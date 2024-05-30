@@ -1,4 +1,8 @@
 .bio-wrapper .bio.block img {
-    border-radius: 50%;
-    object-fit: cover;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.bio-wrapper .bio.block.highlighted img {
+  border: 2px solid blue;
 }
