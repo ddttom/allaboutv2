@@ -5,8 +5,8 @@ const author = document.querySelector('meta[name="author"]').getAttribute('conte
 const authorElement = document.createElement('strong');
 authorElement.textContent = author;
 
-// Find the <picture> element within the .bio-wrapper .bio.block
-const pictureElement = document.querySelector('.bio-wrapper .bio.block picture');
+// Find the .bio-wrapper element
+const bioWrapper = document.querySelector('.bio-wrapper');
 
-// Insert the author element after the <picture> element
-pictureElement.insertAdjacentElement('afterend', authorElement);
+// Insert the author element after the .bio-wrapper element
+bioWrapper.insertAdjacentElement('afterend', authorElement);
