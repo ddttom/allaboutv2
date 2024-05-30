@@ -1,6 +1,4 @@
 .bio-wrapper .bio.block img {
     border-radius: 50%;
     object-fit: cover;
-    width: 198px;
-    height: 198px;
 }
