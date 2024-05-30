@@ -1,5 +1,20 @@
-// Get the content of the "author" meta tag
-const author = document.querySelector('meta[name="author"]').getAttribute('content');
+// Find the <img> element within the .bio.block
+const imgElement = document.querySelector('.bio.block img');
+
+let author = '';
+
+// Check if the <img> element has a non-empty alt attribute
+if (imgElement && imgElement.getAttribute('alt')) {
+  author = imgElement.getAttribute('alt');
+}
+
+// If the alt attribute is empty or not present, fall back to the <meta> tag's author content
+if (!author) {
+  const metaAuthor = document.querySelector('meta[name="author"]');
+  if (metaAuthor) {
+    author = metaAuthor.getAttribute('content');
+  }
+}
 
 // Create a new <strong> element to hold the author name
 const authorElement = document.createElement('strong');
