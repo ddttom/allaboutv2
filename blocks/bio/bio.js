@@ -22,7 +22,7 @@ export default function decorate(block) {
   if (author.includes(':')) {
     bioConfig = (author.split(':')[1]).trim();;
   }
-  bioConfig = bioConfig.replaceAll((' ','-')).toLowerCase();
+  bioConfig = (bioConfig.replaceAll(' ','-')).toLowerCase();
 
   // Create a new <strong> element to hold the author name
   const authorElement = document.createElement('strong');
