@@ -204,5 +204,4 @@ export async function handleMetadataJsonLd() {
     // eslint-disable-next-line no-console
       console.log('Error processing JSON-LD metadata:', error);
     }
-  return jsonString;
   }
