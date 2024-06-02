@@ -52,6 +52,25 @@ export function createJSON() {
     }
   });
 
+
+  let bioConfig = window.siteConfig?.["$meta:author$"];
+  if (!bioConfig) {
+    bioConfig = bioConfig.replaceAll(" ", "-").toLowerCase();
+      content = `${window.location.origin}/bio/${bioConfig}.json`;
+    }
+  try {
+    const resp = await fetch(content);
+    if (!resp.ok) {
+      throw new Error(`Failed to fetch bio content: ${resp.status}`);
+    }
+    let json = await resp.json();
+    json = extractJsonLd(json);
+  } catch (e) {
+     // no bio content, continue
+  }
+  }
+
+
   if (window.siteConfig?.["$meta:command$"]) {
     const commands = window.siteConfig["$meta:command$"].split(";");
     // eslint-disable-next-line no-restricted-syntax
