@@ -189,7 +189,7 @@ export async function handleMetadataJsonLd() {
       }
       let json = await resp.json();
       json = extractJsonLd(json);
-      jsonString = JSON.stringify(json, null, '\t');
+      let jsonString = JSON.stringify(json, null, '\t');
       jsonString = replaceTokens(window.siteConfig, jsonString);
       // Create and append a new script element with the processed JSON-LD data
       const script = document.createElement('script');
