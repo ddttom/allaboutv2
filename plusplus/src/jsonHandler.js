@@ -52,6 +52,7 @@ export function createJSON() {
     }
   });
 
+  window.siteConfig["$meta:author$"] ??= window.siteConfig["$company:name$"];
 
   let bioConfig = window.siteConfig?.["$meta:author$"];
   if (!bioConfig) {
@@ -73,7 +74,7 @@ export function createJSON() {
   }
 
   // fix up missing configs
-  window.siteConfig['$meta:author$'] ??= window.siteConfig['$company:name$'];
+
   window.siteConfig['$meta:contentauthor$'] ??= window.siteConfig['$meta:author$'];
   window.siteConfig['$meta:pagename$'] ??= window.siteConfig['$page:name$'];
   window.siteConfig['$meta:longdescription$'] ??= window.siteConfig['$meta:description$'];
