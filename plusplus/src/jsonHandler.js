@@ -18,7 +18,7 @@ export function extractJsonLd(parsedJson) {
   return parsedJson;
 }
 
-export function createJSON() {
+export async function createJSON() {
   const dc = {};
   const co = {};
 
@@ -57,7 +57,7 @@ export function createJSON() {
   let bioConfig = window.siteConfig?.["$meta:author$"];
   if (bioConfig) {
     bioConfig = bioConfig.replaceAll(" ", "-").toLowerCase();
-    readVariables(`${window.location.origin}/bio/${bioConfig}.json`);
+    await readVariables(`${window.location.origin}/bio/${bioConfig}.json`);
   }
 
   if (window.siteConfig?.["$meta:command$"]) {
