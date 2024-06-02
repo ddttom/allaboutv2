@@ -173,18 +173,17 @@ export function createJSON() {
 export async function handleMetadataJsonLd() {
 
   // assume we have an url, if not we have a role -  construct url on the fly
-  let jsonDataUrl = window.siteConfig?.['$meta:json-ld$'];
-
+  let content = window.siteConfig['$meta:json-ld$'];
     try {
       // Attempt to parse the content as a URL
       // eslint-disable-next-line no-new
       new URL(content);
     } catch (error) {
       // Content is not a URL, construct the JSON-LD URL based on content and current domain
-      jsonDataUrl = `${window.location.origin}/config/json-ld/${content}.json`;
+      content = `${window.location.origin}/config/json-ld/${content}.json`;
     }
     try {
-      const resp = await fetch(jsonDataUrl);
+      const resp = await fetch(content);
       if (!resp.ok) {
         throw new Error(`Failed to fetch JSON-LD content: ${resp.status}`);
       }
