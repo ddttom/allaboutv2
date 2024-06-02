@@ -1,4 +1,4 @@
-import { replaceTokens, convertToISODate, getConfigTruth } from './variables.js';
+import { replaceTokens, convertToISODate, getConfigTruth , readVariables} from './variables.js';
 
 export function extractJsonLd(parsedJson) {
   const jsonLd = { };
@@ -56,20 +56,8 @@ export function createJSON() {
   let bioConfig = window.siteConfig?.["$meta:author$"];
   if (!bioConfig) {
     bioConfig = bioConfig.replaceAll(" ", "-").toLowerCase();
-      content = `${window.location.origin}/bio/${bioConfig}.json`;
-    }
-  try {
-    const resp = await fetch(content);
-    if (!resp.ok) {
-      throw new Error(`Failed to fetch bio content: ${resp.status}`);
-    }
-    let json = await resp.json();
-    json = extractJsonLd(json);
-  } catch (e) {
-     // no bio content, continue
+    readVariables(`${window.location.origin}/bio/${bioConfig}.json`);
   }
-  }
-
 
   if (window.siteConfig?.["$meta:command$"]) {
     const commands = window.siteConfig["$meta:command$"].split(";");
