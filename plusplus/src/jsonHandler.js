@@ -52,6 +52,19 @@ export function createJSON() {
     }
   });
 
+  if (window.siteConfig?.["$meta:command$"]) {
+    const commands = window.siteConfig["$meta:command$"].split(";");
+    // eslint-disable-next-line no-restricted-syntax
+    for (const command of commands) {
+      const phrase = command.split("=");
+      if (phrase.length === 2) {
+        // eslint-disable-next-line prefer-destructuring, semi
+        window.siteConfig[`$${phrase[0].trim().toLowerCase()}$`] =
+          phrase[1].trim();
+      }
+    }
+  }
+
   // fix up missing configs
   window.siteConfig['$meta:author$'] ??= window.siteConfig['$company:name$'];
   window.siteConfig['$meta:contentauthor$'] ??= window.siteConfig['$meta:author$'];
@@ -64,18 +77,25 @@ export function createJSON() {
   window.siteConfig['$meta:category'] ??= 'none';
 
 
-  if (window.siteConfig['$meta:command$'] !== undefined) {
-    const commands = (window.siteConfig['$meta:command$'].split(';'));
-    // eslint-disable-next-line no-restricted-syntax
-    for (const command of commands) {
-      const phrase = command.split('=');
-      if (phrase.length === 2) {
-        // eslint-disable-next-line prefer-destructuring, semi
-        window.siteConfig[`$${phrase[0].trim().toLowerCase()}$`] = phrase[1].trim();
+
+    if (!window.siteConfig?.["$meta:json-ld$"]) {
+      if (window.siteConfig["$meta:json+ld$"]) {
+        window.siteConfig["$meta:json-ld$"] =
+          window.siteConfig["$meta:json+ld$"];
+      } else {
+        if (window.siteConfig["$meta:ld+json$"]) {
+          window.siteConfig["$meta:json-ld$"] =
+            window.siteConfig["$meta:ld+json$"];
+        } else {
+          if (window.siteConfig["$meta:jsonld$"]) {
+            window.siteConfig["$meta:json-ld$"] =
+              window.siteConfig["$meta:jsonld"];
+          } else {
+            window.siteConfig["$meta:json-ld$"] = "owner";
+          }
+        }
       }
     }
-
-  }
 
   if (window.siteConfig?.['$meta:category$'] === 'home') {
     window.siteConfig['$meta:category$'] = 'none';
@@ -148,31 +168,12 @@ export function createJSON() {
       document.head.appendChild(script);
     }
   }
-  if (!window.siteConfig?.['$meta:json-ld$']) {
-    if (window.siteConfig['$meta:json+ld$']) {
-      window.siteConfig['$meta:json-ld$'] = window.siteConfig['$meta:json+ld$'];
-    } else {
-      if (window.siteConfig['$meta:ld+json$']) {
-        window.siteConfig['$meta:json-ld$'] = window.siteConfig['$meta:ld+json$'];
-      } else {
-        if (window.siteConfig['$meta:jsonld$']) {
-          window.siteConfig['$meta:json-ld$'] = window.siteConfig['$meta:jsonld']
-        } else {
-          window.siteConfig['$meta:json-ld$'] = 'owner';
-        }
-      }
-    }
-  }
-
 }
 
 export async function handleMetadataJsonLd() {
 
   // assume we have an url, if not we have a role -  construct url on the fly
   let jsonDataUrl = window.siteConfig?.['$meta:json-ld$'];
-  if (!jsonDataUrl) {
-    jsonDataUrl = 'owner';
-  }
 
     try {
       // Attempt to parse the content as a URL
@@ -204,7 +205,5 @@ export async function handleMetadataJsonLd() {
     // eslint-disable-next-line no-console
       console.log('Error processing JSON-LD metadata:', error);
     }
-  }
-
   return jsonString;
-}
+  }
