@@ -195,7 +195,7 @@ export async function handleMetadataJsonLd() {
       const script = document.createElement('script');
       script.type = 'application/ld+json';
       script.setAttribute('data-role', content.split('/').pop().split('.')[0]); // Set role based on the final URL
-      jsonLdMetaElement.setAttribute('id', 'ldMeta');
+      script.setAttribute('id', 'ldMeta');
       script.textContent = jsonString;
       document.head.appendChild(script);
       document.querySelectorAll('meta[name="longdescription"]').forEach((section) => section.remove());
