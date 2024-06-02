@@ -63,6 +63,7 @@ export function createJSON() {
   }
   window.siteConfig['$meta:category'] ??= 'none';
 
+
   if (window.siteConfig['$meta:command$'] !== undefined) {
     const commands = (window.siteConfig['$meta:command$'].split(';'));
     // eslint-disable-next-line no-restricted-syntax
@@ -73,6 +74,7 @@ export function createJSON() {
         window.siteConfig[`$${phrase[0].trim().toLowerCase()}$`] = phrase[1].trim();
       }
     }
+
   }
 
   if (window.siteConfig?.['$meta:category$'] === 'home') {
@@ -146,22 +148,31 @@ export function createJSON() {
       document.head.appendChild(script);
     }
   }
+  if (!window.siteConfig?.['$meta:json-ld$']) {
+    if (window.siteConfig['$meta:json+ld$']) {
+      window.siteConfig['$meta:json-ld$'] = window.siteConfig['$meta:json+ld$'];
+    } else {
+      if (window.siteConfig['$meta:ld+json$']) {
+        window.siteConfig['$meta:json-ld$'] = window.siteConfig['$meta:ld+json$'];
+      } else {
+        if (window.siteConfig['$meta:jsonld$']) {
+          window.siteConfig['$meta:json-ld$'] = window.siteConfig['$meta:jsonld']
+        } else {
+          window.siteConfig['$meta:json-ld$'] = 'owner';
+        }
+      }
+    }
+  }
+
 }
 
 export async function handleMetadataJsonLd() {
-  let jsonString = '';
-  if (!document.querySelector('script[type="application/ld+json"]')) {
-    let jsonLdMetaElement = document.querySelector('meta[name="json-ld"]');
-    if (!jsonLdMetaElement) {
-      jsonLdMetaElement = document.createElement('meta');
-      jsonLdMetaElement.setAttribute('name', 'json-ld');
-      jsonLdMetaElement.setAttribute('content', 'owner');
-      document.head.appendChild(jsonLdMetaElement);
-    }
-    const content = jsonLdMetaElement.getAttribute('content');
-    jsonLdMetaElement.remove();
-    // assume we have an url, if not we have a role -  construct url on the fly
-    let jsonDataUrl = content;
+
+  // assume we have an url, if not we have a role -  construct url on the fly
+  let jsonDataUrl = window.siteConfig?.['$meta:json-ld$'];
+  if (!jsonDataUrl) {
+    jsonDataUrl = 'owner';
+  }
 
     try {
       // Attempt to parse the content as a URL
