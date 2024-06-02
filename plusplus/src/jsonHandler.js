@@ -55,7 +55,7 @@ export function createJSON() {
   window.siteConfig["$meta:author$"] ??= window.siteConfig["$company:name$"];
 
   let bioConfig = window.siteConfig?.["$meta:author$"];
-  if (!bioConfig) {
+  if (bioConfig) {
     bioConfig = bioConfig.replaceAll(" ", "-").toLowerCase();
     readVariables(`${window.location.origin}/bio/${bioConfig}.json`);
   }
