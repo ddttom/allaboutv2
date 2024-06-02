@@ -1,5 +1,5 @@
 sitemaps:
    example:
-     origin: https://ddttom.global.ssl.fastly.net/
+     origin: https://allabout.network/
      source: /query-index.json
      destination: /sitemap.xml
