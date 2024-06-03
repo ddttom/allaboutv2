@@ -81,7 +81,7 @@ export function renderExpressions(root = document.body, context = undefined) {
       });
 
       if (lastIndex < text.length) {
-        // parent.append(document.createTextNode(text.slice(lastIndex)));
+        parent.append(document.createTextNode(text.slice(lastIndex)));
       }
     }
   });
