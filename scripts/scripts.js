@@ -17,6 +17,8 @@ import {
   loadCSS
 } from '/scripts/aem.js';
 
+import { } from '/plusplus/src/siteConfig.js';
+
 const LCP_BLOCKS = []; // add your LCP blocks to the lis
 const AUDIENCES = {
   mobile: () => window.innerWidth < 600,
