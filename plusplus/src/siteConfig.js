@@ -74,11 +74,11 @@ export async function initializeSiteConfig() {
     const localities = [
       { key: "localhost", value: "local" },
       { key: "127.0.0.1", value: "local" },
-      { key: "stage", value: "stage" },
+      { key: "-stage", value: "stage" },
       { key: "fastly", value: "preprod" },
       { key: "preprod.", value: "preprod" },
-      { key: "prod", value: "prod" },
-      { key: "dev", value: "dev" },
+      { key: "-prod", value: "prod" },
+      { key: "-dev", value: "dev" },
     ];
     for (const env of localities) {
       if (window.location.href.includes(env.key)) {
