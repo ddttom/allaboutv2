@@ -39,7 +39,7 @@ import { } from './externalImage.js';
 
 await import('/config/config.js');
 
-import { createExpression, renderExpressions } from "/plusplus/plugins/expressions/src/expressions.js";
+import { createExpression } from "/plusplus/plugins/expressions/src/expressions.js";
 createExpression("expand", ({ args }) => {
   return window.siteConfig?.[args];
 });
@@ -107,7 +107,6 @@ export async function initializeSiteConfig() {
 
   // all configuration completed, make any further callbacks from here
 
-  renderExpressions(document.body);
 
   await tidyDOM();
   await handleMetadataJsonLd();
