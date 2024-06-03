@@ -4,11 +4,16 @@
     "limit": 1,
     "data": [
       {
-        "Item": "$system:myname$",
-        "Value": "final"
-      },{
-        "Item":"$system:allowtracking$",
+        "Item": "$system:myenvname$",
+        "Value": "final environment"
+      },
+      {
+        "Item": "$system:allowtracking$",
         "Value": "n"
+      },
+      {
+        "Item": "$meta:wantbiovariables$",
+        "Value": "y"
       }
     ],
     ":type": "fallback"

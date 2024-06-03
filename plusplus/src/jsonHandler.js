@@ -54,12 +54,13 @@ export async function createJSON() {
 
   window.siteConfig["$meta:author$"] ??= window.siteConfig["$company:name$"];
 
-  let bioConfig = window.siteConfig?.["$meta:author$"];
-  if (bioConfig) {
-    bioConfig = bioConfig.replaceAll(" ", "-").toLowerCase();
-    await readVariables(`${window.location.origin}/bio/${bioConfig}.json`);
+  if (getConfigTruth('$meta:wantbiovariables$')) {
+    let bioConfig = window.siteConfig?.["$meta:author$"];
+    if (bioConfig) {
+      bioConfig = bioConfig.replaceAll(" ", "-").toLowerCase();
+      await readVariables(`${window.location.origin}/bio/${bioConfig}.json`);
+    }
   }
-
   if (window.siteConfig?.["$meta:command$"]) {
     const commands = window.siteConfig["$meta:command$"].split(";");
     // eslint-disable-next-line no-restricted-syntax

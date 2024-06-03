@@ -49,7 +49,9 @@ function noAction() {
 export async function initializeSiteConfig() {
 // Determine the environment and locality based on the URL
   const getEnvironment = () => {
-  // Define an array of environments with their identifying substrings in the URL
+    // Define an array of environments with their identifying substrings in the URL
+
+    // An Environment is defined as a normal place to serve Helix Content
     const environments = [
       { key: '.html', value: 'final' },
       { key: '.hlx.page', value: 'preview' },
@@ -67,8 +69,9 @@ export async function initializeSiteConfig() {
     return 'final';
   };
 
+  // a locality is defined as a place to serve Helix Content for a regulated industry
   const getLocality = () => {
-    const environments = [
+    const localities = [
       { key: "localhost", value: "local" },
       { key: "127.0.0.1", value: "local" },
       { key: "stage", value: "stage" },
@@ -77,7 +80,7 @@ export async function initializeSiteConfig() {
       { key: "prod", value: "prod" },
       { key: "dev", value: "dev" },
     ];
-    for (const env of environments) {
+    for (const env of localities) {
       if (window.location.href.includes(env.key)) {
         return env.value;
       }

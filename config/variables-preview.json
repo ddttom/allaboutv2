@@ -4,8 +4,12 @@
     "limit": 1,
     "data": [
       {
-        "Item": "$system:myname$",
-        "Value": "preview"
+        "Item": "$system:myenvname$",
+        "Value": "preview environment"
+      },
+      {
+        "Item": "$meta:wantbiovariables$",
+        "Value": "y"
       }
     ],
     ":type": "fallback"
