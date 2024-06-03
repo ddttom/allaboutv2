@@ -39,7 +39,11 @@ import { } from './externalImage.js';
 
 await import('/config/config.js');
 
-import '/scripts/siteExpressions.js';
+import { createExpression } from "/plusplus/plugins/expressions/src/expressions.js";
+createExpression("expand", ({ args }) => {
+  return window.siteConfig?.[args];
+});
+
 function noAction() {
 }
 export async function initializeSiteConfig() {
@@ -103,10 +107,7 @@ export async function initializeSiteConfig() {
 
   // all configuration completed, make any further callbacks from here
 
-  // attempt at overwriting the loadDelayed function
-  // window.cmsplus.loadDelayed = function loadDelayed() {
-  // window.setTimeout(() => import('../delayed.js'), 3000;
-  // };
+  renderExpressions(document.body);
 
   await tidyDOM();
   await handleMetadataJsonLd();
