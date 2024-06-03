@@ -53,7 +53,6 @@ export async function initializeSiteConfig() {
 
     // An Environment is defined as a normal place to serve Helix Content
     const environments = [
-      { key: '.html', value: 'final' },
       { key: '.hlx.page', value: 'preview' },
       { key: '.hlx.live', value: 'live' },
       { key: '.aem.page', value: 'preview' },
@@ -61,7 +60,7 @@ export async function initializeSiteConfig() {
     ];
 
     for (const env of environments) {
-      if (window.location.href.includes(env.key)) {
+      if (window.location.hostname.includes(env.key)) {
         return env.value;
       }
     }
@@ -81,7 +80,7 @@ export async function initializeSiteConfig() {
       { key: "-dev", value: "dev" },
     ];
     for (const env of localities) {
-      if (window.location.href.includes(env.key)) {
+      if (window.location.hostname.includes(env.key)) {
         return env.value;
       }
     }
