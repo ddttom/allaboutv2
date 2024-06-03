@@ -39,6 +39,7 @@ import { } from './externalImage.js';
 
 await import('/config/config.js');
 
+import '/scripts/siteExpressions.js';
 function noAction() {
 }
 export async function initializeSiteConfig() {
@@ -47,8 +48,10 @@ export async function initializeSiteConfig() {
   // Define an array of environments with their identifying substrings in the URL
     const environments = [
       { key: '.html', value: 'final' },
-      { key: 'hlx.page', value: 'preview' },
-      { key: 'hlx.live', value: 'live' },
+      { key: '.hlx.page', value: 'preview' },
+      { key: '.hlx.live', value: 'live' },
+      { key: '.aem.page', value: 'preview' },
+      { key: '.aem.live', value: 'live' },
     ];
 
     for (const env of environments) {
@@ -62,12 +65,13 @@ export async function initializeSiteConfig() {
 
   const getLocality = () => {
     const environments = [
-      { key: 'localhost', value: 'local' },
-      { key: 'stage', value: 'stage' },
-      { key: 'fastly', value: 'preprod' },
-      { key: 'preprod.', value: 'preprod' },
-      { key: 'prod', value: 'prod' },
-      { key: 'dev', value: 'dev' },
+      { key: "localhost", value: "local" },
+      { key: "127.0.0.1", value: "local" },
+      { key: "stage", value: "stage" },
+      { key: "fastly", value: "preprod" },
+      { key: "preprod.", value: "preprod" },
+      { key: "prod", value: "prod" },
+      { key: "dev", value: "dev" },
     ];
     for (const env of environments) {
       if (window.location.href.includes(env.key)) {
