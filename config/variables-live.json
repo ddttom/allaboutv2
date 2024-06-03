@@ -10,10 +10,6 @@
       {
         "Item": "$system:allowtracking$",
         "Value": "n"
-      },
-      {
-        "Item": "$meta:wantbiovariables$",
-        "Value": "y"
       }
     ],
     ":type": "fallback"

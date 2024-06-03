@@ -6,6 +6,12 @@
       {
         "Item": "$system:trackingscript$",
         "Value": "https://assets.adobedtm.com/xxxxxxxxx/xxxxxxxxxxxxxx/launch-xxxxxxxx-development.min.js"
+      }, {
+        "Item": "$meta:wantbiovariables$",
+        "Value": "y"
+      },{
+        "Item": "$meta:wantcontentops$",
+        "Value": "y"
       }
     ],
     ":type": "fallback"
