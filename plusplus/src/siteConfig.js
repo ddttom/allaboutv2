@@ -39,7 +39,7 @@ import { } from './externalImage.js';
 
 await import('/config/config.js');
 
-import { createExpression } from "/plusplus/plugins/expressions/src/expressions.js";
+import { createExpression, renderExpressions } from "/plusplus/plugins/expressions/src/expressions.js";
 createExpression("expand", ({ args }) => {
   return window.siteConfig?.[args];
 });
