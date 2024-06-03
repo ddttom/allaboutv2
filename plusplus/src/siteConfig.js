@@ -41,7 +41,7 @@ await import('/config/config.js');
 
 import { createExpression, renderExpressions } from "/plusplus/plugins/expressions/src/expressions.js";
 createExpression("expand", ({ args }) => {
-  return window.siteConfig?.[args];
+  return `<span>${window.siteConfig?.[args]}</span >`;
 });
 
 function noAction() {
