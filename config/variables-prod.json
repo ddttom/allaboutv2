@@ -8,10 +8,6 @@
       "Value": "prod"
     },
     {
-      "Item": "$system:allowtracking$",
-      "Value": "n"
-    },
-    {
       "Item": "$system:trackingscript$",
       "Value": "https://assets.adobedtm.com/dxxxxxxxxxx/xxxxxxxx/launch-xxxxx.min.js"
     },
