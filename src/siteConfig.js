@@ -52,8 +52,8 @@ export async function initializeSiteConfig() {
         return env.value;
       }
     }
-    // If no match is found, it defaults to 'final'
-    return 'final';
+    // If no match is found, it defaults to 'live' - hardest case.
+    return 'live';
   };
 
   // a locality is defined as a place to serve Helix Content for a regulated industry
