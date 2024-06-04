@@ -131,7 +131,7 @@ async function loadEager(doc) {
     Object.keys(getAllMetadata('campaign')).length ||
     Object.keys(getAllMetadata('audience')).length) {
     // eslint-disable-next-line import/no-relative-packages
-    const { loadEager: runEager } = await import('/plusplus/plugins/experimentation/src/index.js');
+    const { loadEager: runEager } = await import('../plusplus/plugins/experimentation/src/index.js');
     await runEager(document, { audiences: AUDIENCES }, pluginContext);
   }
 
@@ -202,7 +202,6 @@ async function loadPage() {
     document.body.querySelector('header').remove();
     document.body.querySelector('footer').remove();
   }
-
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();

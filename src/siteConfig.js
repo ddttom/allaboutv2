@@ -1,20 +1,8 @@
 /* eslint-disable no-restricted-syntax */
 /* site configuration module */
-/*
 
-   ++++++++++++++++++++++++++++++++++++++++++++++++++
 
-   NOTHING iN HERE CAN USE OR DERIVE FROM siteConfig
-   until you are sure you know what you are doing
-   i.e no use of siteConfig['$meta:author$'] etc
-   The stuff in here has to be super fast
-   do not use ffetch or loading 3rd party libs
-   all such things should be done in their own plugin
-   after the call to createJSON is done siteConfig[...]
-   is ok
-   ++++++++++++++++++++++++++++++++++++++++++++++++++
-
-*/
+let releaseVersion = '1.0.1';
 
 import {
   tidyDOM,
@@ -85,13 +73,14 @@ export async function initializeSiteConfig() {
       }
     }
 
-    // Return 'unknown' if no environment matches
-    return 'unknown';
+    // Return 'prod' if no environment matches -- hardest case.
+    return 'prod';
   };
 
   window.cmsplus = {
     environment: getEnvironment(),
     locality: getLocality(),
+    release: releaseVersion,
   };
   window.cmsplus.callbackPageLoadChain = [];
   window.cmsplus.callbackAfter3SecondsChain = [];
