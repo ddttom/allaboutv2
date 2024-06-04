@@ -133,6 +133,7 @@ export async function constructGlobal() {
     window.siteConfig['$system:minute$'] = new Date().getMinutes();
     window.siteConfig['$system:second$'] = new Date().getSeconds();
     window.siteConfig['$system:millisecond$'] = new Date().getMilliseconds();
+    window.siteConfig['$system:version$'] = window.cmsplus.release;
 
     const month = months[thismonth];
     const firstLetter = month.charAt(0).toUpperCase();
