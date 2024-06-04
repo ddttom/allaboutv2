@@ -1,5 +1,5 @@
 
-# Dynamic
+# Dynamic block JS
 
 This JavaScript code is part Tom Cranstoun derived variations of Helix CMS, with diagrams here <https://main--allaboutv2--ddttom.hlx.live/extra/dynamic>
 
@@ -16,7 +16,7 @@ finally if there are any classnames in the helix block these are used as paths.
 one can use section metadata attribute "maxReturn" to set the maximum number of entries.
 if no section metadata the code looks for page metadata maxReturn
 if not found it then looks for "$system:maxreturn$"
-and finally it uses 8 if they do not exist.  
+and finally it uses 8 if they do not exist.
 
 You can pull in the headline, description, 'service' tag, 'resource' tag and url path from the query-index to the card. This will display relevant information about the article and allow a link to the page from the card.
 

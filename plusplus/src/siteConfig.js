@@ -2,7 +2,7 @@
 /* site configuration module */
 
 
-let releaseVersion = '1.0.1';
+let releaseVersion = 'plusplus 1.0.1';
 
 import {
   tidyDOM,
@@ -90,7 +90,7 @@ export async function initializeSiteConfig() {
   possibleMobileFix('hero');
   await constructGlobal();
   swiftChangesToDOM();
-  await createJSON();// *********   siteConfig is ready now *******
+  await createJSON();
   await initializeClientConfig();
   if (window.cmsplus.environment === 'preview') {
     import('./debugPanel.js');
