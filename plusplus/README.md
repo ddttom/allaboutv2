@@ -20,7 +20,9 @@ What does it add:
   - local,
   - dev environments
 - inclusion of helpful code from block-party <https://www.aem.live/developer/block-collection#block-party> : - Modal, ffetch, DOM-helpers, External - Images
-- Inclusion of experimentation, through git subtree add <https://github.com/adobe/aem-experimentation/wiki/Experiments#authoring>
+- Inclusion of experimentation, expressions through
+ git subtree add <https://github.com/adobe/aem-experimentation/wiki/Experiments#authoring>
+ git subtree add --squash  --prefix plugins/expressions  <https://github.com/vtsaplin/franklin-expressions/> main
 
 Smart algorithms to:
 
