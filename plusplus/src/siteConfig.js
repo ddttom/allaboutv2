@@ -27,7 +27,7 @@ import { } from './externalImage.js';
 
 await import('/config/config.js');
 
-import {} from "/plusplus/src/clientExpression.js";
+import {} from "/plusplus/src/clientExpressions.js";
 
 function noAction() {
 }
