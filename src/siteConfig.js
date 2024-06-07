@@ -2,7 +2,7 @@
 /* site configuration module */
 
 
-let releaseVersion = 'plusplus 1.0.1';
+let releaseVersion = 'plusplus 1.0.2';
 
 import {
   tidyDOM,
@@ -27,7 +27,7 @@ import { } from './externalImage.js';
 
 await import('/config/config.js');
 
-import {} from "/plusplus/src/clientExpression.js";
+import {} from "/plusplus/src/clientExpressions.js";
 
 function noAction() {
 }
