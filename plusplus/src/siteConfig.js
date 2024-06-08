@@ -70,8 +70,8 @@ export async function initializeSiteConfig() {
       }
     }
 
-    // Return 'prod' if no environment matches -- hardest case.
-    return 'prod';
+    // Return 'unknown' if no match.
+    return 'unknown';
   };
 
   window.cmsplus = {

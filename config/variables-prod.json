@@ -6,7 +6,11 @@
     {
       "Item": "$system:mylocality$",
       "Value": "prod"
+    },
+    {
+      "Item": "$system:enabletracking$",
+      "Value": "y"
     }
   ],
-  ":type": "fallback"
+  ":type": "fallback - regulated only"
 }
