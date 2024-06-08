@@ -13,7 +13,7 @@
         "Item": "$meta:enablecontentops$",
         "Value": "y"
       }, {
-        "Item": "$meta:enabletracking$",
+        "Item": "$system:enabletracking$",
         "Value": "y"
       }
     ],
