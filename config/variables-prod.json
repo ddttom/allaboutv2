@@ -6,18 +6,6 @@
     {
       "Item": "$system:mylocality$",
       "Value": "prod"
-    },
-    {
-      "Item": "$system:trackingscript$",
-      "Value": "https://assets.adobedtm.com/dxxxxxxxxxx/xxxxxxxx/launch-xxxxx.min.js"
-    },
-    {
-      "Item": "$system:abtastyscript$",
-      "Value": "https://try.abtasty.com/xxxxxxxxxxxxxx.js"
-    },
-    {
-      "Item": "$system:cookiebotid$",
-      "Value": "xxxxxxxxxxxxxxx"
     }
   ],
   ":type": "fallback"
