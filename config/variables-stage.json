@@ -6,6 +6,9 @@
       {
         "Item": "$system:mylocality$",
         "Value": "stage"
+      }, {
+        "Item": "$system:enabletracking$",
+        "Value": "n"
       }
     ],
     ":type": "fallback"
