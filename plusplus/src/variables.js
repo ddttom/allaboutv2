@@ -143,8 +143,8 @@ export async function constructGlobal() {
       window.siteConfig["$meta:enablebiovariables$"] =
         window.siteConfig["$meta:wantdublincore$"];
     }
-    if (window.siteConfig?.['$meta:allowtracking$']) {
-      window.siteConfig['$meta:enabletracking$'] = window.siteConfig['$meta:allowtracking$'];
+    if (window.siteConfig?.['$system:allowtracking$']) {
+      window.siteConfig['$system:enabletracking$'] = window.siteConfig['$system:allowtracking$'];
 
     }
     const month = months[thismonth];
