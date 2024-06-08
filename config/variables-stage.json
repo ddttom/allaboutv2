@@ -8,7 +8,7 @@
         "Value": "stage"
       }, {
         "Item": "$system:enabletracking$",
-        "Value": "n"
+        "Value": "y"
       }
     ],
     ":type": "fallback"
