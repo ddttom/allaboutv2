@@ -4,7 +4,7 @@
     "limit": 1,
     "data": [
       {
-        "Item": "$system:trackingscript$",
+        "Item": "$system:xtrackingscript$",
         "Value": "https://www.googletagmanager.com/gtag/js?id=G-PEWZ87XQN0"
       }, {
         "Item": "$meta:enablebiovariables$",
@@ -14,7 +14,7 @@
         "Value": "y"
       }, {
         "Item": "$system:enabletracking$",
-        "Value": "y"
+        "Value": "n"
       }
     ],
     ":type": "fallback"
