@@ -45,7 +45,7 @@ export async function initializeSiteConfig() {
     ];
 
     for (const env of environments) {
-      if (window.location.hostname.includes(env.key)) {
+      if (window.location.href.includes(env.key)) {
         return env.value;
       }
     }
