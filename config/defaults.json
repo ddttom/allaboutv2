@@ -12,6 +12,9 @@
       },{
         "Item": "$meta:enablecontentops$",
         "Value": "y"
+      }, {
+        "Item": "$meta:enabletracking$",
+        "Value": "y"
       }
     ],
     ":type": "fallback"

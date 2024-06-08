@@ -31,11 +31,11 @@ export default async function enableTracking() {
   if (window.siteConfig?.['$system:abtastyscript$']) {
     loadScript(`${window.siteConfig['$system:abtastyscript$']}`, {});
   }
-  // if tracking, you only get here if allowtracking is set to true
+  // if tracking, you only get here if enabletracking is set to true
 
   await loadScript(`${window.siteConfig['$system:trackingscript$']}`, {});
 
-  if ((window.siteConfig?.['$system:allowtracking$']).includes('.adobe')) {
+  if ((window.siteConfig?.['$system:trackingscript$']).includes('.adobe')) {
     window.adobeDataLayer = window.adobeDataLayer || [];
     try {
       if (window.cmsplus?.track) {
@@ -53,7 +53,7 @@ export default async function enableTracking() {
     }
   }
 
-  if ((window.siteConfig?.['$system:allowtracking$']).includes('.googletagmanager')) {
+  if ((window.siteConfig?.['$system:trackingscript$']).includes('.googletagmanager')) {
   window.dataLayer = window.dataLayer || [];
   function gtag() {
     dataLayer.push(arguments);
@@ -65,7 +65,7 @@ export default async function enableTracking() {
 }
 export async function initializeClientConfig() {
   window.cmsplus.callbackMetadataTracker = initializeTracker;
-  if (getConfigTruth('$system:allowtracking$')) {
+  if (getConfigTruth('$system:enabletracking$')) {
     window.cmsplus.callbackPageLoadChain.push(enableTracking);
   }
   if (((window.cmsplus.helpapi) || '').length > 0) {

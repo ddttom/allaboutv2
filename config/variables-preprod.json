@@ -8,7 +8,7 @@
         "Value": "preprod"
       },
       {
-        "Item": "$system:allowtracking$",
+        "Item": "$system:enabletracking$",
         "Value": "y"
       },
       {
