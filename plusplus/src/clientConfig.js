@@ -64,9 +64,9 @@ export default async function enableTracking() {
   }
 }
 export async function initializeClientConfig() {
-  if ((window.siteConfig?.['$system:trackingscript$']).includes('.adobe')) {
-    window.cmsplus.callbackMetadataTracker = initializeTracker;
-  }
+//   if ((window.siteConfig?.['$system:trackingscript$']).includes('.adobe')) {
+ //    window.cmsplus.callbackMetadataTracker = initializeTracker;
+ //  }
   if (getConfigTruth('$system:enabletracking$')) {
     window.cmsplus.callbackPageLoadChain.push(enableTracking);
   }
