@@ -5,12 +5,12 @@
     "data": [
       {
         "Item": "$system:trackingscript$",
-        "Value": "https://assets.adobedtm.com/xxxxxxxxx/xxxxxxxxxxxxxx/launch-xxxxxxxx-development.min.js"
+        "Value": "https://www.googletagmanager.com/gtag/js?id=G-PEWZ87XQN0"
       }, {
-        "Item": "$meta:wantbiovariables$",
+        "Item": "$meta:enablebiovariables$",
         "Value": "y"
       },{
-        "Item": "$meta:wantcontentops$",
+        "Item": "$meta:enablecontentops$",
         "Value": "y"
       }
     ],

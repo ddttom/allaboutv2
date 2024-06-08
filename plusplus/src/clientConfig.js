@@ -13,6 +13,9 @@ function enableDanteChat() {
   loadScript('https://chat.dante-ai.com/dante-embed.js');
 }
 export default async function enableTracking() {
+
+//if cookiebot
+
   if (window.siteConfig?.['$system:cookiebotid$']) {
   // eslint-disable-next-line no-console
     const attrs = {
@@ -22,27 +25,44 @@ export default async function enableTracking() {
     };
     await loadScript('https://consent.cookiebot.com/uc.js', attrs);
   }
+
+  //if abtasty
+
   if (window.siteConfig?.['$system:abtastyscript$']) {
     loadScript(`${window.siteConfig['$system:abtastyscript$']}`, {});
   }
+  // if tracking, you only get here if allowtracking is set to true
+
   await loadScript(`${window.siteConfig['$system:trackingscript$']}`, {});
-  window.adobeDataLayer = window.adobeDataLayer || [];
-  try {
-    if (window.cmsplus?.track) {
-      if (window.cmsplus.track?.page) {
-        window.adobeDataLayer.push(window.cmsplus.track.page);
+
+  if ((window.siteConfig?.['$system:allowtracking$']).includes('.adobe')) {
+    window.adobeDataLayer = window.adobeDataLayer || [];
+    try {
+      if (window.cmsplus?.track) {
+        if (window.cmsplus.track?.page) {
+          window.adobeDataLayer.push(window.cmsplus.track.page);
+        }
+        if (window.cmsplus.track?.content) {
+          window.adobeDataLayer.push(window.cmsplus.track.content);
+        }
       }
-      if (window.cmsplus.track?.content) {
-        window.adobeDataLayer.push(window.cmsplus.track.content);
-      }
+      //  console.log('Added AdobeDataLayer');
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log('failed to add cmsplus data to adobeDataLayer', e);
     }
-    //  console.log('Added AdobeDataLayer');
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.log('failed to add cmsplus data to adobeDataLayer', e);
+  }
+
+  if ((window.siteConfig?.['$system:allowtracking$']).includes('.googletagmanager')) {
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+
+  gtag("config", "G-PEWZ87XQN0");
   }
 }
-
 export async function initializeClientConfig() {
   window.cmsplus.callbackMetadataTracker = initializeTracker;
   if (getConfigTruth('$system:allowtracking$')) {
