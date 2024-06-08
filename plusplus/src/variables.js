@@ -83,7 +83,7 @@ export async function constructGlobal() {
   window.siteConfig = {};
   await readVariables(new URL('/config/defaults.json', window.location.origin));
   await readVariables(new URL('/config/variables.json', window.location.origin));
-  if (['final', 'preview', 'live'].includes(window.cmsplus.environment)) {
+  if (['preview', 'live'].includes(window.cmsplus.environment)) {
     await readVariables(new URL(`/config/variables-${window.cmsplus.environment}.json`, window.location.origin));
   }
   if (['local', 'dev', 'preprod', 'prod', 'stage'].includes(window.cmsplus.locality)) {

@@ -99,7 +99,7 @@ export async function initializeSiteConfig() {
   await tidyDOM();
   await handleMetadataJsonLd();
   await window.cmsplus?.callbackMetadataTracker?.();
-  if (window.cmsplus.environment !== 'final') {
+  if (window.cmsplus.environment === 'preview') {
     window.cmsplus.callbackCreateDebugPanel?.();
   }
   // eslint-disable-next-line no-restricted-syntax
