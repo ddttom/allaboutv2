@@ -8,6 +8,10 @@
         "Value": "https://www.googletagmanager.com/gtag/js?id=G-PEWZ87XQN0"
       },
       {
+        "Item": "$system:gtmid$",
+        "Value": "G-PEWZ87XQN0"
+      },
+      {
         "Item": "$meta:enablebiovariables$",
         "Value": "y"
       },

@@ -58,13 +58,13 @@ export default async function enableTracking() {
   function gtag() {
     dataLayer.push(arguments);
   }
-  gtag("js", new Date());
+  gtag('js', new Date());
 
-  gtag("config", "G-PEWZ87XQN0");
+  gtag('config', window.siteConfig['$system:gtmid$']);
   }
 }
 export async function initializeClientConfig() {
-  if (window.siteConfig["$system:trackingscript$"]?.includes(".adobe")) {
+  if (window.siteConfig['$system:trackingscript$']?.includes('.adobe')) {
     window.cmsplus.callbackMetadataTracker = initializeTracker;
   }
 
