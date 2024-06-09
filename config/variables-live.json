@@ -6,6 +6,10 @@
       {
         "Item": "$system:myenvname$",
         "Value": "live environment"
+      },
+      {
+        "Item": "$system:enabletracking$",
+        "Value": "y"
       }
     ],
     ":type": "fallback"
