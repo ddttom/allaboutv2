@@ -71,7 +71,7 @@ export async function initializeClientConfig() {
   }
 
   if (getConfigTruth('$system:enabletracking$')) {
-    window.cmsplus.callbackPageLoadChain.push(enableTracking);
+    window.cmsplus.callbackAfter3SecondsChain.push(enableTracking);
   }
   if (((window.cmsplus.helpapi) || '').length > 0) {
     window.cmsplus.callbackAfter3SecondsChain.push(enableDanteChat);
