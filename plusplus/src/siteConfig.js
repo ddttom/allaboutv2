@@ -83,7 +83,7 @@ export async function initializeSiteConfig() {
     environment: getEnvironment(),
     locality: getLocality(),
     release: releaseVersion,
-    debug: nop,
+    debug: noAction,
   };
   if (window?.debug === 'y') {
     window.cmsplus.debug = debugMessage;
