@@ -71,7 +71,7 @@ export async function initializeClientConfig() {
   }
 
   if (getConfigTruth('$system:enabletracking$')) {
-    if (window.siteConfig['$system:enableslowtracking$']) {
+    if (getConfigTruth['$system:enableslowtracking$']) {
       window.cmsplus.callbackAfter3SecondsChain.push(enableTracking);
     } else {
       window.cmsplus.callbackPageLoadChain.push(enableTracking);
