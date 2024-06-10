@@ -80,7 +80,7 @@ export function convertToISODate(input) {
 }
 
 export async function constructGlobal() {
-  window.debug('constructGlobal');
+  window.cmsplus.debug('constructGlobal');
   window.siteConfig = {};
   await readVariables(new URL('/config/defaults.json', window.location.origin));
   await readVariables(new URL('/config/variables.json', window.location.origin));
