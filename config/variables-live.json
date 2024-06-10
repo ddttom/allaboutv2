@@ -10,6 +10,10 @@
       {
         "Item": "$system:enabletracking$",
         "Value": "y"
+      },
+      {
+        "Item": "$system:enableslowtracking$",
+        "Value": "y"
       }
     ],
     ":type": "fallback"
