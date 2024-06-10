@@ -19,7 +19,6 @@ import {
 
 import { } from '/plusplus/src/siteConfig.js';
 
-
 const LCP_BLOCKS = []; // add your LCP blocks to the lis
 const AUDIENCES = {
   mobile: () => window.innerWidth < 600,
@@ -126,6 +125,7 @@ export function decorateMain(main) {
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
+  window.cmsplus.debug('loadEager');
   document.documentElement.lang = 'en';
   // Add below snippet early in the eager phase
   if (getMetadata('experiment') ||
@@ -159,6 +159,7 @@ async function loadEager(doc) {
  * @param {Element} doc The container element
  */
 async function loadLazy(doc) {
+  window.cmsplus.debug('loadLazy')
   const main = doc.querySelector('main');
   await loadBlocks(main);
   autolinkModals(doc); // added for modal handling, see adobe docs
@@ -190,12 +191,14 @@ async function loadLazy(doc) {
  * without impacting the user experience.
  */
 function loadDelayed() {
+  window.cmsplus.debug('loadDelayed timer start');
   // eslint-disable-next-line import/no-cycle
   window.setTimeout(() => import('./delayed.js'), 3000);
   // load anything that can be postponed to the latest here
 }
 
 async function loadPage() {
+  window.cmsplus.debug('loadPage');
   const urlParams = new URLSearchParams(window.location.search);
   // added for sidekick library - see block party
   if (urlParams.get('suppressFrame') || window.location.pathname.includes('tools/sidekick')) {
