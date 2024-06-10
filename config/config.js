@@ -1,2 +1,2 @@
 window.finalHost = 'https://allabout.network/';
-window.cmsplus.debug = 'y';
+window.debug = 'y';
