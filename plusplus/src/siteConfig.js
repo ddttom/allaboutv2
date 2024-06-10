@@ -36,7 +36,7 @@ function debugMessage(message) {
 function noAction() {
 }
 export async function initializeSiteConfig() {
-  window.debug('initializing site config');
+
 // Determine the environment and locality based on the URL
   const getEnvironment = () => {
     // Define an array of environments with their identifying substrings in the URL
@@ -88,6 +88,7 @@ export async function initializeSiteConfig() {
   if (window?.debug === 'y') {
     window.cmsplus.debug = debugMessage;
   }
+  window.debug("initializing site config");
   window.cmsplus.callbackPageLoadChain = [];
   window.cmsplus.callbackAfter3SecondsChain = [];
 
