@@ -159,7 +159,7 @@ export async function constructGlobal() {
   } catch (error) {
     console.log('Problem constructing SiteConfig', error);
   }
-  window.debug('constructGlobal done');
+  window.cmsplus.debug('constructGlobal done');
 }
 
 export function getConfigTruth(variable) {

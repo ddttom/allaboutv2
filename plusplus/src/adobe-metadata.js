@@ -22,7 +22,7 @@ export async function initializeTracker() {
   await handleMetadataTracking();
 }
 async function handleMetadataTracking() {
-  window.debug('handleMetadataTracking');
+  window.cmsplus.debug('handleMetadataTracking');
   if (getConfigTruth('$system:enabletracking$')) {
     const tracking = window.siteConfig?.['$meta:tracking$'] ?? 'page';
     const trackers = tracking.split(',');
@@ -77,6 +77,6 @@ async function handleMetadataTracking() {
       }
     }
     window.cmsplus.callbackDebugAnalytics = loadAnalyticsDebugPanel;
-    window.debug('handleMetadataTracking complete');
+    window.cmsplus.debug('handleMetadataTracking complete');
   }
 }

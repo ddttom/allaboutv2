@@ -9,8 +9,8 @@ sampleRUM('cwv');
 /* eslint-disable no-await-in-loop */
 // eslint-disable-next-line max-len
 // If you need any delayed stuff client-side add it to the callbackAfter3SecondsChain
-window.debug('callbackAfter3SecondsChain');
+window.cmsplus.debug('callbackAfter3SecondsChain');
 for (const callback of window.cmsplus.callbackAfter3SecondsChain) {
-  window.debug(callback);
+  window.cmsplus.debug(callback);
   await callback();
 }

@@ -88,7 +88,7 @@ export async function initializeSiteConfig() {
   if (window?.debug === 'y') {
     window.cmsplus.debug = debugMessage;
   }
-  window.debug("initializing site config");
+  window.cmsplus.debug("initializing site config");
   window.cmsplus.callbackPageLoadChain = [];
   window.cmsplus.callbackAfter3SecondsChain = [];
 
@@ -117,6 +117,6 @@ export async function initializeSiteConfig() {
   // eslint-disable-next-line no-await-in-loop
     await callback();
   }
-  window.debug('site config initialized');
+  window.cmsplus.debug('site config initialized');
 }
 await initializeSiteConfig();

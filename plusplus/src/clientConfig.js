@@ -6,7 +6,7 @@ import { initializeTracker } from './adobe-metadata.js';
 import { getConfigTruth } from './variables.js';
 
 function enableDanteChat() {
-  window.debug('enableDanteChat');
+  window.cmsplus.debug('enableDanteChat');
   window.danteEmbed = `https://chat.dante-ai.com/embed?${window.cmsplus.helpapi}&mode=false&bubble=true&image=null&bubbleopen=false`;
   // eslint-disable-next-line no-undef
   loadScript('https://chat.dante-ai.com/bubble-embed.js');
@@ -14,7 +14,7 @@ function enableDanteChat() {
   loadScript('https://chat.dante-ai.com/dante-embed.js');
 }
 export default async function enableTracking() {
-window.debug('enableTracking');
+window.cmsplus.debug('enableTracking');
 //if cookiebot
 
   if (window.siteConfig?.['$system:cookiebotid$']) {
@@ -35,7 +35,7 @@ window.debug('enableTracking');
   // if tracking, you only get here if enabletracking is set to true
 
   await loadScript(`${window.siteConfig['$system:trackingscript$']}`, {});
-  window.debug('tracking script loaded');
+  window.cmsplus.debug('tracking script loaded');
   if ((window.siteConfig?.['$system:trackingscript$']).includes('.adobe')) {
     window.adobeDataLayer = window.adobeDataLayer || [];
     try {
@@ -65,7 +65,7 @@ window.debug('enableTracking');
   }
 }
 export async function initializeClientConfig() {
-  window.debug('initialize clientConfig')
+  window.cmsplus.debug('initialize clientConfig')
   if (window.siteConfig['$system:trackingscript$']?.includes('.adobe')) {
     window.cmsplus.callbackMetadataTracker = initializeTracker;
   }
@@ -76,5 +76,5 @@ export async function initializeClientConfig() {
   if (((window.cmsplus.helpapi) || '').length > 0) {
     window.cmsplus.callbackAfter3SecondsChain.push(enableDanteChat);
   }
-  window.debug('finished initialize clientConfig')
+  window.cmsplus.debug('finished initialize clientConfig')
 }
