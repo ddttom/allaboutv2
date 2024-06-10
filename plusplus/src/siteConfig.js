@@ -29,9 +29,14 @@ await import('/config/config.js');
 
 import {} from "/plusplus/src/clientExpressions.js";
 
+function debugMessage(message) {
+  const time = new Date().toLocaleTimeString();
+  console.log(`${time}: ${message}`);
+}
 function noAction() {
 }
 export async function initializeSiteConfig() {
+  window.debug('initializing site config');
 // Determine the environment and locality based on the URL
   const getEnvironment = () => {
     // Define an array of environments with their identifying substrings in the URL
@@ -78,7 +83,11 @@ export async function initializeSiteConfig() {
     environment: getEnvironment(),
     locality: getLocality(),
     release: releaseVersion,
+    debug: nop,
   };
+  if (window?.debug === 'y') {
+    window.cmsplus.debug = debugMessage;
+  }
   window.cmsplus.callbackPageLoadChain = [];
   window.cmsplus.callbackAfter3SecondsChain = [];
 
@@ -107,5 +116,6 @@ export async function initializeSiteConfig() {
   // eslint-disable-next-line no-await-in-loop
     await callback();
   }
+  window.debug('site config initialized');
 }
 await initializeSiteConfig();

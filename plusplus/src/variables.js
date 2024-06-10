@@ -80,6 +80,7 @@ export function convertToISODate(input) {
 }
 
 export async function constructGlobal() {
+  w3indow.debug('constructGlobal');
   window.siteConfig = {};
   await readVariables(new URL('/config/defaults.json', window.location.origin));
   await readVariables(new URL('/config/variables.json', window.location.origin));
@@ -158,6 +159,7 @@ export async function constructGlobal() {
   } catch (error) {
     console.log('Problem constructing SiteConfig', error);
   }
+  window.debug('constructGlobal done');
 }
 
 export function getConfigTruth(variable) {

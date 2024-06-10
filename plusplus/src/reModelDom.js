@@ -115,6 +115,7 @@ function inject() {
 
 // tidyDOM is the slow fixes to the Dom that do not change styes or view
 export async function tidyDOM() {
+  window.debug('Tidy DOM');
   removeCommentBlocks();
   removeMeta();
   inject();
@@ -161,4 +162,5 @@ export async function tidyDOM() {
       link.classList.add('current');
     }
   });
+  window.debug('Tidy DOM complete');
 }
