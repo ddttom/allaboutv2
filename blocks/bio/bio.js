@@ -1,3 +1,4 @@
+import { renderExpressions } from "/plusplus/plugins/expressions/src/expressions.js";
 export default function decorate(block) {
   // Find the <img> element within the .bio.block
   const imgElement = document.querySelector(".bio.block img");
@@ -17,7 +18,6 @@ export default function decorate(block) {
     }
   }
 
-
   // Create a new <strong> element to hold the author name
   const authorElement = document.createElement("strong");
   authorElement.textContent = author;
@@ -28,5 +28,5 @@ export default function decorate(block) {
   // Insert the author element as the last child of the .bio.block element
   bioBlock.appendChild(authorElement);
 
-
+   renderExpressions(document.querySelector(".bio-wrapper"));
 }

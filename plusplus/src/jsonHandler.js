@@ -55,11 +55,11 @@ export async function createJSON() {
 
   window.siteConfig["$meta:author$"] ??= window.siteConfig["$company:name$"];
 
-  if (getConfigTruth('$meta:enablebiovariables$')) {
-    let bioConfig = window.siteConfig?.["$meta:author$"];
-    if (bioConfig) {
-      bioConfig = bioConfig.replaceAll(" ", "-").toLowerCase();
-      await readVariables(`${window.location.origin}/bio/${bioConfig}.json`);
+  if (getConfigTruth('$meta:enableprofilevariables$')) {
+    let profileConfig = window.siteConfig?.["$meta:author$"];
+    if (profileConfig) {
+      profileConfig = profileConfig.replaceAll(" ", "-").toLowerCase();
+      await readVariables(`${window.location.origin}/profiles/${profileConfig}.json`);
     }
   }
   if (window.siteConfig?.["$meta:command$"]) {

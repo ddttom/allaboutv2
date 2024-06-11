@@ -136,13 +136,9 @@ export async function constructGlobal() {
     window.siteConfig['$system:millisecond$'] = new Date().getMilliseconds();
     window.siteConfig['$system:version$'] = window.cmsplus.release;
 
-    if (window.siteConfig?.['$meta:wantbiovariables$']) {
-      window.siteConfig['$meta:enablebiovariables$'] = window.siteConfig['$meta:wantbiovariables$'];
-    }
 
     if (window.siteConfig?.["$meta:wantdublincore$"]) {
-      window.siteConfig["$meta:enablebiovariables$"] =
-        window.siteConfig["$meta:wantdublincore$"];
+      window.siteConfig["$meta:enabledublincore$"] = window.siteConfig["$meta:wantdublincore$"];
     }
     if (window.siteConfig?.['$system:allowtracking$']) {
       window.siteConfig['$system:enabletracking$'] = window.siteConfig['$system:allowtracking$'];
