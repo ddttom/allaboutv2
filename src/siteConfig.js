@@ -29,9 +29,14 @@ await import('/config/config.js');
 
 import {} from "/plusplus/src/clientExpressions.js";
 
+function debugMessage(message) {
+  const time = new Date().toLocaleTimeString();
+  console.log(`${time}: ${message}`);
+}
 function noAction() {
 }
 export async function initializeSiteConfig() {
+
 // Determine the environment and locality based on the URL
   const getEnvironment = () => {
     // Define an array of environments with their identifying substrings in the URL
@@ -45,7 +50,7 @@ export async function initializeSiteConfig() {
     ];
 
     for (const env of environments) {
-      if (window.location.hostname.includes(env.key)) {
+      if (window.location.href.includes(env.key)) {
         return env.value;
       }
     }
@@ -70,15 +75,20 @@ export async function initializeSiteConfig() {
       }
     }
 
-    // Return 'prod' if no environment matches -- hardest case.
-    return 'prod';
+    // Return 'unknown' if no match.
+    return 'unknown';
   };
 
   window.cmsplus = {
     environment: getEnvironment(),
     locality: getLocality(),
     release: releaseVersion,
+    debug: noAction,
   };
+  if (window?.debug === 'y') {
+    window.cmsplus.debug = debugMessage;
+  }
+  window.cmsplus.debug("initializing site config");
   window.cmsplus.callbackPageLoadChain = [];
   window.cmsplus.callbackAfter3SecondsChain = [];
 
@@ -99,7 +109,7 @@ export async function initializeSiteConfig() {
   await tidyDOM();
   await handleMetadataJsonLd();
   await window.cmsplus?.callbackMetadataTracker?.();
-  if (window.cmsplus.environment !== 'final') {
+  if (window.cmsplus.environment === 'preview') {
     window.cmsplus.callbackCreateDebugPanel?.();
   }
   // eslint-disable-next-line no-restricted-syntax
@@ -107,5 +117,6 @@ export async function initializeSiteConfig() {
   // eslint-disable-next-line no-await-in-loop
     await callback();
   }
+  window.cmsplus.debug('site config initialized');
 }
 await initializeSiteConfig();
