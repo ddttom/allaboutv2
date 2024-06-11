@@ -144,6 +144,10 @@ export async function constructGlobal() {
       window.siteConfig['$system:enabletracking$'] = window.siteConfig['$system:allowtracking$'];
 
     }
+    if (window.siteConfig?.['$system:allowtracking$']) {
+      window.siteConfig['$system:enabletracking$'] = window.siteConfig['$system:allowtracking$'];
+
+    }
     const month = months[thismonth];
     const firstLetter = month.charAt(0).toUpperCase();
     const restOfWord = month.slice(1);
