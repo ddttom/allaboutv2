@@ -111,6 +111,7 @@ export async function constructGlobal() {
     window.siteConfig['$co:defaulttags$'] = 'none';
 
     window.siteConfig['$system:environment$'] = window.cmsplus.environment;
+    window.siteConfig['$system:locality$'] = window.cmsplus.locality;
 
     window.siteConfig['$page:location$'] = winloc;
     window.siteConfig['$page:url$'] = href;
@@ -118,7 +119,6 @@ export async function constructGlobal() {
     // eslint-disable-next-line prefer-destructuring
     window.siteConfig['$page:path$'] = (`${winloc}?`).split('?')[0];
     window.siteConfig['$page:wordcount$'] = wordCount;
-    window.siteConfig['$page:linkcount$'] = document.querySelectorAll('a').length;
     window.siteConfig['$page:readspeed$'] = (Math.ceil(wordCount / 140) + 1).toString();
     window.siteConfig['$page:title$'] = document.title;
     window.siteConfig['$page:canonical$'] = href;

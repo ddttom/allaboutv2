@@ -26,7 +26,6 @@ What does it add:
 
 Smart algorithms to:
 
-- add a byline to articles
 - tidy up metadata
 - remove comment blocks
 - dynamically add height to SVG icons
