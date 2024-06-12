@@ -30,8 +30,9 @@ export default function decorate(block) {
 
   // Run buildIndex function asynchronously after 30 seconds
   setTimeout(buildIndex, 30000);
-
-  function buildIndex() {
+}
+function buildIndex() {
+    const indexContent = document.querySelector(".index-content");
     const ul = document.createElement("ul");
     headers.forEach((header, index) => {
       const id = `header-${index}`;
@@ -51,4 +52,3 @@ export default function decorate(block) {
     indexContent.innerHTML = "";
     indexContent.appendChild(ul);
   }
-}
