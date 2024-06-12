@@ -40,5 +40,5 @@ export default function decorate(block) {
     });
     indexContent.innerHTML = "";
     indexContent.appendChild(ul);
-  }, 3000);
+  }, 6000);
 }
