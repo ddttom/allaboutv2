@@ -1,7 +1,6 @@
 export default function decorate(block) {
   const headers = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
   const indexBlock = document.querySelector(".index");
-
   // Create the index header
   const indexHeader = document.createElement("div");
   indexHeader.className = "index-header";
@@ -9,15 +8,12 @@ export default function decorate(block) {
     <span>Index</span>
     <i class="arrow down"></i>
   `;
-
   // Create the index content container
   const indexContent = document.createElement("div");
   indexContent.className = "index-content";
-
   // Append the index header and content container to the index block
   indexBlock.appendChild(indexHeader);
   indexBlock.appendChild(indexContent);
-
   indexHeader.addEventListener("click", () => {
     if (indexContent.style.display === "none") {
       indexContent.style.display = "block";
@@ -27,28 +23,22 @@ export default function decorate(block) {
       indexHeader.querySelector(".arrow").style.transform = "rotate(45deg)";
     }
   });
-
-  // Run buildIndex function asynchronously after 30 seconds
-  setTimeout(buildIndex, 30000);
-}
-function buildIndex() {
+  // Run buildIndex function asynchronously after 30 seconds using an arrow function
+  setTimeout(() => {
     const indexContent = document.querySelector(".index-content");
     const ul = document.createElement("ul");
     headers.forEach((header, index) => {
       const id = `header-${index}`;
       header.id = id;
-
       const li = document.createElement("li");
       li.style.marginLeft = `${(parseInt(header.tagName[1], 10) - 1) * 20}px`;
-
       const a = document.createElement("a");
       a.href = `#${id}`;
       a.textContent = header.textContent;
-
       li.appendChild(a);
       ul.appendChild(li);
     });
-
     indexContent.innerHTML = "";
     indexContent.appendChild(ul);
-  }
+  }, 30000);
+}
