@@ -6,3 +6,17 @@ object-fit: cover;
 border: 2px solid blue;
 box-sizing: border-box;
 }
+
+.bio>div {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.bio>div>div:first-child {
+    flex-shrink: 0;
+}
+
+.bio>div>div:last-child {
+    flex-grow: 1;
+}
