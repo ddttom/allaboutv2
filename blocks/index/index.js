@@ -20,7 +20,6 @@ export default function decorate(block) {
 
   indexHeader.addEventListener("click", () => {
     if (indexContent.style.display === "none") {
-      buildIndex();
       indexContent.style.display = "block";
       indexHeader.querySelector(".arrow").style.transform = "rotate(-135deg)";
     } else {
