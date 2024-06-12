@@ -21,7 +21,7 @@ export default function decorate(block) {
     if (!isIndexBuilt) {
       buildIndex();
       isIndexBuilt = true; // Set the flag to true after building the index
-      indexContent.style.display = 'block';
+      indexContent.style.display = 'none';
     }
 
     if (indexContent.style.display === 'none') {
