@@ -20,6 +20,7 @@ export default function decorate(block) {
 
   indexHeader.addEventListener("click", () => {
     if (indexContent.style.display === "none") {
+      buildIndex();
       indexContent.style.display = "block";
       indexHeader.querySelector(".arrow").style.transform = "rotate(-135deg)";
     } else {
@@ -29,9 +30,7 @@ export default function decorate(block) {
   });
 
   // Run buildIndex function asynchronously after 30 seconds
-  setTimeout(() => {
-    buildIndex();
-  }, 30000);
+  setTimeout(buildIndex, 30000);
 
   function buildIndex() {
     const ul = document.createElement("ul");
