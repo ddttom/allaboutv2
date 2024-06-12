@@ -15,6 +15,7 @@ export default function decorate(block) {
   indexBlock.appendChild(indexHeader);
   indexBlock.appendChild(indexContent);
   indexHeader.addEventListener("click", () => {
+    buildIndex();
     if (indexContent.style.display === "none") {
       indexContent.style.display = "block";
       indexHeader.querySelector(".arrow").style.transform = "rotate(-135deg)";
@@ -23,8 +24,8 @@ export default function decorate(block) {
       indexHeader.querySelector(".arrow").style.transform = "rotate(45deg)";
     }
   });
-  // Run buildIndex function asynchronously after 30 seconds using an arrow function
-  setTimeout(() => {
+
+  function buildIndex() {
     const indexContent = document.querySelector(".index-content");
     const ul = document.createElement("ul");
     headers.forEach((header, index) => {
@@ -40,5 +41,5 @@ export default function decorate(block) {
     });
     indexContent.innerHTML = "";
     indexContent.appendChild(ul);
-  }, 6000);
+  }
 }
