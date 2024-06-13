@@ -132,14 +132,14 @@ export async function tidyDOM() {
   const siteDomain = window.location.hostname;
   const currentPage = window.location.href;
 
-  // Open external link in the new window
+/*  // Open external link in the new window
   links.forEach((link) => {
     const linkDomain = new URL(link.href).hostname;
     if (linkDomain !== siteDomain && !link.href.startsWith('/') && !link.href.startsWith('#')) {
       link.setAttribute('target', '_blank');
     }
   });
-
+*/
   // Add current class to any current visited
   links.forEach((link) => {
     if (link.href === currentPage) {
