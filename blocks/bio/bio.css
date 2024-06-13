@@ -7,16 +7,16 @@ border: 2px solid blue;
 box-sizing: border-box;
 }
 
-.biol>div {
+.bio>div {
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
-.biol>div>div:first-child {
+.bio>div>div:first-child {
     flex-shrink: 0;
 }
 
-.biol>div>div:last-child {
+.bio>div>div:last-child {
     flex-grow: 1;
 }
