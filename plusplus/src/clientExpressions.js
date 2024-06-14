@@ -1,7 +1,7 @@
 import { createExpression } from "/plusplus/plugins/expressions/src/expressions.js";
 import {
   a, div, p, h3, h2
-} from '../../scripts/block-party/dom-helpers.js';
+} from '/plusplus/block-party/dom-helpers.js';
 // a sample expression, expands the text in the siteConfig, from the args
 createExpression("expand", ({ args }) => {
   return window.siteConfig?.[args] || args;
@@ -42,4 +42,3 @@ createExpression("expandprofile", ({ args }) => {
   return profileContainer;
 
 });
-
