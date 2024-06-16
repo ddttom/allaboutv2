@@ -152,7 +152,9 @@ export async function createJSON() {
         const script = document.createElement("script");
         script.type = "application/ld+json";
         script.setAttribute("data-role", "dublin core");
-        script.textContent = replaceTokens(window.siteConfig, dcString);
+        let text= replaceTokens(window.siteConfig, dcString);
+        text = `"@graph": [{${text}]}`;
+        script.textContent = text;
         document.head.appendChild(script);
       }
     }
@@ -202,7 +204,9 @@ export async function createJSON() {
         const script = document.createElement("script");
         script.type = "application/ld+json";
         script.setAttribute("data-role", "content ops");
-        script.textContent = replaceTokens(window.siteConfig, coString);
+        let text = replaceTokens(window.siteConfig, coString);
+        text = `"@graph": [{${text}]}`;
+        script.textContent = text;
         document.head.appendChild(script);
       }
     }
