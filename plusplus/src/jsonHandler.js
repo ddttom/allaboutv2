@@ -142,123 +142,109 @@ export async function createJSON() {
   co["co:author"] = window.siteConfig["$meta:author$"];
   window.cmsplus.helpapikey = window.siteConfig?.["$system:.helpapikey$"] ?? "";
 
-  const isSafari =
-    navigator.userAgent.toLowerCase().indexOf("safari") !== -1 &&
-    navigator.userAgent.toLowerCase().indexOf("chrome") === -1;
-  if (!isSafari) {
-    const dcString = JSON.stringify(dc, null, "\t");
-    if (getConfigTruth("$meta:enabledublincore$")) {
-      if (dcString.length > 2) {
-        const script = document.createElement("script");
-        script.type = "application/ld+json";
-        script.setAttribute("data-role", "dublin core");
-        let text= replaceTokens(window.siteConfig, dcString);
-        text = `"@graph": [{${text}]}`;
-        script.textContent = text;
-        document.head.appendChild(script);
-      }
+  const dcString = JSON.stringify(dc, null, "\t");
+  if (getConfigTruth("$meta:enabledublincore$")) {
+    if (dcString.length > 2) {
+      const script = document.createElement("script");
+      script.type = "application/ld+json";
+      script.setAttribute("data-role", "dublin core");
+      let text = replaceTokens(window.siteConfig, dcString);
+      text = `"@graph": [{${text}]}`;
+      script.textContent = text;
+      document.head.appendChild(script);
     }
-    if (getConfigTruth("$meta:enablecontentops$")) {
-      const currentDate = new Date();
-      let futureDate = new Date();
-      let futurePeriod = "";
-      if (!co["co:reviewdatetime"]) {
-        // Extract the default review period from the site configuration.
-        const futurePeriodString = window.siteConfig["$co:defaultreviewperiod"];
-        futurePeriod = parseInt(futurePeriodString, 10);
-        if (Number.isNaN(futurePeriod)) {
-          futurePeriod = 365; // Default to 1 year.
-        }
-        futureDate = new Date(
-          currentDate.getTime() + futurePeriod * 24 * 60 * 60 * 1000
-        );
-        // Convert the future date to an ISO string and assign it to the review datetime.
-        co["co:reviewdatetime"] = futureDate.toISOString();
-      }
-      if (!co["co:startdatetime"]) {
-        co["co:startdatetime"] = currentDate.toISOString();
-      }
-      if (!co["co:publisheddatetime"]) {
-        co["co:publisheddatetime"] = currentDate.toISOString();
-      }
-      if (!co["co:expirydatetime"]) {
-        const futurePeriodString = window.siteConfig["$co:defaultexpiryperiod"];
-        futurePeriod = parseInt(futurePeriodString, 10);
-        if (Number.isNaN(futurePeriod)) {
-          futurePeriod = 365; // Default to 1 year.
-        }
-        futureDate = new Date(
-          currentDate.getTime() + futurePeriod * 24 * 60 * 60 * 1000
-        );
-        co["co:expirydatetime"] = futureDate.toISOString();
-      }
-      if (!co["co:restrictions"]) {
-        co["co:restrictions"] = window.siteConfig["$co:defaultrestrictions"];
-      }
-      if (!co["co:tags"]) {
-        co["co:tags"] = window.siteConfig["$co:defaulttags"];
-      }
-      let coString = JSON.stringify(co, null, "\t");
-      coString = replaceTokens(window.siteConfig, coString);
-      if (coString.length > 2) {
-        const script = document.createElement("script");
-        script.type = "application/ld+json";
-        script.setAttribute("data-role", "content ops");
-        let text = replaceTokens(window.siteConfig, coString);
-        text = `"@graph": [{${text}]}`;
-        script.textContent = text;
-        document.head.appendChild(script);
-      }
-    }
-    window.cmsplus.debug("complete create json");
-  } else {
-    window.cmsplus.debug("safari");
   }
+  if (getConfigTruth("$meta:enablecontentops$")) {
+    const currentDate = new Date();
+    let futureDate = new Date();
+    let futurePeriod = "";
+    if (!co["co:reviewdatetime"]) {
+      // Extract the default review period from the site configuration.
+      const futurePeriodString = window.siteConfig["$co:defaultreviewperiod"];
+      futurePeriod = parseInt(futurePeriodString, 10);
+      if (Number.isNaN(futurePeriod)) {
+        futurePeriod = 365; // Default to 1 year.
+      }
+      futureDate = new Date(
+        currentDate.getTime() + futurePeriod * 24 * 60 * 60 * 1000
+      );
+      // Convert the future date to an ISO string and assign it to the review datetime.
+      co["co:reviewdatetime"] = futureDate.toISOString();
+    }
+    if (!co["co:startdatetime"]) {
+      co["co:startdatetime"] = currentDate.toISOString();
+    }
+    if (!co["co:publisheddatetime"]) {
+      co["co:publisheddatetime"] = currentDate.toISOString();
+    }
+    if (!co["co:expirydatetime"]) {
+      const futurePeriodString = window.siteConfig["$co:defaultexpiryperiod"];
+      futurePeriod = parseInt(futurePeriodString, 10);
+      if (Number.isNaN(futurePeriod)) {
+        futurePeriod = 365; // Default to 1 year.
+      }
+      futureDate = new Date(
+        currentDate.getTime() + futurePeriod * 24 * 60 * 60 * 1000
+      );
+      co["co:expirydatetime"] = futureDate.toISOString();
+    }
+    if (!co["co:restrictions"]) {
+      co["co:restrictions"] = window.siteConfig["$co:defaultrestrictions"];
+    }
+    if (!co["co:tags"]) {
+      co["co:tags"] = window.siteConfig["$co:defaulttags"];
+    }
+    let coString = JSON.stringify(co, null, "\t");
+    coString = replaceTokens(window.siteConfig, coString);
+    if (coString.length > 2) {
+      const script = document.createElement("script");
+      script.type = "application/ld+json";
+      script.setAttribute("data-role", "content ops");
+      let text = replaceTokens(window.siteConfig, coString);
+      text = `"@graph": [{${text}]}`;
+      script.textContent = text;
+      document.head.appendChild(script);
+    }
+  }
+  window.cmsplus.debug("complete create json");
 }
 
 export async function handleMetadataJsonLd() {
-  const isSafari =
-    navigator.userAgent.toLowerCase().indexOf("safari") !== -1 &&
-    navigator.userAgent.toLowerCase().indexOf("chrome") === -1;
-  if (!isSafari) {
-    window.cmsplus.debug("handleMetadataJsonLd");
-    // assume we have an url, if not we have a role -  construct url on the fly
-    let content = window.siteConfig["$meta:json-ld$"];
-    try {
-      // Attempt to parse the content as a URL
-      // eslint-disable-next-line no-new
-      new URL(content);
-    } catch (error) {
-      // Content is not a URL, construct the JSON-LD URL based on content and current domain
-      content = `${window.location.origin}/config/json-ld/${content}.json`;
-    }
-
-    try {
-      const resp = await fetch(content);
-      if (!resp.ok) {
-        throw new Error(`Failed to fetch JSON-LD content: ${resp.status}`);
-      }
-      let json = await resp.json();
-      json = extractJsonLd(json);
-      let jsonString = JSON.stringify(json, null, "\t");
-      jsonString = replaceTokens(window.siteConfig, jsonString);
-      // Create and append a new script element with the processed JSON-LD data
-      const script = document.createElement("script");
-      script.type = "application/ld+json";
-      script.setAttribute("data-role", content.split("/").pop().split(".")[0]); // Set role based on the final URL
-      script.setAttribute("id", "ldMeta");
-      script.textContent = jsonString;
-      document.head.appendChild(script);
-      document
-        .querySelectorAll('meta[name="longdescription"]')
-        .forEach((section) => section.remove());
-    } catch (error) {
-      // no schema.org for your content, just use the content as is
-      // eslint-disable-next-line no-console
-      console.log("Error processing ld+json metadata:", error);
-    }
-    window.cmsplus.debug("complete handleMetadataJsonLd");
-  } else {
-    window.cmsplus.debug("is Safari. no ld+json");
+  window.cmsplus.debug("handleMetadataJsonLd");
+  // assume we have an url, if not we have a role -  construct url on the fly
+  let content = window.siteConfig["$meta:json-ld$"];
+  try {
+    // Attempt to parse the content as a URL
+    // eslint-disable-next-line no-new
+    new URL(content);
+  } catch (error) {
+    // Content is not a URL, construct the JSON-LD URL based on content and current domain
+    content = `${window.location.origin}/config/json-ld/${content}.json`;
   }
+
+  try {
+    const resp = await fetch(content);
+    if (!resp.ok) {
+      throw new Error(`Failed to fetch JSON-LD content: ${resp.status}`);
+    }
+    let json = await resp.json();
+    json = extractJsonLd(json);
+    let jsonString = JSON.stringify(json, null, "\t");
+    jsonString = replaceTokens(window.siteConfig, jsonString);
+    // Create and append a new script element with the processed JSON-LD data
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.setAttribute("data-role", content.split("/").pop().split(".")[0]); // Set role based on the final URL
+    script.setAttribute("id", "ldMeta");
+    script.textContent = jsonString;
+    document.head.appendChild(script);
+    document
+      .querySelectorAll('meta[name="longdescription"]')
+      .forEach((section) => section.remove());
+  } catch (error) {
+    // no schema.org for your content, just use the content as is
+    // eslint-disable-next-line no-console
+    console.log("Error processing ld+json metadata:", error);
+  }
+  window.cmsplus.debug("complete handleMetadataJsonLd");
 }
