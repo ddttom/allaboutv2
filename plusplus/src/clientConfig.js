@@ -1,9 +1,21 @@
-// Place any Client- Centered Code/  Configuration in here /
+// Place any Client-Centered Code/Configuration in here
 import { loadScript } from '/scripts/aem.js';
-
-import { initializeTracker } from './adobe-metadata.js';
-
 import { getConfigTruth } from './variables.js';
+
+async function loadModule(moduleName, functionName) {
+  try {
+    const module = await import(moduleName);
+    if (typeof module[functionName] === 'function') {
+      return module[functionName];
+    } else {
+      console.error(`Function '${functionName}' not found in module '${moduleName}'`);
+      return null;
+    }
+  } catch (error) {
+    console.error(`Error loading module '${moduleName}':`, error);
+    return null;
+  }
+}
 
 function enableDanteChat() {
   window.cmsplus.debug('enableDanteChat');
@@ -13,12 +25,11 @@ function enableDanteChat() {
   // eslint-disable-next-line no-undef
   loadScript('https://chat.dante-ai.com/dante-embed.js');
 }
-export default async function enableTracking() {
-window.cmsplus.debug('enableTracking');
-//if cookiebot
 
+export default async function enableTracking() {
+  window.cmsplus.debug('enableTracking');
+  // if cookiebot
   if (window.siteConfig?.['$system:cookiebotid$']) {
-  // eslint-disable-next-line no-console
     const attrs = {
       id: 'Cookiebot',
       'data-cbid': `${window.siteConfig['$system:cookiebotid$']}`,
@@ -26,14 +37,11 @@ window.cmsplus.debug('enableTracking');
     };
     await loadScript('https://consent.cookiebot.com/uc.js', attrs);
   }
-
-  //if abtasty
-
+  // if abtasty
   if (window.siteConfig?.['$system:abtastyscript$']) {
     loadScript(`${window.siteConfig['$system:abtastyscript$']}`, {});
   }
   // if tracking, you only get here if enabletracking is set to true
-
   await loadScript(`${window.siteConfig['$system:trackingscript$']}`, {});
   window.cmsplus.debug('tracking script loaded');
   if ((window.siteConfig?.['$system:trackingscript$']).includes('.adobe')) {
@@ -47,29 +55,28 @@ window.cmsplus.debug('enableTracking');
           window.adobeDataLayer.push(window.cmsplus.track.content);
         }
       }
-      //  console.log('Added AdobeDataLayer');
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.log('failed to add cmsplus data to adobeDataLayer', e);
     }
   }
-
   if ((window.siteConfig?.['$system:trackingscript$']).includes('.googletagmanager')) {
-  window.dataLayer = window.dataLayer || [];
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-  gtag('js', new Date());
-
-  gtag('config', window.siteConfig['$system:gtmid$']);
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', window.siteConfig['$system:gtmid$']);
   }
 }
-export async function initializeClientConfig() {
-  window.cmsplus.debug('initialize clientConfig')
-  if (window.siteConfig['$system:trackingscript$']?.includes('.adobe')) {
-    window.cmsplus.callbackMetadataTracker = initializeTracker;
-  }
 
+export async function initializeClientConfig() {
+  window.cmsplus.debug('initialize clientConfig');
+  if (window.siteConfig['$system:trackingscript$']?.includes('.adobe')) {
+    const initializeTracker = await loadModule('./adobe-metadata.js', 'initializeTracker');
+    if (initializeTracker) {
+      window.cmsplus.callbackMetadataTracker = initializeTracker;
+    }
+  }
   if (getConfigTruth('$system:enabletracking$')) {
     if (getConfigTruth['$system:enableslowtracking$']) {
       window.cmsplus.callbackAfter3SecondsChain.push(enableTracking);
@@ -80,5 +87,5 @@ export async function initializeClientConfig() {
   if (((window.cmsplus.helpapi) || '').length > 0) {
     window.cmsplus.callbackAfter3SecondsChain.push(enableDanteChat);
   }
-  window.cmsplus.debug('finished initialize clientConfig')
+  window.cmsplus.debug('finished initialize clientConfig');
 }
