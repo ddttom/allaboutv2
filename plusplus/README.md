@@ -89,9 +89,7 @@ git status
 if the response is similar to
 
 ```sh
-
 Your branch is up to date with 'origin/main'.
-
 nothing to commit, working tree clean
 
 ```
@@ -99,8 +97,16 @@ nothing to commit, working tree clean
 use this command to fix and try again
 
 ```sh
-
 git update-index --refresh
 
+```
+
+
+## Updating the master repo
+
+If you have commit access to the plusplus repo, create a pull request and in your branch
+
+```sh
+ git subtree push --prefix plusplus https://github.com/Digital-Domain-Technologies-Ltd/plusplus main         
 
 ```
