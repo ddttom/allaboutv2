@@ -2,7 +2,7 @@
 /* site configuration module */
 
 
-let releaseVersion = 'plusplus 1.0.2';
+let releaseVersion = 'plusplus 1.0.3';
 
 import {
   tidyDOM,
