@@ -101,7 +101,6 @@ git update-index --refresh
 
 ```
 
-
 ## Updating the master repo
 
 If you have commit access to the plusplus repo, create a pull request and in your branch
