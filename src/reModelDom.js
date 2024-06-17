@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
-import { getConfigTruth } from './variables.js';
 
 export function removeMeta() {
   const keepMetadataNames = [
@@ -139,7 +138,6 @@ export async function tidyDOM() {
       link.setAttribute('target', '_blank');
     }
   });
-
   // Add current class to any current visited
   links.forEach((link) => {
     if (link.href === currentPage) {

@@ -1,22 +1,21 @@
+/* eslint-disable import/no-absolute-path */
+/* eslint-disable import/no-unresolved */
 /* eslint-disable function-paren-newline */
 /* eslint-disable import/extensions */
 /* eslint-disable no-alert */
 
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import {
-  a, div, li, p, h3, span, ul
-} from '../../../scripts/block-party/dom-helpers.js';
-import ffetch from '../../../scripts/block-party/ffetch.js';
+  a, div, li, p, h3, span, ul,
+} from '/plusplus/block-party/dom-helpers.js';
+import ffetch from '/plusplus/block-party/ffetch.js';
 
 export default async function decorate(block) {
 // Select the element by its class
   const element = document.querySelector('.dynamic-container');
 
   // Get the value of the 'data-maxreturn' attribute, or system value, or use the default value of 8
-  let maxReturn = element.getAttribute('data-maxreturn') ||
-  window.siteConfig?.['$meta:maxreturn$'] ||
-  window.siteConfig?.['$system:maxreturn$'] ||
-  '8';
+  let maxReturn = element.getAttribute('data-maxreturn') || window.siteConfig?.['$meta:maxreturn$'] || window.siteConfig?.['$system:maxreturn$'] || '8';
 
   if (maxReturn === '-1') {
     maxReturn = 1000;
@@ -45,11 +44,17 @@ export default async function decorate(block) {
     targetNames = bnames.split(' ');
   }
   // Filter content to exclude paths containing '/template' and the current page path
-  const filteredContent = content.filter((card) => !card.path.includes('/template') && !card.path.includes('/test') &&
-  card.path !== window.location.pathname && // Dynamically exclude the current page path
-  targetNames.some((target) => card.path.includes(`/${target}/`)),
-  );
+  const filteredContent = content.filter((card) => {
+    const isTemplatePath = card.path.includes('/template');
+    const isFragmentPath = card.path.includes('/fragment');
+    const isTestPath = card.path.includes('/test');
+    const isDraftsPath = card.path.includes('/drafts');
+    const isCurrentPage = card.path === window.location.pathname;
+    const isTargetPath = targetNames.some((target) => card.path.includes(`/${target}/`));
 
+    // eslint-disable-next-line max-len
+    return !isTemplatePath && !isTestPath && !isDraftsPath && !isFragmentPath && !isCurrentPage && isTargetPath;
+  });
   // Sort the filtered content by 'lastModified' in descending order
   const sortedContent = filteredContent.sort((adate, b) => {
     const dateA = new Date(adate.lastModified);
