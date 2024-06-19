@@ -38,10 +38,10 @@ function generateContent(blogItems) {
             <div class="blog-item">
                 <a href="${item.path}">
                     <img src="${item.image}" alt="${item.title}">
-                    <h3>${item.title}</h3>
-                    <p>${item.description}</p>
-                    <p>Last Modified: ${formattedDate}</p>
+                    <strong>${item.title}</strong>
                 </a>
+                <p>${item.description}</p>
+                <p>Last Modified: ${formattedDate}</p>
             </div>
         `;
   });
