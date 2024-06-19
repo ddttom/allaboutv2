@@ -6,9 +6,9 @@ export default async function decorate(block) {
     const response = await fetch(url);
     const data = await response.json();
 
-    // Filter the blog items based on the presence of "/blog/" in the path
+    // Filter the blog items based on the presence of "/blogs/ddt" in the path
     const filteredBlogItems = data.data.filter((item) =>
-      item.path.includes("/blogs/")
+      item.path.includes("/blogs/ddt")
     );
 
     // Sort the filtered blog items by title
@@ -16,8 +16,8 @@ export default async function decorate(block) {
       a.title.localeCompare(b.title)
     );
 
-    // Limit the sorted blog items to a maximum of 8
-    const limitedBlogItems = sortedBlogItems.slice(0, 8);
+    // Limit the sorted blog items to a maximum of 3
+    const limitedBlogItems = sortedBlogItems.slice(0, 3);
 
     // Process the limited data and generate the content
     const content = generateContent(limitedBlogItems);
