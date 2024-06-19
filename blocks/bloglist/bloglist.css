@@ -8,6 +8,8 @@
     border: 1px solid #ccc;
     padding: 20px;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
 
 .blog-item img {
@@ -24,6 +26,10 @@
 
 .blog-item p {
     margin: 10px 0;
+}
+
+.blog-item .last-modified {
+    margin-top: auto;
 }
 
 @media screen and (max-width: 600px) {
