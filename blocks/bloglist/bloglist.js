@@ -41,7 +41,6 @@ function generateContent(blogItems) {
                     <strong>${item.title}</strong>
                 </a>
                 <p>${item.description}</p>
-                <hr/>
                 <p class="last-modified">Last Modified: ${formattedDate}</p>
             </div>
         `;

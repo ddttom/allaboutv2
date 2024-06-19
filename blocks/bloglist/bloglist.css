@@ -19,17 +19,23 @@
     margin-bottom: 10px;
 }
 
-.blog-item h3 {
-    margin: 0;
-    font-size: 18px;
-}
-
 .blog-item p {
     margin: 10px 0;
 }
 
 .blog-item .last-modified {
     margin-top: auto;
+    padding-top: 10px;
+    position: relative;
+}
+
+.blog-item .last-modified::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -20px;
+    right: -20px;
+    border-top: 1px solid #ccc;
 }
 
 @media screen and (max-width: 600px) {
