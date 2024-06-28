@@ -6,9 +6,9 @@ export default async function decorate(block) {
     const response = await fetch(url);
     const data = await response.json();
 
-    // Filter the blog items based on the presence of "/blogs/ddt" in the path
+    // Filter the blog items based on the presence of "/blogs/ddt/a-developer" in the path
     const filteredBlogItems = data.data.filter((item) =>
-      item.path.includes("/blogs/ddt")
+      item.path.includes("/blogs/ddt/a-developer")
     );
 
     // Sort the filtered blog items by title
