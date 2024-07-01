@@ -55,20 +55,20 @@ export default async function decorate(block) {
         slideItems.forEach((slide, index) => {
           const slideTop = slide.offsetTop;
           const slideBottom = slideTop + slideHeight;
+          const isCurrentSlide = scrollTop + overlapOffset >= slideTop && scrollTop < slideBottom;
+          const isPartiallyVisible = scrollTop + overlapOffset >= slideBottom - slideHeight && scrollTop < slideBottom;
   
-          if (scrollTop + overlapOffset >= slideTop && scrollTop < slideBottom) {
-            slide.classList.remove('slide-up', 'slide-partially-up');
+          slide.classList.remove('slide-up', 'slide-down', 'slide-partially-up'); // Remove all classes
+  
+          if (isCurrentSlide) {
             slide.classList.add('slide-down');
-          } else if (scrollTop + overlapOffset >= slideBottom - slideHeight && scrollTop < slideBottom) {
-            slide.classList.remove('slide-up', 'slide-down');
+          } else if (isPartiallyVisible) {
             slide.classList.add('slide-partially-up');
           } else {
-            slide.classList.remove('slide-down', 'slide-partially-up');
             slide.classList.add('slide-up');
           }
         });
       }
-  
       updateSlideClasses();
   
       window.addEventListener('scroll', () => {
