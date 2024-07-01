@@ -24,13 +24,6 @@ export default async function decorate(block) {
             slideItem.classList.add('slide-builder-item');
             slideItem.style.backgroundImage = `url(${imageUrl})`;
 
-            // Set the initial slide to be visible
-            if (index === 0) {
-                slideItem.classList.add('slide-down');
-            } else {
-                slideItem.classList.add('slide-up');
-            }
-
             const textContainer = document.createElement('div');
             const slideTitle = document.createElement('h2');
             slideTitle.innerText = title;
@@ -41,10 +34,17 @@ export default async function decorate(block) {
             textContainer.appendChild(slideDescription);
             slideItem.appendChild(textContainer);
             container.appendChild(slideItem);
+
+            // Set classes for initial visibility (only first slide visible)
+            if (index === 0) {
+                slideItem.classList.add('slide-down');
+            } else {
+                slideItem.classList.add('slide-up');
+            }
         });
 
         let currentSlide = 0;
-        const slideHeight = window.innerHeight; // Get viewport height once
+        const slideHeight = window.innerHeight; // Get viewport height
 
         function updateSlideClasses() {
             const slideItems = document.querySelectorAll('.slide-builder-item');
@@ -61,25 +61,26 @@ export default async function decorate(block) {
             });
         }
 
-        updateSlideClasses(); // Initial call to set up the first slide as visible
-
+        // Add the scroll event listener to track scroll position
         window.addEventListener('scroll', () => {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-            // More accurate current slide calculation
-            let newCurrentSlide = Math.floor(scrollTop / slideHeight);
+            // Calculate the new current slide based on scroll position
+            const newCurrentSlide = Math.floor(scrollTop / slideHeight);
 
             // Correct the newCurrentSlide if it exceeds the number of slides
             if (newCurrentSlide >= slides.length) {
                 newCurrentSlide = slides.length - 1;
             }
 
+            // Check if currentSlide has changed
             if (newCurrentSlide !== currentSlide) {
                 currentSlide = newCurrentSlide;
-                updateSlideClasses();
+                updateSlideClasses(); // Update the classes of the slide items
             }
         });
     } else {
+        // Handle cases where there are no slides or an error occurs
         console.error('No slides found or error fetching slide data.');
     }
 }
