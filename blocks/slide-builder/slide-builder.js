@@ -5,15 +5,16 @@ export default async function decorate(block) {
       try {
         const response = await fetch('/slides/query-index.json');
         const data = await response.json();
-        return data.data;
+        return data.data; // Ensure the returned data is an array
       } catch (error) {
         console.error('Error fetching data:', error);
+        return []; // Return an empty array in case of an error
       }
     }
   
     const slides = await fetchSlides();
   
-    if (slides) {
+    if (slides.length > 0) { 
       slides.forEach((slideData, index) => {
         const imageUrl = slideData.image.split('?')[0]; 
         const title = slideData.title;
@@ -42,33 +43,32 @@ export default async function decorate(block) {
       });
   
       let currentSlide = 0; 
-      let scrollDirection = '';
       let lastScrollTop = 0;
   
       window.addEventListener('scroll', () => {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const slideItems = document.querySelectorAll('.slide-builder-item');
+        const slideHeight = container.offsetHeight / slides.length;  
+        
+        const newCurrentSlide = Math.floor(scrollTop / slideHeight);
   
-        if (scrollTop > lastScrollTop) {
-          scrollDirection = 'down';
-        } else if (scrollTop < lastScrollTop) {
-          scrollDirection = 'up';
+        if (newCurrentSlide !== currentSlide) {
+          currentSlide = newCurrentSlide; 
+          const slideItems = document.querySelectorAll('.slide-builder-item'); 
+          slideItems.forEach((slide, index) => {
+            if (index <= currentSlide) {
+              slide.classList.remove('slide-up');
+              slide.classList.add('slide-down');
+            } else {
+              slide.classList.remove('slide-down');
+              slide.classList.add('slide-up');
+            }
+          });
         }
-  
-        currentSlide = Math.round(scrollTop / window.innerHeight);
-  
-        slideItems.forEach((slide, index) => {
-          if (scrollDirection === 'down' && index <= currentSlide) {
-            slide.classList.remove('slide-up');
-            slide.classList.add('slide-down');
-          } else if (scrollDirection === 'up' && index >= currentSlide) {
-            slide.classList.remove('slide-down');
-            slide.classList.add('slide-up');
-          }
-        });
-  
+        
         lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; 
       });
+    } else {
+      console.error('No slides found or error fetching slide data.');
     }
   }
   
