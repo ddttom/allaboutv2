@@ -5,10 +5,10 @@ export default async function decorate(block) {
       try {
         const response = await fetch('/slides/query-index.json');
         const data = await response.json();
-        return data.data; 
+        return data.data;
       } catch (error) {
         console.error('Error fetching data:', error);
-        return []; 
+        return [];
       }
     }
   
@@ -23,6 +23,7 @@ export default async function decorate(block) {
         const slideItem = document.createElement('div');
         slideItem.classList.add('slide-builder-item');
         slideItem.style.backgroundImage = `url(${imageUrl})`;
+        slideItem.style.zIndex = slides.length - index; // Set z-index in descending order for overlap
   
         const textContainer = document.createElement('div');
         const slideTitle = document.createElement('h2');
@@ -34,19 +35,10 @@ export default async function decorate(block) {
         textContainer.appendChild(slideDescription);
         slideItem.appendChild(textContainer);
         container.appendChild(slideItem);
-  
-        // Apply initial classes to create the overlap effect
-        if (index === 0) {
-          slideItem.classList.add('slide-down'); // First slide fully visible
-        } else if (index === 1) {
-          slideItem.classList.add('slide-partially-up'); // Second slide partially visible
-        } else {
-          slideItem.classList.add('slide-up'); // Remaining slides hidden
-        }
       });
   
-      const slideHeight = 600; // Fixed slide height
-      const overlapOffset = 100; // Adjust the overlap amount as needed
+      const slideHeight = 600;
+      const overlapOffset = 100;
   
       function updateSlideClasses() {
         const slideItems = document.querySelectorAll('.slide-builder-item');
@@ -58,17 +50,20 @@ export default async function decorate(block) {
           const isCurrentSlide = scrollTop + overlapOffset >= slideTop && scrollTop < slideBottom;
           const isPartiallyVisible = scrollTop + overlapOffset >= slideBottom - slideHeight && scrollTop < slideBottom;
   
-          slide.classList.remove('slide-up', 'slide-down', 'slide-partially-up'); // Remove all classes
+          slide.classList.remove('slide-up', 'slide-down', 'slide-partially-up');
   
           if (isCurrentSlide) {
             slide.classList.add('slide-down');
           } else if (isPartiallyVisible) {
             slide.classList.add('slide-partially-up');
-          } else {
+          } else if (scrollTop + slideHeight < slideTop) { // Slide is below viewport
             slide.classList.add('slide-up');
+          } else {  // Slide is partially visible above viewport
+            slide.classList.add('slide-partially-up');
           }
         });
       }
+  
       updateSlideClasses();
   
       window.addEventListener('scroll', () => {
