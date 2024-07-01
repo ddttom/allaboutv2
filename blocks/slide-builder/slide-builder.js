@@ -49,8 +49,8 @@ export default async function decorate(block) {
       const slideDescription = document.createElement("p");
       slideDescription.innerText = description;
   
-      textContainer.appendChild(`<strong>${slideTitle}</strong>`);
-      textContainer.appendChild(slideDescription);
+      textContainer.appendChild(slideTitle);
+      textContainer.appendChild(`<strong>${slideDescription}</strong>`);
   
       try {
         const supportingText = await fetchSupportingText(slideData.path);
