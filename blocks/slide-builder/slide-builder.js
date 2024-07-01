@@ -41,7 +41,7 @@ export default async function decorate(block) {
 
       const finalImageUrl = supportsWebP ? `${imageUrl}&format=webply&optimize=medium` : imageUrl; 
  
-      slideItem.style.backgroundImage = `url(${imageUrl})`;
+      slideItem.style.backgroundImage = `url(${finalImageUrl})`;
   
       slideItem.addEventListener("click", () => {
         if (relativePath) {
