@@ -39,28 +39,28 @@ export default async function decorate(block) {
         const slideHeight = window.innerHeight;
 
         function updateSlideClasses() {
-            const slideItems = document.querySelectorAll('.slide-builder-item');
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-            slideItems.forEach((slide, index) => {
-                const slideTop = slide.offsetTop; 
-                const slideBottom = slideTop + slideHeight;
-                if (scrollTop >= slideTop && scrollTop < slideBottom) {
-                    slide.classList.remove('slide-up');
-                    slide.classList.add('slide-down');
-                } else {
-                    slide.classList.remove('slide-down');
-                    slide.classList.add('slide-up');
-                }
-            });
+          const slideItems = document.querySelectorAll('.slide-builder-item');
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+          slideItems.forEach((slide, index) => {
+            const slideTop = slide.offsetTop; 
+            const slideBottom = slideTop + slideHeight;
+            if (scrollTop >= slideTop && scrollTop < slideBottom) {
+              slide.classList.remove('slide-up');
+              slide.classList.add('slide-down');
+            } else {
+              slide.classList.remove('slide-down');
+              slide.classList.add('slide-up');
+            }
+          });
         }
-
-        updateSlideClasses(); // Initial setup of classes
-
+    
+        updateSlideClasses();
+    
         window.addEventListener('scroll', () => {
-            updateSlideClasses();
+          updateSlideClasses();
         });
-    } else {
+      } else {
         console.error('No slides found or error fetching slide data.');
+      }
     }
-}
