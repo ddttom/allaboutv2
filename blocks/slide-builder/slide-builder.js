@@ -1,46 +1,73 @@
 export default async function decorate(block) {
-  async function fetchSlides() {
-    const response = await fetch("/slides/query-index.json"); // Adjust the path if needed
-    const json = await response.json();
-    return json.data;
-  }
-
-  const container = document.querySelector(".slide-builder");
-  const slides = await fetchSlides();
-
-  if (slides.length > 0) {
-    slides.forEach((slideData, index) => {
+    async function fetchSlides() {
+      const response = await fetch("/slides/query-index.json"); // Adjust the path if needed
+      const json = await response.json();
+      return json.data;
+    }
+  
+    async function fetchSupportingText(path) {
+      const response = await fetch(`${path}.plain.html`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch HTML for slide: ${path}`);
+      }
+  
+      const html = await response.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+  
+      const h1 = doc.querySelector('h1');
+      let firstParagraph = h1 ? h1.nextElementSibling : doc.querySelector('p');
+  
+      while (firstParagraph && firstParagraph.tagName.toLowerCase() !== 'p') {
+          firstParagraph = firstParagraph.nextElementSibling;
+      }
+      return firstParagraph ? firstParagraph.textContent : null;
+    }
+  
+    const container = document.querySelector(".slide-builder");
+    const slides = await fetchSlides();
+  
+    for (const slideData of slides) { 
       const imageUrl = slideData.image.split("?")[0];
       const title = slideData.title;
       const description = slideData.description;
-
       const relativePath = slideData.path; 
-
+  
       const slideItem = document.createElement("div");
       slideItem.classList.add("slide-builder-item");
       slideItem.style.backgroundImage = `url(${imageUrl})`;
-
-      // Add event listener to the slide item (the image background)
+  
       slideItem.addEventListener("click", () => {
         if (relativePath) {
           window.location.href = relativePath;
         }
       });
-
+  
       const textContainer = document.createElement("div");
       const slideTitle = document.createElement("h2");
       slideTitle.innerText = title;
       const slideDescription = document.createElement("p");
       slideDescription.innerText = description;
-
+  
       textContainer.appendChild(slideTitle);
       textContainer.appendChild(slideDescription);
+  
+      try {
+        const supportingText = await fetchSupportingText(slideData.path);
+        if (supportingText) {
+          const slideSupportingText = document.createElement("p");
+          slideSupportingText.classList.add("supporting-text");
+          slideSupportingText.textContent = supportingText;
+          textContainer.appendChild(slideSupportingText);
+        }
+      } catch (error) {
+        console.error(error.message); 
+      }
+  
       slideItem.appendChild(textContainer);
-      slideItem.setAttribute("data-slidenum", index + 1); // Set roundel numbers
-
+      slideItem.setAttribute("data-slidenum", slides.indexOf(slideData) + 1); 
+  
       container.appendChild(slideItem);
-    });
-  } else {
-    console.error("No slides found or error fetching slide data.");
+    }
   }
-}
+  
