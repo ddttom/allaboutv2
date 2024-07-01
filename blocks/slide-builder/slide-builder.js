@@ -1,4 +1,7 @@
 export default async function decorate(block) {
+
+    const supportsWebP = window.createImageBitmap && window.createImageBitmap.toString().includes('native code');
+
     async function fetchSlides() {
       const response = await fetch("/slides/query-index.json");
       const json = await response.json();
