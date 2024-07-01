@@ -21,7 +21,7 @@ export default async function decorate(block) {
       while (firstParagraph && firstParagraph.tagName.toLowerCase() !== 'p') {
           firstParagraph = firstParagraph.nextElementSibling;
       }
-      return firstParagraph ? firstParagraph.textContent : null;
+      return (firstParagraph ? firstParagraph.textContent : null).trim();
     }
   
     const container = document.querySelector(".slide-builder");
@@ -49,12 +49,12 @@ export default async function decorate(block) {
       const slideDescription = document.createElement("p");
       slideDescription.innerText = description;
   
-      textContainer.appendChild(slideTitle);
+      textContainer.appendChild(`<strong>${slideTitle}</strong>`);
       textContainer.appendChild(slideDescription);
   
       try {
         const supportingText = await fetchSupportingText(slideData.path);
-        if (supportingText) {
+        if (supportingText.trim) {
           const slideSupportingText = document.createElement("p");
           slideSupportingText.classList.add("supporting-text");
           slideSupportingText.textContent = supportingText;
