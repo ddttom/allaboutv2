@@ -14,8 +14,9 @@
     height: 600px; 
     object-fit: cover; 
     display: flex;
-    align-items: flex-end;  
-    justify-content: flex-start; 
+    align-items: flex-end;  /* Align content to the bottom */
+    justify-content: flex-start; /* Align content to the left */
+    margin-bottom: 25px; /* Add space between slides */
 }
 
 .slide-builder-item div { 
