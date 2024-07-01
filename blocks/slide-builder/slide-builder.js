@@ -24,12 +24,6 @@ export default async function decorate(block) {
         slideItem.classList.add('slide-builder-item');
         slideItem.style.backgroundImage = `url(${imageUrl})`;
   
-        if (index === 0) {
-          slideItem.classList.add('slide-down'); 
-        } else {
-          slideItem.classList.add('slide-up'); 
-        }
-  
         const textContainer = document.createElement('div');
         const slideTitle = document.createElement('h2');
         slideTitle.innerText = title;
@@ -47,15 +41,22 @@ export default async function decorate(block) {
   
       window.addEventListener('scroll', () => {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const slideHeight = container.offsetHeight / slides.length;  
-        
-        const newCurrentSlide = Math.floor(scrollTop / slideHeight);
+        const slideHeight = window.innerHeight; // Use viewport height
   
+        // Use Math.round to round the value to the nearest integer.
+        const newCurrentSlide = Math.round(scrollTop / slideHeight);
+  
+        // Update slides only if the current slide has changed
         if (newCurrentSlide !== currentSlide) {
-          currentSlide = newCurrentSlide; 
-          const slideItems = document.querySelectorAll('.slide-builder-item'); 
+          currentSlide = newCurrentSlide;
+  
+          // Get all slide items
+          const slideItems = document.querySelectorAll('.slide-builder-item');
+  
+          // Loop through each slide item and update classes
           slideItems.forEach((slide, index) => {
-            if (index <= currentSlide) {
+            // Check if the current index is equal to the current slide, then add or remove classes accordingly
+            if (index === currentSlide) {
               slide.classList.remove('slide-up');
               slide.classList.add('slide-down');
             } else {
@@ -64,7 +65,7 @@ export default async function decorate(block) {
             }
           });
         }
-        
+  
         lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; 
       });
     } else {
