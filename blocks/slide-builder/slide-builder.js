@@ -1,6 +1,6 @@
 
 export  default async function decorate(block) {
-    const container = document.getElementById('slide-builder-container');
+    const container = document.getElementById('slide-builder');
 
     async function fetchSlides() {
         try {
