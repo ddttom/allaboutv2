@@ -1,25 +1,30 @@
-body {
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box; 
+}
+
+body {
     overflow-y: scroll;
     scroll-behavior: smooth;
 }
 
 .slide-builder {
-    display: flex; /* Use flexbox for layout */
+    display: flex; 
     flex-direction: column; 
     width: 100%; 
-    height: 100vh; /* Make the container take up the full viewport height */
+    height: 100vh; 
 }
 
 .slide-builder-item {
     width: 100%;
-    height: 100vh; /* Each slide still takes up the full viewport height */
-    background-size: cover;
-    background-position: center;
+    height: 100vh; 
+    background-size: cover; /* This might be redundant if object-fit is working */
+    background-position: center; /* This might be redundant if object-fit is working */
     display: flex;
     align-items: flex-end;
     justify-content: flex-start;
+    object-fit: cover; /* Ensure images fill container */
     transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; 
     will-change: transform, opacity;
 }
