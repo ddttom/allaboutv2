@@ -52,19 +52,13 @@ export default async function decorate(block) {
 
                 if (scrollTop > lastScrollTop) {
                     // Scroll down
-                    if (scrollTop > slideOffsetTop - window.innerHeight / 2) {
+                    if (scrollTop >= slideOffsetTop - slideHeight / 2 && scrollTop < slideOffsetTop + slideHeight / 2) {
                         slide.classList.remove('slide-down');
                         slide.classList.add('slide-up');
-                    } else {
-                        slide.classList.remove('slide-up');
-                        slide.classList.add('slide-down');
                     }
                 } else {
                     // Scroll up
-                    if (scrollTop < slideOffsetTop + window.innerHeight / 2) {
-                        slide.classList.remove('slide-down');
-                        slide.classList.add('slide-up');
-                    } else {
+                    if (scrollTop < slideOffsetTop + slideHeight / 2 && scrollTop >= slideOffsetTop - slideHeight / 2) {
                         slide.classList.remove('slide-up');
                         slide.classList.add('slide-down');
                     }
