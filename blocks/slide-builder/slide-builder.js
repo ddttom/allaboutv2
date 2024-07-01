@@ -1,6 +1,6 @@
 export default async function decorate(block) {
     async function fetchSlides() {
-      const response = await fetch("/slides/query-index.json"); // Adjust the path if needed
+      const response = await fetch("/slides/query-index.json");
       const json = await response.json();
       return json.data;
     }
@@ -19,7 +19,7 @@ export default async function decorate(block) {
       let firstParagraph = h2 ? h2.nextElementSibling : doc.querySelector('p');
   
       while (firstParagraph && firstParagraph.tagName.toLowerCase() !== 'p') {
-          firstParagraph = firstParagraph.nextElementSibling;
+        firstParagraph = firstParagraph.nextElementSibling;
       }
       return (firstParagraph ? firstParagraph.textContent : null).trim();
     }
@@ -27,11 +27,11 @@ export default async function decorate(block) {
     const container = document.querySelector(".slide-builder");
     const slides = await fetchSlides();
   
-    for (const slideData of slides) { 
+    for (const slideData of slides) {
       const imageUrl = slideData.image.split("?")[0];
       const title = slideData.title;
       const description = slideData.description;
-      const relativePath = slideData.path; 
+      const relativePath = slideData.path;
   
       const slideItem = document.createElement("div");
       slideItem.classList.add("slide-builder-item");
@@ -46,11 +46,15 @@ export default async function decorate(block) {
       const textContainer = document.createElement("div");
       const slideTitle = document.createElement("h2");
       slideTitle.innerText = title;
+      
+      // Create the description with <strong> tag
       const slideDescription = document.createElement("p");
-      slideDescription.innerText = description;
+      const strongTag = document.createElement("strong");
+      strongTag.innerText = description;
+      slideDescription.appendChild(strongTag); 
   
       textContainer.appendChild(slideTitle);
-      textContainer.appendChild(`<strong>${slideDescription}</strong>`);
+      textContainer.appendChild(slideDescription);
   
       try {
         const supportingText = await fetchSupportingText(slideData.path);
@@ -61,11 +65,11 @@ export default async function decorate(block) {
           textContainer.appendChild(slideSupportingText);
         }
       } catch (error) {
-        console.error(error.message); 
+        console.error(error.message);
       }
   
       slideItem.appendChild(textContainer);
-      slideItem.setAttribute("data-slidenum", slides.indexOf(slideData) + 1); 
+      slideItem.setAttribute("data-slidenum", slides.indexOf(slideData) + 1);
   
       container.appendChild(slideItem);
     }
