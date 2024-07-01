@@ -52,7 +52,7 @@ export default async function decorate(block) {
 
                 if (scrollTop > lastScrollTop) {
                     // Scroll down
-                    if (scrollTop >= slideOffsetTop + slideHeight - window.innerHeight) {
+                    if (scrollTop > slideOffsetTop - window.innerHeight / 2) {
                         slide.classList.remove('slide-down');
                         slide.classList.add('slide-up');
                     } else {
@@ -61,7 +61,7 @@ export default async function decorate(block) {
                     }
                 } else {
                     // Scroll up
-                    if (scrollTop <= slideOffsetTop - slideHeight + window.innerHeight) {
+                    if (scrollTop < slideOffsetTop + window.innerHeight / 2) {
                         slide.classList.remove('slide-down');
                         slide.classList.add('slide-up');
                     } else {

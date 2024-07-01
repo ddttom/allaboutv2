@@ -10,7 +10,7 @@ body {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    overflow: hidden; /* Prevent scrolling issues */
+    position: relative;
 }
 
 .slide-builder-item {
@@ -24,7 +24,6 @@ body {
     justify-content: flex-start;
     transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
     will-change: transform, opacity;
-    z-index: 1; /* Ensure each new slide is above the previous one */
 }
 
 .slide-builder-item div {
@@ -44,13 +43,13 @@ body {
 }
 
 .slide-up {
-    transform: translateY(-100%);
+    transform: translateY(100%);
     opacity: 0;
-    z-index: 0; /* Move the slide to the background */
+    z-index: 0;
 }
 
 .slide-down {
     transform: translateY(0);
     opacity: 1;
-    z-index: 1; /* Bring the slide to the foreground */
+    z-index: 1;
 }
