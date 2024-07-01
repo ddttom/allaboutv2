@@ -1,21 +1,9 @@
 export default async function decorate(block) {
     const container = document.querySelector('.slide-builder');
-
-    async function fetchSlides() {
-        try {
-            const response = await fetch('/slides/query-index.json');
-            const data = await response.json();
-            return data.data;
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            return [];
-        }
-    }
-
     const slides = await fetchSlides();
 
     if (slides.length > 0) {
-        slides.forEach((slideData) => {
+        slides.forEach((slideData, index) => {
             const imageUrl = slideData.image.split('?')[0];
             const title = slideData.title;
             const description = slideData.description;
@@ -33,6 +21,8 @@ export default async function decorate(block) {
             textContainer.appendChild(slideTitle);
             textContainer.appendChild(slideDescription);
             slideItem.appendChild(textContainer);
+            slideItem.setAttribute('data-slidenum', index + 1); // Set roundel numbers
+
             container.appendChild(slideItem);
         });
     } else {

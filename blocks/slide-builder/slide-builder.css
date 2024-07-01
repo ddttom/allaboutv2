@@ -1,77 +1,46 @@
-* { 
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  overflow-y: scroll; 
-  scroll-behavior: smooth;
-}
-
 .slide-builder {
-  display: flex; 
-  flex-direction: column;
-  width: 100%; 
-  position: relative; /* For positioning slide numbers */
-  overflow: hidden; /* Hide overflow to prevent scrollbars */
-}
-
-.slide-builder-item {
-  height: 600px; 
-  object-fit: cover; 
-  display: flex;
-  align-items: flex-end; 
-  justify-content: flex-start; 
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%; 
-  z-index: 0;  
-  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; 
-}
-
-.slide-builder-item div { 
-  background: rgba(0, 0, 0, 0.5); 
-  color: white;
-  padding: 1em;
-  margin: 1em;
-}
-
-.slide-builder-item h2 {
-  margin: 0;
-  font-weight: bold;
-}
-
-.slide-builder-item p {
-  margin: 0;
-}
-
-/* Slide Visibility Classes */
-.slide-up {
-    transform: translateY(100%); 
-    opacity: 0;
-}
-
-.slide-down {
-    transform: translateY(0);
-    opacity: 1;
-    z-index: 1; /* Make sure visible slide is on top */
-}
-
-/* Roundel Styling */
-.slide-builder-item::before { /* Use ::before pseudo-element for the roundel */
-  content: attr(data-slidenum);  /* Display the slide number */
-  position: absolute; 
-  top: 20px; 
-  left: 20px;
-  width: 40px; 
-  height: 40px;
-  background-color: rgba(0, 0, 0, 0.7); 
-  color: white;
-  border-radius: 50%;
-  display: flex; 
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-}
+    width: 100%; 
+  }
+  
+  .slide-builder-item {
+    height: 600px; 
+    object-fit: cover; 
+    position: relative; /* For roundel positioning */
+  }
+  
+  /* Roundel Styling */
+  .slide-builder-item::before { 
+    content: attr(data-slidenum);
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border-radius: 50%;
+    display: flex; /* We still need this for centering the roundel content */
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  
+  .slide-builder-item div { 
+    background: rgba(0, 0, 0, 0.5); 
+    color: white;
+    padding: 1em;
+    margin: 1em;
+    position: absolute; /* Position the div at the bottom left */
+    bottom: 1em;
+    left: 1em;
+  }
+  
+  .slide-builder-item h2 {
+    margin: 0;
+    font-weight: bold;
+  }
+  
+  .slide-builder-item p {
+    margin: 0;
+  }
+  
