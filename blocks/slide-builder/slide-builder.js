@@ -50,17 +50,17 @@ export default async function decorate(block) {
                 const slideHeight = slide.offsetHeight;
                 const slideOffsetTop = index * slideHeight;
 
-                if (scrollTop > lastScrollTop) {
-                    // Scroll down
+                if (scrollTop < lastScrollTop) {
+                    // Scroll down (reverse)
                     if (scrollTop >= slideOffsetTop - slideHeight / 2 && scrollTop < slideOffsetTop + slideHeight / 2) {
-                        slide.classList.remove('slide-down');
-                        slide.classList.add('slide-up');
-                    }
-                } else {
-                    // Scroll up
-                    if (scrollTop < slideOffsetTop + slideHeight / 2 && scrollTop >= slideOffsetTop - slideHeight / 2) {
                         slide.classList.remove('slide-up');
                         slide.classList.add('slide-down');
+                    }
+                } else {
+                    // Scroll up (reverse)
+                    if (scrollTop < slideOffsetTop + slideHeight / 2 && scrollTop >= slideOffsetTop - slideHeight / 2) {
+                        slide.classList.remove('slide-down');
+                        slide.classList.add('slide-up');
                     }
                 }
             });
