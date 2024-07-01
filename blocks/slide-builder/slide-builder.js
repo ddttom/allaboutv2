@@ -66,14 +66,16 @@ export default async function decorate(block) {
         window.addEventListener('scroll', () => {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-            // Use Math.round to round the value to the nearest integer.
-            const newCurrentSlide = Math.round(scrollTop / slideHeight);
+            // More accurate current slide calculation
+            let newCurrentSlide = Math.floor(scrollTop / slideHeight);
 
-            // Check if currentSlide has changed
+            // Correct the newCurrentSlide if it exceeds the number of slides
+            if (newCurrentSlide >= slides.length) {
+                newCurrentSlide = slides.length - 1;
+            }
+
             if (newCurrentSlide !== currentSlide) {
                 currentSlide = newCurrentSlide;
-
-                // Update slide classes only if the current slide has changed
                 updateSlideClasses();
             }
         });
