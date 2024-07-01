@@ -35,6 +35,12 @@ export default async function decorate(block) {
   
       const slideItem = document.createElement("div");
       slideItem.classList.add("slide-builder-item");
+
+      const imageUrlBase = imageUrl.replace(/\.(png|jpg|jpeg)$/, ''); // Get base URL without extension
+      const imageExtension = supportsWebP ? '.webp' : '.png'; // Choose extension based on support
+      const finalImageUrl = `${imageUrlBase}${imageExtension}`;
+
+
       slideItem.style.backgroundImage = `url(${imageUrl})`;
   
       slideItem.addEventListener("click", () => {
