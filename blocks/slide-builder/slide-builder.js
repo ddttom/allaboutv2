@@ -45,28 +45,27 @@ export default async function decorate(block) {
     const slideHeight = 600;
 
     function updateSlideClasses() {
-      const slideItems = document.querySelectorAll(".slide-builder-item");
-      const scrollTop =
-        window.pageYOffset || document.documentElement.scrollTop;
-
-      slideItems.forEach((slide, index) => {
-        const slideTop = slide.offsetTop;
-        const slideBottom = slideTop + slideHeight;
-
-        // Check if slide is fully or partially within the viewport
-        const isVisible =
-          (scrollTop + slideHeight >= slideTop && scrollTop < slideBottom) || // Fully visible
-          (scrollTop < slideTop && scrollTop + window.innerHeight > slideTop); // Partially visible at the top
-
-        slide.classList.remove("slide-up", "slide-down"); // Remove both classes
-
-        if (isVisible) {
-          slide.classList.add("slide-down"); // Show the slide
-        } else {
-          slide.classList.add("slide-up"); // Hide the slide
-        }
-      });
-    }
+        const slideItems = document.querySelectorAll('.slide-builder-item');
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  
+        slideItems.forEach((slide, index) => {
+          const slideTop = slide.offsetTop; 
+          const slideBottom = slideTop + slideHeight;
+          
+          // Check if the slide is in the viewport or the one directly above it
+          const isVisible = 
+            (scrollTop + slideHeight >= slideTop && scrollTop < slideBottom) || // Fully visible
+            (scrollTop + slideHeight >= slideTop - slideHeight && scrollTop < slideTop); // Slide above is visible
+  
+          slide.classList.remove('slide-up', 'slide-down'); // Remove both classes
+  
+          if (isVisible) {
+            slide.classList.add('slide-down'); // Show the slide
+          } else {
+            slide.classList.add('slide-up'); // Hide the slide
+          }
+        });
+      }
     updateSlideClasses();
 
     window.addEventListener("scroll", () => {
