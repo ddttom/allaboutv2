@@ -37,7 +37,7 @@ export default async function decorate(block) {
       });
   
       const slideHeight = 600; 
-  
+
       function updateSlideClasses() {
         const slideItems = document.querySelectorAll('.slide-builder-item');
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -47,7 +47,9 @@ export default async function decorate(block) {
           const slideBottom = slideTop + slideHeight;
           
           // Check if slide is fully or partially within the viewport
-          const isVisible = scrollTop + slideHeight >= slideTop && scrollTop < slideBottom;
+          const isVisible = 
+            (scrollTop + slideHeight >= slideTop && scrollTop < slideBottom) || // Fully visible
+            (scrollTop < slideTop && scrollTop + window.innerHeight > slideTop); // Partially visible at the top
   
           slide.classList.remove('slide-up', 'slide-down'); // Remove both classes
   
