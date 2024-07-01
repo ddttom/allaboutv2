@@ -1,6 +1,5 @@
-
-export  default async function decorate(block) {
-    const container = document.querySelector('.slide-builder');
+export default async function decorate(block) {
+    const container = document.querySelector('#slide-builder');
 
     async function fetchSlides() {
         try {
@@ -15,7 +14,7 @@ export  default async function decorate(block) {
     const slides = await fetchSlides();
 
     if (slides) {
-        slides.forEach(slideData => {
+        slides.forEach((slideData, index) => {
             const imageUrl = slideData.image.split('?')[0]; // Remove querystring
             const title = slideData.title;
             const description = slideData.description;
@@ -23,6 +22,12 @@ export  default async function decorate(block) {
             const slideItem = document.createElement('div');
             slideItem.classList.add('slide-builder-item');
             slideItem.style.backgroundImage = `url(${imageUrl})`;
+
+            if (index === 0) {
+                slideItem.classList.add('slide-down'); // Initial slide should be visible
+            } else {
+                slideItem.classList.add('slide-up'); // Other slides should be hidden initially
+            }
 
             const textContainer = document.createElement('div');
             const slideTitle = document.createElement('h2');
@@ -34,6 +39,39 @@ export  default async function decorate(block) {
             textContainer.appendChild(slideDescription);
             slideItem.appendChild(textContainer);
             container.appendChild(slideItem);
+        });
+
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            const slideItems = document.querySelectorAll('.slide-builder-item');
+            slideItems.forEach((slide, index) => {
+                const slideHeight = slide.offsetHeight;
+                const slideOffsetTop = slide.offsetTop;
+
+                if (scrollTop > lastScrollTop) {
+                    // Scroll down
+                    if (scrollTop > slideOffsetTop + slideHeight) {
+                        slide.classList.remove('slide-down');
+                        slide.classList.add('slide-up');
+                    } else {
+                        slide.classList.remove('slide-up');
+                        slide.classList.add('slide-down');
+                    }
+                } else {
+                    // Scroll up
+                    if (scrollTop < slideOffsetTop - slideHeight) {
+                        slide.classList.remove('slide-down');
+                        slide.classList.add('slide-up');
+                    } else {
+                        slide.classList.remove('slide-up');
+                        slide.classList.add('slide-down');
+                    }
+                }
+            });
+
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
         });
     }    
 }
