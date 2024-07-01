@@ -44,15 +44,15 @@ export default async function decorate(block) {
         let lastScrollTop = 0;
         window.addEventListener('scroll', () => {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
             const slideItems = document.querySelectorAll('.slide-builder-item');
+
             slideItems.forEach((slide, index) => {
                 const slideHeight = slide.offsetHeight;
-                const slideOffsetTop = slide.offsetTop;
+                const slideOffsetTop = index * slideHeight;
 
                 if (scrollTop > lastScrollTop) {
                     // Scroll down
-                    if (scrollTop > slideOffsetTop + slideHeight) {
+                    if (scrollTop >= slideOffsetTop + slideHeight - window.innerHeight) {
                         slide.classList.remove('slide-down');
                         slide.classList.add('slide-up');
                     } else {
@@ -61,7 +61,7 @@ export default async function decorate(block) {
                     }
                 } else {
                     // Scroll up
-                    if (scrollTop < slideOffsetTop - slideHeight) {
+                    if (scrollTop <= slideOffsetTop - slideHeight + window.innerHeight) {
                         slide.classList.remove('slide-down');
                         slide.classList.add('slide-up');
                     } else {
