@@ -44,14 +44,14 @@ export default async function decorate(block) {
         });
 
         let currentSlide = 0;
-        let lastScrollTop = 0;
         const slideHeight = window.innerHeight; // Get viewport height once
 
         function updateSlideClasses() {
             const slideItems = document.querySelectorAll('.slide-builder-item');
 
+            // Iterate through all slide items and update classes based on currentSlide
             slideItems.forEach((slide, index) => {
-                if (index === currentSlide) {
+                if (index <= currentSlide) { // Show current and previous slides
                     slide.classList.remove('slide-up');
                     slide.classList.add('slide-down');
                 } else {
@@ -76,9 +76,6 @@ export default async function decorate(block) {
                 // Update slide classes only if the current slide has changed
                 updateSlideClasses();
             }
-
-            // Update lastScrollTop after each scroll to keep track
-            lastScrollTop = scrollTop; 
         });
     } else {
         console.error('No slides found or error fetching slide data.');
