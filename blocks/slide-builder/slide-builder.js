@@ -15,7 +15,7 @@ export default async function decorate(block) {
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
   
-      const h1 = doc.querySelector('h2');
+      const h2 = doc.querySelector('h2');
       let firstParagraph = h2 ? h2.nextElementSibling : doc.querySelector('p');
   
       while (firstParagraph && firstParagraph.tagName.toLowerCase() !== 'p') {
