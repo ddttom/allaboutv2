@@ -6,6 +6,7 @@
     height: 600px; 
     object-fit: cover; 
     position: relative; /* For roundel positioning */
+    margin-bottom: 25px; /* Add margin to the bottom of each slide */
   }
   
   /* Roundel Styling */
