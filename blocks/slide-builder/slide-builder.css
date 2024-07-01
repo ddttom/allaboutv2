@@ -22,7 +22,7 @@ body {
     display: flex;
     align-items: flex-end;
     justify-content: flex-start;
-    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; /* Add opacity transition */
     will-change: transform, opacity;
 }
 
