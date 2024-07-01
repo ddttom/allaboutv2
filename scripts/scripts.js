@@ -22,7 +22,7 @@ import {
 
 import { } from '/plusplus/src/siteConfig.js';
 
-const LCP_BLOCKS = ['slide-builder']; // add your LCP blocks to the lis
+const LCP_BLOCKS = []; // add your LCP blocks to the lis
 const AUDIENCES = {
   mobile: () => window.innerWidth < 600,
   desktop: () => window.innerWidth >= 600,

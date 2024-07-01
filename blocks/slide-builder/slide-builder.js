@@ -8,23 +8,30 @@ export default async function decorate(block) {
     }
   
     async function fetchSupportingText(path) {
-      const response = await fetch(`${path}.plain.html`);
-      if (!response.ok) {
-        throw new Error(`Failed to fetch HTML for slide: ${path}`);
+        // Check viewport width before proceeding
+        if (window.innerWidth < 800) {
+          return null; 
+        }
+      
+        const response = await fetch(`${path}.plain.html`);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch HTML for slide: ${path}`);
+        }
+      
+        const html = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+      
+        const h2 = doc.querySelector('h2');
+        let firstParagraph = h2 ? h2.nextElementSibling : doc.querySelector('p');
+      
+        while (firstParagraph && firstParagraph.tagName.toLowerCase() !== 'p') {
+          firstParagraph = firstParagraph.nextElementSibling;
+        }
+      
+        return (firstParagraph ? firstParagraph.textContent : null).trim();
       }
-  
-      const html = await response.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-  
-      const h2 = doc.querySelector('h2');
-      let firstParagraph = h2 ? h2.nextElementSibling : doc.querySelector('p');
-  
-      while (firstParagraph && firstParagraph.tagName.toLowerCase() !== 'p') {
-        firstParagraph = firstParagraph.nextElementSibling;
-      }
-      return (firstParagraph ? firstParagraph.textContent : null).trim();
-    }
+      
   
     function setSlideBackground(slideItem, imageUrl) {
       const finalImageUrl = supportsWebP 
