@@ -39,7 +39,7 @@ export default async function decorate(block) {
       const slideItem = document.createElement("div");
       slideItem.classList.add("slide-builder-item");
 
-      const finalImageUrl = supportsWebP ? `${imageUrl}&format=webply&optimize=medium` : imageUrl; 
+      const finalImageUrl = supportsWebP ? `${imageUrl}?format=webply&optimize=medium` : imageUrl; 
  
       slideItem.style.backgroundImage = `url(${finalImageUrl})`;
   
