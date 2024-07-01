@@ -41,7 +41,15 @@
     font-weight: bold;
   }
   
-  .slide-builder-item p {
+  /* Specific styling for the supporting text paragraph */
+  .slide-builder-item p.supporting-text {
     margin: 0;
+  }
+  
+  /* Media query for screens smaller than 600px */
+  @media (max-width: 600px) {
+    .slide-builder-item p.supporting-text {
+      display: none; /* Hide supporting text on smaller screens */
+    }
   }
   
