@@ -18,10 +18,16 @@ export default async function decorate(block) {
     const response = await fetch("/slides/query-index.json");
     const json = await response.json();
     
-    return json.data.map(slide => ({
-      ...slide,
-      html: window.innerWidth > 799 ? fetchSlideHtml(slide.path) : null
-    }));
+    const slides = [];
+    for (const slide of json.data) {
+      if (window.innerWidth > 799) {
+        slide.html = await fetchSlideHtml(slide.path);
+      } else {
+        slide.html = null;
+      }
+      slides.push(slide);
+    }
+    return slides;
   }
 
   function fetchSupportingText(html) {
@@ -59,7 +65,7 @@ export default async function decorate(block) {
   }
 
   async function createPanel(slideData) {
-    let html = await slideData.html;
+    let html = slideData.html;
     if (!html) {
       html = await fetchSlideHtml(slideData.path);
       if (!html) {
@@ -92,8 +98,8 @@ export default async function decorate(block) {
     }, 0);
   }
 
-  function createSlideItem(slideData, index) {
-    const { image, title, description } = slideData;
+  async function createSlideItem(slideData, index) {
+    const { image, title, description, path } = slideData;
     const imageUrl = image.split("?")[0];
 
     const slideItem = document.createElement("div");
@@ -111,15 +117,19 @@ export default async function decorate(block) {
     slideItem.addEventListener("click", () => createPanel(slideData));
 
     // Fetch and append supporting text if available
-    slideData.html.then(html => {
-      const supportingText = fetchSupportingText(html);
+    if (!slideData.html && window.innerWidth <= 799) {
+      slideData.html = await fetchSlideHtml(path);
+    }
+
+    if (slideData.html) {
+      const supportingText = fetchSupportingText(slideData.html);
       if (supportingText) {
         const textContainer = slideItem.querySelector('.text-container');
         textContainer.insertAdjacentHTML('beforeend', `
           <p class="supporting-text">${supportingText}</p>
         `);
       }
-    });
+    }
 
     return slideItem;
   }
@@ -142,7 +152,7 @@ export default async function decorate(block) {
   );
 
   for (let i = 0; i < slides.length; i++) {
-    const slideItem = createSlideItem(slides[i], i);
+    const slideItem = await createSlideItem(slides[i], i);
     observer.observe(slideItem);
     container.appendChild(slideItem);
   }
