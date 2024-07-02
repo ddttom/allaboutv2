@@ -65,6 +65,7 @@
     align-items: center;
     z-index: 1000;
   }
+  
   .slide-panel-content {
     background-color: white;
     padding: 20px;
@@ -74,6 +75,7 @@
     overflow-y: auto;
     position: relative;
   }
+  
   .slide-panel-close {
     position: absolute;
     top: 10px;
@@ -82,5 +84,6 @@
     background: none;
     border: none;
     cursor: pointer;
+    color: white; /* Make the button visible against dark background */
+    z-index: 1001; /* Ensure it's above the content */
   }
-  

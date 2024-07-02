@@ -72,9 +72,9 @@ export default async function decorate(block) {
     panel.classList.add('slide-panel');
     panel.innerHTML = `
       <div class="slide-panel-content">
-        <button class="slide-panel-close" aria-label="Close panel">&times;</button>
         <div class="slide-panel-body"></div>
       </div>
+      <button class="slide-panel-close" aria-label="Close panel">&times;</button>
     `;
     panel.querySelector('.slide-panel-body').innerHTML = html;
     
@@ -85,9 +85,10 @@ export default async function decorate(block) {
 
     document.body.appendChild(panel);
 
-    // Ensure the close button is visible
+    // Ensure the close button is visible and above other content
     setTimeout(() => {
       closeButton.style.display = 'block';
+      closeButton.style.zIndex = '1001'; // Ensure this is higher than other elements
     }, 0);
   }
 
