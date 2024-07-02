@@ -72,21 +72,27 @@ export default async function decorate(block) {
     panel.classList.add('slide-panel');
     panel.innerHTML = `
       <div class="slide-panel-content">
-        <button class="slide-panel-close">&times;</button>
+        <button class="slide-panel-close" aria-label="Close panel">&times;</button>
         <div class="slide-panel-body"></div>
       </div>
     `;
     panel.querySelector('.slide-panel-body').innerHTML = html;
     
-    panel.querySelector('.slide-panel-close').addEventListener('click', () => {
+    const closeButton = panel.querySelector('.slide-panel-close');
+    closeButton.addEventListener('click', () => {
       panel.remove();
     });
 
     document.body.appendChild(panel);
+
+    // Ensure the close button is visible
+    setTimeout(() => {
+      closeButton.style.display = 'block';
+    }, 0);
   }
 
   function createSlideItem(slideData, index) {
-    const { image, title, description, path } = slideData;
+    const { image, title, description } = slideData;
     const imageUrl = image.split("?")[0];
 
     const slideItem = document.createElement("div");
@@ -139,5 +145,4 @@ export default async function decorate(block) {
     observer.observe(slideItem);
     container.appendChild(slideItem);
   }
-
 }
