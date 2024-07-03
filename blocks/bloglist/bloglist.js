@@ -18,11 +18,11 @@ export default async function decorate(block) {
       a.title.localeCompare(b.title)
     );
 
-    // Limit the sorted blog items to a maximum of 3
+    
     const limitedBlogItems = sortedBlogItems.slice(0, 4);
 
-    // Process the limited data and generate the content
-    const content = generateContent(limitedBlogItems);
+    // generate the content
+    const content = generateContent(sortedBlogItems);
 
     blogListElement.innerHTML = content;
   } catch (error) {
