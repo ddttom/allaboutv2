@@ -1,14 +1,16 @@
 export default async function decorate(block) {
   const blogListElement = document.querySelector(".bloglist");
   const url = "/query-index.json";
+  const currentPath = window.location.pathname; // Get the current document's path
 
   try {
     const response = await fetch(url);
     const data = await response.json();
 
     // Filter the blog items based on the presence of "/blogs/ddt/a-developer" in the path
+    // and exclude the current document
     const filteredBlogItems = data.data.filter((item) =>
-      item.path.includes("/blogs/ddt/a-developer")
+      item.path.includes("/blogs/ddt/a-developer") && item.path !== currentPath
     );
 
     // Sort the filtered blog items by title
@@ -17,7 +19,7 @@ export default async function decorate(block) {
     );
 
     // Limit the sorted blog items to a maximum of 3
-    const limitedBlogItems = sortedBlogItems.slice(0, 3);
+    const limitedBlogItems = sortedBlogItems.slice(0, 4);
 
     // Process the limited data and generate the content
     const content = generateContent(limitedBlogItems);
