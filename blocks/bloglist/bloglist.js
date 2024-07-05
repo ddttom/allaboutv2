@@ -10,7 +10,7 @@ export default async function decorate(block) {
     // Filter the blog items based on the presence of "/blogs/ddt/a-developer" in the path
     // and exclude the current document
     const filteredBlogItems = data.data.filter((item) =>
-      item.path.includes("/blogs/ddt/a-developer") && item.path !== currentPath
+      item.path.includes("developer-guide") && item.path !== currentPath
     );
 
     // Sort the filtered blog items by title
