@@ -38,7 +38,7 @@ function generateContent(blogItems) {
 
     content += `
             <div class="blog-item">
-                <a href="${item.path}">
+                <a href="${item.path}">      <img src="${item.image}" alt="${item.title}">
                     <strong>${item.title}</strong>
                 </a>
                 <p>${item.description}</p>
