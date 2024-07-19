@@ -167,18 +167,17 @@ export default function decorate(block) {
   function addPopupListeners() {
     const pathLinks = document.querySelectorAll('.path-link');
     pathLinks.forEach(link => {
-      link.addEventListener('mousemove', positionPopup);
+      link.addEventListener('mouseenter', showPopup);
       link.addEventListener('mouseleave', hidePopup);
     });
+    document.addEventListener('scroll', updatePopupPositions);
   }
 
-  function positionPopup(event) {
+  function showPopup(event) {
     const popup = event.currentTarget.querySelector('.image-popup');
     if (popup) {
-      const rect = event.currentTarget.getBoundingClientRect();
       popup.style.display = 'block';
-      popup.style.left = `${event.clientX + 10}px`;
-      popup.style.top = `${event.clientY + 10}px`;
+      positionPopup(event);
     }
   }
 
@@ -187,6 +186,29 @@ export default function decorate(block) {
     if (popup) {
       popup.style.display = 'none';
     }
+  }
+
+  function positionPopup(event) {
+    const popup = event.currentTarget.querySelector('.image-popup');
+    if (popup) {
+      const rect = event.currentTarget.getBoundingClientRect();
+      const scrollY = window.scrollY || window.pageYOffset;
+      popup.style.left = `${rect.left}px`;
+      popup.style.top = `${rect.top + scrollY - popup.offsetHeight}px`;
+    }
+  }
+
+  function updatePopupPositions() {
+    const visiblePopups = document.querySelectorAll('.image-popup[style*="display: block"]');
+    visiblePopups.forEach(popup => {
+      const link = popup.closest('.path-link');
+      if (link) {
+        const rect = link.getBoundingClientRect();
+        const scrollY = window.scrollY || window.pageYOffset;
+        popup.style.left = `${rect.left}px`;
+        popup.style.top = `${rect.top + scrollY - popup.offsetHeight}px`;
+      }
+    });
   }
 
   function addSortListeners() {
