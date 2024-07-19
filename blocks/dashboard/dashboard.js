@@ -91,8 +91,8 @@ export default function decorate(block) {
     lastModifiedCell.className = 'date-column';
     lastModifiedCell.textContent = formatDate(item.lastModified);
 
-    const reviewDateCell = createDateCell(item.lastModified, window.siteConfig['$co:defaultreviewperiod']);
-    const expiryDateCell = createDateCell(item.lastModified, window.siteConfig['$co:defaultexpiryperiod']);
+    const reviewDateCell = createReviewDateCell(item.lastModified);
+    const expiryDateCell = createExpiryDateCell(item.lastModified);
 
     row.appendChild(titleCell);
     row.appendChild(pathCell);
@@ -109,27 +109,48 @@ export default function decorate(block) {
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   }
 
-  function createDateCell(lastModified, daysToAdd) {
+  function createReviewDateCell(lastModified) {
     const cell = document.createElement('td');
     cell.className = 'date-column';
     
     const lastModifiedDate = new Date(parseInt(lastModified) * 1000);
-    const calculatedDate = new Date(lastModifiedDate.getTime() + daysToAdd * 24 * 60 * 60 * 1000);
+    const reviewDate = new Date(lastModifiedDate.getTime() + window.siteConfig['$co:defaultreviewperiod'] * 24 * 60 * 60 * 1000);
     
-    cell.textContent = formatDate(calculatedDate.getTime() / 1000);
+    cell.textContent = formatDate(reviewDate.getTime() / 1000);
     
     const today = new Date();
-    const daysUntilDate = Math.ceil((calculatedDate - today) / (24 * 60 * 60 * 1000));
+    const daysUntilReview = Math.ceil((reviewDate - today) / (24 * 60 * 60 * 1000));
     
-    if (daysUntilDate < 0) {
-      cell.style.backgroundColor = 'red';
-    } else if (daysUntilDate <= 30) {
-      cell.style.backgroundColor = 'amber';
-    } else {
-      cell.style.backgroundColor = 'green';
-    }
+    cell.style.backgroundColor = getColorForDays(daysUntilReview);
     
     return cell;
+  }
+
+  function createExpiryDateCell(lastModified) {
+    const cell = document.createElement('td');
+    cell.className = 'date-column';
+    
+    const lastModifiedDate = new Date(parseInt(lastModified) * 1000);
+    const expiryDate = new Date(lastModifiedDate.getTime() + window.siteConfig['$co:defaultexpiryperiod'] * 24 * 60 * 60 * 1000);
+    
+    cell.textContent = formatDate(expiryDate.getTime() / 1000);
+    
+    const today = new Date();
+    const daysUntilExpiry = Math.ceil((expiryDate - today) / (24 * 60 * 60 * 1000));
+    
+    cell.style.backgroundColor = getColorForDays(daysUntilExpiry);
+    
+    return cell;
+  }
+
+  function getColorForDays(days) {
+    if (days < 0) {
+      return 'red';
+    } else if (days <= 30) {
+      return 'amber';
+    } else {
+      return 'green';
+    }
   }
 
   function addPopupListeners() {
