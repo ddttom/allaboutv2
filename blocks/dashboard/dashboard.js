@@ -35,9 +35,12 @@ export default function decorate(block) {
       // Create table header
       const thead = document.createElement('thead');
       const headerRow = document.createElement('tr');
-      ['Title', 'Path', 'Last Modified', 'Description'].forEach(headerText => {
+      ['Title', 'Path', 'Description', 'Last Modified'].forEach(headerText => {
         const th = document.createElement('th');
         th.textContent = headerText;
+        if (headerText === 'Last Modified') {
+          th.className = 'last-modified-column';
+        }
         headerRow.appendChild(th);
       });
       thead.appendChild(headerRow);
@@ -80,16 +83,17 @@ export default function decorate(block) {
       
       pathCell.appendChild(pathLink);
   
-      const dateCell = document.createElement('td');
-      dateCell.textContent = formatDate(item.lastModified);
-  
       const descriptionCell = document.createElement('td');
       descriptionCell.textContent = item.description;
   
+      const dateCell = document.createElement('td');
+      dateCell.className = 'last-modified-column';
+      dateCell.textContent = formatDate(item.lastModified);
+  
       row.appendChild(titleCell);
       row.appendChild(pathCell);
-      row.appendChild(dateCell);
       row.appendChild(descriptionCell);
+      row.appendChild(dateCell);
   
       return row;
     }
