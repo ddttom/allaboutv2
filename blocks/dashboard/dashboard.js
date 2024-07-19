@@ -3,6 +3,8 @@
 export default function decorate(block) {
   const dashboardContainer = document.querySelector('.dashboard-container');
   const jsonUrl = '/query-index.json';
+  let mouseX = 0;
+  let mouseY = 0;
 
   // Fetch JSON data and create dashboard
   fetch(jsonUrl)
@@ -169,15 +171,22 @@ export default function decorate(block) {
     pathLinks.forEach(link => {
       link.addEventListener('mouseenter', showPopup);
       link.addEventListener('mouseleave', hidePopup);
+      link.addEventListener('mousemove', updateMousePosition);
     });
     document.addEventListener('scroll', updatePopupPositions);
+  }
+
+  function updateMousePosition(event) {
+    mouseX = event.clientX;
+    mouseY = event.clientY;
+    positionPopup(event.currentTarget);
   }
 
   function showPopup(event) {
     const popup = event.currentTarget.querySelector('.image-popup');
     if (popup) {
       popup.style.display = 'block';
-      positionPopup(event);
+      positionPopup(event.currentTarget);
     }
   }
 
@@ -188,13 +197,27 @@ export default function decorate(block) {
     }
   }
 
-  function positionPopup(event) {
-    const popup = event.currentTarget.querySelector('.image-popup');
+  function positionPopup(link) {
+    const popup = link.querySelector('.image-popup');
     if (popup) {
-      const rect = event.currentTarget.getBoundingClientRect();
+      const rect = link.getBoundingClientRect();
+      const scrollX = window.scrollX || window.pageXOffset;
       const scrollY = window.scrollY || window.pageYOffset;
-      popup.style.left = `${rect.left}px`;
-      popup.style.top = `${rect.top + scrollY - popup.offsetHeight}px`;
+
+      // Position the popup above the mouse cursor
+      let left = mouseX + scrollX + 10; // 10px to the right of the cursor
+      let top = mouseY + scrollY - 10 - popup.offsetHeight; // 10px above the cursor
+
+      // Ensure the popup doesn't go off-screen
+      if (left + popup.offsetWidth > window.innerWidth + scrollX) {
+        left = window.innerWidth + scrollX - popup.offsetWidth - 10;
+      }
+      if (top < scrollY) {
+        top = mouseY + scrollY + 20; // 20px below the cursor if it would go above the viewport
+      }
+
+      popup.style.left = `${left}px`;
+      popup.style.top = `${top}px`;
     }
   }
 
@@ -203,10 +226,7 @@ export default function decorate(block) {
     visiblePopups.forEach(popup => {
       const link = popup.closest('.path-link');
       if (link) {
-        const rect = link.getBoundingClientRect();
-        const scrollY = window.scrollY || window.pageYOffset;
-        popup.style.left = `${rect.left}px`;
-        popup.style.top = `${rect.top + scrollY - popup.offsetHeight}px`;
+        positionPopup(link);
       }
     });
   }
