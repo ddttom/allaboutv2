@@ -12,6 +12,9 @@ export default function decorate(block) {
       dashboardContainer.appendChild(dashboardElement);
       addPopupListeners();
       addSortListeners();
+      // Indicate initial sort
+      const titleHeader = document.querySelector('.content-table th[data-column="0"]');
+      titleHeader.classList.add('asc');
     })
     .catch(error => console.error('Error fetching data:', error));
 
@@ -202,8 +205,8 @@ export default function decorate(block) {
     const rows = Array.from(tbody.querySelectorAll('tr'));
 
     rows.sort((a, b) => {
-      let aValue = a.children[column].textContent;
-      let bValue = b.children[column].textContent;
+      let aValue = a.children[column].textContent.trim();
+      let bValue = b.children[column].textContent.trim();
 
       if (column >= 3) {  // Date columns
         aValue = a.children[column].dataset.timestamp;
@@ -211,9 +214,9 @@ export default function decorate(block) {
       }
 
       if (ascending) {
-        return aValue.localeCompare(bValue);
+        return aValue.localeCompare(bValue, undefined, {numeric: true, sensitivity: 'base'});
       } else {
-        return bValue.localeCompare(aValue);
+        return bValue.localeCompare(aValue, undefined, {numeric: true, sensitivity: 'base'});
       }
     });
 
@@ -227,9 +230,8 @@ export default function decorate(block) {
     const headers = document.querySelectorAll('.content-table th');
     headers.forEach(header => {
       header.classList.remove('asc', 'desc');
-      if (header.dataset.column === column) {
-        header.classList.add(ascending ? 'asc' : 'desc');
-      }
     });
+    const sortedHeader = document.querySelector(`.content-table th[data-column="${column}"]`);
+    sortedHeader.classList.add(ascending ? 'asc' : 'desc');
   }
 }
