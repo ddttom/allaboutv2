@@ -136,13 +136,15 @@ export async function createJSON() {
     const currentDate = new Date();
     let futureDate = new Date();
     let futurePeriod = '';
-    if (!co['co:reviewdatetime']) {
+    
       // Extract the default review period from the site configuration.
       const futurePeriodString = window.siteConfig['$co:defaultreviewperiod'];
       futurePeriod = parseInt(futurePeriodString, 10);
       if (Number.isNaN(futurePeriod)) {
         futurePeriod = 365; // Default to 1 year.
+        window.siteConfig['$co:defaultreviewperiod'] = futurePeriod; 
       }
+
       futureDate = new Date(currentDate.getTime() + futurePeriod * 24 * 60 * 60 * 1000);
       // Convert the future date to an ISO string and assign it to the review datetime.
       co['co:reviewdatetime'] = futureDate.toISOString();
@@ -158,6 +160,7 @@ export async function createJSON() {
       futurePeriod = parseInt(futurePeriodString, 10);
       if (Number.isNaN(futurePeriod)) {
         futurePeriod = 365; // Default to 1 year.
+        window.siteConfig['$co:defaultexpiryperiod']=futurePeriod;
       }
       futureDate = new Date(currentDate.getTime() + futurePeriod * 24 * 60 * 60 * 1000);
       co['co:expirydatetime'] = futureDate.toISOString();
@@ -168,6 +171,8 @@ export async function createJSON() {
     if (!co['co:tags']) {
       co['co:tags'] = window.siteConfig['$co:defaulttags'];
     }
+
+    if (!co['co:reviewdatetime']) {
     let coString = JSON.stringify(co, null, '\t');
     coString = replaceTokens(window.siteConfig, coString);
     if (coString.length > 2) {
