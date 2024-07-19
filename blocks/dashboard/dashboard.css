@@ -106,3 +106,21 @@
     white-space: nowrap;
     overflow: visible;
   }
+
+  .date-column {
+    width: 180px;
+    white-space: nowrap;
+  }
+  
+  .content-table th:nth-child(4),
+  .content-table th:nth-child(5),
+  .content-table th:nth-child(6) {
+    width: 180px;
+  }
+  
+  .content-table td:nth-child(4),
+  .content-table td:nth-child(5),
+  .content-table td:nth-child(6) {
+    white-space: nowrap;
+    overflow: visible;
+  }
