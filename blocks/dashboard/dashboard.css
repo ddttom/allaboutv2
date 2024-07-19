@@ -75,10 +75,6 @@
   pointer-events: none;
 }
 
-.path-link:hover .image-popup {
-  display: block;
-}
-
 .image-popup img {
   max-width: 300px;
   max-height: 300px;

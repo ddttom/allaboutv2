@@ -175,6 +175,7 @@ export default function decorate(block) {
       link.addEventListener('mousemove', updateMousePosition);
     });
     window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
   }
 
   function updateMousePosition(event) {
@@ -190,6 +191,7 @@ export default function decorate(block) {
     if (popup) {
       activePopup = popup;
       popup.style.display = 'block';
+      popup.style.position = 'fixed';
       positionPopup(popup);
     }
   }
@@ -204,23 +206,26 @@ export default function decorate(block) {
 
   function positionPopup(popup) {
     if (popup) {
-      const scrollX = window.scrollX || window.pageXOffset;
-      const scrollY = window.scrollY || window.pageYOffset;
+      const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
 
       // Position the popup near the mouse cursor
       let left = mouseX + 10; // 10px to the right of the cursor
       let top = mouseY - 10 - popup.offsetHeight; // 10px above the cursor
 
       // Ensure the popup doesn't go off-screen
-      if (left + popup.offsetWidth > window.innerWidth) {
-        left = window.innerWidth - popup.offsetWidth - 10;
+      if (left + popup.offsetWidth > viewportWidth) {
+        left = viewportWidth - popup.offsetWidth - 10;
       }
       if (top < 0) {
         top = mouseY + 20; // 20px below the cursor if it would go above the viewport
       }
+      if (top + popup.offsetHeight > viewportHeight) {
+        top = viewportHeight - popup.offsetHeight - 10;
+      }
 
-      popup.style.left = `${left + scrollX}px`;
-      popup.style.top = `${top + scrollY}px`;
+      popup.style.left = `${left}px`;
+      popup.style.top = `${top}px`;
     }
   }
 
