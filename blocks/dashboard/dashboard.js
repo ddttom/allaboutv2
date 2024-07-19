@@ -5,6 +5,7 @@ export default function decorate(block) {
   const jsonUrl = '/query-index.json';
   let mouseX = 0;
   let mouseY = 0;
+  let activePopup = null;
 
   // Fetch JSON data and create dashboard
   fetch(jsonUrl)
@@ -173,20 +174,23 @@ export default function decorate(block) {
       link.addEventListener('mouseleave', hidePopup);
       link.addEventListener('mousemove', updateMousePosition);
     });
-    document.addEventListener('scroll', updatePopupPositions);
+    window.addEventListener('scroll', handleScroll);
   }
 
   function updateMousePosition(event) {
     mouseX = event.clientX;
     mouseY = event.clientY;
-    positionPopup(event.currentTarget);
+    if (activePopup) {
+      positionPopup(activePopup);
+    }
   }
 
   function showPopup(event) {
     const popup = event.currentTarget.querySelector('.image-popup');
     if (popup) {
+      activePopup = popup;
       popup.style.display = 'block';
-      positionPopup(event.currentTarget);
+      positionPopup(popup);
     }
   }
 
@@ -194,41 +198,36 @@ export default function decorate(block) {
     const popup = event.currentTarget.querySelector('.image-popup');
     if (popup) {
       popup.style.display = 'none';
+      activePopup = null;
     }
   }
 
-  function positionPopup(link) {
-    const popup = link.querySelector('.image-popup');
+  function positionPopup(popup) {
     if (popup) {
-      const rect = link.getBoundingClientRect();
       const scrollX = window.scrollX || window.pageXOffset;
       const scrollY = window.scrollY || window.pageYOffset;
 
-      // Position the popup above the mouse cursor
-      let left = mouseX + scrollX + 10; // 10px to the right of the cursor
-      let top = mouseY + scrollY - 10 - popup.offsetHeight; // 10px above the cursor
+      // Position the popup near the mouse cursor
+      let left = mouseX + 10; // 10px to the right of the cursor
+      let top = mouseY - 10 - popup.offsetHeight; // 10px above the cursor
 
       // Ensure the popup doesn't go off-screen
-      if (left + popup.offsetWidth > window.innerWidth + scrollX) {
-        left = window.innerWidth + scrollX - popup.offsetWidth - 10;
+      if (left + popup.offsetWidth > window.innerWidth) {
+        left = window.innerWidth - popup.offsetWidth - 10;
       }
-      if (top < scrollY) {
-        top = mouseY + scrollY + 20; // 20px below the cursor if it would go above the viewport
+      if (top < 0) {
+        top = mouseY + 20; // 20px below the cursor if it would go above the viewport
       }
 
-      popup.style.left = `${left}px`;
-      popup.style.top = `${top}px`;
+      popup.style.left = `${left + scrollX}px`;
+      popup.style.top = `${top + scrollY}px`;
     }
   }
 
-  function updatePopupPositions() {
-    const visiblePopups = document.querySelectorAll('.image-popup[style*="display: block"]');
-    visiblePopups.forEach(popup => {
-      const link = popup.closest('.path-link');
-      if (link) {
-        positionPopup(link);
-      }
-    });
+  function handleScroll() {
+    if (activePopup) {
+      positionPopup(activePopup);
+    }
   }
 
   function addSortListeners() {
