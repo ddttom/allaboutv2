@@ -115,7 +115,8 @@ export default function decorate(block) {
     cell.className = 'date-column';
     
     const lastModifiedDate = new Date(lastModified * 1000);
-    const reviewDate = new Date(lastModifiedDate.getTime() + window.siteConfig['$co:defaultreviewperiod'] * 24 * 60 * 60 * 1000);
+    const reviewPeriod = parseInt(window.siteConfig['$co:defaultreviewperiod']) || 0;
+    const reviewDate = new Date(lastModifiedDate.getTime() + reviewPeriod * 24 * 60 * 60 * 1000);
     
     cell.textContent = formatDate(reviewDate.getTime() / 1000);
     
@@ -132,7 +133,8 @@ export default function decorate(block) {
     cell.className = 'date-column';
     
     const lastModifiedDate = new Date(lastModified * 1000);
-    const expiryDate = new Date(lastModifiedDate.getTime() + window.siteConfig['$co:defaultexpiryperiod'] * 24 * 60 * 60 * 1000);
+    const expiryPeriod = parseInt(window.siteConfig['$co:defaultexpiryperiod']) || 0;
+    const expiryDate = new Date(lastModifiedDate.getTime() + expiryPeriod * 24 * 60 * 60 * 1000);
     
     cell.textContent = formatDate(expiryDate.getTime() / 1000);
     
