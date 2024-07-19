@@ -35,7 +35,7 @@ export default function decorate(block) {
       // Create table header
       const thead = document.createElement('thead');
       const headerRow = document.createElement('tr');
-      ['Title', 'Path', 'Last Modified', 'Description', 'Image'].forEach(headerText => {
+      ['Title', 'Path', 'Last Modified', 'Description'].forEach(headerText => {
         const th = document.createElement('th');
         th.textContent = headerText;
         headerRow.appendChild(th);
@@ -66,6 +66,18 @@ export default function decorate(block) {
       pathLink.href = item.path;
       pathLink.textContent = item.path.substring(0, 20) + (item.path.length > 20 ? '...' : '');
       pathLink.title = item.path;  // Full path as tooltip
+      pathLink.className = 'path-link';
+      
+      if (item.image) {
+        const imagePopup = document.createElement('div');
+        imagePopup.className = 'image-popup';
+        const image = document.createElement('img');
+        image.src = item.image;
+        image.alt = item.title;
+        imagePopup.appendChild(image);
+        pathLink.appendChild(imagePopup);
+      }
+      
       pathCell.appendChild(pathLink);
   
       const dateCell = document.createElement('td');
@@ -74,27 +86,10 @@ export default function decorate(block) {
       const descriptionCell = document.createElement('td');
       descriptionCell.textContent = item.description;
   
-      const imageCell = document.createElement('td');
-      const imageLink = document.createElement('a');
-      imageLink.href = '#';
-      imageLink.textContent = 'View Image';
-      imageLink.className = 'image-link';
-      
-      const imagePopup = document.createElement('div');
-      imagePopup.className = 'image-popup';
-      const image = document.createElement('img');
-      image.src = item.image;
-      image.alt = item.title;
-      imagePopup.appendChild(image);
-      
-      imageLink.appendChild(imagePopup);
-      imageCell.appendChild(imageLink);
-  
       row.appendChild(titleCell);
       row.appendChild(pathCell);
       row.appendChild(dateCell);
       row.appendChild(descriptionCell);
-      row.appendChild(imageCell);
   
       return row;
     }
