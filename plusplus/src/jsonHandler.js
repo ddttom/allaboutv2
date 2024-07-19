@@ -156,7 +156,7 @@ export async function createJSON() {
     const futurePeriodString = window.siteConfig["$co:defaultreviewperiod"];
     futurePeriod = parseInt(futurePeriodString, 10);
     if (Number.isNaN(futurePeriod)) {
-      futurePeriod = 365; // Default to 1 year.
+      futurePeriod = 300; // Default to 300 days
       window.siteConfig["$co:defaultreviewperiod"] = futurePeriod;
     }
 
