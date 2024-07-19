@@ -16,9 +16,6 @@
     border: 1px solid #ddd;
     padding: 12px;
     text-align: left;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
   
   .content-table th {
@@ -47,6 +44,10 @@
     position: relative;
     color: #0066cc;
     text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
   }
   
   .path-link:hover {
@@ -79,9 +80,26 @@
   
   .last-modified-column {
     width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
-  .content-table th:nth-child(1) { width: 25%; }
-  .content-table th:nth-child(2) { width: 20%; }
-  .content-table th:nth-child(3) { width: 35%; }
-  .content-table th:nth-child(4) { width: 20%; }
+  .content-table th:nth-child(1) { width: 25%; }  /* Title */
+  .content-table th:nth-child(2) { width: 20%; }  /* Path */
+  .content-table th:nth-child(3) { width: 40%; }  /* Description */
+  .content-table th:nth-child(4) { width: 15%; }  /* Last Modified */
+  
+  /* Ensure Title and Description don't truncate */
+  .content-table td:nth-child(1),
+  .content-table td:nth-child(3) {
+    white-space: normal;
+    word-wrap: break-word;
+  }
+  
+  /* Ensure Path truncates with ellipsis */
+  .content-table td:nth-child(2) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
