@@ -2,7 +2,7 @@
 /* eslint-disable no-use-before-define */
 export default function decorate(block) {
     const dashboardContainer = document.querySelector('.dashboard-container');
-    const jsonUrl = '/paste.txt';
+    const jsonUrl = '/query-index.json';
   
     // Fetch JSON data and create dashboard
     fetch(jsonUrl)
