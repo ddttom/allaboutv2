@@ -105,7 +105,8 @@ export default function decorate(block) {
   }
 
   function formatDate(timestamp) {
-    const date = new Date(parseInt(timestamp) * 1000);
+    // Assuming timestamp is in seconds
+    const date = new Date(timestamp * 1000);
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   }
 
@@ -113,7 +114,7 @@ export default function decorate(block) {
     const cell = document.createElement('td');
     cell.className = 'date-column';
     
-    const lastModifiedDate = new Date(parseInt(lastModified) * 1000);
+    const lastModifiedDate = new Date(lastModified * 1000);
     const reviewDate = new Date(lastModifiedDate.getTime() + window.siteConfig['$co:defaultreviewperiod'] * 24 * 60 * 60 * 1000);
     
     cell.textContent = formatDate(reviewDate.getTime() / 1000);
@@ -130,7 +131,7 @@ export default function decorate(block) {
     const cell = document.createElement('td');
     cell.className = 'date-column';
     
-    const lastModifiedDate = new Date(parseInt(lastModified) * 1000);
+    const lastModifiedDate = new Date(lastModified * 1000);
     const expiryDate = new Date(lastModifiedDate.getTime() + window.siteConfig['$co:defaultexpiryperiod'] * 24 * 60 * 60 * 1000);
     
     cell.textContent = formatDate(expiryDate.getTime() / 1000);
@@ -147,7 +148,7 @@ export default function decorate(block) {
     if (days < 0) {
       return 'red';
     } else if (days <= 30) {
-      return 'amber';
+      return 'orange';
     } else {
       return 'green';
     }
