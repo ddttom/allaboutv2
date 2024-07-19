@@ -58,11 +58,8 @@
   
   .image-popup {
     display: none;
-    position: absolute;
+    position: fixed;
     z-index: 1000;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
     background-color: #f9f9f9;
     padding: 10px;
     border: 1px solid #ddd;
@@ -75,8 +72,8 @@
   }
   
   .image-popup img {
-    max-width: 200px;
-    max-height: 200px;
+    max-width: 300px;
+    max-height: 300px;
     display: block;
   }
   

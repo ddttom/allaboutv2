@@ -10,6 +10,7 @@ export default function decorate(block) {
       .then(data => {
         const dashboardElement = createDashboard(data);
         dashboardContainer.appendChild(dashboardElement);
+        addPopupListeners();
       })
       .catch(error => console.error('Error fetching data:', error));
   
@@ -101,5 +102,30 @@ export default function decorate(block) {
     function formatDate(timestamp) {
       const date = new Date(parseInt(timestamp) * 1000);
       return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+  
+    function addPopupListeners() {
+      const pathLinks = document.querySelectorAll('.path-link');
+      pathLinks.forEach(link => {
+        link.addEventListener('mousemove', positionPopup);
+        link.addEventListener('mouseleave', hidePopup);
+      });
+    }
+  
+    function positionPopup(event) {
+      const popup = event.currentTarget.querySelector('.image-popup');
+      if (popup) {
+        const rect = event.currentTarget.getBoundingClientRect();
+        popup.style.display = 'block';
+        popup.style.left = `${event.clientX + 10}px`;
+        popup.style.top = `${event.clientY + 10}px`;
+      }
+    }
+  
+    function hidePopup(event) {
+      const popup = event.currentTarget.querySelector('.image-popup');
+      if (popup) {
+        popup.style.display = 'none';
+      }
     }
   }
