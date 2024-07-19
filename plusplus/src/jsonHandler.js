@@ -175,7 +175,12 @@ export async function createJSON() {
       script.type = 'application/ld+json';
       script.setAttribute('data-role', 'content ops');
       let text = replaceTokens(window.siteConfig, coString);
-      text = `"@graph": [{${text}]}`;
+      text = `{
+        "@graph": [
+          {${text}}
+        ]
+      }`;
+    
       script.textContent = text;
       document.head.appendChild(script);
     }
