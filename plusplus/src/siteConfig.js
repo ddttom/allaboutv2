@@ -84,7 +84,7 @@ export async function initializeSiteConfig() {
     window.cmsplus.debug = debugMessage;
   }
 
-  window.fetchVariables = window.location.href.includes('sidekick/library.html');
+  window.fetchVariables = !window.location.href.includes('sidekick/library.html');
   
   window.cmsplus.debug('initializing site config');
   window.cmsplus.callbackPageLoadChain = [];
