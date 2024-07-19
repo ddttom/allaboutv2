@@ -35,7 +35,7 @@ export async function createJSON() {
   window.cmsplus.debug('createJSON');
   const dc = {};
   const co = {};
-
+  const currentDate = new Date();
   const metaTags = document.querySelectorAll('meta');
   metaTags.forEach((metaTag) => {
     let key = metaTag.getAttribute('name') || metaTag.getAttribute('property');
@@ -133,7 +133,7 @@ export async function createJSON() {
     }
   }
   if (getConfigTruth('$meta:enablecontentops$')) {
-    const currentDate = new Date();
+    
     let futureDate = new Date();
     let futurePeriod = '';
     
