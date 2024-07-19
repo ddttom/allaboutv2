@@ -11,13 +11,14 @@ export default function decorate(block) {
       const dashboardElement = createDashboard(data);
       dashboardContainer.appendChild(dashboardElement);
       addPopupListeners();
+      addSortListeners();
     })
     .catch(error => console.error('Error fetching data:', error));
 
   function createDashboard(jsonData) {
     const data = typeof jsonData === 'string' ? JSON.parse(jsonData) : jsonData;
 
-    // Sort data by title
+    // Sort data by title initially
     data.data.sort((a, b) => a.title.localeCompare(b.title));
 
     // Create the main container
@@ -36,11 +37,13 @@ export default function decorate(block) {
     // Create table header
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
-    ['Title', 'Path', 'Description', 'Last Modified', 'Review Date', 'Expiry Date'].forEach(headerText => {
+    ['Title', 'Path', 'Description', 'Last Modified', 'Review Date', 'Expiry Date'].forEach((headerText, index) => {
       const th = document.createElement('th');
       th.textContent = headerText;
+      th.className = 'sortable';
+      th.dataset.column = index;
       if (headerText === 'Last Modified' || headerText === 'Review Date' || headerText === 'Expiry Date') {
-        th.className = 'date-column';
+        th.classList.add('date-column');
       }
       headerRow.appendChild(th);
     });
@@ -90,6 +93,7 @@ export default function decorate(block) {
     const lastModifiedCell = document.createElement('td');
     lastModifiedCell.className = 'date-column';
     lastModifiedCell.textContent = formatDate(item.lastModified);
+    lastModifiedCell.dataset.timestamp = item.lastModified;
 
     const reviewDateCell = createReviewDateCell(item.lastModified);
     const expiryDateCell = createExpiryDateCell(item.lastModified);
@@ -105,7 +109,6 @@ export default function decorate(block) {
   }
 
   function formatDate(timestamp) {
-    // Assuming timestamp is in seconds
     const date = new Date(timestamp * 1000);
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   }
@@ -119,6 +122,7 @@ export default function decorate(block) {
     const reviewDate = new Date(lastModifiedDate.getTime() + reviewPeriod * 24 * 60 * 60 * 1000);
     
     cell.textContent = formatDate(reviewDate.getTime() / 1000);
+    cell.dataset.timestamp = reviewDate.getTime() / 1000;
     
     const today = new Date();
     const daysUntilReview = Math.ceil((reviewDate - today) / (24 * 60 * 60 * 1000));
@@ -137,6 +141,7 @@ export default function decorate(block) {
     const expiryDate = new Date(lastModifiedDate.getTime() + expiryPeriod * 24 * 60 * 60 * 1000);
     
     cell.textContent = formatDate(expiryDate.getTime() / 1000);
+    cell.dataset.timestamp = expiryDate.getTime() / 1000;
     
     const today = new Date();
     const daysUntilExpiry = Math.ceil((expiryDate - today) / (24 * 60 * 60 * 1000));
@@ -179,5 +184,52 @@ export default function decorate(block) {
     if (popup) {
       popup.style.display = 'none';
     }
+  }
+
+  function addSortListeners() {
+    const headers = document.querySelectorAll('.content-table th');
+    headers.forEach(header => {
+      header.addEventListener('click', () => {
+        const column = header.dataset.column;
+        const isAscending = header.classList.contains('asc');
+        sortTable(column, !isAscending);
+      });
+    });
+  }
+
+  function sortTable(column, ascending) {
+    const tbody = document.querySelector('.content-table tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+
+    rows.sort((a, b) => {
+      let aValue = a.children[column].textContent;
+      let bValue = b.children[column].textContent;
+
+      if (column >= 3) {  // Date columns
+        aValue = a.children[column].dataset.timestamp;
+        bValue = b.children[column].dataset.timestamp;
+      }
+
+      if (ascending) {
+        return aValue.localeCompare(bValue);
+      } else {
+        return bValue.localeCompare(aValue);
+      }
+    });
+
+    // Clear the table
+    tbody.innerHTML = '';
+
+    // Add sorted rows
+    rows.forEach(row => tbody.appendChild(row));
+
+    // Update sort indicators
+    const headers = document.querySelectorAll('.content-table th');
+    headers.forEach(header => {
+      header.classList.remove('asc', 'desc');
+      if (header.dataset.column === column) {
+        header.classList.add(ascending ? 'asc' : 'desc');
+      }
+    });
   }
 }

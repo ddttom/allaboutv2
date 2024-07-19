@@ -117,3 +117,22 @@
   white-space: nowrap;
   overflow: visible;
 }
+.sortable {
+  cursor: pointer;
+}
+
+.sortable::after {
+  content: '▲';
+  display: inline-block;
+  margin-left: 5px;
+  visibility: hidden;
+}
+
+.sortable.asc::after {
+  visibility: visible;
+}
+
+.sortable.desc::after {
+  content: '▼';
+  visibility: visible;
+}
