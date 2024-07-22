@@ -137,36 +137,41 @@ export default function decorate(block) {
   function createDateCell(date, className) {
     const cell = document.createElement('td');
     cell.className = `date-cell ${className}`;
-    cell.textContent = formatDate(date);
-    if (cell.textContent === 'Invalid Date') {
+    const formattedDate = typeof date === 'string' ? date : formatDate(new Date(date));
+    cell.textContent = formattedDate;
+    if (formattedDate === 'Invalid Date') {
       cell.classList.add('red');
     }
     return cell;
   }
 
-  function calculateReviewDate(lastModified) {
-    if (!lastModified) return 'Invalid Date';
-    const reviewPeriod = parseInt(window.siteConfig?.['$co:defaultreviewperiod']) || 180;
-    const reviewDate = new Date((lastModified + reviewPeriod * 24 * 60 * 60) * 1000);
-    return isNaN(reviewDate.getTime()) ? 'Invalid Date' : formatDate(reviewDate.getTime() / 1000);
-  }
-  
-  function calculateExpiryDate(lastModified) {
-    if (!lastModified) return 'Invalid Date';
-    const expiryPeriod = parseInt(window.siteConfig?.['$co:defaultexpiryperiod']) || 365;
-    const expiryDate = new Date((lastModified + expiryPeriod * 24 * 60 * 60) * 1000);
-    return isNaN(expiryDate.getTime()) ? 'Invalid Date' : formatDate(expiryDate.getTime() / 1000);
-  }
-  
-  function formatDate(timestamp) {
-    if (!timestamp) return 'Invalid Date';
-    const date = new Date(timestamp * 1000);
-    return isNaN(date.getTime()) ? 'Invalid Date' : date.toLocaleDateString('en-US', {
+  function formatDate(date) {
+    if (!(date instanceof Date) || isNaN(date.getTime())) return 'Invalid Date';
+    return date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
     });
   }
+
+  function calculateReviewDate(lastModified) {
+    if (!lastModified) return 'Invalid Date';
+    const reviewPeriod = parseInt(window.siteConfig?.['$co:defaultreviewperiod']) || 180;
+    const lastModifiedDate = new Date(lastModified);
+    if (isNaN(lastModifiedDate.getTime())) return 'Invalid Date';
+    const reviewDate = new Date(lastModifiedDate.getTime() + reviewPeriod * 24 * 60 * 60 * 1000);
+    return formatDate(reviewDate);
+  }
+
+  function calculateExpiryDate(lastModified) {
+    if (!lastModified) return 'Invalid Date';
+    const expiryPeriod = parseInt(window.siteConfig?.['$co:defaultexpiryperiod']) || 365;
+    const lastModifiedDate = new Date(lastModified);
+    if (isNaN(lastModifiedDate.getTime())) return 'Invalid Date';
+    const expiryDate = new Date(lastModifiedDate.getTime() + expiryPeriod * 24 * 60 * 60 * 1000);
+    return formatDate(expiryDate);
+  }
+
   function addEventListeners() {
     window.addEventListener('resize', handleResponsiveLayout);
     document.getElementById('status-filter').addEventListener('change', filterTable);
@@ -179,7 +184,7 @@ export default function decorate(block) {
     const headers = document.querySelectorAll('.content-table th');
     headers.forEach(header => {
       header.addEventListener('click', () => {
-        const column = header.dataset.column;
+        const column = parseInt(header.dataset.column);
         const isAscending = header.classList.contains('asc');
         sortTable(column, !isAscending);
       });
@@ -267,9 +272,9 @@ export default function decorate(block) {
       }
 
       if (ascending) {
-        return aValue > bValue ? 1 : -1;
+        return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
       } else {
-        return aValue < bValue ? 1 : -1;
+        return aValue < bValue ? 1 : aValue > bValue ? -1 : 0;
       }
     });
 
