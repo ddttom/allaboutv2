@@ -101,6 +101,7 @@
   .card-layout td {
     display: block;
     width: 100%;
+    box-sizing: border-box;
   }
 
   .card-layout tr {
@@ -113,7 +114,8 @@
 
   .card-layout td {
     position: relative;
-    padding: 10px 10px 10px 50%;
+    padding: 10px 10px 10px 120px;
+    min-height: 30px;
     text-align: left;
     border: none;
     border-bottom: 1px solid #eee;
@@ -127,7 +129,7 @@
     content: attr(data-label);
     position: absolute;
     left: 6px;
-    width: 45%;
+    width: 110px;
     padding-right: 10px;
     white-space: nowrap;
     text-align: left;
@@ -135,16 +137,18 @@
     text-transform: capitalize;
   }
 
-  .card-layout .path-cell {
+  .card-layout .path-cell,
+  .card-layout .description-cell,
+  .card-layout .title-cell {
     max-width: none;
     overflow: visible;
     text-overflow: clip;
     white-space: normal;
+    word-wrap: break-word;
   }
 
-  .card-layout .description-cell {
-    white-space: normal;
-    word-wrap: break-word;
+  .card-layout .path-link {
+    word-break: break-all;
   }
 }
 
