@@ -4,11 +4,13 @@ export default function decorate(block) {
   let mouseX = 0;
   let mouseY = 0;
   let activePopup = null;
+  let data = null;
 
   // Fetch JSON data and create dashboard
   fetch(jsonUrl)
     .then(response => response.json())
-    .then(data => {
+    .then(jsonData => {
+      data = jsonData.data;
       const dashboardElement = createDashboard(data);
       dashboardContainer.appendChild(dashboardElement);
       addEventListeners();
@@ -64,6 +66,7 @@ export default function decorate(block) {
     ['Title', 'Path', 'Description', 'Last Modified', 'Review Date', 'Expiry Date'].forEach((text, index) => {
       const th = document.createElement('th');
       th.textContent = text;
+      th.className = 'sortable';
       th.dataset.column = index;
       headerRow.appendChild(th);
     });
@@ -71,7 +74,7 @@ export default function decorate(block) {
     table.appendChild(thead);
 
     const tbody = document.createElement('tbody');
-    data.data.forEach(item => {
+    data.forEach(item => {
       const row = createTableRow(item);
       tbody.appendChild(row);
     });
@@ -172,6 +175,14 @@ export default function decorate(block) {
       link.addEventListener('mouseenter', showPopup);
       link.addEventListener('mouseleave', hidePopup);
     });
+    const headers = document.querySelectorAll('.content-table th');
+    headers.forEach(header => {
+      header.addEventListener('click', () => {
+        const column = header.dataset.column;
+        const isAscending = header.classList.contains('asc');
+        sortTable(column, !isAscending);
+      });
+    });
   }
 
   function updateMousePosition(event) {
@@ -239,5 +250,40 @@ export default function decorate(block) {
                       (filterValue === 'red' && (reviewDateCell.classList.contains('red') || expiryDateCell.classList.contains('red')));
       row.style.display = showRow ? '' : 'none';
     });
+  }
+
+  function sortTable(column, ascending) {
+    const tbody = document.querySelector('.content-table tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+
+    rows.sort((a, b) => {
+      let aValue = a.children[column].textContent.trim();
+      let bValue = b.children[column].textContent.trim();
+
+      if (column >= 3) {  // Date columns
+        aValue = new Date(aValue).getTime();
+        bValue = new Date(bValue).getTime();
+      }
+
+      if (ascending) {
+        return aValue > bValue ? 1 : -1;
+      } else {
+        return aValue < bValue ? 1 : -1;
+      }
+    });
+
+    // Clear the table
+    tbody.innerHTML = '';
+
+    // Add sorted rows
+    rows.forEach(row => tbody.appendChild(row));
+
+    // Update sort indicators
+    const headers = document.querySelectorAll('.content-table th');
+    headers.forEach(header => {
+      header.classList.remove('asc', 'desc');
+    });
+    const sortedHeader = document.querySelector(`.content-table th[data-column="${column}"]`);
+    sortedHeader.classList.add(ascending ? 'asc' : 'desc');
   }
 }

@@ -91,6 +91,32 @@
   display: block;
 }
 
+.sortable {
+  cursor: pointer;
+  position: relative;
+  padding-right: 18px;
+}
+
+.sortable::after {
+  content: '\25B2';
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8em;
+  color: #999;
+}
+
+.sortable.asc::after {
+  content: '\25B2';
+  color: #333;
+}
+
+.sortable.desc::after {
+  content: '\25BC';
+  color: #333;
+}
+
 @media (max-width: 1023px) {
   .card-layout {
     border: none;
@@ -153,7 +179,3 @@
     white-space: normal;
   }
 }
-
-.green { background-color: #90EE90; }
-.amber { background-color: #FFBF00; }
-.red { background-color: #FF6347; }
