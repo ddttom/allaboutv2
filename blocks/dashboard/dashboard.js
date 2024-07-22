@@ -10,6 +10,7 @@ export default function decorate(block) {
   fetch(jsonUrl)
     .then(response => response.json())
     .then(jsonData => {
+      console.log('Fetched data:', jsonData);
       data = jsonData.data;
       const dashboardElement = createDashboard(data);
       dashboardContainer.appendChild(dashboardElement);
@@ -19,6 +20,7 @@ export default function decorate(block) {
     .catch(error => console.error('Error fetching data:', error));
 
   function createDashboard(data) {
+    console.log('Creating dashboard with data:', data);
     const dashboard = document.createElement('div');
     dashboard.className = 'dashboard';
 
@@ -84,6 +86,7 @@ export default function decorate(block) {
   }
 
   function createTableRow(item) {
+    console.log('createTableRow item:', item);
     const row = document.createElement('tr');
 
     const titleCell = createCell(item.title, 'title-cell');
@@ -135,9 +138,11 @@ export default function decorate(block) {
   }
 
   function createDateCell(date, className) {
+    console.log('createDateCell input:', date, className);
     const cell = document.createElement('td');
     cell.className = `date-cell ${className}`;
-    const formattedDate = typeof date === 'string' ? date : formatDate(new Date(date));
+    const formattedDate = typeof date === 'string' ? date : formatDate(parseDate(date));
+    console.log('createDateCell formattedDate:', formattedDate);
     cell.textContent = formattedDate;
     if (formattedDate === 'Invalid Date') {
       cell.classList.add('red');
@@ -145,31 +150,76 @@ export default function decorate(block) {
     return cell;
   }
 
+  function calculateReviewDate(lastModified) {
+    console.log('calculateReviewDate input:', lastModified);
+    if (!lastModified) {
+      console.log('calculateReviewDate: lastModified is falsy');
+      return 'Invalid Date';
+    }
+    const reviewPeriod = parseInt(window.siteConfig?.['$co:defaultreviewperiod']) || 180;
+    console.log('Review period:', reviewPeriod);
+    const lastModifiedDate = parseDate(lastModified);
+    console.log('Parsed lastModifiedDate:', lastModifiedDate);
+    if (!lastModifiedDate) {
+      console.log('calculateReviewDate: lastModifiedDate is invalid');
+      return 'Invalid Date';
+    }
+    const reviewDate = new Date(lastModifiedDate.getTime() + reviewPeriod * 24 * 60 * 60 * 1000);
+    console.log('Calculated reviewDate:', reviewDate);
+    const formattedReviewDate = formatDate(reviewDate);
+    console.log('Formatted reviewDate:', formattedReviewDate);
+    return formattedReviewDate;
+  }
+
+  function calculateExpiryDate(lastModified) {
+    console.log('calculateExpiryDate input:', lastModified);
+    if (!lastModified) {
+      console.log('calculateExpiryDate: lastModified is falsy');
+      return 'Invalid Date';
+    }
+    const expiryPeriod = parseInt(window.siteConfig?.['$co:defaultexpiryperiod']) || 365;
+    console.log('Expiry period:', expiryPeriod);
+    const lastModifiedDate = parseDate(lastModified);
+    console.log('Parsed lastModifiedDate:', lastModifiedDate);
+    if (!lastModifiedDate) {
+      console.log('calculateExpiryDate: lastModifiedDate is invalid');
+      return 'Invalid Date';
+    }
+    const expiryDate = new Date(lastModifiedDate.getTime() + expiryPeriod * 24 * 60 * 60 * 1000);
+    console.log('Calculated expiryDate:', expiryDate);
+    const formattedExpiryDate = formatDate(expiryDate);
+    console.log('Formatted expiryDate:', formattedExpiryDate);
+    return formattedExpiryDate;
+  }
+
+  function parseDate(dateString) {
+    console.log('parseDate input:', dateString);
+    if (dateString instanceof Date) {
+      console.log('parseDate: input is already a Date object');
+      return dateString;
+    }
+    const parsedDate = new Date(dateString);
+    console.log('parseDate result:', parsedDate);
+    if (isNaN(parsedDate.getTime())) {
+      console.log('parseDate: parsed date is invalid');
+      return null;
+    }
+    return parsedDate;
+  }
+
   function formatDate(date) {
-    if (!(date instanceof Date) || isNaN(date.getTime())) return 'Invalid Date';
-    return date.toLocaleDateString('en-US', {
+    console.log('formatDate input:', date);
+    if (!(date instanceof Date) || isNaN(date.getTime())) {
+      console.log('formatDate: invalid date');
+      return 'Invalid Date';
+    }
+    const formatted = date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
     });
-  }
-
-  function calculateReviewDate(lastModified) {
-    if (!lastModified) return 'Invalid Date';
-    const reviewPeriod = parseInt(window.siteConfig?.['$co:defaultreviewperiod']) || 180;
-    const lastModifiedDate = new Date(lastModified);
-    if (isNaN(lastModifiedDate.getTime())) return 'Invalid Date';
-    const reviewDate = new Date(lastModifiedDate.getTime() + reviewPeriod * 24 * 60 * 60 * 1000);
-    return formatDate(reviewDate);
-  }
-
-  function calculateExpiryDate(lastModified) {
-    if (!lastModified) return 'Invalid Date';
-    const expiryPeriod = parseInt(window.siteConfig?.['$co:defaultexpiryperiod']) || 365;
-    const lastModifiedDate = new Date(lastModified);
-    if (isNaN(lastModifiedDate.getTime())) return 'Invalid Date';
-    const expiryDate = new Date(lastModifiedDate.getTime() + expiryPeriod * 24 * 60 * 60 * 1000);
-    return formatDate(expiryDate);
+    console.log('formatDate result:', formatted);
+    return formatted;
   }
 
   function addEventListeners() {
