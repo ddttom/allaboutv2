@@ -134,7 +134,6 @@
     white-space: nowrap;
     text-align: left;
     font-weight: bold;
-    text-transform: capitalize;
   }
 
   .card-layout .path-cell,

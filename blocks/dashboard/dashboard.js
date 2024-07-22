@@ -86,25 +86,28 @@ export default function decorate(block) {
   }
   function createTableRow(item) {
     const row = document.createElement('tr');
-
+  
     const titleCell = createCell(item.title, 'title-cell');
     const pathCell = createPathCell(item.path, item.image);
     const descriptionCell = createCell(item.description, 'description-cell');
     const lastModifiedCell = createDateCell(item.lastModified, 'last-modified-cell');
     const reviewDateCell = createDateCell(calculateReviewDate(item.lastModified), 'review-date-cell');
     const expiryDateCell = createDateCell(calculateExpiryDate(item.lastModified), 'expiry-date-cell');
-
-    [titleCell, pathCell, descriptionCell, lastModifiedCell, reviewDateCell, expiryDateCell].forEach(cell => {
-      cell.setAttribute('data-label', cell.className.split('-')[0]);
-    });
-
+  
+    titleCell.setAttribute('data-label', 'Title');
+    pathCell.setAttribute('data-label', 'Path');
+    descriptionCell.setAttribute('data-label', 'Description');
+    lastModifiedCell.setAttribute('data-label', 'Last Modified');
+    reviewDateCell.setAttribute('data-label', 'Review');
+    expiryDateCell.setAttribute('data-label', 'Expiry');
+  
     row.appendChild(titleCell);
     row.appendChild(pathCell);
     row.appendChild(descriptionCell);
     row.appendChild(lastModifiedCell);
     row.appendChild(reviewDateCell);
     row.appendChild(expiryDateCell);
-
+  
     return row;
   }
   function createCell(text, className) {
