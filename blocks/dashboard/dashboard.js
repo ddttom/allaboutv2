@@ -19,6 +19,8 @@ export default function decorate(block) {
       // Indicate initial sort
       const titleHeader = document.querySelector('.content-table th[data-column="0"]');
       titleHeader.classList.add('asc');
+      handleResponsiveLayout();
+      window.addEventListener('resize', handleResponsiveLayout);
     })
     .catch(error => console.error('Error fetching data:', error));
 
@@ -75,9 +77,11 @@ export default function decorate(block) {
 
   function createTableRow(item) {
     const row = document.createElement('tr');
+    row.className = 'table-row';
 
     const titleCell = document.createElement('td');
     titleCell.textContent = item.title;
+    titleCell.className = 'title-cell';
 
     const pathCell = document.createElement('td');
     const pathLink = document.createElement('a');
@@ -97,12 +101,14 @@ export default function decorate(block) {
     }
     
     pathCell.appendChild(pathLink);
+    pathCell.className = 'path-cell';
 
     const descriptionCell = document.createElement('td');
     descriptionCell.textContent = item.description;
+    descriptionCell.className = 'description-cell';
 
     const lastModifiedCell = document.createElement('td');
-    lastModifiedCell.className = 'date-column';
+    lastModifiedCell.className = 'date-column last-modified-cell';
     lastModifiedCell.textContent = formatDate(item.lastModified);
     lastModifiedCell.dataset.timestamp = item.lastModified;
 
@@ -126,7 +132,7 @@ export default function decorate(block) {
 
   function createReviewDateCell(lastModified) {
     const cell = document.createElement('td');
-    cell.className = 'date-column';
+    cell.className = 'date-column review-date-cell';
     
     const lastModifiedDate = new Date(lastModified * 1000);
     const reviewPeriod = parseInt(window.siteConfig['$co:defaultreviewperiod']) || 0;
@@ -145,7 +151,7 @@ export default function decorate(block) {
 
   function createExpiryDateCell(lastModified) {
     const cell = document.createElement('td');
-    cell.className = 'date-column';
+    cell.className = 'date-column expiry-date-cell';
     
     const lastModifiedDate = new Date(lastModified * 1000);
     const expiryPeriod = parseInt(window.siteConfig['$co:defaultexpiryperiod']) || 0;
@@ -339,5 +345,39 @@ export default function decorate(block) {
 
       row.style.display = showRow() ? '' : 'none';
     });
+  }
+
+  function handleResponsiveLayout() {
+    const dashboard = document.querySelector('.dashboard');
+    const table = document.querySelector('.content-table');
+    const rows = document.querySelectorAll('.table-row');
+
+    if (window.innerWidth < 1024) {
+      dashboard.classList.add('card-view');
+      table.classList.add('card-layout');
+      rows.forEach(row => {
+        row.classList.add('card');
+        const cells = row.querySelectorAll('td');
+        cells.forEach(cell => {
+          const label = document.createElement('span');
+          label.className = 'card-label';
+          label.textContent = cell.cellIndex === 0 ? 'Title: ' :
+                              cell.cellIndex === 1 ? 'Path: ' :
+                              cell.cellIndex === 2 ? 'Description: ' :
+                              cell.cellIndex === 3 ? 'Last Modified: ' :
+                              cell.cellIndex === 4 ? 'Review Date: ' :
+                              'Expiry Date: ';
+          cell.insertBefore(label, cell.firstChild);
+        });
+      });
+    } else {
+      dashboard.classList.remove('card-view');
+      table.classList.remove('card-layout');
+      rows.forEach(row => {
+        row.classList.remove('card');
+        const labels = row.querySelectorAll('.card-label');
+        labels.forEach(label => label.remove());
+      });
+    }
   }
 }
