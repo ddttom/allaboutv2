@@ -92,6 +92,10 @@
   text-decoration: underline;
 }
 
+.date-cell {
+  white-space: nowrap;
+}
+
 .image-popup {
   display: none;
   position: fixed;
@@ -171,6 +175,13 @@
 
   .card-layout .path-link {
     word-break: break-all;
+  }
+
+  .card-layout .date-cell {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    white-space: nowrap;
   }
 }
 
