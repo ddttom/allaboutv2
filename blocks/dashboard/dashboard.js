@@ -141,13 +141,51 @@ export default function decorate(block) {
     console.log('createDateCell input:', date, className);
     const cell = document.createElement('td');
     cell.className = `date-cell ${className}`;
-    const formattedDate = typeof date === 'string' ? date : formatDate(parseDate(date));
+    const parsedDate = parseDate(date);
+    const formattedDate = parsedDate ? formatDate(parsedDate) : 'Invalid Date';
     console.log('createDateCell formattedDate:', formattedDate);
     cell.textContent = formattedDate;
     if (formattedDate === 'Invalid Date') {
       cell.classList.add('red');
     }
     return cell;
+  }
+
+  function parseDate(dateInput) {
+    console.log('parseDate input:', dateInput);
+    if (dateInput instanceof Date) {
+      console.log('parseDate: input is already a Date object');
+      return dateInput;
+    }
+    // Check if the input is a Unix timestamp (seconds since epoch)
+    if (typeof dateInput === 'number' || (typeof dateInput === 'string' && !isNaN(dateInput))) {
+      const timestamp = typeof dateInput === 'string' ? parseInt(dateInput, 10) : dateInput;
+      const parsedDate = new Date(timestamp * 1000); // Convert seconds to milliseconds
+      console.log('parseDate result (from Unix timestamp):', parsedDate);
+      return parsedDate;
+    }
+    const parsedDate = new Date(dateInput);
+    console.log('parseDate result:', parsedDate);
+    if (isNaN(parsedDate.getTime())) {
+      console.log('parseDate: parsed date is invalid');
+      return null;
+    }
+    return parsedDate;
+  }
+
+  function formatDate(date) {
+    console.log('formatDate input:', date);
+    if (!(date instanceof Date) || isNaN(date.getTime())) {
+      console.log('formatDate: invalid date');
+      return 'Invalid Date';
+    }
+    const formatted = date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+    console.log('formatDate result:', formatted);
+    return formatted;
   }
 
   function calculateReviewDate(lastModified) {
@@ -190,36 +228,6 @@ export default function decorate(block) {
     const formattedExpiryDate = formatDate(expiryDate);
     console.log('Formatted expiryDate:', formattedExpiryDate);
     return formattedExpiryDate;
-  }
-
-  function parseDate(dateString) {
-    console.log('parseDate input:', dateString);
-    if (dateString instanceof Date) {
-      console.log('parseDate: input is already a Date object');
-      return dateString;
-    }
-    const parsedDate = new Date(dateString);
-    console.log('parseDate result:', parsedDate);
-    if (isNaN(parsedDate.getTime())) {
-      console.log('parseDate: parsed date is invalid');
-      return null;
-    }
-    return parsedDate;
-  }
-
-  function formatDate(date) {
-    console.log('formatDate input:', date);
-    if (!(date instanceof Date) || isNaN(date.getTime())) {
-      console.log('formatDate: invalid date');
-      return 'Invalid Date';
-    }
-    const formatted = date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-    console.log('formatDate result:', formatted);
-    return formatted;
   }
 
   function addEventListeners() {
