@@ -43,6 +43,29 @@
 .content-table th {
   background-color: #f2f2f2;
   font-weight: bold;
+  position: relative;
+  padding-right: 20px; /* Make room for sort indicator */
+  cursor: pointer;
+}
+
+.content-table th::after {
+  content: '\2195'; /* Unicode for up/down arrow */
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8em;
+  color: #999;
+}
+
+.content-table th.asc::after {
+  content: '\2191'; /* Unicode for up arrow */
+  color: #333;
+}
+
+.content-table th.desc::after {
+  content: '\2193'; /* Unicode for down arrow */
+  color: #333;
 }
 
 .content-table tr:nth-child(even) {
@@ -89,32 +112,6 @@
   max-width: 300px;
   max-height: 300px;
   display: block;
-}
-
-.sortable {
-  cursor: pointer;
-  position: relative;
-  padding-right: 18px;
-}
-
-.sortable::after {
-  content: '\25B2';
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 0.8em;
-  color: #999;
-}
-
-.sortable.asc::after {
-  content: '\25B2';
-  color: #333;
-}
-
-.sortable.desc::after {
-  content: '\25BC';
-  color: #333;
 }
 
 @media (max-width: 1023px) {
@@ -179,3 +176,7 @@
     white-space: normal;
   }
 }
+
+.green { background-color: #90EE90; }
+.amber { background-color: #FFBF00; }
+.red { background-color: #FF6347; }

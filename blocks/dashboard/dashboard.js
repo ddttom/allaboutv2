@@ -178,7 +178,7 @@ export default function decorate(block) {
     const headers = document.querySelectorAll('.content-table th');
     headers.forEach(header => {
       header.addEventListener('click', () => {
-        const column = header.dataset.column;
+        const column = parseInt(header.dataset.column);
         const isAscending = header.classList.contains('asc');
         sortTable(column, !isAscending);
       });
@@ -266,9 +266,9 @@ export default function decorate(block) {
       }
 
       if (ascending) {
-        return aValue > bValue ? 1 : -1;
+        return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
       } else {
-        return aValue < bValue ? 1 : -1;
+        return aValue < bValue ? 1 : aValue > bValue ? -1 : 0;
       }
     });
 
