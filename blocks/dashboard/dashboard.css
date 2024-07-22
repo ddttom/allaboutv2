@@ -43,6 +43,29 @@
 .content-table th {
   background-color: #f2f2f2;
   font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  padding-right: 20px; /* Make room for sort indicator */
+}
+
+.content-table th::after {
+  content: '\2195'; /* Unicode for up/down arrow */
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8em;
+  color: #999;
+}
+
+.content-table th.asc::after {
+  content: '\2191'; /* Unicode for up arrow */
+  color: #333;
+}
+
+.content-table th.desc::after {
+  content: '\2193'; /* Unicode for down arrow */
+  color: #333;
 }
 
 .content-table tr:nth-child(even) {

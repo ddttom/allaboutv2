@@ -10,17 +10,19 @@ export default function decorate(block) {
   fetch(jsonUrl)
     .then(response => response.json())
     .then(jsonData => {
-      console.log('Fetched data:', jsonData);
       data = jsonData.data;
       const dashboardElement = createDashboard(data);
       dashboardContainer.appendChild(dashboardElement);
       addEventListeners();
       handleResponsiveLayout();
+      
+      // Sort initially by Title
+      sortTable(0, true);
+      document.querySelector('.content-table th[data-column="0"]').classList.add('asc');
     })
     .catch(error => console.error('Error fetching data:', error));
 
   function createDashboard(data) {
-    console.log('Creating dashboard with data:', data);
     const dashboard = document.createElement('div');
     dashboard.className = 'dashboard';
 
@@ -65,7 +67,7 @@ export default function decorate(block) {
 
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
-    ['Title', 'Path', 'Description', 'Last Modified', 'Review Date', 'Expiry Date'].forEach((text, index) => {
+    ['Title', 'Path', 'Description', 'Last Modified', 'Review', 'Expiry'].forEach((text, index) => {
       const th = document.createElement('th');
       th.textContent = text;
       th.className = 'sortable';
@@ -84,32 +86,34 @@ export default function decorate(block) {
 
     return table;
   }
+
   function createTableRow(item) {
     const row = document.createElement('tr');
-  
+
     const titleCell = createCell(item.title, 'title-cell');
     const pathCell = createPathCell(item.path, item.image);
     const descriptionCell = createCell(item.description, 'description-cell');
     const lastModifiedCell = createDateCell(item.lastModified, 'last-modified-cell');
     const reviewDateCell = createDateCell(calculateReviewDate(item.lastModified), 'review-date-cell');
     const expiryDateCell = createDateCell(calculateExpiryDate(item.lastModified), 'expiry-date-cell');
-  
+
     titleCell.setAttribute('data-label', 'Title');
     pathCell.setAttribute('data-label', 'Path');
     descriptionCell.setAttribute('data-label', 'Description');
     lastModifiedCell.setAttribute('data-label', 'Last Modified');
     reviewDateCell.setAttribute('data-label', 'Review');
     expiryDateCell.setAttribute('data-label', 'Expiry');
-  
+
     row.appendChild(titleCell);
     row.appendChild(pathCell);
     row.appendChild(descriptionCell);
     row.appendChild(lastModifiedCell);
     row.appendChild(reviewDateCell);
     row.appendChild(expiryDateCell);
-  
+
     return row;
   }
+
   function createCell(text, className) {
     const cell = document.createElement('td');
     cell.textContent = text;
@@ -142,12 +146,10 @@ export default function decorate(block) {
   }
 
   function createDateCell(date, className) {
-    console.log('createDateCell input:', date, className);
     const cell = document.createElement('td');
     cell.className = `date-cell ${className}`;
     const parsedDate = parseDate(date);
     const formattedDate = parsedDate ? formatDate(parsedDate) : 'Invalid Date';
-    console.log('createDateCell formattedDate:', formattedDate);
     cell.textContent = formattedDate;
     if (formattedDate === 'Invalid Date') {
       cell.classList.add('red');
@@ -156,77 +158,51 @@ export default function decorate(block) {
   }
 
   function parseDate(dateInput) {
-    console.log('parseDate input:', dateInput);
     if (dateInput instanceof Date) {
-      console.log('parseDate: input is already a Date object');
       return dateInput;
     }
-    // Check if the input is a Unix timestamp (seconds since epoch)
     if (typeof dateInput === 'number' || (typeof dateInput === 'string' && !isNaN(dateInput))) {
       const timestamp = typeof dateInput === 'string' ? parseInt(dateInput, 10) : dateInput;
-      const parsedDate = new Date(timestamp * 1000); // Convert seconds to milliseconds
-      console.log('parseDate result (from Unix timestamp):', parsedDate);
-      return parsedDate;
+      return new Date(timestamp * 1000);
     }
     const parsedDate = new Date(dateInput);
-    console.log('parseDate result:', parsedDate);
-    if (isNaN(parsedDate.getTime())) {
-      console.log('parseDate: parsed date is invalid');
-      return null;
-    }
-    return parsedDate;
+    return isNaN(parsedDate.getTime()) ? null : parsedDate;
   }
 
   function formatDate(date) {
-    console.log('formatDate input:', date);
     if (!(date instanceof Date) || isNaN(date.getTime())) {
-      console.log('formatDate: invalid date');
       return 'Invalid Date';
     }
-    const formatted = date.toLocaleDateString('en-US', {
+    return date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
     });
-    console.log('formatDate result:', formatted);
-    return formatted;
   }
 
   function calculateReviewDate(lastModified) {
-    console.log('calculateReviewDate input:', lastModified);
     if (!lastModified) {
-      console.log('calculateReviewDate: lastModified is falsy');
       return 'Invalid Date';
     }
     const reviewPeriod = parseInt(window.siteConfig?.['$co:defaultreviewperiod']) || 300;
-    console.log('Review period:', reviewPeriod);
     const lastModifiedDate = parseDate(lastModified);
-    console.log('Parsed lastModifiedDate:', lastModifiedDate);
     if (!lastModifiedDate) {
-      console.log('calculateReviewDate: lastModifiedDate is invalid');
       return 'Invalid Date';
     }
     const reviewDate = new Date(lastModifiedDate.getTime() + reviewPeriod * 24 * 60 * 60 * 1000);
-    console.log('Calculated reviewDate:', reviewDate);
     return formatDate(reviewDate);
   }
 
   function calculateExpiryDate(lastModified) {
-    console.log('calculateExpiryDate input:', lastModified);
     if (!lastModified) {
-      console.log('calculateExpiryDate: lastModified is falsy');
       return 'Invalid Date';
     }
     const expiryPeriod = parseInt(window.siteConfig?.['$co:defaultexpiryperiod']) || 365;
-    console.log('Expiry period:', expiryPeriod);
     const lastModifiedDate = parseDate(lastModified);
-    console.log('Parsed lastModifiedDate:', lastModifiedDate);
     if (!lastModifiedDate) {
-      console.log('calculateExpiryDate: lastModifiedDate is invalid');
       return 'Invalid Date';
     }
     const expiryDate = new Date(lastModifiedDate.getTime() + expiryPeriod * 24 * 60 * 60 * 1000);
-    console.log('Calculated expiryDate:', expiryDate);
     return formatDate(expiryDate);
   }
 
@@ -336,13 +312,9 @@ export default function decorate(block) {
       }
     });
 
-    // Clear the table
     tbody.innerHTML = '';
-
-    // Add sorted rows
     rows.forEach(row => tbody.appendChild(row));
 
-    // Update sort indicators
     const headers = document.querySelectorAll('.content-table th');
     headers.forEach(header => {
       header.classList.remove('asc', 'desc');
