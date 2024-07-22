@@ -84,9 +84,7 @@ export default function decorate(block) {
 
     return table;
   }
-
   function createTableRow(item) {
-    console.log('createTableRow item:', item);
     const row = document.createElement('tr');
 
     const titleCell = createCell(item.title, 'title-cell');
@@ -95,6 +93,10 @@ export default function decorate(block) {
     const lastModifiedCell = createDateCell(item.lastModified, 'last-modified-cell');
     const reviewDateCell = createDateCell(calculateReviewDate(item.lastModified), 'review-date-cell');
     const expiryDateCell = createDateCell(calculateExpiryDate(item.lastModified), 'expiry-date-cell');
+
+    [titleCell, pathCell, descriptionCell, lastModifiedCell, reviewDateCell, expiryDateCell].forEach(cell => {
+      cell.setAttribute('data-label', cell.className.split('-')[0]);
+    });
 
     row.appendChild(titleCell);
     row.appendChild(pathCell);
@@ -105,7 +107,6 @@ export default function decorate(block) {
 
     return row;
   }
-
   function createCell(text, className) {
     const cell = document.createElement('td');
     cell.textContent = text;
