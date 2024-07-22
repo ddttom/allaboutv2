@@ -297,7 +297,7 @@ export default function decorate(block) {
     const select = document.createElement('select');
     select.id = 'status-filter';
     
-    const options = ['All', 'Green', 'Red'];
+    const options = ['All', 'Green', 'Amber', 'Red'];
     options.forEach(option => {
       const optionElement = document.createElement('option');
       optionElement.value = option.toLowerCase();
@@ -322,13 +322,22 @@ export default function decorate(block) {
       const reviewDateCell = row.querySelector('td:nth-child(5)');
       const expiryDateCell = row.querySelector('td:nth-child(6)');
 
-      if (filterValue === 'all') {
-        row.style.display = '';
-      } else if (filterValue === 'green') {
-        row.style.display = (reviewDateCell.style.backgroundColor === 'green' && expiryDateCell.style.backgroundColor === 'green') ? '' : 'none';
-      } else if (filterValue === 'red') {
-        row.style.display = (reviewDateCell.style.backgroundColor === 'red' || expiryDateCell.style.backgroundColor === 'red') ? '' : 'none';
-      }
+      const showRow = () => {
+        switch (filterValue) {
+          case 'all':
+            return true;
+          case 'green':
+            return reviewDateCell.style.backgroundColor === 'green' && expiryDateCell.style.backgroundColor === 'green';
+          case 'amber':
+            return reviewDateCell.style.backgroundColor === 'orange' || expiryDateCell.style.backgroundColor === 'orange';
+          case 'red':
+            return reviewDateCell.style.backgroundColor === 'red' || expiryDateCell.style.backgroundColor === 'red';
+          default:
+            return true;
+        }
+      };
+
+      row.style.display = showRow() ? '' : 'none';
     });
   }
 }
