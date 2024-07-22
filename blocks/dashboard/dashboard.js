@@ -194,7 +194,7 @@ export default function decorate(block) {
       console.log('calculateReviewDate: lastModified is falsy');
       return 'Invalid Date';
     }
-    const reviewPeriod = parseInt(window.siteConfig?.['$co:defaultreviewperiod']) || 180;
+    const reviewPeriod = parseInt(window.siteConfig?.['$co:defaultreviewperiod']) || 300;
     console.log('Review period:', reviewPeriod);
     const lastModifiedDate = parseDate(lastModified);
     console.log('Parsed lastModifiedDate:', lastModifiedDate);
@@ -204,9 +204,7 @@ export default function decorate(block) {
     }
     const reviewDate = new Date(lastModifiedDate.getTime() + reviewPeriod * 24 * 60 * 60 * 1000);
     console.log('Calculated reviewDate:', reviewDate);
-    const formattedReviewDate = formatDate(reviewDate);
-    console.log('Formatted reviewDate:', formattedReviewDate);
-    return formattedReviewDate;
+    return formatDate(reviewDate);
   }
 
   function calculateExpiryDate(lastModified) {
@@ -225,9 +223,7 @@ export default function decorate(block) {
     }
     const expiryDate = new Date(lastModifiedDate.getTime() + expiryPeriod * 24 * 60 * 60 * 1000);
     console.log('Calculated expiryDate:', expiryDate);
-    const formattedExpiryDate = formatDate(expiryDate);
-    console.log('Formatted expiryDate:', formattedExpiryDate);
-    return formattedExpiryDate;
+    return formatDate(expiryDate);
   }
 
   function addEventListeners() {
