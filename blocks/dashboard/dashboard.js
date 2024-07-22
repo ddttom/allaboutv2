@@ -1,6 +1,9 @@
 export default function decorate(block) {
   const dashboardContainer = block.querySelector('.dashboard-container') || block;
   const jsonUrl = '/query-index.json';
+  let mouseX = 0;
+  let mouseY = 0;
+  let activePopup = null;
 
   // Fetch JSON data and create dashboard
   fetch(jsonUrl)
@@ -80,26 +83,62 @@ export default function decorate(block) {
   function createTableRow(item) {
     const row = document.createElement('tr');
 
-    const cells = [
-      { text: item.title, class: 'title-cell' },
-      { text: item.path, class: 'path-cell' },
-      { text: item.description, class: 'description-cell' },
-      { text: formatDate(item.lastModified), class: 'date-cell last-modified-cell' },
-      { text: calculateReviewDate(item.lastModified), class: 'date-cell review-date-cell' },
-      { text: calculateExpiryDate(item.lastModified), class: 'date-cell expiry-date-cell' }
-    ];
+    const titleCell = createCell(item.title, 'title-cell');
+    const pathCell = createPathCell(item.path, item.image);
+    const descriptionCell = createCell(item.description, 'description-cell');
+    const lastModifiedCell = createDateCell(item.lastModified, 'last-modified-cell');
+    const reviewDateCell = createDateCell(calculateReviewDate(item.lastModified), 'review-date-cell');
+    const expiryDateCell = createDateCell(calculateExpiryDate(item.lastModified), 'expiry-date-cell');
 
-    cells.forEach(cellData => {
-      const td = document.createElement('td');
-      td.textContent = cellData.text;
-      td.className = cellData.class;
-      if (cellData.text === 'Invalid Date') {
-        td.classList.add('red');
-      }
-      row.appendChild(td);
-    });
+    row.appendChild(titleCell);
+    row.appendChild(pathCell);
+    row.appendChild(descriptionCell);
+    row.appendChild(lastModifiedCell);
+    row.appendChild(reviewDateCell);
+    row.appendChild(expiryDateCell);
 
     return row;
+  }
+
+  function createCell(text, className) {
+    const cell = document.createElement('td');
+    cell.textContent = text;
+    cell.className = className;
+    return cell;
+  }
+
+  function createPathCell(path, image) {
+    const cell = document.createElement('td');
+    cell.className = 'path-cell';
+
+    const link = document.createElement('a');
+    link.href = path;
+    link.className = 'path-link';
+    link.textContent = path.length > 20 ? path.substring(0, 17) + '...' : path;
+    link.title = path;
+
+    if (image) {
+      const popup = document.createElement('div');
+      popup.className = 'image-popup';
+      const img = document.createElement('img');
+      img.src = image;
+      img.alt = 'Preview';
+      popup.appendChild(img);
+      link.appendChild(popup);
+    }
+
+    cell.appendChild(link);
+    return cell;
+  }
+
+  function createDateCell(date, className) {
+    const cell = document.createElement('td');
+    cell.className = `date-cell ${className}`;
+    cell.textContent = formatDate(date);
+    if (cell.textContent === 'Invalid Date') {
+      cell.classList.add('red');
+    }
+    return cell;
   }
 
   function formatDate(timestamp) {
@@ -114,21 +153,66 @@ export default function decorate(block) {
 
   function calculateReviewDate(lastModified) {
     if (!lastModified) return 'Invalid Date';
-    const reviewPeriod = parseInt(window.siteConfig?.['$co:defaultreviewperiod']) || 180; // Default to 180 days if not set
-    const reviewDate = new Date((lastModified + reviewPeriod * 24 * 60 * 60) * 1000);
-    return isNaN(reviewDate.getTime()) ? 'Invalid Date' : formatDate(reviewDate.getTime() / 1000);
+    const reviewPeriod = parseInt(window.siteConfig?.['$co:defaultreviewperiod']) || 180;
+    return lastModified + reviewPeriod * 24 * 60 * 60;
   }
 
   function calculateExpiryDate(lastModified) {
     if (!lastModified) return 'Invalid Date';
-    const expiryPeriod = parseInt(window.siteConfig?.['$co:defaultexpiryperiod']) || 365; // Default to 365 days if not set
-    const expiryDate = new Date((lastModified + expiryPeriod * 24 * 60 * 60) * 1000);
-    return isNaN(expiryDate.getTime()) ? 'Invalid Date' : formatDate(expiryDate.getTime() / 1000);
+    const expiryPeriod = parseInt(window.siteConfig?.['$co:defaultexpiryperiod']) || 365;
+    return lastModified + expiryPeriod * 24 * 60 * 60;
   }
 
   function addEventListeners() {
     window.addEventListener('resize', handleResponsiveLayout);
     document.getElementById('status-filter').addEventListener('change', filterTable);
+    document.addEventListener('mousemove', updateMousePosition);
+    const pathLinks = document.querySelectorAll('.path-link');
+    pathLinks.forEach(link => {
+      link.addEventListener('mouseenter', showPopup);
+      link.addEventListener('mouseleave', hidePopup);
+    });
+  }
+
+  function updateMousePosition(event) {
+    mouseX = event.clientX;
+    mouseY = event.clientY;
+    if (activePopup) {
+      positionPopup(activePopup);
+    }
+  }
+
+  function showPopup(event) {
+    const popup = event.currentTarget.querySelector('.image-popup');
+    if (popup) {
+      activePopup = popup;
+      popup.style.display = 'block';
+      positionPopup(popup);
+    }
+  }
+
+  function hidePopup(event) {
+    const popup = event.currentTarget.querySelector('.image-popup');
+    if (popup) {
+      popup.style.display = 'none';
+      activePopup = null;
+    }
+  }
+
+  function positionPopup(popup) {
+    const rect = popup.getBoundingClientRect();
+    let left = mouseX + 10;
+    let top = mouseY + 10;
+
+    if (left + rect.width > window.innerWidth) {
+      left = window.innerWidth - rect.width - 10;
+    }
+    if (top + rect.height > window.innerHeight) {
+      top = window.innerHeight - rect.height - 10;
+    }
+
+    popup.style.left = `${left}px`;
+    popup.style.top = `${top}px`;
   }
 
   function handleResponsiveLayout() {

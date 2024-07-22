@@ -57,6 +57,40 @@
   white-space: nowrap;
 }
 
+.path-cell {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.path-link {
+  color: #0066cc;
+  text-decoration: none;
+  position: relative;
+}
+
+.path-link:hover {
+  text-decoration: underline;
+}
+
+.image-popup {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  padding: 5px;
+}
+
+.image-popup img {
+  max-width: 300px;
+  max-height: 300px;
+  display: block;
+}
+
 @media (max-width: 1023px) {
   .card-layout {
     border: none;
@@ -105,23 +139,19 @@
     text-transform: capitalize;
   }
 
-  .card-layout td::before {
-    content: attr(class);
-    position: absolute;
-    left: 6px;
-    width: 45%;
-    padding-right: 10px;
-    white-space: nowrap;
-    text-align: left;
-    font-weight: bold;
-  }
-
   .card-layout .title-cell::before { content: 'Title'; }
   .card-layout .path-cell::before { content: 'Path'; }
   .card-layout .description-cell::before { content: 'Description'; }
   .card-layout .last-modified-cell::before { content: 'Last Modified'; }
   .card-layout .review-date-cell::before { content: 'Review Date'; }
   .card-layout .expiry-date-cell::before { content: 'Expiry Date'; }
+
+  .card-layout .path-cell {
+    max-width: none;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+  }
 }
 
 .green { background-color: #90EE90; }
