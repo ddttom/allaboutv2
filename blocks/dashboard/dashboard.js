@@ -151,9 +151,20 @@ export default function decorate(block) {
     const parsedDate = parseDate(date);
     const formattedDate = parsedDate ? formatDate(parsedDate) : 'Invalid Date';
     cell.textContent = formattedDate;
+    
     if (formattedDate === 'Invalid Date') {
       cell.classList.add('red');
+    } else if (className === 'review-date-cell' || className === 'expiry-date-cell') {
+      const daysUntil = Math.ceil((parsedDate - new Date()) / (1000 * 60 * 60 * 24));
+      if (daysUntil < 0) {
+        cell.classList.add('red');
+      } else if (daysUntil <= 30) {
+        cell.classList.add('amber');
+      } else {
+        cell.classList.add('green');
+      }
     }
+    
     return cell;
   }
 
@@ -174,8 +185,8 @@ export default function decorate(block) {
       return 'Invalid Date';
     }
     return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
+      year: '2-digit',
+      month: 'short',
       day: 'numeric'
     });
   }
@@ -189,8 +200,7 @@ export default function decorate(block) {
     if (!lastModifiedDate) {
       return 'Invalid Date';
     }
-    const reviewDate = new Date(lastModifiedDate.getTime() + reviewPeriod * 24 * 60 * 60 * 1000);
-    return formatDate(reviewDate);
+    return new Date(lastModifiedDate.getTime() + reviewPeriod * 24 * 60 * 60 * 1000);
   }
 
   function calculateExpiryDate(lastModified) {
@@ -202,8 +212,7 @@ export default function decorate(block) {
     if (!lastModifiedDate) {
       return 'Invalid Date';
     }
-    const expiryDate = new Date(lastModifiedDate.getTime() + expiryPeriod * 24 * 60 * 60 * 1000);
-    return formatDate(expiryDate);
+    return new Date(lastModifiedDate.getTime() + expiryPeriod * 24 * 60 * 60 * 1000);
   }
 
   function addEventListeners() {
@@ -285,7 +294,7 @@ export default function decorate(block) {
       const reviewDateCell = row.querySelector('.review-date-cell');
       const expiryDateCell = row.querySelector('.expiry-date-cell');
       const showRow = filterValue === 'all' || 
-                      (filterValue === 'green' && !reviewDateCell.classList.contains('red') && !expiryDateCell.classList.contains('red')) ||
+                      (filterValue === 'green' && reviewDateCell.classList.contains('green') && expiryDateCell.classList.contains('green')) ||
                       (filterValue === 'amber' && (reviewDateCell.classList.contains('amber') || expiryDateCell.classList.contains('amber'))) ||
                       (filterValue === 'red' && (reviewDateCell.classList.contains('red') || expiryDateCell.classList.contains('red')));
       row.style.display = showRow ? '' : 'none';
