@@ -15,6 +15,7 @@ export default function decorate(block) {
       dashboardContainer.appendChild(dashboardElement);
       addPopupListeners();
       addSortListeners();
+      addFilterListeners();
       // Indicate initial sort
       const titleHeader = document.querySelector('.content-table th[data-column="0"]');
       titleHeader.classList.add('asc');
@@ -35,6 +36,10 @@ export default function decorate(block) {
     const title = document.createElement('h1');
     title.textContent = 'Edge Delivery Services Content Dashboard';
     dashboard.appendChild(title);
+
+    // Create and append the filter
+    const filter = createFilter();
+    dashboard.appendChild(filter);
 
     // Create the table
     const table = document.createElement('table');
@@ -279,5 +284,60 @@ export default function decorate(block) {
     });
     const sortedHeader = document.querySelector(`.content-table th[data-column="${column}"]`);
     sortedHeader.classList.add(ascending ? 'asc' : 'desc');
+  }
+
+  function createFilter() {
+    const filterContainer = document.createElement('div');
+    filterContainer.className = 'filter-container';
+
+    const label = document.createElement('label');
+    label.textContent = 'Filter by status: ';
+    filterContainer.appendChild(label);
+
+    const select = document.createElement('select');
+    select.id = 'status-filter';
+    
+    const options = ['All', 'Green', 'Amber', 'Red'];
+    options.forEach(option => {
+      const optionElement = document.createElement('option');
+      optionElement.value = option.toLowerCase();
+      optionElement.textContent = option;
+      select.appendChild(optionElement);
+    });
+
+    filterContainer.appendChild(select);
+    return filterContainer;
+  }
+
+  function addFilterListeners() {
+    const filterSelect = document.getElementById('status-filter');
+    filterSelect.addEventListener('change', filterTable);
+  }
+
+  function filterTable() {
+    const filterValue = document.getElementById('status-filter').value;
+    const rows = document.querySelectorAll('.content-table tbody tr');
+
+    rows.forEach(row => {
+      const reviewDateCell = row.querySelector('td:nth-child(5)');
+      const expiryDateCell = row.querySelector('td:nth-child(6)');
+
+      const showRow = () => {
+        switch (filterValue) {
+          case 'all':
+            return true;
+          case 'green':
+            return reviewDateCell.style.backgroundColor === 'green' && expiryDateCell.style.backgroundColor === 'green';
+          case 'amber':
+            return reviewDateCell.style.backgroundColor === 'orange' || expiryDateCell.style.backgroundColor === 'orange';
+          case 'red':
+            return reviewDateCell.style.backgroundColor === 'red' || expiryDateCell.style.backgroundColor === 'red';
+          default:
+            return true;
+        }
+      };
+
+      row.style.display = showRow() ? '' : 'none';
+    });
   }
 }
