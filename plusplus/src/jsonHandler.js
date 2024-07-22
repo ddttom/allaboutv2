@@ -148,50 +148,50 @@ export async function createJSON() {
       document.head.appendChild(script);
     }
   }
-  if (getConfigTruth("$meta:enablecontentops$")) {
-    let futureDate = new Date();
-    let futurePeriod = "";
 
-    // Extract the default review period from the site configuration.
-    const futurePeriodString = window.siteConfig["$co:defaultreviewperiod"];
+  let futureDate = new Date();
+  let futurePeriod = "";
+
+  // Extract the default review period from the site configuration.
+  const futurePeriodString = window.siteConfig["$co:defaultreviewperiod"];
+  futurePeriod = parseInt(futurePeriodString, 10);
+  if (Number.isNaN(futurePeriod)) {
+    futurePeriod = 300; // Default to 300 days
+    window.siteConfig["$co:defaultreviewperiod"] = futurePeriod;
+  }
+
+  futureDate = new Date(
+    currentDate.getTime() + futurePeriod * 24 * 60 * 60 * 1000
+  );
+  // Convert the future date to an ISO string and assign it to the review datetime.
+  co["co:reviewdatetime"] = futureDate.toISOString();
+
+  if (!co["co:startdatetime"]) {
+    co["co:startdatetime"] = currentDate.toISOString();
+  }
+  if (!co["co:publisheddatetime"]) {
+    co["co:publisheddatetime"] = currentDate.toISOString();
+  }
+  if (!co["co:expirydatetime"]) {
+    const futurePeriodString = window.siteConfig["$co:defaultexpiryperiod"];
     futurePeriod = parseInt(futurePeriodString, 10);
     if (Number.isNaN(futurePeriod)) {
-      futurePeriod = 300; // Default to 300 days
-      window.siteConfig["$co:defaultreviewperiod"] = futurePeriod;
+      futurePeriod = 365; // Default to 1 year.
+      window.siteConfig["$co:defaultexpiryperiod"] = futurePeriod;
     }
-
     futureDate = new Date(
       currentDate.getTime() + futurePeriod * 24 * 60 * 60 * 1000
     );
-    // Convert the future date to an ISO string and assign it to the review datetime.
-    co["co:reviewdatetime"] = futureDate.toISOString();
+    co["co:expirydatetime"] = futureDate.toISOString();
+  }
+  if (!co["co:restrictions"]) {
+    co["co:restrictions"] = window.siteConfig["$co:defaultrestrictions"];
+  }
+  if (!co["co:tags"]) {
+    co["co:tags"] = window.siteConfig["$co:defaulttags"];
+  }
 
-    if (!co["co:startdatetime"]) {
-      co["co:startdatetime"] = currentDate.toISOString();
-    }
-    if (!co["co:publisheddatetime"]) {
-      co["co:publisheddatetime"] = currentDate.toISOString();
-    }
-    if (!co["co:expirydatetime"]) {
-      const futurePeriodString = window.siteConfig["$co:defaultexpiryperiod"];
-      futurePeriod = parseInt(futurePeriodString, 10);
-      if (Number.isNaN(futurePeriod)) {
-        futurePeriod = 365; // Default to 1 year.
-        window.siteConfig["$co:defaultexpiryperiod"] = futurePeriod;
-      }
-      futureDate = new Date(
-        currentDate.getTime() + futurePeriod * 24 * 60 * 60 * 1000
-      );
-      co["co:expirydatetime"] = futureDate.toISOString();
-    }
-    if (!co["co:restrictions"]) {
-      co["co:restrictions"] = window.siteConfig["$co:defaultrestrictions"];
-    }
-    if (!co["co:tags"]) {
-      co["co:tags"] = window.siteConfig["$co:defaulttags"];
-    }
-
-    if (!co["co:reviewdatetime"]) {
+  if (getConfigTruth("$meta:enablecontentops$")) {
       let coString = JSON.stringify(co, null, "\t");
       coString = replaceTokens(window.siteConfig, coString);
       if (coString.length > 2) {
@@ -204,11 +204,9 @@ export async function createJSON() {
           {${text}}
         ]
       }`;
-
         script.textContent = text;
         document.head.appendChild(script);
       }
-    }
   }
   window.cmsplus.debug("complete create json");
 }
