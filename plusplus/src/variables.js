@@ -140,8 +140,8 @@ export async function constructGlobal() {
     const thismonth = new Date().getMonth();
     const winloc = window.location.href;
 
-    window.siteConfig["$co:defaultreviewperiod"] = 365;
-    window.siteConfig["$co:defaultexpiryperiod"] = 365 * 2;
+    window.siteConfig["$co:defaultreviewperiod"] = 300;
+    window.siteConfig["$co:defaultexpiryperiod"] = 365;
     window.siteConfig["$co:defaultstartdatetime"] = now;
     window.siteConfig["$co:defaultrestrictions"] = "none";
     window.siteConfig["$co:defaulttags$"] = "none";
