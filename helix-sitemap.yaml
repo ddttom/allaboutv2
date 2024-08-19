@@ -1,5 +1,5 @@
 sitemaps:
    example:
-     origin: https://allabout.network/
+     origin: https://allabout.network
      source: /query-index.json
      destination: /sitemap.xml
