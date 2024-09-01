@@ -22,7 +22,6 @@
 }
 
 .down {
-     /* stylelint-disable-next-line property-no-vendor-prefix */
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
 }
