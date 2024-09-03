@@ -52,7 +52,7 @@ function generateContent(blogItems) {
 }
 
 function formatDate(date) {
-  const day = String(date.getDate()).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, '0');
   const month = getMonthName(date.getMonth());
   const year = date.getFullYear();
 
