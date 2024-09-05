@@ -1,16 +1,16 @@
 export default async function decorate(block) {
   const cube = document.createElement('div');
-  cube.className = 'cube';
+  cube.className = 'cube6';
 
   const faces = ['front', 'back', 'right', 'left', 'top', 'bottom'];
   const rows = [...block.children];
 
   faces.forEach((face, index) => {
     const faceElement = document.createElement('div');
-    faceElement.className = `face ${face}`;
+    faceElement.className = `cube6-face cube6-face-${face}`;
 
-    const img = rows[index].children[0].querySelector('img');
-    const link = rows[index].children[1].querySelector('a');
+    const img = rows[index].querySelector('img');
+    const link = rows[index].querySelector('a');
 
     if (img && link) {
       const imgClone = img.cloneNode(true);
@@ -26,38 +26,43 @@ export default async function decorate(block) {
   block.appendChild(cube);
 
   let isDragging = false;
-  let previousX, previousY;
-  let rotateX = 0, rotateY = 0;
+  let previousMousePosition = { x: 0, y: 0 };
+  let rotationX = 0;
+  let rotationY = 0;
 
   const handleMouseMove = (e) => {
     if (!isDragging) return;
 
-    const deltaX = e.clientX - previousX;
-    const deltaY = e.clientY - previousY;
+    const deltaMove = {
+      x: e.clientX - previousMousePosition.x,
+      y: e.clientY - previousMousePosition.y,
+    };
 
-    rotateY += deltaX * 0.5;
-    rotateX -= deltaY * 0.5;
+    rotationY += deltaMove.x * 0.5;
+    rotationX -= deltaMove.y * 0.5;
 
-    cube.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    cube.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
 
-    previousX = e.clientX;
-    previousY = e.clientY;
+    previousMousePosition = {
+      x: e.clientX,
+      y: e.clientY,
+    };
   };
 
-  cube.addEventListener('mousedown', (e) => {
+  cube.addEventListener('mouseenter', () => {
     isDragging = true;
-    previousX = e.clientX;
-    previousY = e.clientY;
+    cube.style.cursor = 'grab';
   });
 
-  document.addEventListener('mouseup', () => {
+  cube.addEventListener('mouseleave', () => {
     isDragging = false;
+    cube.style.cursor = 'default';
   });
 
   cube.addEventListener('mousemove', handleMouseMove);
 
   cube.addEventListener('dblclick', (e) => {
-    const face = e.target.closest('.face');
+    const face = e.target.closest('.cube6-face');
     if (face) {
       const href = face.getAttribute('data-href');
       if (href) {
@@ -66,6 +71,8 @@ export default async function decorate(block) {
     }
   });
 
-  // Apply grey background to the page
-  document.body.style.backgroundColor = '#f0f0f0';
+  // Prevent default drag behavior on images
+  cube.querySelectorAll('img').forEach((img) => {
+    img.addEventListener('dragstart', (e) => e.preventDefault());
+  });
 }

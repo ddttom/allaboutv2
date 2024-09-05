@@ -1,32 +1,23 @@
 # Cube6 Block
 
-This block creates a 3D cube with 6 sides, each containing an image that links to a specified URL. The cube is rotatable in all directions when the mouse hovers over it, and double-clicking an image navigates to its associated link.
+This block creates a 3D cube with 6 faces, each containing an image that links to a specified URL. The cube is rotatable in all directions when the mouse hovers over it, and double-clicking a face navigates to the corresponding link.
 
 ## Block Structure
 
-The block should be structured as a table with 6 rows, each row representing one face of the cube:
+The block should be structured as a table with 6 rows, each row representing a face of the cube:
 
 | Image | Link |
 |-------|------|
-| face1.jpg | <https://example.com/link1> |
-| face2.jpg | <https://example.com/link2> |
-| face3.jpg | <https://example.com/link3> |
-| face4.jpg | <https://example.com/link4> |
-| face5.jpg | <https://example.com/link5> |
-| face6.jpg | <https://example.com/link6> |
+| image1.jpg | https://example1.com |
+| image2.jpg | https://example2.com |
+| ... | ... |
 
-## Features
+## Behavior
 
-- 3D rotatable cube
-- Images on each face
-- Rotation on mouse hover
-- Double-click to navigate to the link
-- Grey background on the web page
+- The cube rotates freely when the mouse hovers over it.
+- Double-clicking a face navigates to the corresponding link.
+- The cube is responsive and adjusts its size based on the viewport.
 
-## Usage
+## Customization
 
-1. Create a new section in your document.
-2. Add a table with 6 rows and 2 columns.
-3. In the first column of each row, add the image for the cube face.
-4. In the second column of each row, add the corresponding link.
-5. Apply the "Cube6" style to the section.
+You can customize the cube's appearance by modifying the CSS variables in the `cube6.css` file.
