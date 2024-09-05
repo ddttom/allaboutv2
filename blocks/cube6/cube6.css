@@ -1,6 +1,6 @@
 .cube6 {
-  width: 200px;
-  height: 200px;
+  width: 400px;
+  height: 400px;
   position: relative;
   transform-style: preserve-3d;
   transition: transform 0.5s;

@@ -1,6 +1,5 @@
 export default async function decorate(block) {
-
-    // version 2
+    
   const cube = document.createElement('div');
   cube.className = 'cube6';
 
