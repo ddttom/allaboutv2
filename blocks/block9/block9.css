@@ -1,0 +1,50 @@
+.block9-container {
+  width: 300px;
+  height: 300px;
+  perspective: 1000px;
+  margin: 50px auto;
+  background-color: black;
+  padding: 50px;
+  border-radius: 10px;
+}
+
+.block9-cube {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.1s;
+}
+
+.block9-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  overflow: hidden;
+}
+
+.block9-face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.block9-front  { transform: rotateY(0deg) translateZ(150px); }
+.block9-back   { transform: rotateY(180deg) translateZ(150px); }
+.block9-right  { transform: rotateY(90deg) translateZ(150px); }
+.block9-left   { transform: rotateY(-90deg) translateZ(150px); }
+.block9-top    { transform: rotateX(90deg) translateZ(150px); }
+.block9-bottom { transform: rotateX(-90deg) translateZ(150px); }
+.block9-front-top { transform: rotateX(45deg) translateZ(212px); }
+.block9-back-top  { transform: rotateX(45deg) rotateY(180deg) translateZ(212px); }
+.block9-right-top { transform: rotateX(45deg) rotateY(90deg) translateZ(212px); }
+
+.block9-container:hover .block9-cube {
+  animation: auto-rotate 15s infinite linear;
+}
+
+@keyframes auto-rotate {
+  from { transform: rotateX(0deg) rotateY(0deg); }
+  to { transform: rotateX(360deg) rotateY(360deg); }
+}
