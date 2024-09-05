@@ -1,0 +1,4 @@
+Create and implement the readme, code and styling for a franklin 6 sided 3d block named block6, each face should contain an image as an href link. it should be rotatable in all directions, the images are placed in each row of the table in the block, the next cell is the link. As soon as the mouse is over the image it should be rotatable without clicking, use the double click action to move to the href page. there should be a grey background on the web page
+
+
+

@@ -1,5 +1,0 @@
-Create and implement the readme (do not put an example table in the readme), code and styling for a franklin 9 sided 3d block named block9, each face should contain an image as an href link. it should be rotatable in all directions, 
-the images are placed in each row of the table in the block. As soon as the mouse is over the image it should be rotatable without clicking, use the double click action to move to the href page. there should be a black background around the object 
-
-
-
