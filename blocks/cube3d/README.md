@@ -9,4 +9,3 @@ To use the 3D Cube block in your Franklin project:
 1. Create a table with 6 rows in your content document.
 2. Each row should contain an image and a link.
 3. Wrap the table with the `cube3d` block syntax.
-
