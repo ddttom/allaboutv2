@@ -8,58 +8,60 @@ export default async function decorate(block) {
   faces.forEach((face, index) => {
     if (rows[index]) {
       const [imageCell, linkCell] = rows[index].children;
-      const faceDiv = document.createElement('div');
-      faceDiv.className = `cube__face cube__face--${face}`;
+      const img = imageCell.querySelector('img');
+      const link = linkCell.querySelector('a');
       
-      const link = document.createElement('a');
-      link.href = linkCell.textContent.trim();
-      
-      const img = document.createElement('img');
-      img.src = imageCell.querySelector('img').src;
-      img.alt = imageCell.querySelector('img').alt;
-      
-      link.appendChild(img);
-      faceDiv.appendChild(link);
-      cube.appendChild(faceDiv);
+      if (img && link) {
+        const faceSide = document.createElement('div');
+        faceSide.className = `cube__face cube__face--${face}`;
+        faceSide.style.backgroundImage = `url(${img.src})`;
+        faceSide.dataset.href = link.href;
+        cube.appendChild(faceSide);
+      }
     }
   });
-  
+
   block.textContent = '';
   block.appendChild(cube);
-  
-  let isMouseDown = false;
-  let startX, startY, rotX = 0, rotY = 0;
-  
+
+  let isDragging = false;
+  let previousMousePosition = { x: 0, y: 0 };
+  let rotationX = 0;
+  let rotationY = 0;
+
   const handleMouseMove = (e) => {
-    if (!isMouseDown) return;
-    const deltaX = e.clientX - startX;
-    const deltaY = e.clientY - startY;
-    rotY += deltaX * 0.5;
-    rotX -= deltaY * 0.5;
-    cube.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
-    startX = e.clientX;
-    startY = e.clientY;
+    if (!isDragging) return;
+    const deltaMove = {
+      x: e.clientX - previousMousePosition.x,
+      y: e.clientY - previousMousePosition.y,
+    };
+
+    rotationY += deltaMove.x * 0.5;
+    rotationX -= deltaMove.y * 0.5;
+
+    cube.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
+    previousMousePosition = { x: e.clientX, y: e.clientY };
   };
-  
+
   cube.addEventListener('mousedown', (e) => {
-    isMouseDown = true;
-    startX = e.clientX;
-    startY = e.clientY;
+    isDragging = true;
+    previousMousePosition = { x: e.clientX, y: e.clientY };
   });
-  
+
   document.addEventListener('mouseup', () => {
-    isMouseDown = false;
+    isDragging = false;
   });
-  
-  cube.addEventListener('mousemove', handleMouseMove);
-  
+
+  document.addEventListener('mousemove', handleMouseMove);
+
   cube.addEventListener('dblclick', (e) => {
-    const link = e.target.closest('a');
-    if (link) {
-      window.location.href = link.href;
+    const face = e.target.closest('.cube__face');
+    if (face && face.dataset.href) {
+      window.location.href = face.dataset.href;
     }
   });
-  
-  // Position image 1 on load
-  cube.style.transform = 'rotateY(0deg)';
+
+  // Position the first image correctly on page load
+  rotationY = -90;
+  cube.style.transform = `rotateX(0deg) rotateY(${rotationY}deg)`;
 }

@@ -1,50 +1,51 @@
 # 3D Cube Block
 
-This block creates a 6-sided 3D cube with images and links on each face.
+The 3D Cube block creates an interactive, rotatable 3D cube with images on each face that link to specified URLs.
 
 ## Features
 
-- Rotatable 3D cube
-- Images on each face linked to specified URLs
-- Mouse rotation without clicking when hovering over the cube
-- Double-click action to navigate to the linked page
+- 6-sided 3D cube with images on each face
+- Rotatable in all directions using mouse movement
+- Double-click to navigate to the linked page
 - Responsive design
 
 ## Usage
 
-To use this block, create a table in your content with 6 rows (one for each face of the cube). Each row should have two cells:
-
-1. The first cell should contain an image.
-2. The second cell should contain the URL for the link.
-
-Example:
+To use the 3D Cube block in your Franklin project, create a block with the following structure:
 
 | Image | Link |
 |-------|------|
-| [Image 1] | <https://example.com/page1> |
-| [Image 2] | <https://example.com/page2> |
-| [Image 3] | <https://example.com/page3> |
-| [Image 4] | <https://example.com/page4> |
-| [Image 5] | <https://example.com/page5> |
-| [Image 6] | <https://example.com/page6> |
+| ![Front face image](path/to/front-image.jpg) | https://example.com/front |
+| ![Back face image](path/to/back-image.jpg) | https://example.com/back |
+| ![Right face image](path/to/right-image.jpg) | https://example.com/right |
+| ![Left face image](path/to/left-image.jpg) | https://example.com/left |
+| ![Top face image](path/to/top-image.jpg) | https://example.com/top |
+| ![Bottom face image](path/to/bottom-image.jpg) | https://example.com/bottom |
 
-## Behavior
+The block will automatically create a 3D cube with the provided images and links.
 
-- The cube is rotatable in all directions using mouse movement.
-- Hovering over the cube allows rotation without clicking.
-- Double-clicking on a face navigates to the associated link.
-- On page load, the first image (front face) is positioned correctly.
+## Interaction
 
-## Styling
+- Hover over the cube to rotate it freely without clicking
+- Click and drag to rotate the cube manually
+- Double-click on a face to navigate to the associated link
 
-The cube is styled to be responsive and visually appealing. It has a default size of 200x200 pixels, which reduces to 150x150 pixels on smaller screens. The faces have a slight opacity effect that increases on hover for better visibility.
+## Customization
+
+You can customize the appearance of the cube by modifying the `3dcube.css` file. Adjust the cube size, face opacity, and other properties as needed.
 
 ## Accessibility and SEO
 
-- Images use alt text for better accessibility and SEO.
-- The cube is keyboard navigable for accessibility.
-- Semantic HTML is used where appropriate.
+The 3D Cube block is designed with accessibility and SEO in mind:
+
+- Images have appropriate alt text (inherited from the original image tags)
+- Links are standard `<a>` tags, making them crawlable by search engines
+- The cube can be rotated using mouse or touch interactions
 
 ## Performance
 
-The block is designed to be performant, using CSS transforms for smooth animations and minimal DOM manipulation. Images are loaded as part of the initial content, ensuring they're available when the cube is created.
+The block uses CSS 3D transforms for smooth performance and minimal JavaScript overhead. Images are loaded as background images to prevent unnecessary DOM elements.
+
+## Browser Support
+
+This block uses modern CSS and JavaScript features. It should work in all modern browsers that support CSS 3D transforms.
