@@ -15,12 +15,12 @@ To use the 3D Cube block in your Franklin project, create a block with the follo
 
 | Image | Link |
 |-------|------|
-| ![Front face image](path/to/front-image.jpg) | https://example.com/front |
-| ![Back face image](path/to/back-image.jpg) | https://example.com/back |
-| ![Right face image](path/to/right-image.jpg) | https://example.com/right |
-| ![Left face image](path/to/left-image.jpg) | https://example.com/left |
-| ![Top face image](path/to/top-image.jpg) | https://example.com/top |
-| ![Bottom face image](path/to/bottom-image.jpg) | https://example.com/bottom |
+| ![Front face image](path/to/front-image.jpg) | <https://example.com/front> |
+| ![Back face image](path/to/back-image.jpg) | <https://example.com/back> |
+| ![Right face image](path/to/right-image.jpg) | <https://example.com/right> |
+| ![Left face image](path/to/left-image.jpg) | <https://example.com/left> |
+| ![Top face image](path/to/top-image.jpg) | <https://example.com/top> |
+| ![Bottom face image](path/to/bottom-image.jpg) | <https://example.com/bottom> |
 
 The block will automatically create a 3D cube with the provided images and links.
 
