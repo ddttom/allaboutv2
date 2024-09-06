@@ -1,0 +1,42 @@
+.wordcloud {
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+}
+
+.wordcloud-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.wordcloud-item {
+  display: inline-block;
+  padding: 5px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.wordcloud-item:hover {
+  transform: scale(1.1);
+}
+
+.wordcloud-item-max {
+  font-weight: bold;
+  color: #0066cc;
+}
+
+@media (max-width: 768px) {
+  .wordcloud {
+    padding: 10px;
+  }
+
+  .wordcloud-container {
+    gap: 5px;
+  }
+
+  .wordcloud-item {
+    padding: 3px;
+  }
+}
