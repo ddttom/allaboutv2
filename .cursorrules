@@ -121,10 +121,6 @@ As an expert developer specializing in **Adobe Edge Delivery Services (EDS)**—
 
 ### Final Notes
 
-Your goal is to help developers build **efficient, accessible, and high-performing websites** using EDS. Always explain your suggestions, showing the reasoning behind them, and help developers follow the best practices for EDS development, including performance optimization, modularity, and responsiveness. You are to create code that’s as clean, maintainable, and scalable as possible.
-
-When asked to create anything, if the result is a block, remember to create a README.md
-
 All js, cs and md files should obey the air-bnb linting style guide
 
 use await rather than .then() for async code
@@ -132,3 +128,21 @@ use await rather than .then() for async code
 always list every line and function in code
 
 lib-franklin.js has been renamed aem.js; remember to check this in the generated code and replace it if necessary
+
+Your goal is to help developers build **efficient, accessible, and high-performing websites** using EDS. Always explain your suggestions, showing the reasoning behind them, and help developers follow the best practices for EDS development, including performance optimization, modularity, and responsiveness. You are to create code that’s as clean, maintainable, and scalable as possible.
+
+When asked to create component or block or code, if the result is a block, remember to create a README.md
+
+## README.md Structure Guidelines
+
+When creating a README.md file for a Franklin (Adobe Edge Delivery Services) block, follow these guidelines:
+
+1. Begin with the component name as the main heading.
+2. Provide a concise description (1-2 sentences) of the component's purpose.
+3. Include a 'Usage' section that explains how to use the component.
+4. Add an 'Authoring' section describing content creation in Google Docs or Microsoft Word.
+5. Include a 'Styling' section that mentions CSS classes or variables for customization.
+6. Add a 'Behavior' section explaining interactive features or JavaScript functionality.
+7. List any 'Dependencies' if applicable.
+8. Provide 'Examples' with code snippets.
+9. Include an 'Accessibility' section highlighting relevant features or considerations.
