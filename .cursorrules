@@ -152,4 +152,4 @@ When creating a README.md file for a Franklin (Adobe Edge Delivery Services) blo
 
 ## Example.md
 
-Create an example.md that the user can copy paste into the Franklin document, it should use markdown tables, with the block name in the first row and as many rows are required to make the block function
+Create an example.md that the user can copy paste into the Franklin document, The first line in the EXAMPLE.md is just '# example component' then a blank line then the example.  use markdown tables, with the block name in the first row and as many rows are required to make the block function
