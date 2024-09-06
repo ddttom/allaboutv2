@@ -1,44 +1,42 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export default async function decorate(block) {
-  const words = {};
-  let maxCount = 0;
+  const wordMap = new Map();
+  const rows = [...block.children];
 
-  // Iterate through all cells and collect words/phrases
-  block.querySelectorAll(':scope > div > div').forEach((cell) => {
-    const cellContent = cell.textContent.trim();
-    const items = cellContent.split(',').map((item) => item.trim());
-    
-    items.forEach((item) => {
-      if (item) {
-        words[item] = (words[item] || 0) + 1;
-        maxCount = Math.max(maxCount, words[item]);
+  // Process all rows and build word frequency map
+  rows.forEach((row) => {
+    const cellContent = row.textContent.trim();
+    const words = cellContent.split(',').map((word) => word.trim());
+    words.forEach((word) => {
+      if (word) {
+        wordMap.set(word, (wordMap.get(word) || 0) + 1);
       }
     });
   });
 
-  // Clear the original content
-  block.innerHTML = '';
+  // Sort words by frequency
+  const sortedWords = [...wordMap.entries()].sort((a, b) => b[1] - a[1]);
 
-  // Create the word cloud container
+  // Create word cloud container
   const cloudContainer = document.createElement('div');
   cloudContainer.classList.add('wordcloud-container');
 
-  // Add words to the cloud
-  Object.entries(words).sort((a, b) => b[1] - a[1]).forEach(([word, count]) => {
+  // Generate word elements
+  sortedWords.forEach(([word, frequency], index) => {
     const wordElement = document.createElement('span');
     wordElement.textContent = word;
-    wordElement.classList.add('wordcloud-item');
+    wordElement.classList.add('wordcloud-word');
+    wordElement.style.fontSize = `${Math.max(1, Math.min(5, frequency))}em`;
     
-    const fontSize = 1 + (count / maxCount) * 2; // Font size between 1em and 3em
-    wordElement.style.fontSize = `${fontSize}em`;
-
-    if (count === maxCount) {
-      wordElement.classList.add('wordcloud-item-max');
+    if (index === 0) {
+      wordElement.classList.add('wordcloud-word-highest');
     }
 
     cloudContainer.appendChild(wordElement);
   });
 
+  // Clear existing content and append the word cloud
+  block.textContent = '';
   block.appendChild(cloudContainer);
 }

@@ -1,41 +1,46 @@
 # WordCloud
 
-The WordCloud component creates a visually appealing representation of words or phrases, with font sizes reflecting their frequency of occurrence.
+The WordCloud component creates a visual representation of words or phrases, with font sizes reflecting their frequency of occurrence.
 
 ## Usage
 
-The WordCloud component can be used to display a collection of words or phrases, emphasizing the most frequently used ones.
+The WordCloud component processes content from cells below its starting point, creating a cloud where more frequent words appear larger.
 
 ## Authoring
 
-| Block Name | Description |
-|------------|-------------|
-| WordCloud  | Add comma-separated words or phrases in each cell below the WordCloud block. Each row will be processed to create the word cloud. |
+| WordCloud |
+|-----------|
+| Word 1, Word 2, Phrase 1 |
+| Word 3, Phrase 2, Word 1 |
+| ... |
+
+- Each cell should contain words or phrases separated by commas.
+- Multiple rows can be used to input more words.
+- The most frequent word or phrase will appear in the center, in bold and blue.
 
 ## Styling
 
-The component uses the following CSS classes for customization:
-- `.wordcloud`: Main container
-- `.wordcloud-container`: Wrapper for word cloud items
-- `.wordcloud-item`: Individual word or phrase
-- `.wordcloud-item-max`: Style for the most frequent word/phrase
+The component uses the following CSS classes:
+
+- `.wordcloud-container`: Main container for the word cloud
+- `.wordcloud-word`: Individual word elements
+- `.wordcloud-word-highest`: Styling for the most frequent word
 
 ## Behavior
 
-- Words and phrases are extracted from cells below the WordCloud block.
-- Font size increases based on the frequency of occurrence.
-- The most frequent word/phrase is centered and bold.
-- Hover effect applied to each word/phrase for interactivity.
+- Words are sized based on their frequency, with a minimum of 1em and a maximum of 5em.
+- Hovering over words triggers a subtle scale animation.
+- The most frequent word is centered, bolded, and colored blue.
 
 ## Accessibility
 
-- The component uses semantic HTML for better screen reader compatibility.
-- Color contrast is ensured for readability.
+- The component uses semantic HTML to ensure screen reader compatibility.
+- Color contrast is maintained for readability.
 
 ## Suggestions for Improvement
 
-1. Add color variation based on word frequency or category.
-2. Implement custom shapes for the word cloud (e.g., circle, square).
-3. Allow for custom exclusion of common words.
-4. Add animation for a more dynamic presentation.
-5. Implement click functionality to show additional information or filter content.
+1. Implement color variation based on word frequency or categories.
+2. Add options for different cloud shapes (e.g., circle, square).
+3. Include a search or filter functionality for large word sets.
+4. Provide an option to export the word cloud as an image.
+5. Implement a custom sorting option (e.g., alphabetical, length).
