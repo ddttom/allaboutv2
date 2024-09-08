@@ -1,59 +1,52 @@
-export default async function decorate(block) {
-  const images = [...block.querySelectorAll('img')];
-  if (images.length === 0) return;
+import { createOptimizedPicture } from '../../scripts/aem.js';
 
-  // Randomize images
-  const shuffledImages = images.sort(() => 0.5 - Math.random());
+export default async function decorate(block) {
+  const images = [...block.querySelectorAll('a')].map((a) => a.href);
+  block.textContent = '';
 
   const container = document.createElement('div');
   container.className = 'slider-container';
-  
   const imageContainer = document.createElement('div');
   imageContainer.className = 'slider-image-container';
-
   const indicators = document.createElement('div');
   indicators.className = 'slider-indicators';
 
-  shuffledImages.forEach((img, index) => {
-    const slide = document.createElement('div');
-    slide.className = 'slider-slide';
-    slide.appendChild(img);
-    imageContainer.appendChild(slide);
+  // Shuffle images
+  const shuffledImages = images.sort(() => Math.random() - 0.5);
 
-    const indicator = document.createElement('button');
-    indicator.className = 'slider-indicator';
-    indicator.setAttribute('aria-label', `Go to slide ${index + 1}`);
-    indicator.addEventListener('click', () => goToSlide(index));
+  shuffledImages.forEach((src, index) => {
+    const img = createOptimizedPicture(src, '', false, [{ width: '750' }]);
+    img.className = index === 0 ? 'active' : '';
+    imageContainer.appendChild(img);
+
+    const indicator = document.createElement('span');
+    indicator.className = index === 0 ? 'active' : '';
     indicators.appendChild(indicator);
   });
 
   container.appendChild(imageContainer);
   container.appendChild(indicators);
-  block.textContent = '';
   block.appendChild(container);
 
-  let currentSlide = 0;
+  let currentIndex = 0;
   let intervalId;
 
-  function goToSlide(index) {
-    currentSlide = index;
-    imageContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
-    updateIndicators();
-  }
-
-  function updateIndicators() {
-    indicators.querySelectorAll('.slider-indicator').forEach((indicator, index) => {
-      indicator.classList.toggle('active', index === currentSlide);
+  function showImage(index) {
+    imageContainer.querySelectorAll('picture').forEach((pic, i) => {
+      pic.className = i === index ? 'active' : '';
+    });
+    indicators.querySelectorAll('span').forEach((span, i) => {
+      span.className = i === index ? 'active' : '';
     });
   }
 
-  function nextSlide() {
-    currentSlide = (currentSlide + 1) % shuffledImages.length;
-    goToSlide(currentSlide);
+  function nextImage() {
+    currentIndex = (currentIndex + 1) % shuffledImages.length;
+    showImage(currentIndex);
   }
 
   function startRotation() {
-    intervalId = setInterval(nextSlide, 15000);
+    intervalId = setInterval(nextImage, 15000);
   }
 
   function stopRotation() {
@@ -63,6 +56,5 @@ export default async function decorate(block) {
   container.addEventListener('mouseenter', stopRotation);
   container.addEventListener('mouseleave', startRotation);
 
-  goToSlide(0);
   startRotation();
 }
