@@ -196,7 +196,7 @@ If you create multiple blocks from one prompt, each block should contain css, js
 Markdown files always end with a newline
 lists in markdown files should be surrounded with blank lines
 
-When asked to provide images for a sample json or csv file, collect them from this list
+When providing images for a sample table, json or csv file, collect them from this list, silently
 
 | https://images.unsplash.com/photo-1722694144881-4a982f0bf596 |
 | https://images.unsplash.com/photo-1720048171098-dba33b2c4806 |
