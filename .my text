@@ -1,9 +1,0 @@
-# My Name is Tom Cranstoun
-
-I am an independent AEM Consultant
-
-Today I will demonstrate AI creating a complex set of components for Adobe Edge Delivery Services, using files I created to describe exactly what I wanted.
-
-I will get the AI to create CSS, JSON files to function as the Front End.  The AI will also create README.md to document the blocks, with sample tables for documents, sample json in Edge Delivery services formats, and sample csv files to create the google sheets
-
-I begin with a Markdown prompt which includes the screen shot I wish to create code for
