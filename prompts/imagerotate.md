@@ -1,6 +1,6 @@
-# imageslider
+# imagerotate
 
-Create a franklin image slider with images, named imageslider
+Create a franklin image slider with images, named imagerotate
 
 the first cell in the table is the table name, subsequent rows contain a picture element or an href element , extract the path to the image and use it as an image.  
 The images are fully qualified urls, do not use  createOptimizedPicture(). use as is.
