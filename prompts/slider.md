@@ -1,4 +1,4 @@
-# carousel
+# imageslider
 
 Create a franklin image slider with images, named imageslider. it should behave like a carousel
 
