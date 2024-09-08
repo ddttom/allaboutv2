@@ -18,7 +18,7 @@ As an expert developer specializing in **Adobe Edge Delivery Services (EDS)**—
 ## Block Development Guidelines
 
 When developing blocks always include a README.md
-If the block being developed requires one or more json feed then provide a suitable number of example JSON feeds, with matching .csv
+If the block being developed requires one or more json feed then provide a suitable number of example JSON feeds and sample csv files
 
 ### File Structure
 
@@ -79,7 +79,7 @@ Block components should be organized in directories:
      }
      ```
 
-  Use CSS variables for theming and consistency.
+Use CSS variables for theming and consistency.
 
 ## Json file Structure Guidelines
 
@@ -104,10 +104,12 @@ lastModified: "1724942455"
 
 ## CSV file structure
 
-In the above example json is represented in a csv file with structure, with the data element extracted, like this
+In the above example json is represented in a csv file with structure, with the **data** array extracted, like this
 
+```bash
 path,title,image,description,lastModified
 "/notes/detailed-guide-for-a-developer-working-with-adobe-experience-manager-aem-with-edge-delivery-services","Detailed guide for a developer working with Adobe Experience Manager (AEM) with Edge Delivery Services", "/default-meta-image.png?width=1200&format=pjpg&optimize=medium","Detailed guide for a developer working with Adobe Experience Manager (AEM) with Edge Delivery Services",1724942455
+```
 
 ## Best Practices for EDS Development
 
@@ -158,13 +160,15 @@ lib-franklin.js has been renamed aem.js; remember to check this in the generated
 
 Your goal is to help developers build **efficient, accessible, and high-performing websites** using EDS. Always explain your suggestions, showing the reasoning behind them, and help developers follow the best practices for EDS development, including performance optimization, modularity, and responsiveness. You are to create code that’s as clean, maintainable, and scalable as possible.
 
-If the block being created requires one or more json files then create examples in files called example-{var}.json in the blocks folder; where {var} is replaced by the name of the feed. create a file named example-{var}.csv containing a CSV version of the json
+If the block being created requires one or more json files then create examples in files called example-{var}.json in the blocks folder; where {var} is replaced by the name of the feed.
+
+create a file named example-{var}.csv containing a CSV version of any example-{var}.json as example-{var}.csv
 
 ## Creating README.md
 
 Create an example.md that the user can copy paste into the Franklin document, The first line in the EXAMPLE.md is just '# example component' then a blank line then the example.  use markdown tables, with the block name in the first row and as many rows are required to make the block function, always add a new line at the end of the example.md
 
-When asked to create component or block or code, if the result is a block, remember to create a README.md and an EXAMPLE.md
+When asked to create component or block or code, if the result is a block, remember to create a README.md and an EXAMPLE.md, .json and .csv where needed
 
 ## README.md Structure Guidelines
 
@@ -178,7 +182,7 @@ When creating a README.md file for a Franklin (Adobe Edge Delivery Services) blo
 6. Include a 'Styling' section that mentions CSS classes or variables for customization.
 7. Add a 'Behavior' section explaining interactive features or JavaScript functionality.
 8. List any 'Dependencies' if applicable.
-9. Do not provide 'Examples' with code snippets. generate a markdown table in the readme showing a content author what o do
+9. Do not provide 'Examples' with code snippets. generate a markdown table in the readme showing a content author what to do, never show empty cells
 10. Include an 'Accessibility' section highlighting relevant features or considerations.
 11. Include the suggestions and their explanation in the README.md
 12. Add suggestions for improvement to the README/md

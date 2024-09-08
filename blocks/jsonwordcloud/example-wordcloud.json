@@ -1,0 +1,17 @@
+{
+  "total": 3,
+  "offset": 0,
+  "limit": 3,
+  "data": [
+    {
+      "phrases": "Adobe, Experience Manager, Edge Delivery Services, Franklin, Helix"
+    },
+    {
+      "phrases": "JavaScript, CSS, HTML, Responsive Design, Performance"
+    },
+    {
+      "phrases": "Adobe, Content Management, Serverless, GitHub, Blocks"
+    }
+  ],
+  ":type": "sheet"
+}
