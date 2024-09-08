@@ -3,16 +3,23 @@ module.exports = {
   extends: 'airbnb-base',
   env: {
     browser: true,
+    es2021: true,
   },
   parser: '@babel/eslint-parser',
   parserOptions: {
-    allowImportExportEverywhere: true,
+    ecmaVersion: 12,
     sourceType: 'module',
     requireConfigFile: false,
   },
   rules: {
-    'import/extensions': ['error', { js: 'always' }], // require js file extensions in imports
-    'linebreak-style': ['error', 'unix'], // enforce unix linebreaks
-    'no-param-reassign': [2, { props: false }], // allow modifying properties of param
+    'import/extensions': ['error', { js: 'always' }],
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'no-param-reassign': [2, { props: false }],
+    'no-console': ['error', { allow: ['warn', 'error'] }],
+    'max-len': ['error', { code: 100, ignoreUrls: true }],
+    'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    'no-underscore-dangle': 'off',
+    'linebreak-style': 'off',
   },
+  ignorePatterns: ['blocks/**/*.md'],
 };
