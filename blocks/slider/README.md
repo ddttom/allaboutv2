@@ -4,46 +4,49 @@ The Slider component is an image carousel that displays a series of images in a 
 
 ## Usage
 
-To use the Slider component, create a table in your Franklin document with the first cell containing "slider" and subsequent rows containing URLs to images.
-
-## Authoring
-
-1. In your Franklin document (Google Docs or Microsoft Word), create a table.
-2. In the first cell of the table, enter "slider".
-3. In each subsequent row, add a single cell with an image URL.
+To use the Slider component, create a table in your Franklin document with the following structure:
 
 | slider |
 |--------|
-| https://example.com/image1.jpg |
-| https://example.com/image2.jpg |
-| https://example.com/image3.jpg |
+| image1_url |
+| image2_url |
+| image3_url |
+| ... |
+
+## Authoring
+
+1. In your Franklin document (Google Docs or Microsoft Word), create a table with one column.
+2. The first cell should contain the text "slider".
+3. In subsequent rows, add one image URL per cell.
 
 ## Styling
 
 The Slider component uses the following CSS classes for styling:
 
-- `.slider`: The main container for the slider
-- `.slider-container`: Contains all the slides
-- `.slider-slide`: Individual slide container
-- `.slider-indicators`: Container for slide indicators
+- `.slider-container`: The main container for the slider.
+- `.slider-image-container`: Container for the sliding images.
+- `.slider-slide`: Individual slide container.
+- `.slider-indicators`: Container for the indicator dots.
+- `.slider-indicator`: Individual indicator dot.
 
-You can customize the appearance by modifying these classes in the `slider.css` file.
+You can customize these classes in your project's CSS to modify the appearance of the slider.
 
 ## Behavior
 
 - Images are randomized on load.
 - The slider automatically rotates through images every 15 seconds.
-- Rotation pauses when the user hovers over an image and resumes when the mouse leaves.
-- Users can manually navigate using the indicator buttons.
+- Rotation pauses when the user hovers over the slider and resumes when the mouse leaves.
+- Users can click on indicator dots to navigate to specific slides.
 
 ## Accessibility
 
 - Indicator buttons have appropriate aria-labels for screen readers.
-- The slider is keyboard navigable.
+- The slider is keyboard navigable through the indicator buttons.
 
 ## Suggestions for Improvement
 
-1. Add touch swipe support for mobile devices.
-2. Implement lazy loading for better performance with many images.
-3. Add options for different transition effects.
-4. Allow customization of rotation speed through authoring.
+1. Add left and right navigation arrows for manual control.
+2. Implement touch swipe functionality for mobile devices.
+3. Add an option to control the rotation speed through metadata.
+4. Implement lazy loading for better performance with many images.
+5. Add caption support for each image.
