@@ -1,0 +1,34 @@
+.imagerotate-container {
+  position: relative;
+  max-width: 100%;
+  height: 800px;
+  overflow: hidden;
+}
+
+.imagerotate-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.imagerotate-indicators {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+}
+
+.imagerotate-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+}
+
+.imagerotate-indicator.active {
+  background-color: white;
+}
