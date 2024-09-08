@@ -4,7 +4,7 @@ Create a franklin image slider with images, named imageslider
 
 the first cell in the table is the table name, subsequent rows contain a picture element or an href element , extract the path to the image and use it as an image.  
 The images are fully qualified urls, do not use  createOptimizedPicture(). use as is.
-ensure that the image fit in 400 pixels tall space by clipping the images, on loading the images randomize them
+ensure that the image fit in 800 pixels tall space by forcing the image to fit, on loading the images randomize them
 read all of the rows when creating the slider.
 only display one image at a time
 it should rotate through each image every 5 seconds. provide a placement indicator. if the user hovers over the image stop rotating.
