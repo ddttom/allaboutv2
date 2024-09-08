@@ -4,13 +4,13 @@
   "limit": 3,
   "data": [
     {
-      "phrases": "Adobe, Experience Manager, Edge Delivery Services, Franklin, Helix"
+      "content": "Adobe, Experience Manager, Edge Delivery Services, Franklin, Helix"
     },
     {
-      "phrases": "JavaScript, CSS, HTML, Responsive Design, Performance"
+      "content": "JavaScript, CSS, HTML, Responsive Design, Performance"
     },
     {
-      "phrases": "Adobe, Content Management, Serverless, GitHub, Blocks"
+      "content": "Adobe, Content Management, Serverless, GitHub, Modern Web"
     }
   ],
   ":type": "sheet"

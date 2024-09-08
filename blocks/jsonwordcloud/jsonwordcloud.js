@@ -1,12 +1,13 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export default async function decorate(block) {
+  const jsonUrl = '/example-wordcloud.json';
   const container = document.createElement('div');
   container.classList.add('jsonwordcloud-container');
   block.appendChild(container);
 
   try {
-    const response = await fetch('/example-wordcloud.json');
+    const response = await fetch(jsonUrl);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const data = await response.json();
 
@@ -14,8 +15,9 @@ export default async function decorate(block) {
     let maxCount = 0;
     let mostUsedWord = '';
 
+    // Count words and phrases
     data.data.forEach((item) => {
-      const words = item.phrases.split(',').map((word) => word.trim());
+      const words = item.content.split(',').map(word => word.trim());
       words.forEach((word) => {
         wordCounts[word] = (wordCounts[word] || 0) + 1;
         if (wordCounts[word] > maxCount) {
@@ -25,17 +27,21 @@ export default async function decorate(block) {
       });
     });
 
-    const sortedWords = Object.entries(wordCounts).sort((a, b) => b[1] - a[1]);
-
-    sortedWords.forEach(([word, count]) => {
+    // Create and append word elements
+    Object.entries(wordCounts).forEach(([word, count]) => {
       const wordElement = document.createElement('span');
       wordElement.textContent = word;
-      wordElement.style.fontSize = `${Math.max(12, (count / maxCount) * 48)}px`;
+      wordElement.classList.add('jsonwordcloud-word');
+      const fontSize = 12 + (count / maxCount) * 24; // Font size between 12px and 36px
+      wordElement.style.fontSize = `${fontSize}px`;
+      
       if (word === mostUsedWord) {
-        wordElement.classList.add('most-used');
+        wordElement.classList.add('jsonwordcloud-most-used');
       }
+      
       container.appendChild(wordElement);
     });
+
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Error:', error);

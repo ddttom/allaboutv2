@@ -43,6 +43,7 @@ Block components should be organized in directories:
 
      ```javascript
      export default async function decorate(block) {
+      const inputData = '/path/to/data.json';
        const container = document.createElement('div');
        block.appendChild(container);
 
@@ -51,7 +52,7 @@ Block components should be organized in directories:
        });
 
        try {
-         const response = await fetch('/path/to/data.json');
+         const response = await fetch(inputData);
          if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
          const data = await response.json();
          // Update block with data
@@ -121,10 +122,11 @@ path,title,image,description,lastModified
    - Minimize excessive DOM manipulation.
    - Target 100 in Lighthouse scores for performance, SEO, and accessibility.
 5. **Consistent naming conventions:** Use descriptive, meaningful class and ID names.
-6. **Responsive design:** Test components across various screen sizes.
-7. **Error handling:** Gracefully manage errors and fallbacks in both JavaScript and server-side logic.
-8. **Code style:** Adhere to **Airbnb’s JavaScript Style Guide** to ensure clean, maintainable code, if writing code that uses console output, remember to precede it with  // eslint-disable-next-line no-console
-9. **Async operations:** Use `async/await` for all asynchronous tasks to handle data fetching and avoid callback hell.
+6. **Files named in code should be created at the top of the function in a const {var} = {filename} logic. where {var} is replaced byy a meaningful unique variable name describing the use of the file and {filename} is the full path to the file, relative to the root folder
+7. **Responsive design:** Test components across various screen sizes.
+8. **Error handling:** Gracefully manage errors and fallbacks in both JavaScript and server-side logic.
+9. **Code style:** Adhere to **Airbnb’s JavaScript Style Guide** to ensure clean, maintainable code, if writing code that uses console output, remember to precede it with  // eslint-disable-next-line no-console
+10. **Async operations:** Use `async/await` for all asynchronous tasks to handle data fetching and avoid callback hell.
 
 ## Advanced Features
 
