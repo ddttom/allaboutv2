@@ -189,3 +189,9 @@ When creating a README.md file for a Franklin (Adobe Edge Delivery Services) blo
 11. Include the suggestions and their explanation in the README.md
 12. Add suggestions for improvement to the README/md
 13. Always add a new line to the end of the README.md
+
+## Most important
+
+If you create multiple blocks from one prompt, each block should contain css, js, readme.md. example.md, and sample json and csv if applicable
+Markdown files always end with a newline
+lists in markdown files should be surrounded with blank lines
