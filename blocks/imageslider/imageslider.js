@@ -2,9 +2,27 @@ export default async function decorate(block) {
   // eslint-disable-next-line no-console
   console.log('Initializing imageslider');
 
-  const images = [...block.querySelectorAll('a')].map((a) => a.href);
+  const links = block.querySelectorAll('a');
+  // eslint-disable-next-line no-console
+  console.log('Links found:', links.length);
+
+  // Log the HTML content of the block for debugging
+  // eslint-disable-next-line no-console
+  console.log('Block HTML:', block.innerHTML);
+
+  const images = [...links].map((a) => {
+    // eslint-disable-next-line no-console
+    console.log('Link href:', a.href);
+    return a.href;
+  });
   // eslint-disable-next-line no-console
   console.log('Images found:', images);
+
+  if (images.length === 0) {
+    // eslint-disable-next-line no-console
+    console.error('No images found in the imageslider block');
+    return; // Exit the function if no images are found
+  }
 
   const container = document.createElement('div');
   container.className = 'imageslider-container';
