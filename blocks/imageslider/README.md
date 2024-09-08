@@ -22,6 +22,7 @@ To use the Image Slider, create a table in your Franklin document with the follo
 ## Styling
 
 The Image Slider uses the following CSS classes for customization:
+
 - `.imageslider-container`: The main container for the slider.
 - `.imageslider-image`: The image element.
 - `.imageslider-indicators`: The container for placement indicators.
