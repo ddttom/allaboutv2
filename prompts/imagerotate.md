@@ -10,4 +10,3 @@ only display one image at a time
 it should rotate through each image every 5 seconds. provide a placement indicator. if the user hovers over the image stop rotating.
 when the user moves off the image start rotating again, immediately move to next image
 Add keyboard navigation (left/right arrow keys) for manual image rotation
-in the example.md use 5 images
