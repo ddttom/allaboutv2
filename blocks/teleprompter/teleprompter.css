@@ -1,0 +1,61 @@
+.teleprompter-icon {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.teleprompter-screen {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80%;
+  color: white;
+  font-size: 24px;
+  text-align: left;
+  overflow: hidden;
+}
+
+.timer-display {
+  display: none;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  font-size: 34px;
+  color: white;
+  z-index: 1000;
+}
+
+.current-line {
+  position: relative;
+}
+
+.current-line::before,
+.current-line::after {
+  content: '→';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.current-line::before {
+  left: -30px;
+}
+
+.current-line::after {
+  right: -30px;
+}
+
+.note-line {
+  color: lightgray;
+}
+
+.action-line {
+  color: yellow;
+}
