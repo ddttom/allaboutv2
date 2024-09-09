@@ -4,14 +4,14 @@ This block creates a teleprompter functionality for displaying text content in a
 
 ## Usage
 
-Add the teleprompter block to your page and ensure that the text content you want to display is present in the DOM below the block.
+Place the teleprompter block where you want the teleprompter icon to appear. The block will read all text content below it.
 
 ## Authoring
 
-Create your content in Google Docs or Microsoft Word, with each paragraph representing a line in the teleprompter. Use the following special prefixes for specific formatting:
+Create your script content in Google Docs or Microsoft Word, with each paragraph as a separate line. Use the following special markers:
 
-- `**note**`: Displays the line in light gray
-- `**action**`: Displays the line in yellow and pauses the scrolling
+- `**note**`: Precede a line with this to display it in light gray.
+- `**action**`: Precede a line with this to display it in yellow and pause the scrolling.
 
 ## Styling
 
@@ -19,21 +19,24 @@ The block uses custom CSS classes for styling. You can customize the appearance 
 
 ## Behavior
 
-1. Click the teleprompter icon in the top-left corner to start.
-2. The screen turns black, and text starts scrolling from top to bottom.
-3. Press the spacebar to pause/resume scrolling.
-4. Click the stop icon or press the Esc key to exit the teleprompter mode.
-5. Action items (prefixed with `**action**`) will pause the scrolling automatically.
+1. Click the teleprompter icon to start.
+2. The screen turns black, and text starts scrolling.
+3. Press spacebar to pause/resume.
+4. Click the stop icon or press Esc to exit.
+5. A timer displays in the top right corner.
 
 ## Accessibility
 
-- Keyboard controls (spacebar and Esc key) are provided for better accessibility.
+- Keyboard controls (spacebar and Esc) are provided for better accessibility.
 - High contrast colors are used for better readability.
+
+## Dependencies
+
+This block has no external dependencies.
 
 ## Suggestions for Improvement
 
 1. Add speed control for text scrolling.
-2. Implement text size adjustment options.
-3. Add support for remote control via mobile devices.
+2. Implement text size adjustment.
+3. Add support for different languages and text directions.
 4. Implement a practice mode with speech recognition.
-5. Add multi-language support for interface elements.
