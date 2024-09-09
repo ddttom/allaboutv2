@@ -8,32 +8,40 @@ Add the teleprompter block to your page where you want the teleprompter function
 
 ## Authoring
 
-Create your content in Google Docs or Microsoft Word as normal paragraphs. Use the following special formatting:
+In your Google Docs or Microsoft Word document, structure your content as follows:
 
-- Prefix a paragraph with `**note**` to display it in light gray.
-- Prefix a paragraph with `**action**` to display it in yellow and pause the scrolling.
+| Teleprompter |
+|--------------|
+| Your content here. Each paragraph will be treated as a separate text element. |
+| Use **note** at the beginning of a line for light gray text. |
+| Use **action** at the beginning of a line for yellow text that pauses the teleprompter. |
 
 ## Styling
 
-The block uses custom CSS classes for styling. You can customize the appearance by modifying the `teleprompter.css` file.
+The teleprompter uses custom CSS classes for styling. You can customize the appearance by modifying the `teleprompter.css` file.
 
 ## Behavior
 
-- Click the teleprompter icon in the top-left corner to start/stop the teleprompter.
-- Press the spacebar to pause/resume scrolling.
-- Press the Esc key to stop the teleprompter and return to the original view.
-- The text scrolls automatically, advancing one line every 10 seconds.
-- A timer displays in the top-right corner when the teleprompter is active.
+- Click on the teleprompter icon to start the teleprompter.
+- The text scrolls automatically every 4 seconds.
+- Press spacebar to pause/resume scrolling.
+- Press 'Esc' or click the stop icon to exit the teleprompter.
+- Use '+' and '-' buttons or keys to adjust scrolling speed.
+- Action items (yellow text) pause the teleprompter until spacebar is pressed.
 
 ## Accessibility
 
-- Keyboard controls (spacebar and Esc key) are available for users who cannot use a mouse.
-- High contrast colors are used for better visibility.
+- Keyboard controls are fully functional for operating the teleprompter.
+- ARIA labels should be added to SVG elements for improved screen reader support.
+
+## Dependencies
+
+This block relies on the `aem.js` script for the `createOptimizedPicture` function.
 
 ## Suggestions for Improvement
 
-1. Add speed control for text scrolling.
-2. Implement text size adjustment for better readability.
-3. Add support for different languages and text directions.
-4. Implement a practice mode with speech recognition.
-5. Add the ability to save and load multiple scripts.
+1. Add voice control options for hands-free operation.
+2. Implement a preview mode for content creators.
+3. Allow customization of text styles and colors through a configuration panel.
+4. Add support for multiple languages and right-to-left text.
+5. Implement a progress bar to show overall progress through the content.

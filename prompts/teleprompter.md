@@ -39,14 +39,82 @@ const stopSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
 
 ```
 
-The code should read all text in the DOM below the block, saving text for later display.
-The block should inject the contents of teleprompterSVG  in the top left corner of the viewport.
-when the teleprompterSVG is clicked, the viewport should be cleared to solid black replacing the teleprompterSVG with the stopSVG.
-A count up timer in minutes and seconds should appear in the top right corner of the window, font size 34px. it should start counting up immediately.
-if the stopSVG is clicked, or the esc key pressed, all activity should stop and the original window should be restored.
+## 1. Initialization
 
-the space bar should stop/start all activity, scrolling, timer
-the block should show text left-aligned, in a 24 point font, in white, scroll from the top to the bottom., it show show one line with arrows at either side as the current line in the middle line of the viewport, another 6 lines should be shown below as a preview of what is coming, every 10 seconds the text should advance by one line
-any text preceded with **note** should be displayed in a light gray color.
-any text preceded by **action** should be displayed in yellow, and will cause the scrolling to stop when it becomes the current line, waiting for the space bar
-when the text finishes, the code should stop, waiting for the stop icon to be clicked, or the esc key pressed.
+- open a new panel as the viewport
+- Inject `teleprompterSVG` in the top left corner of the viewport
+- Read all text in the DOM below the block
+  - Treat each text element individually
+  - Add a new line after each element
+  - Treat 'Edge Delivery Services' as one word
+  - Break text into lines of maximum 8 words, breaking lines on . or end of line
+- Save the processed text list for later use, export the text list to console.log()
+
+## 2. User Interface
+
+- On `teleprompterSVG` click:
+  - Clear viewport to solid black
+  - Replace `teleprompterSVG` with `stopSVG`
+  - addf a large + and - character in middle columns of top line
+- Display count-up timer:
+  - Position: Top right corner
+  - Format: Minutes and seconds
+  - Font size: 34px
+  - Start immediately on teleprompter activation
+
+## 3. Text Display
+
+- Font: 24 point, white color
+- Alignment: Left-aligned
+- Position: Current line at fixed marker point in middle of screen height, use markers: right facing arrow one side of the text, text, then left facing arrow. this indicates the current line, subsequent text below
+- Special formatting:
+- program defensibly  - line may be undefined
+  - Text preceded by "**note**": Light gray color
+  - Text preceded by "**action**": Yellow color, when this text becomes current line stop processing until spacebar or esc pressed
+
+## 4. Scrolling Mechanism
+
+- Scroll direction: Top to bottom, moving current up one line
+- Scroll interval: Every 4 seconds
+- if plus key pressed scroll interval increased by 1 second, flash + character in top line
+- if minus key pressed scroll interval decreased by 1 second, flash - character in top line
+- Scroll behavior: Smooth transition line by line, all text displayed below current line
+- Initial display: First line of text as current line, rest of text below always displayed
+
+## 5. Control Mechanisms
+
+- Start/Stop:
+  - Click on `stopSVG`
+  - Press 'Esc' key
+  - Effect: Stop all activity, restore original window
+- Pause/Resume:
+  - Press spacebar
+  - Effect: Toggle pause/resume for scrolling and timer
+- Action text behavior:
+  - Pause scrolling when action text becomes current line
+  - Wait for spacebar press to resume
+
+## 6. Termination
+
+- When text finishes:
+  - Stop all processes
+  - Wait for `stopSVG` click or 'Esc' key press
+
+## 7. Performance Considerations
+
+- Ensure smooth scrolling animation
+- Optimize for minimal impact on page performance
+
+## 8. Accessibility
+
+- Ensure keyboard controls are fully functional
+- Consider adding ARIA labels for SVG elements
+
+## 9. Error Handling
+
+- Gracefully handle cases where text content is empty or unavailable
+- Provide user feedback for any processing errors
+
+## 10. Responsiveness
+
+- Ensure proper functioning and layout across different viewport sizes
