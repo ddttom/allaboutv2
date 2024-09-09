@@ -203,6 +203,10 @@ main .section {
   }
 }
 
+.footer-wrapper {
+  display: none;
+}
+
 /* section metadata */
 main .section.light,
 main .section.highlight {
