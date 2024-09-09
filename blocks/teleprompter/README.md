@@ -1,41 +1,44 @@
 # Teleprompter
 
-This block creates a teleprompter functionality for the webpage, allowing users to view and scroll through the page content in a teleprompter-style format.
+The Teleprompter block creates a scrolling text display for reading scripts or presenting information in a controlled manner.
 
 ## Usage
 
-To use the teleprompter block, simply add it to your Franklin page. The block will automatically gather all text content from the page and prepare it for the teleprompter view.
+This block allows content authors to create a teleprompter-style text display with start, stop, and speed control functionality.
 
 ## Authoring
 
-No specific authoring is required in Google Docs or Microsoft Word. The teleprompter will use all text content present on the page.
+In your Google Docs or Microsoft Word document, create a two-column block structure:
 
-To mark text as a note (displayed in light gray), precede it with `**note**` in your content.
+| Teleprompter |
+|--------------|
+| Your script content goes here. You can include multiple paragraphs and format the text as needed. |
 
 ## Styling
 
-The block uses custom CSS classes for styling. You can customize the appearance by modifying the `teleprompter.css` file.
+The block uses the following CSS classes for styling:
+- `.teleprompter-container`: Main container for the teleprompter
+- `.teleprompter-text`: Container for the scrolling text
+- `.teleprompter-controls`: Container for the control buttons and speed slider
+
+You can customize the appearance by modifying these classes in your project's CSS.
 
 ## Behavior
 
-1. A teleprompter icon appears in the top-left corner of the viewport.
-2. Clicking the icon activates the teleprompter view:
-   - The screen turns black
-   - A stop icon appears in the top-left corner
-   - A timer starts in the top-right corner
-   - Text begins scrolling from bottom to top
-3. Pressing the spacebar pauses/resumes the scrolling
-4. Clicking the stop icon or pressing the Esc key exits the teleprompter view
+- The teleprompter starts scrolling when the "Start" button is clicked.
+- The "Stop" button pauses the scrolling.
+- The speed slider adjusts the scrolling speed in real-time.
+- The controls remain visible at the bottom of the container while scrolling.
 
 ## Accessibility
 
-- The teleprompter can be controlled using both mouse and keyboard inputs.
-- High contrast white text on a black background improves readability.
+- Control buttons have appropriate `aria-label` attributes for screen readers.
+- The speed slider is labeled for accessibility.
 
 ## Suggestions for Improvement
 
-1. Add customizable scroll speed options
-2. Implement text size adjustment controls
-3. Add support for different color themes
-4. Include an option to import external text files
-5. Implement voice control for hands-free operation
+1. Add a "Reset" button to return to the top of the text.
+2. Implement keyboard shortcuts for start, stop, and speed adjustment.
+3. Add an option to change text size and color for better visibility.
+4. Include a fullscreen mode for distraction-free reading.
+5. Implement text highlighting to indicate the current reading position.

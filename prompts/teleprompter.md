@@ -50,9 +50,11 @@ when the stop icon is clicked, or the esc key pressed, all activity should stop 
 
 When the space bar is first pressed all activity should stop.
 
-the teleprompter should show 4 lines of text at a time, in a 20 point font, in white.
+the teleprompter should show 6 lines of text at a time, left-aligned, in a 24 point font, in white.  there shall be arrow markers at the current line 1 in bold, these markers will stay at the current line as the text assumed being read
 
 any text preceded with **note** should be displayed in a light gray color.
+
+any text preceded by **action** should be displayed in yellow, and will cause the scrolling to stop when it becomes the current line, waiting for the space bar
 
 when the space bar is pressed again, the teleprompter should continue.
 
