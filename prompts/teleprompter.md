@@ -2,6 +2,8 @@
 
 Create a franklin block named teleprompter
 
+use the following JS after export default async function decorate(block) has been opened
+
 ```js
 const teleprompterSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
   <!-- Camera body -->
@@ -37,29 +39,20 @@ const stopSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
 
 ```
 
-the block should use the js above literally
+The code should read all text in the DOM below the block, saving it as a list of lines.
+The block should inject the contents of teleprompterSVG  in the top left corner of the viewport.
 
-The teleprompter block should inject the contents of teleprompterSVG  in the top left corner of the viewport.
+when the teleprompter svg is clicked the viewer becomes active, the viewport should clear to solid black injecting the stopSVG, in the top left hand corner of the viewport.  
+A count up timer in minutes and seconds should appear in the top right corner of the window. it should start counting up immediately.
 
-The teleprompter should read all text in the rest of the DOM, saving it as a list of lines.
+if the stopSVG is clicked, or the esc key pressed, all activity should stop and the original window should be restored.
 
-when the teleprompter icon is clicked the viewer becomes active, and the viewport should clear to solid black injecting the stopSVG from the js above, in the top left hand corner of the viewport.  
-A count up timer in minutes and seconds should appear in the top right corner of the window. it should count up immediately.
+When the space bar is first pressed all activity should stop. when pressed again the code should continue
 
-when the stop icon is clicked, or the esc key pressed, all activity should stop and the original window with the teleprompter svg and text should be restored.
-
-When the space bar is first pressed all activity should stop.
-
-the teleprompter should show 6 lines of text at a time, left-aligned, in a 24 point font, in white.  there shall be arrow markers at the current line 1 in bold, these markers will stay at the current line as the text assumed being read
+the block should show 6 lines of text at a time, left-aligned, in a 24 point font, in white, scroll from the top to the bottom.
 
 any text preceded with **note** should be displayed in a light gray color.
 
 any text preceded by **action** should be displayed in yellow, and will cause the scrolling to stop when it becomes the current line, waiting for the space bar
 
-when the space bar is pressed again, the teleprompter should continue.
-
-when the teleprompter is active, the text should scroll from the top to the bottom.
-
-when the text reaches the bottom, it should stop, waiting for the stop icon to be clicked, or the esc key pressed.
-
-when the stop icon is clicked, or the esc key pressed, all activity should stop and the original window with the teleprompter svg and text should be restored.
+when the text finishes, the code should stop, waiting for the stop icon to be clicked, or the esc key pressed.

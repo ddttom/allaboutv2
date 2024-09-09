@@ -1,43 +1,63 @@
-.teleprompter-container {
-  max-width: 800px;
-  margin: 0 auto;
-  height: 400px;
-  overflow-y: hidden;
-  border: 1px solid #ccc;
-  padding: 20px;
-  font-size: 18px;
-  line-height: 1.5;
-  position: relative;
+.teleprompter-icon {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  z-index: 1000;
 }
 
-.teleprompter-text {
-  padding-bottom: 100px;
+.teleprompter-active {
+  background-color: black;
+  color: white;
+  overflow: hidden;
 }
 
-.teleprompter-controls {
-  position: sticky;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 0.9);
-  padding: 10px;
+.teleprompter-view {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
 }
 
-.teleprompter-controls button {
-  padding: 5px 10px;
-  font-size: 16px;
+.stop-icon {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 50px;
+  height: 50px;
   cursor: pointer;
 }
 
-.teleprompter-controls input[type="range"] {
-  width: 100px;
+.timer {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  font-weight: bold;
 }
 
-@media (max-width: 768px) {
-  .teleprompter-container {
-    font-size: 16px;
-    height: 300px;
-  }
+.text-container {
+  width: 80%;
+  max-width: 800px;
+  text-align: left;
+}
+
+.teleprompter-line {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.note {
+  color: #a0a0a0;
+}
+
+.action {
+  color: yellow;
 }
