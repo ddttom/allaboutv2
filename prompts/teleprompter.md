@@ -37,11 +37,13 @@ const stopSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
 
 ```
 
-The teleprompter block should show teleprompterSVG from the js above, in the top left corner of the viewport.
+the block should use the js above literally
 
-The teleprompter should  read all text in the rest of the DOM, saving it as a list of lines.
+The teleprompter block should inject the contents of teleprompterSVG  in the top left corner of the viewport.
 
-when the teleprompter icon is clicked the viewer becomes active, and the viewport should clear to solid black with the stopSVG from the js above, in the top left hand corner of the viewport.  
+The teleprompter should read all text in the rest of the DOM, saving it as a list of lines.
+
+when the teleprompter icon is clicked the viewer becomes active, and the viewport should clear to solid black injecting the stopSVG from the js above, in the top left hand corner of the viewport.  
 A count up timer in minutes and seconds should appear in the top right corner of the window. it should count up immediately.
 
 when the stop icon is clicked, or the esc key pressed, all activity should stop and the original window with the teleprompter svg and text should be restored.

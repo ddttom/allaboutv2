@@ -156,7 +156,7 @@ All js, cs and md files should obey the air-bnb linting style guide
 
 use await rather than .then() for async code
 
-always list every line and function in code
+only use imports when the functionality of the import will be used
 
 lib-franklin.js has been renamed aem.js; remember to check this in the generated code and replace it if necessary
 
