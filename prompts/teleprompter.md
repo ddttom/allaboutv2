@@ -46,7 +46,7 @@ A count up timer in minutes and seconds should appear in the top right corner of
 if the stopSVG is clicked, or the esc key pressed, all activity should stop and the original window should be restored.
 
 the space bar should stop/start all activity, scrolling, timer
-the block should show 6 lines of text at a time, left-aligned, in a 24 point font, in white, scroll from the top to the bottom.
+the block should show text left-aligned, in a 24 point font, in white, scroll from the top to the bottom., it show show one line with arrows at either side as the current line in the middle line of the viewport, another 6 lines should be shown below as a preview of what is coming, every 10 seconds the text should advance by one line
 any text preceded with **note** should be displayed in a light gray color.
 any text preceded by **action** should be displayed in yellow, and will cause the scrolling to stop when it becomes the current line, waiting for the space bar
 when the text finishes, the code should stop, waiting for the stop icon to be clicked, or the esc key pressed.
