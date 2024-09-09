@@ -39,21 +39,14 @@ const stopSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
 
 ```
 
-The code should read all text in the DOM below the block, saving it as a list of lines.
+The code should read all text in the DOM below the block, saving text for later display.
 The block should inject the contents of teleprompterSVG  in the top left corner of the viewport.
-
 when the teleprompterSVG is clicked, the viewport should be cleared to solid black replacing the teleprompterSVG with the stopSVG.
-
-A count up timer in minutes and seconds should appear in the top right corner of the window. it should start counting up immediately.
-
+A count up timer in minutes and seconds should appear in the top right corner of the window, font size 34px. it should start counting up immediately.
 if the stopSVG is clicked, or the esc key pressed, all activity should stop and the original window should be restored.
 
-When the space bar is first pressed all activity should stop. when pressed again the code should continue
-
+the space bar should stop/start all activity, scrolling, timer
 the block should show 6 lines of text at a time, left-aligned, in a 24 point font, in white, scroll from the top to the bottom.
-
 any text preceded with **note** should be displayed in a light gray color.
-
 any text preceded by **action** should be displayed in yellow, and will cause the scrolling to stop when it becomes the current line, waiting for the space bar
-
 when the text finishes, the code should stop, waiting for the stop icon to be clicked, or the esc key pressed.
