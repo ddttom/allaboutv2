@@ -1,6 +1,6 @@
 # Teleprompter
 
-This block creates a teleprompter functionality for displaying text content in a scrolling format.
+This block creates a teleprompter functionality for displaying text content in a scrollable format.
 
 ## Usage
 
@@ -8,13 +8,7 @@ Add the teleprompter block to your page where you want the teleprompter function
 
 ## Authoring
 
-In your Google Docs or Microsoft Word document, structure your content as follows:
-
-| Teleprompter |
-|--------------|
-| Your content here. Each paragraph will be treated as a separate text element. |
-| Use **note** at the beginning of a line for light gray text. |
-| Use **action** at the beginning of a line for yellow text that pauses the teleprompter. |
+No specific authoring is required for the teleprompter block itself. The block will automatically process and display all text content on the page below it.
 
 ## Styling
 
@@ -22,26 +16,25 @@ The teleprompter uses custom CSS classes for styling. You can customize the appe
 
 ## Behavior
 
-- Click on the teleprompter icon to start the teleprompter.
-- The text scrolls automatically every 4 seconds.
-- Press spacebar to pause/resume scrolling.
-- Press 'Esc' or click the stop icon to exit the teleprompter.
-- Use '+' and '-' buttons or keys to adjust scrolling speed.
-- Action items (yellow text) pause the teleprompter until spacebar is pressed.
-
-## Accessibility
-
-- Keyboard controls are fully functional for operating the teleprompter.
-- ARIA labels should be added to SVG elements for improved screen reader support.
+- Clicking the teleprompter icon opens the teleprompter view.
+- The text scrolls from bottom to top.
+- Use the mouse wheel to control scrolling speed.
+- Press the spacebar to pause/resume.
+- Press the Esc key or click the stop icon to exit the teleprompter view.
 
 ## Dependencies
 
-This block relies on the `aem.js` script for the `createOptimizedPicture` function.
+This block depends on the `aem.js` script for optimized picture creation.
+
+## Accessibility
+
+- Keyboard controls are fully functional (Spacebar for pause/resume, Esc for exit).
+- ARIA labels should be added to the SVG elements for improved screen reader support.
 
 ## Suggestions for Improvement
 
-1. Add voice control options for hands-free operation.
-2. Implement a preview mode for content creators.
-3. Allow customization of text styles and colors through a configuration panel.
-4. Add support for multiple languages and right-to-left text.
-5. Implement a progress bar to show overall progress through the content.
+1. Add customizable scrolling speed options.
+2. Implement text size adjustment controls.
+3. Add support for different color themes.
+4. Implement a preview mode for content creators.
+5. Add support for importing external text files.

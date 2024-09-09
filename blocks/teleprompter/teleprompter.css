@@ -1,3 +1,7 @@
+.teleprompter {
+  position: relative;
+}
+
 .teleprompter-viewport {
   position: fixed;
   top: 0;
@@ -6,10 +10,12 @@
   height: 100%;
   background-color: white;
   z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  display: none;
+}
+
+.teleprompter-viewport.active {
+  display: block;
+  background-color: black;
 }
 
 .teleprompter-icon {
@@ -21,34 +27,7 @@
   cursor: pointer;
 }
 
-.stop-icon {
-  width: 60px;
-  height: 60px;
-}
-
-.controls-container {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 20px;
-}
-
-.control-button {
-  font-size: 24px;
-  padding: 5px 10px;
-  background-color: #333;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.control-button.flash {
-  background-color: #555;
-}
-
-.timer {
+.teleprompter-timer {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -56,50 +35,21 @@
   color: white;
 }
 
-.text-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  overflow: hidden;
-}
-
-.text-line {
+.teleprompter-text-container {
+  position: absolute;
+  top: 100px;
+  left: 50px;
+  right: 50px;
+  bottom: 50px;
+  overflow-y: auto;
   font-size: 24px;
   color: white;
-  text-align: left;
+}
+
+.teleprompter-line {
   margin-bottom: 10px;
-  transition: transform 0.5s ease;
 }
 
-.current-line {
-  font-weight: bold;
-}
-
-.note-line {
-  color: #c0c0c0;
-}
-
-.action-line {
-  color: yellow;
-}
-
-.current-line-marker {
-  font-size: 24px;
-  margin: 0 10px;
-}
-
-@media (max-width: 768px) {
-  .text-line {
-    font-size: 20px;
-  }
-
-  .timer {
-    font-size: 28px;
-  }
-
-  .control-button {
-    font-size: 20px;
-  }
+.teleprompter-line.note {
+  color: lightgray;
 }

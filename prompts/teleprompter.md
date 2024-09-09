@@ -39,82 +39,63 @@ const stopSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
 
 ```
 
-## 1. Initialization
+![Teleprompter UI Design](teleprompter.png)
 
-- open a new panel as the viewport
-- Inject `teleprompterSVG` in the top left corner of the viewport
-- Read all text in the DOM below the block
-  - Treat each text element individually
-  - Add a new line after each element
-  - Treat 'Edge Delivery Services' as one word
-  - Break text into lines of maximum 8 words, breaking lines on . or end of line
-- Save the processed text list for later use, export the text list to console.log()
+**Goal:** Create a Franklin block named "teleprompter" with the functionalities described below.
 
-## 2. User Interface
+**Functionality:**
 
-- On `teleprompterSVG` click:
-  - Clear viewport to solid black
-  - Replace `teleprompterSVG` with `stopSVG`
-  - addf a large + and - character in middle columns of top line
-- Display count-up timer:
-  - Position: Top right corner
-  - Format: Minutes and seconds
-  - Font size: 34px
-  - Start immediately on teleprompter activation
+* **Initialization:**  
+  * Open a new panel as the viewport.  
+  * Inject the provided teleprompterSVG code in the top left corner of the viewport.  
+  * Read all text content in the DOM below the block.  
+    * Treat each text element individually.  
+    * Combine "Edge Delivery Services" into one word.  
+    * Break text into lines with a maximum of 8 words each, considering periods (".") and line breaks.  
+  * Save the processed text list for later use.  
+  * Export the processed text list to the console using console.log().  
+* **User Interface:**  
+  * On click of the teleprompterSVG:  
+    * Clear the viewport to a solid black background.  
+    * Replace the teleprompterSVG with the provided stopSVG code.
+  * Display a count-up timer in the top right corner:  
+    * Format: Minutes and seconds.  
+    * Font size: 34px.  
+    * Start immediately when the teleprompter is activated.  
+* **Text Display:**  
+  * Font: 24 point, white color.  
+  * Alignment: Left-aligned.  
+  * Special formatting:  
+    * Text preceded by "**note**": Display in light gray color.  
+  * Handle potential undefined variables gracefully.  
+* **Scrolling Mechanism:**  
+  * Scroll direction: Top to bottom, moving the current line up one position.  
+  * Trigger scrolling with the mouse wheel.  
+  * Smoothly transition line by line.  
+  * Display the first line as the current line initially, with the rest of the text visible below.  
+* **Control Mechanisms:**  
+  * Start/Stop:  
+    * Clicking on the stopSVG.  
+    * Pressing the "Esc" key.  
+    * Stop all activity and restore the original window.  
+  * Pause/Resume:  
+    * Pressing the spacebar.  
+    * Toggle pause/resume for the timer.  
+* **Termination:**  
+  * When the text finishes scrolling:  
+    * Stop all processes.  
+    * Wait for a click on the stopSVG or press of the "Esc" key.  
+* **Performance:**  
+  * Ensure smooth scrolling animation with minimal impact on page performance.  
+* **Accessibility:**  
+  * Keyboard controls should be fully functional.  
+  * Consider adding ARIA labels for the SVG elements.  
+* **Error Handling:**  
+  * Handle cases with empty or unavailable text content gracefully.  
+  * Provide user feedback for any processing errors.  
+* **Responsiveness:**  
+  * Ensure proper functioning and layout across different viewport sizes.
 
-## 3. Text Display
+**Additional Notes:**
 
-- Font: 24 point, white color
-- Alignment: Left-aligned
-- Position: Current line at fixed marker point in middle of screen height, use markers: right facing arrow one side of the text, text, then left facing arrow. this indicates the current line, subsequent text below
-- Special formatting:
-- program defensibly  - line may be undefined
-  - Text preceded by "**note**": Light gray color
-  - Text preceded by "**action**": Yellow color, when this text becomes current line stop processing until spacebar or esc pressed
-
-## 4. Scrolling Mechanism
-
-- Scroll direction: Top to bottom, moving current up one line
-- Scroll interval: Every 4 seconds
-- if plus key pressed scroll interval increased by 1 second, flash + character in top line
-- if minus key pressed scroll interval decreased by 1 second, flash - character in top line
-- Scroll behavior: Smooth transition line by line, all text displayed below current line
-- Initial display: First line of text as current line, rest of text below always displayed
-
-## 5. Control Mechanisms
-
-- Start/Stop:
-  - Click on `stopSVG`
-  - Press 'Esc' key
-  - Effect: Stop all activity, restore original window
-- Pause/Resume:
-  - Press spacebar
-  - Effect: Toggle pause/resume for scrolling and timer
-- Action text behavior:
-  - Pause scrolling when action text becomes current line
-  - Wait for spacebar press to resume
-
-## 6. Termination
-
-- When text finishes:
-  - Stop all processes
-  - Wait for `stopSVG` click or 'Esc' key press
-
-## 7. Performance Considerations
-
-- Ensure smooth scrolling animation
-- Optimize for minimal impact on page performance
-
-## 8. Accessibility
-
-- Ensure keyboard controls are fully functional
-- Consider adding ARIA labels for SVG elements
-
-## 9. Error Handling
-
-- Gracefully handle cases where text content is empty or unavailable
-- Provide user feedback for any processing errors
-
-## 10. Responsiveness
-
-- Ensure proper functioning and layout across different viewport sizes
+* The provided code snippets (teleprompterSVG and stopSVG) should be included as strings within the prompt.  
