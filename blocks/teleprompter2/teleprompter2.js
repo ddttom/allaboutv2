@@ -1,158 +1,197 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+export default function decorate(block) {
+  // Clear any existing content in the block
+  block.innerHTML = '';
 
-export default async function decorate(block) {
+  // Create a wrapper for the teleprompter
+  const wrapper = document.createElement('div');
+  wrapper.classList.add('teleprompter2-wrapper');
+  block.appendChild(wrapper);
+
+  // Create the icon
   const icon = document.createElement('div');
   icon.classList.add('teleprompter2-icon');
-  icon.innerHTML = '&#128217;';
-  document.body.appendChild(icon);
+  icon.textContent = '🎥';
+  wrapper.appendChild(icon);
 
+  // Create the teleprompter panel
   const teleprompter = document.createElement('div');
-  teleprompter.classList.add('teleprompter2');
-  teleprompter.style.display = 'none';
+  teleprompter.classList.add('teleprompter2-panel');
+  teleprompter.style.display = 'none'; // Hide it by default
+  wrapper.appendChild(teleprompter);
 
-  const title = document.createElement('h2');
-  const content = document.createElement('div');
-  const timer = document.createElement('div');
-  timer.classList.add('teleprompter2-timer');
+  // Extract content from the main content area of the page
+  const mainContent = document.querySelector('main');
+  const content = extractContent(mainContent);
 
-  teleprompter.appendChild(title);
-  teleprompter.appendChild(content);
-  teleprompter.appendChild(timer);
-  document.body.appendChild(teleprompter);
+  let currentIndex = 0;
+  let autoScrollInterval;
 
-  let allLines = [];
-  let currentLineIndex = 0;
-  let isPaused = false;
-  let startTime;
-  let timerInterval;
-
-  function extractContent() {
-    const nodes = document.body.childNodes;
-    let foundBlock = false;
-    for (const node of nodes) {
-      if (node === block) {
-        foundBlock = true;
-      } else if (foundBlock && node.nodeType === Node.TEXT_NODE) {
-        allLines.push(node.textContent.trim());
-      } else if (foundBlock && node.nodeType === Node.ELEMENT_NODE) {
-        if (node.tagName === 'H1' && !title.textContent) {
-          title.textContent = node.textContent;
-        } else {
-          allLines.push(...node.textContent.split('\n').map(line => line.trim()).filter(line => line));
+  function updateTeleprompterContent() {
+    const contentDiv = document.createElement('div');
+    contentDiv.classList.add('teleprompter2-content');
+    
+    const totalLines = 9;
+    const middleLineIndex = Math.floor(totalLines / 2);
+    
+    for (let i = 0; i < totalLines; i++) {
+      const contentIndex = currentIndex - middleLineIndex + i;
+      if (contentIndex >= 0 && contentIndex < content.length) {
+        const text = content[contentIndex];
+        if (text) {
+          const p = document.createElement('p');
+          p.textContent = text; // Remove extra spaces here
+          if (i === middleLineIndex) p.classList.add('current-line');
+          if (text === "***END***") {
+            p.classList.add('end-phrase');
+          }
+          contentDiv.appendChild(p);
         }
+      } else {
+        // Add empty paragraph for spacing if no content
+        const p = document.createElement('p');
+        p.innerHTML = '&nbsp;';
+        contentDiv.appendChild(p);
       }
     }
-  }
-
-  function updateContent() {
-    content.innerHTML = '';
-    for (let i = 0; i < 4 && currentLineIndex + i < allLines.length; i++) {
-      const line = document.createElement('p');
-      line.textContent = allLines[currentLineIndex + i];
-      if (i === 0) {
-        line.classList.add('current-line');
-      }
-      content.appendChild(line);
-    }
-  }
-
-  function updateTimer() {
-    if (!isPaused) {
-      const elapsed = Math.floor((Date.now() - startTime) / 1000);
-      const minutes = Math.floor(elapsed / 60).toString().padStart(2, '0');
-      const seconds = (elapsed % 60).toString().padStart(2, '0');
-      timer.textContent = `${minutes}:${seconds}`;
-    }
-  }
-
-  function startTeleprompter() {
-    teleprompter.style.display = 'block';
-    icon.style.display = 'none';
-    startTime = Date.now();
-    timerInterval = setInterval(updateTimer, 1000);
-    updateContent();
-  }
-
-  function stopTeleprompter() {
-    teleprompter.style.display = 'none';
-    icon.style.display = 'block';
-    clearInterval(timerInterval);
-    currentLineIndex = 0;
-    isPaused = false;
-  }
-
-  function togglePause() {
-    isPaused = !isPaused;
-    if (isPaused) {
-      clearInterval(timerInterval);
-      content.classList.add('paused');
-    } else {
-      timerInterval = setInterval(updateTimer, 1000);
-      content.classList.remove('paused');
-    }
+    
+    teleprompter.innerHTML = '';
+    teleprompter.appendChild(contentDiv);
+    
+    // Position the content
+    const lineHeight = 28; // Approximate line height
+    contentDiv.style.transform = `translateY(${-middleLineIndex * lineHeight}px)`;
   }
 
   function scroll(direction) {
-    if (!isPaused) {
-      currentLineIndex = Math.max(0, Math.min(currentLineIndex + direction, allLines.length - 4));
-      updateContent();
+    const newIndex = currentIndex + direction;
+    if (newIndex >= 0 && newIndex < content.length) {
+      currentIndex = newIndex;
+      updateTeleprompterContent();
+    }
+    // Stop auto-scroll if we've reached the end
+    if (newIndex === content.length - 1 && autoScrollInterval) {
+      clearInterval(autoScrollInterval);
+      autoScrollInterval = null;
     }
   }
 
-  icon.addEventListener('click', startTeleprompter);
+  function toggleAutoScroll() {
+    if (autoScrollInterval) {
+      clearInterval(autoScrollInterval);
+      autoScrollInterval = null;
+    } else {
+      autoScrollInterval = setInterval(() => {
+        if (currentIndex < content.length - 1) {
+          scroll(1);
+        } else {
+          clearInterval(autoScrollInterval);
+          autoScrollInterval = null;
+        }
+      }, 3000); // Scroll every 3 seconds
+    }
+  }
 
-  teleprompter.addEventListener('wheel', (e) => {
-    e.preventDefault();
-    scroll(e.deltaY > 0 ? 1 : -1);
-  });
+  function showTeleprompter() {
+    teleprompter.style.display = 'block';
+    icon.style.display = 'none';
+    updateTeleprompterContent();
+  }
 
-  document.addEventListener('keydown', (e) => {
+  function hideTeleprompter() {
+    teleprompter.style.display = 'none';
+    icon.style.display = 'block';
+    if (autoScrollInterval) {
+      clearInterval(autoScrollInterval);
+      autoScrollInterval = null;
+    }
+  }
+
+  // Event listeners
+  document.addEventListener('keydown', (event) => {
     if (teleprompter.style.display === 'block') {
-      switch (e.key) {
-        case 'Escape':
-          stopTeleprompter();
-          break;
-        case ' ':
-          togglePause();
+      event.preventDefault(); // Prevent default scrolling behavior
+      switch (event.key) {
+        case 'ArrowDown':
+        case 'ArrowRight':
+          scroll(1);
           break;
         case 'ArrowUp':
         case 'ArrowLeft':
           scroll(-1);
           break;
-        case 'ArrowDown':
-        case 'ArrowRight':
-          scroll(1);
+        case ' ':
+          toggleAutoScroll();
+          break;
+        case 'Escape':
+          hideTeleprompter();
           break;
       }
     }
   });
 
-  // Make teleprompter draggable
-  let isDragging = false;
-  let dragStartX, dragStartY;
+  teleprompter.addEventListener('wheel', (event) => {
+    event.preventDefault(); // Prevent default scrolling behavior
+    scroll(event.deltaY > 0 ? 1 : -1);
+  });
 
-  teleprompter.addEventListener('mousedown', (e) => {
-    if (e.target === teleprompter) {
-      isDragging = true;
-      dragStartX = e.clientX - teleprompter.offsetLeft;
-      dragStartY = e.clientY - teleprompter.offsetTop;
+  icon.addEventListener('click', () => {
+    if (teleprompter.style.display === 'none') {
+      showTeleprompter();
+    } else {
+      hideTeleprompter();
     }
   });
 
-  document.addEventListener('mousemove', (e) => {
-    if (isDragging) {
-      teleprompter.style.left = `${e.clientX - dragStartX}px`;
-      teleprompter.style.top = `${e.clientY - dragStartY}px`;
+  document.addEventListener('click', (event) => {
+    if (!wrapper.contains(event.target) && teleprompter.style.display === 'block') {
+      hideTeleprompter();
     }
   });
 
-  document.addEventListener('mouseup', () => {
-    isDragging = false;
-  });
+  // Initialize the teleprompter
+  updateTeleprompterContent();
+  hideTeleprompter(); // Start with the teleprompter hidden
+}
 
-  extractContent();
-  if (allLines.length === 0) {
-    // eslint-disable-next-line no-console
-    console.error('No content available for teleprompter');
+function extractContent(startNode) {
+  const content = [];
+  let node = startNode;
+  while (node) {
+    if (node.tagName === 'H1' || node.tagName === 'H2' || node.tagName === 'P') {
+      const text = node.textContent.trim();
+      if (text) {
+        // Split the text into words, ensuring spaces between them
+        const words = text.split(/\s+/);
+        let sentence = '';
+        words.forEach((word, index) => {
+          // Split words that are incorrectly joined
+          const splitWords = word.replace(/([a-z])([A-Z])/g, '$1 $2').split(/\s+/);
+          splitWords.forEach((splitWord, splitIndex) => {
+            // Add space before the word if it's not the first word
+            if (index > 0 || splitIndex > 0) {
+              sentence += ' ';
+            }
+            sentence += splitWord;
+          });
+          // Add space after punctuation
+          if (/[.!?,;:]$/.test(word)) {
+            sentence += ' ';
+          }
+          if (/[.!?]$/.test(word)) {
+            content.push(sentence.trim().replace(/\s+/g, ' ')); // Remove multiple spaces
+            sentence = '';
+          }
+        });
+        if (sentence.trim()) {
+          content.push(sentence.trim().replace(/\s+/g, ' ')); // Remove multiple spaces
+        }
+      }
+    } else if (node.childNodes && node.childNodes.length > 0) {
+      // Recursively extract content from child nodes
+      content.push(...extractContent(node.firstElementChild));
+    }
+    node = node.nextElementSibling;
   }
+  
+  return content;
 }
