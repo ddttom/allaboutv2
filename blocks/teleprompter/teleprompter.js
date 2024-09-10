@@ -11,6 +11,13 @@ export default async function decorate(block) {
   title.classList.add('teleprompter-title');
   block.insertBefore(title, content);
 
+  // Create the icon
+  const icon = document.createElement('div');
+  icon.classList.add('teleprompter-icon');
+  icon.innerHTML = '&#128217;'; // Unicode for a text icon, you can replace this with an SVG or image
+  icon.setAttribute('aria-label', 'Start Teleprompter');
+  document.body.appendChild(icon);
+
   let allLines = [];
   let currentLine = 0;
   let isPaused = false;
@@ -108,7 +115,7 @@ export default async function decorate(block) {
     makeDraggable(block);
     block.tabIndex = -1; // Make the block focusable
     block.focus(); // Set focus on the block
-    block.classList.add('focused');
+    icon.style.display = 'none'; // Hide the icon when teleprompter starts
   }
 
   function stopTeleprompter() {
@@ -116,6 +123,7 @@ export default async function decorate(block) {
     isPaused = false;
     currentLine = 0;
     updateDisplay();
+    icon.style.display = 'block'; // Show the icon when teleprompter stops
   }
 
   function togglePause() {
@@ -177,15 +185,23 @@ export default async function decorate(block) {
     block.tabIndex = -1;
   }
 
-  startTeleprompter();
-  handleFocus();
+  // Hide the teleprompter block initially
+  block.style.display = 'none';
+
+  icon.addEventListener('click', () => {
+    startTeleprompter();
+    handleFocus();
+  });
 
   document.addEventListener('keydown', (e) => {
-    if (block.style.display === 'none') return;
-
     if (e.key === 'Escape') {
       stopTeleprompter();
-    } else if (e.key === ' ') {
+      return; // Add this line to ensure we exit the function after stopping
+    }
+
+    if (block.style.display === 'none') return;
+
+    if (e.key === ' ') {
       e.preventDefault();
       togglePause();
     } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
@@ -213,18 +229,7 @@ export default async function decorate(block) {
     updateDisplay();
   });
 
-  // Add this new function to periodically check and restore focus
-  function ensureFocus() {
-    if (block.style.display !== 'none' && !block.contains(document.activeElement)) {
-      block.focus();
-      block.classList.add('focused');
-    }
-  }
-
-  // Call ensureFocus every second
-  setInterval(ensureFocus, 1000);
-
-  // Add event listeners for focus and blur
+  // Keep the focus and blur event listeners
   block.addEventListener('focus', () => {
     block.classList.add('focused');
   });
