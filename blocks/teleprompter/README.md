@@ -8,7 +8,7 @@ Add the teleprompter block to your page where you want the teleprompter function
 
 ## Authoring
 
-No specific authoring is required for the teleprompter block itself. The block will automatically process and display all text content on the page below it.
+No specific authoring is required in Google Docs or Microsoft Word. The teleprompter will use all text content on the page below the block.
 
 ## Styling
 
@@ -16,25 +16,20 @@ The teleprompter uses custom CSS classes for styling. You can customize the appe
 
 ## Behavior
 
-- Clicking the teleprompter icon opens the teleprompter view.
-- The text scrolls from bottom to top.
-- Use the mouse wheel to control scrolling speed.
-- Press the spacebar to pause/resume.
-- Press the Esc key or click the stop icon to exit the teleprompter view.
-
-## Dependencies
-
-This block depends on the `aem.js` script for optimized picture creation.
+- Press the "Esc" key to start/stop the teleprompter.
+- Use the mouse wheel to scroll through the text.
+- Press the spacebar to pause/resume the timer.
+- Text preceded by "note" will be displayed in light gray.
 
 ## Accessibility
 
-- Keyboard controls are fully functional (Spacebar for pause/resume, Esc for exit).
-- ARIA labels should be added to the SVG elements for improved screen reader support.
+- Keyboard controls are fully functional for start/stop and pause/resume actions.
+- The teleprompter can be operated entirely using keyboard controls.
 
 ## Suggestions for Improvement
 
-1. Add customizable scrolling speed options.
-2. Implement text size adjustment controls.
-3. Add support for different color themes.
-4. Implement a preview mode for content creators.
-5. Add support for importing external text files.
+1. Add font size controls for better readability.
+2. Implement adjustable scroll speed.
+3. Add an option to change text and background colors.
+4. Include a feature to import custom text files.
+5. Implement a progress bar to show overall progress through the text.

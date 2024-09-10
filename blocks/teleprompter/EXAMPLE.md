@@ -2,4 +2,4 @@
 
 | Teleprompter |
 |--------------|
-| Click to start |
+|              |

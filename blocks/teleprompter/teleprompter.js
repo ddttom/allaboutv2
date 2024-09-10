@@ -1,158 +1,235 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
-
 export default async function decorate(block) {
-  const teleprompterSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-    <!-- Camera body -->
-    <rect x="60" y="70" width="80" height="60" fill="#333333" />
-    
-    <!-- Lens -->
-    <circle cx="100" cy="100" r="20" fill="#4a4a4a" />
-    <circle cx="100" cy="100" r="15" fill="#333333" />
-    
-    <!-- Teleprompter screen -->
-    <rect x="40" y="40" width="120" height="90" fill="#87CEEB" stroke="#000000" stroke-width="2" />
-    
-    <!-- Text lines on screen -->
-    <line x1="50" y1="60" x2="150" y2="60" stroke="#000000" stroke-width="2" />
-    <line x1="50" y1="80" x2="150" y2="80" stroke="#000000" stroke-width="2" />
-    <line x1="50" y1="100" x2="150" y2="100" stroke="#000000" stroke-width="2" />
-    
-    <!-- Stand -->
-    <rect x="90" y="130" width="20" height="40" fill="#555555" />
-    <rect x="70" y="170" width="60" height="10" fill="#555555" />
-  </svg>`;
-
-  const stopSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
-    <!-- White background circle -->
-    <circle cx="300" cy="300" r="290" fill="white" />
-    
-    <!-- Red border -->
-    <circle cx="300" cy="300" r="290" fill="none" stroke="#c1121f" stroke-width="20" />
-    
-    <!-- STOP text -->
-    <text x="300" y="330" font-family="Arial, sans-serif" font-size="140" font-weight="bold" text-anchor="middle" fill="black">STOP</text>
-  </svg>`;
-
-  const viewport = document.createElement('div');
-  viewport.classList.add('teleprompter-viewport');
-  block.appendChild(viewport);
-
-  const teleprompterIcon = document.createElement('div');
-  teleprompterIcon.classList.add('teleprompter-icon');
-  teleprompterIcon.innerHTML = teleprompterSVG;
-  viewport.appendChild(teleprompterIcon);
+  const content = document.createElement('div');
+  content.classList.add('teleprompter-content');
+  block.appendChild(content);
 
   const timer = document.createElement('div');
   timer.classList.add('teleprompter-timer');
-  viewport.appendChild(timer);
+  block.appendChild(timer);
 
-  const textContainer = document.createElement('div');
-  textContainer.classList.add('teleprompter-text-container');
-  viewport.appendChild(textContainer);
+  const title = document.createElement('div');
+  title.classList.add('teleprompter-title');
+  block.insertBefore(title, content);
 
-  let processedText = [];
-  let isActive = false;
+  let allLines = [];
+  let currentLine = 0;
   let isPaused = false;
   let startTime;
-  let timerInterval;
+  let pausedTime = 0;
 
-  function processText() {
-    const allTextElements = document.body.querySelectorAll('p, h1, h2, h3, h4, h5, h6');
-    allTextElements.forEach((element) => {
-      if (element.closest('.teleprompter') === null) {
-        const text = element.textContent.replace(/Edge Delivery Services/g, 'EdgeDeliveryServices');
-        const words = text.split(/\s+/);
-        for (let i = 0; i < words.length; i += 8) {
-          const line = words.slice(i, i + 8).join(' ');
-          processedText.push(line);
+  function readContent() {
+    allLines = [];
+    let h1Found = false;
+    const walker = document.createTreeWalker(
+      document.body,
+      NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT,
+      {
+        acceptNode: function(node) {
+          if (block.contains(node)) {
+            return NodeFilter.FILTER_REJECT;
+          }
+          if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'H1' && !h1Found) {
+            h1Found = true;
+            title.textContent = node.textContent.trim();
+            return NodeFilter.FILTER_REJECT;
+          }
+          return node.nodeType === Node.TEXT_NODE && node.textContent.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
         }
       }
-    });
-    // eslint-disable-next-line no-console
-    console.log('Processed Text:', processedText);
+    );
+
+    while (walker.nextNode()) {
+      const text = walker.currentNode.textContent.trim();
+      if (text) {
+        allLines.push(text);
+      }
+    }
+  }
+
+  function updateDisplay() {
+    content.innerHTML = '';
+    if (allLines.length === 0) {
+      const line = document.createElement('div');
+      line.textContent = "No content available.";
+      content.appendChild(line);
+      return;
+    }
+
+    if (isPaused) {
+      const pausedMessage = document.createElement('div');
+      pausedMessage.textContent = "PAUSED";
+      pausedMessage.classList.add('paused-message');
+      content.appendChild(pausedMessage);
+    }
+
+    // First line (bold)
+    const firstLineElement = document.createElement('div');
+    firstLineElement.textContent = allLines[currentLine] || '';
+    firstLineElement.classList.add('teleprompter-first-line');
+    content.appendChild(firstLineElement);
+
+    // Gap
+    const gap = document.createElement('div');
+    gap.classList.add('teleprompter-gap');
+    content.appendChild(gap);
+
+    // Rest of the text (slightly dimmed)
+    for (let i = 1; i < 4 && currentLine + i < allLines.length; i += 1) {
+      const line = document.createElement('div');
+      line.textContent = allLines[currentLine + i] || '';
+      line.classList.add('teleprompter-dimmed-line');
+      content.appendChild(line);
+    }
   }
 
   function updateTimer() {
     const currentTime = new Date().getTime();
-    const elapsedTime = new Date(currentTime - startTime);
-    const minutes = elapsedTime.getUTCMinutes().toString().padStart(2, '0');
-    const seconds = elapsedTime.getUTCSeconds().toString().padStart(2, '0');
-    timer.textContent = `${minutes}:${seconds}`;
+    let elapsedTime = isPaused ? pausedTime : (currentTime - startTime) + pausedTime;
+    const minutes = Math.floor(elapsedTime / 60000);
+    const seconds = Math.floor((elapsedTime % 60000) / 1000);
+    timer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    requestAnimationFrame(updateTimer);
   }
 
   function startTeleprompter() {
-    isActive = true;
-    isPaused = false;
-    viewport.classList.add('active');
-    teleprompterIcon.innerHTML = stopSVG;
+    readContent();
+    block.style.display = 'block';
+    block.style.position = 'fixed';
+    block.style.top = '50%';
+    block.style.left = '50%';
+    block.style.transform = 'translate(-50%, -50%)';
+    content.style.display = 'block';
     startTime = new Date().getTime();
-    timerInterval = setInterval(updateTimer, 1000);
-    displayText();
+    isPaused = false;
+    pausedTime = 0;
+    currentLine = 0;
+    updateDisplay();
+    updateTimer();
+    makeDraggable(block);
+    block.tabIndex = -1; // Make the block focusable
+    block.focus(); // Set focus on the block
+    block.classList.add('focused');
   }
 
   function stopTeleprompter() {
-    isActive = false;
+    block.style.display = 'none';
     isPaused = false;
-    viewport.classList.remove('active');
-    teleprompterIcon.innerHTML = teleprompterSVG;
-    clearInterval(timerInterval);
-    timer.textContent = '';
-    textContainer.innerHTML = '';
+    currentLine = 0;
+    updateDisplay();
   }
 
   function togglePause() {
-    if (isActive) {
-      isPaused = !isPaused;
-      if (isPaused) {
-        clearInterval(timerInterval);
-      } else {
-        startTime = new Date().getTime() - (new Date(timer.textContent).getTime() - new Date(0).getTime());
-        timerInterval = setInterval(updateTimer, 1000);
-      }
-    }
-  }
-
-  function displayText() {
-    textContainer.innerHTML = '';
-    processedText.forEach((line, index) => {
-      const lineElement = document.createElement('div');
-      lineElement.classList.add('teleprompter-line');
-      if (line.startsWith('**note**')) {
-        lineElement.classList.add('note');
-        line = line.replace('**note**', '').trim();
-      }
-      lineElement.textContent = line;
-      textContainer.appendChild(lineElement);
-    });
-  }
-
-  function scrollText(delta) {
-    if (isActive && !isPaused) {
-      const lines = textContainer.querySelectorAll('.teleprompter-line');
-      const lineHeight = lines[0].offsetHeight;
-      textContainer.scrollTop += delta > 0 ? lineHeight : -lineHeight;
-    }
-  }
-
-  teleprompterIcon.addEventListener('click', () => {
-    if (isActive) {
-      stopTeleprompter();
+    isPaused = !isPaused;
+    block.classList.toggle('paused', isPaused);
+    if (isPaused) {
+      pausedTime += new Date().getTime() - startTime;
     } else {
-      startTeleprompter();
+      startTime = new Date().getTime();
     }
-  });
+    updateDisplay();
+  }
 
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') {
+  function makeDraggable(element) {
+    let isDragging = false;
+    let startX, startY;
+
+    element.addEventListener('mousedown', startDragging);
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('mouseup', stopDragging);
+
+    function startDragging(e) {
+      if (e.target === content) return;
+      isDragging = true;
+      const rect = element.getBoundingClientRect();
+      startX = e.clientX - rect.left;
+      startY = e.clientY - rect.top;
+      e.preventDefault();
+    }
+
+    function drag(e) {
+      if (!isDragging) return;
+      const newX = e.clientX - startX;
+      const newY = e.clientY - startY;
+      element.style.left = `${newX}px`;
+      element.style.top = `${newY}px`;
+      element.style.transform = 'none';
+    }
+
+    function stopDragging() {
+      isDragging = false;
+    }
+  }
+
+  function handleFocus() {
+    block.addEventListener('mousedown', (e) => {
+      e.stopPropagation();
+      block.focus();
+      block.classList.add('focused');
+    });
+
+    document.addEventListener('mousedown', (e) => {
+      if (!block.contains(e.target)) {
+        block.blur();
+        block.classList.remove('focused');
+      }
+    });
+
+    block.tabIndex = -1;
+  }
+
+  startTeleprompter();
+  handleFocus();
+
+  document.addEventListener('keydown', (e) => {
+    if (block.style.display === 'none') return;
+
+    if (e.key === 'Escape') {
       stopTeleprompter();
-    } else if (event.key === ' ') {
+    } else if (e.key === ' ') {
+      e.preventDefault();
       togglePause();
+    } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+      e.preventDefault();
+      if (!isPaused && currentLine < allLines.length - 1) {
+        currentLine += 1;
+        updateDisplay();
+      }
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      if (!isPaused && currentLine > 0) {
+        currentLine -= 1;
+        updateDisplay();
+      }
     }
   });
 
-  viewport.addEventListener('wheel', (event) => {
-    scrollText(event.deltaY);
+  block.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    if (e.deltaY > 0) {
+      currentLine = Math.min(currentLine + 1, allLines.length - 1);
+    } else if (e.deltaY < 0) {
+      currentLine = Math.max(currentLine - 1, 0);
+    }
+    updateDisplay();
   });
 
-  processText();
+  // Add this new function to periodically check and restore focus
+  function ensureFocus() {
+    if (block.style.display !== 'none' && !block.contains(document.activeElement)) {
+      block.focus();
+      block.classList.add('focused');
+    }
+  }
+
+  // Call ensureFocus every second
+  setInterval(ensureFocus, 1000);
+
+  // Add event listeners for focus and blur
+  block.addEventListener('focus', () => {
+    block.classList.add('focused');
+  });
+
+  block.addEventListener('blur', () => {
+    block.classList.remove('focused');
+  });
 }
