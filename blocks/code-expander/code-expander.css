@@ -2,13 +2,16 @@
   position: relative;
   display: block;
   margin-top: 20px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  padding: 30px 10px 10px;
 }
 
 .code-expander-copy {
   position: absolute;
-  top: -25px;
-  left: 0;
-  background: #f0f0f0;
+  top: -12px;
+  left: 10px;
+  background: #fff;
   border: 1px solid #ccc;
   font-size: 0.9em;
   cursor: pointer;
@@ -18,7 +21,6 @@
   align-items: center;
   padding: 2px 5px;
   border-radius: 3px;
-  z-index: 1;
 }
 
 .code-expander-copy:hover {
@@ -32,13 +34,7 @@
 }
 
 .code-expander-code {
-  position: relative;
-}
-
-.code-expander-code > code {
-  display: block;
-  white-space: pre-wrap;
-  word-wrap: break-word;
+  margin-top: 5px;
 }
 
 @media (max-width: 768px) {
