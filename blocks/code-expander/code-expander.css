@@ -1,23 +1,25 @@
 .code-expander-wrapper {
   position: relative;
   display: block;
-  margin-top: 30px;
+  margin-top: 20px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  padding: 30px 10px 10px;
 }
 
 .code-expander-copy {
   position: absolute;
-  top: -25px;
-  left: 0;
-  background: none;
-  border: none;
-  font-size: 1em;
+  top: -12px;
+  left: 10px;
+  background: #fff;
+  border: 1px solid #ccc;
+  font-size: 0.9em;
   cursor: pointer;
-  opacity: 0.7;
+  opacity: 0.9;
   transition: opacity 0.3s ease;
   display: flex;
   align-items: center;
   padding: 2px 5px;
-  background-color: #f0f0f0;
   border-radius: 3px;
 }
 
@@ -31,14 +33,13 @@
   color: #000;
 }
 
-.code-expander-wrapper > code {
-  display: block;
-  margin-top: 1em;
+.code-expander-code {
+  margin-top: 5px;
 }
 
 @media (max-width: 768px) {
   .code-expander-copy {
-    font-size: 0.9em;
+    font-size: 0.8em;
   }
   
   .code-expander-copy-text {
