@@ -7,7 +7,7 @@ export default async function decorate(block) {
 
     const copyButton = document.createElement('button');
     copyButton.className = 'code-expander-copy';
-    copyButton.innerHTML = '📋 <span class="code-expander-copy-text">Copy code</span>';
+    copyButton.innerHTML = '📋 <span class="code-expander-copy-text">Copy code to clipboard</span>';
     copyButton.setAttribute('aria-label', 'Copy code to clipboard');
     copyButton.title = 'Copy to clipboard';
 
