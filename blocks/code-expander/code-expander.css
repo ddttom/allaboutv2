@@ -1,0 +1,26 @@
+.code-expander-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.code-expander-copy {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.code-expander-copy:hover {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .code-expander-copy {
+    font-size: 1em;
+  }
+}
