@@ -7,22 +7,22 @@ export default async function decorate(block) {
 
     const copyButton = document.createElement('button');
     copyButton.className = 'code-expander-copy';
-    copyButton.innerHTML = '📋';
+    copyButton.innerHTML = '📋 <span class="code-expander-copy-text">Copy code</span>';
     copyButton.setAttribute('aria-label', 'Copy code to clipboard');
     copyButton.title = 'Copy to clipboard';
 
-    wrapper.appendChild(codeElement.cloneNode(true));
     wrapper.appendChild(copyButton);
+    wrapper.appendChild(codeElement.cloneNode(true));
 
     codeElement.parentNode.replaceChild(wrapper, codeElement);
 
     copyButton.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(codeElement.textContent);
-        copyButton.innerHTML = '✅';
+        copyButton.innerHTML = '✅ <span class="code-expander-copy-text">Copied!</span>';
         copyButton.setAttribute('aria-label', 'Code copied to clipboard');
         setTimeout(() => {
-          copyButton.innerHTML = '📋';
+          copyButton.innerHTML = '📋 <span class="code-expander-copy-text">Copy code</span>';
           copyButton.setAttribute('aria-label', 'Copy code to clipboard');
         }, 2000);
       } catch (err) {

@@ -13,15 +13,15 @@ Authors can continue to use the standard `<code>` element in their content. The 
 ## Styling
 
 The block uses the following CSS classes:
-
 - `.code-expander-wrapper`: Wraps the code element and copy button
 - `.code-expander-copy`: Styles the copy button
+- `.code-expander-copy-text`: Styles the "Copy code" text
 
 ## Behavior
 
-- A clipboard icon (📋) is added to the top-right corner of each `<code>` element.
-- Clicking the icon copies the code content to the clipboard.
-- The icon changes to a checkmark (✅) for 2 seconds after successful copying.
+- A "Copy code" button with a clipboard icon (📋) is added above each `<code>` element.
+- Clicking the button copies the code content to the clipboard.
+- The button text changes to "Copied!" with a checkmark (✅) for 2 seconds after successful copying.
 
 ## Accessibility
 
@@ -37,4 +37,5 @@ This block has no external dependencies.
 1. Add error handling for browsers that don't support the Clipboard API.
 2. Implement syntax highlighting for code elements.
 3. Add an option to expand/collapse long code snippets.
-4. Provide configuration options for button placement and icons.
+4. Provide configuration options for button placement and text.
+5. Add visual feedback for hover and focus states on the copy button.

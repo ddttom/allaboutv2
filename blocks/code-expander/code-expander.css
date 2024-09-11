@@ -1,26 +1,41 @@
 .code-expander-wrapper {
   position: relative;
-  display: inline-block;
+  display: block;
+  margin-top: 30px;
 }
 
 .code-expander-copy {
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: -25px;
+  left: 0;
   background: none;
   border: none;
-  font-size: 1.2em;
+  font-size: 1em;
   cursor: pointer;
   opacity: 0.7;
   transition: opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  padding: 2px 5px;
+  background-color: #f0f0f0;
+  border-radius: 3px;
 }
 
 .code-expander-copy:hover {
   opacity: 1;
 }
 
+.code-expander-copy-text {
+  font-size: 0.8em;
+  margin-left: 5px;
+}
+
 @media (max-width: 768px) {
   .code-expander-copy {
-    font-size: 1em;
+    font-size: 0.9em;
+  }
+  
+  .code-expander-copy-text {
+    font-size: 0.7em;
   }
 }
