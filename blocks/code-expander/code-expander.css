@@ -35,6 +35,12 @@
   margin-top: 5px;
 }
 
+.code-expander-code pre {
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+}
+
 @media (max-width: 768px) {
   .code-expander-copy {
     font-size: 0.8em;
