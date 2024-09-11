@@ -18,12 +18,12 @@ The block uses the following CSS classes:
 - `.code-expander-copy-text`: Styles the "Copy code" text
 - `.code-expander-code`: Wraps the code element for additional styling control
 
-The `<pre>` element within `.code-expander-code` is styled with a 2px solid border for visual distinction.
+The `<pre>` element within `.code-expander-code` is styled with a 2px solid white border and a light background for visual distinction.
 
 ## Behavior
 
 - A "Copy code" button with a clipboard icon (📋) is added above each `<code>` element.
-- The code is displayed within a bordered `<pre>` element for better visual separation.
+- The code is displayed within a white-bordered `<pre>` element with a light background for better visual separation.
 - Clicking the button copies the code content to the clipboard.
 - The button text changes to "Copied!" with a checkmark (✅) for 2 seconds after successful copying.
 
@@ -43,4 +43,4 @@ This block has no external dependencies.
 3. Add an option to expand/collapse long code snippets.
 4. Provide configuration options for button placement and text.
 5. Add visual feedback for hover and focus states on the copy button.
-6. Allow customization of the copy button's appearance and the code border style.
+6. Allow customization of the copy button's appearance, code border style, and background color.

@@ -36,9 +36,10 @@
 }
 
 .code-expander-code pre {
-  border: 2px solid #ccc;
+  border: 2px solid #fff;
   border-radius: 4px;
   padding: 10px;
+  background-color: #f8f8f8;
 }
 
 @media (max-width: 768px) {
