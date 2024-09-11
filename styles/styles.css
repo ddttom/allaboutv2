@@ -102,7 +102,7 @@ p, dl, ol, ul, pre, blockquote {
 code, pre {
   font-family: var(--fixed-font-family);
   font-size: var(--body-font-size-s);
-  border: 2px solid #e0e0e0;
+  border: 2px solid #0a0909;
   border-radius: 4px;
 }
 
