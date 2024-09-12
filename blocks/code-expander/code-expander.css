@@ -32,12 +32,28 @@
 
 .code-expander-code {
   margin-top: 5px;
+  background-color: #f4f4f4;
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto;
 }
 
 .code-expander-code pre {
-  padding: 10px;
-  background-color: #f8f8f8;
+  margin: 0;
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 1.5;
 }
+
+.language-js .keyword { color: #0000ff; }
+.language-js .string { color: #a31515; }
+.language-js .comment { color: #008000; }
+.language-js .special-char { color: #0000ff; }
+
+.language-css .property { color: #ff0000; }
+.language-css .value { color: #0000ff; }
+.language-css .selector { color: #800000; }
+.language-css .comment { color: #008000; }
 
 @media (max-width: 768px) {
   .code-expander-copy {
