@@ -67,17 +67,17 @@ export default async function decorate(block) {
     codeWrapper.className = 'code-expander-code';
 
     const originalContent = codeElement.textContent.trim();
-    const firstTwoChars = originalContent.substring(0, 2);
+    const firstChar = originalContent[0];
     const firstLine = originalContent.split('\n')[0].trim();
 
     let displayCode = originalContent;
     let fileType = 'code';
 
-    if (firstTwoChars === '# ') {
+    if (firstChar === '#') {
       displayCode = formatMarkdown(originalContent);
       codeWrapper.classList.add('language-markdown');
       fileType = 'Markdown';
-    } else if (originalContent[0] === '"') {
+    } else if (firstChar === '"') {
       displayCode = formatMarkdown(originalContent);
       codeWrapper.classList.add('language-text');
       fileType = 'text';
@@ -86,12 +86,15 @@ export default async function decorate(block) {
       displayCode = highlightJS(codeContent);
       codeWrapper.classList.add('language-js');
       fileType = 'JavaScript';
+    } else if (firstChar === '.') {
+      displayCode = highlightCSS(originalContent);
+      codeWrapper.classList.add('language-css');
+      fileType = 'CSS';
     } else if (firstLine === '/* css */') {
       displayCode = highlightCSS(originalContent.replace('/* css */\n', ''));
       codeWrapper.classList.add('language-css');
       fileType = 'CSS';
     } else if (originalContent.trim().startsWith('<!DOCTYPE html>') || originalContent.trim().startsWith('<!-')) {
-      // Remove the '<!-- html -->' comment if it exists (case-insensitive)
       displayCode = originalContent.replace(/^\s*<!--\s*html\s*-->\s*/i, '');
       displayCode = escapeHTML(displayCode);
       codeWrapper.classList.add('language-html');
