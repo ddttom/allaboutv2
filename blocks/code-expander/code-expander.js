@@ -7,14 +7,18 @@ export default async function decorate(block) {
     const strings = /(["'`])(?:(?=(\\?))\2.)*?\1/g;
     const comments = /(\/\/.*|\/\*[\s\S]*?\*\/)/g;
 
-    return code
+    let highlighted = code
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
+      .replace(/>/g, '&gt;');
+
+    highlighted = highlighted
       .replace(comments, '<span class="comment">$1</span>')
       .replace(strings, '<span class="string">$&</span>')
       .replace(new RegExp(`\\b(${keywords.join('|')})\\b`, 'g'), '<span class="keyword">$1</span>')
       .replace(specialChars, '<span class="special-char">$&</span>');
+
+    return highlighted;
   };
 
   const highlightCSS = (code) => {
@@ -71,7 +75,8 @@ export default async function decorate(block) {
       codeWrapper.classList.add('language-text');
       fileType = 'text';
     } else if (firstLine === '//js') {
-      displayCode = highlightJS(originalContent.slice(originalContent.indexOf('\n') + 1));
+      const codeContent = originalContent.split('\n').slice(1).join('\n');
+      displayCode = highlightJS(codeContent);
       codeWrapper.classList.add('language-js');
       fileType = 'JavaScript';
     } else if (firstLine === '/* css */') {
