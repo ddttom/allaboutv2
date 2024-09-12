@@ -4,7 +4,7 @@ export default async function decorate(block) {
   const highlightJS = (code) => {
     const keywords = ['const', 'let', 'var', 'function', 'return', 'if', 'else', 'for', 'while', 'class', 'import', 'export', 'default', 'async', 'await'];
     const specialChars = /[{}()[\]]/g;
-    const strings = /(["'`])(?:(?=(\\?))\2.)*?\1/g;
+    const strings = /(['"`])((?:\\\1|(?:(?!\1).))*)\1/g;
     const comments = /(\/\/.*|\/\*[\s\S]*?\*\/)/g;
 
     let highlighted = code
@@ -13,7 +13,7 @@ export default async function decorate(block) {
       .replace(/>/g, '&gt;');
 
     highlighted = highlighted
-      .replace(comments, '<span class="comment">$1</span>')
+      .replace(comments, '<span class="comment">$&</span>')
       .replace(strings, '<span class="string">$&</span>')
       .replace(new RegExp(`\\b(${keywords.join('|')})\\b`, 'g'), '<span class="keyword">$1</span>')
       .replace(specialChars, '<span class="special-char">$&</span>');
