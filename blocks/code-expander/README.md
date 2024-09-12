@@ -13,6 +13,7 @@ Authors can continue to use the standard `<code>` element in their content. The 
 ## Styling
 
 The block uses the following CSS classes:
+
 - `.code-expander-wrapper`: Wraps the entire component (copy button and code)
 - `.code-expander-copy`: Styles the copy button
 - `.code-expander-copy-text`: Styles the "Copy code" text
