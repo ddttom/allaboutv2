@@ -1,5 +1,7 @@
 # imagerotate
 
+## Tom Cranstoun, 12 Sep v1.00
+
 Create a franklin block with images, named imagecycle
 
 the first cell in the table is the table name, subsequent rows contain a picture element or an href element , extract the path to the image and use it as an image.  
