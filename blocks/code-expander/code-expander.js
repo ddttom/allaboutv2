@@ -5,7 +5,6 @@ export default async function decorate(block) {
     const keywords = ['const', 'let', 'var', 'function', 'return', 'if', 'else', 'for', 'while', 'class', 'import', 'export', 'default', 'async', 'await'];
     const specialChars = /[{}()[\]]/g;
     const strings = /(['"`])((?:\\\1|(?:(?!\1).))*)\1/g;
-    const comments = /(\/\/.*|\/\*[\s\S]*?\*\/)/g;
 
     let highlighted = code
       .replace(/&/g, '&amp;')
@@ -13,7 +12,6 @@ export default async function decorate(block) {
       .replace(/>/g, '&gt;');
 
     highlighted = highlighted
-      .replace(comments, (match) => `<span style="color: #008000;">${match}</span>`)
       .replace(strings, (match) => `<span style="color: #a31515;">${match}</span>`)
       .replace(new RegExp(`\\b(${keywords.join('|')})\\b`, 'g'), (match) => `<span style="color: #0000ff;">${match}</span>`)
       .replace(specialChars, (match) => `<span style="color: #0000ff;">${match}</span>`);
