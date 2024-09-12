@@ -47,6 +47,15 @@ export default async function decorate(block) {
     });
   };
 
+  const escapeHTML = (html) => {
+    return html
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  };
+
   codeElements.forEach((codeElement) => {
     const wrapper = document.createElement('div');
     wrapper.className = 'code-expander-wrapper';
@@ -82,7 +91,7 @@ export default async function decorate(block) {
       codeWrapper.classList.add('language-css');
       fileType = 'CSS';
     } else if (originalContent.trim().startsWith('<!DOCTYPE html>')) {
-      displayCode = originalContent;
+      displayCode = escapeHTML(originalContent);
       codeWrapper.classList.add('language-html');
       fileType = 'HTML';
     }
