@@ -8,6 +8,9 @@ export default async function decorate(block) {
     const comments = /(\/\/.*|\/\*[\s\S]*?\*\/)/g;
 
     return code
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
       .replace(comments, '<span class="comment">$1</span>')
       .replace(strings, '<span class="string">$&</span>')
       .replace(new RegExp(`\\b(${keywords.join('|')})\\b`, 'g'), '<span class="keyword">$1</span>')
@@ -68,7 +71,7 @@ export default async function decorate(block) {
       codeWrapper.classList.add('language-text');
       fileType = 'text';
     } else if (firstLine === '//js') {
-      displayCode = highlightJS(originalContent.replace('//js\n', ''));
+      displayCode = highlightJS(originalContent.slice(originalContent.indexOf('\n') + 1));
       codeWrapper.classList.add('language-js');
       fileType = 'JavaScript';
     } else if (firstLine === '/* css */') {

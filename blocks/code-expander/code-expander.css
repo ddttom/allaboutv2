@@ -31,7 +31,6 @@
 }
 
 .code-expander-code {
-  margin-top: 5px;
   background-color: #f4f4f4;
   padding: 1rem;
   border-radius: 4px;
@@ -40,9 +39,6 @@
 
 .code-expander-code pre {
   margin: 0;
-  font-family: monospace;
-  font-size: 14px;
-  line-height: 1.5;
   white-space: pre-wrap;
   word-wrap: break-word;
 }
