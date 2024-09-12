@@ -13,10 +13,10 @@ export default async function decorate(block) {
       .replace(/>/g, '&gt;');
 
     highlighted = highlighted
-      .replace(comments, '<span class="comment">$&</span>')
-      .replace(strings, '<span class="string">$&</span>')
-      .replace(new RegExp(`\\b(${keywords.join('|')})\\b`, 'g'), '<span class="keyword">$1</span>')
-      .replace(specialChars, '<span class="special-char">$&</span>');
+      .replace(comments, (match) => `<span style="color: #008000;">${match}</span>`)
+      .replace(strings, (match) => `<span style="color: #a31515;">${match}</span>`)
+      .replace(new RegExp(`\\b(${keywords.join('|')})\\b`, 'g'), (match) => `<span style="color: #0000ff;">${match}</span>`)
+      .replace(specialChars, (match) => `<span style="color: #0000ff;">${match}</span>`);
 
     return highlighted;
   };
