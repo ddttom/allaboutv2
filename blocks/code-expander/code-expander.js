@@ -29,7 +29,17 @@ export default async function decorate(block) {
 
   const formatMarkdown = (content) => {
     // Remove all backticks
-    return content.replace(/`/g, '');
+    content = content.replace(/`/g, '');
+    
+    // Convert HTML elements to entities
+    return content.replace(/[<>&]/g, (char) => {
+      switch (char) {
+        case '<': return '&lt;';
+        case '>': return '&gt;';
+        case '&': return '&amp;';
+        default: return char;
+      }
+    });
   };
 
   codeElements.forEach((codeElement) => {
@@ -45,28 +55,28 @@ export default async function decorate(block) {
     const codeWrapper = document.createElement('div');
     codeWrapper.className = 'code-expander-code';
 
-    const codeContent = codeElement.textContent.trim();
-    const firstTwoChars = codeContent.substring(0, 2);
-    const firstLine = codeContent.split('\n')[0].trim();
+    const originalContent = codeElement.textContent.trim();
+    const firstTwoChars = originalContent.substring(0, 2);
+    const firstLine = originalContent.split('\n')[0].trim();
 
-    let highlightedCode = codeContent;
+    let displayCode = originalContent;
     if (firstTwoChars === '# ') {
       // If the first characters are "# ", treat as Markdown
-      highlightedCode = formatMarkdown(codeContent);
+      displayCode = formatMarkdown(originalContent);
       codeWrapper.classList.add('language-markdown');
-    } else if (codeContent[0] === '"') {
+    } else if (originalContent[0] === '"') {
       // If the first character is a double quote, treat as plain text
-      highlightedCode = codeContent;
+      displayCode = formatMarkdown(originalContent);
       codeWrapper.classList.add('language-text');
     } else if (firstLine === '//js') {
-      highlightedCode = highlightJS(codeContent.replace('//js\n', ''));
+      displayCode = highlightJS(originalContent.replace('//js\n', ''));
       codeWrapper.classList.add('language-js');
     } else if (firstLine === '/* css */') {
-      highlightedCode = highlightCSS(codeContent.replace('/* css */\n', ''));
+      displayCode = highlightCSS(originalContent.replace('/* css */\n', ''));
       codeWrapper.classList.add('language-css');
     }
 
-    codeWrapper.innerHTML = `<pre>${highlightedCode}</pre>`;
+    codeWrapper.innerHTML = `<pre>${displayCode}</pre>`;
 
     wrapper.appendChild(copyButton);
     wrapper.appendChild(codeWrapper);
@@ -75,7 +85,7 @@ export default async function decorate(block) {
 
     copyButton.addEventListener('click', async () => {
       try {
-        await navigator.clipboard.writeText(codeContent);
+        await navigator.clipboard.writeText(originalContent);
         copyButton.innerHTML = '✅ <span class="code-expander-copy-text">Copied!</span>';
         copyButton.setAttribute('aria-label', 'Code copied to clipboard');
         setTimeout(() => {
