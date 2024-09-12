@@ -67,6 +67,7 @@ export default async function decorate(block) {
     codeWrapper.className = 'code-expander-code';
 
     const originalContent = codeElement.textContent.trim();
+    const firstTwoChars = originalContent.substring(0, 2);
     const firstChar = originalContent[0];
     const firstLine = originalContent.split('\n')[0].trim();
 
@@ -81,22 +82,21 @@ export default async function decorate(block) {
       displayCode = formatMarkdown(originalContent);
       codeWrapper.classList.add('language-text');
       fileType = 'text';
+    } else if (firstTwoChars === ',/') {
+      displayCode = formatMarkdown(originalContent);
+      codeWrapper.classList.add('language-text');
+      fileType = 'text';
     } else if (firstLine === '//js') {
       const codeContent = originalContent.split('\n').slice(1).join('\n');
       displayCode = highlightJS(codeContent);
       codeWrapper.classList.add('language-js');
       fileType = 'JavaScript';
-    } else if (firstChar === '.') {
+    } else if (firstChar === '.' || firstLine === '/* css */') {
       displayCode = highlightCSS(originalContent);
       codeWrapper.classList.add('language-css');
       fileType = 'CSS';
-    } else if (firstLine === '/* css */') {
-      displayCode = highlightCSS(originalContent.replace('/* css */\n', ''));
-      codeWrapper.classList.add('language-css');
-      fileType = 'CSS';
-    } else if (originalContent.trim().startsWith('<!DOCTYPE html>') || originalContent.trim().startsWith('<!-')) {
-      displayCode = originalContent.replace(/^\s*<!--\s*html\s*-->\s*/i, '');
-      displayCode = escapeHTML(displayCode);
+    } else if (firstChar === '<') {
+      displayCode = escapeHTML(originalContent);
       codeWrapper.classList.add('language-html');
       fileType = 'HTML';
     }
