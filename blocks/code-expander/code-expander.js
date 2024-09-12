@@ -48,37 +48,33 @@ export default async function decorate(block) {
 
     const copyButton = document.createElement('button');
     copyButton.className = 'code-expander-copy';
-    
+    copyButton.innerHTML = '📋 <span class="code-expander-copy-text">Copy to clipboard</span>';
+    copyButton.setAttribute('aria-label', 'Copy code to clipboard');
+    copyButton.title = 'Copy to clipboard';
+
+    const codeWrapper = document.createElement('div');
+    codeWrapper.className = 'code-expander-code';
+
     const originalContent = codeElement.textContent.trim();
     const firstTwoChars = originalContent.substring(0, 2);
     const firstLine = originalContent.split('\n')[0].trim();
 
-    let fileType = 'Text';
     let displayCode = originalContent;
-
     if (firstTwoChars === '# ') {
+      // If the first characters are "# ", treat as Markdown
       displayCode = formatMarkdown(originalContent);
       codeWrapper.classList.add('language-markdown');
-      fileType = 'Markdown';
     } else if (originalContent[0] === '"') {
+      // If the first character is a double quote, treat as plain text
       displayCode = formatMarkdown(originalContent);
       codeWrapper.classList.add('language-text');
     } else if (firstLine === '//js') {
       displayCode = highlightJS(originalContent.replace('//js\n', ''));
       codeWrapper.classList.add('language-js');
-      fileType = 'JS';
     } else if (firstLine === '/* css */') {
       displayCode = highlightCSS(originalContent.replace('/* css */\n', ''));
       codeWrapper.classList.add('language-css');
-      fileType = 'CSS';
     }
-
-    copyButton.innerHTML = `📋 <span class="code-expander-copy-text">Copy ${fileType}</span>`;
-    copyButton.setAttribute('aria-label', `Copy ${fileType} to clipboard`);
-    copyButton.title = `Copy ${fileType} to clipboard`;
-
-    const codeWrapper = document.createElement('div');
-    codeWrapper.className = 'code-expander-code';
 
     codeWrapper.innerHTML = `<pre>${displayCode}</pre>`;
 
@@ -91,10 +87,10 @@ export default async function decorate(block) {
       try {
         await navigator.clipboard.writeText(originalContent);
         copyButton.innerHTML = '✅ <span class="code-expander-copy-text">Copied!</span>';
-        copyButton.setAttribute('aria-label', `${fileType} copied to clipboard`);
+        copyButton.setAttribute('aria-label', 'Code copied to clipboard');
         setTimeout(() => {
-          copyButton.innerHTML = `📋 <span class="code-expander-copy-text">Copy ${fileType}</span>`;
-          copyButton.setAttribute('aria-label', `Copy ${fileType} to clipboard`);
+          copyButton.innerHTML = '📋 <span class="code-expander-copy-text">Copy to clipboard</span>';
+          copyButton.setAttribute('aria-label', 'Copy code to clipboard');
         }, 2000);
       } catch (err) {
         // eslint-disable-next-line no-console
