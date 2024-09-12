@@ -90,7 +90,7 @@ export default async function decorate(block) {
       displayCode = highlightCSS(originalContent.replace('/* css */\n', ''));
       codeWrapper.classList.add('language-css');
       fileType = 'CSS';
-    } else if (originalContent.trim().startsWith('<!DOCTYPE html>') || originalContent.trim().startsWith('<!--|')) {
+    } else if (originalContent.trim().startsWith('<!DOCTYPE html>') || originalContent.trim().startsWith('<!-')) {
       displayCode = escapeHTML(originalContent);
       codeWrapper.classList.add('language-html');
       fileType = 'HTML';
