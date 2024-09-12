@@ -29,18 +29,7 @@ export default async function decorate(block) {
 
   const formatMarkdown = (content) => {
     // Remove all backticks
-    content = content.replace(/`/g, '');
-
-    // Basic Markdown formatting
-    return content
-      .replace(/^# (.*$)/gm, '<h1>$1</h1>')
-      .replace(/^## (.*$)/gm, '<h2>$1</h2>')
-      .replace(/^### (.*$)/gm, '<h3>$1</h3>')
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2">$1</a>')
-      .replace(/^\s*[-*+]\s(.*)$/gm, '<li>$1</li>')
-      .replace(/<\/li>\s*<li>/g, '</li><li>');
+    return content.replace(/`/g, '');
   };
 
   codeElements.forEach((codeElement) => {
