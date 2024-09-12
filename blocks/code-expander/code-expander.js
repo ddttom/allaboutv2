@@ -27,13 +27,29 @@ export default async function decorate(block) {
       .replace(selectors, '<span class="selector">$1</span> {');
   };
 
+  const formatMarkdown = (content) => {
+    // Remove all backticks
+    content = content.replace(/`/g, '');
+
+    // Basic Markdown formatting
+    return content
+      .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+      .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+      .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2">$1</a>')
+      .replace(/^\s*[-*+]\s(.*)$/gm, '<li>$1</li>')
+      .replace(/<\/li>\s*<li>/g, '</li><li>');
+  };
+
   codeElements.forEach((codeElement) => {
     const wrapper = document.createElement('div');
     wrapper.className = 'code-expander-wrapper';
 
     const copyButton = document.createElement('button');
     copyButton.className = 'code-expander-copy';
-    copyButton.innerHTML = '📋 <span class="code-expander-copy-text">Copy code to clipboard</span>';
+    copyButton.innerHTML = '📋 <span class="code-expander-copy-text">Copy to clipboard</span>';
     copyButton.setAttribute('aria-label', 'Copy code to clipboard');
     copyButton.title = 'Copy to clipboard';
 
@@ -41,11 +57,15 @@ export default async function decorate(block) {
     codeWrapper.className = 'code-expander-code';
 
     const codeContent = codeElement.textContent.trim();
-    const firstChar = codeContent[0];
+    const firstTwoChars = codeContent.substring(0, 2);
     const firstLine = codeContent.split('\n')[0].trim();
 
     let highlightedCode = codeContent;
-    if (firstChar === '"') {
+    if (firstTwoChars === '# ') {
+      // If the first characters are "# ", treat as Markdown
+      highlightedCode = formatMarkdown(codeContent);
+      codeWrapper.classList.add('language-markdown');
+    } else if (codeContent[0] === '"') {
       // If the first character is a double quote, treat as plain text
       highlightedCode = codeContent;
       codeWrapper.classList.add('language-text');

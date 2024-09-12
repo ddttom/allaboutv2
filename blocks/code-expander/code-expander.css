@@ -61,6 +61,52 @@
   color: #000;
 }
 
+.language-markdown {
+  color: #000;
+}
+
+.language-markdown h1,
+.language-markdown h2,
+.language-markdown h3 {
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+.language-markdown h1 {
+  font-size: 1.5em;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.3em;
+}
+
+.language-markdown h2 {
+  font-size: 1.3em;
+}
+
+.language-markdown h3 {
+  font-size: 1.1em;
+}
+
+.language-markdown strong {
+  font-weight: bold;
+}
+
+.language-markdown em {
+  font-style: italic;
+}
+
+.language-markdown a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+.language-markdown a:hover {
+  text-decoration: underline;
+}
+
+.language-markdown li {
+  margin-left: 1em;
+}
+
 @media (max-width: 768px) {
   .code-expander-copy {
     font-size: 0.8em;
