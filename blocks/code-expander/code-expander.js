@@ -41,10 +41,15 @@ export default async function decorate(block) {
     codeWrapper.className = 'code-expander-code';
 
     const codeContent = codeElement.textContent.trim();
+    const firstChar = codeContent[0];
     const firstLine = codeContent.split('\n')[0].trim();
 
     let highlightedCode = codeContent;
-    if (firstLine === '//js') {
+    if (firstChar === '"') {
+      // If the first character is a double quote, treat as plain text
+      highlightedCode = codeContent;
+      codeWrapper.classList.add('language-text');
+    } else if (firstLine === '//js') {
       highlightedCode = highlightJS(codeContent.replace('//js\n', ''));
       codeWrapper.classList.add('language-js');
     } else if (firstLine === '/* css */') {

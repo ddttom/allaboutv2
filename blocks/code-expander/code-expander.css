@@ -43,6 +43,8 @@
   font-family: monospace;
   font-size: 14px;
   line-height: 1.5;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .language-js .keyword { color: #0000ff; }
@@ -55,6 +57,10 @@
 .language-css .selector { color: #800000; }
 .language-css .comment { color: #008000; }
 
+.language-text {
+  color: #000;
+}
+
 @media (max-width: 768px) {
   .code-expander-copy {
     font-size: 0.8em;
@@ -64,7 +70,8 @@
     font-size: 0.7em;
   }
 }
+
 pre {
-    border: 2px solid #0a0909;
-    border-radius: 4px;
-  }
+  border: 2px solid #0a0909;
+  border-radius: 4px;
+}
