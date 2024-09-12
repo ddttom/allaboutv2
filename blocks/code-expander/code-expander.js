@@ -91,7 +91,9 @@ export default async function decorate(block) {
       codeWrapper.classList.add('language-css');
       fileType = 'CSS';
     } else if (originalContent.trim().startsWith('<!DOCTYPE html>') || originalContent.trim().startsWith('<!-')) {
-      displayCode = escapeHTML(originalContent);
+      // Remove the '<!-- html -->' comment if it exists (case-insensitive)
+      displayCode = originalContent.replace(/^\s*<!--\s*html\s*-->\s*/i, '');
+      displayCode = escapeHTML(displayCode);
       codeWrapper.classList.add('language-html');
       fileType = 'HTML';
     }
