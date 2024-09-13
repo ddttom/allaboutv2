@@ -33,15 +33,17 @@ export default async function decorate(block) {
   };
 
   const formatMarkdown = (content) => {
-    // HTML encode backticks
-    content = content.replace(/`/g, '&#96;');
+    // HTML encode backticks only if they're not already encoded
+    content = content.replace(/`/g, (match) => {
+      return match === '&#96;' ? match : '&#96;';
+    });
     
-    // Convert HTML elements to entities
+    // Convert HTML elements to entities only if they're not already encoded
     return content.replace(/[<>&]/g, (char) => {
       switch (char) {
         case '<': return '&lt;';
         case '>': return '&gt;';
-        case '&': return '&amp;';
+        case '&': return /^&(?:[a-zA-Z]+|#[0-9]+);/.test(content.slice(content.indexOf(char))) ? char : '&amp;';
         default: return char;
       }
     });
@@ -49,12 +51,14 @@ export default async function decorate(block) {
 
   const escapeHTML = (html) => {
     return html
-      .replace(/&/g, '&amp;')
+      .replace(/&(?!(?:amp|lt|gt|quot|#39|#96);)/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;')
-      .replace(/`/g, '&#96;'); // HTML encode backticks
+      .replace(/'/g, '&#39;')
+      .replace(/`/g, (match) => {
+        return match === '&#96;' ? match : '&#96;';
+      });
   };
 
   codeElements.forEach((codeElement) => {
@@ -100,6 +104,11 @@ export default async function decorate(block) {
       displayCode = escapeHTML(originalContent);
       codeWrapper.classList.add('language-html');
       fileType = 'HTML';
+    } else {
+      // For any other type of content, use formatMarkdown
+      displayCode = formatMarkdown(originalContent);
+      codeWrapper.classList.add('language-text');
+      fileType = 'text';
     }
 
     copyButton.innerHTML = `📋 <span class="code-expander-copy-text">Copy ${fileType} to clipboard</span>`;
