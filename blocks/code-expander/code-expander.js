@@ -113,11 +113,16 @@ export default async function decorate(block) {
     const firstTwoChars = originalContent.substring(0, 2);
     const firstChar = originalContent[0];
     const firstLine = originalContent.split('\n')[0].trim();
+    const firstWord = originalContent.split(/\s+/)[0];
 
     let displayCode = originalContent;
     let fileType = 'code';
 
-    if (firstChar === '{') {
+    if (['export', 'async', 'const', 'let', 'function'].includes(firstWord)) {
+      displayCode = highlightJS(originalContent);
+      codeWrapper.classList.add('language-js');
+      fileType = 'JavaScript';
+    } else if (firstChar === '{') {
       displayCode = highlightJSON(originalContent);
       codeWrapper.classList.add('language-json');
       fileType = 'JSON';
