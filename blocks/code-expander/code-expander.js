@@ -6,10 +6,7 @@ export default async function decorate(block) {
     const specialChars = /[{}()[\]]/g;
     const strings = /(['"`])((?:\\\1|(?:(?!\1).))*)\1/g;
 
-    let highlighted = code
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
+    let highlighted = escapeHTML(code);
 
     highlighted = highlighted
       .replace(strings, (match) => `<span style="color: #a31515;">${match}</span>`)
@@ -25,7 +22,9 @@ export default async function decorate(block) {
     const selectors = /([^\s{]+)\s*{/g;
     const comments = /(\/\*[\s\S]*?\*\/)/g;
 
-    return code
+    let highlighted = escapeHTML(code);
+
+    return highlighted
       .replace(comments, '<span class="comment">$1</span>')
       .replace(properties, '<span class="property">$1</span>')
       .replace(values, ': <span class="value">$1</span>')
@@ -53,10 +52,7 @@ export default async function decorate(block) {
     return html
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;')
-      .replace(/`/g, '&#96;');
+      .replace(/>/g, '&gt;');
   };
 
   const highlightJSON = (code) => {
@@ -68,14 +64,7 @@ export default async function decorate(block) {
       punctuation: /[{}[\],]/g
     };
 
-    let highlighted = code.replace(/[<>&]/g, (char) => {
-      switch (char) {
-        case '<': return '&lt;';
-        case '>': return '&gt;';
-        case '&': return '&amp;';
-        default: return char;
-      }
-    });
+    let highlighted = escapeHTML(code);
 
     // Highlight strings first
     highlighted = highlighted.replace(jsonSyntax.string, '<span style="color: #a31515;">$&</span>');
