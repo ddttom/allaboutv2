@@ -6,14 +6,10 @@ export default async function decorate(block) {
     const specialChars = /[{}()[\]]/g;
     const strings = /(['"`])((?:\\\1|(?:(?!\1).))*)\1/g;
 
-    let highlighted = escapeHTML(code);
-
-    highlighted = highlighted
+    return code
       .replace(strings, (match) => `<span style="color: #a31515;">${match}</span>`)
       .replace(new RegExp(`\\b(${keywords.join('|')})\\b`, 'g'), (match) => `<span style="color: #0000ff;">${match}</span>`)
       .replace(specialChars, (match) => `<span style="color: #0000ff;">${match}</span>`);
-
-    return highlighted;
   };
 
   const highlightCSS = (code) => {
@@ -22,30 +18,11 @@ export default async function decorate(block) {
     const selectors = /([^\s{]+)\s*{/g;
     const comments = /(\/\*[\s\S]*?\*\/)/g;
 
-    let highlighted = escapeHTML(code);
-
-    return highlighted
+    return code
       .replace(comments, '<span class="comment">$1</span>')
       .replace(properties, '<span class="property">$1</span>')
       .replace(values, ': <span class="value">$1</span>')
       .replace(selectors, '<span class="selector">$1</span> {');
-  };
-
-  const formatMarkdown = (content) => {
-    // HTML encode backticks only if they're not already encoded
-    content = content.replace(/`/g, (match) => {
-      return match === '&#96;' ? match : '&#96;';
-    });
-    
-    // Convert HTML elements to entities only if they're not already encoded
-    return content.replace(/[<>&]/g, (char) => {
-      switch (char) {
-        case '<': return '&lt;';
-        case '>': return '&gt;';
-        case '&': return /^&(?:[a-zA-Z]+|#[0-9]+);/.test(content.slice(content.indexOf(char))) ? char : '&amp;';
-        default: return char;
-      }
-    });
   };
 
   const escapeHTML = (html) => {
@@ -64,7 +41,7 @@ export default async function decorate(block) {
       punctuation: /[{}[\],]/g
     };
 
-    let highlighted = escapeHTML(code);
+    let highlighted = code;
 
     // Highlight strings first
     highlighted = highlighted.replace(jsonSyntax.string, '<span style="color: #a31515;">$&</span>');
@@ -91,13 +68,13 @@ export default async function decorate(block) {
     const highlightedLines = lines.map(line => {
       if (line.startsWith('$ ')) {
         // Command line
-        return `<span style="color: #4EC9B0;">${escapeHTML(line)}</span>`;
+        return `<span style="color: #4EC9B0;">${line}</span>`;
       } else if (line.trim().startsWith('#')) {
         // Comment
-        return `<span style="color: #608B4E;">${escapeHTML(line)}</span>`;
+        return `<span style="color: #608B4E;">${line}</span>`;
       } else {
         // Output
-        return `<span style="color: #D4D4D4;">${escapeHTML(line)}</span>`;
+        return `<span style="color: #D4D4D4;">${line}</span>`;
       }
     });
     return highlightedLines.join('\n');
@@ -119,12 +96,11 @@ export default async function decorate(block) {
     const firstLine = originalContent.split('\n')[0].trim();
     const firstWord = originalContent.split(/\s+/)[0];
 
-    let displayCode = escapeHTML(originalContent);
+    let displayCode = originalContent;
     let fileType = 'code';
 
-    // Add this new condition at the beginning of the if-else chain
     if (/^(npm|node|cat|ls|cd|mkdir|rm|cp|mv|echo|grep|sed|awk|curl|wget|ssh|git|docker|kubectl)\s/.test(originalContent) || originalContent.trim().startsWith('$ ')) {
-      displayCode = highlightTerminal(originalContent);
+      displayCode = highlightTerminal(displayCode);
       codeWrapper.classList.add('language-shell');
       fileType = 'Terminal';
     } else if (['export', 'import', 'async', 'const', 'let', 'function'].includes(firstWord) || firstTwoChars === '//') {
@@ -154,6 +130,7 @@ export default async function decorate(block) {
       codeWrapper.classList.add('language-css');
       fileType = 'CSS';
     } else if (firstChar === '<') {
+      displayCode = escapeHTML(displayCode);
       codeWrapper.classList.add('language-html');
       fileType = 'HTML';
     } else {
