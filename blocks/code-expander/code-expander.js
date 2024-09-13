@@ -63,25 +63,33 @@ export default async function decorate(block) {
 
   const highlightJSON = (code) => {
     const jsonSyntax = {
-      string: /"(?:\\.|[^"\\])*"(?!:)/g,
-      key: /"(?:\\.|[^"\\])*"(?=\s*:)/g,
-      number: /-?\d+(?:\.\d+)?(?:e[+-]?\d+)?/gi,
+      string: /"(?:\\.|[^"\\])*"/g,
+      key: /("(?:\\.|[^"\\])*")\s*:/g,
+      number: /\b-?\d+(?:\.\d+)?(?:e[+-]?\d+)?\b/gi,
       boolean: /\b(?:true|false|null)\b/gi,
       punctuation: /[{}[\],]/g
     };
 
-    return code.replace(/[<>&]/g, (char) => {
+    let highlighted = code.replace(/[<>&]/g, (char) => {
       switch (char) {
         case '<': return '&lt;';
         case '>': return '&gt;';
         case '&': return '&amp;';
         default: return char;
       }
-    }).replace(jsonSyntax.string, '<span style="color: #a31515;">$&</span>')
-      .replace(jsonSyntax.key, '<span style="color: #0451a5;">$&</span>')
+    });
+
+    // Highlight strings first
+    highlighted = highlighted.replace(jsonSyntax.string, '<span style="color: #a31515;">$&</span>');
+
+    // Then highlight the rest
+    highlighted = highlighted
+      .replace(jsonSyntax.key, '<span style="color: #0451a5;">$1</span>:')
       .replace(jsonSyntax.number, '<span style="color: #098658;">$&</span>')
       .replace(jsonSyntax.boolean, '<span style="color: #0000ff;">$&</span>')
       .replace(jsonSyntax.punctuation, '<span style="color: #000000;">$&</span>');
+
+    return highlighted;
   };
 
   codeElements.forEach((codeElement) => {
