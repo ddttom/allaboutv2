@@ -107,7 +107,10 @@ export default async function decorate(block) {
       .replace(commands, '<span style="color: #0000ff;">$1</span>')
       .replace(options, ' <span style="color: #a31515;">$1</span>')
       .replace(paths, '$1<span style="color: #098658;">$2</span>')
-      .replace(strings, '<span style="color: #a31515;">$&</span>');
+      .replace(strings, '<span style="color: #a31515;">$&</span>')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&amp;/g, '&');
   };
 
   codeElements.forEach((codeElement) => {
