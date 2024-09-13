@@ -85,9 +85,16 @@ export default async function decorate(block) {
     // Then highlight the rest
     highlighted = highlighted
       .replace(jsonSyntax.key, '<span style="color: #0451a5;">$1</span>:')
-      .replace(jsonSyntax.number, '<span style="color: #098658;">$&</span>')
       .replace(jsonSyntax.boolean, '<span style="color: #0000ff;">$&</span>')
       .replace(jsonSyntax.punctuation, '<span style="color: #000000;">$&</span>');
+
+    // Highlight numbers only if they're not inside a string
+    highlighted = highlighted.replace(/(<span[^>]*>.*?<\/span>)|(\b-?\d+(?:\.\d+)?(?:e[+-]?\d+)?\b)/gi, (match, insideSpan, number) => {
+      if (insideSpan) {
+        return insideSpan;
+      }
+      return `<span style="color: #098658;">${number}</span>`;
+    });
 
     return highlighted;
   };
