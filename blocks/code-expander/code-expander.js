@@ -86,6 +86,23 @@ export default async function decorate(block) {
     return highlighted;
   };
 
+  const highlightTerminal = (code) => {
+    const lines = code.split('\n');
+    const highlightedLines = lines.map(line => {
+      if (line.startsWith('$ ')) {
+        // Command line
+        return `<span style="color: #4EC9B0;">${escapeHTML(line)}</span>`;
+      } else if (line.trim().startsWith('#')) {
+        // Comment
+        return `<span style="color: #608B4E;">${escapeHTML(line)}</span>`;
+      } else {
+        // Output
+        return `<span style="color: #D4D4D4;">${escapeHTML(line)}</span>`;
+      }
+    });
+    return highlightedLines.join('\n');
+  };
+
   codeElements.forEach((codeElement) => {
     const wrapper = document.createElement('div');
     wrapper.className = 'code-expander-wrapper';
@@ -106,7 +123,8 @@ export default async function decorate(block) {
     let fileType = 'code';
 
     // Add this new condition at the beginning of the if-else chain
-    if (/^(npm|node|cat|ls|cd|mkdir|rm|cp|mv|echo|grep|sed|awk|curl|wget|ssh|git|docker|kubectl)\s/.test(originalContent)) {
+    if (/^(npm|node|cat|ls|cd|mkdir|rm|cp|mv|echo|grep|sed|awk|curl|wget|ssh|git|docker|kubectl)\s/.test(originalContent) || originalContent.trim().startsWith('$ ')) {
+      displayCode = highlightTerminal(originalContent);
       codeWrapper.classList.add('language-shell');
       fileType = 'Terminal';
     } else if (['export', 'import', 'async', 'const', 'let', 'function'].includes(firstWord) || firstTwoChars === '//') {

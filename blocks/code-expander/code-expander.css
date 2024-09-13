@@ -118,3 +118,10 @@ pre {
   border: 2px solid #0a0909;
   border-radius: 4px;
 }
+
+.code-expander-code.language-shell pre {
+  background-color: #1E1E1E;
+  color: #D4D4D4;
+  padding: 1em;
+  border-radius: 4px;
+}
