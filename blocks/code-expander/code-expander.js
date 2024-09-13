@@ -33,8 +33,8 @@ export default async function decorate(block) {
   };
 
   const formatMarkdown = (content) => {
-    // Remove all backticks
-    content = content.replace(/`/g, '');
+    // HTML encode backticks
+    content = content.replace(/`/g, '&#96;');
     
     // Convert HTML elements to entities
     return content.replace(/[<>&]/g, (char) => {
@@ -53,7 +53,8 @@ export default async function decorate(block) {
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
+      .replace(/'/g, '&#039;')
+      .replace(/`/g, '&#96;'); // HTML encode backticks
   };
 
   codeElements.forEach((codeElement) => {
