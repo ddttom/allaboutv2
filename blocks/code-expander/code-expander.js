@@ -99,6 +99,20 @@ export default async function decorate(block) {
     return highlighted;
   };
 
+  const highlightTerminal = (code) => {
+    const commands = /(^|\n)(node|cat|npm)\b/g;
+    const options = /\s-[a-zA-Z]+/g;
+    const strings = /(['"`])((?:\\\1|(?:(?!\1).))*)\1/g;
+
+    return code
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(commands, '$1<span style="color: #0000ff;">$2</span>')
+      .replace(options, '<span style="color: #a31515;">$&</span>')
+      .replace(strings, '<span style="color: #a31515;">$&</span>');
+  };
+
   codeElements.forEach((codeElement) => {
     const wrapper = document.createElement('div');
     wrapper.className = 'code-expander-wrapper';
@@ -118,10 +132,14 @@ export default async function decorate(block) {
     let displayCode = originalContent;
     let fileType = 'code';
 
-    if (['export', 'import', 'async', 'const', 'let', 'function'].includes(firstWord)) {
+    if (['export', 'import', 'async', 'const', 'let', 'function'].includes(firstWord) || firstTwoChars === '//') {
       displayCode = highlightJS(originalContent);
       codeWrapper.classList.add('language-js');
       fileType = 'JavaScript';
+    } else if (['node', 'cat', 'npm'].includes(firstWord)) {
+      displayCode = highlightTerminal(originalContent);
+      codeWrapper.classList.add('language-shell');
+      fileType = 'Terminal';
     } else if (firstChar === '{') {
       displayCode = highlightJSON(originalContent);
       codeWrapper.classList.add('language-json');
