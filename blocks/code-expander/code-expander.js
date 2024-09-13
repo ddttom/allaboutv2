@@ -61,6 +61,29 @@ export default async function decorate(block) {
       });
   };
 
+  const highlightJSON = (code) => {
+    const jsonSyntax = {
+      string: /"(?:\\.|[^"\\])*"(?!:)/g,
+      key: /"(?:\\.|[^"\\])*"(?=\s*:)/g,
+      number: /-?\d+(?:\.\d+)?(?:e[+-]?\d+)?/gi,
+      boolean: /\b(?:true|false|null)\b/gi,
+      punctuation: /[{}[\],]/g
+    };
+
+    return code.replace(/[<>&]/g, (char) => {
+      switch (char) {
+        case '<': return '&lt;';
+        case '>': return '&gt;';
+        case '&': return '&amp;';
+        default: return char;
+      }
+    }).replace(jsonSyntax.string, '<span style="color: #a31515;">$&</span>')
+      .replace(jsonSyntax.key, '<span style="color: #0451a5;">$&</span>')
+      .replace(jsonSyntax.number, '<span style="color: #098658;">$&</span>')
+      .replace(jsonSyntax.boolean, '<span style="color: #0000ff;">$&</span>')
+      .replace(jsonSyntax.punctuation, '<span style="color: #000000;">$&</span>');
+  };
+
   codeElements.forEach((codeElement) => {
     const wrapper = document.createElement('div');
     wrapper.className = 'code-expander-wrapper';
@@ -79,7 +102,11 @@ export default async function decorate(block) {
     let displayCode = originalContent;
     let fileType = 'code';
 
-    if (firstChar === '#') {
+    if (firstChar === '{') {
+      displayCode = highlightJSON(originalContent);
+      codeWrapper.classList.add('language-json');
+      fileType = 'JSON';
+    } else if (firstChar === '#') {
       displayCode = formatMarkdown(originalContent);
       codeWrapper.classList.add('language-markdown');
       fileType = 'Markdown';
