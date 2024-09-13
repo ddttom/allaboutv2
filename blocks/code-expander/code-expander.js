@@ -98,16 +98,15 @@ export default async function decorate(block) {
   };
 
   const highlightTerminal = (code) => {
-    const commands = /(^|\n)(node|cat|npm)\b/g;
-    const options = /\s-[a-zA-Z]+/g;
+    const commands = /^(node|cat|npm)\b/gm;
+    const options = /\s(-[a-zA-Z]+)/g;
+    const paths = /(\s|^)([~/.](?:\/[\w.-]+)+)/g;
     const strings = /(['"`])((?:\\\1|(?:(?!\1).))*)\1/g;
 
     return code
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(commands, '$1<span style="color: #0000ff;">$2</span>')
-      .replace(options, '<span style="color: #a31515;">$&</span>')
+      .replace(commands, '<span style="color: #0000ff;">$1</span>')
+      .replace(options, ' <span style="color: #a31515;">$1</span>')
+      .replace(paths, '$1<span style="color: #098658;">$2</span>')
       .replace(strings, '<span style="color: #a31515;">$&</span>');
   };
 
