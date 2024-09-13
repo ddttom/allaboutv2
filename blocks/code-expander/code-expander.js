@@ -97,22 +97,6 @@ export default async function decorate(block) {
     return highlighted;
   };
 
-  const highlightTerminal = (code) => {
-    const commands = /^(node|cat|npm)\b/gm;
-    const options = /\s(-[a-zA-Z]+)/g;
-    const paths = /(\s|^)([~/.](?:\/[\w.-]+)+)/g;
-    const strings = /(['"`])((?:\\\1|(?:(?!\1).))*)\1/g;
-
-    return code
-      .replace(commands, '<span style="color: #0000ff;">$1</span>')
-      .replace(options, ' <span style="color: #a31515;">$1</span>')
-      .replace(paths, '$1<span style="color: #098658;">$2</span>')
-      .replace(strings, '<span style="color: #a31515;">$&</span>')
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-      .replace(/&amp;/g, '&');
-  };
-
   codeElements.forEach((codeElement) => {
     const wrapper = document.createElement('div');
     wrapper.className = 'code-expander-wrapper';
@@ -132,14 +116,14 @@ export default async function decorate(block) {
     let displayCode = escapeHTML(originalContent);
     let fileType = 'code';
 
-    if (['export', 'import', 'async', 'const', 'let', 'function'].includes(firstWord) || firstTwoChars === '//') {
+    // Add this new condition at the beginning of the if-else chain
+    if (/^(npm|node|cat|ls|cd|mkdir|rm|cp|mv|echo|grep|sed|awk|curl|wget|ssh|git|docker|kubectl)\s/.test(originalContent)) {
+      codeWrapper.classList.add('language-shell');
+      fileType = 'Terminal';
+    } else if (['export', 'import', 'async', 'const', 'let', 'function'].includes(firstWord) || firstTwoChars === '//') {
       displayCode = highlightJS(displayCode);
       codeWrapper.classList.add('language-js');
       fileType = 'JavaScript';
-    } else if (['node', 'cat', 'npm'].includes(firstWord)) {
-      displayCode = highlightTerminal(displayCode);
-      codeWrapper.classList.add('language-shell');
-      fileType = 'Terminal';
     } else if (firstChar === '{') {
       displayCode = highlightJSON(displayCode);
       codeWrapper.classList.add('language-json');
@@ -170,9 +154,9 @@ export default async function decorate(block) {
       fileType = 'text';
     }
 
-    copyButton.innerHTML = `📋 <span class="code-expander-copy-text">Copy ${fileType} to clipboard</span>`;
-    copyButton.setAttribute('aria-label', `Copy ${fileType} to clipboard`);
-    copyButton.title = `Copy ${fileType} to clipboard`;
+    copyButton.innerHTML = `📋 <span class="code-expander-copy-text">Copy ${fileType} ${fileType === 'Terminal' ? 'code' : 'to clipboard'}</span>`;
+    copyButton.setAttribute('aria-label', `Copy ${fileType} ${fileType === 'Terminal' ? 'code' : 'to clipboard'}`);
+    copyButton.title = `Copy ${fileType} ${fileType === 'Terminal' ? 'code' : 'to clipboard'}`;
 
     codeWrapper.innerHTML = `<pre>${displayCode}</pre>`;
 
