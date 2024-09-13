@@ -118,7 +118,7 @@ export default async function decorate(block) {
     let displayCode = originalContent;
     let fileType = 'code';
 
-    if (['export', 'async', 'const', 'let', 'function'].includes(firstWord)) {
+    if (['export', 'import', 'async', 'const', 'let', 'function'].includes(firstWord)) {
       displayCode = highlightJS(originalContent);
       codeWrapper.classList.add('language-js');
       fileType = 'JavaScript';
