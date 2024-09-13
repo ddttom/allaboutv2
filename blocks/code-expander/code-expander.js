@@ -51,14 +51,12 @@ export default async function decorate(block) {
 
   const escapeHTML = (html) => {
     return html
-      .replace(/&(?!(?:amp|lt|gt|quot|#39|#96);)/g, '&amp;')
+      .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#39;')
-      .replace(/`/g, (match) => {
-        return match === '&#96;' ? match : '&#96;';
-      });
+      .replace(/`/g, '&#96;');
   };
 
   const highlightJSON = (code) => {
@@ -129,49 +127,43 @@ export default async function decorate(block) {
     const firstLine = originalContent.split('\n')[0].trim();
     const firstWord = originalContent.split(/\s+/)[0];
 
-    let displayCode = originalContent;
+    let displayCode = escapeHTML(originalContent);
     let fileType = 'code';
 
     if (['export', 'import', 'async', 'const', 'let', 'function'].includes(firstWord) || firstTwoChars === '//') {
-      displayCode = highlightJS(originalContent);
+      displayCode = highlightJS(displayCode);
       codeWrapper.classList.add('language-js');
       fileType = 'JavaScript';
     } else if (['node', 'cat', 'npm'].includes(firstWord)) {
-      displayCode = highlightTerminal(originalContent);
+      displayCode = highlightTerminal(displayCode);
       codeWrapper.classList.add('language-shell');
       fileType = 'Terminal';
     } else if (firstChar === '{') {
-      displayCode = highlightJSON(originalContent);
+      displayCode = highlightJSON(displayCode);
       codeWrapper.classList.add('language-json');
       fileType = 'JSON';
     } else if (firstChar === '#') {
-      displayCode = formatMarkdown(originalContent);
       codeWrapper.classList.add('language-markdown');
       fileType = 'Markdown';
     } else if (firstChar === '"') {
-      displayCode = formatMarkdown(originalContent);
       codeWrapper.classList.add('language-text');
       fileType = 'text';
     } else if (firstTwoChars === ',/') {
-      displayCode = formatMarkdown(originalContent);
       codeWrapper.classList.add('language-text');
       fileType = 'text';
     } else if (firstLine === '//js') {
-      const codeContent = originalContent.split('\n').slice(1).join('\n');
+      const codeContent = displayCode.split('\n').slice(1).join('\n');
       displayCode = highlightJS(codeContent);
       codeWrapper.classList.add('language-js');
       fileType = 'JavaScript';
     } else if (firstChar === '.' || firstLine === '/* css */') {
-      displayCode = highlightCSS(originalContent);
+      displayCode = highlightCSS(displayCode);
       codeWrapper.classList.add('language-css');
       fileType = 'CSS';
     } else if (firstChar === '<') {
-      displayCode = escapeHTML(originalContent);
       codeWrapper.classList.add('language-html');
       fileType = 'HTML';
     } else {
-      // For any other type of content, use formatMarkdown
-      displayCode = formatMarkdown(originalContent);
       codeWrapper.classList.add('language-text');
       fileType = 'text';
     }
