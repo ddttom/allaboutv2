@@ -101,19 +101,29 @@ export default async function decorate(block) {
     timerInterval = setInterval(updateTimer, 1000);
     // Add event listener to prevent background scrolling
     document.addEventListener('wheel', preventBackgroundScroll, { passive: false });
+    document.addEventListener('keydown', preventBackgroundKeyScroll, { passive: false });
   }
 
   function stopTeleprompter() {
     teleprompter.classList.add('hidden');
     teleprompterIcon.style.display = 'block';
     clearInterval(timerInterval);
-    // Remove event listener when teleprompter is stopped
+    // Remove event listeners when teleprompter is stopped
     document.removeEventListener('wheel', preventBackgroundScroll);
+    document.removeEventListener('keydown', preventBackgroundKeyScroll);
   }
 
   // Function to prevent background scrolling
   function preventBackgroundScroll(e) {
     if (!teleprompter.classList.contains('hidden')) {
+      e.preventDefault();
+    }
+  }
+
+  // Function to prevent background scrolling from keyboard
+  function preventBackgroundKeyScroll(e) {
+    if (!teleprompter.classList.contains('hidden') && 
+        ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
       e.preventDefault();
     }
   }
@@ -140,13 +150,16 @@ export default async function decorate(block) {
     switch (e.key) {
       case 'ArrowUp':
       case 'ArrowLeft':
+        e.preventDefault(); // Prevent default scrolling behavior
         scroll(-1);
         break;
       case 'ArrowDown':
       case 'ArrowRight':
+        e.preventDefault(); // Prevent default scrolling behavior
         scroll(1);
         break;
       case ' ':
+        e.preventDefault(); // Prevent default scrolling behavior
         togglePause();
         break;
       case 'Escape':
