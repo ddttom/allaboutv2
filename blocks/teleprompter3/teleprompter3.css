@@ -29,13 +29,6 @@
   display: none;
 }
 
-.teleprompter3 h2 {
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
 .teleprompter3 .current-line {
   font-size: 28px;
   font-weight: bold;

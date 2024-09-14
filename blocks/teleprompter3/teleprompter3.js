@@ -13,11 +13,9 @@ export default async function decorate(block) {
   teleprompter.classList.add('teleprompter3');
   teleprompter.classList.add('hidden'); // Add 'hidden' class initially
 
-  const title = document.createElement('h2');
   const content = document.createElement('div');
   const timer = document.createElement('div');
 
-  teleprompter.appendChild(title);
   teleprompter.appendChild(content);
   teleprompter.appendChild(timer);
 
@@ -52,11 +50,6 @@ export default async function decorate(block) {
   function processContent() {
     const textNodes = getAllTextNodes();
     allLines = textNodes.map(node => node.textContent.trim()).filter(text => text !== '');
-
-    const h1 = document.querySelector('h1');
-    if (h1) {
-      title.textContent = h1.textContent;
-    }
   }
 
   function updateDisplay() {
