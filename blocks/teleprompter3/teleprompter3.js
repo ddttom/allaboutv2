@@ -124,7 +124,7 @@ export default async function decorate(block) {
   });
 
   document.addEventListener('keydown', (e) => {
-    if (teleprompter.style.display === 'none') return;
+    if (teleprompter.classList.contains('hidden')) return;
 
     switch (e.key) {
       case 'ArrowUp':
