@@ -1,5 +1,0 @@
-# Teleprompter
-
-| Teleprompter |
-|--------------|
-|              |

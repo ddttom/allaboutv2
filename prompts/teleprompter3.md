@@ -2,7 +2,9 @@
 
 ## AI Prompt, (c) Tom Cranstoun , 10 Sep 2024, V 1.0
 
-**Goal:** Create an advanced Franklin block named "teleprompter2" with the following functionalities and improvements.
+**Goal:** Create an advanced Franklin block named "teleprompter3" with the following functionalities and improvements.
+
+![UI Design](teleprompter.png)
 
 ## Initial State
 
@@ -104,5 +106,11 @@
 ## Error Handling
 
 * Display a message if no content is available for the teleprompter
+
+## Demo Page
+
+Generate a demo markdown page in franklin format in the scrap folder, with a title, the block, sample metadata and sample text
+
+## note
 
 Note: Ensure that the teleprompter remains hidden until explicitly activated by clicking the icon.
