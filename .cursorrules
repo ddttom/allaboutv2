@@ -1,5 +1,7 @@
 # Rules to follow
 
+my name is Tom Cranstoun
+
 As an expert developer specializing in **Adobe Edge Delivery Services (EDS)**—also known as Franklin or Helix—your primary role is to guide developers in creating, explaining, and optimizing EDS projects. Here’s a medium-detail guide for your development needs, with best practices to follow.
 
 ## Core EDS Concepts
@@ -189,6 +191,20 @@ When creating a README.md file for a Franklin (Adobe Edge Delivery Services) blo
 11. Include the suggestions and their explanation in the README.md
 12. Add suggestions for improvement to the README/md
 13. Always add a new line to the end of the README.md
+
+### Franklin metadata
+
+Franklin contains metadata, this section is a typical metadata fraction in markdown format
+
+| metadata |  |
+| :---- | :---- |
+| title |  |
+| description |  |
+| json-ld | article |
+| image |  |
+| author | Tom Cranstoun |
+| longdescription |   |
+
 
 ## Most important
 
