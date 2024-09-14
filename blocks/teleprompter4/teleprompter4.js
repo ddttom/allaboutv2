@@ -210,4 +210,7 @@ export default async function decorate(block) {
 
   // Process content when the page loads
   window.addEventListener('load', processContent);
+
+  // Initial content processing
+  processContent();
 }
