@@ -28,6 +28,8 @@ export default async function decorate(block) {
   let currentLineIndex = 0;
   let isPaused = false;
   let startTime;
+  let pauseStartTime;
+  let totalPausedTime = 0;
   let timerInterval;
 
   function getAllTextNodes() {
@@ -83,51 +85,30 @@ export default async function decorate(block) {
   }
 
   function updateTimer() {
-    if (isPaused) return;
-
     const currentTime = new Date().getTime();
-    const elapsedTime = Math.floor((currentTime - startTime) / 1000);
+    let elapsedTime;
+    
+    if (isPaused) {
+      elapsedTime = Math.floor((pauseStartTime - startTime - totalPausedTime) / 1000);
+    } else {
+      elapsedTime = Math.floor((currentTime - startTime - totalPausedTime) / 1000);
+    }
+
     const minutes = Math.floor(elapsedTime / 60).toString().padStart(2, '0');
     const seconds = (elapsedTime % 60).toString().padStart(2, '0');
     timer.textContent = `${minutes}:${seconds}`;
   }
 
-  function startTeleprompter() {
-    teleprompterIcon.style.display = 'none';
-    teleprompter.classList.remove('hidden');
-    processContent();
-    updateDisplay();
-    startTime = new Date().getTime();
-    timerInterval = setInterval(updateTimer, 1000);
-    disableBackgroundScroll();
-  }
-
-  function stopTeleprompter() {
-    teleprompter.classList.add('hidden');
-    teleprompterIcon.style.display = 'block';
-    clearInterval(timerInterval);
-    enableBackgroundScroll();
-  }
-
-  let originalBodyOverflow;
-
-  function disableBackgroundScroll() {
-    originalBodyOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-  }
-
-  function enableBackgroundScroll() {
-    document.body.style.overflow = originalBodyOverflow;
-  }
-
-  // Remove the preventBackgroundScroll and preventBackgroundKeyScroll functions
-
   function togglePause() {
     isPaused = !isPaused;
     if (isPaused) {
       content.classList.add('paused');
+      pauseStartTime = new Date().getTime();
+      clearInterval(timerInterval);
     } else {
       content.classList.remove('paused');
+      totalPausedTime += new Date().getTime() - pauseStartTime;
+      timerInterval = setInterval(updateTimer, 1000);
     }
   }
 
