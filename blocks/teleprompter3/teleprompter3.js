@@ -1,6 +1,9 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export default async function decorate(block) {
+  // Set block-wrapper to display:none
+  block.closest('.block-wrapper').style.display = 'none';
+
   const teleprompterIcon = document.createElement('div');
   teleprompterIcon.innerHTML = '&#128217;';
   teleprompterIcon.classList.add('teleprompter3-icon');
