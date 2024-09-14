@@ -112,6 +112,37 @@ export default async function decorate(block) {
     }
   }
 
+  let originalBodyOverflow;
+
+  function disableBackgroundScroll() {
+    originalBodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function enableBackgroundScroll() {
+    document.body.style.overflow = originalBodyOverflow;
+  }
+
+  function startTeleprompter() {
+    teleprompterIcon.style.display = 'none';
+    teleprompter.classList.remove('hidden');
+    processContent();
+    updateDisplay();
+    startTime = new Date().getTime();
+    totalPausedTime = 0;
+    timerInterval = setInterval(updateTimer, 1000);
+    disableBackgroundScroll();
+  }
+
+  function stopTeleprompter() {
+    teleprompter.classList.add('hidden');
+    teleprompterIcon.style.display = 'block';
+    clearInterval(timerInterval);
+    enableBackgroundScroll();
+    isPaused = false;
+    content.classList.remove('paused');
+  }
+
   teleprompterIcon.addEventListener('click', startTeleprompter);
 
   teleprompter.addEventListener('wheel', (e) => {
