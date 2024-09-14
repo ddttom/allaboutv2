@@ -1,6 +1,10 @@
 # Enhanced Teleprompter Block
 
-## AI Prompt, (c) Tom Cranstoun , 10 Sep 2024, V 1.0
+## generic info
+
+My name is Tom Cranstoun, I am an AEM Consultant, my Company is Digital Domain Technologies Ltd
+
+## AI Prompt, (c) Tom Cranstoun , September 2024, V 3.0
 
 **Goal:** Create an advanced Franklin block named "teleprompter3" with the following functionalities and improvements.
 
@@ -97,8 +101,9 @@
 * Handle empty content gracefully
 * Prevent text from being cut off by using word-wrap
 
-## Icon Behavior
+## Icon
 
+* Use a simple, recognizable teleprompter or text icon (Unicode: &#128217;)
 * When clicked, hide the icon and show the teleprompter
 * When teleprompter is closed (Esc key), hide the teleprompter and show the icon again
 * Provide a smooth transition between icon and teleprompter states
