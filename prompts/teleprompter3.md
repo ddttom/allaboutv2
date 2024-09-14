@@ -114,7 +114,7 @@ My name is Tom Cranstoun, I am an AEM Consultant, my Company is Digital Domain T
 
 ## Demo Page
 
-Generate a demo markdown page in franklin format in the scrap folder, with a title, the block, sample metadata and sample text
+Generate a demo markdown page in franklin format in the scrap folder, with a title, the block, add sample  text  and place the metadata table at the end, do not use sections '---'
 
 ## note
 
