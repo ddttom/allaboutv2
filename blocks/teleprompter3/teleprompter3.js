@@ -8,7 +8,7 @@ export default async function decorate(block) {
 
   const teleprompter = document.createElement('div');
   teleprompter.classList.add('teleprompter3');
-  teleprompter.style.display = 'none';
+  teleprompter.classList.add('hidden'); // Add 'hidden' class initially
 
   const title = document.createElement('h2');
   const content = document.createElement('div');
@@ -95,7 +95,7 @@ export default async function decorate(block) {
 
   function startTeleprompter() {
     teleprompterIcon.style.display = 'none';
-    teleprompter.style.display = 'block';
+    teleprompter.classList.remove('hidden'); // Remove 'hidden' class
     processContent();
     updateDisplay();
     startTime = new Date().getTime();
@@ -103,7 +103,7 @@ export default async function decorate(block) {
   }
 
   function stopTeleprompter() {
-    teleprompter.style.display = 'none';
+    teleprompter.classList.add('hidden'); // Add 'hidden' class
     teleprompterIcon.style.display = 'block';
     clearInterval(timerInterval);
   }

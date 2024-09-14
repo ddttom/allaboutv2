@@ -37,6 +37,12 @@
   z-index: 1000;
   cursor: move;
   user-select: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.teleprompter3.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .teleprompter3 h2 {
