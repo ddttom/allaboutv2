@@ -5,10 +5,17 @@ export default async function decorate(block) {
   block.innerHTML = '';
   block.style.display = 'none';
 
-  const teleprompterIcon = document.createElement('div');
-  teleprompterIcon.innerHTML = '&#128217;';
-  teleprompterIcon.classList.add('teleprompter3-icon');
-  document.body.appendChild(teleprompterIcon);
+  let teleprompterIcon;
+
+  function createIcon() {
+    teleprompterIcon = document.createElement('div');
+    teleprompterIcon.innerHTML = '&#128217;';
+    teleprompterIcon.classList.add('teleprompter3-icon');
+    document.body.appendChild(teleprompterIcon);
+    teleprompterIcon.addEventListener('click', startTeleprompter);
+  }
+
+  createIcon();
 
   const teleprompter = document.createElement('div');
   teleprompter.classList.add('teleprompter3');
@@ -125,7 +132,10 @@ export default async function decorate(block) {
 
   function startTeleprompter() {
     teleprompter.classList.remove('hidden');
-    teleprompterIcon.classList.add('hidden'); // Hide the icon
+    if (teleprompterIcon) {
+      teleprompterIcon.remove();
+      teleprompterIcon = null;
+    }
     processContent();
     updateDisplay();
     startTime = new Date().getTime();
@@ -136,7 +146,9 @@ export default async function decorate(block) {
 
   function stopTeleprompter() {
     teleprompter.classList.add('hidden');
-    teleprompterIcon.classList.remove('hidden'); // Show the icon
+    if (!teleprompterIcon) {
+      createIcon();
+    }
     clearInterval(timerInterval);
     enableBackgroundScroll();
     isPaused = false;

@@ -9,10 +9,10 @@
   font-size: 24px;
   cursor: pointer;
   z-index: 1001;
-  display: block; /* Ensure the icon is always visible by default */
 }
 
-/* Hide the icon when the teleprompter is active */
+/* Remove the following rules as they're no longer needed */
+/* 
 .teleprompter3:not(.hidden) ~ .teleprompter3-icon {
   display: none !important;
 }
@@ -20,6 +20,7 @@
 .teleprompter3-icon.hidden {
   display: none !important;
 }
+*/
 
 .teleprompter3 {
   position: fixed;
