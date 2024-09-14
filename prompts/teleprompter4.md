@@ -15,11 +15,14 @@ My name is Tom Cranstoun, I am an AEM Consultant, my Company is Digital Domain T
 * Display a clickable icon on the page when the document loads
 * The teleprompter4 block should be hidden until the icon is clicked
 * Icon design:
-  * Use a simple, recognizable teleprompter or text icon (Unicode: &#128217;)
+  * Use an SVG icon representing a teleprompter
   * Position: Fixed, top left corner of the viewport
-  * Size: 24px font size
+  * Size: 24px
   * Cursor: Pointer
   * Z-index: 1001 to ensure visibility
+  * Background: Semi-transparent black
+  * Color: White
+  * Padding and border-radius for better visibility
 
 ## Content Processing
 
@@ -98,7 +101,7 @@ My name is Tom Cranstoun, I am an AEM Consultant, my Company is Digital Domain T
 
 ## Icon Management
 
-* Create the icon dynamically in JavaScript
+* Create the icon dynamically in JavaScript using SVG
 * Remove the icon from the DOM when the teleprompter is active
 * Recreate the icon when the teleprompter is closed
 
