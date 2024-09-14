@@ -75,4 +75,4 @@ export function initializeDebugPanel(jsonLdStringInit, dcStringInit, coStringIni
   coString = coStringInit;
   window.cmsplus.callbackCreateDebugPanel = createDebugPanel;
 }
-initializeDebugPanel('', '', '');
+// initializeDebugPanel('', '', '');
