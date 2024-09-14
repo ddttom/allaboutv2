@@ -8,7 +8,7 @@
   left: 20px;
   font-size: 24px;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 1001; /* Increased z-index to ensure it's always on top */
 }
 
 .teleprompter3 {
@@ -29,22 +29,27 @@
   display: none;
 }
 
-.teleprompter3 .current-line {
+.teleprompter3-content {
+  cursor: default;
+  user-select: text;
+}
+
+.teleprompter3-content .current-line {
   font-size: 28px;
   font-weight: bold;
   margin-bottom: 20px;
 }
 
-.teleprompter3 .next-lines {
+.teleprompter3-content .next-lines {
   opacity: 0.7;
 }
 
-.teleprompter3 .next-lines p {
+.teleprompter3-content .next-lines p {
   font-size: 24px;
   margin-bottom: 10px;
 }
 
-.teleprompter3 div:last-child {
+.teleprompter3-timer {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -54,12 +59,7 @@
   border-radius: 5px;
 }
 
-.teleprompter3 .content {
-  cursor: default;
-  user-select: text;
-}
-
-.teleprompter3 .paused::before {
+.teleprompter3-content.paused::before {
   content: 'PAUSED';
   position: absolute;
   top: 50%;
