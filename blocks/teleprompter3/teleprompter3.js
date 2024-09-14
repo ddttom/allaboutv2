@@ -99,34 +99,28 @@ export default async function decorate(block) {
     updateDisplay();
     startTime = new Date().getTime();
     timerInterval = setInterval(updateTimer, 1000);
-    // Add event listener to prevent background scrolling
-    document.addEventListener('wheel', preventBackgroundScroll, { passive: false });
-    document.addEventListener('keydown', preventBackgroundKeyScroll, { passive: false });
+    disableBackgroundScroll();
   }
 
   function stopTeleprompter() {
     teleprompter.classList.add('hidden');
     teleprompterIcon.style.display = 'block';
     clearInterval(timerInterval);
-    // Remove event listeners when teleprompter is stopped
-    document.removeEventListener('wheel', preventBackgroundScroll);
-    document.removeEventListener('keydown', preventBackgroundKeyScroll);
+    enableBackgroundScroll();
   }
 
-  // Function to prevent background scrolling
-  function preventBackgroundScroll(e) {
-    if (!teleprompter.classList.contains('hidden')) {
-      e.preventDefault();
-    }
+  let originalBodyOverflow;
+
+  function disableBackgroundScroll() {
+    originalBodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
   }
 
-  // Function to prevent background scrolling from keyboard
-  function preventBackgroundKeyScroll(e) {
-    if (!teleprompter.classList.contains('hidden') && 
-        ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
-      e.preventDefault();
-    }
+  function enableBackgroundScroll() {
+    document.body.style.overflow = originalBodyOverflow;
   }
+
+  // Remove the preventBackgroundScroll and preventBackgroundKeyScroll functions
 
   function togglePause() {
     isPaused = !isPaused;
@@ -140,7 +134,8 @@ export default async function decorate(block) {
   teleprompterIcon.addEventListener('click', startTeleprompter);
 
   teleprompter.addEventListener('wheel', (e) => {
-    e.preventDefault(); // Prevent default scrolling behavior
+    e.preventDefault();
+    e.stopPropagation();
     scroll(e.deltaY > 0 ? 1 : -1);
   });
 
@@ -150,16 +145,26 @@ export default async function decorate(block) {
     switch (e.key) {
       case 'ArrowUp':
       case 'ArrowLeft':
-        e.preventDefault(); // Prevent default scrolling behavior
+      case 'ArrowDown':
+      case 'ArrowRight':
+      case ' ':
+        e.preventDefault();
+        e.stopPropagation();
+        break;
+      default:
+        break;
+    }
+
+    switch (e.key) {
+      case 'ArrowUp':
+      case 'ArrowLeft':
         scroll(-1);
         break;
       case 'ArrowDown':
       case 'ArrowRight':
-        e.preventDefault(); // Prevent default scrolling behavior
         scroll(1);
         break;
       case ' ':
-        e.preventDefault(); // Prevent default scrolling behavior
         togglePause();
         break;
       case 'Escape':
