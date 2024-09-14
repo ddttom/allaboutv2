@@ -1,9 +1,9 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export default async function decorate(block) {
-  // Remove the teleprompter3-hidden class from the block
-  // and add it to the block's parent (the block-wrapper)
-  block.parentElement.classList.add('teleprompter3-hidden');
+  // Remove the block content and hide the block wrapper
+  block.innerHTML = '';
+  block.closest('.block-wrapper').classList.add('teleprompter3-hidden');
 
   const teleprompterIcon = document.createElement('div');
   teleprompterIcon.innerHTML = '&#128217;';
@@ -22,8 +22,7 @@ export default async function decorate(block) {
   teleprompter.appendChild(content);
   teleprompter.appendChild(timer);
 
-  block.innerHTML = ''; // Clear the block's content
-  block.appendChild(teleprompter);
+  document.body.appendChild(teleprompter);
 
   let allLines = [];
   let currentLineIndex = 0;
@@ -94,9 +93,8 @@ export default async function decorate(block) {
   }
 
   function startTeleprompter() {
-    teleprompterIcon.style.display = 'none';
+    teleprompterIcon.classList.add('hidden');
     teleprompter.classList.remove('hidden');
-    block.parentElement.classList.remove('teleprompter3-hidden');
     processContent();
     updateDisplay();
     startTime = new Date().getTime();
@@ -105,8 +103,7 @@ export default async function decorate(block) {
 
   function stopTeleprompter() {
     teleprompter.classList.add('hidden');
-    block.parentElement.classList.add('teleprompter3-hidden');
-    teleprompterIcon.style.display = 'block';
+    teleprompterIcon.classList.remove('hidden');
     clearInterval(timerInterval);
   }
 
