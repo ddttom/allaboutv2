@@ -62,7 +62,7 @@ export default async function decorate(block) {
     }
 
     const currentLine = allLines[currentLineIndex];
-    const nextLines = allLines.slice(currentLineIndex + 1, currentLineIndex + 4);
+    const nextLines = allLines.slice(currentLineIndex + 1, currentLineIndex + 10); // Increased from 4 to 10
 
     content.innerHTML = `
       <p class="current-line">${currentLine}</p>
