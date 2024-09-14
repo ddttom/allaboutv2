@@ -125,6 +125,7 @@ export default async function decorate(block) {
 
   function startTeleprompter() {
     teleprompter.classList.remove('hidden');
+    teleprompterIcon.classList.add('hidden'); // Hide the icon
     processContent();
     updateDisplay();
     startTime = new Date().getTime();
@@ -135,6 +136,7 @@ export default async function decorate(block) {
 
   function stopTeleprompter() {
     teleprompter.classList.add('hidden');
+    teleprompterIcon.classList.remove('hidden'); // Show the icon
     clearInterval(timerInterval);
     enableBackgroundScroll();
     isPaused = false;
@@ -211,4 +213,19 @@ export default async function decorate(block) {
   // Accessibility
   teleprompter.setAttribute('tabindex', '0');
   teleprompterIcon.setAttribute('aria-label', 'Open teleprompter');
+
+  // Ensure the icon is hidden when teleprompter is active
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+        if (!teleprompter.classList.contains('hidden')) {
+          teleprompterIcon.classList.add('hidden');
+        } else {
+          teleprompterIcon.classList.remove('hidden');
+        }
+      }
+    });
+  });
+
+  observer.observe(teleprompter, { attributes: true });
 }
