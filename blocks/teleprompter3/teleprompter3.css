@@ -9,6 +9,7 @@
   font-size: 24px;
   cursor: pointer;
   z-index: 1001;
+  display: block; /* Ensure the icon is always visible by default */
 }
 
 .teleprompter3-icon.hidden {

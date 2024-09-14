@@ -1,9 +1,9 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export default async function decorate(block) {
-  // Remove the block content and hide the block wrapper
+  // Remove the block content and hide the block
   block.innerHTML = '';
-  block.closest('.block-wrapper').classList.add('teleprompter3-hidden');
+  block.style.display = 'none';
 
   const teleprompterIcon = document.createElement('div');
   teleprompterIcon.innerHTML = '&#128217;';
@@ -93,7 +93,7 @@ export default async function decorate(block) {
   }
 
   function startTeleprompter() {
-    teleprompterIcon.classList.add('hidden');
+    teleprompterIcon.style.display = 'none';
     teleprompter.classList.remove('hidden');
     processContent();
     updateDisplay();
@@ -103,7 +103,7 @@ export default async function decorate(block) {
 
   function stopTeleprompter() {
     teleprompter.classList.add('hidden');
-    teleprompterIcon.classList.remove('hidden');
+    teleprompterIcon.style.display = 'block';
     clearInterval(timerInterval);
   }
 
