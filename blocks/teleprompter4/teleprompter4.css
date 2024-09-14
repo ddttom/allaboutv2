@@ -1,33 +1,10 @@
-.teleprompter4-icon {
-  display: block !important;
-  position: fixed !important;
-  top: 10px !important;
-  left: 10px !important;
-  font-size: 24px !important;
-  cursor: pointer !important;
-  z-index: 1001 !important;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  padding: 5px;
-  border-radius: 5px;
+.teleprompter4 {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
 }
 
-.teleprompter4 {
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  max-width: 800px;
-  height: 80vh;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 20px;
-  box-sizing: border-box;
-  overflow-y: auto;
-  z-index: 1000;
+.teleprompter4-content {
+  position: relative;
 }
 
 .teleprompter4-timer {
@@ -35,44 +12,20 @@
   top: 10px;
   right: 10px;
   font-size: 18px;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 5px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 5px 10px;
   border-radius: 5px;
 }
 
-.teleprompter4-content {
-  flex-grow: 1;
-  overflow-y: auto;
+.teleprompter4-text {
+  padding-top: 40px;
+}
+
+.teleprompter4-text p {
+  margin: 0 0 10px 0;
   cursor: default;
-  user-select: text;
 }
 
-.teleprompter4-content .current-line {
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.teleprompter4-content div:not(.current-line) {
-  font-size: 24px;
-  opacity: 0.7;
-  margin-bottom: 5px;
-}
-
-.paused-message {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 36px;
-  font-weight: bold;
-  background-color: rgba(0, 0, 0, 0.7);
-  padding: 20px;
-  border-radius: 10px;
-}
-
-.error-message {
-  text-align: center;
-  font-size: 24px;
-  color: #ff6b6b;
+.teleprompter4-text p::selection {
+  background: rgba(255, 255, 255, 0.3);
 }

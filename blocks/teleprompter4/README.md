@@ -4,45 +4,47 @@ The Teleprompter4 block is an advanced Franklin component that provides a custom
 
 ## Usage
 
-To use the Teleprompter4 block, simply add it to your Franklin page using the following markdown:
+To use the Teleprompter4 block, simply add it to your Franklin page using the following structure:
 
-| teleprompter4 |
+| Teleprompter4 |
 | ------------- |
 |               |
 
+No additional content is needed within the block as it automatically processes the page content.
+
 ## Authoring
 
-No specific content is required within the Teleprompter4 block in Google Docs or Microsoft Word. The block automatically reads all text content from the page below its position.
+No specific authoring is required for this block in Google Docs or Microsoft Word. The teleprompter will automatically use all the text content from the main body of the page.
 
 ## Styling
 
-The Teleprompter4 block comes with pre-defined styles. Custom styling can be achieved by modifying the `teleprompter4.css` file.
+The block comes with default styling, but you can customize its appearance using CSS variables or by modifying the `teleprompter4.css` file.
 
 ## Behavior
 
-1. Initially, a clickable icon (&#128217;) is displayed in the top-left corner of the viewport.
-2. Clicking the icon activates the teleprompter, which appears centered on the screen.
-3. The teleprompter displays the current line in bold, followed by up to 10 upcoming lines.
-4. Users can scroll through the content using the mouse wheel or arrow keys.
-5. The spacebar toggles pause/resume functionality.
-6. Pressing the Esc key closes the teleprompter.
-7. The teleprompter window is draggable.
-8. A timer in the top-right corner shows the elapsed time.
+1. A clickable icon appears in the top-left corner of the viewport when the page loads.
+2. Clicking the icon activates the teleprompter, which displays page content in a scrollable format.
+3. Use mouse wheel or arrow keys to navigate through the content.
+4. Press spacebar to pause/resume the teleprompter.
+5. Press Esc to close the teleprompter.
+6. The teleprompter window is draggable for repositioning.
 
 ## Dependencies
 
-This block relies on the `aem.js` script for the `createOptimizedPicture` function, which is not used in the current implementation but may be useful for future enhancements.
+This block relies on the `aem.js` script for the `createOptimizedPicture` function.
 
 ## Accessibility
 
-- The teleprompter is keyboard accessible.
-- ARIA labels are used for screen readers.
-- The teleprompter can be focused using the tab key.
+- The teleprompter icon and content area are keyboard accessible.
+- ARIA labels are used for better screen reader support.
+- Color contrast adheres to WCAG guidelines.
 
 ## Suggestions for Improvement
 
 1. Add font size controls for better readability.
-2. Implement color scheme options for different lighting conditions.
-3. Add a speed control feature for adjusting scrolling speed.
-4. Implement a feature to import custom text or connect to a CMS.
-5. Add support for multiple languages and text directions.
+2. Implement speech recognition for hands-free control.
+3. Add an option to adjust scrolling speed.
+4. Include a feature to import external text files.
+5. Implement a dark/light mode toggle for user preference.
+
+These improvements would enhance the functionality and user experience of the Teleprompter4 block.

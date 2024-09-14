@@ -1,5 +1,5 @@
-# teleprompter4
+# Teleprompter4
 
-| teleprompter4 |
+| Teleprompter4 |
 | ------------- |
 |               |

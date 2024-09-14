@@ -26,7 +26,7 @@ My name is Tom Cranstoun, I am an AEM Consultant, my Company is Digital Domain T
 
 ## Content Processing
 
-* Read all text content in the DOM below the block, ignore metadata in the page
+* Read all text content in the DOM in the main or body element, ignore meta elements in the page
 * Store each text node's content as a separate line in an array called `allLines`
 * Filter out empty lines
 
