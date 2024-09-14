@@ -124,7 +124,6 @@ export default async function decorate(block) {
   }
 
   function startTeleprompter() {
-    teleprompterIcon.style.display = 'none';
     teleprompter.classList.remove('hidden');
     processContent();
     updateDisplay();
@@ -136,7 +135,6 @@ export default async function decorate(block) {
 
   function stopTeleprompter() {
     teleprompter.classList.add('hidden');
-    teleprompterIcon.style.display = 'block';
     clearInterval(timerInterval);
     enableBackgroundScroll();
     isPaused = false;

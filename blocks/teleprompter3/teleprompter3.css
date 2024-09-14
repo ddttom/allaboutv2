@@ -12,6 +12,11 @@
   display: block; /* Ensure the icon is always visible by default */
 }
 
+/* Hide the icon when the teleprompter is active */
+.teleprompter3:not(.hidden) ~ .teleprompter3-icon {
+  display: none !important;
+}
+
 .teleprompter3-icon.hidden {
   display: none;
 }
