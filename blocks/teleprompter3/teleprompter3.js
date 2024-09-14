@@ -99,12 +99,23 @@ export default async function decorate(block) {
     updateDisplay();
     startTime = new Date().getTime();
     timerInterval = setInterval(updateTimer, 1000);
+    // Add event listener to prevent background scrolling
+    document.addEventListener('wheel', preventBackgroundScroll, { passive: false });
   }
 
   function stopTeleprompter() {
     teleprompter.classList.add('hidden');
     teleprompterIcon.style.display = 'block';
     clearInterval(timerInterval);
+    // Remove event listener when teleprompter is stopped
+    document.removeEventListener('wheel', preventBackgroundScroll);
+  }
+
+  // Function to prevent background scrolling
+  function preventBackgroundScroll(e) {
+    if (!teleprompter.classList.contains('hidden')) {
+      e.preventDefault();
+    }
   }
 
   function togglePause() {
@@ -119,6 +130,7 @@ export default async function decorate(block) {
   teleprompterIcon.addEventListener('click', startTeleprompter);
 
   teleprompter.addEventListener('wheel', (e) => {
+    e.preventDefault(); // Prevent default scrolling behavior
     scroll(e.deltaY > 0 ? 1 : -1);
   });
 
