@@ -8,7 +8,7 @@ My name is Tom Cranstoun, I am an AEM Consultant, my Company is Digital Domain T
 
 **Goal:** Create an advanced Franklin block named "teleprompter4" with the following functionalities and improvements.
 
-![UI Design](teleprompter.png)
+![UI Design](ui-teleprompter.png)
 
 ## Initial State
 
