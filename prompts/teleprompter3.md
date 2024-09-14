@@ -13,7 +13,7 @@ My name is Tom Cranstoun, I am an AEM Consultant, my Company is Digital Domain T
 ## Initial State
 
 * Display a clickable icon on the page when the document loads
-* The teleprompter should not be visible until activated
+* The teleprompter3 block should be hidden until the icon is clicked
 * Icon design:
   * Use a simple, recognizable teleprompter or text icon (Unicode: &#128217;)
   * Position: Fixed, top left corner of the viewport
@@ -22,7 +22,7 @@ My name is Tom Cranstoun, I am an AEM Consultant, my Company is Digital Domain T
 
 ## Content Processing
 
-* Read all text content in the DOM below the block
+* Read all text content in the DOM below the block, ignore metadata in tye page
 * Store each text node's content as a separate line in an array called `allLines`
 * Extract the first `<h1>` element as the title
 
@@ -114,8 +114,4 @@ My name is Tom Cranstoun, I am an AEM Consultant, my Company is Digital Domain T
 
 ## Demo Page
 
-Generate a demo markdown page in franklin format in the scrap folder, with a title, the block, add sample  text  and place the metadata table at the end, do not use sections '---'
-
-## note
-
-Note: Ensure that the teleprompter remains hidden until explicitly activated by clicking the icon.
+Generate a demo markdown page in franklin format in the scrap folder, with a title, the block, add sample  text, this text should be about the history of the teleprompter.  place the metadata table at the end, do not use sections '---'

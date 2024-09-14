@@ -4,44 +4,46 @@ The Teleprompter3 block is an advanced Franklin component that provides a custom
 
 ## Usage
 
-To use the Teleprompter3 block, simply add it to your Franklin page using the following structure:
+To use the Teleprompter3 block, simply add it to your Franklin page using the following markdown:
 
-| Teleprompter3 |
-|---------------|
+| teleprompter3 |
+| ------------- |
 |               |
 
 ## Authoring
 
-No specific content is required within the Teleprompter3 block in Google Docs or Microsoft Word. The block will automatically extract and display all text content from the page below its position.
+No specific content is required within the Teleprompter3 block in Google Docs or Microsoft Word. The block automatically reads and processes all text content on the page below its position.
 
 ## Styling
 
-The Teleprompter3 block comes with pre-defined styles. You can customize its appearance by modifying the CSS variables or adding custom CSS rules.
+The Teleprompter3 block comes with pre-defined styles. You can customize its appearance by modifying the CSS variables or adding custom CSS classes.
 
 ## Behavior
 
-1. A clickable teleprompter icon appears in the top-left corner of the viewport.
-2. Clicking the icon activates the teleprompter, displaying page content.
-3. Use arrow keys or mouse wheel to scroll through content.
-4. Press spacebar to pause/resume.
-5. Press Esc to close the teleprompter.
+- Displays a clickable icon (&#128217;) in the top-left corner of the viewport
+- When clicked, the icon opens a full teleprompter interface
+- Reads and displays all text content from the page
+- Allows scrolling through content using mouse wheel or arrow keys
+- Supports pause/resume functionality with the spacebar
+- Can be closed using the Esc key
+- Draggable interface for repositioning
 
 ## Dependencies
 
-This block relies on the `aem.js` script for optimized image handling.
+This block has no external dependencies beyond the core Franklin libraries.
 
 ## Accessibility
 
-- The teleprompter icon is keyboard focusable.
-- All controls are operable via keyboard.
-- ARIA labels are used for screen reader compatibility.
+- The teleprompter icon and interface are keyboard accessible
+- ARIA labels are provided for screen readers
+- Color contrast ratios meet WCAG 2.1 AA standards
 
 ## Suggestions for Improvement
 
-1. Add text size adjustment controls.
-2. Implement custom scrolling speed options.
-3. Allow users to save their position and resume later.
-4. Add support for different color themes.
-5. Implement multi-language support for UI elements.
+1. Add text size controls for better readability
+2. Implement speech recognition for hands-free control
+3. Add support for custom scrolling speeds
+4. Include an option to import external text files
+5. Implement a focus mode that highlights specific phrases or sentences
 
-These improvements would enhance user experience and make the teleprompter more versatile for different use cases.
+These improvements would enhance the functionality and user experience of the Teleprompter3 block, making it more versatile for various use cases.

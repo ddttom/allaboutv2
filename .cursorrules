@@ -194,7 +194,23 @@ When creating a README.md file for a Franklin (Adobe Edge Delivery Services) blo
 
 ### Franklin metadata
 
-Franklin contains metadata, this section is a typical metadata fraction in markdown format
+Franklin contains metadata, this section is a typical metadata fraction in markdown format it includes promo material.
+
+\---
+
+| fragment |
+| :---- |
+| /fragments/ddt/proposition |
+
+| Section metadata |  |
+| :---- | :---- |
+| style | bg-dark |
+
+\---
+
+| returntotop |
+| :---- |
+| Back to Top |
 
 | metadata |  |
 | :---- | :---- |
@@ -205,6 +221,7 @@ Franklin contains metadata, this section is a typical metadata fraction in markd
 | author | Tom Cranstoun |
 | longdescription |   |
 
+## end metadata
 
 ## Most important
 
