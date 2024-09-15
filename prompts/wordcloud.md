@@ -46,6 +46,7 @@ Create a container for the word cloud
   * Change in opacity (0.8)
 
 # Click effect:
+
   * Display a tooltip with the word's frequency count on click
 
 ## Styling
@@ -80,4 +81,4 @@ Create a container for the word cloud
 
 ## Demo
 
-When creating demo.md ensure that words repeat, sufficient to test
+When creating demo.md ensure that words repeat, sufficient to test, only put one example in the demo.md
