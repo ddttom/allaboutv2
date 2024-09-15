@@ -6,6 +6,8 @@ This page demonstrates the Word Cloud block functionality in Franklin. The Word 
 
 ## Web Development Concepts
 
+wordcloud
+
 | wordcloud |
 |-----------|
 | HTML, CSS, JavaScript, React, Vue, Angular |

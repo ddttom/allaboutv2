@@ -1,6 +1,9 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export default async function decorate(block) {
+  // eslint-disable-next-line no-console
+  console.log('Word Cloud block decoration started');
+
   const container = document.createElement('div');
   container.classList.add('wordcloud-container');
 
@@ -17,9 +20,14 @@ export default async function decorate(block) {
 
   const table = block.querySelector('table');
   if (!table) {
+    // eslint-disable-next-line no-console
+    console.error('No table found in the Word Cloud block');
     wordCloudDiv.textContent = 'No valid wordcloud data found.';
     return;
   }
+
+  // eslint-disable-next-line no-console
+  console.log('Table found in Word Cloud block');
 
   const words = {};
   const commonWords = new Set(['the', 'and', 'or', 'a', 'an', 'in', 'on', 'at', 'to', 'for']);
@@ -33,9 +41,15 @@ export default async function decorate(block) {
     });
   });
 
+  // eslint-disable-next-line no-console
+  console.log('Words processed:', words);
+
   const sortedWords = Object.entries(words)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 100);
+
+  // eslint-disable-next-line no-console
+  console.log('Sorted words:', sortedWords);
 
   const maxFrequency = sortedWords[0][1];
   const colors = ['#4285F4', '#EA4335', '#FBBC05', '#34A853', '#FF6D01', '#46BDC6'];
@@ -74,4 +88,6 @@ export default async function decorate(block) {
   }
 
   block.classList.add('wordcloud--initialized');
+  // eslint-disable-next-line no-console
+  console.log('Word Cloud block decoration completed');
 }
