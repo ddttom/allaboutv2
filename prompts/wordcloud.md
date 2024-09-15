@@ -1,31 +1,25 @@
-# Word Cloud Block
+# WordCloud Block
 
 ## Generic Info
 
 My name is Tom Cranstoun, I am an AEM Consultant, my Company is Digital Domain Technologies Ltd
 
-## AI Prompt, (c) Tom Cranstoun, September 2024, V 1.2
+## AI Prompt, (c) Tom Cranstoun, September 2024, V 1.0
 
 **Goal:** Create an advanced Franklin block named "wordcloud" that generates a visually appealing word cloud based on the content of p elements within div structures with the class "wordcloud".
 
-## Variables
+# wordcloud block
 
-The demo folder is to be /blocks/{blockname} where blockname is replaced by the name of the block
+Create a wordcloud component, called WordCloud, listing the words that appear the franklin block rows.  
+Each element will contain phrases, or words; each separated by commas. there may be many rows.
+Iterate over all of the rows, building a list of words or phases,  adding them to the wordcloud, with an increasing font size for the most used word or phrase.
+Place the most used word or phrase in the centre of the cloud in bold.
 
 ## Content Processing
 
 * Identify the parameters in the franklin block
 * Parse each text content, splitting phrases or words by commas
 * Build a list of words or phrases, tracking their frequency
-
-## Word Cloud Generation
-
-* Create a container for the word cloud
-* For each unique word or phrase:
-  * Create a span element
-  * Set font size based on frequency (more frequent = larger font)
-  * Apply random rotation (-15 to 15 degrees) for visual interest
-* Place the most frequently used word/phrase in the center, styled in bold
 
 ## Display
 
@@ -78,5 +72,3 @@ The demo folder is to be /blocks/{blockname} where blockname is replaced by the 
 
 * Adjust font sizes and layout for different screen sizes
 * Ensure readability on mobile devices (minimum font size: 14px)
-
-## Implementation Notes
