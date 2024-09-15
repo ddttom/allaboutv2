@@ -4,8 +4,7 @@ This page demonstrates the functionality of the Word Cloud block in Franklin, vi
 
 ## Word Cloud Example
 
-wordcloud
-| Word Cloud Content |
+| Wordcloud |
 |---------------------|
 | AEM, Franklin, Edge Delivery Services, serverless, performance, scalability |
 | content authoring, blocks, JavaScript, CSS, responsive design |
@@ -40,3 +39,8 @@ You can customize the Word Cloud block by:
 | image | https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png |
 | author | Tom Cranstoun |
 | longdescription | This page showcases the Word Cloud block functionality in Franklin, visualizing common web development concepts and technologies. |
+
+
+## important
+
+this block does not use csv of json
