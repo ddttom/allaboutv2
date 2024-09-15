@@ -29,9 +29,10 @@ Block components should be organized in directories:
   `/blocks/blockname/blockname.js`
   `/blocks/blockname/blockname.css`
   `/blocks/blockname/README.md`
-  `/blocks/blockname/EXAMPLE.md`
-  `/blocks/blockname/EXAMPLE.json`
-  `/blocks/blockname/EXAMPLE.csv`
+  `/blocks/blockname/example.md`
+  `/blocks/blockname/example.json`
+  `/blocks/blockname/example.csv`
+  `/blocks/blockname/demo.md`
 
 **JavaScript (`blockname.js`):**
 
@@ -83,6 +84,32 @@ Block components should be organized in directories:
      ```
 
 Use CSS variables for theming and consistency.
+
+
+## Demo File guidelines
+
+
+1. Title:
+2. Introduction
+3. Sample table
+4. Explanation of how the block works
+5. Information on customization options
+6. Potential use cases
+7. Metadata section
+
+Ensure that the demo file includes all necessary elements to showcase the block's functionality and usage within a Franklin project.
+
+## Metadata Example
+
+| metadata |  |
+| :---- | :---- |
+| title | Word Cloud Demo |
+| description | A demonstration of the Word Cloud block for Franklin |
+| json-ld | article |
+| image | https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png |
+| author | Tom Cranstoun |
+| longdescription | This page showcases the Word Cloud block functionality in Franklin, visualizing common web development concepts and technologies. |
+
 
 ## Json file Structure Guidelines
 

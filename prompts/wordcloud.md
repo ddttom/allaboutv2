@@ -100,25 +100,4 @@ When creating a demo page, use the following structure:
 
 Create a file named `wordcloud-demo.md` in the demo folder with the following content:
 
-1. Title: "Word Cloud Demo"
-2. Introduction explaining the Word Cloud concept
-3. Sample table with web development terms to generate the word cloud
-4. Explanation of how the Word Cloud block works
-5. Information on customization options
-6. Potential use cases for Word Clouds
-7. Metadata section
-
-Ensure that the demo file includes all necessary elements to showcase the Word Cloud block's functionality and usage within a Franklin project.
-
-## Metadata Example
-
-| metadata |  |
-| :---- | :---- |
-| title | Word Cloud Demo |
-| description | A demonstration of the Word Cloud block for Franklin |
-| json-ld | article |
-| image | https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png |
-| author | Tom Cranstoun |
-| longdescription | This page showcases the Word Cloud block functionality in Franklin, visualizing common web development concepts and technologies. |
-
 Remember to create appropriate README.md, EXAMPLE.md, .json, and .csv files for the block, following the guidelines provided earlier.
