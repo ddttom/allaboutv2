@@ -21,11 +21,11 @@ Place the most used word or phrases at the start of the block.
 * Parse each text content, splitting phrases or words by commas
 * Build a list of words or phrases, tracking their frequency
 * remove the list of words from the display
-* randomize the list of words
 
 ## Display
 
 Create a container for the word cloud
+* randomize the list of content
 * For each unique word or phrase:
   * Create a span element
   * Set font size based on frequency (more frequent = larger font)
