@@ -43,7 +43,7 @@ Each commit message that is not part of a pull request:
 
 
 
-## Coding Styleguides
+## Coding Styleguide
 
 We enforce a coding styleguide using `eslint`. As part of your build, run `npm run lint` to check if your code is conforming to the style guide. We do the same for every PR in our CI, so PRs will get rejected if they don't follow the style guide.
 
@@ -70,4 +70,3 @@ One of the maintainers will look at the pull request within one week. Feedback o
 
 The project's committers will release to the [Adobe organization on npmjs.org](https://www.npmjs.com/org/adobe).
 Please contact the [Adobe Open Source Advisory Board](https://git.corp.adobe.com/OpenSourceAdvisoryBoard/discuss/issues) to get access to the npmjs organization.
-
