@@ -1,0 +1,42 @@
+.styleguide-animations {
+  font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
+.animation-section {
+  margin-bottom: 2rem;
+}
+
+.animation-demo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.transition-demo {
+  padding: 0.5rem 1rem;
+  background-color: #BB1919;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.transition-demo:hover {
+  background-color: #8B0000;
+}
+
+.hover-demo {
+  width: 100px;
+  height: 100px;
+  background-color: #007BC7;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.hover-demo:hover {
+  transform: scale(1.1);
+}
