@@ -10,7 +10,7 @@ My name is Tom Cranstoun, I am an AEM Consultant, my Company is Digital Domain T
 
 # wordcloud block
 
-Create a wordcloud component, called WordCloud, listing the words that appear the franklin block rows.  
+Create a wordcloud component, called wordcloud, listing the words that appear the franklin block rows.  
 Each element will contain phrases, or words; each separated by commas. there may be many rows.
 Iterate over all of the rows, building a list of words or phases, adding them to the wordcloud, with an increasing font size for the most used word or phrase.
 Place the most used word or phrases at the start of the block.
@@ -22,11 +22,6 @@ Place the most used word or phrases at the start of the block.
 * Build a list of words or phrases, tracking their frequency
 * remove the list of words from the display
 
-
-## after creating content
-
-* randomize the list of words/phrases 
-
 ## Display
 
 Create a container for the wordcloud
@@ -34,7 +29,6 @@ Create a container for the wordcloud
   * Create a span element
   * Set font size based on frequency (more frequent = larger font)
   * Apply random rotation (-20 to 20 degrees) for visual interest
-* Place the most frequently used word/phrase in the center of the cloud, styled in bold, if there is more than one at same frequency choose one randomly
 
 * wordcloud block: Background is to be Light gray (#f5f5f5)
 * Position: Centered within its container
