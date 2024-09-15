@@ -10,15 +10,14 @@ export default async function decorate(block) {
   cloudIcon.textContent = '☁️';
   container.appendChild(cloudIcon);
 
-  const wordCloudContent = block.querySelector('.wordcloud');
-  if (!wordCloudContent) {
+  const words = processContent(block);
+  if (Object.keys(words).length === 0) {
     // eslint-disable-next-line no-console
-    console.error('No .wordcloud element found');
+    console.error('No word cloud data found');
     container.textContent = 'No word cloud data found.';
     return;
   }
 
-  const words = processContent(wordCloudContent);
   const sortedWords = sortWordsByFrequency(words);
   const topWords = sortedWords.slice(0, 100);
 
@@ -27,11 +26,11 @@ export default async function decorate(block) {
   block.classList.add('wordcloud--initialized');
 }
 
-function processContent(element) {
+function processContent(block) {
   const words = {};
-  const divs = element.querySelectorAll('div');
-  divs.forEach((div) => {
-    const content = div.textContent.trim();
+  const divs = block.querySelectorAll('div > div > div > p');
+  divs.forEach((p) => {
+    const content = p.textContent.trim();
     const phrases = content.split(',').map((phrase) => phrase.trim());
     phrases.forEach((phrase) => {
       if (phrase && !isCommonWord(phrase)) {

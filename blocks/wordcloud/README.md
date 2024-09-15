@@ -1,10 +1,10 @@
 # Word Cloud Block
 
-The Word Cloud block generates a visually appealing word cloud based on the content of div elements with the class "wordcloud".
+The Word Cloud block generates a visually appealing word cloud based on the content of p elements within the block.
 
 ## Usage
 
-To use the Word Cloud block, include a div with the class "wordcloud" in your content. Each child div within this element should contain words or phrases separated by commas.
+The Word Cloud block is automatically applied to elements with the class "wordcloud". The content should be structured as follows:
 
 ## Authoring
 
