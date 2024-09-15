@@ -4,9 +4,13 @@
 
 My name is Tom Cranstoun, I am an AEM Consultant, my Company is Digital Domain Technologies Ltd
 
-## AI Prompt, (c) Tom Cranstoun, September 2024, V 1.3
+## AI Prompt, (c) Tom Cranstoun, September 2024, V 1.0
 
 **Goal:** Create an advanced Franklin block named "wordcloud" that generates a visually appealing word cloud based on the content of table cells with the header "wordcloud".
+
+## variables
+
+the demo folder is to be /blocks/{blockname} where blockname is replaced by the name of the block
 
 ## Content Processing
 
@@ -94,7 +98,7 @@ When creating a demo page, use the following structure:
 
 ## Scrap Demo File
 
-Create a file named `wordcloud-demo.md` in the `scrap` folder with the following content:
+Create a file named `wordcloud-demo.md` in the demo folder with the following content:
 
 1. Title: "Word Cloud Demo"
 2. Introduction explaining the Word Cloud concept
@@ -104,7 +108,7 @@ Create a file named `wordcloud-demo.md` in the `scrap` folder with the following
 6. Potential use cases for Word Clouds
 7. Metadata section
 
-Ensure that the scrap demo file includes all necessary elements to showcase the Word Cloud block's functionality and usage within a Franklin project.
+Ensure that the demo file includes all necessary elements to showcase the Word Cloud block's functionality and usage within a Franklin project.
 
 ## Metadata Example
 
