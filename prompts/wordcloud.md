@@ -13,7 +13,7 @@ My name is Tom Cranstoun, I am an AEM Consultant, my Company is Digital Domain T
 Create a wordcloud component, called WordCloud, listing the words that appear the franklin block rows.  
 Each element will contain phrases, or words; each separated by commas. there may be many rows.
 Iterate over all of the rows, building a list of words or phases, adding them to the wordcloud, with an increasing font size for the most used word or phrase.
-Place the most used word or phrases at the stat of the block.
+Place the most used word or phrases at the start of the block.
 
 ## Content Processing
 
@@ -31,15 +31,15 @@ Place the most used word or phrases at the stat of the block.
   * Most frequent word:
     * Largest font size (48px)
     * Bold weight
-    * Centered position
 
 ## Interactivity
 
 * Hover effect:
-  * Slight increase in size (scale 1.5)
+  * Slight increase in size (scale 1.2)
   * Change in opacity (0.8)
-* Click effect:
-  * Display a tooltip with the word's frequency count
+
+• Action
+  * Display a tooltip with the word's frequency count on click
 
 ## Styling
 
