@@ -25,7 +25,7 @@ Place the most used word or phrases at the start of the block.
 ## Display
 
 Create a container for the wordcloud
-* randomize the list of contynt for the wordcloud
+* randomize the list of content for the wordcloud
 * For each unique word or phrase:
   * Create a span element
   * Set font size based on frequency (more frequent = larger font)
