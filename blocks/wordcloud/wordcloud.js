@@ -18,22 +18,22 @@ export default async function decorate(block) {
 
   block.appendChild(container);
 
-  const table = block.querySelector('table');
-  if (!table) {
+  const wordcloudDivs = block.querySelectorAll('.wordcloud > div > div');
+  if (wordcloudDivs.length === 0) {
     // eslint-disable-next-line no-console
-    console.error('No table found in the Word Cloud block');
+    console.error('No wordcloud data found in the block');
     wordCloudDiv.textContent = 'No valid wordcloud data found.';
     return;
   }
 
   // eslint-disable-next-line no-console
-  console.log('Table found in Word Cloud block');
+  console.log('Wordcloud data found in block');
 
   const words = {};
   const commonWords = new Set(['the', 'and', 'or', 'a', 'an', 'in', 'on', 'at', 'to', 'for']);
 
-  table.querySelectorAll('td').forEach((cell) => {
-    cell.textContent.split(',').forEach((word) => {
+  wordcloudDivs.forEach((div) => {
+    div.textContent.split(',').forEach((word) => {
       const trimmedWord = word.trim().toLowerCase();
       if (trimmedWord && !commonWords.has(trimmedWord)) {
         words[trimmedWord] = (words[trimmedWord] || 0) + 1;

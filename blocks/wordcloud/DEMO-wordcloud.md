@@ -8,26 +8,24 @@ This page demonstrates the Word Cloud block functionality in Franklin. The Word 
 
 wordcloud
 
-| wordcloud |
-|-----------|
-| HTML, CSS, JavaScript, React, Vue, Angular |
-| Node.js, Express, MongoDB, SQL, GraphQL |
-| Responsive Design, Accessibility, SEO, Performance |
-| Git, GitHub, GitLab, Version Control |
-| Agile, Scrum, Kanban, Project Management |
-| API, REST, SOAP, Microservices, Docker |
-| Cloud Computing, AWS, Azure, Google Cloud |
-| Machine Learning, AI, Data Science, Big Data |
-| Cybersecurity, Encryption, Authentication, Authorization |
-| DevOps, CI/CD, Jenkins, Travis CI |
+AEM, Franklin, Edge Delivery Services, Content Management, Serverless
+JavaScript, CSS, HTML, Responsive Design, Performance Optimization
+SEO, Accessibility, User Experience, Mobile-First, Cloud Computing
+Headless CMS, API, Microservices, Scalability, Version Control
+Content Authoring, Workflow, Personalization, Analytics, A/B Testing
+Progressive Web Apps, Single Page Applications, Server-Side Rendering
+Git, CI/CD, DevOps, Agile Methodology, Scrum
+Frontend Development, Backend Development, Full Stack, Database Management
+Security, HTTPS, SSL, Cross-Site Scripting (XSS), SQL Injection
+Web Standards, W3C, WCAG, Browser Compatibility, Polyfills
 
 ## How It Works
 
-The Word Cloud block processes the content of the table above, counting the frequency of each word or phrase. It then generates a visually appealing cloud where the size of each word corresponds to its frequency. The most common terms appear larger and more prominently.
+The Word Cloud block processes the content above, counting the frequency of each word or phrase. It then generates a visually appealing cloud where the size of each word corresponds to its frequency. The most common terms appear larger and more prominently.
 
 ## Customization
 
-You can customize the Word Cloud by modifying the content in the table. Add or remove terms to reflect different topics or focus areas. The block will automatically adjust the display based on the new content.
+You can customize the Word Cloud by modifying the content in the wordcloud section. Add or remove terms to reflect different topics or focus areas. The block will automatically adjust the display based on the new content.
 
 ## Use Cases
 
