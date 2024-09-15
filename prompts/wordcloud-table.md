@@ -4,7 +4,7 @@
 
 My name is Tom Cranstoun, I am an AEM Consultant, my Company is Digital Domain Technologies Ltd
 
-## AI Prompt, (c) Tom Cranstoun, September 2024, V 1.1
+## AI Prompt, (c) Tom Cranstoun, September 2024, V 1.2
 
 **Goal:** Create an advanced Franklin block named "wordcloud" that generates a visually appealing word cloud based on the content of table cells with the header "wordcloud".
 
@@ -26,35 +26,35 @@ My name is Tom Cranstoun, I am an AEM Consultant, my Company is Digital Domain T
 
 ## Display
 
-* Background: Light gray or white
+* Background: Light gray (#f5f5f5)
 * Dimensions: Responsive, with a max-width of 800px
 * Position: Centered within its container
 * Text Display:
   * Font: Sans-serif (e.g., Arial, Helvetica)
   * Colors: Use a predefined color palette (5-7 colors) for variety
   * Most frequent word:
-    * Largest font size (e.g., 48px)
+    * Largest font size (up to 48px)
     * Bold weight
     * Centered position
 
 ## Interactivity
 
 * Hover effect:
-  * Slight increase in size
-  * Change in color or opacity
+  * Slight increase in size (scale 1.1)
+  * Change in opacity (0.8)
 * Click effect:
   * Display a tooltip with the word's frequency count
 
 ## Styling
 
-* Use CSS Grid or Flexbox for layout
-* Ensure proper spacing between words
+* Use CSS Flexbox for layout
+* Ensure proper spacing between words (margin: 5px, padding: 5px)
 * Apply subtle transitions for hover and click effects
 
 ## Performance
 
-* Limit the number of displayed words (e.g., top 100) for large datasets
-* Use requestAnimationFrame for smooth animations
+* Limit the number of displayed words (top 100) for large datasets
+* Use efficient DOM manipulation techniques
 
 ## Accessibility
 
@@ -68,13 +68,12 @@ My name is Tom Cranstoun, I am an AEM Consultant, my Company is Digital Domain T
 
 ## Error Handling
 
-* Display a message if no content is available for the word cloud
-* Handle cases where all words have the same frequency
+* Display a message if no valid wordcloud data is found
 
 ## Responsiveness
 
 * Adjust font sizes and layout for different screen sizes
-* Ensure readability on mobile devices
+* Ensure readability on mobile devices (minimum font size: 14px)
 
 ## Implementation Notes
 
@@ -86,11 +85,11 @@ My name is Tom Cranstoun, I am an AEM Consultant, my Company is Digital Domain T
 
 When creating a demo page, use the following structure:
 
-1. Title (e.g., "Word Cloud Demo")
+1. Title: "Word Cloud Demo"
 2. Brief introduction
-3. Section explaining the content (e.g., "Web Development Concepts")
-4. Table with header "wordcloud" containing the words/phrases, ensure that there are some repetitions in the table to exercise the code
-5. Section for Word Cloud Visualization
+3. Section: "Web Development Concepts"
+4. Table with header "wordcloud" containing web development-related words/phrases
+5. Section: "Word Cloud Visualization"
 6. Metadata table at the end
 
 ## Example Usage
@@ -104,6 +103,19 @@ When creating a demo page, use the following structure:
 | Database, SQL, NoSQL, API, RESTful |
 | Version Control, Git, GitHub, CI/CD, Agile |
 | Mobile First, Cross-Browser Compatibility, Progressive Enhancement |
+| JavaScript, HTML, CSS, React, Node.js |
+| Performance, SEO, Accessibility, User Experience |
+| Git, GitHub, Version Control |
 
+## Metadata Example
+
+| metadata |  |
+| :---- | :---- |
+| title | Word Cloud Demo |
+| description | A demonstration of the Word Cloud block for Franklin |
+| json-ld | article |
+| image | https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png |
+| author | Tom Cranstoun |
+| longdescription | This page showcases the Word Cloud block functionality in Franklin, visualizing common web development concepts and technologies. |
 
 Remember to create appropriate README.md, EXAMPLE.md, .json, and .csv files for the block, following the guidelines provided earlier.
