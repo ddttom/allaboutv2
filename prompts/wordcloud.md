@@ -14,9 +14,8 @@ The demo folder is to be /blocks/{blockname} where blockname is replaced by the 
 
 ## Content Processing
 
-* Identify the div elements with the class "wordcloud" in the document
-* Iterate through all nested p elements within these elements
-* Parse each p's content, splitting phrases or words by commas
+* Identify the parameters in the franklin block
+* Parse each text content, splitting phrases or words by commas
 * Build a list of words or phrases, tracking their frequency
 
 ## Word Cloud Generation
@@ -81,11 +80,3 @@ The demo folder is to be /blocks/{blockname} where blockname is replaced by the 
 * Ensure readability on mobile devices (minimum font size: 14px)
 
 ## Implementation Notes
-
-* The block should be invoked in the markdown file using the "wordcloud" keyword
-* The content for the word cloud should be placed in p elements within nested div structures with the class "wordcloud"
-* The block's JavaScript should look for p elements within the nested div structure, rather than relying on a specific table structure
-
-## HTML Structure
-
-The expected HTML structure for the Word Cloud block is:
