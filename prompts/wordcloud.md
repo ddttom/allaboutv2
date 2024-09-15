@@ -52,7 +52,7 @@ Create a container for the wordcloud
   * Change in opacity (0.8)
 
 * Click effect:
-  * smoothly show a tooltip with the word's frequency count on click, over the word for 2 seconds
+  * smoothly show a tooltip with the word's frequency count on click, at the pointer position for 2 seconds
 
 ## Styling
 
