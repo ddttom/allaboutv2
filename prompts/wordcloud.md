@@ -27,6 +27,7 @@ My name is Tom Cranstoun, I am an AEM Consultant, my Company is Digital Domain T
 ## Display
 
 * Background: Light gray (#f5f5f5)
+* surrounded with an enlarged cloud icon generated from unicode
 * Dimensions: Responsive, with a max-width of 800px
 * Position: Centered within its container
 * Text Display:
@@ -89,10 +90,8 @@ When creating a demo page, use the following structure:
 2. Brief introduction
 3. Section: "Web Development Concepts"
 4. Table with header "wordcloud" containing web development-related words/phrases
-5. Section: "Word Cloud Visualization"
-6. Metadata table at the end
+5. Metadata table at the end
 
-## Example Usage
 
 | wordcloud |
 |-----------|
