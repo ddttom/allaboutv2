@@ -1,60 +1,41 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export default async function decorate(block) {
-  console.log('Wordcloud decoration started');
-  console.log('Block content:', block.innerHTML);
-
   const container = document.createElement('div');
   container.classList.add('wordcloud-container');
-  block.appendChild(container);
 
   const cloudIcon = document.createElement('span');
-  cloudIcon.classList.add('wordcloud-icon');
+  cloudIcon.classList.add('cloud-icon');
   cloudIcon.textContent = '☁️';
   container.appendChild(cloudIcon);
 
-  const wordCloudContent = document.createElement('div');
-  wordCloudContent.classList.add('wordcloud-content');
-  container.appendChild(wordCloudContent);
+  const wordCloudDiv = document.createElement('div');
+  wordCloudDiv.classList.add('wordcloud');
+  container.appendChild(wordCloudDiv);
 
-  // Look for the content within the block
-  const rows = block.querySelectorAll(':scope > div');
-  console.log('Number of rows found:', rows.length);
+  block.appendChild(container);
 
-  if (rows.length === 0) {
-    console.error('No content found in the wordcloud block');
-    container.textContent = 'No word cloud data found.';
+  const table = block.querySelector('table');
+  if (!table) {
+    wordCloudDiv.textContent = 'No valid wordcloud data found.';
     return;
   }
 
   const words = {};
-  rows.forEach((row, index) => {
-    console.log(`Processing row ${index}:`, row.innerHTML);
-    const cells = row.querySelectorAll('div');
-    cells.forEach((cell) => {
-      console.log(`Processing cell:`, cell.textContent);
-      cell.textContent.split(',').forEach((word) => {
-        const trimmedWord = word.trim();
-        if (trimmedWord) {
-          words[trimmedWord] = (words[trimmedWord] || 0) + 1;
-        }
-      });
+  const commonWords = new Set(['the', 'and', 'or', 'a', 'an', 'in', 'on', 'at', 'to', 'for']);
+
+  table.querySelectorAll('td').forEach((cell) => {
+    cell.textContent.split(',').forEach((word) => {
+      const trimmedWord = word.trim().toLowerCase();
+      if (trimmedWord && !commonWords.has(trimmedWord)) {
+        words[trimmedWord] = (words[trimmedWord] || 0) + 1;
+      }
     });
   });
-
-  console.log('Processed words:', words);
 
   const sortedWords = Object.entries(words)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 100);
-
-  console.log('Sorted words:', sortedWords);
-
-  if (sortedWords.length === 0) {
-    console.error('No words found after processing');
-    container.textContent = 'No words found for the word cloud.';
-    return;
-  }
 
   const maxFrequency = sortedWords[0][1];
   const colors = ['#4285F4', '#EA4335', '#FBBC05', '#34A853', '#FF6D01', '#46BDC6'];
@@ -67,31 +48,30 @@ export default async function decorate(block) {
     span.style.transform = `rotate(${Math.random() * 30 - 15}deg)`;
     span.setAttribute('aria-label', `${word}, appears ${frequency} times`);
 
-    if (index === 0) {
-      span.style.fontWeight = 'bold';
-      span.style.fontSize = '48px';
-    }
-
     span.addEventListener('click', () => {
       const tooltip = document.createElement('div');
-      tooltip.classList.add('wordcloud-tooltip');
+      tooltip.classList.add('tooltip');
       tooltip.textContent = `Frequency: ${frequency}`;
       span.appendChild(tooltip);
       setTimeout(() => tooltip.remove(), 2000);
     });
 
-    wordCloudContent.appendChild(span);
-    console.log(`Added word to cloud: ${word}`);
+    wordCloudDiv.appendChild(span);
   });
 
-  console.log('Wordcloud generation completed');
-  console.log('Final wordcloud content:', wordCloudContent.innerHTML);
+  // Center the most frequent word
+  if (sortedWords.length > 0) {
+    const [mostFrequentWord] = sortedWords[0];
+    const centerWord = wordCloudDiv.querySelector(`span[aria-label^="${mostFrequentWord},"]`);
+    if (centerWord) {
+      centerWord.style.fontWeight = 'bold';
+      centerWord.style.fontSize = '48px';
+      centerWord.style.position = 'absolute';
+      centerWord.style.top = '50%';
+      centerWord.style.left = '50%';
+      centerWord.style.transform = 'translate(-50%, -50%)';
+    }
+  }
 
-  // Add this visibility check
-  setTimeout(() => {
-    const computedStyle = window.getComputedStyle(container);
-    console.log('Wordcloud container visibility:', computedStyle.display, computedStyle.visibility);
-    console.log('Wordcloud container dimensions:', computedStyle.width, computedStyle.height);
-    console.log('Wordcloud container position:', computedStyle.position, computedStyle.top, computedStyle.left);
-  }, 1000);
+  block.classList.add('wordcloud--initialized');
 }

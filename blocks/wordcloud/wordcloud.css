@@ -1,34 +1,31 @@
 .wordcloud-container {
   background-color: #f5f5f5;
   max-width: 800px;
-  margin: 20px auto;
+  margin: 0 auto;
   padding: 20px;
-  text-align: center;
   position: relative;
-  min-height: 400px;
-  border: 1px solid #ddd;
-  display: block !important; /* Force display */
-  visibility: visible !important; /* Force visibility */
-  opacity: 1 !important; /* Force opacity */
+  text-align: center;
 }
 
-.wordcloud-icon {
+.cloud-icon {
   font-size: 48px;
   position: absolute;
-  top: -24px;
+  top: -20px;
   left: 50%;
   transform: translateX(-50%);
 }
 
-.wordcloud-content {
+.wordcloud {
+  font-family: Arial, Helvetica, sans-serif;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  min-height: 300px;
+  min-height: 400px;
+  position: relative;
 }
 
-.wordcloud-content span {
+.wordcloud span {
   margin: 5px;
   padding: 5px;
   display: inline-block;
@@ -36,12 +33,12 @@
   cursor: pointer;
 }
 
-.wordcloud-content span:hover {
+.wordcloud span:hover {
   transform: scale(1.1);
   opacity: 0.8;
 }
 
-.wordcloud-tooltip {
+.tooltip {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.8);
   color: white;
@@ -49,6 +46,9 @@
   border-radius: 5px;
   font-size: 12px;
   z-index: 1000;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 @media (max-width: 768px) {
@@ -56,7 +56,16 @@
     padding: 10px;
   }
 
-  .wordcloud-content span {
+  .wordcloud span {
     font-size: 14px !important;
   }
+}
+
+:root {
+  --wordcloud-color-1: #4285F4;
+  --wordcloud-color-2: #EA4335;
+  --wordcloud-color-3: #FBBC05;
+  --wordcloud-color-4: #34A853;
+  --wordcloud-color-5: #FF6D01;
+  --wordcloud-color-6: #46BDC6;
 }
