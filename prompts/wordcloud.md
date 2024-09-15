@@ -23,13 +23,13 @@ Place the most used word or phrase in the centre of the cloud in bold.
 
 ## Display
 
-* Background: Light gray (#f5f5f5)
-* Surrounded with an enlarged cloud icon generated from unicode
-* Dimensions: Responsive, with a max-width of 800px
+* Background: Light gray (#f5f5f5), Surrounded with an enlarged cloud icon generated from unicode, which fills the panel
+* Dimensions: Responsive, with a max-width, height of 400px
 * Position: Centered within its container
 * Text Display:
   * Font: Sans-serif (e.g., Arial, Helvetica)
   * Colors: Use a predefined color palette (6 colors) for variety
+  * rotate the phrases at random, through 90, 180, 270
   * Most frequent word:
     * Largest font size (48px)
     * Bold weight
@@ -51,7 +51,7 @@ Place the most used word or phrase in the centre of the cloud in bold.
 
 ## Performance
 
-* Limit the number of displayed words (top 100) for large datasets
+* Limit the number of displayed words (top 50) for large datasets
 * Use efficient DOM manipulation techniques
 
 ## Accessibility
@@ -72,3 +72,7 @@ Place the most used word or phrase in the centre of the cloud in bold.
 
 * Adjust font sizes and layout for different screen sizes
 * Ensure readability on mobile devices (minimum font size: 14px)
+
+## Demo
+
+When creating demo.md ensure that words repeat, sufficient to test
