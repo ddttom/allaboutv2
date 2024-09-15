@@ -19,6 +19,12 @@ Below is a table containing various web development-related words and phrases. T
 | Security, HTTPS, SSL, Cross-Site Scripting (XSS), SQL Injection |
 | Web Standards, W3C, WCAG, Browser Compatibility, Polyfills |
 
+## Word Cloud Visualization
+
+Here's the Word Cloud generated from the above data:
+
+wordcloud
+
 ## How It Works
 
 1. The Word Cloud block processes the content of the table above.

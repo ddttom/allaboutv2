@@ -14,16 +14,22 @@ export default async function decorate(block) {
   wordCloudContent.classList.add('wordcloud-content');
   container.appendChild(wordCloudContent);
 
-  const table = block.querySelector('table');
-  if (!table) {
+  // Look for the table with "wordcloud" in its first cell
+  const tables = document.querySelectorAll('table');
+  const wordcloudTable = Array.from(tables).find(table => {
+    const firstCell = table.querySelector('th, td');
+    return firstCell && firstCell.textContent.trim().toLowerCase() === 'wordcloud';
+  });
+
+  if (!wordcloudTable) {
     // eslint-disable-next-line no-console
-    console.error('No table found in the wordcloud block');
+    console.error('No table with "wordcloud" header found in the document');
     container.textContent = 'No word cloud data found.';
     return;
   }
 
   const words = {};
-  const cells = table.querySelectorAll('td');
+  const cells = wordcloudTable.querySelectorAll('td');
   cells.forEach((cell) => {
     cell.textContent.split(',').forEach((word) => {
       const trimmedWord = word.trim();
