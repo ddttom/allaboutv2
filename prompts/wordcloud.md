@@ -23,6 +23,13 @@ Place the most used word or phrases at the start of the block.
 
 ## Display
 
+Create a container for the word cloud
+* For each unique word or phrase:
+  * Create a span element
+  * Set font size based on frequency (more frequent = larger font)
+  * Apply random rotation (-15 to 15 degrees) for visual interest
+* Place the most frequently used word/phrase in the center of the cloud, styled in bold
+
 * wordcloud block: Background is to be Light gray (#f5f5f5)
 * Position: Centered within its container
 * Text Display:
@@ -38,7 +45,7 @@ Place the most used word or phrases at the start of the block.
   * Slight increase in size (scale 1.2)
   * Change in opacity (0.8)
 
-• Action
+# Click effect:
   * Display a tooltip with the word's frequency count on click
 
 ## Styling
