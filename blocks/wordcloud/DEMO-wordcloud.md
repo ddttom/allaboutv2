@@ -25,6 +25,19 @@ Here's the Word Cloud generated from the above data:
 
 wordcloud
 
+<!-- Word Cloud Check -->
+<script>
+  setTimeout(() => {
+    const wordcloud = document.querySelector('.wordcloud-container');
+    if (wordcloud) {
+      console.log('Word Cloud container found in the DOM');
+      console.log('Word Cloud container HTML:', wordcloud.innerHTML);
+    } else {
+      console.error('Word Cloud container not found in the DOM');
+    }
+  }, 2000);
+</script>
+
 ## How It Works
 
 1. The Word Cloud block processes the content of the table above.

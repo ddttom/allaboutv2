@@ -5,8 +5,11 @@
   padding: 20px;
   text-align: center;
   position: relative;
-  min-height: 400px; /* Ensure a minimum height */
-  border: 1px solid #ddd; /* Add a border for visibility */
+  min-height: 400px;
+  border: 1px solid #ddd;
+  display: block !important; /* Force display */
+  visibility: visible !important; /* Force visibility */
+  opacity: 1 !important; /* Force opacity */
 }
 
 .wordcloud-icon {
@@ -22,7 +25,7 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  min-height: 300px; /* Ensure content has a minimum height */
+  min-height: 300px;
 }
 
 .wordcloud-content span {

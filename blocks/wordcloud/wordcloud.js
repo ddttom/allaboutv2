@@ -86,4 +86,12 @@ export default async function decorate(block) {
 
   console.log('Wordcloud generation completed');
   console.log('Final wordcloud content:', wordCloudContent.innerHTML);
+
+  // Add this visibility check
+  setTimeout(() => {
+    const computedStyle = window.getComputedStyle(container);
+    console.log('Wordcloud container visibility:', computedStyle.display, computedStyle.visibility);
+    console.log('Wordcloud container dimensions:', computedStyle.width, computedStyle.height);
+    console.log('Wordcloud container position:', computedStyle.position, computedStyle.top, computedStyle.left);
+  }, 1000);
 }
