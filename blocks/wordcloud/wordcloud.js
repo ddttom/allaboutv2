@@ -14,28 +14,25 @@ export default async function decorate(block) {
   wordCloudContent.classList.add('wordcloud-content');
   container.appendChild(wordCloudContent);
 
-  // Look for the table with "wordcloud" in its first cell
-  const tables = document.querySelectorAll('table');
-  const wordcloudTable = Array.from(tables).find(table => {
-    const firstCell = table.querySelector('th, td');
-    return firstCell && firstCell.textContent.trim().toLowerCase() === 'wordcloud';
-  });
-
-  if (!wordcloudTable) {
+  // Look for the content within the block
+  const rows = block.querySelectorAll(':scope > div');
+  if (rows.length === 0) {
     // eslint-disable-next-line no-console
-    console.error('No table with "wordcloud" header found in the document');
+    console.error('No content found in the wordcloud block');
     container.textContent = 'No word cloud data found.';
     return;
   }
 
   const words = {};
-  const cells = wordcloudTable.querySelectorAll('td');
-  cells.forEach((cell) => {
-    cell.textContent.split(',').forEach((word) => {
-      const trimmedWord = word.trim();
-      if (trimmedWord) {
-        words[trimmedWord] = (words[trimmedWord] || 0) + 1;
-      }
+  rows.forEach((row) => {
+    const cells = row.querySelectorAll('div');
+    cells.forEach((cell) => {
+      cell.textContent.split(',').forEach((word) => {
+        const trimmedWord = word.trim();
+        if (trimmedWord) {
+          words[trimmedWord] = (words[trimmedWord] || 0) + 1;
+        }
+      });
     });
   });
 
