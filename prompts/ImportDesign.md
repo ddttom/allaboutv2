@@ -12,10 +12,11 @@ Create a set of Franklin blocks that can recreate the blocks and layout of a giv
 2. **Design Analysis**
    * Fetch the HTML content of the provided URL.
    * Analyze the structure and identify main components (header, navigation, main content areas, sidebars, footer, etc.).
+   * identify the textual parameters
 
 3. **Block Creation**
    * For each identified component, create a corresponding Franklin block, use blocks named {import}-blockname where {import} is replaced by the name of the import, do not use block names that already exist in the repo.
-   * Generate the necessary JavaScript, CSS, and markdown files for each block.
+   * Generate the necessary JavaScript, CSS, and markdown files for each block. do not place text in the parameter rows, just placeholder names, 
 
 4. **Layout Recreation**
    * Recreate the overall layout of the imported design using Franklin's block structure.
