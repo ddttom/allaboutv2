@@ -96,8 +96,4 @@ When creating a demo page, use the following structure:
 4. Table with header "wordcloud" containing web development-related words/phrases
 5. Metadata table at the end
 
-## Scrap Demo File
-
-Create a file named `wordcloud-demo.md` in the demo folder with the following content:
-
-Remember to create appropriate README.md, EXAMPLE.md, .json, and .csv files for the block, following the guidelines provided earlier.
+Remember to create appropriate DEMO-BLOCKNAME.md, README.md, EXAMPLE.md files for the block, following the guidelines provided earlier.
