@@ -1,0 +1,47 @@
+.wordcloud-container {
+  background-color: #f0f0f0;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.wordcloud-container span {
+  display: inline-block;
+  margin: 5px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.wordcloud-container span:nth-child(5n) { color: #ff6b6b; }
+.wordcloud-container span:nth-child(5n+1) { color: #4ecdc4; }
+.wordcloud-container span:nth-child(5n+2) { color: #45b7d1; }
+.wordcloud-container span:nth-child(5n+3) { color: #f7b731; }
+.wordcloud-container span:nth-child(5n+4) { color: #5c7cfa; }
+
+.wordcloud-container span:first-child {
+  font-weight: bold;
+  font-size: 48px !important;
+}
+
+.wordcloud-hover {
+  transform: scale(1.1) !important;
+  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .wordcloud-container {
+    padding: 10px;
+  }
+
+  .wordcloud-container span {
+    font-size: 14px !important;
+  }
+
+  .wordcloud-container span:first-child {
+    font-size: 36px !important;
+  }
+}
