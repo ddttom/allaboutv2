@@ -27,6 +27,7 @@ Create a set of Franklin blocks that can recreate the blocks and layout of a giv
    * Update references in the created blocks to use the local assets.
 
 6. **Styling**
+   * extract overarching styling and associate it with the block import-styling
    * Extract and adapt the CSS styles from the original design.
    * Create a cohesive set of CSS variables for easy theming, in the blocks.
 
@@ -65,12 +66,13 @@ Create a set of Franklin blocks that can recreate the blocks and layout of a giv
 ## Demo Page Structure
 
 1. Title: "Imported Design Demo"
-2. Recreated Header (as a table)
-3. Recreated Navigation (as a table, if separate from header)
-4. Recreated Main Content Areas (as tables)
-5. Recreated Sidebar (as a table, if applicable)
-6. Recreated Footer (as a table)
-7. Metadata Table (at the end)
+2. import-styling as a table
+3. Recreated Header (as a table)
+4. Recreated Navigation (as a table, if separate from header)
+5. Recreated Main Content Areas (as tables)
+6. Recreated Sidebar (as a table, if applicable)
+7. Recreated Footer (as a table)
+8. Metadata Table (at the end)
 
 Example of how to represent a block in the demo page:
 
