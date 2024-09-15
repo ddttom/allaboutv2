@@ -81,24 +81,24 @@ Remember to create README.md, EXAMPLE.md, and sample JSON/CSV files for each cre
 
 ## Additional Considerations
 
-12. **EXAMPLE.md Creation**
+1. **EXAMPLE.md Creation**
     * Create EXAMPLE.md files for each block, demonstrating how to use the block in a Franklin document.
     * Include various configuration options and use cases in the examples.
 
-13. **Version Control**
+2. **Version Control**
     * Commit changes to version control after creating or modifying blocks.
     * Use meaningful commit messages describing the changes made.
 
-14. **Testing**
+3. **Testing**
     * Test each created block individually to ensure it functions as expected.
     * Test the entire demo page to verify the overall layout and interactions.
     * Consider creating automated tests for complex blocks.
 
-15. **Documentation**
+4. **Documentation**
     * Provide thorough documentation in README.md files for each block.
     * Include information on block purpose, usage, configuration options, and any dependencies.
 
-16. **Customization Options**
+5. **Customization Options**
     * Where appropriate, include customization options in blocks to increase their flexibility.
     * Document these options clearly in the block's README.md file.
 
