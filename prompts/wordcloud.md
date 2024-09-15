@@ -6,7 +6,7 @@ My name is Tom Cranstoun, I am an AEM Consultant, my Company is Digital Domain T
 
 ## AI Prompt, (c) Tom Cranstoun, September 2024, V 1.0
 
-**Goal:** Create an advanced Franklin block named "wordcloud" that generates a visually appealing word cloud based on the content of table cells with the header "wordcloud".
+**Goal:** Create an advanced Franklin block named "wordcloud" that generates a visually appealing word cloud based on the content of table cells with the header "wordcloud".  This block does not use external json or csv files. do not create them
 
 ## variables
 
@@ -96,4 +96,4 @@ When creating a demo page, use the following structure:
 4. Table with header "wordcloud" containing web development-related words/phrases
 5. Metadata table at the end
 
-Remember to create appropriate DEMO-BLOCKNAME.md, README.md, EXAMPLE.md files for the block, following the guidelines provided earlier.
+Remember to create appropriate DEMO-wordcloud.md, README.md, EXAMPLE.md files for the block, following the guidelines provided earlier.
