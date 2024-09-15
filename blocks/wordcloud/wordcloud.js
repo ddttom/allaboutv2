@@ -14,26 +14,27 @@ export default async function decorate(block) {
   wordCloudContent.classList.add('wordcloud-content');
   container.appendChild(wordCloudContent);
 
-  // Look for the content within the block
-  const rows = block.querySelectorAll(':scope > div');
-  if (rows.length === 0) {
+  // Look for the content within the wordcloud class div
+  const wordcloudDiv = block.querySelector('.wordcloud');
+  if (!wordcloudDiv) {
     // eslint-disable-next-line no-console
-    console.error('No content found in the wordcloud block');
+    console.error('No .wordcloud div found in the block');
     container.textContent = 'No word cloud data found.';
     return;
   }
 
   const words = {};
+  const rows = wordcloudDiv.querySelectorAll(':scope > div');
   rows.forEach((row) => {
-    const cells = row.querySelectorAll('div');
-    cells.forEach((cell) => {
+    const cell = row.querySelector('div');
+    if (cell) {
       cell.textContent.split(',').forEach((word) => {
         const trimmedWord = word.trim();
         if (trimmedWord) {
           words[trimmedWord] = (words[trimmedWord] || 0) + 1;
         }
       });
-    });
+    }
   });
 
   const sortedWords = Object.entries(words)
