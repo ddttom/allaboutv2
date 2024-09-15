@@ -1,0 +1,73 @@
+.styleguide-layout {
+  padding: 2rem;
+}
+
+.layout-examples {
+  display: grid;
+  gap: 2rem;
+}
+
+.layout-example {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.layout-example h3 {
+  margin-top: 0;
+  color: #0a66c2;
+}
+
+.layout-demo {
+  background-color: #f3f2ef;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.demo-block {
+  background-color: #0a66c2;
+  height: 50px;
+  margin-bottom: 0.5rem;
+}
+
+.layout-description {
+  font-size: 0.9rem;
+  color: #666666;
+}
+
+/* Layout-specific styles */
+.full-width .layout-demo {
+  width: 100%;
+}
+
+.two-column .layout-demo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.three-column .layout-demo {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+
+.sidebar .layout-demo {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+}
+
+.card-grid .layout-demo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .two-column .layout-demo,
+  .three-column .layout-demo,
+  .sidebar .layout-demo {
+    grid-template-columns: 1fr;
+  }
+}

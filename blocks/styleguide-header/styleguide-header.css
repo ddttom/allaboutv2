@@ -1,0 +1,42 @@
+.styleguide-header {
+  background-color: #f3f2ef;
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+.styleguide-header-content {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.styleguide-header-content img {
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.styleguide-header-text h1 {
+  font-size: 2rem;
+  color: #000000;
+  margin: 0 0 0.5rem;
+}
+
+.styleguide-header-text p {
+  font-size: 1.2rem;
+  color: #666666;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .styleguide-header-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .styleguide-header-content img {
+    width: 150px;
+    height: 150px;
+  }
+}
