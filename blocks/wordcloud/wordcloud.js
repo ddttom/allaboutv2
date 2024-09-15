@@ -81,7 +81,9 @@ export default async function decorate(block) {
     });
 
     wordCloudContent.appendChild(span);
+    console.log(`Added word to cloud: ${word}`);
   });
 
   console.log('Wordcloud generation completed');
+  console.log('Final wordcloud content:', wordCloudContent.innerHTML);
 }
