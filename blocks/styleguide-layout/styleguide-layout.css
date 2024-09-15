@@ -1,0 +1,36 @@
+.styleguide-layout {
+  font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
+.layout-section {
+  margin-bottom: 2rem;
+}
+
+.grid-demo {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.grid-demo::before {
+  content: '';
+  grid-column: span 12;
+  height: 50px;
+  background: repeating-linear-gradient(
+    90deg,
+    #e0e0e0,
+    #e0e0e0 calc(100% / 12 - 10px),
+    transparent calc(100% / 12 - 10px),
+    transparent calc(100% / 12)
+  );
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}

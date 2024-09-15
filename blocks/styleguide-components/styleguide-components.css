@@ -1,0 +1,71 @@
+.styleguide-components {
+  font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
+.component-section {
+  margin-bottom: 2rem;
+}
+
+.component-demo {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+
+.bbc-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.bbc-button.primary {
+  background-color: #BB1919;
+  color: white;
+}
+
+.bbc-button.secondary {
+  background-color: white;
+  color: #BB1919;
+  border: 1px solid #BB1919;
+}
+
+.bbc-card {
+  width: 250px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.bbc-card img {
+  width: 100%;
+  height: auto;
+}
+
+.bbc-card h3, .bbc-card p {
+  padding: 0.5rem;
+  margin: 0;
+}
+
+.bbc-search {
+  display: flex;
+}
+
+.bbc-search input {
+  flex-grow: 1;
+  padding: 0.5rem;
+  border: 1px solid #e0e0e0;
+  border-right: none;
+  border-radius: 4px 0 0 4px;
+}
+
+.bbc-search button {
+  padding: 0.5rem 1rem;
+  background-color: #BB1919;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}

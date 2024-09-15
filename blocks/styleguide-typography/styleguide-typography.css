@@ -1,0 +1,29 @@
+.styleguide-typography {
+  font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
+.typography-category {
+  margin-bottom: 2rem;
+}
+
+h1, h2, h3, h4 {
+  margin: 0.5em 0;
+}
+
+h1 { font-size: 2.75rem; }
+h2 { font-size: 2.25rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+
+p { font-size: 1rem; }
+.small { font-size: 0.875rem; }
+
+.link { color: #007BC7; text-decoration: underline; }
+.button { 
+  display: inline-block;
+  padding: 0.5em 1em;
+  background-color: #BB1919;
+  color: #FFFFFF;
+  text-decoration: none;
+  border-radius: 3px;
+}
