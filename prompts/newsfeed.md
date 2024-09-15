@@ -1,6 +1,6 @@
 # UI for a newsfeed
 
-![Newsfeed UI Design](MakeThis.png)
+![UI Design](MakeThis.png)
 
 This is a UI for a newsfeed. It includes the weather in the current location and the ability to choose a tab for different news stories.
 Please make several blocks to recreate this type of thing; the tab headings come from the newsfeed json, along with the image, title, and article.
