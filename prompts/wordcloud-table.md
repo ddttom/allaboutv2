@@ -4,14 +4,14 @@
 
 My name is Tom Cranstoun, I am an AEM Consultant, my Company is Digital Domain Technologies Ltd
 
-## AI Prompt, (c) Tom Cranstoun, September 2024, V 1.0
+## AI Prompt, (c) Tom Cranstoun, September 2024, V 1.1
 
-**Goal:** Create an advanced Franklin block named "wordcloud" that generates a visually appealing word cloud based on the content of table cells below a specified starting point.
+**Goal:** Create an advanced Franklin block named "wordcloud" that generates a visually appealing word cloud based on the content of table cells with the header "wordcloud".
 
 ## Content Processing
 
-* Identify the starting point in the document (e.g., a specific heading or marker)
-* Iterate through all table cells below the starting point
+* Identify the table with the header "wordcloud" in the document
+* Iterate through all table cells within this table
 * Parse each cell's content, splitting phrases or words by commas
 * Build a list of words or phrases, tracking their frequency
 
@@ -76,6 +76,34 @@ My name is Tom Cranstoun, I am an AEM Consultant, my Company is Digital Domain T
 * Adjust font sizes and layout for different screen sizes
 * Ensure readability on mobile devices
 
-## Demo Page
+## Implementation Notes
 
-Generate a demo markdown page in Franklin format in the scrap folder, using the wordcloud block with a title, the block, and sample text containing a table with various phrases about web development. Place the metadata table at the end, do not use sections '---'
+* The block should be invoked in the markdown file using the "wordcloud" keyword
+* The table containing the words/phrases for the word cloud should have "wordcloud" as its header
+* The block's JavaScript should look for a table with the "wordcloud" header, rather than relying on a specific heading structure
+
+## Demo Page Structure
+
+When creating a demo page, use the following structure:
+
+1. Title (e.g., "Word Cloud Demo")
+2. Brief introduction
+3. Section explaining the content (e.g., "Web Development Concepts")
+4. Table with header "wordcloud" containing the words/phrases, ensure that there are some repetitions in the table to exercise the code
+5. Section for Word Cloud Visualization
+6. Metadata table at the end
+
+## Example Usage
+
+| wordcloud |
+|-----------|
+| Web Development, JavaScript, CSS, HTML, Responsive Design |
+| User Experience, Accessibility, Performance, SEO |
+| Frontend, Backend, Full Stack, DevOps, Cloud Computing |
+| React, Vue, Angular, Node.js, Express |
+| Database, SQL, NoSQL, API, RESTful |
+| Version Control, Git, GitHub, CI/CD, Agile |
+| Mobile First, Cross-Browser Compatibility, Progressive Enhancement |
+
+
+Remember to create appropriate README.md, EXAMPLE.md, .json, and .csv files for the block, following the guidelines provided earlier.
