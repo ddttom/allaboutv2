@@ -4,9 +4,9 @@
 
 My name is Tom Cranstoun, I am an AEM Consultant, my Company is Digital Domain Technologies Ltd
 
-## AI Prompt, (c) Tom Cranstoun, September 2024, V 1.1
+## AI Prompt, (c) Tom Cranstoun, September 2024, V 1.2
 
-**Goal:** Create an advanced Franklin block named "wordcloud" that generates a visually appealing word cloud based on the content of div elements with the class "wordcloud".
+**Goal:** Create an advanced Franklin block named "wordcloud" that generates a visually appealing word cloud based on the content of p elements within div structures with the class "wordcloud".
 
 ## Variables
 
@@ -15,8 +15,8 @@ The demo folder is to be /blocks/{blockname} where blockname is replaced by the 
 ## Content Processing
 
 * Identify the div elements with the class "wordcloud" in the document
-* Iterate through all child div elements within these elements
-* Parse each div's content, splitting phrases or words by commas
+* Iterate through all nested p elements within these elements
+* Parse each p's content, splitting phrases or words by commas
 * Build a list of words or phrases, tracking their frequency
 
 ## Word Cloud Generation
@@ -83,37 +83,9 @@ The demo folder is to be /blocks/{blockname} where blockname is replaced by the 
 ## Implementation Notes
 
 * The block should be invoked in the markdown file using the "wordcloud" keyword
-* The content for the word cloud should be placed in div elements with the class "wordcloud"
-* The block's JavaScript should look for elements with the class "wordcloud", rather than relying on a specific table structure
+* The content for the word cloud should be placed in p elements within nested div structures with the class "wordcloud"
+* The block's JavaScript should look for p elements within the nested div structure, rather than relying on a specific table structure
 
-## Demo Page Structure
+## HTML Structure
 
-When creating a demo page, use the following structure:
-
-1. Title: "Word Cloud Demo"
-2. Brief introduction
-3. Content for the word cloud blocks, in a table named wordcloud, with roes for the content
-4. Explanation of how the block works
-5. Customization instructions
-6. Use cases
-7. Metadata table at the end
-
-## File Structure
-
-Ensure the following files are created and properly structured:
-
-* `/blocks/wordcloud/wordcloud.js`
-* `/blocks/wordcloud/wordcloud.css`
-* `/blocks/wordcloud/README.md`
-* `/blocks/wordcloud/EXAMPLE.md`
-* `/blocks/wordcloud/DEMO-wordcloud.md`
-
-## Additional Guidelines
-
-* Follow Airbnb JavaScript Style Guide
-* Use `async/await` for asynchronous operations
-* Include console logging for debugging (with appropriate ESLint comments)
-* Ensure all markdown files end with a newline
-* Surround lists in markdown files with blank lines
-
-Remember to create appropriate README.md and EXAMPLE.md files for the block, following the guidelines provided earlier.
+The expected HTML structure for the Word Cloud block is:
