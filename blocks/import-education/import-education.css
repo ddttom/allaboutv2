@@ -1,0 +1,38 @@
+.education-container {
+  background-color: white;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.education-container h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #0a66c2;
+}
+
+.education-item {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.education-item:last-child {
+  border-bottom: none;
+}
+
+.education-item h3 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.education-item .degree {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.education-item .duration {
+  color: #666;
+  font-size: 14px;
+}
