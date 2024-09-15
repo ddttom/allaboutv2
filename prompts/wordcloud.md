@@ -23,8 +23,8 @@ Place the most used word or phrase in the centre of the cloud in bold.
 
 ## Display
 
-* Background: Light gray (#f5f5f5), Surrounded with an enlarged cloud icon generated from unicode, which fills the panel
-* Dimensions: Responsive, with a max-width, height of 400px
+* wordcloud block: Background is to be Light gray (#f5f5f5)
+* Dimensions: Responsive, with a height of 400px
 * Position: Centered within its container
 * Text Display:
   * Font: Sans-serif (e.g., Arial, Helvetica)
