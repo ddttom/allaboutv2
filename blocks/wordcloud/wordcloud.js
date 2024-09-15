@@ -1,6 +1,9 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export default async function decorate(block) {
+  console.log('Wordcloud decoration started');
+  console.log('Block content:', block.innerHTML);
+
   const container = document.createElement('div');
   container.classList.add('wordcloud-container');
   block.appendChild(container);
@@ -14,32 +17,44 @@ export default async function decorate(block) {
   wordCloudContent.classList.add('wordcloud-content');
   container.appendChild(wordCloudContent);
 
-  // Look for the content within the wordcloud class div
-  const wordcloudDiv = block.querySelector('.wordcloud');
-  if (!wordcloudDiv) {
-    // eslint-disable-next-line no-console
-    console.error('No .wordcloud div found in the block');
+  // Look for the content within the block
+  const rows = block.querySelectorAll(':scope > div');
+  console.log('Number of rows found:', rows.length);
+
+  if (rows.length === 0) {
+    console.error('No content found in the wordcloud block');
     container.textContent = 'No word cloud data found.';
     return;
   }
 
   const words = {};
-  const rows = wordcloudDiv.querySelectorAll(':scope > div');
-  rows.forEach((row) => {
-    const cell = row.querySelector('div');
-    if (cell) {
+  rows.forEach((row, index) => {
+    console.log(`Processing row ${index}:`, row.innerHTML);
+    const cells = row.querySelectorAll('div');
+    cells.forEach((cell) => {
+      console.log(`Processing cell:`, cell.textContent);
       cell.textContent.split(',').forEach((word) => {
         const trimmedWord = word.trim();
         if (trimmedWord) {
           words[trimmedWord] = (words[trimmedWord] || 0) + 1;
         }
       });
-    }
+    });
   });
+
+  console.log('Processed words:', words);
 
   const sortedWords = Object.entries(words)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 100);
+
+  console.log('Sorted words:', sortedWords);
+
+  if (sortedWords.length === 0) {
+    console.error('No words found after processing');
+    container.textContent = 'No words found for the word cloud.';
+    return;
+  }
 
   const maxFrequency = sortedWords[0][1];
   const colors = ['#4285F4', '#EA4335', '#FBBC05', '#34A853', '#FF6D01', '#46BDC6'];
@@ -67,4 +82,6 @@ export default async function decorate(block) {
 
     wordCloudContent.appendChild(span);
   });
+
+  console.log('Wordcloud generation completed');
 }
