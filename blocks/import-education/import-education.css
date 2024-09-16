@@ -1,0 +1,27 @@
+.import-education .education-item {
+  margin-bottom: 24px;
+}
+
+.import-education .school-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  margin-right: 16px;
+  float: left;
+}
+
+.import-education .school-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.import-education .degree {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.import-education .education-duration {
+  font-size: 14px;
+  color: var(--linkedin-dark-gray);
+}
