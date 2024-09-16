@@ -10,7 +10,7 @@ Create a set of Franklin blocks that can recreate the blocks and layout of a giv
    The URL is given in the prompt.
 
 2. **Design Analysis**
-   * Fetch the HTML content of the provided URL.
+   * Fetch the HTML and CSS content of the provided URL.
    * Analyze the structure and identify main components (header, navigation, main content areas, sidebars, footer, etc.).
    * identify the textual parameters
 
