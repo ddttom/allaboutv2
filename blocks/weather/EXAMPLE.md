@@ -1,0 +1,5 @@
+# Weather
+
+| Weather |
+|---------|
+| [weather] |

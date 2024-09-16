@@ -1,0 +1,34 @@
+.recommendations-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.recommendation-item {
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--linkedin-light-gray);
+}
+
+.recommendation-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.recommendation-item h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.recommender-title {
+  font-size: 14px;
+  color: var(--linkedin-dark-gray);
+  margin-bottom: 8px;
+}
+
+.recommendation-content {
+  font-size: 14px;
+  line-height: 1.5;
+}

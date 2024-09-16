@@ -1,7 +1,15 @@
 .imagecycle {
-  background-color: lightblue;
+  background-color: red; /* Changed from lightblue to red */
   padding: 20px;
-  border-radius: 8px;
+  width: 100vw; /* Use viewport width */
+  margin-left: calc(-50vw + 50%); /* Center the block */
+  box-sizing: border-box;
+}
+
+.imagecycle-wrapper {
+  max-width: 1200px; /* Or any other max-width you prefer */
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .imagecycle-container {
@@ -9,6 +17,7 @@
   height: 400px;
   position: relative;
   overflow: hidden;
+  margin: 0 auto;
 }
 
 .imagecycle-image {

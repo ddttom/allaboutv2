@@ -1,0 +1,35 @@
+.linkedin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--linkedin-white);
+  padding: 0 24px;
+  height: 52px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.linkedin-logo img {
+  width: 40px;
+  height: auto;
+}
+
+.linkedin-header nav {
+  display: flex;
+  gap: 24px;
+}
+
+.linkedin-header nav a {
+  color: var(--linkedin-dark-gray);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.linkedin-header nav a:hover {
+  color: var(--linkedin-text);
+}
+
+@media (max-width: 768px) {
+  .linkedin-header nav {
+    display: none;
+  }
+}

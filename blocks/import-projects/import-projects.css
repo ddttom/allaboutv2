@@ -1,0 +1,40 @@
+.projects-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.project-item {
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--linkedin-light-gray);
+}
+
+.project-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.project-item h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.project-description {
+  font-size: 14px;
+  color: var(--linkedin-dark-gray);
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.project-link {
+  font-size: 14px;
+  color: var(--linkedin-blue);
+  text-decoration: none;
+}
+
+.project-link:hover {
+  text-decoration: underline;
+}

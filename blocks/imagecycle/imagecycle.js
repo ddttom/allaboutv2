@@ -15,10 +15,15 @@ export default async function decorate(block) {
   // Clear the original content
   block.innerHTML = '';
 
+  // Create wrapper for content
+  const wrapper = document.createElement('div');
+  wrapper.className = 'imagecycle-wrapper';
+  block.appendChild(wrapper);
+
   // Create container for images
   const imageContainer = document.createElement('div');
   imageContainer.className = 'imagecycle-container';
-  block.appendChild(imageContainer);
+  wrapper.appendChild(imageContainer);
 
   // Create image element
   const imgElement = document.createElement('img');
