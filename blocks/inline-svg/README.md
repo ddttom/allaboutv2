@@ -1,33 +1,49 @@
 # Inline SVG
 
-This block displays an inline SVG from the first row of the block.
+This block allows for the embedding of SVG content directly into the page, ensuring it scales properly and respects content margins.
 
 ## Usage
 
-Place the SVG code in the first cell of the first row of the block. The block will remove the container and display the SVG inline.
+Place the SVG markup directly in the block content in your document.
 
 ## Authoring
 
-In your Google Docs or Microsoft Word document, create a two-column table with one row. Place "Inline SVG" in the first column and the SVG code in the second column of the first row.
+In your Google Docs or Microsoft Word document, create a two-column table with "inline-svg" in the first column and the SVG markup in the second column.
 
-| Inline SVG | `<svg>...</svg>` (Your SVG here) |
-|------------|:---------------------------------|
+| inline-svg |
+|------------|
+| `<svg>...</svg>` |
 
 ## Styling
 
-The block adds an `inline-svg` class to the root element. You can customize the appearance using 
+The block uses the following CSS classes:
 
-css
-.inline-svg {
-/ Your custom styles here /
-}
+- `.inline-svg`: Applies to the main container of the SVG.
+- `.inline-svg svg`: Applies to the SVG element itself.
 
-
+You can customize the appearance by modifying these classes in the `inline-svg.css` file.
 
 ## Behavior
 
-The block extracts the SVG from the first row and displays it inline, removing the original container. If no valid SVG is found, a warning is logged to the console.
+The JavaScript in `inline-svg.js` does the following:
+
+1. Extracts the SVG content from the block.
+2. Clears the original text content.
+3. Creates a new SVG element with the extracted content.
+4. Sets the SVG to take up 100% width and height of its container.
+5. Appends the SVG to the block.
+
+## Accessibility
+
+The SVG is embedded directly in the DOM, which allows for better accessibility compared to using an `<img>` tag. However, ensure that your SVG includes appropriate ARIA labels and descriptions for complex graphics.
 
 ## Dependencies
 
 This block has no external dependencies.
+
+## Suggestions for Improvement
+
+1. Add option for custom sizing (e.g., max-width) through block metadata.
+2. Implement fallback for browsers that don't support inline SVG.
+3. Add option to specify alternative text for the SVG for improved accessibility.
+4. Consider adding animation capabilities for interactive SVGs.

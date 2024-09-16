@@ -1,12 +1,6 @@
 export default function decorate(block) {
   const svgText = block.textContent.trim();
   if (svgText.startsWith('<svg')) {
-    // Create a full-width wrapper
-    const wrapper = document.createElement('div');
-    wrapper.className = 'inline-svg-wrapper';
-    block.parentNode.insertBefore(wrapper, block);
-    wrapper.appendChild(block);
-
     // Clear the text content
     block.textContent = '';
 
