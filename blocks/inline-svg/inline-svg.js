@@ -1,7 +1,7 @@
 export default async function decorate(block) {
   const svgContainer = block.querySelector(':scope > div:first-child > div');
-  if (svgContainer && svgContainer.innerHTML.trim().toLowerCase().startsWith('<svg')) {
-    const svgContent = svgContainer.innerHTML;
+  if (svgContainer && svgContainer.textContent.trim().toLowerCase().startsWith('<svg')) {
+    const svgContent = svgContainer.textContent.trim();
     block.innerHTML = svgContent;
     block.classList.add('inline-svg');
   } else {
