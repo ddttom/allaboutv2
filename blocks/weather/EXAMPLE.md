@@ -1,5 +1,0 @@
-# Weather
-
-| Weather |
-|---------|
-| Weather |
