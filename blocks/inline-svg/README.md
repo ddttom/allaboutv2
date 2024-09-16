@@ -8,11 +8,10 @@ Place the SVG code in the first cell of the first row of the block. The block wi
 
 ## Authoring
 
-In your Google Docs or Microsoft Word document, create a two-column table with one row. Place the SVG code in the second column of the first row.
+In your Google Docs or Microsoft Word document, create a two-column table with one row. Place "Inline SVG" in the first column and the SVG code in the second column of the first row.
 
-| Inline SVG |                                 |
-|------------|:--------------------------------|
-|            | `<svg>...</svg>` (Your SVG here) |
+| Inline SVG | `<svg>...</svg>` (Your SVG here) |
+|------------|:---------------------------------|
 
 ## Styling
 
