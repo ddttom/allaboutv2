@@ -1,0 +1,56 @@
+.styleguide-layout {
+  padding: 2rem;
+}
+
+.layout-section {
+  margin-bottom: 3rem;
+}
+
+.layout-section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #0a66c2;
+}
+
+.grid-example {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.grid-column {
+  background-color: #0a66c2;
+  height: 50px;
+  border-radius: 4px;
+}
+
+.space-example {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.space-example span {
+  width: 100px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .styleguide-layout {
+    padding: 1rem;
+  }
+
+  .layout-section h3 {
+    font-size: 1.2rem;
+  }
+
+  .grid-example {
+    gap: 0.5rem;
+  }
+
+  .grid-column {
+    height: 30px;
+  }
+}
