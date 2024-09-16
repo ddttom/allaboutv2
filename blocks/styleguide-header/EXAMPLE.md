@@ -1,4 +1,0 @@
-# styleguide-header
-
-| styleguide-header |
-| :---- |

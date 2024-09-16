@@ -1,4 +1,0 @@
-# styleguide-typography
-
-| styleguide-typography |
-| :---- |

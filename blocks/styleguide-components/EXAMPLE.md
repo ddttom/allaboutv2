@@ -1,4 +1,0 @@
-# styleguide-components
-
-| styleguide-components |
-| :---- |

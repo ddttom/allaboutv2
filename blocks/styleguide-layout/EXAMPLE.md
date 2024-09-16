@@ -1,4 +1,0 @@
-# styleguide-layout
-
-| styleguide-layout |
-| :---- |
