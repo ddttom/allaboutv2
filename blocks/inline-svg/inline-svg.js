@@ -1,12 +1,32 @@
 export default function decorate(block) {
-  const svg = block.querySelector('img');
-  if (svg) {
+  const svgText = block.textContent.trim();
+  if (svgText.startsWith('<svg')) {
     // Create a full-width wrapper
     const wrapper = document.createElement('div');
     wrapper.className = 'inline-svg-wrapper';
     block.parentNode.insertBefore(wrapper, block);
     wrapper.appendChild(block);
 
-    // ... existing code ...
+    // Clear the text content
+    block.textContent = '';
+
+    // Create a container for the SVG
+    const svgContainer = document.createElement('div');
+    svgContainer.innerHTML = svgText;
+    
+    // Extract the SVG element
+    const svgElement = svgContainer.querySelector('svg');
+    if (svgElement) {
+      // Ensure the SVG takes full width and height
+      svgElement.setAttribute('width', '100%');
+      svgElement.setAttribute('height', '100%');
+      block.appendChild(svgElement);
+    } else {
+      // eslint-disable-next-line no-console
+      console.error('No SVG element found in the provided content');
+    }
+  } else {
+    // eslint-disable-next-line no-console
+    console.error('The block does not contain valid SVG content');
   }
 }
