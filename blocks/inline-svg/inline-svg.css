@@ -1,8 +1,18 @@
 .inline-svg {
-  display: inline-block;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .inline-svg svg {
   width: 100%;
   height: auto;
+}
+
+.inline-svg-wrapper {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
 }
