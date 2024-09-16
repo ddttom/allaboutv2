@@ -4,7 +4,7 @@ This block displays the current weather information based on the user's geolocat
 
 ## Usage
 
-The Weather block fetches weather data from the OpenWeatherMap API using the user's current location.
+The Weather block fetches weather data from OpenWeatherMap API using the user's current location.
 
 ## Authoring
 
@@ -15,29 +15,25 @@ No specific authoring is required in Google Docs or Microsoft Word for this bloc
 The block uses the following CSS classes for styling:
 - `.weather`: Main container for the weather block
 - `.weather-info`: Container for weather information
-- `.weather-info h3`: City name
+- `.weather-info h2`: City name
 - `.weather-info p`: Temperature and weather description
 
 ## Behavior
 
-1. The block attempts to get the user's current location using the Geolocation API.
-2. It then fetches weather data from the OpenWeatherMap API.
-3. The weather information (city name, temperature, and description) is displayed.
+The block uses the browser's geolocation API to get the user's current location and then fetches weather data from OpenWeatherMap API.
 
 ## Dependencies
 
 - OpenWeatherMap API (requires an API key)
-- Geolocation API (browser feature)
 
 ## Accessibility
 
-- Weather information is presented in a clear, readable format.
-- Error messages are displayed if weather data cannot be fetched.
+The weather information is presented in a clear, readable format suitable for screen readers.
 
 ## Suggestions for Improvement
 
-1. Add icons to represent different weather conditions.
-2. Implement a fallback location if geolocation is not available.
-3. Add an option to switch between Celsius and Fahrenheit.
-4. Include more detailed weather information (e.g., humidity, wind speed).
-5. Implement caching to reduce API calls and improve performance.
+1. Add error handling for when geolocation is not available or denied by the user.
+2. Implement caching to reduce API calls and improve performance.
+3. Add options for different temperature units (Celsius/Fahrenheit).
+4. Include weather icons for better visual representation.
+5. Add forecast information for upcoming days.

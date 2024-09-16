@@ -1,0 +1,29 @@
+.news-tabs {
+  margin-bottom: 20px;
+}
+
+.tabs-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+}
+
+.tab {
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.tab.active {
+  background-color: #007bff;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .tabs-container {
+    flex-wrap: nowrap;
+  }
+}

@@ -14,11 +14,12 @@ export default async function decorate(block) {
     const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`);
     
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    
     const data = await response.json();
-
+    
     container.innerHTML = `
       <div class="weather-info">
-        <h3>${data.name}</h3>
+        <h2>${data.name}</h2>
         <p>${Math.round(data.main.temp)}°C</p>
         <p>${data.weather[0].description}</p>
       </div>

@@ -2,4 +2,4 @@
 
 | Weather |
 |---------|
-| [weather] |
+| Weather |

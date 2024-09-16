@@ -1,6 +1,6 @@
 .weather {
   background-color: #f0f0f0;
-  padding: 15px;
+  padding: 20px;
   border-radius: 8px;
   margin-bottom: 20px;
 }
@@ -11,7 +11,7 @@
   align-items: center;
 }
 
-.weather-info h3 {
+.weather-info h2 {
   margin: 0 0 10px 0;
 }
 
