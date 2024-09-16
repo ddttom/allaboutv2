@@ -1,42 +1,41 @@
 export default function decorate(block) {
-  const recommendationsSection = document.createElement('div');
-  recommendationsSection.classList.add('recommendations-section', 'section-card');
+  const container = document.createElement('div');
+  container.className = 'import-recommendations';
 
   const title = document.createElement('h2');
-  title.classList.add('section-title');
+  title.className = 'section-title';
   title.textContent = 'Recommendations';
-
-  recommendationsSection.appendChild(title);
+  container.appendChild(title);
 
   const recommendationsList = document.createElement('ul');
-  recommendationsList.classList.add('recommendations-list');
+  recommendationsList.className = 'recommendations-list';
 
   [...block.children].forEach((row) => {
-    const [name, title, content] = [...row.children].map(cell => cell.textContent);
-
+    const [name, title, content] = [...row.children].map(cell => cell.textContent.trim());
+    
     const listItem = document.createElement('li');
-    listItem.classList.add('recommendation-item');
-
+    listItem.className = 'recommendation-item';
+    
     const nameElement = document.createElement('h3');
+    nameElement.className = 'recommender-name';
     nameElement.textContent = name;
-
+    
     const titleElement = document.createElement('p');
-    titleElement.classList.add('recommender-title');
+    titleElement.className = 'recommender-title';
     titleElement.textContent = title;
-
-    const contentElement = document.createElement('p');
-    contentElement.classList.add('recommendation-content');
+    
+    const contentElement = document.createElement('blockquote');
+    contentElement.className = 'recommendation-content';
     contentElement.textContent = content;
-
+    
     listItem.appendChild(nameElement);
     listItem.appendChild(titleElement);
     listItem.appendChild(contentElement);
-
+    
     recommendationsList.appendChild(listItem);
   });
 
-  recommendationsSection.appendChild(recommendationsList);
-
+  container.appendChild(recommendationsList);
   block.textContent = '';
-  block.appendChild(recommendationsSection);
+  block.appendChild(container);
 }

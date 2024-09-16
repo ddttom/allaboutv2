@@ -1,38 +1,35 @@
-# import-certifications
+# Import Certifications
 
-This block creates a licenses and certifications section similar to LinkedIn's design.
+This block represents the licenses and certifications section of a LinkedIn profile, displaying a list of professional certifications.
 
 ## Usage
 
-Add this block to your Franklin document to display the licenses and certifications section.
+Use this block to showcase professional certifications, licenses, and other credentials.
 
 ## Authoring
 
-Create a table with five columns for each certification:
-1. Certification name
-2. Issuing organization
-3. Issue date
-4. Expiration date (optional, leave blank if not applicable)
-5. Credential ID
+In your Franklin document, create a table with the following structure:
+
+| import-certifications |
+| :---- |
+| [Certification Name] | [Issuer] | [Issue Date] | [Expiration Date] | [Credential ID] |
+| [Certification Name] | [Issuer] | [Issue Date] | [Expiration Date] | [Credential ID] |
+| ... |
 
 ## Styling
 
-The block includes styles for:
-- Section title
-- Certifications list
-- Individual certification items (name, issuer, dates, credential ID)
+The block uses CSS classes for styling. You can customize the appearance by modifying the `import-certifications.css` file.
 
 ## Behavior
 
-This block is static and doesn't include any interactive elements.
+The block uses JavaScript to create a structured list of certifications from the provided data.
 
 ## Accessibility
 
-- Semantic HTML structure is used for better accessibility
-- Proper heading hierarchy is maintained
+The certification information is presented in a semantic structure using appropriate heading levels and paragraphs.
 
 ## Suggestions for Improvement
 
-- Add issuer logos to each certification item
-- Implement a "Verify" link for each certification
-- Add the ability to sort certifications by date or relevance
+1. Add support for certification logos or badges.
+2. Implement a "See credential" link that opens the certification verification page.
+3. Add an option to sort certifications by date or importance.

@@ -1,36 +1,35 @@
-# import-experience
+# Import Experience
 
-This block creates an experience section similar to LinkedIn's design.
+This block represents the experience section of a LinkedIn profile, displaying a list of work experiences.
 
 ## Usage
 
-Add this block to your Franklin document to display the experience section.
+Use this block to showcase professional experience, including company names, positions, and durations.
 
 ## Authoring
 
-Create a table with rows for each experience entry. Each row should have three cells:
-1. Company name
-2. Role
-3. Duration
+In your Franklin document, create a table with the following structure:
+
+| import-experience |
+| :---- |
+| [Company Name] | [Position] | [Duration] |
+| [Company Name] | [Position] | [Duration] |
+| ... |
 
 ## Styling
 
-The block includes styles for:
-- Section title
-- Experience list
-- Individual experience items (role, company, duration)
+The block uses CSS classes for styling. You can customize the appearance by modifying the `import-experience.css` file.
 
 ## Behavior
 
-This block is static and doesn't include any interactive elements.
+The block uses JavaScript to create a structured list of experiences from the provided data.
 
 ## Accessibility
 
-- Semantic HTML structure is used for better accessibility
-- Proper heading hierarchy is maintained
+The experience information is presented in a semantic structure using appropriate heading levels and paragraphs.
 
 ## Suggestions for Improvement
 
-- Add company logos to each experience item
-- Implement an expandable description for each role
-- Add a feature to highlight current position
+1. Add support for company logos.
+2. Implement a "See more" functionality for longer lists of experiences.
+3. Add an option to include job descriptions or achievements for each position.

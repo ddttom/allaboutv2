@@ -1,36 +1,35 @@
-# import-education
+# Import Education
 
-This block creates an education section similar to LinkedIn's design.
+This block represents the education section of a LinkedIn profile, displaying a list of educational experiences.
 
 ## Usage
 
-Add this block to your Franklin document to display the education section.
+Use this block to showcase academic background, including institutions, degrees, and durations.
 
 ## Authoring
 
-Create a table with rows for each education entry. Each row should have three cells:
-1. School name
-2. Degree
-3. Years attended
+In your Franklin document, create a table with the following structure:
+
+| import-education |
+| :---- |
+| [Institution Name] | [Degree] | [Duration] |
+| [Institution Name] | [Degree] | [Duration] |
+| ... |
 
 ## Styling
 
-The block includes styles for:
-- Section title
-- Education list
-- Individual education items (school, degree, years)
+The block uses CSS classes for styling. You can customize the appearance by modifying the `import-education.css` file.
 
 ## Behavior
 
-This block is static and doesn't include any interactive elements.
+The block uses JavaScript to create a structured list of educational experiences from the provided data.
 
 ## Accessibility
 
-- Semantic HTML structure is used for better accessibility
-- Proper heading hierarchy is maintained
+The education information is presented in a semantic structure using appropriate heading levels and paragraphs.
 
 ## Suggestions for Improvement
 
-- Add school logos to each education item
-- Implement an expandable description for each degree
-- Add a feature to highlight notable achievements or activities during education
+1. Add support for institution logos.
+2. Implement a "See more" functionality for longer lists of educational experiences.
+3. Add an option to include additional details such as major, GPA, or notable achievements.

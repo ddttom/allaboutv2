@@ -1,42 +1,41 @@
 export default function decorate(block) {
-  const educationSection = document.createElement('div');
-  educationSection.classList.add('education-section', 'section-card');
+  const container = document.createElement('div');
+  container.className = 'import-education';
 
   const title = document.createElement('h2');
-  title.classList.add('section-title');
+  title.className = 'section-title';
   title.textContent = 'Education';
-
-  educationSection.appendChild(title);
+  container.appendChild(title);
 
   const educationList = document.createElement('ul');
-  educationList.classList.add('education-list');
+  educationList.className = 'education-list';
 
   [...block.children].forEach((row) => {
-    const [school, degree, years] = [...row.children].map(cell => cell.textContent);
-
+    const [institution, degree, duration] = [...row.children].map(cell => cell.textContent.trim());
+    
     const listItem = document.createElement('li');
-    listItem.classList.add('education-item');
-
-    const schoolElement = document.createElement('h3');
-    schoolElement.textContent = school;
-
+    listItem.className = 'education-item';
+    
+    const institutionElement = document.createElement('h3');
+    institutionElement.className = 'institution';
+    institutionElement.textContent = institution;
+    
     const degreeElement = document.createElement('p');
-    degreeElement.classList.add('degree');
+    degreeElement.className = 'degree';
     degreeElement.textContent = degree;
-
-    const yearsElement = document.createElement('p');
-    yearsElement.classList.add('years');
-    yearsElement.textContent = years;
-
-    listItem.appendChild(schoolElement);
+    
+    const durationElement = document.createElement('p');
+    durationElement.className = 'duration';
+    durationElement.textContent = duration;
+    
+    listItem.appendChild(institutionElement);
     listItem.appendChild(degreeElement);
-    listItem.appendChild(yearsElement);
-
+    listItem.appendChild(durationElement);
+    
     educationList.appendChild(listItem);
   });
 
-  educationSection.appendChild(educationList);
-
+  container.appendChild(educationList);
   block.textContent = '';
-  block.appendChild(educationSection);
+  block.appendChild(container);
 }

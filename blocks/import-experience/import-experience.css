@@ -1,3 +1,11 @@
+.import-experience {
+  background-color: var(--linkedin-white);
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
 .experience-list {
   list-style-type: none;
   padding: 0;
@@ -5,11 +13,15 @@
 }
 
 .experience-item {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--linkedin-light-gray);
 }
 
 .experience-item:last-child {
   margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .experience-item h3 {
@@ -19,12 +31,25 @@
 }
 
 .experience-item .company {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.experience-item .position {
   font-size: 14px;
-  color: var(--linkedin-dark-gray);
-  margin-bottom: 4px;
+  color: var(--linkedin-gray);
+  margin: 0 0 4px;
 }
 
 .experience-item .duration {
   font-size: 14px;
-  color: var(--linkedin-dark-gray);
+  color: var(--linkedin-gray);
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .import-experience {
+    padding: 16px;
+  }
 }

@@ -1,3 +1,11 @@
+.import-projects {
+  background-color: var(--linkedin-white);
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
 .projects-list {
   list-style-type: none;
   padding: 0;
@@ -5,8 +13,8 @@
 }
 
 .project-item {
-  margin-bottom: 24px;
-  padding-bottom: 24px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
   border-bottom: 1px solid var(--linkedin-light-gray);
 }
 
@@ -16,17 +24,16 @@
   border-bottom: none;
 }
 
-.project-item h3 {
-  font-size: 18px;
+.project-name {
+  font-size: 16px;
   font-weight: 600;
-  margin-bottom: 8px;
+  margin: 0 0 8px;
 }
 
 .project-description {
   font-size: 14px;
-  color: var(--linkedin-dark-gray);
-  margin-bottom: 8px;
-  line-height: 1.5;
+  color: var(--linkedin-gray);
+  margin: 0 0 8px;
 }
 
 .project-link {
@@ -37,4 +44,10 @@
 
 .project-link:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .import-projects {
+    padding: 16px;
+  }
 }

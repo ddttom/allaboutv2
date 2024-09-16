@@ -1,20 +1,21 @@
 :root {
   --linkedin-blue: #0a66c2;
+  --linkedin-light-blue: #e8f3ff;
+  --linkedin-black: #000000;
+  --linkedin-gray: #666666;
   --linkedin-light-gray: #f3f2ef;
-  --linkedin-dark-gray: #5e5e5e;
-  --linkedin-text: #000000;
   --linkedin-white: #ffffff;
-  --linkedin-font: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Fira Sans', Ubuntu, Oxygen, 'Oxygen Sans', Cantarell, 'Droid Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Lucida Grande', Helvetica, Arial, sans-serif;
+  --font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Fira Sans', Ubuntu, Oxygen, 'Oxygen Sans', Cantarell, 'Droid Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Lucida Grande', Helvetica, Arial, sans-serif;
 }
 
 body {
-  font-family: var(--linkedin-font);
+  font-family: var(--font-family);
   background-color: var(--linkedin-light-gray);
-  color: var(--linkedin-text);
+  color: var(--linkedin-black);
   line-height: 1.5;
 }
 
-.section-card {
+.section {
   background-color: var(--linkedin-white);
   border-radius: 8px;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
@@ -25,7 +26,6 @@ body {
 .section-title {
   font-size: 20px;
   font-weight: 600;
-  color: var(--linkedin-text);
   margin-bottom: 16px;
 }
 
@@ -37,8 +37,15 @@ body {
   padding: 6px 16px;
   font-weight: 600;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .button:hover {
   background-color: #004182;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 16px;
+  }
 }

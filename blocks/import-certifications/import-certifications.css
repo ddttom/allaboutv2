@@ -5,8 +5,8 @@
 }
 
 .certification-item {
-  margin-bottom: 24px;
-  padding-bottom: 24px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
   border-bottom: 1px solid var(--linkedin-light-gray);
 }
 
@@ -16,20 +16,34 @@
   border-bottom: none;
 }
 
-.certification-item h3 {
+.certification-name {
   font-size: 16px;
   font-weight: 600;
-  margin-bottom: 4px;
+  margin: 0 0 4px;
 }
 
 .certification-issuer,
 .certification-date,
 .certification-credential {
   font-size: 14px;
-  color: var(--linkedin-dark-gray);
-  margin-bottom: 4px;
+  color: var(--linkedin-gray);
+  margin: 0 0 4px;
 }
 
 .certification-credential {
   font-style: italic;
+}
+
+.import-certifications {
+  background-color: var(--linkedin-white);
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+  .import-certifications {
+    padding: 16px;
+  }
 }

@@ -1,26 +1,28 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export default function decorate(block) {
-  const header = document.createElement('header');
-  header.classList.add('linkedin-header');
+  const container = document.createElement('div');
+  container.className = 'import-header';
 
-  const logo = document.createElement('div');
-  logo.classList.add('linkedin-logo');
-  const logoImg = createOptimizedPicture('https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png', 'LinkedIn Logo', false, [{ width: '40' }]);
-  logo.appendChild(logoImg);
+  const profilePicture = createOptimizedPicture('https://allabout.network/media_1d92670adcfb7a18a062e49fd7967f4e9f76d8a52.jpeg', 'Lars Trieloff', false, [200]);
+  profilePicture.className = 'profile-picture';
+  container.appendChild(profilePicture);
 
-  const nav = document.createElement('nav');
-  const navItems = ['Home', 'My Network', 'Jobs', 'Messaging', 'Notifications'];
-  navItems.forEach(item => {
-    const navItem = document.createElement('a');
-    navItem.textContent = item;
-    navItem.href = '#';
-    nav.appendChild(navItem);
-  });
+  const nameElement = document.createElement('h1');
+  nameElement.className = 'profile-name';
+  nameElement.textContent = block.children[0].children[0].textContent;
+  container.appendChild(nameElement);
 
-  header.appendChild(logo);
-  header.appendChild(nav);
+  const titleElement = document.createElement('p');
+  titleElement.className = 'profile-title';
+  titleElement.textContent = block.children[1].children[0].textContent;
+  container.appendChild(titleElement);
+
+  const locationElement = document.createElement('p');
+  locationElement.className = 'profile-location';
+  locationElement.textContent = block.children[2].children[0].textContent;
+  container.appendChild(locationElement);
 
   block.textContent = '';
-  block.appendChild(header);
+  block.appendChild(container);
 }

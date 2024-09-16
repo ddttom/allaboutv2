@@ -1,42 +1,41 @@
 export default function decorate(block) {
-  const experienceSection = document.createElement('div');
-  experienceSection.classList.add('experience-section', 'section-card');
+  const container = document.createElement('div');
+  container.className = 'import-experience';
 
   const title = document.createElement('h2');
-  title.classList.add('section-title');
+  title.className = 'section-title';
   title.textContent = 'Experience';
-
-  experienceSection.appendChild(title);
+  container.appendChild(title);
 
   const experienceList = document.createElement('ul');
-  experienceList.classList.add('experience-list');
+  experienceList.className = 'experience-list';
 
   [...block.children].forEach((row) => {
-    const [company, role, duration] = [...row.children].map(cell => cell.textContent);
-
+    const [company, position, duration] = [...row.children].map(cell => cell.textContent.trim());
+    
     const listItem = document.createElement('li');
-    listItem.classList.add('experience-item');
-
-    const roleElement = document.createElement('h3');
-    roleElement.textContent = role;
-
-    const companyElement = document.createElement('p');
-    companyElement.classList.add('company');
+    listItem.className = 'experience-item';
+    
+    const companyElement = document.createElement('h3');
+    companyElement.className = 'company';
     companyElement.textContent = company;
-
+    
+    const positionElement = document.createElement('p');
+    positionElement.className = 'position';
+    positionElement.textContent = position;
+    
     const durationElement = document.createElement('p');
-    durationElement.classList.add('duration');
+    durationElement.className = 'duration';
     durationElement.textContent = duration;
-
-    listItem.appendChild(roleElement);
+    
     listItem.appendChild(companyElement);
+    listItem.appendChild(positionElement);
     listItem.appendChild(durationElement);
-
+    
     experienceList.appendChild(listItem);
   });
 
-  experienceSection.appendChild(experienceList);
-
+  container.appendChild(experienceList);
   block.textContent = '';
-  block.appendChild(experienceSection);
+  block.appendChild(container);
 }

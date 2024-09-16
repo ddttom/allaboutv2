@@ -1,37 +1,33 @@
 # import-profile-summary
 
-This block creates a profile summary section similar to LinkedIn's design.
+This block represents the summary section of a LinkedIn profile.
 
 ## Usage
 
-Add this block to your Franklin document to display the profile summary.
+Use this block to display a brief professional summary or bio.
 
 ## Authoring
 
-Create a table with one row and three cells:
-1. Name
-2. Headline
-3. Location
+In your Franklin document, create a table with the following structure:
+
+| import-profile-summary |
+| :---- |
+| [Summary text] |
 
 ## Styling
 
-The block includes styles for:
-- Cover image
-- Profile image
-- Name, headline, and location
-- Connect button
+The block uses CSS classes for styling. You can customize the appearance by modifying the `import-profile-summary.css` file.
 
 ## Behavior
 
-The block is mostly static, with a clickable connect button.
+The block uses JavaScript to create the structure and apply the summary text.
 
 ## Accessibility
 
-- Images include alt text for screen readers
-- Semantic HTML structure is used for better accessibility
+The summary text is presented as a paragraph for proper semantic structure.
 
 ## Suggestions for Improvement
 
-- Add functionality to the connect button
-- Include additional profile information like connections and contact info
-- Implement a photo upload feature for cover and profile images
+1. Add support for formatting options (bold, italic, etc.) in the summary text.
+2. Implement a character limit with a "See more" functionality for longer summaries.
+3. Add an option to include keywords or highlight specific skills within the summary.

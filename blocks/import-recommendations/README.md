@@ -1,36 +1,35 @@
 # import-recommendations
 
-This block creates a recommendations section similar to LinkedIn's design.
+This block represents the recommendations section of a LinkedIn profile, displaying a list of professional recommendations.
 
 ## Usage
 
-Add this block to your Franklin document to display the recommendations section.
+Use this block to showcase recommendations from colleagues, clients, or supervisors.
 
 ## Authoring
 
-Create a table with three columns for each recommendation:
-1. Recommender's name
-2. Recommender's title
-3. Recommendation content
+In your Franklin document, create a table with the following structure:
+
+| import-recommendations |
+| :---- |
+| [Recommender Name] | [Recommender Title] | [Recommendation Content] |
+| [Recommender Name] | [Recommender Title] | [Recommendation Content] |
+| ... |
 
 ## Styling
 
-The block includes styles for:
-- Section title
-- Recommendations list
-- Individual recommendation items (name, title, content)
+The block uses CSS classes for styling. You can customize the appearance by modifying the `import-recommendations.css` file.
 
 ## Behavior
 
-This block is static and doesn't include any interactive elements.
+The block uses JavaScript to create a structured list of recommendations from the provided data.
 
 ## Accessibility
 
-- Semantic HTML structure is used for better accessibility
-- Proper heading hierarchy is maintained
+The recommendation information is presented in a semantic structure using appropriate heading levels, paragraphs, and blockquotes.
 
 ## Suggestions for Improvement
 
-- Add profile pictures for recommenders
-- Implement a "Show more" feature for long recommendations
-- Add the ability to sort recommendations by date or relevance
+1. Add support for recommender profile pictures.
+2. Implement a "See more" functionality for longer recommendations.
+3. Add an option to categorize recommendations (e.g., colleagues, clients, supervisors).

@@ -1,33 +1,39 @@
-# import-header
+# Import Header
 
-This block creates a header similar to LinkedIn's design.
+This block represents the header section of a LinkedIn profile, including the profile picture, name, title, and location.
 
 ## Usage
 
-Add this block to the top of your Franklin document to display the LinkedIn-style header.
+Use this block to display the main profile information at the top of the page.
 
 ## Authoring
 
-No specific authoring is required for this block.
+In your Franklin document, create a table with the following structure:
+
+| import-header |
+| :---- |
+| [Name] |
+| [Title] |
+| [Location] |
 
 ## Styling
 
-The block includes styles for:
-- Header layout
-- Logo
-- Navigation items
+The block uses CSS classes for styling. You can customize the appearance by modifying the `import-header.css` file.
 
 ## Behavior
 
-The header is static and doesn't include interactive elements in this version.
+The block uses JavaScript to create the structure and apply optimized picture loading for the profile image.
 
 ## Accessibility
 
-- The logo image includes an alt text for screen readers.
-- Navigation items are keyboard accessible.
+The profile picture includes an alt text for screen readers.
+
+## Dependencies
+
+This block depends on the `createOptimizedPicture` function from `aem.js`.
 
 ## Suggestions for Improvement
 
-- Add a mobile menu for responsive design
-- Implement active states for navigation items
-- Include a search bar functionality
+1. Add support for a background image or cover photo.
+2. Implement a responsive design for various screen sizes.
+3. Add options for social media links or contact information.

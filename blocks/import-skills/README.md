@@ -1,33 +1,36 @@
-# import-skills
+# Import Skills
 
-This block creates a skills section similar to LinkedIn's design.
+This block represents the skills section of a LinkedIn profile, displaying a list of professional skills.
 
 ## Usage
 
-Add this block to your Franklin document to display the skills section.
+Use this block to showcase key skills and competencies.
 
 ## Authoring
 
-Create a table with one column. Each row should contain a single skill.
+In your Franklin document, create a table with the following structure:
+
+| import-skills |
+| :---- |
+| [Skill 1] |
+| [Skill 2] |
+| [Skill 3] |
+| ... |
 
 ## Styling
 
-The block includes styles for:
-- Section title
-- Skills list
-- Individual skill items
+The block uses CSS classes for styling. You can customize the appearance by modifying the `import-skills.css` file.
 
 ## Behavior
 
-This block is static and doesn't include any interactive elements.
+The block uses JavaScript to create a list of skills from the provided data.
 
 ## Accessibility
 
-- Semantic HTML structure is used for better accessibility
-- Skills are presented in a list format for easy screen reader navigation
+The skills are presented in an unordered list for proper semantic structure.
 
 ## Suggestions for Improvement
 
-- Add endorsement functionality for each skill
-- Implement a "Show more" feature for long lists of skills
-- Add skill categorization (e.g., Top Skills, Industry Knowledge, Tools & Technologies)
+1. Add support for skill endorsements or ratings.
+2. Implement a "See more" functionality for longer lists of skills.
+3. Add an option to categorize skills into different groups (e.g., technical, soft skills).

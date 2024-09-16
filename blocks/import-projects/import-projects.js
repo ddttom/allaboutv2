@@ -1,43 +1,44 @@
 export default function decorate(block) {
-  const projectsSection = document.createElement('div');
-  projectsSection.classList.add('projects-section', 'section-card');
+  const container = document.createElement('div');
+  container.className = 'import-projects';
 
   const title = document.createElement('h2');
-  title.classList.add('section-title');
+  title.className = 'section-title';
   title.textContent = 'Projects';
-
-  projectsSection.appendChild(title);
+  container.appendChild(title);
 
   const projectsList = document.createElement('ul');
-  projectsList.classList.add('projects-list');
+  projectsList.className = 'projects-list';
 
   [...block.children].forEach((row) => {
-    const [projectName, description, url] = [...row.children].map(cell => cell.textContent);
-
+    const [projectName, description, url] = [...row.children].map(cell => cell.textContent.trim());
+    
     const listItem = document.createElement('li');
-    listItem.classList.add('project-item');
-
+    listItem.className = 'project-item';
+    
     const nameElement = document.createElement('h3');
+    nameElement.className = 'project-name';
     nameElement.textContent = projectName;
-
+    
     const descriptionElement = document.createElement('p');
-    descriptionElement.classList.add('project-description');
+    descriptionElement.className = 'project-description';
     descriptionElement.textContent = description;
-
+    
     const linkElement = document.createElement('a');
+    linkElement.className = 'project-link';
     linkElement.href = url;
     linkElement.textContent = 'View Project';
-    linkElement.classList.add('project-link');
-
+    linkElement.target = '_blank';
+    linkElement.rel = 'noopener noreferrer';
+    
     listItem.appendChild(nameElement);
     listItem.appendChild(descriptionElement);
     listItem.appendChild(linkElement);
-
+    
     projectsList.appendChild(listItem);
   });
 
-  projectsSection.appendChild(projectsList);
-
+  container.appendChild(projectsList);
   block.textContent = '';
-  block.appendChild(projectsSection);
+  block.appendChild(container);
 }

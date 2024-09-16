@@ -1,47 +1,46 @@
 export default function decorate(block) {
-  const certificationsSection = document.createElement('div');
-  certificationsSection.classList.add('certifications-section', 'section-card');
+  const container = document.createElement('div');
+  container.className = 'import-certifications';
 
   const title = document.createElement('h2');
-  title.classList.add('section-title');
+  title.className = 'section-title';
   title.textContent = 'Licenses & Certifications';
-
-  certificationsSection.appendChild(title);
+  container.appendChild(title);
 
   const certificationsList = document.createElement('ul');
-  certificationsList.classList.add('certifications-list');
+  certificationsList.className = 'certifications-list';
 
   [...block.children].forEach((row) => {
-    const [certName, issuer, issueDate, expDate, credentialId] = [...row.children].map(cell => cell.textContent);
-
+    const [name, issuer, issueDate, expirationDate, credentialId] = [...row.children].map(cell => cell.textContent.trim());
+    
     const listItem = document.createElement('li');
-    listItem.classList.add('certification-item');
-
+    listItem.className = 'certification-item';
+    
     const nameElement = document.createElement('h3');
-    nameElement.textContent = certName;
-
+    nameElement.className = 'certification-name';
+    nameElement.textContent = name;
+    
     const issuerElement = document.createElement('p');
-    issuerElement.classList.add('certification-issuer');
-    issuerElement.textContent = `Issuing organization: ${issuer}`;
-
+    issuerElement.className = 'certification-issuer';
+    issuerElement.textContent = `Issuer: ${issuer}`;
+    
     const dateElement = document.createElement('p');
-    dateElement.classList.add('certification-date');
-    dateElement.textContent = `Issued ${issueDate}${expDate ? ` · Expires ${expDate}` : ''}`;
-
+    dateElement.className = 'certification-date';
+    dateElement.textContent = `Issued: ${issueDate}${expirationDate ? ` • Expires: ${expirationDate}` : ''}`;
+    
     const credentialElement = document.createElement('p');
-    credentialElement.classList.add('certification-credential');
+    credentialElement.className = 'certification-credential';
     credentialElement.textContent = `Credential ID: ${credentialId}`;
-
+    
     listItem.appendChild(nameElement);
     listItem.appendChild(issuerElement);
     listItem.appendChild(dateElement);
     listItem.appendChild(credentialElement);
-
+    
     certificationsList.appendChild(listItem);
   });
 
-  certificationsSection.appendChild(certificationsList);
-
+  container.appendChild(certificationsList);
   block.textContent = '';
-  block.appendChild(certificationsSection);
+  block.appendChild(container);
 }
