@@ -69,7 +69,7 @@ Each block should include:
 
 ### 3. Style Guide Demo Page
 
-Create a main demo.md file in the scrap folder:
+Create a main demo.md file in the demos folder:
 - Incorporate all created blocks in a logical order
 - Include a table of contents
 - Add brief descriptions for each section
@@ -87,6 +87,7 @@ Create a main demo.md file in the scrap folder:
 - Create an import-styling block for overarching styles
 - Develop a set of CSS variables for consistent theming
 - Ensure responsive design principles are applied
+- use franklin variations, when practical
 
 ### 6. Accessibility
 
@@ -134,7 +135,7 @@ Create a main demo.md file in the scrap folder:
 ## Success Criteria
 
 - Accurate representation of the original website's visual design
-- Modular and reusable Franklin blocks
+- Modular and reusable Franklin blocks, with variations when practical
 - Clear and comprehensive documentation
 - Accessibility compliance (WCAG 2.1 AA)
 - Responsive design implementation

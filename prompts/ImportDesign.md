@@ -15,11 +15,12 @@ Create a set of Franklin blocks that can recreate the blocks and layout of a giv
    * identify the textual parameters
 
 3. **Block Creation**
-   * For each identified component, create a corresponding Franklin block, use blocks named {import}-blockname where {import} is replaced by the name of the import, do not use block names that already exist in the repo.
+   * For each identified component, create a corresponding Franklin block, use blocks named {import}-blockname where {import} is replaced by the name of the import, do not use block names that already exist in the repo. Use variations where possible
    * Generate the necessary JavaScript, CSS, and markdown files for each block. do not place text in the parameter rows, just placeholder names, 
 
 4. **Layout Recreation**
    * Recreate the overall layout of the imported design using Franklin's block structure.
+   * attempt to replicate the full look of the input source page
    * Ensure responsive design principles are followed.
 
 5. **Asset Handling**
@@ -28,15 +29,16 @@ Create a set of Franklin blocks that can recreate the blocks and layout of a giv
 
 6. **Styling**
    * extract overarching styling and associate it with the block import-styling
-   * Extract and adapt the CSS styles from the original design.
+   * Extract and adapt the CSS styles from the input source page
    * Create a cohesive set of CSS variables for easy theming, in the blocks.
+   * Use Franklin variations wheen practical
 
 7. **Interactivity**
    * Identify and recreate interactive elements (e.g., dropdowns, sliders, modals).
    * Implement necessary JavaScript functionality for these elements, in the blocks.
 
 8. **Accessibility**
-   * Ensure all created blocks maintain or improve the accessibility of the original design.
+   * Ensure all created blocks maintain or improve the accessibility, and styling, of the original design.
    * Add appropriate ARIA labels and roles where necessary.
 
 9. **Performance Optimization**
@@ -47,7 +49,7 @@ Create a set of Franklin blocks that can recreate the blocks and layout of a giv
     * Generate appropriate metadata for the recreated design, including title, description, and other relevant fields.
 
 11. **Demo Page**
-    * Create a demo page in Franklin format, in the scrap folder that showcases the imported design.
+    * Create a demo page in Franklin format, in the demos folder that showcases the imported design.
     * Include all recreated blocks in their appropriate layout.
     * Represent each block as a single-cell table with the block name inside, add parameters in the rows that follow.
 
@@ -59,7 +61,7 @@ Create a set of Franklin blocks that can recreate the blocks and layout of a giv
 ## Best Practices
 
 * Adhere to Franklin (Adobe Edge Delivery Services) development best practices.
-* Ensure all created blocks are modular and reusable.
+* Ensure all created blocks are modular and reusable, using variations when possible
 * Follow Airbnb JavaScript Style Guide for code consistency.
 * Use async/await for asynchronous operations.
 

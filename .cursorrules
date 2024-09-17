@@ -22,6 +22,8 @@ As an expert developer specializing in **Adobe Edge Delivery Services (EDS) for 
 When developing blocks always include a README.md
 If the block being developed requires one or more json feed then provide a suitable number of example JSON feeds and sample csv files
 
+whilst constructing a new block consider using variations within previously constructed block, this improves efficiency and content author knowledge, avoiding overload
+
 ### File Structure
 
 Block components should be organized in directories:
@@ -84,6 +86,14 @@ Block components should be organized in directories:
      ```
 
 Use CSS variables for theming and consistency.
+
+
+## Example file guidelines
+
+1. Title:
+2. Introduction
+3. Sample table
+4. Explanation of how the block works
 
 
 ## Demo File guidelines
