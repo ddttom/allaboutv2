@@ -16,6 +16,12 @@ export default async function decorate(block) {
     selectionControls.appendChild(selectAllBtn);
     selectionControls.appendChild(clearSelectionBtn);
 
+    // Create copy JSON button
+    const copyJsonBtn = document.createElement('button');
+    copyJsonBtn.textContent = 'Copy JSON';
+    copyJsonBtn.className = 'dam-copy-json';
+    copyJsonBtn.style.display = 'none'; // Initially hidden
+
     // Process all rows
     Array.from(block.children).forEach((row, index) => {
       if (row.children.length >= 6) {
@@ -113,6 +119,7 @@ export default async function decorate(block) {
       outputContainer.classList.toggle('dam-output-hidden');
       gallery.classList.toggle('dam-gallery-hidden');
       selectionControls.classList.toggle('dam-selection-controls-hidden');
+      copyJsonBtn.style.display = outputContainer.classList.contains('dam-output-hidden') ? 'none' : 'inline-block';
     });
 
     // Selection functionality
@@ -139,10 +146,29 @@ export default async function decorate(block) {
       }
     });
 
+    // Copy JSON functionality
+    copyJsonBtn.addEventListener('click', () => {
+      const checkboxes = gallery.querySelectorAll('.dam-gallery-checkbox');
+      const selectedData = data.filter((_, index) => checkboxes[index].checked);
+      const jsonString = JSON.stringify(selectedData, null, 2);
+      
+      navigator.clipboard.writeText(jsonString).then(() => {
+        const originalText = copyJsonBtn.textContent;
+        copyJsonBtn.textContent = 'Copied!';
+        setTimeout(() => {
+          copyJsonBtn.textContent = originalText;
+        }, 2000);
+      }).catch(err => {
+        // eslint-disable-next-line no-console
+        console.error('Failed to copy JSON: ', err);
+      });
+    });
+
     // Clear the block and add new elements
     block.innerHTML = '';
     block.appendChild(toggleButton);
     block.appendChild(selectionControls);
+    block.appendChild(copyJsonBtn);
     block.appendChild(outputContainer);
     block.appendChild(gallery);
 
