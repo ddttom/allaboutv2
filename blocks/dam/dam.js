@@ -1,10 +1,16 @@
 export default async function decorate(block) {
+  // eslint-disable-next-line no-console
+  console.log('Input block:', block);
+
   const data = [];
 
   // Iterate through rows, skipping the header
   for (let i = 1; i < block.children.length; i += 1) {
     const row = block.children[i];
     const cells = row.children;
+
+    // eslint-disable-next-line no-console
+    console.log(`Processing row ${i}:`, row);
 
     if (cells.length >= 6) {
       const note = cells[0].textContent.trim();
@@ -33,11 +39,20 @@ export default async function decorate(block) {
         path,
         additionalInfo,
       });
+
+      // eslint-disable-next-line no-console
+      console.log('Processed data:', data[data.length - 1]);
+    } else {
+      // eslint-disable-next-line no-console
+      console.log(`Skipping row ${i} due to insufficient cells`);
     }
   }
 
   // Create JSON output
   const jsonOutput = JSON.stringify(data, null, 2);
+
+  // eslint-disable-next-line no-console
+  console.log('Final JSON output:', jsonOutput);
 
   // Create and append pre and code elements
   const pre = document.createElement('pre');
