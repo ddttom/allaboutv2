@@ -29,23 +29,15 @@ export default async function decorate(block) {
 
       const [description, classification, tag, imageElement, additionalInfo] = row.children;
 
-      // eslint-disable-next-line no-console
-      console.log('Image element:', imageElement);
-      // eslint-disable-next-line no-console
-      console.log('Image element innerHTML:', imageElement.innerHTML);
-
       let imagePath = '';
       if (imageElement.querySelector('picture')) {
         const img = imageElement.querySelector('img');
-        imagePath = img ? img.src : '';
+        imagePath = img ? new URL(img.src).pathname : '';
       } else if (imageElement.querySelector('a')) {
-        imagePath = imageElement.querySelector('a').href;
+        imagePath = new URL(imageElement.querySelector('a').href).pathname;
       } else if (imageElement.querySelector('img')) {
-        imagePath = imageElement.querySelector('img').src;
+        imagePath = new URL(imageElement.querySelector('img').src).pathname;
       }
-
-      // eslint-disable-next-line no-console
-      console.log('Extracted image path:', imagePath);
 
       const rowData = {
         description: description.textContent.trim(),
@@ -80,37 +72,9 @@ export default async function decorate(block) {
     code.textContent = jsonOutput;
     pre.appendChild(code);
 
-    // Create image gallery
-    const gallery = document.createElement('div');
-    gallery.classList.add('dam-gallery');
-
-    damData.forEach((item) => {
-      const card = document.createElement('div');
-      card.classList.add('dam-card');
-
-      const img = document.createElement('img');
-      img.src = item.path || 'https://via.placeholder.com/300x200?text=No+Image';
-      img.alt = item.description;
-      img.title = `${item.classification} - ${item.tag}`;
-
-      const info = document.createElement('div');
-      info.classList.add('dam-info');
-      info.innerHTML = `
-        <h3>${item.description}</h3>
-        <p><strong>Classification:</strong> ${item.classification}</p>
-        <p><strong>Tag:</strong> ${item.tag}</p>
-        <p><strong>Additional Info:</strong> ${item.additionalInfo}</p>
-      `;
-
-      card.appendChild(img);
-      card.appendChild(info);
-      gallery.appendChild(card);
-    });
-
-    // Clear existing content and append new elements
+    // Clear existing content and append JSON output
     block.innerHTML = '';
     block.appendChild(pre);
-    block.appendChild(gallery);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Error in DAM block:', error);
