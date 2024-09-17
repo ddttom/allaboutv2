@@ -1,10 +1,10 @@
 # DAM Block
 
-The DAM (Digital Asset Management) block displays a list of images with associated metadata in a structured format.
+The DAM (Digital Asset Management) block displays a list of images with associated metadata in a structured format, including a JSON representation.
 
 ## Usage
 
-This block is used to showcase a collection of digital assets with their descriptions, classifications, and tags.
+This block is used to showcase a collection of digital assets with their descriptions, classifications, and tags, along with a JSON representation of the data.
 
 ## Authoring
 
@@ -34,7 +34,7 @@ You can customize the appearance by modifying these classes in the CSS file.
 ## Behavior
 
 The block processes the table data and generates:
-1. A JSON representation of the assets
+1. A JSON representation of the assets, displayed in a code block
 2. A visual display of the images with their descriptions
 
 ## Accessibility
@@ -48,3 +48,4 @@ The block processes the table data and generates:
 2. Implement lazy loading for images to improve performance.
 3. Add a lightbox feature for viewing larger images.
 4. Include a search functionality to find specific assets.
+5. Provide options to toggle between JSON view and image gallery view.
