@@ -20,7 +20,7 @@ export default async function decorate(block) {
     const copyJsonBtn = document.createElement('button');
     copyJsonBtn.textContent = 'Copy JSON';
     copyJsonBtn.className = 'dam-copy-json';
-    copyJsonBtn.style.display = 'none'; // Initially hidden
+    // Remove this line: copyJsonBtn.style.display = 'none';
 
     // Process all rows
     Array.from(block.children).forEach((row, index) => {
@@ -116,10 +116,10 @@ export default async function decorate(block) {
     toggleButton.textContent = 'Toggle View';
     toggleButton.className = 'dam-toggle';
     toggleButton.addEventListener('click', () => {
-      outputContainer.classList.toggle('dam-output-hidden');
+      const isJsonView = outputContainer.classList.toggle('dam-output-hidden');
       gallery.classList.toggle('dam-gallery-hidden');
       selectionControls.classList.toggle('dam-selection-controls-hidden');
-      copyJsonBtn.style.display = outputContainer.classList.contains('dam-output-hidden') ? 'none' : 'inline-block';
+      copyJsonBtn.classList.toggle('dam-copy-json-hidden', !isJsonView);
     });
 
     // Selection functionality
@@ -179,9 +179,10 @@ export default async function decorate(block) {
     block.appendChild(outputContainer);
     block.appendChild(gallery);
 
-    // Initially hide the gallery and selection controls
+    // Initially hide the gallery and selection controls, show JSON view
     gallery.classList.add('dam-gallery-hidden');
     selectionControls.classList.add('dam-selection-controls-hidden');
+    // Remove this line: copyJsonBtn.style.display = 'none';
 
   } catch (error) {
     // eslint-disable-next-line no-console

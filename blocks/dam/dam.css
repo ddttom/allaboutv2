@@ -132,6 +132,10 @@
   border-radius: 4px;
 }
 
+.dam-copy-json-hidden {
+  display: none;
+}
+
 .dam-copy-json:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
