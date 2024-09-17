@@ -1,0 +1,18 @@
+.import-about {
+  background-color: white;
+  border: 1px solid var(--linkedin-border);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.import-about h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.import-about p {
+  font-size: 14px;
+  line-height: 1.5;
+}

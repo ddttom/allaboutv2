@@ -1,0 +1,34 @@
+.import-header {
+  background-color: white;
+  border-bottom: 1px solid var(--linkedin-border);
+  padding: 0 24px;
+}
+
+.import-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1128px;
+  margin: 0 auto;
+  height: 52px;
+}
+
+.import-header-logo {
+  width: 34px;
+  height: 34px;
+}
+
+.import-header-nav {
+  display: flex;
+  align-items: center;
+}
+
+.import-header-nav-item {
+  margin-left: 24px;
+  color: var(--linkedin-gray);
+  font-size: 14px;
+}
+
+.import-header-nav-item:hover {
+  color: var(--linkedin-text);
+}

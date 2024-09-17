@@ -1,0 +1,28 @@
+.import-experience {
+  background-color: white;
+  border: 1px solid var(--linkedin-border);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.import-experience h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.import-experience-item {
+  margin-bottom: 16px;
+}
+
+.import-experience-item h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.import-experience-item p {
+  font-size: 14px;
+  color: var(--linkedin-gray);
+  margin-top: 4px;
+}

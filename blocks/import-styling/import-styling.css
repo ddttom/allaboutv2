@@ -1,0 +1,97 @@
+:root {
+  --linkedin-blue: #0a66c2;
+  --linkedin-light-blue: #e7f3ff;
+  --linkedin-gray: #86888a;
+  --linkedin-light-gray: #f3f2ef;
+  --linkedin-text: #191919;
+  --linkedin-border: #e0e0e0;
+  --font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Fira Sans', Ubuntu, Oxygen, 'Oxygen Sans', Cantarell, 'Droid Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Lucida Grande', Helvetica, Arial, sans-serif;
+
+  /* Dark mode variables */
+  --linkedin-dark-bg: #1c1e21;
+  --linkedin-dark-text: #e4e6eb;
+  --linkedin-dark-border: #3e4042;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--linkedin-light-gray);
+  color: var(--linkedin-text);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+a {
+  color: var(--linkedin-blue);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.button {
+  border-radius: 16px;
+  padding: 6px 16px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button-primary {
+  background-color: var(--linkedin-blue);
+  color: white;
+  border: none;
+}
+
+.button-primary:hover {
+  background-color: #004182;
+}
+
+.button-secondary {
+  background-color: white;
+  color: var(--linkedin-gray);
+  border: 1px solid var(--linkedin-gray);
+}
+
+.button-secondary:hover {
+  background-color: var(--linkedin-light-gray);
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--linkedin-dark-bg);
+    color: var(--linkedin-dark-text);
+  }
+
+  .button-secondary {
+    background-color: var(--linkedin-dark-bg);
+    color: var(--linkedin-dark-text);
+    border-color: var(--linkedin-dark-text);
+  }
+
+  .button-secondary:hover {
+    background-color: var(--linkedin-dark-border);
+  }
+}
+
+/* Responsive layout */
+.container {
+  max-width: 1128px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+@media (max-width: 1128px) {
+  .container {
+    max-width: 100%;
+  }
+}
