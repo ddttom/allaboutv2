@@ -1,6 +1,8 @@
 export default async function decorate(block) {
   try {
     const data = [];
+    const gallery = document.createElement('div');
+    gallery.className = 'dam-gallery';
 
     // Process all rows
     Array.from(block.children).forEach((row, index) => {
@@ -19,6 +21,21 @@ export default async function decorate(block) {
           // Extract path without domain and query parameters
           const url = new URL(imageElement.src, window.location.origin);
           path = url.pathname.split('?')[0];
+
+          // Create image card for gallery
+          const card = document.createElement('div');
+          card.className = 'dam-gallery-card';
+          card.innerHTML = `
+            <img src="${imageElement.src}" alt="${description}">
+            <div class="dam-gallery-card-info">
+              <h3>${note}</h3>
+              <p>${description}</p>
+              <p>Classification: ${classification}</p>
+              <p>Tag: ${tag}</p>
+              <p>${additionalInfo}</p>
+            </div>
+          `;
+          gallery.appendChild(card);
         }
 
         data.push({
@@ -51,16 +68,21 @@ export default async function decorate(block) {
     
     // Create a toggle button
     const toggleButton = document.createElement('button');
-    toggleButton.textContent = 'Toggle JSON';
+    toggleButton.textContent = 'Toggle View';
     toggleButton.className = 'dam-toggle';
     toggleButton.addEventListener('click', () => {
       outputContainer.classList.toggle('dam-output-hidden');
+      gallery.classList.toggle('dam-gallery-hidden');
     });
 
     // Clear the block and add new elements
     block.innerHTML = '';
     block.appendChild(toggleButton);
     block.appendChild(outputContainer);
+    block.appendChild(gallery);
+
+    // Initially hide the gallery
+    gallery.classList.add('dam-gallery-hidden');
 
   } catch (error) {
     // eslint-disable-next-line no-console
