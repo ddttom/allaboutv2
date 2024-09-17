@@ -4,6 +4,18 @@ export default async function decorate(block) {
     const gallery = document.createElement('div');
     gallery.className = 'dam-gallery';
 
+    // Create selection controls
+    const selectionControls = document.createElement('div');
+    selectionControls.className = 'dam-selection-controls';
+    const selectAllBtn = document.createElement('button');
+    selectAllBtn.textContent = 'Select All';
+    selectAllBtn.className = 'dam-select-all';
+    const clearSelectionBtn = document.createElement('button');
+    clearSelectionBtn.textContent = 'Clear Selection';
+    clearSelectionBtn.className = 'dam-clear-selection';
+    selectionControls.appendChild(selectAllBtn);
+    selectionControls.appendChild(clearSelectionBtn);
+
     // Process all rows
     Array.from(block.children).forEach((row, index) => {
       if (row.children.length >= 6) {
@@ -25,7 +37,11 @@ export default async function decorate(block) {
           // Create image card for gallery
           const card = document.createElement('div');
           card.className = 'dam-gallery-card';
-          card.innerHTML = `
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.className = 'dam-gallery-checkbox';
+          card.appendChild(checkbox);
+          card.innerHTML += `
             <img src="${imageElement.src}" alt="${description}">
             <div class="dam-gallery-card-info">
               <h3>${note}</h3>
@@ -53,19 +69,20 @@ export default async function decorate(block) {
     });
 
     // Create JSON output
-    const jsonOutput = JSON.stringify(data, null, 2);
+    const createJsonOutput = (selectedData) => {
+      const jsonOutput = JSON.stringify(selectedData, null, 2);
+      const pre = document.createElement('pre');
+      const code = document.createElement('code');
+      code.textContent = jsonOutput;
+      pre.appendChild(code);
+      return pre;
+    };
 
-    // Create and append pre and code elements
-    const pre = document.createElement('pre');
-    const code = document.createElement('code');
-    code.textContent = jsonOutput;
-    pre.appendChild(code);
-    
     // Create a container for the JSON output
     const outputContainer = document.createElement('div');
     outputContainer.className = 'dam-output';
-    outputContainer.appendChild(pre);
-    
+    outputContainer.appendChild(createJsonOutput(data));
+
     // Create a toggle button
     const toggleButton = document.createElement('button');
     toggleButton.textContent = 'Toggle View';
@@ -73,16 +90,43 @@ export default async function decorate(block) {
     toggleButton.addEventListener('click', () => {
       outputContainer.classList.toggle('dam-output-hidden');
       gallery.classList.toggle('dam-gallery-hidden');
+      selectionControls.classList.toggle('dam-selection-controls-hidden');
+    });
+
+    // Selection functionality
+    const updateSelection = () => {
+      const checkboxes = gallery.querySelectorAll('.dam-gallery-checkbox');
+      const selectedData = data.filter((_, index) => checkboxes[index].checked);
+      outputContainer.innerHTML = '';
+      outputContainer.appendChild(createJsonOutput(selectedData));
+    };
+
+    selectAllBtn.addEventListener('click', () => {
+      gallery.querySelectorAll('.dam-gallery-checkbox').forEach(cb => { cb.checked = true; });
+      updateSelection();
+    });
+
+    clearSelectionBtn.addEventListener('click', () => {
+      gallery.querySelectorAll('.dam-gallery-checkbox').forEach(cb => { cb.checked = false; });
+      updateSelection();
+    });
+
+    gallery.addEventListener('change', (e) => {
+      if (e.target.classList.contains('dam-gallery-checkbox')) {
+        updateSelection();
+      }
     });
 
     // Clear the block and add new elements
     block.innerHTML = '';
     block.appendChild(toggleButton);
+    block.appendChild(selectionControls);
     block.appendChild(outputContainer);
     block.appendChild(gallery);
 
-    // Initially hide the gallery
+    // Initially hide the gallery and selection controls
     gallery.classList.add('dam-gallery-hidden');
+    selectionControls.classList.add('dam-selection-controls-hidden');
 
   } catch (error) {
     // eslint-disable-next-line no-console

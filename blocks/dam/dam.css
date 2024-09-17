@@ -6,7 +6,9 @@
   border-radius: 5px;
 }
 
-.dam-toggle {
+.dam-toggle,
+.dam-select-all,
+.dam-clear-selection {
   background-color: #4CAF50;
   border: none;
   color: white;
@@ -18,6 +20,19 @@
   margin: 4px 2px;
   cursor: pointer;
   border-radius: 4px;
+}
+
+.dam-select-all,
+.dam-clear-selection {
+  background-color: #008CBA;
+}
+
+.dam-selection-controls {
+  margin-top: 10px;
+}
+
+.dam-selection-controls-hidden {
+  display: none;
 }
 
 .dam-output {
@@ -73,6 +88,14 @@
   border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.dam-gallery-checkbox {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
 }
 
 .dam-gallery-card img {
