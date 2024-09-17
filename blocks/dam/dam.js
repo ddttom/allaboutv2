@@ -8,16 +8,20 @@ export default async function decorate(block) {
   // Start from index 1 to skip the title row
   for (let i = 1; i < rows.length; i++) {
     const row = rows[i];
-    const [description, classification, tag, imageDiv] = [...row.children];
-    const img = imageDiv.querySelector('img');
-    const imagePath = img ? new URL(img.src).pathname : '';
+    const cells = [...row.children];
+    
+    if (cells.length >= 4) {
+      const [description, classification, tag, imageDiv] = cells;
+      const img = imageDiv.querySelector('img');
+      const imagePath = img ? new URL(img.src).pathname : '';
 
-    damData.push({
-      description: description.textContent.trim(),
-      classification: classification.textContent.trim(),
-      tag: tag.textContent.trim(),
-      path: imagePath,
-    });
+      damData.push({
+        description: description.textContent.trim(),
+        classification: classification.textContent.trim(),
+        tag: tag.textContent.trim(),
+        path: imagePath,
+      });
+    }
   }
 
   const jsonOutput = JSON.stringify(damData, null, 2);
