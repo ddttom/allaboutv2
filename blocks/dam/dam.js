@@ -137,7 +137,8 @@ export default async function decorate(block) {
       const checkboxes = gallery.querySelectorAll('.dam-gallery-checkbox');
       const selectedData = data.filter((_, index) => checkboxes[index].checked);
       outputContainer.innerHTML = '';
-      outputContainer.appendChild(createJsonOutput(selectedData));
+      // If no items are selected, show all data
+      outputContainer.appendChild(createJsonOutput(selectedData.length > 0 ? selectedData : data));
     };
 
     selectAllBtn.addEventListener('click', () => {
@@ -160,6 +161,7 @@ export default async function decorate(block) {
     copyJsonBtn.addEventListener('click', () => {
       const checkboxes = gallery.querySelectorAll('.dam-gallery-checkbox');
       const selectedData = data.filter((_, index) => checkboxes[index].checked);
+      // If no items are selected, use all data
       const jsonString = JSON.stringify(selectedData.length > 0 ? selectedData : data, null, 2);
       
       // Create a temporary textarea element to hold the text
