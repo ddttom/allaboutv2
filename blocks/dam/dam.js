@@ -2,14 +2,13 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export default async function decorate(block) {
   const rows = [...block.children];
-  const title = rows.shift().textContent.trim();
+  const title = block.classList[0] || 'DAM Assets';
   const damData = [];
 
   rows.forEach((row) => {
-    const [description, classification, tag, imageOrHref] = [...row.children];
-    const imagePath = imageOrHref.querySelector('picture') ? 
-      new URL(imageOrHref.querySelector('img').src).pathname :
-      imageOrHref.querySelector('a') ? imageOrHref.querySelector('a').href : '';
+    const [description, , classification, tag, imageDiv] = [...row.children];
+    const imagePath = imageDiv.querySelector('img') ? 
+      new URL(imageDiv.querySelector('img').src).pathname : '';
 
     damData.push({
       description: description.textContent.trim(),
