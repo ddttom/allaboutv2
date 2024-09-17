@@ -25,13 +25,5 @@ export default async function decorate(block) {
   block.innerHTML = `
     <h2>${title}</h2>
     <pre><code>${jsonOutput}</code></pre>
-    <div class="dam-images">
-      ${damData.map(item => `
-        <div class="dam-item">
-          ${createOptimizedPicture(item.path, item.description, false, [{ width: '300' }])}
-          <p>${item.description}</p>
-        </div>
-      `).join('')}
-    </div>
   `;
 }
