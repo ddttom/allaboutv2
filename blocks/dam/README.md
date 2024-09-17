@@ -1,51 +1,49 @@
 # DAM Block
 
-The DAM (Digital Asset Management) block displays a list of images with associated metadata in a structured format, including a JSON representation.
+The DAM (Digital Asset Management) block displays a list of images with associated metadata in a JSON format and an image gallery.
 
 ## Usage
 
-This block is used to showcase a collection of digital assets with their descriptions, classifications, and tags, along with a JSON representation of the data.
+The DAM block is used to showcase digital assets with their descriptions, classifications, and tags.
 
 ## Authoring
 
-Create a table in your document with the following structure:
+Create a table in your Google Docs or Microsoft Word document with the following structure:
 
-| DAM Block Title |
-|-----------------|
-| Description | Classification | Tag | Image |
-| ... | ... | ... | ... |
+| DAM | Description | Classification | Tag | Image |
+|-----|-------------|----------------|-----|-------|
+| | Asset description | Asset class | Asset tag | Image URL or embed |
 
-- The first row contains the block title.
-- Subsequent rows contain:
-  1. Description of the asset
-  2. Classification
-  3. Tag
-  4. Image (use the 'Image' button in your document editor)
+- The first cell should contain "DAM" to indicate the block type.
+- Each subsequent row represents an asset with its metadata and image.
 
 ## Styling
 
 The block uses CSS classes for styling:
-- `.dam`: Main container
-- `.dam-images`: Grid container for images
-- `.dam-item`: Individual image item
+- `.dam`: Main container styles
+- `.dam pre`: Styles for the JSON output container
+- `.dam code`: Styles for the JSON text
+- `.dam-gallery`: Styles for the image gallery
+- `.dam-gallery img`: Styles for individual images in the gallery
 
-You can customize the appearance by modifying these classes in the CSS file.
+Custom CSS variables can be used to adjust the styling to match your site's theme.
 
 ## Behavior
 
-The block processes the table data and generates:
-1. A JSON representation of the assets, displayed in a code block
-2. A visual display of the images with their descriptions
+The block processes the table data to create a JSON output and an image gallery:
+1. Extracts metadata and image paths from the table.
+2. Generates a formatted JSON output displayed in a `<pre><code>` element.
+3. Creates an image gallery using the extracted image paths.
 
 ## Accessibility
 
-- Images include alt text based on their descriptions for screen readers.
-- The JSON output is contained within a `<pre><code>` element for better readability and potential interaction with screen readers.
+- Images include alt text based on the asset description for screen readers.
+- The JSON output is presented in a structured format for easy reading by assistive technologies.
 
 ## Suggestions for Improvement
 
-1. Add filtering options based on classifications or tags.
-2. Implement lazy loading for images to improve performance.
-3. Add a lightbox feature for viewing larger images.
-4. Include a search functionality to find specific assets.
-5. Provide options to toggle between JSON view and image gallery view.
+1. Add lazy loading for images to improve performance.
+2. Implement a lightbox feature for enlarged image viewing.
+3. Add filtering and sorting options for the gallery based on classifications or tags.
+4. Implement error handling for missing or invalid image URLs.
+5. Add a search functionality to filter assets based on descriptions or metadata.
