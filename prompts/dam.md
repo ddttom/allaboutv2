@@ -6,7 +6,7 @@
 
 The first cell in the table is the table name, subsequent rows contain a textual description in the first cell, a classification name in the second cell, a tagname in the third cell, and a picture element or an href element in the fourth cell. 
 
-The block should display the output as a .json with description, classification, tag, and path to the image without the domain name inside a code html element, extract the path to the image and use it as an image.
+The block should display the output as a .json with description, classification, tag, and path to the image without the domain name inside a code html element, extract the path to the image.
 
 ## JavaScript (dam.js)
 
@@ -23,6 +23,30 @@ Create a `dam.css` file with the following styles:
 - Style the `<pre>` element to ensure proper formatting of the JSON output
 - Add responsive styles for different screen sizes
 - Use CSS variables for theming and consistency
+
+
+## Input
+
+| DAM | Description | Classification | Tag | Image | Additional Info |
+| :---- | :---- | :---- | :---- | :---- | :---- |
+| Note | Colorful abstract art | Art | Abstract |![UI Design](MakeThis.png) | Vibrant colors |
+
+
+
+## Json Output
+
+[
+  {
+    "note":{info},
+    "description": {info},
+    "classification": {info},
+    "tag": {info},
+    "path": {info},
+    "additionalInfo": {info}
+  }
+]
+
+where {info} is replaced with the appropriate thing
 
 ## Additional Requirements
 
