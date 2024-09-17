@@ -133,7 +133,7 @@
 }
 
 .dam-copy-json-hidden {
-  display: none;
+  display: none !important;
 }
 
 .dam-copy-json:disabled {

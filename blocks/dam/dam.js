@@ -20,7 +20,6 @@ export default async function decorate(block) {
     const copyJsonBtn = document.createElement('button');
     copyJsonBtn.textContent = 'Copy JSON';
     copyJsonBtn.className = 'dam-copy-json';
-    // Remove this line: copyJsonBtn.style.display = 'none';
 
     // Process all rows
     Array.from(block.children).forEach((row, index) => {
@@ -115,11 +114,22 @@ export default async function decorate(block) {
     const toggleButton = document.createElement('button');
     toggleButton.textContent = 'Toggle View';
     toggleButton.className = 'dam-toggle';
-    toggleButton.addEventListener('click', () => {
-      const isJsonView = outputContainer.classList.toggle('dam-output-hidden');
-      gallery.classList.toggle('dam-gallery-hidden');
-      selectionControls.classList.toggle('dam-selection-controls-hidden');
+
+    // Function to update view
+    const updateView = (isJsonView) => {
+      outputContainer.classList.toggle('dam-output-hidden', !isJsonView);
+      gallery.classList.toggle('dam-gallery-hidden', isJsonView);
+      selectionControls.classList.toggle('dam-selection-controls-hidden', isJsonView);
       copyJsonBtn.classList.toggle('dam-copy-json-hidden', !isJsonView);
+    };
+
+    // Set initial view
+    updateView(true);
+
+    // Add event listener for toggle button
+    toggleButton.addEventListener('click', () => {
+      const isJsonView = outputContainer.classList.contains('dam-output-hidden');
+      updateView(isJsonView);
     });
 
     // Selection functionality
@@ -174,15 +184,14 @@ export default async function decorate(block) {
     // Clear the block and add new elements
     block.innerHTML = '';
     block.appendChild(toggleButton);
-    block.appendChild(selectionControls);
     block.appendChild(copyJsonBtn);
+    block.appendChild(selectionControls);
     block.appendChild(outputContainer);
     block.appendChild(gallery);
 
     // Initially hide the gallery and selection controls, show JSON view
     gallery.classList.add('dam-gallery-hidden');
     selectionControls.classList.add('dam-selection-controls-hidden');
-    // Remove this line: copyJsonBtn.style.display = 'none';
 
   } catch (error) {
     // eslint-disable-next-line no-console
