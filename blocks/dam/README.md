@@ -1,51 +1,62 @@
-# DAM Block
+# DAM (Digital Asset Management) Block
 
-The DAM (Digital Asset Management) block is designed to display a list of images with associated metadata in JSON format.
+The DAM block is a versatile component for managing and displaying digital assets. It provides both a JSON view and a gallery view of the assets, along with selection and copy functionalities.
 
 ## Usage
 
-The DAM block takes a table input and converts it into a JSON structure, displaying the output within a code block.
-
-## Authoring
-
-In Google Docs or Microsoft Word, create a table with the following structure:
+To use the DAM block, create a table in your document with the following structure:
 
 | DAM | Description | Classification | Tag | Image | Additional Info |
-| :---- | :---- | :---- | :---- | :---- | :---- |
-| Note | Image description | Classification | Tag | Image | Extra details |
+|-----|-------------|----------------|-----|-------|-----------------|
+| Asset Note | Asset Description | Asset Classification | Asset Tag | Asset Image | Additional Information |
 
-- The first row is the header and should contain the column names as shown above.
-- Subsequent rows contain the data for each image.
-- The "Image" column should contain an image or a link to the image.
+You can add as many rows as needed, each representing a different asset.
+
+## Features
+
+1. **Toggle View**: Switch between JSON and gallery views of the assets.
+2. **JSON View**: Displays a colorized JSON representation of the assets.
+3. **Gallery View**: Shows a grid of asset cards with images and details.
+4. **Selection**: In gallery view, select individual assets or use "Select All" and "Clear Selection" buttons.
+5. **Copy JSON**: Copy the JSON data of selected (or all) assets to the clipboard.
+
+## Functionality
+
+### JSON View
+- Displays a colorized JSON representation of all assets or selected assets.
+- The "Copy JSON" button allows you to copy the displayed JSON data to the clipboard.
+
+### Gallery View
+- Displays asset cards in a grid layout.
+- Each card shows the asset image, note, description, classification, tag, and additional info.
+- Checkboxes allow for individual asset selection.
+
+### Selection Controls
+- "Select All": Selects all assets in the gallery view.
+- "Clear Selection": Clears all selections in the gallery view.
+
+### Copy JSON
+- Copies the JSON data of selected assets (or all assets if none are selected) to the clipboard.
+- Provides visual feedback ("Copied!" or "Copy failed") after attempting to copy.
 
 ## Styling
 
-The block uses CSS variables for theming:
+The DAM block is styled for a clean and user-friendly interface:
+- Responsive grid layout for the gallery view
+- Clear button styles for easy interaction
+- Smooth transitions between views
+- Colorized JSON for improved readability
 
-- `--body-font-family`: Font for the overall block
-- `--overlay-background-color`: Background color for the code block
-- `--border-color`: Border color for the code block
-- `--fixed-font-family`: Font for the code text
+## Customization
 
-## Behavior
+You can customize the appearance of the DAM block by modifying the `dam.css` file. Key areas for customization include:
+- Color scheme
+- Button styles
+- Gallery card layout
+- JSON view styling
 
-The block processes the input table and generates a JSON output containing the following information for each image:
+## Notes
 
-- note
-- description
-- classification
-- tag
-- path (extracted from the image source)
-- additionalInfo
-
-## Accessibility
-
-The block presents information in a structured JSON format, which can be read by screen readers. The use of semantic HTML elements (`<pre>` and `<code>`) ensures proper interpretation of the content.
-
-## Suggestions for Improvement
-
-1. Add error handling for missing or malformed data in the input table.
-2. Implement a toggle feature to switch between JSON view and a more visual representation of the data.
-3. Add a search or filter functionality for larger datasets.
-4. Implement lazy loading for images in the JSON output to improve performance.
-5. Add a copy-to-clipboard button for the JSON output.
+- Ensure that each row in the DAM table has at least 6 cells for proper functionality.
+- The block automatically handles cases where no assets are selected, displaying all assets in such scenarios.
+- Console logs are included for debugging purposes and can be removed for production use.
