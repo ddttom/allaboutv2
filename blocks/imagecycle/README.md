@@ -1,6 +1,6 @@
 # Imagecycle
 
-The Imagecycle block is a component that displays a rotating carousel of images with manual and automatic navigation options.
+The Imagecycle block is a component that displays a rotating carousel of images with manual and automatic navigation options, and the ability to close the display.
 
 ## Usage
 
@@ -25,8 +25,12 @@ The Imagecycle block uses the following CSS classes for customization:
 - `.imagecycle`: The main container for the block
 - `.imagecycle-container`: The container for the images
 - `.imagecycle-image`: The image element
+- `.imagecycle-arrow`: Navigation arrows
+- `.imagecycle-arrow-left`: Left navigation arrow
+- `.imagecycle-arrow-right`: Right navigation arrow
 - `.imagecycle-indicators`: The container for navigation indicators
 - `.imagecycle-indicator`: Individual navigation indicator
+- `.imagecycle-close`: Close button to hide the image cycle
 
 ## Behavior
 
@@ -34,12 +38,14 @@ The Imagecycle block uses the following CSS classes for customization:
 - Hovering over an image stops the rotation.
 - Moving the cursor off the image resumes rotation and immediately moves to the next image.
 - Click on indicators to manually navigate to a specific image.
-- Use left and right arrow keys for keyboard navigation.
+- Use left and right arrow buttons or keyboard arrow keys for manual navigation.
+- Click the close button in the top right corner to hide the image cycle.
 
 ## Accessibility
 
 - Keyboard navigation is supported using left and right arrow keys.
 - Visual indicators show the current active image.
+- Arrow buttons and close button have appropriate aria-labels for screen readers.
 
 ## Suggestions for Improvement
 

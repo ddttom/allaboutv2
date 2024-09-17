@@ -1,5 +1,5 @@
 .imagecycle {
-  background-color: lightblue;
+  background-color: black;
   padding: 20px;
   width: 100%;
   max-width: 400px;
@@ -22,6 +22,31 @@
   object-fit: cover;
 }
 
+.imagecycle-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  font-size: 24px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.imagecycle-arrow:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.imagecycle-arrow-left {
+  left: 10px;
+}
+
+.imagecycle-arrow-right {
+  right: 10px;
+}
+
 .imagecycle-indicators {
   display: flex;
   justify-content: center;
@@ -32,11 +57,33 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: #ccc;
+  background-color: #555;
   margin: 0 5px;
   cursor: pointer;
 }
 
 .imagecycle-indicator.active {
-  background-color: #333;
+  background-color: #fff;
+}
+
+.imagecycle-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  font-size: 24px;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  z-index: 10;
+  padding: 0;
+}
+
+.imagecycle-close:hover {
+  background-color: rgba(0, 0, 0, 0.8);
 }

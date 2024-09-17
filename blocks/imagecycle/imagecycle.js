@@ -26,6 +26,20 @@ export default async function decorate(block) {
   imgElement.className = 'imagecycle-image';
   imageContainer.appendChild(imgElement);
 
+  // Create left arrow
+  const leftArrow = document.createElement('button');
+  leftArrow.className = 'imagecycle-arrow imagecycle-arrow-left';
+  leftArrow.innerHTML = '&#10094;';
+  leftArrow.setAttribute('aria-label', 'Previous image');
+  imageContainer.appendChild(leftArrow);
+
+  // Create right arrow
+  const rightArrow = document.createElement('button');
+  rightArrow.className = 'imagecycle-arrow imagecycle-arrow-right';
+  rightArrow.innerHTML = '&#10095;';
+  rightArrow.setAttribute('aria-label', 'Next image');
+  imageContainer.appendChild(rightArrow);
+
   // Create indicators
   const indicatorContainer = document.createElement('div');
   indicatorContainer.className = 'imagecycle-indicators';
@@ -50,14 +64,14 @@ export default async function decorate(block) {
     });
   }
 
-  function rotateImage() {
-    currentIndex = (currentIndex + 1) % images.length;
+  function rotateImage(direction = 1) {
+    currentIndex = (currentIndex + direction + images.length) % images.length;
     showImage(currentIndex);
   }
 
   function startRotation() {
     if (!intervalId) {
-      intervalId = setInterval(rotateImage, 5000);
+      intervalId = setInterval(() => rotateImage(1), 5000);
     }
   }
 
@@ -72,22 +86,44 @@ export default async function decorate(block) {
   currentIndex = Math.floor(Math.random() * images.length);
   showImage(currentIndex);
 
+  // Create close button
+  const closeButton = document.createElement('button');
+  closeButton.className = 'imagecycle-close';
+  closeButton.innerHTML = '&times;';
+  closeButton.setAttribute('aria-label', 'Close image cycle');
+  imageContainer.appendChild(closeButton);
+
+  function hideImageCycle() {
+    block.style.display = 'none';
+    stopRotation();
+  }
+
   // Event listeners
   imageContainer.addEventListener('mouseenter', stopRotation);
   imageContainer.addEventListener('mouseleave', () => {
-    rotateImage();
+    rotateImage(1);
     startRotation();
   });
+
+  leftArrow.addEventListener('click', () => {
+    rotateImage(-1);
+    stopRotation();
+  });
+
+  rightArrow.addEventListener('click', () => {
+    rotateImage(1);
+    stopRotation();
+  });
+
+  closeButton.addEventListener('click', hideImageCycle);
 
   // Keyboard navigation
   document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') {
-      currentIndex = (currentIndex - 1 + images.length) % images.length;
-      showImage(currentIndex);
+      rotateImage(-1);
       stopRotation();
     } else if (e.key === 'ArrowRight') {
-      currentIndex = (currentIndex + 1) % images.length;
-      showImage(currentIndex);
+      rotateImage(1);
       stopRotation();
     }
   });
