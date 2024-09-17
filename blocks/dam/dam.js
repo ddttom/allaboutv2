@@ -21,13 +21,13 @@ export default async function decorate(block) {
         continue;
       }
 
-      if (row.children.length < 4) {
+      if (row.children.length < 5) {
         // eslint-disable-next-line no-console
         console.warn(`Row ${i} does not have enough cells. Skipping.`);
         continue;
       }
 
-      const [description, classification, tag, imageElement] = row.children;
+      const [description, classification, tag, imageElement, additionalInfo] = row.children;
 
       // eslint-disable-next-line no-console
       console.log('Image element:', imageElement);
@@ -52,6 +52,7 @@ export default async function decorate(block) {
         classification: classification.textContent.trim(),
         tag: tag.textContent.trim(),
         path: imagePath,
+        additionalInfo: additionalInfo.textContent.trim(),
       };
 
       // eslint-disable-next-line no-console
@@ -84,16 +85,26 @@ export default async function decorate(block) {
     gallery.classList.add('dam-gallery');
 
     damData.forEach((item) => {
-      if (item.path) {
-        const img = document.createElement('img');
-        img.src = item.path;
-        img.alt = item.description;
-        img.title = `${item.classification} - ${item.tag}`;
-        gallery.appendChild(img);
-      } else {
-        // eslint-disable-next-line no-console
-        console.warn(`No image path for item: ${JSON.stringify(item)}`);
-      }
+      const card = document.createElement('div');
+      card.classList.add('dam-card');
+
+      const img = document.createElement('img');
+      img.src = item.path || 'https://via.placeholder.com/300x200?text=No+Image';
+      img.alt = item.description;
+      img.title = `${item.classification} - ${item.tag}`;
+
+      const info = document.createElement('div');
+      info.classList.add('dam-info');
+      info.innerHTML = `
+        <h3>${item.description}</h3>
+        <p><strong>Classification:</strong> ${item.classification}</p>
+        <p><strong>Tag:</strong> ${item.tag}</p>
+        <p><strong>Additional Info:</strong> ${item.additionalInfo}</p>
+      `;
+
+      card.appendChild(img);
+      card.appendChild(info);
+      gallery.appendChild(card);
     });
 
     // Clear existing content and append new elements
