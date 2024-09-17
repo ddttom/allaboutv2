@@ -2,44 +2,41 @@ export default async function decorate(block) {
   const images = [];
   let currentIndex = 0;
   let intervalId = null;
-  const rotationInterval = 5000;
 
   // Extract images from the block
-  [...block.children].forEach((row) => {
-    const img = row.querySelector('img, a');
-    if (img) {
-      images.push(img.tagName === 'A' ? img.href : img.src);
+  block.querySelectorAll('img, a').forEach((element) => {
+    if (element.tagName === 'IMG') {
+      images.push(element.src);
+    } else if (element.tagName === 'A') {
+      const img = element.querySelector('img');
+      if (img) images.push(img.src);
     }
   });
 
-  // Clear the original content
+  // Clear the block content
   block.innerHTML = '';
-
-  // Create wrapper for content
-  const wrapper = document.createElement('div');
-  wrapper.className = 'imagecycle-wrapper';
-  block.appendChild(wrapper);
 
   // Create container for images
   const imageContainer = document.createElement('div');
   imageContainer.className = 'imagecycle-container';
-  wrapper.appendChild(imageContainer);
+  block.appendChild(imageContainer);
 
   // Create image element
   const imgElement = document.createElement('img');
   imgElement.className = 'imagecycle-image';
   imageContainer.appendChild(imgElement);
 
-  // Create placement indicators
+  // Create indicators
   const indicatorContainer = document.createElement('div');
   indicatorContainer.className = 'imagecycle-indicators';
+  block.appendChild(indicatorContainer);
+
   images.forEach((_, index) => {
     const indicator = document.createElement('span');
     indicator.className = 'imagecycle-indicator';
     indicator.addEventListener('click', () => showImage(index));
     indicatorContainer.appendChild(indicator);
   });
-  block.appendChild(indicatorContainer);
 
   function showImage(index) {
     imgElement.src = images[index];
@@ -48,7 +45,7 @@ export default async function decorate(block) {
   }
 
   function updateIndicators() {
-    [...indicatorContainer.children].forEach((indicator, index) => {
+    indicatorContainer.querySelectorAll('.imagecycle-indicator').forEach((indicator, index) => {
       indicator.classList.toggle('active', index === currentIndex);
     });
   }
@@ -60,7 +57,7 @@ export default async function decorate(block) {
 
   function startRotation() {
     if (!intervalId) {
-      intervalId = setInterval(rotateImage, rotationInterval);
+      intervalId = setInterval(rotateImage, 5000);
     }
   }
 
@@ -74,9 +71,6 @@ export default async function decorate(block) {
   // Randomize initial image
   currentIndex = Math.floor(Math.random() * images.length);
   showImage(currentIndex);
-
-  // Start rotation
-  startRotation();
 
   // Event listeners
   imageContainer.addEventListener('mouseenter', stopRotation);
@@ -97,4 +91,7 @@ export default async function decorate(block) {
       stopRotation();
     }
   });
+
+  // Start rotation
+  startRotation();
 }

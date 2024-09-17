@@ -1,51 +1,50 @@
 # Imagecycle
 
-The Imagecycle block is a component that displays a rotating carousel of images with automatic and manual navigation options.
+The Imagecycle block is a component that displays a rotating carousel of images with manual and automatic navigation options.
 
 ## Usage
 
 To use the Imagecycle block, create a table in your Franklin document with the following structure:
 
-| imagecycle |
-|------------|
-| [Image 1 URL] |
-| [Image 2 URL] |
-| [Image 3 URL] |
-| ... |
+| Imagecycle |
+| --- |
+| ![Image 1](https://example.com/image1.jpg) |
+| ![Image 2](https://example.com/image2.jpg) |
+| ![Image 3](https://example.com/image3.jpg) |
 
 ## Authoring
 
-1. In your Google Docs or Microsoft Word document, create a table with "imagecycle" in the first cell.
-2. In subsequent rows, add fully qualified URLs to the images you want to display.
-3. You can also use `<a>` tags with `href` attributes containing image URLs.
+1. In your Google Docs or Microsoft Word document, create a table with one column.
+2. The first cell should contain the text "Imagecycle".
+3. Each subsequent cell should contain an image or a link to an image.
 
 ## Styling
 
-The block uses custom CSS classes for styling. You can customize the appearance by modifying the following classes in the `imagecycle.css` file:
+The Imagecycle block uses the following CSS classes for customization:
 
-- `.imagecycle`: Main container styles
-- `.imagecycle-container`: Image container styles
-- `.imagecycle-image`: Image styles
-- `.imagecycle-indicators`: Indicator container styles
-- `.imagecycle-indicator`: Individual indicator styles
+- `.imagecycle`: The main container for the block
+- `.imagecycle-container`: The container for the images
+- `.imagecycle-image`: The image element
+- `.imagecycle-indicators`: The container for navigation indicators
+- `.imagecycle-indicator`: Individual navigation indicator
 
 ## Behavior
 
 - Images rotate automatically every 5 seconds.
-- Hovering over an image pauses the rotation.
-- Moving the cursor off the image resumes rotation and immediately shows the next image.
-- Click on indicators to manually select an image.
-- Use left and right arrow keys for manual navigation.
+- Hovering over an image stops the rotation.
+- Moving the cursor off the image resumes rotation and immediately moves to the next image.
+- Click on indicators to manually navigate to a specific image.
+- Use left and right arrow keys for keyboard navigation.
 
 ## Accessibility
 
 - Keyboard navigation is supported using left and right arrow keys.
-- The component uses semantic HTML elements for better screen reader compatibility.
+- Visual indicators show the current active image.
 
 ## Suggestions for Improvement
 
-1. Add alt text support for images to improve accessibility.
+1. Add alt text to images for better accessibility.
 2. Implement touch swipe gestures for mobile devices.
 3. Add options for customizing rotation speed and transition effects.
 4. Implement lazy loading for better performance with many images.
-5. Add support for captions or titles for each image.
+5. Add support for captions or descriptions for each image.
