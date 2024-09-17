@@ -107,7 +107,7 @@ export default async function decorate(block) {
       displayCode = highlightJS(displayCode);
       codeWrapper.classList.add('language-js');
       fileType = 'JavaScript';
-    } else if (firstChar === '{') {
+    } else if (firstChar === '{' || firstChar === '[') {
       displayCode = highlightJSON(displayCode);
       codeWrapper.classList.add('language-json');
       fileType = 'JSON';
