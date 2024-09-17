@@ -147,21 +147,28 @@ export default async function decorate(block) {
     });
 
     // Copy JSON functionality
-    copyJsonBtn.addEventListener('click', () => {
+    copyJsonBtn.addEventListener('click', async () => {
       const checkboxes = gallery.querySelectorAll('.dam-gallery-checkbox');
       const selectedData = data.filter((_, index) => checkboxes[index].checked);
-      const jsonString = JSON.stringify(selectedData, null, 2);
+      const jsonString = JSON.stringify(selectedData.length > 0 ? selectedData : data, null, 2);
       
-      navigator.clipboard.writeText(jsonString).then(() => {
+      try {
+        await navigator.clipboard.writeText(jsonString);
         const originalText = copyJsonBtn.textContent;
         copyJsonBtn.textContent = 'Copied!';
+        copyJsonBtn.disabled = true;
         setTimeout(() => {
           copyJsonBtn.textContent = originalText;
+          copyJsonBtn.disabled = false;
         }, 2000);
-      }).catch(err => {
+      } catch (err) {
         // eslint-disable-next-line no-console
         console.error('Failed to copy JSON: ', err);
-      });
+        copyJsonBtn.textContent = 'Copy failed';
+        setTimeout(() => {
+          copyJsonBtn.textContent = 'Copy JSON';
+        }, 2000);
+      }
     });
 
     // Clear the block and add new elements
