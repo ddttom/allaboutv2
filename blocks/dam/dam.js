@@ -157,13 +157,22 @@ export default async function decorate(block) {
     });
 
     // Copy JSON functionality
-    copyJsonBtn.addEventListener('click', async () => {
+    copyJsonBtn.addEventListener('click', () => {
       const checkboxes = gallery.querySelectorAll('.dam-gallery-checkbox');
       const selectedData = data.filter((_, index) => checkboxes[index].checked);
       const jsonString = JSON.stringify(selectedData.length > 0 ? selectedData : data, null, 2);
       
+      // Create a temporary textarea element to hold the text
+      const tempTextArea = document.createElement('textarea');
+      tempTextArea.value = jsonString;
+      document.body.appendChild(tempTextArea);
+
       try {
-        await navigator.clipboard.writeText(jsonString);
+        // Select the text and copy it
+        tempTextArea.select();
+        document.execCommand('copy');
+        
+        // Provide feedback
         const originalText = copyJsonBtn.textContent;
         copyJsonBtn.textContent = 'Copied!';
         copyJsonBtn.disabled = true;
@@ -178,6 +187,9 @@ export default async function decorate(block) {
         setTimeout(() => {
           copyJsonBtn.textContent = 'Copy JSON';
         }, 2000);
+      } finally {
+        // Remove the temporary textarea
+        document.body.removeChild(tempTextArea);
       }
     });
 
