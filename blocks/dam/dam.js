@@ -68,13 +68,35 @@ export default async function decorate(block) {
       }
     });
 
+    // Colorize JSON function
+    const colorizeJSON = (json) => {
+      const colorMap = {
+        string: '#008000',
+        number: '#0000FF',
+        boolean: '#b22222',
+        null: '#808080',
+        key: '#0000FF'
+      };
+
+      return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, (match) => {
+        let type = 'number';
+        if (/^"/.test(match)) {
+          type = /:$/.test(match) ? 'key' : 'string';
+        } else if (/true|false/.test(match)) {
+          type = 'boolean';
+        } else if (/null/.test(match)) {
+          type = 'null';
+        }
+        return `<span style="color:${colorMap[type]}">${match}</span>`;
+      });
+    };
+
     // Create JSON output
     const createJsonOutput = (selectedData) => {
-      const jsonOutput = JSON.stringify(selectedData, null, 2);
+      const jsonString = JSON.stringify(selectedData, null, 2);
+      const colorizedJSON = colorizeJSON(jsonString);
       const pre = document.createElement('pre');
-      const code = document.createElement('code');
-      code.textContent = jsonOutput;
-      pre.appendChild(code);
+      pre.innerHTML = colorizedJSON;
       return pre;
     };
 
