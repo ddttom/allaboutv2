@@ -6,11 +6,12 @@ export default async function decorate(block) {
     const row = block.children[i];
     const cells = row.children;
 
-    if (cells.length >= 4) {
-      const description = cells[0].textContent.trim();
-      const classification = cells[1].textContent.trim();
-      const tag = cells[2].textContent.trim();
-      const imageElement = cells[3].querySelector('img');
+    if (cells.length >= 5) {
+      const note = cells[0].textContent.trim();
+      const description = cells[1].textContent.trim();
+      const classification = cells[2].textContent.trim();
+      const tag = cells[3].textContent.trim();
+      const imageElement = cells[4].querySelector('img');
       const additionalInfo = cells[5] ? cells[5].textContent.trim() : '';
 
       let path = '';
@@ -21,7 +22,7 @@ export default async function decorate(block) {
       }
 
       data.push({
-        note: description,
+        note,
         description,
         classification,
         tag,
