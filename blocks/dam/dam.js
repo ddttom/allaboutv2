@@ -4,48 +4,39 @@ export default async function decorate(block) {
 
   const data = [];
 
-  // Iterate through rows, skipping the header
-  for (let i = 1; i < block.children.length; i += 1) {
-    const row = block.children[i];
+  // Process the single row
+  const row = block.children[0];
+  if (row && row.children.length >= 6) {
     const cells = row.children;
 
-    // eslint-disable-next-line no-console
-    console.log(`Processing row ${i}:`, row);
+    const note = cells[0].textContent.trim();
+    const description = cells[1].textContent.trim();
+    const classification = cells[2].textContent.trim();
+    const tag = cells[3].textContent.trim();
+    const imageElement = cells[4].querySelector('img');
+    const additionalInfo = cells[5].textContent.trim();
 
-    if (cells.length >= 6) {
-      const note = cells[0].textContent.trim();
-      const description = cells[1].textContent.trim();
-      const classification = cells[2].textContent.trim();
-      const tag = cells[3].textContent.trim();
-      const imageElement = cells[4].querySelector('img');
-      const additionalInfo = cells[5].textContent.trim();
-
-      let path = '';
-      if (imageElement) {
-        // Check if the image source is a data URL
-        if (imageElement.src.startsWith('data:')) {
-          path = 'Data URL image';
-        } else {
-          // Extract path without domain
-          path = new URL(imageElement.src).pathname;
-        }
-      }
-
-      data.push({
-        note,
-        description,
-        classification,
-        tag,
-        path,
-        additionalInfo,
-      });
-
-      // eslint-disable-next-line no-console
-      console.log('Processed data:', data[data.length - 1]);
-    } else {
-      // eslint-disable-next-line no-console
-      console.log(`Skipping row ${i} due to insufficient cells`);
+    let path = '';
+    if (imageElement) {
+      // Extract path without domain and query parameters
+      const url = new URL(imageElement.src, window.location.origin);
+      path = url.pathname.split('?')[0];
     }
+
+    data.push({
+      note,
+      description,
+      classification,
+      tag,
+      path,
+      additionalInfo,
+    });
+
+    // eslint-disable-next-line no-console
+    console.log('Processed data:', data[0]);
+  } else {
+    // eslint-disable-next-line no-console
+    console.log('Row has insufficient cells or is missing');
   }
 
   // Create JSON output
