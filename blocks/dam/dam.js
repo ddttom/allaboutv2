@@ -6,19 +6,23 @@ export default async function decorate(block) {
     const row = block.children[i];
     const cells = row.children;
 
-    if (cells.length >= 5) {
+    if (cells.length >= 6) {
       const note = cells[0].textContent.trim();
       const description = cells[1].textContent.trim();
       const classification = cells[2].textContent.trim();
       const tag = cells[3].textContent.trim();
       const imageElement = cells[4].querySelector('img');
-      const additionalInfo = cells[5] ? cells[5].textContent.trim() : '';
+      const additionalInfo = cells[5].textContent.trim();
 
       let path = '';
       if (imageElement) {
-        const fullPath = imageElement.src;
-        // Extract path without domain
-        path = new URL(fullPath).pathname;
+        // Check if the image source is a data URL
+        if (imageElement.src.startsWith('data:')) {
+          path = 'Data URL image';
+        } else {
+          // Extract path without domain
+          path = new URL(imageElement.src).pathname;
+        }
       }
 
       data.push({
