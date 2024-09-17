@@ -136,9 +136,17 @@ export default async function decorate(block) {
     const updateSelection = () => {
       const checkboxes = gallery.querySelectorAll('.dam-gallery-checkbox');
       const selectedData = data.filter((_, index) => checkboxes[index].checked);
+      
+      // Log the selected data and all data
+      console.log('Selected data:', selectedData);
+      console.log('All data:', data);
+
       outputContainer.innerHTML = '';
-      // If no items are selected, show all data
-      outputContainer.appendChild(createJsonOutput(selectedData.length > 0 ? selectedData : data));
+      // Always show data, whether items are selected or not
+      const dataToShow = selectedData.length > 0 ? selectedData : data;
+      console.log('Data to show:', dataToShow);
+      
+      outputContainer.appendChild(createJsonOutput(dataToShow));
     };
 
     selectAllBtn.addEventListener('click', () => {
@@ -149,6 +157,7 @@ export default async function decorate(block) {
     clearSelectionBtn.addEventListener('click', () => {
       gallery.querySelectorAll('.dam-gallery-checkbox').forEach(cb => { cb.checked = false; });
       updateSelection();
+      console.log('Selection cleared, updating view');
     });
 
     gallery.addEventListener('change', (e) => {
@@ -161,9 +170,12 @@ export default async function decorate(block) {
     copyJsonBtn.addEventListener('click', () => {
       const checkboxes = gallery.querySelectorAll('.dam-gallery-checkbox');
       const selectedData = data.filter((_, index) => checkboxes[index].checked);
-      // If no items are selected, use all data
-      const jsonString = JSON.stringify(selectedData.length > 0 ? selectedData : data, null, 2);
+      // Always use data, whether items are selected or not
+      const dataToUse = selectedData.length > 0 ? selectedData : data;
+      const jsonString = JSON.stringify(dataToUse, null, 2);
       
+      console.log('Data being copied:', dataToUse);
+
       // Create a temporary textarea element to hold the text
       const tempTextArea = document.createElement('textarea');
       tempTextArea.value = jsonString;
