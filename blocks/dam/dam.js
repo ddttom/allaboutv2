@@ -2,13 +2,15 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export default async function decorate(block) {
   const rows = [...block.children];
-  const title = block.classList[0] || 'DAM Assets';
+  const title = rows[0].textContent.trim();
   const damData = [];
 
-  rows.forEach((row) => {
-    const [description, , classification, tag, imageDiv] = [...row.children];
-    const imagePath = imageDiv.querySelector('img') ? 
-      new URL(imageDiv.querySelector('img').src).pathname : '';
+  // Start from index 1 to skip the title row
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i];
+    const [description, classification, tag, imageDiv] = [...row.children];
+    const img = imageDiv.querySelector('img');
+    const imagePath = img ? new URL(img.src).pathname : '';
 
     damData.push({
       description: description.textContent.trim(),
@@ -16,7 +18,7 @@ export default async function decorate(block) {
       tag: tag.textContent.trim(),
       path: imagePath,
     });
-  });
+  }
 
   const jsonOutput = JSON.stringify(damData, null, 2);
   
