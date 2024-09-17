@@ -29,16 +29,23 @@ export default async function decorate(block) {
 
       const [description, classification, tag, imageElement] = row.children;
 
+      // eslint-disable-next-line no-console
+      console.log('Image element:', imageElement);
+      // eslint-disable-next-line no-console
+      console.log('Image element innerHTML:', imageElement.innerHTML);
+
       let imagePath = '';
       if (imageElement.querySelector('picture')) {
         const img = imageElement.querySelector('img');
-        imagePath = img ? new URL(img.src).pathname : '';
+        imagePath = img ? img.src : '';
       } else if (imageElement.querySelector('a')) {
         imagePath = imageElement.querySelector('a').href;
-      } else {
-        // eslint-disable-next-line no-console
-        console.log('Image element content:', imageElement.innerHTML);
+      } else if (imageElement.querySelector('img')) {
+        imagePath = imageElement.querySelector('img').src;
       }
+
+      // eslint-disable-next-line no-console
+      console.log('Extracted image path:', imagePath);
 
       const rowData = {
         description: description.textContent.trim(),
@@ -77,11 +84,16 @@ export default async function decorate(block) {
     gallery.classList.add('dam-gallery');
 
     damData.forEach((item) => {
-      const img = document.createElement('img');
-      img.src = item.path;
-      img.alt = item.description;
-      img.title = `${item.classification} - ${item.tag}`;
-      gallery.appendChild(img);
+      if (item.path) {
+        const img = document.createElement('img');
+        img.src = item.path;
+        img.alt = item.description;
+        img.title = `${item.classification} - ${item.tag}`;
+        gallery.appendChild(img);
+      } else {
+        // eslint-disable-next-line no-console
+        console.warn(`No image path for item: ${JSON.stringify(item)}`);
+      }
     });
 
     // Clear existing content and append new elements
