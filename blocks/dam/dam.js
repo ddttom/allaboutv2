@@ -32,11 +32,11 @@ export default async function decorate(block) {
       let imagePath = '';
       if (imageElement.querySelector('picture')) {
         const img = imageElement.querySelector('img');
-        imagePath = img ? new URL(img.src).pathname : '';
+        imagePath = img ? img.src : '';
       } else if (imageElement.querySelector('a')) {
-        imagePath = new URL(imageElement.querySelector('a').href).pathname;
+        imagePath = imageElement.querySelector('a').href;
       } else if (imageElement.querySelector('img')) {
-        imagePath = new URL(imageElement.querySelector('img').src).pathname;
+        imagePath = imageElement.querySelector('img').src;
       }
 
       const rowData = {
