@@ -1,73 +1,54 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+export default function decorate(block) {
+  console.log('LinkedIn Profile block decoration started');
 
-export default async function decorate(block) {
-  const profileData = '/samples/linkedin-profile.json';
-  
-  try {
-    const response = await fetch(profileData);
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    const data = await response.json();
+  // Add necessary classes and structure
+  block.classList.add('linkedin-profile');
 
-    // Create background image
-    const backgroundDiv = document.createElement('div');
-    backgroundDiv.className = 'background-image';
-    backgroundDiv.style.backgroundImage = `url('${data.profileSummary.backgroundImage}')`;
-    block.insertBefore(backgroundDiv, block.firstChild);
+  // Create background image div
+  const backgroundDiv = document.createElement('div');
+  backgroundDiv.className = 'background-image';
+  block.insertBefore(backgroundDiv, block.firstChild);
 
-    // Update profile picture
-    const profilePictureDiv = block.querySelector('.profile-picture-container');
-    if (profilePictureDiv) {
-      const profilePicture = profilePictureDiv.querySelector('img') || document.createElement('img');
-      profilePicture.src = data.profileSummary.profilePicture;
-      profilePicture.alt = `${data.profileSummary.name}'s profile picture`;
-      profilePicture.className = 'profile-picture';
-      if (!profilePictureDiv.contains(profilePicture)) {
-        profilePictureDiv.appendChild(profilePicture);
-      }
-      console.log('Profile picture src:', profilePicture.src); // Debug log
-    } else {
-      console.error('Profile picture container not found');
-    }
-
-    // Update name
-    const nameDiv = block.children[2].firstElementChild;
-    if (nameDiv) {
-      nameDiv.textContent = data.profileSummary.name;
-    }
-
-    // Update title
-    const titleDiv = block.children[3].firstElementChild;
-    if (titleDiv) {
-      titleDiv.textContent = data.profileSummary.title;
-    }
-
-    // Update location
-    const locationDiv = block.children[4].firstElementChild;
-    if (locationDiv) {
-      locationDiv.textContent = data.profileSummary.location;
-    }
-
-    // Update connections
-    const connectionsDiv = block.children[5].firstElementChild;
-    if (connectionsDiv) {
-      connectionsDiv.textContent = data.profileSummary.connections;
-    }
-
-    // Add classes for styling
-    block.classList.add('profile-summary');
-    Array.from(block.children).forEach((child, index) => {
-      if (index > 0) {
-        child.classList.add('profile-info-item');
-      }
-    });
-
-    console.log('Profile data:', data); // Debug log
-
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Error:', error);
-    block.innerHTML += '<p>Error loading profile data</p>';
+  // Wrap profile picture in a container
+  const profilePictureLink = block.children[1].querySelector('a');
+  if (profilePictureLink) {
+    const profilePictureContainer = document.createElement('div');
+    profilePictureContainer.className = 'profile-picture-container';
+    const profilePicture = document.createElement('img');
+    profilePicture.src = profilePictureLink.href;
+    profilePicture.alt = 'Profile Picture';
+    profilePicture.className = 'profile-picture';
+    profilePictureContainer.appendChild(profilePicture);
+    block.replaceChild(profilePictureContainer, block.children[1]);
   }
 
-  block.classList.add('linkedin-profile--initialized');
+  // Add classes to other elements
+  const elements = [
+    { index: 2, class: 'profile-name' },
+    { index: 3, class: 'profile-title' },
+    { index: 4, class: 'profile-location' },
+    { index: 5, class: 'profile-connections' },
+    { index: 6, class: 'contact-info' }
+  ];
+
+  elements.forEach(el => {
+    if (block.children[el.index]) {
+      block.children[el.index].classList.add(el.class);
+      const content = block.children[el.index].firstElementChild;
+      if (content) {
+        content.classList.add(`${el.class}-content`);
+      }
+    }
+  });
+
+  // Convert contact info to a button
+  const contactInfo = block.querySelector('.contact-info-content');
+  if (contactInfo) {
+    const button = document.createElement('button');
+    button.textContent = contactInfo.textContent;
+    button.className = 'contact-button';
+    contactInfo.parentNode.replaceChild(button, contactInfo);
+  }
+
+  console.log('LinkedIn Profile block decoration completed');
 }

@@ -1,4 +1,4 @@
-.import-profile-summary {
+.linkedin-profile {
   font-family: Arial, sans-serif;
   max-width: 800px;
   margin: 0 auto;
@@ -12,12 +12,9 @@
 
 .background-image {
   height: 200px;
+  background-color: #0073b1; /* Placeholder color */
   background-size: cover;
   background-position: center;
-}
-
-.profile-info-item {
-  margin: 10px 20px;
 }
 
 .profile-picture-container {
@@ -38,35 +35,38 @@
   object-fit: cover;
 }
 
-.profile-info-item:nth-child(3) { /* Name */
-  margin-top: 100px; /* Increased to create space below the profile picture */
+.profile-name,
+.profile-title,
+.profile-location,
+.profile-connections,
+.contact-info {
+  margin: 10px 20px;
+}
+
+.profile-name {
+  margin-top: 100px;
   font-size: 24px;
   font-weight: bold;
   color: #000;
 }
 
-.profile-info-item:nth-child(4) { /* Title */
+.profile-title {
   font-size: 18px;
   color: #666;
-  margin-top: 5px;
 }
 
-.profile-info-item:nth-child(5), /* Location */
-.profile-info-item:nth-child(6) { /* Connections */
+.profile-location,
+.profile-connections {
   font-size: 14px;
   color: #666;
-  margin-top: 5px;
 }
 
-.profile-info-item:last-child { /* Contact info */
-  margin-top: 20px;
-}
-
-.profile-info-item:last-child div {
+.contact-button {
   display: inline-block;
   padding: 8px 16px;
   background-color: #0073b1;
   color: #fff;
+  border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
@@ -74,20 +74,22 @@
 
 @media (max-width: 600px) {
   .profile-picture-container {
-    position: relative;
-    top: -75px;
+    top: 175px;
     left: 50%;
     transform: translateX(-50%);
     width: 120px;
     height: 120px;
   }
 
-  .profile-info-item:nth-child(3) { /* Name */
-    margin-top: 0;
+  .profile-name,
+  .profile-title,
+  .profile-location,
+  .profile-connections,
+  .contact-info {
     text-align: center;
   }
 
-  .profile-info-item {
-    text-align: center;
+  .profile-name {
+    margin-top: 70px;
   }
 }
