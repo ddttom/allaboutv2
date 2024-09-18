@@ -1,4 +1,5 @@
 export default function decorate(block) {
+  // eslint-disable-next-line no-console
   console.log('LinkedIn Profile block decoration started');
 
   // Add necessary classes
@@ -23,50 +24,50 @@ export default function decorate(block) {
       imgElement.className = 'profile-picture';
       imgElement.alt = 'Profile Picture';
     }
+  } else {
+    const imgLink = block.querySelector('a[href*="/media_"]');
+    if (imgLink) {
+      const img = document.createElement('img');
+      img.src = imgLink.href;
+      img.alt = 'Profile Picture';
+      img.className = 'profile-picture';
+      profilePictureContainer.appendChild(img);
+      imgLink.parentElement.remove();
+    }
   }
-  block.insertBefore(profilePictureContainer, backgroundDiv);
+  block.insertBefore(profilePictureContainer, backgroundDiv.nextSibling);
 
-  // Add classes to other elements and correct content
+  // Add classes to other elements and preserve content
   const elements = [
-    { index: 2, class: 'profile-name' },
-    { index: 3, class: 'profile-title' },
-    { index: 4, class: 'profile-location' },
-    { index: 5, class: 'profile-connections' }
+    { class: 'profile-name' },
+    { class: 'profile-title' },
+    { class: 'profile-location' },
+    { class: 'profile-connections' }
   ];
 
-  elements.forEach(el => {
-    const element = block.children[el.index];
+  elements.forEach((el, index) => {
+    const element = block.children[index + 2];
     if (element) {
       element.classList.add(el.class);
-      let content = element.querySelector('p') || element.querySelector('div');
-      if (!content) {
-        content = document.createElement('p');
-        element.appendChild(content);
+      const content = element.querySelector('div');
+      if (content) {
+        content.classList.add(`${el.class}-content`);
       }
-      content.classList.add(`${el.class}-content`);
-      // Keep the original content instead of overwriting it
-      if (!content.textContent.trim()) {
-        content.textContent = `[${el.class.replace('profile-', '').toUpperCase()}]`;
-      }
-    }
-  });
-
-  // Remove any extra elements that might contain duplicate information
-  const extraElements = block.querySelectorAll('div:not(.profile-name):not(.profile-title):not(.profile-location):not(.profile-connections):not(.background-image):not(.profile-picture-container)');
-  extraElements.forEach(el => {
-    if (!el.classList.contains('contact-button')) {
-      el.remove();
     }
   });
 
   // Create contact info button if it doesn't exist
   let contactButton = block.querySelector('.contact-button');
   if (!contactButton) {
-    contactButton = document.createElement('button');
-    contactButton.textContent = 'Contact info';
-    contactButton.className = 'contact-button';
-    block.appendChild(contactButton);
+    const contactDiv = block.querySelector('div:last-child');
+    if (contactDiv && contactDiv.textContent.trim().toLowerCase() === 'contact info') {
+      contactButton = document.createElement('button');
+      contactButton.textContent = contactDiv.textContent;
+      contactButton.className = 'contact-button';
+      contactDiv.parentElement.replaceChild(contactButton, contactDiv);
+    }
   }
 
+  // eslint-disable-next-line no-console
   console.log('LinkedIn Profile block decoration completed');
 }
