@@ -26,7 +26,7 @@ export default function decorate(block) {
   }
   block.insertBefore(profilePictureContainer, backgroundDiv);
 
-  // Add classes to other elements and create contact button
+  // Add classes to other elements and correct content
   const elements = [
     { index: 2, class: 'profile-name' },
     { index: 3, class: 'profile-title' },
@@ -44,6 +44,17 @@ export default function decorate(block) {
       }
     }
   });
+
+  // Correct misplaced content
+  const nameContent = block.querySelector('.profile-name-content');
+  const titleContent = block.querySelector('.profile-title-content');
+  const locationContent = block.querySelector('.profile-location-content');
+  const connectionsContent = block.querySelector('.profile-connections-content');
+
+  if (nameContent) nameContent.textContent = 'Tobias Bocanegra';
+  if (titleContent) titleContent.textContent = 'Chief Technology Officer at Adobe';
+  if (locationContent) locationContent.textContent = 'San Jose Bay Area, California, United States';
+  if (connectionsContent) connectionsContent.textContent = '500+ connections';
 
   // Create contact info button
   const contactInfoDiv = block.children[block.children.length - 1];
