@@ -23,6 +23,8 @@
 .profile-info {
   position: relative;
   padding: 20px;
+  padding-left: 200px; /* Make room for the profile picture */
+  min-height: 150px; /* Ensure enough space for the content */
 }
 
 .profile-picture-container {
@@ -119,12 +121,15 @@
 }
 
 @media (max-width: 768px) {
+  .profile-info {
+    padding-left: 20px;
+    padding-top: 100px; /* Make room for the profile picture */
+  }
+
   .profile-picture-container {
-    position: relative;
     top: -50px;
     left: 50%;
     transform: translateX(-50%);
-    text-align: center;
   }
 
   .profile-picture {
@@ -133,9 +138,7 @@
   }
 
   .profile-details {
-    margin-left: 0;
     text-align: center;
-    padding-top: 0;
   }
 
   .job,
