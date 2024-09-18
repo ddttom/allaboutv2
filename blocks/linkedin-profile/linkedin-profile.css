@@ -5,7 +5,7 @@
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  overflow: visible; /* Changed from hidden to visible */
   position: relative;
   padding-bottom: 20px;
 }
@@ -27,6 +27,7 @@
   overflow: hidden;
   border: 4px solid #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transform: translateY(50%); /* Move half of the container down */
 }
 
 .profile-picture-container picture {
@@ -51,6 +52,7 @@
 
 .profile-name {
   margin-top: 80px;
+  padding-left: 120px; /* Add space for the profile picture */
 }
 
 .profile-name-content {
@@ -88,7 +90,7 @@
 @media (max-width: 600px) {
   .profile-picture-container {
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, 50%); /* Center horizontally and move half down */
   }
 
   .profile-name,
@@ -97,9 +99,10 @@
   .profile-connections,
   .contact-button {
     text-align: center;
+    padding-left: 0; /* Remove left padding on mobile */
   }
 
   .profile-name {
-    margin-top: 70px;
+    margin-top: 100px; /* Increase top margin to make room for centered profile picture */
   }
 }
