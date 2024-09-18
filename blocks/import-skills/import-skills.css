@@ -1,0 +1,22 @@
+.import-skills .skills-section h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.import-skills .skills-list {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.import-skills .skills-list li {
+  background-color: var(--linkedin-light-blue);
+  color: var(--linkedin-blue);
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}

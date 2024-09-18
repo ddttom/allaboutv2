@@ -1,0 +1,48 @@
+.import-profile-summary .profile-summary {
+  position: relative;
+  padding-top: 200px;
+}
+
+.import-profile-summary .background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background-image: url('https://allabout.network/media_14e918fa88c2a9a810fd454fa04f0bd152c01fed2.jpeg');
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px 8px 0 0;
+}
+
+.import-profile-summary .profile-picture {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 4px solid white;
+  position: absolute;
+  top: 120px;
+  left: 24px;
+}
+
+.import-profile-summary .profile-info {
+  padding-top: 16px;
+}
+
+.import-profile-summary h1 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.import-profile-summary h2 {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--linkedin-gray);
+  margin-bottom: 8px;
+}
+
+.import-profile-summary p {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
