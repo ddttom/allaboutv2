@@ -45,14 +45,13 @@
 .profile-name,
 .profile-title,
 .profile-location,
-.profile-connections,
-.contact-button {
-  margin: 10px 24px;
+.profile-connections {
+  margin: 8px 24px;
+  padding-left: 140px;
 }
 
 .profile-name {
   margin-top: 70px; /* Reduced top margin */
-  padding-left: 140px; /* Increased space for the profile picture */
 }
 
 .profile-name-content {
@@ -65,26 +64,42 @@
 .profile-title-content {
   font-size: 18px;
   color: #666;
-  margin: 4px 0 0 0;
+  margin: 0;
 }
 
-.profile-location-content,
-.profile-connections-content {
+.profile-location-content {
   font-size: 14px;
   color: #666;
-  margin: 4px 0 0 0;
+  margin: 0;
+}
+
+.profile-connections {
+  margin-top: 16px;
+}
+
+.profile-connections-content {
+  font-size: 14px;
+  color: #0073b1;
+  margin: 0;
+  font-weight: 600;
 }
 
 .contact-button {
   display: inline-block;
   padding: 6px 16px;
-  background-color: #0073b1;
-  color: #fff;
-  border: none;
+  background-color: transparent;
+  color: #0073b1;
+  border: 1px solid #0073b1;
   border-radius: 16px;
   cursor: pointer;
-  font-size: 14px;
-  margin-top: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 16px 0 0 164px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.contact-button:hover {
+  background-color: rgba(0, 115, 177, 0.1);
 }
 
 @media (max-width: 600px) {
@@ -101,9 +116,17 @@
   .contact-button {
     text-align: center;
     padding-left: 0; /* Remove left padding on mobile */
+    margin-left: 24px;
+    margin-right: 24px;
   }
 
   .profile-name {
     margin-top: 90px; /* Adjusted for mobile */
+  }
+
+  .contact-button {
+    margin: 16px auto 0;
+    display: block;
+    width: fit-content;
   }
 }

@@ -26,7 +26,7 @@ export default function decorate(block) {
   }
   block.insertBefore(profilePictureContainer, backgroundDiv);
 
-  // Add classes to other elements
+  // Add classes to other elements and create contact button
   const elements = [
     { index: 2, class: 'profile-name' },
     { index: 3, class: 'profile-title' },
@@ -44,6 +44,19 @@ export default function decorate(block) {
       }
     }
   });
+
+  // Create contact info button
+  const contactInfoDiv = block.children[block.children.length - 1];
+  if (contactInfoDiv) {
+    const contactInfoContent = contactInfoDiv.querySelector('p');
+    if (contactInfoContent) {
+      const button = document.createElement('button');
+      button.textContent = contactInfoContent.textContent;
+      button.className = 'contact-button';
+      contactInfoDiv.innerHTML = '';
+      contactInfoDiv.appendChild(button);
+    }
+  }
 
   console.log('LinkedIn Profile block decoration completed');
 }
