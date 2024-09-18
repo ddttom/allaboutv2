@@ -63,7 +63,8 @@
 }
 
 .profile-title-content {
-  font-size: 18px;
+  font-size: 20px;
+  font-weight: 600;
   color: #2f3941;
   margin: 4px 0 0;
   line-height: 1.4;
@@ -133,7 +134,7 @@
   }
 
   .profile-title-content {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .contact-button {
