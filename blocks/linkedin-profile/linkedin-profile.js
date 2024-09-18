@@ -15,14 +15,18 @@ export default async function decorate(block) {
     block.insertBefore(backgroundDiv, block.firstChild);
 
     // Update profile picture
-    const profilePictureDiv = block.children[1].firstElementChild;
+    const profilePictureDiv = block.querySelector('.profile-picture-container');
     if (profilePictureDiv) {
-      const profilePicture = document.createElement('img');
+      const profilePicture = profilePictureDiv.querySelector('img') || document.createElement('img');
       profilePicture.src = data.profileSummary.profilePicture;
       profilePicture.alt = `${data.profileSummary.name}'s profile picture`;
       profilePicture.className = 'profile-picture';
-      profilePictureDiv.innerHTML = '';
-      profilePictureDiv.appendChild(profilePicture);
+      if (!profilePictureDiv.contains(profilePicture)) {
+        profilePictureDiv.appendChild(profilePicture);
+      }
+      console.log('Profile picture src:', profilePicture.src); // Debug log
+    } else {
+      console.error('Profile picture container not found');
     }
 
     // Update name
@@ -57,8 +61,7 @@ export default async function decorate(block) {
       }
     });
 
-    // Log the profile picture URL for debugging
-    console.log('Profile picture URL:', data.profileSummary.profilePicture);
+    console.log('Profile data:', data); // Debug log
 
   } catch (error) {
     // eslint-disable-next-line no-console

@@ -20,7 +20,7 @@
   margin: 10px 20px;
 }
 
-.profile-info-item:nth-child(2) { /* Profile picture */
+.profile-picture-container {
   position: absolute;
   top: 125px;
   left: 20px;
@@ -73,7 +73,7 @@
 }
 
 @media (max-width: 600px) {
-  .profile-info-item:nth-child(2) { /* Profile picture */
+  .profile-picture-container {
     position: relative;
     top: -75px;
     left: 50%;
