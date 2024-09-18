@@ -4,16 +4,11 @@ export default function decorate(block) {
   // Add necessary classes
   block.classList.add('linkedin-profile');
 
-  // Create background image div
-  const backgroundDiv = document.createElement('div');
-  backgroundDiv.className = 'background-image';
-  block.insertBefore(backgroundDiv, block.firstChild);
-
   // Process profile picture
-  const profilePictureContainer = block.querySelector('.profile-name');
+  const profilePictureContainer = block.querySelector('.background-image');
   if (profilePictureContainer) {
     profilePictureContainer.classList.add('profile-picture-container');
-    const pictureElement = profilePictureContainer.querySelector('picture');
+    const pictureElement = block.querySelector('picture');
     if (pictureElement) {
       const imgElement = pictureElement.querySelector('img');
       if (imgElement) {
@@ -25,10 +20,10 @@ export default function decorate(block) {
 
   // Correct the classes for other elements
   const elements = [
-    { selector: '.profile-title p', class: 'profile-name-content' },
-    { selector: '.profile-location p', class: 'profile-title-content' },
-    { selector: '.profile-connections p', class: 'profile-location-content' },
-    { selector: '.contact-info button', class: 'profile-connections-content' }
+    { selector: '.profile-name p', class: 'profile-name-content' },
+    { selector: '.profile-title p', class: 'profile-title-content' },
+    { selector: '.profile-location p', class: 'profile-location-content' },
+    { selector: '.profile-connections p', class: 'profile-connections-content' }
   ];
 
   elements.forEach(el => {
