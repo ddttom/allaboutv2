@@ -1,7 +1,7 @@
 .import-profile-summary .profile-summary {
   position: relative;
-  padding-top: 200px;
-  margin-top: 52px;
+  padding-top: 196px; /* Adjusted to accommodate the profile picture */
+  margin-top: 0;
 }
 
 .import-profile-summary .background-image {
@@ -9,27 +9,37 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 200px;
+  height: 196px;
+  background-color: #f3f2ef; /* Placeholder background color */
   background-size: cover;
   background-position: center;
   border-radius: 8px 8px 0 0;
 }
 
-.import-profile-summary .profile-picture {
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  border: 4px solid white;
+.import-profile-summary .profile-picture-container {
   position: absolute;
-  top: 140px;
+  top: 132px; /* Adjusted to move the picture higher */
   left: 24px;
+  width: 152px;
+  height: 152px;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 0 4px #fff, 0 0 0 5px rgba(0,0,0,0.15);
+}
+
+.import-profile-summary .profile-picture {
+  width: 144px;
+  height: 144px;
+  border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
 }
 
 .import-profile-summary .profile-info {
   padding: 24px;
-  padding-top: 84px; /* Adjusted to accommodate the profile picture */
+  padding-top: 88px; /* Adjusted to accommodate the profile picture */
 }
 
 .import-profile-summary h1 {
@@ -56,13 +66,18 @@
 }
 
 @media (max-width: 768px) {
+  .import-profile-summary .profile-picture-container {
+    width: 128px;
+    height: 128px;
+    top: 140px;
+  }
+
   .import-profile-summary .profile-picture {
     width: 120px;
     height: 120px;
-    top: 160px;
   }
 
   .import-profile-summary .profile-info {
-    padding-top: 64px;
+    padding-top: 72px;
   }
 }
