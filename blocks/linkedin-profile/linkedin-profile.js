@@ -9,14 +9,19 @@ export default async function decorate(block) {
     const data = await response.json();
 
     block.innerHTML = `
-      <div class="profile-header">
+      <div class="section-card profile-summary">
         <div class="background-image" style="background-image: url('${data.profileSummary.backgroundImage}')"></div>
         <div class="profile-info">
-          <img class="profile-picture" src="${data.profileSummary.profilePicture}" alt="${data.profileSummary.name}">
-          <h1>${data.profileSummary.name}</h1>
-          <p class="title">${data.profileSummary.title}</p>
-          <p class="location">${data.profileSummary.location}</p>
-          <p class="connections">${data.profileSummary.connections}</p>
+          <div class="profile-picture-container">
+            <img src="${data.profileSummary.profilePicture}" alt="${data.profileSummary.name}" class="profile-picture">
+          </div>
+          <div class="profile-details">
+            <h1>${data.profileSummary.name}</h1>
+            <h2>${data.profileSummary.title}</h2>
+            <p>${data.profileSummary.location}</p>
+            <p>${data.profileSummary.connections}</p>
+            <button class="button connect-button">Connect</button>
+          </div>
         </div>
       </div>
       <div class="profile-content">
