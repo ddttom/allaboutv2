@@ -1,0 +1,95 @@
+.linkedin-profile {
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.profile-summary {
+  position: relative;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.background-image {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+}
+
+.profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 5px solid white;
+  position: absolute;
+  top: 125px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.profile-summary h1 {
+  margin-top: 80px;
+  margin-bottom: 10px;
+}
+
+.profile-summary p {
+  margin: 5px 0;
+}
+
+.experience-section,
+.education-section,
+.skills-section {
+  margin-top: 30px;
+}
+
+.job,
+.education {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.job img,
+.education img {
+  width: 50px;
+  height: 50px;
+  margin-right: 15px;
+}
+
+.skills-section ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.skills-section li {
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+  .profile-picture {
+    width: 100px;
+    height: 100px;
+    top: 150px;
+  }
+
+  .profile-summary h1 {
+    margin-top: 60px;
+  }
+
+  .job,
+  .education {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .job img,
+  .education img {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}
