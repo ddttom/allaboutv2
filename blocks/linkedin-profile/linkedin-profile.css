@@ -11,7 +11,7 @@
 }
 
 .background-image {
-  height: 200px;
+  height: 160px; /* Reduced height */
   background-color: #0073b1;
   background-size: cover;
   background-position: center;
@@ -19,7 +19,7 @@
 
 .profile-picture-container {
   position: absolute;
-  top: 0;
+  top: 100px; /* Adjusted to move it lower */
   left: 24px;
   width: 120px;
   height: 120px;
@@ -51,8 +51,8 @@
 }
 
 .profile-name {
-  margin-top: 140px; /* Adjusted to account for the profile picture */
-  padding-left: 120px; /* Add space for the profile picture */
+  margin-top: 70px; /* Reduced top margin */
+  padding-left: 140px; /* Increased space for the profile picture */
 }
 
 .profile-name-content {
@@ -89,6 +89,7 @@
 
 @media (max-width: 600px) {
   .profile-picture-container {
+    top: 80px; /* Adjusted for mobile */
     left: 50%;
     transform: translateX(-50%);
   }
@@ -103,6 +104,6 @@
   }
 
   .profile-name {
-    margin-top: 160px; /* Increase top margin to make room for centered profile picture */
+    margin-top: 90px; /* Adjusted for mobile */
   }
 }
