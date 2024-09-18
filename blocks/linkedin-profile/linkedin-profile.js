@@ -38,15 +38,9 @@ export default function decorate(block) {
     const element = block.children[el.index];
     if (element) {
       element.classList.add(el.class);
-      const content = element.querySelector('p');
+      const content = element.querySelector('p') || element.querySelector('div');
       if (content) {
         content.classList.add(`${el.class}-content`);
-        // Correct the content for location and connections
-        if (el.class === 'profile-location') {
-          content.textContent = 'San Jose Bay Area, California, United States';
-        } else if (el.class === 'profile-connections') {
-          content.textContent = '500+ connections';
-        }
       }
     }
   });

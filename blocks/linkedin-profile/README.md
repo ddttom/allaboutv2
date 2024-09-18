@@ -1,41 +1,62 @@
 # LinkedIn Profile Block
 
-This block displays a LinkedIn-style profile using data from a JSON file.
+This block creates a LinkedIn-style profile section using content provided in a Franklin document.
 
 ## Usage
 
-To use this block, add the following table to your Franklin document:
+To use this block, add the following structure to your Franklin document:
 
 | LinkedIn Profile |
 |------------------|
-|                  |
+| [Profile Picture URL] |
+| [Name] |
+| [Title] |
+| [Location] |
+| [Connections] |
+| Contact info |
 
-## Authoring
+## Example
 
-The content for this block is pulled from a JSON file. No additional authoring is required in the document.
+| LinkedIn Profile |
+|------------------|
+| https://example.com/profile-picture.jpg |
+| John Doe |
+| Software Engineer at Tech Company |
+| San Francisco Bay Area, California, United States |
+| 500+ connections |
+| Contact info |
 
 ## Styling
 
 The block uses custom CSS classes for styling. You can customize the appearance by modifying the `linkedin-profile.css` file.
 
-## Behavior
+## Features
 
-The block fetches data from a JSON file and dynamically creates the profile layout, including the profile summary, experience, education, and skills sections.
+- Displays a profile picture
+- Shows name, title, location, and connection information
+- Includes a "Contact info" button
+- Responsive design for both desktop and mobile views
 
-## Dependencies
+## Customization
 
-- This block requires the `aem.js` script for image optimization.
-- The profile data should be available in a JSON file at `/samples/linkedin-profile.json`.
+To customize the appearance of the LinkedIn Profile block:
+
+1. Modify the CSS in `linkedin-profile.css`
+2. Adjust the JavaScript in `linkedin-profile.js` for structural changes
 
 ## Accessibility
 
-- The block uses semantic HTML elements for better screen reader compatibility.
-- Alt text is provided for all images.
+- The profile picture includes an alt text for screen readers
+- Semantic HTML structure is used for better accessibility
 
-## Suggestions for Improvement
+## Dependencies
 
-1. Add error handling for missing data fields in the JSON.
-2. Implement lazy loading for images to improve performance.
-3. Add options for customizing the layout or color scheme.
-4. Include social media links in the profile summary.
-5. Add a section for recommendations or endorsements.
+This block relies on the following files:
+
+- `linkedin-profile.js`
+- `linkedin-profile.css`
+
+## Notes
+
+- Ensure that the profile picture URL is accessible and valid
+- The "Contact info" text will be automatically converted to a button
