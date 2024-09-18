@@ -48,6 +48,12 @@ export default function decorate(block) {
     }
   });
 
+  // Remove the duplicate connections element
+  const extraConnections = block.querySelector('div:not(.profile-connections) > div > p');
+  if (extraConnections && extraConnections.textContent.includes('connections')) {
+    extraConnections.parentElement.parentElement.remove();
+  }
+
   // Create contact info button
   const contactInfoDiv = block.children[block.children.length - 1];
   if (contactInfoDiv) {
