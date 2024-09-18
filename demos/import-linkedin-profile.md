@@ -7,8 +7,10 @@ This demo showcases the recreation of a LinkedIn profile using Franklin blocks. 
 | :---- |
 
 <!-- Header with navigation and search -->
+<!-- Commented out as requested
 | import-header |
 | :---- |
+-->
 
 <!-- Profile summary with name, title, and location -->
 | import-profile-summary |

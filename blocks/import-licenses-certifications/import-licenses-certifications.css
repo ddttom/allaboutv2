@@ -12,16 +12,17 @@
 .import-licenses-certifications .cert-list {
   list-style-type: none;
   padding: 0;
+  margin: 0;
 }
 
 .import-licenses-certifications .cert-list li {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .import-licenses-certifications h3 {
   font-size: 16px;
   font-weight: 600;
-  margin-bottom: 4px;
+  margin: 0;
   color: rgba(0, 0, 0, 0.9);
 }
 

@@ -2,7 +2,7 @@
   padding: 24px;
 }
 
-.import-education .education-section h2 {
+.import-education h2 {
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 16px;
@@ -12,18 +12,11 @@
 .import-education .education-list {
   list-style-type: none;
   padding: 0;
+  margin: 0;
 }
 
 .import-education .education-list li {
-  display: flex;
   margin-bottom: 16px;
-}
-
-.import-education .education-list img {
-  width: 48px;
-  height: 48px;
-  margin-right: 12px;
-  object-fit: contain;
 }
 
 .import-education .education-list h3 {
@@ -33,14 +26,9 @@
   color: rgba(0, 0, 0, 0.9);
 }
 
-.import-education .education-list .degree {
+.import-education .education-list p {
   font-size: 14px;
-  color: rgba(0, 0, 0, 0.9);
-  margin-bottom: 4px;
-}
-
-.import-education .education-list .duration {
-  font-size: 14px;
+  margin: 0;
   color: rgba(0, 0, 0, 0.6);
 }
 

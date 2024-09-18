@@ -6,8 +6,7 @@ export default function decorate(block) {
     <ul class="cert-list">
       ${Array.from(block.children).map(row => `
         <li>
-          <h3>${row.children[0].textContent}</h3>
-          <p>${row.children[1].textContent}</p>
+          <h3>${row.children[0]?.textContent || 'Certification'}</h3>
         </li>
       `).join('')}
     </ul>
