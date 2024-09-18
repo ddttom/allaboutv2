@@ -1,0 +1,65 @@
+{
+  "profileSummary": {
+    "name": "Tobias Bocanegra",
+    "title": "Chief Technology Officer at Adobe",
+    "location": "San Jose, California, United States",
+    "connections": "500+ connections",
+    "profilePicture": "https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png",
+    "backgroundImage": "https://allabout.network/media_14e918fa88c2a9a810fd454fa04f0bd152c01fed2.jpeg"
+  },
+  "experience": [
+    {
+      "title": "Chief Technology Officer",
+      "company": "Adobe",
+      "duration": "Jan 2022 - Present",
+      "logo": "https://allabout.network/media_1d92670adcfb7a18a062e49fd7967f4e9f76d8a52.jpeg"
+    },
+    {
+      "title": "VP, Engineering",
+      "company": "Adobe",
+      "duration": "Jan 2020 - Dec 2021",
+      "logo": "https://allabout.network/media_1d92670adcfb7a18a062e49fd7967f4e9f76d8a52.jpeg"
+    },
+    {
+      "title": "Chief Architect",
+      "company": "Day Software",
+      "duration": "Jan 2010 - Dec 2019",
+      "logo": "https://allabout.network/media_1e744525e97292dcd074e9b1c7ab2cf47a048f292.jpeg"
+    },
+    {
+      "title": "Software Engineer",
+      "company": "Tech Startup",
+      "duration": "Jan 2005 - Dec 2009",
+      "logo": "https://allabout.network/media_1e744525e97292dcd074e9b1c7ab2cf47a048f292.jpeg"
+    }
+  ],
+  "education": [
+    {
+      "school": "ETH Zurich",
+      "degree": "Master of Science in Computer Science",
+      "duration": "2000 - 2002",
+      "logo": "https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png"
+    },
+    {
+      "school": "ETH Zurich",
+      "degree": "Bachelor of Science in Computer Science",
+      "duration": "1995 - 2000",
+      "logo": "https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png"
+    },
+    {
+      "school": "Online Course",
+      "degree": "Advanced Machine Learning",
+      "duration": "2018",
+      "logo": "https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png"
+    }
+  ],
+  "skills": [
+    "Software Architecture",
+    "Cloud Computing",
+    "Agile Methodologies",
+    "Web Development",
+    "Digital Transformation",
+    "Machine Learning",
+    "Leadership"
+  ]
+}

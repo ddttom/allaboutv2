@@ -5,13 +5,18 @@ export default async function decorate(block) {
       <div class="logo">
         <img src="https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png" alt="LinkedIn Logo" width="40" height="40">
       </div>
-      <nav>
-        <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#network">My Network</a></li>
-          <li><a href="#jobs">Jobs</a></li>
-          <li><a href="#messaging">Messaging</a></li>
-          <li><a href="#notifications">Notifications</a></li>
+      <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav aria-label="Main navigation">
+        <ul role="menubar">
+          <li role="none"><a href="#home" role="menuitem">Home</a></li>
+          <li role="none"><a href="#network" role="menuitem">My Network</a></li>
+          <li role="none"><a href="#jobs" role="menuitem">Jobs</a></li>
+          <li role="none"><a href="#messaging" role="menuitem">Messaging</a></li>
+          <li role="none"><a href="#notifications" role="menuitem">Notifications</a></li>
         </ul>
       </nav>
       <div class="profile-icon">
@@ -19,5 +24,20 @@ export default async function decorate(block) {
       </div>
     </div>
   `;
+  block.textContent = '';
   block.appendChild(header);
+
+  const mobileMenuToggle = header.querySelector('.mobile-menu-toggle');
+  const nav = header.querySelector('nav');
+
+  mobileMenuToggle.addEventListener('click', () => {
+    nav.classList.toggle('active');
+    mobileMenuToggle.classList.toggle('active');
+    const isExpanded = nav.classList.contains('active');
+    mobileMenuToggle.setAttribute('aria-expanded', isExpanded);
+    // Improve accessibility by changing focus when menu is opened
+    if (isExpanded) {
+      nav.querySelector('a').focus();
+    }
+  });
 }

@@ -3,7 +3,7 @@ export default async function decorate(block) {
   footer.innerHTML = `
     <div class="footer-content">
       <img src="https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png" alt="LinkedIn Logo" width="56" height="14">
-      <p>&copy; 2023 LinkedIn Corporation</p>
+      <p>&copy; ${new Date().getFullYear()} LinkedIn Corporation</p>
       <nav>
         <ul>
           <li><a href="#about">About</a></li>

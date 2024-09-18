@@ -1,16 +1,19 @@
 .import-header header {
   background-color: white;
-  padding: 0 24px;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .import-header .header-content {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 1128px;
+  max-width: var(--content-width);
   margin: 0 auto;
-  height: 52px;
+  height: 3.25rem;
+  padding: 0 1rem;
 }
 
 .import-header nav ul {
@@ -21,13 +24,14 @@
 }
 
 .import-header nav li {
-  margin-right: 20px;
+  margin-right: 1.25rem;
 }
 
 .import-header nav a {
   color: var(--linkedin-gray);
   text-decoration: none;
-  font-size: 14px;
+  font-size: 0.875rem;
+  transition: color 0.3s ease;
 }
 
 .import-header nav a:hover {
@@ -36,4 +40,63 @@
 
 .import-header .profile-icon img {
   border-radius: 50%;
+}
+
+.import-header .mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.import-header .mobile-menu-toggle span {
+  display: block;
+  width: 1.5625rem;
+  height: 0.1875rem;
+  background-color: var(--linkedin-gray);
+  margin: 0.3125rem 0;
+  transition: 0.3s;
+}
+
+.import-header .mobile-menu-toggle.active span:nth-child(1) {
+  transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.import-header .mobile-menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.import-header .mobile-menu-toggle.active span:nth-child(3) {
+  transform: rotate(45deg) translate(-5px, -6px);
+}
+
+@media (max-width: 768px) {
+  .import-header .mobile-menu-toggle {
+    display: block;
+  }
+
+  .import-header nav {
+    display: none;
+    position: absolute;
+    top: 3.25rem;
+    left: 0;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .import-header nav.active {
+    display: block;
+  }
+
+  .import-header nav ul {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .import-header nav li {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
 }

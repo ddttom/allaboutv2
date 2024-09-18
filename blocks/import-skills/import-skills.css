@@ -1,7 +1,7 @@
 .import-skills .skills-section h2 {
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 600;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 
 .import-skills .skills-list {
@@ -9,14 +9,20 @@
   padding: 0;
   display: flex;
   flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .import-skills .skills-list li {
   background-color: var(--linkedin-light-blue);
   color: var(--linkedin-blue);
-  padding: 4px 8px;
-  border-radius: 4px;
-  margin-right: 8px;
-  margin-bottom: 8px;
-  font-size: 14px;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.import-skills .skills-list li:hover {
+  background-color: var(--linkedin-blue);
+  color: white;
 }

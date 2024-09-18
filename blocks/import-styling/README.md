@@ -16,7 +16,11 @@ The block defines CSS variables for colors, fonts, and layout measurements used 
 
 ## Behavior
 
-This block includes JavaScript functionality to organize the content into main and side columns, improving the overall layout of the profile.
+This block includes JavaScript functionality to:
+- Organize the content into main and side columns
+- Implement lazy loading for images
+- Add smooth scrolling for anchor links
+- Apply fade-in animations to newly visible elements
 
 ## Dependencies
 
@@ -24,8 +28,11 @@ None
 
 ## Accessibility
 
-The defined styles ensure proper color contrast and readable font sizes for improved accessibility. The responsive layout also enhances the user experience across different devices.
+The defined styles ensure proper color contrast and readable font sizes for improved accessibility. The responsive layout enhances the user experience across different devices. Smooth scrolling and fade-in animations improve the overall user experience without compromising accessibility.
 
 ## Customization
 
-To customize the overall look and feel of the LinkedIn profile recreation, you can modify the CSS variables and styles in the `import-styling.css` file. The layout structure can be adjusted in the `import-styling.js` file if needed.
+To customize the overall look and feel of the LinkedIn profile recreation:
+1. Modify the CSS variables in `import-styling.css` to change colors, fonts, and layout measurements.
+2. Adjust the layout structure in `import-styling.js` if needed.
+3. Modify animation timings and behaviors in both CSS and JavaScript files.

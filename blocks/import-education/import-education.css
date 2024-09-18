@@ -1,7 +1,7 @@
 .import-education .education-section h2 {
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 600;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 
 .import-education .education-list {
@@ -11,23 +11,49 @@
 
 .import-education .education-list li {
   display: flex;
-  margin-bottom: 16px;
+  margin-bottom: 1.5rem;
 }
 
 .import-education .education-list img {
-  width: 48px;
-  height: 48px;
-  margin-right: 16px;
+  width: 3rem;
+  height: 3rem;
+  margin-right: 1rem;
+  object-fit: cover;
 }
 
 .import-education .education-list h3 {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 600;
-  margin-bottom: 4px;
+  margin-bottom: 0.25rem;
 }
 
-.import-education .education-list p {
-  font-size: 14px;
+.import-education .education-list .degree {
+  font-size: 0.875rem;
+  color: var(--linkedin-text);
+  margin-bottom: 0.25rem;
+}
+
+.import-education .education-list .duration {
+  font-size: 0.875rem;
   color: var(--linkedin-gray);
-  margin-bottom: 4px;
+}
+
+.import-education .hidden {
+  display: none;
+}
+
+.import-education .see-more-btn {
+  background: none;
+  border: none;
+  color: var(--linkedin-blue);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.875rem;
+  transition: color 0.3s ease;
+}
+
+.import-education .see-more-btn:hover {
+  text-decoration: underline;
+  color: var(--linkedin-text);
 }

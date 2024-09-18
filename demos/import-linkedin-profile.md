@@ -21,10 +21,13 @@ This demo showcases the recreation of a LinkedIn profile using Franklin blocks.
 | https://allabout.network/media_1d92670adcfb7a18a062e49fd7967f4e9f76d8a52.jpeg | Chief Technology Officer | Adobe | Jan 2022 - Present |
 | https://allabout.network/media_1d92670adcfb7a18a062e49fd7967f4e9f76d8a52.jpeg | VP, Engineering | Adobe | Jan 2020 - Dec 2021 |
 | https://allabout.network/media_1e744525e97292dcd074e9b1c7ab2cf47a048f292.jpeg | Chief Architect | Day Software | Jan 2010 - Dec 2019 |
+| https://allabout.network/media_1e744525e97292dcd074e9b1c7ab2cf47a048f292.jpeg | Software Engineer | Tech Startup | Jan 2005 - Dec 2009 |
 
 | import-education |
 | :---- |
-| https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png | ETH Zurich | Computer Science | 1995 - 2000 |
+| https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png | ETH Zurich | Master of Science in Computer Science | 2000 - 2002 |
+| https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png | ETH Zurich | Bachelor of Science in Computer Science | 1995 - 2000 |
+| https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png | Online Course | Advanced Machine Learning | 2018 |
 
 | import-skills |
 | :---- |
@@ -33,6 +36,8 @@ This demo showcases the recreation of a LinkedIn profile using Franklin blocks.
 | Agile Methodologies |
 | Web Development |
 | Digital Transformation |
+| Machine Learning |
+| Leadership |
 
 | import-footer |
 | :---- |
