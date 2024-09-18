@@ -78,7 +78,8 @@
 }
 
 .profile-connections {
-  margin-top: 12px;
+  margin: 4px 24px 0;
+  padding-left: 140px;
 }
 
 .profile-connections-content {
@@ -135,6 +136,13 @@
 
   .profile-title-content {
     font-size: 18px;
+  }
+
+  .profile-connections {
+    text-align: center;
+    padding-left: 0;
+    margin-left: 24px;
+    margin-right: 24px;
   }
 
   .contact-button {

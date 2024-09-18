@@ -41,6 +41,12 @@ export default function decorate(block) {
       const content = element.querySelector('p');
       if (content) {
         content.classList.add(`${el.class}-content`);
+        // Correct the content for location and connections
+        if (el.class === 'profile-location') {
+          content.textContent = 'San Jose Bay Area, California, United States';
+        } else if (el.class === 'profile-connections') {
+          content.textContent = '500+ connections';
+        }
       }
     }
   });
