@@ -4,6 +4,14 @@ export default function decorate(block) {
   // Add necessary classes
   block.classList.add('linkedin-profile');
 
+  // Create background image div if it doesn't exist
+  let backgroundDiv = block.querySelector('.background-image');
+  if (!backgroundDiv) {
+    backgroundDiv = document.createElement('div');
+    backgroundDiv.className = 'background-image';
+    block.insertBefore(backgroundDiv, block.firstChild);
+  }
+
   // Create profile picture container
   const profilePictureContainer = document.createElement('div');
   profilePictureContainer.className = 'profile-picture-container';
@@ -16,7 +24,7 @@ export default function decorate(block) {
       imgElement.alt = 'Profile Picture';
     }
   }
-  block.insertBefore(profilePictureContainer, block.children[1]);
+  block.insertBefore(profilePictureContainer, backgroundDiv);
 
   // Add classes to other elements
   const elements = [
