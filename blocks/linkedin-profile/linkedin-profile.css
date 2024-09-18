@@ -22,7 +22,7 @@
 
 .profile-info-item:nth-child(2) { /* Profile picture */
   position: absolute;
-  top: 150px;
+  top: 125px;
   left: 20px;
   width: 150px;
   height: 150px;
@@ -39,7 +39,7 @@
 }
 
 .profile-info-item:nth-child(3) { /* Name */
-  margin-top: 120px;
+  margin-top: 100px; /* Increased to create space below the profile picture */
   font-size: 24px;
   font-weight: bold;
   color: #000;
@@ -48,12 +48,14 @@
 .profile-info-item:nth-child(4) { /* Title */
   font-size: 18px;
   color: #666;
+  margin-top: 5px;
 }
 
 .profile-info-item:nth-child(5), /* Location */
 .profile-info-item:nth-child(6) { /* Connections */
   font-size: 14px;
   color: #666;
+  margin-top: 5px;
 }
 
 .profile-info-item:last-child { /* Contact info */

@@ -57,6 +57,9 @@ export default async function decorate(block) {
       }
     });
 
+    // Log the profile picture URL for debugging
+    console.log('Profile picture URL:', data.profileSummary.profilePicture);
+
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Error:', error);
