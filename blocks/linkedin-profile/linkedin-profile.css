@@ -15,12 +15,11 @@
   background-color: #0073b1;
   background-size: cover;
   background-position: center;
-  position: relative;
 }
 
 .profile-picture-container {
   position: absolute;
-  bottom: -60px;
+  top: 140px;
   left: 24px;
   width: 120px;
   height: 120px;
@@ -42,32 +41,36 @@
   object-fit: cover;
 }
 
-.profile-name-content,
-.profile-title-content,
-.profile-location-content,
-.profile-connections-content,
+.profile-name,
+.profile-title,
+.profile-location,
+.profile-connections,
 .contact-button {
   margin: 10px 24px;
 }
 
-.profile-name-content {
+.profile-name {
   margin-top: 80px;
+}
+
+.profile-name-content {
   font-size: 24px;
   font-weight: bold;
   color: #000;
+  margin: 0;
 }
 
 .profile-title-content {
   font-size: 18px;
   color: #666;
-  margin-top: 4px;
+  margin: 4px 0 0 0;
 }
 
 .profile-location-content,
 .profile-connections-content {
   font-size: 14px;
   color: #666;
-  margin-top: 4px;
+  margin: 4px 0 0 0;
 }
 
 .contact-button {
@@ -88,15 +91,15 @@
     transform: translateX(-50%);
   }
 
-  .profile-name-content,
-  .profile-title-content,
-  .profile-location-content,
-  .profile-connections-content,
+  .profile-name,
+  .profile-title,
+  .profile-location,
+  .profile-connections,
   .contact-button {
     text-align: center;
   }
 
-  .profile-name-content {
+  .profile-name {
     margin-top: 70px;
   }
 }

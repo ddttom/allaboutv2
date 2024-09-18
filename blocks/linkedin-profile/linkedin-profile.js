@@ -4,47 +4,38 @@ export default function decorate(block) {
   // Add necessary classes
   block.classList.add('linkedin-profile');
 
-  // Process profile picture
-  const profilePictureContainer = block.querySelector('.background-image');
-  if (profilePictureContainer) {
-    profilePictureContainer.classList.add('profile-picture-container');
-    const pictureElement = block.querySelector('picture');
-    if (pictureElement) {
-      const imgElement = pictureElement.querySelector('img');
-      if (imgElement) {
-        imgElement.className = 'profile-picture';
-        imgElement.alt = 'Profile Picture';
-      }
+  // Create profile picture container
+  const profilePictureContainer = document.createElement('div');
+  profilePictureContainer.className = 'profile-picture-container';
+  const pictureElement = block.querySelector('picture');
+  if (pictureElement) {
+    profilePictureContainer.appendChild(pictureElement);
+    const imgElement = pictureElement.querySelector('img');
+    if (imgElement) {
+      imgElement.className = 'profile-picture';
+      imgElement.alt = 'Profile Picture';
     }
   }
+  block.insertBefore(profilePictureContainer, block.children[1]);
 
-  // Correct the classes for other elements
+  // Add classes to other elements
   const elements = [
-    { selector: '.profile-name p', class: 'profile-name-content' },
-    { selector: '.profile-title p', class: 'profile-title-content' },
-    { selector: '.profile-location p', class: 'profile-location-content' },
-    { selector: '.profile-connections p', class: 'profile-connections-content' }
+    { index: 2, class: 'profile-name' },
+    { index: 3, class: 'profile-title' },
+    { index: 4, class: 'profile-location' },
+    { index: 5, class: 'profile-connections' }
   ];
 
   elements.forEach(el => {
-    const element = block.querySelector(el.selector);
+    const element = block.children[el.index];
     if (element) {
-      element.className = el.class;
+      element.classList.add(el.class);
+      const content = element.querySelector('p');
+      if (content) {
+        content.classList.add(`${el.class}-content`);
+      }
     }
   });
-
-  // Convert the last div to a contact info button
-  const lastDiv = block.children[block.children.length - 1];
-  if (lastDiv) {
-    const contactInfoContent = lastDiv.querySelector('p');
-    if (contactInfoContent) {
-      const button = document.createElement('button');
-      button.textContent = contactInfoContent.textContent;
-      button.className = 'contact-button';
-      lastDiv.innerHTML = '';
-      lastDiv.appendChild(button);
-    }
-  }
 
   console.log('LinkedIn Profile block decoration completed');
 }
