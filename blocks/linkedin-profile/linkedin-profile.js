@@ -10,7 +10,7 @@ export default function decorate(block) {
   block.insertBefore(backgroundDiv, block.firstChild);
 
   // Process profile picture
-  const profilePictureContainer = block.children[0];
+  const profilePictureContainer = block.querySelector('.profile-name');
   if (profilePictureContainer) {
     profilePictureContainer.classList.add('profile-picture-container');
     const pictureElement = profilePictureContainer.querySelector('picture');
@@ -19,39 +19,36 @@ export default function decorate(block) {
       if (imgElement) {
         imgElement.className = 'profile-picture';
         imgElement.alt = 'Profile Picture';
-        // Remove domain and protocol from the image URL
-        imgElement.src = imgElement.src.split('/').slice(-1)[0];
       }
     }
   }
 
-  // Add classes to other elements
+  // Correct the classes for other elements
   const elements = [
-    { index: 1, class: 'profile-name' },
-    { index: 2, class: 'profile-title' },
-    { index: 3, class: 'profile-location' },
-    { index: 4, class: 'profile-connections' },
-    { index: 5, class: 'contact-info' }
+    { selector: '.profile-title p', class: 'profile-name-content' },
+    { selector: '.profile-location p', class: 'profile-title-content' },
+    { selector: '.profile-connections p', class: 'profile-location-content' },
+    { selector: '.contact-info button', class: 'profile-connections-content' }
   ];
 
   elements.forEach(el => {
-    const element = block.children[el.index];
+    const element = block.querySelector(el.selector);
     if (element) {
-      element.classList.add(el.class);
-      const content = element.querySelector('p');
-      if (content) {
-        content.classList.add(`${el.class}-content`);
-      }
+      element.className = el.class;
     }
   });
 
-  // Convert contact info to a button
-  const contactInfo = block.querySelector('.contact-info-content');
-  if (contactInfo) {
-    const button = document.createElement('button');
-    button.textContent = contactInfo.textContent;
-    button.className = 'contact-button';
-    contactInfo.parentNode.replaceChild(button, contactInfo);
+  // Convert the last div to a contact info button
+  const lastDiv = block.children[block.children.length - 1];
+  if (lastDiv) {
+    const contactInfoContent = lastDiv.querySelector('p');
+    if (contactInfoContent) {
+      const button = document.createElement('button');
+      button.textContent = contactInfoContent.textContent;
+      button.className = 'contact-button';
+      lastDiv.innerHTML = '';
+      lastDiv.appendChild(button);
+    }
   }
 
   console.log('LinkedIn Profile block decoration completed');
