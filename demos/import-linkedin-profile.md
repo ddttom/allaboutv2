@@ -102,8 +102,10 @@ This demo showcases the recreation of a LinkedIn profile using Franklin blocks. 
 | Artificial Intelligence and Machine Learning |
 
 <!-- Footer section -->
+<!-- Commented out as requested
 | import-footer |
 | :---- |
+-->
 
 <!-- Metadata for SEO and page information -->
 | metadata |  |
