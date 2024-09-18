@@ -52,6 +52,16 @@ export default function decorate(block) {
       const content = element.querySelector('div');
       if (content) {
         content.classList.add(`${el.class}-content`);
+        // Preserve the content
+        if (content.textContent.trim() === '') {
+          content.textContent = element.textContent.trim();
+        }
+      } else if (element.textContent.trim() !== '') {
+        const newContent = document.createElement('div');
+        newContent.classList.add(`${el.class}-content`);
+        newContent.textContent = element.textContent.trim();
+        element.textContent = '';
+        element.appendChild(newContent);
       }
     }
   });
