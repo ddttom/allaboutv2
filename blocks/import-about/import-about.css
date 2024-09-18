@@ -1,0 +1,16 @@
+.import-about .about-section {
+  padding: 24px;
+}
+
+.import-about h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.import-about p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.9);
+}

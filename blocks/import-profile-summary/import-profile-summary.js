@@ -4,11 +4,11 @@ export default async function decorate(block) {
   profileSummary.innerHTML = `
     <div class="background-image"></div>
     <div class="profile-info">
-      <img data-src="${block.children[0].children[0].textContent}" alt="Profile Picture" class="profile-picture">
-      <h1>${block.children[1].children[0].textContent}</h1>
-      <h2>${block.children[2].children[0].textContent}</h2>
+      <img data-src="https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png" alt="Profile Picture" class="profile-picture">
+      <h1>${block.children[0].children[0].textContent}</h1>
+      <h2>${block.children[1].children[0].textContent}</h2>
+      <p>${block.children[2].children[0].textContent}</p>
       <p>${block.children[3].children[0].textContent}</p>
-      <p>${block.children[4].children[0].textContent}</p>
       <button class="button connect-button">Connect</button>
     </div>
   `;

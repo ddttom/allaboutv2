@@ -12,11 +12,11 @@ In Google Docs or Microsoft Word, create a table with the following structure:
 
 | import-profile-summary |
 | :---- |
-| [Profile Picture URL] |
 | [Name] |
 | [Title] |
 | [Location] |
 | [Connection Info] |
+| [Contact Info] |
 
 ## Styling
 
@@ -24,7 +24,7 @@ The block includes styles for the profile summary layout, including the backgrou
 
 ## Behavior
 
-The block dynamically generates the profile summary based on the provided content. It also includes a "Connect" button, which is currently non-functional.
+The block dynamically generates the profile summary based on the provided content. It also includes a "Connect" button.
 
 ## Dependencies
 
@@ -33,4 +33,11 @@ The block dynamically generates the profile summary based on the provided conten
 ## Accessibility
 
 - The profile picture includes an alt text for screen readers.
-- Heading hierarchy is properly structured for screen readers.
+- Proper heading hierarchy is maintained for screen readers.
+
+## Customization
+
+To customize the appearance of the profile summary:
+1. Modify the CSS in `import-profile-summary.css` to adjust styles.
+2. Update the HTML structure in `import-profile-summary.js` if needed.
+3. Adjust the background image and profile picture by modifying the respective URLs in the JavaScript file.

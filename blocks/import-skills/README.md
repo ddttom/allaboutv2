@@ -25,7 +25,7 @@ The block includes styles for displaying skills as interactive tags. It uses CSS
 
 ## Behavior
 
-The block dynamically generates the skills list based on the provided content. Each skill tag has a hover effect for improved interactivity.
+The block dynamically generates the skills list based on the provided content. Each skill tag is interactive and can be toggled on/off.
 
 ## Dependencies
 
@@ -34,10 +34,11 @@ The block dynamically generates the skills list based on the provided content. E
 ## Accessibility
 
 - Skills are presented in a semantic list structure for screen readers.
-- Color contrast for skill tags meets WCAG 2.1 AA standards.
+- Each skill tag is keyboard accessible and can be toggled using the Enter or Space key.
+- ARIA attributes are used to indicate the pressed state of each skill tag.
 
 ## Customization
 
-To customize the appearance of the skills section:
+To customize the appearance and behavior of the skills section:
 1. Modify the CSS in `import-skills.css` to adjust styles, including colors, spacing, and hover effects.
-2. Update the JavaScript in `import-skills.js` if you want to add additional interactivity or functionality to the skill tags.
+2. Update the JavaScript in `import-skills.js` if you want to modify the interactivity or add additional functionality to the skill tags.

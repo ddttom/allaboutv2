@@ -1,0 +1,32 @@
+.import-accomplishments .accomplishments-section {
+  padding: 24px;
+}
+
+.import-accomplishments h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.import-accomplishments .accomplishment-category {
+  margin-bottom: 16px;
+}
+
+.import-accomplishments h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.import-accomplishments ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.import-accomplishments li {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.9);
+  margin-bottom: 4px;
+}

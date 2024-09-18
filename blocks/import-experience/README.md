@@ -4,7 +4,7 @@ This block creates the experience section of the LinkedIn profile recreation usi
 
 ## Usage
 
-The Import Experience block generates a list of work experiences, including company logos, job titles, company names, and employment periods. It also includes a "See more" functionality to display additional experiences.
+The Import Experience block generates a list of work experiences, including job titles, company names, and employment periods. It also includes a "See more" functionality to display additional experiences.
 
 ## Authoring
 
@@ -12,15 +12,15 @@ In Google Docs or Microsoft Word, create a table with the following structure:
 
 | import-experience |
 | :---- |
-| [Company Logo URL] | [Job Title] | [Company Name] | [Employment Period] |
-| [Company Logo URL] | [Job Title] | [Company Name] | [Employment Period] |
+| [Job Title] | [Company Name] | [Employment Period] |
+| [Job Title] | [Company Name] | [Employment Period] |
 | ... |
 
 Add as many rows as needed for each work experience entry. The first three entries will be displayed initially, with the rest hidden behind a "See more" button.
 
 ## Styling
 
-The block includes styles for the experience section layout, including company logos and text elements. It uses CSS variables defined in the import-styling block for consistent theming.
+The block includes styles for the experience section layout and text elements. It uses CSS variables defined in the import-styling block for consistent theming.
 
 ## Behavior
 
@@ -32,9 +32,9 @@ The block dynamically generates the experience list based on the provided conten
 
 ## Accessibility
 
-- Company logos include alt text for screen readers.
 - Proper heading hierarchy is maintained for screen readers.
 - The "See more" button is keyboard accessible and toggles the visibility of additional experiences.
+- ARIA attributes are used to indicate the expanded/collapsed state of the additional experiences.
 
 ## Customization
 
