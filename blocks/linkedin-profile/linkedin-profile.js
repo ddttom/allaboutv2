@@ -1,16 +1,20 @@
 export default function decorate(block) {
   console.log('LinkedIn Profile block decoration started');
+  console.log('Initial block structure:', block.innerHTML);
 
   // Add necessary classes and structure
   block.classList.add('linkedin-profile');
+  console.log('Added linkedin-profile class to block');
 
   // Create background image div
   const backgroundDiv = document.createElement('div');
   backgroundDiv.className = 'background-image';
   block.insertBefore(backgroundDiv, block.firstChild);
+  console.log('Added background image div');
 
   // Wrap profile picture in a container
-  const profilePictureLink = block.children[1].querySelector('a');
+  const profilePictureLink = block.children[1]?.querySelector('a');
+  console.log('Profile picture link:', profilePictureLink);
   if (profilePictureLink) {
     const profilePictureContainer = document.createElement('div');
     profilePictureContainer.className = 'profile-picture-container';
@@ -20,6 +24,9 @@ export default function decorate(block) {
     profilePicture.className = 'profile-picture';
     profilePictureContainer.appendChild(profilePicture);
     block.replaceChild(profilePictureContainer, block.children[1]);
+    console.log('Wrapped profile picture in container');
+  } else {
+    console.log('Profile picture link not found');
   }
 
   // Add classes to other elements
@@ -32,23 +39,35 @@ export default function decorate(block) {
   ];
 
   elements.forEach(el => {
-    if (block.children[el.index]) {
-      block.children[el.index].classList.add(el.class);
-      const content = block.children[el.index].firstElementChild;
+    const element = block.children[el.index];
+    console.log(`Processing element at index ${el.index}:`, element);
+    if (element) {
+      element.classList.add(el.class);
+      const content = element.firstElementChild;
       if (content) {
         content.classList.add(`${el.class}-content`);
+        console.log(`Added class ${el.class} to element and ${el.class}-content to its child`);
+      } else {
+        console.log(`No child element found for ${el.class}`);
       }
+    } else {
+      console.log(`Element at index ${el.index} not found`);
     }
   });
 
   // Convert contact info to a button
   const contactInfo = block.querySelector('.contact-info-content');
+  console.log('Contact info element:', contactInfo);
   if (contactInfo) {
     const button = document.createElement('button');
     button.textContent = contactInfo.textContent;
     button.className = 'contact-button';
     contactInfo.parentNode.replaceChild(button, contactInfo);
+    console.log('Converted contact info to button');
+  } else {
+    console.log('Contact info element not found');
   }
 
   console.log('LinkedIn Profile block decoration completed');
+  console.log('Final block structure:', block.innerHTML);
 }
