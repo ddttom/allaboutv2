@@ -28,10 +28,10 @@ export default function decorate(block) {
 
   // Add classes to other elements and correct content
   const elements = [
-    { index: 2, class: 'profile-name', content: 'Tobias Bocanegra' },
-    { index: 3, class: 'profile-title', content: 'Chief Technology Officer at Adobe' },
-    { index: 4, class: 'profile-location', content: 'San Jose Bay Area, California, United States' },
-    { index: 5, class: 'profile-connections', content: '500+ connections' }
+    { index: 2, class: 'profile-name' },
+    { index: 3, class: 'profile-title' },
+    { index: 4, class: 'profile-location' },
+    { index: 5, class: 'profile-connections' }
   ];
 
   elements.forEach(el => {
@@ -44,24 +44,28 @@ export default function decorate(block) {
         element.appendChild(content);
       }
       content.classList.add(`${el.class}-content`);
-      content.textContent = el.content;
+      // Keep the original content instead of overwriting it
+      if (!content.textContent.trim()) {
+        content.textContent = `[${el.class.replace('profile-', '').toUpperCase()}]`;
+      }
     }
   });
 
-  // Remove the duplicate connections element
-  const extraConnections = block.querySelector('div:not(.profile-connections) > div > p');
-  if (extraConnections && extraConnections.textContent.includes('connections')) {
-    extraConnections.parentElement.parentElement.remove();
-  }
+  // Remove any extra elements that might contain duplicate information
+  const extraElements = block.querySelectorAll('div:not(.profile-name):not(.profile-title):not(.profile-location):not(.profile-connections):not(.background-image):not(.profile-picture-container)');
+  extraElements.forEach(el => {
+    if (!el.classList.contains('contact-button')) {
+      el.remove();
+    }
+  });
 
-  // Create contact info button
-  const contactInfoDiv = block.children[block.children.length - 1];
-  if (contactInfoDiv) {
-    const button = document.createElement('button');
-    button.textContent = 'Contact info';
-    button.className = 'contact-button';
-    contactInfoDiv.innerHTML = '';
-    contactInfoDiv.appendChild(button);
+  // Create contact info button if it doesn't exist
+  let contactButton = block.querySelector('.contact-button');
+  if (!contactButton) {
+    contactButton = document.createElement('button');
+    contactButton.textContent = 'Contact info';
+    contactButton.className = 'contact-button';
+    block.appendChild(contactButton);
   }
 
   console.log('LinkedIn Profile block decoration completed');
