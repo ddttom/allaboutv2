@@ -16,10 +16,12 @@ export default async function decorate(block) {
     summary.innerHTML = `
       <div class="background-image" style="background-image: url('${data.profileSummary.backgroundImage}')"></div>
       <img class="profile-picture" src="${data.profileSummary.profilePicture}" alt="${data.profileSummary.name}">
-      <h1>${data.profileSummary.name}</h1>
-      <p>${data.profileSummary.title}</p>
-      <p>${data.profileSummary.location}</p>
-      <p>${data.profileSummary.connections}</p>
+      <div class="profile-info">
+        <h1>${data.profileSummary.name}</h1>
+        <p>${data.profileSummary.title}</p>
+        <p>${data.profileSummary.location}</p>
+        <p>${data.profileSummary.connections}</p>
+      </div>
     `;
     container.appendChild(summary);
 
