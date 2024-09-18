@@ -8,7 +8,7 @@ export default async function decorate(block) {
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const data = await response.json();
 
-    // Update existing elements instead of replacing them
+    // Update existing elements
     const backgroundImage = block.querySelector('.background-image');
     if (backgroundImage) {
       backgroundImage.style.backgroundImage = `url('${data.profileSummary.backgroundImage}')`;

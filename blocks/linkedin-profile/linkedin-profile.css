@@ -1,4 +1,4 @@
-.linkedin-profile {
+.import-profile-summary {
   max-width: 800px;
   margin: 0 auto;
   font-family: Arial, sans-serif;
@@ -23,8 +23,7 @@
 .profile-info {
   position: relative;
   padding: 20px;
-  padding-left: 200px; /* Make room for the profile picture */
-  min-height: 150px; /* Ensure enough space for the content */
+  min-height: 150px;
 }
 
 .profile-picture-container {
@@ -42,7 +41,7 @@
 }
 
 .profile-details {
-  margin-left: 180px; /* Adjust this value to align with the profile picture */
+  margin-left: 180px;
   padding-top: 20px;
 }
 
@@ -122,8 +121,7 @@
 
 @media (max-width: 768px) {
   .profile-info {
-    padding-left: 20px;
-    padding-top: 100px; /* Make room for the profile picture */
+    padding-top: 100px;
   }
 
   .profile-picture-container {
@@ -138,6 +136,7 @@
   }
 
   .profile-details {
+    margin-left: 0;
     text-align: center;
   }
 
