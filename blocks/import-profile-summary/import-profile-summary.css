@@ -1,6 +1,6 @@
 .import-profile-summary .profile-summary {
   position: relative;
-  padding-top: 196px; /* Adjusted to accommodate the profile picture */
+  padding-top: 196px;
   margin-top: 0;
 }
 
@@ -10,7 +10,7 @@
   left: 0;
   right: 0;
   height: 196px;
-  background-color: #f3f2ef; /* Placeholder background color */
+  background-color: #f3f2ef;
   background-size: cover;
   background-position: center;
   border-radius: 8px 8px 0 0;
@@ -18,7 +18,7 @@
 
 .import-profile-summary .profile-picture-container {
   position: absolute;
-  top: 132px; /* Adjusted to move the picture higher */
+  top: 132px;
   left: 24px;
   width: 152px;
   height: 152px;
@@ -27,19 +27,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
   box-shadow: 0 0 0 4px #fff, 0 0 0 5px rgba(0,0,0,0.15);
 }
 
 .import-profile-summary .profile-picture {
-  width: 144px;
-  height: 144px;
-  border-radius: 50%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
 .import-profile-summary .profile-info {
   padding: 24px;
-  padding-top: 88px; /* Adjusted to accommodate the profile picture */
+  padding-top: 88px;
 }
 
 .import-profile-summary h1 {
@@ -70,11 +70,6 @@
     width: 128px;
     height: 128px;
     top: 140px;
-  }
-
-  .import-profile-summary .profile-picture {
-    width: 120px;
-    height: 120px;
   }
 
   .import-profile-summary .profile-info {
