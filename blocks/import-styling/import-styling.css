@@ -7,12 +7,13 @@
 :root {
   --linkedin-blue: #0a66c2;
   --linkedin-light-blue: #e8f3ff;
-  --linkedin-gray: #86888a;
+  --linkedin-gray: rgba(0, 0, 0, 0.6);
   --linkedin-light-gray: #f3f2ef;
-  --linkedin-text: #191919;
+  --linkedin-text: rgba(0, 0, 0, 0.9);
+  --linkedin-border: #e0e0e0;
   --linkedin-font: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Fira Sans', Ubuntu, Oxygen, 'Oxygen Sans', Cantarell, 'Droid Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Lucida Grande', Helvetica, Arial, sans-serif;
   --content-width: 1128px;
-  --section-spacing: 1.5rem;
+  --section-spacing: 24px;
 }
 
 /* Base styles */
@@ -23,7 +24,7 @@ body {
   margin: 0;
   padding: 0;
   line-height: 1.5;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 /* Typography */
@@ -32,90 +33,78 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
 }
 
-h1 { font-size: 2rem; }
-h2 { font-size: 1.5rem; }
-h3 { font-size: 1.25rem; }
+h1 { font-size: 24px; font-weight: 600; }
+h2 { font-size: 20px; font-weight: 600; }
+h3 { font-size: 16px; font-weight: 600; }
 
 /* Buttons */
 .button {
   background-color: var(--linkedin-blue);
   color: white;
   border: none;
-  border-radius: 1rem;
-  padding: 0.375rem 1rem;
+  border-radius: 16px;
+  padding: 6px 16px;
   font-weight: 600;
+  font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.1s ease;
+  transition: background-color 0.3s ease;
 }
 
 .button:hover {
   background-color: #004182;
 }
 
-.button:active {
-  transform: translateY(1px);
-}
-
 /* Layout */
 .section-card {
   background-color: white;
-  border-radius: 0.5rem;
+  border-radius: 8px;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
   margin-bottom: var(--section-spacing);
-  padding: 1.5rem;
-  transition: box-shadow 0.3s ease-in-out;
+  overflow: hidden;
 }
 
 .content-wrapper {
   max-width: var(--content-width);
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 24px;
 }
 
 .main-content {
   display: flex;
-  flex-wrap: wrap;
   gap: var(--section-spacing);
-  padding-top: var(--section-spacing);
+  padding-top: 52px; /* Account for fixed header */
 }
 
 .main-column {
   flex: 1;
-  min-width: 300px;
+  min-width: 0; /* Allows flex items to shrink below content size */
 }
 
 .side-column {
   width: 300px;
+  flex-shrink: 0;
 }
 
 /* Responsive design */
-@media (max-width: 768px) {
-  .main-column,
+@media (max-width: 1024px) {
+  .content-wrapper {
+    padding: 0 16px;
+  }
+  
+  .main-content {
+    flex-direction: column;
+  }
+  
   .side-column {
     width: 100%;
   }
-
-  .content-wrapper {
-    padding: 0 0.75rem;
-  }
-
-  .section-card {
-    padding: 1rem;
-  }
 }
 
-@media (max-width: 480px) {
-  body {
-    font-size: 14px;
-  }
-
-  h1 { font-size: 1.5rem; }
-  h2 { font-size: 1.25rem; }
-  h3 { font-size: 1.125rem; }
-
-  .button {
-    font-size: 0.875rem;
-    padding: 0.25rem 0.75rem;
+@media (max-width: 768px) {
+  .section-card {
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: 1px solid var(--linkedin-border);
   }
 }
 
@@ -133,7 +122,4 @@ h3 { font-size: 1.25rem; }
 .fade-in {
   animation: fadeIn 0.3s ease-in-out;
 }
-
-.section-card:hover {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
