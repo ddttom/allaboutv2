@@ -1,62 +1,47 @@
 # LinkedIn Profile Block
 
-This block creates a LinkedIn-style profile section using content provided in a Franklin document.
+This block creates a LinkedIn-style profile display for use in Franklin projects.
 
 ## Usage
 
-To use this block, add the following structure to your Franklin document:
+The LinkedIn Profile block displays a user's profile information in a format similar to LinkedIn.
 
-| LinkedIn Profile |
-|------------------|
-| [Profile Picture URL] |
-| [Name] |
-| [Title] |
-| [Location] |
-| [Connections] |
-| Contact info |
+## Authoring
 
-## Example
+To use this block in your Franklin project, create a table with the following structure in your Google Docs or Microsoft Word document:
 
-| LinkedIn Profile |
-|------------------|
-| https://example.com/profile-picture.jpg |
-| John Doe |
-| Software Engineer at Tech Company |
-| San Francisco Bay Area, California, United States |
-| 500+ connections |
-| Contact info |
+| LinkedIn Profile |                                                |
+|------------------|------------------------------------------------|
+| Profile Picture  | URL or path to the profile picture             |
+| Name             | Full name of the profile owner                 |
+| Title            | Professional title or current position         |
+| Location         | Geographic location                            |
+| Connections      | Number of connections (e.g., "500+ connections") |
 
 ## Styling
 
-The block uses custom CSS classes for styling. You can customize the appearance by modifying the `linkedin-profile.css` file.
+The block uses custom CSS classes for styling. The main classes are:
 
-## Features
+- `.linkedin-profile`: The main container
+- `.background-image`: The blue background at the top
+- `.profile-picture-container`: Contains the profile picture
+- `.profile-picture`: The actual profile picture
+- `.profile-name-content`: The name of the profile owner
+- `.profile-title-content`: The professional title
+- `.profile-location-content`: The location information
+- `.profile-connections-content`: The number of connections
+- `.contact-button`: The "Contact info" button
 
-- Displays a profile picture
-- Shows name, title, location, and connection information
-- Includes a "Contact info" button
-- Responsive design for both desktop and mobile views
+You can customize these classes in the `linkedin-profile.css` file to adjust the appearance of the block.
 
-## Customization
+## Behavior
 
-To customize the appearance of the LinkedIn Profile block:
-
-1. Modify the CSS in `linkedin-profile.css`
-2. Adjust the JavaScript in `linkedin-profile.js` for structural changes
+The block is static and does not have any interactive features beyond the "Contact info" button, which can be customized to perform an action when clicked.
 
 ## Accessibility
 
-- The profile picture includes an alt text for screen readers
-- Semantic HTML structure is used for better accessibility
+The block uses semantic HTML elements and includes an alt text for the profile picture to ensure accessibility.
 
 ## Dependencies
 
-This block relies on the following files:
-
-- `linkedin-profile.js`
-- `linkedin-profile.css`
-
-## Notes
-
-- Ensure that the profile picture URL is accessible and valid
-- The "Contact info" text will be automatically converted to a button
+This block does not have any external dependencies beyond the core Franklin libraries.
