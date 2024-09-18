@@ -10,17 +10,19 @@ export default function decorate(block) {
   block.insertBefore(backgroundDiv, block.firstChild);
 
   // Process profile picture
-  const profilePictureLink = block.children[0]?.querySelector('a');
-  if (profilePictureLink) {
-    const profilePictureContainer = document.createElement('div');
-    profilePictureContainer.className = 'profile-picture-container';
-    const profilePicture = document.createElement('img');
-    // Remove domain and protocol from the image URL
-    profilePicture.src = profilePictureLink.href.split('/').slice(-1)[0];
-    profilePicture.alt = 'Profile Picture';
-    profilePicture.className = 'profile-picture';
-    profilePictureContainer.appendChild(profilePicture);
-    block.replaceChild(profilePictureContainer, block.children[0]);
+  const profilePictureContainer = block.children[0];
+  if (profilePictureContainer) {
+    profilePictureContainer.classList.add('profile-picture-container');
+    const pictureElement = profilePictureContainer.querySelector('picture');
+    if (pictureElement) {
+      const imgElement = pictureElement.querySelector('img');
+      if (imgElement) {
+        imgElement.className = 'profile-picture';
+        imgElement.alt = 'Profile Picture';
+        // Remove domain and protocol from the image URL
+        imgElement.src = imgElement.src.split('/').slice(-1)[0];
+      }
+    }
   }
 
   // Add classes to other elements
@@ -36,7 +38,7 @@ export default function decorate(block) {
     const element = block.children[el.index];
     if (element) {
       element.classList.add(el.class);
-      const content = element.firstElementChild;
+      const content = element.querySelector('p');
       if (content) {
         content.classList.add(`${el.class}-content`);
       }
