@@ -16,9 +16,14 @@
   border-radius: 8px 8px 0 0;
 }
 
+.import-profile-summary .profile-info {
+  position: relative;
+  padding: 24px;
+}
+
 .import-profile-summary .profile-picture-container {
   position: absolute;
-  top: 132px;
+  top: -96px;
   left: 24px;
   width: 152px;
   height: 152px;
@@ -37,9 +42,8 @@
   object-fit: cover;
 }
 
-.import-profile-summary .profile-info {
-  padding: 24px;
-  padding-top: 88px;
+.import-profile-summary .profile-details {
+  padding-left: 176px;
 }
 
 .import-profile-summary h1 {
@@ -69,10 +73,11 @@
   .import-profile-summary .profile-picture-container {
     width: 128px;
     height: 128px;
-    top: 140px;
+    top: -80px;
   }
 
-  .import-profile-summary .profile-info {
-    padding-top: 72px;
+  .import-profile-summary .profile-details {
+    padding-left: 0;
+    padding-top: 64px;
   }
 }
