@@ -1,13 +1,12 @@
 # Imported LinkedIn Profile Demo
 
-This demo showcases the recreation of a LinkedIn profile using Franklin blocks. Each block represents a section of the profile, demonstrating how the various components work together to create a complete LinkedIn profile page.
+This demo showcases the recreation of a profile page in the linked-in style using Franklin blocks. Each block represents a section of the profile, demonstrating how the various components work together to create a complete  profile page.
 
 <!-- Global styling for the entire profile -->
 | import-styling |
 | :---- |
 
 <!-- Header with navigation and search -->
-<!-- Commented out as requested
 | import-header |
 | :---- |
 -->
@@ -16,8 +15,8 @@ This demo showcases the recreation of a LinkedIn profile using Franklin blocks. 
 | import-profile-summary |
 | :---- |
 | https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png |
-| Tobias Bocanegra |
-| Chief Technology Officer at Adobe |
+| Joh Doe |
+| Technology Officer at Adobe |
 | San Jose Bay Area, California, United States |
 | 500+ connections |
 | Contact info |
@@ -37,13 +36,13 @@ This demo showcases the recreation of a LinkedIn profile using Franklin blocks. 
 | import-activity |
 | :---- |
 | 3,542 followers |
-| Tobias Bocanegra posted this • 1w |
+| John Doe posted this  |
 | Excited to announce the latest innovations in Adobe Experience Cloud! Our team has been working tirelessly to bring you cutting-edge features that will transform the way businesses interact with their customers. Stay tuned for more updates! #AdobeExperienceCloud #DigitalTransformation |
 
 <!-- Work experience section -->
 | import-experience |
 | :---- |
-| Chief Technology Officer | Adobe | Jan 2022 - Present • 2 yrs 3 mos |
+| Technology Officer | Adobe | Jan 2022 - Present |
 | VP, Engineering | Adobe | Jan 2020 - Dec 2021 • 2 yrs |
 | Chief Architect | Day Software | Jan 2010 - Dec 2019 • 10 yrs |
 | Software Engineer | Tech Startup | Jan 2005 - Dec 2009 • 5 yrs |
@@ -102,7 +101,6 @@ This demo showcases the recreation of a LinkedIn profile using Franklin blocks. 
 | Artificial Intelligence and Machine Learning |
 
 <!-- Footer section -->
-<!-- Commented out as requested
 | import-footer |
 | :---- |
 -->
@@ -110,9 +108,9 @@ This demo showcases the recreation of a LinkedIn profile using Franklin blocks. 
 <!-- Metadata for SEO and page information -->
 | metadata |  |
 | :---- | :---- |
-| title | Tobias Bocanegra - Chief Technology Officer at Adobe |
-| description | LinkedIn profile of Tobias Bocanegra, CTO at Adobe, showcasing his experience in software architecture, cloud computing, and digital transformation. |
+| title | John Doe - Technology Officer at Adobe |
+| description | Profile of John Doe, Tech Officer at Adobe, showcasing his experience in software architecture, cloud computing, and digital transformation. |
 | json-ld | article |
 | image | https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png |
 | author | Tom Cranstoun |
-| longdescription | This page showcases a recreation of Tobias Bocanegra's LinkedIn profile using Franklin blocks, demonstrating his professional experience, education, skills, and accomplishments in the tech industry. |
+| longdescription | This page showcases a recreation of a LinkedIn profile using Franklin blocks. Each block represents a section of the profile, demonstrating how the various components work together to create a complete profile page. |
