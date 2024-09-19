@@ -14,7 +14,7 @@ This demo showcases the recreation of a profile page in the LinkedIn style using
 <!-- Profile summary with name, title, and location -->
 | import-profile-summary |
 | :---- |
-| https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png |
+| /media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png |
 | John Doe |
 | Technology Officer at Adobe |
 | San Jose Bay Area, California, United States |
