@@ -94,8 +94,8 @@ When creating tables for blocks, follow this structure:
 1. The first row should contain the block name in the first cell, followed by column headers.
 2. Use the following format for the header row:
 
-   | BlockName | |  |  | ... |
-   | :---- | :---- | :---- | :---- | :---- |
+   | BlockName |  ... |
+   | :----  | :---- |
 
 3. Subsequent rows contain the data for each column.
 
