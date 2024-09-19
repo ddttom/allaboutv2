@@ -18,3 +18,5 @@ when the user moves off the image start rotating again, immediately move to next
 Add keyboard navigation (left/right arrow keys) for manual image rotation
 
 Create the blocks, css, js, readme.md example.md and the demo.md file.  demo.md file showcases the component, describes the component, lists use cases,  with metadata 
+
+ensure that no styles leak out of the imagecycle container
