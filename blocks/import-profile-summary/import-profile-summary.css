@@ -43,9 +43,9 @@
 }
 
 .import-profile-summary .profile-details {
-  padding-top: 80px; // Increased padding to move content below the profile picture
-  padding-left: 24px; // Align with the left margin of the block
-  padding-right: 24px; // Ensure content doesn't touch the right edge
+  padding-top: 80px; /* Increased padding to move content below the profile picture */
+  padding-left: 24px; /* Align with the left margin of the block */
+  padding-right: 24px; /* Ensure content doesn't touch the right edge */
 }
 
 .import-profile-summary h1 {
