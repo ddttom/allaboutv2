@@ -243,7 +243,7 @@ When creating a README.md file for a Franklin (Adobe Edge Delivery Services) blo
 
 ### Franklin metadata
 
-Franklin contains metadata, this section is a typical metadata fraction in markdown format it includes promo material.
+Franklin contains metadata, this section is a typical metadata fraction in markdown format, when placing it in a demo.md do not put a heading before this block, do it silently 
 
 | metadata |  |
 | :---- | :---- |
