@@ -92,10 +92,10 @@ Use CSS variables for theming and consistency.
 When creating tables for blocks, follow this structure:
 
 1. The first row should contain the block name in the first cell, followed by column headers.
-2. Use the following format for the header row:
+2. Use something like the following format for the header row, if more than one column is required then extend the table as needed
 
-   | BlockName |  ... |
-   | :----  | :---- |
+   | BlockName | 
+   | :----  | 
 
 3. Subsequent rows contain the data for each column.
 
