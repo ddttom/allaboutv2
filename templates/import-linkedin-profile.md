@@ -1,12 +1,12 @@
-# Imported LinkedIn Profile Demo
+# Profile Demo
 
-This demo showcases the recreation of a profile page in the linked-in style using Franklin blocks. Each block represents a section of the profile, demonstrating how the various components work together to create a complete  profile page.
+This demo showcases the recreation of a profile page in the LinkedIn style using Franklin blocks. Each block represents a profile section, demonstrating how the various components work together to create a complete profile page. The prompt asked for a recreation of a LinkedIn page styling. 
 
 <!-- Global styling for the entire profile -->
 | import-styling |
 | :---- |
 
-<!-- Header with navigation and search -->
+<!-- Header with navigation and search  -
 | import-header |
 | :---- |
 -->
@@ -15,7 +15,7 @@ This demo showcases the recreation of a profile page in the linked-in style usin
 | import-profile-summary |
 | :---- |
 | https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png |
-| Joh Doe |
+| John Doe |
 | Technology Officer at Adobe |
 | San Jose Bay Area, California, United States |
 | 500+ connections |
@@ -100,7 +100,7 @@ This demo showcases the recreation of a profile page in the linked-in style usin
 | Cloud Native Computing Foundation |
 | Artificial Intelligence and Machine Learning |
 
-<!-- Footer section -->
+<!-- Footer section 
 | import-footer |
 | :---- |
 -->
@@ -113,4 +113,4 @@ This demo showcases the recreation of a profile page in the linked-in style usin
 | json-ld | article |
 | image | https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png |
 | author | Tom Cranstoun |
-| longdescription | This page showcases a recreation of a LinkedIn profile using Franklin blocks. Each block represents a section of the profile, demonstrating how the various components work together to create a complete profile page. |
+| longdescription | This page showcases a recreation of a LinkedIn profile using Franklin blocks. Each block represents a profile section, demonstrating how the various components work together to create a complete profile page. |
