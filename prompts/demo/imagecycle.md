@@ -13,9 +13,6 @@ it should rotate through each image every 5 seconds. provide a placement indicat
 when the user moves off the image start rotating again, immediately move to next image
 Add keyboard navigation (left/right arrow keys) for manual image rotation
 
-
-
-
-**Demo Page**
+Create JS,CSS, Example.md, readme.md, demo.md 
     * Create a demo page in Franklin format, in the demos folder that showcases the imported design. Add text describing the Demo
     * Generate appropriate metadata for the recreated design, including title, description, and other relevant fields.
