@@ -79,6 +79,6 @@
   }
 
   .import-profile-summary .profile-details {
-    padding-top: 64px; // Adjust for smaller profile picture on mobile
+    padding-top: 64px; /* Adjust for smaller profile picture on mobile */
   }
 }
