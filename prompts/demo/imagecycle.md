@@ -13,7 +13,7 @@ This document describes the Imagecycle block, a Franklin component for displayin
 3. Image handling:
    - Use fully qualified URLs
    - Do not use createOptimizedPicture()
-   - Images should fit within 400px width
+   - Images should fit within 400px width, but the page should be default size
 4. Behavior:
    - Randomize image order on load
    - Display one image at a time
