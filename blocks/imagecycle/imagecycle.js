@@ -17,8 +17,8 @@ export default async function decorate(block) {
     const imgWrapper = document.createElement('div');
     imgWrapper.className = 'imagecycle-image';
     imgWrapper.style.display = index === 0 ? 'block' : 'none';
-    img.style.width = '400px';
-    img.style.height = '400px';
+    img.style.width = '100%';
+    img.style.height = '100%';
     img.style.objectFit = 'cover';
     imgWrapper.appendChild(img);
     imageContainer.appendChild(imgWrapper);
