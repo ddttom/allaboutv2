@@ -1,4 +1,0 @@
-# import-footer
-
-| import-footer |
-| :---- |

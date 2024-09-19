@@ -1,12 +1,12 @@
-# Imported LinkedIn Profile Demo
+# Profile Demo
 
-This demo showcases the recreation of a profile page in the linked-in style using Franklin blocks. Each block represents a section of the profile, demonstrating how the various components work together to create a complete  profile page.
+This demo showcases the recreation of a profile page in the LinkedIn style using Franklin blocks. Each block represents a profile section, demonstrating how the various components work together to create a complete profile page. The prompt asked for a recreation of a LinkedIn page styling. 
 
 <!-- Global styling for the entire profile -->
 | import-styling |
 | :---- |
 
-<!-- Header with navigation and search -->
+<!-- Header with navigation and search  -
 | import-header |
 | :---- |
 -->
@@ -14,9 +14,9 @@ This demo showcases the recreation of a profile page in the linked-in style usin
 <!-- Profile summary with name, title, and location -->
 | import-profile-summary |
 | :---- |
-| https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png |
-| Joh Doe |
-| Technology Officer at Adobe |
+| /media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png |
+| John Doe |
+| Technology Officer at Media Company |
 | San Jose Bay Area, California, United States |
 | 500+ connections |
 | Contact info |
@@ -42,16 +42,16 @@ This demo showcases the recreation of a profile page in the linked-in style usin
 <!-- Work experience section -->
 | import-experience |
 | :---- |
-| Technology Officer | Adobe | Jan 2022 - Present |
-| VP, Engineering | Adobe | Jan 2020 - Dec 2021 • 2 yrs |
-| Chief Architect | Day Software | Jan 2010 - Dec 2019 • 10 yrs |
+| Technology Officer | Media Company | Jan 2022 - Present |
+| VP, Engineering | Media Company | Jan 2020 - Dec 2021 • 2 yrs |
+| Chief Architect | Daytime Software | Jan 2010 - Dec 2019 • 10 yrs |
 | Software Engineer | Tech Startup | Jan 2005 - Dec 2009 • 5 yrs |
 
 <!-- Education section -->
 | import-education |
 | :---- |
-| ETH Zurich | Master of Science in Computer Science | 2000 - 2002 |
-| ETH Zurich | Bachelor of Science in Computer Science | 1995 - 2000 |
+| Zurich | Master of Science in Computer Science | 2000 - 2002 |
+| Zurich | Bachelor of Science in Computer Science | 1995 - 2000 |
 | Online Course | Advanced Machine Learning | 2018 |
 | Stanford University | Executive Leadership Program | 2015 |
 
@@ -94,13 +94,12 @@ This demo showcases the recreation of a profile page in the linked-in style usin
 | import-interests |
 | :---- |
 | Adobe |
-| ETH Zurich |
 | World Economic Forum |
 | TechCrunch |
 | Cloud Native Computing Foundation |
 | Artificial Intelligence and Machine Learning |
 
-<!-- Footer section -->
+<!-- Footer section 
 | import-footer |
 | :---- |
 -->
@@ -113,4 +112,4 @@ This demo showcases the recreation of a profile page in the linked-in style usin
 | json-ld | article |
 | image | https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png |
 | author | Tom Cranstoun |
-| longdescription | This page showcases a recreation of a LinkedIn profile using Franklin blocks. Each block represents a section of the profile, demonstrating how the various components work together to create a complete profile page. |
+| longdescription | This page showcases a recreation of a LinkedIn profile using Franklin blocks. Each block represents a profile section, demonstrating how the various components work together to create a complete profile page. |
