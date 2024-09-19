@@ -1,0 +1,39 @@
+.imagecycle {
+  background-color: lightblue;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.imagecycle-container {
+  position: relative;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.imagecycle-image {
+  display: none;
+}
+
+.imagecycle-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+.imagecycle-indicators {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.imagecycle-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.imagecycle-indicator.active {
+  background-color: #333;
+}
