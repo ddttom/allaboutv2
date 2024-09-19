@@ -59,8 +59,6 @@
   }
 }
 
-@import url('/blocks/import-styling/import-styling.css');
-
 body {
   font-size: var(--body-font-size-m);
   margin: 0;
