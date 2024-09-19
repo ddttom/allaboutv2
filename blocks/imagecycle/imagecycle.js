@@ -22,40 +22,39 @@ export default async function decorate(block) {
   let currentIndex = 0;
   let intervalId;
 
-  const showImage = (index) => {
+  function showImage(index) {
     imageContainer.innerHTML = '';
-    const img = images[index].cloneNode(true);
+    const img = createOptimizedPicture(images[index].src, images[index].alt, false, [{ width: 400 }]);
     imageContainer.appendChild(img);
+    updateIndicators();
+  }
 
-    indicators.innerHTML = '';
-    images.forEach((_, i) => {
-      const dot = document.createElement('span');
-      dot.className = `imagecycle-indicator ${i === index ? 'active' : ''}`;
-      indicators.appendChild(dot);
-    });
-  };
+  function updateIndicators() {
+    indicators.innerHTML = images.map((_, index) => 
+      `<span class="indicator${index === currentIndex ? ' active' : ''}"></span>`
+    ).join('');
+  }
 
-  const nextImage = () => {
+  function nextImage() {
     currentIndex = (currentIndex + 1) % images.length;
     showImage(currentIndex);
-  };
+  }
 
-  const prevImage = () => {
+  function prevImage() {
     currentIndex = (currentIndex - 1 + images.length) % images.length;
     showImage(currentIndex);
-  };
+  }
 
-  const startRotation = () => {
+  function startRotation() {
     intervalId = setInterval(nextImage, 5000);
-  };
+  }
 
-  const stopRotation = () => {
+  function stopRotation() {
     clearInterval(intervalId);
-  };
+  }
 
   container.addEventListener('mouseenter', stopRotation);
   container.addEventListener('mouseleave', () => {
-    stopRotation();
     nextImage();
     startRotation();
   });
@@ -67,8 +66,4 @@ export default async function decorate(block) {
 
   showImage(currentIndex);
   startRotation();
-}
-
-export default async function decorate(block) {
-  await createImageCycle(block);
 }
