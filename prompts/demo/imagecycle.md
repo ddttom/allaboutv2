@@ -25,6 +25,4 @@ This document describes the Imagecycle block, a Franklin component for displayin
 5. Styling:
    - Background color: light blue
 
-## Demo Creation
-
-Create a demo.md file which showcases the component, describes the component, lists use cases,  with metadata
+Create the blocks, css, js, readme.md example.md and the demo.md file.  demo.md file showcases the component, describes the component, lists use cases,  with metadata
