@@ -5,23 +5,9 @@
   <title>Tom Cranstoun - AEM Consultant</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="/scripts/scripts.js" type="module" crossorigin="use-credentials"></script>
-  <script type="module">
-    import { sampleRUM } from '/scripts/aem.js';
-
-    window.addEventListener('load', () => {
-      sampleRUM('load');
-    });
-  </script>
   <link rel="stylesheet" href="/styles/styles.css">
   <link rel="stylesheet" href="/styles/lazy-styles.css">
-  <script>
-    window.addEventListener('load', () => {
-      const mainContent = document.querySelector('main');
-      if (window.location.port !== '3000') {
-        mainContent.innerHTML = '<h1>Error: This page must be viewed on port 3000</h1>';
-      }
-    });
-  </script>
+  
 </head>
 
 <body>
