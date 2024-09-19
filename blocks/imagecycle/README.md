@@ -16,27 +16,22 @@ To use the Imagecycle block, create a table in your Franklin document with the f
 
 1. In Google Docs or Microsoft Word, create a table with "Imagecycle" in the first cell.
 2. Add images to subsequent rows, one image per row.
-3. Ensure that image URLs are fully qualified (complete URLs).
+3. Ensure that the image URLs are fully qualified (complete URLs).
 
 ## Styling
 
 The Imagecycle block uses the following CSS classes for customization:
 - `.imagecycle-container`: Main container for the carousel
 - `.imagecycle-image-container`: Container for the images
-- `.imagecycle-image`: Wrapper for individual images
-- `.imagecycle-indicators`: Container for navigation indicators
+- `.imagecycle-indicators`: Container for the navigation indicators
+- `.imagecycle-indicator`: Individual navigation indicator
 
 ## Behavior
 
-- Images are randomized on load.
-- The carousel automatically rotates through images every 5 seconds.
-- Rotation pauses when the user hovers over the image.
-- Rotation resumes immediately after the user moves away from the image.
-- Users can navigate manually using left/right arrow keys.
-
-## Dependencies
-
-This block has no external dependencies.
+- Images rotate automatically every 5 seconds.
+- Rotation pauses on hover and resumes when the mouse leaves the carousel.
+- Users can navigate manually using the indicators or left/right arrow keys.
+- The initial image is randomly selected on load.
 
 ## Accessibility
 
@@ -45,7 +40,7 @@ This block has no external dependencies.
 
 ## Suggestions for Improvement
 
-1. Add touch swipe support for mobile devices.
-2. Implement lazy loading for better performance with many images.
-3. Add alt text support for images to improve accessibility.
-4. Create an option for authors to control rotation speed and randomization.
+1. Add alt text support for images to improve accessibility.
+2. Implement touch swipe gestures for mobile devices.
+3. Add options for customizing rotation speed and transition effects.
+4. Create an option to disable autoplay for users who prefer manual navigation.

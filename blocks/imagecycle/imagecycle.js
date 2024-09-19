@@ -10,17 +10,37 @@ export default async function decorate(block) {
   let currentIndex = 0;
   let intervalId;
 
-  // Randomize image order
-  images.sort(() => Math.random() - 0.5);
+  function showImage(index) {
+    images.forEach((img, i) => {
+      img.style.display = i === index ? 'block' : 'none';
+      indicators.children[i].classList.toggle('active', i === index);
+    });
+  }
+
+  function rotateImage() {
+    currentIndex = (currentIndex + 1) % images.length;
+    showImage(currentIndex);
+  }
+
+  function startRotation() {
+    intervalId = setInterval(rotateImage, 5000);
+  }
+
+  function stopRotation() {
+    clearInterval(intervalId);
+  }
 
   images.forEach((img, index) => {
-    const imgWrapper = document.createElement('div');
-    imgWrapper.className = 'imagecycle-image';
-    imgWrapper.appendChild(img);
-    imageContainer.appendChild(imgWrapper);
-
+    img.style.display = 'none';
+    imageContainer.appendChild(img);
     const indicator = document.createElement('span');
     indicator.className = 'imagecycle-indicator';
+    indicator.addEventListener('click', () => {
+      currentIndex = index;
+      showImage(currentIndex);
+      stopRotation();
+      startRotation();
+    });
     indicators.appendChild(indicator);
   });
 
@@ -29,47 +49,29 @@ export default async function decorate(block) {
   block.textContent = '';
   block.appendChild(container);
 
-  function showImage(index) {
-    imageContainer.style.transform = `translateX(-${index * 100}%)`;
-    [...indicators.children].forEach((indicator, i) => {
-      indicator.classList.toggle('active', i === index);
-    });
-  }
-
-  function nextImage() {
-    currentIndex = (currentIndex + 1) % images.length;
-    showImage(currentIndex);
-  }
-
-  function prevImage() {
-    currentIndex = (currentIndex - 1 + images.length) % images.length;
-    showImage(currentIndex);
-  }
-
-  function startRotation() {
-    intervalId = setInterval(nextImage, 5000);
-  }
-
-  function stopRotation() {
-    clearInterval(intervalId);
-  }
+  // Randomize initial image
+  currentIndex = Math.floor(Math.random() * images.length);
+  showImage(currentIndex);
 
   container.addEventListener('mouseenter', stopRotation);
   container.addEventListener('mouseleave', () => {
-    nextImage();
+    rotateImage();
     startRotation();
   });
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') {
-      prevImage();
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      showImage(currentIndex);
       stopRotation();
+      startRotation();
     } else if (e.key === 'ArrowRight') {
-      nextImage();
+      currentIndex = (currentIndex + 1) % images.length;
+      showImage(currentIndex);
       stopRotation();
+      startRotation();
     }
   });
 
-  showImage(currentIndex);
   startRotation();
 }
