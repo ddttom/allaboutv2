@@ -10,7 +10,7 @@ Create a franklin block with images, named imagecycle
 
 the first cell in the table is the table name, subsequent rows contain a picture element or an href element , extract the path to the image and use it as an image.  
 The images are fully qualified urls, do not use  createOptimizedPicture(). use as is.
-ensure that the image fit 400 px wide by 40 px tall, on loading the images randomize them, make the background light blue in color.
+ensure that the images fit 400 px wide by 400 px tall, on loading the images randomize them, make the background light blue in color.
 read all of the rows when creating the block
 only display one image at a time
 it should rotate through each image every 5 seconds. provide a placement indicator. if the user hovers over the image stop rotating.

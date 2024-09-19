@@ -10,16 +10,40 @@ export default async function decorate(block) {
   let currentIndex = 0;
   let intervalId;
 
+  // Randomize images
+  images.sort(() => Math.random() - 0.5);
+
+  images.forEach((img, index) => {
+    const imgWrapper = document.createElement('div');
+    imgWrapper.className = 'imagecycle-image';
+    imgWrapper.style.display = index === 0 ? 'block' : 'none';
+    img.style.width = '400px';
+    img.style.height = '400px';
+    img.style.objectFit = 'cover';
+    imgWrapper.appendChild(img);
+    imageContainer.appendChild(imgWrapper);
+
+    const indicator = document.createElement('span');
+    indicator.className = 'imagecycle-indicator';
+    indicator.setAttribute('data-index', index);
+    indicators.appendChild(indicator);
+  });
+
+  container.appendChild(imageContainer);
+  container.appendChild(indicators);
+  block.textContent = '';
+  block.appendChild(container);
+
   function showImage(index) {
-    images.forEach((img, i) => {
-      img.style.display = i === index ? 'block' : 'none';
+    images.forEach((_, i) => {
+      imageContainer.children[i].style.display = i === index ? 'block' : 'none';
       indicators.children[i].classList.toggle('active', i === index);
     });
+    currentIndex = index;
   }
 
   function rotateImage() {
-    currentIndex = (currentIndex + 1) % images.length;
-    showImage(currentIndex);
+    showImage((currentIndex + 1) % images.length);
   }
 
   function startRotation() {
@@ -30,48 +54,33 @@ export default async function decorate(block) {
     clearInterval(intervalId);
   }
 
-  images.forEach((img, index) => {
-    img.style.display = 'none';
-    imageContainer.appendChild(img);
-    const indicator = document.createElement('span');
-    indicator.className = 'imagecycle-indicator';
-    indicator.addEventListener('click', () => {
-      currentIndex = index;
-      showImage(currentIndex);
-      stopRotation();
-      startRotation();
-    });
-    indicators.appendChild(indicator);
-  });
-
-  container.appendChild(imageContainer);
-  container.appendChild(indicators);
-  block.textContent = '';
-  block.appendChild(container);
-
-  // Randomize initial image
-  currentIndex = Math.floor(Math.random() * images.length);
-  showImage(currentIndex);
-
   container.addEventListener('mouseenter', stopRotation);
   container.addEventListener('mouseleave', () => {
     rotateImage();
     startRotation();
   });
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') {
-      currentIndex = (currentIndex - 1 + images.length) % images.length;
-      showImage(currentIndex);
-      stopRotation();
-      startRotation();
-    } else if (e.key === 'ArrowRight') {
-      currentIndex = (currentIndex + 1) % images.length;
-      showImage(currentIndex);
+  indicators.addEventListener('click', (e) => {
+    if (e.target.classList.contains('imagecycle-indicator')) {
+      const index = parseInt(e.target.getAttribute('data-index'), 10);
+      showImage(index);
       stopRotation();
       startRotation();
     }
   });
 
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+      showImage((currentIndex - 1 + images.length) % images.length);
+      stopRotation();
+      startRotation();
+    } else if (e.key === 'ArrowRight') {
+      showImage((currentIndex + 1) % images.length);
+      stopRotation();
+      startRotation();
+    }
+  });
+
+  showImage(0);
   startRotation();
 }

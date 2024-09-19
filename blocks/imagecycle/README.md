@@ -1,6 +1,6 @@
 # Imagecycle
 
-The Imagecycle block is a Franklin component that displays a rotating image carousel with automatic and manual navigation options.
+The Imagecycle block is a Franklin component that displays a rotating image carousel with randomized images.
 
 ## Usage
 
@@ -16,26 +16,28 @@ To use the Imagecycle block, create a table in your Franklin document with the f
 
 1. In Google Docs or Microsoft Word, create a table with "Imagecycle" in the first cell.
 2. Add images to subsequent rows, one image per row.
-3. Ensure that the image URLs are fully qualified (complete URLs).
+3. Ensure that the image URLs are fully qualified (starting with "https://").
 
 ## Styling
 
 The Imagecycle block uses the following CSS classes for customization:
-- `.imagecycle-container`: Main container for the carousel
-- `.imagecycle-image-container`: Container for the images
-- `.imagecycle-indicators`: Container for the navigation indicators
-- `.imagecycle-indicator`: Individual navigation indicator
+- `.imagecycle-container`
+- `.imagecycle-image-container`
+- `.imagecycle-image`
+- `.imagecycle-indicators`
+- `.imagecycle-indicator`
 
 ## Behavior
 
-- Images rotate automatically every 5 seconds.
-- Rotation pauses on hover and resumes when the mouse leaves the carousel.
-- Users can navigate manually using the indicators or left/right arrow keys.
-- The initial image is randomly selected on load.
+- Images are randomized on load.
+- The carousel rotates through images every 5 seconds.
+- Rotation stops when hovering over the image and resumes immediately after moving away.
+- Clicking on indicators allows manual image selection.
+- Keyboard navigation is supported using left and right arrow keys.
 
 ## Accessibility
 
-- Keyboard navigation is supported using left and right arrow keys.
+- Keyboard navigation is supported for manual image rotation.
 - The component uses semantic HTML structure for better screen reader compatibility.
 
 ## Suggestions for Improvement
@@ -43,4 +45,5 @@ The Imagecycle block uses the following CSS classes for customization:
 1. Add alt text support for images to improve accessibility.
 2. Implement touch swipe gestures for mobile devices.
 3. Add options for customizing rotation speed and transition effects.
-4. Create an option to disable autoplay for users who prefer manual navigation.
+4. Implement lazy loading for better performance with many images.
+5. Add support for captions or descriptions for each image.
