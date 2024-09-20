@@ -42,7 +42,7 @@ function sanitizeHTML(html) {
   const doc = parser.parseFromString(html, 'text/html');
   
   // Remove potentially harmful elements and attributes
-  const harmfulTags = ['script', 'iframe', 'object', 'embed'];
+  const harmfulTags = ['script', 'object', 'embed'];
   const harmfulAttributes = ['onerror', 'onload', 'onclick', 'onmouseover'];
   
   harmfulTags.forEach(tag => {
@@ -56,6 +56,27 @@ function sanitizeHTML(html) {
     harmfulAttributes.forEach(attr => {
       el.removeAttribute(attr);
     });
+    
+    // Special handling for iframes
+    if (el.tagName.toLowerCase() === 'iframe') {
+      // Allow only specific attributes
+      const allowedAttributes = ['src', 'width', 'height', 'frameborder', 'allowfullscreen', 'allow'];
+      Array.from(el.attributes).forEach(attr => {
+        if (!allowedAttributes.includes(attr.name)) {
+          el.removeAttribute(attr.name);
+        }
+      });
+      
+      // Ensure src is from a trusted domain
+      const trustedDomains = ['ooo.mmhmm.app']; // Add more trusted domains as needed
+      const src = el.getAttribute('src');
+      if (src) {
+        const url = new URL(src, window.location.origin);
+        if (!trustedDomains.includes(url.hostname)) {
+          el.removeAttribute('src');
+        }
+      }
+    }
   });
   
   return doc.body.innerHTML;
