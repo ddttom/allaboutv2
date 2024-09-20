@@ -1,8 +1,16 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export default async function decorate(block) {
-  const content = block.innerHTML;
+  let content = block.innerHTML.trim();
   block.innerHTML = '';
+
+  // Remove surrounding quotes if present
+  if (content.startsWith('"') && content.endsWith('"')) {
+    content = content.slice(1, -1);
+  }
+
+  // Decode HTML entities
+  content = decodeHTMLEntities(content);
 
   // Sanitize the content
   const sanitizedContent = sanitizeHTML(content);
@@ -21,6 +29,12 @@ export default async function decorate(block) {
     console.warn('Invalid HTML structure detected');
     reportIssue('Invalid HTML structure', sanitizedContent);
   }
+}
+
+function decodeHTMLEntities(text) {
+  const textarea = document.createElement('textarea');
+  textarea.innerHTML = text;
+  return textarea.value;
 }
 
 function sanitizeHTML(html) {
