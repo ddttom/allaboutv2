@@ -1,0 +1,49 @@
+:root {
+  --linkedin-blue: #0a66c2;
+  --linkedin-light-gray: #f3f2ef;
+  --linkedin-dark-gray: #5e5e5e;
+  --linkedin-text: #000000;
+  --linkedin-white: #ffffff;
+  --linkedin-font: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Fira Sans', Ubuntu, Oxygen, 'Oxygen Sans', Cantarell, 'Droid Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Lucida Grande', Helvetica, Arial, sans-serif;
+}
+
+body {
+  font-family: var(--linkedin-font);
+  background-color: var(--linkedin-light-gray);
+  color: var(--linkedin-text);
+}
+
+.import-styling {
+  max-width: 1128px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section-card {
+  background-color: var(--linkedin-white);
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+  padding: 24px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--linkedin-text);
+  margin-bottom: 16px;
+}
+
+.button {
+  background-color: var(--linkedin-blue);
+  color: var(--linkedin-white);
+  border: none;
+  border-radius: 16px;
+  padding: 6px 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #004182;
+}
