@@ -1,0 +1,61 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+
+export default async function decorate(block) {
+  const content = block.innerHTML;
+  block.innerHTML = '';
+
+  // Sanitize the content
+  const sanitizedContent = sanitizeHTML(content);
+
+  // Validate HTML structure
+  if (isValidHTML(sanitizedContent)) {
+    try {
+      block.insertAdjacentHTML('beforeend', sanitizedContent);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Error inserting HTML:', error);
+      reportIssue('Error inserting HTML', error);
+    }
+  } else {
+    // eslint-disable-next-line no-console
+    console.warn('Invalid HTML structure detected');
+    reportIssue('Invalid HTML structure', sanitizedContent);
+  }
+}
+
+function sanitizeHTML(html) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  
+  // Remove potentially harmful elements and attributes
+  const harmfulTags = ['script', 'iframe', 'object', 'embed'];
+  const harmfulAttributes = ['onerror', 'onload', 'onclick', 'onmouseover'];
+  
+  harmfulTags.forEach(tag => {
+    const elements = doc.getElementsByTagName(tag);
+    for (let i = elements.length - 1; i >= 0; i--) {
+      elements[i].parentNode.removeChild(elements[i]);
+    }
+  });
+  
+  doc.body.querySelectorAll('*').forEach(el => {
+    harmfulAttributes.forEach(attr => {
+      el.removeAttribute(attr);
+    });
+  });
+  
+  return doc.body.innerHTML;
+}
+
+function isValidHTML(html) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  return doc.body.querySelector('parsererror') === null;
+}
+
+function reportIssue(type, details) {
+  // Implement your reporting mechanism here
+  // This could be an API call to a logging service or a custom reporting system
+  // eslint-disable-next-line no-console
+  console.warn(`Raw Block Issue: ${type}`, details);
+}
