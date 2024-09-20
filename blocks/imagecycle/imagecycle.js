@@ -66,6 +66,34 @@ export default async function decorate(block) {
     clearInterval(intervalId);
   }
 
+  function createArrow(direction) {
+    const arrow = document.createElement('button');
+    arrow.className = `imagecycle-arrow imagecycle-arrow-${direction}`;
+    arrow.setAttribute('aria-label', `${direction === 'prev' ? 'Previous' : 'Next'} image`);
+    arrow.innerHTML = direction === 'prev' ? '&#10094;' : '&#10095;';
+    return arrow;
+  }
+
+  const prevArrow = createArrow('prev');
+  const nextArrow = createArrow('next');
+
+  prevArrow.addEventListener('click', () => {
+    stopRotation();
+    showImage(currentIndex - 1);
+  });
+
+  nextArrow.addEventListener('click', () => {
+    stopRotation();
+    showImage(currentIndex + 1);
+  });
+
+  const arrowContainer = document.createElement('div');
+  arrowContainer.className = 'imagecycle-arrow-container';
+  arrowContainer.appendChild(prevArrow);
+  arrowContainer.appendChild(nextArrow);
+
+  carousel.appendChild(arrowContainer);
+
   carousel.addEventListener('mouseenter', stopRotation);
   carousel.addEventListener('mouseleave', () => {
     showImage(currentIndex + 1);

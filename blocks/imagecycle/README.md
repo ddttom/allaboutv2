@@ -27,18 +27,22 @@ The Imagecycle block uses the following CSS classes for customization:
 - `.imagecycle-carousel`: Carousel container
 - `.imagecycle-image-container`: Image container
 - `.imagecycle-indicators`: Navigation indicators
+- `.imagecycle-arrow-container`: Container for navigation arrows
+- `.imagecycle-arrow`: Navigation arrow buttons
 
 ## Behavior
 
-- Images are randomized on load.
+- Images are shuffled randomly on each page load.
 - The carousel automatically rotates through images every 5 seconds.
-- Rotation pauses on hover and resumes when the mouse leaves.
-- Users can navigate using left/right arrow keys.
+- Rotation pauses when the mouse hovers over the carousel.
+- Users can navigate using left and right arrow keys.
+- Users can also navigate using the on-screen arrow buttons below the image.
 
 ## Accessibility
 
 - Images have appropriate alt text.
 - Keyboard navigation is supported for manual image rotation.
+- On-screen arrow buttons are keyboard accessible and have appropriate aria labels.
 
 ## Suggestions for Improvement
 
