@@ -23,20 +23,24 @@ To use the Imagecycle block, create a table in your Franklin document with the f
 The Imagecycle block uses the following CSS classes for customization:
 - `.imagecycle`: Main container
 - `.imagecycle-container`: Carousel container
-- `.imagecycle-image-container`: Image display area
+- `.imagecycle-image-container`: Image display area (includes a 2px border)
 - `.imagecycle-indicators`: Navigation indicators
+- `.imagecycle-arrow`: Navigation arrows
+
+The image is displayed within a container that has a 2px solid border, providing a frame-like effect.
 
 ## Behavior
 
 - Images are randomized on load.
 - Automatic rotation occurs every 5 seconds.
 - Rotation pauses on hover and resumes when the mouse leaves.
-- Manual navigation is possible using left/right arrow keys.
+- Manual navigation is possible using left/right arrow keys or on-screen arrows.
 
 ## Accessibility
 
 - Keyboard navigation is supported using left and right arrow keys.
 - Visual indicators show the current active image.
+- On-screen arrows provide additional navigation options.
 
 ## Suggestions for Improvement
 
@@ -45,3 +49,4 @@ The Imagecycle block uses the following CSS classes for customization:
 3. Add alt text support for better accessibility.
 4. Create options for different transition effects.
 5. Allow customization of rotation speed and behavior through metadata.
+6. Implement ARIA labels for improved screen reader support.

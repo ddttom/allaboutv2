@@ -14,6 +14,16 @@ export default async function decorate(block) {
   indicators.className = 'imagecycle-indicators';
   container.appendChild(indicators);
 
+  const leftArrow = document.createElement('a');
+  leftArrow.className = 'imagecycle-arrow imagecycle-arrow-left';
+  leftArrow.innerHTML = '&#10094;';
+  container.appendChild(leftArrow);
+
+  const rightArrow = document.createElement('a');
+  rightArrow.className = 'imagecycle-arrow imagecycle-arrow-right';
+  rightArrow.innerHTML = '&#10095;';
+  container.appendChild(rightArrow);
+
   let currentIndex = 0;
   let intervalId;
 
@@ -29,14 +39,14 @@ export default async function decorate(block) {
     ).join('');
   }
 
-  function rotateImage() {
-    currentIndex = (currentIndex + 1) % images.length;
+  function rotateImage(direction = 1) {
+    currentIndex = (currentIndex + direction + images.length) % images.length;
     showImage(currentIndex);
   }
 
   function startRotation() {
     clearInterval(intervalId);
-    intervalId = setInterval(rotateImage, 5000);
+    intervalId = setInterval(() => rotateImage(1), 5000);
   }
 
   function stopRotation() {
@@ -53,20 +63,27 @@ export default async function decorate(block) {
   startRotation();
 
   container.addEventListener('mouseenter', stopRotation);
-  container.addEventListener('mouseleave', () => {
-    rotateImage();
-    startRotation();
+  container.addEventListener('mouseleave', startRotation);
+
+  leftArrow.addEventListener('click', (e) => {
+    e.preventDefault();
+    rotateImage(-1);
+    stopRotation();
+  });
+
+  rightArrow.addEventListener('click', (e) => {
+    e.preventDefault();
+    rotateImage(1);
+    stopRotation();
   });
 
   // Keyboard navigation
   document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') {
-      currentIndex = (currentIndex - 1 + images.length) % images.length;
-      showImage(currentIndex);
+      rotateImage(-1);
       stopRotation();
     } else if (e.key === 'ArrowRight') {
-      currentIndex = (currentIndex + 1) % images.length;
-      showImage(currentIndex);
+      rotateImage(1);
       stopRotation();
     }
   });
