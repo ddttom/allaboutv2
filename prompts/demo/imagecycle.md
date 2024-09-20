@@ -18,5 +18,5 @@ rotate through each image every 5 seconds. provide a placement indicator. if the
 when the user moves off the image start rotating again, immediately move to next image
 Add keyboard navigation (left/right arrow keys) for manual image rotation
 
-Create the blocks, css, js, readme.md example.md and the demo.md file.  demo.md file showcases the component, describes the component, lists use cases,  with metadata 
+Create the blocks, css, js, readme.md example.md and the demo.md file.  demo.md file should have a title, then the component, then describe the component, lists use cases,  with metadata 
 
