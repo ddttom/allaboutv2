@@ -198,7 +198,7 @@ export default async function decorate(block) {
           contentToCopy = contentToCopy.split('\n').map(line => line.trim()).join('\n');
         }
         
-        // Remove opening and closing quotes only for 'text' type content
+        // Remove opening and closing quotes (both straight and typographical) only for 'text' type content
         if (fileType === 'text') {
           contentToCopy = contentToCopy.replace(/^["'""]|["'""]$/g, '').trim();
         }
