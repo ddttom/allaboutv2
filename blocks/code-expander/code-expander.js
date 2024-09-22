@@ -7,7 +7,6 @@ const TERMINAL_COMMANDS = /^(npm|node|cat|ls|cd|mkdir|rm|cp|mv|echo|grep|sed|awk
 const JS_KEYWORDS = ['export', 'import', 'async', 'const', 'let', 'function'];
 
 export default async function decorate(block) {
-  console.log('Code Expander: decorate function called');
   const codeElements = document.querySelectorAll('code');
 
   const highlightJS = (code) => {
@@ -168,9 +167,6 @@ export default async function decorate(block) {
       fileType = 'text';
     }
 
-    // Add this right after the file type is determined
-    console.log('Detected file type:', fileType);
-
     copyButton.innerHTML = `📋 <span class="code-expander-copy-text">Copy ${fileType} ${fileType === 'Terminal' ? 'code' : 'to clipboard'}</span>`;
     copyButton.setAttribute('aria-label', `Copy ${fileType} ${fileType === 'Terminal' ? 'code' : 'to clipboard'}`);
     copyButton.title = `Copy ${fileType} ${fileType === 'Terminal' ? 'code' : 'to clipboard'}`;
@@ -194,20 +190,24 @@ export default async function decorate(block) {
     codeElement.parentNode.replaceChild(wrapper, codeElement);
 
     copyButton.addEventListener('click', async () => {
-      console.log(`Copying ${fileType} content`);
       try {
         let contentToCopy = originalContent.trim();
+        
+        console.log(`Before processing (${fileType}):`, contentToCopy);
         
         if (fileType === 'JavaScript') {
           contentToCopy = contentToCopy.split('\n').map(line => line.trim()).join('\n');
         }
         
         if (fileType === 'text') {
+          console.log('Before quote removal:', contentToCopy);
           contentToCopy = contentToCopy.replace(/^["'""]|["'""]$/g, '').trim();
+          console.log('After quote removal:', contentToCopy);
         }
         
+        console.log(`After processing (${fileType}):`, contentToCopy);
+        
         await navigator.clipboard.writeText(contentToCopy);
-        console.log(`${fileType} content copied successfully`);
         
         copyButton.innerHTML = '✅ <span class="code-expander-copy-text">Copied!</span>';
         copyButton.setAttribute('aria-label', `${fileType} copied to clipboard`);
@@ -220,8 +220,5 @@ export default async function decorate(block) {
         console.error(`Error copying ${fileType} content:`, err.message);
       }
     });
-
-    console.log('File Type:', fileType);
-    console.log('Highlighted Code:', displayCode);
   });
 }
