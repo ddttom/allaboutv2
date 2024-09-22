@@ -194,10 +194,9 @@ export default async function decorate(block) {
     codeElement.parentNode.replaceChild(wrapper, codeElement);
 
     copyButton.addEventListener('click', async () => {
-      alert('Copy button clicked');
+      console.log(`Copying ${fileType} content`);
       try {
         let contentToCopy = originalContent.trim();
-        alert(`File type: ${fileType}\nContent to be copied: ${contentToCopy.substring(0, 50)}...`);
         
         if (fileType === 'JavaScript') {
           contentToCopy = contentToCopy.split('\n').map(line => line.trim()).join('\n');
@@ -208,7 +207,7 @@ export default async function decorate(block) {
         }
         
         await navigator.clipboard.writeText(contentToCopy);
-        alert('Content copied to clipboard');
+        console.log(`${fileType} content copied successfully`);
         
         copyButton.innerHTML = '✅ <span class="code-expander-copy-text">Copied!</span>';
         copyButton.setAttribute('aria-label', `${fileType} copied to clipboard`);
@@ -216,10 +215,9 @@ export default async function decorate(block) {
         setTimeout(() => {
           copyButton.innerHTML = `📋 <span class="code-expander-copy-text">Copy ${fileType} to clipboard</span>`;
           copyButton.setAttribute('aria-label', `Copy ${fileType} to clipboard`);
-          alert('Copy button reset');
         }, COPY_BUTTON_RESET_DELAY);
       } catch (err) {
-        alert(`Error in copy process: ${err.message}`);
+        console.error(`Error copying ${fileType} content:`, err.message);
       }
     });
 
