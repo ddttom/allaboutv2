@@ -10,9 +10,9 @@ export default async function decorate(block) {
     const highlightedLines = lines.map((line, index) => {
       const lineNumber = index + 1;
       const highlightedLine = line
-        .replace(strings, (match) => `<span style="color: #a31515;">${match}</span>`)
-        .replace(new RegExp(`\\b(${keywords.join('|')})\\b`, 'g'), (match) => `<span style="color: #0000ff;">${match}</span>`)
-        .replace(specialChars, (match) => `<span style="color: #0000ff;">${match}</span>`);
+        .replace(strings, (match) => `<span class="string">${match}</span>`)
+        .replace(new RegExp(`\\b(${keywords.join('|')})\\b`, 'g'), (match) => `<span class="keyword">${match}</span>`)
+        .replace(specialChars, (match) => `<span class="special-char">${match}</span>`);
       
       return `<span class="line-number">${lineNumber}</span><span class="line-content">${highlightedLine}</span>`;
     });
@@ -51,21 +51,17 @@ export default async function decorate(block) {
 
     let highlighted = code;
 
-    // Highlight strings first
-    highlighted = highlighted.replace(jsonSyntax.string, '<span style="color: #a31515;">$&</span>');
-
-    // Then highlight the rest
+    highlighted = highlighted.replace(jsonSyntax.string, '<span class="json-string">$&</span>');
     highlighted = highlighted
-      .replace(jsonSyntax.key, '<span style="color: #0451a5;">$1</span>:')
-      .replace(jsonSyntax.boolean, '<span style="color: #0000ff;">$&</span>')
-      .replace(jsonSyntax.punctuation, '<span style="color: #000000;">$&</span>');
+      .replace(jsonSyntax.key, '<span class="json-key">$1</span>:')
+      .replace(jsonSyntax.boolean, '<span class="json-boolean">$&</span>')
+      .replace(jsonSyntax.punctuation, '<span class="json-punctuation">$&</span>');
 
-    // Highlight numbers only if they're not inside a string
     highlighted = highlighted.replace(/(<span[^>]*>.*?<\/span>)|(\b-?\d+(?:\.\d+)?(?:e[+-]?\d+)?\b)/gi, (match, insideSpan, number) => {
       if (insideSpan) {
         return insideSpan;
       }
-      return `<span style="color: #098658;">${number}</span>`;
+      return `<span class="json-number">${number}</span>`;
     });
 
     return highlighted;
@@ -75,14 +71,11 @@ export default async function decorate(block) {
     const lines = code.split('\n');
     const highlightedLines = lines.map(line => {
       if (line.startsWith('$ ')) {
-        // Command line
-        return `<span style="color: #4EC9B0;">${line}</span>`;
+        return `<span class="terminal-command">${line}</span>`;
       } else if (line.trim().startsWith('#')) {
-        // Comment
-        return `<span style="color: #608B4E;">${line}</span>`;
+        return `<span class="terminal-comment">${line}</span>`;
       } else {
-        // Output
-        return `<span style="color: #D4D4D4;">${line}</span>`;
+        return `<span class="terminal-output">${line}</span>`;
       }
     });
     return highlightedLines.join('\n');
@@ -99,11 +92,11 @@ export default async function decorate(block) {
     expandCollapseButton.addEventListener('click', () => {
       isExpanded = !isExpanded;
       if (isExpanded) {
-        codeWrapper.style.maxHeight = 'none';
+        codeWrapper.classList.add('expanded');
         expandCollapseButton.innerHTML = 'Collapse';
         expandCollapseButton.setAttribute('aria-label', 'Collapse code snippet');
       } else {
-        codeWrapper.style.maxHeight = '300px';
+        codeWrapper.classList.remove('expanded');
         expandCollapseButton.innerHTML = 'Long Document, click to expand';
         expandCollapseButton.setAttribute('aria-label', 'Expand long code snippet');
       }
@@ -181,8 +174,6 @@ export default async function decorate(block) {
 
     const lines = displayCode.split('\n');
     if (lines.length > 80) {
-      codeWrapper.style.maxHeight = '300px';
-      codeWrapper.style.overflow = 'hidden';
       const expandCollapseButton = createExpandCollapseButton(codeWrapper, displayCode);
       wrapper.insertBefore(expandCollapseButton, codeWrapper);
     }

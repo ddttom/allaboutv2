@@ -14,6 +14,8 @@ As an expert developer specializing in **Adobe Edge Delivery Services (EDS) for 
 6. **Responsive design:** Prioritize a mobile-first approach.
 7. **Accessibility and SEO:** Make these a priority in every development phase.
 8. **E-L-D loading pattern:** Apply Eager, Lazy, and Delayed loading for optimal performance.
+9. **Use css-variables:** Apply CSS-Variables to minimize maintenance
+10. **Do not use inline css in javascript filer** always create css in css files
 
 ---
 
@@ -274,3 +276,66 @@ When providing images for a sample table, json or csv file, collect them from th
 if you need a profile picture it can be found here
 
 https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png
+
+
+## dynamically accessing the franklin pages
+
+there is a json file in every folder named query-index.json
+
+its contents are
+
+{
+    "total": 4,
+    "offset": 0,
+    "limit": 4,
+    "data": [
+        {
+            "path": "/blogs/ddt/a-managers-guide-to-document-authoring-with-edge-delivery-services",
+            "title": "A manager's guide to Document Authoring with Edge Delivery Services",
+            "image": "/blogs/ddt/media_13cd1a6707e9b077826a405fed46b2f3c60bbae7a.jpeg?width=1200&format=pjpg&optimize=medium",
+            "description": "A web page describing how Edge Delivery Services works",
+            "lastModified": "1720279421"
+        },
+        {
+            "path": "/Plusplus/creating-a-client-website-quickly-with-helix-plusplus",
+            "title": "Creating a Client Website - quickly with Helix PlusPlus",
+            "image": "/Plusplus/media_1854443688cfe261392a3943816687138f41d04e4.png?width=1200&format=pjpg&optimize=medium",
+            "description": "This article assumes that you are familiar with the helix project concepts.",
+            "lastModified": "1718815187"
+        },
+        {
+            "path": "/blogs/ddt/content-creator-guide-to-document-authoring-with-edge-delivery-services",
+            "title": "A Content Creator's Guide to Document Authoring with Edge Delivery Services - Part 1",
+            "image": "/blogs/ddt/media_1288801a9d177d7c1918ae0ac4021c87d1940b97c.png?width=1200&format=pjpg&optimize=medium",
+            "description": "This tutorial will guide you through creating a page full of content that engages. An ongoing series for authors",
+            "lastModified": "1719430788"
+        },
+        {
+            "path": "/slides/york-minster",
+            "title": "York Minster",
+            "image": "/slides/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png?width=1200&format=pjpg&optimize=medium",
+            "description": "A magnificent Gothic cathedral with centuries of history and breathtaking architecture",
+            "lastModified": "1719573871"
+        }
+    ],
+    "type": "sheet"
+}
+
+This JSON represents a paginated list of published item. Here's a breakdown of its structure:
+
+1. Top-level properties, the numbers are variable depending on size of json
+   - "total": 4 (Total number of items)
+   - "offset": 0 (Starting position of this page in the overall list)
+   - "limit": 4 (Maximum number of items per page)
+   - "type": "sheet" (Indicates this is a spreadsheet-like data structure)
+
+2. "data": An array containing the actual content items. Each item has:
+   - "path": URL path to the content
+   - "title": Title of the content
+   - "image": URL of an associated image
+   - "description": Brief description of the content
+   - "lastModified": Timestamp of when the content was last modified
+
+## using the json in coding
+
+If the prompt asks for index, use the pattern fetch  '{path}/query-index.json' where path is any path that the user specifies. it may be missing
