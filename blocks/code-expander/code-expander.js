@@ -1,224 +1,192 @@
-const LONG_DOCUMENT_THRESHOLD = 80;
-const COPY_BUTTON_RESET_DELAY = 2000; // 2 seconds
-const KEYWORDS = ['const', 'let', 'var', 'function', 'return', 'if', 'else', 'for', 'while', 'class', 'import', 'export', 'default', 'async', 'await'];
-const SPECIAL_CHARS_REGEX = /[{}()[\]]/g;
-const STRINGS_REGEX = /(['"`])((?:\\\1|(?:(?!\1).))*)\1/g;
-const TERMINAL_COMMANDS = /^(npm|node|cat|ls|cd|mkdir|rm|cp|mv|echo|grep|sed|awk|curl|wget|ssh|git|docker|kubectl)\s/;
-const JS_KEYWORDS = ['export', 'import', 'async', 'const', 'let', 'function'];
+const LONG_DOCUMENT_THRESHOLD = 40;
+const COPY_BUTTON_RESET_DELAY = 2000;
 
-export default async function decorate(block) {
-  const codeElements = document.querySelectorAll('code');
+export default function decorate(block) {
+  console.log('Code Expander: decorate function called');
+  const codeElements = document.querySelectorAll('pre code');
+  console.log('Code elements found:', codeElements.length);
 
-  const highlightJS = (code) => {
-    const lines = code.split('\n');
-    const highlightedLines = lines.map((line, index) => {
-      const lineNumber = index + 1;
-      const highlightedLine = line
-        .replace(STRINGS_REGEX, (match) => `<span class="string">${match}</span>`)
-        .replace(new RegExp(`\\b(${KEYWORDS.join('|')})\\b`, 'g'), (match) => `<span class="keyword">${match}</span>`)
-        .replace(SPECIAL_CHARS_REGEX, (match) => `<span class="special-char">${match}</span>`);
-      
-      return `<span class="line-number">${lineNumber}</span><span class="line-content">${highlightedLine}</span>`;
-    });
-
-    return highlightedLines.join('\n');
-  };
-
-  const highlightCSS = (code) => {
-    const properties = /([\w-]+)(?=\s*:)/g;
-    const values = /:\s*([^;]+)/g;
-    const selectors = /([^\s{]+)\s*{/g;
-    const comments = /(\/\*[\s\S]*?\*\/)/g;
-
-    return code
-      .replace(comments, '<span class="comment">$1</span>')
-      .replace(properties, '<span class="property">$1</span>')
-      .replace(values, ': <span class="value">$1</span>')
-      .replace(selectors, '<span class="selector">$1</span> {');
-  };
-
-  const escapeHTML = (html) => {
-    return html
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
-  };
-
-  const highlightJSON = (code) => {
-    const jsonSyntax = {
-      string: /"(?:\\.|[^"\\])*"/g,
-      key: /("(?:\\.|[^"\\])*")\s*:/g,
-      number: /\b-?\d+(?:\.\d+)?(?:e[+-]?\d+)?\b/gi,
-      boolean: /\b(?:true|false|null)\b/gi,
-      punctuation: /[{}[\],]/g
-    };
-
-    let highlighted = code;
-
-    highlighted = highlighted.replace(jsonSyntax.string, '<span class="json-string">$&</span>');
-    highlighted = highlighted
-      .replace(jsonSyntax.key, '<span class="json-key">$1</span>:')
-      .replace(jsonSyntax.boolean, '<span class="json-boolean">$&</span>')
-      .replace(jsonSyntax.punctuation, '<span class="json-punctuation">$&</span>');
-
-    highlighted = highlighted.replace(/(<span[^>]*>.*?<\/span>)|(\b-?\d+(?:\.\d+)?(?:e[+-]?\d+)?\b)/gi, (match, insideSpan, number) => {
-      if (insideSpan) {
-        return insideSpan;
-      }
-      return `<span class="json-number">${number}</span>`;
-    });
-
-    return highlighted;
-  };
-
-  const highlightTerminal = (code) => {
-    const lines = code.split('\n');
-    const highlightedLines = lines.map(line => {
-      if (line.startsWith('$ ')) {
-        return `<span class="terminal-command">${line}</span>`;
-      } else if (line.trim().startsWith('#')) {
-        return `<span class="terminal-comment">${line}</span>`;
-      } else {
-        return `<span class="terminal-output">${line}</span>`;
-      }
-    });
-    return highlightedLines.join('\n');
-  };
-
-  const createExpandCollapseButton = (codeWrapper, displayCode) => {
-    const expandCollapseButton = document.createElement('button');
-    expandCollapseButton.className = 'code-expander-expand-collapse';
-    expandCollapseButton.innerHTML = 'Long Document, click to expand';
-    expandCollapseButton.setAttribute('aria-label', 'Expand long code snippet');
+  function detectLanguage(code) {
+    console.log('Detecting language for:', code.substring(0, 50) + '...');
     
-    let isExpanded = false;
+    // Check for shell commands
+    if (/^(ls|cd|pwd|mkdir|rm|cp|mv|cat|echo|grep|sed|awk|curl|wget|ssh|git|npm|yarn|docker|kubectl)\s/.test(code)) {
+      return 'shell';
+    }
     
-    expandCollapseButton.addEventListener('click', () => {
-      isExpanded = !isExpanded;
-      if (isExpanded) {
-        codeWrapper.style.maxHeight = 'none';
-        expandCollapseButton.innerHTML = 'Collapse';
-        expandCollapseButton.setAttribute('aria-label', 'Collapse code snippet');
-      } else {
-        codeWrapper.style.maxHeight = '300px';
-        expandCollapseButton.innerHTML = 'Long Document, click to expand';
-        expandCollapseButton.setAttribute('aria-label', 'Expand long code snippet');
-      }
-    });
+    if (code.includes('function') || code.includes('var') || code.includes('const')) return 'javascript';
+    if (code.includes('{') && code.includes('}')) {
+      // Check for CSS-specific patterns
+      if (code.match(/[a-z-]+\s*:\s*[^;]+;/)) return 'css';
+      // If not CSS, then it's likely JSON
+      if (code.includes(':')) return 'json';
+    }
+    if (code.includes('<') && code.includes('>') && (code.includes('</') || code.includes('/>'))) return 'html';
     
-    return expandCollapseButton;
-  };
+    // Check for Markdown
+    if (code.match(/^(#{1,6}\s|\*\s|-\s|\d+\.\s|\[.*\]\(.*\))/m)) return 'markdown';
+    
+    // Check for shell (existing check)
+    if (code.startsWith('$') || code.startsWith('#')) return 'shell';
+    
+    return 'text';
+  }
 
-  codeElements.forEach((codeElement) => {
+  function highlightSyntax(code, language) {
+    switch (language) {
+      case 'javascript':
+        // Highlight JavaScript syntax
+        return code.replace(
+          /(\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\.|[^\\'])*'|"(?:\\.|[^\\"])*"|`(?:\\.|[^\\`])*`|\b(?:function|var|const|let|if|else|for|while|return|class|import|export)\b|\b(?:true|false|null|undefined)\b|\b\d+\b)/g,
+          match => {
+            // Highlight comments
+            if (/^\/\//.test(match)) return `<span class="comment">${match}</span>`;
+            if (/^\/\*/.test(match)) return `<span class="comment">${match}</span>`;
+            // Highlight strings
+            if (/^['"`]/.test(match)) return `<span class="string">${match}</span>`;
+            // Highlight keywords
+            if (/^(function|var|const|let|if|else|for|while|return|class|import|export)$/.test(match)) return `<span class="keyword">${match}</span>`;
+            // Highlight boolean values and null/undefined
+            if (/^(true|false|null|undefined)$/.test(match)) return `<span class="boolean">${match}</span>`;
+            // Highlight numbers
+            if (/^\d+$/.test(match)) return `<span class="number">${match}</span>`;
+            return match;
+          }
+        );
+      case 'json':
+        // Highlight JSON syntax
+        return code.replace(
+          /("(?:\\.|[^\\"])*"|\b(?:true|false|null)\b|\b\d+(?:\.\d+)?\b)/g,
+          match => {
+            // Highlight strings
+            if (/^"/.test(match)) return `<span class="string">${match}</span>`;
+            // Highlight boolean values and null
+            if (/^(true|false|null)$/.test(match)) return `<span class="boolean">${match}</span>`;
+            // Highlight numbers
+            return `<span class="number">${match}</span>`;
+          }
+        );
+      case 'html':
+        // Highlight HTML syntax
+        return code.replace(/&/g, '&amp;')
+                   .replace(/</g, '&lt;')
+                   .replace(/>/g, '&gt;')
+                   // Highlight strings
+                   .replace(/(".*?")/g, '<span class="string">$1</span>')
+                   // Highlight opening tags
+                   .replace(/(&lt;[^\s!?/]+)/g, '<span class="tag">$1</span>')
+                   // Highlight closing tags
+                   .replace(/(&lt;\/[^\s!?/]+)/g, '<span class="tag">$1</span>')
+                   // Highlight comments
+                   .replace(/(&lt;!--.*?--&gt;)/g, '<span class="comment">$1</span>');
+      case 'css':
+        // Highlight CSS syntax
+        return code.replace(
+          /([\w-]+\s*:)|(#[\da-f]{3,6})/gi,
+          match => {
+            // Highlight property names
+            if (/:$/.test(match)) return `<span class="property">${match}</span>`;
+            // Highlight color values
+            return `<span class="value">${match}</span>`;
+          }
+        );
+      case 'markdown':
+        // Highlight Markdown syntax
+        return code.replace(
+          /(^#{1,6}\s.*$)|(^[*-]\s.*$)|(^>\s.*$)|(`{1,3}[^`\n]+`{1,3})|(\[.*?\]\(.*?\))/gm,
+          match => {
+            // Highlight headings
+            if (/^#{1,6}/.test(match)) return `<span class="heading">${match}</span>`;
+            // Highlight list items
+            if (/^[*-]\s+/.test(match)) return `<span class="list-item">${match}</span>`;
+            // Highlight blockquotes
+            if (/^>\s+/.test(match)) return `<span class="blockquote">${match}</span>`;
+            // Highlight inline code
+            if (/`{1,3}[^`\n]+`{1,3}/.test(match)) return `<span class="code">${match}</span>`;
+            // Highlight links
+            if (/\[.*?\]\(.*?\)/.test(match)) return `<span class="link">${match}</span>`;
+            return match;
+          }
+        );
+      default:
+        // If language is not recognized, return the code without highlighting
+        return code;
+    }
+  }
+
+  codeElements.forEach((codeElement, index) => {
+    console.log(`Processing code element ${index + 1}`);
+    
+    const code = codeElement.textContent;
+    const language = detectLanguage(code);
+    console.log(`Detected language: ${language}`);
+    
+    // Create a wrapper div
     const wrapper = document.createElement('div');
     wrapper.className = 'code-expander-wrapper';
-
+    console.log('Wrapper created');
+    
+    // Move the pre element into the wrapper
+    const preElement = codeElement.parentNode;
+    preElement.parentNode.insertBefore(wrapper, preElement);
+    wrapper.appendChild(preElement);
+    console.log('Pre element moved to wrapper');
+    
+    preElement.className = `language-${language}`;
+    codeElement.innerHTML = highlightSyntax(code, language);
+    
     const copyButton = document.createElement('button');
     copyButton.className = 'code-expander-copy';
+    copyButton.textContent = `Copy ${language === 'shell' ? 'terminal' : language} to clipboard`;
+    wrapper.insertBefore(copyButton, preElement);
+    console.log('Copy button added');
 
-    const codeWrapper = document.createElement('div');
-    codeWrapper.className = 'code-expander-code';
-
-    const originalContent = codeElement.textContent.trim();
-    const firstTwoChars = originalContent.substring(0, 2);
-    const firstChar = originalContent[0];
-    const firstLine = originalContent.split('\n')[0].trim();
-    const firstWord = originalContent.split(/\s+/)[0];
-
-    let displayCode = originalContent;
-    let fileType = 'code';
-
-    if (TERMINAL_COMMANDS.test(originalContent) || originalContent.trim().startsWith('$ ')) {
-      displayCode = highlightTerminal(displayCode);
-      codeWrapper.classList.add('language-shell');
-      fileType = 'Terminal';
-    } else if (JS_KEYWORDS.includes(firstWord) || firstTwoChars === '//') {
-      displayCode = highlightJS(displayCode);
-      codeWrapper.classList.add('language-js', 'line-numbers');
-      fileType = 'JavaScript';
-    } else if (firstChar === '{' || firstChar === '[') {
-      displayCode = highlightJSON(displayCode);
-      codeWrapper.classList.add('language-json');
-      fileType = 'JSON';
-    } else if (firstChar === '#') {
-      codeWrapper.classList.add('language-markdown');
-      fileType = 'Markdown';
-    } else if (firstChar === '"') {
-      codeWrapper.classList.add('language-text');
-      fileType = 'text';
-    } else if (firstTwoChars === ',/') {
-      codeWrapper.classList.add('language-text');
-      fileType = 'text';
-    } else if (firstLine === '//js') {
-      const codeContent = displayCode.split('\n').slice(1).join('\n');
-      displayCode = highlightJS(codeContent);
-      codeWrapper.classList.add('language-js');
-      fileType = 'JavaScript';
-    } else if (firstChar === '.' || firstLine === '/* css */') {
-      displayCode = highlightCSS(displayCode);
-      codeWrapper.classList.add('language-css');
-      fileType = 'CSS';
-    } else if (firstChar === '<') {
-      displayCode = escapeHTML(displayCode);
-      codeWrapper.classList.add('language-html');
-      fileType = 'HTML';
-    } else {
-      codeWrapper.classList.add('language-text');
-      fileType = 'text';
-    }
-
-    copyButton.innerHTML = `📋 <span class="code-expander-copy-text">Copy ${fileType} ${fileType === 'Terminal' ? 'code' : 'to clipboard'}</span>`;
-    copyButton.setAttribute('aria-label', `Copy ${fileType} ${fileType === 'Terminal' ? 'code' : 'to clipboard'}`);
-    copyButton.title = `Copy ${fileType} ${fileType === 'Terminal' ? 'code' : 'to clipboard'}`;
-
-    const pre = document.createElement('pre');
-    pre.innerHTML = displayCode;
-    codeWrapper.innerHTML = ''; // Clear existing content
-    codeWrapper.appendChild(pre);
-
-    wrapper.appendChild(copyButton);
-    wrapper.appendChild(codeWrapper);
-
-    const lines = displayCode.split('\n');
+    const lines = code.split('\n');
     if (lines.length > LONG_DOCUMENT_THRESHOLD) {
-      const expandCollapseButton = createExpandCollapseButton(codeWrapper, displayCode);
-      wrapper.appendChild(expandCollapseButton);
-    } else {
-      codeWrapper.style.maxHeight = 'none'; // Ensure short documents are fully visible
+      preElement.classList.add('collapsible');
+      
+      // Create top expand/collapse button
+      const topExpandButton = document.createElement('button');
+      topExpandButton.className = 'code-expander-expand-collapse top';
+      topExpandButton.textContent = 'Expand';
+      
+      // Create bottom expand/collapse button
+      const bottomExpandButton = document.createElement('button');
+      bottomExpandButton.className = 'code-expander-expand-collapse bottom';
+      bottomExpandButton.textContent = '....';
+      
+      // Function to toggle expansion
+      const toggleExpansion = () => {
+        preElement.classList.toggle('expanded');
+        const isExpanded = preElement.classList.contains('expanded');
+        topExpandButton.textContent = isExpanded ? 'Collapse' : 'Expand';
+        bottomExpandButton.textContent = isExpanded ? 'Close' : '....';
+      };
+      
+      // Add click event listeners to both buttons
+      topExpandButton.onclick = toggleExpansion;
+      bottomExpandButton.onclick = toggleExpansion;
+      
+      // Add buttons to the wrapper
+      wrapper.insertBefore(topExpandButton, preElement);
+      wrapper.appendChild(bottomExpandButton);
+      
+      console.log('Expand/collapse buttons added');
     }
 
-    codeElement.parentNode.replaceChild(wrapper, codeElement);
-
-    copyButton.addEventListener('click', async () => {
-      try {
-        let contentToCopy = originalContent.trim();
-        
-        console.log(`Before processing (${fileType}):`, contentToCopy);
-        
-        if (fileType === 'JavaScript') {
-          contentToCopy = contentToCopy.split('\n').map(line => line.trim()).join('\n');
-        }
-        
-        if (fileType === 'text') {
-          console.log('Before quote removal:', contentToCopy);
-          contentToCopy = contentToCopy.replace(/^["'""]|["'""]$/g, '').trim();
-          console.log('After quote removal:', contentToCopy);
-        }
-        
-        console.log(`After processing (${fileType}):`, contentToCopy);
-        
-        await navigator.clipboard.writeText(contentToCopy);
-        
-        copyButton.innerHTML = '✅ <span class="code-expander-copy-text">Copied!</span>';
-        copyButton.setAttribute('aria-label', `${fileType} copied to clipboard`);
-        
-        setTimeout(() => {
-          copyButton.innerHTML = `📋 <span class="code-expander-copy-text">Copy ${fileType} to clipboard</span>`;
-          copyButton.setAttribute('aria-label', `Copy ${fileType} to clipboard`);
-        }, COPY_BUTTON_RESET_DELAY);
-      } catch (err) {
-        console.error(`Error copying ${fileType} content:`, err.message);
-      }
+    copyButton.addEventListener('click', () => {
+      console.log('Copy button clicked');
+      navigator.clipboard.writeText(code)
+        .then(() => {
+          console.log('Content copied to clipboard');
+          copyButton.textContent = 'Copied!';
+          setTimeout(() => {
+            copyButton.textContent = `Copy ${language === 'shell' ? 'terminal' : language} to clipboard`;
+          }, COPY_BUTTON_RESET_DELAY);
+        })
+        .catch(err => console.error('Error copying content:', err));
     });
   });
+
+  console.log('Code Expander: decorate function completed');
 }
