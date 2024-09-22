@@ -167,6 +167,9 @@ export default async function decorate(block) {
       fileType = 'text';
     }
 
+    // Add this right after the file type is determined
+    console.log('Detected file type:', fileType);
+
     copyButton.innerHTML = `📋 <span class="code-expander-copy-text">Copy ${fileType} ${fileType === 'Terminal' ? 'code' : 'to clipboard'}</span>`;
     copyButton.setAttribute('aria-label', `Copy ${fileType} ${fileType === 'Terminal' ? 'code' : 'to clipboard'}`);
     copyButton.title = `Copy ${fileType} ${fileType === 'Terminal' ? 'code' : 'to clipboard'}`;
@@ -190,19 +193,22 @@ export default async function decorate(block) {
     codeElement.parentNode.replaceChild(wrapper, codeElement);
 
     copyButton.addEventListener('click', async () => {
+      console.log('Copy button clicked');
       try {
-        let contentToCopy = originalContent.trim(); // Trim before processing
-        console.log('Original content:', contentToCopy);
+        console.log('Original content:', originalContent);
         console.log('File type:', fileType);
         
+        let contentToCopy = originalContent.trim();
+        console.log('Trimmed content:', contentToCopy);
+        
         if (fileType === 'JavaScript') {
-          // Remove line numbers before copying
+          console.log('Processing JavaScript content');
           contentToCopy = contentToCopy.split('\n').map(line => line.trim()).join('\n');
-          console.log('JavaScript content after line number removal:', contentToCopy);
+          console.log('JavaScript content after processing:', contentToCopy);
         }
         
-        // Remove opening and closing quotes (both straight and typographical) only for 'text' type content
         if (fileType === 'text') {
+          console.log('Processing text content');
           console.log('Before quote removal:', contentToCopy);
           contentToCopy = contentToCopy.replace(/^["'""]|["'""]$/g, '').trim();
           console.log('After quote removal:', contentToCopy);
@@ -211,16 +217,22 @@ export default async function decorate(block) {
         console.log('Final content to be copied:', contentToCopy);
         
         await navigator.clipboard.writeText(contentToCopy);
-        console.log('Content copied to clipboard');
+        console.log('Content successfully copied to clipboard');
         
         copyButton.innerHTML = '✅ <span class="code-expander-copy-text">Copied!</span>';
         copyButton.setAttribute('aria-label', `${fileType} copied to clipboard`);
+        console.log('Copy button updated to show success');
+        
         setTimeout(() => {
           copyButton.innerHTML = `📋 <span class="code-expander-copy-text">Copy ${fileType} to clipboard</span>`;
           copyButton.setAttribute('aria-label', `Copy ${fileType} to clipboard`);
+          console.log('Copy button reset after timeout');
         }, COPY_BUTTON_RESET_DELAY);
       } catch (err) {
-        console.error('Failed to copy text:', err);
+        console.error('Error in copy process:', err);
+        console.error('Error stack:', err.stack);
+        copyButton.innerHTML = '❌ <span class="code-expander-copy-text">Copy failed</span>';
+        copyButton.setAttribute('aria-label', `Failed to copy ${fileType}`);
       }
     });
 
