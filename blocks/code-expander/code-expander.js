@@ -91,8 +91,8 @@ export default async function decorate(block) {
   const createExpandCollapseButton = (codeWrapper, displayCode) => {
     const expandCollapseButton = document.createElement('button');
     expandCollapseButton.className = 'code-expander-expand-collapse';
-    expandCollapseButton.innerHTML = 'Expand';
-    expandCollapseButton.setAttribute('aria-label', 'Expand code snippet');
+    expandCollapseButton.innerHTML = 'Long Document, click to expand';
+    expandCollapseButton.setAttribute('aria-label', 'Expand long code snippet');
     
     let isExpanded = false;
     
@@ -104,8 +104,8 @@ export default async function decorate(block) {
         expandCollapseButton.setAttribute('aria-label', 'Collapse code snippet');
       } else {
         codeWrapper.style.maxHeight = '300px';
-        expandCollapseButton.innerHTML = 'Expand';
-        expandCollapseButton.setAttribute('aria-label', 'Expand code snippet');
+        expandCollapseButton.innerHTML = 'Long Document, click to expand';
+        expandCollapseButton.setAttribute('aria-label', 'Expand long code snippet');
       }
     });
     
