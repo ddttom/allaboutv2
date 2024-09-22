@@ -198,9 +198,10 @@ export default async function decorate(block) {
           contentToCopy = contentToCopy.split('\n').map(line => line.trim()).join('\n');
         }
         
-        // Remove opening and closing quotes if the content is a string, then trim
-        if (fileType === 'text' && contentToCopy.startsWith('"') && contentToCopy.endsWith('"')) {
-          contentToCopy = contentToCopy.slice(1, -1).trim();
+        // Remove opening and closing quotes if the content is a string or text, then trim
+        if (fileType === 'text' || fileType === 'code') {
+          // Remove straight quotes, typographical quotes, and trim
+          contentToCopy = contentToCopy.replace(/^["'""]|["'""]$/g, '').trim();
         } else {
           contentToCopy = contentToCopy.trim();
         }
