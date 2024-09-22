@@ -1,13 +1,21 @@
 const LONG_DOCUMENT_THRESHOLD = 40;
 const COPY_BUTTON_RESET_DELAY = 2000;
 
-export default function decorate(block) {
+export default async function decorate(block) {
+  // eslint-disable-next-line no-console
   console.log('Code Expander: decorate function called');
   const codeElements = document.querySelectorAll('pre code');
+  // eslint-disable-next-line no-console
   console.log('Code elements found:', codeElements.length);
 
   function detectLanguage(code) {
+    // eslint-disable-next-line no-console
     console.log('Detecting language for:', code.substring(0, 50) + '...');
+    
+    // Check if the code starts with a quotation mark, indicating it's likely text
+    if (code.trim().startsWith('"') || code.trim().startsWith("'")) {
+      return 'text';
+    }
     
     // Check for shell commands
     if (/^(ls|cd|pwd|mkdir|rm|cp|mv|cat|echo|grep|sed|awk|curl|wget|ssh|git|npm|yarn|docker|kubectl)\s/.test(code)) {
@@ -140,28 +148,39 @@ export default function decorate(block) {
             return match;
           }
         );
+      case 'text':
+        // For text, we'll just escape HTML entities to prevent XSS
+        return code.replace(/&/g, '&amp;')
+                 .replace(/</g, '&lt;')
+                 .replace(/>/g, '&gt;')
+                 .replace(/"/g, '&quot;')
+                 .replace(/'/g, '&#039;');
       default:
         // If language is not recognized, return the code without highlighting
         return code;
     }
   }
 
-  codeElements.forEach((codeElement, index) => {
+  await Promise.all(Array.from(codeElements).map(async (codeElement, index) => {
+    // eslint-disable-next-line no-console
     console.log(`Processing code element ${index + 1}`);
     
     const code = codeElement.textContent;
     const language = detectLanguage(code);
+    // eslint-disable-next-line no-console
     console.log(`Detected language: ${language}`);
     
     // Create a wrapper div
     const wrapper = document.createElement('div');
     wrapper.className = 'code-expander-wrapper';
+    // eslint-disable-next-line no-console
     console.log('Wrapper created');
     
     // Move the pre element into the wrapper
     const preElement = codeElement.parentNode;
     preElement.parentNode.insertBefore(wrapper, preElement);
     wrapper.appendChild(preElement);
+    // eslint-disable-next-line no-console
     console.log('Pre element moved to wrapper');
     
     preElement.className = `language-${language}`;
@@ -169,8 +188,9 @@ export default function decorate(block) {
     
     const copyButton = document.createElement('button');
     copyButton.className = 'code-expander-copy';
-    copyButton.textContent = `Copy ${language === 'shell' ? 'terminal' : language} to clipboard`;
+    copyButton.textContent = `Copy ${language === 'shell' ? 'terminal' : language === 'text' ? 'text' : language} to clipboard`;
     wrapper.insertBefore(copyButton, preElement);
+    // eslint-disable-next-line no-console
     console.log('Copy button added');
 
     const lines = code.split('\n');
@@ -203,13 +223,16 @@ export default function decorate(block) {
       wrapper.insertBefore(topExpandButton, preElement);
       wrapper.appendChild(bottomExpandButton);
       
+      // eslint-disable-next-line no-console
       console.log('Expand/collapse buttons added');
     }
 
     copyButton.addEventListener('click', () => {
+      // eslint-disable-next-line no-console
       console.log('Copy button clicked');
       navigator.clipboard.writeText(code)
         .then(() => {
+          // eslint-disable-next-line no-console
           console.log('Content copied to clipboard');
           copyButton.textContent = 'Copied!';
           setTimeout(() => {
@@ -218,7 +241,8 @@ export default function decorate(block) {
         })
         .catch(err => console.error('Error copying content:', err));
     });
-  });
+  }));
 
+  // eslint-disable-next-line no-console
   console.log('Code Expander: decorate function completed');
 }
