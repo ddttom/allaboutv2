@@ -192,18 +192,27 @@ export default async function decorate(block) {
     copyButton.addEventListener('click', async () => {
       try {
         let contentToCopy = originalContent.trim(); // Trim before processing
+        console.log('Original content:', contentToCopy);
+        console.log('File type:', fileType);
         
         if (fileType === 'JavaScript') {
           // Remove line numbers before copying
           contentToCopy = contentToCopy.split('\n').map(line => line.trim()).join('\n');
+          console.log('JavaScript content after line number removal:', contentToCopy);
         }
         
         // Remove opening and closing quotes (both straight and typographical) only for 'text' type content
         if (fileType === 'text') {
+          console.log('Before quote removal:', contentToCopy);
           contentToCopy = contentToCopy.replace(/^["'""]|["'""]$/g, '').trim();
+          console.log('After quote removal:', contentToCopy);
         }
         
+        console.log('Final content to be copied:', contentToCopy);
+        
         await navigator.clipboard.writeText(contentToCopy);
+        console.log('Content copied to clipboard');
+        
         copyButton.innerHTML = '✅ <span class="code-expander-copy-text">Copied!</span>';
         copyButton.setAttribute('aria-label', `${fileType} copied to clipboard`);
         setTimeout(() => {
@@ -211,8 +220,7 @@ export default async function decorate(block) {
           copyButton.setAttribute('aria-label', `Copy ${fileType} to clipboard`);
         }, COPY_BUTTON_RESET_DELAY);
       } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error('Failed to copy text: ', err);
+        console.error('Failed to copy text:', err);
       }
     });
 
