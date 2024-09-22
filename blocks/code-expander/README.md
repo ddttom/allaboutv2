@@ -4,20 +4,22 @@ The Code Expander is a versatile component for displaying and managing code snip
 
 ## Table of Contents
 
-- [Usage](#usage)
-- [Authoring](#authoring)
-- [Styling](#styling)
-- [Features](#features)
-- [Supported Languages](#supported-languages)
-- [Accessibility](#accessibility)
-- [Responsive Design](#responsive-design)
-- [Dark Mode](#dark-mode)
-- [Dependencies](#dependencies)
-- [Configuration](#configuration)
-- [Performance Considerations](#performance-considerations)
-- [Browser Compatibility](#browser-compatibility)
-- [Maintenance](#maintenance)
-- [Future Improvements](#future-improvements)
+- [Code Expander](#code-expander)
+  - [Table of Contents](#table-of-contents)
+  - [Usage](#usage)
+  - [Authoring](#authoring)
+  - [Styling](#styling)
+  - [Features](#features)
+  - [Supported Languages](#supported-languages)
+  - [Accessibility](#accessibility)
+  - [Responsive Design](#responsive-design)
+  - [Dark Mode](#dark-mode)
+  - [Dependencies](#dependencies)
+  - [Configuration](#configuration)
+  - [Performance Considerations](#performance-considerations)
+  - [Browser Compatibility](#browser-compatibility)
+  - [Maintenance](#maintenance)
+  - [Future Improvements](#future-improvements)
 
 ## Usage
 
