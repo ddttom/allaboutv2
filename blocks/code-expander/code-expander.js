@@ -191,20 +191,15 @@ export default async function decorate(block) {
 
     copyButton.addEventListener('click', async () => {
       try {
-        let contentToCopy = originalContent;
+        let contentToCopy = originalContent.trim(); // Trim before processing
         
         if (fileType === 'JavaScript') {
           // Remove line numbers before copying
           contentToCopy = contentToCopy.split('\n').map(line => line.trim()).join('\n');
         }
         
-        // Remove opening and closing quotes if the content is a string or text, then trim
-        if (fileType === 'text' || fileType === 'code') {
-          // Remove straight quotes, typographical quotes, and trim
-          contentToCopy = contentToCopy.replace(/^["'""]|["'""]$/g, '').trim();
-        } else {
-          contentToCopy = contentToCopy.trim();
-        }
+        // Remove opening and closing quotes for all content types, then trim again
+        contentToCopy = contentToCopy.replace(/^["'""]|["'""]$/g, '').trim();
         
         await navigator.clipboard.writeText(contentToCopy);
         copyButton.innerHTML = '✅ <span class="code-expander-copy-text">Copied!</span>';
