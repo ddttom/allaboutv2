@@ -198,8 +198,8 @@ export default async function decorate(block) {
           contentToCopy = contentToCopy.split('\n').map(line => line.trim()).join('\n');
         }
         
-        // Remove opening and closing quotes for all content types, then trim again
-        contentToCopy = contentToCopy.replace(/^["'""]|["'""]$/g, '').trim();
+        // Remove opening and closing quotes for all content types
+        contentToCopy = contentToCopy.replace(/^(['"`])([\s\S]*)\1$/g, '$2').trim();
         
         await navigator.clipboard.writeText(contentToCopy);
         copyButton.innerHTML = '✅ <span class="code-expander-copy-text">Copied!</span>';
