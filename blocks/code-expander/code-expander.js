@@ -175,7 +175,7 @@ export default async function decorate(block) {
     const lines = displayCode.split('\n');
     if (lines.length > 80) {
       const expandCollapseButton = createExpandCollapseButton(codeWrapper, displayCode);
-      wrapper.insertBefore(expandCollapseButton, codeWrapper);
+      wrapper.appendChild(expandCollapseButton); // Changed from insertBefore to appendChild
     }
 
     codeElement.parentNode.replaceChild(wrapper, codeElement);

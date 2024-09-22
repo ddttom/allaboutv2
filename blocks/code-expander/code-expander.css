@@ -5,11 +5,27 @@
   margin-bottom: 1rem;
 }
 
-.code-expander-copy,
-.code-expander-expand-collapse {
+.code-expander-copy {
   position: absolute;
   top: -12px;
   left: 10px;
+  background: var(--code-expander-button-bg);
+  border: 1px solid var(--code-expander-button-border);
+  color: var(--code-expander-button-text);
+  font-size: var(--code-expander-font-size-normal);
+  cursor: pointer;
+  opacity: 0.9;
+  transition: opacity 0.3s ease, background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+
+.code-expander-expand-collapse {
+  position: absolute;
+  top: -12px;
+  right: 10px; /* Changed from left to right */
   background: var(--code-expander-button-bg);
   border: 1px solid var(--code-expander-button-border);
   color: var(--code-expander-button-text);
