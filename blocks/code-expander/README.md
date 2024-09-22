@@ -1,140 +1,64 @@
 # Code Expander
 
-The Code Expander is a versatile component for displaying and managing code snippets within Adobe Edge Delivery Services (EDS) projects. It provides syntax highlighting, copy functionality, and an expand/collapse feature for long code blocks.
-
-## Table of Contents
-
-- [Code Expander](#code-expander)
-  - [Table of Contents](#table-of-contents)
-  - [Usage](#usage)
-  - [Authoring](#authoring)
-  - [Styling](#styling)
-  - [Features](#features)
-  - [Supported Languages](#supported-languages)
-  - [Accessibility](#accessibility)
-  - [Responsive Design](#responsive-design)
-  - [Dark Mode](#dark-mode)
-  - [Dependencies](#dependencies)
-  - [Configuration](#configuration)
-  - [Performance Considerations](#performance-considerations)
-  - [Browser Compatibility](#browser-compatibility)
-  - [Maintenance](#maintenance)
-  - [Future Improvements](#future-improvements)
+The Code Expander is a component that enhances code blocks by adding syntax highlighting, copy functionality, and expandable views for long code snippets.
 
 ## Usage
 
-To use the Code Expander in your EDS project, simply wrap your code snippets in `<code>` tags within your Markdown or HTML content. The component will automatically detect the language and apply appropriate styling and functionality.
-
-```
-| Code Expander |
-| :---- |
-| <code>Your code here</code> |
-```
+The Code Expander automatically applies to all `<pre><code>` elements on the page. No additional markup is required.
 
 ## Authoring
 
-When creating content in Google Docs or Microsoft Word, use the following structure:
-
-1. Create a table with one column.
-2. In the first row, type "Code Expander".
-3. In the second row, paste your code snippet.
-
-The Code Expander will automatically process and style the code when rendered on the website.
+When creating content in Google Docs or Microsoft Word, simply use code blocks as you normally would. The Code Expander will automatically enhance these blocks when the page is rendered.
 
 ## Styling
 
-The component uses CSS variables for easy customization. Here are the main variables you can override:
+The Code Expander uses the following CSS classes:
 
-```css
-:root {
-  --code-expander-background: #f4f4f4;
-  --code-expander-text-color: #333;
-  --code-expander-border-color: #ddd;
-  --code-expander-button-background: #e0e0e0;
-  --code-expander-button-text-color: #333;
-}
-```
+- `.code-expander-wrapper`: The main wrapper for each code block.
+- `.code-expander-copy`: The copy button.
+- `.code-expander-expand-collapse`: The expand/collapse buttons for long code blocks.
+- `.collapsible`: Applied to long code blocks that can be expanded/collapsed.
+- `.expanded`: Applied to code blocks when they are expanded.
 
-You can override these variables in your project's CSS to customize the appearance of the Code Expander.
+Language-specific syntax highlighting classes are also applied to individual code elements.
 
-## Features
+## Behavior
 
-1. **Syntax Highlighting:** Automatically detects and highlights syntax for various languages.
-2. **Copy Functionality:** Provides a "Copy" button on the top-left to easily copy the code snippet to the clipboard.
-3. **Expand/Collapse:** For code snippets longer than the defined threshold, a "Long Document, click to expand" button is provided on the top-right.
-4. **Dark Mode Support:** Automatically adjusts styling for dark mode preferences.
-5. **Line Numbers:** Displays line numbers for JavaScript code.
+1. **Language Detection**: The component automatically detects the language of the code snippet and applies appropriate syntax highlighting. Supported languages include JavaScript, JSON, HTML, CSS, Markdown, and shell/terminal commands.
 
-## Supported Languages
+2. **Syntax Highlighting**: Each language has specific syntax highlighting rules applied to enhance readability.
 
-- JavaScript (with line numbers)
-- CSS
-- HTML
-- JSON
-- Markdown
-- Terminal commands
-- Plain text
+3. **Copy Functionality**: Each code block has a "Copy to clipboard" button at the top right corner. The button text changes to "Copied!" briefly after clicking and then reverts to the original text.
 
-## Accessibility
+4. **Expandable Long Code Blocks**: Code blocks with more than 40 lines are made collapsible. They have an "Expand" button at the top left and a "..." button at the bottom left to toggle the full view.
 
-- Buttons have appropriate aria-label attributes for screen readers.
-- The component uses semantic HTML structure.
-- Focus styles are provided for keyboard navigation.
-- Color contrast ratios are maintained for readability.
+## Customization
 
-## Responsive Design
-
-The Code Expander is responsive and adjusts its layout for smaller screens. Font sizes are reduced on mobile devices for better readability.
-
-## Dark Mode
-
-The component supports automatic dark mode switching based on user preferences using the `prefers-color-scheme` media query.
+The component uses CSS variables for easy customization of colors and sizes. These variables are defined in the `:root` selector and can be overridden as needed.
 
 ## Dependencies
 
-This component has no external dependencies and uses vanilla JavaScript and CSS.
+This component has no external dependencies. It uses vanilla JavaScript and CSS.
 
-## Configuration
+## Accessibility
 
-The component defines several constants that can be adjusted if needed:
+- The copy and expand/collapse buttons are keyboard accessible.
+- ARIA attributes are used where appropriate to enhance screen reader compatibility.
+- Focus styles are applied to buttons for better visibility during keyboard navigation.
 
-- `LONG_DOCUMENT_THRESHOLD`: The number of lines at which a code block is considered "long" (default: 80).
-- `COPY_BUTTON_RESET_DELAY`: The delay in milliseconds before resetting the copy button text (default: 2000).
-- `KEYWORDS`: An array of JavaScript keywords for syntax highlighting.
-- `SPECIAL_CHARS_REGEX`: A regular expression for identifying special characters in code.
-- `STRINGS_REGEX`: A regular expression for identifying string literals in code.
-- `TERMINAL_COMMANDS`: A regular expression for identifying terminal commands.
-- `JS_KEYWORDS`: An array of keywords used to identify JavaScript code.
+## Browser Support
 
-These constants can be modified in the JavaScript file to adjust the component's behavior.
+The Code Expander is designed to work in modern browsers that support ES6+ JavaScript and CSS3.
 
-## Performance Considerations
-
-The Code Expander is designed to handle large code blocks efficiently. However, for optimal performance, consider the following:
-
-- The component automatically collapses long code snippets (those exceeding the `LONG_DOCUMENT_THRESHOLD`) to improve initial page load times.
-- Syntax highlighting is applied dynamically, which may impact performance for extremely large code blocks.
-
-## Browser Compatibility
-
-The Code Expander is designed to work across modern web browsers. Regular testing is performed to ensure compatibility with the latest versions of Chrome, Firefox, Safari, and Edge.
-
-## Maintenance
-
-When updating the component, ensure that:
-
-1. All styling is done through CSS variables for easy theming.
-2. JavaScript remains free of inline styles.
-3. Accessibility features are maintained and improved.
-4. The component remains performant, especially for large code blocks.
-5. Browser compatibility is regularly tested and maintained.
-
-## Future Improvements
+## Suggestions for Improvement
 
 1. Add support for more programming languages.
-2. Implement a theme switcher for different syntax highlighting color schemes.
-3. Add line numbering options for all supported languages.
-4. Implement a search functionality within long code blocks.
-5. Add an option to highlight specific lines of code.
-6. Implement syntax highlighting for more complex language constructs.
-7. Add options for customizing the maximum height before collapsing.
+2. Implement line numbering for code blocks.
+3. Add an option to highlight specific lines of code.
+4. Implement a theme switcher for different syntax highlighting color schemes.
+5. Add a "View Raw" option to see the unformatted code.
+6. Improve mobile responsiveness for better display on smaller screens.
+
+## Known Issues
+
+Currently, there are no known issues. If you encounter any problems, please report them to the development team.
