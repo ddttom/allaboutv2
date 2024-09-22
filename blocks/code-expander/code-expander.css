@@ -25,9 +25,9 @@
   --code-expander-json-key: #0451a5;
   --code-expander-json-boolean: #0000ff;
   --code-expander-json-number: #098658;
-  --code-expander-terminal-command: #4EC9B0;
-  --code-expander-terminal-comment: #608B4E;
-  --code-expander-terminal-output: #D4D4D4;
+  --code-expander-terminal-command: #000000;
+  --code-expander-terminal-comment: #008000;
+  --code-expander-terminal-output: #000000;
 }
 
 .code-expander-wrapper {
