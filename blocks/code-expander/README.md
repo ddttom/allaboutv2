@@ -1,14 +1,41 @@
-# Code Expander
+# Code Expander Block
 
-The Code Expander block adds a copy-to-clipboard functionality to all `<code>` elements in the document.
+The Code Expander block is a versatile component designed to enhance code display and interaction on web pages. It provides syntax highlighting for various programming languages, line numbers for JavaScript, and offers a convenient copy-to-clipboard functionality with customizable appearance and improved user interaction.
+
+## Features
+
+1. Syntax highlighting for multiple languages:
+   - JavaScript (with line numbers)
+   - CSS
+   - HTML
+   - JSON
+   - Markdown
+   - Terminal commands
+2. Automatic language detection based on code content
+3. Copy-to-clipboard functionality with visual feedback
+4. Line numbers for JavaScript code
+5. Expand/collapse functionality for long code snippets (more than 80 lines)
+6. Accessibility considerations (ARIA labels)
+7. Responsive design
+8. Customizable appearance for buttons and code background
+9. Visual feedback for hover and focus states on buttons
 
 ## Usage
 
-This block automatically enhances all `<code>` elements on the page, so no specific usage in the content is required.
+To use the Code Expander block in your Franklin project:
+
+1. Place the `code-expander.js` file in the `blocks/code-expander/` directory.
+2. Mark text with a courier font in the document, triggering autoblocking.
+3. Use the CodeExpander block once in the document
+
+The component will automatically detect the language and apply appropriate styling and functionality.
 
 ## Authoring
 
-Authors can continue to use the standard `<code>` element in their content. The Code Expander block will automatically add the copy-to-clipboard functionality.
+When creating content in Google Docs or Microsoft Word, use the following structure:
+
+| CodeExpander |
+| ------------- |
 
 ## Styling
 
@@ -23,8 +50,8 @@ The `<pre>` element within `.code-expander-code` has a light background for visu
 
 ## Behavior
 
-- A "Copy code" button with a clipboard icon (📋) is added above each `<code>` element.
-- The code is displayed within a `<pre>` element with a light background for better visual separation.
+- A "Copy code" button with a clipboard icon (📋) is added above each decorated element.
+- The code is displayed within a light background for better visual separation.
 - Clicking the button copies the code content to the clipboard.
 - The button text changes to "Copied!" with a checkmark (✅) for 2 seconds after successful copying.
 
@@ -36,12 +63,3 @@ The `<pre>` element within `.code-expander-code` has a light background for visu
 ## Dependencies
 
 This block has no external dependencies.
-
-## Suggestions for Improvement
-
-1. Add error handling for browsers that don't support the Clipboard API.
-2. Implement syntax highlighting for code elements.
-3. Add an option to expand/collapse long code snippets.
-4. Provide configuration options for button placement and text.
-5. Add visual feedback for hover and focus states on the copy button.
-6. Allow customization of the copy button's appearance and code background color.

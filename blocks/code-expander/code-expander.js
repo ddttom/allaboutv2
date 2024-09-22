@@ -6,10 +6,18 @@ export default async function decorate(block) {
     const specialChars = /[{}()[\]]/g;
     const strings = /(['"`])((?:\\\1|(?:(?!\1).))*)\1/g;
 
-    return code
-      .replace(strings, (match) => `<span style="color: #a31515;">${match}</span>`)
-      .replace(new RegExp(`\\b(${keywords.join('|')})\\b`, 'g'), (match) => `<span style="color: #0000ff;">${match}</span>`)
-      .replace(specialChars, (match) => `<span style="color: #0000ff;">${match}</span>`);
+    const lines = code.split('\n');
+    const highlightedLines = lines.map((line, index) => {
+      const lineNumber = index + 1;
+      const highlightedLine = line
+        .replace(strings, (match) => `<span style="color: #a31515;">${match}</span>`)
+        .replace(new RegExp(`\\b(${keywords.join('|')})\\b`, 'g'), (match) => `<span style="color: #0000ff;">${match}</span>`)
+        .replace(specialChars, (match) => `<span style="color: #0000ff;">${match}</span>`);
+      
+      return `<span class="line-number">${lineNumber}</span><span class="line-content">${highlightedLine}</span>`;
+    });
+
+    return highlightedLines.join('\n');
   };
 
   const highlightCSS = (code) => {
@@ -80,6 +88,30 @@ export default async function decorate(block) {
     return highlightedLines.join('\n');
   };
 
+  const createExpandCollapseButton = (codeWrapper, displayCode) => {
+    const expandCollapseButton = document.createElement('button');
+    expandCollapseButton.className = 'code-expander-expand-collapse';
+    expandCollapseButton.innerHTML = 'Expand';
+    expandCollapseButton.setAttribute('aria-label', 'Expand code snippet');
+    
+    let isExpanded = false;
+    
+    expandCollapseButton.addEventListener('click', () => {
+      isExpanded = !isExpanded;
+      if (isExpanded) {
+        codeWrapper.style.maxHeight = 'none';
+        expandCollapseButton.innerHTML = 'Collapse';
+        expandCollapseButton.setAttribute('aria-label', 'Collapse code snippet');
+      } else {
+        codeWrapper.style.maxHeight = '300px';
+        expandCollapseButton.innerHTML = 'Expand';
+        expandCollapseButton.setAttribute('aria-label', 'Expand code snippet');
+      }
+    });
+    
+    return expandCollapseButton;
+  };
+
   codeElements.forEach((codeElement) => {
     const wrapper = document.createElement('div');
     wrapper.className = 'code-expander-wrapper';
@@ -105,7 +137,7 @@ export default async function decorate(block) {
       fileType = 'Terminal';
     } else if (['export', 'import', 'async', 'const', 'let', 'function'].includes(firstWord) || firstTwoChars === '//') {
       displayCode = highlightJS(displayCode);
-      codeWrapper.classList.add('language-js');
+      codeWrapper.classList.add('language-js', 'line-numbers');
       fileType = 'JavaScript';
     } else if (firstChar === '{' || firstChar === '[') {
       displayCode = highlightJSON(displayCode);
@@ -147,11 +179,33 @@ export default async function decorate(block) {
     wrapper.appendChild(copyButton);
     wrapper.appendChild(codeWrapper);
 
+    const lines = displayCode.split('\n');
+    if (lines.length > 80) {
+      codeWrapper.style.maxHeight = '300px';
+      codeWrapper.style.overflow = 'hidden';
+      const expandCollapseButton = createExpandCollapseButton(codeWrapper, displayCode);
+      wrapper.insertBefore(expandCollapseButton, codeWrapper);
+    }
+
     codeElement.parentNode.replaceChild(wrapper, codeElement);
 
     copyButton.addEventListener('click', async () => {
       try {
-        await navigator.clipboard.writeText(originalContent);
+        let contentToCopy = originalContent;
+        
+        if (fileType === 'JavaScript') {
+          // Remove line numbers before copying
+          contentToCopy = contentToCopy.split('\n').map(line => line.trim()).join('\n');
+        }
+        
+        // Remove opening and closing quotes if the content is a string, then trim
+        if (fileType === 'text' && contentToCopy.startsWith('"') && contentToCopy.endsWith('"')) {
+          contentToCopy = contentToCopy.slice(1, -1).trim();
+        } else {
+          contentToCopy = contentToCopy.trim();
+        }
+        
+        await navigator.clipboard.writeText(contentToCopy);
         copyButton.innerHTML = '✅ <span class="code-expander-copy-text">Copied!</span>';
         copyButton.setAttribute('aria-label', `${fileType} copied to clipboard`);
         setTimeout(() => {
@@ -164,4 +218,71 @@ export default async function decorate(block) {
       }
     });
   });
+
+  // Add default CSS variables
+  const style = document.createElement('style');
+  style.textContent = `
+    :root {
+      --code-expander-button-bg: #f0f0f0;
+      --code-expander-button-text: #333;
+      --code-expander-button-border: #ccc;
+      --code-expander-code-bg: #f8f8f8;
+      --code-expander-code-text: #333;
+      --code-expander-button-hover-bg: #e0e0e0;
+      --code-expander-button-focus-outline: #4d90fe;
+    }
+    .code-expander-wrapper {
+      margin-bottom: 1rem;
+    }
+    .code-expander-copy,
+    .code-expander-expand-collapse {
+      background-color: var(--code-expander-button-bg);
+      color: var(--code-expander-button-text);
+      border: 1px solid var(--code-expander-button-border);
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 14px;
+      border-radius: 4px;
+      transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .code-expander-copy:hover,
+    .code-expander-expand-collapse:hover {
+      background-color: var(--code-expander-button-hover-bg);
+    }
+    .code-expander-copy:focus,
+    .code-expander-expand-collapse:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--code-expander-button-focus-outline);
+    }
+    .code-expander-expand-collapse {
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+    .code-expander-code {
+      background-color: var(--code-expander-code-bg);
+      color: var(--code-expander-code-text);
+      padding: 1rem;
+      border-radius: 4px;
+      overflow-x: auto;
+      transition: max-height 0.3s ease-out;
+    }
+    .code-expander-code pre {
+      margin: 0;
+    }
+    .code-expander-code.language-js.line-numbers {
+      counter-reset: line;
+    }
+    .code-expander-code.language-js.line-numbers .line-number {
+      counter-increment: line;
+      width: 1.5em;
+      display: inline-block;
+      text-align: right;
+      margin-right: 0.5em;
+      color: #888;
+    }
+    .code-expander-code.language-js.line-numbers .line-content {
+      display: inline-block;
+    }
+  `;
+  document.head.appendChild(style);
 }
