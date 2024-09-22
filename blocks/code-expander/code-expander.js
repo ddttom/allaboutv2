@@ -171,7 +171,9 @@ export default async function decorate(block) {
     copyButton.setAttribute('aria-label', `Copy ${fileType} ${fileType === 'Terminal' ? 'code' : 'to clipboard'}`);
     copyButton.title = `Copy ${fileType} ${fileType === 'Terminal' ? 'code' : 'to clipboard'}`;
 
-    codeWrapper.innerHTML = `<pre>${displayCode}</pre>`;
+    const pre = document.createElement('pre');
+    pre.innerHTML = displayCode;
+    codeWrapper.appendChild(pre);
 
     wrapper.appendChild(copyButton);
     wrapper.appendChild(codeWrapper);

@@ -98,11 +98,6 @@
 .language-shell .terminal-comment { color: var(--code-expander-terminal-comment); }
 .language-shell .terminal-output { color: var(--code-expander-terminal-output); }
 
-.language-shell pre {
-  background-color: var(--code-expander-shell-bg);
-  color: var(--code-expander-shell-text);
-}
-
 /* Line numbers for JavaScript */
 .language-js.line-numbers {
   counter-reset: line;
@@ -158,22 +153,5 @@
   
   .code-expander-copy-text {
     font-size: calc(var(--code-expander-font-size-small) * 0.9);
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --code-expander-button-bg: #333;
-    --code-expander-button-text: #f0f0f0;
-    --code-expander-button-border: #555;
-    --code-expander-code-bg: #1E1E1E;
-    --code-expander-code-text: #D4D4D4;
-    --code-expander-button-hover-bg: #444;
-    --code-expander-button-focus-outline: #0366d6;
-    --code-expander-pre-border-color: #555;
-    --code-expander-shell-bg: #1E1E1E;
-    --code-expander-shell-text: #D4D4D4;
-    --code-expander-line-number-color: #888;
-    --code-expander-markdown-link-color: #58a6ff;
   }
 }
