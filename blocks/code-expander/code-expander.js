@@ -173,6 +173,7 @@ export default async function decorate(block) {
 
     const pre = document.createElement('pre');
     pre.innerHTML = displayCode;
+    codeWrapper.innerHTML = ''; // Clear existing content
     codeWrapper.appendChild(pre);
 
     wrapper.appendChild(copyButton);
@@ -216,5 +217,8 @@ export default async function decorate(block) {
         console.error('Failed to copy text: ', err);
       }
     });
+
+    console.log('File Type:', fileType);
+    console.log('Highlighted Code:', displayCode);
   });
 }
