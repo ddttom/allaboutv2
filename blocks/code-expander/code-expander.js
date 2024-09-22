@@ -1,18 +1,22 @@
+const LONG_DOCUMENT_THRESHOLD = 80;
+const COPY_BUTTON_RESET_DELAY = 2000; // 2 seconds
+const KEYWORDS = ['const', 'let', 'var', 'function', 'return', 'if', 'else', 'for', 'while', 'class', 'import', 'export', 'default', 'async', 'await'];
+const SPECIAL_CHARS_REGEX = /[{}()[\]]/g;
+const STRINGS_REGEX = /(['"`])((?:\\\1|(?:(?!\1).))*)\1/g;
+const TERMINAL_COMMANDS = /^(npm|node|cat|ls|cd|mkdir|rm|cp|mv|echo|grep|sed|awk|curl|wget|ssh|git|docker|kubectl)\s/;
+const JS_KEYWORDS = ['export', 'import', 'async', 'const', 'let', 'function'];
+
 export default async function decorate(block) {
   const codeElements = document.querySelectorAll('code');
 
   const highlightJS = (code) => {
-    const keywords = ['const', 'let', 'var', 'function', 'return', 'if', 'else', 'for', 'while', 'class', 'import', 'export', 'default', 'async', 'await'];
-    const specialChars = /[{}()[\]]/g;
-    const strings = /(['"`])((?:\\\1|(?:(?!\1).))*)\1/g;
-
     const lines = code.split('\n');
     const highlightedLines = lines.map((line, index) => {
       const lineNumber = index + 1;
       const highlightedLine = line
-        .replace(strings, (match) => `<span class="string">${match}</span>`)
-        .replace(new RegExp(`\\b(${keywords.join('|')})\\b`, 'g'), (match) => `<span class="keyword">${match}</span>`)
-        .replace(specialChars, (match) => `<span class="special-char">${match}</span>`);
+        .replace(STRINGS_REGEX, (match) => `<span class="string">${match}</span>`)
+        .replace(new RegExp(`\\b(${KEYWORDS.join('|')})\\b`, 'g'), (match) => `<span class="keyword">${match}</span>`)
+        .replace(SPECIAL_CHARS_REGEX, (match) => `<span class="special-char">${match}</span>`);
       
       return `<span class="line-number">${lineNumber}</span><span class="line-content">${highlightedLine}</span>`;
     });
@@ -124,11 +128,11 @@ export default async function decorate(block) {
     let displayCode = originalContent;
     let fileType = 'code';
 
-    if (/^(npm|node|cat|ls|cd|mkdir|rm|cp|mv|echo|grep|sed|awk|curl|wget|ssh|git|docker|kubectl)\s/.test(originalContent) || originalContent.trim().startsWith('$ ')) {
+    if (TERMINAL_COMMANDS.test(originalContent) || originalContent.trim().startsWith('$ ')) {
       displayCode = highlightTerminal(displayCode);
       codeWrapper.classList.add('language-shell');
       fileType = 'Terminal';
-    } else if (['export', 'import', 'async', 'const', 'let', 'function'].includes(firstWord) || firstTwoChars === '//') {
+    } else if (JS_KEYWORDS.includes(firstWord) || firstTwoChars === '//') {
       displayCode = highlightJS(displayCode);
       codeWrapper.classList.add('language-js', 'line-numbers');
       fileType = 'JavaScript';
@@ -173,9 +177,9 @@ export default async function decorate(block) {
     wrapper.appendChild(codeWrapper);
 
     const lines = displayCode.split('\n');
-    if (lines.length > 80) {
+    if (lines.length > LONG_DOCUMENT_THRESHOLD) {
       const expandCollapseButton = createExpandCollapseButton(codeWrapper, displayCode);
-      wrapper.appendChild(expandCollapseButton); // Changed from insertBefore to appendChild
+      wrapper.appendChild(expandCollapseButton);
     }
 
     codeElement.parentNode.replaceChild(wrapper, codeElement);
@@ -202,78 +206,11 @@ export default async function decorate(block) {
         setTimeout(() => {
           copyButton.innerHTML = `📋 <span class="code-expander-copy-text">Copy ${fileType} to clipboard</span>`;
           copyButton.setAttribute('aria-label', `Copy ${fileType} to clipboard`);
-        }, 2000);
+        }, COPY_BUTTON_RESET_DELAY);
       } catch (err) {
         // eslint-disable-next-line no-console
         console.error('Failed to copy text: ', err);
       }
     });
   });
-
-  // Add default CSS variables
-  const style = document.createElement('style');
-  style.textContent = `
-    :root {
-      --code-expander-button-bg: #f0f0f0;
-      --code-expander-button-text: #333;
-      --code-expander-button-border: #ccc;
-      --code-expander-code-bg: #f8f8f8;
-      --code-expander-code-text: #333;
-      --code-expander-button-hover-bg: #e0e0e0;
-      --code-expander-button-focus-outline: #4d90fe;
-    }
-    .code-expander-wrapper {
-      margin-bottom: 1rem;
-    }
-    .code-expander-copy,
-    .code-expander-expand-collapse {
-      background-color: var(--code-expander-button-bg);
-      color: var(--code-expander-button-text);
-      border: 1px solid var(--code-expander-button-border);
-      padding: 5px 10px;
-      cursor: pointer;
-      font-size: 14px;
-      border-radius: 4px;
-      transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    }
-    .code-expander-copy:hover,
-    .code-expander-expand-collapse:hover {
-      background-color: var(--code-expander-button-hover-bg);
-    }
-    .code-expander-copy:focus,
-    .code-expander-expand-collapse:focus {
-      outline: none;
-      box-shadow: 0 0 0 2px var(--code-expander-button-focus-outline);
-    }
-    .code-expander-expand-collapse {
-      margin-top: 5px;
-      margin-bottom: 5px;
-    }
-    .code-expander-code {
-      background-color: var(--code-expander-code-bg);
-      color: var(--code-expander-code-text);
-      padding: 1rem;
-      border-radius: 4px;
-      overflow-x: auto;
-      transition: max-height 0.3s ease-out;
-    }
-    .code-expander-code pre {
-      margin: 0;
-    }
-    .code-expander-code.language-js.line-numbers {
-      counter-reset: line;
-    }
-    .code-expander-code.language-js.line-numbers .line-number {
-      counter-increment: line;
-      width: 1.5em;
-      display: inline-block;
-      text-align: right;
-      margin-right: 0.5em;
-      color: #888;
-    }
-    .code-expander-code.language-js.line-numbers .line-content {
-      display: inline-block;
-    }
-  `;
-  document.head.appendChild(style);
 }
