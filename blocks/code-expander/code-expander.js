@@ -193,46 +193,46 @@ export default async function decorate(block) {
     codeElement.parentNode.replaceChild(wrapper, codeElement);
 
     copyButton.addEventListener('click', async () => {
-      console.log('Copy button clicked');
       try {
-        console.log('Original content:', originalContent);
-        console.log('File type:', fileType);
-        
         let contentToCopy = originalContent.trim();
-        console.log('Trimmed content:', contentToCopy);
         
         if (fileType === 'JavaScript') {
-          console.log('Processing JavaScript content');
+          // Remove line numbers before copying
           contentToCopy = contentToCopy.split('\n').map(line => line.trim()).join('\n');
-          console.log('JavaScript content after processing:', contentToCopy);
         }
         
+        // Remove opening and closing quotes only for 'text' type content
         if (fileType === 'text') {
-          console.log('Processing text content');
-          console.log('Before quote removal:', contentToCopy);
           contentToCopy = contentToCopy.replace(/^["'""]|["'""]$/g, '').trim();
-          console.log('After quote removal:', contentToCopy);
         }
-        
-        console.log('Final content to be copied:', contentToCopy);
         
         await navigator.clipboard.writeText(contentToCopy);
-        console.log('Content successfully copied to clipboard');
-        
         copyButton.innerHTML = '✅ <span class="code-expander-copy-text">Copied!</span>';
         copyButton.setAttribute('aria-label', `${fileType} copied to clipboard`);
-        console.log('Copy button updated to show success');
         
         setTimeout(() => {
           copyButton.innerHTML = `📋 <span class="code-expander-copy-text">Copy ${fileType} to clipboard</span>`;
           copyButton.setAttribute('aria-label', `Copy ${fileType} to clipboard`);
-          console.log('Copy button reset after timeout');
         }, COPY_BUTTON_RESET_DELAY);
       } catch (err) {
         console.error('Error in copy process:', err);
         console.error('Error stack:', err.stack);
-        copyButton.innerHTML = '❌ <span class="code-expander-copy-text">Copy failed</span>';
-        copyButton.setAttribute('aria-label', `Failed to copy ${fileType}`);
+        
+        let errorMessage = 'Copy failed';
+        if (err.name === 'NotAllowedError') {
+          errorMessage = 'Permission denied. Please allow clipboard access.';
+        } else if (err.message === 'Clipboard API not available') {
+          errorMessage = 'Clipboard not supported in this browser.';
+        }
+        
+        copyButton.innerHTML = `❌ <span class="code-expander-copy-text">${errorMessage}</span>`;
+        copyButton.setAttribute('aria-label', `Failed to copy ${fileType}: ${errorMessage}`);
+        
+        // Reset the button after a delay
+        setTimeout(() => {
+          copyButton.innerHTML = `📋 <span class="code-expander-copy-text">Copy ${fileType} to clipboard</span>`;
+          copyButton.setAttribute('aria-label', `Copy ${fileType} to clipboard`);
+        }, COPY_BUTTON_RESET_DELAY);
       }
     });
 
