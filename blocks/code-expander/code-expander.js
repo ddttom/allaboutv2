@@ -54,18 +54,50 @@ export default function decorate(block) {
           }
         );
       case 'json':
-        // Highlight JSON syntax
-        return code.replace(
-          /("(?:\\.|[^\\"])*"|\b(?:true|false|null)\b|\b\d+(?:\.\d+)?\b)/g,
-          match => {
-            // Highlight strings
-            if (/^"/.test(match)) return `<span class="string">${match}</span>`;
-            // Highlight boolean values and null
-            if (/^(true|false|null)$/.test(match)) return `<span class="boolean">${match}</span>`;
-            // Highlight numbers
-            return `<span class="number">${match}</span>`;
-          }
-        );
+        // Highlight and indent JSON syntax
+        try {
+          const parsedJson = JSON.parse(code);
+          const indentedJson = JSON.stringify(parsedJson, null, 2);
+          return indentedJson.replace(
+            /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+            match => {
+              let cls = 'number';
+              if (/^"/.test(match)) {
+                if (/:$/.test(match)) {
+                  cls = 'key';
+                } else {
+                  cls = 'string';
+                }
+              } else if (/true|false/.test(match)) {
+                cls = 'boolean';
+              } else if (/null/.test(match)) {
+                cls = 'null';
+              }
+              return `<span class="${cls}">${match}</span>`;
+            }
+          ).replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');
+        } catch (error) {
+          console.error('Error parsing JSON:', error);
+          // If parsing fails, apply basic highlighting without parsing
+          return code.replace(
+            /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+            match => {
+              let cls = 'number';
+              if (/^"/.test(match)) {
+                if (/:$/.test(match)) {
+                  cls = 'key';
+                } else {
+                  cls = 'string';
+                }
+              } else if (/true|false/.test(match)) {
+                cls = 'boolean';
+              } else if (/null/.test(match)) {
+                cls = 'null';
+              }
+              return `<span class="${cls}">${match}</span>`;
+            }
+          );
+        }
       case 'html':
         // Highlight HTML syntax
         return code.replace(/&/g, '&amp;')

@@ -35,6 +35,9 @@
   --code-expander-markdown-blockquote: #808080;
   --code-expander-markdown-code: #D2691E;
   --code-expander-markdown-link: #1E90FF;
+
+  /* Add this variable to your :root if not already present */
+  --code-expander-json-null: #0000FF;
 }
 
 pre[class^="language-"] {
@@ -180,3 +183,27 @@ pre[class^="language-"].expanded {
 .language-css { background-color: #f6f8fa; }
 .language-markdown { background-color: #f6f8fa; }
 .language-shell { background-color: #f6f8fa; }
+
+.language-json {
+  white-space: pre-wrap;
+}
+
+.language-json .key {
+  color: var(--code-expander-json-key);
+}
+
+.language-json .string {
+  color: var(--code-expander-json-string);
+}
+
+.language-json .number {
+  color: var(--code-expander-json-number);
+}
+
+.language-json .boolean {
+  color: var(--code-expander-json-boolean);
+}
+
+.language-json .null {
+  color: var(--code-expander-json-null);
+}
