@@ -96,11 +96,11 @@ export default async function decorate(block) {
     expandCollapseButton.addEventListener('click', () => {
       isExpanded = !isExpanded;
       if (isExpanded) {
-        codeWrapper.classList.add('expanded');
+        codeWrapper.style.maxHeight = 'none';
         expandCollapseButton.innerHTML = 'Collapse';
         expandCollapseButton.setAttribute('aria-label', 'Collapse code snippet');
       } else {
-        codeWrapper.classList.remove('expanded');
+        codeWrapper.style.maxHeight = '300px';
         expandCollapseButton.innerHTML = 'Long Document, click to expand';
         expandCollapseButton.setAttribute('aria-label', 'Expand long code snippet');
       }
@@ -180,6 +180,8 @@ export default async function decorate(block) {
     if (lines.length > LONG_DOCUMENT_THRESHOLD) {
       const expandCollapseButton = createExpandCollapseButton(codeWrapper, displayCode);
       wrapper.appendChild(expandCollapseButton);
+    } else {
+      codeWrapper.style.maxHeight = 'none'; // Ensure short documents are fully visible
     }
 
     codeElement.parentNode.replaceChild(wrapper, codeElement);
