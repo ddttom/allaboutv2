@@ -13,6 +13,8 @@ Company: Digital Domain Technologies Ltd
 
 Create a set of Franklin blocks that can generate a comprehensive style guide for a given website URL, following normal Franklin development rules and industry best practices.
 
+** DO NOT focus on creating the first few blocks as examples, and then provide an overview of how to approach the remaining blocks.  Provide all of the blocks.**
+
 ## Objectives
 
 1. Analyze the visual design of a provided website URL
