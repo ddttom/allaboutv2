@@ -40,6 +40,8 @@ Block components should be organized in directories:
 
 **JavaScript (`blockname.js`):**
 
+When writing, or modifying Javascript code, promote configuration variables, and filenames to the top of the Code as const
+
   Export an **async `decorate` function** as default. This handles:
      1. DOM manipulation
      2. Event listeners for interactivity
@@ -75,7 +77,11 @@ Block components should be organized in directories:
 
 **CSS (`blockname.css`):**
   
-  Define block-specific styles and ensure **responsive design**:
+  Define block-specific styles and ensure **responsive design** 
+
+  Ensure that css3 variables are used, configuration should be through CSS3 variables
+
+  Remember that blocks can use variations   `blockname (bold)` is the bold variation of the block named blockname
 
      ```css
      .blockname {
@@ -99,8 +105,15 @@ When creating tables for blocks, follow this structure:
    | BlockName | 
    | :----  | 
 
-3. Subsequent rows contain the data for each column.
+3.  Variations are encouraged in blocks, in the example following `(bold)` is the variation; the additional class `bold` is added to the class and the css adjusts, thus saving creation of two different but similar block.
 
+   | BlockName (bold) | 
+   | :----  | 
+
+4. Subsequent rows contain the data for each column.
+
+
+On finished creating all of the blocks, reiterate over them to see if variations can be created
 
 ## Example file guidelines
 
@@ -176,10 +189,11 @@ path,title,image,description,lastModified
    - Target 100 in Lighthouse scores for performance, SEO, and accessibility.
 5. **Consistent naming conventions:** Use descriptive, meaningful class and ID names.
 6. **Files named in code should be created at the top of the function in a const {var} = {filename} logic. where {var} is replaced byy a meaningful unique variable name describing the use of the file and {filename} is the full path to the file, relative to the root folder
-7. **Responsive design:** Test components across various screen sizes.
-8. **Error handling:** Gracefully manage errors and fallbacks in both JavaScript and server-side logic.
-9. **Code style:** Adhere to **Airbnb’s JavaScript Style Guide** to ensure clean, maintainable code, if writing code that uses console output, remember to precede it with  // eslint-disable-next-line no-console
-10. **Async operations:** Use `async/await` for all asynchronous tasks to handle data fetching and avoid callback hell.
+7. Configuration const should be create for configuration variables and created at the top of the function
+8. **Responsive design:** Test components across various screen sizes.
+9. **Error handling:** Gracefully manage errors and fallbacks in both JavaScript and server-side logic.
+10. **Code style:** Adhere to **Airbnb’s JavaScript Style Guide** to ensure clean, maintainable code, if writing code that uses console output, remember to precede it with  // eslint-disable-next-line no-console
+11. **Async operations:** Use `async/await` for all asynchronous tasks to handle data fetching and avoid callback hell.
 
 ## Advanced Features
 
@@ -339,3 +353,29 @@ This JSON represents a paginated list of published item. Here's a breakdown of i
 ## using the json in coding
 
 If the prompt asks for index, use the pattern fetch  '{path}/query-index.json' where path is any path that the user specifies. it may be missing
+
+
+Add comments to code you create to make it more understandable for AI systems or human developers. 
+
+To add comments to this code, follow these steps:
+
+1. Analyze the code to understand its structure and functionality.
+2. Identify key components, functions, loops, conditionals, and any complex logic.
+3. Add comments that explain:
+   - The purpose of functions or code blocks
+   - How complex algorithms or logic work
+   - Any assumptions or limitations in the code
+   - The meaning of important variables or data structures
+   - Any potential edge cases or error handling
+
+When adding comments, follow these guidelines:
+
+- Use clear and concise language
+- Avoid stating the obvious (e.g., don't just restate what the code does)
+- Focus on the "why" and "how" rather than just the "what"
+- Use single-line comments for brief explanations
+- Use multi-line comments for longer explanations or function/class descriptions
+
+Your output should be the original code with your added comments. Make sure to preserve the original code's formatting and structure.
+
+Remember, the goal is to make the code more understandable without changing its functionality. Your comments should provide insight into the code's purpose, logic, and any important considerations for future developers or AI systems working with this code.

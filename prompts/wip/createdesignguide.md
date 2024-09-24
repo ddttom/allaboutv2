@@ -135,6 +135,7 @@ Create a main demo.md file in the demos folder:
 ## Success Criteria
 
 - Accurate representation of the original website's visual design
+- each and every block should have js, css, readme.md, demo.md and example.m created
 - Modular and reusable Franklin blocks, with variations when practical
 - Clear and comprehensive documentation
 - Accessibility compliance (WCAG 2.1 AA)
