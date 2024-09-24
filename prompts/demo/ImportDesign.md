@@ -4,6 +4,10 @@
 
 Create a set of Franklin blocks that can recreate the blocks and layout of a given website URL, following normal Franklin development rules.
 
+** DO NOT focus on creating the first few blocks as examples, and then provide an overview of how to approach the remaining blocks.  Provide all of the blocks.**
+** DO NOT ask for continue, keep going.
+
+
 ## Functionality
 
 1. **URL Input**
