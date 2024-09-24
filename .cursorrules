@@ -143,7 +143,7 @@ Ensure that the demo file includes all necessary elements to showcase the block'
 | title | Word Cloud Demo |
 | description | A demonstration of the Word Cloud block for Franklin |
 | json-ld | article |
-| image | https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png |
+| image | |
 | author | Tom Cranstoun |
 | longdescription | This page showcases the Word Cloud block functionality in Franklin, visualizing common web development concepts and technologies. |
 
