@@ -1,48 +1,40 @@
-# Imported LinkedIn Profile Design Demo
+# Imported LinkedIn Profile Demo
 
 | import-styling |
 | :---- |
 | |
 
-| import-header |
-| :---- |
-| logo |
-| navigation_items |
-
-| import-profile |
-| :---- |
-| profile_image |
-| name |
-| headline |
-| location |
-| connections |
-| current_company |
-| education |
-
-| import-about |
-| :---- |
-| content |
-
-| import-experience |
+| import-linkedin-header |
 | :---- |
 | |
 
-| import-education |
+| import-linkedin-profile-header |
 | :---- |
-| |
+| Tom Cranstoun |
+| Independent CMS Consultant |
+| Copmanthorpe, England, United Kingdom |
 
-| import-skills |
+| import-linkedin-about |
 | :---- |
-| |
+| I am an independent CMS consultant with over 12 years of experience in designing and implementing content management solutions. My expertise lies in Adobe Experience Manager (AEM) and Edge Delivery Services (EDS), where I help organizations optimize their digital content strategies and improve their online presence. |
 
-| import-recommendations |
+| import-linkedin-experience |
 | :---- |
-| |
+| DIGITAL DOMAIN TECHNOLOGIES LIMITED |
+| Independent CMS Consultant |
 
-| import-footer |
+| import-linkedin-education |
 | :---- |
-| footer_links |
-| copyright_text |
+| Hermitage Academy |
+| Secondary Education |
+
+| import-linkedin-skills |
+| :---- |
+| Content Management Systems |
+| Adobe Experience Manager (AEM) |
+| Edge Delivery Services (EDS) |
+| Digital Strategy |
+| Web Development |
 
 | metadata |  |
 | :---- | :---- |

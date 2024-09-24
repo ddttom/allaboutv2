@@ -1,0 +1,55 @@
+.profile-header {
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.cover-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.profile-info {
+  padding: 24px;
+  position: relative;
+}
+
+.profile-picture {
+  width: 152px;
+  height: 152px;
+  border-radius: 50%;
+  border: 4px solid white;
+  position: absolute;
+  top: -76px;
+  left: 24px;
+}
+
+.name-title {
+  margin-left: 180px;
+}
+
+.name-title h1 {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+
+.name-title h2 {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0 0 4px 0;
+}
+
+.name-title p {
+  font-size: 14px;
+  color: var(--linkedin-gray);
+  margin: 0;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}

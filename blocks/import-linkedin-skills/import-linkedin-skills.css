@@ -1,0 +1,29 @@
+.skills-section {
+  background-color: white;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.skills-section h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+}
+
+.skills-section ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skills-section li {
+  background-color: var(--linkedin-light-blue);
+  color: var(--linkedin-blue);
+  font-size: 14px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
