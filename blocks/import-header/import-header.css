@@ -1,0 +1,50 @@
+.import-header {
+  background-color: var(--linkedin-white);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  padding: 0 24px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.import-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  max-width: 1128px;
+  margin: 0 auto;
+}
+
+.import-header-logo img {
+  height: 34px;
+}
+
+.import-header-nav {
+  display: flex;
+  align-items: center;
+}
+
+.import-header-nav-item {
+  margin-left: 24px;
+  color: var(--linkedin-gray);
+  font-size: 14px;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.import-header-nav-item:hover {
+  color: var(--linkedin-black);
+}
+
+@media (max-width: 768px) {
+  .import-header-content {
+    justify-content: center;
+  }
+
+  .import-header-nav {
+    display: none;
+  }
+}

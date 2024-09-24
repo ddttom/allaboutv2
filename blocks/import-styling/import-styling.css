@@ -1,0 +1,34 @@
+:root {
+  --linkedin-blue: #0a66c2;
+  --linkedin-light-blue: #e8f3ff;
+  --linkedin-black: #000000;
+  --linkedin-gray: #666666;
+  --linkedin-light-gray: #f3f2ef;
+  --linkedin-white: #ffffff;
+  --linkedin-font: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Fira Sans', Ubuntu, Oxygen, 'Oxygen Sans', Cantarell, 'Droid Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Lucida Grande', Helvetica, Arial, sans-serif;
+}
+
+body {
+  font-family: var(--linkedin-font);
+  background-color: var(--linkedin-light-gray);
+  color: var(--linkedin-black);
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1128px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+a {
+  color: var(--linkedin-blue);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Add more global styles as needed */
