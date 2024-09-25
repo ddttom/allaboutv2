@@ -36,11 +36,9 @@ function groupAndSortPosts(posts) {
     groupedPosts[key].sort((a, b) => a.partNumber - b.partNumber);
   });
 
-  // Sort the groups by the first post's title (without Part - x)
+  // Sort the groups by count in descending order
   return Object.entries(groupedPosts).sort((a, b) => {
-    const titleA = a[1][0].title.replace(/Part \d+/i, '').trim();
-    const titleB = b[1][0].title.replace(/Part \d+/i, '').trim();
-    return titleA.localeCompare(titleB);
+    return b[1].length - a[1].length;
   });
 }
 
