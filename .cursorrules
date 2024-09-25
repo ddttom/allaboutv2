@@ -194,6 +194,14 @@ path,title,image,description,lastModified
 9. **Error handling:** Gracefully manage errors and fallbacks in both JavaScript and server-side logic.
 10. **Code style:** Adhere to **Airbnb’s JavaScript Style Guide** to ensure clean, maintainable code, if writing code that uses console output, remember to precede it with  // eslint-disable-next-line no-console
 11. **Async operations:** Use `async/await` for all asynchronous tasks to handle data fetching and avoid callback hell.
+12. be Consistent in naming conventions
+Optimize repeated styles
+ensure that there are Accessibility enhancements
+
+Consistency in naming conventions for css:  use kebab-case (e.g., `.code-expander-copy`). Stick to one convention, preferably kebab-case for CSS classes.
+Optimization of repeated styles: Consider creating a shared class for common styles.
+Accessibility enhancements: Consider adding :focus-visible styles for better keyboard navigation.
+Add comments to explain the purpose of different sections in the CSS file. Consider grouping related styles together with comments to improve readability.
 
 ## Advanced Features
 
