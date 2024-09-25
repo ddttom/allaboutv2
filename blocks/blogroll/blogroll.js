@@ -45,15 +45,25 @@ function groupAndSortPosts(posts) {
 }
 
 export default async function decorate(block) {
+  const isCompact = block.classList.contains('compact');
+  
+  // Fetch data from the query-index.json in the current directory
+  const resp = await fetch('/query-index.json');
+  if (!resp.ok) {
+    // eslint-disable-next-line no-console
+    console.error('Failed to fetch blog data');
+    return;
+  }
+  const json = await resp.json();
+
   const blogrollContainer = document.createElement('div');
   blogrollContainer.classList.add('blogroll-container');
+  if (isCompact) {
+    blogrollContainer.classList.add('compact');
+  }
 
   try {
-    const response = await fetch('https://allabout.network/blogs/ddt/query-index.json');
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    const data = await response.json();
-
-    const groupedAndSortedPosts = groupAndSortPosts(data.data);
+    const groupedAndSortedPosts = groupAndSortPosts(json.data);
 
     groupedAndSortedPosts.forEach(([basePath, posts]) => {
       const groupContainer = document.createElement('div');

@@ -3,7 +3,7 @@
 | Blogroll |
 |----------|
 
-# Compact Blogroll
+# Blogroll (Compact)
 
 | Blogroll (compact) |
 |--------------------|
