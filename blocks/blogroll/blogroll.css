@@ -1,0 +1,76 @@
+.blogroll-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.blogroll-group {
+  margin-bottom: 40px;
+}
+
+.blogroll-group h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #333;
+  padding-bottom: 10px;
+}
+
+.blogroll-post {
+  display: flex;
+  margin-bottom: 30px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.blogroll-image {
+  flex: 0 0 300px;
+}
+
+.blogroll-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.blogroll-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.blogroll-content h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.blogroll-content h3 a {
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.blogroll-content h3 a:hover {
+  color: #0066cc;
+}
+
+.blogroll-content p {
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.blogroll-date {
+  font-style: italic;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .blogroll-post {
+    flex-direction: column;
+  }
+
+  .blogroll-image {
+    flex: 0 0 auto;
+    height: 200px;
+  }
+}
