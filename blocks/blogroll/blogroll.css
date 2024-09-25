@@ -64,6 +64,30 @@
   color: #666;
 }
 
+/* Compact variation */
+.blogroll-container.compact .blogroll-post {
+  flex-direction: column;
+  max-width: 300px;
+  margin: 0 auto 20px;
+}
+
+.blogroll-container.compact .blogroll-image {
+  flex: 0 0 auto;
+  height: 200px;
+}
+
+.blogroll-container.compact .blogroll-content {
+  padding: 15px;
+}
+
+.blogroll-container.compact .blogroll-content h3 {
+  font-size: 18px;
+}
+
+.blogroll-container.compact .blogroll-content p {
+  font-size: 14px;
+}
+
 @media (max-width: 768px) {
   .blogroll-post {
     flex-direction: column;

@@ -2,3 +2,8 @@
 
 | Blogroll |
 |----------|
+
+# Compact Blogroll
+
+| Blogroll (compact) |
+|--------------------|

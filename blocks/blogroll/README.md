@@ -8,16 +8,24 @@ This block fetches blog post data from a specified JSON endpoint and organizes t
 
 ## Authoring
 
-To use the Blogroll block in your content, simply add a table with the block name:
+To use the Blogroll block in your content, add a table with the block name:
 
 | Blogroll |
 |----------|
 
-No additional configuration is needed in the content document.
+For a compact view, use:
+
+| Blogroll (compact) |
+|--------------------|
 
 ## Styling
 
 The block uses CSS classes for styling. You can customize the appearance by modifying the `blogroll.css` file.
+
+## Variations
+
+1. Default: Displays blog posts in a full-width layout.
+2. Compact: Displays blog posts in a compact, card-like layout.
 
 ## Behavior
 
