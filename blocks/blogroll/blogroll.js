@@ -1,4 +1,5 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+// Remove the unused import
+// import { createOptimizedPicture } from '../../scripts/aem.js';
 
 // Function to format the date
 function formatDate(timestamp) {
@@ -44,7 +45,7 @@ export default async function decorate(block) {
   block.textContent = 'Loading blog posts...';
   
   try {
-    const response = await fetch('https://allabout.network/blogs/ddt/query-index.json');
+    const response = await fetch('/query-index.json');
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
