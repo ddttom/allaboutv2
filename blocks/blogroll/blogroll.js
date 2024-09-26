@@ -1,6 +1,3 @@
-// Remove the unused import
-// import { createOptimizedPicture } from '../../scripts/aem.js';
-
 // Function to format the date
 function formatDate(timestamp) {
   const date = new Date(parseInt(timestamp, 10) * 1000);
@@ -19,12 +16,12 @@ function extractSeriesInfo(title, path) {
 }
 
 // Function to group and sort blog posts
-function groupAndSortPosts(posts, acceptList) {
+function groupAndSortPosts(posts, acceptList = []) {
   const seriesMap = new Map();
 
   posts.forEach(post => {
-    // Filter posts based on the accept list, if provided
-    if (acceptList.length > 0 && !acceptList.some(term => post.path.includes(term))) {
+    // Only filter if acceptList is not empty
+    if (acceptList.length > 0 && !acceptList.some(term => post.path.toLowerCase().includes(term))) {
       return;
     }
 
@@ -54,14 +51,126 @@ function groupAndSortPosts(posts, acceptList) {
 
 // Configuration function
 function getConfig(block) {
-  const config = {};
+  const config = {
+    acceptList: [],
+    isCompact: false,
+  };
+  
   const rows = [...block.children];
   if (rows.length > 0) {
     const firstRow = rows.shift();
-    config.acceptList = [...firstRow.children].map(cell => cell.textContent.trim());
+    config.acceptList = [...firstRow.children]
+      .map(cell => cell.textContent.trim())
+      .filter(text => text !== ''); // Remove empty strings
   }
+  
   config.isCompact = block.classList.contains('compact');
+
+  // Set default path for compact mode
+  if (config.isCompact && config.acceptList.length === 0) {
+    const currentPath = window.location.pathname;
+    const folderPath = currentPath.split('/').slice(0, -1).join('/');
+    const pageName = currentPath.split('/').pop().replace(/-part-\d+$/i, '');
+    config.acceptList.push(folderPath + '/' + pageName);
+  }
+
+  // Make acceptList case-insensitive
+  config.acceptList = config.acceptList.map(path => path.toLowerCase());
+
   return config;
+}
+
+// Function to create the compact blogroll panel
+function createCompactBlogrollPanel(groupedPosts, originalPosts, config) {
+  const panel = document.createElement('div');
+  panel.className = 'blogroll-panel';
+  
+  const panelHeader = document.createElement('div');
+  panelHeader.className = 'blogroll-panel-header';
+  
+  const panelTitle = document.createElement('div');
+  panelTitle.className = 'blogroll-panel-title';
+  panelTitle.textContent = 'Blogroll';
+  panelHeader.appendChild(panelTitle);
+  
+  const closeButton = document.createElement('button');
+  closeButton.innerHTML = '&times;'; // This creates a × symbol
+  closeButton.className = 'blogroll-panel-close';
+  closeButton.setAttribute('aria-label', 'Close blogroll panel');
+  closeButton.addEventListener('click', () => panel.classList.remove('open'));
+  panelHeader.appendChild(closeButton);
+  
+  panel.appendChild(panelHeader);
+
+  const blogrollContent = document.createElement('div');
+  blogrollContent.className = 'blogroll-panel-content';
+
+  updatePanelContent(blogrollContent, groupedPosts);
+
+  // Add "Show All" button at the bottom of the panel
+  const showAllContainer = document.createElement('div');
+  showAllContainer.className = 'blogroll-show-all';
+  
+  const showAllButton = document.createElement('button');
+  showAllButton.textContent = 'Show All Posts';
+  showAllButton.setAttribute('aria-label', 'Show all posts');
+  showAllButton.title = 'Show all posts';
+  
+  let isShowingAll = false;
+  
+  showAllContainer.appendChild(showAllButton);
+  showAllContainer.addEventListener('click', () => {
+    if (isShowingAll) {
+      // Revert to previous state
+      updatePanelContent(blogrollContent, groupedPosts);
+      showAllButton.textContent = 'Show All Posts';
+    } else {
+      // Show all posts
+      const allPosts = groupAndSortPosts(originalPosts, []);
+      updatePanelContent(blogrollContent, allPosts);
+      showAllButton.textContent = 'Show Filtered Posts';
+    }
+    isShowingAll = !isShowingAll;
+  });
+
+  panel.appendChild(blogrollContent);
+  panel.appendChild(showAllContainer);
+
+  return panel;
+}
+
+function updatePanelContent(container, groupedPosts) {
+  container.innerHTML = ''; // Clear existing content
+  
+  groupedPosts.forEach(([seriesName, posts]) => {
+    const seriesContainer = document.createElement('div');
+    seriesContainer.className = 'blogroll-series';
+
+    const seriesTitle = document.createElement('h3');
+    seriesTitle.textContent = seriesName;
+    seriesContainer.appendChild(seriesTitle);
+
+    const postList = document.createElement('ul');
+    posts.forEach(post => {
+      const listItem = document.createElement('li');
+      
+      const postLink = document.createElement('a');
+      postLink.href = post.path;
+      postLink.textContent = post.title;
+      
+      const postDate = document.createElement('span');
+      postDate.className = 'blogroll-date';
+      postDate.textContent = formatDate(post.lastModified);
+      
+      listItem.appendChild(postLink);
+      listItem.appendChild(postDate);
+
+      postList.appendChild(listItem);
+    });
+
+    seriesContainer.appendChild(postList);
+    container.appendChild(seriesContainer);
+  });
 }
 
 export default async function decorate(block) {
@@ -76,7 +185,6 @@ export default async function decorate(block) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const json = await response.json();
-    // Use all blog posts without filtering
     const blogPosts = json.data;
 
     const groupedPosts = groupAndSortPosts(blogPosts, config.acceptList);
@@ -84,11 +192,9 @@ export default async function decorate(block) {
     // Clear loading message
     block.textContent = '';
 
+    // Create full blogroll (always)
     const blogrollContainer = document.createElement('div');
     blogrollContainer.className = 'blogroll-container';
-    if (config.isCompact) {
-      blogrollContainer.classList.add('compact');
-    }
 
     groupedPosts.forEach(([seriesName, posts]) => {
       const seriesContainer = document.createElement('div');
@@ -127,6 +233,61 @@ export default async function decorate(block) {
     });
 
     block.appendChild(blogrollContainer);
+
+    // If compact mode is enabled, add the icon and panel
+    if (config.isCompact) {
+      // Create compact blogroll icon container
+      const iconContainer = document.createElement('div');
+      iconContainer.className = 'blogroll-icon-container';
+
+      // Create compact blogroll icon
+      const icon = document.createElement('div');
+      icon.className = 'blogroll-icon';
+      icon.innerHTML = '📚'; // You can replace this with an SVG icon if preferred
+      iconContainer.appendChild(icon);
+
+      // Add "Blogroll" text next to the icon
+      const iconText = document.createElement('span');
+      iconText.className = 'blogroll-icon-text';
+      iconText.textContent = 'Blogroll';
+      iconContainer.appendChild(iconText);
+
+      document.body.appendChild(iconContainer);
+
+      // Create compact blogroll panel
+      const panel = createCompactBlogrollPanel(groupedPosts, blogPosts, config);
+      document.body.appendChild(panel);
+
+      // Function to close the panel
+      const closePanel = () => {
+        panel.classList.remove('open');
+      };
+
+      // Add click event to icon container
+      iconContainer.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent this click from immediately closing the panel
+        panel.classList.add('open');
+      });
+
+      // Add click event to document to close panel when clicking outside
+      document.addEventListener('click', (e) => {
+        if (panel.classList.contains('open') && !panel.contains(e.target) && e.target !== iconContainer) {
+          closePanel();
+        }
+      });
+
+      // Prevent clicks inside the panel from closing it
+      panel.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+
+      // Add keydown event listener to close panel on Escape key press
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && panel.classList.contains('open')) {
+          closePanel();
+        }
+      });
+    }
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Error fetching blog posts:', error);

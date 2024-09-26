@@ -3,6 +3,9 @@ review the generated code, ensure all blocks and css and readme.md and demo.md a
 whilst reviewing consider franklin variations and update all files to match if variations are created
 
 
-remove any unused imports in the code
+remove any unused imports in the code, do not comment them out
 
-check css for proper use of css variables
+heck css for proper use of css variables
+
+
+Remember to update the README.md, example.md, and demo.md files to reflect any changes

@@ -1,53 +1,43 @@
 # Blogroll Block
 
-The Blogroll block displays a list of blog posts grouped by series and sorted by part number or title.
+The Blogroll block displays a list of blog posts grouped by series.
 
 ## Usage
 
-This block fetches blog post data from a JSON file and organizes it into a structured list.
-
-## Authoring
-
-To use the Blogroll block in your content, add a table with "Blogroll" in the first cell:
+To use the Blogroll block, add the following to your Franklin document:
 
 | Blogroll |
 |----------|
+| path1    |
+| path2    |
 
-For a compact version without descriptions, use:
+Each row after the first represents a path filter. If no paths are specified, all blog posts will be displayed.
+
+## Variations
+
+### Compact
+
+To use the compact variation, which adds a floating icon with "Blogroll" text and a slide-out panel:
 
 | Blogroll (compact) |
 |--------------------|
+| path1              |
+| path2              |
 
-No additional configuration is needed in the content document.
+In compact mode, a floating icon (📚) with the text "Blogroll" appears in the top-left corner of the viewport. Clicking on either the icon or the text opens a slide-out panel containing the blogroll.
+
+The compact panel also includes a "Show All Posts" button at the bottom. When clicked, it toggles between showing all available blog posts and the filtered view. The button text changes to "Show Filtered Posts" when displaying all posts.
+
+If no paths are specified in compact mode, the block will default to showing posts from the current page's folder path and page name (without any part number). The filtering is case-insensitive.
 
 ## Styling
 
-The block uses CSS classes for styling. You can customize the appearance by modifying the `blogroll.css` file.
+The block uses CSS variables for easy customization. See the CSS file for available variables.
 
 ## Behavior
 
-The block performs the following actions:
-1. Fetches blog post data from a JSON file
-2. Groups posts by series
-3. Sorts posts within each series by part number or title
-4. Displays the grouped and sorted posts in a structured list
-5. In compact mode, only shows titles and dates
-
-## Dependencies
-
-This block depends on the `aem.js` script for the `createOptimizedPicture` function, although it's not currently used in this implementation.
+The block fetches blog posts from the query-index.json file, groups them by series, and displays them in order. In compact mode, it adds a floating icon and text that opens a slide-out panel when clicked. The panel can be closed by clicking outside, pressing the Escape key, or clicking the close button (×).
 
 ## Accessibility
 
-The block uses semantic HTML elements to ensure good accessibility:
-- `<h2>` for series titles
-- `<ul>` and `<li>` for list structure
-- `<a>` tags for clickable post titles
-
-## Suggestions for Improvement
-
-1. Add pagination or "load more" functionality for large numbers of posts
-2. Implement filtering options (e.g., by date, category)
-3. Add a search feature to find specific posts
-4. Include thumbnail images for each post (if available in the JSON data)
-5. Add social sharing buttons for each post
+The compact variation includes keyboard navigation support (Escape key to close) and uses ARIA attributes for better screen reader compatibility.

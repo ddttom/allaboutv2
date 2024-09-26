@@ -1,57 +1,42 @@
 # Blogroll Block Demo
 
-This page demonstrates the functionality of the Blogroll block, which displays a list of blog posts grouped by series and sorted by part number or title.
+This page demonstrates the Blogroll block in both its default and compact variations.
 
-## Introduction
-
-The Blogroll block is designed to fetch blog post data from a JSON file and present it in an organized, easy-to-read format. It groups posts by series, sorts them appropriately, and displays them with titles, dates, and descriptions.
-
-## Sample Usage
-
-To use the Blogroll block in your content, add one of the following tables to your document:
-
-Regular Blogroll:
+## Default Blogroll
 
 | Blogroll |
 |----------|
+| /blogs/  |
 
-Compact Blogroll:
+## Compact Blogroll
 
 | Blogroll (compact) |
 |--------------------|
 
-The block will automatically fetch the blog post data and render the blogroll in the specified format.
+Note: This compact blogroll will default to showing posts from the current page's folder path and page name (without any part number). The filtering is case-insensitive.
 
-## How It Works
+## Usage
 
-1. The block fetches blog post data from a specified JSON endpoint.
-2. It processes the data, grouping posts by series and sorting them by part number or title.
-3. The grouped and sorted posts are then rendered in a structured HTML format.
-4. Each post displays its title (linked to the post) and publication date. In the regular version, descriptions are also shown.
+The Blogroll block displays a list of blog posts grouped by series. You can filter the displayed posts by specifying paths in the rows below the block name.
 
-## Customization Options
+The compact variation adds a floating icon (📚) with the text "Blogroll" in the top-left corner of the viewport. Clicking on either the icon or the text opens a slide-out panel, providing a more space-efficient option for displaying the blogroll.
 
-The Blogroll block can be customized by modifying the CSS file (`blogroll.css`). You can adjust:
+### Compact Variation Features:
+- Floating icon (📚) with "Blogroll" text in the top-left corner
+- Slide-out panel from the left side when clicked
+- Panel contains a sticky header with "Blogroll" title and close button (×)
+- Close panel by clicking outside, pressing Escape, or clicking the close button
+- Compact format of blog posts within the panel
+- "Show All Posts" button at the bottom of the panel to toggle between all posts and the filtered view
 
-- Font styles and sizes
-- Colors
-- Layout and spacing
-- Responsive design breakpoints
+## Accessibility
+The compact variation supports keyboard navigation (Escape key to close the panel) and includes ARIA attributes for better screen reader compatibility.
 
-## Potential Use Cases
-
-1. Blog homepage to showcase all posts (regular version)
-2. Sidebar widget to display recent or featured posts (compact version)
-3. Dedicated archive page for easy navigation of all blog content
-4. Topic-specific pages to group related posts together
-
-## Metadata
-
-| metadata | |
+| metadata |  |
 |----------|--|
 | title | Blogroll Block Demo |
-| description | A demonstration of the Blogroll block functionality in Franklin |
+| description | Demonstration of the Blogroll block for Franklin |
 | json-ld | article |
-| image | |
+| image |  |
 | author | Tom Cranstoun |
-| longdescription | This page showcases the Blogroll block functionality in Franklin, demonstrating how it organizes and displays blog posts in a structured, easy-to-navigate format, including both regular and compact variations. |
+| longdescription | This page showcases the Blogroll block functionality in Franklin, demonstrating both the default and compact variations for displaying blog post listings. The compact variation features a floating icon with text for easy access to the blogroll. |
