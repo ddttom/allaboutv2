@@ -193,56 +193,56 @@ export default async function decorate(block) {
     // Clear loading message
     block.textContent = '';
 
-    // Create full blogroll (always)
-    const blogrollContainer = document.createElement('div');
-    blogrollContainer.className = 'blogroll-container';
+    // Only create the full blogroll if it's not compact mode
+    if (!config.isCompact) {
+      const blogrollContainer = document.createElement('div');
+      blogrollContainer.className = 'blogroll-container';
 
-    if (groupedPosts.length === 0) {
-      console.log('No posts to display');
-      const noPostsMessage = document.createElement('p');
-      noPostsMessage.textContent = 'No blog posts found.';
-      blogrollContainer.appendChild(noPostsMessage);
-    } else {
-      groupedPosts.forEach(([seriesName, posts]) => {
-        const seriesContainer = document.createElement('div');
-        seriesContainer.className = 'blogroll-series';
+      if (groupedPosts.length === 0) {
+        console.log('No posts to display');
+        const noPostsMessage = document.createElement('p');
+        noPostsMessage.textContent = 'No blog posts found.';
+        blogrollContainer.appendChild(noPostsMessage);
+      } else {
+        groupedPosts.forEach(([seriesName, posts]) => {
+          const seriesContainer = document.createElement('div');
+          seriesContainer.className = 'blogroll-series';
 
-        const seriesTitle = document.createElement('h2');
-        seriesTitle.textContent = seriesName;
-        seriesContainer.appendChild(seriesTitle);
+          const seriesTitle = document.createElement('h2');
+          seriesTitle.textContent = seriesName;
+          seriesContainer.appendChild(seriesTitle);
 
-        const postList = document.createElement('ul');
-        posts.forEach(post => {
-          const listItem = document.createElement('li');
-          
-          const postLink = document.createElement('a');
-          postLink.href = post.path;
-          postLink.textContent = post.title;
-          
-          const postDate = document.createElement('span');
-          postDate.className = 'blogroll-date';
-          postDate.textContent = formatDate(post.lastModified);
-          
-          listItem.appendChild(postLink);
-          listItem.appendChild(postDate);
+          const postList = document.createElement('ul');
+          posts.forEach(post => {
+            const listItem = document.createElement('li');
+            
+            const postLink = document.createElement('a');
+            postLink.href = post.path;
+            postLink.textContent = post.title;
+            
+            const postDate = document.createElement('span');
+            postDate.className = 'blogroll-date';
+            postDate.textContent = formatDate(post.lastModified);
+            
+            listItem.appendChild(postLink);
+            listItem.appendChild(postDate);
 
-          if (!config.isCompact) {
             const postDescription = document.createElement('p');
             postDescription.textContent = post.longdescription || post.description;
             listItem.appendChild(postDescription);
-          }
 
-          postList.appendChild(listItem);
+            postList.appendChild(listItem);
+          });
+
+          seriesContainer.appendChild(postList);
+          blogrollContainer.appendChild(seriesContainer);
         });
+      }
 
-        seriesContainer.appendChild(postList);
-        blogrollContainer.appendChild(seriesContainer);
-      });
+      // Append the blogroll container to the block
+      block.appendChild(blogrollContainer);
+      console.log('Blogroll content added to block:', blogrollContainer);
     }
-
-    // Append the blogroll container to the block
-    block.appendChild(blogrollContainer);
-    console.log('Blogroll content added to block:', blogrollContainer);
 
     // If compact mode is enabled, add the icon and panel
     if (config.isCompact) {
