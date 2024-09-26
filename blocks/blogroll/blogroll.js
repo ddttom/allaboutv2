@@ -20,11 +20,9 @@ function groupAndSortPosts(posts, acceptList = []) {
   const seriesMap = new Map();
 
   posts.forEach(post => {
+    const postPath = post.path.toLowerCase();
     // Only filter if acceptList is not empty
-    if (acceptList.length > 0 && !acceptList.some(term => {
-      const postPath = post.path.toLowerCase();
-      return postPath.startsWith(term) || postPath.replace(/-part-\d+$/, '').startsWith(term);
-    })) {
+    if (acceptList.length > 0 && !acceptList.some(term => postPath.includes(term))) {
       return;
     }
 
@@ -56,38 +54,25 @@ function groupAndSortPosts(posts, acceptList = []) {
 function getConfig(block) {
   const config = {
     acceptList: [],
-    isCompact: false,
+    isCompact: block.classList.contains('compact'),
   };
   
   const rows = [...block.children];
   if (rows.length > 0) {
     const firstRow = rows.shift();
     config.acceptList = [...firstRow.children]
-      .map(cell => cell.textContent.trim())
+      .map(cell => cell.textContent.trim().toLowerCase())
       .filter(text => text !== '');
   }
-  
-  // Always set isCompact to true for the panel
-  config.isCompact = true;
 
-  // If acceptList is empty, set default path for compact mode
-  if (config.acceptList.length === 0) {
-    const currentPath = window.location.pathname;
+  // If acceptList is empty and it's compact mode, set default path
+  if (config.acceptList.length === 0 && config.isCompact) {
+    const currentPath = window.location.pathname.toLowerCase();
     const pathParts = currentPath.split('/');
-    const lastPart = pathParts[pathParts.length - 1];
-    
-    // Remove '-part-x' from the end of the path if present
-    const basePath = lastPart.replace(/-part-\d+$/, '');
-    
-    // Reconstruct the path without the last part
-    pathParts.pop();
-    const folderPath = pathParts.join('/');
-    
-    config.acceptList.push(folderPath + '/' + basePath);
+    const lastPart = pathParts[pathParts.length - 1].replace(/-part-\d+$/, '');
+    const folderPath = pathParts.slice(0, -1).join('/');
+    config.acceptList.push(folderPath + '/' + lastPart);
   }
-
-  // Make acceptList case-insensitive
-  config.acceptList = config.acceptList.map(path => path.toLowerCase());
 
   return config;
 }
@@ -241,9 +226,11 @@ export default async function decorate(block) {
           listItem.appendChild(postLink);
           listItem.appendChild(postDate);
 
-          const postDescription = document.createElement('p');
-          postDescription.textContent = post.longdescription || post.description;
-          listItem.appendChild(postDescription);
+          if (!config.isCompact) {
+            const postDescription = document.createElement('p');
+            postDescription.textContent = post.longdescription || post.description;
+            listItem.appendChild(postDescription);
+          }
 
           postList.appendChild(listItem);
         });
@@ -258,9 +245,59 @@ export default async function decorate(block) {
     console.log('Blogroll content added to block:', blogrollContainer);
 
     // If compact mode is enabled, add the icon and panel
-    if (block.classList.contains('compact')) {
+    if (config.isCompact) {
       console.log('Creating compact blogroll');
-      // ... (rest of the compact blogroll code)
+      // Create compact blogroll icon container
+      const iconContainer = document.createElement('div');
+      iconContainer.className = 'blogroll-icon-container';
+
+      // Create compact blogroll icon
+      const icon = document.createElement('div');
+      icon.className = 'blogroll-icon';
+      icon.innerHTML = '📚';
+      iconContainer.appendChild(icon);
+
+      // Add "Blogroll" text next to the icon
+      const iconText = document.createElement('span');
+      iconText.className = 'blogroll-icon-text';
+      iconText.textContent = 'Blogroll';
+      iconContainer.appendChild(iconText);
+
+      document.body.appendChild(iconContainer);
+
+      // Create compact blogroll panel
+      const panel = createCompactBlogrollPanel(groupedPosts, blogPosts, config);
+      document.body.appendChild(panel);
+
+      // Function to close the panel
+      const closePanel = () => {
+        panel.classList.remove('open');
+      };
+
+      // Add click event to icon container
+      iconContainer.addEventListener('click', (e) => {
+        e.stopPropagation();
+        panel.classList.add('open');
+      });
+
+      // Add click event to document to close panel when clicking outside
+      document.addEventListener('click', (e) => {
+        if (panel.classList.contains('open') && !panel.contains(e.target) && e.target !== iconContainer) {
+          closePanel();
+        }
+      });
+
+      // Prevent clicks inside the panel from closing it
+      panel.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+
+      // Add keydown event listener to close panel on Escape key press
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && panel.classList.contains('open')) {
+          closePanel();
+        }
+      });
     }
   } catch (error) {
     console.error('Error in blogroll decoration:', error);
