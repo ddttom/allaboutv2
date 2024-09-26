@@ -21,7 +21,10 @@ function groupAndSortPosts(posts, acceptList = []) {
 
   posts.forEach(post => {
     // Only filter if acceptList is not empty
-    if (acceptList.length > 0 && !acceptList.some(term => post.path.toLowerCase().includes(term))) {
+    if (acceptList.length > 0 && !acceptList.some(term => {
+      const postPath = post.path.toLowerCase();
+      return postPath.startsWith(term) || postPath.replace(/-part-\d+$/, '').startsWith(term);
+    })) {
       return;
     }
 
@@ -61,17 +64,26 @@ function getConfig(block) {
     const firstRow = rows.shift();
     config.acceptList = [...firstRow.children]
       .map(cell => cell.textContent.trim())
-      .filter(text => text !== ''); // Remove empty strings
+      .filter(text => text !== '');
   }
   
-  config.isCompact = block.classList.contains('compact');
+  // Always set isCompact to true for the panel
+  config.isCompact = true;
 
-  // Set default path for compact mode
-  if (config.isCompact && config.acceptList.length === 0) {
+  // If acceptList is empty, set default path for compact mode
+  if (config.acceptList.length === 0) {
     const currentPath = window.location.pathname;
-    const folderPath = currentPath.split('/').slice(0, -1).join('/');
-    const pageName = currentPath.split('/').pop().replace(/-part-\d+$/i, '');
-    config.acceptList.push(folderPath + '/' + pageName);
+    const pathParts = currentPath.split('/');
+    const lastPart = pathParts[pathParts.length - 1];
+    
+    // Remove '-part-x' from the end of the path if present
+    const basePath = lastPart.replace(/-part-\d+$/, '');
+    
+    // Reconstruct the path without the last part
+    pathParts.pop();
+    const folderPath = pathParts.join('/');
+    
+    config.acceptList.push(folderPath + '/' + basePath);
   }
 
   // Make acceptList case-insensitive

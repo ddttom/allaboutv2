@@ -71,35 +71,25 @@
   margin: 5px 0 0 0;
 }
 
-.blogroll-container.compact .blogroll-series li {
+/* Remove these styles completely as they're no longer needed */
+/* .blogroll-container.compact .blogroll-series li,
+.blogroll-container.compact .blogroll-series a,
+.blogroll-container.compact .blogroll-date {
+} */
+
+/* Modify the panel styles to be more specific */
+.blogroll-panel .blogroll-series li {
   margin-bottom: 5px;
 }
 
-.blogroll-container.compact .blogroll-series a {
-  font-size: 16px;
+.blogroll-panel .blogroll-series a {
+  font-size: 14px;
 }
 
-.blogroll-container.compact .blogroll-date {
+.blogroll-panel .blogroll-date {
   font-size: 12px;
   margin: 0 0 0 10px;
-}
-
-@media (max-width: 768px) {
-  .blogroll-container {
-    padding: 10px;
-  }
-
-  .blogroll-series h2 {
-    font-size: 20px;
-  }
-
-  .blogroll-series a {
-    font-size: 16px;
-  }
-
-  .blogroll-series p {
-    font-size: 14px;
-  }
+  display: inline;
 }
 
 .blogroll-icon {
