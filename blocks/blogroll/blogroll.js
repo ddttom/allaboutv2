@@ -150,6 +150,7 @@ function updatePanelContent(container, groupedPosts) {
     const postList = document.createElement('ul');
     posts.forEach(post => {
       const listItem = document.createElement('li');
+      listItem.className = 'blogroll-entry'; // Add this line to apply the new class
       
       const postLink = document.createElement('a');
       postLink.href = post.path;
@@ -215,6 +216,7 @@ export default async function decorate(block) {
           const postList = document.createElement('ul');
           posts.forEach(post => {
             const listItem = document.createElement('li');
+            listItem.className = 'blogroll-entry'; // Add this line to apply the new class
             
             const postLink = document.createElement('a');
             postLink.href = post.path;

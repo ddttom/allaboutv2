@@ -243,3 +243,14 @@
 .blogroll-show-all button:hover {
   background-color: var(--blogroll-link-color);
 }
+
+.blogroll-entry {
+  /* Add a thin outline */
+  border: 1px solid var(--blogroll-entry-border-color, #e0e0e0);
+  /* Add some padding to prevent content from touching the border */
+  padding: 10px;
+  /* Add some margin between entries */
+  margin-bottom: 15px;
+  /* Optional: add a subtle border radius for a softer look */
+  border-radius: 4px;
+}
