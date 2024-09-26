@@ -23,7 +23,7 @@ function groupAndSortPosts(posts, acceptList) {
   const seriesMap = new Map();
 
   posts.forEach(post => {
-    // Filter posts based on the accept list
+    // Filter posts based on the accept list, if provided
     if (acceptList.length > 0 && !acceptList.some(term => post.path.includes(term))) {
       return;
     }
@@ -76,7 +76,8 @@ export default async function decorate(block) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const json = await response.json();
-    const blogPosts = json.data.filter(item => item.path !== '/blogs/ddt/');
+    // Use all blog posts without filtering
+    const blogPosts = json.data;
 
     const groupedPosts = groupAndSortPosts(blogPosts, config.acceptList);
 
