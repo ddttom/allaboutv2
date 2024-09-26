@@ -19,10 +19,15 @@ function extractSeriesInfo(title, path) {
 }
 
 // Function to group and sort blog posts
-function groupAndSortPosts(posts) {
+function groupAndSortPosts(posts, acceptList) {
   const seriesMap = new Map();
 
   posts.forEach(post => {
+    // Filter posts based on the accept list
+    if (acceptList.length > 0 && !acceptList.some(term => post.path.includes(term))) {
+      return;
+    }
+
     const { name, part, basePath } = extractSeriesInfo(post.title, post.path);
     const key = `${basePath}/${name}`;
     if (!seriesMap.has(key)) {
@@ -47,8 +52,20 @@ function groupAndSortPosts(posts) {
     .map(([key, posts]) => [posts[0].title.split(' - ')[0], posts]);
 }
 
+// Configuration function
+function getConfig(block) {
+  const config = {};
+  const rows = [...block.children];
+  if (rows.length > 0) {
+    const firstRow = rows.shift();
+    config.acceptList = [...firstRow.children].map(cell => cell.textContent.trim());
+  }
+  config.isCompact = block.classList.contains('compact');
+  return config;
+}
+
 export default async function decorate(block) {
-  const isCompact = block.classList.contains('compact');
+  const config = getConfig(block);
   
   // Add loading state
   block.textContent = 'Loading blog posts...';
@@ -61,14 +78,14 @@ export default async function decorate(block) {
     const json = await response.json();
     const blogPosts = json.data.filter(item => item.path !== '/blogs/ddt/');
 
-    const groupedPosts = groupAndSortPosts(blogPosts);
+    const groupedPosts = groupAndSortPosts(blogPosts, config.acceptList);
 
     // Clear loading message
     block.textContent = '';
 
     const blogrollContainer = document.createElement('div');
     blogrollContainer.className = 'blogroll-container';
-    if (isCompact) {
+    if (config.isCompact) {
       blogrollContainer.classList.add('compact');
     }
 
@@ -95,7 +112,7 @@ export default async function decorate(block) {
         listItem.appendChild(postLink);
         listItem.appendChild(postDate);
 
-        if (!isCompact) {
+        if (!config.isCompact) {
           const postDescription = document.createElement('p');
           postDescription.textContent = post.longdescription || post.description;
           listItem.appendChild(postDescription);
