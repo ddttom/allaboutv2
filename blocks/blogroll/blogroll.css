@@ -71,6 +71,14 @@
   margin: 5px 0 0 0;
 }
 
+.blogroll-container.compact {
+  display: none; /* Hide the entire blogroll container in compact mode */
+}
+
+.blogroll-container.compact .blogroll-series {
+  display: none; /* Hide series content in compact mode (redundant, but for clarity) */
+}
+
 .blogroll-container.compact .blogroll-series li {
   margin-bottom: 5px;
 }
