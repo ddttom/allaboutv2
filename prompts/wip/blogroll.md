@@ -10,6 +10,8 @@ The json is a published index, as new blog posts are added the json gets updated
 
 the field longdescription may be blank, when it is blank the filed description should be copied into it
 
+i do not want any images, jstu text
+
 last modified is a typical internet time stamp, convert it to dd/mm/yyyy format
 obtain the list of blog paths, noting when there are multiple parts by the path ending im  Part x, where x is an integer and the word part is in any case.
 

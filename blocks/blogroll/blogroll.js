@@ -1,118 +1,107 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
-// Function to format timestamp to dd/mm/yyyy
+// Function to format the date
 function formatDate(timestamp) {
   const date = new Date(parseInt(timestamp, 10) * 1000);
-  return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+  return date.toLocaleDateString('en-GB');
 }
 
-// Function to extract part number from title
-function extractPartNumber(title) {
-  const match = title.match(/Part (\d+)/i);
-  return match ? parseInt(match[1], 10) : 0;
+// Function to extract series name and part number
+function extractSeriesInfo(title) {
+  const match = title.match(/^(.*?)\s*-?\s*Part\s*(\d+)$/i);
+  return match ? { name: match[1].trim(), part: parseInt(match[2], 10) } : { name: title, part: null };
 }
 
 // Function to group and sort blog posts
 function groupAndSortPosts(posts) {
-  const groupedPosts = {};
+  const seriesMap = new Map();
 
   posts.forEach(post => {
-    const pathParts = post.path.split('/');
-    const basePath = pathParts.slice(0, -1).join('/');
-    const fileName = pathParts[pathParts.length - 1];
-
-    if (!groupedPosts[basePath]) {
-      groupedPosts[basePath] = [];
+    const { name, part } = extractSeriesInfo(post.title);
+    if (!seriesMap.has(name)) {
+      seriesMap.set(name, []);
     }
+    seriesMap.get(name).push({ ...post, part });
+  });
 
-    groupedPosts[basePath].push({
-      ...post,
-      partNumber: extractPartNumber(post.title)
+  // Sort posts within each series
+  seriesMap.forEach(posts => {
+    posts.sort((a, b) => {
+      if (a.part !== null && b.part !== null) {
+        return a.part - b.part;
+      }
+      return a.title.localeCompare(b.title);
     });
   });
 
-  // Sort each group by part number
-  Object.keys(groupedPosts).forEach(key => {
-    groupedPosts[key].sort((a, b) => a.partNumber - b.partNumber);
-  });
-
-  // Sort the groups by count in descending order
-  return Object.entries(groupedPosts).sort((a, b) => {
-    return b[1].length - a[1].length;
-  });
+  return Array.from(seriesMap.entries()).sort((a, b) => a[0].localeCompare(b[0]));
 }
 
 export default async function decorate(block) {
   const isCompact = block.classList.contains('compact');
   
-  // Fetch data from the query-index.json in the current directory
-  const resp = await fetch('/query-index.json');
-  if (!resp.ok) {
-    // eslint-disable-next-line no-console
-    console.error('Failed to fetch blog data');
-    return;
-  }
-  const json = await resp.json();
-
-  const blogrollContainer = document.createElement('div');
-  blogrollContainer.classList.add('blogroll-container');
-  if (isCompact) {
-    blogrollContainer.classList.add('compact');
-  }
-
+  // Add loading state
+  block.textContent = 'Loading blog posts...';
+  
   try {
-    const groupedAndSortedPosts = groupAndSortPosts(json.data);
+    const response = await fetch('https://allabout.network/blogs/ddt/query-index.json');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const json = await response.json();
+    const blogPosts = json.data.filter(item => item.path !== '/blogs/ddt/');
 
-    groupedAndSortedPosts.forEach(([basePath, posts]) => {
-      const groupContainer = document.createElement('div');
-      groupContainer.classList.add('blogroll-group');
+    const groupedPosts = groupAndSortPosts(blogPosts);
 
-      const groupTitle = document.createElement('h2');
-      groupTitle.textContent = posts[0].title.replace(/Part \d+/i, '').trim();
-      groupContainer.appendChild(groupTitle);
+    // Clear loading message
+    block.textContent = '';
 
+    const blogrollContainer = document.createElement('div');
+    blogrollContainer.className = 'blogroll-container';
+    if (isCompact) {
+      blogrollContainer.classList.add('compact');
+    }
+
+    groupedPosts.forEach(([seriesName, posts]) => {
+      const seriesContainer = document.createElement('div');
+      seriesContainer.className = 'blogroll-series';
+
+      const seriesTitle = document.createElement('h2');
+      seriesTitle.textContent = seriesName;
+      seriesContainer.appendChild(seriesTitle);
+
+      const postList = document.createElement('ul');
       posts.forEach(post => {
-        const postElement = document.createElement('div');
-        postElement.classList.add('blogroll-post');
+        const listItem = document.createElement('li');
+        
+        const postLink = document.createElement('a');
+        postLink.href = post.path;
+        postLink.textContent = post.title;
+        
+        const postDate = document.createElement('span');
+        postDate.className = 'blogroll-date';
+        postDate.textContent = formatDate(post.lastModified);
+        
+        listItem.appendChild(postLink);
+        listItem.appendChild(postDate);
 
-        const imageContainer = document.createElement('div');
-        imageContainer.classList.add('blogroll-image');
-        const image = createOptimizedPicture(post.image, post.title, false, [{ width: '300' }]);
-        imageContainer.appendChild(image);
+        if (!isCompact) {
+          const postDescription = document.createElement('p');
+          postDescription.textContent = post.longdescription || post.description;
+          listItem.appendChild(postDescription);
+        }
 
-        const contentContainer = document.createElement('div');
-        contentContainer.classList.add('blogroll-content');
-
-        const title = document.createElement('h3');
-        const titleLink = document.createElement('a');
-        titleLink.href = post.path;
-        titleLink.textContent = post.title;
-        title.appendChild(titleLink);
-
-        const description = document.createElement('p');
-        description.textContent = post.longdescription || post.description;
-
-        const date = document.createElement('p');
-        date.classList.add('blogroll-date');
-        date.textContent = `Last modified: ${formatDate(post.lastModified)}`;
-
-        contentContainer.appendChild(title);
-        contentContainer.appendChild(description);
-        contentContainer.appendChild(date);
-
-        postElement.appendChild(imageContainer);
-        postElement.appendChild(contentContainer);
-
-        groupContainer.appendChild(postElement);
+        postList.appendChild(listItem);
       });
 
-      blogrollContainer.appendChild(groupContainer);
+      seriesContainer.appendChild(postList);
+      blogrollContainer.appendChild(seriesContainer);
     });
 
     block.appendChild(blogrollContainer);
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('Error fetching or processing blog data:', error);
-    block.textContent = 'Error loading blog posts. Please try again later.';
+    console.error('Error fetching blog posts:', error);
+    block.textContent = 'Failed to load blog posts. Please try again later.';
   }
 }

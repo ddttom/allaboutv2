@@ -57,3 +57,5 @@ Your review should be structured as follows:
 Remember, the goal is to help the developer improve their skills and the quality of the codebase. Your feedback should be thorough, constructive, and actionable.
 
 Do not modify the existing code, just provide textual help.
+
+create a senior-review.md in the block folder with this information

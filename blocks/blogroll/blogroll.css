@@ -1,73 +1,93 @@
+:root {
+  --blogroll-font-family: Arial, sans-serif;
+  --blogroll-max-width: 800px;
+  --blogroll-padding: 20px;
+  --blogroll-title-color: #333;
+  --blogroll-border-color: #ddd;
+  --blogroll-link-color: #0066cc;
+  --blogroll-date-color: #666;
+  --blogroll-text-color: #444;
+}
+
 .blogroll-container {
-  max-width: 1200px;
+  font-family: var(--blogroll-font-family);
+  max-width: var(--blogroll-max-width);
   margin: 0 auto;
-  padding: 20px;
+  padding: var(--blogroll-padding);
 }
 
-.blogroll-group {
-  margin-bottom: 40px;
+.blogroll-series {
+  margin-bottom: 30px;
 }
 
-.blogroll-group h2 {
+.blogroll-series h2 {
   font-size: 24px;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #333;
+  color: var(--blogroll-title-color);
+  border-bottom: 2px solid var(--blogroll-border-color);
   padding-bottom: 10px;
+  margin-bottom: 15px;
 }
 
-.blogroll-post {
-  display: flex;
-  margin-bottom: 20px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  overflow: hidden;
+.blogroll-series ul {
+  list-style-type: none;
+  padding: 0;
 }
 
-.blogroll-image {
-  flex: 0 0 300px;
+.blogroll-series li {
+  margin-bottom: 15px;
 }
 
-.blogroll-image img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
+.blogroll-series a {
+  font-size: 18px;
+  color: var(--blogroll-link-color);
+  text-decoration: none;
+  font-weight: bold;
 }
 
-.blogroll-content {
-  flex: 1;
-  padding: 20px;
-}
-
-.blogroll-content h3 {
-  margin-top: 0;
+.blogroll-series a:hover {
+  text-decoration: underline;
 }
 
 .blogroll-date {
-  font-style: italic;
-  color: #666;
-}
-
-/* Compact variation */
-.blogroll.compact .blogroll-post {
-  flex-direction: column;
-  max-width: 300px;
-  margin-right: 20px;
-  display: inline-block;
-  vertical-align: top;
-}
-
-.blogroll.compact .blogroll-image {
-  flex: 0 0 auto;
-}
-
-.blogroll.compact .blogroll-content {
-  padding: 15px;
-}
-
-.blogroll.compact .blogroll-content h3 {
-  font-size: 18px;
-}
-
-.blogroll.compact .blogroll-content p {
+  display: block;
   font-size: 14px;
+  color: var(--blogroll-date-color);
+  margin: 5px 0;
+}
+
+.blogroll-series p {
+  font-size: 16px;
+  color: var(--blogroll-text-color);
+  margin: 5px 0 0 0;
+}
+
+.blogroll-container.compact .blogroll-series li {
+  margin-bottom: 5px;
+}
+
+.blogroll-container.compact .blogroll-series a {
+  font-size: 16px;
+}
+
+.blogroll-container.compact .blogroll-date {
+  font-size: 12px;
+  margin: 0 0 0 10px;
+}
+
+@media (max-width: 768px) {
+  .blogroll-container {
+    padding: 10px;
+  }
+
+  .blogroll-series h2 {
+    font-size: 20px;
+  }
+
+  .blogroll-series a {
+    font-size: 16px;
+  }
+
+  .blogroll-series p {
+    font-size: 14px;
+  }
 }
