@@ -8,9 +8,14 @@ function formatDate(timestamp) {
 }
 
 // Function to extract series name and part number
-function extractSeriesInfo(title) {
+function extractSeriesInfo(title, path) {
   const match = title.match(/^(.*?)\s*-?\s*Part\s*(\d+)$/i);
-  return match ? { name: match[1].trim(), part: parseInt(match[2], 10) } : { name: title, part: null };
+  const basePath = path.split('/').slice(0, -1).join('/');
+  return {
+    name: match ? match[1].trim() : title,
+    part: match ? parseInt(match[2], 10) : null,
+    basePath
+  };
 }
 
 // Function to group and sort blog posts
@@ -18,11 +23,12 @@ function groupAndSortPosts(posts) {
   const seriesMap = new Map();
 
   posts.forEach(post => {
-    const { name, part } = extractSeriesInfo(post.title);
-    if (!seriesMap.has(name)) {
-      seriesMap.set(name, []);
+    const { name, part, basePath } = extractSeriesInfo(post.title, post.path);
+    const key = `${basePath}/${name}`;
+    if (!seriesMap.has(key)) {
+      seriesMap.set(key, []);
     }
-    seriesMap.get(name).push({ ...post, part });
+    seriesMap.get(key).push({ ...post, part });
   });
 
   // Sort posts within each series
@@ -35,7 +41,10 @@ function groupAndSortPosts(posts) {
     });
   });
 
-  return Array.from(seriesMap.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+  // Convert map to array and sort by number of posts (descending)
+  return Array.from(seriesMap.entries())
+    .sort((a, b) => b[1].length - a[1].length)
+    .map(([key, posts]) => [posts[0].title.split(' - ')[0], posts]);
 }
 
 export default async function decorate(block) {
