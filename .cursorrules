@@ -203,6 +203,9 @@ Optimization of repeated styles: Consider creating a shared class for common sty
 Accessibility enhancements: Consider adding :focus-visible styles for better keyboard navigation.
 Add comments to explain the purpose of different sections in the CSS file. Consider grouping related styles together with comments to improve readability.
 
+Used shorthand properties where applicable (e.g., margin: 5px 0 0;).
+Added focus styles for better accessibility.
+
 ## Advanced Features
 
 1. **Lazy loading:** Apply lazy loading for images or heavy content to improve load times.

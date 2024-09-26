@@ -1,6 +1,6 @@
 # Blogroll Block
 
-The Blogroll block displays a list of blog posts grouped by series.
+The Blogroll block displays a list of blog posts, grouped by series and sorted by part number or title.
 
 ## Usage
 
@@ -8,36 +8,55 @@ To use the Blogroll block, add the following to your Franklin document:
 
 | Blogroll |
 |----------|
-| path1    |
-| path2    |
+| /path/to/filter |
 
-Each row after the first represents a path filter. If no paths are specified, all blog posts will be displayed.
+You can add multiple rows to filter posts from different paths.
 
-## Variations
+## Authoring
 
-### Compact
-
-To use the compact variation, which adds a floating icon with "Blogroll" text and a slide-out panel:
-
-| Blogroll (compact) |
-|--------------------|
-| path1              |
-| path2              |
-
-In compact mode, a floating icon (📚) with the text "Blogroll" appears in the top-left corner of the viewport. Clicking on either the icon or the text opens a slide-out panel containing the blogroll.
-
-The compact panel also includes a "Show All Posts" button at the bottom. When clicked, it toggles between showing all available blog posts and the filtered view. The button text changes to "Show Filtered Posts" when displaying all posts.
-
-If no paths are specified in compact mode, the block will default to showing posts from the current page's folder path and page name (without any part number). The filtering is case-insensitive.
+In Google Docs or Microsoft Word, create a table with one column. The first row should contain "Blogroll", and subsequent rows can contain paths to filter the blog posts.
 
 ## Styling
 
-The block uses CSS variables for easy customization. See the CSS file for available variables.
-
+The Blogroll block uses CSS variables for easy customization. You can override these variables in your project's CSS:
+:root {
+--blogroll-text-color: #333;
+--blogroll-link-color: #0066cc;
+--blogroll-date-color: #666;
+--blogroll-background: #f5f5f5;
+--blogroll-border-color: #ddd;
+--blogroll-icon-size: 24px;
+--blogroll-panel-width: 300px;
+}
 ## Behavior
 
-The block fetches blog posts from the query-index.json file, groups them by series, and displays them in order. In compact mode, it adds a floating icon and text that opens a slide-out panel when clicked. The panel can be closed by clicking outside, pressing the Escape key, or clicking the close button (×).
+The Blogroll block fetches blog posts from the `/query-index.json` file and displays them grouped by series. In compact mode, it creates a floating icon that opens a panel with the blogroll content.
+
+## Variations
+
+1. Default: Displays the blogroll as a full-width block on the page.
+
+2. Highlight:
+   - Usage: `| Blogroll (highlight) |`
+   - Applies a highlighted background to the blogroll.
+   - Changes the background color to a light blue (#e6f3ff) and the border color to #99ccff.
+
+3. Compact:
+   - Usage: `| Blogroll (compact) |`
+   - Enables compact mode with a floating icon and panel.
+   - Creates a small icon (📚) in the bottom-right corner of the page.
+   - Clicking the icon opens a panel with the blogroll content.
+   - The panel can be closed by clicking outside or pressing the Escape key.
 
 ## Accessibility
 
-The compact variation includes keyboard navigation support (Escape key to close) and uses ARIA attributes for better screen reader compatibility.
+- The compact mode panel can be closed using the Escape key.
+- ARIA labels are used for the close button in compact mode.
+- Keyboard navigation is supported for opening and closing the panel.
+
+## Suggestions for Improvement
+
+1. Add pagination for large numbers of posts.
+2. Implement lazy loading for better performance with many posts.
+3. Add options for different sorting methods (e.g., by date, alphabetical).
+4. Create a search functionality within the blogroll.
