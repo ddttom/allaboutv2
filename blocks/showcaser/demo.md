@@ -15,38 +15,37 @@ The Showcaser block automatically gathers all `<pre>` elements from the page, gr
 ## Sample Code Snippets
 
 <pre><code class="language-javascript">
-//Greeting Function.js
-`function greet(name) {
-  console.log(\`Hello, \${name}!\`);
-}
-
-greet('World');`
+`//Greeting Function.js`
+`` `function greet(name) { ` ``
+`` `  console.log(\`Hello, \${name}!\`);` ``
+`` `}` ``
+`` `greet('World');` ``
 </code></pre>
 
 <pre><code class="language-css">
-//Showcaser Styles.css
-`.showcaser {
-  font-family: Arial, sans-serif;
-  color: #333;
-  background-color: #f4f4f4;
-  padding: 20px;
-  border-radius: 4px;
-}`
+`//Showcaser Styles.css`
+`` `.showcaser { ` ``
+`` `  font-family: Arial, sans-serif;` ``
+`` `  color: #333;` ``
+`` `  background-color: #f4f4f4;` ``
+`` `  padding: 20px;` ``
+`` `  border-radius: 4px;` ``
+`` `}` ``
 </code></pre>
 
 <pre><code class="language-html">
-//Simple HTML Page.html
-`<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Showcaser Demo</title>
-</head>
-<body>
-  <h1>Welcome to Showcaser</h1>
-  <p>This is a demo page.</p>
-</body>
-</html>`
+`//Simple HTML Page.html`
+`` `<!DOCTYPE html>` ``
+`` `<html lang="en">` ``
+`` `<head>` ``
+`` `  <meta charset="UTF-8">` ``
+`` `  <title>Showcaser Demo</title>` ``
+`` `</head>` ``
+`` `<body>` ``
+`` `  <h1>Welcome to Showcaser</h1>` ``
+`` `  <p>This is a demo page.</p>` ``
+`` `</body>` ``
+`` `</html>` ``
 </code></pre>
 
 ## Customization

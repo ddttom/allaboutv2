@@ -4,7 +4,7 @@ The Showcaser block is a Franklin component that displays a visually appealing s
 
 ## Usage
 
-To use the Showcaser block, simply add it to your Franklin page using the following structure:
+To use the Showcaser block, add it to your Franklin page using the following structure:
 
 | Showcaser |
 |-----------|
@@ -16,21 +16,29 @@ The block will automatically collect all `<pre>` elements from the page, group t
 
 1. Add the Showcaser block to your page.
 2. (Optional) Add introductory content in the first cell of the block.
-3. Ensure that your page contains `<pre>` elements with code snippets you want to showcase.
+3. Add code snippets to your page using `<pre>` elements with the following format:
+
+<pre><code class="language-javascript">
+`//Your Code Title.js`
+`` `Your code here` ``
+`` `More code here` ``
+</code></pre>
 
 ## Styling
 
 The Showcaser block uses CSS variables for easy customization. You can override these variables in your project's CSS:
-.showcaser {
---showcaser-bg-color: #ffffff;
---showcaser-text-color: #333333;
---showcaser-accent-color: #0077cc;
---showcaser-border-color: #dddddd;
---showcaser-font-family: Arial, sans-serif;
---showcaser-font-size: 16px;
---showcaser-line-height: 1.5;
-}
 
+.showcaser {
+  --showcaser-bg-color: #ffffff;
+  --showcaser-text-color: #333333;
+  --showcaser-accent-color: #0077cc;
+  --showcaser-border-color: #dddddd;
+  --showcaser-font-family: Arial, sans-serif;
+  --showcaser-font-size: 16px;
+  --showcaser-line-height: 1.5;
+  --showcaser-padding: 20px;
+  --showcaser-border-radius: 4px;
+}
 
 ## Behavior
 
