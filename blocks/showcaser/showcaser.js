@@ -20,11 +20,23 @@ export default async function decorate(block) {
   const codeSnippets = [];
 
   preElements.forEach((pre, index) => {
-    const codeType = pre.querySelector('code')?.className.split('-')[1] || 'unknown';
+    // Extract title and type from comment
+    const comment = pre.textContent.trim().split('\n')[0];
+    let title = `Snippet ${index + 1}`;
+    let type = 'text';
+
+    if (comment.startsWith('//')) {
+      const parts = comment.substring(2).trim().split('.');
+      title = parts[0] || title;
+      type = parts[1] || 'text';
+    }
+
+    const codeContent = pre.innerHTML.replace(/^\/\/.*\n/, '').trim(); // Remove the comment line
+
     codeSnippets.push({
-      type: codeType,
-      content: pre.innerHTML,
-      title: `Snippet ${index + 1} (${codeType})`,
+      type,
+      content: codeContent,
+      title,
     });
     pre.remove(); // Remove the original <pre> element
   });
