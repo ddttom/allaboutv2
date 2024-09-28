@@ -13,7 +13,33 @@ function decodeHtmlEntities(text) {
 function detectLanguage(code) {
   const decodedCode = decodeHtmlEntities(code);
 
+  // Check for JavaScript first
+  if (decodedCode.includes('function') || 
+      decodedCode.includes('var ') || 
+      decodedCode.includes('let ') || 
+      decodedCode.includes('const ') ||
+      decodedCode.includes('export ') ||
+      decodedCode.includes('import ') ||
+      /\bfor\s*\(/.test(decodedCode) ||
+      /\bwhile\s*\(/.test(decodedCode) ||
+      /\bif\s*\(/.test(decodedCode)) {
+    console.log('Detected language: javascript');
+    return 'javascript';
+  }
+
   // Check for Markdown first
+  if (decodedCode.match(/^(#{1,6}\s|\*\s|-\s|\d+\.\s|\[.*\]\(.*\))/m) || 
+      decodedCode.includes('|---') || 
+      decodedCode.includes('```') || 
+      decodedCode.match(/\*\*(.*?)\*\*/) || 
+      decodedCode.match(/_(.*?)_/) || 
+      decodedCode.match(/\[(.*?)\]\((.*?)\)/) ||
+      decodedCode.match(/^>\s/m)) {
+    console.log('Detected language: markdown');
+    return 'markdown';
+  }
+
+  // Check for Markdown
   if (decodedCode.match(/^(#{1,6}\s|\*\s|-\s|\d+\.\s|\[.*\]\(.*\))/m) || 
       decodedCode.includes('|---') || 
       decodedCode.includes('```') || 
@@ -31,7 +57,6 @@ function detectLanguage(code) {
     return 'shell';
   }
   
-  if (decodedCode.includes('function') || decodedCode.includes('var') || decodedCode.includes('const') || decodedCode.includes('let')) return 'javascript';
   if (decodedCode.includes('{') && decodedCode.includes('}')) {
     if (decodedCode.match(/[a-z-]+\s*:\s*[^;]+;/)) return 'css';
     if (decodedCode.includes(':')) return 'json';
@@ -60,7 +85,7 @@ function highlightSyntax(code, language) {
 
   switch (language) {
     case 'markdown':
-      return decodedCode.replace(
+      const highlightedMd = decodedCode.replace(
         /(^#{1,6}\s.*$)|(^[*-]\s.*$)|(^>\s.*$)|(`{1,3}[^`\n]+`{1,3})|(\[.*?\]\(.*?\))|(\*\*.*?\*\*)|(_.*?_)|(^```[\s\S]*?^```)/gm,
         match => {
           if (/^#{1,6}/.test(match)) return `<span class="heading">${encodeHtmlEntities(match)}</span>`;
@@ -74,8 +99,10 @@ function highlightSyntax(code, language) {
           return encodeHtmlEntities(match);
         }
       );
+      console.log('Highlighted Markdown:', highlightedMd.substring(0, 100) + '...');
+      return highlightedMd;
     case 'javascript':
-      return decodedCode.replace(
+      const highlightedJs = decodedCode.replace(
         /(\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\.|[^\\'])*'|"(?:\\.|[^\\"])*"|`(?:\\.|[^\\`])*`|\b(?:function|var|let|const|if|else|for|while|do|switch|case|break|return|continue|class|new|typeof|instanceof|this|null|undefined|true|false)\b|\b\d+\b|[{}[\],;.])/g,
         match => {
           if (/^\/\//.test(match)) return `<span class="comment">${encodeHtmlEntities(match)}</span>`;
@@ -88,7 +115,8 @@ function highlightSyntax(code, language) {
           return encodeHtmlEntities(match);
         }
       );
-      console.log('Highlighted JavaScript:', highlightedCode.substring(0, 100) + '...');
+      console.log('Highlighted JavaScript:', highlightedJs.substring(0, 100) + '...');
+      return highlightedJs;
     case 'css':
       return decodedCode.replace(
         /(\/\*[\s\S]*?\*\/)|(\b[\w-]+\s*:)|(#[\da-f]{3,6})|(\b\d+(%|px|em|rem|vh|vw)?\b)|([@.]{1}[\w-]+)/gi,
