@@ -12,43 +12,15 @@ function decodeHtmlEntities(text) {
 
 function detectLanguage(code) {
   const decodedCode = decodeHtmlEntities(code);
+  console.log('Detecting language for:', decodedCode.substring(0, 50) + '...');
 
-  // Check for JavaScript first
-  if (decodedCode.includes('function') || 
-      decodedCode.includes('var ') || 
-      decodedCode.includes('let ') || 
-      decodedCode.includes('const ') ||
-      decodedCode.includes('export ') ||
-      decodedCode.includes('import ') ||
-      /\bfor\s*\(/.test(decodedCode) ||
-      /\bwhile\s*\(/.test(decodedCode) ||
-      /\bif\s*\(/.test(decodedCode)) {
-    console.log('Detected language: javascript');
-    return 'javascript';
-  }
-
-  // Check for Markdown first
-  if (decodedCode.match(/^(#{1,6}\s|\*\s|-\s|\d+\.\s|\[.*\]\(.*\))/m) || 
-      decodedCode.includes('|---') || 
-      decodedCode.includes('```') || 
-      decodedCode.match(/\*\*(.*?)\*\*/) || 
-      decodedCode.match(/_(.*?)_/) || 
-      decodedCode.match(/\[(.*?)\]\((.*?)\)/) ||
-      decodedCode.match(/^>\s/m)) {
+  // Simple check for Markdown
+  if (decodedCode.trim().startsWith('# ')) {
     console.log('Detected language: markdown');
     return 'markdown';
   }
 
-  // Check for Markdown
-  if (decodedCode.match(/^(#{1,6}\s|\*\s|-\s|\d+\.\s|\[.*\]\(.*\))/m) || 
-      decodedCode.includes('|---') || 
-      decodedCode.includes('```') || 
-      decodedCode.match(/\*\*(.*?)\*\*/) || 
-      decodedCode.match(/_(.*?)_/) || 
-      decodedCode.match(/\[(.*?)\]\((.*?)\)/)) {
-    return 'markdown';
-  }
-
+  // Rest of the language detection logic
   if (decodedCode.trim().startsWith('"') || decodedCode.trim().startsWith("'")) {
     return 'text';
   }
@@ -57,6 +29,7 @@ function detectLanguage(code) {
     return 'shell';
   }
   
+  if (decodedCode.includes('function') || decodedCode.includes('var') || decodedCode.includes('const')) return 'javascript';
   if (decodedCode.includes('{') && decodedCode.includes('}')) {
     if (decodedCode.match(/[a-z-]+\s*:\s*[^;]+;/)) return 'css';
     if (decodedCode.includes(':')) return 'json';
@@ -65,6 +38,7 @@ function detectLanguage(code) {
   
   if (decodedCode.startsWith('$') || decodedCode.startsWith('#')) return 'shell';
   
+  console.log('Detected language: text (default)');
   return 'text';
 }
 
