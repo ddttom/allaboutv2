@@ -52,16 +52,18 @@ export default async function decorate(block) {
   leftPage.appendChild(bookTitle);
 
   try {
-    const codeElements = document.querySelectorAll('pre');
     const codeSnippets = [];
 
-    codeElements.forEach((pre) => {
-      const code = pre.textContent;
-      const title = code.split('\n')[0].trim();
-      const language = detectLanguage(code);
-      const highlightedCode = highlightSyntax(code, language);
+    // Find all <pre><code> elements in the document
+    const preCodeElements = document.querySelectorAll('pre code');
+    preCodeElements.forEach((codeElement, index) => {
+      const code = codeElement.textContent;
+      const lines = code.split('\n');
+      const title = lines[0].trim() || `Code Snippet ${index + 1}`;
+      const content = lines.slice(1).join('\n').trim();
+      const language = detectLanguage(content);
+      const highlightedCode = highlightSyntax(content, language);
       codeSnippets.push({ title, content: highlightedCode, language });
-      pre.remove();
     });
 
     codeSnippets.forEach((snippet, index) => {
@@ -72,7 +74,7 @@ export default async function decorate(block) {
       titleElement.addEventListener('click', () => {
         rightPage.innerHTML = `
           <h3 id="snippet-${index}">${snippet.title}</h3>
-          <pre class="language-${snippet.language}">${snippet.content}</pre>
+          <pre class="language-${snippet.language}"><code>${snippet.content}</code></pre>
         `;
         document.querySelectorAll('.showcaser-title').forEach((el) => el.classList.remove('active'));
         titleElement.classList.add('active');
@@ -82,6 +84,14 @@ export default async function decorate(block) {
 
       if (index === 0) {
         titleElement.click();
+      }
+    });
+
+    // Remove the original <pre><code> elements
+    preCodeElements.forEach((codeElement) => {
+      const preElement = codeElement.parentElement;
+      if (preElement && preElement.tagName.toLowerCase() === 'pre') {
+        preElement.remove();
       }
     });
 
