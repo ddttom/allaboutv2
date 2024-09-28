@@ -12,11 +12,10 @@ function decodeHtmlEntities(text) {
 
 function detectLanguage(code) {
   const decodedCode = decodeHtmlEntities(code);
-  console.log('Detecting language for:', decodedCode.substring(0, 50) + '...');
+
 
   // Simple check for Markdown
   if (decodedCode.trim().startsWith('# ')) {
-    console.log('Detected language: markdown');
     return 'markdown';
   }
 
@@ -38,7 +37,6 @@ function detectLanguage(code) {
   
   if (decodedCode.startsWith('$') || decodedCode.startsWith('#')) return 'shell';
   
-  console.log('Detected language: text (default)');
   return 'text';
 }
 
@@ -53,9 +51,6 @@ function highlightSyntax(code, language) {
   };
 
   const decodedCode = decodeHtmlEntities(code);
-
-  console.log('Highlighting syntax for language:', language);
-  console.log('Code to highlight:', decodedCode.substring(0, 100) + '...');
 
   switch (language) {
     case 'markdown':
@@ -73,7 +68,6 @@ function highlightSyntax(code, language) {
           return encodeHtmlEntities(match);
         }
       );
-      console.log('Highlighted Markdown:', highlightedMd.substring(0, 100) + '...');
       return highlightedMd;
     case 'javascript':
       const highlightedJs = decodedCode.replace(
@@ -89,7 +83,6 @@ function highlightSyntax(code, language) {
           return encodeHtmlEntities(match);
         }
       );
-      console.log('Highlighted JavaScript:', highlightedJs.substring(0, 100) + '...');
       return highlightedJs;
     case 'css':
       return decodedCode.replace(
@@ -109,7 +102,6 @@ function highlightSyntax(code, language) {
 }
 
 export default async function decorate(block) {
-  console.log('Showcaser: Starting decoration');
   
   const container = document.createElement('div');
   container.className = 'showcaser-container';
@@ -152,29 +144,43 @@ export default async function decorate(block) {
     });
   });
 
+  const returnToMenuButton = document.createElement('button');
+  returnToMenuButton.className = 'showcaser-returntomenu';
+  returnToMenuButton.textContent = 'Return to Menu';
+  returnToMenuButton.style.display = 'none';
+  container.appendChild(returnToMenuButton);
+
+  window.addEventListener('scroll', () => {
+    const blockTop = block.getBoundingClientRect().top;
+    const blockBottom = block.getBoundingClientRect().bottom;
+    if (blockTop < 0 && blockBottom > window.innerHeight) {
+      returnToMenuButton.style.display = 'block';
+    } else {
+      returnToMenuButton.style.display = 'none';
+    }
+  });
+
+  returnToMenuButton.addEventListener('click', () => {
+    block.scrollIntoView({ behavior: 'smooth' });
+  });
+
   try {
     const codeSnippets = [];
     const codeElements = document.querySelectorAll('pre > code');
-    console.log('Showcaser: Found', codeElements.length, 'code elements');
-
+    
     codeElements.forEach((element, index) => {
       const code = element.textContent;
-      console.log(`Showcaser: Processing code snippet ${index + 1}:`, code.substring(0, 50) + '...');
       
       const lines = code.split('\n');
-      const title = lines[0].trim() || `Code Snippet ${index + 1}`;
-      const content = lines.join('\n').trim();
+      const title = lines[0].replace(/\/\/|\/\*|\*\//g, '').trim() || `Code Snippet ${index + 1}`;
+      const content = lines.slice(1).join('\n').trim();
       
       if (content) {
         const language = detectLanguage(content);
-        console.log(`Showcaser: Detected language for snippet ${index + 1}:`, language);
-        
         const highlightedCode = highlightSyntax(content, language);
         codeSnippets.push({ title, content: highlightedCode, language });
       }
     });
-
-    console.log('Showcaser: Processed', codeSnippets.length, 'code snippets');
 
     codeSnippets.forEach((snippet, index) => {
       const titleElement = document.createElement('a');
@@ -184,7 +190,6 @@ export default async function decorate(block) {
       titleElement.setAttribute('aria-controls', `snippet-${index}`);
       titleElement.addEventListener('click', (e) => {
         e.preventDefault();
-        console.log(`Showcaser: Clicked on snippet ${index + 1}:`, snippet.title);
         rightPage.innerHTML = `
           <h3 id="snippet-${index}">${snippet.title}</h3>
           <div class="showcaser-code-wrapper">
@@ -215,7 +220,6 @@ export default async function decorate(block) {
       leftPage.appendChild(titleElement);
 
       if (index === 0) {
-        console.log('Showcaser: Activating first snippet');
         titleElement.click();
       }
     });
@@ -224,7 +228,6 @@ export default async function decorate(block) {
       const preElement = element.parentElement;
       if (preElement && preElement.tagName.toLowerCase() === 'pre') {
         preElement.remove();
-        console.log('Showcaser: Removed original code element');
       }
     });
 
@@ -237,5 +240,5 @@ export default async function decorate(block) {
   }
 
   block.classList.add('showcaser--initialized');
-  console.log('Showcaser: Finished decoration');
+
 }
