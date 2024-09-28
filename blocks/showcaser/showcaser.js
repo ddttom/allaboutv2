@@ -56,17 +56,17 @@ export default async function decorate(block) {
   try {
     const codeSnippets = [];
 
-    // Find all code elements within the block
-    const codeElements = block.querySelectorAll('div > div > p');
-    console.log('Showcaser: Found', codeElements.length, 'potential code elements');
+    // Find all pre>code elements in the document
+    const codeElements = document.querySelectorAll('pre > code');
+    console.log('Showcaser: Found', codeElements.length, 'code elements');
 
     codeElements.forEach((element, index) => {
       const code = element.textContent;
-      console.log(`Showcaser: Processing potential code snippet ${index + 1}:`, code.substring(0, 50) + '...');
+      console.log(`Showcaser: Processing code snippet ${index + 1}:`, code.substring(0, 50) + '...');
       
       const lines = code.split('\n');
       const title = lines[0].trim() || `Code Snippet ${index + 1}`;
-      const content = lines.slice(1).join('\n').trim();
+      const content = lines.join('\n').trim();
       
       if (content) {
         const language = detectLanguage(content);
@@ -78,17 +78,6 @@ export default async function decorate(block) {
     });
 
     console.log('Showcaser: Processed', codeSnippets.length, 'code snippets');
-
-    if (codeSnippets.length === 0) {
-      console.log('Showcaser: No code snippets found. Checking for pre-processed code.');
-      const preElement = block.querySelector('pre');
-      if (preElement) {
-        const code = preElement.textContent;
-        const language = detectLanguage(code);
-        const highlightedCode = highlightSyntax(code, language);
-        codeSnippets.push({ title: 'Code Snippet', content: highlightedCode, language });
-      }
-    }
 
     codeSnippets.forEach((snippet, index) => {
       const titleElement = document.createElement('button');
@@ -115,8 +104,11 @@ export default async function decorate(block) {
 
     // Remove the original code elements
     codeElements.forEach((element) => {
-      element.remove();
-      console.log('Showcaser: Removed original code element');
+      const preElement = element.parentElement;
+      if (preElement && preElement.tagName.toLowerCase() === 'pre') {
+        preElement.remove();
+        console.log('Showcaser: Removed original code element');
+      }
     });
 
   } catch (error) {
