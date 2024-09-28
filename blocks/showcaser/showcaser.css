@@ -112,3 +112,27 @@
   opacity: 1;
   transition: opacity 0.5s ease;
 }
+
+/* Syntax Highlighting */
+.showcaser-right-page pre {
+  background-color: #f4f4f4;
+  padding: 15px;
+  border-radius: 5px;
+  overflow-x: auto;
+}
+
+.showcaser-right-page .comment { color: #008000; }
+.showcaser-right-page .string { color: #a31515; }
+.showcaser-right-page .keyword { color: #0000ff; }
+.showcaser-right-page .boolean { color: #0000ff; }
+.showcaser-right-page .number { color: #09885a; }
+.showcaser-right-page .property { color: #ff0000; }
+.showcaser-right-page .key { color: #0451a5; }
+.showcaser-right-page .value { color: #0451a5; }
+.showcaser-right-page .null { color: #0000ff; }
+.showcaser-right-page .tag { color: #800000; }
+.showcaser-right-page .heading { color: #800000; font-weight: bold; }
+.showcaser-right-page .list-item { color: #0451a5; }
+.showcaser-right-page .blockquote { color: #808080; font-style: italic; }
+.showcaser-right-page .code { background-color: #f0f0f0; padding: 2px 4px; border-radius: 3px; }
+.showcaser-right-page .link { color: #0000ff; text-decoration: underline; }

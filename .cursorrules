@@ -138,12 +138,23 @@ On finished creating all of the blocks, reiterate over them to see if variations
 
 Ensure that the demo file includes all necessary elements to showcase the block's functionality and usage within a Franklin project.
 
-When providing code examples in a markdown file such as readme.md or demo.md, follow these guidelines:
+When adding code examples in a Franklin markdown file, demo, readme, example or review:
 Use single backticks to enclose code snippets.
-Avoid using triple backticks.
+Do not use triple backticks or <pre> tags.
 Place the code inside single backticks, like this:
-function example() { return 'This is an example';}
-This format is a special signal to Franklin and helps maintain consistency across the project.tick enclosing code in an .md is a special signal to franklin
+`Hello World Example`   
+`console.log("Hello, World!");`
+
+
+
+
+`// JS Example
+function example() { 
+  return 'This is an example';
+}'
+The first line within the backticks will be treated as the title of the code snippet.
+1. Each pair of backticks represents a separate code snippet
+This format is a special signal to Franklin and helps maintain consistency across the project. 
 
 ## Metadata Example
 
