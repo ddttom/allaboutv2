@@ -1,0 +1,106 @@
+.showcaser {
+  --showcaser-bg-color: #f5f5f5;
+  --showcaser-text-color: #333;
+  --showcaser-title-color: #2c3e50;
+  --showcaser-button-bg: #3498db;
+  --showcaser-button-text: #fff;
+  --showcaser-button-hover: #2980b9;
+  --showcaser-code-bg: #fff;
+  --showcaser-border-color: #ddd;
+  --showcaser-font-family: Arial, sans-serif;
+  --showcaser-border-radius: 5px;
+  --showcaser-padding: 20px;
+
+  background-color: var(--showcaser-bg-color);
+  color: var(--showcaser-text-color);
+  font-family: var(--showcaser-font-family);
+  padding: var(--showcaser-padding);
+  border-radius: var(--showcaser-border-radius);
+}
+
+.showcaser-book {
+  display: flex;
+  border: 1px solid var(--showcaser-border-color);
+  border-radius: var(--showcaser-border-radius);
+  overflow: hidden;
+}
+
+.showcaser-left-panel {
+  width: 30%;
+  background-color: var(--showcaser-bg-color);
+  padding: var(--showcaser-padding);
+  border-right: 1px solid var(--showcaser-border-color);
+}
+
+.showcaser-right-panel {
+  width: 70%;
+  background-color: var(--showcaser-code-bg);
+  padding: var(--showcaser-padding);
+  overflow-x: auto;
+}
+
+.showcaser-title {
+  color: var(--showcaser-title-color);
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.showcaser-title-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: var(--showcaser-button-bg);
+  color: var(--showcaser-button-text);
+  border: none;
+  border-radius: var(--showcaser-border-radius);
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.3s ease;
+}
+
+.showcaser-title-button:hover,
+.showcaser-title-button.active {
+  background-color: var(--showcaser-button-hover);
+}
+
+.showcaser-loading {
+  text-align: center;
+  padding: var(--showcaser-padding);
+}
+
+.showcaser-loading.error {
+  color: #e74c3c;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .showcaser-book {
+    flex-direction: column;
+  }
+
+  .showcaser-left-panel,
+  .showcaser-right-panel {
+    width: 100%;
+  }
+
+  .showcaser-left-panel {
+    border-right: none;
+    border-bottom: 1px solid var(--showcaser-border-color);
+  }
+}
+
+/* Compact variation */
+.showcaser-book.compact {
+  flex-direction: column;
+}
+
+.showcaser-book.compact .showcaser-left-panel,
+.showcaser-book.compact .showcaser-right-panel {
+  width: 100%;
+}
+
+.showcaser-book.compact .showcaser-left-panel {
+  border-right: none;
+  border-bottom: 1px solid var(--showcaser-border-color);
+}

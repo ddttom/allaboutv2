@@ -9,6 +9,10 @@ remove unused css in the stylesheet, do not comment them out
 
 check css for proper use of css variables, Organize CSS variables into logical groups
 
+Add ARIA attributes to improve screen reader compatibility.
+Ensure proper focus management when navigating
+consider adding comments to separate different sections (e.g., layout, typography, responsive design)
+
 
 Remember to update the README.md, example.md, and demo.md files to reflect any changes
 

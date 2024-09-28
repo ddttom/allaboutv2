@@ -13,9 +13,11 @@ You are an expert Franklin Developer
 
 ## Requirements
 
-The block should find all <pre> </pre> content in the current page, collect the rendered html together in an array, remove the existing <pre></pre> content
+The block should find all <pre> </pre> content in the current page, collect the rendered html together in an array, remove the existing <pre></pre> content, the code should add the content from all of the subsequent rows, at the start of the gathering. 
 
-The code should crate a simulated book object and place all of the pre items in by type name (markdown/js/css) min the left hand column and ket the titles be clickable, when clicked the relevant html is placed into right hand panel . the default content for the panel is yte content in the first row of the franklin block
+The code should create a simulated book object and place all of the pre items in by name in the left hand column and let the titles be clickable, when clicked the relevant html is placed into right hand panel, title is the first line of the gathered content
+
+
 
 ## Implementation Details:
 
