@@ -1,74 +1,124 @@
-// Showcaser block - Displays a visually appealing showcase for code
+// Configuration constants
+const LOADING_MESSAGE = 'Loading code snippets...';
+const ERROR_MESSAGE = 'Error loading code snippets. Please try again.';
+
+// Helper function to create DOM elements
+const createElement = (tag, className, textContent = '') => {
+  const element = document.createElement(tag);
+  if (className) element.className = className;
+  if (textContent) element.textContent = textContent;
+  return element;
+};
+
+// Main function to decorate the showcaser block
 export default async function decorate(block) {
-  // Configuration
-  const bookTitle = 'Code Showcase';
-  const loadingMessage = 'Loading code samples...';
-  const errorMessage = 'Error loading code samples. Please try again.';
-
   // Check for compact variation
-  const isCompact = block.classList.contains('compact');
+  const isCompact = block.classList.contains('showcaser--compact');
 
-  // Create book structure
-  const book = document.createElement('div');
-  book.className = `showcaser-book ${isCompact ? 'compact' : ''}`;
-  const leftPanel = document.createElement('div');
-  leftPanel.className = 'showcaser-left-panel';
-  const rightPanel = document.createElement('div');
-  rightPanel.className = 'showcaser-right-panel';
-  book.appendChild(leftPanel);
-  book.appendChild(rightPanel);
+  // Create main container
+  const container = createElement('div', 'showcaser-container');
+  if (isCompact) container.classList.add('showcaser-container--compact');
+  block.appendChild(container);
 
-  // Create and append book title
-  const titleElement = document.createElement('h2');
-  titleElement.textContent = bookTitle;
-  titleElement.className = 'showcaser-title';
-  leftPanel.appendChild(titleElement);
-
-  // Create loading indicator
-  const loadingIndicator = document.createElement('div');
-  loadingIndicator.className = 'showcaser-loading';
-  loadingIndicator.textContent = loadingMessage;
-  block.appendChild(loadingIndicator);
+  // Create loading message
+  const loadingElement = createElement('p', 'showcaser-loading', LOADING_MESSAGE);
+  container.appendChild(loadingElement);
 
   try {
-    // Collect all <pre> elements from the page
-    const preElements = document.querySelectorAll('pre');
-    const codeSnippets = [];
+    // Collect all code blocks enclosed in single backticks
+    const codeBlocks = Array.from(document.querySelectorAll('code')).filter(
+      (code) => code.textContent.trim().startsWith('`') && code.textContent.trim().endsWith('`')
+    );
 
-    preElements.forEach((pre) => {
-      const title = pre.textContent.trim().split('\n')[0];
-      const content = pre.innerHTML;
-      codeSnippets.push({ title, content });
-      pre.remove(); // Remove the original <pre> element
-    });
-
-    // Create clickable titles in the left panel
-    codeSnippets.forEach((snippet) => {
-      const titleButton = document.createElement('button');
-      titleButton.textContent = snippet.title;
-      titleButton.className = 'showcaser-title-button';
-      titleButton.addEventListener('click', () => {
-        rightPanel.innerHTML = snippet.content;
-        // Update active state
-        leftPanel.querySelectorAll('.showcaser-title-button').forEach(btn => btn.classList.remove('active'));
-        titleButton.classList.add('active');
-      });
-      leftPanel.appendChild(titleButton);
-    });
-
-    // Display the first snippet by default
-    if (codeSnippets.length > 0) {
-      rightPanel.innerHTML = codeSnippets[0].content;
-      leftPanel.querySelector('.showcaser-title-button').classList.add('active');
+    if (codeBlocks.length === 0) {
+      throw new Error('No code blocks found');
     }
 
-    // Remove loading indicator and append the book
-    loadingIndicator.remove();
-    block.appendChild(book);
+    // Remove loading message
+    container.removeChild(loadingElement);
+
+    // Create book interface
+    const bookContainer = createElement('div', 'showcaser-book');
+    container.appendChild(bookContainer);
+
+    const leftPanel = createElement('div', 'showcaser-left-panel');
+    const rightPanel = createElement('div', 'showcaser-right-panel');
+    bookContainer.appendChild(leftPanel);
+    bookContainer.appendChild(rightPanel);
+
+    // Process code blocks
+    codeBlocks.forEach((codeBlock, index) => {
+      const content = codeBlock.textContent.trim().slice(1, -1); // Remove backticks
+      const lines = content.split('\n');
+      const title = lines[0].trim();
+      const code = lines.slice(1).join('\n');
+
+      // Create title element in left panel
+      const titleElement = createElement('button', 'showcaser-title', title);
+      titleElement.setAttribute('aria-controls', `showcaser-content-${index}`);
+      titleElement.setAttribute('aria-expanded', 'false');
+      leftPanel.appendChild(titleElement);
+
+      // Create content element in right panel
+      const contentElement = createElement('div', 'showcaser-content');
+      contentElement.id = `showcaser-content-${index}`;
+      contentElement.setAttribute('role', 'region');
+      contentElement.setAttribute('aria-labelledby', titleElement.id);
+      contentElement.innerHTML = code;
+      contentElement.hidden = true;
+      rightPanel.appendChild(contentElement);
+
+      // Add click event listener
+      titleElement.addEventListener('click', () => {
+        updateContent(titleElement, contentElement);
+      });
+
+      // Remove original code block
+      codeBlock.parentNode.removeChild(codeBlock);
+    });
+
+    // Activate first item by default
+    leftPanel.querySelector('.showcaser-title').click();
+
+    // Add keyboard navigation
+    leftPanel.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        const titles = Array.from(leftPanel.querySelectorAll('.showcaser-title'));
+        const currentIndex = titles.findIndex(title => title === document.activeElement);
+        let newIndex = currentIndex;
+
+        if (e.key === 'ArrowDown') {
+          newIndex = (currentIndex + 1) % titles.length;
+        } else {
+          newIndex = (currentIndex - 1 + titles.length) % titles.length;
+        }
+
+        titles[newIndex].focus();
+      }
+    });
+
+    function updateContent(titleElement, contentElement) {
+      // Hide all content elements
+      rightPanel.querySelectorAll('.showcaser-content').forEach((el) => {
+        el.hidden = true;
+        el.setAttribute('aria-hidden', 'true');
+      });
+      // Show clicked content
+      contentElement.hidden = false;
+      contentElement.setAttribute('aria-hidden', 'false');
+      // Update active state of titles
+      leftPanel.querySelectorAll('.showcaser-title').forEach((el) => {
+        el.classList.remove('active');
+        el.setAttribute('aria-expanded', 'false');
+      });
+      titleElement.classList.add('active');
+      titleElement.setAttribute('aria-expanded', 'true');
+    }
+
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('Error in showcaser block:', error);
-    loadingIndicator.textContent = errorMessage;
-    loadingIndicator.classList.add('error');
+    console.error('Showcaser Error:', error);
+    container.innerHTML = `<p class="showcaser-error">${ERROR_MESSAGE}</p>`;
   }
 }
