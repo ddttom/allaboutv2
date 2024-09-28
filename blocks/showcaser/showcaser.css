@@ -26,44 +26,9 @@
   border-radius: var(--showcaser-border-radius);
 }
 
-/* Book layout */
-.showcaser-book {
-  display: flex;
-  gap: 20px;
-}
+/* Remove unused styles related to book layout and left/right panels */
+/* Update remaining styles */
 
-/* Left panel styles */
-.showcaser-left-panel {
-  flex: 1;
-  border-right: 1px solid var(--showcaser-border-color);
-  padding-right: 20px;
-}
-
-/* Right panel styles */
-.showcaser-right-panel {
-  flex: 2;
-}
-
-/* Title button styles */
-.showcaser-title {
-  display: block;
-  width: 100%;
-  text-align: left;
-  padding: 10px;
-  margin-bottom: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.showcaser-title:hover,
-.showcaser-title.active {
-  background-color: var(--showcaser-accent-color);
-  color: white;
-}
-
-/* Content styles */
 .showcaser-content {
   background-color: white;
   padding: 20px;
@@ -71,16 +36,7 @@
   border: 1px solid var(--showcaser-border-color);
 }
 
-/* Loading and error messages */
-.showcaser-loading,
-.showcaser-error {
-  text-align: center;
-  padding: 20px;
-}
-
-.showcaser-error {
-  color: red;
-}
+/* Keep compact variation and responsive design styles */
 
 /* Compact variation */
 .showcaser-container--compact {

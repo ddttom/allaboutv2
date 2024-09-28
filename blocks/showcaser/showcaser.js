@@ -1,6 +1,6 @@
 // Configuration constants
-const LOADING_MESSAGE = 'Loading code snippets...';
-const ERROR_MESSAGE = 'Error loading code snippets. Please try again.';
+const LOADING_MESSAGE = 'Loading content...';
+const ERROR_MESSAGE = 'Error loading content. Please try again.';
 
 // Helper function to create DOM elements
 const createElement = (tag, className, textContent = '') => {
@@ -25,96 +25,21 @@ export default async function decorate(block) {
   container.appendChild(loadingElement);
 
   try {
-    // Collect all code blocks enclosed in single backticks
-    const codeBlocks = Array.from(document.querySelectorAll('code')).filter(
-      (code) => code.textContent.trim().startsWith('`') && code.textContent.trim().endsWith('`')
-    );
+    // Get the content from the first row of the table
+    const content = block.querySelector('td').textContent.trim();
 
-    if (codeBlocks.length === 0) {
-      throw new Error('No code blocks found');
+    if (!content) {
+      throw new Error('No content found');
     }
 
     // Remove loading message
     container.removeChild(loadingElement);
 
-    // Create book interface
-    const bookContainer = createElement('div', 'showcaser-book');
-    container.appendChild(bookContainer);
-
-    const leftPanel = createElement('div', 'showcaser-left-panel');
-    const rightPanel = createElement('div', 'showcaser-right-panel');
-    bookContainer.appendChild(leftPanel);
-    bookContainer.appendChild(rightPanel);
-
-    // Process code blocks
-    codeBlocks.forEach((codeBlock, index) => {
-      const content = codeBlock.textContent.trim().slice(1, -1); // Remove backticks
-      const lines = content.split('\n');
-      const title = lines[0].trim();
-      const code = lines.slice(1).join('\n');
-
-      // Create title element in left panel
-      const titleElement = createElement('button', 'showcaser-title', title);
-      titleElement.setAttribute('aria-controls', `showcaser-content-${index}`);
-      titleElement.setAttribute('aria-expanded', 'false');
-      leftPanel.appendChild(titleElement);
-
-      // Create content element in right panel
-      const contentElement = createElement('div', 'showcaser-content');
-      contentElement.id = `showcaser-content-${index}`;
-      contentElement.setAttribute('role', 'region');
-      contentElement.setAttribute('aria-labelledby', titleElement.id);
-      contentElement.innerHTML = code;
-      contentElement.hidden = true;
-      rightPanel.appendChild(contentElement);
-
-      // Add click event listener
-      titleElement.addEventListener('click', () => {
-        updateContent(titleElement, contentElement);
-      });
-
-      // Remove original code block
-      codeBlock.parentNode.removeChild(codeBlock);
-    });
-
-    // Activate first item by default
-    leftPanel.querySelector('.showcaser-title').click();
-
-    // Add keyboard navigation
-    leftPanel.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-        e.preventDefault();
-        const titles = Array.from(leftPanel.querySelectorAll('.showcaser-title'));
-        const currentIndex = titles.findIndex(title => title === document.activeElement);
-        let newIndex = currentIndex;
-
-        if (e.key === 'ArrowDown') {
-          newIndex = (currentIndex + 1) % titles.length;
-        } else {
-          newIndex = (currentIndex - 1 + titles.length) % titles.length;
-        }
-
-        titles[newIndex].focus();
-      }
-    });
-
-    function updateContent(titleElement, contentElement) {
-      // Hide all content elements
-      rightPanel.querySelectorAll('.showcaser-content').forEach((el) => {
-        el.hidden = true;
-        el.setAttribute('aria-hidden', 'true');
-      });
-      // Show clicked content
-      contentElement.hidden = false;
-      contentElement.setAttribute('aria-hidden', 'false');
-      // Update active state of titles
-      leftPanel.querySelectorAll('.showcaser-title').forEach((el) => {
-        el.classList.remove('active');
-        el.setAttribute('aria-expanded', 'false');
-      });
-      titleElement.classList.add('active');
-      titleElement.setAttribute('aria-expanded', 'true');
-    }
+    // Create showcaser interface
+    const showcaserContent = createElement('div', 'showcaser-content', content);
+    showcaserContent.setAttribute('role', 'region');
+    showcaserContent.setAttribute('aria-label', 'Showcaser content');
+    container.appendChild(showcaserContent);
 
   } catch (error) {
     // eslint-disable-next-line no-console
