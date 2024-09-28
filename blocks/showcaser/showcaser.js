@@ -26,8 +26,31 @@ function detectLanguage(code) {
 }
 
 function highlightSyntax(code, language) {
-  // ... (copy the entire highlightSyntax function from code-expander.js)
-  // This function is quite long, so I'm not repeating it here for brevity
+  // This is a simple implementation. You may want to use a more sophisticated syntax highlighter.
+  const escapeHtml = (unsafe) => {
+    return unsafe
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  };
+
+  const highlighted = escapeHtml(code);
+
+  switch (language) {
+    case 'css':
+      return highlighted.replace(
+        /([\w-]+\s*:)|(#[\da-f]{3,6})/gi,
+        match => {
+          if (/:$/.test(match)) return `<span class="property">${match}</span>`;
+          return `<span class="value">${match}</span>`;
+        }
+      );
+    // Add more language-specific highlighting here if needed
+    default:
+      return highlighted;
+  }
 }
 
 export default async function decorate(block) {
