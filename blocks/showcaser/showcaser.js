@@ -99,7 +99,8 @@ export default async function decorate(block) {
       console.log(`Showcaser: Processing code snippet ${index + 1}:`, code.substring(0, 50) + '...');
       
       const lines = code.split('\n');
-      const title = lines[0].trim() || `Code Snippet ${index + 1}`;
+      // Use the first line as the title, stripping comments and trimming whitespace
+      const title = lines[0].replace(/\/\/.*$|\/\*[\s\S]*?\*\/|^\s*|\s*$/g, '').trim() || `Code Snippet ${index + 1}`;
       const content = lines.join('\n').trim();
       
       if (content) {
