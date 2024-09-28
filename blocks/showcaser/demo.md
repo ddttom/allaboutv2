@@ -7,23 +7,18 @@ This page demonstrates the functionality of the Showcaser block, which displays 
 | Showcaser |
 |-----------|
 
-<pre>
-Hello World Example
-console.log("Hello, World!");
-</pre>
+`Hello World Example
+console.log("Hello, World!");`
 
-<pre>
-Fibonacci Sequence
+`Fibonacci Sequence
 function fibonacci(n) {
   if (n <= 1) return n;
   return fibonacci(n - 1) + fibonacci(n - 2);
 }
 
-console.log(fibonacci(10));
-</pre>
+console.log(fibonacci(10));`
 
-<pre>
-CSS Flexbox
+`CSS Flexbox
 .container {
   display: flex;
   justify-content: space-between;
@@ -33,24 +28,21 @@ CSS Flexbox
 .item {
   flex: 1;
   padding: 10px;
-}
-</pre>
+}`
 
 ## Compact Variation
 
 | Showcaser (compact) |
 |---------------------|
 
-<pre>
-Compact Example
-console.log("This is a compact showcaser!");
-</pre>
+`Compact Example
+console.log("This is a compact showcaser!");`
 
 ## How It Works
 
-1. The Showcaser block collects all `<pre>` elements from the current page.
+1. The Showcaser block collects all code blocks (wrapped in single backticks) from the current page.
 2. It creates a book-like interface with clickable titles on the left and content on the right.
-3. The first line of each `<pre>` block becomes the title for that snippet.
+3. The first line of each code block becomes the title for that snippet.
 4. Clicking a title displays the corresponding code snippet on the right page.
 5. The block is responsive and adjusts its layout for different screen sizes.
 
