@@ -26,7 +26,6 @@ function detectLanguage(code) {
 }
 
 function highlightSyntax(code, language) {
-  // This is a simple implementation. You may want to use a more sophisticated syntax highlighter.
   const escapeHtml = (unsafe) => {
     return unsafe
       .replace(/&/g, "&amp;")
@@ -47,7 +46,19 @@ function highlightSyntax(code, language) {
           return `<span class="value">${match}</span>`;
         }
       );
-    // Add more language-specific highlighting here if needed
+    case 'javascript':
+      return highlighted.replace(
+        /(\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\.|[^\\'])*'|"(?:\\.|[^\\"])*"|`(?:\\.|[^\\`])*`|\b(?:function|var|const|let|if|else|for|while|return|class|import|export)\b|\b(?:true|false|null|undefined)\b|\b\d+\b)/g,
+        match => {
+          if (/^\/\//.test(match)) return `<span class="comment">${match}</span>`;
+          if (/^\/\*/.test(match)) return `<span class="comment">${match}</span>`;
+          if (/^['"`]/.test(match)) return `<span class="string">${match}</span>`;
+          if (/^(function|var|const|let|if|else|for|while|return|class|import|export)$/.test(match)) return `<span class="keyword">${match}</span>`;
+          if (/^(true|false|null|undefined)$/.test(match)) return `<span class="boolean">${match}</span>`;
+          if (/^\d+$/.test(match)) return `<span class="number">${match}</span>`;
+          return match;
+        }
+      );
     default:
       return highlighted;
   }
@@ -103,11 +114,13 @@ export default async function decorate(block) {
     console.log('Showcaser: Processed', codeSnippets.length, 'code snippets');
 
     codeSnippets.forEach((snippet, index) => {
-      const titleElement = document.createElement('button');
+      const titleElement = document.createElement('a');
       titleElement.className = 'showcaser-title';
       titleElement.textContent = snippet.title;
+      titleElement.href = '#';
       titleElement.setAttribute('aria-controls', `snippet-${index}`);
-      titleElement.addEventListener('click', () => {
+      titleElement.addEventListener('click', (e) => {
+        e.preventDefault();
         console.log(`Showcaser: Clicked on snippet ${index + 1}:`, snippet.title);
         rightPage.innerHTML = `
           <h3 id="snippet-${index}">${snippet.title}</h3>

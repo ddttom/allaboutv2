@@ -48,17 +48,20 @@
 }
 
 .showcaser-title {
+  display: block;
   cursor: pointer;
   padding: 10px;
   margin-bottom: 5px;
   font-size: var(--showcaser-title-font-size);
   color: var(--showcaser-title-color);
   transition: background-color 0.3s ease;
+  text-decoration: none;
 }
 
 .showcaser-title:hover,
 .showcaser-title.active {
   background-color: var(--showcaser-active-bg);
+  text-decoration: underline;
 }
 
 .showcaser-right-page h3 {
