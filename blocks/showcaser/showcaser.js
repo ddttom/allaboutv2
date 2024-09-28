@@ -1,49 +1,77 @@
-// Configuration constants
-const LOADING_MESSAGE = 'Loading content...';
+// Constants for configuration
+const BOOK_TITLE = 'Code Showcase';
 const ERROR_MESSAGE = 'Error loading content. Please try again.';
 
-// Helper function to create DOM elements
-const createElement = (tag, className, textContent = '') => {
-  const element = document.createElement(tag);
-  if (className) element.className = className;
-  if (textContent) element.textContent = textContent;
-  return element;
-};
-
-// Main function to decorate the showcaser block
 export default async function decorate(block) {
-  // Check for compact variation
-  const isCompact = block.classList.contains('showcaser--compact');
-
   // Create main container
-  const container = createElement('div', 'showcaser-container');
-  if (isCompact) container.classList.add('showcaser-container--compact');
+  const container = document.createElement('div');
+  container.className = 'showcaser-container';
   block.appendChild(container);
 
-  // Create loading message
-  const loadingElement = createElement('p', 'showcaser-loading', LOADING_MESSAGE);
-  container.appendChild(loadingElement);
+  // Create book structure
+  const book = document.createElement('div');
+  book.className = 'showcaser-book';
+  container.appendChild(book);
+
+  const leftPage = document.createElement('div');
+  leftPage.className = 'showcaser-left-page';
+  book.appendChild(leftPage);
+
+  const rightPage = document.createElement('div');
+  rightPage.className = 'showcaser-right-page';
+  book.appendChild(rightPage);
+
+  // Add book title
+  const bookTitle = document.createElement('h2');
+  bookTitle.textContent = BOOK_TITLE;
+  leftPage.appendChild(bookTitle);
 
   try {
-    // Get the content from the first row of the table
-    const content = block.querySelector('td').textContent.trim();
+    // Find all <pre> elements in the current page
+    const preElements = document.querySelectorAll('pre');
+    const codeSnippets = [];
 
-    if (!content) {
-      throw new Error('No content found');
-    }
+    // Collect rendered HTML and remove existing <pre> elements
+    preElements.forEach((pre) => {
+      const title = pre.textContent.split('\n')[0].trim();
+      const content = pre.innerHTML;
+      codeSnippets.push({ title, content });
+      pre.remove();
+    });
 
-    // Remove loading message
-    container.removeChild(loadingElement);
+    // Create clickable titles in the left page
+    codeSnippets.forEach((snippet, index) => {
+      const titleElement = document.createElement('button'); // Changed to button for better accessibility
+      titleElement.className = 'showcaser-title';
+      titleElement.textContent = snippet.title;
+      titleElement.setAttribute('aria-controls', `snippet-${index}`);
+      titleElement.addEventListener('click', () => {
+        // Display the selected content in the right page
+        rightPage.innerHTML = `<h3 id="snippet-${index}">${snippet.title}</h3>${snippet.content}`;
+        // Highlight the active title
+        document.querySelectorAll('.showcaser-title').forEach((el) => el.classList.remove('active'));
+        titleElement.classList.add('active');
+        // Set focus to the displayed content for better screen reader navigation
+        document.getElementById(`snippet-${index}`).focus();
+      });
+      leftPage.appendChild(titleElement);
 
-    // Create showcaser interface
-    const showcaserContent = createElement('div', 'showcaser-content', content);
-    showcaserContent.setAttribute('role', 'region');
-    showcaserContent.setAttribute('aria-label', 'Showcaser content');
-    container.appendChild(showcaserContent);
+      // Display the first snippet by default
+      if (index === 0) {
+        titleElement.click();
+      }
+    });
 
   } catch (error) {
+    // Display error message
+    const errorElement = document.createElement('div');
+    errorElement.className = 'showcaser-error';
+    errorElement.textContent = ERROR_MESSAGE;
+    container.appendChild(errorElement);
     // eslint-disable-next-line no-console
     console.error('Showcaser Error:', error);
-    container.innerHTML = `<p class="showcaser-error">${ERROR_MESSAGE}</p>`;
   }
+
+  // Add initialized class to enable CSS transitions
+  block.classList.add('showcaser--initialized');
 }

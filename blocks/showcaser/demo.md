@@ -1,83 +1,68 @@
-# Showcaser Block Demo
+# Showcaser Demo
 
-This page demonstrates the functionality of the Showcaser block, which displays code snippets in an interactive, book-like interface.
+This page demonstrates the functionality of the Showcaser block, which displays code snippets in a visually appealing book-like format.
 
-## Standard Showcaser
+## Usage Example
 
 | Showcaser |
-| :---- |
-| Hello, world! I am a Demo. |
+|-----------|
 
-## Compact Showcaser
+<pre>
+Hello World Example
+console.log("Hello, World!");
+</pre>
+
+<pre>
+Fibonacci Sequence
+function fibonacci(n) {
+  if (n <= 1) return n;
+  return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+console.log(fibonacci(10));
+</pre>
+
+<pre>
+CSS Flexbox
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item {
+  flex: 1;
+  padding: 10px;
+}
+</pre>
+
+## Compact Variation
 
 | Showcaser (compact) |
-| :---- |
-| Hello, world! I am a Demo. |
+|---------------------|
+
+<pre>
+Compact Example
+console.log("This is a compact showcaser!");
+</pre>
 
 ## How It Works
 
-The Showcaser block collects all code snippets from the markdown table. It then creates an interactive interface with a left panel showing the titles (first row of each snippet) and a right panel displaying the selected content.
+1. The Showcaser block collects all `<pre>` elements from the current page.
+2. It creates a book-like interface with clickable titles on the left and content on the right.
+3. The first line of each `<pre>` block becomes the title for that snippet.
+4. Clicking a title displays the corresponding code snippet on the right page.
+5. The block is responsive and adjusts its layout for different screen sizes.
 
-Clicking on a title in the left panel updates the right panel with the corresponding content. The block is responsive and adjusts its layout for different screen sizes.
+## Customization
 
-The compact variation provides a more condensed layout, suitable for displaying smaller snippets or when space is limited.
+You can customize the appearance of the Showcaser block by modifying the CSS variables in your project's stylesheet. Refer to the README.md file for more details on available variables.
 
-## Code Examples
-
-Here are the actual code snippets that would be displayed in the Showcaser:
-
-HTML Example:
-`<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sample HTML</title>
-</head>
-<body>
-    <h1>Hello, World!</h1>
-    <p>This is a sample HTML document.</p>
-</body>
-</html>`
-
-CSS Example:
-`body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-h1 {
-    color: #007bff;
-}`
-
-JavaScript Example:
-`function greet(name) {
-    return `Hello, ${name}!`;
-}
-
-console.log(greet('Franklin Developer'));
-
-// Output: Hello, Franklin Developer!`
-
-Compact HTML:
-`<h1>Compact Example</h1>
-<p>This is a compact showcaser demo.</p>`
-
-Compact CSS:
-`.compact {
-    font-size: 14px;
-    padding: 10px;
-}`
-
-| metadata |  |
-| :---- | :---- |
+| metadata | |
+|----------|--|
 | title | Showcaser Block Demo |
 | description | Demonstration of the Showcaser block for displaying code snippets |
 | json-ld | article |
 | image | |
 | author | Tom Cranstoun |
-| longdescription | This page showcases the Showcaser block functionality in Franklin, demonstrating how it can be used to display code snippets in an interactive, book-like interface. |
+| longdescription | This page showcases the Showcaser block functionality in Franklin, displaying code snippets in a visually appealing book-like format. It demonstrates how to use the block, explains its behavior, and provides information on customization options. |

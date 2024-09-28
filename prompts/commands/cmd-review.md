@@ -2,6 +2,7 @@ review the generated code, ensure all blocks and css and readme.md and demo.md a
 
 whilst reviewing consider franklin variations and update all files to match if variations are created
 
+make sure const is used when js variables are not reassigned
 
 remove any unused imports in the code, do not comment them out
 remove unused css in the stylesheet, do not comment them out

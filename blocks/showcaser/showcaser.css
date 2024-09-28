@@ -2,71 +2,113 @@
   /* Colors */
   --showcaser-bg-color: #f5f5f5;
   --showcaser-text-color: #333;
-  --showcaser-accent-color: #007bff;
+  --showcaser-title-color: #0066cc;
   --showcaser-border-color: #ddd;
-
+  --showcaser-active-bg: #e6f2ff;
+  
   /* Typography */
   --showcaser-font-family: Arial, sans-serif;
-  --showcaser-font-size: 16px;
-  --showcaser-line-height: 1.5;
-
-  /* Layout */
+  --showcaser-title-font-size: 1.2rem;
+  --showcaser-content-font-size: 1rem;
+  
+  /* Spacing */
   --showcaser-padding: 20px;
-  --showcaser-border-radius: 5px;
+  --showcaser-border-radius: 8px;
 }
 
-/* Container styles */
+/* Layout */
 .showcaser-container {
   background-color: var(--showcaser-bg-color);
   color: var(--showcaser-text-color);
   font-family: var(--showcaser-font-family);
-  font-size: var(--showcaser-font-size);
-  line-height: var(--showcaser-line-height);
   padding: var(--showcaser-padding);
   border-radius: var(--showcaser-border-radius);
 }
 
-/* Remove unused styles related to book layout and left/right panels */
-/* Update remaining styles */
-
-.showcaser-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: var(--showcaser-border-radius);
+.showcaser-book {
+  display: flex;
   border: 1px solid var(--showcaser-border-color);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-/* Keep compact variation and responsive design styles */
-
-/* Compact variation */
-.showcaser-container--compact {
-  font-size: calc(var(--showcaser-font-size) * 0.9);
-  padding: calc(var(--showcaser-padding) * 0.75);
+.showcaser-left-page,
+.showcaser-right-page {
+  padding: 20px;
+  flex: 1;
 }
 
-.showcaser-container--compact .showcaser-book {
-  flex-direction: column;
+.showcaser-left-page {
+  border-right: 1px solid var(--showcaser-border-color);
+  background-color: var(--showcaser-bg-color);
 }
 
-.showcaser-container--compact .showcaser-left-panel {
-  border-right: none;
-  border-bottom: 1px solid var(--showcaser-border-color);
-  padding-right: 0;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
+.showcaser-right-page {
+  background-color: white;
 }
 
-/* Responsive design */
+.showcaser-title {
+  cursor: pointer;
+  padding: 10px;
+  margin-bottom: 5px;
+  font-size: var(--showcaser-title-font-size);
+  color: var(--showcaser-title-color);
+  transition: background-color 0.3s ease;
+}
+
+.showcaser-title:hover,
+.showcaser-title.active {
+  background-color: var(--showcaser-active-bg);
+}
+
+.showcaser-right-page h3 {
+  margin-top: 0;
+  color: var(--showcaser-title-color);
+}
+
+.showcaser-right-page pre {
+  font-size: var(--showcaser-content-font-size);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.showcaser-error {
+  color: red;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
   .showcaser-book {
     flex-direction: column;
   }
 
-  .showcaser-left-panel {
+  .showcaser-left-page {
     border-right: none;
     border-bottom: 1px solid var(--showcaser-border-color);
-    padding-right: 0;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
   }
+}
+
+/* Accessibility */
+.showcaser-title:focus {
+  outline: 2px solid var(--showcaser-title-color);
+  outline-offset: 2px;
+}
+
+/* Variations */
+.showcaser.compact {
+  --showcaser-padding: 10px;
+  --showcaser-title-font-size: 1rem;
+  --showcaser-content-font-size: 0.9rem;
+}
+
+/* Transition for initialization */
+.showcaser:not(.showcaser--initialized) {
+  opacity: 0;
+}
+
+.showcaser--initialized {
+  opacity: 1;
+  transition: opacity 0.5s ease;
 }
