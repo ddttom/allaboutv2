@@ -2,7 +2,6 @@
 const BOOK_TITLE = 'Code Showcase';
 const ERROR_MESSAGE = 'Error loading content. Please try again.';
 const COPY_BUTTON_RESET_DELAY = 2000;
-const SCROLL_THRESHOLD = 100;
 
 function decodeHtmlEntities(text) {
   const textArea = document.createElement('textarea');
@@ -12,7 +11,6 @@ function decodeHtmlEntities(text) {
 
 function detectLanguage(code) {
   const decodedCode = decodeHtmlEntities(code);
-
 
   // Simple check for Markdown
   if (decodedCode.trim().startsWith('# ')) {
@@ -102,7 +100,6 @@ function highlightSyntax(code, language) {
 }
 
 export default async function decorate(block) {
-  
   const container = document.createElement('div');
   container.className = 'showcaser-container';
   block.appendChild(container);
@@ -122,27 +119,6 @@ export default async function decorate(block) {
   const bookTitle = document.createElement('h2');
   bookTitle.textContent = BOOK_TITLE;
   leftPage.appendChild(bookTitle);
-
-  const returnToTopButton = document.createElement('button');
-  returnToTopButton.className = 'showcaser-returntotop';
-  returnToTopButton.textContent = 'Return to Top';
-  returnToTopButton.style.display = 'none';
-  container.appendChild(returnToTopButton);
-
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > SCROLL_THRESHOLD) {
-      returnToTopButton.style.display = 'block';
-    } else {
-      returnToTopButton.style.display = 'none';
-    }
-  });
-
-  returnToTopButton.addEventListener('click', () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  });
 
   const returnToMenuButton = document.createElement('button');
   returnToMenuButton.className = 'showcaser-returntomenu';
@@ -240,5 +216,4 @@ export default async function decorate(block) {
   }
 
   block.classList.add('showcaser--initialized');
-
 }

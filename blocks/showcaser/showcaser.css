@@ -171,8 +171,8 @@
   outline-offset: 2px;
 }
 
-/* Return to Top button styles */
-.showcaser-returntotop {
+/* Return to Menu button styles */
+.showcaser-returntomenu {
     position: fixed;
     bottom: 20px;
     left: 20px;
@@ -190,12 +190,12 @@
     transition: background-color 0.3s ease;
 }
 
-.showcaser-returntotop:hover {
+.showcaser-returntomenu:hover {
     background-color: var(--showcaser-active-bg);
     color: var(--showcaser-title-color);
 }
 
-.showcaser-returntotop:focus {
+.showcaser-returntomenu:focus {
     outline: 2px solid var(--showcaser-title-color);
     outline-offset: 2px;
 }
