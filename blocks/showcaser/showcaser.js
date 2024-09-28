@@ -1,31 +1,49 @@
 // Constants for configuration
 const BOOK_TITLE = 'Code Showcase';
 const ERROR_MESSAGE = 'Error loading content. Please try again.';
+const COPY_BUTTON_RESET_DELAY = 2000;
+const SCROLL_THRESHOLD = 100;
+
+// Add this helper function at the top of your file
+function decodeHtmlEntities(text) {
+  const textArea = document.createElement('textarea');
+  textArea.innerHTML = text;
+  return textArea.value;
+}
 
 function detectLanguage(code) {
-  if (code.trim().startsWith('"') || code.trim().startsWith("'")) {
+  // Decode HTML entities before checking
+  const decodedCode = decodeHtmlEntities(code);
+
+  if (decodedCode.trim().startsWith('"') || decodedCode.trim().startsWith("'")) {
     return 'text';
   }
   
-  if (/^(ls|cd|pwd|mkdir|rm|cp|mv|cat|echo|grep|sed|awk|curl|wget|ssh|git|npm|yarn|docker|kubectl)\s/.test(code)) {
+  if (/^(ls|cd|pwd|mkdir|rm|cp|mv|cat|echo|grep|sed|awk|curl|wget|ssh|git|npm|yarn|docker|kubectl)\s/.test(decodedCode)) {
     return 'shell';
   }
   
-  if (code.includes('function') || code.includes('var') || code.includes('const')) return 'javascript';
-  if (code.includes('{') && code.includes('}')) {
-    if (code.match(/[a-z-]+\s*:\s*[^;]+;/)) return 'css';
-    if (code.includes(':')) return 'json';
+  if (decodedCode.includes('function') || decodedCode.includes('var') || decodedCode.includes('const') || decodedCode.includes('let')) return 'javascript';
+  if (decodedCode.includes('{') && decodedCode.includes('}')) {
+    if (decodedCode.match(/[a-z-]+\s*:\s*[^;]+;/)) return 'css';
+    if (decodedCode.includes(':')) return 'json';
   }
-  if (code.includes('<') && code.includes('>') && (code.includes('</') || code.includes('/>'))) return 'html';
+  if (decodedCode.includes('<') && decodedCode.includes('>') && (decodedCode.includes('</') || decodedCode.includes('/>'))) return 'html';
   
-  if (code.match(/^(#{1,6}\s|\*\s|-\s|\d+\.\s|\[.*\]\(.*\))/m)) return 'markdown';
+  if (decodedCode.match(/^(#{1,6}\s|\*\s|-\s|\d+\.\s|\[.*\]\(.*\))/m)) return 'markdown';
   
-  if (code.startsWith('$') || code.startsWith('#')) return 'shell';
+  if (decodedCode.startsWith('$') || decodedCode.startsWith('#')) return 'shell';
   
   return 'text';
 }
 
 function highlightSyntax(code, language) {
+  const decodeHtmlEntities = (text) => {
+    const textArea = document.createElement('textarea');
+    textArea.innerHTML = text;
+    return textArea.value;
+  };
+
   const escapeHtml = (unsafe) => {
     return unsafe
       .replace(/&/g, "&amp;")
@@ -35,7 +53,9 @@ function highlightSyntax(code, language) {
       .replace(/'/g, "&#039;");
   };
 
-  const highlighted = escapeHtml(code);
+  // Decode HTML entities before processing
+  const decodedCode = decodeHtmlEntities(code);
+  const highlighted = escapeHtml(decodedCode);
 
   switch (language) {
     case 'css':
@@ -87,6 +107,30 @@ export default async function decorate(block) {
   bookTitle.textContent = BOOK_TITLE;
   leftPage.appendChild(bookTitle);
 
+  // Add Return to Top button
+  const returnToTopButton = document.createElement('button');
+  returnToTopButton.className = 'showcaser-returntotop';
+  returnToTopButton.textContent = 'Return to Top';
+  returnToTopButton.style.display = 'none';
+  container.appendChild(returnToTopButton);
+
+  // Add scroll event listener
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > SCROLL_THRESHOLD) {
+      returnToTopButton.style.display = 'block';
+    } else {
+      returnToTopButton.style.display = 'none';
+    }
+  });
+
+  // Add click event listener to Return to Top button
+  returnToTopButton.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  });
+
   try {
     const codeSnippets = [];
 
@@ -99,8 +143,44 @@ export default async function decorate(block) {
       console.log(`Showcaser: Processing code snippet ${index + 1}:`, code.substring(0, 50) + '...');
       
       const lines = code.split('\n');
-      // Use the first line as the title, stripping comments and trimming whitespace
-      const title = lines[0].replace(/\/\/.*$|\/\*[\s\S]*?\*\/|^\s*|\s*$/g, '').trim() || `Code Snippet ${index + 1}`;
+      let title = '';
+      
+      // Check if the first non-empty line is a comment
+      for (let line of lines) {
+        const trimmedLine = line.trim();
+        if (trimmedLine.startsWith('//')) {
+          // Single-line comment
+          title = trimmedLine.substring(2).trim();
+          break;
+        } else if (trimmedLine.startsWith('/*')) {
+          // Multi-line comment
+          const endIndex = trimmedLine.indexOf('*/');
+          if (endIndex !== -1) {
+            // Single-line multi-line comment
+            title = trimmedLine.substring(2, endIndex).trim();
+          } else {
+            // Multi-line comment spanning multiple lines
+            const commentLines = [];
+            for (let i = lines.indexOf(line); i < lines.length; i++) {
+              const commentLine = lines[i].trim();
+              if (commentLine.endsWith('*/')) {
+                commentLines.push(commentLine.substring(0, commentLine.length - 2).trim());
+                break;
+              } else {
+                commentLines.push(i === lines.indexOf(line) ? commentLine.substring(2) : commentLine);
+              }
+            }
+            title = commentLines.join(' ').trim();
+          }
+          break;
+        } else if (trimmedLine) {
+          // First non-empty line that's not a comment
+          title = trimmedLine;
+          break;
+        }
+      }
+      
+      title = title || `Code Snippet ${index + 1}`;
       const content = lines.join('\n').trim();
       
       if (content) {
@@ -125,11 +205,31 @@ export default async function decorate(block) {
         console.log(`Showcaser: Clicked on snippet ${index + 1}:`, snippet.title);
         rightPage.innerHTML = `
           <h3 id="snippet-${index}">${snippet.title}</h3>
-          <pre class="language-${snippet.language}"><code>${snippet.content}</code></pre>
+          <div class="showcaser-code-wrapper">
+            <button class="showcaser-copy">Copy ${snippet.language} to clipboard</button>
+            <pre class="language-${snippet.language}"><code>${snippet.content}</code></pre>
+          </div>
         `;
         document.querySelectorAll('.showcaser-title').forEach((el) => el.classList.remove('active'));
         titleElement.classList.add('active');
         document.getElementById(`snippet-${index}`).focus();
+
+        // Add copy to clipboard functionality
+        const copyButton = rightPage.querySelector('.showcaser-copy');
+        copyButton.addEventListener('click', () => {
+          const codeElement = rightPage.querySelector('pre code');
+          const code = codeElement.textContent;
+          navigator.clipboard.writeText(code)
+            .then(() => {
+              copyButton.textContent = 'Copied!';
+              setTimeout(() => {
+                copyButton.textContent = `Copy ${snippet.language} to clipboard`;
+              }, COPY_BUTTON_RESET_DELAY);
+            })
+            .catch(err => {
+              console.error('Error copying content:', err);
+            });
+        });
       });
       leftPage.appendChild(titleElement);
 

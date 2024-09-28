@@ -1,6 +1,6 @@
 # Showcaser
 
-The Showcaser block displays a visually appealing showcase for code snippets in a book-like format.
+The Showcaser block displays a visually appealing showcase for code snippets in a book-like format, with the ability to copy code to the clipboard and a "Return to Top" button for easy navigation.
 
 ## Usage
 
@@ -15,6 +15,14 @@ For a compact version, use:
 |---------------------|
 
 The block automatically collects all code snippets from the current page and displays them in the showcase.
+
+## Features
+
+- Displays code snippets in a book-like interface
+- Syntax highlighting for various programming languages
+- Copy to clipboard functionality for each code snippet
+- "Return to Top" button for easy navigation
+- Responsive design for mobile and desktop viewing
 
 ## Authoring
 
@@ -51,6 +59,7 @@ The Showcaser block uses CSS variables for easy customization. Override these va
 - Clicking a title displays the corresponding code snippet on the right page
 - The first snippet is displayed by default
 - Responsive layout adjusts for mobile devices
+- "Return to Top" button appears when scrolling down and allows quick navigation to the top of the page
 
 ## Accessibility
 
