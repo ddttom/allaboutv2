@@ -28,7 +28,7 @@ whilst constructing a new block consider using variations within previously cons
 
 ### File Structure
 
-Block components should be organized in directories:
+Block components should be organized in folders:
 
   `/blocks/blockname/blockname.js`
   `/blocks/blockname/blockname.css`
@@ -37,6 +37,8 @@ Block components should be organized in directories:
   `/blocks/blockname/example.json`
   `/blocks/blockname/example.csv`
   `/blocks/blockname/demo.md`
+  `/blocks/blockname/self-review.md`
+  `/blocks/blockname/senior-review.md`
 
 **JavaScript (`blockname.js`):**
 
@@ -105,7 +107,7 @@ When creating tables for blocks, follow this structure:
    | BlockName | 
    | :----  | 
 
-3.  Variations are encouraged in blocks, in the example following `(bold)` is the variation; the additional class `bold` is added to the class and the css adjusts, thus saving creation of two different but similar block.
+3.  Variations are encouraged in blocks, in the example following `(bold)` is the variation; the additional class `bold` is added to the class by franklin and your job is to adjust the css and js, thus saving creation of two different, but similar block.
 
    | BlockName (bold) | 
    | :----  | 
@@ -141,7 +143,7 @@ When creating code or css examples in a senior-review.md, readme.md or demo.md p
   
    `function fred() {}`
 
-This is a signal to franklin
+This is a signal to franklin to use special text styling
 
 
 ## Metadata Example
@@ -273,8 +275,7 @@ When creating a README.md file for a Franklin (Adobe Edge Delivery Services) blo
 9. Do not provide 'Examples' with code snippets. generate a markdown table in the readme showing a content author what to do, never show empty cells
 10. Include an 'Accessibility' section highlighting relevant features or considerations.
 11. Include the suggestions and their explanation in the README.md
-12. Add suggestions for improvement to the README/md
-13. Always add a new line to the end of the README.md
+
 
 ### Franklin metadata
 
