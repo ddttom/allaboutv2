@@ -31,6 +31,8 @@ function highlightSyntax(code, language) {
 }
 
 export default async function decorate(block) {
+  console.log('Showcaser: Starting decoration');
+  
   const container = document.createElement('div');
   container.className = 'showcaser-container';
   block.appendChild(container);
@@ -56,15 +58,23 @@ export default async function decorate(block) {
 
     // Find all <pre><code> elements in the document
     const preCodeElements = document.querySelectorAll('pre code');
+    console.log('Showcaser: Found', preCodeElements.length, 'code elements');
+
     preCodeElements.forEach((codeElement, index) => {
       const code = codeElement.textContent;
+      console.log(`Showcaser: Processing code snippet ${index + 1}:`, code.substring(0, 50) + '...');
+      
       const lines = code.split('\n');
       const title = lines[0].trim() || `Code Snippet ${index + 1}`;
       const content = lines.slice(1).join('\n').trim();
       const language = detectLanguage(content);
+      console.log(`Showcaser: Detected language for snippet ${index + 1}:`, language);
+      
       const highlightedCode = highlightSyntax(content, language);
       codeSnippets.push({ title, content: highlightedCode, language });
     });
+
+    console.log('Showcaser: Processed', codeSnippets.length, 'code snippets');
 
     codeSnippets.forEach((snippet, index) => {
       const titleElement = document.createElement('button');
@@ -72,6 +82,7 @@ export default async function decorate(block) {
       titleElement.textContent = snippet.title;
       titleElement.setAttribute('aria-controls', `snippet-${index}`);
       titleElement.addEventListener('click', () => {
+        console.log(`Showcaser: Clicked on snippet ${index + 1}:`, snippet.title);
         rightPage.innerHTML = `
           <h3 id="snippet-${index}">${snippet.title}</h3>
           <pre class="language-${snippet.language}"><code>${snippet.content}</code></pre>
@@ -83,6 +94,7 @@ export default async function decorate(block) {
       leftPage.appendChild(titleElement);
 
       if (index === 0) {
+        console.log('Showcaser: Activating first snippet');
         titleElement.click();
       }
     });
@@ -92,17 +104,18 @@ export default async function decorate(block) {
       const preElement = codeElement.parentElement;
       if (preElement && preElement.tagName.toLowerCase() === 'pre') {
         preElement.remove();
+        console.log('Showcaser: Removed original <pre><code> element');
       }
     });
 
   } catch (error) {
+    console.error('Showcaser Error:', error);
     const errorElement = document.createElement('div');
     errorElement.className = 'showcaser-error';
     errorElement.textContent = ERROR_MESSAGE;
     container.appendChild(errorElement);
-    // eslint-disable-next-line no-console
-    console.error('Showcaser Error:', error);
   }
 
   block.classList.add('showcaser--initialized');
+  console.log('Showcaser: Finished decoration');
 }
