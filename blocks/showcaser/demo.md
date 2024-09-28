@@ -16,8 +16,7 @@ For a compact version:
 
 ## Sample Code Snippets
 
-<pre>
-HTML Example
+`HTML Example
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,11 +28,9 @@ HTML Example
     <h1>Hello, World!</h1>
     <p>This is a sample HTML document.</p>
 </body>
-</html>
-</pre>
+</html>`
 
-<pre>
-CSS Example
+`CSS Example
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
@@ -48,11 +45,9 @@ h1 {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
-}
-</pre>
+}`
 
-<pre>
-JavaScript Example
+`JavaScript Example
 function greet(name) {
     return `Hello, ${name}!`;
 }
@@ -60,12 +55,11 @@ function greet(name) {
 const result = greet('Franklin Developer');
 console.log(result);
 
-// Output: Hello, Franklin Developer!
-</pre>
+// Output: Hello, Franklin Developer!`
 
 ## How It Works
 
-1. The Showcaser block collects all `<pre>` elements from the page.
+1. The Showcaser block collects all code blocks (enclosed in single backticks) from the page.
 2. It creates an interactive "book" interface with a left panel for titles and a right panel for code display.
 3. Clicking on a title in the left panel displays the corresponding code in the right panel.
 4. The block is responsive and adjusts its layout for different screen sizes.

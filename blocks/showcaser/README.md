@@ -14,13 +14,26 @@ For a compact version of the Showcaser, use:
 | Showcaser (compact) |
 |---------------------|
 
-The block will automatically collect all `<pre>` elements from the current page, remove them from their original positions, and display them in an interactive book-like interface.
+The block will automatically collect all code blocks enclosed in single backticks (`) from the current page, remove them from their original positions, and display them in an interactive book-like interface.
 
 ## Authoring
 
-1. Create your code snippets using `<pre>` tags in your Google Docs or Microsoft Word document.
-2. The first line of each `<pre>` block will be used as the title for that code snippet.
+1. Create your code snippets using single backticks (`) in your Google Docs or Microsoft Word document.
+2. The first line of each code block will be used as the title for that code snippet.
 3. Add the Showcaser block table where you want the showcase to appear.
+
+Example:
+`HTML Example
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sample HTML</title>
+</head>
+<body>
+    <h1>Hello, World!</h1>
+</body>
+</html>`
 
 ## Styling
 
@@ -45,7 +58,7 @@ The Showcaser block uses CSS variables for easy customization. You can override 
 
 ## Behavior
 
-- The Showcaser block collects all `<pre>` elements from the page and displays them in an interactive interface.
+- The Showcaser block collects all code blocks enclosed in single backticks from the page and displays them in an interactive interface.
 - The left panel shows clickable titles for each code snippet.
 - Clicking a title displays the corresponding code in the right panel.
 - The first code snippet is displayed by default.

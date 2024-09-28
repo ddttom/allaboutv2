@@ -140,11 +140,13 @@ Ensure that the demo file includes all necessary elements to showcase the block'
 
 
 When creating code or css examples in a senior-review.md, readme.md or demo.md place all code snippets inside single backticks like this.
-  
-   `function fred() {}`
+   I do not want to have triple backticks, i want it like this
 
-This is a signal to franklin to use special text styling
+  `function fred() {
+return 0;
+}` 
 
+The single backtick enclosing code in an .md is a special signal to franklin
 
 ## Metadata Example
 
