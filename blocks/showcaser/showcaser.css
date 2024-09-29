@@ -42,7 +42,7 @@
 .showcaser-left-page {
   border-right: 1px solid var(--showcaser-border-color);
   background-color: var(--showcaser-bg-color);
-  font-size: 0.9rem;
+  font-size: 0.8rem; /* Reduced from 0.9rem to 0.8rem */
   transition: flex-basis 0.3s ease, padding-top 0.3s ease;
   flex-basis: 20%;
   min-width: 150px;
@@ -93,9 +93,9 @@
 .showcaser-title {
   display: block;
   cursor: pointer;
-  padding: 10px;
-  margin-bottom: 5px;
-  font-size: 1rem; /* Further reduced font size for titles */
+  padding: 8px; /* Reduced from 10px to 8px */
+  margin-bottom: 4px; /* Reduced from 5px to 4px */
+  font-size: 0.9rem; /* Reduced from 1rem to 0.9rem */
   color: var(--showcaser-title-color);
   transition: background-color 0.3s ease;
   text-decoration: none;
