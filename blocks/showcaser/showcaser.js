@@ -2,6 +2,7 @@
 const BOOK_TITLE = 'Code Showcase';
 const ERROR_MESSAGE = 'Error loading content. Please try again.';
 const COPY_BUTTON_RESET_DELAY = 2000;
+const LONG_DOCUMENT_THRESHOLD = 40;
 
 function decodeHtmlEntities(text) {
   const textArea = document.createElement('textarea');
@@ -173,9 +174,40 @@ export default async function decorate(block) {
             <pre class="language-${snippet.language}"><code>${snippet.content}</code></pre>
           </div>
         `;
-        document.querySelectorAll('.showcaser-title').forEach((el) => el.classList.remove('active'));
-        titleElement.classList.add('active');
-        document.getElementById(`snippet-${index}`).focus();
+
+        const preElement = rightPage.querySelector('pre');
+        const lines = snippet.content.split('\n');
+
+        if (lines.length > LONG_DOCUMENT_THRESHOLD) {
+          preElement.classList.add('collapsible');
+          
+          // Create top expand/collapse button
+          const topExpandButton = document.createElement('button');
+          topExpandButton.className = 'showcaser-expand-collapse top';
+          topExpandButton.textContent = 'Expand';
+          
+          // Create bottom expand/collapse button
+          const bottomExpandButton = document.createElement('button');
+          bottomExpandButton.className = 'showcaser-expand-collapse bottom';
+          bottomExpandButton.textContent = '....';
+          
+          // Function to toggle expansion
+          const toggleExpansion = () => {
+            preElement.classList.toggle('expanded');
+            const isExpanded = preElement.classList.contains('expanded');
+            topExpandButton.textContent = isExpanded ? 'Collapse' : 'Expand';
+            bottomExpandButton.textContent = isExpanded ? 'Close' : '....';
+          };
+          
+          // Add click event listeners to both buttons
+          topExpandButton.onclick = toggleExpansion;
+          bottomExpandButton.onclick = toggleExpansion;
+          
+          // Add buttons to the wrapper
+          const codeWrapper = rightPage.querySelector('.showcaser-code-wrapper');
+          codeWrapper.insertBefore(topExpandButton, preElement);
+          codeWrapper.appendChild(bottomExpandButton);
+        }
 
         const copyButton = rightPage.querySelector('.showcaser-copy');
         copyButton.addEventListener('click', () => {
