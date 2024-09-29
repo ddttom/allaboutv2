@@ -41,10 +41,46 @@
 .showcaser-left-page {
   border-right: 1px solid var(--showcaser-border-color);
   background-color: var(--showcaser-bg-color);
+  font-size: 0.9rem; /* Shrunk font size */
+  transition: transform 0.3s ease;
+  transform: translateX(-100%); /* Default to popped in */
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 250px; /* Adjust as needed */
+  z-index: 10;
+}
+
+.showcaser-left-page.popped-out {
+  transform: translateX(0);
 }
 
 .showcaser-right-page {
   background-color: white;
+  margin-left: 0; /* Adjust based on left page width when popped out */
+  transition: margin-left 0.3s ease;
+}
+
+.showcaser-right-page.shifted {
+  margin-left: 250px; /* Should match the width of left-page */
+}
+
+.showcaser-toggle {
+  position: absolute;
+  left: 100%;
+  top: 10px;
+  background-color: var(--showcaser-title-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  z-index: 11;
+}
+
+.showcaser-toggle:hover {
+  background-color: var(--showcaser-active-bg);
+  color: var(--showcaser-title-color);
 }
 
 .showcaser-title {
@@ -52,7 +88,7 @@
   cursor: pointer;
   padding: 10px;
   margin-bottom: 5px;
-  font-size: var(--showcaser-title-font-size);
+  font-size: 1rem; /* Further reduced font size for titles */
   color: var(--showcaser-title-color);
   transition: background-color 0.3s ease;
   text-decoration: none;

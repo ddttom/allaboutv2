@@ -135,6 +135,17 @@ export default async function decorate(block) {
   leftPage.className = 'showcaser-left-page';
   book.appendChild(leftPage);
 
+  const toggleButton = document.createElement('button');
+  toggleButton.className = 'showcaser-toggle';
+  toggleButton.textContent = '>';
+  leftPage.appendChild(toggleButton);
+
+  toggleButton.addEventListener('click', () => {
+    leftPage.classList.toggle('popped-out');
+    rightPage.classList.toggle('shifted');
+    toggleButton.textContent = leftPage.classList.contains('popped-out') ? '<' : '>';
+  });
+
   const rightPage = document.createElement('div');
   rightPage.className = 'showcaser-right-page';
   book.appendChild(rightPage);
@@ -188,6 +199,14 @@ export default async function decorate(block) {
       titleElement.setAttribute('aria-controls', `snippet-${index}`);
       titleElement.addEventListener('click', (e) => {
         e.preventDefault();
+        
+        // Ensure left page is visible when a snippet is selected
+        if (!leftPage.classList.contains('popped-out')) {
+          leftPage.classList.add('popped-out');
+          rightPage.classList.add('shifted');
+          toggleButton.textContent = '<';
+        }
+
         rightPage.innerHTML = `
           <h3 id="snippet-${index}">${snippet.title}</h3>
           <div class="showcaser-code-wrapper">
