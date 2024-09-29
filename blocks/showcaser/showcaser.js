@@ -143,6 +143,7 @@ export default async function decorate(block) {
   toggleButton.addEventListener('click', () => {
     leftPage.classList.toggle('collapsed');
     toggleButton.classList.toggle('collapsed');
+    rightPage.style.width = leftPage.classList.contains('collapsed') ? '100%' : '80%';
     toggleButton.textContent = leftPage.classList.contains('collapsed') ? '>' : '<';
   });
 
@@ -204,6 +205,7 @@ export default async function decorate(block) {
         if (leftPage.classList.contains('collapsed')) {
           leftPage.classList.remove('collapsed');
           toggleButton.classList.remove('collapsed');
+          rightPage.style.width = '80%';
           toggleButton.textContent = '<';
         }
 
