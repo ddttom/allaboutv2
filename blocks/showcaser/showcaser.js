@@ -1,5 +1,5 @@
 // Constants for configuration
-const BOOK_TITLE = 'Code Showcase';
+const BOOK_TITLE = 'Code';
 const ERROR_MESSAGE = 'Error loading content. Please try again.';
 const COPY_BUTTON_RESET_DELAY = 2000;
 const LONG_DOCUMENT_THRESHOLD = 40;
