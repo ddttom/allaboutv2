@@ -14,8 +14,14 @@ function detectLanguage(code) {
   const decodedCode = decodeHtmlEntities(code);
 
   // Simple check for Markdown
-  if (decodedCode.trim().startsWith('# ')) {
+  if (decodedCode.trim().startsWith('#')) {
     return 'markdown';
+  }
+
+  // Check for JSON
+  const jsonTest = decodedCode.trim();
+  if (jsonTest.startsWith('{') || (jsonTest.includes('\n') && jsonTest.split('\n')[1].trim().startsWith('{'))) {
+    return 'json';
   }
 
   // Rest of the language detection logic
@@ -30,7 +36,6 @@ function detectLanguage(code) {
   if (decodedCode.includes('function') || decodedCode.includes('var') || decodedCode.includes('const')) return 'javascript';
   if (decodedCode.includes('{') && decodedCode.includes('}')) {
     if (decodedCode.match(/[a-z-]+\s*:\s*[^;]+;/)) return 'css';
-    if (decodedCode.includes(':')) return 'json';
   }
   if (decodedCode.includes('<') && decodedCode.includes('>') && (decodedCode.includes('</') || decodedCode.includes('/>'))) return 'html';
   
@@ -92,6 +97,24 @@ function highlightSyntax(code, language) {
           if (/^#/.test(match)) return `<span class="value">${encodeHtmlEntities(match)}</span>`;
           if (/^\d/.test(match)) return `<span class="number">${encodeHtmlEntities(match)}</span>`;
           if (/^[@.]/.test(match)) return `<span class="selector">${encodeHtmlEntities(match)}</span>`;
+          return encodeHtmlEntities(match);
+        }
+      );
+    case 'json':
+      return decodedCode.replace(
+        /(\"(?:\\.|[^\\"])*\")(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,
+        (match, string, colon, boolean) => {
+          if (string) {
+            return colon 
+              ? `<span class="json-key">${encodeHtmlEntities(string)}</span>${encodeHtmlEntities(colon)}`
+              : `<span class="json-string">${encodeHtmlEntities(string)}</span>`;
+          }
+          if (boolean) {
+            return `<span class="json-boolean">${encodeHtmlEntities(boolean)}</span>`;
+          }
+          if (/^-?\d/.test(match)) {
+            return `<span class="json-number">${encodeHtmlEntities(match)}</span>`;
+          }
           return encodeHtmlEntities(match);
         }
       );
