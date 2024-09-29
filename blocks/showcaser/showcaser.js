@@ -137,13 +137,13 @@ export default async function decorate(block) {
 
   const toggleButton = document.createElement('button');
   toggleButton.className = 'showcaser-toggle';
-  toggleButton.textContent = '>';
-  leftPage.appendChild(toggleButton);
+  toggleButton.textContent = '<';
+  book.appendChild(toggleButton);
 
   toggleButton.addEventListener('click', () => {
-    leftPage.classList.toggle('popped-out');
-    rightPage.classList.toggle('shifted');
-    toggleButton.textContent = leftPage.classList.contains('popped-out') ? '<' : '>';
+    leftPage.classList.toggle('collapsed');
+    toggleButton.classList.toggle('collapsed');
+    toggleButton.textContent = leftPage.classList.contains('collapsed') ? '>' : '<';
   });
 
   const rightPage = document.createElement('div');
@@ -201,9 +201,9 @@ export default async function decorate(block) {
         e.preventDefault();
         
         // Ensure left page is visible when a snippet is selected
-        if (!leftPage.classList.contains('popped-out')) {
-          leftPage.classList.add('popped-out');
-          rightPage.classList.add('shifted');
+        if (leftPage.classList.contains('collapsed')) {
+          leftPage.classList.remove('collapsed');
+          toggleButton.classList.remove('collapsed');
           toggleButton.textContent = '<';
         }
 
