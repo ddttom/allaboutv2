@@ -43,18 +43,20 @@
   border-right: 1px solid var(--showcaser-border-color);
   background-color: var(--showcaser-bg-color);
   font-size: 0.9rem;
-  transition: flex-basis 0.3s ease;
-  flex-basis: 20%; /* Use flex-basis instead of width */
-  min-width: 150px; /* Set a minimum width */
-  max-width: 300px; /* Set a maximum width */
+  transition: flex-basis 0.3s ease, padding-top 0.3s ease;
+  flex-basis: 20%;
+  min-width: 150px;
+  max-width: 300px;
   overflow-y: auto;
   height: 100%;
+  padding-top: 40px; /* Make room for the toggle button */
 }
 
 .showcaser-left-page.collapsed {
   flex-basis: 0;
   min-width: 0;
   border-right: none;
+  padding-top: 0;
 }
 
 .showcaser-right-page {
@@ -68,15 +70,15 @@
 
 .showcaser-toggle {
   position: absolute;
-  left: 20%; /* This will be adjusted in JavaScript */
-  top: 10px;
+  left: 0;
+  top: 0;
   background-color: var(--showcaser-title-color);
   color: white;
   border: none;
   padding: 5px 10px;
   cursor: pointer;
   z-index: 11;
-  transition: left 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
 .showcaser-toggle.collapsed {

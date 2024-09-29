@@ -122,18 +122,6 @@ function highlightSyntax(code, language) {
   }
 }
 
-function updateTogglePosition() {
-  const leftPage = document.querySelector('.showcaser-left-page');
-  const toggle = document.querySelector('.showcaser-toggle');
-  if (leftPage && toggle) {
-    const leftPageWidth = leftPage.offsetWidth;
-    toggle.style.left = `${leftPageWidth}px`;
-  }
-}
-
-// Call this function after initializing the showcaser and whenever the window is resized
-window.addEventListener('resize', updateTogglePosition);
-
 export default async function decorate(block) {
   const container = document.createElement('div');
   container.className = 'showcaser-container';
@@ -156,7 +144,6 @@ export default async function decorate(block) {
     leftPage.classList.toggle('collapsed');
     toggleButton.classList.toggle('collapsed');
     toggleButton.textContent = leftPage.classList.contains('collapsed') ? '>' : '<';
-    updateTogglePosition(); // Add this line
   });
 
   const rightPage = document.createElement('div');
@@ -302,5 +289,4 @@ export default async function decorate(block) {
   }
 
   block.classList.add('showcaser--initialized');
-  updateTogglePosition(); // Add this line
 }
