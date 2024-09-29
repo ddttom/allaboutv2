@@ -13,18 +13,18 @@ function decodeHtmlEntities(text) {
 function detectLanguage(code) {
   const decodedCode = decodeHtmlEntities(code);
 
-  // Simple check for Markdown
+  // Simple check for Markdown (including title)
   if (decodedCode.trim().startsWith('#')) {
     return 'markdown';
   }
 
-  // Check for JSON
+  // Check for JSON (including title)
   const jsonTest = decodedCode.trim();
-  if (jsonTest.startsWith('{') || (jsonTest.includes('\n') && jsonTest.split('\n')[1].trim().startsWith('{'))) {
+  if (jsonTest.startsWith('{') || jsonTest.includes('\n{')) {
     return 'json';
   }
 
-  // Rest of the language detection logic
+  // Rest of the language detection logic (including title)
   if (decodedCode.trim().startsWith('"') || decodedCode.trim().startsWith("'")) {
     return 'text';
   }
@@ -173,11 +173,10 @@ export default async function decorate(block) {
       
       const lines = code.split('\n');
       const title = lines[0].replace(/\/\/|\/\*|\*\//g, '').trim() || `Code Snippet ${index + 1}`;
-      const content = lines.slice(1).join('\n').trim();
       
-      if (content) {
-        const language = detectLanguage(content);
-        const highlightedCode = highlightSyntax(content, language);
+      if (code.trim()) {
+        const language = detectLanguage(code);
+        const highlightedCode = highlightSyntax(code, language);
         codeSnippets.push({ title, content: highlightedCode, language });
       }
     });

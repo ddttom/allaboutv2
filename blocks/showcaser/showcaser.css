@@ -145,6 +145,7 @@
 .showcaser-code-wrapper {
   position: relative;
   margin: 1em 0;
+  padding: 30px 5px 5px; /* Adjusted padding */
   border: 1px solid var(--showcaser-border-color);
   border-radius: 6px;
   overflow: hidden;
@@ -152,7 +153,7 @@
 
 .showcaser-code-wrapper pre {
   margin: 0;
-  padding: 2.5em 1em 1em;
+  padding: 10px;
   overflow-x: auto;
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
   font-size: 14px;
@@ -162,34 +163,34 @@
 .showcaser-copy,
 .showcaser-expand-collapse {
   position: absolute;
-  padding: 0.3em 0.6em; /* Slightly increased padding */
+  padding: 0.3em 0.6em;
   background-color: var(--showcaser-title-color);
   color: white;
   border: 1px solid var(--showcaser-border-color);
   border-radius: 3px;
-  font-size: 14px; /* Increased font size */
+  font-size: 14px;
   cursor: pointer;
   z-index: 2;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  min-width: 70px; /* Slightly increased min-width */
+  min-width: 70px;
   text-align: center;
 }
 
 .showcaser-copy {
-  top: -25px; /* Adjusted to accommodate larger font size */
+  top: 5px;
   right: 5px;
 }
 
 .showcaser-expand-collapse.top {
-  top: -25px; /* Adjusted to accommodate larger font size */
+  top: 5px;
   left: 5px;
 }
 
 .showcaser-expand-collapse.bottom {
-  bottom: -25px; /* Adjusted to accommodate larger font size */
+  bottom: 5px;
   left: 5px;
-  min-width: 60px; /* Slightly increased min-width for bottom button */
+  min-width: 60px;
 }
 
 .showcaser-copy:hover,
@@ -243,14 +244,15 @@
     outline-offset: 2px;
 }
 
-/* Adjust padding of the code wrapper to accommodate the larger buttons */
+/* Adjust padding of the code wrapper to accommodate the buttons with margin */
 .showcaser-code-wrapper {
   position: relative;
-  padding-top: 35px; /* Increased top padding */
-  padding-bottom: 35px; /* Increased bottom padding */
+  padding-top: 40px; /* Increased top padding */
+  padding-bottom: 40px; /* Increased bottom padding */
+  margin: 1em 5px; /* Added horizontal margin */
 }
 
 .showcaser-code-wrapper pre {
-  margin-top: 5px; /* Reduced top margin */
-  margin-bottom: 5px; /* Added bottom margin */
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
