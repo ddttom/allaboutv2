@@ -104,13 +104,6 @@
   outline-offset: 2px;
 }
 
-/* Variations */
-.showcaser.compact {
-  --showcaser-padding: 10px;
-  --showcaser-title-font-size: 1rem;
-  --showcaser-content-font-size: 0.9rem;
-}
-
 /* Transition for initialization */
 .showcaser:not(.showcaser--initialized) {
   opacity: 0;

@@ -2,6 +2,3 @@
 
 | Showcaser |
 |-----------|
-
-| Showcaser (compact) |
-|---------------------|

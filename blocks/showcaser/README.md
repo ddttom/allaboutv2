@@ -9,11 +9,6 @@ To use the Showcaser block, add the following markdown table to your Franklin do
 | Showcaser |
 |-----------|
 
-For a compact version, use:
-
-| Showcaser (compact) |
-|---------------------|
-
 The block automatically collects all code snippets from the current page and displays them in the showcase.
 
 ## Features
@@ -59,10 +54,6 @@ The Showcaser block uses CSS variables for easy customization. Override these va
 - Maintains color contrast ratios for readability
 - "Return to Menu" button provides an easy way for users to navigate back to the top of the Showcaser, improving usability for all users
 
-## Variations
-
-- **Compact**: A more condensed version of the showcaser, suitable for smaller spaces or when displaying many code snippets.
-
 ## Behavior
 
 - Collects all code snippets from the current page
@@ -87,9 +78,6 @@ The Showcaser block uses CSS variables for easy customization. Override these va
 - Expand/collapse buttons for long code snippets improve readability and navigation
 - Focus styles for interactive elements to aid keyboard navigation
 
-## Variations
-
-- **Compact**: A more condensed version of the showcaser, suitable for smaller spaces or when displaying many code snippets. It uses smaller font sizes and padding.
 
 ## Language Detection
 
