@@ -43,29 +43,32 @@
   border-right: 1px solid var(--showcaser-border-color);
   background-color: var(--showcaser-bg-color);
   font-size: 0.9rem;
-  transition: width 0.3s ease;
-  width: 20%; /* Changed to 20% of the block width */
+  transition: flex-basis 0.3s ease;
+  flex-basis: 20%; /* Use flex-basis instead of width */
+  min-width: 150px; /* Set a minimum width */
+  max-width: 300px; /* Set a maximum width */
   overflow-y: auto;
   height: 100%;
-  flex-shrink: 0; /* Prevent shrinking */
 }
 
 .showcaser-left-page.collapsed {
-  width: 0;
+  flex-basis: 0;
+  min-width: 0;
   border-right: none;
 }
 
 .showcaser-right-page {
   background-color: white;
   flex-grow: 1;
-  width: 80%; /* Set to 80% to complement the left page */
-  transition: width 0.3s ease;
+  flex-shrink: 1;
+  flex-basis: auto; /* Allow it to grow and shrink */
+  transition: flex-basis 0.3s ease;
   overflow-x: auto;
 }
 
 .showcaser-toggle {
   position: absolute;
-  left: 20%; /* Align with the edge of the left page */
+  left: 20%; /* This will be adjusted in JavaScript */
   top: 10px;
   background-color: var(--showcaser-title-color);
   color: white;
