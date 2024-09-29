@@ -74,7 +74,7 @@ function highlightSyntax(code, language) {
       );
       return highlightedMd;
     case 'javascript':
-      const highlightedJs = decodedCode.replace(
+      return decodedCode.replace(
         /(\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\.|[^\\'])*'|"(?:\\.|[^\\"])*"|`(?:\\.|[^\\`])*`|\b(?:function|var|let|const|if|else|for|while|do|switch|case|break|return|continue|class|new|typeof|instanceof|this|null|undefined|true|false)\b|\b\d+\b|[{}[\],;.])/g,
         match => {
           if (/^\/\//.test(match)) return `<span class="comment">${encodeHtmlEntities(match)}</span>`;
@@ -87,7 +87,6 @@ function highlightSyntax(code, language) {
           return encodeHtmlEntities(match);
         }
       );
-      return highlightedJs;
     case 'css':
       return decodedCode.replace(
         /(\/\*[\s\S]*?\*\/)|(\b[\w-]+\s*:)|(#[\da-f]{3,6})|(\b\d+(%|px|em|rem|vh|vw)?\b)|([@.]{1}[\w-]+)/gi,
