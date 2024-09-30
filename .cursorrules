@@ -44,6 +44,10 @@ Block components should be organized in folders:
 
 When writing, or modifying Javascript code, promote configuration variables, and filenames to the top of the Code as const
 
+when creating inline prompts or text fragments, create them as const variables
+
+unique text strings in the javascript should be promoted to the top of the file as const and all text strings grouped together to ensure ease of translation.
+
   Export an **async `decorate` function** as default. This handles:
      1. DOM manipulation
      2. Event listeners for interactivity
@@ -53,23 +57,26 @@ When writing, or modifying Javascript code, promote configuration variables, and
      Example:
 
      ```javascript
+     
      export default async function decorate(block) {
-      const inputData = '/path/to/data.json';
+       const error_message = 'Error:';
+       const http_error_message = 'HTTP error! status:'
+       const inputData = '/path/to/data.json';
+       
        const container = document.createElement('div');
        block.appendChild(container);
-
        container.addEventListener('click', () => {
          // Handle interaction
        });
 
        try {
          const response = await fetch(inputData);
-         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+         if (!response.ok) throw new Error(` ${http_error_message} ${response.status}`);
          const data = await response.json();
          // Update block with data
        } catch (error) {
         // eslint-disable-next-line no-console
-         console.error('Error:', error);
+         console.error(error_message, error);
          // Graceful error handling
        }
         // optional 
