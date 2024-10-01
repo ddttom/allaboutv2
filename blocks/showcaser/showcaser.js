@@ -221,7 +221,7 @@ export default async function decorate(block) {
       toggleButton.textContent = '>';
       toggleButton.setAttribute('aria-expanded', 'false');
     }
-    scrollToTop();
+    setTimeout(scrollToTop, 50); // Small delay to allow for collapse animation
   };
 
   // Create and set up toggle button for collapsing left page
