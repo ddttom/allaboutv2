@@ -213,6 +213,17 @@ export default async function decorate(block) {
     });
   };
 
+  // Function to handle both collapse and return to menu actions
+  const collapseAndReturnToMenu = () => {
+    if (!leftPage.classList.contains('collapsed')) {
+      leftPage.classList.add('collapsed');
+      toggleButton.classList.add('collapsed');
+      toggleButton.textContent = '>';
+      toggleButton.setAttribute('aria-expanded', 'false');
+    }
+    scrollToTop();
+  };
+
   // Create and set up toggle button for collapsing left page
   const toggleButton = document.createElement('button');
   toggleButton.className = 'showcaser-toggle';
@@ -224,14 +235,13 @@ export default async function decorate(block) {
   // Modify the toggle button click event
   toggleButton.addEventListener('click', () => {
     const isCollapsing = !leftPage.classList.contains('collapsed');
-    leftPage.classList.toggle('collapsed');
-    toggleButton.classList.toggle('collapsed');
-    toggleButton.textContent = isCollapsing ? '>' : '<';
-    toggleButton.setAttribute('aria-expanded', !isCollapsing);
-
-    // If the left page is being collapsed, scroll to the top
     if (isCollapsing) {
-      scrollToTop();
+      collapseAndReturnToMenu();
+    } else {
+      leftPage.classList.remove('collapsed');
+      toggleButton.classList.remove('collapsed');
+      toggleButton.textContent = '<';
+      toggleButton.setAttribute('aria-expanded', 'true');
     }
   });
 
@@ -263,12 +273,8 @@ export default async function decorate(block) {
     }
   });
 
-  returnToMenuButton.addEventListener('click', () => {
-    if (!leftPage.classList.contains('collapsed')) {
-      toggleButton.click(); // Simulate clicking the toggle button to collapse
-    }
-    scrollToTop();
-  });
+  // Modify the "Return to Menu" button click event
+  returnToMenuButton.addEventListener('click', collapseAndReturnToMenu);
 
   // Check for compact variation
   if (block.classList.contains('compact')) {
