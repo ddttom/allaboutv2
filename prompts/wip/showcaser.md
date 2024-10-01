@@ -17,11 +17,9 @@ You are an expert Franklin Developer
 
 ## Requirements
 
-The block should find all <pre> </pre> content in the current page, collect the rendered html together in an array, remove the existing <pre></pre> content, the code should add the content from all of the subsequent rows, at the start of the gathering. 
+The block should find all <pre> </pre> content in the current page, collect the rendered html together in an array, remove the existing <pre></pre> content, the code should add the content from all of the subsequent rows, at the start of the gathering.
 
 The code should create a simulated book object and place all of the pre items in by title in the left hand column and let the titles be clickable, when clicked the relevant html is placed into right hand panel, title is the first line of the gathered content
-
-
 
 
 ## Implementation Details:
@@ -37,10 +35,12 @@ The code should create a simulated book object and place all of the pre items in
 
 ### README.md:
 - Provide clear instructions for usage and authoring
-- List available CSS variables for customization
+- List available CSS variables for customization, do not use <pre> tags or triple backticks.  Franklin uses single backtick to denote code
 
 ### demo.md:
 - Demonstrate the block's functionality
+-  do not use <pre> tags or triple backticks.  Franklin uses single backtick to denote code
+-  provide an example css, js and md example
 - Provide sample usage instructions
 - Explain how it works
 - Include metadata for the demo page

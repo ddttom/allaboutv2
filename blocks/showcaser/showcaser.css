@@ -17,6 +17,9 @@
   /* Spacing */
   --showcaser-padding: 20px;
   --showcaser-border-radius: 8px;
+
+  /* Transitions */
+  --showcaser-transition-duration: 0.3s;
 }
 
 /* Main container styles */
@@ -313,4 +316,14 @@
 .showcaser-code-wrapper pre {
   margin-top: 5px;
   margin-bottom: 5px;
+}
+
+/* Add this to the end of the CSS file */
+.showcaser.compact .showcaser-left-page {
+  flex-basis: 15%;
+  min-width: 120px;
+}
+
+.showcaser.compact .showcaser-right-page {
+  font-size: 0.9em;
 }

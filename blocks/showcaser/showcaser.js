@@ -1,8 +1,10 @@
 // Constants for configuration
-const BOOK_TITLE = 'Code';
-const ERROR_MESSAGE = 'Error loading content. Please try again.';
-const COPY_BUTTON_RESET_DELAY = 2000;
-const LONG_DOCUMENT_THRESHOLD = 40;
+const SHOWCASER_CONFIG = {
+  BOOK_TITLE: 'Code',
+  ERROR_MESSAGE: 'Error loading content. Please try again.',
+  COPY_BUTTON_RESET_DELAY: 2000,
+  LONG_DOCUMENT_THRESHOLD: 40,
+};
 
 // Helper function to decode HTML entities in text
 function decodeHtmlEntities(text) {
@@ -150,26 +152,33 @@ export default async function decorate(block) {
 
   const leftPage = document.createElement('div');
   leftPage.className = 'showcaser-left-page';
+  leftPage.setAttribute('role', 'navigation');
+  leftPage.setAttribute('aria-label', 'Code snippets navigation');
   book.appendChild(leftPage);
 
   // Create and set up toggle button for collapsing left page
   const toggleButton = document.createElement('button');
   toggleButton.className = 'showcaser-toggle';
   toggleButton.textContent = '<';
+  toggleButton.setAttribute('aria-label', 'Toggle navigation panel');
+  toggleButton.setAttribute('aria-expanded', 'true');
   book.appendChild(toggleButton);
 
   toggleButton.addEventListener('click', () => {
     leftPage.classList.toggle('collapsed');
     toggleButton.classList.toggle('collapsed');
     toggleButton.textContent = leftPage.classList.contains('collapsed') ? '>' : '<';
+    toggleButton.setAttribute('aria-expanded', !leftPage.classList.contains('collapsed'));
   });
 
   const rightPage = document.createElement('div');
   rightPage.className = 'showcaser-right-page';
+  rightPage.setAttribute('role', 'region');
+  rightPage.setAttribute('aria-live', 'polite');
   book.appendChild(rightPage);
 
   const bookTitle = document.createElement('h2');
-  bookTitle.textContent = BOOK_TITLE;
+  bookTitle.textContent = SHOWCASER_CONFIG.BOOK_TITLE;
   leftPage.appendChild(bookTitle);
 
   // Create "Return to Menu" button and set up scroll behavior
@@ -193,6 +202,11 @@ export default async function decorate(block) {
   returnToMenuButton.addEventListener('click', () => {
     block.scrollIntoView({ behavior: 'smooth' });
   });
+
+  // Check for compact variation
+  if (block.classList.contains('compact')) {
+    container.classList.add('compact');
+  }
 
   try {
     // Collect and process code snippets from the page
@@ -243,7 +257,7 @@ export default async function decorate(block) {
         const lines = snippet.content.split('\n');
 
         // Add expand/collapse functionality for long code snippets
-        if (lines.length > LONG_DOCUMENT_THRESHOLD) {
+        if (lines.length > SHOWCASER_CONFIG.LONG_DOCUMENT_THRESHOLD) {
           preElement.classList.add('collapsible');
           
           // Create top and bottom expand/collapse buttons
@@ -283,7 +297,7 @@ export default async function decorate(block) {
               copyButton.textContent = 'Copied!';
               setTimeout(() => {
                 copyButton.textContent = `Copy ${snippet.language} to clipboard`;
-              }, COPY_BUTTON_RESET_DELAY);
+              }, SHOWCASER_CONFIG.COPY_BUTTON_RESET_DELAY);
             })
             .catch(err => {
               console.error('Error copying content:', err);
@@ -311,7 +325,7 @@ export default async function decorate(block) {
     console.error('Showcaser Error:', error);
     const errorElement = document.createElement('div');
     errorElement.className = 'showcaser-error';
-    errorElement.textContent = ERROR_MESSAGE;
+    errorElement.textContent = SHOWCASER_CONFIG.ERROR_MESSAGE;
     container.appendChild(errorElement);
   }
 

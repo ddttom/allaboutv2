@@ -15,6 +15,6 @@ Ensure proper focus management when navigating
 consider adding comments to separate different sections (e.g., layout, typography, responsive design)
 
 
-Remember to update the README.md, example.md, and demo.md files to reflect any changes
+Remember to update the README.md, example.md, and demo.md files to reflect any changes, check these files for misuses of <pre></pre> tags, Franklin uses a single backtick to denote code
 
 create a file named self-review.md in the blocks folder, with the information from the review
