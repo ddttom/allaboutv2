@@ -202,6 +202,11 @@ export default async function decorate(block) {
   leftPage.setAttribute('aria-label', 'Code snippets navigation');
   book.appendChild(leftPage);
 
+  // Function to scroll back to the top of the block
+  const scrollToTop = () => {
+    block.scrollIntoView({ behavior: 'smooth' });
+  };
+
   // Create and set up toggle button for collapsing left page
   const toggleButton = document.createElement('button');
   toggleButton.className = 'showcaser-toggle';
@@ -210,20 +215,16 @@ export default async function decorate(block) {
   toggleButton.setAttribute('aria-expanded', 'true');
   book.appendChild(toggleButton);
 
-  // Function to scroll back to the top of the block
-  const scrollToTop = () => {
-    block.scrollIntoView({ behavior: 'smooth' });
-  };
-
   // Modify the toggle button click event
   toggleButton.addEventListener('click', () => {
+    const isCollapsing = !leftPage.classList.contains('collapsed');
     leftPage.classList.toggle('collapsed');
     toggleButton.classList.toggle('collapsed');
-    toggleButton.textContent = leftPage.classList.contains('collapsed') ? '>' : '<';
-    toggleButton.setAttribute('aria-expanded', !leftPage.classList.contains('collapsed'));
+    toggleButton.textContent = isCollapsing ? '>' : '<';
+    toggleButton.setAttribute('aria-expanded', !isCollapsing);
 
     // If the left page is being collapsed, also scroll to the top
-    if (leftPage.classList.contains('collapsed')) {
+    if (isCollapsing) {
       scrollToTop();
     }
   });
@@ -256,7 +257,12 @@ export default async function decorate(block) {
     }
   });
 
-  returnToMenuButton.addEventListener('click', scrollToTop);
+  returnToMenuButton.addEventListener('click', () => {
+    scrollToTop();
+    if (!leftPage.classList.contains('collapsed')) {
+      toggleButton.click(); // Simulate clicking the toggle button to collapse
+    }
+  });
 
   // Check for compact variation
   if (block.classList.contains('compact')) {
