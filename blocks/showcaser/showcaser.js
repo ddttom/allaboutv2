@@ -106,14 +106,27 @@ function highlightSyntax(code, language) {
      case "javascript":
        return decodedCode.replace(
          /(\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\.|[^\\'])*'|"(?:\\.|[^\\"])*"|`(?:\\.|[^\\`])*`|\b(?:function|var|let|const|if|else|for|while|do|switch|case|break|return|continue|class|new|typeof|instanceof|this|null|undefined|true|false)\b|\b\d+\b|[{}[\],;.])/g,
-         match => {
-           if (/^\/\//.test(match)) return `<span class="comment">${encodeHtmlEntities(match)}</span>`;
-           if (/^\/\*/.test(match)) return `<span class="comment">${encodeHtmlEntities(match)}</span>`;
-           if (/^['"`]/.test(match)) return `<span class="string">${encodeHtmlEntities(match)}</span>`;
-           if (/^(function|var|let|const|if|else|for|while|do|switch|case|break|return|continue|class|new|typeof|instanceof|this)$/.test(match)) return `<span class="keyword">${encodeHtmlEntities(match)}</span>`;
-           if (/^(null|undefined|true|false)$/.test(match)) return `<span class="boolean">${encodeHtmlEntities(match)}</span>`;
-           if (/^\d+$/.test(match)) return `<span class="number">${encodeHtmlEntities(match)}</span>`;
-           if (/^[{}[\],;.]$/.test(match)) return `<span class="punctuation">${encodeHtmlEntities(match)}</span>`;
+         (match) => {
+           if (/^\/\//.test(match))
+             return `<span class="comment">${encodeHtmlEntities(match)}</span>`;
+           if (/^\/\*/.test(match))
+             return `<span class="comment">${encodeHtmlEntities(match)}</span>`;
+           if (/^['"`]/.test(match))
+             return `<span class="string">${encodeHtmlEntities(match)}</span>`;
+           if (
+             /^(function|var|let|const|if|else|for|while|do|switch|case|break|return|continue|class|new|typeof|instanceof|this)$/.test(
+               match
+             )
+           )
+             return `<span class="keyword">${encodeHtmlEntities(match)}</span>`;
+           if (/^(null|undefined|true|false)$/.test(match))
+             return `<span class="boolean">${encodeHtmlEntities(match)}</span>`;
+           if (/^\d+$/.test(match))
+             return `<span class="number">${encodeHtmlEntities(match)}</span>`;
+           if (/^[{}[\],;.]$/.test(match))
+             return `<span class="punctuation">${encodeHtmlEntities(
+               match
+             )}</span>`;
            return encodeHtmlEntities(match);
          }
        );
