@@ -42,9 +42,19 @@ Block components should be organized in folders:
 
 **JavaScript (`blockname.js`):**
 
-When writing, or modifying Javascript code, promote configuration variables, and filenames to the top of the Code as const
+When writing, or modifying Javascript code, promote configuration variables, and filenames to the top of the Code in a config object
 
-when creating inline prompts or text fragments, create them as const variables
+when creating inline prompts or text fragments, create them as config object variables
+
+Create a config object containing these items, and use it throughout the code
+
+const BLOCKNAME_CONFIG = {
+  BOOK_TITLE: 'Code',
+  ERROR_MESSAGE: 'Error loading content. Please try again.',
+  COPY_BUTTON_RESET_DELAY: 2000,
+  LONG_DOCUMENT_THRESHOLD: 40,
+  // Add other configuration options here
+};
 
 unique text strings in the javascript should be promoted to the top of the file as const and all text strings grouped together to ensure ease of translation.
 
@@ -59,10 +69,11 @@ unique text strings in the javascript should be promoted to the top of the file 
      ```javascript
      
      export default async function decorate(block) {
-       const error_message = 'Error:';
-       const http_error_message = 'HTTP error! status:'
-       const inputData = '/path/to/data.json';
-       
+       const BLOCKNAME_CONFIG = {
+         ERROR_MESSAGE: 'Error:',
+         HTTP_ERROR_MESSAGE: 'HTTP error! status:',
+         INPUT_DATA: '/path/to/data.json'
+       };
        const container = document.createElement('div');
        block.appendChild(container);
        container.addEventListener('click', () => {
@@ -70,16 +81,16 @@ unique text strings in the javascript should be promoted to the top of the file 
        });
 
        try {
-         const response = await fetch(inputData);
-         if (!response.ok) throw new Error(`${http_error_message} ${response.status}`);
+         const response = await fetch(BLOCKNAME_CONFIG.INPUT_DATA);
+         if (!response.ok) throw new Error(`${BLOCKNAME_CONFIG.HTTP_ERROR_MESSAGE} ${response.status}`);
          const data = await response.json();
          // Update block with data
        } catch (error) {
-        // eslint-disable-next-line no-console
-         console.error(error_message, error);
+         // eslint-disable-next-line no-console
+         console.error(BLOCKNAME_CONFIG.ERROR_MESSAGE, error);
          // Graceful error handling
        }
-        // optional 
+       // optional 
        block.classList.add('blockname--initialized');
      }
      ```

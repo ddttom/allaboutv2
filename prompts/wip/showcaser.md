@@ -4,7 +4,11 @@ You are an expert Franklin Developer
 
 ## AI Prompt, (c) Tom Cranstoun, 2024  V 1.0
 
-**Goal:** Create a Franklin block named showcaser that displays a visually appealing showcase for code
+**Goal:** Create a Franklin block named showcaser that displays a visually appealing showcase for code, this is the intended design
+
+
+![UI Design](showcaser.png)
+
 
 ## Key Features:
 1. Implement error handling and loading state
