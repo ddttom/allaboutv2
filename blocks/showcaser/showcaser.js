@@ -245,54 +245,34 @@ export default async function decorate(block) {
         }
 
         // Render the selected code snippet
-        rightPage.innerHTML = `
-          <h3 id="snippet-${index}">${snippet.title}</h3>
-          <div class="showcaser-code-wrapper">
-            <button class="showcaser-copy">Copy ${snippet.language} to clipboard</button>
-            <pre class="language-${snippet.language}"><code>${snippet.content}</code></pre>
-          </div>
-        `;
+        const h3 = document.createElement('h3');
+        h3.id = `snippet-${index}`;
+        h3.textContent = snippet.title;
 
-        const preElement = rightPage.querySelector('pre');
-        const lines = snippet.content.split('\n');
+        const codeWrapper = document.createElement('div');
+        codeWrapper.className = 'showcaser-code-wrapper';
 
-        // Add expand/collapse functionality for long code snippets
-        if (lines.length > SHOWCASER_CONFIG.LONG_DOCUMENT_THRESHOLD) {
-          preElement.classList.add('collapsible');
-          
-          // Create top and bottom expand/collapse buttons
-          const topExpandButton = document.createElement('button');
-          topExpandButton.className = 'showcaser-expand-collapse top';
-          topExpandButton.textContent = 'Expand';
-          
-          const bottomExpandButton = document.createElement('button');
-          bottomExpandButton.className = 'showcaser-expand-collapse bottom';
-          bottomExpandButton.textContent = '....';
-          
-          // Function to toggle expansion
-          const toggleExpansion = () => {
-            preElement.classList.toggle('expanded');
-            const isExpanded = preElement.classList.contains('expanded');
-            topExpandButton.textContent = isExpanded ? 'Collapse' : 'Expand';
-            bottomExpandButton.textContent = isExpanded ? 'Close' : '....';
-          };
-          
-          // Add click event listeners to both buttons
-          topExpandButton.onclick = toggleExpansion;
-          bottomExpandButton.onclick = toggleExpansion;
-          
-          // Add buttons to the wrapper
-          const codeWrapper = rightPage.querySelector('.showcaser-code-wrapper');
-          codeWrapper.insertBefore(topExpandButton, preElement);
-          codeWrapper.appendChild(bottomExpandButton);
-        }
+        const copyButton = document.createElement('button');
+        copyButton.className = 'showcaser-copy';
+        copyButton.textContent = `Copy ${snippet.language} to clipboard`;
+
+        const pre = document.createElement('pre');
+        pre.className = `language-${snippet.language}`;
+
+        const code = document.createElement('code');
+        code.innerHTML = snippet.content;
+
+        pre.appendChild(code);
+        codeWrapper.appendChild(copyButton);
+        codeWrapper.appendChild(pre);
+
+        rightPage.innerHTML = '';
+        rightPage.appendChild(h3);
+        rightPage.appendChild(codeWrapper);
 
         // Set up copy to clipboard functionality
-        const copyButton = rightPage.querySelector('.showcaser-copy');
         copyButton.addEventListener('click', () => {
-          const codeElement = rightPage.querySelector('pre code');
-          const code = codeElement.textContent;
-          navigator.clipboard.writeText(code)
+          navigator.clipboard.writeText(code.textContent)
             .then(() => {
               copyButton.textContent = 'Copied!';
               setTimeout(() => {
@@ -303,6 +283,32 @@ export default async function decorate(block) {
               console.error('Error copying content:', err);
             });
         });
+
+        // Add expand/collapse functionality for long code snippets
+        if (snippet.content.split('\n').length > SHOWCASER_CONFIG.LONG_DOCUMENT_THRESHOLD) {
+          pre.classList.add('collapsible');
+          
+          const topExpandButton = document.createElement('button');
+          topExpandButton.className = 'showcaser-expand-collapse top';
+          topExpandButton.textContent = 'Expand';
+          
+          const bottomExpandButton = document.createElement('button');
+          bottomExpandButton.className = 'showcaser-expand-collapse bottom';
+          bottomExpandButton.textContent = '....';
+          
+          const toggleExpansion = () => {
+            pre.classList.toggle('expanded');
+            const isExpanded = pre.classList.contains('expanded');
+            topExpandButton.textContent = isExpanded ? 'Collapse' : 'Expand';
+            bottomExpandButton.textContent = isExpanded ? 'Close' : '....';
+          };
+          
+          topExpandButton.onclick = toggleExpansion;
+          bottomExpandButton.onclick = toggleExpansion;
+          
+          codeWrapper.insertBefore(topExpandButton, pre);
+          codeWrapper.appendChild(bottomExpandButton);
+        }
       });
       leftPage.appendChild(titleElement);
 
