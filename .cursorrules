@@ -71,7 +71,7 @@ unique text strings in the javascript should be promoted to the top of the file 
 
        try {
          const response = await fetch(inputData);
-         if (!response.ok) throw new Error(` ${http_error_message} ${response.status}`);
+         if (!response.ok) throw new Error(`${http_error_message} ${response.status}`);
          const data = await response.json();
          // Update block with data
        } catch (error) {
