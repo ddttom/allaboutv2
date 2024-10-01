@@ -215,12 +215,10 @@ export default async function decorate(block) {
 
   // Function to handle both collapse and return to menu actions
   const collapseAndReturnToMenu = () => {
-    if (!leftPage.classList.contains('collapsed')) {
-      leftPage.classList.add('collapsed');
-      toggleButton.classList.add('collapsed');
-      toggleButton.textContent = '>';
-      toggleButton.setAttribute('aria-expanded', 'false');
-    }
+    leftPage.classList.add('collapsed');
+    toggleButton.classList.add('collapsed');
+    toggleButton.textContent = '>';
+    toggleButton.setAttribute('aria-expanded', 'false');
     setTimeout(scrollToTop, 50); // Small delay to allow for collapse animation
   };
 
@@ -234,8 +232,7 @@ export default async function decorate(block) {
 
   // Modify the toggle button click event
   toggleButton.addEventListener('click', () => {
-    const isCollapsing = !leftPage.classList.contains('collapsed');
-    if (isCollapsing) {
+    if (!leftPage.classList.contains('collapsed')) {
       collapseAndReturnToMenu();
     } else {
       leftPage.classList.remove('collapsed');
