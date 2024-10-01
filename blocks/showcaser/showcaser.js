@@ -70,70 +70,116 @@ function highlightSyntax(code, language) {
 
   const decodedCode = decodeHtmlEntities(code);
 
-  switch (language) {
-    case 'markdown':
-      const highlightedMd = decodedCode.replace(
-        /(^#{1,6}\s.*$)|(^[*-]\s.*$)|(^>\s.*$)|(`{1,3}[^`\n]+`{1,3})|(\[.*?\]\(.*?\))|(\*\*.*?\*\*)|(_.*?_)|(^```[\s\S]*?^```)/gm,
-        match => {
-          if (/^#{1,6}/.test(match)) return `<span class="heading">${encodeHtmlEntities(match)}</span>`;
-          if (/^[*-]\s+/.test(match)) return `<span class="list-item">${encodeHtmlEntities(match)}</span>`;
-          if (/^>\s+/.test(match)) return `<span class="blockquote">${encodeHtmlEntities(match)}</span>`;
-          if (/`{1,3}[^`\n]+`{1,3}/.test(match)) return `<span class="inline-code">${encodeHtmlEntities(match)}</span>`;
-          if (/\[.*?\]\(.*?\)/.test(match)) return `<span class="link">${encodeHtmlEntities(match)}</span>`;
-          if (/\*\*.*?\*\*/.test(match)) return `<span class="bold">${encodeHtmlEntities(match)}</span>`;
-          if (/_.*?_/.test(match)) return `<span class="italic">${encodeHtmlEntities(match)}</span>`;
-          if (/^```[\s\S]*?^```/.test(match)) return `<span class="code-block">${encodeHtmlEntities(match)}</span>`;
-          return encodeHtmlEntities(match);
-        }
-      );
-      return highlightedMd;
-    case 'javascript':
-      return decodedCode.replace(
-        /(\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\.|[^\\'])*'|"(?:\\.|[^\\"])*"|`(?:\\.|[^\\`])*`|\b(?:function|var|let|const|if|else|for|while|do|switch|case|break|return|continue|class|new|typeof|instanceof|this|null|undefined|true|false)\b|\b\d+\b|[{}[\],;.])/g,
-        match => {
-          if (/^\/\//.test(match)) return `<span class="comment">${encodeHtmlEntities(match)}</span>`;
-          if (/^\/\*/.test(match)) return `<span class="comment">${encodeHtmlEntities(match)}</span>`;
-          if (/^['"`]/.test(match)) return `<span class="string">${encodeHtmlEntities(match)}</span>`;
-          if (/^(function|var|let|const|if|else|for|while|do|switch|case|break|return|continue|class|new|typeof|instanceof|this)$/.test(match)) return `<span class="keyword">${encodeHtmlEntities(match)}</span>`;
-          if (/^(null|undefined|true|false)$/.test(match)) return `<span class="boolean">${encodeHtmlEntities(match)}</span>`;
-          if (/^\d+$/.test(match)) return `<span class="number">${encodeHtmlEntities(match)}</span>`;
-          if (/^[{}[\],;.]$/.test(match)) return `<span class="punctuation">${encodeHtmlEntities(match)}</span>`;
-          return encodeHtmlEntities(match);
-        }
-      );
-    case 'css':
-      return decodedCode.replace(
-        /(\/\*[\s\S]*?\*\/)|(\b[\w-]+\s*:)|(#[\da-f]{3,6})|(\b\d+(%|px|em|rem|vh|vw)?\b)|([@.]{1}[\w-]+)/gi,
-        match => {
-          if (/^\/\*/.test(match)) return `<span class="comment">${encodeHtmlEntities(match)}</span>`;
-          if (/:$/.test(match)) return `<span class="property">${encodeHtmlEntities(match)}</span>`;
-          if (/^#/.test(match)) return `<span class="value">${encodeHtmlEntities(match)}</span>`;
-          if (/^\d/.test(match)) return `<span class="number">${encodeHtmlEntities(match)}</span>`;
-          if (/^[@.]/.test(match)) return `<span class="selector">${encodeHtmlEntities(match)}</span>`;
-          return encodeHtmlEntities(match);
-        }
-      );
-    case 'json':
-      return decodedCode.replace(
-        /(\"(?:\\.|[^\\"])*\")(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,
-        (match, string, colon, boolean) => {
-          if (string) {
-            return colon 
-              ? `<span class="json-key">${encodeHtmlEntities(string)}</span>${encodeHtmlEntities(colon)}`
-              : `<span class="json-string">${encodeHtmlEntities(string)}</span>`;
-          }
-          if (boolean) {
-            return `<span class="json-boolean">${encodeHtmlEntities(boolean)}</span>`;
-          }
-          if (/^-?\d/.test(match)) {
-            return `<span class="json-number">${encodeHtmlEntities(match)}</span>`;
-          }
-          return encodeHtmlEntities(match);
-        }
-      );
-    default:
-      return encodeHtmlEntities(decodedCode);
-  }
+   switch (language) {
+     case "markdown":
+       const highlightedMd = decodedCode.replace(
+         /(^#{1,6}\s.*$)|(^[*-]\s.*$)|(^>\s.*$)|(`{1,3}[^`\n]+`{1,3})|(\[.*?\]\(.*?\))|(\*\*.*?\*\*)|(_.*?_)|(^```[\s\S]*?^```)/gm,
+         (match) => {
+           if (/^#{1,6}/.test(match))
+             return `<span class="heading">${encodeHtmlEntities(match)}</span>`;
+           if (/^[*-]\s+/.test(match))
+             return `<span class="list-item">${encodeHtmlEntities(
+               match
+             )}</span>`;
+           if (/^>\s+/.test(match))
+             return `<span class="blockquote">${encodeHtmlEntities(
+               match
+             )}</span>`;
+           if (/`{1,3}[^`\n]+`{1,3}/.test(match))
+             return `<span class="inline-code">${encodeHtmlEntities(
+               match
+             )}</span>`;
+           if (/\[.*?\]\(.*?\)/.test(match))
+             return `<span class="link">${encodeHtmlEntities(match)}</span>`;
+           if (/\*\*.*?\*\*/.test(match))
+             return `<span class="bold">${encodeHtmlEntities(match)}</span>`;
+           if (/_.*?_/.test(match))
+             return `<span class="italic">${encodeHtmlEntities(match)}</span>`;
+           if (/^```[\s\S]*?^```/.test(match))
+             return `<span class="code-block">${encodeHtmlEntities(
+               match
+             )}</span>`;
+           return encodeHtmlEntities(match);
+         }
+       );
+       return highlightedMd;
+     case "javascript":
+       return decodedCode.replace(
+         /(\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\.|[^\\'])*'|"(?:\\.|[^\\"])*"|`(?:\\.|[^\\`])*`|\b(?:function|var|let|const|if|else|for|while|do|switch|case|break|return|continue|class|new|typeof|instanceof|this|null|undefined|true|false)\b|\b\d+\b|[{}[\],;.])/g,
+         (match) => {
+           if (/^\/\//.test(match))
+             return `<span class="comment">${encodeHtmlEntities(match)}</span>`;
+           if (/^\/\*/.test(match))
+             return `<span class="comment">${encodeHtmlEntities(match)}</span>`;
+           if (/^['"`]/.test(match))
+             return `<span class="string">${encodeHtmlEntities(match)}</span>`;
+           if (
+             /^(function|var|let|const|if|else|for|while|do|switch|case|break|return|continue|class|new|typeof|instanceof|this)$/.test(
+               match
+             )
+           )
+             return `<span class="keyword">${encodeHtmlEntities(match)}</span>`;
+           if (/^(null|undefined|true|false)$/.test(match))
+             return `<span class="boolean">${encodeHtmlEntities(match)}</span>`;
+           if (/^\d+$/.test(match))
+             return `<span class="number">${encodeHtmlEntities(match)}</span>`;
+           if (/^[{}[\],;.]$/.test(match))
+             return `<span class="punctuation">${encodeHtmlEntities(
+               match
+             )}</span>`;
+           return encodeHtmlEntities(match);
+         }
+       );
+     case "css":
+       return decodedCode.replace(
+         /(\/\*[\s\S]*?\*\/)|(\b[\w-]+\s*:)|(#[\da-f]{3,6})|(\b\d+(%|px|em|rem|vh|vw)?\b)|([@.]{1}[\w-]+)/gi,
+         (match) => {
+           if (/^\/\*/.test(match))
+             return `<span class="comment">${encodeHtmlEntities(match)}</span>`;
+           if (/:$/.test(match))
+             return `<span class="property">${encodeHtmlEntities(
+               match
+             )}</span>`;
+           if (/^#/.test(match))
+             return `<span class="value">${encodeHtmlEntities(match)}</span>`;
+           if (/^\d/.test(match))
+             return `<span class="number">${encodeHtmlEntities(match)}</span>`;
+           if (/^[@.]/.test(match))
+             return `<span class="selector">${encodeHtmlEntities(
+               match
+             )}</span>`;
+           return encodeHtmlEntities(match);
+         }
+       );
+     case "json":
+       return decodedCode.replace(
+         /(\"(?:\\.|[^\\"])*\")(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,
+         (match, string, colon, boolean) => {
+           if (string) {
+             return colon
+               ? `<span class="json-key">${encodeHtmlEntities(
+                   string
+                 )}</span>${encodeHtmlEntities(colon)}`
+               : `<span class="json-string">${encodeHtmlEntities(
+                   string
+                 )}</span>`;
+           }
+           if (boolean) {
+             return `<span class="json-boolean">${encodeHtmlEntities(
+               boolean
+             )}</span>`;
+           }
+           if (/^-?\d/.test(match)) {
+             return `<span class="json-number">${encodeHtmlEntities(
+               match
+             )}</span>`;
+           }
+           return encodeHtmlEntities(match);
+         }
+       );
+     default:
+       return encodeHtmlEntities(decodedCode);
+   }
 }
 
 /**
