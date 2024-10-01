@@ -213,13 +213,9 @@ export default async function decorate(block) {
     });
   };
 
-  // Function to handle both collapse and return to menu actions
-  const collapseAndReturnToMenu = () => {
-    leftPage.classList.add('collapsed');
-    toggleButton.classList.add('collapsed');
-    toggleButton.textContent = '>';
-    toggleButton.setAttribute('aria-expanded', 'false');
-    setTimeout(scrollToTop, 50); // Small delay to allow for collapse animation
+  // Function to handle return to menu action
+  const returnToMenu = () => {
+    scrollToTop();
   };
 
   // Create and set up toggle button for collapsing left page
@@ -232,13 +228,13 @@ export default async function decorate(block) {
 
   // Modify the toggle button click event
   toggleButton.addEventListener('click', () => {
-    if (!leftPage.classList.contains('collapsed')) {
-      collapseAndReturnToMenu();
-    } else {
-      leftPage.classList.remove('collapsed');
-      toggleButton.classList.remove('collapsed');
-      toggleButton.textContent = '<';
-      toggleButton.setAttribute('aria-expanded', 'true');
+    leftPage.classList.toggle('collapsed');
+    toggleButton.classList.toggle('collapsed');
+    toggleButton.textContent = leftPage.classList.contains('collapsed') ? '>' : '<';
+    toggleButton.setAttribute('aria-expanded', !leftPage.classList.contains('collapsed'));
+    
+    if (leftPage.classList.contains('collapsed')) {
+      returnToMenu();
     }
   });
 
@@ -271,7 +267,7 @@ export default async function decorate(block) {
   });
 
   // Modify the "Return to Menu" button click event
-  returnToMenuButton.addEventListener('click', collapseAndReturnToMenu);
+  returnToMenuButton.addEventListener('click', returnToMenu);
 
   // Check for compact variation
   if (block.classList.contains('compact')) {
