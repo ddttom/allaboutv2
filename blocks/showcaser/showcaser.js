@@ -229,9 +229,9 @@ export default async function decorate(block) {
     toggleButton.textContent = isCollapsing ? '>' : '<';
     toggleButton.setAttribute('aria-expanded', !isCollapsing);
 
-    // If the left page is being collapsed, scroll to the top after a short delay
+    // If the left page is being collapsed, scroll to the top
     if (isCollapsing) {
-      setTimeout(scrollToTop, 50); // Small delay to allow for collapse animation
+      scrollToTop();
     }
   });
 
@@ -267,7 +267,7 @@ export default async function decorate(block) {
     if (!leftPage.classList.contains('collapsed')) {
       toggleButton.click(); // Simulate clicking the toggle button to collapse
     }
-    setTimeout(scrollToTop, 50); // Small delay to allow for collapse animation
+    scrollToTop();
   });
 
   // Check for compact variation
