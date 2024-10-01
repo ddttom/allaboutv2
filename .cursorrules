@@ -65,8 +65,6 @@ unique text strings in the javascript should be promoted to the top of the file 
      4. Dynamic styling
 
      Example:
-
-     ```javascript
      
      export default async function decorate(block) {
        const BLOCKNAME_CONFIG = {
@@ -93,7 +91,7 @@ unique text strings in the javascript should be promoted to the top of the file 
        // optional 
        block.classList.add('blockname--initialized');
      }
-     ```
+    
 
 **CSS (`blockname.css`):**
   
@@ -103,7 +101,7 @@ unique text strings in the javascript should be promoted to the top of the file 
 
   Remember that blocks can use variations   `blockname (bold)` is the bold variation of the block named blockname
 
-     ```css
+  
      .blockname {
        /* Base styles */
      }
@@ -111,7 +109,7 @@ unique text strings in the javascript should be promoted to the top of the file 
      @media (max-width: 768px) {
        /* Responsive styles */
      }
-     ```
+    
 
 Use CSS variables for theming and consistency.
 
@@ -158,7 +156,7 @@ Ensure that the demo file includes all necessary elements to showcase the block'
 
 When adding code examples in a Franklin markdown file, demo, readme, example or review:
 Use single backticks to enclose code snippets.
-Do not use triple backticks or <pre> tags.
+**Do not use triple backticks or <pre> tags.**
 Place the code inside single backticks, like this:
 `Hello World Example`   
 `console.log("Hello, World!");`
@@ -172,7 +170,7 @@ function example() {
 }'
 The first line within the backticks will be treated as the title of the code snippet.
 1. Each pair of backticks represents a separate code snippet
-This format is a special signal to Franklin and helps maintain consistency across the project. 
+This format is a special signal to Franklin and helps maintain consistency across the project, triple backticks interfere with the process **DO NOT USE TRIPLE BACKTICKS** 
 
 ## Metadata Example
 
@@ -211,10 +209,9 @@ lastModified: "1724942455"
 
 In the above example json is represented in a csv file with structure, with the **data** array extracted, like this
 
-```bash
+
 path,title,image,description,lastModified
 "/notes/detailed-guide-for-a-developer-working-with-adobe-experience-manager-aem-with-edge-delivery-services","Detailed guide for a developer working with Adobe Experience Manager (AEM) with Edge Delivery Services", "/default-meta-image.png?width=1200&format=pjpg&optimize=medium","Detailed guide for a developer working with Adobe Experience Manager (AEM) with Edge Delivery Services",1724942455
-```
 
 ## Best Practices for EDS Development
 
