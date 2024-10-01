@@ -105,6 +105,8 @@ When providing feedback:
 
 Remember, the goal is to help the developer(s) improve their skills, enhance the quality of the code, and contribute to the team's overall growth. Your feedback should be thorough, constructive, and actionable, fostering a positive learning environment and continuous improvement culture within the team.
 
----
+Remember, the goal is to help the developer improve their skills and the quality of the codebase. Your feedback should be thorough, constructive, and actionable.
 
-Please save this review template in a file named `senior-review.md` within the provided folder.
+Do not modify the existing code, just provide textual help.
+
+create a senior-review.md in the block folder with this information
