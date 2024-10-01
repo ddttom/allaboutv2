@@ -4,12 +4,18 @@ const ERROR_MESSAGE = 'Error loading content. Please try again.';
 const COPY_BUTTON_RESET_DELAY = 2000;
 const LONG_DOCUMENT_THRESHOLD = 40;
 
+// Helper function to decode HTML entities in text
 function decodeHtmlEntities(text) {
   const textArea = document.createElement('textarea');
   textArea.innerHTML = text;
   return textArea.value;
 }
 
+/**
+ * Detects the programming language of the given code snippet
+ * @param {string} code - The code snippet to analyze
+ * @returns {string} The detected language
+ */
 function detectLanguage(code) {
   const decodedCode = decodeHtmlEntities(code);
 
@@ -44,6 +50,12 @@ function detectLanguage(code) {
   return 'text';
 }
 
+/**
+ * Applies syntax highlighting to the given code based on the detected language
+ * @param {string} code - The code to highlight
+ * @param {string} language - The detected language
+ * @returns {string} HTML string with syntax highlighting
+ */
 function highlightSyntax(code, language) {
   const encodeHtmlEntities = (text) => {
     return text
@@ -122,7 +134,12 @@ function highlightSyntax(code, language) {
   }
 }
 
+/**
+ * Main function to decorate the Showcaser block
+ * @param {HTMLElement} block - The block element to decorate
+ */
 export default async function decorate(block) {
+  // Create container and book structure
   const container = document.createElement('div');
   container.className = 'showcaser-container';
   block.appendChild(container);
@@ -135,6 +152,7 @@ export default async function decorate(block) {
   leftPage.className = 'showcaser-left-page';
   book.appendChild(leftPage);
 
+  // Create and set up toggle button for collapsing left page
   const toggleButton = document.createElement('button');
   toggleButton.className = 'showcaser-toggle';
   toggleButton.textContent = '<';
@@ -154,12 +172,14 @@ export default async function decorate(block) {
   bookTitle.textContent = BOOK_TITLE;
   leftPage.appendChild(bookTitle);
 
+  // Create "Return to Menu" button and set up scroll behavior
   const returnToMenuButton = document.createElement('button');
   returnToMenuButton.className = 'showcaser-returntomenu';
   returnToMenuButton.textContent = 'Return to Menu';
   returnToMenuButton.style.display = 'none';
   container.appendChild(returnToMenuButton);
 
+  // Show/hide "Return to Menu" button based on scroll position
   window.addEventListener('scroll', () => {
     const blockTop = block.getBoundingClientRect().top;
     const blockBottom = block.getBoundingClientRect().bottom;
@@ -175,6 +195,7 @@ export default async function decorate(block) {
   });
 
   try {
+    // Collect and process code snippets from the page
     const codeSnippets = [];
     const codeElements = document.querySelectorAll('pre > code');
     
@@ -191,6 +212,7 @@ export default async function decorate(block) {
       }
     });
 
+    // Create navigation and content for each code snippet
     codeSnippets.forEach((snippet, index) => {
       const titleElement = document.createElement('a');
       titleElement.className = 'showcaser-title';
@@ -208,6 +230,7 @@ export default async function decorate(block) {
           toggleButton.textContent = '<';
         }
 
+        // Render the selected code snippet
         rightPage.innerHTML = `
           <h3 id="snippet-${index}">${snippet.title}</h3>
           <div class="showcaser-code-wrapper">
@@ -219,15 +242,15 @@ export default async function decorate(block) {
         const preElement = rightPage.querySelector('pre');
         const lines = snippet.content.split('\n');
 
+        // Add expand/collapse functionality for long code snippets
         if (lines.length > LONG_DOCUMENT_THRESHOLD) {
           preElement.classList.add('collapsible');
           
-          // Create top expand/collapse button
+          // Create top and bottom expand/collapse buttons
           const topExpandButton = document.createElement('button');
           topExpandButton.className = 'showcaser-expand-collapse top';
           topExpandButton.textContent = 'Expand';
           
-          // Create bottom expand/collapse button
           const bottomExpandButton = document.createElement('button');
           bottomExpandButton.className = 'showcaser-expand-collapse bottom';
           bottomExpandButton.textContent = '....';
@@ -250,6 +273,7 @@ export default async function decorate(block) {
           codeWrapper.appendChild(bottomExpandButton);
         }
 
+        // Set up copy to clipboard functionality
         const copyButton = rightPage.querySelector('.showcaser-copy');
         copyButton.addEventListener('click', () => {
           const codeElement = rightPage.querySelector('pre code');
@@ -268,11 +292,13 @@ export default async function decorate(block) {
       });
       leftPage.appendChild(titleElement);
 
+      // Automatically display the first snippet
       if (index === 0) {
         titleElement.click();
       }
     });
 
+    // Remove original code elements from the page
     codeElements.forEach((element) => {
       const preElement = element.parentElement;
       if (preElement && preElement.tagName.toLowerCase() === 'pre') {
@@ -281,6 +307,7 @@ export default async function decorate(block) {
     });
 
   } catch (error) {
+    // Handle errors and display error message
     console.error('Showcaser Error:', error);
     const errorElement = document.createElement('div');
     errorElement.className = 'showcaser-error';
@@ -288,5 +315,6 @@ export default async function decorate(block) {
     container.appendChild(errorElement);
   }
 
+  // Mark the block as initialized
   block.classList.add('showcaser--initialized');
 }
