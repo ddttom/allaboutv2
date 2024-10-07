@@ -5,29 +5,23 @@ export default async function decorate(block) {
   const codeElements = document.querySelectorAll('pre code');
   
   function detectLanguage(code) {
-    // Check if the code starts with a quotation mark, indicating it's likely text
     if (code.trim().startsWith('"') || code.trim().startsWith("'")) {
       return 'text';
     }
     
-    // Check for shell commands
     if (/^(ls|cd|pwd|mkdir|rm|cp|mv|cat|echo|grep|sed|awk|curl|wget|ssh|git|npm|yarn|docker|kubectl)\s/.test(code)) {
       return 'shell';
     }
     
     if (code.includes('function') || code.includes('var') || code.includes('const')) return 'javascript';
     if (code.includes('{') && code.includes('}')) {
-      // Check for CSS-specific patterns
       if (code.match(/[a-z-]+\s*:\s*[^;]+;/)) return 'css';
-      // If not CSS, then it's likely JSON
       if (code.includes(':')) return 'json';
     }
     if (code.includes('<') && code.includes('>') && (code.includes('</') || code.includes('/>'))) return 'html';
     
-    // Check for Markdown
     if (code.match(/^(#{1,6}\s|\*\s|-\s|\d+\.\s|\[.*\]\(.*\))/m)) return 'markdown';
     
-    // Check for shell (existing check)
     if (code.startsWith('$') || code.startsWith('#')) return 'shell';
     
     return 'text';
@@ -36,27 +30,21 @@ export default async function decorate(block) {
   function highlightSyntax(code, language) {
     switch (language) {
       case 'javascript':
-        // Highlight JavaScript syntax
         return code.replace(
           /(\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\['\\]|[^'])*'|"(?:\\["\\]|[^"])*"|`(?:\\[`\\]|[^`])*`|\b(?:function|var|const|let|if|else|for|while|return|class|import|export)\b|\b(?:true|false|null|undefined)\b|\b\d+\b)/g,
           (match) => {
-            // Highlight comments
             if (/^\/\//.test(match) || /^\/\*/.test(match)) {
               return `<span class="comment">${match}</span>`;
             }
-            // Highlight strings
             if (/^['"`]/.test(match)) {
               return `<span class="string">${match}</span>`;
             }
-            // Highlight keywords
             if (/\b(?:function|var|const|let|if|else|for|while|return|class|import|export)\b/.test(match)) {
               return `<span class="keyword">${match}</span>`;
             }
-            // Highlight boolean values and null/undefined
             if (/\b(?:true|false|null|undefined)\b/.test(match)) {
               return `<span class="boolean">${match}</span>`;
             }
-            // Highlight numbers
             if (/^\d+$/.test(match)) {
               return `<span class="number">${match}</span>`;
             }
@@ -215,7 +203,7 @@ export default async function decorate(block) {
       wrapper.appendChild(bottomExpandButton);
     }
 
-    copyButton.addEventListener('click', async () => { // Changed to use async/await
+    copyButton.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(code);
         copyButton.textContent = 'Copied!';
