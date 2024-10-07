@@ -12,6 +12,7 @@ This project is an **AI Prompt Factory** designed to create and manage prompts f
   - [Usage](#usage)
   - [Contributing](#contributing)
   - [License](#license)
+  - [Inclusion in your own project](#inclusion-in-your-own-project)
 
 ## Features
 - Collection of markdown-based AI prompts
@@ -60,3 +61,24 @@ We welcome contributions to improve existing prompts or add new ones. Please fol
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+
+## Inclusion in your own project
+
+
+then using the shell CD into your project folder and run this;
+
+```sh
+
+git subtree add --squash  --prefix config  https://github.com/ddttom/prompts-master main
+
+```
+
+If you later want to update your subtrees, use 
+
+```sh
+
+git subtree pull --squash --prefix config  https://github.com/ddttom/prompts-master main
+
+
+```
