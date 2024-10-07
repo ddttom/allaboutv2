@@ -23,7 +23,7 @@ This project is an **AI Prompt Factory** designed to create and manage prompts f
 ## Installation
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/ddttom/prompts-master.git
+   git clone https://github.com/ddttom/prompt-master.git
    ```
 2. **Navigate to the project directory:**
    ```bash
@@ -70,7 +70,7 @@ then using the shell CD into your project folder and run this;
 
 ```sh
 
-git subtree add --squash  --prefix config  https://github.com/ddttom/prompts-master main
+git subtree add --squash  --prefix prompts  https://github.com/ddttom/prompt-master main
 
 ```
 
@@ -78,7 +78,7 @@ If you later want to update your subtrees, use
 
 ```sh
 
-git subtree pull --squash --prefix config  https://github.com/ddttom/prompts-master main
+git subtree pull --squash --prefix prompts  https://github.com/ddttom/prompt-master main
 
 
 ```
