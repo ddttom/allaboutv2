@@ -57,6 +57,14 @@ const BLOCKNAME_CONFIG = {
 };
 
 unique text strings in the javascript should be promoted to the top of the file as const and all text strings grouped together to ensure ease of translation.
+Favour named exports for functions
+Favour iteration and modularization to adhere to DRY principles, avoid code duplication
+use the "function" keyword for pure functions to add  clarity
+
+structure the javascript code with decorate, sub-components, helpers
+use custom error types for consistent error handling
+leave no todo's or placeholders in the code
+ 
 
   Export an **async `decorate` function** as default. This handles:
      1. DOM manipulation
