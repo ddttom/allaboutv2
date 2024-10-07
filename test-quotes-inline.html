@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Quote Highlighting Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; }
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; }
+        .string { color: #a31515; }
+        .comment { color: #008000; }
+        .keyword { color: #0000ff; }
+        .number { color: #09885a; }
+        .boolean { color: #0000ff; }
+    </style>
+</head>
+<body>
+    <h1>JavaScript Quote Highlighting Test</h1>
+    <div class="code-expander-wrapper">
+        <pre><code class="language-javascript">
+// Test various types of quotes and string literals
+const singleQuotes = 'This is a single-quoted string';
+const doubleQuotes = "This is a double-quoted string";
+const backticksQuotes = `This is a backtick-quoted string`;
+
+const escapedSingleQuotes = 'This string contains an escaped \'single\' quote';
+const escapedDoubleQuotes = "This string contains an escaped \"double\" quote";
+const escapedBackticksQuotes = `This string contains an escaped \`backtick\` quote`;
+
+const multilineString = `
+    This is a multiline
+    string using backticks
+`;
+
+const nestedQuotes = "She said, 'Hello!' and waved.";
+const complexString = `He exclaimed, "Don't say 'never'!"`;
+
+const regex = /^This is a regex with 'quotes' and "double quotes"/;
+
+console.log(singleQuotes, doubleQuotes, backticksQuotes);
+console.log(escapedSingleQuotes, escapedDoubleQuotes, escapedBackticksQuotes);
+console.log(multilineString);
+console.log(nestedQuotes, complexString);
+console.log(regex);
+        </code></pre>
+    </div>
+
+    <script>
+    // Inline code-expander.js content
+    const LONG_DOCUMENT_THRESHOLD = 40;
+    const COPY_BUTTON_RESET_DELAY = 2000;
+
+    function decorate(block) {
+      const codeElements = block.querySelectorAll('pre code');
+      
+      function detectLanguage(code) {
+        if (code.trim().startsWith('"') || code.trim().startsWith("'")) {
+          return 'text';
+        }
+        
+        if (/^(ls|cd|pwd|mkdir|rm|cp|mv|cat|echo|grep|sed|awk|curl|wget|ssh|git|npm|yarn|docker|kubectl)\s/.test(code)) {
+          return 'shell';
+        }
+        
+        if (code.includes('function') || code.includes('var') || code.includes('const')) return 'javascript';
+        if (code.includes('{') && code.includes('}')) {
+          if (code.match(/[a-z-]+\s*:\s*[^;]+;/)) return 'css';
+          if (code.includes(':')) return 'json';
+        }
+        if (code.includes('<') && code.includes('>') && (code.includes('</') || code.includes('/>'))) return 'html';
+        
+        if (code.match(/^(#{1,6}\s|\*\s|-\s|\d+\.\s|\[.*\]\(.*\))/m)) return 'markdown';
+        
+        if (code.startsWith('$') || code.startsWith('#')) return 'shell';
+        
+        return 'text';
+      }
+
+      function highlightSyntax(code, language) {
+        switch (language) {
+          case 'javascript':
+            return code.replace(
+              /(\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\['\\]|[^'])*'|"(?:\\["\\]|[^"])*"|`(?:\\[`\\]|[^`])*`|\b(?:function|var|const|let|if|else|for|while|return|class|import|export)\b|\b(?:true|false|null|undefined)\b|\b\d+\b)/g,
+              (match) => {
+                if (/^\/\//.test(match) || /^\/\*/.test(match)) {
+                  return `<span class="comment">${match}</span>`;
+                }
+                if (/^['"`]/.test(match)) {
+                  return `<span class="string">${match}</span>`;
+                }
+                if (/\b(?:function|var|const|let|if|else|for|while|return|class|import|export)\b/.test(match)) {
+                  return `<span class="keyword">${match}</span>`;
+                }
+                if (/\b(?:true|false|null|undefined)\b/.test(match)) {
+                  return `<span class="boolean">${match}</span>`;
+                }
+                if (/^\d+$/.test(match)) {
+                  return `<span class="number">${match}</span>`;
+                }
+                return match;
+              }
+            );
+          // ... (other language cases)
+          default:
+            return code;
+        }
+      }
+
+      codeElements.forEach((codeElement) => {
+        const code = codeElement.textContent;
+        const language = detectLanguage(code);  
+        codeElement.className = `language-${language}`;
+        codeElement.innerHTML = highlightSyntax(code, language);
+      });
+    }
+
+    // Execute the decoration
+    decorate(document.querySelector('.code-expander-wrapper'));
+    </script>
+</body>
+</html>

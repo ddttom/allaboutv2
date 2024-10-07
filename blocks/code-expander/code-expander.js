@@ -36,22 +36,9 @@ export default async function decorate(block) {
   function highlightSyntax(code, language) {
     switch (language) {
       case 'javascript':
-        // Standardize smart quotes to prevent regex issues
-        const standardizedCode = code.replace(/(['"`“”‘’])/g, (match) => {
-          switch (match) {
-            case '“':
-            case '”':
-            case '‘':
-            case '’':
-              return '"';
-            default:
-              return match;
-          }
-        });
-
-        // Highlight JavaScript syntax using the standardized code
-        return standardizedCode.replace(
-          /(\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\.|[^\\'])*'|"(?:\\.|[^\\"])*"|`(?:\\.|[^\\`])*`|\b(?:function|var|const|let|if|else|for|while|return|class|import|export)\b|\b(?:true|false|null|undefined)\b|\b\d+\b)/g,
+        // Highlight JavaScript syntax
+        return code.replace(
+          /(\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\['\\]|[^'])*'|"(?:\\["\\]|[^"])*"|`(?:\\[`\\]|[^`])*`|\b(?:function|var|const|let|if|else|for|while|return|class|import|export)\b|\b(?:true|false|null|undefined)\b|\b\d+\b)/g,
           (match) => {
             // Highlight comments
             if (/^\/\//.test(match) || /^\/\*/.test(match)) {
