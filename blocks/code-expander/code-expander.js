@@ -28,127 +28,82 @@ export default async function decorate(block) {
   }
 
   function highlightSyntax(code, language) {
+    const encodeHtmlEntities = (text) => {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    };
+
+    const decodedCode = code;
+
     switch (language) {
       case 'javascript':
-        return code.replace(
-          /(\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\['\\]|[^'])*'|"(?:\\["\\]|[^"])*"|`(?:\\[`\\]|[^`])*`|\b(?:function|var|const|let|if|else|for|while|return|class|import|export)\b|\b(?:true|false|null|undefined)\b|\b\d+\b)/g,
-          (match) => {
-            if (/^\/\//.test(match) || /^\/\*/.test(match)) {
-              return `<span class="comment">${match}</span>`;
-            }
-            if (/^['"`]/.test(match)) {
-              return `<span class="string">${match}</span>`;
-            }
-            if (/\b(?:function|var|const|let|if|else|for|while|return|class|import|export)\b/.test(match)) {
-              return `<span class="keyword">${match}</span>`;
-            }
-            if (/\b(?:true|false|null|undefined)\b/.test(match)) {
-              return `<span class="boolean">${match}</span>`;
-            }
-            if (/^\d+$/.test(match)) {
-              return `<span class="number">${match}</span>`;
-            }
-            return match;
+        return decodedCode.replace(
+          /(\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\.|[^\\'])*'|"(?:\\.|[^\\"])*"|`(?:\\.|[^\\`])*`|\b(?:function|var|let|const|if|else|for|while|do|switch|case|break|return|continue|class|new|typeof|instanceof|this|null|undefined|true|false)\b|\b\d+\b|[{}[\],;.])/g,
+          match => {
+            if (/^\/\//.test(match)) return `<span class="comment">${encodeHtmlEntities(match)}</span>`;
+            if (/^\/\*/.test(match)) return `<span class="comment">${encodeHtmlEntities(match)}</span>`;
+            if (/^['"`]/.test(match)) return `<span class="string">${encodeHtmlEntities(match)}</span>`;
+            if (/^(function|var|let|const|if|else|for|while|do|switch|case|break|return|continue|class|new|typeof|instanceof|this)$/.test(match)) return `<span class="keyword">${encodeHtmlEntities(match)}</span>`;
+            if (/^(null|undefined|true|false)$/.test(match)) return `<span class="boolean">${encodeHtmlEntities(match)}</span>`;
+            if (/^\d+$/.test(match)) return `<span class="number">${encodeHtmlEntities(match)}</span>`;
+            if (/^[{}[\],;.]$/.test(match)) return `<span class="punctuation">${encodeHtmlEntities(match)}</span>`;
+            return encodeHtmlEntities(match);
           }
         );
       case 'json':
-        // Highlight and indent JSON syntax
-        try {
-          const parsedJson = JSON.parse(code);
-          const indentedJson = JSON.stringify(parsedJson, null, 2);
-          return indentedJson.replace(
-            /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
-            match => {
-              let cls = 'number';
-              if (/^"/.test(match)) {
-                if (/:$/.test(match)) {
-                  cls = 'key';
-                } else {
-                  cls = 'string';
-                }
-              } else if (/true|false/.test(match)) {
-                cls = 'boolean';
-              } else if (/null/.test(match)) {
-                cls = 'null';
-              }
-              return `<span class="${cls}">${match}</span>`;
+        return decodedCode.replace(
+          /(\"(?:\\.|[^\\"])*\")(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,
+          (match, string, colon, boolean) => {
+            if (string) {
+              return colon 
+                ? `<span class="json-key">${encodeHtmlEntities(string)}</span>${encodeHtmlEntities(colon)}`
+                : `<span class="json-string">${encodeHtmlEntities(string)}</span>`;
             }
-          ).replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');
-        } catch (error) {
-          // eslint-disable-next-line no-console
-          console.error('Error parsing JSON:', error);
-          // If parsing fails, apply basic highlighting without parsing
-          return code.replace(
-            /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
-            match => {
-              let cls = 'number';
-              if (/^"/.test(match)) {
-                if (/:$/.test(match)) {
-                  cls = 'key';
-                } else {
-                  cls = 'string';
-                }
-              } else if (/true|false/.test(match)) {
-                cls = 'boolean';
-              } else if (/null/.test(match)) {
-                cls = 'null';
-              }
-              return `<span class="${cls}">${match}</span>`;
+            if (boolean) {
+              return `<span class="json-boolean">${encodeHtmlEntities(boolean)}</span>`;
             }
-          );
-        }
+            if (/^-?\d/.test(match)) {
+              return `<span class="json-number">${encodeHtmlEntities(match)}</span>`;
+            }
+            return encodeHtmlEntities(match);
+          }
+        );
       case 'html':
-        // Highlight HTML syntax
-        return code.replace(/&/g, '&amp;')
-                   .replace(/</g, '&lt;')
-                   .replace(/>/g, '&gt;')
-                   // Highlight strings
-                   .replace(/(".*?")/g, '<span class="string">$1</span>')
-                   // Highlight opening tags
-                   .replace(/(&lt;[^\s!?/]+)/g, '<span class="tag">$1</span>')
-                   // Highlight closing tags
-                   .replace(/(&lt;\/[^\s!?/]+)/g, '<span class="tag">$1</span>')
-                   // Highlight comments
-                   .replace(/(&lt;!--.*?--&gt;)/g, '<span class="comment">$1</span>');
+        return decodedCode.replace(/&/g, '&amp;')
+                     .replace(/</g, '&lt;')
+                     .replace(/>/g, '&gt;')
+                     .replace(/(".*?")/g, '<span class="string">$1</span>')
+                     .replace(/(&lt;[^\s!?/]+)/g, '<span class="tag">$1</span>')
+                     .replace(/(&lt;\/[^\s!?/]+)/g, '<span class="tag">$1</span>')
+                     .replace(/(&lt;!--.*?--&gt;)/g, '<span class="comment">$1</span>');
       case 'css':
-        // Highlight CSS syntax
-        return code.replace(
+        return decodedCode.replace(
           /([\w-]+\s*:)|(#[\da-f]{3,6})/gi,
           match => {
-            // Highlight property names
-            if (/:$/.test(match)) return `<span class="property">${match}</span>`;
-            // Highlight color values
-            return `<span class="value">${match}</span>`;
+            if (/:$/.test(match)) return `<span class="property">${encodeHtmlEntities(match)}</span>`;
+            return `<span class="value">${encodeHtmlEntities(match)}</span>`;
           }
         );
       case 'markdown':
-        // Highlight Markdown syntax
-        return code.replace(
+        return decodedCode.replace(
           /(^#{1,6}\s.*$)|(^[*-]\s.*$)|(^>\s.*$)|(`{1,3}[^`\n]+`{1,3})|(\[.*?\]\(.*?\))/gm,
           match => {
-            // Highlight headings
-            if (/^#{1,6}/.test(match)) return `<span class="heading">${match}</span>`;
-            // Highlight list items
-            if (/^[*-]\s+/.test(match)) return `<span class="list-item">${match}</span>`;
-            // Highlight blockquotes
-            if (/^>\s+/.test(match)) return `<span class="blockquote">${match}</span>`;
-            // Highlight inline code
-            if (/`{1,3}[^`\n]+`{1,3}/.test(match)) return `<span class="code">${match}</span>`;
-            // Highlight links
-            if (/\[.*?\]\(.*?\)/.test(match)) return `<span class="link">${match}</span>`;
-            return match;
+            if (/^#{1,6}/.test(match)) return `<span class="heading">${encodeHtmlEntities(match)}</span>`;
+            if (/^[*-]\s+/.test(match)) return `<span class="list-item">${encodeHtmlEntities(match)}</span>`;
+            if (/^>\s+/.test(match)) return `<span class="blockquote">${encodeHtmlEntities(match)}</span>`;
+            if (/`{1,3}[^`\n]+`{1,3}/.test(match)) return `<span class="code">${encodeHtmlEntities(match)}</span>`;
+            if (/\[.*?\]\(.*?\)/.test(match)) return `<span class="link">${encodeHtmlEntities(match)}</span>`;
+            return encodeHtmlEntities(match);
           }
         );
       case 'text':
-        // For text, we'll just escape HTML entities to prevent XSS
-        return code.replace(/&/g, '&amp;')
-                 .replace(/</g, '&lt;')
-                 .replace(/>/g, '&gt;')
-                 .replace(/"/g, '&quot;')
-                 .replace(/'/g, '&#039;');
+        return encodeHtmlEntities(decodedCode);
       default:
-        // If language is not recognized, return the code without highlighting
-        return code;
+        return encodeHtmlEntities(decodedCode);
     }
   }
 
