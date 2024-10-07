@@ -36,21 +36,43 @@ export default async function decorate(block) {
   function highlightSyntax(code, language) {
     switch (language) {
       case 'javascript':
-        // Highlight JavaScript syntax
-        return code.replace(
+        // Standardize smart quotes to prevent regex issues
+        const standardizedCode = code.replace(/(['"`“”‘’])/g, (match) => {
+          switch (match) {
+            case '“':
+            case '”':
+            case '‘':
+            case '’':
+              return '"';
+            default:
+              return match;
+          }
+        });
+
+        // Highlight JavaScript syntax using the standardized code
+        return standardizedCode.replace(
           /(\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\.|[^\\'])*'|"(?:\\.|[^\\"])*"|`(?:\\.|[^\\`])*`|\b(?:function|var|const|let|if|else|for|while|return|class|import|export)\b|\b(?:true|false|null|undefined)\b|\b\d+\b)/g,
-          match => {
+          (match) => {
             // Highlight comments
-            if (/^\/\//.test(match)) return `<span class="comment">${match}</span>`;
-            if (/^\/\*/.test(match)) return `<span class="comment">${match}</span>`;
+            if (/^\/\//.test(match) || /^\/\*/.test(match)) {
+              return `<span class="comment">${match}</span>`;
+            }
             // Highlight strings
-            if (/^['"`]/.test(match)) return `<span class="string">${match}</span>`;
+            if (/^['"`]/.test(match)) {
+              return `<span class="string">${match}</span>`;
+            }
             // Highlight keywords
-            if (/^(function|var|const|let|if|else|for|while|return|class|import|export)$/.test(match)) return `<span class="keyword">${match}</span>`;
+            if (/\b(?:function|var|const|let|if|else|for|while|return|class|import|export)\b/.test(match)) {
+              return `<span class="keyword">${match}</span>`;
+            }
             // Highlight boolean values and null/undefined
-            if (/^(true|false|null|undefined)$/.test(match)) return `<span class="boolean">${match}</span>`;
+            if (/\b(?:true|false|null|undefined)\b/.test(match)) {
+              return `<span class="boolean">${match}</span>`;
+            }
             // Highlight numbers
-            if (/^\d+$/.test(match)) return `<span class="number">${match}</span>`;
+            if (/^\d+$/.test(match)) {
+              return `<span class="number">${match}</span>`;
+            }
             return match;
           }
         );
@@ -206,19 +228,17 @@ export default async function decorate(block) {
       wrapper.appendChild(bottomExpandButton);
     }
 
-    copyButton.addEventListener('click', () => {
-      navigator.clipboard.writeText(code)
-        .then(() => {
-          copyButton.textContent = 'Copied!';
-          setTimeout(() => {
-            copyButton.textContent = `Copy ${language === 'shell' ? 'terminal' : language} to clipboard`;
-          }, COPY_BUTTON_RESET_DELAY);
-        })
-        .catch(err => {
-          // eslint-disable-next-line no-console
-          console.error('Error copying content:', err);
-        });
+    copyButton.addEventListener('click', async () => { // Changed to use async/await
+      try {
+        await navigator.clipboard.writeText(code);
+        copyButton.textContent = 'Copied!';
+        setTimeout(() => {
+          copyButton.textContent = `Copy ${language === 'shell' ? 'terminal' : language === 'text' ? 'text' : language} to clipboard`;
+        }, COPY_BUTTON_RESET_DELAY);
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error('Error copying content:', err);
+      }
     });
   }));
 }
-
