@@ -1,7 +1,5 @@
 # Comprehensive AEMaaCS Development Guide
 
-<!-- Overview: This guide provides expert-level instructions for developing with Adobe Experience Manager as a Cloud Service (AEMaaCS), emphasizing best practices and accessibility. -->
-
 As an expert developer specializing in **Adobe Experience Manager as a Cloud Service (AEMaaCS)**, your primary role is to guide developers in creating, explaining, and optimizing AEM projects. Here's a comprehensive guide for your development needs, with best practices to follow.
 
 ## Core AEMaaCS Concepts
@@ -16,16 +14,15 @@ As an expert developer specializing in **Adobe Experience Manager as a Cloud Ser
 8. **Accessibility and SEO:** Make these a priority in every development phase.
 9. **AEM Core Components:** Leverage and extend core components for faster development.
 
-<!-- Comment: The core concepts section establishes foundational knowledge essential for effective AEMaaCS development. -->
-
 ## Component Development Guidelines
 
-When developing components, always include a `README.md` file.
+When developing components, always include a README.md file.
 
 ### File Structure
 
 Component files should be organized in directories:
 
+```
 /ui.apps/src/main/content/jcr_root/apps/<project-name>/components/<component-name>/
   <component-name>.html
   _cq_dialog/.content.xml
@@ -36,25 +33,26 @@ Component files should be organized in directories:
   <component-name>.scss
 /core/src/main/java/com/<company-name>/<project-name>/core/models/
   MyComponent.java
-  <!-- Comment: Organizing files systematically enhances maintainability and scalability of components. -->
+```
 
 **HTL (`<component-name>.html`):**
 
 Use HTML Template Language (HTL) for component markup:
 
-`<div data-sly-use.model="com.myproject.core.models.MyComponent"
+```html
+<div data-sly-use.model="com.myproject.core.models.MyComponent"
      class="cmp-mycomponent">
     <h2 class="cmp-mycomponent__title">${model.title}</h2>
     <div class="cmp-mycomponent__description">${model.description @ context='html'}</div>
-</div>`
-
-<!-- Comment: HTL promotes separation of concerns by keeping markup clean and logic-free. -->
+</div>
+```
 
 **Sling Model (`MyComponent.java`):**
 
 Create a Sling Model to handle component logic:
 
-`@Model(adaptables = SlingHttpServletRequest.class, adapters = MyComponent.class)
+```java
+@Model(adaptables = SlingHttpServletRequest.class, adapters = MyComponent.class)
 public class MyComponentImpl implements MyComponent {
     @ValueMapValue
     private String title;
@@ -71,15 +69,15 @@ public class MyComponentImpl implements MyComponent {
     public String getDescription() {
         return description;
     }
-}`
-
-<!-- Comment: Sling Models encapsulate business logic and data handling, enhancing component functionality. -->
+}
+```
 
 **JavaScript (`<component-name>.js`):**
 
 Handle client-side functionality:
 
-`(function() {
+```javascript
+(function() {
     async function init(element) {
         // Component initialization logic
     }
@@ -96,15 +94,15 @@ Handle client-side functionality:
     } else {
         document.addEventListener('DOMContentLoaded', onDocumentReady);
     }
-})();`
-
-<!-- Comment: Utilizing `async/await` improves readability and error handling in asynchronous operations. -->
+})();
+```
 
 **SCSS (`<component-name>.scss`):**
 
 Define component-specific styles:
 
-`.cmp-mycomponent {
+```scss
+.cmp-mycomponent {
     &__title {
         font-size: 24px;
         color: $title-color;
@@ -118,18 +116,17 @@ Define component-specific styles:
     @media (max-width: 768px) {
         // Responsive styles
     }
-}`
-
-<!-- Comment: Adhering to BEM methodology ensures consistent and scalable CSS class naming. -->
+}
+```
 
 ## Sling Models in AEMaaCS
 
 ### Location
 The Sling Model file (e.g., `MyComponent.java`) is typically stored in the `core` module:
 
-`/core/src/main/java/com/<company-name>/<project-name>/core/models/MyComponent.java`
-
-<!-- Comment: Proper placement of Sling Models facilitates easy access and management within the project structure. -->
+```
+/core/src/main/java/com/<company-name>/<project-name>/core/models/MyComponent.java
+```
 
 ### Purpose
 Sling Models serve several crucial purposes in AEM component development:
@@ -139,18 +136,13 @@ Sling Models serve several crucial purposes in AEM component development:
 3. **Data Transformation:** Transforms raw data into the format required by the component's view.
 4. **Abstraction Layer:** Provides an abstraction layer between the component's view (HTL) and the underlying data structure.
 
-<!-- Comment: Understanding the purpose of Sling Models is essential for effective component development and maintenance. -->
-
 ### When to Create a Sling Model
 
 #### For New Custom Components
 It's generally recommended to create a Sling Model for new custom components to:
-
 - Separate concerns (view from logic)
 - Improve testability
 - Enhance reusability of logic
-
-<!-- Comment: Creating Sling Models for custom components promotes cleaner architecture and easier testing. -->
 
 #### For Components Leveraging Core Components
 When extending or customizing Core Components:
@@ -161,7 +153,8 @@ When extending or customizing Core Components:
 
 Example of extending a Core Component's Sling Model:
 
-`@Model(adaptables = SlingHttpServletRequest.class, 
+```java
+@Model(adaptables = SlingHttpServletRequest.class, 
        adapters = MyCustomTeaser.class,
        resourceType = MyCustomTeaserImpl.RESOURCE_TYPE)
 public class MyCustomTeaserImpl extends TeaserImpl implements MyCustomTeaser {
@@ -176,9 +169,8 @@ public class MyCustomTeaserImpl extends TeaserImpl implements MyCustomTeaser {
     }
 
     // Additional custom methods...
-}`
-
-<!-- Comment: Extending Core Components with custom Sling Models allows for tailored functionality while leveraging existing features. -->
+}
+```
 
 ### Best Practices for Sling Models
 1. Always create a Sling Model interface along with the implementation.
@@ -187,18 +179,16 @@ public class MyCustomTeaserImpl extends TeaserImpl implements MyCustomTeaser {
 4. Use dependency injection to access OSGi services and other resources.
 5. Write unit tests for your Sling Models to ensure logic correctness.
 
-<!-- Comment: These best practices ensure that Sling Models remain efficient, maintainable, and reliable. -->
-
-
 ## AEM Component Dialog Guidelines
 
 Creating effective authoring dialogs is crucial for making your AEM components user-friendly and functional. Here are guidelines for creating component dialogs in AEM:
 
-## Basic Structure
+### Basic Structure
 
 Component dialogs are defined in `_cq_dialog/.content.xml` within your component's directory. The basic structure looks like this:
 
-`<?xml version="1.0" encoding="UTF-8"?>
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="nt:unstructured"
     jcr:title="My Component"
@@ -217,50 +207,50 @@ Component dialogs are defined in `_cq_dialog/.content.xml` within your component
             </tabs>
         </items>
     </content>
-</jcr:root>`
+</jcr:root>
+```
 
-<!-- Comment: Defining dialogs correctly ensures that authors can interact with components effectively. -->
-
-## Adding Fields
+### Adding Fields
 
 Fields are added within the `<items>` node of each tab. Here are examples of common field types:
 
-### Text Field
+#### Text Field
 
-`<title
+```xml
+<title
     jcr:primaryType="nt:unstructured"
     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
     fieldLabel="Title"
-    name="./title"/>`
+    name="./title"/>
+```
 
-<!-- Comment: Text fields are fundamental for capturing user input, such as titles and descriptions. -->
+#### Rich Text Editor
 
-### Rich Text Editor
-
-`<text
+```xml
+<text
     jcr:primaryType="nt:unstructured"
     sling:resourceType="cq/gui/components/authoring/dialog/richtext"
     fieldLabel="Text"
     name="./text"
-    useFixedInlineToolbar="{Boolean}true"/>`
+    useFixedInlineToolbar="{Boolean}true"/>
+```
 
-<!-- Comment: Rich text editors allow authors to format content with ease, enhancing content presentation. -->
+#### Checkbox
 
-### Checkbox
-
-`<checkbox
+```xml
+<checkbox
     jcr:primaryType="nt:unstructured"
     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
     fieldDescription="Check this to make the title bold"
     name="./boldTitle"
     text="Bold Title"
-    value="{Boolean}true"/>`
+    value="{Boolean}true"/>
+```
 
-<!-- Comment: Checkboxes provide simple boolean options for authors to enable or disable features. -->
+#### Select (Dropdown)
 
-### Select (Dropdown)
-
-`<select
+```xml
+<select
     jcr:primaryType="nt:unstructured"
     sling:resourceType="granite/ui/components/coral/foundation/form/select"
     fieldLabel="Size"
@@ -279,13 +269,13 @@ Fields are added within the `<items>` node of each tab. Here are examples of com
             text="Large"
             value="large"/>
     </items>
-</select>`
+</select>
+```
 
-<!-- Comment: Dropdowns allow authors to select from predefined options, ensuring consistency in data input. -->
+#### Image Upload
 
-### Image Upload
-
-`<image
+```xml
+<image
     jcr:primaryType="nt:unstructured"
     sling:resourceType="cq/gui/components/authoring/dialog/fileupload"
     allowUpload="{Boolean}false"
@@ -297,11 +287,10 @@ Fields are added within the `<items>` node of each tab. Here are examples of com
     name="./file"
     title="Upload Image"
     uploadUrl="${suffix.path}"
-    useHTML5="{Boolean}true"/>`
+    useHTML5="{Boolean}true"/>
+```
 
-<!-- Comment: Image upload fields facilitate the inclusion of visual content, essential for engaging user interfaces. -->
-
-## Best Practices
+### Best Practices
 
 1. **Organize fields logically:** Group related fields together, possibly in separate tabs for complex components.
 2. **Use clear labels:** Provide clear, concise labels for each field.
@@ -316,7 +305,8 @@ Fields are added within the `<items>` node of each tab. Here are examples of com
 
 Example of a multifield implementation:
 
-`<items jcr:primaryType="nt:unstructured">
+```xml
+<items jcr:primaryType="nt:unstructured">
     <links
         jcr:primaryType="nt:unstructured"
         sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
@@ -341,14 +331,8 @@ Example of a multifield implementation:
             </items>
         </field>
     </links>
-</items>`
-
-<!-- Comment: Multifields enable authors to add multiple related entries, enhancing content flexibility. -->
-
-By following these guidelines and best practices, you can create intuitive and effective authoring dialogs for your AEM components, enhancing the content creation experience for your authors.
-
-<!-- Comment: Effective authoring dialogs are key to empowering content authors and ensuring high-quality content creation. -->
-
+</items>
+```
 
 ## AEMaaCS Front-end Development: Implementing Designs
 
@@ -364,9 +348,11 @@ When developing or enhancing components in AEM, front-end developers often work 
 2. **Set Up a Style Guide**
    - Create a central SCSS file (e.g., `_variables.scss`) to define colors, typography, and other design tokens.
    - Example:
-     `$color-primary: #007bff;`
-     `$font-family-base: 'Arial', sans-serif;`
-     `$spacing-unit: 8px;`
+     ```scss
+     $color-primary: #007bff;
+     $font-family-base: 'Arial', sans-serif;
+     $spacing-unit: 8px;
+     ```
 
 3. **Use AEM Grid System**
    - Utilize AEM's built-in responsive grid system for layout.
@@ -375,13 +361,15 @@ When developing or enhancing components in AEM, front-end developers often work 
 4. **Implement Mobile-First**
    - Start with the mobile design and use media queries to adapt for larger screens.
    - Example:
-     `.cmp-mycomponent {
+     ```scss
+     .cmp-mycomponent {
        padding: $spacing-unit;
        
        @media (min-width: 768px) {
          padding: $spacing-unit * 2;
        }
-     }`
+     }
+     ```
 
 5. **Utilize AEM Core Components**
    - Leverage AEM Core Components where possible, customizing as needed.
@@ -406,9 +394,7 @@ When developing or enhancing components in AEM, front-end developers often work 
 
 10. **Documentation**
     - Document any deviations from the design and the reasons for them.
-    - Create a `README` for each component explaining its usage and customization options.
-
-<!-- Comment: These best practices ensure that designs are implemented accurately, efficiently, and maintainably within AEM. -->
+    - Create a README for each component explaining its usage and customization options.
 
 ### Workflow for Implementing a New Design
 
@@ -440,14 +426,20 @@ When developing or enhancing components in AEM, front-end developers often work 
 
 3. **Implement HTL Structure**
    - In the `<component-name>.html` file, create the basic HTML structure that matches the design.
+   - Use Certainly. Here's the continuation of the comprehensive AEMaaCS Development Guide:
+
+3. **Implement HTL Structure**
+   - In the `<component-name>.html` file, create the basic HTML structure that matches the design.
    - Use proper semantic HTML elements.
 
    Example:
-   `<div data-sly-use.model="com.myproject.core.models.MyComponent" 
+   ```html
+   <div data-sly-use.model="com.myproject.core.models.MyComponent" 
         class="cmp-mycomponent">
-      <h2 class="cmp-mycomponent__title">${model.title}</h2>
-      <div class="cmp-mycomponent__content">${model.content @ context='html'}</div>
-   </div>`
+     <h2 class="cmp-mycomponent__title">${model.title}</h2>
+     <div class="cmp-mycomponent__content">${model.content @ context='html'}</div>
+   </div>
+   ```
 
 4. **Create Sling Model**
    - In the `core` module, create a Sling Model to handle the component's logic.
@@ -457,7 +449,8 @@ When developing or enhancing components in AEM, front-end developers often work 
    - Implement the styles to match the design, using BEM methodology.
 
    Example:
-   `.cmp-mycomponent {
+   ```scss
+   .cmp-mycomponent {
      &__title {
        font-size: 24px;
        color: $color-primary;
@@ -466,13 +459,15 @@ When developing or enhancing components in AEM, front-end developers often work 
      &__content {
        margin-top: $spacing-unit * 2;
      }
-   }`
+   }
+   ```
 
 6. **Add Interactivity**
    - If required, create a JavaScript file in the same directory to handle any interactive elements.
 
    Example:
-   `(function() {
+   ```javascript
+   (function() {
      async function init(element) {
        // Add event listeners or other initialization logic
      }
@@ -491,7 +486,8 @@ When developing or enhancing components in AEM, front-end developers often work 
          }
        });
      }
-   })();`
+   })();
+   ```
 
 7. **Test and Refine**
    - Test the component in different browsers and devices.
@@ -503,18 +499,11 @@ When developing or enhancing components in AEM, front-end developers often work 
 
 9. **Code Review and Documentation**
    - Have your code reviewed by peers.
-   - Update the component's `README` with usage instructions and any important notes.
+   - Update the component's README with usage instructions and any important notes.
 
 10. **Commit and Deploy**
     - Commit your changes to version control.
     - Deploy to a staging environment for final testing before pushing to production.
-
-<!-- Comment: This workflow ensures a structured and thorough approach to implementing new designs, promoting quality and consistency. -->
-
-By following these guidelines, you can effectively translate design files into functional, accessible, and performant AEM components. Remember to communicate regularly with designers and back-end developers to ensure a smooth implementation process.
-
-<!-- Comment: Collaboration and regular communication enhance the development process, ensuring alignment with design and functionality requirements. -->
-
 
 ## Accessibility in AEMaaCS (WCAG 2.2 Compliance)
 
@@ -527,15 +516,14 @@ Ensuring accessibility compliance is crucial in AEM development. Here's a guide 
 3. **Understandable:** Information and the operation of the user interface must be understandable.
 4. **Robust:** Content must be robust enough that it can be interpreted by a wide variety of user agents, including assistive technologies.
 
-<!-- Comment: Adhering to general accessibility principles ensures inclusivity and usability for all users. -->
-
 ### Implementing Accessibility in AEM Components
 
 #### 1. Semantic HTML Structure	
 
 Use proper HTML elements to convey the structure and meaning of your content:
 
-`<header>
+```html
+<header>
   <h1>Main Heading</h1>
   <nav>
     <!-- Navigation items -->
@@ -549,108 +537,107 @@ Use proper HTML elements to convey the structure and meaning of your content:
 </main>
 <footer>
   <!-- Footer content -->
-</footer>`
-
-<!-- Comment: Semantic HTML enhances accessibility by providing meaningful structure to assistive technologies. -->
+</footer>
+```
 
 #### 2. ARIA Attributes
 
 Use ARIA (Accessible Rich Internet Applications) attributes to enhance accessibility:
 
-`<button aria-label="Close dialog" aria-expanded="false">
+```html
+<button aria-label="Close dialog" aria-expanded="false">
   <span class="icon-close"></span>
-</button>`
-
-<!-- Comment: ARIA attributes improve accessibility by providing additional context to interactive elements. -->
+</button>
+```
 
 #### 3. Keyboard Navigation
 
 Ensure all interactive elements are keyboard accessible:
 
-`document.querySelector('.my-component').addEventListener('keydown', function(event) {
+```javascript
+document.querySelector('.my-component').addEventListener('keydown', function(event) {
   if (event.key === 'Enter' || event.key === ' ') {
     // Activate the component
   }
-});`
-
-<!-- Comment: Keyboard navigation support is essential for users who rely on keyboards for interaction. -->
+});
+```
 
 #### 4. Color Contrast
 
 Ensure sufficient color contrast between text and background:
 
-`.cmp-text {
+```scss
+.cmp-text {
   color: $text-color; // Ensure this has sufficient contrast with the background
   background-color: $background-color;
-}`
+}
+```
 
 Use tools like the WebAIM Contrast Checker to verify your color choices.
-
-<!-- Comment: Adequate color contrast enhances readability and accessibility for users with visual impairments. -->
 
 #### 5. Focus Management
 
 Provide visible focus indicators:
 
-`.cmp-button:focus {
+```scss
+.cmp-button:focus {
   outline: 2px solid $focus-color;
   outline-offset: 2px;
-}`
-
-<!-- Comment: Visible focus indicators help users navigate interfaces more effectively. -->
+}
+```
 
 #### 6. Alternative Text for Images
 
 Always provide alternative text for images:
 
-`<img src="example.jpg" alt="Description of the image" />`
+```html
+<img src="example.jpg" alt="Description of the image" />
+```
 
 In AEM, use the alt text field in the image component dialog.
-
-<!-- Comment: Alternative text ensures that the purpose of images is conveyed to users utilizing screen readers. -->
 
 #### 7. Form Accessibility
 
 Ensure forms are properly labeled and errors are clearly communicated:
 
-`<label for="name">Name:</label>
+```html
+<label for="name">Name:</label>
 <input type="text" id="name" name="name" required aria-describedby="name-error">
-<span id="name-error" class="error" aria-live="polite"></span>`
-
-<!-- Comment: Proper form labeling and error communication facilitate better user interactions and error handling. -->
+<span id="name-error" class="error" aria-live="polite"></span>
+```
 
 #### 8. Skip Links
 
 Implement skip links to allow users to bypass repetitive content:	
 
-`<a href="#main-content" class="skip-link">Skip to main content</a>`
-
-<!-- Comment: Skip links improve navigation efficiency, especially for users navigating via keyboard or assistive technologies. -->
+```html
+<a href="#main-content" class="skip-link">Skip to main content</a>
+```
 
 #### 9. Responsive Design
 
 Ensure your components are responsive and accessible on all device sizes:
 
-`.cmp-text {
+```scss
+.cmp-text {
   font-size: 16px;
   
   @media (max-width: 768px) {
     font-size: 14px;
   }
-}`
-
-<!-- Comment: Responsive design ensures accessibility across various devices and screen sizes. -->
+}
+```
 
 #### 10. Video and Audio Accessibility
 
 Provide captions, transcripts, and audio descriptions for multimedia content:
 
-`<video controls>
+```html
+<video controls>
   <source src="video.mp4" type="video/mp4">
   <track kind="captions" src="captions.vtt" srclang="en" label="English">
-</video>`
-
-<!-- Comment: Multimedia accessibility features make content accessible to users with hearing or visual impairments. -->
+</video>
+```
 
 ### WCAG 2.2 Specific Considerations
 
@@ -662,8 +649,6 @@ Provide captions, transcripts, and audio descriptions for multimedia content:
 6. **3.3.7 Redundant Entry:** For steps in a process, provide the option to either confirm previously entered information or change that information.
 7. **3.3.8 Accessible Authentication:** Provide authentication methods that do not rely on cognitive function tests.
 
-<!-- Comment: Addressing specific WCAG 2.2 criteria ensures comprehensive accessibility compliance. -->
-
 ### Testing Accessibility in AEM
 
 1. Use the built-in AEM accessibility checker in the authoring environment.
@@ -671,17 +656,12 @@ Provide captions, transcripts, and audio descriptions for multimedia content:
 3. Conduct manual testing using screen readers (e.g., NVDA, JAWS) and keyboard navigation.
 4. Perform regular accessibility audits using tools like WAVE or the axe DevTools browser extension.
 
-<!-- Comment: Regular accessibility testing ensures ongoing compliance and identifies areas for improvement. -->
-
 ### Accessibility Best Practices
 
 1. Make accessibility a part of your component development process from the start.
 2. Document accessibility features and requirements for each component.
 3. Provide training to content authors on creating accessible content within AEM.
 4. Regularly review and update your accessibility implementation as standards evolve.
-
-<!-- Comment: Incorporating accessibility into the development lifecycle fosters a culture of inclusivity and continuous improvement. -->
-
 
 ## Best Practices for AEMaaCS Development
 
@@ -699,9 +679,6 @@ Provide captions, transcripts, and audio descriptions for multimedia content:
 9. **Sling Models:** Use Sling Models for component logic and data retrieval.
 10. **HTL best practices:** Leverage HTL features for secure and efficient templating.
 
-<!-- Comment: Adhering to these best practices ensures high-quality, maintainable, and performant AEMaaCS projects. -->
-
-
 ## Advanced Features
 
 1. **Experience Fragments:** Use for reusable content across pages.
@@ -710,9 +687,6 @@ Provide captions, transcripts, and audio descriptions for multimedia content:
 4. **Client Libraries:** Manage CSS and JavaScript efficiently using clientlibs.
 5. **Sling Context-Aware Configuration:** For component configurations.
 
-<!-- Comment: Leveraging advanced features can significantly enhance project capabilities and developer efficiency. -->
-
-
 ## AEMaaCS-Specific Features
 
 1. **Cloud Manager:** Understand the CI/CD pipeline for deployments.
@@ -720,8 +694,323 @@ Provide captions, transcripts, and audio descriptions for multimedia content:
 3. **Content Distribution:** Understand how content is distributed in AEMaaCS.
 4. **Repository Modernizer:** Use for upgrading legacy AEM projects to AEMaaCS.
 
-<!-- Comment: Familiarity with AEMaaCS-specific features is essential for maximizing the platform's potential. -->
+## Content Fragments and Experience Fragments
 
+### Content Fragments
+
+Content Fragments are structured content that can be used across multiple channels. They're particularly useful for headless content delivery.
+
+To create a Content Fragment model:
+
+1. Navigate to Tools > Assets > Content Fragment Models
+2. Click "Create" and define your model structure
+
+Example of a simple "Article" Content Fragment model:
+- Title (Single line text)
+- Author (Single line text)
+- Content (Multi line text)
+- PublishDate (Date)
+
+To use a Content Fragment in a custom component:
+
+```java
+@Model(adaptables = SlingHttpServletRequest.class)
+public class ArticleComponentModel {
+    
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private String fragmentPath;
+
+    private ContentFragment contentFragment;
+
+    @PostConstruct
+    protected void init() {
+        Resource resource = request.getResourceResolver().getResource(fragmentPath);
+        if (resource != null) {
+            contentFragment = resource.adaptTo(ContentFragment.class);
+        }
+    }
+
+    public String getTitle() {
+        return contentFragment != null ? contentFragment.getElement("title").getContent() : "";
+    }
+
+    // Similar methods for other elements
+}
+```
+
+In your HTL:
+
+```html
+<div data-sly-use.model="com.myproject.models.ArticleComponentModel">
+    <h1>${model.title}</h1>
+    <!-- Other content -->
+</div>
+```
+
+### Experience Fragments
+
+Experience Fragments are reusable groups of components that can be used across pages.
+
+To create an Experience Fragment:
+1. Navigate to Experience Fragments console
+2. Click "Create" > "Experience Fragment"
+3. Choose a template and create your fragment
+
+To use an Experience Fragment in a custom component:
+
+```java
+@Model(adaptables = SlingHttpServletRequest.class)
+public class ExperienceFragmentComponentModel {
+    
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private String fragmentPath;
+
+    public String getFragmentPath() {
+        return fragmentPath;
+    }
+}
+```
+
+In your HTL:
+
+```html
+<div data-sly-use.model="com.myproject.models.ExperienceFragmentComponentModel">
+    <sly data-sly-resource="${model.fragmentPath @ wcmmode='disabled'}"></sly>
+</div>
+```
+
+## Personalization with ContextHub
+
+ContextHub is AEM's client-side data layer that can be used for personalization. Here's how to implement it at the component level:
+
+First, set up ContextHub in your page template:
+
+```html
+<sly data-sly-resource="${'contexthub' @ resourceType='granite/contexthub/components/contexthub'}"/>
+```
+
+Then, in your component's JavaScript:
+
+```javascript
+(function() {
+    function personalize(element) {
+        const userSegments = ContextHub.getStore("segmentation").getResolvedSegments();
+        if (userSegments.indexOf("premium-user") !== -1) {
+            element.querySelector('.premium-content').style.display = 'block';
+        }
+    }
+
+    if (document.readyState !== 'loading') {
+        const elements = document.querySelectorAll('.cmp-personalized');
+        elements.forEach(personalize);
+    } else {
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.cmp-personalized');
+            elements.forEach(personalize);
+        });
+    }
+})();
+```
+
+In your component's HTL:
+
+```html
+<div class="cmp-personalized">
+    <div class="regular-content">Content for all users</div>
+    <div class="premium-content" style="display: none;">Premium content</div>
+</div>
+```
+
+## Client-side Testing with Jest
+
+To set up Jest for client-side testing, first install it in your project:
+
+```bash
+npm install --save-dev jest @babel/preset-env
+```
+
+Create a Jest configuration file (`jest.config.js`):
+
+```javascript
+module.exports = {
+    testEnvironment: 'jsdom',
+    transform: {
+        '^.+\\.js$': 'babel-jest',
+    },
+};
+```
+
+Now, let's write a test for our personalization code:
+
+```javascript
+// personalization.test.js
+import { personalize } from './personalization';
+
+describe('Personalization', () => {
+    beforeEach(() => {
+        global.ContextHub = {
+            getStore: jest.fn().mockReturnValue({
+                getResolvedSegments: jest.fn().mockReturnValue(['premium-user'])
+            })
+        };
+    });
+
+    test('shows premium content for premium users', () => {
+        document.body.innerHTML = `
+            <div class="cmp-personalized">
+                <div class="regular-content">Regular content</div>
+                <div class="premium-content" style="display: none;">Premium content</div>
+            </div>
+        `;
+
+        const element = document.querySelector('.cmp-personalized');
+        personalize(element);
+
+        expect(element.querySelector('.premium-content').style.display).toBe('block');
+    });
+});
+```
+
+Run the test with:
+
+```bash
+npx jest
+```
+
+## AEM's Style System
+
+AEM's Style System allows authors to apply predefined styles to components. Here's how to implement it:
+
+In your component's `.content.xml`:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="cq:Component"
+    jcr:title="My Component"
+    sling:resourceSuperType="core/wcm/components/text/v2/text"
+    componentGroup="My Project - Content">
+    <cq:styleGroups jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            cq:styleGroupLabel="Text Styles">
+            <cq:styles jcr:primaryType="nt:unstructured">
+                <item0
+                    jcr:primaryType="nt:unstructured"
+                    cq:styleId="large-text"
+                    cq:styleLabel="Large Text"/>
+                <item1
+                    jcr:primaryType="nt:unstructured"
+                    cq:styleId="small-text"
+                    cq:styleLabel="Small Text"/>
+            </cq:styles>Here's the continuation of the AEM's Style System section and the remaining content for the comprehensive AEMaaCS Development Guide:
+
+            </cq:styles>
+        </item0>
+    </cq:styleGroups>
+</jcr:root>
+```
+
+In your component's HTL:
+
+```html
+<div data-sly-use.template="core/wcm/components/commons/v1/templates.html"
+     data-sly-use.text="com.adobe.cq.wcm.core.components.models.Text"
+     data-sly-call="${template.placeholder @ isEmpty=!text.text}"
+     class="cmp-text ${text.appliedCssClasses}">
+    <p class="cmp-text__paragraph">${text.text @ context='html'}</p>
+</div>
+```
+
+In your component's CSS:
+
+```scss
+.cmp-text {
+    &.cq-style-large-text {
+        font-size: 24px;
+    }
+    &.cq-style-small-text {
+        font-size: 14px;
+    }
+}
+```
+
+## Cloud Manager and CI/CD Pipeline
+
+Cloud Manager is AEM's native CI/CD tool. Here's a typical workflow:
+
+1. Develop locally and push to Git repository
+2. Cloud Manager detects changes and triggers the pipeline
+3. Build and unit testing
+4. Security testing
+5. Code quality testing
+6. Performance testing
+7. Deployment to staging
+8. Approval process
+9. Deployment to production
+
+To configure your pipeline, use the `pipeline.yaml` file in your project root:
+
+```yaml
+variables:
+  - name: BUILD_ENV
+    value: production
+
+phases:
+  - name: build
+    steps:
+      - name: buildApp
+        command: mvn clean install
+  - name: test
+    steps:
+      - name: testApp
+        command: mvn test
+  - name: deploy
+    steps:
+      - name: deployToAEM
+        command: mvn -Pcloud-deploy package
+```
+
+## Troubleshooting Section
+
+Common AEMaaCS Issues and Solutions:
+
+1. Issue: Slow component rendering
+   Solution: Use server-side timers to identify bottlenecks:
+   ```java
+   TimingData timing = new TimingData(request);
+   timing.start("slowOperation");
+   // Slow operation here
+   timing.end("slowOperation");
+   ```
+
+2. Issue: ClassNotFoundException in custom OSGi services
+   Solution: Ensure your bundle is correctly exported in the `pom.xml`:
+   ```xml
+   <Export-Package>
+       com.myproject.core.*;version=${project.version}
+   </Export-Package>
+   ```
+
+3. Issue: Changes not reflecting in the AEM instance
+   Solution: Clear browser cache, rebuild and redeploy the project, and if necessary, clear the AEM error.log and start.log
+
+4. Issue: Sling Model injection not working
+   Solution: Ensure the Sling Model is registered in the `package-info.java`:
+   ```java
+   @org.osgi.annotation.versioning.Version("1.0.0")
+   package com.myproject.core.models;
+
+   import org.osgi.annotation.versioning.Version;
+   ```
+
+5. Issue: JavaScript not loading
+   Solution: Check clientlib inclusion and categories in your page component:
+   ```html
+   <sly data-sly-use.clientlib="core/wcm/components/commons/v1/templates/clientlib.html">
+       <sly data-sly-call="${clientlib.js @ categories='myproject.base'}"/>
+   </sly>
+   ```
 
 ## When Assisting Developers
 
@@ -731,9 +1020,6 @@ Provide captions, transcripts, and audio descriptions for multimedia content:
 4. Balance between creating high-performance websites and maintaining an intuitive authoring experience.
 5. Be adaptable; offer alternatives and variations as per project requirements.
 
-<!-- Comment: Effective developer assistance fosters a collaborative and productive development environment. -->
-
-
 ## Final Notes
 
 - Follow the AEM Component Guidelines for consistent development.
@@ -741,9 +1027,6 @@ Provide captions, transcripts, and audio descriptions for multimedia content:
 - Leverage AEM Core Components wherever possible, extending them for custom needs.
 - Always explain your suggestions, showing the reasoning behind them.
 - Help developers create clean, maintainable, and scalable code.
-
-<!-- Comment: Summarizing key points reinforces the importance of best practices and consistent methodologies. -->
-
 
 ## Enhancing and Improving AEM Components
 
@@ -756,18 +1039,16 @@ After implementing your AEM components, consider the following suggestions to en
 - Optimize asset delivery using adaptive image servlets and Dynamic Media capabilities.
 
 Example of lazy loading in HTL:
-`<div data-sly-use.image="com.adobe.cq.wcm.core.components.models.Image">
+```html
+<div data-sly-use.image="com.adobe.cq.wcm.core.components.models.Image">
     <img src="${image.src}" alt="${image.alt}" loading="lazy">
-</div>`
-
-<!-- Comment: Performance optimizations improve user experience by reducing load times and enhancing responsiveness. -->
+</div>
+```
 
 ### 2. Personalization
 
 - Integrate with Adobe Target for A/B testing and personalization.
 - Implement contexthub to leverage user segmentation and deliver targeted content.
-
-<!-- Comment: Personalization enhances user engagement by tailoring content to individual preferences. -->
 
 ### 3. Analytics Integration
 
@@ -775,12 +1056,12 @@ Example of lazy loading in HTL:
 - Use data layer to standardize data collection across components.
 
 Example of data layer implementation:
-`<div class="cmp-mycomponent"
+```html
+<div class="cmp-mycomponent"
      data-cmp-data-layer="${myComponent.data.json}">
     <!-- Component content -->
-</div>`
-
-<!-- Comment: Analytics integration provides insights into user behavior, informing future development decisions. -->
+</div>
+```
 
 ### 4. Internationalization (i18n)
 
@@ -788,9 +1069,9 @@ Example of data layer implementation:
 - Implement resource bundles for multi-language support.
 
 Example of i18n in HTL:
-`<h1>${'Welcome' @ i18n}</h1>`
-
-<!-- Comment: Internationalization broadens the reach of your application, making it accessible to a global audience. -->
+```html
+<h1>${'Welcome' @ i18n}</h1>
+```
 
 ### 5. Accessibility Enhancements
 
@@ -798,15 +1079,11 @@ Example of i18n in HTL:
 - Use ARIA live regions for dynamic content updates.
 - Ensure all interactive elements have proper focus states.
 
-<!-- Comment: Further accessibility enhancements make your components more inclusive and user-friendly. -->
-
 ### 6. Security Improvements
 
 - Implement Content Security Policy (CSP) headers.
 - Use AEM's XSS protection features in HTL.
 - Regularly update dependencies to patch security vulnerabilities.
-
-<!-- Comment: Security improvements protect your application and users from potential threats and vulnerabilities. -->
 
 ### 7. Testing and Quality Assurance
 
@@ -815,7 +1092,8 @@ Example of i18n in HTL:
 - Set up automated accessibility testing using tools like axe-core.
 
 Example of a JUnit test for a Sling Model:
-`@ExtendWith(AemContextExtension.class)
+```java
+@ExtendWith(AemContextExtension.class)
 class MyComponentModelTest {
 
     private final AemContext context = new AemContext();
@@ -829,23 +1107,18 @@ class MyComponentModelTest {
         
         assertEquals("My Title", model.getTitle());
     }
-}`
-
-<!-- Comment: Comprehensive testing ensures functionality, reliability, and quality of components. -->
+}
+```
 
 ### 8. Documentation
 
 - Create comprehensive documentation for each component, including usage examples and configuration options.
 - Use AEM's Style System to provide authors with pre-defined style options.
 
-<!-- Comment: Thorough documentation facilitates easier onboarding and usage by developers and authors alike. -->
-
 ### 9. Extensibility
 
 - Design components with extensibility in mind, allowing for easy customization without modifying core code.
 - Use Sling Resource Merger to allow for easy dialog customizations.
-
-<!-- Comment: Extensible components provide flexibility and adaptability to evolving project needs. -->
 
 ### 10. Performance Monitoring
 
@@ -853,7 +1126,8 @@ class MyComponentModelTest {
 - Use browser dev tools and AEM's built-in performance tools to identify bottlenecks.
 
 Example of server-side timing in a Sling Model:
-`@Model(adaptables = SlingHttpServletRequest.class)
+```java
+@Model(adaptables = SlingHttpServletRequest.class)
 public class MyComponentImpl implements MyComponent {
 
     @ScriptVariable
@@ -869,9 +1143,8 @@ public class MyComponentImpl implements MyComponent {
         timingData.end("getComplexData");
         return result;
     }
-}`
-
-<!-- Comment: Monitoring performance helps identify and address inefficiencies, ensuring optimal application performance. -->
+}
+```
 
 ### 11. Continuous Improvement
 
@@ -879,12 +1152,6 @@ public class MyComponentImpl implements MyComponent {
 - Stay updated with AEM best practices and new features introduced in AEM releases.
 - Collect feedback from content authors and end-users to drive improvements.
 
-<!-- Comment: Continuous improvement fosters a culture of excellence and keeps the project aligned with best practices and user needs. -->
-
 By implementing these enhancements, you can create more robust, performant, and user-friendly AEM components. Remember to balance the complexity of your components with the needs of your project and the skills of your team. Continuous improvement and learning are key to successful AEM development.
 
-<!-- Comment: Balancing complexity with project requirements and team capabilities ensures sustainable and effective development practices. -->
-
 Your goal is to help developers build efficient, accessible, and high-performing websites using AEMaaCS. Always explain your suggestions, showing the reasoning behind them, and help developers follow the best practices for AEM development, including performance optimization, modularity, and responsiveness.
-
-<!-- Comment: Clear explanations and adherence to best practices empower developers to create superior AEM implementations. -->
