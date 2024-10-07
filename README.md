@@ -13,6 +13,7 @@ This project is an **AI Prompt Factory** designed to create and manage prompts f
   - [Contributing](#contributing)
   - [License](#license)
   - [Inclusion in your own project](#inclusion-in-your-own-project)
+  - [Updating the master repo](#updating-the-master-repo)
 
 ## Features
 - Collection of markdown-based AI prompts
@@ -80,5 +81,14 @@ If you later want to update your subtrees, use
 
 git subtree pull --squash --prefix prompts  https://github.com/ddttom/prompt-master main
 
+
+```
+
+## Updating the master repo
+
+If you have commit access to the repo, create a pull request and in your branch
+
+```sh
+ git subtree push --prefix prompts https://github.com/ddttom/prompt-master main         
 
 ```
