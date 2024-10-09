@@ -1,6 +1,6 @@
-review the generated code, ensure all blocks and css and readme.md and demo.md and example.md are present
+review the generated code, ensure all java, css, xml and readme.md  are present
 
-make sure const is used when js variables are not reassigned
+make sure const is used when variables are not reassigned
 
 remove any unused imports in the code, do not comment them out
 remove unused css in the stylesheet, do not comment them out
