@@ -1,5 +1,4 @@
-Create and implement the code, styling and readme for a Franklin
-6-sided 3D cube named  3dcube, 
+Create and implement the code, styling and readme for a 6-sided 3D cube named  3dcube, 
 the readme should include the guidance you respond with as text. 
 Each face should contain an image as a href link. 
 The images are placed in the block’s first cell of each table row; 
