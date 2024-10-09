@@ -22,7 +22,7 @@ When developing components, always include a README.md file.
 
 Component files should be organized in directories:
 
-```
+```bash
 /ui.apps/src/main/content/jcr_root/apps/<project-name>/components/<component-name>/
   <component-name>.html
   _cq_dialog/.content.xml
@@ -122,13 +122,15 @@ Define component-specific styles:
 ## Sling Models in AEMaaCS
 
 ### Location
+
 The Sling Model file (e.g., `MyComponent.java`) is typically stored in the `core` module:
 
-```
+```bash
 /core/src/main/java/com/<company-name>/<project-name>/core/models/MyComponent.java
 ```
 
 ### Purpose
+
 Sling Models serve several crucial purposes in AEM component development:
 
 1. **Business Logic:** Encapsulates the business logic and data processing for the component.
@@ -139,12 +141,15 @@ Sling Models serve several crucial purposes in AEM component development:
 ### When to Create a Sling Model
 
 #### For New Custom Components
+
 It's generally recommended to create a Sling Model for new custom components to:
+
 - Separate concerns (view from logic)
 - Improve testability
 - Enhance reusability of logic
 
 #### For Components Leveraging Core Components
+
 When extending or customizing Core Components:
 
 1. **Simple Customization:** Might not need a new Sling Model for minor changes or appearance customization.
@@ -173,6 +178,7 @@ public class MyCustomTeaserImpl extends TeaserImpl implements MyCustomTeaser {
 ```
 
 ### Best Practices for Sling Models
+
 1. Always create a Sling Model interface along with the implementation.
 2. Use appropriate annotations (`@Model`, `@ValueMapValue`, `@OSGiService`, etc.).
 3. Keep models focused and adhere to the Single Responsibility Principle.
@@ -348,6 +354,7 @@ When developing or enhancing components in AEM, front-end developers often work 
 2. **Set Up a Style Guide**
    - Create a central SCSS file (e.g., `_variables.scss`) to define colors, typography, and other design tokens.
    - Example:
+
      ```scss
      $color-primary: #007bff;
      $font-family-base: 'Arial', sans-serif;
@@ -361,6 +368,7 @@ When developing or enhancing components in AEM, front-end developers often work 
 4. **Implement Mobile-First**
    - Start with the mobile design and use media queries to adapt for larger screens.
    - Example:
+
      ```scss
      .cmp-mycomponent {
        padding: $spacing-unit;
@@ -408,7 +416,8 @@ When developing or enhancing components in AEM, front-end developers often work 
    - Add the necessary files: `.content.xml`, `<component-name>.html`, and `_cq_dialog/.content.xml`.
 
    Example structure:
-   ```
+
+   ```bash
    ui.apps/
    └── src/
        └── main/
@@ -426,13 +435,10 @@ When developing or enhancing components in AEM, front-end developers often work 
 
 3. **Implement HTL Structure**
    - In the `<component-name>.html` file, create the basic HTML structure that matches the design.
-   - Use Certainly. Here's the continuation of the comprehensive AEMaaCS Development Guide:
-
-3. **Implement HTL Structure**
-   - In the `<component-name>.html` file, create the basic HTML structure that matches the design.
    - Use proper semantic HTML elements.
 
    Example:
+
    ```html
    <div data-sly-use.model="com.myproject.core.models.MyComponent" 
         class="cmp-mycomponent">
@@ -449,6 +455,7 @@ When developing or enhancing components in AEM, front-end developers often work 
    - Implement the styles to match the design, using BEM methodology.
 
    Example:
+
    ```scss
    .cmp-mycomponent {
      &__title {
@@ -466,6 +473,7 @@ When developing or enhancing components in AEM, front-end developers often work 
    - If required, create a JavaScript file in the same directory to handle any interactive elements.
 
    Example:
+
    ```javascript
    (function() {
      async function init(element) {
@@ -518,7 +526,7 @@ Ensuring accessibility compliance is crucial in AEM development. Here's a guide 
 
 ### Implementing Accessibility in AEM Components
 
-#### 1. Semantic HTML Structure	
+#### 1. Semantic HTML Structure
 
 Use proper HTML elements to convey the structure and meaning of your content:
 
@@ -608,7 +616,7 @@ Ensure forms are properly labeled and errors are clearly communicated:
 
 #### 8. Skip Links
 
-Implement skip links to allow users to bypass repetitive content:	
+Implement skip links to allow users to bypass repetitive content:
 
 ```html
 <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -706,6 +714,7 @@ To create a Content Fragment model:
 2. Click "Create" and define your model structure
 
 Example of a simple "Article" Content Fragment model:
+
 - Title (Single line text)
 - Author (Single line text)
 - Content (Multi line text)
@@ -752,6 +761,7 @@ In your HTL:
 Experience Fragments are reusable groups of components that can be used across pages.
 
 To create an Experience Fragment:
+
 1. Navigate to Experience Fragments console
 2. Click "Create" > "Experience Fragment"
 3. Choose a template and create your fragment
@@ -977,6 +987,7 @@ Common AEMaaCS Issues and Solutions:
 
 1. Issue: Slow component rendering
    Solution: Use server-side timers to identify bottlenecks:
+
    ```java
    TimingData timing = new TimingData(request);
    timing.start("slowOperation");
@@ -986,6 +997,7 @@ Common AEMaaCS Issues and Solutions:
 
 2. Issue: ClassNotFoundException in custom OSGi services
    Solution: Ensure your bundle is correctly exported in the `pom.xml`:
+
    ```xml
    <Export-Package>
        com.myproject.core.*;version=${project.version}
@@ -997,6 +1009,7 @@ Common AEMaaCS Issues and Solutions:
 
 4. Issue: Sling Model injection not working
    Solution: Ensure the Sling Model is registered in the `package-info.java`:
+
    ```java
    @org.osgi.annotation.versioning.Version("1.0.0")
    package com.myproject.core.models;
@@ -1006,6 +1019,7 @@ Common AEMaaCS Issues and Solutions:
 
 5. Issue: JavaScript not loading
    Solution: Check clientlib inclusion and categories in your page component:
+
    ```html
    <sly data-sly-use.clientlib="core/wcm/components/commons/v1/templates/clientlib.html">
        <sly data-sly-call="${clientlib.js @ categories='myproject.base'}"/>
@@ -1039,6 +1053,7 @@ After implementing your AEM components, consider the following suggestions to en
 - Optimize asset delivery using adaptive image servlets and Dynamic Media capabilities.
 
 Example of lazy loading in HTL:
+
 ```html
 <div data-sly-use.image="com.adobe.cq.wcm.core.components.models.Image">
     <img src="${image.src}" alt="${image.alt}" loading="lazy">
@@ -1056,6 +1071,7 @@ Example of lazy loading in HTL:
 - Use data layer to standardize data collection across components.
 
 Example of data layer implementation:
+
 ```html
 <div class="cmp-mycomponent"
      data-cmp-data-layer="${myComponent.data.json}">
@@ -1069,6 +1085,7 @@ Example of data layer implementation:
 - Implement resource bundles for multi-language support.
 
 Example of i18n in HTL:
+
 ```html
 <h1>${'Welcome' @ i18n}</h1>
 ```
@@ -1092,6 +1109,7 @@ Example of i18n in HTL:
 - Set up automated accessibility testing using tools like axe-core.
 
 Example of a JUnit test for a Sling Model:
+
 ```java
 @ExtendWith(AemContextExtension.class)
 class MyComponentModelTest {
@@ -1126,6 +1144,7 @@ class MyComponentModelTest {
 - Use browser dev tools and AEM's built-in performance tools to identify bottlenecks.
 
 Example of server-side timing in a Sling Model:
+
 ```java
 @Model(adaptables = SlingHttpServletRequest.class)
 public class MyComponentImpl implements MyComponent {
