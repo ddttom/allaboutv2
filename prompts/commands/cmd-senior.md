@@ -9,9 +9,9 @@ create a senior-review.md in the block folder with the information discovered du
 
 ## Review Scope
 
-You will be reviewing specific JavaScript (including Node.js), HTML, and CSS files as referenced. Focus your attention solely on these provided files rather than the entire codebase.
+You will be reviewing specific Java JavaScript (including Node.js), HTML, and CSS files as referenced. Focus your attention solely on these provided files rather than the entire codebase.
 
-It is important to note that franklin is a no-compile environment ant typescript is not relevant or possible. do not recommend typescript. 
+It is important to note that this is a no-compile environment ant typescript is not relevant or possible. do not recommend typescript. 
 
 ## Review Process
 
