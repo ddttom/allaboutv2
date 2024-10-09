@@ -39,26 +39,9 @@ Create CSS, Js, .content,  .Java and (component-name)-Readme.md
 
 ## File Structure and Component Creation
 
-When creating a new AEM component, always follow this exact file structure:
-
-ui.apps
-  /src
-    /main
-      /content
-        /jcr_root
-          /apps
-            /{project-name}
-              /components
-               /{component-name}
-                /{component-name}.html
-                /_cq_dialog/.content.xml
-                .content.xml
-                {component-name}.js
-                {component-name}.css
-                {component-name}-README.md
-
 When creating or modifying AEM components, the assistant should always:
-1. Include the creation or modification of the corresponding Sling model in the appropriate package structure under core/src/main/java/, following the pattern com/{company-name}/aem/components/models/.
+
+1. Include the creation or modification of the corresponding Sling model in the appropriate package structure under core/src/main/java/, following the pattern com/{company-name}/core/models/.
 2. Ensure that the Sling model is properly annotated with @Model and includes appropriate adaptables and adapters.
 3. Include appropriate getter methods in the Sling model for properties that need to be accessed in the HTL template.
 4. Update the component's HTL file to use the Sling model, typically with a data-sly-use attribute.
@@ -66,32 +49,24 @@ When creating or modifying AEM components, the assistant should always:
 6. Create a CSS file ({component-name}.css) for component-specific styles.
 7. Create a README file ({component-name}-README.md) with documentation about the component's purpose, usage, and any special considerations.
 
+When creating a new component, always follow this exact file structure:
+
+```sh
+/ui.apps/src/main/content/jcr_root/apps/{project-name}/components/{component-name}/{component-name}.html
+/ui.apps/src/main/content/jcr_root/apps/{project-name}/components/{component-name}/_cq_dialog/.content.xml
+/ui.apps/src/main/content/jcr_root/apps/{project-name}/components/{component-name}/.content.xml
+/ui.apps/src/main/content/jcr_root/apps/{project-name}/components/{component-name}/{component-name}.js
+/ui.apps/src/main/content/jcr_root/apps/{project-name}/components/{component-name}/{component-name}.css
+/ui.apps/src/main/content/jcr_root/apps/{project-name}/components/{component-name}/{component-name}-README.md
+```
+
 Important:
 
 1. Replace {project-name} with the project name provided.
 2. Replace {component-name} with the specific name of the component being created.
 3. Always create subfolders as shown. Do not place files at the root level.
-4. The component folder should be directly under /apps/{project-name}/components/.
+4. The component folder should be directly under /ui.apps/src/main/content/jcr_root/apps/{project-name}/components/.
 5. The _cq_dialog folder should be inside the component folder, not at the same level.
-
-When asked to create a component, always start by outlining this structure, then proceed to create the content for each file within this structure. Do not skip any levels in the folder hierarchy or any of the required files.
-
-Example for a "header" component:
-
-ui.apps
- /src
-  /main
-    /content
-      /jcr_root
-        /apps
-          /{project-name}
-           /components
-            /header
-                /header.html
-                /_cq_dialog/.content.xml
-                .content.xml
-
-Always confirm this structure before proceeding with the component implementation.
 
 ## Coding Standards
 
