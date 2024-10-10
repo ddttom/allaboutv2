@@ -52,13 +52,24 @@ Always follow this exact file structure for new components:
     {component-name}-SeniorReview.md
 ```
 
+Example of a fully resolved path:
+```
+/ui.apps/src/main/content/jcr_root/apps/myproject/components/mycomponent/mycomponent.html
+```
+
 ## Sling Model Development
 
 1. Create the model in `core/src/main/java/com/{company-name}/core/models/`
+   Example: `/core/src/main/java/com/tom/core/models/MyComponentModel.java`
 2. Use `@Model` annotation with appropriate adaptables
 3. Implement getter methods for properties used in HTL
 4. Use `@PostConstruct` for initialization logic
 5. Follow SOLID principles in your Java code
+
+## Unit Testing
+
+Implement unit tests in the `core/src/test/java/` directory, mirroring the structure of your main Java code.
+Example: `/core/src/test/java/com/tom/core/models/MyComponentModelTest.java`
 
 ## Dialog Creation
 
@@ -151,8 +162,8 @@ Always follow this exact file structure for new components:
 5. Provide help text for complex fields
 6. Set appropriate default values
 7. Implement validation when necessary
-8. use constants when variables are not reassigned
-9. group configuration variables into a configuration object
+8. Use constants when variables are not reassigned
+9. Group configuration variables into a configuration object
 
 ## HTL Script Development
 
@@ -216,7 +227,40 @@ Always follow this exact file structure for new components:
 ## AEM Core Components Usage
 
 1. Understand and utilize available Core Components
-2. Customize Core Components using the recommended extension patterns
+2. Core Components provide a solid foundation for common content types (e.g., Text, Image, Navigation)
+3. Customize Core Components using the recommended extension patterns:
+   a. Content Policy Configuration
+   b. Sling Resource Merger overlays
+   c. Custom Sling Models
+4. Leverage the Style System provided by Core Components for flexible styling
+5. Use the latest version of Core Components for best performance and features
+6. Refer to the [Adobe Core Components Library](https://www.adobe.com/go/aem_cmp_library) for documentation and examples
+
+## Content Fragments and Experience Fragments
+
+### Content Fragments
+1. Use Content Fragments for reusable, channel-agnostic content
+2. Create Content Fragment Models to define the structure
+3. Implement Content Fragment components for rendering
+4. Leverage variations for different content versions
+5. Use Content Fragment references in your components for modular content
+
+### Experience Fragments
+1. Use Experience Fragments for reusable groups of components
+2. Implement Experience Fragment variations for different contexts (e.g., web, mobile, email)
+3. Leverage Experience Fragments in your templates for consistent layouts
+4. Use Experience Fragment references in your components for modular experiences
+
+## GraphQL and Headless CMS Capabilities
+
+1. Utilize AEM's built-in GraphQL API for Content Fragments
+2. Create custom GraphQL schemas based on Content Fragment Models
+3. Implement persisted queries for better performance and security
+4. Use GraphQL query editor in AEM for testing and development
+5. Leverage AEM's HTTP API for headless content delivery
+6. Implement server-side rendering for initial page load performance
+7. Use client-side rendering for dynamic content updates
+8. Consider using the AEM SPA Editor framework for single-page applications
 
 ## Security Best Practices
 
@@ -269,30 +313,5 @@ Always follow this exact file structure for new components:
 7. Use AEM's built-in caching mechanisms
 8. Follow version control best practices
 9. Consider ethical implications of features
-
-To add comments to this code, follow these steps:
-
-1. Analyze the code to understand its structure and functionality.
-2. Identify key components, functions, loops, conditionals, and any complex logic.
-3. Add comments that explain:
-   * The purpose of functions or code blocks
-   * How complex algorithms or logic work
-   * Any assumptions or limitations in the code
-   * The meaning of important variables or data structures
-   * Any potential edge cases or error handling
-   * Usage of external libraries, APIs, or Node.js modules
-   * Known issues or TODO items
-   * For CSS, explain the purpose of complex selectors or the reasoning behind specific style choices
-
-When adding comments, follow these guidelines:
-
-* Use clear and concise language
-* Avoid stating the obvious (e.g., don't just restate what the code does)
-* Focus on the "why" and "how" rather than just the "what"
-* Use single-line comments for brief explanations
-* Use multi-line comments for longer explanations or function/class descriptions
-* Maintain a balanced comment density (aim for one comment per logical block or every 5-10 lines of complex code)
-* Place comments directly above the relevant code or at the end of short lines
-* For already well-commented or self-explanatory code, add comments only if they provide additional insight
 
 Remember to always tailor your responses to the specific AEM version the developer is using, provide complete and functional code snippets, and offer step-by-step guidance for complex tasks. When creating a new component, always start by outlining the correct file structure as specified in the "File Structure" section. Confirm this structure before proceeding with the implementation details of each file. Always provide content for all required files: HTML, dialog XML, content XML, JavaScript, CSS, and README.
