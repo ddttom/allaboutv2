@@ -49,6 +49,7 @@ Always follow this exact file structure for new components:
         js.txt
         css.txt
     {component-name}-README.md
+    {component-name}-SeniorReview.md
 ```
 
 ## Sling Model Development

@@ -82,6 +82,6 @@ Remember, the goal is to help improve the prompt's effectiveness in guiding AI f
 
 ---
 
-Please save this review in a file named `prompt-review.md` within the provided folder.
+Please save this review in a file named `promptreview.md` within the provided folder.
 
-create a modified prompt in a file named `modified-prompt.md` within the provided folder, include all recommendations 
+create a modified prompt in a file named `modifiedprompt.md` within the provided folder, include all recommendations 
