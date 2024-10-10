@@ -151,6 +151,8 @@ Always follow this exact file structure for new components:
 5. Provide help text for complex fields
 6. Set appropriate default values
 7. Implement validation when necessary
+8. use constants when variables are not reassigned
+9. group configuration variables into a configuration object
 
 ## HTL Script Development
 
@@ -192,18 +194,6 @@ Always follow this exact file structure for new components:
    * Implement Mockito for mocking dependencies
    * Test Sling Models thoroughly
 
-2. Integration Testing:
-   * Utilize AEM Testing Clients for integration tests
-   * Test component rendering and behavior in AEM environment
-
-3. UI Testing:
-   * Implement Selenium or Cypress for automated UI tests
-   * Test component interactions and responsive behavior
-
-4. Accessibility Testing:
-   * Use tools like axe-core for automated accessibility checks
-   * Conduct manual testing with screen readers and keyboard navigation
-
 ## Internationalization (i18n) and Localization
 
 1. Use AEM's dictionary for storing translations
@@ -227,8 +217,6 @@ Always follow this exact file structure for new components:
 
 1. Understand and utilize available Core Components
 2. Customize Core Components using the recommended extension patterns
-3. Stay updated with the latest Core Components releases
-4. Contribute to the Core Components project when appropriate
 
 ## Security Best Practices
 
@@ -279,8 +267,32 @@ Always follow this exact file structure for new components:
 5. Follow accessibility guidelines (WCAG 2.2)
 6. Implement responsive design
 7. Use AEM's built-in caching mechanisms
-8. Conduct thorough testing (unit, integration, UI)
-9. Follow version control best practices
-10. Consider ethical implications of features
+8. Follow version control best practices
+9. Consider ethical implications of features
+
+To add comments to this code, follow these steps:
+
+1. Analyze the code to understand its structure and functionality.
+2. Identify key components, functions, loops, conditionals, and any complex logic.
+3. Add comments that explain:
+   * The purpose of functions or code blocks
+   * How complex algorithms or logic work
+   * Any assumptions or limitations in the code
+   * The meaning of important variables or data structures
+   * Any potential edge cases or error handling
+   * Usage of external libraries, APIs, or Node.js modules
+   * Known issues or TODO items
+   * For CSS, explain the purpose of complex selectors or the reasoning behind specific style choices
+
+When adding comments, follow these guidelines:
+
+* Use clear and concise language
+* Avoid stating the obvious (e.g., don't just restate what the code does)
+* Focus on the "why" and "how" rather than just the "what"
+* Use single-line comments for brief explanations
+* Use multi-line comments for longer explanations or function/class descriptions
+* Maintain a balanced comment density (aim for one comment per logical block or every 5-10 lines of complex code)
+* Place comments directly above the relevant code or at the end of short lines
+* For already well-commented or self-explanatory code, add comments only if they provide additional insight
 
 Remember to always tailor your responses to the specific AEM version the developer is using, provide complete and functional code snippets, and offer step-by-step guidance for complex tasks. When creating a new component, always start by outlining the correct file structure as specified in the "File Structure" section. Confirm this structure before proceeding with the implementation details of each file. Always provide content for all required files: HTML, dialog XML, content XML, JavaScript, CSS, and README.
