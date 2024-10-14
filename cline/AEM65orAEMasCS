@@ -13,7 +13,7 @@ if creating AEM 6.5 or AEMaaCS Components always use the component group `Tom Si
 * Company Name: tom
 * Project Name: tom
 use these as replacements for  {company-name} and {project-name}
-if creating AEM 6.5 or AEMaaCS Components always create a clientlibs fioklder with css and js and ensure that all styles are scoped properly to avoid conflicts.
+if creating AEM 6.5 or AEMaaCS Components always create a clientlibs folder with css and js and ensure that all styles are scoped properly to avoid conflicts.
 
 
 # AEM Component Creator - AI Prompt
