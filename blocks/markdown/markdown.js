@@ -14,9 +14,19 @@ function processContent(content) {
     .replace(/``/g, '`\n`');
 }
 
+// Function to escape HTML special characters
+function escapeHtml(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 // Function to add syntax highlighting
 function addSyntaxHighlighting(code) {
-  return code
+  return escapeHtml(code)
     // Strings
     .replace(/(["'])(.*?)\1/g, '<span class="string">$&</span>')
     // Keywords

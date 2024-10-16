@@ -41,3 +41,11 @@
     padding: calc(var(--markdown-padding) / 2);
   }
 }
+
+/* Add this to your existing CSS */
+.markdown-content pre code {
+  display: block;
+  background-color: #f4f4f4;
+  padding: 10px;
+  border-radius: 4px;
+}
