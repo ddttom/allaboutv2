@@ -4,40 +4,24 @@ const MARKDOWN_CONFIG = {
 };
 
 /**
- * Escapes HTML special characters in the Markdown content
- * @param {string} markdown - The Markdown content to escape
- * @returns {string} The escaped Markdown content
- */
-function escapeHtml(markdown) {
-  return markdown
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
-
-/**
  * Decorates the markdown block
  * @param {HTMLElement} block - The markdown block element
  */
 export default function decorate(block) {
-  const container = document.createElement('pre');
-  container.className = 'markdown markdown-border';
+  const pre = document.createElement('pre');
+  pre.className = 'markdown';
 
   try {
     const markdownContent = block.textContent.trim();
-    container.textContent = markdownContent;
+    pre.textContent = markdownContent;
     block.textContent = '';
-    block.appendChild(container);
+    block.appendChild(pre);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Markdown Error:', error);
     const errorElement = document.createElement('div');
     errorElement.className = 'markdown-error';
     errorElement.textContent = MARKDOWN_CONFIG.ERROR_MESSAGE;
-    container.appendChild(errorElement);
+    pre.appendChild(errorElement);
   }
-
-  block.classList.add('markdown--initialized');
 }
