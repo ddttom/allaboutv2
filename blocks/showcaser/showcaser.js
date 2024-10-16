@@ -384,11 +384,13 @@ export default async function decorate(block) {
       }
     });
 
-    // Remove original code elements from the page
+    // Hide original code elements instead of removing them
     codeElements.forEach((element) => {
       const preElement = element.parentElement;
       if (preElement && preElement.tagName.toLowerCase() === 'pre') {
-        preElement.remove();
+        preElement.style.display = 'none';
+        // Add a class for potential future reference
+        preElement.classList.add('showcaser-original-code');
       }
     });
 
