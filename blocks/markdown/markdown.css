@@ -12,6 +12,8 @@
   white-space: pre-wrap;
   word-wrap: break-word;
   overflow-x: auto;
+  border: 2px solid #333; /* Added dark line */
+  border-radius: 8px; /* Rounded corners */
 }
 
 /* Raw Markdown Content */
