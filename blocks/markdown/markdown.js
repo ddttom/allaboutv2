@@ -19,24 +19,23 @@ function highlightMarkdown(markdown) {
 }
 
 /**
- * Converts Markdown to HTML while preserving raw Markdown syntax
+ * Converts Markdown to HTML while preserving raw Markdown syntax and line breaks
  * @param {string} markdown - The Markdown content to convert
- * @returns {string} The converted HTML with preserved Markdown syntax
+ * @returns {string} The converted HTML with preserved Markdown syntax and line breaks
  */
 function convertMarkdownToHtml(markdown) {
-  const trimmedMarkdown = markdown
-    .split('\n')
-    .map(line => line.trim())
-    .join('\n');
-
-  const escapedMarkdown = trimmedMarkdown
+  const escapedMarkdown = markdown
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 
   const highlightedMarkdown = highlightMarkdown(escapedMarkdown);
 
-  return highlightedMarkdown.replace(/\n/g, '<br>');
+  // Preserve line breaks without adding leading non-breaking spaces
+  return highlightedMarkdown
+    .split('\n')
+    .map(line => line.trimEnd())
+    .join('<br>');
 }
 
 /**
