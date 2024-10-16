@@ -10,6 +10,9 @@ const MARKDOWN_CONFIG = {
  */
 function convertMarkdownToHtml(markdown) {
   return markdown
+    .split('\n')
+    .map(line => line.trim())
+    .join('\n')
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
