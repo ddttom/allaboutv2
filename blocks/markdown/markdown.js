@@ -8,20 +8,24 @@ const MARKDOWN_CONFIG = {
  * @param {HTMLElement} block - The markdown block element
  */
 export default function decorate(block) {
-  const pre = document.createElement('pre');
-  pre.className = 'markdown';
+  const container = document.createElement('div');
+  container.className = 'markdown';
 
   try {
     const markdownContent = block.textContent.trim();
-    pre.textContent = markdownContent;
+    const contentElement = document.createElement('div');
+    contentElement.className = 'markdown-content';
+    contentElement.textContent = markdownContent;
+    container.appendChild(contentElement);
+    
     block.textContent = '';
-    block.appendChild(pre);
+    block.appendChild(container);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Markdown Error:', error);
     const errorElement = document.createElement('div');
     errorElement.className = 'markdown-error';
     errorElement.textContent = MARKDOWN_CONFIG.ERROR_MESSAGE;
-    pre.appendChild(errorElement);
+    container.appendChild(errorElement);
   }
 }

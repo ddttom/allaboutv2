@@ -16,6 +16,11 @@
   margin: 0;
 }
 
+.markdown-content {
+  margin: 0;
+  padding: 0;
+}
+
 /* Raw Markdown Content */
 .markdown .raw-markdown {
   white-space: pre-wrap;
