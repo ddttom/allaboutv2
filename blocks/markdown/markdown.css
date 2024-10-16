@@ -21,6 +21,9 @@
 .markdown-wrapper {
   display: block;
   width: 100%;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .markdown {
@@ -68,8 +71,12 @@
 }
 
 .markdown code {
-  font-family: var(--markdown-code-font-family);
+  font-family: var(--markdown-font-family);
   font-size: 0.9em;
+  background-color: #f0f0f0;
+  padding: 2px 4px;
+  border-radius: 3px;
+  color: #d14;
 }
 
 /* Error Handling */
@@ -104,13 +111,6 @@
 .markdown .md-code { background-color: #f0f0f0; padding: 2px 4px; border-radius: 3px; color: #d14; }
 .markdown .md-list-item { color: #008000; }
 .markdown .md-link { color: #0000FF; text-decoration: underline; }
-
-/* Add this to your existing CSS */
-.markdown-wrapper {
-  white-space: pre-wrap;
-  word-break: break-word;
-  overflow-wrap: break-word;
-}
 
 /* Remove any margin or padding from inner elements */
 .markdown * {
