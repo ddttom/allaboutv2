@@ -119,13 +119,13 @@ function highlightSyntax(code, language) {
  * @returns {string} The converted HTML with preserved Markdown syntax
  */
 function convertMarkdownToHtml(markdown) {
-  return markdown
-    // Escape HTML entities
+  const escapedMarkdown = markdown
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
-    // Preserve line breaks
     .replace(/\n/g, '<br>');
+
+  return `<div class="raw-markdown">${escapedMarkdown}</div>`;
 }
 
 /**
