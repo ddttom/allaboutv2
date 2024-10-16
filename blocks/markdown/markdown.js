@@ -45,7 +45,7 @@ function convertMarkdownToHtml(markdown) {
  */
 export default function decorate(block) {
   const container = document.createElement('div');
-  container.className = 'markdown-container';
+  container.className = 'markdown-container markdown-border'; // Added markdown-border class
 
   try {
     const markdownContent = block.textContent.trim();
