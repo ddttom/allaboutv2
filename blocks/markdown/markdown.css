@@ -11,8 +11,6 @@
   border-radius: var(--markdown-border-radius);
   white-space: pre-wrap;
   word-wrap: break-word;
-  text-indent: -2em;  /* Add negative text-indent */
-  padding-left: 2em;  /* Add left padding to compensate for the negative text-indent */
 }
 
 /* Typography */
