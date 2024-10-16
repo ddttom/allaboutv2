@@ -192,3 +192,19 @@
     font-size: 1.1em;
   }
 }
+
+/* Markdown Syntax Highlighting */
+.markdown-container .heading { color: var(--markdown-heading-color); font-weight: bold; }
+.markdown-container .heading-text { color: var(--markdown-heading-color); }
+.markdown-container .bold { font-weight: bold; }
+.markdown-container .italic { font-style: italic; }
+.markdown-container .link { color: var(--markdown-link-color); }
+.markdown-container .link-text { text-decoration: underline; }
+.markdown-container .link-url { color: var(--markdown-js-string-color); }
+.markdown-container .list-item { color: var(--markdown-js-keyword-color); font-weight: bold; }
+.markdown-container .inline-code { 
+  background-color: var(--markdown-code-bg);
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-family: var(--markdown-code-font-family);
+}

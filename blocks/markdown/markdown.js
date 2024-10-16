@@ -106,6 +106,16 @@ function highlightSyntax(code, language) {
         .replace(/([\w-]+)(?=\s*:)/g, '<span class="property">$1</span>')
         .replace(/(:.*?;)/g, '<span class="value">$1</span>')
         .replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="comment">$1</span>');
+    case "markdown":
+      // Highlight Markdown syntax
+      return encodedCode
+        .replace(/^(#{1,6})\s+(.*?)$/gm, '<span class="heading">$1</span> <span class="heading-text">$2</span>')
+        .replace(/(\*\*|__)(.*?)\1/g, '<span class="bold">$2</span>')
+        .replace(/(\*|_)(.*?)\1/g, '<span class="italic">$2</span>')
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<span class="link">[<span class="link-text">$1</span>](<span class="link-url">$2</span>)</span>')
+        .replace(/^(\s*[-+*])\s/gm, '<span class="list-item">$1</span> ')
+        .replace(/^(\s*\d+\.)\s/gm, '<span class="list-item">$1</span> ')
+        .replace(/`([^`]+)`/g, '<span class="inline-code">$1</span>');
     default:
       // Return encoded code without highlighting for unsupported languages
       return encodedCode;
@@ -119,20 +129,28 @@ function highlightSyntax(code, language) {
  * @returns {string} The converted HTML
  */
 function convertMarkdownToHtml(markdown) {
-  return markdown
+  // First, apply syntax highlighting to the entire markdown content
+  const highlightedMarkdown = highlightSyntax(markdown, 'markdown');
+
+  return highlightedMarkdown
     // Convert headers
-    .replace(/^# (.*$)/gm, '<h1>$1</h1>')
-    .replace(/^## (.*$)/gm, '<h2>$1</h2>')
-    .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+    .replace(/<span class="heading">(#{1,6})<\/span> <span class="heading-text">(.*?)<\/span>/g, (match, hashes, text) => {
+      const level = hashes.length;
+      return `<h${level}>${text}</h${level}>`;
+    })
     // Convert bold and italic text
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/<span class="bold">(.*?)<\/span>/g, '<strong>$1</strong>')
+    .replace(/<span class="italic">(.*?)<\/span>/g, '<em>$1</em>')
     // Convert links
-    .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2">$1</a>')
+    .replace(/<span class="link">\[<span class="link-text">(.*?)<\/span>\]\(<span class="link-url">(.*?)<\/span>\)<\/span>/g, '<a href="$2">$1</a>')
     // Convert unordered list items
-    .replace(/^- (.*$)/gm, '<ul><li>$1</li></ul>')
+    .replace(/<span class="list-item">(\s*[-+*])<\/span> (.*?)(?=(\n|$))/g, '<ul><li>$2</li></ul>')
+    // Convert ordered list items
+    .replace(/<span class="list-item">(\s*\d+\.)<\/span> (.*?)(?=(\n|$))/g, '<ol><li>$2</li></ol>')
+    // Convert inline code
+    .replace(/<span class="inline-code">(.*?)<\/span>/g, '<code>$1</code>')
     // Convert paragraphs
-    .replace(/^([^<].*$)/gm, '<p>$1</p>')
+    .replace(/^(?!<[uo]l>|<li>|<h\d>)(.*?)$/gm, '<p>$1</p>')
     // Convert code blocks with language detection and syntax highlighting
     .replace(/^\s*```([a-z]*)\n([\s\S]*?)\n```/gm, (match, lang, code) => {
       const language = lang || detectLanguage(code);
