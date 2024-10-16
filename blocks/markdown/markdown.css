@@ -57,6 +57,8 @@
   color: var(--markdown-heading-color);
   font-weight: bold;
   display: inline-block;
+  margin: 1em 0 0.5em;
+  line-height: 1.2;
 }
 
 .markdown-container .bold {
@@ -80,6 +82,8 @@
 .markdown-container .list-item {
   color: var(--markdown-js-keyword-color);
   font-weight: bold;
+  display: inline-block;
+  margin-bottom: 0.5em;
 }
 
 /* Code Blocks */
@@ -88,7 +92,8 @@
   border-radius: var(--markdown-border-radius);
   padding: 15px;
   overflow-x: auto;
-  margin-bottom: 1em;
+  margin: 1em 0;
+  white-space: pre;
 }
 
 .markdown-container code {
@@ -178,5 +183,20 @@
 .markdown-container br {
   display: block;
   content: "";
-  margin-top: 1em;
+  margin-top: 0.5em;
+}
+
+/* Adjust spacing for block elements */
+.markdown-container p,
+.markdown-container ul,
+.markdown-container ol {
+  margin-bottom: 1em;
+}
+
+/* Ensure inline elements don't break */
+.markdown-container .bold,
+.markdown-container .italic,
+.markdown-container .inline-code {
+  display: inline;
+  white-space: normal;
 }
