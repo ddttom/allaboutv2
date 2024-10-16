@@ -102,6 +102,10 @@ leave no todo's or placeholders in the code
     
 
 **CSS (`blockname.css`):**
+
+The div with classes of  the type  {blockname}-container is a marker to say these are "on the Page" they should never be used for styling
+
+so do not use {blockname}-container as a styling class
   
   Define block-specific styles and ensure **responsive design** 
 

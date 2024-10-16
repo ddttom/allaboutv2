@@ -102,6 +102,10 @@ leave no todo's or placeholders in the code
     
 
 **CSS (`blockname.css`):**
+
+The div with classes of  the type  {blockname}-container is a marker to say these are "on the Page" they should never be used for styling
+
+so do not use {blockname}-container as a styling class
   
   Define block-specific styles and ensure **responsive design** 
 
@@ -128,13 +132,13 @@ When creating tables for blocks, follow this structure:
 1. The first row should contain the block name in the first cell, followed by column headers.
 2. Use something like the following format for the header row, if more than one column is required then extend the table as needed
 
-   | BlockName | 
-   | :----  | 
+   | BlockName |
+   | :-------- |
 
 3.  Variations are encouraged in blocks, in the example following `(bold)` is the variation; the additional class `bold` is added to the class by franklin and your job is to adjust the css and js, thus saving creation of two different, but similar block.
 
-   | BlockName (bold) | 
-   | :----  | 
+   | BlockName (bold) |
+   | :--------------- |
 
 4. Subsequent rows contain the data for each column.
 
@@ -182,13 +186,13 @@ This format is a special signal to Franklin and helps maintain consistency acros
 
 ## Metadata Example
 
-| metadata |  |
-| :---- | :---- |
-| title | Word Cloud Demo |
-| description | A demonstration of the Word Cloud block for Franklin |
-| json-ld | article |
-| image | |
-| author | Tom Cranstoun |
+| metadata        |                                                                                                                                   |
+| :-------------- | :-------------------------------------------------------------------------------------------------------------------------------- |
+| title           | Word Cloud Demo                                                                                                                   |
+| description     | A demonstration of the Word Cloud block for Franklin                                                                              |
+| json-ld         | article                                                                                                                           |
+| image           |                                                                                                                                   |
+| author          | Tom Cranstoun                                                                                                                     |
 | longdescription | This page showcases the Word Cloud block functionality in Franklin, visualizing common web development concepts and technologies. |
 
 
@@ -314,14 +318,14 @@ When creating a README.md file for a Franklin (Adobe Edge Delivery Services) blo
 
 Franklin contains metadata, this section is a typical metadata fraction in markdown format, when placing it in a demo.md do not put a heading before this block, do it silently 
 
-| metadata |  |
-| :---- | :---- |
-| title |  |
-| description |  |
-| json-ld | article |
-| image |  |
-| author | Tom Cranstoun |
-| longdescription |   |
+| metadata        |               |
+| :-------------- | :------------ |
+| title           |               |
+| description     |               |
+| json-ld         | article       |
+| image           |               |
+| author          | Tom Cranstoun |
+| longdescription |               |
 
 ## end metadata
 
