@@ -13,8 +13,7 @@ function convertMarkdownToHtml(markdown) {
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
-    .replace(/\n/g, '<br>\n')
-    .replace(/ /g, '&nbsp;');
+    .replace(/\n/g, '<br>');
 }
 
 /**
