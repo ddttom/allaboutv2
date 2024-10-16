@@ -24,19 +24,6 @@
   tab-size: 4;
 }
 
-/* Remove any text-indent or padding-left that might cause misalignment */
-.markdown .raw-markdown * {
-  text-indent: 0;
-  padding-left: 0;
-}
-
-/* Preserve line breaks without extra spacing */
-.markdown .raw-markdown br {
-  display: block;
-  content: "";
-  margin-top: 0;
-}
-
 /* Code Blocks */
 .markdown pre {
   background-color: var(--markdown-code-bg);
