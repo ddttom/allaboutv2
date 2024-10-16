@@ -20,6 +20,21 @@
   margin-bottom: 0;
 }
 
+.markdown-content pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Syntax highlighting colors */
+.markdown-content .string { color: #a31515; }
+.markdown-content .keyword { color: #0000ff; }
+.markdown-content .comment { color: #008000; }
+.markdown-content .number { color: #09885a; }
+.markdown-content .function { color: #795e26; }
+
 /* Responsive design */
 @media (max-width: 768px) {
   .markdown-content {

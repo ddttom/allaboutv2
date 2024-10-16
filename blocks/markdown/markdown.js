@@ -14,6 +14,21 @@ function processContent(content) {
     .replace(/``/g, '`\n`');
 }
 
+// Function to add syntax highlighting
+function addSyntaxHighlighting(code) {
+  return code
+    // Strings
+    .replace(/(["'])(.*?)\1/g, '<span class="string">$&</span>')
+    // Keywords
+    .replace(/\b(const|let|var|function|return|if|else|for|while|class)\b/g, '<span class="keyword">$&</span>')
+    // Comments
+    .replace(/(\/\/.*|\/\*[\s\S]*?\*\/)/g, '<span class="comment">$&</span>')
+    // Numbers
+    .replace(/\b(\d+)\b/g, '<span class="number">$&</span>')
+    // Function names
+    .replace(/(\w+)(?=\s*\()/g, '<span class="function">$&</span>');
+}
+
 export default function decorate(block) {
   try {
     const content = block.textContent.trim();
@@ -24,7 +39,7 @@ export default function decorate(block) {
     
     // Create a pre element to preserve formatting
     const preElement = document.createElement('pre');
-    preElement.textContent = processedContent;
+    preElement.innerHTML = addSyntaxHighlighting(processedContent);
     
     container.appendChild(preElement);
 
