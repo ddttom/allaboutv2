@@ -78,7 +78,7 @@ function highlightSyntax(code, language) {
 
   switch (language) {
     case "html":
-      return encodedCode.replace(/(&lt;[^&]*&gt;)|(&lt;!--[\s\S]*?--&gt;)/g, match => {
+      return encodedCode.replace(/(&lt;!--[\s\S]*?--&gt;)|(&lt;[^&]*&gt;)/g, match => {
         if (match.startsWith('&lt;!--')) {
           return `<span class="comment">${match}</span>`;
         }
