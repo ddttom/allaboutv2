@@ -42,10 +42,9 @@
   }
 }
 
-/* Add this to your existing CSS */
+/* Removed background color from code blocks */
 .markdown-content pre code {
   display: block;
-  background-color: #f4f4f4;
   padding: 10px;
   border-radius: 4px;
 }
