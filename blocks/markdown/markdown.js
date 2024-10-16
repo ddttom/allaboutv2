@@ -158,7 +158,22 @@ function highlightMarkdown(markdown) {
  * @returns {string} The converted HTML with preserved Markdown syntax
  */
 function convertMarkdownToHtml(markdown) {
-  return markdown
+  const lines = markdown.split('\n');
+  let firstLine = '';
+  let restOfContent = '';
+
+  if (lines.length > 0) {
+    firstLine = lines[0];
+    restOfContent = lines.slice(1).join('\n');
+  }
+
+  // Process the first line separately
+  const processedFirstLine = firstLine
+    .replace(/^# (.*)$/, '<h1 class="markdown-title">$1</h1>')
+    .replace(/^([^#].*)$/, '<h1 class="markdown-title">$1</h1>');
+
+  // Process the rest of the content
+  const processedContent = restOfContent
     // Escape HTML entities
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -182,6 +197,8 @@ function convertMarkdownToHtml(markdown) {
       const highlightedCode = highlightSyntax(code, language);
       return `<pre><code class="language-${language}">${highlightedCode}</code></pre>`;
     });
+
+  return processedFirstLine + processedContent;
 }
 
 /**

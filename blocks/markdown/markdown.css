@@ -161,3 +161,14 @@
   display: inline;
   white-space: normal;
 }
+
+/* Add this to your existing CSS */
+
+.markdown .markdown-title {
+  font-size: 2em;
+  color: var(--markdown-heading-color);
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  border-bottom: 1px solid var(--markdown-border-color);
+  padding-bottom: 0.3em;
+}
