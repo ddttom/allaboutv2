@@ -389,9 +389,36 @@ export default async function decorate(block) {
       const preElement = element.parentElement;
       if (preElement && preElement.tagName.toLowerCase() === 'pre') {
         preElement.style.display = 'none';
-        // Add a class for potential future reference
         preElement.classList.add('showcaser-original-code');
       }
+    });
+
+    // Render the code snippets in the showcaser
+    codeSnippets.forEach((snippet, index) => {
+      const snippetContainer = document.createElement('div');
+      snippetContainer.className = 'showcaser-snippet';
+      snippetContainer.innerHTML = `
+        <h3>${snippet.title}</h3>
+        <pre><code class="language-${snippet.language}">${snippet.content}</code></pre>
+      `;
+      rightPage.appendChild(snippetContainer);
+
+      // Hide all snippets except the first one
+      if (index !== 0) {
+        snippetContainer.style.display = 'none';
+      }
+    });
+
+    // Add click event to title elements to show corresponding snippet
+    const titleElements = leftPage.querySelectorAll('.showcaser-title');
+    titleElements.forEach((titleElement, index) => {
+      titleElement.addEventListener('click', (e) => {
+        e.preventDefault();
+        const snippets = rightPage.querySelectorAll('.showcaser-snippet');
+        snippets.forEach((snippet, i) => {
+          snippet.style.display = i === index ? 'block' : 'none';
+        });
+      });
     });
 
   } catch (error) {
