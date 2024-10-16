@@ -153,15 +153,35 @@ function highlightMarkdown(markdown) {
 
 /**
  * Converts Markdown to HTML while preserving raw Markdown syntax
- * This function applies syntax highlighting to Markdown content
+ * This function wraps Markdown elements in spans for syntax highlighting
  * @param {string} markdown - The Markdown content to convert
  * @returns {string} The converted HTML with preserved Markdown syntax
  */
 function convertMarkdownToHtml(markdown) {
-  const highlightedMarkdown = highlightMarkdown(markdown);
-  
-  // Wrap the highlighted content in a div
-  return `<div class="raw-markdown">${highlightedMarkdown}</div>`;
+  return markdown
+    // Escape HTML entities
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    // Highlight headers
+    .replace(/^(#{1,6})\s+(.*?)$/gm, '<span class="heading">$1</span> <span class="heading-text">$2</span>')
+    // Highlight bold
+    .replace(/(\*\*|__)(.*?)\1/g, '<span class="bold">$1$2$1</span>')
+    // Highlight italic
+    .replace(/(\*|_)(.*?)\1/g, '<span class="italic">$1$2$1</span>')
+    // Highlight links
+    .replace(/(\[.*?\]\(.*?\))/g, '<span class="link">$1</span>')
+    // Highlight list items
+    .replace(/^(\s*[-+*])\s/gm, '<span class="list-item">$1</span> ')
+    .replace(/^(\s*\d+\.)\s/gm, '<span class="list-item">$1</span> ')
+    // Highlight inline code
+    .replace(/`([^`]+)`/g, '<span class="inline-code">`$1`</span>')
+    // Highlight code blocks
+    .replace(/```(\w+)?\n([\s\S]*?)```/g, (match, lang, code) => {
+      const language = lang || detectLanguage(code);
+      const highlightedCode = highlightSyntax(code, language);
+      return `<pre><code class="language-${language}">${highlightedCode}</code></pre>`;
+    });
 }
 
 /**
