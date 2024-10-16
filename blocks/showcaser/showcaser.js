@@ -319,10 +319,9 @@ export default async function decorate(block) {
 
       rightPage.appendChild(snippetContainer);
 
-      // Hide all snippets except the first one
-      if (index !== 0) {
-        snippetContainer.style.display = 'none';
-      }
+      
+      snippetContainer.style.display = 'none';
+      
     });
 
     // Add click event to title elements to show corresponding snippet
