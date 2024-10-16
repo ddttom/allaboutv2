@@ -49,9 +49,9 @@
 
 /* Error Handling */
 .markdown-error {
-  color: var(--markdown-error-color);
+  color: red;
   text-align: center;
-  padding: var(--markdown-padding);
+  padding: 15px;
 }
 
 /* Initialization */
@@ -70,4 +70,14 @@
     padding: calc(var(--markdown-padding) / 2);
     font-size: calc(var(--markdown-font-size) * 0.9);
   }
+}
+
+.markdown-container {
+  font-family: monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  padding: 15px;
+  background-color: #f8f8f8;
+  border-radius: 4px;
+  line-height: 1.4;
 }
