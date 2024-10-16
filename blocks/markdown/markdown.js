@@ -12,7 +12,10 @@ export default function decorate(block) {
     const markdownContent = block.textContent.trim();
     const pre = document.createElement('pre');
     pre.className = 'markdown';
-    pre.textContent = markdownContent;
+    
+    // Split the content by lines and join them back with proper line breaks
+    const lines = markdownContent.split('\n');
+    pre.textContent = lines.map(line => line.trim()).join('\n');
     
     block.textContent = '';
     block.appendChild(pre);
