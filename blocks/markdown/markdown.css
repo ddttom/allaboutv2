@@ -1,0 +1,28 @@
+.markdown {
+  --markdown-bg-color: #e6f3ff;
+  --markdown-border-color: #4a90e2;
+  --markdown-border-radius: 8px;
+  --markdown-padding: 20px;
+}
+
+.markdown-content {
+  background-color: var(--markdown-bg-color);
+  border: 2px solid var(--markdown-border-color);
+  border-radius: var(--markdown-border-radius);
+  padding: var(--markdown-padding);
+}
+
+.markdown-content > *:first-child {
+  margin-top: 0;
+}
+
+.markdown-content > *:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .markdown-content {
+    padding: calc(var(--markdown-padding) / 2);
+  }
+}
