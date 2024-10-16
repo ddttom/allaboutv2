@@ -4,38 +4,17 @@ const MARKDOWN_CONFIG = {
 };
 
 /**
- * Applies basic syntax highlighting to Markdown content
- * @param {string} markdown - The Markdown content to highlight
- * @returns {string} The highlighted Markdown content
+ * Escapes HTML special characters in the Markdown content
+ * @param {string} markdown - The Markdown content to escape
+ * @returns {string} The escaped Markdown content
  */
-function highlightMarkdown(markdown) {
+function escapeHtml(markdown) {
   return markdown
-    .replace(/^(#{1,6}\s.*)/gm, '<span class="md-heading">$1</span>')
-    .replace(/(\*\*.*?\*\*)/g, '<span class="md-bold">$1</span>')
-    .replace(/(\*.*?\*)/g, '<span class="md-italic">$1</span>')
-    .replace(/(`.*?`)/g, '<span class="md-code">$1</span>')
-    .replace(/^(\s*[-*+]\s.*)/gm, '<span class="md-list-item">$1</span>')
-    .replace(/(\[.*?\]\(.*?\))/g, '<span class="md-link">$1</span>');
-}
-
-/**
- * Converts Markdown to HTML while preserving raw Markdown syntax and line breaks
- * @param {string} markdown - The Markdown content to convert
- * @returns {string} The converted HTML with preserved Markdown syntax and line breaks
- */
-function convertMarkdownToHtml(markdown) {
-  const escapedMarkdown = markdown
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-
-  const highlightedMarkdown = highlightMarkdown(escapedMarkdown);
-
-  // Preserve line breaks without adding leading non-breaking spaces
-  return highlightedMarkdown
-    .split('\n')
-    .map(line => line.trimEnd())
-    .join('<br>');
+    .replace(/>/g, '&gt')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
 }
 
 /**
@@ -43,15 +22,16 @@ function convertMarkdownToHtml(markdown) {
  * @param {HTMLElement} block - The markdown block element
  */
 export default function decorate(block) {
-  const container = document.createElement('div');
-  container.className = 'markdown-container markdown-border'; // Added markdown-border class
+  const container = document.createElement('pre');
+  container.className = 'markdown markdown-border';
 
   try {
     const markdownContent = block.textContent.trim();
-    container.innerHTML = convertMarkdownToHtml(markdownContent);
+    container.textContent = markdownContent;
     block.textContent = '';
     block.appendChild(container);
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Markdown Error:', error);
     const errorElement = document.createElement('div');
     errorElement.className = 'markdown-error';
