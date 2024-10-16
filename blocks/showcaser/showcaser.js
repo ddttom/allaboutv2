@@ -78,7 +78,7 @@ function highlightSyntax(code, language) {
 
   switch (language) {
     case "html":
-      return encodedCode.replace(/(&lt;!--[\s\S]*?--&gt;)|(&lt;[^&]*&gt;)/g, match => {
+      return encodedCode.replace(/(&lt;[^&]*&gt;)|(&lt;!--[\s\S]*?--&gt;)/g, match => {
         if (match.startsWith('&lt;!--')) {
           return `<span class="comment">${match}</span>`;
         }
@@ -292,11 +292,50 @@ export default async function decorate(block) {
       }
     });
 
-    // Activate the first title
-    const firstTitle = leftPage.querySelector('.showcaser-title');
-    if (firstTitle) {
-      firstTitle.classList.add('active');
-    }
+    // Hide original code elements instead of removing them
+    codeElements.forEach((element) => {
+      const preElement = element.parentElement;
+      if (preElement && preElement.tagName.toLowerCase() === 'pre') {
+        preElement.style.display = 'none';
+        preElement.classList.add('showcaser-original-code');
+      }
+    });
+
+    // Render the code snippets in the showcaser
+    codeSnippets.forEach((snippet, index) => {
+      const snippetContainer = document.createElement('div');
+      snippetContainer.className = 'showcaser-snippet';
+      
+      const titleElement = document.createElement('h3');
+      titleElement.textContent = snippet.title;
+      snippetContainer.appendChild(titleElement);
+
+      const preElement = document.createElement('pre');
+      const codeElement = document.createElement('code');
+      codeElement.className = `language-${snippet.language}`;
+      codeElement.innerHTML = snippet.content;
+      preElement.appendChild(codeElement);
+      snippetContainer.appendChild(preElement);
+
+      rightPage.appendChild(snippetContainer);
+
+      // Hide all snippets except the first one
+      if (index !== 0) {
+        snippetContainer.style.display = 'none';
+      }
+    });
+
+    // Add click event to title elements to show corresponding snippet
+    const titleElements = leftPage.querySelectorAll('.showcaser-title');
+    titleElements.forEach((titleElement, index) => {
+      titleElement.addEventListener('click', (e) => {
+        e.preventDefault();
+        const snippets = rightPage.querySelectorAll('.showcaser-snippet');
+        snippets.forEach((snippet, i) => {
+          snippet.style.display = i === index ? 'block' : 'none';
+        });
+      });
+    });
 
   } catch (error) {
     // Handle errors and display error message
@@ -309,12 +348,4 @@ export default async function decorate(block) {
 
   // Mark the block as initialized
   block.classList.add('showcaser--initialized');
-
-  // Show the first snippet and activate the first title by default
-  const firstSnippet = rightPage.querySelector('.showcaser-snippet');
-  const firstTitle = leftPage.querySelector('.showcaser-title');
-  if (firstSnippet && firstTitle) {
-    firstSnippet.style.display = 'block';
-    firstTitle.classList.add('active');
-  }
 }
