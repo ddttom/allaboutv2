@@ -9,6 +9,9 @@
   padding: var(--markdown-padding);
   background-color: var(--markdown-bg-color);
   border-radius: var(--markdown-border-radius);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-x: auto;
 }
 
 /* Raw Markdown Content */
@@ -34,14 +37,9 @@
 
 /* Code Blocks */
 .markdown pre {
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  font-family: monospace;
-  tab-size: 4;
   background-color: var(--markdown-code-bg);
   border-radius: var(--markdown-border-radius);
   padding: 15px;
-  overflow-x: auto;
   margin: 1em 0;
 }
 
@@ -75,39 +73,10 @@
   }
 }
 
-.markdown-container {
-  font-family: monospace;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  padding: 15px;
-  background-color: #f8f8f8;
-  border-radius: 4px;
-  line-height: 1.4;
-  overflow-x: auto;
-}
-
 /* Syntax Highlighting */
-.md-heading { color: #0000FF; font-weight: bold; }
-.md-bold { font-weight: bold; color: #000080; }
-.md-italic { font-style: italic; color: #800000; }
-.md-code { background-color: #f0f0f0; padding: 2px 4px; border-radius: 3px; color: #d14; }
-.md-list-item { color: #008000; }
-.md-link { color: #0000FF; text-decoration: underline; }
-
-/* Initialization */
-.markdown:not(.markdown--initialized) {
-  opacity: 0;
-}
-
-.markdown--initialized {
-  opacity: 1;
-  transition: opacity 0.5s ease;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .markdown-container {
-    padding: 10px;
-    font-size: 14px;
-  }
-}
+.markdown .md-heading { color: #0000FF; font-weight: bold; }
+.markdown .md-bold { font-weight: bold; color: #000080; }
+.markdown .md-italic { font-style: italic; color: #800000; }
+.markdown .md-code { background-color: #f0f0f0; padding: 2px 4px; border-radius: 3px; color: #d14; }
+.markdown .md-list-item { color: #008000; }
+.markdown .md-link { color: #0000FF; text-decoration: underline; }
