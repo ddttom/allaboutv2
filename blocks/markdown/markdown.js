@@ -5,22 +5,26 @@ const MARKDOWN_CONFIG = {
   ERROR_MESSAGE: 'Error processing markdown content.',
 };
 
-// Function to trim all lines in the content
-function trimLines(content) {
-  return content.split('\n').map(line => line.trim()).join('\n');
+// Function to trim all lines in the content and handle double backticks
+function processContent(content) {
+  return content
+    .split('\n')
+    .map(line => line.trim())
+    .join('\n')
+    .replace(/``/g, '`\n`');
 }
 
 export default function decorate(block) {
   try {
     const content = block.textContent.trim();
-    const trimmedContent = trimLines(content);
+    const processedContent = processContent(content);
     
     const container = document.createElement('div');
     container.className = MARKDOWN_CONFIG.CONTAINER_CLASS;
     
     // Create a pre element to preserve formatting
     const preElement = document.createElement('pre');
-    preElement.textContent = trimmedContent;
+    preElement.textContent = processedContent;
     
     container.appendChild(preElement);
 
