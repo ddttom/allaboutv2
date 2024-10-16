@@ -83,7 +83,28 @@
   overflow-x: auto;
 }
 
-.markdown-container .raw-markdown {
-  display: inline-block;
-  min-width: 100%;
+/* Syntax Highlighting */
+.md-heading { color: #0000FF; font-weight: bold; }
+.md-bold { font-weight: bold; color: #000080; }
+.md-italic { font-style: italic; color: #800000; }
+.md-code { background-color: #f0f0f0; padding: 2px 4px; border-radius: 3px; color: #d14; }
+.md-list-item { color: #008000; }
+.md-link { color: #0000FF; text-decoration: underline; }
+
+/* Initialization */
+.markdown:not(.markdown--initialized) {
+  opacity: 0;
+}
+
+.markdown--initialized {
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .markdown-container {
+    padding: 10px;
+    font-size: 14px;
+  }
 }

@@ -4,19 +4,39 @@ const MARKDOWN_CONFIG = {
 };
 
 /**
+ * Applies basic syntax highlighting to Markdown content
+ * @param {string} markdown - The Markdown content to highlight
+ * @returns {string} The highlighted Markdown content
+ */
+function highlightMarkdown(markdown) {
+  return markdown
+    .replace(/^(#{1,6}\s.*)/gm, '<span class="md-heading">$1</span>')
+    .replace(/(\*\*.*?\*\*)/g, '<span class="md-bold">$1</span>')
+    .replace(/(\*.*?\*)/g, '<span class="md-italic">$1</span>')
+    .replace(/(`.*?`)/g, '<span class="md-code">$1</span>')
+    .replace(/^(\s*[-*+]\s.*)/gm, '<span class="md-list-item">$1</span>')
+    .replace(/(\[.*?\]\(.*?\))/g, '<span class="md-link">$1</span>');
+}
+
+/**
  * Converts Markdown to HTML while preserving raw Markdown syntax
  * @param {string} markdown - The Markdown content to convert
  * @returns {string} The converted HTML with preserved Markdown syntax
  */
 function convertMarkdownToHtml(markdown) {
-  return markdown
+  const trimmedMarkdown = markdown
     .split('\n')
     .map(line => line.trim())
-    .join('\n')
+    .join('\n');
+
+  const escapedMarkdown = trimmedMarkdown
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/\n/g, '<br>');
+    .replace(/>/g, '&gt;');
+
+  const highlightedMarkdown = highlightMarkdown(escapedMarkdown);
+
+  return highlightedMarkdown.replace(/\n/g, '<br>');
 }
 
 /**
