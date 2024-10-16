@@ -225,6 +225,7 @@ export default async function decorate(block) {
         });
 
         // Update active state of title elements
+        const titleElements = leftPage.querySelectorAll('.showcaser-title');
         titleElements.forEach(t => t.classList.remove('active'));
         titleElement.classList.add('active');
       });
@@ -234,6 +235,7 @@ export default async function decorate(block) {
       const snippetContainer = document.createElement('div');
       snippetContainer.className = 'showcaser-snippet';
       snippetContainer.id = `snippet-${index}`;
+      snippetContainer.style.display = 'none'; // Hide all snippets initially
       
       const snippetTitle = document.createElement('h3');
       snippetTitle.textContent = snippet.title;
@@ -322,4 +324,12 @@ export default async function decorate(block) {
 
   // Mark the block as initialized
   block.classList.add('showcaser--initialized');
+
+  // Show the first snippet and activate the first title by default
+  const firstSnippet = rightPage.querySelector('.showcaser-snippet');
+  const firstTitle = leftPage.querySelector('.showcaser-title');
+  if (firstSnippet && firstTitle) {
+    firstSnippet.style.display = 'block';
+    firstTitle.classList.add('active');
+  }
 }
