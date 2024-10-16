@@ -1,7 +1,7 @@
 /* Markdown Block Styles */
 
 /* Layout */
-.markdown {
+.markdown-container {
   font-family: var(--markdown-font-family);
   font-size: var(--markdown-font-size);
   color: var(--markdown-text-color);
@@ -11,6 +11,23 @@
   border-radius: var(--markdown-border-radius);
   white-space: pre-wrap;
   word-wrap: break-word;
+  display: block;
+  unicode-bidi: embed;
+  font-family: monospace;
+  tab-size: 4;
+}
+
+/* Remove any text-indent or padding-left that might cause misalignment */
+.markdown-container * {
+  text-indent: 0;
+  padding-left: 0;
+}
+
+/* Preserve line breaks without extra spacing */
+.markdown-container br {
+  display: block;
+  content: "";
+  margin-top: 0;
 }
 
 /* Typography */
