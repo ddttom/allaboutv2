@@ -34,12 +34,15 @@
 
 /* Code Blocks */
 .markdown pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: monospace;
+  tab-size: 4;
   background-color: var(--markdown-code-bg);
   border-radius: var(--markdown-border-radius);
   padding: 15px;
   overflow-x: auto;
   margin: 1em 0;
-  white-space: pre;
 }
 
 .markdown code {
@@ -49,9 +52,9 @@
 
 /* Error Handling */
 .markdown-error {
-  color: red;
+  color: var(--markdown-error-color);
   text-align: center;
-  padding: 15px;
+  padding: var(--markdown-padding);
 }
 
 /* Initialization */
