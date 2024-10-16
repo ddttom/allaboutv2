@@ -6,13 +6,13 @@
   font-size: var(--markdown-font-size);
   color: var(--markdown-text-color);
   line-height: 1.5;
-  padding: var(--markdown-padding);
+  padding: calc(var(--markdown-padding) + 2px); /* Added 2px to existing padding */
   background-color: var(--markdown-bg-color);
   border-radius: var(--markdown-border-radius);
   white-space: pre-wrap;
   word-wrap: break-word;
   overflow-x: auto;
-  border: 2px solid #333; /* Added dark line */
+  border: 2px solid #333; /* Dark line */
   border-radius: 8px; /* Rounded corners */
 }
 
@@ -57,7 +57,7 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .markdown {
-    padding: calc(var(--markdown-padding) / 2);
+    padding: calc(var(--markdown-padding) / 2 + 2px); /* Adjusted for responsive design */
     font-size: calc(var(--markdown-font-size) * 0.9);
   }
 }
