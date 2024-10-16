@@ -13,6 +13,16 @@
 }
 
 /* Layout */
+.markdown-container {
+  display: block;
+  width: 100%;
+}
+
+.markdown-wrapper {
+  display: block;
+  width: 100%;
+}
+
 .markdown {
   font-family: var(--markdown-font-family);
   font-size: var(--markdown-font-size);
