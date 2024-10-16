@@ -12,6 +12,7 @@ export default function decorate(block) {
     const markdownContent = block.textContent.trim();
     const pre = document.createElement('pre');
     pre.className = 'markdown';
+    pre.setAttribute('aria-label', 'Markdown content');
     
     // Split the content by lines and join them back with proper line breaks
     const lines = markdownContent.split('\n');

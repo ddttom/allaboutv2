@@ -1,18 +1,30 @@
 /* Markdown Block Styles */
 
+:root {
+  --markdown-font-family: monospace;
+  --markdown-font-size: 14px;
+  --markdown-color: #333;
+  --markdown-line-height: 1.5;
+  --markdown-bg-color: #f8f8f8;
+  --markdown-border-color: #ddd;
+  --markdown-border-radius: 4px;
+  --markdown-padding: 15px;
+  --markdown-error-color: #ff0000;
+}
+
 /* Layout */
 .markdown {
-  font-family: monospace;
-  font-size: 14px;
-  color: #333;
-  line-height: 1.5;
-  background-color: #f8f8f8;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  font-family: var(--markdown-font-family);
+  font-size: var(--markdown-font-size);
+  color: var(--markdown-color);
+  line-height: var(--markdown-line-height);
+  background-color: var(--markdown-bg-color);
+  border: 1px solid var(--markdown-border-color);
+  border-radius: var(--markdown-border-radius);
   white-space: pre-wrap;
   word-wrap: break-word;
   overflow-x: auto;
-  padding: 15px;
+  padding: var(--markdown-padding);
   margin: 0;
   display: block;
   width: 100%;
@@ -52,9 +64,9 @@
 
 /* Error Handling */
 .markdown-error {
-  color: #ff0000;
+  color: var(--markdown-error-color);
   text-align: center;
-  padding: 15px;
+  padding: var(--markdown-padding);
 }
 
 /* Initialization */
@@ -70,8 +82,8 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .markdown {
-    font-size: 12px;
-    padding: 10px;
+    font-size: calc(var(--markdown-font-size) - 2px);
+    padding: calc(var(--markdown-padding) - 5px);
   }
 }
 
