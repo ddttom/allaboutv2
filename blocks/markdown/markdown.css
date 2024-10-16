@@ -208,3 +208,46 @@
   border-radius: 3px;
   font-family: var(--markdown-code-font-family);
 }
+
+/* Raw Markdown Styles */
+.raw-markdown {
+  white-space: pre-wrap;
+  font-family: var(--markdown-code-font-family);
+  line-height: 1.5;
+  padding: 1em;
+  background-color: var(--markdown-code-bg);
+  border-radius: var(--markdown-border-radius);
+}
+
+.raw-markdown .heading { color: var(--markdown-heading-color); font-weight: bold; }
+.raw-markdown .heading-text { color: var(--markdown-heading-color); }
+.raw-markdown .bold { color: var(--markdown-js-keyword-color); }
+.raw-markdown .italic { color: var(--markdown-js-string-color); font-style: italic; }
+.raw-markdown .link { color: var(--markdown-link-color); }
+.raw-markdown .list-item { color: var(--markdown-js-keyword-color); }
+.raw-markdown .inline-code { 
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+/* Preserve line breaks */
+.raw-markdown br {
+  display: block;
+  content: "";
+  margin-top: 1em;
+}
+
+/* Style for code blocks within raw Markdown */
+.raw-markdown pre {
+  margin: 1em 0;
+  padding: 1em;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: var(--markdown-border-radius);
+  overflow-x: auto;
+}
+
+.raw-markdown code {
+  font-family: var(--markdown-code-font-family);
+  font-size: 0.9em;
+}
