@@ -5,38 +5,45 @@
   font-family: var(--markdown-font-family);
   font-size: var(--markdown-font-size);
   color: var(--markdown-text-color);
-  line-height: 1.3; /* Reduced line height */
+  line-height: 1.5;
   padding: var(--markdown-padding);
   background-color: var(--markdown-bg-color);
   border-radius: var(--markdown-border-radius);
-  white-space: normal; /* Changed from pre-wrap to normal */
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 /* Typography */
-.markdown .heading,
-.markdown .heading-text {
+.markdown .heading {
   color: var(--markdown-heading-color);
   font-weight: bold;
-  display: inline-block;
-  margin: 1em 0 0.5em;
-  line-height: 1.2;
+}
+
+.markdown .heading-text {
+  color: var(--markdown-heading-color);
 }
 
 .markdown .bold {
-  font-weight: bold;
+  font-weight: normal;
 }
 
 .markdown .italic {
-  font-style: italic;
+  font-style: normal;
 }
 
 .markdown .link {
   color: var(--markdown-link-color);
-  text-decoration: none;
 }
 
-.markdown .link:hover {
-  text-decoration: underline;
+.markdown .list-item {
+  color: var(--markdown-js-keyword-color);
+}
+
+.markdown .inline-code {
+  background-color: var(--markdown-code-bg);
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-family: var(--markdown-code-font-family);
 }
 
 /* Lists */
@@ -60,13 +67,6 @@
 .markdown code {
   font-family: var(--markdown-code-font-family);
   font-size: 0.9em;
-}
-
-.markdown .inline-code {
-  background-color: var(--markdown-code-bg);
-  padding: 2px 4px;
-  border-radius: 3px;
-  font-family: var(--markdown-code-font-family);
 }
 
 /* Error Handling */
@@ -140,11 +140,11 @@
   }
 }
 
-/* Adjust spacing for line breaks */
+/* Preserve line breaks */
 .markdown br {
   display: block;
   content: "";
-  margin-top: 0.3em; /* Reduced margin */
+  margin-top: 0.5em;
 }
 
 /* Remove margin from paragraphs */
