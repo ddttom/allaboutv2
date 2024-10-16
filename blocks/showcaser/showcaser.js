@@ -21,6 +21,11 @@ function decodeHtmlEntities(text) {
 function detectLanguage(code) {
   const decodedCode = decodeHtmlEntities(code);
 
+  // Check for HTML (including comments)
+  if (decodedCode.trim().startsWith('<!DOCTYPE html>') || decodedCode.trim().startsWith('<!--')) {
+    return 'html';
+  }
+
   // Simple check for Markdown (including title)
   if (decodedCode.trim().startsWith('#')) {
     return 'markdown';
@@ -177,6 +182,13 @@ function highlightSyntax(code, language) {
            return encodeHtmlEntities(match);
          }
        );
+     case "html":
+       return decodedCode.replace(/(&lt;[^&]*&gt;)|(&lt;!--[\s\S]*?--&gt;)/g, match => {
+         if (match.startsWith('&lt;!--')) {
+           return `<span class="comment">${match}</span>`;
+         }
+         return `<span class="tag">${match}</span>`;
+       });
      default:
        return encodeHtmlEntities(decodedCode);
    }
