@@ -107,8 +107,9 @@
 
 .showcaser-title:hover,
 .showcaser-title.active {
-  background-color: var(--showcaser-active-bg);
+  background-color: var(--showcaser-active-bg, #e6f2ff);
   text-decoration: underline;
+  font-weight: bold;
 }
 
 .showcaser-right-page h3 {
