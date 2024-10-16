@@ -214,96 +214,81 @@ export default async function decorate(block) {
         if (leftPage.classList.contains('collapsed')) {
           leftPage.classList.remove('collapsed');
           toggleButton.classList.remove('collapsed');
+          rightPage.style.width = '80%';
           toggleButton.textContent = '<';
-          toggleButton.setAttribute('aria-expanded', 'true');
         }
 
-        // Show the selected snippet and hide others
-        const snippets = rightPage.querySelectorAll('.showcaser-snippet');
-        snippets.forEach((s, i) => {
-          s.style.display = i === index ? 'block' : 'none';
+        // Render the selected code snippet
+        const h3 = document.createElement('h3');
+        h3.id = `snippet-${index}`;
+        h3.textContent = snippet.title;
+
+        const codeWrapper = document.createElement('div');
+        codeWrapper.className = 'showcaser-code-wrapper';
+
+        const copyButton = document.createElement('button');
+        copyButton.className = 'showcaser-copy';
+        copyButton.textContent = `Copy ${snippet.language} to clipboard`;
+
+        const pre = document.createElement('pre');
+        pre.className = `language-${snippet.language}`;
+
+        const code = document.createElement('code');
+        code.innerHTML = snippet.content;
+
+        pre.appendChild(code);
+        codeWrapper.appendChild(copyButton);
+        codeWrapper.appendChild(pre);
+
+        rightPage.innerHTML = '';
+        rightPage.appendChild(h3);
+        rightPage.appendChild(codeWrapper);
+
+        // Set up copy to clipboard functionality
+        copyButton.addEventListener('click', () => {
+          navigator.clipboard.writeText(code.textContent)
+            .then(() => {
+              copyButton.textContent = 'Copied!';
+              setTimeout(() => {
+                copyButton.textContent = `Copy ${snippet.language} to clipboard`;
+              }, SHOWCASER_CONFIG.COPY_BUTTON_RESET_DELAY);
+            })
+            .catch(err => {
+              console.error('Error copying content:', err);
+            });
         });
 
-        // Update active state of title elements
-        const titleElements = leftPage.querySelectorAll('.showcaser-title');
-        titleElements.forEach(t => t.classList.remove('active'));
-        titleElement.classList.add('active');
+        // Add expand/collapse functionality for long code snippets
+        if (snippet.content.split('\n').length > SHOWCASER_CONFIG.LONG_DOCUMENT_THRESHOLD) {
+          pre.classList.add('collapsible');
+          
+          const topExpandButton = document.createElement('button');
+          topExpandButton.className = 'showcaser-expand-collapse top';
+          topExpandButton.textContent = 'Expand';
+          
+          const bottomExpandButton = document.createElement('button');
+          bottomExpandButton.className = 'showcaser-expand-collapse bottom';
+          bottomExpandButton.textContent = '....';
+          
+          const toggleExpansion = () => {
+            pre.classList.toggle('expanded');
+            const isExpanded = pre.classList.contains('expanded');
+            topExpandButton.textContent = isExpanded ? 'Collapse' : 'Expand';
+            bottomExpandButton.textContent = isExpanded ? 'Close' : '....';
+          };
+          
+          topExpandButton.onclick = toggleExpansion;
+          bottomExpandButton.onclick = toggleExpansion;
+          
+          codeWrapper.insertBefore(topExpandButton, pre);
+          codeWrapper.appendChild(bottomExpandButton);
+        }
       });
       leftPage.appendChild(titleElement);
 
-      // Create snippet container
-      const snippetContainer = document.createElement('div');
-      snippetContainer.className = 'showcaser-snippet';
-      snippetContainer.id = `snippet-${index}`;
-      snippetContainer.style.display = 'none'; // Hide all snippets initially
-      
-      const snippetTitle = document.createElement('h3');
-      snippetTitle.textContent = snippet.title;
-      snippetContainer.appendChild(snippetTitle);
-
-      const codeWrapper = document.createElement('div');
-      codeWrapper.className = 'showcaser-code-wrapper';
-
-      const copyButton = document.createElement('button');
-      copyButton.className = 'showcaser-copy';
-      copyButton.textContent = `Copy ${snippet.language} to clipboard`;
-
-      const pre = document.createElement('pre');
-      pre.className = `language-${snippet.language}`;
-
-      const code = document.createElement('code');
-      code.innerHTML = snippet.content;
-
-      pre.appendChild(code);
-      codeWrapper.appendChild(copyButton);
-      codeWrapper.appendChild(pre);
-      snippetContainer.appendChild(codeWrapper);
-
-      rightPage.appendChild(snippetContainer);
-
-      // Hide all snippets except the first one
-      if (index !== 0) {
-        snippetContainer.style.display = 'none';
-      }
-
-      // Set up copy to clipboard functionality
-      copyButton.addEventListener('click', () => {
-        navigator.clipboard.writeText(code.textContent)
-          .then(() => {
-            copyButton.textContent = 'Copied!';
-            setTimeout(() => {
-              copyButton.textContent = `Copy ${snippet.language} to clipboard`;
-            }, SHOWCASER_CONFIG.COPY_BUTTON_RESET_DELAY);
-          })
-          .catch(err => {
-            console.error('Error copying content:', err);
-          });
-      });
-
-      // Add expand/collapse functionality for long code snippets
-      if (snippet.content.split('\n').length > SHOWCASER_CONFIG.LONG_DOCUMENT_THRESHOLD) {
-        pre.classList.add('collapsible');
-        
-        const topExpandButton = document.createElement('button');
-        topExpandButton.className = 'showcaser-expand-collapse top';
-        topExpandButton.textContent = 'Expand';
-        
-        const bottomExpandButton = document.createElement('button');
-        bottomExpandButton.className = 'showcaser-expand-collapse bottom';
-        bottomExpandButton.textContent = '....';
-        
-        const toggleExpansion = () => {
-          pre.classList.toggle('expanded');
-          const isExpanded = pre.classList.contains('expanded');
-          topExpandButton.textContent = isExpanded ? 'Collapse' : 'Expand';
-          bottomExpandButton.textContent = isExpanded ? 'Close' : '....';
-        };
-        
-        topExpandButton.onclick = toggleExpansion;
-        bottomExpandButton.onclick = toggleExpansion;
-        
-        codeWrapper.insertBefore(topExpandButton, pre);
-        codeWrapper.appendChild(bottomExpandButton);
+      // Automatically display the first snippet
+      if (index === 0) {
+        titleElement.click();
       }
     });
 
