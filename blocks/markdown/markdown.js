@@ -2,7 +2,7 @@
 const MARKDOWN_CONFIG = {
   ERROR_MESSAGE: 'Error rendering Markdown content. Please try again.',
   BOOK_TITLE: 'Markdown',
-  COPY_BUTTON_RESET_DELAY: 2000, // Delay in milliseconds before resetting the copy button text
+  COPY_BUTTON_RESET_DELAY: 2000,
 };
 
 /**
@@ -106,16 +106,6 @@ function highlightSyntax(code, language) {
         .replace(/([\w-]+)(?=\s*:)/g, '<span class="property">$1</span>')
         .replace(/(:.*?;)/g, '<span class="value">$1</span>')
         .replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="comment">$1</span>');
-    case "markdown":
-      // Highlight Markdown syntax
-      return encodedCode
-        .replace(/^(#{1,6})\s+(.*?)$/gm, '<span class="heading">$1</span> <span class="heading-text">$2</span>')
-        .replace(/(\*\*|__)(.*?)\1/g, '<span class="bold">$2</span>')
-        .replace(/(\*|_)(.*?)\1/g, '<span class="italic">$2</span>')
-        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<span class="link">[<span class="link-text">$1</span>](<span class="link-url">$2</span>)</span>')
-        .replace(/^(\s*[-+*])\s/gm, '<span class="list-item">$1</span> ')
-        .replace(/^(\s*\d+\.)\s/gm, '<span class="list-item">$1</span> ')
-        .replace(/`([^`]+)`/g, '<span class="inline-code">$1</span>');
     default:
       // Return encoded code without highlighting for unsupported languages
       return encodedCode;
@@ -123,82 +113,16 @@ function highlightSyntax(code, language) {
 }
 
 /**
- * Applies syntax highlighting to Markdown content
- * This function wraps Markdown syntax elements in span tags for highlighting
- * @param {string} markdown - The Markdown content to highlight
- * @returns {string} HTML string with syntax highlighting
- */
-function highlightMarkdown(markdown) {
-  return markdown
-    // Highlight headers
-    .replace(/^(#{1,6})\s+(.*?)$/gm, '<span class="heading">$1</span> <span class="heading-text">$2</span>')
-    // Highlight bold
-    .replace(/(\*\*|__)(.*?)\1/g, '<span class="bold">$1$2$1</span>')
-    // Highlight italic
-    .replace(/(\*|_)(.*?)\1/g, '<span class="italic">$1$2$1</span>')
-    // Highlight links
-    .replace(/(\[.*?\]\(.*?\))/g, '<span class="link">$1</span>')
-    // Highlight list items
-    .replace(/^(\s*[-+*])\s/gm, '<span class="list-item">$1</span> ')
-    .replace(/^(\s*\d+\.)\s/gm, '<span class="list-item">$1</span> ')
-    // Highlight inline code
-    .replace(/`([^`]+)`/g, '<span class="inline-code">`$1`</span>')
-    // Highlight code blocks
-    .replace(/```(\w+)?\n([\s\S]*?)```/g, (match, lang, code) => {
-      const language = lang || detectLanguage(code);
-      const highlightedCode = highlightSyntax(code, language);
-      return `<pre><code class="language-${language}">${highlightedCode}</code></pre>`;
-    });
-}
-
-/**
  * Converts Markdown to HTML while preserving raw Markdown syntax
- * This function wraps Markdown elements in spans for syntax highlighting
+ * This function applies syntax highlighting to Markdown content
  * @param {string} markdown - The Markdown content to convert
  * @returns {string} The converted HTML with preserved Markdown syntax
  */
 function convertMarkdownToHtml(markdown) {
-  const lines = markdown.split('\n');
-  let firstLine = '';
-  let restOfContent = '';
-
-  if (lines.length > 0) {
-    firstLine = lines[0];
-    restOfContent = lines.slice(1).join('\n');
-  }
-
-  // Process the first line separately
-  const processedFirstLine = firstLine
-    .replace(/^# (.*)$/, '<h1 class="markdown-title">$1</h1>')
-    .replace(/^([^#].*)$/, '<h1 class="markdown-title">$1</h1>');
-
-  // Process the rest of the content
-  const processedContent = restOfContent
-    // Escape HTML entities
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    // Highlight headers
-    .replace(/^(#{1,6})\s+(.*?)$/gm, '<span class="heading">$1</span> <span class="heading-text">$2</span>')
-    // Highlight bold
-    .replace(/(\*\*|__)(.*?)\1/g, '<span class="bold">$1$2$1</span>')
-    // Highlight italic
-    .replace(/(\*|_)(.*?)\1/g, '<span class="italic">$1$2$1</span>')
-    // Highlight links
-    .replace(/(\[.*?\]\(.*?\))/g, '<span class="link">$1</span>')
-    // Highlight list items
-    .replace(/^(\s*[-+*])\s/gm, '<span class="list-item">$1</span> ')
-    .replace(/^(\s*\d+\.)\s/gm, '<span class="list-item">$1</span> ')
-    // Highlight inline code
-    .replace(/`([^`]+)`/g, '<span class="inline-code">`$1`</span>')
-    // Highlight code blocks
-    .replace(/```(\w+)?\n([\s\S]*?)```/g, (match, lang, code) => {
-      const language = lang || detectLanguage(code);
-      const highlightedCode = highlightSyntax(code, language);
-      return `<pre><code class="language-${language}">${highlightedCode}</code></pre>`;
-    });
-
-  return processedFirstLine + processedContent;
+  const highlightedMarkdown = highlightMarkdown(markdown);
+  
+  // Wrap the highlighted content in a div
+  return `<div class="raw-markdown">${highlightedMarkdown}</div>`;
 }
 
 /**
@@ -211,37 +135,32 @@ export default function decorate(block) {
   container.className = 'markdown-container';
 
   try {
-    // Convert Markdown content to HTML
     const markdownContent = block.textContent.trim();
     const htmlContent = convertMarkdownToHtml(markdownContent);
     container.innerHTML = htmlContent;
 
-    // Apply syntax highlighting to code blocks and add copy buttons
+    // Apply syntax highlighting to code blocks
     container.querySelectorAll('pre code').forEach((codeBlock) => {
       const language = codeBlock.className.replace('language-', '');
       codeBlock.innerHTML = highlightSyntax(codeBlock.textContent, language);
 
-      // Create a wrapper for the code block and copy button
+      // Add copy button to code blocks
       const codeWrapper = document.createElement('div');
       codeWrapper.className = 'markdown-code-wrapper';
       codeBlock.parentNode.insertBefore(codeWrapper, codeBlock);
       codeWrapper.appendChild(codeBlock);
 
-      // Create and add the copy button
       const copyButton = document.createElement('button');
       copyButton.className = 'markdown-copy';
       copyButton.textContent = `Copy ${language} to clipboard`;
       copyButton.setAttribute('aria-label', `Copy ${language} code to clipboard`);
       codeWrapper.insertBefore(copyButton, codeBlock);
 
-      // Add click event listener to the copy button
       copyButton.addEventListener('click', () => {
         navigator.clipboard.writeText(codeBlock.textContent)
           .then(() => {
-            // Update button text and aria-label on successful copy
             copyButton.textContent = 'Copied!';
             copyButton.setAttribute('aria-label', 'Code copied to clipboard');
-            // Reset button text and aria-label after a delay
             setTimeout(() => {
               copyButton.textContent = `Copy ${language} to clipboard`;
               copyButton.setAttribute('aria-label', `Copy ${language} code to clipboard`);
