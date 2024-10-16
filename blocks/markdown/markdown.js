@@ -126,17 +126,16 @@ function convertMarkdownToHtml(markdown) {
     .replace(/>/g, '&gt;')
     // Highlight headers
     .replace(/^(#{1,6})\s+(.*?)$/gm, '<span class="heading">$1</span> <span class="heading-text">$2</span><br>')
-    // Highlight bold
-    .replace(/(\*\*|__)(.*?)\1/g, '<span class="bold">$1$2$1</span>')
-    // Highlight italic
-    .replace(/(\*|_)(.*?)\1/g, '<span class="italic">$1$2$1</span>')
+    // Preserve bold and italic syntax
+    .replace(/(\*\*|__)(.*?)\1/g, '<span class="raw-bold">$&</span>')
+    .replace(/(\*|_)(.*?)\1/g, '<span class="raw-italic">$&</span>')
     // Highlight links
     .replace(/(\[.*?\]\(.*?\))/g, '<span class="link">$1</span>')
     // Highlight list items
     .replace(/^(\s*[-+*])\s(.*?)$/gm, '<span class="list-item">$1</span> $2<br>')
     .replace(/^(\s*\d+\.)\s(.*?)$/gm, '<span class="list-item">$1</span> $2<br>')
     // Highlight inline code
-    .replace(/`([^`]+)`/g, '<span class="inline-code">`$1`</span>')
+    .replace(/`([^`]+)`/g, '<span class="inline-code">$&</span>')
     // Highlight code blocks
     .replace(/```(\w+)?\n([\s\S]*?)```/g, (match, lang, code) => {
       const language = lang || detectLanguage(code);

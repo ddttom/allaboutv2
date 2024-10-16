@@ -176,3 +176,21 @@
   border-bottom: 1px solid var(--markdown-border-color);
   padding-bottom: 0.3em;
 }
+
+/* Add these styles to your existing CSS */
+
+.markdown .raw-bold,
+.markdown .raw-italic {
+  font-weight: normal;
+  font-style: normal;
+}
+
+.markdown .raw-bold::before,
+.markdown .raw-bold::after,
+.markdown .raw-italic::before,
+.markdown .raw-italic::after {
+  content: attr(class);
+  color: #888;
+  font-size: 0.8em;
+  vertical-align: super;
+}
