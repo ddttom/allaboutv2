@@ -71,7 +71,7 @@ then using the shell CD into your project folder and run this;
 
 ```sh
 
-git subtree add --squash  --prefix prompts  https://github.com/ddttom/prompt-master main
+git subtree add --squash  --prefix prompt-master  https://github.com/ddttom/prompt-master main
 
 ```
 
@@ -79,7 +79,7 @@ If you later want to update your subtrees, use
 
 ```sh
 
-git subtree pull --squash --prefix prompts  https://github.com/ddttom/prompt-master main
+git subtree pull --squash --prefix prompt-master  https://github.com/ddttom/prompt-master main
 
 
 ```
@@ -89,6 +89,6 @@ git subtree pull --squash --prefix prompts  https://github.com/ddttom/prompt-mas
 If you have commit access to the repo, create a pull request and in your branch
 
 ```sh
- git subtree push --prefix prompts https://github.com/ddttom/prompt-master main         
+ git subtree push --prefix prompt-master https://github.com/ddttom/prompt-master main         
 
 ```
