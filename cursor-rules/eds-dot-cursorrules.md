@@ -1,6 +1,31 @@
 # Rules to follow
 
-my name is Tom Cranstoun
+
+const CONFIG = {
+    DEVELOPER: {
+        name: "Tom Cranstoun",
+        company: "tom"
+    },
+    PATHS: {
+        BLOCKS: "/blocks",
+        IMAGES: {
+            PROFILE: "https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png",
+            SAMPLE_IMAGES: [
+                "https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png",
+                "https://allabout.network/media_14e918fa88c2a9a810fd454fa04f0bd152c01fed2.jpeg",
+                "https://allabout.network/media_1d92670adcfb7a18a062e49fd7967f4e9f76d8a52.jpeg",
+                "https://allabout.network/media_1e744525e97292dcd074e9b1c7ab2cf47a048f292.jpeg",
+                "https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png"
+            ]
+        }
+    },
+    STANDARDS: {
+        styleGuide: "airbnb",
+        cssNaming: "kebab-case",
+        jsModules: "esm",
+        markdown: "gfm"
+    }
+};
 
 As an expert developer specializing in **Adobe Edge Delivery Services (EDS) for Document Authoring**—also known as Franklin or Helix. Your primary role is to guide developers in creating, explaining, and optimizing EDS projects. Here’s a medium-detail guide for your development needs, with best practices to follow.
 
@@ -29,16 +54,17 @@ whilst constructing a new block consider using variations within previously cons
 ### File Structure
 
 Block components should be organized in folders:
+/blocks/{blockname}/
+├── {blockname}.js           # Core block functionality
+├── {blockname}.css         # Block styles
+├── README.md              # Documentation
+├── example.md            # Usage examples
+├── demo.md              # Demo content
+├── self-review.md      # Self-review checklist
+├── senior-review.md   # Senior review notes
+├── example.json      # Sample data (if needed)
+└── example.csv      # CSV version of sample data
 
-  `/blocks/blockname/blockname.js`
-  `/blocks/blockname/blockname.css`
-  `/blocks/blockname/README.md`
-  `/blocks/blockname/example.md`
-  `/blocks/blockname/example.json`
-  `/blocks/blockname/example.csv`
-  `/blocks/blockname/demo.md`
-  `/blocks/blockname/self-review.md`
-  `/blocks/blockname/senior-review.md`
 
 **JavaScript (`blockname.js`):**
 
@@ -80,9 +106,9 @@ leave no todo's or placeholders in the code
          HTTP_ERROR_MESSAGE: 'HTTP error! status:',
          INPUT_DATA: '/path/to/data.json'
        };
-       const container = document.createElement('div');
-       block.appendChild(container);
-       container.addEventListener('click', () => {
+       const element_container = document.createElement('div');
+       block.appendChild(element_container);
+       element_container.addEventListener('click', () => {
          // Handle interaction
        });
 
@@ -107,17 +133,31 @@ leave no todo's or placeholders in the code
 
   Ensure that css3 variables are used, configuration should be through CSS3 variables
 
-  Remember that blocks can use variations   `blockname (bold)` is the bold variation of the block named blockname
+  NEVER STYLE .blockname-container
 
-  
-     .blockname {
-       /* Base styles */
-     }
+  Remember that blocks can use variations   `blockname (bold)` is the bold variation of the block named blockname; styling is in .blockname.bold
 
-     @media (max-width: 768px) {
-       /* Responsive styles */
-     }
-    
+  /* Block configuration */
+.blockname {
+    --block-spacing: 1rem;
+    --block-color: var(--color-primary, #000);
+}
+
+/* Base styles */
+.blockname-wrapper {
+    display: flex;
+    gap: var(--block-spacing);
+}
+
+/* Variations */
+.blockname.variation {
+    /* Variation styles */
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+    /* Desktop styles */
+}  
 
 Use CSS variables for theming and consistency.
 
@@ -295,6 +335,33 @@ When asked to create component or block or code, if the result is a block, remem
 
 ## README.md Structure Guidelines
 
+# Block Name
+
+Brief description of block purpose and functionality.
+
+## Features
+- Feature 1
+- Feature 2
+
+## Usage
+| BlockName |
+| --------- |
+| Content   |
+
+## Configuration
+- CSS Variables
+- Variations
+- Options
+
+## Accessibility
+- ARIA roles
+- Keyboard navigation
+- Screen reader support
+
+## Performance
+- Loading strategy
+- Optimization techniques
+
 When creating a README.md file for a Franklin (Adobe Edge Delivery Services) block, follow these guidelines:
 
 1. Begin with the component name as the main heading.
@@ -331,13 +398,7 @@ If you create multiple blocks from one prompt, each block should contain css, js
 Markdown files always end with a newline
 lists in markdown files should be surrounded with blank lines
 
-When providing images for a sample table, json or csv file, collect them from this list, silently
-
-   https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png
-   https://allabout.network/media_14e918fa88c2a9a810fd454fa04f0bd152c01fed2.jpeg
-   https://allabout.network/media_1d92670adcfb7a18a062e49fd7967f4e9f76d8a52.jpeg
-   https://allabout.network/media_1e744525e97292dcd074e9b1c7ab2cf47a048f292.jpeg
-   https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png
+When providing images for a sample table, json or csv file, collect them from the CONFIG.IMAGES.SAMPLE_IMAGES silently
 
 
 if you need a profile picture it can be found here
@@ -432,3 +493,22 @@ When adding comments, follow these guidelines:
 Your output should be the original code with your added comments. Make sure to preserve the original code's formatting and structure.
 
 Remember, the goal is to make the code more understandable without changing its functionality. Your comments should provide insight into the code's purpose, logic, and any important considerations for future developers or AI systems working with this code.
+
+Response Template
+
+# Block: [Name]
+
+## Analysis
+[Technical evaluation]
+
+## Files Generated
+[List of files created]
+
+## Implementation Details
+[Key technical decisions]
+
+## Usage Examples
+[How to use the block]
+
+## Testing Notes
+[Testing strategy]
