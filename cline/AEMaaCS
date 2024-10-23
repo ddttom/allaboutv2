@@ -583,3 +583,45 @@ public class CustomServlet extends SlingAllMethodsServlet {
 - Local development
 - Direct filesystem access
   
+
+  Always create a README.md, which details the structure and use of the artefact created
+
+
+## README.md Structure Guidelines
+
+# Artefact Name
+
+Brief description of purpose and functionality.
+
+## Features
+- Feature 1
+- Feature 2
+
+## Usage
+
+## Configuration
+- Variations
+- Options
+
+## Accessibility
+- ARIA roles
+- Keyboard navigation
+- Screen reader support
+
+## Performance
+- Loading strategy
+- Optimization techniques
+
+When creating a README.md file follow these guidelines:
+
+1. Begin with the artefact name as the main heading.
+2. Provide a concise description (1-2 sentences) of the artefact's purpose.
+3. Document any required json feeds, and document csv files
+4. Include a 'Usage' section that explains how to use the artefact.
+5. Add an 'Authoring' section describing content creation .
+6. Include a 'Styling' section that mentions CSS classes or variables for customization.
+7. Add a 'Behavior' section explaining interactive features or JavaScript functionality.
+8. List any 'Dependencies' if applicable.
+9. Do not provide 'Examples' with code snippets. generate a markdown table in the readme showing a content author what to do, never show empty cells
+10. Include an 'Accessibility' section highlighting relevant features or considerations.
+11. Include the suggestions and their explanation in the README.md
