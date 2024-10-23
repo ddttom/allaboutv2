@@ -10,6 +10,7 @@ const CONFIG = {
         company: "tom",
         projectName: "tom",
         basePackage: "com.tom",
+        projectName: "com/tom/aem",
         componentGroup: `Tom Site - Content`,
         workflowGroup: `Tom Site - Workflows`
     },
@@ -20,7 +21,7 @@ const CONFIG = {
     },
     PATHS: {
         uiApps: "/ui.apps/src/main/content/jcr_root/apps/",
-        core: "/core/src/main/java/",
+        core: "/core/src/main/java/{projectName}/core/workflow",
         workflows: "/conf/global/settings/workflow/models/",
         launchers: "/conf/global/settings/workflow/launcher/config/",
         config: "/ui.config/src/main/content/jcr_root/apps/",
