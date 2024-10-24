@@ -3,6 +3,7 @@ const DAM_CONFIG = {
   ERROR_MESSAGES: {
     MISSING_IMAGE: 'Image element is missing or invalid',
     JSON_PARSE: 'Error parsing DAM data',
+    INVALID_BLOCK: 'Invalid DAM block structure',
   },
   SELECTORS: {
     IMAGE: 'img',
@@ -10,6 +11,10 @@ const DAM_CONFIG = {
   },
   CLASS_NAMES: {
     CODE_WRAPPER: 'dam-code',
+  },
+  ARIA_LABELS: {
+    CODE_SECTION: 'DAM metadata JSON output',
+    ERROR_MESSAGE: 'Error in DAM block',
   },
 };
 
@@ -41,7 +46,11 @@ function extractPath(element) {
  * @returns {string} Formatted JSON string
  */
 function createDamJson(block) {
-  const rows = Array.from(block.children).slice(1); // Skip header row
+  if (!block || !block.children.length) {
+    throw new Error(DAM_CONFIG.ERROR_MESSAGES.INVALID_BLOCK);
+  }
+
+  const rows = Array.from(block.children).slice(1);
   const damData = rows.map((row) => {
     const [, note, description, classification, tag, imageCell, additionalInfo] = 
       Array.from(row.children);
@@ -67,9 +76,15 @@ function createDamJson(block) {
 function createCodeDisplay(jsonString) {
   const pre = document.createElement('pre');
   const code = document.createElement('code');
+  
+  pre.setAttribute('role', 'region');
+  pre.setAttribute('aria-label', DAM_CONFIG.ARIA_LABELS.CODE_SECTION);
+  pre.setAttribute('tabindex', '0');
+  
   code.textContent = jsonString;
   pre.appendChild(code);
   pre.className = DAM_CONFIG.CLASS_NAMES.CODE_WRAPPER;
+  
   return pre;
 }
 
@@ -81,10 +96,15 @@ export default async function decorate(block) {
   try {
     const jsonString = createDamJson(block);
     const codeDisplay = createCodeDisplay(jsonString);
-    block.textContent = ''; // Clear original content
+    block.textContent = '';
     block.appendChild(codeDisplay);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(DAM_CONFIG.ERROR_MESSAGES.JSON_PARSE, error);
+    const errorElement = document.createElement('div');
+    errorElement.setAttribute('role', 'alert');
+    errorElement.setAttribute('aria-label', DAM_CONFIG.ARIA_LABELS.ERROR_MESSAGE);
+    errorElement.textContent = error.message;
+    block.appendChild(errorElement);
   }
 }

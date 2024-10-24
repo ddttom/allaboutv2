@@ -56,6 +56,7 @@ A Markdown of
 
 is transformed into
 
+```html
 <!DOCTYPE html>
 <html>
   <head>
@@ -148,7 +149,7 @@ is transformed into
   </body>
 </html>
 
-
+```
 
 
 ---
@@ -483,7 +484,10 @@ When creating a README.md file for a Franklin (Adobe Edge Delivery Services) blo
 8. List any 'Dependencies' if applicable.
 9. Do not provide 'Examples' with code snippets. generate a markdown table in the readme showing a content author what to do, never show empty cells
 10. Include an 'Accessibility' section highlighting relevant features or considerations.
-11. Include the suggestions and their explanation in the README.md
+11. Include suggestions and explanation
+12. include troubleshooting section
+13. Add performance considerations
+14.Include browser compatibility notes
 
 
 ### Franklin metadata
