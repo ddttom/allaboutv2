@@ -1,0 +1,75 @@
+/* Block configuration */
+.u3a {
+  --u3a-spacing: 1rem;
+  --u3a-border-radius: 4px;
+  --u3a-transition: all 0.3s ease;
+  --u3a-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Wrapper styles */
+.u3a-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--u3a-spacing);
+  padding: var(--u3a-spacing);
+}
+
+/* Image set styles */
+.u3a-image-set {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--u3a-spacing);
+  background: var(--background-color, #fff);
+  padding: var(--u3a-spacing);
+  border-radius: var(--u3a-border-radius);
+  box-shadow: var(--u3a-shadow);
+}
+
+/* Slider styles */
+.u3a-slider {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--u3a-border-radius);
+}
+
+.u3a-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: var(--u3a-transition);
+}
+
+.u3a-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Controls styles */
+.u3a-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--u3a-spacing);
+}
+
+.u3a-controls button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: var(--color-primary, #000);
+  color: var(--color-background, #fff);
+  border-radius: var(--u3a-border-radius);
+  cursor: pointer;
+  transition: var(--u3a-transition);
+}
+
+/* Metadata styles */
+.u3a-metadata {
+  padding: var(--u3a-spacing);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .u3a-image-set {
+    grid-template-columns: 1fr;
+  }
+}
