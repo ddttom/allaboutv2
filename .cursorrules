@@ -101,7 +101,21 @@ is transformed into
             <div>Abstract artwork</div>
             <div>Art</div>
             <div>Gallery</div>
-            <div></div>
+            <div>
+              <picture>
+                <source type="image/webp"
+                  srcset="./media_17682fbf6fa666def2c58ba3497b98f598b66954a.png?width=2000&#x26;format=webply&#x26;optimize=medium"
+                  media="(min-width: 600px)">
+                <source type="image/webp"
+                  srcset="./media_17682fbf6fa666def2c58ba3497b98f598b66954a.png?width=750&#x26;format=webply&#x26;optimize=medium">
+                <source type="image/png"
+                  srcset="./media_17682fbf6fa666def2c58ba3497b98f598b66954a.png?width=2000&#x26;format=png&#x26;optimize=medium"
+                  media="(min-width: 600px)">
+                <img loading="lazy" alt="Profile"
+                  src="./media_17682fbf6fa666def2c58ba3497b98f598b66954a.png?width=750&#x26;format=png&#x26;optimize=medium"
+                  width="600" height="601">
+              </picture>
+            </div>
             <div>Featured piece</div>
           </div>
           <div>
@@ -110,7 +124,21 @@ is transformed into
             <div>Landscape view</div>
             <div>Photography</div>
             <div>Nature</div>
-            <div></div>
+            <div>
+              <picture>
+                <source type="image/webp"
+                  srcset="./media_17682fbf6fa666def2c58ba3497b98f598b66954.png?width=2000&#x26;format=webply&#x26;optimize=medium"
+                  media="(min-width: 600px)">
+                <source type="image/webp"
+                  srcset="./media_17682fbf6fa666def2c58ba3497b98f598b66954.png?width=750&#x26;format=webply&#x26;optimize=medium">
+                <source type="image/png"
+                  srcset="./media_17682fbf6fa666def2c58ba3497b98f598b66954.png?width=2000&#x26;format=png&#x26;optimize=medium"
+                  media="(min-width: 600px)">
+                <img loading="lazy" alt="Profile"
+                  src="./media_17682fbf6fa666def2c58ba3497b98f598b66954apng?width=750&#x26;format=png&#x26;optimize=medium"
+                  width="600" height="601">
+              </picture>
+            </div>
             <div>Scenic vista</div>
           </div>
         </div>
