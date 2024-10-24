@@ -1,0 +1,33 @@
+.dam {
+  --dam-background: var(--background-code, #f5f5f5);
+  --dam-text-color: var(--text-color, #333);
+  --dam-font-family: var(--fixed-font-family, monospace);
+  --dam-padding: 1.5rem;
+  --dam-border-radius: 4px;
+}
+
+.dam-wrapper {
+  margin: 1rem 0;
+}
+
+.dam pre {
+  background-color: var(--dam-background);
+  padding: var(--dam-padding);
+  border-radius: var(--dam-border-radius);
+  overflow-x: auto;
+  margin: 0;
+}
+
+.dam code {
+  font-family: var(--dam-font-family);
+  color: var(--dam-text-color);
+  line-height: 1.5;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dam pre {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+}
