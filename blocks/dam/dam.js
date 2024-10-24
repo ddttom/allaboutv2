@@ -3,6 +3,7 @@ const DAM_CONFIG = {
   ERROR_MESSAGES: {
     MISSING_IMAGE: 'Image element is missing or invalid',
     PARSING_ERROR: 'Error parsing row data',
+    URL_PARSE_ERROR: 'Error parsing URL',
   },
   SELECTORS: {
     IMAGE: 'img',
@@ -23,17 +24,29 @@ const DAM_CONFIG = {
 function extractPath(element) {
   if (!element) return '';
   
-  const img = element.querySelector(DAM_CONFIG.SELECTORS.IMAGE);
-  const link = element.querySelector(DAM_CONFIG.SELECTORS.LINK);
-  
-  if (img) {
-    const url = new URL(img.src);
-    return url.pathname;
+  // The image is directly in the cell, not nested
+  if (element.tagName === 'IMG') {
+    try {
+      const url = new URL(element.src);
+      return url.pathname;
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(DAM_CONFIG.ERROR_MESSAGES.URL_PARSE_ERROR, error);
+      return '';
+    }
   }
   
-  if (link) {
-    const url = new URL(link.href);
-    return url.pathname;
+  // Check for nested image
+  const img = element.querySelector(DAM_CONFIG.SELECTORS.IMAGE);
+  if (img) {
+    try {
+      const url = new URL(img.src);
+      return url.pathname;
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(DAM_CONFIG.ERROR_MESSAGES.URL_PARSE_ERROR, error);
+      return '';
+    }
   }
   
   return '';
@@ -76,7 +89,7 @@ export default async function decorate(block) {
           description: cells[1]?.textContent?.trim() || '',
           classification: cells[2]?.textContent?.trim() || '',
           tag: cells[3]?.textContent?.trim() || '',
-          path: extractPath(cells[4]),
+          path: extractPath(cells[4].firstElementChild), // Get the first child element (img)
           additionalInfo: cells[5]?.textContent?.trim() || '',
         });
       }
