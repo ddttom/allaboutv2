@@ -1,0 +1,31 @@
+.dam {
+  --dam-background: var(--background-code, #f5f5f5);
+  --dam-text-color: var(--text-color, #333);
+  --dam-border-color: var(--border-color, #ddd);
+  --dam-border-radius: var(--border-radius, 4px);
+  --dam-padding: var(--spacing-m, 1rem);
+}
+
+.dam-wrapper {
+  margin: var(--dam-padding) 0;
+}
+
+.dam .dam-code {
+  background-color: var(--dam-background);
+  color: var(--dam-text-color);
+  border: 1px solid var(--dam-border-color);
+  border-radius: var(--dam-border-radius);
+  padding: var(--dam-padding);
+  overflow-x: auto;
+  font-family: monospace;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .dam .dam-code {
+    font-size: 14px;
+    padding: calc(var(--dam-padding) / 2);
+  }
+}
