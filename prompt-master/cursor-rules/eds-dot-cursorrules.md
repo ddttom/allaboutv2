@@ -42,6 +42,116 @@ As an expert developer specializing in **Adobe Edge Delivery Services (EDS) for 
 9. **Use css-variables:** Apply CSS-Variables to minimize maintenance
 10. **Do not use inline css in javascript filer** always create css in css files
 
+
+Important the user may describe blocks as tables, with cells and rows; these are how things are represented in Franklin Markdown Source, theses elements are  The table/cells are being transformed by Franklin into divs with paragraph elements
+
+
+A Markdown of 
+
+| DAM  | Note          | Description           | Classification | Tag     | Image | Additional Info    |
+| :--- | :------------ | :-------------------- | :------------- | :------ | :---- | :----------------- |
+|      | Profile Image | Professional headshot | Portrait       | Profile |       | Main profile photo |
+|      | Sample Art    | Abstract artwork      | Art            | Gallery |       | Featured piece     |
+|      | Nature Photo  | Landscape view        | Photography    | Nature  |       | Scenic vista       |
+
+is transformed into
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DAM Block Demo</title>
+    <link rel="canonical" href="https://allabout.network/dam/dam">
+    <meta name="description" content="Demonstration of the DAM block functionality">
+    <meta property="og:title" content="DAM Block Demo">
+    <meta property="og:description" content="Demonstration of the DAM block functionality">
+    <meta property="og:url" content="https://allabout.network/dam/dam">
+    <meta property="og:image" content="https://allabout.network/default-meta-image.png?width=1200&#x26;format=pjpg&#x26;optimize=medium">
+    <meta property="og:image:secure_url" content="https://allabout.network/default-meta-image.png?width=1200&#x26;format=pjpg&#x26;optimize=medium">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="DAM Block Demo">
+    <meta name="twitter:description" content="Demonstration of the DAM block functionality">
+    <meta name="twitter:image" content="https://allabout.network/default-meta-image.png?width=1200&#x26;format=pjpg&#x26;optimize=medium">
+    <meta name="author" content="Tom Cranstoun">
+    <meta name="longdescription" content="This page demonstrates how the DAM block can be used to display and manage digital asset metadata in a structured format.">
+    <script type="application/ld+json" data-error="error in json-ld: Unexpected token a in JSON at position 0"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/scripts/aem.js" type="module"></script>
+    <script src="/scripts/scripts.js" type="module"></script>
+    <link rel="stylesheet" href="/styles/styles.css">
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <div>
+        <h1 id="dam-block-demo">DAM Block Demo</h1>
+        <p>This demo showcases the DAM block's functionality for managing digital assets metadata.</p>
+        <div class="dam">
+          <div>
+            <div></div>
+            <div>Profile Image</div>
+            <div>Professional headshot</div>
+            <div>Portrait</div>
+            <div>Profile</div>
+            <div></div>
+            <div>Main profile photo</div>
+          </div>
+          <div>
+            <div></div>
+            <div>Sample Art</div>
+            <div>Abstract artwork</div>
+            <div>Art</div>
+            <div>Gallery</div>
+            <div>
+              <picture>
+                <source type="image/webp"
+                  srcset="./media_17682fbf6fa666def2c58ba3497b98f598b66954a.png?width=2000&#x26;format=webply&#x26;optimize=medium"
+                  media="(min-width: 600px)">
+                <source type="image/webp"
+                  srcset="./media_17682fbf6fa666def2c58ba3497b98f598b66954a.png?width=750&#x26;format=webply&#x26;optimize=medium">
+                <source type="image/png"
+                  srcset="./media_17682fbf6fa666def2c58ba3497b98f598b66954a.png?width=2000&#x26;format=png&#x26;optimize=medium"
+                  media="(min-width: 600px)">
+                <img loading="lazy" alt="Profile"
+                  src="./media_17682fbf6fa666def2c58ba3497b98f598b66954a.png?width=750&#x26;format=png&#x26;optimize=medium"
+                  width="600" height="601">
+              </picture>
+            </div>
+            <div>Featured piece</div>
+          </div>
+          <div>
+            <div></div>
+            <div>Nature Photo</div>
+            <div>Landscape view</div>
+            <div>Photography</div>
+            <div>Nature</div>
+            <div>
+              <picture>
+                <source type="image/webp"
+                  srcset="./media_17682fbf6fa666def2c58ba3497b98f598b66954.png?width=2000&#x26;format=webply&#x26;optimize=medium"
+                  media="(min-width: 600px)">
+                <source type="image/webp"
+                  srcset="./media_17682fbf6fa666def2c58ba3497b98f598b66954.png?width=750&#x26;format=webply&#x26;optimize=medium">
+                <source type="image/png"
+                  srcset="./media_17682fbf6fa666def2c58ba3497b98f598b66954.png?width=2000&#x26;format=png&#x26;optimize=medium"
+                  media="(min-width: 600px)">
+                <img loading="lazy" alt="Profile"
+                  src="./media_17682fbf6fa666def2c58ba3497b98f598b66954apng?width=750&#x26;format=png&#x26;optimize=medium"
+                  width="600" height="601">
+              </picture>
+            </div>
+            <div>Scenic vista</div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>
+
+```
+
+
 ---
 
 ## Block Development Guidelines
@@ -168,13 +278,13 @@ When creating tables for blocks, follow this structure:
 1. The first row should contain the block name in the first cell, followed by column headers.
 2. Use something like the following format for the header row, if more than one column is required then extend the table as needed
 
-   | BlockName | 
-   | :----  | 
+   | BlockName |
+   | :-------- |
 
 3.  Variations are encouraged in blocks, in the example following `(bold)` is the variation; the additional class `bold` is added to the class by franklin and your job is to adjust the css and js, thus saving creation of two different, but similar block.
 
-   | BlockName (bold) | 
-   | :----  | 
+   | BlockName (bold) |
+   | :--------------- |
 
 4. Subsequent rows contain the data for each column.
 
@@ -222,13 +332,13 @@ This format is a special signal to Franklin and helps maintain consistency acros
 
 ## Metadata Example
 
-| metadata |  |
-| :---- | :---- |
-| title | Word Cloud Demo |
-| description | A demonstration of the Word Cloud block for Franklin |
-| json-ld | article |
-| image | |
-| author | Tom Cranstoun |
+| metadata        |                                                                                                                                   |
+| :-------------- | :-------------------------------------------------------------------------------------------------------------------------------- |
+| title           | Word Cloud Demo                                                                                                                   |
+| description     | A demonstration of the Word Cloud block for Franklin                                                                              |
+| json-ld         | article                                                                                                                           |
+| image           |                                                                                                                                   |
+| author          | Tom Cranstoun                                                                                                                     |
 | longdescription | This page showcases the Word Cloud block functionality in Franklin, visualizing common web development concepts and technologies. |
 
 
@@ -374,21 +484,24 @@ When creating a README.md file for a Franklin (Adobe Edge Delivery Services) blo
 8. List any 'Dependencies' if applicable.
 9. Do not provide 'Examples' with code snippets. generate a markdown table in the readme showing a content author what to do, never show empty cells
 10. Include an 'Accessibility' section highlighting relevant features or considerations.
-11. Include the suggestions and their explanation in the README.md
+11. Include suggestions and explanation
+12. include troubleshooting section
+13. Add performance considerations
+14.Include browser compatibility notes
 
 
 ### Franklin metadata
 
 Franklin contains metadata, this section is a typical metadata fraction in markdown format, when placing it in a demo.md do not put a heading before this block, do it silently 
 
-| metadata |  |
-| :---- | :---- |
-| title |  |
-| description |  |
-| json-ld | article |
-| image |  |
-| author | Tom Cranstoun |
-| longdescription |   |
+| metadata        |               |
+| :-------------- | :------------ |
+| title           |               |
+| description     |               |
+| json-ld         | article       |
+| image           |               |
+| author          | Tom Cranstoun |
+| longdescription |               |
 
 ## end metadata
 
