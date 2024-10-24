@@ -7,7 +7,7 @@ const DAM_CONFIG = {
   },
   SELECTORS: {
     IMAGE: 'img',
-    LINK: 'a',
+    PICTURE: 'picture',
   },
   OUTPUT_INDENT: 2,
   ARIA: {
@@ -17,36 +17,44 @@ const DAM_CONFIG = {
 };
 
 /**
- * Extracts the path from an image or link element
+ * Extracts the base path from a URL with query parameters
+ * @param {string} url - The full URL
+ * @returns {string} The path without query parameters
+ */
+function extractBasePath(url) {
+  try {
+    const urlObj = new URL(url);
+    // Get the pathname and remove query parameters
+    const path = urlObj.pathname.split('?')[0];
+    return path;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(DAM_CONFIG.ERROR_MESSAGES.URL_PARSE_ERROR, error);
+    return '';
+  }
+}
+
+/**
+ * Extracts the path from an image or picture element
  * @param {HTMLElement} element - The element containing the path
  * @returns {string} The extracted path
  */
 function extractPath(element) {
   if (!element) return '';
   
-  // The image is directly in the cell, not nested
-  if (element.tagName === 'IMG') {
-    try {
-      const url = new URL(element.src);
-      return url.pathname;
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(DAM_CONFIG.ERROR_MESSAGES.URL_PARSE_ERROR, error);
-      return '';
+  // Check for picture element
+  const picture = element.querySelector(DAM_CONFIG.SELECTORS.PICTURE);
+  if (picture) {
+    const img = picture.querySelector(DAM_CONFIG.SELECTORS.IMAGE);
+    if (img && img.src) {
+      return extractBasePath(img.src);
     }
   }
   
-  // Check for nested image
+  // Fallback to direct image
   const img = element.querySelector(DAM_CONFIG.SELECTORS.IMAGE);
-  if (img) {
-    try {
-      const url = new URL(img.src);
-      return url.pathname;
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(DAM_CONFIG.ERROR_MESSAGES.URL_PARSE_ERROR, error);
-      return '';
-    }
+  if (img && img.src) {
+    return extractBasePath(img.src);
   }
   
   return '';
@@ -61,7 +69,6 @@ function createJsonDisplay(data) {
   const pre = document.createElement('pre');
   const code = document.createElement('code');
   
-  // Add ARIA attributes
   pre.setAttribute('role', DAM_CONFIG.ARIA.ROLE);
   pre.setAttribute('aria-label', DAM_CONFIG.ARIA.LABEL);
   pre.setAttribute('tabindex', '0');
@@ -83,15 +90,18 @@ export default async function decorate(block) {
   rows.slice(1).forEach((row) => {
     try {
       const cells = Array.from(row.children);
+      
       if (cells.length >= 5) {
-        data.push({
+        const rowData = {
           note: cells[0]?.textContent?.trim() || '',
           description: cells[1]?.textContent?.trim() || '',
           classification: cells[2]?.textContent?.trim() || '',
           tag: cells[3]?.textContent?.trim() || '',
-          path: extractPath(cells[4].firstElementChild), // Get the first child element (img)
-          additionalInfo: cells[5]?.textContent?.trim() || '',
-        });
+          path: extractPath(cells[5]), // Image is in the 6th cell (index 5)
+          additionalInfo: cells[6]?.textContent?.trim() || '',
+        };
+        
+        data.push(rowData);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -99,7 +109,6 @@ export default async function decorate(block) {
     }
   });
 
-  // Clear the block and add the JSON display
   block.textContent = '';
   block.appendChild(createJsonDisplay(data));
 }

@@ -42,6 +42,87 @@ As an expert developer specializing in **Adobe Edge Delivery Services (EDS) for 
 9. **Use css-variables:** Apply CSS-Variables to minimize maintenance
 10. **Do not use inline css in javascript filer** always create css in css files
 
+
+Important the user may describe blocks as tables, with cells and rows; these are how things are represented in Franklin Markdown Source, theses elements are  The table/cells are being transformed by Franklin into divs with paragraph elements
+
+
+A Markdown of 
+
+| DAM | Note | Description | Classification | Tag | Image | Additional Info |
+| :---- | :---- | :---- | :---- | :---- | :---- | :---- |
+|  | Profile Image | Professional headshot | Portrait | Profile |  | Main profile photo |
+|  | Sample Art | Abstract artwork | Art | Gallery |  | Featured piece |
+|  | Nature Photo | Landscape view | Photography | Nature |  | Scenic vista |
+
+is transformed into
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DAM Block Demo</title>
+    <link rel="canonical" href="https://allabout.network/dam/dam">
+    <meta name="description" content="Demonstration of the DAM block functionality">
+    <meta property="og:title" content="DAM Block Demo">
+    <meta property="og:description" content="Demonstration of the DAM block functionality">
+    <meta property="og:url" content="https://allabout.network/dam/dam">
+    <meta property="og:image" content="https://allabout.network/default-meta-image.png?width=1200&#x26;format=pjpg&#x26;optimize=medium">
+    <meta property="og:image:secure_url" content="https://allabout.network/default-meta-image.png?width=1200&#x26;format=pjpg&#x26;optimize=medium">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="DAM Block Demo">
+    <meta name="twitter:description" content="Demonstration of the DAM block functionality">
+    <meta name="twitter:image" content="https://allabout.network/default-meta-image.png?width=1200&#x26;format=pjpg&#x26;optimize=medium">
+    <meta name="author" content="Tom Cranstoun">
+    <meta name="longdescription" content="This page demonstrates how the DAM block can be used to display and manage digital asset metadata in a structured format.">
+    <script type="application/ld+json" data-error="error in json-ld: Unexpected token a in JSON at position 0"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/scripts/aem.js" type="module"></script>
+    <script src="/scripts/scripts.js" type="module"></script>
+    <link rel="stylesheet" href="/styles/styles.css">
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <div>
+        <h1 id="dam-block-demo">DAM Block Demo</h1>
+        <p>This demo showcases the DAM block's functionality for managing digital assets metadata.</p>
+        <div class="dam">
+          <div>
+            <div></div>
+            <div>Profile Image</div>
+            <div>Professional headshot</div>
+            <div>Portrait</div>
+            <div>Profile</div>
+            <div></div>
+            <div>Main profile photo</div>
+          </div>
+          <div>
+            <div></div>
+            <div>Sample Art</div>
+            <div>Abstract artwork</div>
+            <div>Art</div>
+            <div>Gallery</div>
+            <div></div>
+            <div>Featured piece</div>
+          </div>
+          <div>
+            <div></div>
+            <div>Nature Photo</div>
+            <div>Landscape view</div>
+            <div>Photography</div>
+            <div>Nature</div>
+            <div></div>
+            <div>Scenic vista</div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>
+
+
+
+
 ---
 
 ## Block Development Guidelines
