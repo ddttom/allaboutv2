@@ -1,0 +1,18 @@
+Always use await instead of .then( ) in async js
+always use airbnb style guide
+use const for variables that do not get reassigned
+group const variables into config objects
+comment the code
+IMPORTANT when creating readme.md documents do not use triple backticks use a single backtick
+
+if creating franklin blocks the block classes will be  {blockname}-container, {blockname}-wrapper, {blockname} it is not acceptable to apply styling to the container, only the wrapper or the block itself
+if creating java packages use com.tom as my domain
+if asked to create aem projects use sling models etc
+if creating AEM 6.5 or AEMaaCS Components always use the component group `Tom Site - Content`
+
+## Developer Information
+* Developer Name: Tom Cranstoun
+* Company Name: tom
+* Project Name: tom
+use these as replacements for  {company-name} and {project-name}
+if creating AEM 6.5 or AEMaaCS Components always create a clientlibs folder with css and js and ensure that all styles are scoped properly to avoid conflicts.
