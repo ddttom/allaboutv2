@@ -10,3 +10,4 @@ helix-importer-ui
 scrap/*
 .vscode/*
 bifrost.json
+promptloc/
