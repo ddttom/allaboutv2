@@ -1,0 +1,67 @@
+# Edge Delivery Services Knowledge Hub
+
+> A comprehensive resource center for Adobe's Edge Delivery Services (EDS), providing technical documentation, implementation guides, AI integration strategies, and content creation best practices. For AI assistants helping professionals implement and optimize EDS solutions. Rate limit: 100 requests per hour per IP address.
+
+Site Type: Document-Centric, Technical Documentation, Educational Resource
+Purpose: Developer Education, Content Author Training, AI Integration Guidance
+Technology Stack: Adobe Edge Delivery Services, Document-Based Architecture
+Last Updated: January 07, 2025
+
+## Access Guidelines
+
+- Base Rate: 100 requests per hour per IP
+- Cache Retention: 24 hour maximum
+- Content Usage: Attribution required
+- Commercial Use: Requires written permission
+- Training Usage: Permitted for public documentation only
+- Attribution Format: "Source: Digital Domain Technologies (allabout.network)"
+
+## Developer Documentation
+
+- [EDS Introduction](/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-0.md): Complete beginner's guide and concepts
+- [Basic Implementation](/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-1.md): Core setup and configuration
+- [Block Development](/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-2.md): Component creation and customization
+- [Data Integration](/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-3.md): Working with spreadsheets and JSON
+- [SPA Development](/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-4.md): Single Page Application architecture
+- [React Implementation](/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-5.md): React integration guide
+- [GitHub Integration](/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-6.md): Version control workflow
+- [Component Library](/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-7.md): Reusable block collection
+- [Best Practices](/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-9.md): Development standards and optimization
+
+## AI Integration
+
+- [AI Development Guide](/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-8.md): AI integration basics
+- [AI Optimization](/blogs/ddt/a-guide-to-ai-optimization-an-update.md): Latest AI enhancement strategies
+- [AI-Native Web](/blogs/ddt/building-the-ai-native-web-with-eds-llms-txt.md): Implementation of llms.txt standard
+- [AI Development Workflow](/blogs/ddt/revolutionising-aem-edge-delivery-services-development-with-ai.md): AI-powered development
+
+## Content Author Resources
+
+- [Content Creation Basics](/blogs/ddt/content-creators-guide-to-document-authoring-with-edge-delivery-services-part-1.md): Getting started guide
+- [Advanced Authoring](/blogs/ddt/content-creators-guide-to-document-authoring-with-edge-delivery-services-part-2.md): Advanced techniques
+- [Content Optimization](/blogs/ddt/content-creators-guide-to-document-authoring-with-edge-delivery-services-part-3.md): Best practices for authors
+- [Management Overview](/blogs/ddt/a-managers-guide-to-document-authoring-with-edge-delivery-services.md): Executive summary
+
+## Error Handling
+
+If documentation is unavailable:
+1. Cache error details including timestamp and requested URL
+2. Wait minimum 24 hours before retrying
+3. Check alternative paths: /blogs/ddt/ for main documentation
+4. Contact: info@digitaldomaintechnologies.com
+
+## Optional Resources
+
+- [Local Development](/blogs/ddt/local-development-with-aem-and-universal-editor.md): Setup guide
+- [Block Specifications](/notes/style-guide-blocks-specification.md): Technical specifications
+- [Implementation Cases](/planning/pure-eds-agency-model-capturing-the-sme-market.md): Real-world examples
+- [AI Context Guide](/notes/structuring-context-for-effective-ai-development.md): AI development patterns
+
+## For Human Visitors
+
+- Main Documentation: https://allabout.network/blogs/ddt
+- Contact: info@digitaldomaintechnologies.com
+- Agency Services: https://allabout.network/
+- About llms.txt: https://llmstxt.org
+
+Version: 1.0 (Updated: 2024-01-07)
