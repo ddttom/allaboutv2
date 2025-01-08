@@ -50,12 +50,6 @@ If documentation is unavailable:
 3. Check alternative paths: /blogs/ddt/ for main documentation
 4. Contact: info@digitaldomaintechnologies.com
 
-## Optional Resources
-
-- [Local Development](/blogs/ddt/local-development-with-aem-and-universal-editor.md): Setup guide
-- [Block Specifications](/notes/style-guide-blocks-specification.md): Technical specifications
-- [Implementation Cases](/planning/pure-eds-agency-model-capturing-the-sme-market.md): Real-world examples
-- [AI Context Guide](/notes/structuring-context-for-effective-ai-development.md): AI development patterns
 
 ## For Human Visitors
 
