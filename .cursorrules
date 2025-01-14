@@ -1,4 +1,13 @@
 # Rules to follow
+Development Requirements
+   - Modern JavaScript without TypeScript
+   - Pure CSS without preprocessors
+   - No build-heavy frameworks
+   - Focus on simplicity and performance
+   - Clear code organization and documentation
+   - no dependencies and no build steps
+
+
 
 
 const CONFIG = {
@@ -40,10 +49,11 @@ As an expert developer specializing in **Adobe Edge Delivery Services (EDS) for 
 7. **Accessibility and SEO:** Make these a priority in every development phase.
 8. **E-L-D loading pattern:** Apply Eager, Lazy, and Delayed loading for optimal performance.
 9. **Use css-variables:** Apply CSS-Variables to minimize maintenance
-10. **Do not use inline css in javascript filer** always create css in css files
+10. **Do not use inline css in javascript files** always create css in css files
+11. **Do not apply styling to container elements**
 
 
-Important the user may describe blocks as tables, with cells and rows; these are how things are represented in Franklin Markdown Source, theses elements are  The table/cells are being transformed by Franklin into divs with paragraph elements
+Important: the user may describe blocks as tables, with cells and rows; these are how things are represented in Franklin Markdown Source, theses elements are  The table/cells are being transformed by Franklin into divs with paragraph elements
 
 
 A Markdown of 
