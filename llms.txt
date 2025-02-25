@@ -23,11 +23,11 @@
 - [React Implementation](https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-5): React integration guide  
 - [GitHub Integration](https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-6): Version control workflow  
 - [Component Library](https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-7): Reusable block collection  
+- [AI Development Guide](https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-8): AI integration basics  
 - [Best Practices](https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-9): Development standards and optimization
 
 ## AI Integration
 
-- [AI Development Guide](https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-8): AI integration basics  
 - [AI-Powered Development](https://allabout.network/blogs/ddt/eds-ai) : AI Development with EDS  
 - [https://allabout.network/blogs/ddt/building-the-ai-native-web-with-eds](https://allabout.network/blogs/ddt/building-the-ai-native-web-with-eds)  Implementation of llms.txt standard
 
@@ -45,4 +45,4 @@
 - Agency Services: [https://allabout.network/](https://allabout.network/)  
 - About llms.txt: [https://llmstxt.org](https://llmstxt.org)
 
-Version: 1.1 (Updated: Jan 9 2024)
+Version: 1.2 (Updated: Feb 25 2025)
