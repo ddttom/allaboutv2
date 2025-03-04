@@ -120,10 +120,11 @@
       flex-direction: row;
       height: 300px;
       gap: 20px;
+      justify-content: space-between;
     }
     
     .slide-content-text {
-      flex: 0 0 60%;
+      flex: 0 0 55%;
       display: flex;
       flex-direction: column;
       overflow-y: auto;
@@ -131,6 +132,7 @@
     }
     
     .slide-content > p {
+      flex: 0 0 55%;
       margin-bottom: 20px;
     }
     
@@ -188,8 +190,8 @@
       height: 300px;
       display: flex;
       align-items: flex-start;
-      justify-content: center;
-      padding: 10px;
+      justify-content: flex-end;
+      padding: 0;
     }
     
     .footer {
@@ -214,6 +216,7 @@
       display: none;
       width: 100%;
       height: 100%;
+      margin-left: auto;
     }
     
     .data-illustration.active {
@@ -655,11 +658,261 @@
           </div>
         </div>
       </div>
+
+      <!-- Slide 9: Local Deployment of Foundation Models -->
+      <div id="slide-9" class="slide">
+        <h2 class="slide-title">Local Deployment of Foundation Models</h2>
+        <div class="slide-content">
+          <ul class="bullet-list">
+            <li>Complete control over model selection and versions</li>
+            <li>Data sovereignty - train with proprietary data</li>
+            <li>Reduced external dependencies</li>
+            <li>Freedom from usage-based pricing</li>
+            <li>Enhanced compliance capabilities</li>
+          </ul>
+          
+          <div class="illustration">
+            <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Server rack representation -->
+              <rect x="120" y="40" width="160" height="120" rx="5" fill="#ECF0F1" stroke="#3498db" stroke-width="2"/>
+              
+              <!-- Server units -->
+              <rect x="130" y="50" width="140" height="20" rx="2" fill="#BBDEFB" stroke="#3498db" stroke-width="1"/>
+              <rect x="130" y="80" width="140" height="20" rx="2" fill="#BBDEFB" stroke="#3498db" stroke-width="1"/>
+              <rect x="130" y="110" width="140" height="20" rx="2" fill="#BBDEFB" stroke="#3498db" stroke-width="1"/>
+              
+              <!-- Status lights -->
+              <circle cx="140" cy="60" r="3" fill="#27ae60"/>
+              <circle cx="140" cy="90" r="3" fill="#27ae60"/>
+              <circle cx="140" cy="120" r="3" fill="#27ae60"/>
+              
+              <!-- Data flow lines -->
+              <path d="M200 160 L300 160" stroke="#3498db" stroke-width="2" marker-end="url(#arrow)"/>
+              <path d="M200 160 L100 160" stroke="#3498db" stroke-width="2" marker-end="url(#arrow)"/>
+              
+              <!-- Labels -->
+              <text x="200" y="185" text-anchor="middle" fill="#34495e" font-size="14">LOCAL DEPLOYMENT</text>
+              <text x="100" y="170" text-anchor="middle" fill="#34495e" font-size="10">INPUT</text>
+              <text x="300" y="170" text-anchor="middle" fill="#34495e" font-size="10">OUTPUT</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 10: Foundation Models as Better Building Blocks -->
+      <div id="slide-10" class="slide">
+        <h2 class="slide-title">Foundation Models as Better Building Blocks</h2>
+        <div class="slide-content">
+          <ul class="bullet-list">
+            <li>Higher-quality training data focused on business domains</li>
+            <li>Customization potential with organization-specific data</li>
+            <li>Reduced hallucinations through domain-specific training</li>
+            <li>Opportunity for alignment with organizational values</li>
+          </ul>
+          
+          <div class="illustration">
+            <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Building blocks structure -->
+              <rect x="100" y="120" width="60" height="40" rx="5" fill="#3498db" opacity="0.8"/>
+              <rect x="170" y="120" width="60" height="40" rx="5" fill="#3498db" opacity="0.8"/>
+              <rect x="240" y="120" width="60" height="40" rx="5" fill="#3498db" opacity="0.8"/>
+              
+              <rect x="135" y="70" width="60" height="40" rx="5" fill="#2ecc71" opacity="0.8"/>
+              <rect x="205" y="70" width="60" height="40" rx="5" fill="#2ecc71" opacity="0.8"/>
+              
+              <rect x="170" y="20" width="60" height="40" rx="5" fill="#e74c3c" opacity="0.8"/>
+              
+              <!-- Labels -->
+              <text x="130" y="145" text-anchor="middle" fill="white" font-size="10">BASE</text>
+              <text x="200" y="145" text-anchor="middle" fill="white" font-size="10">BASE</text>
+              <text x="270" y="145" text-anchor="middle" fill="white" font-size="10">BASE</text>
+              
+              <text x="165" y="95" text-anchor="middle" fill="white" font-size="10">DOMAIN</text>
+              <text x="235" y="95" text-anchor="middle" fill="white" font-size="10">DOMAIN</text>
+              
+              <text x="200" y="45" text-anchor="middle" fill="white" font-size="10">ORG</text>
+              
+              <text x="200" y="185" text-anchor="middle" fill="#34495e" font-size="14">FOUNDATION MODEL LAYERS</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 11: The AI Content Architect -->
+      <div id="slide-11" class="slide">
+        <h2 class="slide-title">The AI Content Architect: A Critical New Role</h2>
+        <div class="slide-content">
+          <ul class="bullet-list">
+            <li>Bridge between technology and business needs</li>
+            <li>Data preparation specialist</li>
+            <li>Value translation expert</li>
+            <li>Governance implementer</li>
+          </ul>
+          
+          <div class="illustration">
+            <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Central figure -->
+              <circle cx="200" cy="100" r="40" fill="#BBDEFB" stroke="#3498db" stroke-width="2"/>
+              
+              <!-- Connection points -->
+              <circle cx="100" cy="60" r="20" fill="#e74c3c" opacity="0.6"/>
+              <circle cx="300" cy="60" r="20" fill="#2ecc71" opacity="0.6"/>
+              <circle cx="100" cy="140" r="20" fill="#f39c12" opacity="0.6"/>
+              <circle cx="300" cy="140" r="20" fill="#9b59b6" opacity="0.6"/>
+              
+              <!-- Connection lines -->
+              <path d="M160 100 L120 60" stroke="#3498db" stroke-width="1" stroke-dasharray="4 2"/>
+              <path d="M240 100 L280 60" stroke="#3498db" stroke-width="1" stroke-dasharray="4 2"/>
+              <path d="M160 100 L120 140" stroke="#3498db" stroke-width="1" stroke-dasharray="4 2"/>
+              <path d="M240 100 L280 140" stroke="#3498db" stroke-width="1" stroke-dasharray="4 2"/>
+              
+              <!-- Labels -->
+              <text x="100" y="63" text-anchor="middle" fill="white" font-size="8">TECH</text>
+              <text x="300" y="63" text-anchor="middle" fill="white" font-size="8">BIZ</text>
+              <text x="100" y="143" text-anchor="middle" fill="white" font-size="8">DATA</text>
+              <text x="300" y="143" text-anchor="middle" fill="white" font-size="8">GOV</text>
+              
+              <text x="200" y="105" text-anchor="middle" fill="#34495e" font-size="12">AI</text>
+              <text x="200" y="95" text-anchor="middle" fill="#34495e" font-size="12">ARCHITECT</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 12: Realistic Assessment -->
+      <div id="slide-12" class="slide">
+        <h2 class="slide-title">Realistic Assessment for Organizations</h2>
+        <div class="slide-content">
+          <ul class="bullet-list">
+            <li>Hardware investments ($3,000-$15,000 per knowledge worker)</li>
+            <li>Expertise requirements - specialized and expensive talent</li>
+            <li>Data limitations - preparation work often needed</li>
+            <li>Ongoing maintenance requirements</li>
+          </ul>
+          
+          <div class="illustration">
+            <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Cost meter -->
+              <path d="M100 140 A70 70 0 0 1 300 140" stroke="#3498db" stroke-width="2" fill="none"/>
+              <path d="M100 140 A70 70 0 0 1 200 70" stroke="#e74c3c" stroke-width="4" fill="none"/>
+              
+              <!-- Indicator -->
+              <circle cx="200" cy="140" r="10" fill="#34495e"/>
+              
+              <!-- Scale markers -->
+              <line x1="100" y1="145" x2="100" y2="135" stroke="#34495e" stroke-width="2"/>
+              <line x1="200" y1="145" x2="200" y2="135" stroke="#34495e" stroke-width="2"/>
+              <line x1="300" y1="145" x2="300" y2="135" stroke="#34495e" stroke-width="2"/>
+              
+              <!-- Labels -->
+              <text x="100" y="160" text-anchor="middle" fill="#34495e" font-size="10">$3K</text>
+              <text x="200" y="160" text-anchor="middle" fill="#34495e" font-size="10">$9K</text>
+              <text x="300" y="160" text-anchor="middle" fill="#34495e" font-size="10">$15K</text>
+              
+              <text x="200" y="185" text-anchor="middle" fill="#34495e" font-size="14">INVESTMENT PER WORKER</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 13: Pragmatic Pathways -->
+      <div id="slide-13" class="slide">
+        <h2 class="slide-title">Pragmatic Pathways Forward</h2>
+        <div class="slide-content">
+          <ul class="bullet-list">
+            <li>Large organizations: Local deployment + AI Content Architects</li>
+            <li>Medium organizations: Hybrid approaches (cloud + targeted local solutions)</li>
+            <li>Small organizations: Carefully selected cloud services with oversight</li>
+            <li>All organizations: Clear guidelines for appropriate AI use</li>
+          </ul>
+          
+          <div class="illustration">
+            <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Organization sizes -->
+              <rect x="80" y="40" width="80" height="120" rx="5" fill="#3498db" opacity="0.8"/>
+              <rect x="170" y="70" width="60" height="90" rx="5" fill="#2ecc71" opacity="0.8"/>
+              <rect x="240" y="100" width="40" height="60" rx="5" fill="#e74c3c" opacity="0.8"/>
+              
+              <!-- Cloud connections -->
+              <path d="M120 30 Q150 10, 180 30" stroke="#95a5a6" stroke-width="1" stroke-dasharray="4 2"/>
+              <path d="M200 50 Q220 30, 240 50" stroke="#95a5a6" stroke-width="1" stroke-dasharray="4 2"/>
+              <path d="M260 80 Q280 60, 300 80" stroke="#95a5a6" stroke-width="1" stroke-dasharray="4 2"/>
+              
+              <!-- Labels -->
+              <text x="120" y="100" text-anchor="middle" fill="white" font-size="12">L</text>
+              <text x="200" y="115" text-anchor="middle" fill="white" font-size="12">M</text>
+              <text x="260" y="130" text-anchor="middle" fill="white" font-size="12">S</text>
+              
+              <text x="200" y="185" text-anchor="middle" fill="#34495e" font-size="14">ORGANIZATION PATHWAYS</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 14: Conclusion -->
+      <div id="slide-14" class="slide">
+        <h2 class="slide-title">Conclusion</h2>
+        <div class="slide-content">
+          <ul class="bullet-list">
+            <li>The future of organizational AI lies in thoughtfully integrating these technologies to enhance human capabilities rather than replace them.</li>
+            <li>By acknowledging current limitations while working to overcome them, organizations can build AI implementations that genuinely advance their missions.</li>
+          </ul>
+          
+          <div class="illustration">
+            <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Human and AI collaboration -->
+              <circle cx="150" cy="100" r="30" fill="#3498db" opacity="0.6"/>
+              <circle cx="250" cy="100" r="30" fill="#e74c3c" opacity="0.6"/>
+              
+              <!-- Intersection -->
+              <circle cx="200" cy="100" r="20" fill="#2ecc71" opacity="0.8"/>
+              
+              <!-- Labels -->
+              <text x="150" y="105" text-anchor="middle" fill="white" font-size="12">AI</text>
+              <text x="250" y="105" text-anchor="middle" fill="white" font-size="12">HUMAN</text>
+              <text x="200" y="105" text-anchor="middle" fill="white" font-size="8">SYNERGY</text>
+              
+              <text x="200" y="160" text-anchor="middle" fill="#34495e" font-size="14">ENHANCED CAPABILITIES</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 15: Thank You -->
+      <div id="slide-15" class="slide">
+        <h2 class="slide-title">Thank You</h2>
+        <div class="slide-content">
+          <div class="slide-content-text" style="text-align: center; padding-top: 40px;">
+            <p style="font-size: 24px; margin-bottom: 20px;">Thank you for your attention!</p>
+            <p style="font-size: 18px; color: #666;">Questions & Discussion</p>
+          </div>
+          
+          <div class="illustration">
+            <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Thank you animation elements -->
+              <circle cx="200" cy="100" r="50" fill="#3498db" opacity="0.1"/>
+              <circle cx="200" cy="100" r="40" fill="#3498db" opacity="0.2"/>
+              <circle cx="200" cy="100" r="30" fill="#3498db" opacity="0.3"/>
+              
+              <!-- Checkmark -->
+              <path d="M175 100 L190 115 L225 80" stroke="#2ecc71" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+              
+              <!-- Decorative elements -->
+              <circle cx="150" cy="60" r="10" fill="#e74c3c" opacity="0.6"/>
+              <circle cx="250" cy="60" r="10" fill="#f39c12" opacity="0.6"/>
+              <circle cx="150" cy="140" r="10" fill="#9b59b6" opacity="0.6"/>
+              <circle cx="250" cy="140" r="10" fill="#16a085" opacity="0.6"/>
+              
+              <text x="200" y="160" text-anchor="middle" fill="#34495e" font-size="14">QUESTIONS & DISCUSSION</text>
+            </svg>
+          </div>
+        </div>
+      </div>
     </div>
     
     <div class="footer">
       <div class="timer">30:00</div>
-      <div class="pagination">1 / 8</div>
+      <div class="pagination">1 / 15</div>
     </div>
   </div>
   <script>
@@ -747,13 +1000,62 @@
 
     // Keyboard navigation
     document.addEventListener('keydown', (event) => {
-      switch (event.key) {
-        case 'ArrowLeft':
-          if (!prevBtn.disabled) prevBtn.click();
-          break;
-        case 'ArrowRight':
-          if (!nextBtn.disabled) nextBtn.click();
-          break;
+      // Check if we're on the Structured Data Approaches slide (slide 8)
+      const isStructuredDataSlide = currentSlideIndex === 7; // 0-based index
+      const illustrations = document.querySelectorAll('.data-illustration');
+      
+      if (isStructuredDataSlide) {
+        switch (event.key) {
+          case 'ArrowRight':
+            // If not all illustrations have been shown, rotate through them
+            if (currentIllustrationIndex < illustrations.length - 1) {
+              rotateIllustrations();
+              event.preventDefault();
+              return;
+            }
+            // If we've seen all illustrations, move to next slide
+            if (!nextBtn.disabled) {
+              currentIllustrationIndex = 0; // Reset index
+              illustrations.forEach((ill, idx) => {
+                ill.classList.remove('active');
+                if (idx === 0) ill.classList.add('active');
+              });
+              nextBtn.click();
+            }
+            break;
+          case 'ArrowLeft':
+            // If we're at the first illustration, go to previous slide
+            if (currentIllustrationIndex === 0) {
+              if (!prevBtn.disabled) {
+                prevBtn.click();
+              }
+            } else {
+              // Otherwise, show previous illustration
+              illustrations.forEach(ill => ill.classList.remove('active'));
+              currentIllustrationIndex--;
+              illustrations[currentIllustrationIndex].classList.add('active');
+              event.preventDefault();
+            }
+            break;
+        }
+      } else {
+        // Reset illustration index when leaving slide 8
+        if (currentSlideIndex === 8 && event.key === 'ArrowLeft') {
+          currentIllustrationIndex = 0;
+          illustrations.forEach((ill, idx) => {
+            ill.classList.remove('active');
+            if (idx === 0) ill.classList.add('active');
+          });
+        }
+        // Normal navigation for other slides
+        switch (event.key) {
+          case 'ArrowLeft':
+            if (!prevBtn.disabled) prevBtn.click();
+            break;
+          case 'ArrowRight':
+            if (!nextBtn.disabled) nextBtn.click();
+            break;
+        }
       }
     });
 
