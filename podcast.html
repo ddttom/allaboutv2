@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AEM Podcast Presenter Cards</title>
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#2c3e50">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f9fc;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 15px 20px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 20px;
+      background-color: #34495e;
+      color: white;
+    }
+    
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.2s ease;
+    }
+    
+    .nav-btn {
+      background-color: #3498db;
+      color: white;
+    }
+    
+    .nav-btn:hover {
+      background-color: #2980b9;
+    }
+    
+    .timer-btn {
+      background-color: #e74c3c;
+      color: white;
+    }
+    
+    .timer-btn:hover {
+      background-color: #c0392b;
+    }
+    
+    .content-area {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      overflow: auto;
+    }
+    
+    .section-heading {
+      background-color: #3498db;
+      color: white;
+      padding: 10px 15px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .section-heading h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+    
+    .section-timing {
+      font-size: 16px;
+      font-weight: normal;
+      margin-left: 10px;
+    }
+    
+    .card-content {
+      background-color: white;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      font-size: 18px;
+      line-height: 1.4;
+    }
+    
+    .bullet-point {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: flex-start;
+    }
+    
+    .bullet-icon {
+      margin-right: 10px;
+      color: #3498db;
+      font-weight: bold;
+      min-width: 15px;
+      text-align: center;
+    }
+    
+    .bullet-text {
+      flex-grow: 1;
+      flex-shrink: 1;
+      min-width: 0;
+      word-wrap: break-word;
+    }
+    
+    .sub-bullet {
+      margin-left: 30px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: flex-start;
+    }
+    
+    .status-bar {
+      background-color: #ecf0f1;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #ddd;
+    }
+    
+    .timer-display {
+      font-size: 18px;
+      font-weight: bold;
+      color: #e74c3c;
+    }
+    
+    .progress-indicator {
+      color: #7f8c8d;
+    }
+    
+    /* Hide all sections initially */
+    .section {
+      display: none;
+    }
+    
+    /* Show the active section */
+    .section.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Bridging Open Source & Enterprise: AEM Podcast</h1>
+  </div>
+  
+  <div class="controls">
+    <div class="nav-buttons">
+      <button id="prev-btn" class="btn nav-btn">Previous</button>
+      <button id="next-btn" class="btn nav-btn">Next</button>
+    </div>
+    <div class="timer-controls">
+      <button id="timer-btn" class="btn timer-btn">Start Timer</button>
+    </div>
+  </div>
+  
+  <div class="content-area">
+    <!-- Section 1: Introduction -->
+    <div id="section-1" class="section active">
+      <div class="section-heading">
+        <h2>I. Introduction <span class="section-timing">(2-3 min)</span></h2>
+      </div>
+      <div class="card-content">
+        <div class="bullet-point">
+          <div class="bullet-icon">•</div>
+          <div class="bullet-text">Key Misconception: AEM is often mischaracterised as a purely proprietary system</div>
+        </div>
+        <div class="bullet-point">
+          <div class="bullet-icon">•</div>
+          <div class="bullet-text">Reality: One of the most successful marriages of open source + enterprise capability</div>
+        </div>
+        <div class="bullet-point">
+          <div class="bullet-icon">•</div>
+          <div class="bullet-text">Industry Shift: Moving toward composable architecture (best-of-breed components)</div>
+        </div>
+        <div class="bullet-point">
+          <div class="bullet-icon">•</div>
+          <div class="bullet-text">Your Experience: 13+ years implementing AEM for global brands (EE, Nissan/Renault, Twitter, Genesis, McLaren, Ford)</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Section 2: AEM's Open-Source DNA -->
+    <div id="section-2" class="section">
+      <div class="section-heading">
+        <h2>II. AEM's Open-Source DNA <span class="section-timing">(4-5 min)</span></h2>
+      </div>
+      <div class="card-content">
+        <div class="bullet-point">
+          <div class="bullet-icon">•</div>
+          <div class="bullet-text">Origins: Started as "Communique" (CQ) in 2002 by Day Software (Swiss company)</div>
+        </div>
+        <div class="bullet-point">
+          <div class="bullet-icon">•</div>
+          <div class="bullet-text">Foundation Technologies:</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">Apache Jackrabbit & JCR: Content storage with built-in versioning, search, access control</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">Apache Felix & OSGi: Modular components with hot deployment</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">Apache Sling: RESTful approach with "everything is a resource" philosophy</div>
+        </div>
+        <div class="bullet-point">
+          <div class="bullet-icon">•</div>
+          <div class="bullet-text">Roy Fielding's Influence:</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">Chief Architect at Day Software</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">Principal author of HTTP specification</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">Created REST architectural style (2000 dissertation)</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">Brought web-native principles directly to AEM's design</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">Now Senior Principal Scientist at Adobe</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Section 3: Evolution Toward Composability -->
+    <div id="section-3" class="section">
+      <div class="section-heading">
+        <h2>III. Evolution Toward Composability <span class="section-timing">(5-6 min)</span></h2>
+      </div>
+      <div class="card-content">
+        <div class="bullet-point">
+          <div class="bullet-icon">•</div>
+          <div class="bullet-text">Deployment Evolution:</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">1.</div>
+          <div class="bullet-text">On-premise: Traditional installations</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">2.</div>
+          <div class="bullet-text">Managed services: Adobe handles infrastructure</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">3.</div>
+          <div class="bullet-text">AEM Cloud Service (2019): Fully cloud-native SaaS</div>
+        </div>
+        <div class="bullet-point">
+          <div class="bullet-icon">•</div>
+          <div class="bullet-text">Key Innovations:</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">Edge Delivery Services (formerly Franklin):</div>
+        </div>
+        <div class="sub-bullet" style="margin-left: 50px;">
+          <div class="bullet-text">- Performance-focused</div>
+        </div>
+        <div class="sub-bullet" style="margin-left: 50px;">
+          <div class="bullet-text">- Git-based workflow</div>
+        </div>
+        <div class="sub-bullet" style="margin-left: 50px;">
+          <div class="bullet-text">- Document authoring in familiar platforms</div>
+        </div>
+        <div class="sub-bullet" style="margin-left: 50px;">
+          <div class="bullet-text">- Project Crosswalk integration with traditional AEM</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">Universal Visual Editor:</div>
+        </div>
+        <div class="sub-bullet" style="margin-left: 50px;">
+          <div class="bullet-text">- Framework-agnostic (works with any architecture)</div>
+        </div>
+        <div class="sub-bullet" style="margin-left: 50px;">
+          <div class="bullet-text">- Overcomes traditional editor limitations</div>
+        </div>
+        <div class="sub-bullet" style="margin-left: 50px;">
+          <div class="bullet-text">- Supports headless content via GraphQL</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">App Builder:</div>
+        </div>
+        <div class="sub-bullet" style="margin-left: 50px;">
+          <div class="bullet-text">- Built on Apache OpenWhisk (open-source serverless)</div>
+        </div>
+        <div class="sub-bullet" style="margin-left: 50px;">
+          <div class="bullet-text">- Custom microservices and extensions</div>
+        </div>
+        <div class="sub-bullet" style="margin-left: 50px;">
+          <div class="bullet-text">- Modern JavaScript frameworks and tools</div>
+        </div>
+        <div class="bullet-point">
+          <div class="bullet-icon">•</div>
+          <div class="bullet-text">Key Quote: "Future of digital experiences isn't monolithic applications but composable services assembled for specific business needs"</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Section 4: Real-World Implementations & Challenges -->
+    <div id="section-4" class="section">
+      <div class="section-heading">
+        <h2>IV. Real-World Implementations & Challenges <span class="section-timing">(4-5 min)</span></h2>
+      </div>
+      <div class="card-content">
+        <div class="bullet-point">
+          <div class="bullet-icon">•</div>
+          <div class="bullet-text">Success Stories:</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">Nissan/Renault Alliance: 200 websites, 30 languages, 5 brands, 500 staff globally</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">EE (UK Telecom): Hybris e-commerce + AEM frontend + 8,000-page help website</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">Media-Rich Projects: Twitter, Genesis USA, McLaren</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">Headless Implementation: Ford with React</div>
+        </div>
+        <div class="bullet-point">
+          <div class="bullet-icon">•</div>
+          <div class="bullet-text">Challenges:</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">Technical:</div>
+        </div>
+        <div class="sub-bullet" style="margin-left: 50px;">
+          <div class="bullet-text">- API complexity (REST vs. GraphQL)</div>
+        </div>
+        <div class="sub-bullet" style="margin-left: 50px;">
+          <div class="bullet-text">- Storage architecture decisions</div>
+        </div>
+        <div class="sub-bullet" style="margin-left: 50px;">
+          <div class="bullet-text">- Caching in marketing environments</div>
+        </div>
+        <div class="sub-bullet" style="margin-left: 50px;">
+          <div class="bullet-text">- Integration with other systems</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">Business/Cultural:</div>
+        </div>
+        <div class="sub-bullet" style="margin-left: 50px;">
+          <div class="bullet-text">- Legacy perspectives on AEM</div>
+        </div>
+        <div class="sub-bullet" style="margin-left: 50px;">
+          <div class="bullet-text">- Skills gaps between specialists</div>
+        </div>
+        <div class="sub-bullet" style="margin-left: 50px;">
+          <div class="bullet-text">- Governance for hybrid environments</div>
+        </div>
+        <div class="sub-bullet" style="margin-left: 50px;">
+          <div class="bullet-text">- Component ownership questions</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">Migration:</div>
+        </div>
+        <div class="sub-bullet" style="margin-left: 50px;">
+          <div class="bullet-text">- Existing investments ("too much to justify re-architecting")</div>
+        </div>
+        <div class="sub-bullet" style="margin-left: 50px;">
+          <div class="bullet-text">- Support vs. innovation focus</div>
+        </div>
+        <div class="sub-bullet" style="margin-left: 50px;">
+          <div class="bullet-text">- Testing requirements</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Section 5: Future Direction & Closing -->
+    <div id="section-5" class="section">
+      <div class="section-heading">
+        <h2>V. Future Direction & Closing <span class="section-timing">(3-4 min)</span></h2>
+      </div>
+      <div class="card-content">
+        <div class="bullet-point">
+          <div class="bullet-icon">•</div>
+          <div class="bullet-text">Adobe's Strategic Roadmap:</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">Cloud-first approach</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">Composable architecture expansion</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">Experience-led commerce integration</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">Generative AI capabilities</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">Unified authoring experiences</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">Improved developer experience</div>
+        </div>
+        <div class="bullet-point">
+          <div class="bullet-icon">•</div>
+          <div class="bullet-text">Bridging Open Source & Enterprise:</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">AEM demonstrates how these worlds strengthen each other</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">Open standards + enterprise capabilities = blueprint for future</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">Transition happening gradually, but direction is clear</div>
+        </div>
+        <div class="sub-bullet">
+          <div class="bullet-icon">○</div>
+          <div class="bullet-text">"AEM is changing from all-in-one system to flexible, cloud-based platform"</div>
+        </div>
+        <div class="bullet-point">
+          <div class="bullet-icon">•</div>
+          <div class="bullet-text">Final Thought: Understanding both open-source heritage and enterprise evolution is crucial for navigating the changing landscape</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="status-bar">
+    <div class="timer-display" id="timer">00:00</div>
+    <div class="progress-indicator">Section <span id="current-section">1</span> of 5</div>
+  </div>
+
+  <script>
+    // DOM elements
+    const sections = document.querySelectorAll('.section');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const timerBtn = document.getElementById('timer-btn');
+    const timerDisplay = document.getElementById('timer');
+    const currentSectionDisplay = document.getElementById('current-section');
+    
+    // Global variables
+    let currentSectionIndex = 0;
+    let timerRunning = false;
+    let timerSeconds = 0;
+    let timerInterval;
+    
+    // Initialize
+    function init() {
+      updateNavButtons();
+      
+      // Add event listeners
+      prevBtn.addEventListener('click', showPreviousSection);
+      nextBtn.addEventListener('click', showNextSection);
+      timerBtn.addEventListener('click', toggleTimer);
+      
+      // Keyboard navigation
+      document.addEventListener('keydown', handleKeyNavigation);
+    }
+    
+    // Show previous section
+    function showPreviousSection() {
+      if (currentSectionIndex > 0) {
+        sections[currentSectionIndex].classList.remove('active');
+        currentSectionIndex--;
+        sections[currentSectionIndex].classList.add('active');
+        updateNavButtons();
+        updateCurrentSectionDisplay();
+      }
+    }
+    
+    // Show next section
+    function showNextSection() {
+      if (currentSectionIndex < sections.length - 1) {
+        sections[currentSectionIndex].classList.remove('active');
+        currentSectionIndex++;
+        sections[currentSectionIndex].classList.add('active');
+        updateNavButtons();
+        updateCurrentSectionDisplay();
+      }
+    }
+    
+    // Update navigation button states
+    function updateNavButtons() {
+      prevBtn.disabled = currentSectionIndex === 0;
+      nextBtn.disabled = currentSectionIndex === sections.length - 1;
+    }
+    
+    // Update current section display
+    function updateCurrentSectionDisplay() {
+      currentSectionDisplay.textContent = currentSectionIndex + 1;
+    }
+    
+    // Toggle timer
+    function toggleTimer() {
+      if (timerRunning) {
+        clearInterval(timerInterval);
+        timerBtn.textContent = 'Start Timer';
+        timerBtn.style.backgroundColor = '#e74c3c';
+      } else {
+        timerInterval = setInterval(updateTimer, 1000);
+        timerBtn.textContent = 'Pause Timer';
+        timerBtn.style.backgroundColor = '#27ae60';
+      }
+      timerRunning = !timerRunning;
+    }
+    
+    // Update timer display
+    function updateTimer() {
+      timerSeconds++;
+      const minutes = Math.floor(timerSeconds / 60);
+      const seconds = timerSeconds % 60;
+      timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+    
+    // Handle keyboard navigation
+    function handleKeyNavigation(e) {
+      if (e.key === 'ArrowLeft') {
+        showPreviousSection();
+      } else if (e.key === 'ArrowRight') {
+        showNextSection();
+      } else if (e.key === ' ' || e.key === 'Spacebar') {
+        toggleTimer();
+        e.preventDefault(); // Prevent page scroll on space
+      }
+    }
+    
+    // Initialize when document is ready
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
