@@ -293,6 +293,7 @@
             <li>They provide answers with confidence rather than acknowledging limitations</li>
             <li>This isn't an occasional glitch—it's in their fundamental design</li>
             <li>Particularly dangerous in specialized domains like law, medicine, and finance</li>
+            
           </ul>
           
           <div class="illustration">
@@ -333,13 +334,17 @@
       
       <!-- Slide 3: Toxic Training Data -->
       <div id="slide-3" class="slide">
-        <h2 class="slide-title">Toxic Training Data</h2>
+        <h2 class="slide-title">Toxic Training Data, with indeterminate release cycles</h2>
         <div class="slide-content">
           <ul class="bullet-list">
             <li>Most large language models are trained on internet data</li>
             <li>This includes misinformation, extremism, and various biases</li>
             <li>Models have ingested fiction, propaganda, and falsehoods</li>
             <li>Even with filtering, comprehensive curation is practically impossible</li>
+            <li>AI companies create System Prompts that Mislead (Trump/Musk Twitter)</li>
+            <li>AI Companies release updates without warning</li>
+            <Li>AI companies release according to their competitions releases, no structure</li>
+
           </ul>
           
           <div class="illustration">
@@ -473,8 +478,8 @@
         <h2 class="slide-title">Cultural Alignment Biases</h2>
         <div class="slide-content">
           <ul class="bullet-list">
-            <li>Most AI systems reflect Western, English-speaking perspectives</li>
-            <li>Alternative models demonstrate different cultural alignments</li>
+            <li>Most AI systems reflect Anglo-American perspectives, perhaps Silicon Valley culture</li>
+            <li>Alternative models demonstrate different cultural alignments, Deepseek and Tianmen Square</li>
             <li>Systems interpret information through specific cultural lenses</li>
             <li>Organizations outside dominant cultures risk misalignment with their values</li>
           </ul>
@@ -759,7 +764,7 @@
 
       <!-- Slide 11: The AI Content Architect -->
       <div id="slide-11" class="slide">
-        <h2 class="slide-title">The AI Content Architect: A Critical New Role</h2>
+        <h2 class="slide-title">The AI Content Architect</h2>
         <div class="slide-content">
           <ul class="bullet-list">
             <li>Bridge between technology and business needs</li>
@@ -800,7 +805,7 @@
 
       <!-- Slide 12: Realistic Assessment -->
       <div id="slide-12" class="slide">
-        <h2 class="slide-title">Realistic Assessment for Organizations</h2>
+        <h2 class="slide-title">Realistic Assessment</h2>
         <div class="slide-content">
           <ul class="bullet-list">
             <li>Hardware investments ($3,000-$15,000 per knowledge worker)</li>
@@ -836,7 +841,7 @@
 
       <!-- Slide 13: Pragmatic Pathways -->
       <div id="slide-13" class="slide">
-        <h2 class="slide-title">Pragmatic Pathways Forward</h2>
+        <h2 class="slide-title">Pragmatic Pathways</h2>
         <div class="slide-content">
           <ul class="bullet-list">
             <li>Large organizations: Local deployment + AI Content Architects</li>
@@ -918,6 +923,11 @@
         </div>
       </div>
     </div>
+    
+    <div class="footer">
+      <div class="timer">15:00</div>
+      <div class="pagination">1 / 15</div>
+    </div>
   </div>
 
   <script>
@@ -960,6 +970,14 @@
       // Reset illustration index when changing slides
       if (currentSlideIndex !== 7) { // If not on slide 8 (index 7)
         resetIllustrations();
+      }
+      
+      // Update h1 text based on slide number
+      const headerTitle = document.querySelector('.header h1');
+      if (index >= 7) {
+        headerTitle.textContent = "What's Missing from AI - Corporate Solutions";
+      } else {
+        headerTitle.textContent = "What's Missing from AI";
       }
     }
     
@@ -1011,12 +1029,15 @@
         timerInterval = null;
         timerBtn.textContent = 'Start Timer';
         timerBtn.style.backgroundColor = '#e74c3c';
+        // Show navigation bar when timer stops
+        document.querySelector('.navigation').style.display = 'flex';
       } else {
         // Start timer
         timerInterval = setInterval(updateTimer, 1000);
         timerBtn.textContent = 'Stop Timer';
         timerBtn.style.backgroundColor = '#27ae60';
-        document.querySelector('.navigation').style.display = 'none'; // Initially hide navigation bar
+        // Hide navigation bar when timer starts
+        document.querySelector('.navigation').style.display = 'none';
       }
     });
     
