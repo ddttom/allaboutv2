@@ -261,7 +261,7 @@
     <div class="content">
       <!-- Slide 1: Introduction -->
       <div id="slide-1" class="slide active">
-        <h2 class="slide-title">The Fundamental Flaws in Modern AI</h2>
+        <h2 class="slide-title">The Fundamental Flaws in AI</h2>
         <div class="slide-content">
           <p style="font-size: 18px;">Despite impressive headlines about AI capabilities, significant limitations continue to hinder their potential and create risks for organizations.</p>
           
@@ -291,7 +291,7 @@
           <ul class="bullet-list">
             <li>AI systems generate information that appears factual but is fabricated</li>
             <li>They provide answers with confidence rather than acknowledging limitations</li>
-            <li>This isn't an occasional glitch—it's in their fundamental design</li>
+            <li>This isn't an occasional glitch—it's in their design</li>
             <li>Particularly dangerous in specialized domains like law, medicine, and finance</li>
             
           </ul>
@@ -478,8 +478,8 @@
         <h2 class="slide-title">Cultural Alignment Biases</h2>
         <div class="slide-content">
           <ul class="bullet-list">
-            <li>Most AI systems reflect Anglo-American perspectives, perhaps Silicon Valley culture</li>
-            <li>Alternative models demonstrate different cultural alignments, Deepseek and Tianmen Square</li>
+            <li>Most AI systems reflect Anglo-American perspectives, perhaps even  Silicon Valley culture</li>
+            <li>Alternative models demonstrate different cultural alignments (Deepseek and Tianmen Square)</li>
             <li>Systems interpret information through specific cultural lenses</li>
             <li>Organizations outside dominant cultures risk misalignment with their values</li>
           </ul>
@@ -562,19 +562,19 @@
               <!-- GDPR Section -->
               <g transform="translate(150, 80)">
                 <rect width="100" height="30" rx="4" fill="#3498db" opacity="0.8"/>
-                <text x="50" y="20" text-anchor="middle" fill="white" font-size="14" font-weight="bold">GDPR</text>
+                <text x="50" y="20" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Regulation</text>
               </g>
               
               <!-- HIPAA Section -->
               <g transform="translate(160, 120)">
                 <rect width="80" height="30" rx="4" fill="#2980b9" opacity="0.8"/>
-                <text x="40" y="20" text-anchor="middle" fill="white" font-size="14" font-weight="bold">HIPAA</text>
+                <text x="40" y="20" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Sectors</text>
               </g>
               
               <!-- CCPA Section -->
               <g transform="translate(170, 160)">
                 <rect width="60" height="30" rx="4" fill="#1abc9c" opacity="0.8"/>
-                <text x="30" y="20" text-anchor="middle" fill="white" font-size="14" font-weight="bold">CCPA</text>
+                <text x="30" y="20" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Privacy</text>
               </g>
               
               <!-- AI Regulation Icon -->
@@ -593,8 +593,8 @@
         <div class="slide-content">
           <ul class="bullet-list">
             <li>JSON-LD: Creating machine-readable context</li>
+            <li>Building AI-friendly information architecture (.md files)</li>
             <li>The emerging llms.txt standard (like robots.txt for AI)</li>
-            <li>Building AI-friendly information architecture</li>
             <li>Creating explicit bridges between human content and machine understanding</li>
           </ul>
           
@@ -659,10 +659,10 @@
               
               <!-- LLMs.txt example -->
               <g transform="translate(100, 70)">
-                <text x="0" y="0" fill="#34495e" font-size="10" style="font-family: monospace;">User-Agent: *</text>
-                <text x="0" y="15" fill="#34495e" font-size="10" style="font-family: monospace;">Allow: /public/*</text>
-                <text x="0" y="30" fill="#34495e" font-size="10" style="font-family: monospace;">Disallow: /private/*</text>
-                <text x="0" y="45" fill="#34495e" font-size="10" style="font-family: monospace;">Context: business</text>
+                <text x="0" y="0" fill="#34495e" font-size="10" style="font-family: monospace;">**Site Type:** Document-Centric</text>
+                <text x="0" y="15" fill="#34495e" font-size="10" style="font-family: monospace;">**Purpose:** Developer Education</text>
+                <text x="0" y="30" fill="#34495e" font-size="10" style="font-family: monospace;">**Technology Stack:** Adobe Edge</text>
+                <text x="0" y="45" fill="#34495e" font-size="10" style="font-family: monospace;">**Author:** Tom Cranstoun</text>
               </g>
               
               <path d="M200 160 L280 160" stroke="#3498db" stroke-width="2" marker-end="url(#arrow)"/>
@@ -796,8 +796,8 @@
               <text x="100" y="143" text-anchor="middle" fill="white" font-size="8">DATA</text>
               <text x="300" y="143" text-anchor="middle" fill="white" font-size="8">GOV</text>
               
-              <text x="200" y="105" text-anchor="middle" fill="#34495e" font-size="12">AI</text>
-              <text x="200" y="95" text-anchor="middle" fill="#34495e" font-size="12">ARCHITECT</text>
+              <text x="200" y="105" text-anchor="middle" fill="#34495e" font-size="12">Architect</text>
+              <text x="200" y="95" text-anchor="middle" fill="#34495e" font-size="12">AI</text>
             </svg>
           </div>
         </div>
@@ -904,7 +904,7 @@
 
       <!-- Slide 15: Thank You -->
       <div id="slide-15" class="slide">
-        <h2 class="slide-title">Thank You</h2>
+        <h2 class="slide-title">Lets Connect</h2>
         <div class="slide-content">
           <div class="illustration" style="flex: 0 0 40%; justify-content: flex-start; align-items: center;">
             <div style="width: 220px; height: 220px; border-radius: 50%; background-color: #3498db; padding: 10px; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
@@ -1011,10 +1011,39 @@
       return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
     }
 
+    // Function to flash the screen as a time warning
+    function flashTimeWarning() {
+      const container = document.querySelector('.container');
+      let flashCount = 0;
+      
+      function singleFlash() {
+        container.style.backgroundColor = '#e74c3c'; // Red flash
+        
+        setTimeout(() => {
+          container.style.backgroundColor = '#fff'; // Return to normal
+          flashCount++;
+          
+          if (flashCount < 3) {
+            setTimeout(singleFlash, 300); // Wait before next flash
+          } else {
+            // After all flashes complete, set background to light grey
+            container.style.backgroundColor = '#f0f0f0';
+          }
+        }, 300);
+      }
+      
+      singleFlash();
+    }
+
     function updateTimer() {
       if (remainingTime > 0) {
         remainingTime--;
         document.querySelector('.timer').textContent = formatTime(remainingTime);
+        
+        // Flash warning when 1 minute remains
+        if (remainingTime === 60) {
+          flashTimeWarning();
+        }
       } else {
         clearInterval(timerInterval);
         timerBtn.textContent = 'Time Up!';
