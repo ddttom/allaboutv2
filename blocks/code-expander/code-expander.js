@@ -5,13 +5,18 @@ export default async function decorate(block) {
   const codeElements = document.querySelectorAll('pre code');
   
   function detectLanguage(code) {
-    if (code.trim().startsWith('"') || code.trim().startsWith("'")) {
-      return 'text';
-    }
-    
-    if (/^(ls|cd|pwd|mkdir|#!|rm|cp|mv|cat|echo|grep|sed|awk|curl|wget|ssh|git|npm|yarn|docker|kubectl)\s/.test(code)) {
-      return 'shell';
-    }
+      // First priority: Check for shebang line (#!/bin/bash, #!/usr/bin/env bash, etc.)
+      if (code.trim().startsWith('#!')) {
+        return 'shell';
+      }
+      
+      if (code.trim().startsWith('"') || code.trim().startsWith("'")) {
+        return 'text';
+      }
+      
+      if (/^(ls|cd|pwd|mkdir|rm|cp|mv|cat|echo|grep|sed|awk|curl|wget|ssh|git|npm|yarn|docker|kubectl)\s/.test(code)) {
+        return 'shell';
+      }
     
     if (code.includes('function') || code.includes('var') || code.includes('const')) return 'javascript';
     if (code.includes('{') && code.includes('}')) {
