@@ -205,10 +205,11 @@ export default async function decorate(block) {
         }
         
         // Process keywords, but avoid touching already processed parts
+        let keywordMatch;
         const keywordRegex = /\b(def|class|import|from|as|if|elif|else|for|while|try|except|finally|with|return|yield|lambda|global|nonlocal|pass|break|continue|raise|assert|del|in|is|not|and|or|async|await|self)\b/g;
-        while ((match = keywordRegex.exec(encodedCode)) !== null) {
-          const start = match.index;
-          const end = start + match[0].length;
+        while ((keywordMatch = keywordRegex.exec(encodedCode)) !== null) {
+          const start = keywordMatch.index;
+          const end = start + keywordMatch[0].length;
           if (!isProcessed(start)) {
             encodedCode = wrapWithSpan(encodedCode, start, end, "keyword");
             // Reset regex to continue from the new position
@@ -217,10 +218,11 @@ export default async function decorate(block) {
         }
         
         // Process built-ins
+        let builtinMatch;
         const builtinRegex = /\b(print|len|range|str|int|float|list|dict|set|tuple|sum|min|max|sorted|map|filter|zip|enumerate|open|type|isinstance|hasattr|getattr|setattr|delattr)\b/g;
-        while ((match = builtinRegex.exec(encodedCode)) !== null) {
-          const start = match.index;
-          const end = start + match[0].length;
+        while ((builtinMatch = builtinRegex.exec(encodedCode)) !== null) {
+          const start = builtinMatch.index;
+          const end = start + builtinMatch[0].length;
           if (!isProcessed(start)) {
             encodedCode = wrapWithSpan(encodedCode, start, end, "builtin");
             // Reset regex to continue from the new position
@@ -229,10 +231,11 @@ export default async function decorate(block) {
         }
         
         // Process boolean constants
+        let booleanMatch;
         const booleanRegex = /\b(True|False|None)\b/g;
-        while ((match = booleanRegex.exec(encodedCode)) !== null) {
-          const start = match.index;
-          const end = start + match[0].length;
+        while ((booleanMatch = booleanRegex.exec(encodedCode)) !== null) {
+          const start = booleanMatch.index;
+          const end = start + booleanMatch[0].length;
           if (!isProcessed(start)) {
             encodedCode = wrapWithSpan(encodedCode, start, end, "boolean");
             // Reset regex to continue from the new position
@@ -241,10 +244,11 @@ export default async function decorate(block) {
         }
         
         // Process decorators
+        let decoratorMatch;
         const decoratorRegex = /@\w+(?:\.[\w.]+)*/g;
-        while ((match = decoratorRegex.exec(encodedCode)) !== null) {
-          const start = match.index;
-          const end = start + match[0].length;
+        while ((decoratorMatch = decoratorRegex.exec(encodedCode)) !== null) {
+          const start = decoratorMatch.index;
+          const end = start + decoratorMatch[0].length;
           if (!isProcessed(start)) {
             encodedCode = wrapWithSpan(encodedCode, start, end, "decorator");
             // Reset regex to continue from the new position
@@ -253,10 +257,11 @@ export default async function decorate(block) {
         }
         
         // Process numbers
+        let numberMatch;
         const numberRegex = /\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/g;
-        while ((match = numberRegex.exec(encodedCode)) !== null) {
-          const start = match.index;
-          const end = start + match[0].length;
+        while ((numberMatch = numberRegex.exec(encodedCode)) !== null) {
+          const start = numberMatch.index;
+          const end = start + numberMatch[0].length;
           if (!isProcessed(start)) {
             encodedCode = wrapWithSpan(encodedCode, start, end, "number");
             // Reset regex to continue from the new position
