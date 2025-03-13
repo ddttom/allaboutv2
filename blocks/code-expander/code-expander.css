@@ -163,6 +163,9 @@ pre[class^="language-"].expanded {
 .language-shell .comment { color: var(--code-expander-terminal-comment); }
 .language-shell .output { color: var(--code-expander-terminal-output); }
 
+/* Python syntax highlighting */
+.language-python .comment { color: #008000; }
+
 /* General syntax highlighting */
 .comment { color: #6a737d; }
 .string { color: #032f62; }
