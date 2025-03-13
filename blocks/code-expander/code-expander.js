@@ -140,21 +140,57 @@ export default async function decorate(block) {
           }
         );
       case 'python':
-        return decodedCode.replace(
-          /(#.*$|'''[\s\S]*?'''|"""[\s\S]*?"""|"(?:\\.|[^\\"])*"|'(?:\\.|[^\\'])*'|f['"][^'"]*(?:\{.*?\})[^'"]*['"]|\b(?:def|class|import|from|as|if|elif|else|for|while|try|except|finally|with|return|yield|lambda|global|nonlocal|pass|break|continue|raise|assert|del|in|is|not|and|or|async|await|self)\b|@\w+(?:\.[\w.]+)*|\b(?:print|len|range|str|int|float|list|dict|set|tuple|sum|min|max|sorted|map|filter|zip|enumerate|open|type|isinstance|hasattr|getattr|setattr|delattr)\b|\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b)/gm,
-          match => {
-            if (/^#/.test(match)) return `<span class="comment">${encodeHtmlEntities(match)}</span>`;
-            if (/^'''|^"""/.test(match)) return `<span class="comment">${encodeHtmlEntities(match)}</span>`;
-            if (/^f['"]/.test(match)) return `<span class="f-string">${encodeHtmlEntities(match)}</span>`;
-            if (/^['"]/.test(match)) return `<span class="string">${encodeHtmlEntities(match)}</span>`;
-            if (/^@/.test(match)) return `<span class="decorator">${encodeHtmlEntities(match)}</span>`;
-            if (/^(def|class|import|from|as|if|elif|else|for|while|try|except|finally|with|return|yield|lambda|global|nonlocal|pass|break|continue|raise|assert|del|in|is|not|and|or|async|await|self)$/.test(match)) return `<span class="keyword">${encodeHtmlEntities(match)}</span>`;
-            if (/^(True|False|None)$/.test(match)) return `<span class="boolean">${encodeHtmlEntities(match)}</span>`;
-            if (/^(print|len|range|str|int|float|list|dict|set|tuple|sum|min|max|sorted|map|filter|zip|enumerate|open|type|isinstance|hasattr|getattr|setattr|delattr)$/.test(match)) return `<span class="builtin">${encodeHtmlEntities(match)}</span>`;
-            if (/^\d+(\.\d+)?([eE][+-]?\d+)?$/.test(match)) return `<span class="number">${encodeHtmlEntities(match)}</span>`;
-            return encodeHtmlEntities(match);
+        // Process Python code line by line to handle comments and docstrings properly
+        const lines = decodedCode.split('\n');
+        let inMultilineComment = false;
+        let processedLines = lines.map(line => {
+          // Handle single-line comments
+          if (line.trim().startsWith('#')) {
+            return `<span class="comment">${encodeHtmlEntities(line)}</span>`;
           }
-        );
+          
+          // Check for docstring start/end
+          if (line.trim().startsWith('"""') || line.trim().startsWith("'''")) {
+            inMultilineComment = !inMultilineComment || 
+                                (line.trim().endsWith('"""') && line.trim().startsWith('"""')) || 
+                                (line.trim().endsWith("'''") && line.trim().startsWith("'''"));
+            return `<span class="comment">${encodeHtmlEntities(line)}</span>`;
+          }
+          
+          // If we're inside a multiline comment
+          if (inMultilineComment) {
+            // Check if this line ends the multiline comment
+            if (line.trim().endsWith('"""') || line.trim().endsWith("'''")) {
+              inMultilineComment = false;
+            }
+            return `<span class="comment">${encodeHtmlEntities(line)}</span>`;
+          }
+          
+          // Process normal code with syntax highlighting
+          return line.replace(
+            /(\b(?:def|class|import|from|as|if|elif|else|for|while|try|except|finally|with|return|yield|lambda|global|nonlocal|pass|break|continue|raise|assert|del|in|is|not|and|or|async|await|self)\b|@\w+(?:\.[\w.]+)*|\b(?:print|len|range|str|int|float|list|dict|set|tuple|sum|min|max|sorted|map|filter|zip|enumerate|open|type|isinstance|hasattr|getattr|setattr|delattr)\b|\b(?:True|False|None)\b|\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b|"(?:\\.|[^\\"])*"|'(?:\\.|[^\\'])*'|f(['"])(?:\\.|[^\\])*?\1)/g,
+            (match, keyword, decorator, builtin, boolean, number, string, fString) => {
+              if (match.startsWith('#')) return `<span class="comment">${encodeHtmlEntities(match)}</span>`;
+              if (/^def|^class|^import|^from|^as|^if|^elif|^else|^for|^while|^try|^except|^finally|^with|^return|^yield|^lambda|^global|^nonlocal|^pass|^break|^continue|^raise|^assert|^del|^in|^is|^not|^and|^or|^async|^await|^self\b/.test(match)) 
+                return `<span class="keyword">${encodeHtmlEntities(match)}</span>`;
+              if (/^True|^False|^None\b/.test(match)) 
+                return `<span class="boolean">${encodeHtmlEntities(match)}</span>`;
+              if (/^print|^len|^range|^str|^int|^float|^list|^dict|^set|^tuple|^sum|^min|^max|^sorted|^map|^filter|^zip|^enumerate|^open|^type|^isinstance|^hasattr|^getattr|^setattr|^delattr\b/.test(match)) 
+                return `<span class="builtin">${encodeHtmlEntities(match)}</span>`;
+              if (/^@/.test(match)) 
+                return `<span class="decorator">${encodeHtmlEntities(match)}</span>`;
+              if (/^\d+(\.\d+)?([eE][+-]?\d+)?$/.test(match)) 
+                return `<span class="number">${encodeHtmlEntities(match)}</span>`;
+              if (/^f['"]/.test(match)) 
+                return `<span class="f-string">${encodeHtmlEntities(match)}</span>`;
+              if (/^['"]/.test(match)) 
+                return `<span class="string">${encodeHtmlEntities(match)}</span>`;
+              return encodeHtmlEntities(match);
+            }
+          );
+        });
+        
+        return processedLines.join('\n');
       case 'text':
         return encodeHtmlEntities(decodedCode);
       default:
