@@ -165,6 +165,7 @@ pre[class^="language-"].expanded {
 
 /* Python syntax highlighting */
 .language-python .comment { color: #008000; }
+.language-python .string { color: #a31515; font-weight: bold; }
 
 /* General syntax highlighting */
 .comment { color: #6a737d; }

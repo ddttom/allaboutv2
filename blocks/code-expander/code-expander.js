@@ -143,29 +143,126 @@ export default async function decorate(block) {
         // First, encode HTML entities in the entire code
         let encodedCode = encodeHtmlEntities(decodedCode);
         
-        // Then, find and highlight Python comments (single-line and docstrings)
-        // This approach only targets comments and leaves other code untouched
-        encodedCode = encodedCode.replace(
-          /(^|\n)(\s*)(#.*)($|\n)/g, 
-          '$1$2<span class="comment">$3</span>$4'
-        );
+        // Create a map to track which parts of the code have been processed
+        const processedRanges = [];
         
-        // Handle triple-quoted docstrings (both """ and ''')
-        // This is a simplified approach that might not handle all edge cases
-        encodedCode = encodedCode.replace(
-          /"""([\s\S]*?)"""|'''([\s\S]*?)'''/g,
-          (match) => `<span class="comment">${match}</span>`
-        );
+        // Helper function to check if a position is within any processed range
+        const isProcessed = (pos) => {
+          return processedRanges.some(range => pos >= range.start && pos < range.end);
+        };
         
-        // Now highlight Python keywords, but avoid touching the already highlighted comments
-        const keywordPattern = /\b(def|class|import|from|as|if|elif|else|for|while|try|except|finally|with|return|yield|lambda|global|nonlocal|pass|break|continue|raise|assert|del|in|is|not|and|or|async|await)\b/g;
-        encodedCode = encodedCode.replace(keywordPattern, (match) => {
-          // Only replace if not already inside a span
-          if (!/span class="comment"/.test(encodedCode.substring(Math.max(0, encodedCode.lastIndexOf('<', encodedCode.indexOf(match))), encodedCode.indexOf(match)))) {
-            return `<span class="keyword">${match}</span>`;
+        // Helper function to mark a range as processed
+        const markProcessed = (start, end) => {
+          processedRanges.push({ start, end });
+        };
+        
+        // Helper function to wrap a substring with a span
+        const wrapWithSpan = (str, start, end, className) => {
+          const before = str.substring(0, start);
+          const content = str.substring(start, end);
+          const after = str.substring(end);
+          markProcessed(start, end);
+          return before + `<span class="${className}">` + content + '</span>' + after;
+        };
+        
+        // First, process string literals to avoid highlighting keywords inside them
+        let stringMatch;
+        const stringRegex = /"(?:\\.|[^\\"])*"|'(?:\\.|[^\\'])*'/g;
+        while ((stringMatch = stringRegex.exec(encodedCode)) !== null) {
+          const start = stringMatch.index;
+          const end = start + stringMatch[0].length;
+          if (!isProcessed(start)) {
+            encodedCode = wrapWithSpan(encodedCode, start, end, "string");
+            // Reset regex to continue from the new position
+            stringRegex.lastIndex = end;
           }
-          return match;
-        });
+        }
+        
+        // Process triple-quoted docstrings
+        let docstringMatch;
+        const docstringRegex = /"""[\s\S]*?"""|'''[\s\S]*?'''/g;
+        while ((docstringMatch = docstringRegex.exec(encodedCode)) !== null) {
+          const start = docstringMatch.index;
+          const end = start + docstringMatch[0].length;
+          if (!isProcessed(start)) {
+            encodedCode = wrapWithSpan(encodedCode, start, end, "comment");
+            // Reset regex to continue from the new position
+            docstringRegex.lastIndex = end;
+          }
+        }
+        
+        // Process single-line comments
+        let commentMatch;
+        const commentRegex = /(^|\n)(\s*)(#.*)($|\n)/g;
+        while ((commentMatch = commentRegex.exec(encodedCode)) !== null) {
+          const start = commentMatch.index + commentMatch[1].length + commentMatch[2].length;
+          const end = start + commentMatch[3].length;
+          if (!isProcessed(start)) {
+            encodedCode = wrapWithSpan(encodedCode, start, end, "comment");
+            // Reset regex to continue from the new position
+            commentRegex.lastIndex = end;
+          }
+        }
+        
+        // Process keywords, but avoid touching already processed parts
+        const keywordRegex = /\b(def|class|import|from|as|if|elif|else|for|while|try|except|finally|with|return|yield|lambda|global|nonlocal|pass|break|continue|raise|assert|del|in|is|not|and|or|async|await|self)\b/g;
+        while ((match = keywordRegex.exec(encodedCode)) !== null) {
+          const start = match.index;
+          const end = start + match[0].length;
+          if (!isProcessed(start)) {
+            encodedCode = wrapWithSpan(encodedCode, start, end, "keyword");
+            // Reset regex to continue from the new position
+            keywordRegex.lastIndex = end;
+          }
+        }
+        
+        // Process built-ins
+        const builtinRegex = /\b(print|len|range|str|int|float|list|dict|set|tuple|sum|min|max|sorted|map|filter|zip|enumerate|open|type|isinstance|hasattr|getattr|setattr|delattr)\b/g;
+        while ((match = builtinRegex.exec(encodedCode)) !== null) {
+          const start = match.index;
+          const end = start + match[0].length;
+          if (!isProcessed(start)) {
+            encodedCode = wrapWithSpan(encodedCode, start, end, "builtin");
+            // Reset regex to continue from the new position
+            builtinRegex.lastIndex = end;
+          }
+        }
+        
+        // Process boolean constants
+        const booleanRegex = /\b(True|False|None)\b/g;
+        while ((match = booleanRegex.exec(encodedCode)) !== null) {
+          const start = match.index;
+          const end = start + match[0].length;
+          if (!isProcessed(start)) {
+            encodedCode = wrapWithSpan(encodedCode, start, end, "boolean");
+            // Reset regex to continue from the new position
+            booleanRegex.lastIndex = end;
+          }
+        }
+        
+        // Process decorators
+        const decoratorRegex = /@\w+(?:\.[\w.]+)*/g;
+        while ((match = decoratorRegex.exec(encodedCode)) !== null) {
+          const start = match.index;
+          const end = start + match[0].length;
+          if (!isProcessed(start)) {
+            encodedCode = wrapWithSpan(encodedCode, start, end, "decorator");
+            // Reset regex to continue from the new position
+            decoratorRegex.lastIndex = end;
+          }
+        }
+        
+        // Process numbers
+        const numberRegex = /\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/g;
+        while ((match = numberRegex.exec(encodedCode)) !== null) {
+          const start = match.index;
+          const end = start + match[0].length;
+          if (!isProcessed(start)) {
+            encodedCode = wrapWithSpan(encodedCode, start, end, "number");
+            // Reset regex to continue from the new position
+            numberRegex.lastIndex = end;
+          }
+        }
         
         return encodedCode;
       case 'text':
