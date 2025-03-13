@@ -15,7 +15,17 @@ export default async function decorate(block) {
             firstLine.includes('/usr/bin/env sh')) {
           return 'shell';
         }
-        return 'shell'; // Default to shell for any shebang line
+        // Check for Python interpreters
+        if (firstLine.includes('/python') || 
+            firstLine.includes('/usr/bin/env python')) {
+          return 'python';
+        }
+        return 'shell'; // Default to shell for any other shebang line
+      }
+      
+      // Check for specific Python import pattern
+      if (firstLine.includes('import mlx.core as mx')) {
+        return 'python';
       }
       
       if (code.trim().startsWith('"') || code.trim().startsWith("'")) {
@@ -25,6 +35,22 @@ export default async function decorate(block) {
       if (/^(ls|cd|python|pip|pwd|mkdir|rm|cp|mv|cat|echo|grep|sed|awk|curl|wget|ssh|git|npm|yarn|docker|kubectl)\s/.test(code)) {
         return 'shell';
       }
+    
+    // Check for Python-specific patterns
+    // Look for distinctive Python patterns rather than just 'import'
+    if (code.includes('def ') || 
+        /\bimport\s+[\w\.]+\s+as\s+\w+/.test(code) || // import X as Y pattern
+        /\bfrom\s+[\w\.]+\s+import\s+/.test(code) || // from X import Y pattern
+        code.includes('class ') || 
+        /\bif\s+__name__\s*==\s*['"]__main__['"]/.test(code)) {
+      return 'python';
+    }
+    
+    // Check for JavaScript-specific import patterns to avoid confusion
+    if (/\bimport\s+{[^}]*}\s+from\s+['"]/.test(code) || // import { X } from 'Y'
+        /\bimport\s+\w+\s+from\s+['"]/.test(code)) { // import X from 'Y'
+      return 'javascript';
+    }
     
     if (code.includes('function') || code.includes('var') || code.includes('const')) return 'javascript';
     if (code.includes('{') && code.includes('}')) {
@@ -113,6 +139,22 @@ export default async function decorate(block) {
             return encodeHtmlEntities(match);
           }
         );
+      case 'python':
+        return decodedCode.replace(
+          /(#.*$|'''[\s\S]*?'''|"""[\s\S]*?"""|"(?:\\.|[^\\"])*"|'(?:\\.|[^\\'])*'|f['"][^'"]*(?:\{.*?\})[^'"]*['"]|\b(?:def|class|import|from|as|if|elif|else|for|while|try|except|finally|with|return|yield|lambda|global|nonlocal|pass|break|continue|raise|assert|del|in|is|not|and|or|async|await|self)\b|@\w+(?:\.[\w.]+)*|\b(?:print|len|range|str|int|float|list|dict|set|tuple|sum|min|max|sorted|map|filter|zip|enumerate|open|type|isinstance|hasattr|getattr|setattr|delattr)\b|\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b)/gm,
+          match => {
+            if (/^#/.test(match)) return `<span class="comment">${encodeHtmlEntities(match)}</span>`;
+            if (/^'''|^"""/.test(match)) return `<span class="comment">${encodeHtmlEntities(match)}</span>`;
+            if (/^f['"]/.test(match)) return `<span class="f-string">${encodeHtmlEntities(match)}</span>`;
+            if (/^['"]/.test(match)) return `<span class="string">${encodeHtmlEntities(match)}</span>`;
+            if (/^@/.test(match)) return `<span class="decorator">${encodeHtmlEntities(match)}</span>`;
+            if (/^(def|class|import|from|as|if|elif|else|for|while|try|except|finally|with|return|yield|lambda|global|nonlocal|pass|break|continue|raise|assert|del|in|is|not|and|or|async|await|self)$/.test(match)) return `<span class="keyword">${encodeHtmlEntities(match)}</span>`;
+            if (/^(True|False|None)$/.test(match)) return `<span class="boolean">${encodeHtmlEntities(match)}</span>`;
+            if (/^(print|len|range|str|int|float|list|dict|set|tuple|sum|min|max|sorted|map|filter|zip|enumerate|open|type|isinstance|hasattr|getattr|setattr|delattr)$/.test(match)) return `<span class="builtin">${encodeHtmlEntities(match)}</span>`;
+            if (/^\d+(\.\d+)?([eE][+-]?\d+)?$/.test(match)) return `<span class="number">${encodeHtmlEntities(match)}</span>`;
+            return encodeHtmlEntities(match);
+          }
+        );
       case 'text':
         return encodeHtmlEntities(decodedCode);
       default:
@@ -131,6 +173,21 @@ export default async function decorate(block) {
     const preElement = codeElement.parentNode;
     preElement.parentNode.insertBefore(wrapper, preElement);
     wrapper.appendChild(preElement);
+    
+    // Add scroll hint
+    const scrollHint = document.createElement('div');
+    scrollHint.className = 'code-expander-scroll-hint';
+    scrollHint.textContent = '<-scroll with arrows->';
+    scrollHint.style.position = 'absolute';
+    scrollHint.style.bottom = '5px';
+    scrollHint.style.right = '10px';
+    scrollHint.style.fontSize = '12px';
+    scrollHint.style.color = '#888';
+    scrollHint.style.pointerEvents = 'none';
+    scrollHint.style.userSelect = 'none';
+    scrollHint.style.zIndex = '1';
+    wrapper.style.position = 'relative';
+    wrapper.appendChild(scrollHint);
     
     preElement.className = `language-${language}`;
     codeElement.innerHTML = highlightSyntax(code, language);
