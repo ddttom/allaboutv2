@@ -22,7 +22,7 @@ export default async function decorate(block) {
         return 'text';
       }
       
-      if (/^(ls|cd|pwd|mkdir|rm|cp|mv|cat|echo|grep|sed|awk|curl|wget|ssh|git|npm|yarn|docker|kubectl)\s/.test(code)) {
+      if (/^(ls|cd|python|pip|pwd|mkdir|rm|cp|mv|cat|echo|grep|sed|awk|curl|wget|ssh|git|npm|yarn|docker|kubectl)\s/.test(code)) {
         return 'shell';
       }
     
