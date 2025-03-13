@@ -6,8 +6,16 @@ export default async function decorate(block) {
   
   function detectLanguage(code) {
       // First priority: Check for shebang line (#!/bin/bash, #!/usr/bin/env bash, etc.)
-      if (code.trim().startsWith('#!')) {
-        return 'shell';
+      const firstLine = code.trim().split('\n')[0];
+      if (firstLine.startsWith('#!')) {
+        // Check for common shell interpreters
+        if (firstLine.includes('/bin/bash') || 
+            firstLine.includes('/bin/sh') || 
+            firstLine.includes('/usr/bin/env bash') || 
+            firstLine.includes('/usr/bin/env sh')) {
+          return 'shell';
+        }
+        return 'shell'; // Default to shell for any shebang line
       }
       
       if (code.trim().startsWith('"') || code.trim().startsWith("'")) {
