@@ -141,45 +141,136 @@ export default async function decorate(block) {
         );
       case 'python':
         // First encode HTML entities
-        const encodedCode = encodeHtmlEntities(decodedCode);
+        let encodedCode = encodeHtmlEntities(decodedCode);
         
-        // Simple approach that preserves whitespace and newlines
-        // First, wrap all Python syntax elements with spans
-        let result = encodedCode;
+        // Create a map to track which parts of the code have been processed
+        const processedRanges = [];
         
-        // Process comments (# to end of line)
-        result = result.replace(/(#.*)$/gm, '<span class="comment">$1</span>');
+        // Helper function to check if a position is within any processed range
+        const isProcessed = (pos) => {
+          return processedRanges.some(range => pos >= range.start && pos < range.end);
+        };
         
-        // Process string literals (both single and double quotes)
-        result = result.replace(/('(?:\\.|[^\\'])*'|"(?:\\.|[^\\"])*")/g, '<span class="string">$1</span>');
+        // Helper function to mark a range as processed
+        const markProcessed = (start, end) => {
+          processedRanges.push({ start, end });
+        };
         
-        // Process triple-quoted strings (both single and double quotes)
-        result = result.replace(/('''[\s\S]*?'''|"""[\s\S]*?""")/g, '<span class="comment">$1</span>');
+        // Helper function to wrap a substring with a span
+        const wrapWithSpan = (str, start, end, className) => {
+          const before = str.substring(0, start);
+          const content = str.substring(start, end);
+          const after = str.substring(end);
+          markProcessed(start, end);
+          return before + `<span class="${className}">` + content + '</span>' + after;
+        };
+        
+        // First, process comments (both single-line and docstrings)
+        // Process single-line comments
+        let commentMatch;
+        const commentRegex = /(^|\n)(\s*)(#.*)($|\n)/g;
+        while ((commentMatch = commentRegex.exec(encodedCode)) !== null) {
+          const start = commentMatch.index + commentMatch[1].length + commentMatch[2].length;
+          const end = start + commentMatch[3].length;
+          if (!isProcessed(start)) {
+            encodedCode = wrapWithSpan(encodedCode, start, end, "comment");
+            // Reset regex to continue from the new position
+            commentRegex.lastIndex = end;
+          }
+        }
+        
+        // Process triple-quoted docstrings
+        let docstringMatch;
+        const docstringRegex = /"""[\s\S]*?"""|'''[\s\S]*?'''/g;
+        while ((docstringMatch = docstringRegex.exec(encodedCode)) !== null) {
+          const start = docstringMatch.index;
+          const end = start + docstringMatch[0].length;
+          if (!isProcessed(start)) {
+            encodedCode = wrapWithSpan(encodedCode, start, end, "comment");
+            // Reset regex to continue from the new position
+            docstringRegex.lastIndex = end;
+          }
+        }
+        
+        // Process string literals
+        let stringMatch;
+        const stringRegex = /"(?:\\.|[^\\"])*"|'(?:\\.|[^\\'])*'/g;
+        while ((stringMatch = stringRegex.exec(encodedCode)) !== null) {
+          const start = stringMatch.index;
+          const end = start + stringMatch[0].length;
+          if (!isProcessed(start)) {
+            encodedCode = wrapWithSpan(encodedCode, start, end, "string");
+            // Reset regex to continue from the new position
+            stringRegex.lastIndex = end;
+          }
+        }
         
         // Process keywords
-        const keywords = ['def', 'class', 'import', 'from', 'as', 'if', 'elif', 'else', 'for', 'while', 'try', 'except', 'finally', 'with', 'return', 'yield', 'lambda', 'global', 'nonlocal', 'pass', 'break', 'continue', 'raise', 'assert', 'del', 'in', 'is', 'not', 'and', 'or', 'async', 'await', 'self'];
-        
-        // Create a regex pattern for keywords with word boundaries
-        const keywordPattern = new RegExp(`\\b(${keywords.join('|')})\\b`, 'g');
-        result = result.replace(keywordPattern, '<span class="keyword">$1</span>');
+        let keywordMatch;
+        const keywordRegex = /\b(def|class|import|from|as|if|elif|else|for|while|try|except|finally|with|return|yield|lambda|global|nonlocal|pass|break|continue|raise|assert|del|in|is|not|and|or|async|await|self)\b/g;
+        while ((keywordMatch = keywordRegex.exec(encodedCode)) !== null) {
+          const start = keywordMatch.index;
+          const end = start + keywordMatch[0].length;
+          if (!isProcessed(start)) {
+            encodedCode = wrapWithSpan(encodedCode, start, end, "keyword");
+            // Reset regex to continue from the new position
+            keywordRegex.lastIndex = end;
+          }
+        }
         
         // Process built-ins
-        const builtins = ['print', 'len', 'range', 'str', 'int', 'float', 'list', 'dict', 'set', 'tuple', 'sum', 'min', 'max', 'sorted', 'map', 'filter', 'zip', 'enumerate', 'open', 'type', 'isinstance', 'hasattr', 'getattr', 'setattr', 'delattr'];
-        
-        // Create a regex pattern for builtins with word boundaries
-        const builtinPattern = new RegExp(`\\b(${builtins.join('|')})\\b`, 'g');
-        result = result.replace(builtinPattern, '<span class="builtin">$1</span>');
+        let builtinMatch;
+        const builtinRegex = /\b(print|len|range|str|int|float|list|dict|set|tuple|sum|min|max|sorted|map|filter|zip|enumerate|open|type|isinstance|hasattr|getattr|setattr|delattr)\b/g;
+        while ((builtinMatch = builtinRegex.exec(encodedCode)) !== null) {
+          const start = builtinMatch.index;
+          const end = start + builtinMatch[0].length;
+          if (!isProcessed(start)) {
+            encodedCode = wrapWithSpan(encodedCode, start, end, "builtin");
+            // Reset regex to continue from the new position
+            builtinRegex.lastIndex = end;
+          }
+        }
         
         // Process boolean constants
-        result = result.replace(/\b(True|False|None)\b/g, '<span class="boolean">$1</span>');
+        let booleanMatch;
+        const booleanRegex = /\b(True|False|None)\b/g;
+        while ((booleanMatch = booleanRegex.exec(encodedCode)) !== null) {
+          const start = booleanMatch.index;
+          const end = start + booleanMatch[0].length;
+          if (!isProcessed(start)) {
+            encodedCode = wrapWithSpan(encodedCode, start, end, "boolean");
+            // Reset regex to continue from the new position
+            booleanRegex.lastIndex = end;
+          }
+        }
         
         // Process decorators
-        result = result.replace(/@\w+(?:\.[\w.]+)*/g, '<span class="decorator">$&</span>');
+        let decoratorMatch;
+        const decoratorRegex = /@\w+(?:\.[\w.]+)*/g;
+        while ((decoratorMatch = decoratorRegex.exec(encodedCode)) !== null) {
+          const start = decoratorMatch.index;
+          const end = start + decoratorMatch[0].length;
+          if (!isProcessed(start)) {
+            encodedCode = wrapWithSpan(encodedCode, start, end, "decorator");
+            // Reset regex to continue from the new position
+            decoratorRegex.lastIndex = end;
+          }
+        }
         
         // Process numbers
-        result = result.replace(/\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/g, '<span class="number">$&</span>');
+        let numberMatch;
+        const numberRegex = /\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/g;
+        while ((numberMatch = numberRegex.exec(encodedCode)) !== null) {
+          const start = numberMatch.index;
+          const end = start + numberMatch[0].length;
+          if (!isProcessed(start)) {
+            encodedCode = wrapWithSpan(encodedCode, start, end, "number");
+            // Reset regex to continue from the new position
+            numberRegex.lastIndex = end;
+          }
+        }
         
-        return result;
+        return encodedCode;
         
       case 'text':
         return encodeHtmlEntities(decodedCode);
