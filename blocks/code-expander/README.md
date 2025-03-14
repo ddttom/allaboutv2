@@ -8,7 +8,7 @@ The Code Expander block enhances code snippets with syntax highlighting, copy fu
 - **Copy to Clipboard**: One-click copying of code snippets
 - **Expandable View**: Collapsible interface for long code blocks
 - **Raw Code View**: Toggle between formatted and raw code views
-- **Download Code**: Save code snippets as files with custom filenames
+- **Download Code**: Save code snippets as files with appropriate extension
 - **Help Information**: Info button with tooltip explaining each control's function
 - **Responsive Design**: Optimized for all screen sizes
 - **Keyboard Accessibility**: Full keyboard navigation support
@@ -87,6 +87,7 @@ The Code Expander block is designed with accessibility in mind:
 - Color contrast meets WCAG standards
 - Info button provides context for all controls
 - Tooltips are properly labeled with ARIA attributes
+- Fixed positioning ensures tooltips are always visible regardless of code block height
 
 ## Troubleshooting
 
@@ -95,6 +96,7 @@ The Code Expander block is designed with accessibility in mind:
 - **Download not working**: Check browser permissions for downloading files
 - **Syntax highlighting issues**: If syntax highlighting appears incorrect, try specifying the language explicitly in the code block
 - **Info tooltip not appearing**: Make sure JavaScript is enabled in your browser
+- **Tooltip cut off**: The tooltip now uses fixed positioning to ensure it's always visible, even on shallow code blocks
 
 ## Performance Considerations
 
@@ -105,6 +107,7 @@ The Code Expander block is optimized for performance:
 - CSS is optimized for rendering performance
 - No external dependencies are required
 - Configuration variables are centralized for better maintenance
+- Tooltips are only added to the DOM when needed
 
 ## Browser Compatibility
 
@@ -117,4 +120,4 @@ The Code Expander block is compatible with:
 
 ## Implementation Notes
 
-The block uses vanilla JavaScript and CSS with no external dependencies. The syntax highlighting is implemented using regular expressions for optimal performance. The code is structured with a configuration object at the top for easy maintenance and localization.
+The block uses vanilla JavaScript and CSS with no external dependencies. The syntax highlighting is implemented using regular expressions for optimal performance. The code is structured with a configuration object at the top for easy maintenance and localization. Tooltips use fixed positioning relative to the viewport to ensure they're always visible regardless of the code block's dimensions.

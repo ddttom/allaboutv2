@@ -17,10 +17,10 @@ const CODE_EXPANDER_CONFIG = {
   DEFAULT_FILENAME: 'code-snippet',
   INFO_TOOLTIP: {
     TITLE: 'Code Expander Controls',
-    EXPAND: 'Expand/Collapse: Toggle between collapsed and expanded view for long code blocks',
     COPY: 'Copy: Copy the code to clipboard',
     VIEW_RAW: 'View Raw/Formatted: Toggle between raw text and formatted code view',
-    DOWNLOAD: 'Download: Save the code as a file with appropriate extension'
+    DOWNLOAD: 'Download: Save the code as a file with appropriate extension',
+    EXPAND: 'Expand/Collapse: Toggle between collapsed and expanded view for long code blocks'
   }
 };
 
@@ -73,7 +73,7 @@ export default async function decorate(block) {
         return 'text';
       }
       
-      if (/^(ls|cd|python|conda|pip|pwd|mkdir|rm|cp|mv|cat|echo|grep|sed|awk|curl|wget|ssh|git|npm|yarn|docker|kubectl)\s/.test(code)) {
+      if (/^(ls|cd|python|python3|conda|pip|pwd|mkdir|rm|cp|mv|cat|echo|grep|sed|awk|curl|wget|ssh|git|npm|yarn|docker|kubectl)\s/.test(code)) {
         return 'shell';
       }
     
@@ -441,9 +441,9 @@ export default async function decorate(block) {
     infoButton.addEventListener('click', (e) => {
       e.stopPropagation();
       
-      // Add tooltip to wrapper if not already added
-      if (!wrapper.contains(tooltip)) {
-        wrapper.appendChild(tooltip);
+      // Add tooltip to document body if not already added
+      if (!document.body.contains(tooltip)) {
+        document.body.appendChild(tooltip);
       }
       
       // Toggle tooltip visibility
@@ -451,13 +451,19 @@ export default async function decorate(block) {
       tooltip.setAttribute('aria-hidden', isVisible ? 'true' : 'false');
       tooltip.classList.toggle('active', !isVisible);
       
-      // Position the tooltip
+      // Position the tooltip relative to the viewport
       if (!isVisible) {
         const buttonRect = infoButton.getBoundingClientRect();
-        const wrapperRect = wrapper.getBoundingClientRect();
         
-        tooltip.style.top = `${buttonRect.bottom - wrapperRect.top + 5}px`;
-        tooltip.style.right = `${wrapperRect.right - buttonRect.right}px`;
+        // Position tooltip below the button
+        tooltip.style.top = `${buttonRect.bottom + 5}px`;
+        tooltip.style.left = `${buttonRect.left}px`;
+        
+        // Ensure tooltip doesn't go off-screen to the right
+        const tooltipRect = tooltip.getBoundingClientRect();
+        if (tooltipRect.right > window.innerWidth) {
+          tooltip.style.left = `${window.innerWidth - tooltipRect.width - 10}px`;
+        }
       }
     });
     
