@@ -397,11 +397,10 @@ export default async function decorate(block) {
       const rawView = wrapper.querySelector('.code-expander-raw-view');
       const isRawActive = rawView.classList.toggle('active');
       
-      if (isRawActive) {
-        viewRawButton.textContent = CODE_EXPANDER_CONFIG.VIEW_FORMATTED_TEXT;
-      } else {
-        viewRawButton.textContent = CODE_EXPANDER_CONFIG.VIEW_RAW_TEXT;
-      }
+      // Always set the button text based on the current state
+      viewRawButton.textContent = isRawActive 
+        ? CODE_EXPANDER_CONFIG.VIEW_FORMATTED_TEXT 
+        : CODE_EXPANDER_CONFIG.VIEW_RAW_TEXT;
     });
     
     // Add event listener for download button
