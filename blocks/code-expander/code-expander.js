@@ -140,127 +140,46 @@ export default async function decorate(block) {
           }
         );
       case 'python':
-        // Simplified approach to avoid infinite loops
-        // First encode all HTML entities
+        // First encode HTML entities
         const encodedCode = encodeHtmlEntities(decodedCode);
         
-        // Create a token array to store all the tokens and their types
-        const tokens = [];
+        // Simple approach that preserves whitespace and newlines
+        // First, wrap all Python syntax elements with spans
+        let result = encodedCode;
         
-        // Split the code into lines for easier processing
-        const lines = encodedCode.split('\n');
+        // Process comments (# to end of line)
+        result = result.replace(/(#.*)$/gm, '<span class="comment">$1</span>');
         
-        // Process each line
-        for (let i = 0; i < lines.length; i++) {
-          let line = lines[i];
-          let position = 0;
-          
-          // Process comments first (they take precedence over everything else on a line)
-          const commentIndex = line.indexOf('#');
-          if (commentIndex !== -1) {
-            // Add any code before the comment
-            if (commentIndex > 0) {
-              tokens.push({
-                text: line.substring(0, commentIndex),
-                type: null // Will be processed later
-              });
-            }
-            
-            // Add the comment
-            tokens.push({
-              text: line.substring(commentIndex),
-              type: 'comment'
-            });
-            
-            // Move to the next line
-            continue;
-          }
-          
-          // If no comment, process the whole line
-          tokens.push({
-            text: line,
-            type: null // Will be processed later
-          });
-        }
+        // Process string literals (both single and double quotes)
+        result = result.replace(/('(?:\\.|[^\\'])*'|"(?:\\.|[^\\"])*")/g, '<span class="string">$1</span>');
         
-        // Process string literals in the tokens that don't have a type yet
-        for (let i = 0; i < tokens.length; i++) {
-          if (tokens[i].type !== null) continue;
-          
-          const text = tokens[i].text;
-          let newTokens = [];
-          let lastIndex = 0;
-          
-          // Find string literals (both single and double quotes)
-          const stringRegex = /"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'/g;
-          let match;
-          
-          while ((match = stringRegex.exec(text)) !== null) {
-            // Add text before the string
-            if (match.index > lastIndex) {
-              newTokens.push({
-                text: text.substring(lastIndex, match.index),
-                type: null
-              });
-            }
-            
-            // Add the string
-            newTokens.push({
-              text: match[0],
-              type: 'string'
-            });
-            
-            lastIndex = match.index + match[0].length;
-          }
-          
-          // Add any remaining text
-          if (lastIndex < text.length) {
-            newTokens.push({
-              text: text.substring(lastIndex),
-              type: null
-            });
-          }
-          
-          // Replace the original token with the new tokens
-          if (newTokens.length > 0) {
-            tokens.splice(i, 1, ...newTokens);
-            i += newTokens.length - 1;
-          }
-        }
+        // Process triple-quoted strings (both single and double quotes)
+        result = result.replace(/('''[\s\S]*?'''|"""[\s\S]*?""")/g, '<span class="comment">$1</span>');
         
-        // Process keywords, builtins, etc. in the tokens that don't have a type yet
-        for (let i = 0; i < tokens.length; i++) {
-          if (tokens[i].type !== null) continue;
-          
-          const text = tokens[i].text;
-          let result = text;
-          
-          // Keywords
-          result = result.replace(/\b(def|class|import|from|as|if|elif|else|for|while|try|except|finally|with|return|yield|lambda|global|nonlocal|pass|break|continue|raise|assert|del|in|is|not|and|or|async|await|self)\b/g, '<span class="keyword">$1</span>');
-          
-          // Builtins
-          result = result.replace(/\b(print|len|range|str|int|float|list|dict|set|tuple|sum|min|max|sorted|map|filter|zip|enumerate|open|type|isinstance|hasattr|getattr|setattr|delattr)\b/g, '<span class="builtin">$1</span>');
-          
-          // Boolean constants
-          result = result.replace(/\b(True|False|None)\b/g, '<span class="boolean">$1</span>');
-          
-          // Decorators
-          result = result.replace(/@\w+(?:\.[\w.]+)*/g, '<span class="decorator">$&</span>');
-          
-          // Numbers
-          result = result.replace(/\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/g, '<span class="number">$&</span>');
-          
-          tokens[i].text = result;
-          tokens[i].type = 'processed';
-        }
+        // Process keywords
+        const keywords = ['def', 'class', 'import', 'from', 'as', 'if', 'elif', 'else', 'for', 'while', 'try', 'except', 'finally', 'with', 'return', 'yield', 'lambda', 'global', 'nonlocal', 'pass', 'break', 'continue', 'raise', 'assert', 'del', 'in', 'is', 'not', 'and', 'or', 'async', 'await', 'self'];
         
-        // Combine all tokens back into a single string
-        return tokens.map(token => {
-          if (token.type === null || token.type === 'processed') {
-            return token.text;
-          }
-          return `<span class="${token.type}">${token.text}</span>`;
-        }).join('');
+        // Create a regex pattern for keywords with word boundaries
+        const keywordPattern = new RegExp(`\\b(${keywords.join('|')})\\b`, 'g');
+        result = result.replace(keywordPattern, '<span class="keyword">$1</span>');
+        
+        // Process built-ins
+        const builtins = ['print', 'len', 'range', 'str', 'int', 'float', 'list', 'dict', 'set', 'tuple', 'sum', 'min', 'max', 'sorted', 'map', 'filter', 'zip', 'enumerate', 'open', 'type', 'isinstance', 'hasattr', 'getattr', 'setattr', 'delattr'];
+        
+        // Create a regex pattern for builtins with word boundaries
+        const builtinPattern = new RegExp(`\\b(${builtins.join('|')})\\b`, 'g');
+        result = result.replace(builtinPattern, '<span class="builtin">$1</span>');
+        
+        // Process boolean constants
+        result = result.replace(/\b(True|False|None)\b/g, '<span class="boolean">$1</span>');
+        
+        // Process decorators
+        result = result.replace(/@\w+(?:\.[\w.]+)*/g, '<span class="decorator">$&</span>');
+        
+        // Process numbers
+        result = result.replace(/\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/g, '<span class="number">$&</span>');
+        
+        return result;
         
       case 'text':
         return encodeHtmlEntities(decodedCode);
