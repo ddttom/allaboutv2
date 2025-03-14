@@ -10,7 +10,6 @@ const CODE_EXPANDER_CONFIG = {
   DOWNLOAD_TEXT: 'Download',
   EXPAND_TEXT: 'Expand',
   COLLAPSE_TEXT: 'Collapse',
-  ELLIPSIS_TEXT: '....',
   CLOSE_TEXT: 'Close',
   FILENAME_PROMPT_TEXT: 'Enter filename (without extension):',
   DOWNLOAD_BUTTON_TEXT: 'Download',
@@ -46,8 +45,20 @@ export default async function decorate(block) {
         return 'shell'; // Default to shell for any other shebang line
       }
       
-      // Check for specific Python import pattern
-      if (firstLine.includes('import mlx.core as mx')) {
+      // Check for common Python import patterns
+      if (firstLine.startsWith('import ')) {
+        return 'python';
+      }
+      
+      // Check for specific Python import patterns
+      if (firstLine.includes('import os') || 
+          firstLine.includes('import sys') || 
+          firstLine.includes('import numpy') || 
+          firstLine.includes('import pandas') || 
+          firstLine.includes('import matplotlib') || 
+          firstLine.includes('import tensorflow') || 
+          firstLine.includes('import torch') || 
+          firstLine.includes('import mlx')) {
         return 'python';
       }
       
@@ -279,6 +290,8 @@ export default async function decorate(block) {
   await Promise.all(Array.from(codeElements).map(async (codeElement, index) => {
     const code = codeElement.textContent;
     const language = detectLanguage(code);  
+    const lines = code.split('\n');
+    const isLongDocument = lines.length > CODE_EXPANDER_CONFIG.LONG_DOCUMENT_THRESHOLD;
     
     // Create a wrapper div
     const wrapper = document.createElement('div');
@@ -298,9 +311,24 @@ export default async function decorate(block) {
     languageIndicator.textContent = language.toUpperCase();
     header.appendChild(languageIndicator);
     
+    // Add scroll hint to header
+    const scrollHint = document.createElement('div');
+    scrollHint.className = 'code-expander-scroll-hint';
+    scrollHint.textContent = CODE_EXPANDER_CONFIG.SCROLL_HINT_TEXT;
+    header.appendChild(scrollHint);
+    
     // Create button group
     const buttonGroup = document.createElement('div');
     buttonGroup.className = 'code-expander-buttons';
+    
+    // Add expand button to toolbar if it's a long document
+    let expandButton = null;
+    if (isLongDocument) {
+      expandButton = document.createElement('button');
+      expandButton.className = 'code-expander-expand-collapse';
+      expandButton.textContent = CODE_EXPANDER_CONFIG.EXPAND_TEXT;
+      buttonGroup.appendChild(expandButton);
+    }
     
     // Add copy button
     const copyButton = document.createElement('button');
@@ -329,12 +357,6 @@ export default async function decorate(block) {
     // Add pre element to wrapper
     wrapper.appendChild(preElement);
     
-    // Add scroll hint
-    const scrollHint = document.createElement('div');
-    scrollHint.className = 'code-expander-scroll-hint';
-    scrollHint.textContent = CODE_EXPANDER_CONFIG.SCROLL_HINT_TEXT;
-    wrapper.appendChild(scrollHint);
-    
     // Add raw view container
     const rawViewContainer = document.createElement('div');
     rawViewContainer.className = 'code-expander-raw-view';
@@ -347,35 +369,18 @@ export default async function decorate(block) {
     preElement.className = `language-${language}`;
     codeElement.innerHTML = highlightSyntax(code, language);
     
-    const lines = code.split('\n');
-    if (lines.length > CODE_EXPANDER_CONFIG.LONG_DOCUMENT_THRESHOLD) {
+    if (isLongDocument) {
       preElement.classList.add('collapsible');
-      
-      // Create top expand/collapse button
-      const topExpandButton = document.createElement('button');
-      topExpandButton.className = 'code-expander-expand-collapse top';
-      topExpandButton.textContent = CODE_EXPANDER_CONFIG.EXPAND_TEXT;
-      
-      // Create bottom expand/collapse button
-      const bottomExpandButton = document.createElement('button');
-      bottomExpandButton.className = 'code-expander-expand-collapse bottom';
-      bottomExpandButton.textContent = CODE_EXPANDER_CONFIG.ELLIPSIS_TEXT;
       
       // Function to toggle expansion
       const toggleExpansion = () => {
         preElement.classList.toggle('expanded');
         const isExpanded = preElement.classList.contains('expanded');
-        topExpandButton.textContent = isExpanded ? CODE_EXPANDER_CONFIG.COLLAPSE_TEXT : CODE_EXPANDER_CONFIG.EXPAND_TEXT;
-        bottomExpandButton.textContent = isExpanded ? CODE_EXPANDER_CONFIG.CLOSE_TEXT : CODE_EXPANDER_CONFIG.ELLIPSIS_TEXT;
+        expandButton.textContent = isExpanded ? CODE_EXPANDER_CONFIG.COLLAPSE_TEXT : CODE_EXPANDER_CONFIG.EXPAND_TEXT;
       };
       
-      // Add click event listeners to both buttons
-      topExpandButton.onclick = toggleExpansion;
-      bottomExpandButton.onclick = toggleExpansion;
-      
-      // Add buttons to the wrapper
-      wrapper.appendChild(topExpandButton);
-      wrapper.appendChild(bottomExpandButton);
+      // Add click event listener to expand button
+      expandButton.onclick = toggleExpansion;
     }
 
     // Add event listener for copy button
