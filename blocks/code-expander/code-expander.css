@@ -31,6 +31,13 @@
   --code-expander-modal-border: #ccc;
   --code-expander-input-border: #ddd;
   --code-expander-input-focus-border: #4a90e2;
+  
+  /* Tooltip */
+  --code-expander-tooltip-bg: #fff;
+  --code-expander-tooltip-border: #ddd;
+  --code-expander-tooltip-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --code-expander-tooltip-text: #333;
+  --code-expander-tooltip-title-bg: #f5f5f5;
 
   /* Syntax highlighting */
   --code-expander-css-property: #ff0000;
@@ -127,7 +134,8 @@
 .code-expander-copy,
 .code-expander-expand-collapse,
 .code-expander-view-raw,
-.code-expander-download {
+.code-expander-download,
+.code-expander-info {
   padding: 0.3em 0.6em;
   background-color: var(--code-expander-button-bg);
   color: var(--code-expander-button-text);
@@ -144,19 +152,77 @@
   line-height: 1;
 }
 
+/* Info button specific styles */
+.code-expander-info {
+  min-width: 28px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .code-expander-copy:hover,
 .code-expander-expand-collapse:hover,
 .code-expander-view-raw:hover,
-.code-expander-download:hover {
+.code-expander-download:hover,
+.code-expander-info:hover {
   background-color: var(--code-expander-button-hover-bg);
 }
 
 .code-expander-copy:focus,
 .code-expander-expand-collapse:focus,
 .code-expander-view-raw:focus,
-.code-expander-download:focus {
+.code-expander-download:focus,
+.code-expander-info:focus {
   outline: 2px solid var(--code-expander-button-focus-outline);
   outline-offset: 2px;
+}
+
+/* Tooltip styles */
+.code-expander-tooltip {
+  position: absolute;
+  z-index: 10;
+  width: 300px;
+  max-width: 90%;
+  background-color: var(--code-expander-tooltip-bg);
+  border: 1px solid var(--code-expander-tooltip-border);
+  border-radius: 4px;
+  box-shadow: var(--code-expander-tooltip-shadow);
+  color: var(--code-expander-tooltip-text);
+  font-size: var(--code-expander-font-size-small);
+  display: none;
+  overflow: hidden;
+}
+
+.code-expander-tooltip.active {
+  display: block;
+}
+
+.code-expander-tooltip h3 {
+  margin: 0;
+  padding: 8px 12px;
+  background-color: var(--code-expander-tooltip-title-bg);
+  border-bottom: 1px solid var(--code-expander-tooltip-border);
+  font-size: var(--code-expander-font-size-normal);
+}
+
+.code-expander-tooltip ul {
+  margin: 0;
+  padding: 8px 12px 8px 28px;
+  list-style-type: disc;
+}
+
+.code-expander-tooltip li {
+  margin-bottom: 8px;
+}
+
+.code-expander-tooltip li:last-child {
+  margin-bottom: 0;
 }
 
 /* Collapsible code blocks */
@@ -363,6 +429,19 @@ pre[class^="language-"].expanded {
     min-width: 60px;
   }
   
+  .code-expander-info {
+    min-width: 24px;
+    width: 24px;
+    height: 24px;
+  }
+  
+  .code-expander-tooltip {
+    width: 250px;
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 auto;
+  }
+  
   /* Adjust filename modal for mobile */
   .code-expander-filename-modal-content {
     width: 90%;
@@ -394,6 +473,13 @@ pre[class^="language-"].expanded {
     text-align: center;
     white-space: nowrap;
     min-width: 50px;
+  }
+  
+  .code-expander-info {
+    min-width: 22px;
+    width: 22px;
+    height: 22px;
+    font-size: 9px;
   }
   
   .code-expander-filename-buttons {

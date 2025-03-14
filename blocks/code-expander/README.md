@@ -9,8 +9,10 @@ The Code Expander block enhances code snippets with syntax highlighting, copy fu
 - **Expandable View**: Collapsible interface for long code blocks
 - **Raw Code View**: Toggle between formatted and raw code views
 - **Download Code**: Save code snippets as files with custom filenames
+- **Help Information**: Info button with tooltip explaining each control's function
 - **Responsive Design**: Optimized for all screen sizes
 - **Keyboard Accessibility**: Full keyboard navigation support
+- **Improved Python Detection**: Better recognition of Python code patterns
 
 ## Usage
 
@@ -44,6 +46,8 @@ The Code Expander block can be customized through CSS variables:
   --code-expander-button-text: #ffffff;      /* Button text color */
   --code-expander-code-bg: #f8f8f8;          /* Code background color */
   --code-expander-border-radius: 6px;        /* Border radius for container */
+  --code-expander-tooltip-bg: #fff;          /* Tooltip background color */
+  --code-expander-tooltip-border: #ddd;      /* Tooltip border color */
 }
 ```
 
@@ -56,7 +60,8 @@ The Code Expander block provides the following interactive features:
 3. **View Raw Button**: Toggles between formatted and raw code views
 4. **Download Button**: Opens a modal to enter a custom filename before downloading
 5. **Expand/Collapse**: For code blocks longer than 40 lines, provides expand/collapse functionality
-6. **Scroll Hint**: Shows a hint for horizontal scrolling when code exceeds the container width
+6. **Info Button**: Displays a tooltip with explanations of each button's function
+7. **Scroll Hint**: Shows a hint for horizontal scrolling when code exceeds the container width
 
 ## Variations
 
@@ -80,6 +85,8 @@ The Code Expander block is designed with accessibility in mind:
 - Focus states are clearly visible
 - ARIA attributes are used where appropriate
 - Color contrast meets WCAG standards
+- Info button provides context for all controls
+- Tooltips are properly labeled with ARIA attributes
 
 ## Troubleshooting
 
@@ -87,6 +94,7 @@ The Code Expander block is designed with accessibility in mind:
 - **Copy button not working**: Some browsers require HTTPS for clipboard access
 - **Download not working**: Check browser permissions for downloading files
 - **Syntax highlighting issues**: If syntax highlighting appears incorrect, try specifying the language explicitly in the code block
+- **Info tooltip not appearing**: Make sure JavaScript is enabled in your browser
 
 ## Performance Considerations
 
@@ -96,6 +104,7 @@ The Code Expander block is optimized for performance:
 - DOM manipulation is minimized
 - CSS is optimized for rendering performance
 - No external dependencies are required
+- Configuration variables are centralized for better maintenance
 
 ## Browser Compatibility
 
@@ -108,4 +117,4 @@ The Code Expander block is compatible with:
 
 ## Implementation Notes
 
-The block uses vanilla JavaScript and CSS with no external dependencies. The syntax highlighting is implemented using regular expressions for optimal performance.
+The block uses vanilla JavaScript and CSS with no external dependencies. The syntax highlighting is implemented using regular expressions for optimal performance. The code is structured with a configuration object at the top for easy maintenance and localization.

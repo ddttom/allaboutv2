@@ -14,7 +14,14 @@ const CODE_EXPANDER_CONFIG = {
   FILENAME_PROMPT_TEXT: 'Enter filename (without extension):',
   DOWNLOAD_BUTTON_TEXT: 'Download',
   CANCEL_BUTTON_TEXT: 'Cancel',
-  DEFAULT_FILENAME: 'code-snippet'
+  DEFAULT_FILENAME: 'code-snippet',
+  INFO_TOOLTIP: {
+    TITLE: 'Code Expander Controls',
+    EXPAND: 'Expand/Collapse: Toggle between collapsed and expanded view for long code blocks',
+    COPY: 'Copy: Copy the code to clipboard',
+    VIEW_RAW: 'View Raw/Formatted: Toggle between raw text and formatted code view',
+    DOWNLOAD: 'Download: Save the code as a file with appropriate extension'
+  }
 };
 
 export default async function decorate(block) {
@@ -58,7 +65,7 @@ export default async function decorate(block) {
           firstLine.includes('import matplotlib') || 
           firstLine.includes('import tensorflow') || 
           firstLine.includes('import torch') || 
-          firstLine.includes('import mlx')) {
+          firstLine.includes('import mlx.core as mx')) {
         return 'python';
       }
       
@@ -230,6 +237,43 @@ export default async function decorate(block) {
   }
 
   /**
+   * Creates an info tooltip with descriptions of each button
+   * @returns {Object} - The tooltip elements
+   */
+  function createInfoTooltip() {
+    const tooltip = document.createElement('div');
+    tooltip.className = 'code-expander-tooltip';
+    tooltip.setAttribute('role', 'tooltip');
+    tooltip.setAttribute('aria-hidden', 'true');
+    
+    const title = document.createElement('h3');
+    title.textContent = CODE_EXPANDER_CONFIG.INFO_TOOLTIP.TITLE;
+    tooltip.appendChild(title);
+    
+    const list = document.createElement('ul');
+    
+    // Add descriptions for each button
+    const descriptions = [
+      { key: 'EXPAND', condition: true },
+      { key: 'COPY', condition: true },
+      { key: 'VIEW_RAW', condition: true },
+      { key: 'DOWNLOAD', condition: true }
+    ];
+    
+    descriptions.forEach(({ key, condition }) => {
+      if (condition) {
+        const item = document.createElement('li');
+        item.innerHTML = CODE_EXPANDER_CONFIG.INFO_TOOLTIP[key];
+        list.appendChild(item);
+      }
+    });
+    
+    tooltip.appendChild(list);
+    
+    return tooltip;
+  }
+
+  /**
    * Downloads code as a file with the specified filename
    * @param {string} code - The code to download
    * @param {string} language - The language of the code
@@ -321,6 +365,16 @@ export default async function decorate(block) {
     const buttonGroup = document.createElement('div');
     buttonGroup.className = 'code-expander-buttons';
     
+    // Add info button
+    const infoButton = document.createElement('button');
+    infoButton.className = 'code-expander-info';
+    infoButton.innerHTML = '<span aria-hidden="true">i</span>';
+    infoButton.setAttribute('aria-label', 'Information about code expander controls');
+    buttonGroup.appendChild(infoButton);
+    
+    // Create tooltip but don't add it to DOM yet
+    const tooltip = createInfoTooltip();
+    
     // Add expand button to toolbar if it's a long document
     let expandButton = null;
     if (isLongDocument) {
@@ -382,6 +436,38 @@ export default async function decorate(block) {
       // Add click event listener to expand button
       expandButton.onclick = toggleExpansion;
     }
+
+    // Add event listener for info button
+    infoButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      
+      // Add tooltip to wrapper if not already added
+      if (!wrapper.contains(tooltip)) {
+        wrapper.appendChild(tooltip);
+      }
+      
+      // Toggle tooltip visibility
+      const isVisible = tooltip.getAttribute('aria-hidden') === 'false';
+      tooltip.setAttribute('aria-hidden', isVisible ? 'true' : 'false');
+      tooltip.classList.toggle('active', !isVisible);
+      
+      // Position the tooltip
+      if (!isVisible) {
+        const buttonRect = infoButton.getBoundingClientRect();
+        const wrapperRect = wrapper.getBoundingClientRect();
+        
+        tooltip.style.top = `${buttonRect.bottom - wrapperRect.top + 5}px`;
+        tooltip.style.right = `${wrapperRect.right - buttonRect.right}px`;
+      }
+    });
+    
+    // Close tooltip when clicking outside
+    document.addEventListener('click', (e) => {
+      if (tooltip.classList.contains('active') && !tooltip.contains(e.target) && e.target !== infoButton) {
+        tooltip.setAttribute('aria-hidden', 'true');
+        tooltip.classList.remove('active');
+      }
+    });
 
     // Add event listener for copy button
     copyButton.addEventListener('click', async () => {
