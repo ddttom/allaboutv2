@@ -13,6 +13,7 @@ The Code Expander block demonstrates excellent code organization and adherence t
 - **Event Listeners**: Event listeners are properly attached and managed.
 - **Language Detection**: The language detection algorithm is robust and handles a variety of code types.
 - **Global Code Processing**: The implementation intelligently detects and processes code blocks from anywhere on the page.
+- **Non-destructive Processing**: The code now creates new elements for enhanced code blocks rather than removing the original elements, preserving the original content.
 
 ### CSS Implementation
 
@@ -34,6 +35,7 @@ The block provides a comprehensive set of features for code display and interact
 - ✅ Download functionality with custom filename
 - ✅ Mobile responsiveness
 - ✅ Global code block processing
+- ✅ Non-destructive code processing
 
 ## Performance Considerations
 
@@ -44,6 +46,7 @@ The block performs well with minimal impact on page load times. Key performance 
 - Minimal use of heavy operations
 - Appropriate use of CSS for styling rather than JavaScript
 - Modular code structure for better maintainability and performance
+- Creation of new elements rather than moving existing ones, which preserves the original page structure
 
 ## Accessibility Review
 
@@ -103,6 +106,8 @@ No significant compatibility issues were identified.
 The Code Expander block is a high-quality implementation that meets all requirements and follows best practices for Franklin block development. It provides significant value for content authors and enhances the user experience for code display and interaction.
 
 The addition of global code block processing is particularly valuable, as it allows the block to automatically find and enhance all code blocks on a page without requiring manual updates to each code snippet. This feature makes the block much more versatile and easier to use, especially for enhancing existing content or working with large documents containing many code examples.
+
+The implementation of non-destructive code processing is a significant improvement that ensures original code blocks remain intact on the page. This prevents issues where code elements might disappear when using the code-expander block, improving reliability and user experience. By creating new elements rather than moving existing ones, the block now preserves the original page structure while still providing enhanced functionality.
 
 **Approval Status**: ✅ Approved for Production
 

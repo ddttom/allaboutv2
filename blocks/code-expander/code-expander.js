@@ -453,9 +453,6 @@ export default async function decorate(block) {
     const wrapper = document.createElement('div');
     wrapper.className = 'code-expander-wrapper';
     
-    // Get the pre element (parent of code element)
-    const preElement = codeElement.parentNode;
-    
     // Create header with buttons
     const header = document.createElement('div');
     header.className = 'code-expander-header';
@@ -710,7 +707,6 @@ export default async function decorate(block) {
   // Check if the block is empty (no children)
   if (block.children.length === 0) {
     // Process each code element and create a copy in the block
-    // This preserves the original code elements on the page
     codeElements.forEach((codeElement, index) => {
       const wrapper = createCodeExpanderWrapper(codeElement, index);
       
@@ -718,14 +714,25 @@ export default async function decorate(block) {
       block.appendChild(wrapper);
     });
   } else {
-    // If the block already has content, just process the code elements within it
+    // If the block already has content, process the code elements within it
     const blockCodeElements = block.querySelectorAll('pre code');
-    blockCodeElements.forEach((codeElement, index) => {
-      const wrapper = createCodeExpanderWrapper(codeElement, index);
-      
-      // Replace the original pre element with the wrapper
-      const preElement = codeElement.parentNode;
-      preElement.parentNode.replaceChild(wrapper, preElement);
-    });
+    if (blockCodeElements.length > 0) {
+      blockCodeElements.forEach((codeElement, index) => {
+        const wrapper = createCodeExpanderWrapper(codeElement, index);
+        
+        // Get the pre element (parent of code element)
+        const preElement = codeElement.parentNode;
+        
+        // Insert the wrapper after the pre element
+        preElement.parentNode.insertBefore(wrapper, preElement.nextSibling);
+      });
+    } else {
+      // If no code elements in the block, look for code in the content
+      const blockContent = block.textContent.trim();
+      if (blockContent) {
+        const wrapper = createCodeExpanderWrapper({ textContent: blockContent }, 0);
+        block.appendChild(wrapper);
+      }
+    }
   }
 }
