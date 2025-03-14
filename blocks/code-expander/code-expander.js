@@ -73,7 +73,7 @@ export default async function decorate(block) {
         return 'text';
       }
       
-      if (/^(ls|cd|python|python3|conda|pip|pwd|mkdir|rm|cp|mv|cat|echo|grep|sed|awk|curl|wget|ssh|git|npm|yarn|docker|kubectl)\s/.test(code)) {
+      if (/^(ls|cd|python|conda|pip|pwd|mkdir|rm|cp|mv|cat|echo|grep|sed|awk|curl|wget|ssh|git|npm|yarn|docker|kubectl)\s/.test(code)) {
         return 'shell';
       }
     
@@ -437,22 +437,27 @@ export default async function decorate(block) {
       expandButton.onclick = toggleExpansion;
     }
 
+    // Track tooltip state
+    let isTooltipVisible = false;
+
     // Add event listener for info button
     infoButton.addEventListener('click', (e) => {
       e.stopPropagation();
       
-      // Add tooltip to document body if not already added
-      if (!document.body.contains(tooltip)) {
-        document.body.appendChild(tooltip);
-      }
-      
       // Toggle tooltip visibility
-      const isVisible = tooltip.getAttribute('aria-hidden') === 'false';
-      tooltip.setAttribute('aria-hidden', isVisible ? 'true' : 'false');
-      tooltip.classList.toggle('active', !isVisible);
+      isTooltipVisible = !isTooltipVisible;
       
-      // Position the tooltip relative to the viewport
-      if (!isVisible) {
+      // If tooltip is now visible, add it to document body and position it
+      if (isTooltipVisible) {
+        // Add tooltip to document body if not already added
+        if (!document.body.contains(tooltip)) {
+          document.body.appendChild(tooltip);
+        }
+        
+        tooltip.setAttribute('aria-hidden', 'false');
+        tooltip.classList.add('active');
+        
+        // Position the tooltip relative to the viewport
         const buttonRect = infoButton.getBoundingClientRect();
         
         // Position tooltip below the button
@@ -464,12 +469,26 @@ export default async function decorate(block) {
         if (tooltipRect.right > window.innerWidth) {
           tooltip.style.left = `${window.innerWidth - tooltipRect.width - 10}px`;
         }
+      } else {
+        // Hide the tooltip
+        tooltip.setAttribute('aria-hidden', 'true');
+        tooltip.classList.remove('active');
+      }
+    });
+    
+    // Add mouseenter event to hide tooltip if it's already visible
+    infoButton.addEventListener('mouseenter', () => {
+      if (isTooltipVisible) {
+        isTooltipVisible = false;
+        tooltip.setAttribute('aria-hidden', 'true');
+        tooltip.classList.remove('active');
       }
     });
     
     // Close tooltip when clicking outside
     document.addEventListener('click', (e) => {
-      if (tooltip.classList.contains('active') && !tooltip.contains(e.target) && e.target !== infoButton) {
+      if (isTooltipVisible && !tooltip.contains(e.target) && e.target !== infoButton) {
+        isTooltipVisible = false;
         tooltip.setAttribute('aria-hidden', 'true');
         tooltip.classList.remove('active');
       }
