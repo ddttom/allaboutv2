@@ -725,7 +725,7 @@ export default async function decorate(block) {
 
   // Main processing logic
   // Process all code elements on the page
-  codeElements.forEach((codeElement, index) => {
+  Array.from(codeElements).forEach((codeElement, index) => {
     // Skip code elements that are already processed
     if (codeElement.closest('.code-expander-wrapper')) {
       return;
@@ -733,7 +733,16 @@ export default async function decorate(block) {
     
     const wrapper = createCodeExpanderWrapper(codeElement, index);
     
-    // Add the wrapper to the code-expander block
-    block.appendChild(wrapper);
+    // Get the parent pre element
+    const preElement = codeElement.parentNode;
+    
+    // Create a container to hold the enhanced code block
+    const container = document.createElement('div');
+    
+    // Replace the original pre element with the container
+    preElement.parentNode.replaceChild(container, preElement);
+    
+    // Add the wrapper to the container
+    container.appendChild(wrapper);
   });
 }
