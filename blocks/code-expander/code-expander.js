@@ -465,23 +465,31 @@ export default async function decorate(block) {
     const buttonGroup = document.createElement('div');
     buttonGroup.className = 'code-expander-buttons';
     
-    // Add info button
+    // Create info button but don't add it yet (will add at the end)
     const infoButton = document.createElement('button');
     infoButton.className = 'code-expander-info';
-    infoButton.innerHTML = '<span aria-hidden="true">i</span>';
+    infoButton.innerHTML = '<span aria-hidden="true">?</span>'; // Changed from 'i' to '?'
     infoButton.setAttribute('aria-label', 'Information about code expander controls');
-    buttonGroup.appendChild(infoButton);
     
     // Create tooltip but don't add it to DOM yet
     const tooltip = createInfoTooltip();
     
     // Add expand button to toolbar if it's a long document
-    let expandButton = null;
     if (isLongDocument) {
-      expandButton = document.createElement('button');
+      const expandButton = document.createElement('button');
       expandButton.className = 'code-expander-expand-collapse';
       expandButton.textContent = CODE_EXPANDER_CONFIG.EXPAND_TEXT;
       buttonGroup.appendChild(expandButton);
+      
+      // Function to toggle expansion
+      const toggleExpansion = () => {
+        preElement.classList.toggle('expanded');
+        const isExpanded = preElement.classList.contains('expanded');
+        expandButton.textContent = isExpanded ? CODE_EXPANDER_CONFIG.COLLAPSE_TEXT : CODE_EXPANDER_CONFIG.EXPAND_TEXT;
+      };
+      
+      // Add click event listener to expand button
+      expandButton.onclick = toggleExpansion;
     }
     
     // Add copy button
@@ -501,6 +509,9 @@ export default async function decorate(block) {
     downloadButton.className = 'code-expander-download';
     downloadButton.textContent = CODE_EXPANDER_CONFIG.DOWNLOAD_TEXT;
     buttonGroup.appendChild(downloadButton);
+    
+    // Add info button as the last button in the group
+    buttonGroup.appendChild(infoButton);
     
     // Add button group to header
     header.appendChild(buttonGroup);
@@ -523,20 +534,6 @@ export default async function decorate(block) {
     preElement.className = `language-${language}`;
     codeElement.innerHTML = highlightSyntax(code, language);
     
-    if (isLongDocument) {
-      preElement.classList.add('collapsible');
-      
-      // Function to toggle expansion
-      const toggleExpansion = () => {
-        preElement.classList.toggle('expanded');
-        const isExpanded = preElement.classList.contains('expanded');
-        expandButton.textContent = isExpanded ? CODE_EXPANDER_CONFIG.COLLAPSE_TEXT : CODE_EXPANDER_CONFIG.EXPAND_TEXT;
-      };
-      
-      // Add click event listener to expand button
-      expandButton.onclick = toggleExpansion;
-    }
-
     // Setup keyboard navigation
     setupKeyboardNavigation(preElement, rawViewContainer);
 
