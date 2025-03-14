@@ -13,6 +13,14 @@
   --code-expander-font-size-small: 0.8rem;
   --code-expander-font-size-normal: 0.9rem;
   --code-expander-font-size-large: 1rem;
+  --code-expander-line-number-bg: #f0f0f0;
+  --code-expander-line-number-width: 3rem;
+  --code-expander-line-number-padding: 0 0.5rem;
+  --code-expander-modal-bg: rgba(0, 0, 0, 0.5);
+  --code-expander-modal-content-bg: #fff;
+  --code-expander-modal-border: #ccc;
+  --code-expander-input-border: #ddd;
+  --code-expander-input-focus-border: #4a90e2;
 
   /* syntax highlighting */
   --code-expander-css-property: #ff0000;
@@ -68,8 +76,48 @@ pre[class^="language-"] {
   line-height: 1.45;
 }
 
+/* Line numbering styles */
+.code-expander-wrapper.line-numbers pre {
+  padding-left: var(--code-expander-line-number-width);
+  counter-reset: line;
+}
+
+.code-expander-wrapper.line-numbers pre code {
+  position: relative;
+}
+
+.code-expander-line-numbers {
+  position: absolute;
+  top: 2.5em;
+  left: 0;
+  width: var(--code-expander-line-number-width);
+  height: calc(100% - 2.5em);
+  overflow: hidden;
+  background-color: var(--code-expander-line-number-bg);
+  border-right: 1px solid #ddd;
+  counter-reset: line;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.code-expander-line-number {
+  display: block;
+  padding: var(--code-expander-line-number-padding);
+  color: var(--code-expander-line-number-color);
+  text-align: right;
+  font-size: 12px;
+  line-height: 1.45;
+  counter-increment: line;
+}
+
+.code-expander-line-number::before {
+  content: counter(line);
+}
+
 .code-expander-copy,
-.code-expander-expand-collapse {
+.code-expander-expand-collapse,
+.code-expander-view-raw,
+.code-expander-download {
   position: absolute;
   padding: 0.2em 0.5em;
   background-color: var(--code-expander-button-bg);
@@ -86,6 +134,14 @@ pre[class^="language-"] {
 
 .code-expander-copy {
   right: 0;
+}
+
+.code-expander-view-raw {
+  right: 80px; /* Position to the left of the copy button */
+}
+
+.code-expander-download {
+  right: 160px; /* Position to the left of the view raw button */
 }
 
 .code-expander-expand-collapse {
@@ -108,12 +164,16 @@ pre[class^="language-"] {
 }
 
 .code-expander-copy:hover,
-.code-expander-expand-collapse:hover {
+.code-expander-expand-collapse:hover,
+.code-expander-view-raw:hover,
+.code-expander-download:hover {
   background-color: var(--code-expander-button-hover-bg);
 }
 
 .code-expander-copy:focus,
-.code-expander-expand-collapse:focus {
+.code-expander-expand-collapse:focus,
+.code-expander-view-raw:focus,
+.code-expander-download:focus {
   outline: 2px solid var(--code-expander-button-focus-outline);
   outline-offset: 2px;
 }
@@ -126,6 +186,108 @@ pre[class^="language-"].collapsible {
 
 pre[class^="language-"].expanded {
   max-height: none;
+}
+
+/* Raw code view styles */
+.code-expander-raw-view {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--code-expander-code-bg);
+  z-index: 3;
+  overflow: auto;
+  padding: 2.5em 1em 1em;
+  box-sizing: border-box;
+  white-space: pre;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.code-expander-raw-view.active {
+  display: block;
+}
+
+/* Filename prompt modal styles */
+.code-expander-filename-modal {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--code-expander-modal-bg);
+  z-index: 10;
+  justify-content: center;
+  align-items: center;
+}
+
+.code-expander-filename-modal-content {
+  background-color: var(--code-expander-modal-content-bg);
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  width: 80%;
+  max-width: 400px;
+}
+
+.code-expander-filename-modal p {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.code-expander-filename-input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid var(--code-expander-input-border);
+  border-radius: 3px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.code-expander-filename-input:focus {
+  outline: none;
+  border-color: var(--code-expander-input-focus-border);
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.code-expander-filename-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.code-expander-filename-download,
+.code-expander-filename-cancel {
+  padding: 6px 12px;
+  border-radius: 3px;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid var(--code-expander-button-border);
+}
+
+.code-expander-filename-download {
+  background-color: var(--code-expander-button-bg);
+  color: var(--code-expander-button-text);
+}
+
+.code-expander-filename-download:hover {
+  background-color: var(--code-expander-button-hover-bg);
+}
+
+.code-expander-filename-cancel {
+  background-color: #f5f5f5;
+  color: #333;
+  border-color: #ccc;
+}
+
+.code-expander-filename-cancel:hover {
+  background-color: #e5e5e5;
 }
 
 /* JavaScript syntax highlighting */
@@ -181,3 +343,119 @@ pre[class^="language-"].expanded {
 .blockquote { color: #6a737d; }
 .code { color: #24292e; background-color: #f6f8fa; }
 .link { color: #032f62; }
+
+/* Scroll hint styles */
+.code-expander-scroll-hint {
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  font-size: 12px;
+  color: #888;
+  pointer-events: none;
+  -webkit-user-select: none; /* Safari 3+ and iOS Safari 3+ */
+  user-select: none;
+  z-index: 1;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .code-expander-wrapper pre {
+    font-size: 12px;
+    padding-top: 3.5em; /* More space for buttons */
+  }
+  
+  .code-expander-copy,
+  .code-expander-expand-collapse,
+  .code-expander-view-raw,
+  .code-expander-download {
+    font-size: 10px;
+    padding: 0.15em 0.4em;
+  }
+  
+  .code-expander-copy {
+    right: 0;
+    top: 0;
+  }
+  
+  .code-expander-view-raw {
+    right: 0;
+    top: 1.5em; /* Position below the copy button */
+  }
+  
+  .code-expander-download {
+    right: 0;
+    top: 3em; /* Position below the view raw button */
+  }
+  
+  .code-expander-expand-collapse.top {
+    left: 0;
+    top: 0;
+  }
+  
+  .code-expander-expand-collapse.bottom {
+    left: 0;
+    bottom: 0;
+  }
+  
+  /* Adjust line numbers for mobile */
+  .code-expander-wrapper.line-numbers pre {
+    padding-left: 2.5rem;
+  }
+  
+  .code-expander-line-numbers {
+    width: 2.5rem;
+  }
+  
+  .code-expander-line-number {
+    font-size: 10px;
+  }
+  
+  /* Adjust raw view for mobile */
+  .code-expander-raw-view {
+    font-size: 12px;
+    padding-top: 3.5em;
+  }
+  
+  /* Adjust filename modal for mobile */
+  .code-expander-filename-modal-content {
+    width: 90%;
+    padding: 15px;
+  }
+  
+  .code-expander-filename-input {
+    padding: 6px;
+  }
+  
+  .code-expander-filename-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .code-expander-filename-download,
+  .code-expander-filename-cancel {
+    width: 100%;
+  }
+}
+
+/* For very small screens */
+@media (max-width: 480px) {
+  .code-expander-wrapper pre {
+    font-size: 11px;
+    padding-top: 4.5em; /* Even more space for stacked buttons */
+  }
+  
+  .code-expander-copy,
+  .code-expander-expand-collapse,
+  .code-expander-view-raw,
+  .code-expander-download {
+    font-size: 9px;
+  }
+  
+  .code-expander-view-raw {
+    top: 1.8em;
+  }
+  
+  .code-expander-download {
+    top: 3.6em;
+  }
+}

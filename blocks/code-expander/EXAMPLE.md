@@ -1,5 +1,10 @@
 # code-expander
 
 | code-expander |
-|---------------|
-| This block does not require any specific markup in the document. It automatically enhances all `<code>` elements on the page. |
+| :------------ |
+| ```javascript
+function helloWorld() {
+  console.log("Hello, World!");
+  return "Hello, World!";
+}
+``` |
