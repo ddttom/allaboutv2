@@ -1,13 +1,12 @@
 # Code Expander Block
 
-The Code Expander block enhances code snippets with syntax highlighting, copy functionality, expandable views, line numbering, raw code viewing, and download capabilities. It provides a modern, interactive code display experience for technical documentation, tutorials, and blogs.
+The Code Expander block enhances code snippets with syntax highlighting, copy functionality, expandable views, raw code viewing, and download capabilities. It provides a modern, interactive code display experience for technical documentation, tutorials, and blogs.
 
 ## Features
 
 - **Automatic Syntax Highlighting**: Detects and highlights syntax for JavaScript, HTML, CSS, Python, Shell, JSON, and Markdown
 - **Copy to Clipboard**: One-click copying of code snippets
 - **Expandable View**: Collapsible interface for long code blocks
-- **Line Numbers**: Clear line numbering for easy reference
 - **Raw Code View**: Toggle between formatted and raw code views
 - **Download Code**: Save code snippets as files with custom filenames
 - **Responsive Design**: Optimized for all screen sizes
@@ -44,8 +43,6 @@ The Code Expander block can be customized through CSS variables:
   --code-expander-button-bg: #4a90e2;        /* Button background color */
   --code-expander-button-text: #ffffff;      /* Button text color */
   --code-expander-code-bg: #f8f8f8;          /* Code background color */
-  --code-expander-line-number-bg: #f0f0f0;   /* Line number background */
-  --code-expander-line-number-color: #888;   /* Line number text color */
   --code-expander-border-radius: 6px;        /* Border radius for container */
 }
 ```
@@ -65,15 +62,15 @@ The Code Expander block provides the following interactive features:
 
 The Code Expander block supports the following variations:
 
-| code-expander (no-line-numbers) |
-| :------------------------------ |
+| code-expander (dark) |
+| :------------------- |
 | ```javascript
 function example() {
   return "This is an example";
 }
 ``` |
 
-This variation removes the line numbers from the code display.
+This variation applies a dark theme to the code display.
 
 ## Accessibility
 
@@ -83,14 +80,13 @@ The Code Expander block is designed with accessibility in mind:
 - Focus states are clearly visible
 - ARIA attributes are used where appropriate
 - Color contrast meets WCAG standards
-- Line numbers are non-selectable to improve user experience when copying code
 
 ## Troubleshooting
 
 - **Code not highlighting properly**: Ensure the language is correctly specified or let the automatic detection work by not specifying a language
 - **Copy button not working**: Some browsers require HTTPS for clipboard access
 - **Download not working**: Check browser permissions for downloading files
-- **Line numbers misaligned**: Ensure code doesn't contain extremely long lines that might break the layout
+- **Syntax highlighting issues**: If syntax highlighting appears incorrect, try specifying the language explicitly in the code block
 
 ## Performance Considerations
 

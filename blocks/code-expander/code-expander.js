@@ -10,7 +10,7 @@ const CODE_EXPANDER_CONFIG = {
   DOWNLOAD_TEXT: 'Download',
   EXPAND_TEXT: 'Expand',
   COLLAPSE_TEXT: 'Collapse',
-  ELLIPSIS_TEXT: '....expand',
+  ELLIPSIS_TEXT: '....',
   CLOSE_TEXT: 'Close',
   FILENAME_PROMPT_TEXT: 'Enter filename (without extension):',
   DOWNLOAD_BUTTON_TEXT: 'Download',
@@ -177,27 +177,6 @@ export default async function decorate(block) {
   }
 
   /**
-   * Creates line numbers for the code block
-   * @param {string} code - The code to create line numbers for
-   * @returns {HTMLElement} - The line numbers container element
-   */
-  function createLineNumbers(code) {
-    const lines = code.split('\n');
-    const lineNumbersContainer = document.createElement('div');
-    lineNumbersContainer.className = 'code-expander-line-numbers';
-    
-    // Create a line number for each line of code
-    lines.forEach((_, index) => {
-      const lineNumber = document.createElement('div');
-      lineNumber.className = 'code-expander-line-number';
-      lineNumber.textContent = index + 1; // Line numbers start at 1
-      lineNumbersContainer.appendChild(lineNumber);
-    });
-    
-    return lineNumbersContainer;
-  }
-
-  /**
    * Creates a modal dialog for entering a custom filename
    * @returns {Object} - The modal elements
    */
@@ -303,7 +282,7 @@ export default async function decorate(block) {
     
     // Create a wrapper div
     const wrapper = document.createElement('div');
-    wrapper.className = 'code-expander-wrapper line-numbers';
+    wrapper.className = 'code-expander-wrapper';
     
     // Move the pre element into the wrapper
     const preElement = codeElement.parentNode;
@@ -349,10 +328,6 @@ export default async function decorate(block) {
     
     // Add pre element to wrapper
     wrapper.appendChild(preElement);
-    
-    // Add line numbers
-    const lineNumbersContainer = createLineNumbers(code);
-    wrapper.appendChild(lineNumbersContainer);
     
     // Add scroll hint
     const scrollHint = document.createElement('div');

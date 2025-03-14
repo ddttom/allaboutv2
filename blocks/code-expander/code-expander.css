@@ -14,13 +14,6 @@
   --code-expander-border-radius: 6px;
   --code-expander-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   
-  /* Line numbers */
-  --code-expander-line-number-bg: #f0f0f0;
-  --code-expander-line-number-color: #888;
-  --code-expander-line-number-width: 3rem;
-  --code-expander-line-number-padding: 0 0.5rem;
-  --code-expander-line-number-border: 1px solid #e1e4e8;
-  
   /* Typography */
   --code-expander-font-size-small: 0.8rem;
   --code-expander-font-size-normal: 0.9rem;
@@ -100,60 +93,19 @@
 /* Pre and code elements */
 .code-expander-wrapper pre {
   margin: 0;
-  padding: 0;
+  padding: 1rem;
   overflow-x: auto;
   font-family: var(--code-expander-font-family);
   font-size: 14px;
   line-height: var(--code-expander-line-height);
   background-color: var(--code-expander-code-bg);
   color: var(--code-expander-code-text);
-  display: flex; /* Use flexbox for alignment */
 }
 
 .code-expander-wrapper pre code {
   display: block;
-  padding: 1rem;
-  padding-left: 0.5rem; /* Reduced padding to align with line numbers */
-  flex: 1; /* Take remaining space */
-  min-width: 0; /* Allow code to shrink if needed */
-  white-space: pre; /* Preserve whitespace */
-  tab-size: 4; /* Set tab size */
-}
-
-/* Line numbering styles */
-.code-expander-wrapper.line-numbers pre {
-  counter-reset: line;
-  position: relative; /* For absolute positioning of line numbers */
-}
-
-.code-expander-line-numbers {
-  position: absolute;
-  top: 2.5rem; /* Adjusted to account for header */
-  left: 0;
-  width: var(--code-expander-line-number-width);
-  height: calc(100% - 2.5rem);
-  overflow: hidden;
-  background-color: var(--code-expander-line-number-bg);
-  border-right: var(--code-expander-line-number-border);
-  user-select: none;
-  -webkit-user-select: none;
-  display: flex;
-  flex-direction: column;
-  padding-top: 1rem; /* Match code padding-top */
-}
-
-.code-expander-line-number {
-  display: block;
-  padding: 0 0.5rem;
-  color: var(--code-expander-line-number-color);
-  text-align: right;
-  font-size: 12px;
-  line-height: var(--code-expander-line-height);
-  height: calc(var(--code-expander-line-height) * 1em); /* Fixed height for each line number */
-}
-
-.code-expander-wrapper pre code {
-  margin-left: var(--code-expander-line-number-width); /* Make space for line numbers */
+  white-space: pre;
+  tab-size: 4;
 }
 
 /* Button styles */
@@ -182,7 +134,7 @@
 
 .code-expander-expand-collapse.top {
   position: absolute;
-  left: calc(var(--code-expander-line-number-width) + 0.5rem);
+  left: 0.5rem;
   top: 0.5rem;
   z-index: 2;
 }
@@ -190,7 +142,7 @@
 .code-expander-expand-collapse.bottom {
   position: absolute;
   bottom: 0.5rem;
-  left: calc(var(--code-expander-line-number-width) + 0.5rem);
+  left: 0.5rem;
   min-width: 50px;
   text-align: center;
   z-index: 2;
@@ -423,22 +375,6 @@ pre[class^="language-"].expanded {
     padding: 0.2em 0.4em;
   }
   
-  .code-expander-line-numbers {
-    width: 2.5rem;
-  }
-  
-  .code-expander-wrapper pre code {
-    margin-left: 2.5rem;
-  }
-  
-  .code-expander-expand-collapse.top {
-    left: 3rem;
-  }
-  
-  .code-expander-expand-collapse.bottom {
-    left: 3rem;
-  }
-  
   /* Adjust filename modal for mobile */
   .code-expander-filename-modal-content {
     width: 90%;
@@ -468,22 +404,6 @@ pre[class^="language-"].expanded {
     flex: 1;
     text-align: center;
     white-space: nowrap;
-  }
-  
-  .code-expander-line-numbers {
-    width: 2rem;
-  }
-  
-  .code-expander-wrapper pre code {
-    margin-left: 2rem;
-  }
-  
-  .code-expander-expand-collapse.top {
-    left: 2.5rem;
-  }
-  
-  .code-expander-expand-collapse.bottom {
-    left: 2.5rem;
   }
   
   .code-expander-filename-buttons {
