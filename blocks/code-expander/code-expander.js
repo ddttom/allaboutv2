@@ -2,7 +2,7 @@
 const CODE_EXPANDER_CONFIG = {
   LONG_DOCUMENT_THRESHOLD: 40,
   COPY_BUTTON_RESET_DELAY: 2000,
-  SCROLL_HINT_TEXT: 'Use ←→ arrows to scroll horizontally, ↑↓ in raw view',
+  SCROLL_HINT_TEXT: 'scroll with arrow keys',
   COPY_TEXT: 'Copy',
   COPIED_TEXT: 'Copied!',
   VIEW_RAW_TEXT: 'View Raw',
