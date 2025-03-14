@@ -26,7 +26,15 @@ const CODE_EXPANDER_CONFIG = {
 };
 
 export default async function decorate(block) {
+  // Find all code elements in the document
   const codeElements = document.querySelectorAll('pre code');
+  
+  if (codeElements.length === 0) {
+    // If no code elements found, log a message and exit
+    // eslint-disable-next-line no-console
+    console.log('Code-expander: No code elements found on the page');
+    return;
+  }
   
   /**
    * Detects the programming language of the provided code
@@ -35,49 +43,49 @@ export default async function decorate(block) {
    * @returns {string} - The detected language
    */
   function detectLanguage(code) {
-      // First priority: Check for shebang line (#!/bin/bash, #!/usr/bin/env bash, etc.)
-      const firstLine = code.trim().split('\n')[0];
-      if (firstLine.startsWith('#!')) {
-        // Check for common shell interpreters
-        if (firstLine.includes('/bin/bash') || 
-            firstLine.includes('/bin/sh') || 
-            firstLine.includes('/usr/bin/env bash') || 
-            firstLine.includes('/usr/bin/env sh')) {
-          return 'shell';
-        }
-        // Check for Python interpreters
-        if (firstLine.includes('/python') || 
-            firstLine.includes('/usr/bin/env python')) {
-          return 'python';
-        }
-        return 'shell'; // Default to shell for any other shebang line
-      }
-      
-      // Check for common Python import patterns
-      if (firstLine.startsWith('import ')) {
-        return 'python';
-      }
-      
-      // Check for specific Python import patterns
-      if (firstLine.includes('import os') || 
-          firstLine.includes('import sys') || 
-          firstLine.includes('import numpy') || 
-          firstLine.includes('import pandas') || 
-          firstLine.includes('import matplotlib') || 
-          firstLine.includes('import tensorflow') || 
-          firstLine.includes('import torch') || 
-          firstLine.includes('import mlx.core as mx')) {
-        return 'python';
-      }
-      
-      if (code.trim().startsWith('"') || code.trim().startsWith("'")) {
-        return 'text';
-      }
-      
-      if (/^(ls|cd|python|conda|pip|pwd|mkdir|rm|cp|mv|cat|echo|grep|sed|awk|curl|wget|ssh|git|npm|yarn|docker|kubectl)\s/.test(code)) {
+    // First priority: Check for shebang line (#!/bin/bash, #!/usr/bin/env bash, etc.)
+    const firstLine = code.trim().split('\n')[0];
+    if (firstLine.startsWith('#!')) {
+      // Check for common shell interpreters
+      if (firstLine.includes('/bin/bash') || 
+          firstLine.includes('/bin/sh') || 
+          firstLine.includes('/usr/bin/env bash') || 
+          firstLine.includes('/usr/bin/env sh')) {
         return 'shell';
       }
+      // Check for Python interpreters
+      if (firstLine.includes('/python') || 
+          firstLine.includes('/usr/bin/env python')) {
+        return 'python';
+      }
+      return 'shell'; // Default to shell for any other shebang line
+    }
     
+    // Check for common Python import patterns
+    if (firstLine.startsWith('import ')) {
+      return 'python';
+    }
+    
+    // Check for specific Python import patterns
+    if (firstLine.includes('import os') || 
+        firstLine.includes('import sys') || 
+        firstLine.includes('import numpy') || 
+        firstLine.includes('import pandas') || 
+        firstLine.includes('import matplotlib') || 
+        firstLine.includes('import tensorflow') || 
+        firstLine.includes('import torch') || 
+        firstLine.includes('import mlx.core as mx')) {
+      return 'python';
+    }
+    
+    if (code.trim().startsWith('"') || code.trim().startsWith("'")) {
+      return 'text';
+    }
+    
+    if (/^(ls|cd|python|conda|pip|pwd|mkdir|rm|cp|mv|cat|echo|grep|sed|awk|curl|wget|ssh|git|npm|yarn|docker|kubectl)\s/.test(code)) {
+      return 'shell';
+    }
+  
     // Check for Python-specific patterns
     // Look for distinctive Python patterns rather than just 'import'
     if (code.includes('def ') || 
@@ -429,8 +437,13 @@ export default async function decorate(block) {
     });
   }
 
-  // Process each code element
-  await Promise.all(Array.from(codeElements).map(async (codeElement, index) => {
+  /**
+   * Creates a code expander wrapper for a code element
+   * @param {HTMLElement} codeElement - The code element to process
+   * @param {number} index - The index of the code element
+   * @returns {HTMLElement} - The created wrapper element
+   */
+  function createCodeExpanderWrapper(codeElement, index) {
     const code = codeElement.textContent;
     const language = detectLanguage(code);  
     const lines = code.split('\n');
@@ -440,9 +453,8 @@ export default async function decorate(block) {
     const wrapper = document.createElement('div');
     wrapper.className = 'code-expander-wrapper';
     
-    // Move the pre element into the wrapper
+    // Get the pre element (parent of code element)
     const preElement = codeElement.parentNode;
-    preElement.parentNode.insertBefore(wrapper, preElement);
     
     // Create header with buttons
     const header = document.createElement('div');
@@ -465,31 +477,13 @@ export default async function decorate(block) {
     const buttonGroup = document.createElement('div');
     buttonGroup.className = 'code-expander-buttons';
     
-    // Create info button but don't add it yet (will add at the end)
-    const infoButton = document.createElement('button');
-    infoButton.className = 'code-expander-info';
-    infoButton.innerHTML = '<span aria-hidden="true">?</span>'; // Changed from 'i' to '?'
-    infoButton.setAttribute('aria-label', 'Information about code expander controls');
-    
-    // Create tooltip but don't add it to DOM yet
-    const tooltip = createInfoTooltip();
-    
     // Add expand button to toolbar if it's a long document
+    let expandButton = null;
     if (isLongDocument) {
-      const expandButton = document.createElement('button');
+      expandButton = document.createElement('button');
       expandButton.className = 'code-expander-expand-collapse';
       expandButton.textContent = CODE_EXPANDER_CONFIG.EXPAND_TEXT;
       buttonGroup.appendChild(expandButton);
-      
-      // Function to toggle expansion
-      const toggleExpansion = () => {
-        preElement.classList.toggle('expanded');
-        const isExpanded = preElement.classList.contains('expanded');
-        expandButton.textContent = isExpanded ? CODE_EXPANDER_CONFIG.COLLAPSE_TEXT : CODE_EXPANDER_CONFIG.EXPAND_TEXT;
-      };
-      
-      // Add click event listener to expand button
-      expandButton.onclick = toggleExpansion;
     }
     
     // Add copy button
@@ -511,6 +505,10 @@ export default async function decorate(block) {
     buttonGroup.appendChild(downloadButton);
     
     // Add info button as the last button in the group
+    const infoButton = document.createElement('button');
+    infoButton.className = 'code-expander-info';
+    infoButton.innerHTML = '<span aria-hidden="true">?</span>';
+    infoButton.setAttribute('aria-label', 'Information about code expander controls');
     buttonGroup.appendChild(infoButton);
     
     // Add button group to header
@@ -519,24 +517,41 @@ export default async function decorate(block) {
     // Add header to wrapper
     wrapper.appendChild(header);
     
-    // Add pre element to wrapper
-    wrapper.appendChild(preElement);
-    
     // Add raw view container
     const rawViewContainer = document.createElement('div');
     rawViewContainer.className = 'code-expander-raw-view';
     rawViewContainer.textContent = code;
-    wrapper.appendChild(rawViewContainer);
     
     // Create filename prompt modal (but don't add to DOM yet)
     const { modal, input, modalDownloadButton, cancelButton } = createFilenamePrompt();
     
+    // Create tooltip but don't add it to DOM yet
+    const tooltip = createInfoTooltip();
+    
     preElement.className = `language-${language}`;
     codeElement.innerHTML = highlightSyntax(code, language);
     
+    if (isLongDocument) {
+      preElement.classList.add('collapsible');
+      
+      // Function to toggle expansion
+      const toggleExpansion = () => {
+        preElement.classList.toggle('expanded');
+        const isExpanded = preElement.classList.contains('expanded');
+        expandButton.textContent = isExpanded ? CODE_EXPANDER_CONFIG.COLLAPSE_TEXT : CODE_EXPANDER_CONFIG.EXPAND_TEXT;
+      };
+      
+      // Add click event listener to expand button
+      expandButton.onclick = toggleExpansion;
+    }
+    
+    // Add the pre element to the wrapper
+    wrapper.appendChild(preElement);
+    wrapper.appendChild(rawViewContainer);
+    
     // Setup keyboard navigation
     setupKeyboardNavigation(preElement, rawViewContainer);
-
+    
     // Check for overflow and show scroll hint if needed
     // Use setTimeout to ensure the element is fully rendered
     setTimeout(() => {
@@ -544,10 +559,10 @@ export default async function decorate(block) {
         scrollHint.style.display = 'block';
       }
     }, 100);
-
+    
     // Track tooltip state
     let isTooltipVisible = false;
-
+    
     // Add event listener for info button click
     infoButton.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -594,7 +609,7 @@ export default async function decorate(block) {
         isTooltipVisible = false;
       }
     });
-
+    
     // Add event listener for copy button
     copyButton.addEventListener('click', async () => {
       try {
@@ -679,223 +694,35 @@ export default async function decorate(block) {
         }
       });
     });
-  }));
-}
-    buttonGroup.className = 'code-expander-buttons';
     
-    // Create info button but don't add it yet (will add at the end)
-    const infoButton = document.createElement('button');
-    infoButton.className = 'code-expander-info';
-    infoButton.innerHTML = '<span aria-hidden="true">?</span>'; // Changed from 'i' to '?'
-    infoButton.setAttribute('aria-label', 'Information about code expander controls');
-    
-    // Create tooltip but don't add it to DOM yet
-    const tooltip = createInfoTooltip();
-    
-    // Add expand button to toolbar if it's a long document
-    if (isLongDocument) {
-      const expandButton = document.createElement('button');
-      expandButton.className = 'code-expander-expand-collapse';
-      expandButton.textContent = CODE_EXPANDER_CONFIG.EXPAND_TEXT;
-      buttonGroup.appendChild(expandButton);
-      
-      // Function to toggle expansion
-      const toggleExpansion = () => {
-        preElement.classList.toggle('expanded');
-        const isExpanded = preElement.classList.contains('expanded');
-        expandButton.textContent = isExpanded ? CODE_EXPANDER_CONFIG.COLLAPSE_TEXT : CODE_EXPANDER_CONFIG.EXPAND_TEXT;
-      };
-      
-      // Add click event listener to expand button
-      expandButton.onclick = toggleExpansion;
-    }
-    
-    // Add copy button
-    const copyButton = document.createElement('button');
-    copyButton.className = 'code-expander-copy';
-    copyButton.textContent = CODE_EXPANDER_CONFIG.COPY_TEXT;
-    buttonGroup.appendChild(copyButton);
-    
-    // Add view raw button
-    const viewRawButton = document.createElement('button');
-    viewRawButton.className = 'code-expander-view-raw';
-    viewRawButton.textContent = CODE_EXPANDER_CONFIG.VIEW_RAW_TEXT;
-    buttonGroup.appendChild(viewRawButton);
-    
-    // Add download button
-    const downloadButton = document.createElement('button');
-    downloadButton.className = 'code-expander-download';
-    downloadButton.textContent = CODE_EXPANDER_CONFIG.DOWNLOAD_TEXT;
-    buttonGroup.appendChild(downloadButton);
-    
-    // Add info button as the last button in the group
-    buttonGroup.appendChild(infoButton);
-    
-    // Add button group to header
-    header.appendChild(buttonGroup);
-    
-    // Add header to wrapper
-    wrapper.appendChild(header);
-    
-    // Add pre element to wrapper
-    wrapper.appendChild(preElement);
-    
-    // Add raw view container
-    const rawViewContainer = document.createElement('div');
-    rawViewContainer.className = 'code-expander-raw-view';
-    rawViewContainer.textContent = code;
-    wrapper.appendChild(rawViewContainer);
-    
-    // Create filename prompt modal (but don't add to DOM yet)
-    const { modal, input, modalDownloadButton, cancelButton } = createFilenamePrompt();
-    
-    preElement.className = `language-${language}`;
-    codeElement.innerHTML = highlightSyntax(code, language);
-    
-    // Setup keyboard navigation
-    setupKeyboardNavigation(preElement, rawViewContainer);
+    return wrapper;
+  }
 
-    // Check for overflow and show scroll hint if needed
-    // Use setTimeout to ensure the element is fully rendered
-    setTimeout(() => {
-      if (hasOverflow(preElement, 'horizontal')) {
-        scrollHint.style.display = 'block';
-      }
-    }, 100);
-
-    // Track tooltip state
-    let isTooltipVisible = false;
-
-    // Add event listener for info button click
-    infoButton.addEventListener('click', (e) => {
-      e.stopPropagation();
+  // Main processing logic
+  // Check if the block is empty (no children)
+  if (block.children.length === 0) {
+    // Process each code element and move it into the block
+    codeElements.forEach((codeElement, index) => {
+      const wrapper = createCodeExpanderWrapper(codeElement, index);
       
-      // Toggle tooltip visibility
-      if (isTooltipVisible) {
-        hideTooltip(tooltip);
-        isTooltipVisible = false;
-      } else {
-        showTooltip(tooltip, infoButton);
-        isTooltipVisible = true;
-      }
+      // Get the original pre element's parent
+      const preParent = codeElement.parentNode.parentNode;
+      
+      // Remove the original pre element from its parent
+      preParent.removeChild(codeElement.parentNode);
+      
+      // Add the wrapper to the code-expander block
+      block.appendChild(wrapper);
     });
-    
-    // Add mouseenter event to hide tooltip if it's already visible
-    infoButton.addEventListener('mouseenter', () => {
-      if (isTooltipVisible) {
-        hideTooltip(tooltip);
-        isTooltipVisible = false;
-      }
+  } else {
+    // If the block already has content, just process the code elements within it
+    const blockCodeElements = block.querySelectorAll('pre code');
+    blockCodeElements.forEach((codeElement, index) => {
+      const wrapper = createCodeExpanderWrapper(codeElement, index);
+      
+      // Replace the original pre element with the wrapper
+      const preElement = codeElement.parentNode;
+      preElement.parentNode.replaceChild(wrapper, preElement);
     });
-    
-    // Add mouseleave event to hide tooltip when mouse leaves the info button
-    infoButton.addEventListener('mouseleave', () => {
-      // Small delay to allow moving to the tooltip
-      setTimeout(() => {
-        if (!tooltip.matches(':hover')) {
-          hideTooltip(tooltip);
-          isTooltipVisible = false;
-        }
-      }, 100);
-    });
-    
-    // Add mouseleave event to the tooltip itself
-    tooltip.addEventListener('mouseleave', () => {
-      hideTooltip(tooltip);
-      isTooltipVisible = false;
-    });
-    
-    // Close tooltip when clicking outside
-    document.addEventListener('click', (e) => {
-      if (isTooltipVisible && !tooltip.contains(e.target) && e.target !== infoButton) {
-        hideTooltip(tooltip);
-        isTooltipVisible = false;
-      }
-    });
-
-    // Add event listener for copy button
-    copyButton.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(code);
-        copyButton.textContent = CODE_EXPANDER_CONFIG.COPIED_TEXT;
-        setTimeout(() => {
-          copyButton.textContent = CODE_EXPANDER_CONFIG.COPY_TEXT;
-        }, CODE_EXPANDER_CONFIG.COPY_BUTTON_RESET_DELAY);
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error('Error copying content:', err);
-      }
-    });
-    
-    // Add event listener for view raw button
-    viewRawButton.addEventListener('click', () => {
-      const rawView = wrapper.querySelector('.code-expander-raw-view');
-      const isRawActive = rawView.classList.toggle('active');
-      
-      // Always set the button text based on the current state
-      viewRawButton.textContent = isRawActive 
-        ? CODE_EXPANDER_CONFIG.VIEW_FORMATTED_TEXT 
-        : CODE_EXPANDER_CONFIG.VIEW_RAW_TEXT;
-      
-      // If switching to raw view, check for vertical overflow
-      if (isRawActive) {
-        setTimeout(() => {
-          if (hasOverflow(rawView, 'vertical')) {
-            scrollHint.style.display = 'block';
-          }
-        }, 100);
-      } else {
-        // If switching back to formatted view, check for horizontal overflow
-        setTimeout(() => {
-          if (hasOverflow(preElement, 'horizontal')) {
-            scrollHint.style.display = 'block';
-          } else {
-            scrollHint.style.display = 'none';
-          }
-        }, 100);
-      }
-    });
-    
-    // Add event listener for download button
-    downloadButton.addEventListener('click', () => {
-      // Add modal to the wrapper
-      wrapper.appendChild(modal);
-      
-      // Show the modal
-      modal.style.display = 'flex';
-      
-      // Focus the input
-      input.focus();
-      
-      // Handle download button click
-      modalDownloadButton.onclick = () => {
-        const filename = input.value.trim() || CODE_EXPANDER_CONFIG.DEFAULT_FILENAME;
-        downloadCode(code, language, filename);
-        modal.style.display = 'none';
-        wrapper.removeChild(modal);
-      };
-      
-      // Handle cancel button click
-      cancelButton.onclick = () => {
-        modal.style.display = 'none';
-        wrapper.removeChild(modal);
-      };
-      
-      // Handle Enter key press
-      input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          modalDownloadButton.click();
-        } else if (e.key === 'Escape') {
-          cancelButton.click();
-        }
-      });
-      
-      // Handle click outside modal to close
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-          cancelButton.click();
-        }
-      });
-    });
-  }));
+  }
 }

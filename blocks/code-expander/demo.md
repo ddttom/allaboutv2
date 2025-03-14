@@ -1,6 +1,6 @@
 # Code Expander Demo
 
-This page demonstrates the Code Expander block, which enhances code snippets with syntax highlighting, copy functionality, expandable views, line numbering, raw code viewing, and download capabilities.
+This page demonstrates the Code Expander block, which enhances code snippets with syntax highlighting, copy functionality, expandable views, raw code viewing, and download capabilities.
 
 ## JavaScript Example
 
@@ -226,6 +226,21 @@ fi
 }
 ``` |
 
+## Global Code Block Processing
+
+The Code Expander block can now automatically find and process all code blocks on a page, even if they're not explicitly placed within the block. This is done by adding an empty code-expander block anywhere on your page:
+
+| code-expander |
+| :------------ |
+|  |
+
+When this empty block is present, it will automatically:
+1. Find all `<pre><code>` elements on the page
+2. Process them with syntax highlighting and interactive features
+3. Move them into the code-expander block
+
+This makes it much easier to enhance all code snippets on a page without having to manually wrap each one in a code-expander block.
+
 ## How It Works
 
 The Code Expander block automatically enhances any code block on your page with the following features:
@@ -236,6 +251,7 @@ The Code Expander block automatically enhances any code block on your page with 
 4. **Line Numbers**: Adds line numbers to make it easier to reference specific parts of the code.
 5. **Raw View**: Allows users to toggle between formatted and raw code views.
 6. **Download Code**: Enables users to download the code as a file with a custom filename.
+7. **Global Processing**: Can automatically find and enhance all code blocks on the page.
 
 ## Customization Options
 
@@ -254,6 +270,7 @@ The Code Expander block can be customized through CSS variables defined in the `
 - **Blogs**: Improve the presentation of code in technical blog posts.
 - **Knowledge Bases**: Provide better code sharing capabilities in knowledge bases.
 - **Educational Content**: Make learning materials more interactive and accessible.
+- **Legacy Content**: Easily enhance code blocks in existing content without manual updates.
 
 | metadata        |                                                                                                                                   |
 | :-------------- | :-------------------------------------------------------------------------------------------------------------------------------- |

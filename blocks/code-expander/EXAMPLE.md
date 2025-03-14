@@ -8,3 +8,9 @@ function helloWorld() {
   return "Hello, World!";
 }
 ``` |
+
+# code-expander (empty)
+
+| code-expander |
+| :------------ |
+|  |

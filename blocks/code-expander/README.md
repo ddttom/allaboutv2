@@ -13,6 +13,8 @@ The Code Expander block enhances code snippets with syntax highlighting, copy fu
 - **Responsive Design**: Optimized for all screen sizes
 - **Keyboard Navigation**: Use arrow keys to navigate (←→ in formatted view, ↑↓ in raw view)
 - **Improved Python Detection**: Better recognition of Python code patterns
+- **Global Code Block Processing**: Automatically finds and processes all code blocks on the page, even if they're not initially within the code-expander block
+- **Multiple Code Block Support**: Handles any number of code blocks on a single page
 
 ## Usage
 
@@ -27,6 +29,12 @@ function helloWorld() {
 }
 ``` |
 
+Alternatively, you can simply add an empty code-expander block anywhere on your page, and it will automatically find and enhance all code blocks:
+
+| code-expander |
+| :------------ |
+|  |
+
 ## Authoring
 
 When creating content in Google Docs or Microsoft Word:
@@ -35,6 +43,8 @@ When creating content in Google Docs or Microsoft Word:
 2. In the first cell, type `code-expander`
 3. In the second cell, paste your code snippet
 4. Format the code with a monospace font (like Courier New) to maintain proper spacing
+
+If you want the block to automatically find and process all code blocks on the page, you can leave the second cell empty.
 
 ## Styling
 
@@ -55,16 +65,17 @@ The Code Expander block can be customized through CSS variables:
 
 The Code Expander block provides the following interactive features:
 
-1. **Language Detection**: Automatically detects the language of the code snippet
-2. **Copy Button**: Copies the entire code snippet to the clipboard
-3. **View Raw Button**: Toggles between formatted and raw code views
-4. **Download Button**: Opens a modal to enter a custom filename before downloading
-5. **Expand/Collapse**: For code blocks longer than 40 lines, provides expand/collapse functionality
-6. **Info Button**: Displays a tooltip with explanations of each button's function
-7. **Keyboard Navigation**: 
+1. **Global Code Block Processing**: Automatically finds all `<pre><code>` elements on the page and enhances them
+2. **Language Detection**: Automatically detects the language of each code snippet
+3. **Copy Button**: Copies the entire code snippet to the clipboard
+4. **View Raw Button**: Toggles between formatted and raw code views
+5. **Download Button**: Opens a modal to enter a custom filename before downloading
+6. **Expand/Collapse**: For code blocks longer than 40 lines, provides expand/collapse functionality
+7. **Info Button**: Displays a tooltip with explanations of each button's function
+8. **Keyboard Navigation**: 
    - Use left/right arrow keys to scroll horizontally in formatted view
    - Use up/down arrow keys to scroll vertically in raw view
-8. **Scroll Hint**: Shows a hint for keyboard navigation when content overflows
+9. **Scroll Hint**: Shows a hint for keyboard navigation when content overflows
 
 ## Variations
 
@@ -102,6 +113,7 @@ The Code Expander block is designed with accessibility in mind:
 - **Info tooltip not appearing**: Make sure JavaScript is enabled in your browser
 - **Tooltip cut off**: The tooltip now uses fixed positioning to ensure it's always visible, even on shallow code blocks
 - **Keyboard navigation not working**: Ensure the code block has focus by clicking on it first
+- **Code blocks not being processed**: If you're using an empty code-expander block and some code blocks aren't being enhanced, make sure they use the proper `<pre><code>` HTML structure
 
 ## Performance Considerations
 
@@ -114,6 +126,7 @@ The Code Expander block is optimized for performance:
 - Configuration variables are centralized for better maintenance
 - Tooltips are only added to the DOM when needed
 - Scroll hints are only shown when content actually overflows
+- Code processing is modularized for better maintainability and performance
 
 ## Browser Compatibility
 
@@ -126,4 +139,14 @@ The Code Expander block is compatible with:
 
 ## Implementation Notes
 
-The block uses vanilla JavaScript and CSS with no external dependencies. The syntax highlighting is implemented using regular expressions for optimal performance. The code is structured with a configuration object at the top for easy maintenance and localization. Tooltips use fixed positioning relative to the viewport to ensure they're always visible regardless of the code block's dimensions. Keyboard navigation is implemented for better accessibility, allowing users to navigate through code content using arrow keys.
+The block uses vanilla JavaScript and CSS with no external dependencies. The syntax highlighting is implemented using regular expressions for optimal performance. The code is structured with a configuration object at the top for easy maintenance and localization. 
+
+The block now features a more modular approach to processing code blocks:
+
+1. It first checks if the code-expander block is empty
+2. If empty, it finds all code blocks in the document and moves them into the code-expander block
+3. If not empty, it processes only the code blocks within it
+
+This approach allows for maximum flexibility in how the block can be used, either as a container for specific code blocks or as a processor for all code blocks on the page.
+
+Tooltips use fixed positioning relative to the viewport to ensure they're always visible regardless of the code block's dimensions. Keyboard navigation is implemented for better accessibility, allowing users to navigate through code content using arrow keys.
