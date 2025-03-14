@@ -252,12 +252,12 @@ export default async function decorate(block) {
     
     const list = document.createElement('ul');
     
-    // Add descriptions for each button
+    // Add descriptions for each button - always include all functions
     const descriptions = [
-      { key: 'EXPAND', condition: true },
       { key: 'COPY', condition: true },
       { key: 'VIEW_RAW', condition: true },
-      { key: 'DOWNLOAD', condition: true }
+      { key: 'DOWNLOAD', condition: true },
+      { key: 'EXPAND', condition: true }
     ];
     
     descriptions.forEach(({ key, condition }) => {
