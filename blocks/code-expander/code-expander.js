@@ -139,137 +139,129 @@ export default async function decorate(block) {
             return encodeHtmlEntities(match);
           }
         );
-      case 'python3':
-        // First, encode HTML entities in the entire code
-        let encodedCode = encodeHtmlEntities(decodedCode);
+      case 'python':
+        // Simplified approach to avoid infinite loops
+        // First encode all HTML entities
+        const encodedCode = encodeHtmlEntities(decodedCode);
         
-        // Create a map to track which parts of the code have been processed
-        const processedRanges = [];
+        // Create a token array to store all the tokens and their types
+        const tokens = [];
         
-        // Helper function to check if a position is within any processed range
-        const isProcessed = (pos) => {
-          return processedRanges.some(range => pos >= range.start && pos < range.end);
-        };
+        // Split the code into lines for easier processing
+        const lines = encodedCode.split('\n');
         
-        // Helper function to mark a range as processed
-        const markProcessed = (start, end) => {
-          processedRanges.push({ start, end });
-        };
+        // Process each line
+        for (let i = 0; i < lines.length; i++) {
+          let line = lines[i];
+          let position = 0;
+          
+          // Process comments first (they take precedence over everything else on a line)
+          const commentIndex = line.indexOf('#');
+          if (commentIndex !== -1) {
+            // Add any code before the comment
+            if (commentIndex > 0) {
+              tokens.push({
+                text: line.substring(0, commentIndex),
+                type: null // Will be processed later
+              });
+            }
+            
+            // Add the comment
+            tokens.push({
+              text: line.substring(commentIndex),
+              type: 'comment'
+            });
+            
+            // Move to the next line
+            continue;
+          }
+          
+          // If no comment, process the whole line
+          tokens.push({
+            text: line,
+            type: null // Will be processed later
+          });
+        }
         
-        // Helper function to wrap a substring with a span
-        const wrapWithSpan = (str, start, end, className) => {
-          const before = str.substring(0, start);
-          const content = str.substring(start, end);
-          const after = str.substring(end);
-          markProcessed(start, end);
-          return before + `<span class="${className}">` + content + '</span>' + after;
-        };
-        
-        // First, process string literals to avoid highlighting keywords inside them
-        let stringMatch;
-        const stringRegex = /"(?:\\.|[^\\"])*"|'(?:\\.|[^\\'])*'/g;
-        while ((stringMatch = stringRegex.exec(encodedCode)) !== null) {
-          const start = stringMatch.index;
-          const end = start + stringMatch[0].length;
-          if (!isProcessed(start)) {
-            encodedCode = wrapWithSpan(encodedCode, start, end, "string");
-            // Reset regex to continue from the new position
-            stringRegex.lastIndex = end;
+        // Process string literals in the tokens that don't have a type yet
+        for (let i = 0; i < tokens.length; i++) {
+          if (tokens[i].type !== null) continue;
+          
+          const text = tokens[i].text;
+          let newTokens = [];
+          let lastIndex = 0;
+          
+          // Find string literals (both single and double quotes)
+          const stringRegex = /"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'/g;
+          let match;
+          
+          while ((match = stringRegex.exec(text)) !== null) {
+            // Add text before the string
+            if (match.index > lastIndex) {
+              newTokens.push({
+                text: text.substring(lastIndex, match.index),
+                type: null
+              });
+            }
+            
+            // Add the string
+            newTokens.push({
+              text: match[0],
+              type: 'string'
+            });
+            
+            lastIndex = match.index + match[0].length;
+          }
+          
+          // Add any remaining text
+          if (lastIndex < text.length) {
+            newTokens.push({
+              text: text.substring(lastIndex),
+              type: null
+            });
+          }
+          
+          // Replace the original token with the new tokens
+          if (newTokens.length > 0) {
+            tokens.splice(i, 1, ...newTokens);
+            i += newTokens.length - 1;
           }
         }
         
-        // Process triple-quoted docstrings
-        let docstringMatch;
-        const docstringRegex = /"""[\s\S]*?"""|'''[\s\S]*?'''/g;
-        while ((docstringMatch = docstringRegex.exec(encodedCode)) !== null) {
-          const start = docstringMatch.index;
-          const end = start + docstringMatch[0].length;
-          if (!isProcessed(start)) {
-            encodedCode = wrapWithSpan(encodedCode, start, end, "comment");
-            // Reset regex to continue from the new position
-            docstringRegex.lastIndex = end;
-          }
+        // Process keywords, builtins, etc. in the tokens that don't have a type yet
+        for (let i = 0; i < tokens.length; i++) {
+          if (tokens[i].type !== null) continue;
+          
+          const text = tokens[i].text;
+          let result = text;
+          
+          // Keywords
+          result = result.replace(/\b(def|class|import|from|as|if|elif|else|for|while|try|except|finally|with|return|yield|lambda|global|nonlocal|pass|break|continue|raise|assert|del|in|is|not|and|or|async|await|self)\b/g, '<span class="keyword">$1</span>');
+          
+          // Builtins
+          result = result.replace(/\b(print|len|range|str|int|float|list|dict|set|tuple|sum|min|max|sorted|map|filter|zip|enumerate|open|type|isinstance|hasattr|getattr|setattr|delattr)\b/g, '<span class="builtin">$1</span>');
+          
+          // Boolean constants
+          result = result.replace(/\b(True|False|None)\b/g, '<span class="boolean">$1</span>');
+          
+          // Decorators
+          result = result.replace(/@\w+(?:\.[\w.]+)*/g, '<span class="decorator">$&</span>');
+          
+          // Numbers
+          result = result.replace(/\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/g, '<span class="number">$&</span>');
+          
+          tokens[i].text = result;
+          tokens[i].type = 'processed';
         }
         
-        // Process single-line comments
-        let commentMatch;
-        const commentRegex = /(^|\n)(\s*)(#.*)($|\n)/g;
-        while ((commentMatch = commentRegex.exec(encodedCode)) !== null) {
-          const start = commentMatch.index + commentMatch[1].length + commentMatch[2].length;
-          const end = start + commentMatch[3].length;
-          if (!isProcessed(start)) {
-            encodedCode = wrapWithSpan(encodedCode, start, end, "comment");
-            // Reset regex to continue from the new position
-            commentRegex.lastIndex = end;
+        // Combine all tokens back into a single string
+        return tokens.map(token => {
+          if (token.type === null || token.type === 'processed') {
+            return token.text;
           }
-        }
+          return `<span class="${token.type}">${token.text}</span>`;
+        }).join('');
         
-        // Process keywords, but avoid touching already processed parts
-        let keywordMatch;
-        const keywordRegex = /\b(def|class|import|from|as|if|elif|else|for|while|try|except|finally|with|return|yield|lambda|global|nonlocal|pass|break|continue|raise|assert|del|in|is|not|and|or|async|await|self)\b/g;
-        while ((keywordMatch = keywordRegex.exec(encodedCode)) !== null) {
-          const start = keywordMatch.index;
-          const end = start + keywordMatch[0].length;
-          if (!isProcessed(start)) {
-            encodedCode = wrapWithSpan(encodedCode, start, end, "keyword");
-            // Reset regex to continue from the new position
-            keywordRegex.lastIndex = end;
-          }
-        }
-        
-        // Process built-ins
-        let builtinMatch;
-        const builtinRegex = /\b(print|len|range|str|int|float|list|dict|set|tuple|sum|min|max|sorted|map|filter|zip|enumerate|open|type|isinstance|hasattr|getattr|setattr|delattr)\b/g;
-        while ((builtinMatch = builtinRegex.exec(encodedCode)) !== null) {
-          const start = builtinMatch.index;
-          const end = start + builtinMatch[0].length;
-          if (!isProcessed(start)) {
-            encodedCode = wrapWithSpan(encodedCode, start, end, "builtin");
-            // Reset regex to continue from the new position
-            builtinRegex.lastIndex = end;
-          }
-        }
-        
-        // Process boolean constants
-        let booleanMatch;
-        const booleanRegex = /\b(True|False|None)\b/g;
-        while ((booleanMatch = booleanRegex.exec(encodedCode)) !== null) {
-          const start = booleanMatch.index;
-          const end = start + booleanMatch[0].length;
-          if (!isProcessed(start)) {
-            encodedCode = wrapWithSpan(encodedCode, start, end, "boolean");
-            // Reset regex to continue from the new position
-            booleanRegex.lastIndex = end;
-          }
-        }
-        
-        // Process decorators
-        let decoratorMatch;
-        const decoratorRegex = /@\w+(?:\.[\w.]+)*/g;
-        while ((decoratorMatch = decoratorRegex.exec(encodedCode)) !== null) {
-          const start = decoratorMatch.index;
-          const end = start + decoratorMatch[0].length;
-          if (!isProcessed(start)) {
-            encodedCode = wrapWithSpan(encodedCode, start, end, "decorator");
-            // Reset regex to continue from the new position
-            decoratorRegex.lastIndex = end;
-          }
-        }
-        
-        // Process numbers
-        let numberMatch;
-        const numberRegex = /\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/g;
-        while ((numberMatch = numberRegex.exec(encodedCode)) !== null) {
-          const start = numberMatch.index;
-          const end = start + numberMatch[0].length;
-          if (!isProcessed(start)) {
-            encodedCode = wrapWithSpan(encodedCode, start, end, "number");
-            // Reset regex to continue from the new position
-            numberRegex.lastIndex = end;
-          }
-        }
-        
-        return encodedCode;
       case 'text':
         return encodeHtmlEntities(decodedCode);
       default:
