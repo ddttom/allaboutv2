@@ -139,7 +139,7 @@ export default async function decorate(block) {
             return encodeHtmlEntities(match);
           }
         );
-      case 'python':
+      case 'python3':
         // First, encode HTML entities in the entire code
         let encodedCode = encodeHtmlEntities(decodedCode);
         
