@@ -279,6 +279,46 @@ export default async function decorate(block) {
     // Move the pre element into the wrapper
     const preElement = codeElement.parentNode;
     preElement.parentNode.insertBefore(wrapper, preElement);
+    
+    // Create header with buttons
+    const header = document.createElement('div');
+    header.className = 'code-expander-header';
+    
+    // Add language indicator
+    const languageIndicator = document.createElement('div');
+    languageIndicator.className = 'code-expander-language';
+    languageIndicator.textContent = language;
+    header.appendChild(languageIndicator);
+    
+    // Create button group
+    const buttonGroup = document.createElement('div');
+    buttonGroup.className = 'code-expander-buttons';
+    
+    // Add copy button
+    const copyButton = document.createElement('button');
+    copyButton.className = 'code-expander-copy';
+    copyButton.textContent = `${COPY_TEXT}`;
+    buttonGroup.appendChild(copyButton);
+    
+    // Add view raw button
+    const viewRawButton = document.createElement('button');
+    viewRawButton.className = 'code-expander-view-raw';
+    viewRawButton.textContent = VIEW_RAW_TEXT;
+    buttonGroup.appendChild(viewRawButton);
+    
+    // Add download button
+    const downloadButton = document.createElement('button');
+    downloadButton.className = 'code-expander-download';
+    downloadButton.textContent = DOWNLOAD_TEXT;
+    buttonGroup.appendChild(downloadButton);
+    
+    // Add button group to header
+    header.appendChild(buttonGroup);
+    
+    // Add header to wrapper
+    wrapper.appendChild(header);
+    
+    // Add pre element to wrapper
     wrapper.appendChild(preElement);
     
     // Add line numbers
@@ -302,24 +342,6 @@ export default async function decorate(block) {
     
     preElement.className = `language-${language}`;
     codeElement.innerHTML = highlightSyntax(code, language);
-    
-    // Add copy button
-    const copyButton = document.createElement('button');
-    copyButton.className = 'code-expander-copy';
-    copyButton.textContent = `${COPY_TEXT} ${language === 'shell' ? 'terminal' : language === 'text' ? 'text' : language} to clipboard`;
-    wrapper.insertBefore(copyButton, preElement);
-    
-    // Add view raw button
-    const viewRawButton = document.createElement('button');
-    viewRawButton.className = 'code-expander-view-raw';
-    viewRawButton.textContent = VIEW_RAW_TEXT;
-    wrapper.insertBefore(viewRawButton, preElement);
-    
-    // Add download button
-    const downloadButton = document.createElement('button');
-    downloadButton.className = 'code-expander-download';
-    downloadButton.textContent = DOWNLOAD_TEXT;
-    wrapper.insertBefore(downloadButton, preElement);
     
     const lines = code.split('\n');
     if (lines.length > LONG_DOCUMENT_THRESHOLD) {
@@ -348,7 +370,7 @@ export default async function decorate(block) {
       bottomExpandButton.onclick = toggleExpansion;
       
       // Add buttons to the wrapper
-      wrapper.insertBefore(topExpandButton, preElement);
+      wrapper.appendChild(topExpandButton);
       wrapper.appendChild(bottomExpandButton);
     }
 
@@ -358,7 +380,7 @@ export default async function decorate(block) {
         await navigator.clipboard.writeText(code);
         copyButton.textContent = COPIED_TEXT;
         setTimeout(() => {
-          copyButton.textContent = `${COPY_TEXT} ${language === 'shell' ? 'terminal' : language === 'text' ? 'text' : language} to clipboard`;
+          copyButton.textContent = COPY_TEXT;
         }, COPY_BUTTON_RESET_DELAY);
       } catch (err) {
         // eslint-disable-next-line no-console
