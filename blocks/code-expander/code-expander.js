@@ -681,3 +681,221 @@ export default async function decorate(block) {
     });
   }));
 }
+    buttonGroup.className = 'code-expander-buttons';
+    
+    // Create info button but don't add it yet (will add at the end)
+    const infoButton = document.createElement('button');
+    infoButton.className = 'code-expander-info';
+    infoButton.innerHTML = '<span aria-hidden="true">?</span>'; // Changed from 'i' to '?'
+    infoButton.setAttribute('aria-label', 'Information about code expander controls');
+    
+    // Create tooltip but don't add it to DOM yet
+    const tooltip = createInfoTooltip();
+    
+    // Add expand button to toolbar if it's a long document
+    if (isLongDocument) {
+      const expandButton = document.createElement('button');
+      expandButton.className = 'code-expander-expand-collapse';
+      expandButton.textContent = CODE_EXPANDER_CONFIG.EXPAND_TEXT;
+      buttonGroup.appendChild(expandButton);
+      
+      // Function to toggle expansion
+      const toggleExpansion = () => {
+        preElement.classList.toggle('expanded');
+        const isExpanded = preElement.classList.contains('expanded');
+        expandButton.textContent = isExpanded ? CODE_EXPANDER_CONFIG.COLLAPSE_TEXT : CODE_EXPANDER_CONFIG.EXPAND_TEXT;
+      };
+      
+      // Add click event listener to expand button
+      expandButton.onclick = toggleExpansion;
+    }
+    
+    // Add copy button
+    const copyButton = document.createElement('button');
+    copyButton.className = 'code-expander-copy';
+    copyButton.textContent = CODE_EXPANDER_CONFIG.COPY_TEXT;
+    buttonGroup.appendChild(copyButton);
+    
+    // Add view raw button
+    const viewRawButton = document.createElement('button');
+    viewRawButton.className = 'code-expander-view-raw';
+    viewRawButton.textContent = CODE_EXPANDER_CONFIG.VIEW_RAW_TEXT;
+    buttonGroup.appendChild(viewRawButton);
+    
+    // Add download button
+    const downloadButton = document.createElement('button');
+    downloadButton.className = 'code-expander-download';
+    downloadButton.textContent = CODE_EXPANDER_CONFIG.DOWNLOAD_TEXT;
+    buttonGroup.appendChild(downloadButton);
+    
+    // Add info button as the last button in the group
+    buttonGroup.appendChild(infoButton);
+    
+    // Add button group to header
+    header.appendChild(buttonGroup);
+    
+    // Add header to wrapper
+    wrapper.appendChild(header);
+    
+    // Add pre element to wrapper
+    wrapper.appendChild(preElement);
+    
+    // Add raw view container
+    const rawViewContainer = document.createElement('div');
+    rawViewContainer.className = 'code-expander-raw-view';
+    rawViewContainer.textContent = code;
+    wrapper.appendChild(rawViewContainer);
+    
+    // Create filename prompt modal (but don't add to DOM yet)
+    const { modal, input, modalDownloadButton, cancelButton } = createFilenamePrompt();
+    
+    preElement.className = `language-${language}`;
+    codeElement.innerHTML = highlightSyntax(code, language);
+    
+    // Setup keyboard navigation
+    setupKeyboardNavigation(preElement, rawViewContainer);
+
+    // Check for overflow and show scroll hint if needed
+    // Use setTimeout to ensure the element is fully rendered
+    setTimeout(() => {
+      if (hasOverflow(preElement, 'horizontal')) {
+        scrollHint.style.display = 'block';
+      }
+    }, 100);
+
+    // Track tooltip state
+    let isTooltipVisible = false;
+
+    // Add event listener for info button click
+    infoButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      
+      // Toggle tooltip visibility
+      if (isTooltipVisible) {
+        hideTooltip(tooltip);
+        isTooltipVisible = false;
+      } else {
+        showTooltip(tooltip, infoButton);
+        isTooltipVisible = true;
+      }
+    });
+    
+    // Add mouseenter event to hide tooltip if it's already visible
+    infoButton.addEventListener('mouseenter', () => {
+      if (isTooltipVisible) {
+        hideTooltip(tooltip);
+        isTooltipVisible = false;
+      }
+    });
+    
+    // Add mouseleave event to hide tooltip when mouse leaves the info button
+    infoButton.addEventListener('mouseleave', () => {
+      // Small delay to allow moving to the tooltip
+      setTimeout(() => {
+        if (!tooltip.matches(':hover')) {
+          hideTooltip(tooltip);
+          isTooltipVisible = false;
+        }
+      }, 100);
+    });
+    
+    // Add mouseleave event to the tooltip itself
+    tooltip.addEventListener('mouseleave', () => {
+      hideTooltip(tooltip);
+      isTooltipVisible = false;
+    });
+    
+    // Close tooltip when clicking outside
+    document.addEventListener('click', (e) => {
+      if (isTooltipVisible && !tooltip.contains(e.target) && e.target !== infoButton) {
+        hideTooltip(tooltip);
+        isTooltipVisible = false;
+      }
+    });
+
+    // Add event listener for copy button
+    copyButton.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(code);
+        copyButton.textContent = CODE_EXPANDER_CONFIG.COPIED_TEXT;
+        setTimeout(() => {
+          copyButton.textContent = CODE_EXPANDER_CONFIG.COPY_TEXT;
+        }, CODE_EXPANDER_CONFIG.COPY_BUTTON_RESET_DELAY);
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error('Error copying content:', err);
+      }
+    });
+    
+    // Add event listener for view raw button
+    viewRawButton.addEventListener('click', () => {
+      const rawView = wrapper.querySelector('.code-expander-raw-view');
+      const isRawActive = rawView.classList.toggle('active');
+      
+      // Always set the button text based on the current state
+      viewRawButton.textContent = isRawActive 
+        ? CODE_EXPANDER_CONFIG.VIEW_FORMATTED_TEXT 
+        : CODE_EXPANDER_CONFIG.VIEW_RAW_TEXT;
+      
+      // If switching to raw view, check for vertical overflow
+      if (isRawActive) {
+        setTimeout(() => {
+          if (hasOverflow(rawView, 'vertical')) {
+            scrollHint.style.display = 'block';
+          }
+        }, 100);
+      } else {
+        // If switching back to formatted view, check for horizontal overflow
+        setTimeout(() => {
+          if (hasOverflow(preElement, 'horizontal')) {
+            scrollHint.style.display = 'block';
+          } else {
+            scrollHint.style.display = 'none';
+          }
+        }, 100);
+      }
+    });
+    
+    // Add event listener for download button
+    downloadButton.addEventListener('click', () => {
+      // Add modal to the wrapper
+      wrapper.appendChild(modal);
+      
+      // Show the modal
+      modal.style.display = 'flex';
+      
+      // Focus the input
+      input.focus();
+      
+      // Handle download button click
+      modalDownloadButton.onclick = () => {
+        const filename = input.value.trim() || CODE_EXPANDER_CONFIG.DEFAULT_FILENAME;
+        downloadCode(code, language, filename);
+        modal.style.display = 'none';
+        wrapper.removeChild(modal);
+      };
+      
+      // Handle cancel button click
+      cancelButton.onclick = () => {
+        modal.style.display = 'none';
+        wrapper.removeChild(modal);
+      };
+      
+      // Handle Enter key press
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          modalDownloadButton.click();
+        } else if (e.key === 'Escape') {
+          cancelButton.click();
+        }
+      });
+      
+      // Handle click outside modal to close
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          cancelButton.click();
+        }
+      });
+    });
+  }));
+}
