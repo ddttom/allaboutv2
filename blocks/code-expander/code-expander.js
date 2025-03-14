@@ -2,7 +2,7 @@
 const CODE_EXPANDER_CONFIG = {
   LONG_DOCUMENT_THRESHOLD: 40,
   COPY_BUTTON_RESET_DELAY: 2000,
-  SCROLL_HINT_TEXT: '<-scroll with arrows->',
+  SCROLL_HINT_TEXT: 'Use ←→ arrows to scroll horizontally, ↑↓ in raw view',
   COPY_TEXT: 'Copy',
   COPIED_TEXT: 'Copied!',
   VIEW_RAW_TEXT: 'View Raw',
@@ -20,7 +20,8 @@ const CODE_EXPANDER_CONFIG = {
     COPY: 'Copy: Copy the code to clipboard',
     VIEW_RAW: 'View Raw/Formatted: Toggle between raw text and formatted code view',
     DOWNLOAD: 'Download: Save the code as a file with appropriate extension',
-    EXPAND: 'Expand/Collapse: Toggle between collapsed and expanded view for long code blocks'
+    EXPAND: 'Expand/Collapse: Toggle between collapsed and expanded view for long code blocks',
+    KEYBOARD: 'Keyboard: Use arrow keys to navigate (←→ in formatted view, ↑↓ in raw view)'
   }
 };
 
@@ -257,7 +258,8 @@ export default async function decorate(block) {
       { key: 'COPY', condition: true },
       { key: 'VIEW_RAW', condition: true },
       { key: 'DOWNLOAD', condition: true },
-      { key: 'EXPAND', condition: true }
+      { key: 'EXPAND', condition: true },
+      { key: 'KEYBOARD', condition: true }
     ];
     
     descriptions.forEach(({ key, condition }) => {
@@ -367,6 +369,66 @@ export default async function decorate(block) {
     tooltip.classList.remove('active');
   }
 
+  /**
+   * Checks if an element has overflow in the specified direction
+   * @param {HTMLElement} element - The element to check
+   * @param {string} direction - The direction to check ('horizontal' or 'vertical')
+   * @returns {boolean} - Whether the element has overflow
+   */
+  function hasOverflow(element, direction) {
+    if (direction === 'horizontal') {
+      return element.scrollWidth > element.clientWidth;
+    } else if (direction === 'vertical') {
+      return element.scrollHeight > element.clientHeight;
+    }
+    return false;
+  }
+
+  /**
+   * Sets up keyboard navigation for scrolling in code blocks
+   * @param {HTMLElement} preElement - The pre element containing the code
+   * @param {HTMLElement} rawView - The raw view element
+   */
+  function setupKeyboardNavigation(preElement, rawView) {
+    // Add tabindex to make the elements focusable
+    preElement.setAttribute('tabindex', '0');
+    rawView.setAttribute('tabindex', '0');
+    
+    // Handle keyboard navigation in formatted view
+    preElement.addEventListener('keydown', (e) => {
+      // Only handle arrow keys
+      if (!['ArrowLeft', 'ArrowRight'].includes(e.key)) return;
+      
+      // Prevent default behavior (like cursor movement)
+      e.preventDefault();
+      
+      const scrollAmount = 40; // Pixels to scroll per key press
+      
+      if (e.key === 'ArrowLeft') {
+        preElement.scrollLeft -= scrollAmount;
+      } else if (e.key === 'ArrowRight') {
+        preElement.scrollLeft += scrollAmount;
+      }
+    });
+    
+    // Handle keyboard navigation in raw view
+    rawView.addEventListener('keydown', (e) => {
+      // Only handle arrow keys
+      if (!['ArrowUp', 'ArrowDown'].includes(e.key)) return;
+      
+      // Prevent default behavior (like cursor movement)
+      e.preventDefault();
+      
+      const scrollAmount = 40; // Pixels to scroll per key press
+      
+      if (e.key === 'ArrowUp') {
+        rawView.scrollTop -= scrollAmount;
+      } else if (e.key === 'ArrowDown') {
+        rawView.scrollTop += scrollAmount;
+      }
+    });
+  }
+
   // Process each code element
   await Promise.all(Array.from(codeElements).map(async (codeElement, index) => {
     const code = codeElement.textContent;
@@ -392,10 +454,11 @@ export default async function decorate(block) {
     languageIndicator.textContent = language.toUpperCase();
     header.appendChild(languageIndicator);
     
-    // Add scroll hint to header
+    // Add scroll hint to header (will be shown/hidden based on overflow)
     const scrollHint = document.createElement('div');
     scrollHint.className = 'code-expander-scroll-hint';
     scrollHint.textContent = CODE_EXPANDER_CONFIG.SCROLL_HINT_TEXT;
+    scrollHint.style.display = 'none'; // Hide initially, will show if overflow detected
     header.appendChild(scrollHint);
     
     // Create button group
@@ -474,6 +537,17 @@ export default async function decorate(block) {
       expandButton.onclick = toggleExpansion;
     }
 
+    // Setup keyboard navigation
+    setupKeyboardNavigation(preElement, rawViewContainer);
+
+    // Check for overflow and show scroll hint if needed
+    // Use setTimeout to ensure the element is fully rendered
+    setTimeout(() => {
+      if (hasOverflow(preElement, 'horizontal')) {
+        scrollHint.style.display = 'block';
+      }
+    }, 100);
+
     // Track tooltip state
     let isTooltipVisible = false;
 
@@ -547,6 +621,24 @@ export default async function decorate(block) {
       viewRawButton.textContent = isRawActive 
         ? CODE_EXPANDER_CONFIG.VIEW_FORMATTED_TEXT 
         : CODE_EXPANDER_CONFIG.VIEW_RAW_TEXT;
+      
+      // If switching to raw view, check for vertical overflow
+      if (isRawActive) {
+        setTimeout(() => {
+          if (hasOverflow(rawView, 'vertical')) {
+            scrollHint.style.display = 'block';
+          }
+        }, 100);
+      } else {
+        // If switching back to formatted view, check for horizontal overflow
+        setTimeout(() => {
+          if (hasOverflow(preElement, 'horizontal')) {
+            scrollHint.style.display = 'block';
+          } else {
+            scrollHint.style.display = 'none';
+          }
+        }, 100);
+      }
     });
     
     // Add event listener for download button

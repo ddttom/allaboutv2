@@ -11,7 +11,7 @@ The Code Expander block enhances code snippets with syntax highlighting, copy fu
 - **Download Code**: Save code snippets as files with appropriate extension
 - **Help Information**: Info button with tooltip explaining each control's function
 - **Responsive Design**: Optimized for all screen sizes
-- **Keyboard Accessibility**: Full keyboard navigation support
+- **Keyboard Navigation**: Use arrow keys to navigate (←→ in formatted view, ↑↓ in raw view)
 - **Improved Python Detection**: Better recognition of Python code patterns
 
 ## Usage
@@ -61,7 +61,10 @@ The Code Expander block provides the following interactive features:
 4. **Download Button**: Opens a modal to enter a custom filename before downloading
 5. **Expand/Collapse**: For code blocks longer than 40 lines, provides expand/collapse functionality
 6. **Info Button**: Displays a tooltip with explanations of each button's function
-7. **Scroll Hint**: Shows a hint for horizontal scrolling when code exceeds the container width
+7. **Keyboard Navigation**: 
+   - Use left/right arrow keys to scroll horizontally in formatted view
+   - Use up/down arrow keys to scroll vertically in raw view
+8. **Scroll Hint**: Shows a hint for keyboard navigation when content overflows
 
 ## Variations
 
@@ -88,6 +91,7 @@ The Code Expander block is designed with accessibility in mind:
 - Info button provides context for all controls
 - Tooltips are properly labeled with ARIA attributes
 - Fixed positioning ensures tooltips are always visible regardless of code block height
+- Arrow key navigation for scrolling through code content
 
 ## Troubleshooting
 
@@ -97,6 +101,7 @@ The Code Expander block is designed with accessibility in mind:
 - **Syntax highlighting issues**: If syntax highlighting appears incorrect, try specifying the language explicitly in the code block
 - **Info tooltip not appearing**: Make sure JavaScript is enabled in your browser
 - **Tooltip cut off**: The tooltip now uses fixed positioning to ensure it's always visible, even on shallow code blocks
+- **Keyboard navigation not working**: Ensure the code block has focus by clicking on it first
 
 ## Performance Considerations
 
@@ -108,6 +113,7 @@ The Code Expander block is optimized for performance:
 - No external dependencies are required
 - Configuration variables are centralized for better maintenance
 - Tooltips are only added to the DOM when needed
+- Scroll hints are only shown when content actually overflows
 
 ## Browser Compatibility
 
@@ -120,4 +126,4 @@ The Code Expander block is compatible with:
 
 ## Implementation Notes
 
-The block uses vanilla JavaScript and CSS with no external dependencies. The syntax highlighting is implemented using regular expressions for optimal performance. The code is structured with a configuration object at the top for easy maintenance and localization. Tooltips use fixed positioning relative to the viewport to ensure they're always visible regardless of the code block's dimensions.
+The block uses vanilla JavaScript and CSS with no external dependencies. The syntax highlighting is implemented using regular expressions for optimal performance. The code is structured with a configuration object at the top for easy maintenance and localization. Tooltips use fixed positioning relative to the viewport to ensure they're always visible regardless of the code block's dimensions. Keyboard navigation is implemented for better accessibility, allowing users to navigate through code content using arrow keys.
