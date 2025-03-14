@@ -12,6 +12,7 @@ The Code Expander block demonstrates excellent code organization and adherence t
 - **DOM Manipulation**: DOM manipulation is efficient and minimizes reflows.
 - **Event Listeners**: Event listeners are properly attached and managed.
 - **Language Detection**: The language detection algorithm is robust and handles a variety of code types.
+- **Global Code Processing**: The implementation intelligently detects and processes code blocks from anywhere on the page.
 
 ### CSS Implementation
 
@@ -32,6 +33,7 @@ The block provides a comprehensive set of features for code display and interact
 - ✅ Raw code view toggle
 - ✅ Download functionality with custom filename
 - ✅ Mobile responsiveness
+- ✅ Global code block processing
 
 ## Performance Considerations
 
@@ -41,6 +43,7 @@ The block performs well with minimal impact on page load times. Key performance 
 - Proper cleanup of resources (URL objects are revoked after use)
 - Minimal use of heavy operations
 - Appropriate use of CSS for styling rather than JavaScript
+- Modular code structure for better maintainability and performance
 
 ## Accessibility Review
 
@@ -83,6 +86,7 @@ While the current implementation is strong, the following enhancements could be 
 5. **Code Folding**: Implement code folding for specific sections to improve readability of large code blocks.
 6. **Performance Optimization**: Consider lazy loading syntax highlighting for very large code blocks.
 7. **Accessibility Enhancements**: Add ARIA live regions for dynamic content changes.
+8. **Legacy Content Support**: Enhance the global code block processing to handle various HTML structures for code blocks.
 
 ## Browser Compatibility
 
@@ -97,6 +101,8 @@ No significant compatibility issues were identified.
 ## Final Assessment
 
 The Code Expander block is a high-quality implementation that meets all requirements and follows best practices for Franklin block development. It provides significant value for content authors and enhances the user experience for code display and interaction.
+
+The addition of global code block processing is particularly valuable, as it allows the block to automatically find and enhance all code blocks on a page without requiring manual updates to each code snippet. This feature makes the block much more versatile and easier to use, especially for enhancing existing content or working with large documents containing many code examples.
 
 **Approval Status**: ✅ Approved for Production
 

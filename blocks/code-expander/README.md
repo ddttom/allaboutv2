@@ -15,6 +15,7 @@ The Code Expander block enhances code snippets with syntax highlighting, copy fu
 - **Improved Python Detection**: Better recognition of Python code patterns
 - **Global Code Block Processing**: Automatically finds and processes all code blocks on the page, even if they're not initially within the code-expander block
 - **Multiple Code Block Support**: Handles any number of code blocks on a single page
+- **Non-destructive Processing**: Preserves original code blocks while creating enhanced versions
 
 ## Usage
 
@@ -114,6 +115,7 @@ The Code Expander block is designed with accessibility in mind:
 - **Tooltip cut off**: The tooltip now uses fixed positioning to ensure it's always visible, even on shallow code blocks
 - **Keyboard navigation not working**: Ensure the code block has focus by clicking on it first
 - **Code blocks not being processed**: If you're using an empty code-expander block and some code blocks aren't being enhanced, make sure they use the proper `<pre><code>` HTML structure
+- **Code elements disappearing**: If code elements disappear after adding the code-expander block, make sure you're using the latest version which preserves original code blocks
 
 ## Performance Considerations
 
@@ -144,9 +146,11 @@ The block uses vanilla JavaScript and CSS with no external dependencies. The syn
 The block now features a more modular approach to processing code blocks:
 
 1. It first checks if the code-expander block is empty
-2. If empty, it finds all code blocks in the document and moves them into the code-expander block
+2. If empty, it finds all code blocks in the document and creates enhanced copies in the code-expander block
 3. If not empty, it processes only the code blocks within it
 
 This approach allows for maximum flexibility in how the block can be used, either as a container for specific code blocks or as a processor for all code blocks on the page.
+
+The latest version of the code-expander block uses a non-destructive approach to processing code blocks. Instead of removing the original code elements from the page, it creates new elements with the enhanced functionality. This ensures that the original content remains intact while still providing the enhanced experience.
 
 Tooltips use fixed positioning relative to the viewport to ensure they're always visible regardless of the code block's dimensions. Keyboard navigation is implemented for better accessibility, allowing users to navigate through code content using arrow keys.

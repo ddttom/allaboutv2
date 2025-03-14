@@ -517,6 +517,17 @@ export default async function decorate(block) {
     // Add header to wrapper
     wrapper.appendChild(header);
     
+    // Create a new pre element for the code expander
+    const newPreElement = document.createElement('pre');
+    newPreElement.className = `language-${language}`;
+    
+    // Create a new code element for the code expander
+    const newCodeElement = document.createElement('code');
+    newCodeElement.innerHTML = highlightSyntax(code, language);
+    
+    // Add the new code element to the new pre element
+    newPreElement.appendChild(newCodeElement);
+    
     // Add raw view container
     const rawViewContainer = document.createElement('div');
     rawViewContainer.className = 'code-expander-raw-view';
@@ -528,16 +539,13 @@ export default async function decorate(block) {
     // Create tooltip but don't add it to DOM yet
     const tooltip = createInfoTooltip();
     
-    preElement.className = `language-${language}`;
-    codeElement.innerHTML = highlightSyntax(code, language);
-    
     if (isLongDocument) {
-      preElement.classList.add('collapsible');
+      newPreElement.classList.add('collapsible');
       
       // Function to toggle expansion
       const toggleExpansion = () => {
-        preElement.classList.toggle('expanded');
-        const isExpanded = preElement.classList.contains('expanded');
+        newPreElement.classList.toggle('expanded');
+        const isExpanded = newPreElement.classList.contains('expanded');
         expandButton.textContent = isExpanded ? CODE_EXPANDER_CONFIG.COLLAPSE_TEXT : CODE_EXPANDER_CONFIG.EXPAND_TEXT;
       };
       
@@ -545,17 +553,17 @@ export default async function decorate(block) {
       expandButton.onclick = toggleExpansion;
     }
     
-    // Add the pre element to the wrapper
-    wrapper.appendChild(preElement);
+    // Add the new pre element to the wrapper
+    wrapper.appendChild(newPreElement);
     wrapper.appendChild(rawViewContainer);
     
     // Setup keyboard navigation
-    setupKeyboardNavigation(preElement, rawViewContainer);
+    setupKeyboardNavigation(newPreElement, rawViewContainer);
     
     // Check for overflow and show scroll hint if needed
     // Use setTimeout to ensure the element is fully rendered
     setTimeout(() => {
-      if (hasOverflow(preElement, 'horizontal')) {
+      if (hasOverflow(newPreElement, 'horizontal')) {
         scrollHint.style.display = 'block';
       }
     }, 100);
@@ -644,7 +652,7 @@ export default async function decorate(block) {
       } else {
         // If switching back to formatted view, check for horizontal overflow
         setTimeout(() => {
-          if (hasOverflow(preElement, 'horizontal')) {
+          if (hasOverflow(newPreElement, 'horizontal')) {
             scrollHint.style.display = 'block';
           } else {
             scrollHint.style.display = 'none';
@@ -701,15 +709,10 @@ export default async function decorate(block) {
   // Main processing logic
   // Check if the block is empty (no children)
   if (block.children.length === 0) {
-    // Process each code element and move it into the block
+    // Process each code element and create a copy in the block
+    // This preserves the original code elements on the page
     codeElements.forEach((codeElement, index) => {
       const wrapper = createCodeExpanderWrapper(codeElement, index);
-      
-      // Get the original pre element's parent
-      const preParent = codeElement.parentNode.parentNode;
-      
-      // Remove the original pre element from its parent
-      preParent.removeChild(codeElement.parentNode);
       
       // Add the wrapper to the code-expander block
       block.appendChild(wrapper);

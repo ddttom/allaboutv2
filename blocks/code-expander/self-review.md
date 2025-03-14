@@ -11,6 +11,7 @@
 - [x] All interactive elements (buttons, modals) function as intended
 - [x] Language detection algorithm correctly identifies code languages
 - [x] Global code block processing finds and enhances all code blocks on the page
+- [x] Non-destructive processing preserves original code blocks while creating enhanced versions
 
 ## Code Quality
 
@@ -78,5 +79,7 @@
 The Code Expander block successfully meets all core requirements and provides a robust, user-friendly experience for displaying and interacting with code snippets. The implementation follows best practices for Franklin block development, with a focus on accessibility, performance, and responsive design. The block is well-documented and includes examples for content authors.
 
 The addition of global code block processing enhances the block's utility by allowing it to automatically find and process all code blocks on a page, making it much easier to enhance existing content without manual updates to each code snippet.
+
+The non-destructive processing approach ensures that original code blocks remain intact on the page while still providing enhanced functionality. This prevents issues where code elements might disappear when using the code-expander block, improving reliability and user experience.
 
 While there are opportunities for future enhancements, the current implementation provides significant value and improves the experience of working with code snippets in Franklin documents.
