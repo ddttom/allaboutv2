@@ -330,6 +330,43 @@ export default async function decorate(block) {
     }, 100);
   }
 
+  /**
+   * Shows the tooltip at the specified position
+   * @param {HTMLElement} tooltip - The tooltip element
+   * @param {HTMLElement} button - The button that triggered the tooltip
+   */
+  function showTooltip(tooltip, button) {
+    // Add tooltip to document body if not already added
+    if (!document.body.contains(tooltip)) {
+      document.body.appendChild(tooltip);
+    }
+    
+    tooltip.setAttribute('aria-hidden', 'false');
+    tooltip.classList.add('active');
+    
+    // Position the tooltip relative to the viewport
+    const buttonRect = button.getBoundingClientRect();
+    
+    // Position tooltip below the button
+    tooltip.style.top = `${buttonRect.bottom + 5}px`;
+    tooltip.style.left = `${buttonRect.left}px`;
+    
+    // Ensure tooltip doesn't go off-screen to the right
+    const tooltipRect = tooltip.getBoundingClientRect();
+    if (tooltipRect.right > window.innerWidth) {
+      tooltip.style.left = `${window.innerWidth - tooltipRect.width - 10}px`;
+    }
+  }
+
+  /**
+   * Hides the tooltip
+   * @param {HTMLElement} tooltip - The tooltip element
+   */
+  function hideTooltip(tooltip) {
+    tooltip.setAttribute('aria-hidden', 'true');
+    tooltip.classList.remove('active');
+  }
+
   // Process each code element
   await Promise.all(Array.from(codeElements).map(async (codeElement, index) => {
     const code = codeElement.textContent;
@@ -440,57 +477,50 @@ export default async function decorate(block) {
     // Track tooltip state
     let isTooltipVisible = false;
 
-    // Add event listener for info button
+    // Add event listener for info button click
     infoButton.addEventListener('click', (e) => {
       e.stopPropagation();
       
       // Toggle tooltip visibility
-      isTooltipVisible = !isTooltipVisible;
-      
-      // If tooltip is now visible, add it to document body and position it
       if (isTooltipVisible) {
-        // Add tooltip to document body if not already added
-        if (!document.body.contains(tooltip)) {
-          document.body.appendChild(tooltip);
-        }
-        
-        tooltip.setAttribute('aria-hidden', 'false');
-        tooltip.classList.add('active');
-        
-        // Position the tooltip relative to the viewport
-        const buttonRect = infoButton.getBoundingClientRect();
-        
-        // Position tooltip below the button
-        tooltip.style.top = `${buttonRect.bottom + 5}px`;
-        tooltip.style.left = `${buttonRect.left}px`;
-        
-        // Ensure tooltip doesn't go off-screen to the right
-        const tooltipRect = tooltip.getBoundingClientRect();
-        if (tooltipRect.right > window.innerWidth) {
-          tooltip.style.left = `${window.innerWidth - tooltipRect.width - 10}px`;
-        }
+        hideTooltip(tooltip);
+        isTooltipVisible = false;
       } else {
-        // Hide the tooltip
-        tooltip.setAttribute('aria-hidden', 'true');
-        tooltip.classList.remove('active');
+        showTooltip(tooltip, infoButton);
+        isTooltipVisible = true;
       }
     });
     
     // Add mouseenter event to hide tooltip if it's already visible
     infoButton.addEventListener('mouseenter', () => {
       if (isTooltipVisible) {
+        hideTooltip(tooltip);
         isTooltipVisible = false;
-        tooltip.setAttribute('aria-hidden', 'true');
-        tooltip.classList.remove('active');
       }
+    });
+    
+    // Add mouseleave event to hide tooltip when mouse leaves the info button
+    infoButton.addEventListener('mouseleave', () => {
+      // Small delay to allow moving to the tooltip
+      setTimeout(() => {
+        if (!tooltip.matches(':hover')) {
+          hideTooltip(tooltip);
+          isTooltipVisible = false;
+        }
+      }, 100);
+    });
+    
+    // Add mouseleave event to the tooltip itself
+    tooltip.addEventListener('mouseleave', () => {
+      hideTooltip(tooltip);
+      isTooltipVisible = false;
     });
     
     // Close tooltip when clicking outside
     document.addEventListener('click', (e) => {
       if (isTooltipVisible && !tooltip.contains(e.target) && e.target !== infoButton) {
+        hideTooltip(tooltip);
         isTooltipVisible = false;
-        tooltip.setAttribute('aria-hidden', 'true');
-        tooltip.classList.remove('active');
       }
     });
 
