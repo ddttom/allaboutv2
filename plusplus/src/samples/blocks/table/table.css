@@ -1,6 +1,10 @@
 .table {
   width: 100%;
   overflow-x: auto;
+  /* Define pale blue color for first-line styling */
+  --table-first-line-bg: #e6f2ff;
+  /* define background color for striped tables */
+  --overlay-background-color: rgba(0, 0, 0, 0.05);
 }
 
 .table table {
@@ -51,8 +55,23 @@
   background-color: var(--overlay-background-color);
 }
 
+/* Additional selector for striped tables with data rows in thead */
+.table.striped thead tr:nth-child(odd):not(:first-child) {
+  background-color: var(--overlay-background-color);
+}
+
 /* bordered variant */
 .table.bordered table th,
 .table.bordered table td {
   border: 1px solid;
+}
+
+/* first-line variant - applies pale blue background to the first row */
+.table.first-line table tbody tr:first-child {
+  background-color: var(--table-first-line-bg);
+}
+
+/* Handle case where first line is in thead - target the first row */
+.table.first-line table thead tr:first-child {
+  background-color: var(--table-first-line-bg);
 }
