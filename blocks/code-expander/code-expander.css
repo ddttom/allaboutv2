@@ -26,6 +26,7 @@
   --code-expander-font-size-normal: 0.9rem;
   --code-expander-font-size-large: 1rem;
   --code-expander-font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  --code-expander-line-height: 1.5;
   
   /* Modal */
   --code-expander-modal-bg: rgba(0, 0, 0, 0.5);
@@ -103,19 +104,26 @@
   overflow-x: auto;
   font-family: var(--code-expander-font-family);
   font-size: 14px;
-  line-height: 1.45;
+  line-height: var(--code-expander-line-height);
   background-color: var(--code-expander-code-bg);
   color: var(--code-expander-code-text);
+  display: flex; /* Use flexbox for alignment */
 }
 
 .code-expander-wrapper pre code {
   display: block;
-  padding: 1rem 1rem 1rem calc(var(--code-expander-line-number-width) + 0.5rem);
+  padding: 1rem;
+  padding-left: 0.5rem; /* Reduced padding to align with line numbers */
+  flex: 1; /* Take remaining space */
+  min-width: 0; /* Allow code to shrink if needed */
+  white-space: pre; /* Preserve whitespace */
+  tab-size: 4; /* Set tab size */
 }
 
 /* Line numbering styles */
 .code-expander-wrapper.line-numbers pre {
   counter-reset: line;
+  position: relative; /* For absolute positioning of line numbers */
 }
 
 .code-expander-line-numbers {
@@ -127,23 +135,25 @@
   overflow: hidden;
   background-color: var(--code-expander-line-number-bg);
   border-right: var(--code-expander-line-number-border);
-  counter-reset: line;
   user-select: none;
   -webkit-user-select: none;
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem; /* Match code padding-top */
 }
 
 .code-expander-line-number {
   display: block;
-  padding: var(--code-expander-line-number-padding);
+  padding: 0 0.5rem;
   color: var(--code-expander-line-number-color);
   text-align: right;
   font-size: 12px;
-  line-height: 1.45;
-  counter-increment: line;
+  line-height: var(--code-expander-line-height);
+  height: calc(var(--code-expander-line-height) * 1em); /* Fixed height for each line number */
 }
 
-.code-expander-line-number::before {
-  content: counter(line);
+.code-expander-wrapper pre code {
+  margin-left: var(--code-expander-line-number-width); /* Make space for line numbers */
 }
 
 /* Button styles */
@@ -228,7 +238,7 @@ pre[class^="language-"].expanded {
   white-space: pre;
   font-family: var(--code-expander-font-family);
   font-size: 14px;
-  line-height: 1.45;
+  line-height: var(--code-expander-line-height);
 }
 
 .code-expander-raw-view.active {
@@ -418,7 +428,7 @@ pre[class^="language-"].expanded {
   }
   
   .code-expander-wrapper pre code {
-    padding-left: 3rem;
+    margin-left: 2.5rem;
   }
   
   .code-expander-expand-collapse.top {
@@ -465,7 +475,7 @@ pre[class^="language-"].expanded {
   }
   
   .code-expander-wrapper pre code {
-    padding-left: 2.5rem;
+    margin-left: 2rem;
   }
   
   .code-expander-expand-collapse.top {

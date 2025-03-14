@@ -1,24 +1,32 @@
 // Configuration constants
-const LONG_DOCUMENT_THRESHOLD = 40;
-const COPY_BUTTON_RESET_DELAY = 2000;
-const SCROLL_HINT_TEXT = '<-scroll with arrows->';
-const COPY_TEXT = 'Copy';
-const COPIED_TEXT = 'Copied!';
-const VIEW_RAW_TEXT = 'View Raw';
-const VIEW_FORMATTED_TEXT = 'View Formatted';
-const DOWNLOAD_TEXT = 'Download';
-const EXPAND_TEXT = 'Expand';
-const COLLAPSE_TEXT = 'Collapse';
-const ELLIPSIS_TEXT = '....';
-const CLOSE_TEXT = 'Close';
-const FILENAME_PROMPT_TEXT = 'Enter filename (without extension):';
-const DOWNLOAD_BUTTON_TEXT = 'Download';
-const CANCEL_BUTTON_TEXT = 'Cancel';
-const DEFAULT_FILENAME = 'code-snippet';
+const CODE_EXPANDER_CONFIG = {
+  LONG_DOCUMENT_THRESHOLD: 40,
+  COPY_BUTTON_RESET_DELAY: 2000,
+  SCROLL_HINT_TEXT: '<-scroll with arrows->',
+  COPY_TEXT: 'Copy',
+  COPIED_TEXT: 'Copied!',
+  VIEW_RAW_TEXT: 'View Raw',
+  VIEW_FORMATTED_TEXT: 'View Formatted',
+  DOWNLOAD_TEXT: 'Download',
+  EXPAND_TEXT: 'Expand',
+  COLLAPSE_TEXT: 'Collapse',
+  ELLIPSIS_TEXT: '....expand',
+  CLOSE_TEXT: 'Close',
+  FILENAME_PROMPT_TEXT: 'Enter filename (without extension):',
+  DOWNLOAD_BUTTON_TEXT: 'Download',
+  CANCEL_BUTTON_TEXT: 'Cancel',
+  DEFAULT_FILENAME: 'code-snippet'
+};
 
 export default async function decorate(block) {
   const codeElements = document.querySelectorAll('pre code');
   
+  /**
+   * Detects the programming language of the provided code
+   * Uses a series of heuristics to determine the most likely language
+   * @param {string} code - The code to analyze
+   * @returns {string} - The detected language
+   */
   function detectLanguage(code) {
       // First priority: Check for shebang line (#!/bin/bash, #!/usr/bin/env bash, etc.)
       const firstLine = code.trim().split('\n')[0];
@@ -81,6 +89,12 @@ export default async function decorate(block) {
     return 'text';
   }
 
+  /**
+   * Applies syntax highlighting to code based on the detected language
+   * @param {string} code - The code to highlight
+   * @param {string} language - The detected programming language
+   * @returns {string} - HTML with syntax highlighting applied
+   */
   function highlightSyntax(code, language) {
     const encodeHtmlEntities = (text) => {
       return text
@@ -162,22 +176,31 @@ export default async function decorate(block) {
     }
   }
 
-  // Create line numbers container
+  /**
+   * Creates line numbers for the code block
+   * @param {string} code - The code to create line numbers for
+   * @returns {HTMLElement} - The line numbers container element
+   */
   function createLineNumbers(code) {
     const lines = code.split('\n');
     const lineNumbersContainer = document.createElement('div');
     lineNumbersContainer.className = 'code-expander-line-numbers';
     
-    lines.forEach(() => {
-      const lineNumber = document.createElement('span');
+    // Create a line number for each line of code
+    lines.forEach((_, index) => {
+      const lineNumber = document.createElement('div');
       lineNumber.className = 'code-expander-line-number';
+      lineNumber.textContent = index + 1; // Line numbers start at 1
       lineNumbersContainer.appendChild(lineNumber);
     });
     
     return lineNumbersContainer;
   }
 
-  // Create filename prompt modal
+  /**
+   * Creates a modal dialog for entering a custom filename
+   * @returns {Object} - The modal elements
+   */
   function createFilenamePrompt() {
     const modal = document.createElement('div');
     modal.className = 'code-expander-filename-modal';
@@ -186,23 +209,23 @@ export default async function decorate(block) {
     modalContent.className = 'code-expander-filename-modal-content';
     
     const promptText = document.createElement('p');
-    promptText.textContent = FILENAME_PROMPT_TEXT;
+    promptText.textContent = CODE_EXPANDER_CONFIG.FILENAME_PROMPT_TEXT;
     
     const input = document.createElement('input');
     input.type = 'text';
     input.className = 'code-expander-filename-input';
-    input.placeholder = DEFAULT_FILENAME;
+    input.placeholder = CODE_EXPANDER_CONFIG.DEFAULT_FILENAME;
     
     const buttonContainer = document.createElement('div');
     buttonContainer.className = 'code-expander-filename-buttons';
     
     const modalDownloadButton = document.createElement('button');
     modalDownloadButton.className = 'code-expander-filename-download';
-    modalDownloadButton.textContent = DOWNLOAD_BUTTON_TEXT;
+    modalDownloadButton.textContent = CODE_EXPANDER_CONFIG.DOWNLOAD_BUTTON_TEXT;
     
     const cancelButton = document.createElement('button');
     cancelButton.className = 'code-expander-filename-cancel';
-    cancelButton.textContent = CANCEL_BUTTON_TEXT;
+    cancelButton.textContent = CODE_EXPANDER_CONFIG.CANCEL_BUTTON_TEXT;
     
     buttonContainer.appendChild(modalDownloadButton);
     buttonContainer.appendChild(cancelButton);
@@ -216,7 +239,12 @@ export default async function decorate(block) {
     return { modal, input, modalDownloadButton, cancelButton };
   }
 
-  // Function to download code as a file
+  /**
+   * Downloads code as a file with the specified filename
+   * @param {string} code - The code to download
+   * @param {string} language - The language of the code
+   * @param {string} customFilename - Optional custom filename
+   */
   function downloadCode(code, language, customFilename = null) {
     // Determine file extension based on language
     let extension = '.txt';
@@ -247,7 +275,7 @@ export default async function decorate(block) {
     }
     
     // Use custom filename if provided, otherwise use default
-    const filename = customFilename ? `${customFilename}${extension}` : `${DEFAULT_FILENAME}${extension}`;
+    const filename = customFilename ? `${customFilename}${extension}` : `${CODE_EXPANDER_CONFIG.DEFAULT_FILENAME}${extension}`;
     
     // Create a blob with the code content
     const blob = new Blob([code], { type: 'text/plain' });
@@ -268,6 +296,7 @@ export default async function decorate(block) {
     }, 100);
   }
 
+  // Process each code element
   await Promise.all(Array.from(codeElements).map(async (codeElement, index) => {
     const code = codeElement.textContent;
     const language = detectLanguage(code);  
@@ -287,7 +316,7 @@ export default async function decorate(block) {
     // Add language indicator
     const languageIndicator = document.createElement('div');
     languageIndicator.className = 'code-expander-language';
-    languageIndicator.textContent = language;
+    languageIndicator.textContent = language.toUpperCase();
     header.appendChild(languageIndicator);
     
     // Create button group
@@ -297,19 +326,19 @@ export default async function decorate(block) {
     // Add copy button
     const copyButton = document.createElement('button');
     copyButton.className = 'code-expander-copy';
-    copyButton.textContent = `${COPY_TEXT}`;
+    copyButton.textContent = CODE_EXPANDER_CONFIG.COPY_TEXT;
     buttonGroup.appendChild(copyButton);
     
     // Add view raw button
     const viewRawButton = document.createElement('button');
     viewRawButton.className = 'code-expander-view-raw';
-    viewRawButton.textContent = VIEW_RAW_TEXT;
+    viewRawButton.textContent = CODE_EXPANDER_CONFIG.VIEW_RAW_TEXT;
     buttonGroup.appendChild(viewRawButton);
     
     // Add download button
     const downloadButton = document.createElement('button');
     downloadButton.className = 'code-expander-download';
-    downloadButton.textContent = DOWNLOAD_TEXT;
+    downloadButton.textContent = CODE_EXPANDER_CONFIG.DOWNLOAD_TEXT;
     buttonGroup.appendChild(downloadButton);
     
     // Add button group to header
@@ -328,7 +357,7 @@ export default async function decorate(block) {
     // Add scroll hint
     const scrollHint = document.createElement('div');
     scrollHint.className = 'code-expander-scroll-hint';
-    scrollHint.textContent = SCROLL_HINT_TEXT;
+    scrollHint.textContent = CODE_EXPANDER_CONFIG.SCROLL_HINT_TEXT;
     wrapper.appendChild(scrollHint);
     
     // Add raw view container
@@ -344,25 +373,25 @@ export default async function decorate(block) {
     codeElement.innerHTML = highlightSyntax(code, language);
     
     const lines = code.split('\n');
-    if (lines.length > LONG_DOCUMENT_THRESHOLD) {
+    if (lines.length > CODE_EXPANDER_CONFIG.LONG_DOCUMENT_THRESHOLD) {
       preElement.classList.add('collapsible');
       
       // Create top expand/collapse button
       const topExpandButton = document.createElement('button');
       topExpandButton.className = 'code-expander-expand-collapse top';
-      topExpandButton.textContent = EXPAND_TEXT;
+      topExpandButton.textContent = CODE_EXPANDER_CONFIG.EXPAND_TEXT;
       
       // Create bottom expand/collapse button
       const bottomExpandButton = document.createElement('button');
       bottomExpandButton.className = 'code-expander-expand-collapse bottom';
-      bottomExpandButton.textContent = ELLIPSIS_TEXT;
+      bottomExpandButton.textContent = CODE_EXPANDER_CONFIG.ELLIPSIS_TEXT;
       
       // Function to toggle expansion
       const toggleExpansion = () => {
         preElement.classList.toggle('expanded');
         const isExpanded = preElement.classList.contains('expanded');
-        topExpandButton.textContent = isExpanded ? COLLAPSE_TEXT : EXPAND_TEXT;
-        bottomExpandButton.textContent = isExpanded ? CLOSE_TEXT : ELLIPSIS_TEXT;
+        topExpandButton.textContent = isExpanded ? CODE_EXPANDER_CONFIG.COLLAPSE_TEXT : CODE_EXPANDER_CONFIG.EXPAND_TEXT;
+        bottomExpandButton.textContent = isExpanded ? CODE_EXPANDER_CONFIG.CLOSE_TEXT : CODE_EXPANDER_CONFIG.ELLIPSIS_TEXT;
       };
       
       // Add click event listeners to both buttons
@@ -378,10 +407,10 @@ export default async function decorate(block) {
     copyButton.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(code);
-        copyButton.textContent = COPIED_TEXT;
+        copyButton.textContent = CODE_EXPANDER_CONFIG.COPIED_TEXT;
         setTimeout(() => {
-          copyButton.textContent = COPY_TEXT;
-        }, COPY_BUTTON_RESET_DELAY);
+          copyButton.textContent = CODE_EXPANDER_CONFIG.COPY_TEXT;
+        }, CODE_EXPANDER_CONFIG.COPY_BUTTON_RESET_DELAY);
       } catch (err) {
         // eslint-disable-next-line no-console
         console.error('Error copying content:', err);
@@ -394,9 +423,9 @@ export default async function decorate(block) {
       const isRawActive = rawView.classList.toggle('active');
       
       if (isRawActive) {
-        viewRawButton.textContent = VIEW_FORMATTED_TEXT;
+        viewRawButton.textContent = CODE_EXPANDER_CONFIG.VIEW_FORMATTED_TEXT;
       } else {
-        viewRawButton.textContent = VIEW_RAW_TEXT;
+        viewRawButton.textContent = CODE_EXPANDER_CONFIG.VIEW_RAW_TEXT;
       }
     });
     
@@ -413,7 +442,7 @@ export default async function decorate(block) {
       
       // Handle download button click
       modalDownloadButton.onclick = () => {
-        const filename = input.value.trim() || DEFAULT_FILENAME;
+        const filename = input.value.trim() || CODE_EXPANDER_CONFIG.DEFAULT_FILENAME;
         downloadCode(code, language, filename);
         modal.style.display = 'none';
         wrapper.removeChild(modal);
