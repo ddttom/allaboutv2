@@ -51,6 +51,11 @@
   background-color: var(--overlay-background-color);
 }
 
+/* Additional selector for striped tables with data rows in thead */
+.table.striped thead tr:nth-child(odd):not(:first-child) {
+  background-color: var(--overlay-background-color);
+}
+
 /* bordered variant */
 .table.bordered table th,
 .table.bordered table td {
