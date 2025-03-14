@@ -17,7 +17,7 @@ Here are some example code snippets that will be enhanced by the Code Expander b
 
 ### JavaScript Example
 
-```javascript
+`javascript
 // Sample JavaScript function
 function calculateTotal(items) {
   return items.reduce((total, item) => {
@@ -34,11 +34,11 @@ const cart = [
 
 const total = calculateTotal(cart);
 console.log(`Total: $${total}`); // Output: Total: $50
-```
+`
 
 ### HTML Example
 
-```html
+`html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,11 +66,11 @@ console.log(`Total: $${total}`); // Output: Total: $50
   </footer>
 </body>
 </html>
-```
+`
 
 ### CSS Example
 
-```css
+`css
 /* Base styles */
 body {
   font-family: 'Arial', sans-serif;
@@ -106,11 +106,11 @@ nav a {
 nav a:hover {
   text-decoration: underline;
 }
-```
+`
 
 ### Python Example
 
-```python
+`python
 import json
 from datetime import datetime
 
@@ -145,11 +145,11 @@ class DataProcessor:
 # Usage
 processor = DataProcessor('data.json')
 processor.save_results('processed_data.json')
-```
+`
 
 ### Shell Script Example
 
-```shell
+`shell
 #!/bin/bash
 # Simple backup script
 
@@ -174,7 +174,7 @@ else
   echo "Backup failed!"
   exit 1
 fi
-```
+`
 
 ## Features and Customization
 
@@ -187,6 +187,7 @@ The Code Expander block provides the following features:
 5. **Download as file** - Save code snippets with appropriate file extensions
 6. **Expand/collapse for long code blocks** - Collapsible view for long code snippets
 7. **Keyboard navigation** - Arrow key navigation for scrolling through code
+8. **Info tooltip** - Helpful information about available controls and keyboard shortcuts
 
 ## Use Cases
 

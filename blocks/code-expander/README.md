@@ -11,6 +11,7 @@ The Code Expander block enhances all `<pre><code>` elements on a page with synta
 - Expand/collapse for long code blocks
 - Keyboard navigation support
 - Accessibility features including ARIA attributes and keyboard controls
+- Info tooltip with usage instructions
 
 ## Usage
 
@@ -64,6 +65,7 @@ The Code Expander block:
    - View Raw/Formatted toggle: Switches between raw text and formatted view
    - Download button: Saves code as a file with appropriate extension
    - Expand/Collapse (for long code blocks): Toggles between collapsed and expanded view
+   - Info button: Shows tooltip with usage instructions
 
 ## Accessibility
 
@@ -72,6 +74,7 @@ The Code Expander block:
 - Focus states for all interactive elements
 - Screen reader friendly structure
 - Proper color contrast for syntax highlighting
+- ARIA attributes for tooltips and modals
 
 ## Performance
 
@@ -79,6 +82,7 @@ The Code Expander block:
 - Efficient DOM manipulation
 - No external dependencies
 - Minimal memory footprint
+- Optimized event handling
 
 ## Browser Compatibility
 
@@ -92,6 +96,7 @@ The Code Expander block:
 - **Language detection issues**: Add a comment at the top of your code to help with language detection
 - **Copy button not working**: Some browsers restrict clipboard access; check browser permissions
 - **Styling conflicts**: Check for CSS that might be overriding the code-expander styles
+- **Code not displaying correctly**: Ensure code is properly escaped in the HTML
 
 ## Variations
 
