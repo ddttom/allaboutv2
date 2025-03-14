@@ -1,3 +1,22 @@
+/**
+ * Code Expander Block
+ * 
+ * This block enhances all <pre><code> elements on the page with:
+ * - Syntax highlighting based on detected language
+ * - Copy to clipboard functionality
+ * - Raw/formatted view toggle
+ * - Download as file option
+ * - Expand/collapse for long code blocks
+ * - Keyboard navigation
+ * 
+ * Usage: Simply add an empty code-expander block anywhere on the page:
+ * | code-expander |
+ * | ------------- |
+ * 
+ * The block will automatically find and enhance all <pre><code> elements
+ * while preserving the original content.
+ */
+
 // Configuration constants
 const CODE_EXPANDER_CONFIG = {
   LONG_DOCUMENT_THRESHOLD: 40,
@@ -452,6 +471,7 @@ export default async function decorate(block) {
     // Create a wrapper div
     const wrapper = document.createElement('div');
     wrapper.className = 'code-expander-wrapper';
+    wrapper.dataset.codeIndex = index;
     
     // Create header with buttons
     const header = document.createElement('div');
@@ -704,35 +724,16 @@ export default async function decorate(block) {
   }
 
   // Main processing logic
-  // Check if the block is empty (no children)
-  if (block.children.length === 0) {
-    // Process each code element and create a copy in the block
-    codeElements.forEach((codeElement, index) => {
-      const wrapper = createCodeExpanderWrapper(codeElement, index);
-      
-      // Add the wrapper to the code-expander block
-      block.appendChild(wrapper);
-    });
-  } else {
-    // If the block already has content, process the code elements within it
-    const blockCodeElements = block.querySelectorAll('pre code');
-    if (blockCodeElements.length > 0) {
-      blockCodeElements.forEach((codeElement, index) => {
-        const wrapper = createCodeExpanderWrapper(codeElement, index);
-        
-        // Get the pre element (parent of code element)
-        const preElement = codeElement.parentNode;
-        
-        // Insert the wrapper after the pre element
-        preElement.parentNode.insertBefore(wrapper, preElement.nextSibling);
-      });
-    } else {
-      // If no code elements in the block, look for code in the content
-      const blockContent = block.textContent.trim();
-      if (blockContent) {
-        const wrapper = createCodeExpanderWrapper({ textContent: blockContent }, 0);
-        block.appendChild(wrapper);
-      }
+  // Process all code elements on the page
+  codeElements.forEach((codeElement, index) => {
+    // Skip code elements that are already processed
+    if (codeElement.closest('.code-expander-wrapper')) {
+      return;
     }
-  }
+    
+    const wrapper = createCodeExpanderWrapper(codeElement, index);
+    
+    // Add the wrapper to the code-expander block
+    block.appendChild(wrapper);
+  });
 }

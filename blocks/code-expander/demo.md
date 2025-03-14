@@ -1,30 +1,44 @@
-# Code Expander Demo
+# Code Expander Block Demo
 
-This page demonstrates the Code Expander block, which enhances code snippets with syntax highlighting, copy functionality, expandable views, raw code viewing, and download capabilities.
+This demo showcases the Code Expander block, which enhances code snippets on your page with syntax highlighting, copy functionality, and interactive features.
 
-## JavaScript Example
+## Basic Usage
+
+Simply add an empty code-expander block to your page:
 
 | code-expander |
-| :------------ |
-| ```javascript
-// Example JavaScript function
-function calculateFactorial(n) {
-  if (n === 0 || n === 1) {
-    return 1;
-  }
-  return n * calculateFactorial(n - 1);
+| ------------- |
+
+The block will automatically find and enhance all `<pre><code>` elements on the page.
+
+## Example Code Snippets
+
+Here are some example code snippets that will be enhanced by the Code Expander block:
+
+### JavaScript Example
+
+```javascript
+// Sample JavaScript function
+function calculateTotal(items) {
+  return items.reduce((total, item) => {
+    return total + (item.price * item.quantity);
+  }, 0);
 }
 
 // Usage example
-const result = calculateFactorial(5);
-console.log(`Factorial of 5 is: ${result}`);
-``` |
+const cart = [
+  { name: 'Product 1', price: 10, quantity: 2 },
+  { name: 'Product 2', price: 15, quantity: 1 },
+  { name: 'Product 3', price: 5, quantity: 3 }
+];
 
-## HTML Example
+const total = calculateTotal(cart);
+console.log(`Total: $${total}`); // Output: Total: $50
+```
 
-| code-expander |
-| :------------ |
-| ```html
+### HTML Example
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,23 +59,18 @@ console.log(`Factorial of 5 is: ${result}`);
     </nav>
   </header>
   <main>
-    <section>
-      <h2>About Us</h2>
-      <p>This is a sample website created to demonstrate the Code Expander block.</p>
-    </section>
+    <p>This is a sample HTML page.</p>
   </main>
   <footer>
-    <p>&copy; 2025 Example Company</p>
+    <p>&copy; 2025 My Website</p>
   </footer>
 </body>
 </html>
-``` |
+```
 
-## CSS Example
+### CSS Example
 
-| code-expander |
-| :------------ |
-| ```css
+```css
 /* Base styles */
 body {
   font-family: 'Arial', sans-serif;
@@ -69,13 +78,13 @@ body {
   color: #333;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 20px;
 }
 
 header {
   background-color: #f4f4f4;
-  padding: 20px;
-  margin-bottom: 20px;
+  padding: 1rem;
+  border-radius: 5px;
 }
 
 nav ul {
@@ -84,95 +93,71 @@ nav ul {
   padding: 0;
 }
 
-nav ul li {
+nav li {
   margin-right: 20px;
 }
 
-nav ul li a {
+nav a {
   text-decoration: none;
-  color: #333;
-}
-
-nav ul li a:hover {
   color: #0066cc;
+  font-weight: bold;
 }
 
-footer {
-  background-color: #f4f4f4;
-  padding: 20px;
-  margin-top: 20px;
-  text-align: center;
+nav a:hover {
+  text-decoration: underline;
 }
+```
 
-/* Responsive styles */
-@media (max-width: 768px) {
-  nav ul {
-    flex-direction: column;
-  }
-  
-  nav ul li {
-    margin-right: 0;
-    margin-bottom: 10px;
-  }
-}
-``` |
+### Python Example
 
-## Python Example
+```python
+import json
+from datetime import datetime
 
-| code-expander |
-| :------------ |
-| ```python
-# A simple Python class example
-class Calculator:
-    def __init__(self, initial_value=0):
-        self.value = initial_value
-        
-    def add(self, x):
-        self.value += x
-        return self
-        
-    def subtract(self, x):
-        self.value -= x
-        return self
-        
-    def multiply(self, x):
-        self.value *= x
-        return self
-        
-    def divide(self, x):
-        if x == 0:
-            raise ValueError("Cannot divide by zero")
-        self.value /= x
-        return self
+class DataProcessor:
+    def __init__(self, data_file):
+        self.data_file = data_file
+        self.data = self.load_data()
     
-    def get_result(self):
-        return self.value
+    def load_data(self):
+        try:
+            with open(self.data_file, 'r') as f:
+                return json.load(f)
+        except FileNotFoundError:
+            print(f"Error: File {self.data_file} not found")
+            return []
+    
+    def process_data(self):
+        results = []
+        for item in self.data:
+            if 'timestamp' in item:
+                # Convert timestamp to datetime
+                item['date'] = datetime.fromtimestamp(item['timestamp'])
+            results.append(item)
+        return results
+    
+    def save_results(self, output_file):
+        processed_data = self.process_data()
+        with open(output_file, 'w') as f:
+            json.dump(processed_data, f, default=str, indent=2)
+        print(f"Results saved to {output_file}")
 
-# Usage example
-calc = Calculator(10)
-result = calc.add(5).multiply(2).subtract(8).divide(2).get_result()
-print(f"Result: {result}")  # Output: Result: 6.0
-``` |
+# Usage
+processor = DataProcessor('data.json')
+processor.save_results('processed_data.json')
+```
 
-## Shell/Terminal Example
+### Shell Script Example
 
-| code-expander |
-| :------------ |
-| ```shell
+```shell
 #!/bin/bash
-# A simple shell script to create a backup of a directory
+# Simple backup script
 
-# Define variables
+# Configuration
 SOURCE_DIR="/path/to/source"
 BACKUP_DIR="/path/to/backup"
-DATETIME=$(date +"%Y%m%d_%H%M%S")
-BACKUP_FILE="backup_$DATETIME.tar.gz"
-
-# Check if source directory exists
-if [ ! -d "$SOURCE_DIR" ]; then
-  echo "Error: Source directory does not exist!"
-  exit 1
-fi
+TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+BACKUP_FILE="backup_${TIMESTAMP}.tar.gz"
 
 # Create backup directory if it doesn't exist
 mkdir -p "$BACKUP_DIR"
@@ -183,95 +168,34 @@ tar -czf "$BACKUP_DIR/$BACKUP_FILE" -C "$(dirname "$SOURCE_DIR")" "$(basename "$
 
 # Check if backup was successful
 if [ $? -eq 0 ]; then
-  echo "Backup created successfully: $BACKUP_DIR/$BACKUP_FILE"
+  echo "Backup completed successfully: $BACKUP_DIR/$BACKUP_FILE"
+  echo "Backup size: $(du -h "$BACKUP_DIR/$BACKUP_FILE" | cut -f1)"
 else
-  echo "Error: Backup failed!"
+  echo "Backup failed!"
   exit 1
 fi
-``` |
+```
 
-## JSON Example
+## Features and Customization
 
-| code-expander |
-| :------------ |
-| ```json
-{
-  "name": "code-expander",
-  "version": "1.0.0",
-  "description": "A block that enhances code snippets with syntax highlighting and interactive features",
-  "features": [
-    "Syntax highlighting",
-    "Copy to clipboard",
-    "Expandable long code blocks",
-    "Line numbering",
-    "Raw code view",
-    "Download code with custom filename"
-  ],
-  "languages": [
-    "JavaScript",
-    "HTML",
-    "CSS",
-    "Python",
-    "Shell",
-    "JSON",
-    "Markdown"
-  ],
-  "settings": {
-    "longDocumentThreshold": 40,
-    "copyButtonResetDelay": 2000,
-    "defaultFilename": "code-snippet"
-  },
-  "author": "Tom Cranstoun",
-  "license": "MIT"
-}
-``` |
+The Code Expander block provides the following features:
 
-## Global Code Block Processing
-
-The Code Expander block can now automatically find and process all code blocks on a page, even if they're not explicitly placed within the block. This is done by adding an empty code-expander block anywhere on your page:
-
-| code-expander |
-| :------------ |
-|  |
-
-When this empty block is present, it will automatically:
-1. Find all `<pre><code>` elements on the page
-2. Process them with syntax highlighting and interactive features
-3. Create enhanced versions while preserving the original code blocks
-
-This makes it much easier to enhance all code snippets on a page without having to manually wrap each one in a code-expander block, and ensures that the original content remains intact.
-
-## How It Works
-
-The Code Expander block automatically enhances any code block on your page with the following features:
-
-1. **Syntax Highlighting**: Automatically detects the language and applies appropriate syntax highlighting.
-2. **Copy Button**: Allows users to easily copy the code to their clipboard.
-3. **Expandable View**: For long code blocks (more than 40 lines), provides expand/collapse functionality.
-4. **Line Numbers**: Adds line numbers to make it easier to reference specific parts of the code.
-5. **Raw View**: Allows users to toggle between formatted and raw code views.
-6. **Download Code**: Enables users to download the code as a file with a custom filename.
-7. **Global Processing**: Can automatically find and enhance all code blocks on the page.
-8. **Non-destructive Processing**: Creates enhanced versions of code blocks while preserving the original content.
-
-## Customization Options
-
-The Code Expander block can be customized through CSS variables defined in the `:root` selector. Key customization variables include:
-
-- `--code-expander-button-bg`: Background color for buttons
-- `--code-expander-code-bg`: Background color for code blocks
-- `--code-expander-line-number-bg`: Background color for line numbers
-- `--code-expander-line-number-color`: Text color for line numbers
-- `--code-expander-line-number-width`: Width of the line numbers column
+1. **Automatic language detection** - The block detects the programming language based on code content
+2. **Syntax highlighting** - Code is highlighted according to the detected language
+3. **Copy to clipboard** - One-click copying of code snippets
+4. **Raw/formatted view toggle** - Switch between raw text and formatted code
+5. **Download as file** - Save code snippets with appropriate file extensions
+6. **Expand/collapse for long code blocks** - Collapsible view for long code snippets
+7. **Keyboard navigation** - Arrow key navigation for scrolling through code
 
 ## Use Cases
 
-- **Documentation**: Enhance code examples in technical documentation.
-- **Tutorials**: Make code snippets in tutorials more interactive and easier to use.
-- **Blogs**: Improve the presentation of code in technical blog posts.
-- **Knowledge Bases**: Provide better code sharing capabilities in knowledge bases.
-- **Educational Content**: Make learning materials more interactive and accessible.
-- **Legacy Content**: Easily enhance code blocks in existing content without manual updates.
+- Technical documentation
+- Programming tutorials
+- API documentation
+- Code examples in blog posts
+- Technical specifications
+- Educational content
 
 | metadata        |                                                                                                                                   |
 | :-------------- | :-------------------------------------------------------------------------------------------------------------------------------- |
@@ -280,4 +204,4 @@ The Code Expander block can be customized through CSS variables defined in the `
 | json-ld         | article                                                                                                                           |
 | image           |                                                                                                                                   |
 | author          | Tom Cranstoun                                                                                                                     |
-| longdescription | This page showcases the Code Expander block functionality in Franklin, enhancing code snippets with interactive features and tools. |
+| longdescription | This page showcases the Code Expander block functionality in Franklin, enhancing code snippets with syntax highlighting and interactive features. |
