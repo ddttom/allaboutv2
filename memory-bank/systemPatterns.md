@@ -2,7 +2,7 @@
 
 This file documents recurring patterns and standards used in the project.
 It is optional, but recommended to be updated as the project evolves.
-2024-03-20 20:45:30 - Log of updates made.
+2024-03-20 20:57:00 - Log of updates made.
 
 *
 
@@ -10,10 +10,11 @@ It is optional, but recommended to be updated as the project evolves.
 
 * **Language Detection in code-expander**: The code-expander block uses a series of pattern checks to identify programming languages. These checks are organized in a priority order, with more specific patterns checked first (like shebangs) and more general patterns checked later. This pattern allows for extensible language detection.
 
-* **Comment-based Language Detection**: Added detection for language-specific comment patterns:
+* **Comment-based Language Detection**: Added detection for language-specific patterns:
   * `//` or `/*` for JavaScript
   * `<link` for HTML
   * Single `/` at the start of a line for shell scripts
+  * `.` or `@` at the start of a line for CSS
   
   This pattern improves language identification accuracy by recognizing common syntax elements.
 

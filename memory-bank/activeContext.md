@@ -1,7 +1,7 @@
 # Active Context
 
 This file tracks the project's current status, including recent changes, current goals, and open questions.
-2024-03-20 20:45:45 - Log of updates made.
+2024-03-20 20:57:15 - Log of updates made.
 
 *
 
@@ -11,6 +11,7 @@ This file tracks the project's current status, including recent changes, current
   * JavaScript detection for lines starting with "//" or "/*"
   * HTML detection for lines starting with "<link"
   * Shell detection for lines starting with a single "/"
+  * CSS detection for lines starting with "." or "@"
 
 ## Recent Changes
 

@@ -1,7 +1,7 @@
 # Decision Log
 
 This file documents key decisions made during the project, including rationale and implications.
-2024-03-20 20:45:15 - Log of updates made.
+2024-03-20 20:56:40 - Log of updates made.
 
 *
 
@@ -11,6 +11,7 @@ This file documents key decisions made during the project, including rationale a
 1. JavaScript detection for lines starting with "//" or "/*"
 2. HTML detection for lines starting with "<link"
 3. Shell detection for lines starting with a single "/"
+4. CSS detection for lines starting with "." or "@"
 
 **Rationale:**
 - Improves language detection accuracy for various code snippets

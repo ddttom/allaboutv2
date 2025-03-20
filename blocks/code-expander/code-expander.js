@@ -91,8 +91,14 @@ export default async function decorate(block) {
     }
     
     // Check for shell commands (single slash at start)
-    if (firstLine.trim() === '/' || firstLine.trim().match(/^\/\s/)) {
+    // This detects lines that are either just a single '/' or start with '/' followed by a space
+    if (firstLine.trim() === '/' || firstLine.trim().startsWith('/')) {
       return 'shell';
+    }
+    
+    // Check for CSS selectors or at-rules
+    if (firstLine.trim().startsWith('.') || firstLine.trim().startsWith('@')) {
+      return 'css';
     }
     
     // Check for common Python import patterns

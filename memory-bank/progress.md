@@ -1,7 +1,7 @@
 # Progress
 
 This file tracks the project's progress using a task list format.
-2024-03-20 20:46:00 - Log of updates made.
+2024-03-20 20:57:30 - Log of updates made.
 
 *
 
@@ -17,6 +17,7 @@ This file tracks the project's progress using a task list format.
   * JavaScript detection for lines starting with "/*"
   * HTML detection for lines starting with "<link"
   * Shell detection for lines starting with a single "/"
+  * CSS detection for lines starting with "." or "@"
 * Updated all Memory Bank files with the latest changes
 
 ## Current Tasks
