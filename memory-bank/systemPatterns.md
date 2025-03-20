@@ -2,28 +2,24 @@
 
 This file documents recurring patterns and standards used in the project.
 It is optional, but recommended to be updated as the project evolves.
-2025-03-20 11:30:00 - Log of updates made.
+2024-03-20 20:39:00 - Log of updates made.
 
 *
 
 ## Coding Patterns
 
-* Modern JavaScript (ES modules) without TypeScript
-* Pure CSS without preprocessors
-* No build-heavy frameworks
-* Configuration variables and filenames promoted to the top of JavaScript files in config objects
-* CSS variables used for theming and consistency
-* Kebab-case naming convention for CSS classes
-* Async/await used for asynchronous operations instead of .then()
+* **Language Detection in code-expander**: The code-expander block uses a series of pattern checks to identify programming languages. These checks are organized in a priority order, with more specific patterns checked first (like shebangs) and more general patterns checked later. This pattern allows for extensible language detection.
+
+* **Comment-based Language Detection**: Adding detection for language-specific comment patterns (like "//" for JavaScript) to improve language identification accuracy.
 
 ## Architectural Patterns
 
-* Adobe Edge Delivery Services (EDS) architecture
-* Block-based development approach
-* Serverless architecture optimized for performance and scalability
-* GitHub integration for code storage and syncing
-* E-L-D (Eager, Lazy, Delayed) loading pattern for optimal performance
+* **Block-based Development**: Following Adobe Edge Delivery Services (EDS) pattern of organizing functionality into self-contained blocks.
+
+* **Progressive Enhancement**: The code-expander block enhances existing code snippets with additional functionality (syntax highlighting, copy buttons, etc.) without requiring changes to the original content.
 
 ## Testing Patterns
 
-* Not explicitly defined in the current project context
+* **Manual Testing with Sample Code**: Testing language detection with various code snippets that start with different patterns to ensure correct identification.
+
+* **Edge Case Testing**: Ensuring that language detection works correctly even with minimal code snippets or snippets with mixed patterns.

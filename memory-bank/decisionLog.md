@@ -1,26 +1,30 @@
 # Decision Log
 
-This file records architectural and implementation decisions using a list format.
-2025-03-20 11:30:00 - Log of updates made.
+This file documents key decisions made during the project, including rationale and implications.
+2024-03-20 20:41:00 - Log of updates made.
 
 *
 
-## Decision
+## 2024-03-20: Added JavaScript Detection for Lines Starting with "//"
 
-* Initialize Memory Bank to maintain project context and track development progress
+**Decision:** Enhance the code-expander block to detect JavaScript code when a line starts with "//".
 
-## Rationale 
+**Rationale:**
+- Improves language detection accuracy for JavaScript code snippets
+- Many JavaScript code examples start with comments using "//" syntax
+- This pattern is a strong indicator of JavaScript code and should be detected early in the language detection process
 
-* A Memory Bank provides a structured way to document project context, decisions, and progress
-* It helps maintain continuity across development sessions
-* It serves as a reference for all team members to understand the project's evolution
+**Implementation:**
+- Added a check in the `detectLanguage` function after the shebang checks but before the Python import checks
+- The check uses `firstLine.trim().startsWith('//')` to identify JavaScript comment syntax
+- Returns 'javascript' immediately when this pattern is detected
 
-## Implementation Details
+**Implications:**
+- Better syntax highlighting for JavaScript code snippets that start with comments
+- Improved user experience when viewing JavaScript code
+- Maintains compatibility with existing language detection logic
+- Minimal code change with high impact on functionality
 
-* Created five core Memory Bank files:
-  * productContext.md - High-level project overview
-  * activeContext.md - Current status and focus
-  * progress.md - Task tracking
-  * decisionLog.md - Decision documentation
-  * systemPatterns.md - Architectural patterns
-* Each file follows a consistent format with timestamps for updates
+**Alternatives Considered:**
+- Adding the check later in the detection flow, but this would have reduced its effectiveness
+- Using a more complex regex pattern, but the simple startsWith check is more performant and sufficient for this case

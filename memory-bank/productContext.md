@@ -1,31 +1,31 @@
 # Product Context
 
 This file provides a high-level overview of the project and the expected product that will be created. Initially it is based upon projectBrief.md (if provided) and all other available project-related information in the working directory. This file is intended to be updated as the project evolves, and should be used to inform all other modes of the project's goals and context.
-2025-03-20 11:30:00 - Log of updates made will be appended as footnotes to the end of this file.
+2024-03-20 20:39:16 - Log of updates made will be appended as footnotes to the end of this file.
 
 *
 
 ## Project Goal
 
-* This project appears to be an Adobe Edge Delivery Services (EDS) website called "allaboutV2", which is likely a version 2 of a website. The project uses Franklin/Helix for document authoring and follows a block-based development approach.
+* The project is an Adobe Edge Delivery Services (EDS) website that uses block-based development to create a modern, performant web experience.
+* The code-expander block is a component that enhances code snippets with syntax highlighting, copy functionality, and other interactive features.
+* The current enhancement focuses on improving the language detection capabilities of the code-expander block, specifically adding JavaScript detection for lines starting with "//".
 
 ## Key Features
 
-* Block-based development with numerous custom blocks
-* Modern JavaScript (ES modules) without TypeScript
-* Pure CSS without preprocessors
-* No build-heavy frameworks
-* Focus on simplicity and performance
-* Clear code organization and documentation
-* Minimal dependencies and build steps
+* **Block-based Development**: The website uses EDS blocks for modular functionality.
+* **Code Expander Block**: Enhances code snippets with:
+  * Syntax highlighting for multiple programming languages
+  * Copy to clipboard functionality
+  * Download code functionality
+  * Toggle between raw and formatted views
+  * Expandable view for long code blocks
+  * Automatic language detection
 
 ## Overall Architecture
 
-* Follows Adobe Edge Delivery Services architecture
-* Uses serverless architecture optimized for performance and scalability
-* GitHub integration for code storage and syncing
-* Block-based development where blocks are core for functionality and styling
-* Modern web technologies with vanilla JavaScript and CSS3
-* Responsive design with a mobile-first approach
-* Accessibility and SEO as priorities
-* E-L-D (Eager, Lazy, Delayed) loading pattern for optimal performance
+* **Adobe Edge Delivery Services (EDS)**: The website is built on Adobe's EDS platform, which provides serverless architecture and content delivery.
+* **Block Components**: Functionality is organized into self-contained blocks that can be reused across the site.
+* **Progressive Enhancement**: The code-expander block enhances existing code snippets without requiring changes to the original content.
+* **Modern JavaScript**: The codebase uses modern JavaScript (ES modules) without TypeScript or heavy frameworks.
+* **Pure CSS**: Styling is done with CSS3 variables and without preprocessors.

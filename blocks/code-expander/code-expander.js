@@ -80,6 +80,11 @@ export default async function decorate(block) {
       return 'shell'; // Default to shell for any other shebang line
     }
     
+    // Check if the first line starts with "//" for JavaScript comments
+    if (firstLine.trim().startsWith('//')) {
+      return 'javascript';
+    }
+    
     // Check for common Python import patterns
     if (firstLine.startsWith('import ')) {
       return 'python';
