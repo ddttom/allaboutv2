@@ -85,8 +85,8 @@ export default async function decorate(block) {
       return 'javascript';
     }
     
-    // Check for HTML link tag
-    if (firstLine.trim().startsWith('<link')) {
+    // Check for HTML link tag or HTML comments
+    if (firstLine.trim().startsWith('<link') || firstLine.trim().startsWith('<!--')) {
       return 'html';
     }
     

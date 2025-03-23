@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<!--
+  Presentation Configuration
+  Slides will display in natural numerical order
+-->
+<script>
+  const TOTAL_SLIDES = 15; // Total number of slides
+</script>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Understanding AI Limitations - Presenter</title>
+  <style>
+    /* Reset default margins and padding */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      background-color: #f0f2f5;
+    }
+
+    .container {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      border-radius: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Inner content wrapper for 10% margins */
+    .header-content,
+    .navigation-content,
+    .slide-content,
+    .footer-content {
+      width: 80%;
+      margin: 0 auto;
+    }
+
+    .header {
+      width: 100%;
+      padding: 15px 0;
+      background-color: #2c3e50;
+      color: white;
+      text-align: center;
+    }
+
+    .navigation {
+      width: 100%;
+      padding: 10px 0;
+      background-color: #34495e;
+    }
+
+    .navigation-content {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .content {
+      flex: 1;
+      width: 100%;
+      padding: 0;
+      overflow-y: auto;
+      background-color: #fff;
+    }
+
+    .slide {
+      width: 100%;
+      height: 100%;
+      padding: 20px 0;
+      display: none;
+    }
+
+    .slide.active {
+      display: block;
+    }
+
+    .footer {
+      width: 100%;
+      padding: 15px 0;
+      background-color: #ecf0f1;
+      border-top: 1px solid #ddd;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .timer, .pagination {
+      padding: 0;
+    }
+
+    /* Ensure SVG illustrations are full width within their container */
+    .illustration svg {
+      width: 100%;
+      height: auto;
+      max-width: none;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    .header p {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-bottom: 10px;
+    }
+
+    /* Button styling */
+    .nav-btn {
+      padding: 6px 14px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      min-width: 80px;
+    }
+
+    .nav-btn:hover {
+      background-color: #2980b9;
+    }
+
+    .nav-btn:disabled {
+      background-color: #95a5a6;
+      cursor: not-allowed;
+    }
+
+    .timer-btn {
+      padding: 6px 14px;
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      min-width: 80px;
+    }
+
+    .timer-btn:hover {
+      background-color: #c0392b;
+    }
+
+    /* Slide styling */
+    .slide-title {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #2c3e50;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #3498db;
+      height: 44px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Slide content layout */
+    .slide-content {
+      display: flex;
+      flex-direction: column;
+      height: calc(100% - 44px); /* Subtract slide title height */
+      gap: 20px;
+      justify-content: flex-start;
+      margin-top: 10px;
+    }
+
+    /* Text content area */
+    .slide-content-text {
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+
+    /* Illustration area */
+    .illustration {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .illustration img {
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .illustration svg {
+      width: 100%;
+      height: auto;
+      max-height: 600px;
+    }
+
+    /* Paragraph styling */
+    .slide-content > p {
+      flex: 0 0 30%;
+      margin-bottom: 20px;
+    }
+
+    .bullet-list {
+      list-style-type: none;
+      margin-left: 10px;
+      margin-bottom: 20px;
+    }
+
+    .bullet-list li {
+      position: relative;
+      padding-left: 25px;
+      margin-bottom: 15px;
+      font-size: 20px;
+      line-height: 1.4;
+    }
+
+    .bullet-list li:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 10px;
+      height: 10px;
+      background-color: #3498db;
+      border-radius: 50%;
+    }
+
+    .sub-bullet-list {
+      list-style-type: none;
+      margin: 10px 0 20px 35px;
+    }
+
+    .sub-bullet-list li {
+      position: relative;
+      padding-left: 25px;
+      margin-bottom: 12px;
+      font-size: 18px;
+      line-height: 1.4;
+    }
+
+    .sub-bullet-list li:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 8px;
+      height: 8px;
+      background-color: #95a5a6;
+      border-radius: 50%;
+    }
+
+    /* Timer styling */
+    .timer {
+      font-weight: bold;
+      font-size: 16px;
+      color: #e74c3c;
+    }
+
+    /* Pagination styling */
+    .pagination {
+      color: #7f8c8d;
+      font-size: 14px;
+    }
+
+    .data-illustration {
+      display: none;
+      width: 100%;
+      height: 100%;
+      margin-left: auto;
+    }
+
+    .data-illustration.active {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        border-radius: 0;
+      }
+
+      .content {
+        padding: 20px;
+      }
+
+      ul.bullet-list li {
+        font-size: 16px;
+      }
+    }
+  </style>
+  <svg style="position: absolute; width: 0; height: 0;" width="0" height="0" version="1.1"
+    xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#3498db" />
+      </marker>
+    </defs>
+  </svg>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-content">
+        <h1>Understanding AI Limitations</h1>
+        <p>How Tokenization and Training Shape AI Capabilities</p>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <div class="navigation-content">
+        <button id="prev-btn" class="nav-btn" disabled>Previous</button>
+        <button id="timer-btn" class="timer-btn">Start Timer</button>
+        <button id="next-btn" class="nav-btn">Next</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <!-- Slide 0: AI Image Example -->
+      <div id="slide-0" class="slide">
+        <div class="slide-content">
+          <h2 class="slide-title">Understanding Large Language Models in AI (LLMs)</h2>
+          <div class="slide-content-text">
+            <p style="font-size: 18px; margin-bottom: 20px;">AI gets things wrong, we need to understand why</p>
+            <ul class="bullet-list">
+              <li>A Norwegian man named Arve Hjalmar Holmen asked ChatGPT about himself</li>
+              <li>The AI fabricated a tragic story about his "sons drowning in a pond"</li>
+              <li>This completely fictional narrative was presented as fact</li>
+              <li>How do these "hallucinations" occur in AI systems?</li>
+              <li>Understanding the inner workings helps us use AI more wisely</li>
+            </ul>
+          </div>
+
+          <div class="illustration">
+            <img src="https://allabout.network/blogs/media_1ed1788d038b9e9d2e54a1dfb0c9e1130a267c652.png" 
+                 alt="AI Processing Visualization"
+                 style="max-width: 100%; height: auto;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 1: Introduction -->
+      <div id="slide-1" class="slide">
+        <div class="slide-content">
+          <h2 class="slide-title">The Problem of AI Hallucinations</h2>
+          <div class="slide-content-text">
+            <p style="font-size: 18px; margin-bottom: 20px;">Despite impressive capabilities, AI systems can generate false
+              information with confidence:</p>
+            <ul class="bullet-list">
+              <li>AI systems like ChatGPT can generate false information with confidence</li>
+              <li>AI relies on the input query and goes through many calculations"</li>
+              <li>The Calculations are hidden from the user, it just a 'Black Box'</li>
+              <li>By the end of this session I hope you have a better understanding of how AI works</li>
+              <li>Computers only work with numbers, so AI must convert language into numbers</li>
+              <li>I hope to explain this topic in a way that is easy to understand, stop me if you want a slower pace</li>
+            </ul>
+          </div>
+
+          <div class="illustration">
+          <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Arrow marker definition -->
+            <defs>
+              <marker id="arrowMarker" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#34495e" />
+              </marker>
+            </defs>
+          
+            <!-- AI Brain with question marks -->
+            <path d="M200 50 Q240 45, 260 65 Q280 85, 260 110 Q240 130, 200 125 Q160 130, 140 110 Q120 85, 140 65 Q160 45, 200 50"
+              fill="#BBDEFB" stroke="#3498db" stroke-width="2" />
+          
+            <!-- Output bubbles with some false info -->
+            <path d="M140 150 L120 140 L110 160 L120 170 L140 150" fill="#e74c3c" stroke="#c0392b" stroke-width="1" />
+            <rect x="65" y="140" width="80" height="40" rx="5" fill="#e74c3c" opacity="0.8" />
+            <text x="105" y="165" text-anchor="middle" fill="white" font-size="8">FALSE INFO</text>
+          
+            <path d="M260 150 L280 140 L290 160 L280 170 L260 150" fill="#2ecc71" stroke="#27ae60" stroke-width="1" />
+            <rect x="255" y="140" width="80" height="40" rx="5" fill="#2ecc71" opacity="0.8" />
+            <text x="295" y="165" text-anchor="middle" fill="white" font-size="8">TRUE INFO</text>
+          
+            <!-- Question marks inside brain -->
+            <text x="180" y="80" font-size="12" fill="#34495e">13.456?</text>
+            <text x="210" y="100" font-size="12" fill="#34495e">9.56?</text>
+            <text x="170" y="110" font-size="12" fill="#34495e">3.14159?</text>
+          
+            <!-- Input arrow -->
+            <path d="M200 20 L200 45" stroke="#3498db" stroke-width="2" marker-end="url(#arrowMarker)" />
+            <text x="200" y="15" text-anchor="middle" fill="#34495e" font-size="10">INPUT QUERY</text>
+          
+            <!-- New arrows connecting the cloud to TRUE and FALSE -->
+            <path d="M170 115 L120 140" stroke="#34495e" stroke-width="2" stroke-dasharray="4" marker-end="url(#arrowMarker)" />
+            <path d="M230 115 L280 140" stroke="#34495e" stroke-width="2" marker-end="url(#arrowMarker)" />
+          </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2: The Training Corpus -->
+      <div id="slide-2" class="slide">
+        <div class="slide-content">
+          <h2 class="slide-title">The Enormous Corpus Behind AI</h2>
+          <div class="slide-content-text">
+            <ul class="bullet-list">
+              <li>Modern AI is trained on vast amounts of text data</li>
+              <li>This includes books, websites, scientific papers, and more</li>
+              <li>The corpus provides patterns for the AI to learn from</li>
+              <li>But the sheer diversity means the AI must generalize</li>
+              <li>The scale of data creates challenges for quality control</li>
+            </ul>
+          </div>
+
+          <div class="illustration">
+        <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Arrow marker definition -->
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6"
+              orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#3498db" />
+            </marker>
+          </defs>
+        
+          <!-- Data sources flowing into funnel -->
+          <rect x="20" y="20" width="60" height="30" rx="5" fill="#3498db" opacity="0.7" />
+          <text x="50" y="40" text-anchor="middle" fill="white" font-size="10">BOOKS</text>
+        
+          <rect x="90" y="10" width="60" height="30" rx="5" fill="#e74c3c" opacity="0.7" />
+          <text x="120" y="30" text-anchor="middle" fill="white" font-size="10">WEBSITES</text>
+        
+          <rect x="160" y="20" width="60" height="30" rx="5" fill="#2ecc71" opacity="0.7" />
+          <text x="190" y="40" text-anchor="middle" fill="white" font-size="10">PAPERS</text>
+        
+          <rect x="230" y="10" width="60" height="30" rx="5" fill="#f39c12" opacity="0.7" />
+          <text x="260" y="30" text-anchor="middle" fill="white" font-size="10">FORUMS</text>
+        
+          <!-- New inputs -->
+          <rect x="300" y="20" width="80" height="30" rx="5" fill="#9b59b6" opacity="0.7" />
+          <text x="340" y="40" text-anchor="middle" fill="white" font-size="10">GEOGRAPHY</text>
+        
+          <rect x="160" y="60" width="80" height="30" rx="5" fill="#16a085" opacity="0.7" />
+          <text x="200" y="80" text-anchor="middle" fill="white" font-size="10">RELIGIOUS TEXT</text>
+        
+          <!-- Funnel shape -->
+          <path d="M100 100 L330 100 L290 140 L140 140 Z" fill="#BBDEFB" stroke="#3498db" stroke-width="2" />
+          <text x="215" y="125" text-anchor="middle" fill="#2c3e50" font-size="14" font-weight="bold">TEXT ENCODING</text>
+          <path d="M140 140 L290 140 L250 170 L180 170 Z" fill="#90CAF9" stroke="#3498db" stroke-width="2" />
+          <text x="215" y="160" text-anchor="middle" fill="white" font-size="14" font-weight="bold">TRAINING</text>
+        
+          <!-- Arrows pointing to funnel -->
+          <path d="M50 50 L100 100" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+          <path d="M120 40 L160 100" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+          <path d="M190 50 L190 100" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+          <path d="M260 40 L270 100" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+          <path d="M340 50 L310 100" stroke="#9b59b6" stroke-width="1" marker-end="url(#arrow)" />
+          <path d="M200 90 L210 100" stroke="#16a085" stroke-width="1" marker-end="url(#arrow)" />
+        
+          <!-- AI model at bottom -->
+          <circle cx="215" cy="185" r="12" fill="#3498db" />
+          <text x="215" y="190" text-anchor="middle" fill="white" font-size="12">AI</text>
+          <path d="M215 170 L215 173" stroke="#3498db" stroke-width="2" marker-end="url(#arrow)" />
+        </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: Tokenization -->
+      <div id="slide-3" class="slide">
+        <div class="slide-content">
+          <h2 class="slide-title">Building the Dictionary: Tokens and Embeddings</h2>
+          <div class="slide-content-text">
+            <ul class="bullet-list">
+              <li>AI breaks language into basic units called "tokens"</li>
+              <li>Tokens can be words, parts of words, or punctuation</li>
+              <li>Each token is converted to a unique ID in a dictionary</li>
+              <li>These IDs map to "embedding vectors" - points in a high-dimensional space</li>
+              <li>Similar words have embedding vectors that are close together</li>
+            </ul>
+          </div>
+
+          <div class="illustration">
+            <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Input text example -->
+              <rect x="50" y="30" width="300" height="30" rx="5" fill="#ECF0F1" stroke="#3498db" stroke-width="1" />
+              <text x="200" y="50" text-anchor="middle" fill="#34495e" font-size="12">"the fat cat sat on the mat"</text>
+
+              <!-- Tokenization -->
+              <path d="M200 60 L200 80" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+
+              <!-- Token boxes -->
+              <rect x="60" y="80" width="30" height="20" rx="3" fill="#BBDEFB" stroke="#3498db" stroke-width="1" />
+              <text x="75" y="94" text-anchor="middle" fill="#34495e" font-size="10">the</text>
+
+              <rect x="100" y="80" width="30" height="20" rx="3" fill="#BBDEFB" stroke="#3498db" stroke-width="1" />
+              <text x="115" y="94" text-anchor="middle" fill="#34495e" font-size="10">fat</text>
+
+              <rect x="140" y="80" width="30" height="20" rx="3" fill="#BBDEFB" stroke="#3498db" stroke-width="1" />
+              <text x="155" y="94" text-anchor="middle" fill="#34495e" font-size="10">cat</text>
+
+              <rect x="180" y="80" width="30" height="20" rx="3" fill="#BBDEFB" stroke="#3498db" stroke-width="1" />
+              <text x="195" y="94" text-anchor="middle" fill="#34495e" font-size="10">sat</text>
+
+              <rect x="220" y="80" width="30" height="20" rx="3" fill="#BBDEFB" stroke="#3498db" stroke-width="1" />
+              <text x="235" y="94" text-anchor="middle" fill="#34495e" font-size="10">on</text>
+
+              <rect x="260" y="80" width="30" height="20" rx="3" fill="#BBDEFB" stroke="#3498db" stroke-width="1" />
+              <text x="275" y="94" text-anchor="middle" fill="#34495e" font-size="10">the</text>
+
+              <rect x="300" y="80" width="30" height="20" rx="3" fill="#BBDEFB" stroke="#3498db" stroke-width="1" />
+              <text x="315" y="94" text-anchor="middle" fill="#34495e" font-size="10">mat</text>
+
+              <!-- Dictionary IDs -->
+              <path d="M200 100 L200 120" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+
+              <rect x="60" y="120" width="30" height="20" rx="3" fill="#90CAF9" stroke="#3498db" stroke-width="1" />
+              <text x="75" y="134" text-anchor="middle" fill="#34495e" font-size="10">12</text>
+
+              <rect x="100" y="120" width="30" height="20" rx="3" fill="#90CAF9" stroke="#3498db" stroke-width="1" />
+              <text x="115" y="134" text-anchor="middle" fill="#34495e" font-size="10">47</text>
+
+              <rect x="140" y="120" width="30" height="20" rx="3" fill="#90CAF9" stroke="#3498db" stroke-width="1" />
+              <text x="155" y="134" text-anchor="middle" fill="#34495e" font-size="10">105</text>
+
+              <rect x="180" y="120" width="30" height="20" rx="3" fill="#90CAF9" stroke="#3498db" stroke-width="1" />
+              <text x="195" y="134" text-anchor="middle" fill="#34495e" font-size="10">203</text>
+
+              <rect x="220" y="120" width="30" height="20" rx="3" fill="#90CAF9" stroke="#3498db" stroke-width="1" />
+              <text x="235" y="134" text-anchor="middle" fill="#34495e" font-size="10">31</text>
+
+              <rect x="260" y="120" width="30" height="20" rx="3" fill="#90CAF9" stroke="#3498db" stroke-width="1" />
+              <text x="275" y="134" text-anchor="middle" fill="#34495e" font-size="10">12</text>
+
+              <rect x="300" y="120" width="30" height="20" rx="3" fill="#90CAF9" stroke="#3498db" stroke-width="1" />
+              <text x="315" y="134" text-anchor="middle" fill="#34495e" font-size="10">89</text>
+
+              <!-- Vector embeddings -->
+              <path d="M200 140 L200 160" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+              <rect x="120" y="160" width="160" height="30" rx="5" fill="#64B5F6" stroke="#3498db" stroke-width="1" />
+              <text x="200" y="178" text-anchor="middle" fill="white" font-size="10">EMBEDDING VECTORS</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4: Token Embedding in Detail -->
+      <div id="slide-4" class="slide">
+        <div class="slide-content">
+          <h2 class="slide-title">Token Embedding: A Closer Look</h2>
+          <div class="slide-content-text">
+            <p style="font-size: 18px; margin-bottom: 20px;">Each token maps to a compact vector in high-dimensional space:
+            </p>
+            <ul class="bullet-list">
+              <li>Example (simplified to 3 dimensions for illustration):</li>
+              <ul class="sub-bullet-list">
+                <li>"the" → [0.123, -0.456, 0.789]</li>
+                <li>"fat" → [0.234, 0.567, -0.345]</li>
+                <li>"cat" → [-0.678, 0.123, 0.456]</li>
+              </ul>
+              <li>Real embeddings use 300-768+ dimensions</li>
+              <li>These vectors capture semantic relationships</li>
+              <li>Similar words have vectors pointing in similar directions</li>
+            </ul>
+          </div>
+
+          <div class="illustration">
+            <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- 3D coordinate system -->
+              <path d="M150 150 L250 50" stroke="#34495e" stroke-width="1" stroke-dasharray="4 2" />
+              <path d="M150 150 L50 150" stroke="#34495e" stroke-width="1" />
+              <path d="M150 150 L150 50" stroke="#34495e" stroke-width="1" />
+
+              <!-- Axis labels -->
+              <text x="45" y="145" text-anchor="middle" fill="#34495e" font-size="10">X</text>
+              <text x="150" y="45" text-anchor="middle" fill="#34495e" font-size="10">Y</text>
+              <text x="255" y="45" text-anchor="middle" fill="#34495e" font-size="10">Z</text>
+
+              <!-- Points in 3D space -->
+              <circle cx="180" cy="110" r="5" fill="#3498db" />
+              <text x="190" y="110" fill="#3498db" font-size="10">the</text>
+
+              <circle cx="200" cy="130" r="5" fill="#e74c3c" />
+              <text x="210" y="130" fill="#e74c3c" font-size="10">fat</text>
+
+              <circle cx="120" cy="100" r="5" fill="#2ecc71" />
+              <text x="110" y="100" fill="#2ecc71" font-size="10">cat</text>
+
+              <circle cx="110" cy="110" r="5" fill="#f39c12" />
+              <text x="100" y="110" fill="#f39c12" font-size="10">dog</text>
+
+              <!-- Similarity indication -->
+              <path d="M120 100 L110 110" stroke="#27ae60" stroke-width="1" stroke-dasharray="2 2" />
+              <text x="100" y="130" fill="#27ae60" font-size="8">SIMILAR MEANINGS</text>
+
+              <!-- Note about real dimensions -->
+              <text x="200" y="180" text-anchor="middle" fill="#34495e" font-size="12" font-style="italic">Real embeddings:
+                300-768+ dimensions</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 5: Tokenization Example -->
+      <div id="slide-5" class="slide">
+        <div class="slide-content">
+          <h2 class="slide-title">A Practical Example: Tokenizing a Sentence</h2>
+          <div class="slide-content-text">
+            <p style="font-size: 18px; margin-bottom: 10px;">Let's examine how AI tokenizes a familiar sentence:</p>
+            <p style="font-size: 16px; font-style: italic; margin-bottom: 15px;">"In the beginning God created the heavens and
+              the earth."</p>
+
+            <p style="font-size: 16px; margin-bottom: 10px;"><strong>Step 1:</strong> Split into tokens (some words may be
+              divided)</p>
+            <p style="font-size: 14px; margin-bottom: 15px; padding-left: 20px;">"In", "the", "begin", "ning", "God",
+              "created", "the", "heavens", "and", "the", "earth"</p>
+
+            <p style="font-size: 16px; margin-bottom: 10px;"><strong>Step 2:</strong> Convert to token IDs</p>
+            <p style="font-size: 14px; margin-bottom: 15px; padding-left: 20px;">[5, 12, 47, 48, 105, 203, 12, 31, 89, 12, 56]
+            </p>
+
+            <p style="font-size: 16px; margin-bottom: 10px;"><strong>Step 3:</strong> Convert to embedding vectors</p>
+            <p style="font-size: 14px; padding-left: 20px;">Each ID maps to a high-dimensional vector</p>
+          </div>
+
+          <div class="illustration">
+            <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Original text -->
+              <rect x="50" y="20" width="300" height="30" rx="5" fill="#ECF0F1" stroke="#3498db" stroke-width="1" />
+              <text x="200" y="40" text-anchor="middle" fill="#34495e" font-size="10">"In the beginning God created the
+                heavens and the earth."</text>
+
+              <!-- Arrows -->
+              <path d="M200 50 L200 60" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+
+              <!-- Tokenization illustration -->
+              <rect x="50" y="60" width="300" height="40" rx="5" fill="#BBDEFB" stroke="#3498db" stroke-width="1" />
+              <text x="60" y="80" fill="#34495e" font-size="8">"In" | "the" | "begin" | "ning" | "God" | "created" | "the" |
+                "heavens" | "and" | "the" | "earth"</text>
+
+              <!-- Arrows -->
+              <path d="M200 100 L200 110" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+
+              <!-- Token IDs -->
+              <rect x="50" y="110" width="300" height="30" rx="5" fill="#90CAF9" stroke="#3498db" stroke-width="1" />
+              <text x="200" y="130" text-anchor="middle" fill="#34495e" font-size="10">[5, 12, 47, 48, 105, 203, 12, 31, 89,
+                12, 56]</text>
+
+              <!-- Arrows -->
+              <path d="M200 140 L200 150" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+
+              <!-- Embedding vectors representation -->
+              <rect x="50" y="150" width="300" height="30" rx="5" fill="#64B5F6" stroke="#3498db" stroke-width="1" />
+              <text x="200" y="170" text-anchor="middle" fill="white" font-size="10">Sequence of embedding vectors
+                (high-dimensional)</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 6: Text Generation Process -->
+      <div id="slide-6" class="slide">
+        <div class="slide-content">
+          <h2 class="slide-title">How AI Generates Text</h2>
+          <div class="slide-content-text">
+            <ul class="bullet-list">
+              <li>AI predicts the next token based on previous tokens, using a statistical sampling method</li>
+              <li>For each prediction, it calculates probabilities for all tokens</li>
+              <li>It uses sampling strategies to select the next token:</li>
+              <ul class="sub-bullet-list">
+                <li>Weighted Tombola: Tokens with higher probabilities have more "tickets"</li>
+                <li>Top-K: Only consider K most likely tokens</li>
+                <li>Top-P: Include enough tokens to reach P% of total probability</li>
+              </ul>
+              <li>Text is built token by token through this process</li>
+            </ul>
+          </div>
+
+          <div class="illustration">
+            <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Input sequence -->
+              <rect x="50" y="30" width="200" height="30" rx="5" fill="#ECF0F1" stroke="#3498db" stroke-width="1" />
+              <text x="150" y="50" text-anchor="middle" fill="#34495e" font-size="12">"The capital of France is"</text>
+
+              <!-- Arrow down -->
+              <path d="M200 60 L200 80" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+
+              <!-- AI prediction box -->
+              <rect x="100" y="80" width="200" height="40" rx="5" fill="#BBDEFB" stroke="#3498db" stroke-width="1" />
+              <text x="200" y="105" text-anchor="middle" fill="#34495e" font-size="14">AI PREDICTION</text>
+
+              <!-- Arrow down -->
+              <path d="M200 120 L200 130" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+
+              <!-- Probability distribution -->
+              <rect x="50" y="130" width="300" height="60" rx="5" fill="#90CAF9" stroke="#3498db" stroke-width="1" />
+
+              <!-- Probability bars -->
+              <rect x="60" y="145" width="60" height="30" rx="2" fill="#3498db" opacity="0.9" />
+              <text x="90" y="165" text-anchor="middle" fill="white" font-size="10">Paris</text>
+              <text x="90" y="175" text-anchor="middle" fill="white" font-size="8">85%</text>
+
+              <rect x="130" y="150" width="40" height="25" rx="2" fill="#3498db" opacity="0.6" />
+              <text x="150" y="165" text-anchor="middle" fill="white" font-size="10">Lyon</text>
+              <text x="150" y="175" text-anchor="middle" fill="white" font-size="8">10%</text>
+
+              <rect x="180" y="155" width="30" height="20" rx="2" fill="#3498db" opacity="0.4" />
+              <text x="195" y="165" text-anchor="middle" fill="white" font-size="10">Nice</text>
+              <text x="195" y="175" text-anchor="middle" fill="white" font-size="8">3%</text>
+
+              <rect x="220" y="160" width="20" height="15" rx="2" fill="#3498db" opacity="0.2" />
+              <text x="230" y="165" text-anchor="middle" fill="white" font-size="8">located</text>
+              <text x="230" y="175" text-anchor="middle" fill="white" font-size="8">1%</text>
+
+              <rect x="250" y="162" width="40" height="13" rx="2" fill="#3498db" opacity="0.1" />
+              <text x="270" y="170" text-anchor="middle" fill="white" font-size="8">other tokens</text>
+              <text x="270" y="178" text-anchor="middle" fill="white" font-size="6">1% total</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 7: Learning Process -->
+      <div id="slide-7" class="slide">
+        <div class="slide-content">
+          <h2 class="slide-title">From Raw Corpus to Training: How AI Learns</h2>
+          <div class="slide-content-text">
+            <ul class="bullet-list">
+              <li>Pre-training phase: Predict next token in sequences</li>
+              <li>For example: "The capital of France is ___"</li>
+              <li>Model continuously adjusts its parameters based on errors</li>
+              <li>Learns through billions of examples and iterations</li>
+              <li>Uses gradient descent to improve predictions over time</li>
+              <li>Captures not just vocabulary but grammar, facts, reasoning</li>
+            </ul>
+          </div>
+
+          <div class="illustration">
+            <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Training process visualization -->
+              <rect x="80" y="40" width="240" height="40" rx="5" fill="#BBDEFB" stroke="#3498db" stroke-width="1" />
+              <text x="200" y="65" text-anchor="middle" fill="#34495e" font-size="14">PRE-TRAINING</text>
+
+              <path d="M200 80 L200 100" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+
+              <!-- Prediction examples -->
+              <rect x="60" y="100" width="130" height="60" rx="5" fill="#90CAF9" stroke="#3498db" stroke-width="1" />
+              <text x="125" y="120" text-anchor="middle" fill="#34495e" font-size="10">Input: "The capital of</text>
+              <text x="125" y="135" text-anchor="middle" fill="#34495e" font-size="10">France is"</text>
+              <text x="125" y="150" text-anchor="middle" fill="#34495e" font-size="10">Predict: "Paris"</text>
+
+              <rect x="210" y="100" width="130" height="60" rx="5" fill="#90CAF9" stroke="#3498db" stroke-width="1" />
+              <text x="275" y="120" text-anchor="middle" fill="#34495e" font-size="10">Input: "To be or not</text>
+              <text x="275" y="135" text-anchor="middle" fill="#34495e" font-size="10">to"</text>
+              <text x="275" y="150" text-anchor="middle" fill="#34495e" font-size="10">Predict: "be"</text>
+
+              <!-- Gradient descent arrow -->
+              <path d="M125 160 Q200 200, 275 160" stroke="#3498db" stroke-width="2" stroke-dasharray="4 2"
+                marker-end="url(#arrow)" />
+              <text x="200" y="190" text-anchor="middle" fill="#34495e" font-size="12">Gradient Descent</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 8: Alignment Challenge -->
+      <div id="slide-8" class="slide">
+        <div class="slide-content">
+          <h2 class="slide-title">The Alignment Challenge</h2>
+          <div class="slide-content-text">
+            <ul class="bullet-list">
+              <li>A model trained only to predict the next token isn't naturally helpful</li>
+              <li>Raw models may generate toxic, biased, or harmful content</li>
+              <li>Fine-tuning with human feedback addresses these issues:</li>
+              <ul class="sub-bullet-list">
+                <li>Instruction tuning: Training on helpful prompt-response pairs</li>
+                <li>Reinforcement Learning from Human Feedback (RLHF)</li>
+                <li>Human evaluators rate responses to guide improvement</li>
+              </ul>
+              <li>Balancing multiple objectives: helpfulness, harmlessness, honesty</li>
+            </ul>
+          </div>
+
+          <div class="illustration">
+            <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Raw model -->
+              <rect x="50" y="40" width="100" height="40" rx="5" fill="#e74c3c" opacity="0.6" stroke="#c0392b"
+                stroke-width="1" />
+              <text x="100" y="65" text-anchor="middle" fill="white" font-size="10">RAW MODEL</text>
+
+              <!-- Process flow -->
+              <path d="M150 60 L200 60" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+
+              <!-- Fine-tuning box -->
+              <rect x="200" y="40" width="100" height="40" rx="5" fill="#f39c12" opacity="0.7" stroke="#d35400"
+                stroke-width="1" />
+              <text x="250" y="65" text-anchor="middle" fill="white" font-size="10">FINE-TUNING</text>
+
+              <!-- Human feedback -->
+              <path d="M250 80 L250 100" stroke="#3498db" stroke-width="1" />
+              <path d="M250 100 L200 120" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+              <path d="M250 100 L300 120" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+
+              <rect x="150" y="120" width="100" height="40" rx="5" fill="#3498db" opacity="0.7" stroke="#2980b9"
+                stroke-width="1" />
+              <text x="200" y="145" text-anchor="middle" fill="white" font-size="10">INSTRUCT TUNING</text>
+
+              <rect x="270" y="120" width="100" height="40" rx="5" fill="#2ecc71" opacity="0.7" stroke="#27ae60"
+                stroke-width="1" />
+              <text x="320" y="145" text-anchor="middle" fill="white" font-size="10">RLHF</text>
+
+              <!-- Final aligned model -->
+              <path d="M200 160 L240 180" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+              <path d="M320 160 L280 180" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+
+              <rect x="210" y="180" width="100" height="30" rx="5" fill="#9b59b6" opacity="0.7" stroke="#8e44ad"
+                stroke-width="1" />
+              <text x="260" y="200" text-anchor="middle" fill="white" font-size="10">ALIGNED MODEL</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 9: How AI Answers Questions -->
+      <div id="slide-9" class="slide">
+        <div class="slide-content">
+          <h2 class="slide-title">The Journey to a Question-Answering System</h2>
+          <div class="slide-content-text">
+            <ul class="bullet-list">
+              <li>AI doesn't look up answers in a database</li>
+              <li>It retrieves information encoded in its parameters</li>
+              <li>For example, asking "Who wrote Romeo and Juliet?":</li>
+              <ul class="sub-bullet-list">
+                <li>AI doesn't search a database entry</li>
+                <li>It recalls that "Shakespeare" frequently appeared near "wrote" and "Romeo and Juliet" in training data</li>
+              </ul>
+              <li>Answers are generated token by token</li>
+              <li>Modern systems use techniques like:</li>
+              <ul class="sub-bullet-list">
+                <li>Chain-of-thought: Breaking reasoning into steps</li>
+                <li>Self-critique: Evaluating and revising initial responses</li>
+              </ul>
+            </ul>
+          </div>
+
+          <div class="illustration">
+            <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Query -->
+              <rect x="50" y="30" width="300" height="30" rx="5" fill="#ECF0F1" stroke="#3498db" stroke-width="1" />
+              <text x="200" y="50" text-anchor="middle" fill="#34495e" font-size="12">"Who wrote Romeo and Juliet?"</text>
+
+              <!-- Process flow -->
+              <path d="M200 60 L200 75" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+
+              <!-- Neural network visualization (simplified) -->
+              <rect x="100" y="75" width="200" height="50" rx="5" fill="#BBDEFB" stroke="#3498db" stroke-width="1" />
+
+              <!-- Nodes and connections -->
+              <circle cx="130" cy="85" r="5" fill="#3498db" />
+              <circle cx="170" cy="85" r="5" fill="#3498db" />
+              <circle cx="210" cy="85" r="5" fill="#3498db" />
+              <circle cx="250" cy="85" r="5" fill="#3498db" />
+              <circle cx="270" cy="85" r="5" fill="#3498db" />
+
+              <circle cx="150" cy="100" r="5" fill="#3498db" />
+              <circle cx="190" cy="100" r="5" fill="#3498db" />
+              <circle cx="230" cy="100" r="5" fill="#3498db" />
+              <circle cx="250" cy="100" r="5" fill="#3498db" />
+
+              <circle cx="170" cy="115" r="5" fill="#3498db" />
+              <circle cx="210" cy="115" r="5" fill="#3498db" />
+              <circle cx="230" cy="115" r="5" fill="#3498db" />
+
+              <!-- Some connecting lines -->
+              <path d="M130 85 L150 100" stroke="#3498db" stroke-width="0.5" />
+              <path d="M130 85 L190 100" stroke="#3498db" stroke-width="0.5" />
+              <path d="M170 85 L150 100" stroke="#3498db" stroke-width="0.5" />
+              <path d="M170 85 L190 100" stroke="#3498db" stroke-width="0.5" />
+              <path d="M210 85 L190 100" stroke="#3498db" stroke-width="0.5" />
+              <path d="M210 85 L230 100" stroke="#3498db" stroke-width="0.5" />
+              <path d="M250 85 L230 100" stroke="#3498db" stroke-width="0.5" />
+              <path d="M270 85 L250 100" stroke="#3498db" stroke-width="0.5" />
+
+              <path d="M150 100 L170 115" stroke="#3498db" stroke-width="0.5" />
+              <path d="M190 100 L170 115" stroke="#3498db" stroke-width="0.5" />
+              <path d="M190 100 L210 115" stroke="#3498db" stroke-width="0.5" />
+              <path d="M230 100 L210 115" stroke="#3498db" stroke-width="0.5" />
+              <path d="M230 100 L230 115" stroke="#3498db" stroke-width="0.5" />
+              <path d="M250 100 L230 115" stroke="#3498db" stroke-width="0.5" />
+
+              <text x="200" y="135" text-anchor="middle" fill="#34495e" font-size="10">NEURAL NETWORK PARAMETERS</text>
+
+              <!-- Output generation -->
+              <path d="M200 125 L200 145" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+
+              <rect x="100" y="145" width="200" height="40" rx="5" fill="#90CAF9" stroke="#3498db" stroke-width="1" />
+              <text x="200" y="170" text-anchor="middle" fill="#34495e" font-size="14">"William Shakespeare"</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 10: Imperfect Alignment -->
+      <div id="slide-10" class="slide">
+        <div class="slide-content">
+          <h2 class="slide-title">Why Alignment is Never Perfect</h2>
+          <div class="slide-content-text">
+            <ul class="bullet-list">
+              <li>Distributional Shift: The world changes faster than models update</li>
+              <li>Knowledge Cutoff: AI has no knowledge beyond training date</li>
+              <li>Specification Problems: Hard to formalize all human values</li>
+              <li>Adversarial Examples: Users can craft inputs to circumvent guardrails</li>
+              <li>Conflicting Values: Balancing accuracy, sensitivity, and helpfulness</li>
+              <li>These issues make ongoing research in AI alignment crucial</li>
+            </ul>
+          </div>
+
+          <div class="illustration">
+            <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Timeline -->
+              <line x1="50" y1="100" x2="350" y2="100" stroke="#3498db" stroke-width="3" />
+
+              <!-- Cutoff date marker -->
+              <line x1="200" y1="70" x2="200" y2="130" stroke="#e74c3c" stroke-width="2" stroke-dasharray="4 2" />
+              <circle cx="200" cy="100" r="10" fill="#e74c3c" />
+              <text x="200" y="150" text-anchor="middle" fill="#e74c3c" font-size="14">CUTOFF</text>
+
+              <!-- Time periods -->
+              <rect x="50" y="80" width="150" height="20" rx="2" fill="#3498db" opacity="0.7" />
+              <text x="125" y="95" text-anchor="middle" fill="white" font-size="12">KNOWN</text>
+
+              <rect x="200" y="80" width="150" height="20" rx="2" fill="#95a5a6" opacity="0.7" />
+              <text x="275" y="95" text-anchor="middle" fill="white" font-size="12">UNKNOWN</text>
+
+              <!-- Value conflicts -->
+              <circle cx="90" cy="40" r="25" fill="#e74c3c" opacity="0.6" />
+              <text x="90" y="44" text-anchor="middle" fill="white" font-size="6">ACCURACY</text>
+
+              <circle cx="200" cy="40" r="25" fill="#f39c12" opacity="0.6" />
+              <text x="200" y="44" text-anchor="middle" fill="white" font-size="6">SAFETY</text>
+
+              <circle cx="310" cy="40" r="25" fill="#2ecc71" opacity="0.6" />
+              <text x="310" y="44" text-anchor="middle" fill="white" font-size="6">HELPFULNESS</text>
+
+              <!-- Connecting lines showing tension -->
+              <path d="M110 40 L180 40" stroke="#34495e" stroke-width="1" stroke-dasharray="2 2" />
+              <path d="M220 40 L290 40" stroke="#34495e" stroke-width="1" stroke-dasharray="2 2" />
+              <path d="M90 60 L310 60" stroke="#34495e" stroke-width="1" stroke-dasharray="2 2" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 11: Conclusion -->
+      <div id="slide-11" class="slide">
+        <div class="slide-content">
+          <h2 class="slide-title">Conclusion</h2>
+          <div class="slide-content-text">
+            <p style="font-size: 18px; margin-bottom: 20px;">Understanding AI limitations helps us use these tools more
+              wisely:</p>
+            <ul class="bullet-list">
+              <li>AI language models rely on token-based pattern matching</li>
+              <li>They don't truly "understand" in the human sense</li>
+              <li>Hallucinations are an inherent limitation of the technology</li>
+              <li>These systems remain powerful tools despite limitations</li>
+              <li>Human oversight and verification remain essential</li>
+              <li>Ongoing research continues to improve reliability and alignment</li>
+            </ul>
+          </div>
+
+          <div class="illustration">
+            <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Human and AI collaboration -->
+              <circle cx="130" cy="100" r="30" fill="#3498db" opacity="0.7" />
+              <text x="130" y="105" text-anchor="middle" fill="white" font-size="8">AI</text>
+
+              <circle cx="270" cy="100" r="30" fill="#e74c3c" opacity="0.7" />
+              <text x="270" y="105" text-anchor="middle" fill="white" font-size="8">HUMAN</text>
+
+              <!-- Intersection -->
+              <circle cx="200" cy="100" r="30" fill="#9b59b6" opacity="0.9" />
+              <text x="200" y="105" text-anchor="middle" fill="white" font-size="8">PARTNERSHIP</text>
+
+              <!-- Labels -->
+              <text x="130" y="140" text-anchor="middle" fill="#34495e" font-size="10">PATTERN RECOGNITION</text>
+              <text x="130" y="155" text-anchor="middle" fill="#34495e" font-size="10">SCALE & SPEED</text>
+
+              <text x="270" y="140" text-anchor="middle" fill="#34495e" font-size="10">UNDERSTANDING</text>
+              <text x="270" y="155" text-anchor="middle" fill="#34495e" font-size="10">VERIFICATION</text>
+
+              <text x="200" y="170" text-anchor="middle" fill="#34495e" font-size="12">AUGMENTED CAPABILITIES</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 12: Why AI Hallucinates -->
+      <div id="slide-12" class="slide">
+        <div class="slide-content">
+          <h2 class="slide-title">Why These Methods Lead to Errors</h2>
+          <div class="slide-content-text">
+            <ul class="bullet-list">
+              <li>No true understanding - purely statistical patterns</li>
+              <li>Randomness in token selection leads to "hallucinations"</li>
+              <li>No internal fact-checking mechanism</li>
+              <li>The Norwegian case example:</li>
+              <ul class="sub-bullet-list">
+                <li>AI recognized query as biographical request about Norwegian name</li>
+                <li>Tokens for "tragic events" and family details had higher probability</li>
+                <li>AI continued a statistically coherent but fictional narrative, a thing called 'snowball hallucination'</li>
+                <li>Generated specific details (ages, location, date) to match patterns</li>
+              </ul>
+            </ul>
+          </div>
+
+          <div class="illustration">
+            <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Query box -->
+              <rect x="50" y="30" width="300" height="30" rx="5" fill="#ECF0F1" stroke="#3498db" stroke-width="1" />
+              <text x="200" y="50" text-anchor="middle" fill="#34495e" font-size="12">"Tell me about Arve Hjalmar
+                Holmen"</text>
+
+              <!-- Process flow -->
+              <path d="M200 60 L200 80" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+
+              <!-- Pattern matching -->
+              <rect x="100" y="80" width="200" height="30" rx="5" fill="#BBDEFB" stroke="#3498db" stroke-width="1" />
+              <text x="200" y="100" text-anchor="middle" fill="#34495e" font-size="12">PATTERN MATCHING</text>
+
+              <path d="M200 110 L200 130" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+
+              <!-- Hallucinated answer -->
+              <rect x="75" y="130" width="250" height="60" rx="5" fill="#e74c3c" opacity="0.7" stroke="#c0392b"
+                stroke-width="1" />
+              <text x="200" y="150" text-anchor="middle" fill="white" font-size="10">"Norwegian father of two boys,</text>
+              <text x="200" y="165" text-anchor="middle" fill="white" font-size="10">aged 7 and 10, who drowned</text>
+              <text x="200" y="180" text-anchor="middle" fill="white" font-size="10">in Trondheim, December 2020"</text>
+
+              <!-- Error indicator -->
+              <circle cx="330" cy="150" r="15" fill="#e74c3c" stroke="#c0392b" stroke-width="2" />
+              <text x="330" y="154" text-anchor="middle" fill="white" font-size="16">!</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 13: AI Image Example -->
+      <div id="slide-13" class="slide">
+        <div class="slide-content">
+          <h2 class="slide-title">AI Image Processing Example</h2>
+          <div class="slide-content-text">
+            <p style="font-size: 18px; margin-bottom: 20px;">Visual representation of AI processing:</p>
+            <ul class="bullet-list">
+              <li>Neural networks process visual information in layers</li>
+              <li>Pattern recognition identifies key features</li>
+              <li>Contextual understanding connects related elements</li>
+              <li>Output generation creates coherent results</li>
+              <li>This process mirrors some aspects of human cognition</li>
+            </ul>
+          </div>
+
+          <div class="illustration">
+            <img src="https://allabout.network/blogs/media_1ed1788d038b9e9d2e54a1dfb0c9e1130a267c652.png" 
+                 alt="AI Processing Visualization"
+                 style="max-width: 100%; height: auto;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 14: Q&A -->
+      <div id="slide-14" class="slide">
+        <div class="slide-content"
+          style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <div
+            style="width: 220px; height: 220px; border-radius: 50%; background-color: #3498db; padding: 10px; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+            <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+              <!-- Q&A Icon -->
+              <circle cx="100" cy="100" r="90" fill="#3498db" stroke="white" stroke-width="4" />
+              <text x="100" y="95" text-anchor="middle" fill="white" font-size="70" font-weight="bold">?</text>
+              <text x="100" y="130" text-anchor="middle" fill="white" font-size="18" font-weight="bold">QUESTIONS</text>
+            </svg>
+          </div>
+
+          <p style="font-size: 24px; margin-top: 20px; color: #2c3e50;">Thank You</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="footer-content">
+        <div class="timer">25:00</div>
+        <div class="pagination">1 / 15</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts will be placed here -->
+  <script>
+    // Configuration object for presentation settings
+    const PRESENTATION_CONFIG = {
+      TIMER_DURATION: 25 * 60, // 25 minutes in seconds
+      SLIDE_TRANSITION_MS: 300 // Transition time in milliseconds
+    };
+
+    // DOM elements
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const timerBtn = document.getElementById('timer-btn');
+    const slides = document.querySelectorAll('.slide');
+    const paginationDisplay = document.querySelector('.pagination');
+
+    // State management
+    let currentSlideIndex = 0;
+    let timerInterval = null;
+    let remainingTime = PRESENTATION_CONFIG.TIMER_DURATION;
+
+    // Set the initial pagination display
+    paginationDisplay.textContent = `0 / ${TOTAL_SLIDES - 1}`;
+
+    // Update button states based on current slide
+    function updateNavigationState() {
+      prevBtn.disabled = currentSlideIndex === 0;
+      nextBtn.disabled = currentSlideIndex === TOTAL_SLIDES - 1;
+      paginationDisplay.textContent = `${currentSlideIndex} / ${TOTAL_SLIDES - 1}`;
+    }
+
+    // Show specific slide by index
+    function showSlide(index) {
+      // Hide all slides first and remove active class
+      slides.forEach(slide => {
+        slide.style.display = 'none';
+        slide.classList.remove('active');
+      });
+      
+      // Show the slide at the index and add active class
+      if (slides[index]) {
+        slides[index].style.display = 'block';
+        slides[index].classList.add('active');
+      }
+      
+      currentSlideIndex = index;
+      updateNavigationState();
+    }
+
+    // Navigation event handlers
+    prevBtn.addEventListener('click', () => {
+      if (currentSlideIndex > 0) {
+        showSlide(currentSlideIndex - 1);
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentSlideIndex < TOTAL_SLIDES - 1) {
+        showSlide(currentSlideIndex + 1);
+      }
+    });
+
+    // Timer functionality
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+      return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+    }
+
+    // Function to flash the screen as a time warning
+    function flashTimeWarning() {
+      const container = document.querySelector('.container');
+      let flashCount = 0;
+
+      function singleFlash() {
+        container.style.backgroundColor = '#e74c3c'; // Red flash
+
+        setTimeout(() => {
+          container.style.backgroundColor = '#fff'; // Return to normal
+          flashCount++;
+
+          if (flashCount < 3) {
+            setTimeout(singleFlash, 300); // Wait before next flash
+          } else {
+            // After all flashes complete, set background to light grey
+            container.style.backgroundColor = '#f0f0f0';
+          }
+        }, 300);
+      }
+
+      singleFlash();
+    }
+
+    function updateTimer() {
+      if (remainingTime > 0) {
+        remainingTime--;
+        document.querySelector('.timer').textContent = formatTime(remainingTime);
+
+        // Flash warning when 2 minutes remain (for a 25-minute presentation)
+        if (remainingTime === 120) {
+          flashTimeWarning();
+        }
+      } else {
+        clearInterval(timerInterval);
+        timerBtn.textContent = 'Time Up!';
+        timerBtn.style.backgroundColor = '#e74c3c';
+      }
+    }
+
+    timerBtn.addEventListener('click', () => {
+      if (timerInterval) {
+        // Stop timer
+        clearInterval(timerInterval);
+        timerInterval = null;
+        timerBtn.textContent = 'Start Timer';
+        timerBtn.style.backgroundColor = '#e74c3c';
+        // Show navigation bar when timer stops
+        document.querySelector('.navigation').style.display = 'flex';
+      } else {
+        // Start timer
+        timerInterval = setInterval(updateTimer, 1000);
+        timerBtn.textContent = 'Stop Timer';
+        timerBtn.style.backgroundColor = '#27ae60';
+        // Hide navigation bar when timer starts (optional - comment out if you want to keep it visible)
+        // document.querySelector('.navigation').style.display = 'none';
+      }
+    });
+
+    // Add ESC key handler to toggle navigation bar and arrow keys for navigation
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        const navBar = document.querySelector('.navigation');
+        navBar.style.display = navBar.style.display === 'none' ? 'flex' : 'none';
+        return;
+      }
+
+      // Navigation using logical indices
+      if (event.key === 'ArrowLeft' && currentSlideIndex > 0) {
+        showSlide(currentSlideIndex - 1);
+        event.preventDefault();
+      }
+      else if (event.key === 'ArrowRight' && currentSlideIndex < TOTAL_SLIDES - 1) {
+        showSlide(currentSlideIndex + 1);
+        event.preventDefault();
+      }
+    });
+
+    // Initialize presentation
+    document.addEventListener('DOMContentLoaded', () => {
+      // Set the initial timer display
+      document.querySelector('.timer').textContent = formatTime(remainingTime);
+
+      // Initialize pagination
+      paginationDisplay.textContent = `0 / ${TOTAL_SLIDES - 1}`;
+
+      // Show the first slide
+      showSlide(0);
+    });
+  </script>
+</body>
+
+</html>
