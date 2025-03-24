@@ -1,5 +1,12 @@
 /* DPS Block CSS */
 
+/* Hide header when DPS block is present */
+.dps-wrapper ~ header,
+header:has(+ .dps-container),
+header:has(~ .dps-container) {
+    display: none;
+}
+
 /* Reset styles */
 html, body {
     margin: 0;
