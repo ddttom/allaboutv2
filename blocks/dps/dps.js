@@ -340,8 +340,7 @@ function buildSlides(slides, container) {
     container.appendChild(slideElement);
   });
 
-  // Show the first slide
-  showSlide(0);
+  // First slide will be shown by setupControls
 }
 
 /**
@@ -474,8 +473,8 @@ function setupControls(slidesContainer, timerDuration) {
   // Initially set the timer display
   document.querySelector(".timer").textContent = formatTime(remainingTime);
 
-  // Make the showSlide function available globally
-  window.showSlide = showSlide;
+  // Show the first slide initially
+  showSlide(0);
 }
 
 /**
