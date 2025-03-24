@@ -9,9 +9,9 @@
 
 /* Main container styling */
 .dps-container {
-    width: 100%;
+    width: calc(100vw - 40px); /* Viewport width minus 20px margins on each side */
     height: 100vh;
-    margin: 0 auto;
+    margin: 0 20px; /* 20px margins on left and right */
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -36,8 +36,9 @@
 .navigation-content,
 .slide-content,
 .footer-content {
-    width: 80%;
-    margin: 0 auto;
+    width: 100%; /* Changed from 80% to 100% to use full container width */
+    margin: 0;
+    padding: 0 20px; /* Added padding to maintain spacing */
 }
 
 /* Header styling */
