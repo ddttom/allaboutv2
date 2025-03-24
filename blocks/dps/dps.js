@@ -22,13 +22,6 @@ export default function decorate(block) {
     return;
   }
 
-  // Check if this is a valid DPS block
-  if (!isDPSBlock(block)) {
-    block.innerHTML =
-      '<div class="dps-error">Error: This block requires a properly formatted DPS structure.</div>';
-    return;
-  }
-
   // Extract presentation data from the rows
   const presentationData = parseRows(rows);
 
@@ -110,31 +103,11 @@ export default function decorate(block) {
 }
 
 /**
- * Check if this is a valid DPS block
- */
-function isDPSBlock(block) {
-  // If there are rows
-  if (block.children.length > 0) {
-    // Get the first row
-    const firstRow = block.children[0];
-    // If the first row has cells
-    if (firstRow.children.length > 0) {
-      // Get the first cell of the first row
-      const firstCell = firstRow.children[0];
-      // Check if the first cell contains "DPS"
-      return firstCell.textContent.trim().toUpperCase() === "DPS";
-    }
-  }
-  return false;
-}
-
-/**
  * Parse rows from the Franklin-rendered structure
  */
 function parseRows(rows) {
-  // Row 1 contains presentation information (the second row of the original table)
-  // The first row had "DPS" as the identifier
-  const configRow = rows[1];
+  // First row contains presentation information
+  const configRow = rows[0];
   const configCells = Array.from(configRow.children);
 
   // Initialize presentation data
@@ -145,8 +118,8 @@ function parseRows(rows) {
     slides: [],
   };
 
-  // Process slide rows (starting from row 3 of the original table)
-  for (let i = 2; i < rows.length; i++) {
+  // Process slide rows
+  for (let i = 1; i < rows.length; i++) {
     const slideRow = rows[i];
     const slideCells = Array.from(slideRow.children);
 
@@ -187,71 +160,40 @@ function parseBulletPoints(cell) {
 
   const bulletPoints = [];
 
-  // Check for list elements first
+  // Find all list items, regardless of structure
   const listItems = cell.querySelectorAll("li");
 
   if (listItems.length > 0) {
-    // Process structured lists
-    let currentPoint = null;
-    let lastListItem = null;
-
-    Array.from(listItems).forEach((li, index) => {
+    // Process each list item as a bullet point
+    Array.from(listItems).forEach((li) => {
       const text = li.textContent.trim();
 
-      // Skip empty list items
-      if (!text) {
-        return;
+      if (text) {
+        // Create a bullet point from this list item
+        const bulletPoint = {
+          text: text,
+          subPoints: [],
+        };
+
+        bulletPoints.push(bulletPoint);
       }
-
-      // Create a new bullet point
-      currentPoint = {
-        text: text,
-        subPoints: [],
-      };
-
-      // Store this as the last non-empty list item
-      lastListItem = currentPoint;
-      bulletPoints.push(currentPoint);
     });
-
-    // Look for paragraphs that might contain sub-points
-    const paragraphs = cell.querySelectorAll("p");
-    if (paragraphs.length > 0 && lastListItem) {
-      Array.from(paragraphs).forEach((p) => {
-        // Check if this looks like a sub-point indicator
-        const text = p.textContent.trim();
-        if (
-          text &&
-          text.toLowerCase() !== "sub bullet points" &&
-          text.toLowerCase() !== "without bullets"
-        ) {
-          lastListItem.subPoints.push(text);
-        }
-      });
-    }
   } else {
-    // No list elements, try to parse content from paragraphs or text nodes
+    // No lists found, check for plain text content
     const textContent = cell.textContent.trim();
     if (textContent) {
       // Split by new lines and convert to bullet points
       const lines = textContent.split(/\n|\r\n/);
-      let currentPoint = null;
 
       lines.forEach((line) => {
         line = line.trim();
         if (!line) return;
 
-        // Check if this line is indented (sub-point)
-        if (line.startsWith("  ") && currentPoint) {
-          currentPoint.subPoints.push(line.trim());
-        } else {
-          // New main point
-          currentPoint = {
-            text: line,
-            subPoints: [],
-          };
-          bulletPoints.push(currentPoint);
-        }
+        // Create a bullet point from each line
+        bulletPoints.push({
+          text: line,
+          subPoints: [],
+        });
       });
     }
   }
@@ -284,30 +226,27 @@ function parseIllustration(cell) {
   }
 
   // Check if content contains SVG tags (common in Franklin output)
-  const paragraphs = cell.querySelectorAll("p");
-  for (const p of paragraphs) {
-    const content = p.textContent.trim();
-    if (content.startsWith("<svg") && content.includes("</svg>")) {
-      // We found an SVG string, parse it to a real SVG
-      try {
-        const container = document.createElement("div");
-        container.innerHTML = content;
+  const content = cell.textContent.trim();
+  if (content.startsWith("<svg") && content.includes("</svg>")) {
+    // We found an SVG string, parse it to a real SVG
+    try {
+      const container = document.createElement("div");
+      container.innerHTML = content;
 
-        // If parsing succeeded, we should have an SVG element
-        const parsedSvg = container.querySelector("svg");
-        if (parsedSvg) {
-          return {
-            type: "svg",
-            content: parsedSvg.outerHTML,
-          };
-        }
-      } catch (e) {
-        // If parsing failed, return the raw content
+      // If parsing succeeded, we should have an SVG element
+      const parsedSvg = container.querySelector("svg");
+      if (parsedSvg) {
         return {
           type: "svg",
-          content: content,
+          content: parsedSvg.outerHTML,
         };
       }
+    } catch (e) {
+      // If parsing failed, return the raw content
+      return {
+        type: "svg",
+        content: content,
+      };
     }
   }
 
@@ -460,12 +399,6 @@ function setupControls(slidesContainer, timerDuration) {
   });
 
   // Timer functionality
-  function formatTime(seconds) {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
-  }
-
   function updateTimer() {
     if (remainingTime > 0) {
       remainingTime--;
