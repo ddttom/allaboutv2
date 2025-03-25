@@ -13,7 +13,8 @@ The DPS block transforms a structured table from a Google Doc into a full-screen
 - Navigation controls with Previous/Next buttons
 - Configurable countdown timer with visual warnings
 - Keyboard navigation support
-- Support for bullet points and sub-bullet points
+- Support for bullet points and sub-bullet points with optimized spacing
+- Support for mixed content (plain text and bullet points)
 - SVG and image illustration support
 - Responsive design for all screen sizes
 - Print-optimized layout
@@ -44,7 +45,11 @@ Content authors should structure their content as follows:
 
 1. **First column**: Slide titles
 2. **Second column**: Slide introduction text or subtitle
-3. **Third column**: Bullet points (using document list formatting)
+3. **Third column**: Bullet points and plain text
+   - Use document list formatting for bullet points
+   - Plain text will be displayed without bullets
+   - Line breaks in plain text are preserved
+   - HTML formatting (like `<code>` and `<strong>`) is supported
 4. **Fourth column**: SVG code or images for illustrations
 
 ## Slide Layout
@@ -57,12 +62,44 @@ Each slide follows a consistent layout:
 
 2. **Content Area** (40% width)
    - Introduction text (if provided)
-   - Bullet points
+   - Bullet points with optimized spacing
+   - Plain text with preserved formatting
    - Sub-bullet points (if used)
 
 3. **Illustration Area** (60% width)
    - SVG illustrations or images
    - Automatically sized to fit
+
+## Content Formatting
+
+### Bullet Points and Text
+
+The third column supports both bullet points and plain text:
+
+1. **Bullet Points**
+   - Use document's list formatting
+   - Optimized spacing between items
+   - Consistent bullet styling
+   - Supports sub-bullets
+
+2. **Plain Text**
+   - No bullet styling
+   - Preserves line breaks
+   - Supports HTML formatting
+   - Can be mixed with bullet points
+
+3. **Mixed Content**
+   - Bullet points and plain text can be used together
+   - Maintains original content order
+   - Preserves all formatting and spacing
+
+### HTML Support
+
+The following HTML elements are supported in the content:
+- `<code>` - Monospace text
+- `<strong>` - Bold text
+- `<br>` - Line breaks
+- Other HTML formatting elements
 
 ## Special Slides
 
@@ -94,7 +131,7 @@ This block follows these important EDS development principles:
 4. Each subsequent row represents a slide:
    - Title (required)
    - Introduction text (optional)
-   - Bullet points (use document's list formatting)
+   - Bullet points and plain text (use document's list formatting for bullets)
    - SVG content or image (optional)
 
 ## Advanced Features
