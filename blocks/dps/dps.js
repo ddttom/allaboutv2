@@ -167,14 +167,14 @@ function parseBulletPoints(cell) {
 
   const bulletPoints = [];
   const listItems = cell.querySelectorAll("li");
-  const textContent = cell.textContent.trim();
+  const textContent = cell.innerHTML.trim();
 
   if (!textContent) return [];
 
   // Create a map of list item text to their content
   const listItemMap = new Map();
   Array.from(listItems).forEach((li) => {
-    const text = li.textContent.trim();
+    const text = li.innerHTML.trim();
     if (text) {
       listItemMap.set(text, {
         text: text,
@@ -183,24 +183,64 @@ function parseBulletPoints(cell) {
     }
   });
 
-  // Split the text by newlines and process in order
-  const lines = textContent.split(/\n|\r\n/).filter(line => line.trim());
-  
-  lines.forEach(line => {
-    const trimmedLine = line.trim();
-    if (!trimmedLine) return;
+  // Create a temporary div to parse the HTML content
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = textContent;
 
-    // Check if this line matches a list item
-    if (listItemMap.has(trimmedLine)) {
-      // This is a list item, add it as a bullet point
-      bulletPoints.push(listItemMap.get(trimmedLine));
-    } else {
-      // This is plain text, add it as plain text
-      bulletPoints.push({
-        text: trimmedLine,
-        subPoints: [],
-        isPlainText: true
-      });
+  // Process each child node in order
+  Array.from(tempDiv.childNodes).forEach(node => {
+    if (node.nodeType === Node.TEXT_NODE) {
+      // Handle text nodes
+      const text = node.textContent.trim();
+      if (text) {
+        // Split text by newlines and process each line
+        const lines = text.split(/\n|\r\n/).filter(line => line.trim());
+        lines.forEach(line => {
+          const trimmedLine = line.trim();
+          if (!trimmedLine) return;
+
+          // Check if this line matches a list item
+          if (listItemMap.has(trimmedLine)) {
+            bulletPoints.push(listItemMap.get(trimmedLine));
+          } else {
+            bulletPoints.push({
+              text: trimmedLine,
+              subPoints: [],
+              isPlainText: true
+            });
+          }
+        });
+      }
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      // Handle HTML elements
+      if (node.tagName === 'LI') {
+        const text = node.innerHTML.trim();
+        if (text) {
+          bulletPoints.push({
+            text: text,
+            subPoints: [],
+          });
+        }
+      } else if (node.tagName === 'BR') {
+        // Handle line breaks explicitly
+        bulletPoints.push({
+          text: '<br>',
+          subPoints: [],
+          isPlainText: true,
+          isHTML: true
+        });
+      } else {
+        // For other elements (like <p>, <code>, <strong>), preserve their HTML
+        const text = node.outerHTML.trim();
+        if (text) {
+          bulletPoints.push({
+            text: text,
+            subPoints: [],
+            isPlainText: true,
+            isHTML: true
+          });
+        }
+      }
     }
   });
 
@@ -313,8 +353,18 @@ function buildSlides(slides, container) {
         slideContent += '<ul class="bullet-list">';
         slide.bulletPoints.forEach((point) => {
           if (point.isPlainText) {
-            // For plain text, render without bullet styling
-            slideContent += `<li class="plain-text">${point.text}</li>`;
+            // For plain text or HTML content, render without bullet styling
+            if (point.isHTML) {
+              // For HTML content, render the HTML directly
+              if (point.text === '<br>') {
+                slideContent += '<br>';
+              } else {
+                slideContent += `<li class="plain-text">${point.text}</li>`;
+              }
+            } else {
+              // For plain text, render as text
+              slideContent += `<li class="plain-text">${point.text}</li>`;
+            }
           } else {
             // For bullet points, render with bullet styling
             slideContent += `<li>${point.text}`;
