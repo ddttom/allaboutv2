@@ -1,0 +1,32 @@
+<svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Timeline -->
+    <line x1="50" y1="100" x2="350" y2="100" stroke="#3498db" stroke-width="3" />
+
+    <!-- Cutoff date marker -->
+    <line x1="200" y1="70" x2="200" y2="130" stroke="#e74c3c" stroke-width="2"
+        stroke-dasharray="4 2" />
+    <circle cx="200" cy="100" r="10" fill="#e74c3c" />
+    <text x="200" y="150" text-anchor="middle" fill="#e74c3c" font-size="14">CUTOFF</text>
+
+    <!-- Time periods -->
+    <rect x="50" y="80" width="150" height="20" rx="2" fill="#3498db" opacity="0.7" />
+    <text x="125" y="95" text-anchor="middle" fill="white" font-size="12">KNOWN</text>
+
+    <rect x="200" y="80" width="150" height="20" rx="2" fill="#95a5a6" opacity="0.7" />
+    <text x="275" y="95" text-anchor="middle" fill="white" font-size="12">UNKNOWN</text>
+
+    <!-- Value conflicts -->
+    <circle cx="90" cy="40" r="25" fill="#e74c3c" opacity="0.6" />
+    <text x="90" y="44" text-anchor="middle" fill="white" font-size="6">ACCURACY</text>
+
+    <circle cx="200" cy="40" r="25" fill="#f39c12" opacity="0.6" />
+    <text x="200" y="44" text-anchor="middle" fill="white" font-size="6">SAFETY</text>
+
+    <circle cx="310" cy="40" r="25" fill="#2ecc71" opacity="0.6" />
+    <text x="310" y="44" text-anchor="middle" fill="white" font-size="6">HELPFULNESS</text>
+
+    <!-- Connecting lines showing tension -->
+    <path d="M110 40 L180 40" stroke="#34495e" stroke-width="1" stroke-dasharray="2 2" />
+    <path d="M220 40 L290 40" stroke="#34495e" stroke-width="1" stroke-dasharray="2 2" />
+    <path d="M90 60 L310 60" stroke="#34495e" stroke-width="1" stroke-dasharray="2 2" />
+</svg>

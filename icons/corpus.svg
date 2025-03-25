@@ -1,0 +1,50 @@
+<svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Arrow marker definition -->
+    <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6"
+            orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#3498db" />
+        </marker>
+    </defs>
+
+    <!-- Data sources flowing into funnel -->
+    <rect x="20" y="20" width="60" height="30" rx="5" fill="#3498db" opacity="0.7" />
+    <text x="50" y="40" text-anchor="middle" fill="white" font-size="10">BOOKS</text>
+
+    <rect x="90" y="10" width="60" height="30" rx="5" fill="#e74c3c" opacity="0.7" />
+    <text x="120" y="30" text-anchor="middle" fill="white" font-size="10">WEBSITES</text>
+
+    <rect x="160" y="20" width="60" height="30" rx="5" fill="#2ecc71" opacity="0.7" />
+    <text x="190" y="40" text-anchor="middle" fill="white" font-size="10">PAPERS</text>
+
+    <rect x="230" y="10" width="60" height="30" rx="5" fill="#f39c12" opacity="0.7" />
+    <text x="260" y="30" text-anchor="middle" fill="white" font-size="10">FORUMS</text>
+
+    <!-- New inputs -->
+    <rect x="300" y="20" width="80" height="30" rx="5" fill="#9b59b6" opacity="0.7" />
+    <text x="340" y="40" text-anchor="middle" fill="white" font-size="10">GEOGRAPHY</text>
+
+    <rect x="160" y="60" width="80" height="30" rx="5" fill="#16a085" opacity="0.7" />
+    <text x="200" y="80" text-anchor="middle" fill="white" font-size="10">RELIGIOUS TEXT</text>
+
+    <!-- Funnel shape -->
+    <path d="M100 100 L330 100 L290 140 L140 140 Z" fill="#BBDEFB" stroke="#3498db" stroke-width="2" />
+    <text x="215" y="125" text-anchor="middle" fill="#2c3e50" font-size="14" font-weight="bold">TEXT
+        ENCODING</text>
+    <path d="M140 140 L290 140 L250 170 L180 170 Z" fill="#90CAF9" stroke="#3498db" stroke-width="2" />
+    <text x="215" y="160" text-anchor="middle" fill="white" font-size="14" font-weight="bold">
+        TRAINING</text>
+
+    <!-- Arrows pointing to funnel -->
+    <path d="M50 50 L100 100" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+    <path d="M120 40 L160 100" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+    <path d="M190 50 L190 100" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+    <path d="M260 40 L270 100" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />
+    <path d="M340 50 L310 100" stroke="#9b59b6" stroke-width="1" marker-end="url(#arrow)" />
+    <path d="M200 90 L210 100" stroke="#16a085" stroke-width="1" marker-end="url(#arrow)" />
+
+    <!-- AI model at bottom -->
+    <circle cx="215" cy="185" r="12" fill="#3498db" />
+    <text x="215" y="190" text-anchor="middle" fill="white" font-size="12">AI</text>
+    <path d="M215 170 L215 173" stroke="#3498db" stroke-width="2" marker-end="url(#arrow)" />
+</svg>
