@@ -167,35 +167,41 @@ function parseBulletPoints(cell) {
 
   const bulletPoints = [];
 
-  // Find all list items, regardless of structure
+  // First, handle any list items
   const listItems = cell.querySelectorAll("li");
-
   if (listItems.length > 0) {
-    // Process each list item as a bullet point
     Array.from(listItems).forEach((li) => {
       const text = li.textContent.trim();
-
       if (text) {
-        // Create a bullet point from this list item
-        const bulletPoint = {
+        bulletPoints.push({
           text: text,
           subPoints: [],
-        };
-
-        bulletPoints.push(bulletPoint);
+        });
       }
     });
-  } else {
-    // No lists found, treat as regular text
-    const textContent = cell.textContent.trim();
-    if (textContent) {
-      // Create a single text point without bullets, preserving line breaks
-      bulletPoints.push({
-        text: textContent.replace(/\n/g, '<br>'),
-        subPoints: [],
-        isPlainText: true // Flag to indicate this is plain text, not a bullet point
-      });
-    }
+  }
+
+  // Then, handle any plain text content
+  const textContent = cell.textContent.trim();
+  if (textContent) {
+    // Split the text by newlines and filter out empty lines
+    const lines = textContent.split(/\n|\r\n/).filter(line => line.trim());
+    
+    lines.forEach(line => {
+      // Skip if this line is part of a list item (already handled)
+      if (listItems.length > 0 && Array.from(listItems).some(li => li.textContent.trim() === line.trim())) {
+        return;
+      }
+      
+      // Add non-empty lines as plain text
+      if (line.trim()) {
+        bulletPoints.push({
+          text: line.trim(),
+          subPoints: [],
+          isPlainText: true
+        });
+      }
+    });
   }
 
   return bulletPoints;
@@ -307,7 +313,7 @@ function buildSlides(slides, container) {
         slideContent += '<ul class="bullet-list">';
         slide.bulletPoints.forEach((point) => {
           if (point.isPlainText) {
-            // For plain text, render without bullet styling and preserve line breaks
+            // For plain text, render without bullet styling
             slideContent += `<li class="plain-text">${point.text}</li>`;
           } else {
             // For bullet points, render with bullet styling
