@@ -231,20 +231,23 @@ html, body {
 /* Bullet lists */
 .bullet-list {
     list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 .bullet-list li {
     position: relative;
     padding-left: 25px;
     font-size: 20px;
-    line-height: 1.4;
+    line-height: 1.2;
+    margin-bottom: 8px;
 }
 
 .bullet-list li:before {
     content: "";
     position: absolute;
     left: 0;
-    top: 10px;
+    top: 8px;
     width: 10px;
     height: 10px;
     background-color: #3498db;
@@ -255,8 +258,9 @@ html, body {
 .bullet-list li.plain-text {
     padding-left: 0;
     list-style: none;
-    white-space: pre-line; /* Preserve line breaks */
-    line-height: 1.6; /* Improve readability of line breaks */
+    white-space: pre-line;
+    line-height: 1.4;
+    margin-bottom: 8px;
 }
 
 .bullet-list li.plain-text:before {
@@ -265,21 +269,23 @@ html, body {
 
 .sub-bullet-list {
     list-style-type: none;
-    margin: 10px 0 20px 35px;
+    margin: 4px 0 8px 35px;
+    padding: 0;
 }
 
 .sub-bullet-list li {
     position: relative;
     padding-left: 25px;
     font-size: 18px;
-    line-height: 1.4;
+    line-height: 1.2;
+    margin-bottom: 6px;
 }
 
 .sub-bullet-list li:before {
     content: "";
     position: absolute;
     left: 0;
-    top: 10px;
+    top: 8px;
     width: 8px;
     height: 8px;
     background-color: #95a5a6;
