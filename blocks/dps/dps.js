@@ -166,43 +166,43 @@ function parseBulletPoints(cell) {
   if (!cell) return [];
 
   const bulletPoints = [];
-
-  // First, handle any list items
   const listItems = cell.querySelectorAll("li");
-  if (listItems.length > 0) {
-    Array.from(listItems).forEach((li) => {
-      const text = li.textContent.trim();
-      if (text) {
-        bulletPoints.push({
-          text: text,
-          subPoints: [],
-        });
-      }
-    });
-  }
-
-  // Then, handle any plain text content
   const textContent = cell.textContent.trim();
-  if (textContent) {
-    // Split the text by newlines and filter out empty lines
-    const lines = textContent.split(/\n|\r\n/).filter(line => line.trim());
-    
-    lines.forEach(line => {
-      // Skip if this line is part of a list item (already handled)
-      if (listItems.length > 0 && Array.from(listItems).some(li => li.textContent.trim() === line.trim())) {
-        return;
-      }
-      
-      // Add non-empty lines as plain text
-      if (line.trim()) {
-        bulletPoints.push({
-          text: line.trim(),
-          subPoints: [],
-          isPlainText: true
-        });
-      }
-    });
-  }
+
+  if (!textContent) return [];
+
+  // Create a map of list item text to their content
+  const listItemMap = new Map();
+  Array.from(listItems).forEach((li) => {
+    const text = li.textContent.trim();
+    if (text) {
+      listItemMap.set(text, {
+        text: text,
+        subPoints: [],
+      });
+    }
+  });
+
+  // Split the text by newlines and process in order
+  const lines = textContent.split(/\n|\r\n/).filter(line => line.trim());
+  
+  lines.forEach(line => {
+    const trimmedLine = line.trim();
+    if (!trimmedLine) return;
+
+    // Check if this line matches a list item
+    if (listItemMap.has(trimmedLine)) {
+      // This is a list item, add it as a bullet point
+      bulletPoints.push(listItemMap.get(trimmedLine));
+    } else {
+      // This is plain text, add it as plain text
+      bulletPoints.push({
+        text: trimmedLine,
+        subPoints: [],
+        isPlainText: true
+      });
+    }
+  });
 
   return bulletPoints;
 }
