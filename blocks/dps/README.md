@@ -1,153 +1,163 @@
 # Dynamic Presentation System (DPS) Block
 
-This block transforms a structured table from a Google Doc into an interactive slideshow presentation. It's perfect for creating slide decks directly in a Franklin project without requiring external presentation software.
+A block for creating interactive presentations directly within AEM/Franklin pages, with automatic fullscreen mode and consistent slide styling.
 
 ## Overview
 
-The Dynamic Presentation System (DPS) Block provides:
-
-- A complete slideshow presentation system
-- Timer functionality for timed presentations
-- Navigation controls
-- Fullscreen mode
-- Support for bullet points, sub-bullets, and illustrations
-- Automatic Q&A slide generation
-
-## Usage
-
-### Document Structure
-
-Create a table in your Google Doc with the following format:
-
-1. **First row (header)**: 
-   - First cell should contain "DPS" (this identifies the table as a DPS block)
-
-2. **Second row (configuration)**:
-   - Cell 1: Presentation Title
-   - Cell 2: Presentation Subtitle (optional)
-   - Cell 3: Timer Duration in minutes (default: 25)
-
-3. **Subsequent rows (slides)**:
-   - Cell 1: Slide Title
-   - Cell 2: Intro Text (optional)
-   - Cell 3: Bullet Points (use list formatting to create bullets)
-   - Cell 4: Illustration (insert image or SVG)
-
-### Example Table Structure
-
-| DPS              |                    |                                                            |            |
-| ---------------- | ------------------ | ---------------------------------------------------------- | ---------- |
-| Understanding AI | How it works       | 25                                                         |            |
-| ---------------- | ------------------ | ---------------------------------------------------------- | ---------- |
-| Introduction     | AI basics overview | • First point<br>• Second point<br>• Third point           | [Image]    |
-| ---------------- | ------------------ | ---------------------------------------------------------- | ---------- |
-| Data Processing  | How AI learns      | • Training data<br>• Machine learning<br>• Neural networks | [SVG code] |
-
-### SVG Example
-
-For the Data Processing slide, you could include this SVG in cell 4:
-
-```
-<svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <marker id="arrowMarker" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#34495e" />
-    </marker>
-  </defs>
-  <!-- Brain shape -->
-  <path d="M200 50 Q240 45, 260 65 Q280 85, 260 110 Q240 130, 200 125 Q160 130, 140 110 Q120 85, 140 65 Q160 45, 200 50" 
-        fill="#BBDEFB" stroke="#3498db" stroke-width="2" />
-  <!-- Data input arrow -->
-  <path d="M200 20 L200 45" stroke="#3498db" stroke-width="2" marker-end="url(#arrowMarker)" />
-  <text x="200" y="15" text-anchor="middle" fill="#34495e" font-size="10">INPUT DATA</text>
-  <!-- Processing nodes -->
-  <circle cx="180" cy="80" r="10" fill="#3498db" opacity="0.7" />
-  <circle cx="220" cy="90" r="10" fill="#3498db" opacity="0.7" />
-  <circle cx="190" cy="110" r="10" fill="#3498db" opacity="0.7" />
-  <!-- Connections -->
-  <path d="M180 80 L220 90" stroke="#34495e" stroke-width="1" />
-  <path d="M220 90 L190 110" stroke="#34495e" stroke-width="1" />
-  <path d="M180 80 L190 110" stroke="#34495e" stroke-width="1" />
-  <!-- Output path -->
-  <path d="M200 125 L200 150" stroke="#3498db" stroke-width="2" marker-end="url(#arrowMarker)" />
-  <text x="200" y="170" text-anchor="middle" fill="#34495e" font-size="10">OUTPUT PREDICTION</text>
-</svg>
-```
-
-### Bullet Points and Sub-bullets
-
-Format bullet points in Cell 3 of each slide row:
-
-- Use Franklin's list formatting to create bullet points
-- Indent text to create sub-bullets
-- Each bullet point can have multiple sub-bullets
-
-For example:
-
-* Main point 1
-  * Sub-point 1.1
-  * Sub-point 1.2
-* Main point 2
-  * Sub-point 2.1
-
-### Illustrations
-
-Add illustrations in Cell 4 of each slide row:
-
-- **Images**: Simply insert an image in the cell
-- **SVGs**: Insert SVG code directly into the cell as text
+The DPS block transforms a structured table from a Google Doc into a full-screen, interactive slideshow presentation. It adheres to Edge Delivery Services (EDS) best practices with proper namespacing and container usage.
 
 ## Features
 
-### Timer
+- Automatic full-screen mode on startup
+- Consistent slide layout with 40/60 split for content and illustrations
+- Navigation controls with Previous/Next buttons
+- Configurable countdown timer with visual warnings
+- Keyboard navigation support
+- Support for bullet points and sub-bullet points
+- SVG and image illustration support
+- Responsive design for all screen sizes
+- Print-optimized layout
+- Q&A slide automatically added at the end
 
-The presentation includes a built-in timer:
+## Implementation
 
-- Set the duration in minutes in the configuration row
-- Start/stop the timer using the timer button
-- Visual warning flashes when 2 minutes remain
+### Files
+
+- `dps.js` - JavaScript implementation
+- `dps.css` - CSS styling
+- `README.md` - Documentation (this file)
+
+### Content Structure
+
+Content authors should structure their content as follows:
+
+```
+| DPS                |                       |            |           |
+| ------------------ | --------------------- | ---------- | --------- |
+| Presentation Title | Presentation Subtitle | 25 (timer) |           |
+| Slide 1 Title      | Slide 1 Introduction  | Bullets    | SVG/Image |
+| Slide 2 Title      | Slide 2 Introduction  | Bullets    | SVG/Image |
+| ...                | ...                   | ...        | ...       |
+```
+
+#### Column Definitions
+
+1. **First column**: Slide titles
+2. **Second column**: Slide introduction text or subtitle
+3. **Third column**: Bullet points (using document list formatting)
+4. **Fourth column**: SVG code or images for illustrations
+
+## Slide Layout
+
+Each slide follows a consistent layout:
+
+1. **Title Area** (Full width)
+   - Large title with bottom border
+   - Optional subtitle or introduction text
+
+2. **Content Area** (40% width)
+   - Introduction text (if provided)
+   - Bullet points
+   - Sub-bullet points (if used)
+
+3. **Illustration Area** (60% width)
+   - SVG illustrations or images
+   - Automatically sized to fit
+
+## Special Slides
+
+### Q&A Slide
+- Automatically added as the last slide
+- Includes:
+  - "Questions & Answers" title
+  - "Your feedback and questions are valuable" subtitle
+  - Centered question mark icon
+  - "Thank You For Your Attention" message
+
+## EDS Best Practices
+
+This block follows these important EDS development principles:
+
+1. **Proper Namespacing**: All class names follow the pattern `blockname-feature-state`
+2. **No Container Styling**: Container elements have no styles applied
+3. **Semantic Structure**: Uses appropriate semantic elements
+4. **Consistent Layout**: Maintains consistent spacing and alignment
+
+## Usage Guide for Authors
+
+1. Create a table in your Google Doc
+2. First cell must contain "DPS"
+3. Second row contains configuration:
+   - Presentation title
+   - Subtitle
+   - Timer duration in minutes (default: 25)
+4. Each subsequent row represents a slide:
+   - Title (required)
+   - Introduction text (optional)
+   - Bullet points (use document's list formatting)
+   - SVG content or image (optional)
+
+## Advanced Features
+
+### SVG Support
+
+Authors can include SVG code directly in the fourth column. Example:
+
+```svg
+<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="200" cy="100" rx="150" ry="80" fill="#BBDEFB" stroke="#3498db" stroke-width="2"/>
+  <text x="200" y="105" font-size="24" text-anchor="middle">Sample SVG</text>
+</svg>
+```
+
+### Timer Functionality
+
+- Timer starts at the configured duration (default: 25 minutes)
+- Can be started/stopped with the timer button
+- Visual warning (red flash) when 2 minutes remain
+- Timer display in MM:SS format
+- Timer state persists during slide navigation
 
 ### Navigation
 
-Navigate through slides using:
-
+#### Controls
 - Previous/Next buttons
-- Left/Right arrow keys
-- Pagination display shows current slide position
+- Current slide indicator
+- Timer control button
+- Fullscreen toggle
 
-### Fullscreen Mode
+#### Keyboard Shortcuts
+- Left Arrow: Previous slide
+- Right Arrow: Next slide
+- Escape: Toggle navigation bar visibility or exit fullscreen
 
-Toggle fullscreen mode using:
+### Responsive Design
 
-- The fullscreen button in the top-right corner
-- ESC key to exit fullscreen mode
+- Adapts to all screen sizes
+- Mobile-optimized layout
+- Maintains readability on small screens
+- Adjusts illustration sizes automatically
+
+### Print Mode
+
+- Optimized for handouts
+- Each slide on a separate page
+- Clean layout without navigation elements
+- Preserves all content and illustrations
+
+## Compatibility
+
+- Works in all modern browsers
+- Follows WCAG accessibility guidelines
+- Supports high-DPI displays
+- Touch-friendly interface
 
 ## Styling
 
-The DPS block comes with comprehensive styling that includes:
+The block uses a consistent color scheme:
+- Primary Blue: #3498db
+- Dark Blue: #2c3e50
+- Light Gray: #ecf0f1
+- Warning Red: #e74c3c
 
-- Responsive design that works on different screen sizes
-- Professional slide layouts
-- Consistent typography
-- Bullet and sub-bullet formatting
-- Print styling for handouts
-
-## Technical Notes
-
-- A Q&A slide is automatically added as the final slide
-- The block handles different input formats for bullet points
-- The presentation system works without external dependencies
-
-## Limitations
-
-- Complex animations are not supported
-- Custom slide layouts beyond the default format are not currently supported
-- Video content is not directly supported (use images instead)
-
-## Browser Compatibility
-
-The DPS block works in all modern browsers:
-
-- Chrome, Firefox, Safari, Edge (latest versions)
-- Print support for creating handouts
- 
+All colors and spacing can be customized through CSS variables.

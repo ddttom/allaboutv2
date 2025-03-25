@@ -1,10 +1,32 @@
 /* DPS Block CSS */
 
-/* Hide header when DPS block is present */
-.dps-wrapper ~ header,
-header:has(+ .dps-container),
-header:has(~ .dps-container) {
-    display: none;
+/* Override section padding for DPS block */
+main .section {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+main .section > div {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+}
+
+main .section > div > .dps {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Comprehensive reset for DPS block */
+.dps * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 /* Reset styles */
@@ -12,20 +34,20 @@ html, body {
     margin: 0;
     padding: 0;
     width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
 /* Block wrapper styling - primary styling container */
 .dps-wrapper {
-    width: auto;
-    max-width: 100%;
+    width: 100%;
     height: 100vh;
-    margin: 0 20px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     background-color: #fff;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    box-shadow: none;
     position: relative;
 }
 
@@ -45,8 +67,8 @@ html, body {
 .slide-content,
 .footer-content {
     width: 100%;
-    margin: 0;
-    padding: 0 20px;
+    padding: 0 10px;
+    max-width: 100%;
 }
 
 /* Header styling */
@@ -60,13 +82,11 @@ html, body {
 
 .dps-header h1 {
     font-size: 24px;
-    margin-bottom: 5px;
 }
 
 .dps-header p {
     font-size: 14px;
     opacity: 0.9;
-    margin-bottom: 10px;
 }
 
 /* Navigation styling */
@@ -126,49 +146,59 @@ html, body {
 .slides-container {
     flex: 1;
     width: 100%;
+    max-width: 100%;
     overflow-y: auto;
     background-color: #fff;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* Allow container to shrink */
 }
 
 /* Slide styling */
 .slide {
     width: 100%;
-    height: 100%;
-    padding: 20px 0;
+    max-width: 100%;
+    flex: 1;
     display: none;
+    padding: 0;
+    min-height: 0;
 }
 
 .slide.active {
-    display: block;
-}
-
-/* Slide title */
-.slide-title {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #2c3e50;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #3498db;
-    height: 44px;
     display: flex;
-    align-items: center;
+    flex-direction: column;
 }
 
 /* Slide content layout */
 .slide-content {
-    display: flex;
-    flex-direction: column;
-    height: calc(100% - 44px);
-    /* Subtract slide title height */
+    display: grid;
+    grid-template-areas: 
+        "title title"
+        "text illustration";
+    grid-template-columns: 40% 60%;
+    grid-template-rows: auto 1fr;
     gap: 20px;
-    justify-content: flex-start;
-    margin-top: 10px;
+    padding: 20px;
+    padding-bottom: 80px; /* Increased padding to prevent content from being hidden behind fixed footer */
+    height: 100%;
+    min-height: 0;
+}
+
+/* Slide title */
+.slide-title {
+    grid-area: title;
+    font-size: 28px;
+    color: #2c3e50;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #3498db;
+    width: 100%;
 }
 
 /* Text content area */
 .slide-content-text {
-    flex: 0 0 auto;
+    grid-area: text;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -177,11 +207,11 @@ html, body {
 
 /* Illustration area */
 .illustration {
-    flex: 1;
+    grid-area: illustration;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    margin-top: 20px;
+    overflow: hidden;
 }
 
 .illustration img {
@@ -194,26 +224,18 @@ html, body {
 .illustration svg {
     width: 100%;
     height: auto;
-    max-width: none;
-}
-
-/* Paragraph styling */
-.slide-content>p {
-    flex: 0 0 30%;
-    margin-bottom: 20px;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 /* Bullet lists */
 .bullet-list {
     list-style-type: none;
-    margin-left: 10px;
-    margin-bottom: 20px;
 }
 
 .bullet-list li {
     position: relative;
     padding-left: 25px;
-    margin-bottom: 15px;
     font-size: 20px;
     line-height: 1.4;
 }
@@ -237,7 +259,6 @@ html, body {
 .sub-bullet-list li {
     position: relative;
     padding-left: 25px;
-    margin-bottom: 12px;
     font-size: 18px;
     line-height: 1.4;
 }
@@ -256,14 +277,19 @@ html, body {
 /* Footer styling */
 .dps-footer {
     width: 100%;
-    padding: 15px 0;
+    padding: 10px 0;
     background-color: #ecf0f1;
     border-top: 1px solid #ddd;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
 }
 
 .footer-content {
     display: flex;
     justify-content: space-between;
+    padding: 0 20px;
 }
 
 /* Timer styling */
@@ -280,11 +306,18 @@ html, body {
 }
 
 /* Q&A slide */
+.qanda-slide,
+.slide-header {
+    display: none;
+}
+
+/* Q&A slide */
 .qanda-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 40px;
     height: 100%;
 }
 
@@ -298,20 +331,19 @@ html, body {
     justify-content: center;
     align-items: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    margin-bottom: 20px;
+    margin: 0 auto;
 }
 
-/* Make sure SVGs in the document that aren't part of a slide don't show */
-.dps-wrapper>svg {
-    display: none;
+.thank-you-text {
+    font-size: 24px;
+    color: #2c3e50;
+    text-align: center;
+    font-weight: 500;
+    margin-top: 20px;
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
-    .slides-container {
-        padding: 10px;
-    }
-
     .header-content,
     .navigation-content,
     .slide-content,
@@ -327,13 +359,23 @@ html, body {
         font-size: 14px;
     }
 
-    .illustration {
-        margin-top: 10px;
-    }
-
     .qanda-circle {
         width: 180px;
         height: 180px;
+    }
+
+    .slide-content {
+        flex-direction: column;
+    }
+
+    .slide-content-text,
+    .illustration {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+
+    .thank-you-text {
+        font-size: 20px;
     }
 }
 
@@ -341,13 +383,10 @@ html, body {
 .dps-fullscreen .dps-wrapper {
     position: fixed;
     top: 0;
-    left: 20px;
-    right: 20px;
     bottom: 0;
     z-index: 9999;
     height: 100vh;
-    width: auto;
-    margin: 0;
+    width: 100%;
 }
 
 /* Button to toggle fullscreen */

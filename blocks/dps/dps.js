@@ -100,6 +100,11 @@ export default function decorate(block) {
 
   // Set up fullscreen toggle
   setupFullscreenToggle(fullscreenBtn, block);
+
+  // Trigger fullscreen mode on startup
+  setTimeout(() => {
+    fullscreenBtn.click();
+  }, 100);
 }
 
 /**
@@ -139,6 +144,8 @@ function parseRows(rows) {
   // Always add a Q&A slide at the end
   presentationData.slides.push({
     type: "qanda",
+    title: "Questions & Answers",
+    subtitle: "Your feedback and questions are valuable",
     thankYouText: "Thank You For Your Attention",
   });
 
@@ -273,17 +280,21 @@ function buildSlides(slides, container) {
     // Special handling for Q&A slides
     if (slide.type === "qanda") {
       slideElement.innerHTML = `
-        <div class="qanda-content">
-          <div class="qanda-circle">
-            <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" width="200" height="200">
-              <circle cx="100" cy="100" r="90" fill="#3498db" stroke="white" stroke-width="4" />
-              <text x="100" y="95" text-anchor="middle" fill="white" font-size="70" font-weight="bold">?</text>
-              <text x="100" y="130" text-anchor="middle" fill="white" font-size="18" font-weight="bold">QUESTIONS</text>
-            </svg>
+        <div class="slide-content">
+          <h2 class="slide-title">${slide.title}</h2>
+          <div class="slide-content-text">
+            <p class="slide-subtitle">${slide.subtitle}</p>
           </div>
-          <p style="font-size: 24px; color: #2c3e50;">${
-            slide.thankYouText || "Thank You"
-          }</p>
+          <div class="illustration qanda-content">
+            <div class="qanda-circle">
+              <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+                <circle cx="100" cy="100" r="90" fill="#3498db" stroke="white" stroke-width="4" />
+                <text x="100" y="95" text-anchor="middle" fill="white" font-size="70" font-weight="bold">?</text>
+                <text x="100" y="130" text-anchor="middle" fill="white" font-size="18" font-weight="bold">QUESTIONS</text>
+              </svg>
+            </div>
+            <p class="thank-you-text">${slide.thankYouText || "Thank You"}</p>
+          </div>
         </div>
       `;
     } else {
