@@ -255,6 +255,8 @@ html, body {
 .bullet-list li.plain-text {
     padding-left: 0;
     list-style: none;
+    white-space: pre-line; /* Preserve line breaks */
+    line-height: 1.6; /* Improve readability of line breaks */
 }
 
 .bullet-list li.plain-text:before {

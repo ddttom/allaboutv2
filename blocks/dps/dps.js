@@ -189,9 +189,9 @@ function parseBulletPoints(cell) {
     // No lists found, treat as regular text
     const textContent = cell.textContent.trim();
     if (textContent) {
-      // Create a single text point without bullets
+      // Create a single text point without bullets, preserving line breaks
       bulletPoints.push({
-        text: textContent,
+        text: textContent.replace(/\n/g, '<br>'),
         subPoints: [],
         isPlainText: true // Flag to indicate this is plain text, not a bullet point
       });
@@ -307,7 +307,7 @@ function buildSlides(slides, container) {
         slideContent += '<ul class="bullet-list">';
         slide.bulletPoints.forEach((point) => {
           if (point.isPlainText) {
-            // For plain text, render without bullet styling
+            // For plain text, render without bullet styling and preserve line breaks
             slideContent += `<li class="plain-text">${point.text}</li>`;
           } else {
             // For bullet points, render with bullet styling
