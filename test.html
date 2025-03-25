@@ -94,9 +94,9 @@
                         <p>Each token maps to a compact vector in high-dimensional space:</p>
                         <p>Example (simplified to 3 dimensions for illustration):</p>
                         <ul>
-                            <li>"the" → [0.123, -0.456, 0.789]</li>
-                            <li>"fat" → [0.234, 0.567, -0.345]</li>
-                            <li>"cat" → [-0.678, 0.123, 0.456]</li>
+                            <li><code>"the" → [0.123, -0.456, 0.789]</code></li>
+                            <li><code>"fat" → [0.234, 0.567, -0.345]</code></li>
+                            <li><code>"cat" → [-0.678, 0.123, 0.456]</code></li>
                         </ul>
                         <p>Real embeddings use 300-768+ dimensions. These vectors capture semantic relationships</p>
                         <p>Similar words have vectors pointing in similar directions</p>
@@ -107,10 +107,8 @@
                     <div>A Practical Example: Tokenizing a Sentence</div>
                     <div>Let's examine how AI tokenizes a familiar sentence</div>
                     <div>
-                        <p><strong>Step 1:</strong> Split into tokens (some words may be divided) "In", "the", "begin",
-                            "ning", "God", "created", "the", "heavens", "and", "the", "earth"</p>
-                        <p><strong>Step 2:</strong> Convert to token IDs [5, 12, 47, 48, 105, 203, 12, 31, 89, 12, 56]
-                        </p>
+                        <p><strong>Step 1:</strong> Split into tokens (some words may be divided)</p>
+                        <p><strong>Step 2:</strong> Convert to token IDs</p>
                         <p><strong>Step 3:</strong> Convert to embedding vectors. Each ID maps to a high-dimensional
                             vector</p>
                     </div>
@@ -122,10 +120,12 @@
                     <div>
                         <p>AI predicts the next token based on previous tokens, using a statistical sampling method</p>
                         <p>For each prediction, it calculates probabilities for all tokens</p>
-                        <p>It uses sampling strategies to select the next token: Weighted Tombola: Tokens with higher
-                            probabilities have more "tickets"</p>
-                        <p>Top-K: Only consider K most likely tokens</p>
-                        <p>Top-P: Include enough tokens to reach P% of total probability</p>
+                        <p>It uses sampling strategies to select the next token:</p>
+                        <ul>
+                            <li>Weighted Tombola: Tokens with higher probabilities have more "tickets"</li>
+                            <li>Top-K: Only consider K most likely tokens</li>
+                            <li>Top-P: Include enough tokens to reach P% of total probability</li>
+                        </ul>
                         <p>Text is built token by token through this process</p>
                     </div>
                     <div><span class="icon icon-generates"></span></div>
@@ -153,8 +153,11 @@
                         <p>It recalls that "Shakespeare" frequently appeared near "wrote" and "Romeo and Juliet" in
                             training data</p>
                         <p>Answers are generated token by token</p>
-                        <p>Modern systems use techniques like:<br>Chain-of-thought: Breaking reasoning into steps</p>
-                        <p>Self-critique: Evaluating and revising initial responses</p>
+                        <p>Modern systems use techniques like:</p>
+                        <ul>
+                            <li>Chain-of-thought: Breaking reasoning into steps</li>
+                            <li>Self-critique: Evaluating and revising initial responses</li>
+                        </ul>
                     </div>
                     <div><span class="icon icon-journey"></span></div>
                 </div>
@@ -162,11 +165,11 @@
                     <div>Why Alignment is Never Perfect</div>
                     <div></div>
                     <div>
-                        <p>Distributional Shift: The world changes faster than models update</p>
-                        <p>Knowledge Cutoff: AI has no knowledge beyond training date</p>
-                        <p>Specification Problems: Hard to formalize all human values</p>
-                        <p>Adversarial Examples: Users can craft inputs to circumvent guardrails</p>
-                        <p>Conflicting Values: Balancing accuracy, sensitivity, and helpfulness</p>
+                        <p><strong>Distributional Shift:</strong> The world changes faster than models update</p>
+                        <p><strong>Knowledge Cutoff:</strong> AI has no knowledge beyond training date</p>
+                        <p><strong>Specification Problems:</strong> Hard to formalize all human values</p>
+                        <p><strong>Adversarial Examples</strong>: Users can craft inputs to circumvent guardrails</p>
+                        <p><strong>Conflicting Values:</strong> Balancing accuracy, sensitivity, and helpfulness</p>
                         <p>These issues make ongoing research in AI alignment crucial</p>
                     </div>
                     <div><span class="icon icon-alignment"></span></div>
@@ -180,8 +183,8 @@
                         <p>No internal fact-checking mechanism</p>
                         <p>The Norwegian case example:</p>
                         <ul>
-                            <li>AI recognized query as biographical request about Norwegian nameTokens for "tragic
-                                events" and family details had higher probability</li>
+                            <li>AI recognized query as biographical request about Norwegian name</li>
+                            <li>Tokens for "tragic events" and family details had higher probability</li>
                             <li>AI continued a statistically coherent but fictional narrative, a thing called 'snowball
                                 hallucination'</li>
                             <li>Generated specific details (ages, location, date) to match patterns</li>
@@ -193,23 +196,19 @@
                     <div>AI Image Processing Example</div>
                     <div>Visual representation of AI processing:</div>
                     <div>
-                        <ul>
-                            <li>Neural networks process visual information in layers</li>
-                            <li>Pattern recognition identifies key features</li>
-                            <li>Contextual understanding connects related elements</li>
-                            <li>Output generation creates coherent results</li>
-                            <li>This process mirrors some aspects of human cognition</li>
-                            <li>Hands and Fingers: AI struggles to depict realistic hands, often creating extra fingers,
-                                distorted shapes, or unnatural positions.</li>
-                            <li>Facial Features: Faces can sometimes appear asymmetrical, with misplaced eyes, crooked
-                                smiles, or odd proportions.</li>
-                            <li>Backgrounds: AI may generate inconsistent or illogical backgrounds, blending objects or
-                                creating surreal settings unintentionally.</li>
-                            <li>Lighting and Shadows: Improper lighting or shadow placement can make the image look
-                                unnatural and out of sync.</li>
-                            <li>Text in Images: When generating text as part of an image, AI often produces gibberish or
-                                incomplete characters.</li>
-                        </ul>
+                        <p>Neural networks process visual information in layers<br>Pattern recognition identifies key
+                            features<br>Contextual understanding connects related elements<br>Output generation creates
+                            coherent results<br>However even images can suffer from hallucinations</p>
+                        <p><strong>Hands and Fingers:</strong> AI struggles to depict realistic hands, often creating
+                            extra fingers, distorted shapes, or unnatural positions.</p>
+                        <p><strong>Facial Features:</strong> Faces can sometimes appear asymmetrical, with misplaced
+                            eyes, crooked smiles, or odd proportions.</p>
+                        <p><strong>Backgrounds:</strong> AI may generate inconsistent or illogical backgrounds, blending
+                            objects or creating surreal settings unintentionally.</p>
+                        <p><strong>Lighting and Shadows:</strong> Improper lighting or shadow placement can make the
+                            image look unnatural and out of sync.</p>
+                        <p><strong>Text in Images</strong>: When generating text as part of an image, AI often produces
+                            gibberish or incomplete characters, remember it was fed with Tokens not Text</p>
                     </div>
                     <div><a
                             href="https://allabout.network/blogs/media_167c92e53d349e0436335141172985ec64642876d.png">https://allabout.network/blogs/media_167c92e53d349e0436335141172985ec64642876d.png</a>
