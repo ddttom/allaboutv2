@@ -240,7 +240,7 @@ html, body {
     padding-left: 25px;
     font-size: 20px;
     line-height: 1.2;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 }
 
 .bullet-list li:before {
@@ -260,7 +260,7 @@ html, body {
     list-style: none;
     white-space: pre-line;
     line-height: 1.4;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 }
 
 .bullet-list li.plain-text:before {
@@ -269,7 +269,7 @@ html, body {
 
 .sub-bullet-list {
     list-style-type: none;
-    margin: 4px 0 8px 35px;
+    margin: 2px 0 4px 35px;
     padding: 0;
 }
 
@@ -278,7 +278,7 @@ html, body {
     padding-left: 25px;
     font-size: 18px;
     line-height: 1.2;
-    margin-bottom: 6px;
+    margin-bottom: 3px;
 }
 
 .sub-bullet-list li:before {
