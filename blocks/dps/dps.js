@@ -186,21 +186,14 @@ function parseBulletPoints(cell) {
       }
     });
   } else {
-    // No lists found, check for plain text content
+    // No lists found, treat as regular text
     const textContent = cell.textContent.trim();
     if (textContent) {
-      // Split by new lines and convert to bullet points
-      const lines = textContent.split(/\n|\r\n/);
-
-      lines.forEach((line) => {
-        line = line.trim();
-        if (!line) return;
-
-        // Create a bullet point from each line
-        bulletPoints.push({
-          text: line,
-          subPoints: [],
-        });
+      // Create a single text point without bullets
+      bulletPoints.push({
+        text: textContent,
+        subPoints: [],
+        isPlainText: true // Flag to indicate this is plain text, not a bullet point
       });
     }
   }
@@ -313,18 +306,24 @@ function buildSlides(slides, container) {
       if (slide.bulletPoints && slide.bulletPoints.length > 0) {
         slideContent += '<ul class="bullet-list">';
         slide.bulletPoints.forEach((point) => {
-          slideContent += `<li>${point.text}`;
+          if (point.isPlainText) {
+            // For plain text, render without bullet styling
+            slideContent += `<li class="plain-text">${point.text}</li>`;
+          } else {
+            // For bullet points, render with bullet styling
+            slideContent += `<li>${point.text}`;
 
-          // Add sub-bullets if they exist
-          if (point.subPoints && point.subPoints.length > 0) {
-            slideContent += '<ul class="sub-bullet-list">';
-            point.subPoints.forEach((subPoint) => {
-              slideContent += `<li>${subPoint}</li>`;
-            });
-            slideContent += "</ul>";
+            // Add sub-bullets if they exist
+            if (point.subPoints && point.subPoints.length > 0) {
+              slideContent += '<ul class="sub-bullet-list">';
+              point.subPoints.forEach((subPoint) => {
+                slideContent += `<li>${subPoint}</li>`;
+              });
+              slideContent += "</ul>";
+            }
+
+            slideContent += "</li>";
           }
-
-          slideContent += "</li>";
         });
         slideContent += "</ul>";
       }

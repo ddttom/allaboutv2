@@ -251,6 +251,16 @@ html, body {
     border-radius: 50%;
 }
 
+/* Plain text items in bullet list */
+.bullet-list li.plain-text {
+    padding-left: 0;
+    list-style: none;
+}
+
+.bullet-list li.plain-text:before {
+    display: none;
+}
+
 .sub-bullet-list {
     list-style-type: none;
     margin: 10px 0 20px 35px;
