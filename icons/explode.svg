@@ -22,19 +22,19 @@
 
     <!-- Main AI Circle (with growth animation at the end) -->
     <circle cx="400" cy="300" r="220" fill="#e6f3ff" stroke="#3366cc" stroke-width="3" onclick="resetAnimations()">
-        <animate attributeName="r" from="220" to="220" begin="0s" dur="13s" fill="freeze" repeatCount="indefinite" />
-        <animate attributeName="r" from="220" to="280" begin="13s" dur="2s" fill="freeze" repeatCount="indefinite" />
-        <animate attributeName="fill" from="#e6f3ff" to="#d0e6ff" begin="13s" dur="2s"
+        <animate attributeName="r" from="220" to="220" begin="0s" dur="15s" fill="freeze" repeatCount="indefinite" />
+        <animate attributeName="r" from="220" to="280" begin="15s" dur="2s" fill="freeze" repeatCount="indefinite" />
+        <animate attributeName="fill" from="#e6f3ff" to="#d0e6ff" begin="15s" dur="2s"
             fill="freeze" repeatCount="indefinite" />
-        <animate attributeName="stroke-width" from="3" to="5" begin="13s" dur="2s" fill="freeze" repeatCount="indefinite" />
+        <animate attributeName="stroke-width" from="3" to="5" begin="15s" dur="2s" fill="freeze" repeatCount="indefinite" />
     </circle>
 
     <!-- Center AI Text (with growth animation at the end) -->
     <text x="400" y="300" font-family="Arial, sans-serif" font-size="40" font-weight="bold"
         fill="#3366cc" text-anchor="middle" onclick="resetAnimations()">AI <animate attributeName="font-size" from="40" to="40"
-            begin="0s" dur="13s" fill="freeze" repeatCount="indefinite" />
+            begin="0s" dur="15s" fill="freeze" repeatCount="indefinite" />
     <animate attributeName="font-size" from="40"
-            to="120" begin="13s" dur="2s" fill="freeze" repeatCount="indefinite" />
+            to="120" begin="15s" dur="2s" fill="freeze" repeatCount="indefinite" />
     </text>
 
     <!-- Title removed as requested -->
@@ -54,6 +54,7 @@
             text-anchor="middle">Speech</text>
         <text x="400" y="148" font-family="Arial, sans-serif" font-size="12" fill="#333333"
             text-anchor="middle">Recognition</text>
+        <animate attributeName="opacity" from="1" to="0" begin="17s" dur="0.5s" fill="freeze" repeatCount="indefinite" />
     </g>
 
     <!-- Machine Translation (1-2 o'clock) -->
@@ -63,6 +64,7 @@
             text-anchor="middle">Machine</text>
         <text x="550" y="208" font-family="Arial, sans-serif" font-size="12" fill="#333333"
             text-anchor="middle">Translation</text>
+        <animate attributeName="opacity" from="1" to="0" begin="17s" dur="0.5s" fill="freeze" repeatCount="indefinite" />
     </g>
 
     <!-- Image Recognition (3 o'clock) -->
@@ -72,6 +74,7 @@
             text-anchor="middle">Image</text>
         <text x="570" y="318" font-family="Arial, sans-serif" font-size="12" fill="#333333"
             text-anchor="middle">Recognition</text>
+        <animate attributeName="opacity" from="1" to="0" begin="17s" dur="0.5s" fill="freeze" repeatCount="indefinite" />
     </g>
 
     <!-- Recommendation Engines (5 o'clock) -->
@@ -81,6 +84,7 @@
             text-anchor="middle">Recommendation</text>
         <text x="530" y="423" font-family="Arial, sans-serif" font-size="12" fill="#333333"
             text-anchor="middle">Engines</text>
+        <animate attributeName="opacity" from="1" to="0" begin="17s" dur="0.5s" fill="freeze" repeatCount="indefinite" />
     </g>
 
     <!-- Expert Systems (6 o'clock) -->
@@ -90,6 +94,7 @@
             text-anchor="middle">Expert</text>
         <text x="400" y="488" font-family="Arial, sans-serif" font-size="12" fill="#333333"
             text-anchor="middle">Systems</text>
+        <animate attributeName="opacity" from="1" to="0" begin="17s" dur="0.5s" fill="freeze" repeatCount="indefinite" />
     </g>
 
     <!-- Data Mining Tools (7-8 o'clock) -->
@@ -99,6 +104,7 @@
             text-anchor="middle">Data Mining</text>
         <text x="270" y="423" font-family="Arial, sans-serif" font-size="12" fill="#333333"
             text-anchor="middle">Tools</text>
+        <animate attributeName="opacity" from="1" to="0" begin="17s" dur="0.5s" fill="freeze" repeatCount="indefinite" />
     </g>
 
     <!-- Natural Language Processing (9 o'clock) -->
@@ -108,6 +114,7 @@
             text-anchor="middle">Natural Language</text>
         <text x="230" y="313" font-family="Arial, sans-serif" font-size="11" fill="#333333"
             text-anchor="middle">Processing</text>
+        <animate attributeName="opacity" from="1" to="0" begin="17s" dur="0.5s" fill="freeze" repeatCount="indefinite" />
     </g>
 
     <!-- Sentiment Analysis (10-11 o'clock) -->
@@ -117,66 +124,67 @@
             text-anchor="middle">Sentiment</text>
         <text x="250" y="208" font-family="Arial, sans-serif" font-size="12" fill="#333333"
             text-anchor="middle">Analysis</text>
+        <animate attributeName="opacity" from="1" to="0" begin="17s" dur="0.5s" fill="freeze" repeatCount="indefinite" />
     </g>
 
     <!-- Particle effects to enhance the burst animation -->
     <g opacity="0">
         <circle cx="400" cy="300" r="2" fill="#3366cc">
-            <animate attributeName="opacity" from="0" to="0" begin="0s" dur="13s" fill="freeze" repeatCount="indefinite" />
-            <animate attributeName="opacity" from="0" to="1" begin="13s" dur="0.2s" fill="freeze" repeatCount="indefinite" />
-            <animate attributeName="opacity" from="1" to="0" begin="15s" dur="0.6s" fill="freeze" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="0" to="0" begin="0s" dur="15s" fill="freeze" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="0" to="1" begin="15s" dur="0.2s" fill="freeze" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="1" to="0" begin="17s" dur="0.6s" fill="freeze" repeatCount="indefinite" />
             <animateTransform attributeName="transform" type="translate" from="0 0" to="-100 -100"
-                begin="13s" dur="2s" fill="freeze" repeatCount="indefinite" />
+                begin="15s" dur="2s" fill="freeze" repeatCount="indefinite" />
         </circle>
         <circle cx="400" cy="300" r="2" fill="#3366cc">
-            <animate attributeName="opacity" from="0" to="0" begin="0s" dur="13s" fill="freeze" repeatCount="indefinite" />
-            <animate attributeName="opacity" from="0" to="1" begin="13s" dur="0.2s" fill="freeze" repeatCount="indefinite" />
-            <animate attributeName="opacity" from="1" to="0" begin="15s" dur="0.6s" fill="freeze" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="0" to="0" begin="0s" dur="15s" fill="freeze" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="0" to="1" begin="15s" dur="0.2s" fill="freeze" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="1" to="0" begin="17s" dur="0.6s" fill="freeze" repeatCount="indefinite" />
             <animateTransform attributeName="transform" type="translate" from="0 0" to="100 -100"
-                begin="13s" dur="2s" fill="freeze" repeatCount="indefinite" />
+                begin="15s" dur="2s" fill="freeze" repeatCount="indefinite" />
         </circle>
         <circle cx="400" cy="300" r="2" fill="#3366cc">
-            <animate attributeName="opacity" from="0" to="0" begin="0s" dur="13s" fill="freeze" repeatCount="indefinite" />
-            <animate attributeName="opacity" from="0" to="1" begin="13s" dur="0.2s" fill="freeze" repeatCount="indefinite" />
-            <animate attributeName="opacity" from="1" to="0" begin="15s" dur="0.6s" fill="freeze" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="0" to="0" begin="0s" dur="15s" fill="freeze" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="0" to="1" begin="15s" dur="0.2s" fill="freeze" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="1" to="0" begin="17s" dur="0.6s" fill="freeze" repeatCount="indefinite" />
             <animateTransform attributeName="transform" type="translate" from="0 0" to="100 100"
-                begin="13s" dur="2s" fill="freeze" repeatCount="indefinite" />
+                begin="15s" dur="2s" fill="freeze" repeatCount="indefinite" />
         </circle>
         <circle cx="400" cy="300" r="2" fill="#3366cc">
-            <animate attributeName="opacity" from="0" to="0" begin="0s" dur="13s" fill="freeze" repeatCount="indefinite" />
-            <animate attributeName="opacity" from="0" to="1" begin="13s" dur="0.2s" fill="freeze" repeatCount="indefinite" />
-            <animate attributeName="opacity" from="1" to="0" begin="15s" dur="0.6s" fill="freeze" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="0" to="0" begin="0s" dur="15s" fill="freeze" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="0" to="1" begin="15s" dur="0.2s" fill="freeze" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="1" to="0" begin="17s" dur="0.6s" fill="freeze" repeatCount="indefinite" />
             <animateTransform attributeName="transform" type="translate" from="0 0" to="-100 100"
-                begin="13s" dur="2s" fill="freeze" repeatCount="indefinite" />
+                begin="15s" dur="2s" fill="freeze" repeatCount="indefinite" />
         </circle>
         <!-- Additional diagonal particles -->
         <circle cx="400" cy="300" r="2" fill="#3366cc">
-            <animate attributeName="opacity" from="0" to="0" begin="0s" dur="13s" fill="freeze" repeatCount="indefinite" />
-            <animate attributeName="opacity" from="0" to="1" begin="13s" dur="0.2s" fill="freeze" repeatCount="indefinite" />
-            <animate attributeName="opacity" from="1" to="0" begin="15s" dur="0.6s" fill="freeze" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="0" to="0" begin="0s" dur="15s" fill="freeze" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="0" to="1" begin="15s" dur="0.2s" fill="freeze" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="1" to="0" begin="17s" dur="0.6s" fill="freeze" repeatCount="indefinite" />
             <animateTransform attributeName="transform" type="translate" from="0 0" to="-120 0"
-                begin="13s" dur="2s" fill="freeze" repeatCount="indefinite" />
+                begin="15s" dur="2s" fill="freeze" repeatCount="indefinite" />
         </circle>
         <circle cx="400" cy="300" r="2" fill="#3366cc">
-            <animate attributeName="opacity" from="0" to="0" begin="0s" dur="13s" fill="freeze" repeatCount="indefinite" />
-            <animate attributeName="opacity" from="0" to="1" begin="13s" dur="0.2s" fill="freeze" repeatCount="indefinite" />
-            <animate attributeName="opacity" from="1" to="0" begin="15s" dur="0.6s" fill="freeze" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="0" to="0" begin="0s" dur="15s" fill="freeze" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="0" to="1" begin="15s" dur="0.2s" fill="freeze" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="1" to="0" begin="17s" dur="0.6s" fill="freeze" repeatCount="indefinite" />
             <animateTransform attributeName="transform" type="translate" from="0 0" to="120 0"
-                begin="13s" dur="2s" fill="freeze" repeatCount="indefinite" />
+                begin="15s" dur="2s" fill="freeze" repeatCount="indefinite" />
         </circle>
         <circle cx="400" cy="300" r="2" fill="#3366cc">
-            <animate attributeName="opacity" from="0" to="0" begin="0s" dur="13s" fill="freeze" repeatCount="indefinite" />
-            <animate attributeName="opacity" from="0" to="1" begin="13s" dur="0.2s" fill="freeze" repeatCount="indefinite" />
-            <animate attributeName="opacity" from="1" to="0" begin="15s" dur="0.6s" fill="freeze" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="0" to="0" begin="0s" dur="15s" fill="freeze" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="0" to="1" begin="15s" dur="0.2s" fill="freeze" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="1" to="0" begin="17s" dur="0.6s" fill="freeze" repeatCount="indefinite" />
             <animateTransform attributeName="transform" type="translate" from="0 0" to="0 -120"
-                begin="13s" dur="2s" fill="freeze" repeatCount="indefinite" />
+                begin="15s" dur="2s" fill="freeze" repeatCount="indefinite" />
         </circle>
         <circle cx="400" cy="300" r="2" fill="#3366cc">
-            <animate attributeName="opacity" from="0" to="0" begin="0s" dur="13s" fill="freeze" repeatCount="indefinite" />
-            <animate attributeName="opacity" from="0" to="1" begin="13s" dur="0.2s" fill="freeze" repeatCount="indefinite" />
-            <animate attributeName="opacity" from="1" to="0" begin="15s" dur="0.6s" fill="freeze" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="0" to="0" begin="0s" dur="15s" fill="freeze" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="0" to="1" begin="15s" dur="0.2s" fill="freeze" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="1" to="0" begin="17s" dur="0.6s" fill="freeze" repeatCount="indefinite" />
             <animateTransform attributeName="transform" type="translate" from="0 0" to="0 120"
-                begin="13s" dur="2s" fill="freeze" repeatCount="indefinite" />
+                begin="15s" dur="2s" fill="freeze" repeatCount="indefinite" />
         </circle>
     </g>
 </svg>
