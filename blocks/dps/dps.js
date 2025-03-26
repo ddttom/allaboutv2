@@ -51,17 +51,6 @@ export default function decorate(block) {
   );
   header.appendChild(fullscreenBtn);
 
-  // Create navigation controls
-  const navigation = document.createElement("div");
-  navigation.className = "dps-navigation";
-  navigation.innerHTML = `
-    <div class="navigation-content">
-      <button id="prev-btn" class="nav-btn" disabled>Previous</button>
-      <button id="timer-btn" class="timer-btn">Start Timer</button>
-      <button id="next-btn" class="nav-btn">Next</button>
-    </div>
-  `;
-
   // Create slides container
   const slidesContainer = document.createElement("div");
   slidesContainer.className = "slides-container";
@@ -75,13 +64,11 @@ export default function decorate(block) {
       <div class="timer">${formatTime(
         presentationData.timerDuration * 60 || DPS_CONFIG.TIMER_DURATION
       )}</div>
-      <div class="pagination">0 / ${presentationData.slides.length - 1}</div>
     </div>
   `;
 
   // Append all elements to the presentation container
   presentationContainer.appendChild(header);
-  presentationContainer.appendChild(navigation);
   presentationContainer.appendChild(slidesContainer);
   presentationContainer.appendChild(footer);
 
@@ -307,10 +294,6 @@ function buildSlides(slides, container) {
   container.innerHTML = "";
   const totalSlides = slides.length;
 
-  // Update pagination display
-  const paginationDisplay = document.querySelector(".pagination");
-  paginationDisplay.textContent = `0 / ${totalSlides - 1}`;
-
   slides.forEach((slide, index) => {
     const slideElement = document.createElement("div");
     slideElement.id = `slide-${index}`;
@@ -413,24 +396,12 @@ function buildSlides(slides, container) {
  * Set up presentation controls
  */
 function setupControls(slidesContainer, timerDuration) {
-  const prevBtn = document.getElementById("prev-btn");
-  const nextBtn = document.getElementById("next-btn");
-  const timerBtn = document.getElementById("timer-btn");
   const slides = slidesContainer.querySelectorAll(".slide");
-  const paginationDisplay = document.querySelector(".pagination");
 
   let currentSlideIndex = 0;
   let timerInterval = null;
   let remainingTime = timerDuration; // in seconds
-
-  // Function to update button states
-  function updateNavigationState() {
-    prevBtn.disabled = currentSlideIndex === 0;
-    nextBtn.disabled = currentSlideIndex === slides.length - 1;
-    paginationDisplay.textContent = `${currentSlideIndex} / ${
-      slides.length - 1
-    }`;
-  }
+  let hasStartedTimer = false;
 
   // Function to show a specific slide
   function showSlide(index) {
@@ -447,21 +418,13 @@ function setupControls(slidesContainer, timerDuration) {
     }
 
     currentSlideIndex = index;
-    updateNavigationState();
+
+    // Start timer automatically when advancing past first slide
+    if (index > 0 && !hasStartedTimer) {
+      startTimer();
+      hasStartedTimer = true;
+    }
   }
-
-  // Navigation event handlers
-  prevBtn.addEventListener("click", () => {
-    if (currentSlideIndex > 0) {
-      showSlide(currentSlideIndex - 1);
-    }
-  });
-
-  nextBtn.addEventListener("click", () => {
-    if (currentSlideIndex < slides.length - 1) {
-      showSlide(currentSlideIndex + 1);
-    }
-  });
 
   // Timer functionality
   function updateTimer() {
@@ -475,8 +438,29 @@ function setupControls(slidesContainer, timerDuration) {
       }
     } else {
       clearInterval(timerInterval);
-      timerBtn.textContent = "Time Up!";
-      timerBtn.style.backgroundColor = "#e74c3c";
+      document.querySelector(".timer").textContent = "Time Up!";
+      document.querySelector(".timer").style.color = "#e74c3c";
+    }
+  }
+
+  function startTimer() {
+    if (!timerInterval) {
+      timerInterval = setInterval(updateTimer, 1000);
+    }
+  }
+
+  function stopTimer() {
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+  }
+
+  function toggleTimer() {
+    if (timerInterval) {
+      stopTimer();
+    } else {
+      startTimer();
     }
   }
 
@@ -500,21 +484,6 @@ function setupControls(slidesContainer, timerDuration) {
     singleFlash();
   }
 
-  timerBtn.addEventListener("click", () => {
-    if (timerInterval) {
-      // Stop timer
-      clearInterval(timerInterval);
-      timerInterval = null;
-      timerBtn.textContent = "Start Timer";
-      timerBtn.style.backgroundColor = "#e74c3c";
-    } else {
-      // Start timer
-      timerInterval = setInterval(updateTimer, 1000);
-      timerBtn.textContent = "Stop Timer";
-      timerBtn.style.backgroundColor = "#27ae60";
-    }
-  });
-
   // Add keyboard navigation
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
@@ -532,6 +501,10 @@ function setupControls(slidesContainer, timerDuration) {
       currentSlideIndex < slides.length - 1
     ) {
       showSlide(currentSlideIndex + 1);
+      event.preventDefault();
+    } else if (event.key === " " && hasStartedTimer) {
+      // Space bar to toggle timer after it has started
+      toggleTimer();
       event.preventDefault();
     }
   });

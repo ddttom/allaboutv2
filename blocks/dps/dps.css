@@ -63,7 +63,6 @@ html, body {
 
 /* Inner content wrapper for consistent margins */
 .header-content,
-.navigation-content,
 .slide-content,
 .footer-content {
     width: 100%;
@@ -74,7 +73,7 @@ html, body {
 /* Header styling */
 .dps-header {
     width: 100%;
-    padding: 15px 0;
+    padding: 10px 0;
     background-color: #2c3e50;
     color: white;
     text-align: center;
@@ -87,59 +86,6 @@ html, body {
 .dps-header p {
     font-size: 14px;
     opacity: 0.9;
-}
-
-/* Navigation styling */
-.dps-navigation {
-    width: 100%;
-    padding: 10px 0;
-    background-color: #34495e;
-    display: flex;
-    justify-content: center;
-}
-
-.navigation-content {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-/* Button styling */
-.nav-btn {
-    padding: 6px 14px;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    min-width: 80px;
-}
-
-.nav-btn:hover {
-    background-color: #2980b9;
-}
-
-.nav-btn:disabled {
-    background-color: #95a5a6;
-    cursor: not-allowed;
-}
-
-.timer-btn {
-    padding: 6px 14px;
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    min-width: 80px;
-}
-
-.timer-btn:hover {
-    background-color: #c0392b;
 }
 
 /* Content area */
@@ -306,7 +252,7 @@ html, body {
 
 .footer-content {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     padding: 0 20px;
 }
 
@@ -315,12 +261,6 @@ html, body {
     font-weight: bold;
     font-size: 16px;
     color: #e74c3c;
-}
-
-/* Pagination styling */
-.pagination {
-    color: #7f8c8d;
-    font-size: 14px;
 }
 
 /* Q&A slide */
@@ -363,7 +303,6 @@ html, body {
 /* Responsive design */
 @media (max-width: 768px) {
     .header-content,
-    .navigation-content,
     .slide-content,
     .footer-content {
         width: 90%;
@@ -439,7 +378,6 @@ html, body {
     }
 
     .dps-header,
-    .dps-navigation,
     .dps-footer {
         display: none;
     }

@@ -10,9 +10,9 @@ The DPS block transforms a structured table from a Google Doc into a full-screen
 
 - Automatic full-screen mode on startup
 - Consistent slide layout with 40/60 split for content and illustrations
-- Navigation controls with Previous/Next buttons
-- Configurable countdown timer with visual warnings
-- Keyboard navigation support
+- Keyboard-based navigation
+- Automatic timer start after first slide
+- Visual timer warnings and countdown
 - Support for bullet points and sub-bullet points with optimized spacing
 - Support for mixed content (plain text and bullet points)
 - SVG and image illustration support
@@ -149,24 +149,20 @@ Authors can include SVG code directly in the fourth column. Example:
 
 ### Timer Functionality
 
-- Timer starts at the configured duration (default: 25 minutes)
-- Can be started/stopped with the timer button
+- Timer starts automatically when advancing past the first slide
+- Space bar toggles timer on/off after it has started
 - Visual warning (red flash) when 2 minutes remain
 - Timer display in MM:SS format
+- Timer shows "Time Up!" in red when finished
 - Timer state persists during slide navigation
 
 ### Navigation
 
-#### Controls
-- Previous/Next buttons
-- Current slide indicator
-- Timer control button
-- Fullscreen toggle
-
-#### Keyboard Shortcuts
+#### Keyboard Controls
 - Left Arrow: Previous slide
 - Right Arrow: Next slide
-- Escape: Toggle navigation bar visibility or exit fullscreen
+- Space Bar: Toggle timer (after first slide)
+- Escape: Exit fullscreen mode
 
 ### Responsive Design
 
