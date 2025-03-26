@@ -37,11 +37,13 @@ export default function decorate(block) {
       //extract the svg element
       const svgElement = svgContainer.querySelector('svg'); 
       
-      //ensure the svg takes full width and height
-      svgElement.setAttribute('width', '100%');
-      svgElement.setAttribute('height', '100%');
+      if (svgElement) {
+        //ensure the svg takes full width and height
+        svgElement.setAttribute('width', '100%');
+        svgElement.setAttribute('height', '100%');
 
-      svgContainer.appendChild(svgElement);
+        block.appendChild(svgElement);
+      }
     } else {
       // eslint-disable-next-line no-console
       console.error('No valid icon or SVG content found in the block');
