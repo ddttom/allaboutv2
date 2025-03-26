@@ -1,9 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" style="cursor: pointer;">
+    <!-- Script to handle animation reset -->
+    <script type="text/javascript">
+        <![CDATA[
+            function resetAnimations() {
+                // Get all animations
+                const animations = document.querySelectorAll('animate, animateTransform');
+                
+                // Reset each animation
+                animations.forEach(animation => {
+                    animation.setAttribute('begin', 'indefinite');
+                    animation.parentNode.offsetHeight; // Force reflow
+                    animation.setAttribute('begin', '0s');
+                });
+            }
+        ]]>
+    </script>
+
     <!-- Background -->
-    <rect width="800" height="600" fill="#f8f9fa" />
+    <rect width="800" height="600" fill="#f8f9fa" onclick="resetAnimations()" />
 
     <!-- Main AI Circle (with growth animation at the end) -->
-    <circle cx="400" cy="300" r="220" fill="#e6f3ff" stroke="#3366cc" stroke-width="3">
+    <circle cx="400" cy="300" r="220" fill="#e6f3ff" stroke="#3366cc" stroke-width="3" onclick="resetAnimations()">
         <animate attributeName="r" from="220" to="220" begin="0s" dur="12.5s" fill="freeze" />
         <animate attributeName="r" from="220" to="280" begin="12.5s" dur="1s" fill="freeze" />
         <animate attributeName="fill" from="#e6f3ff" to="#d0e6ff" begin="12.5s" dur="1s"
@@ -13,7 +31,7 @@
 
     <!-- Center AI Text (with growth animation at the end) -->
     <text x="400" y="300" font-family="Arial, sans-serif" font-size="40" font-weight="bold"
-        fill="#3366cc" text-anchor="middle">AI <animate attributeName="font-size" from="40" to="40"
+        fill="#3366cc" text-anchor="middle" onclick="resetAnimations()">AI <animate attributeName="font-size" from="40" to="40"
             begin="0s" dur="12.5s" fill="freeze" />
     <animate attributeName="font-size" from="40"
             to="80" begin="12.5s" dur="1s" fill="freeze" />
@@ -23,14 +41,14 @@
 
     <!-- Explanation (Always Visible) -->
     <rect x="200" y="520" width="400" height="50" rx="5" ry="5" fill="#f0f7ff" stroke="#3366cc"
-        stroke-width="1" />
+        stroke-width="1" onclick="resetAnimations()" />
     <text x="400" y="550" font-family="Arial, sans-serif" font-size="13" fill="#333333"
-        text-anchor="middle">
+        text-anchor="middle" onclick="resetAnimations()">
         Technologies once developed separately, now integrated under AI
     </text>
 
     <!-- Speech Recognition (12 o'clock) -->
-    <g opacity="0">
+    <g opacity="0" onclick="resetAnimations()">
         <circle cx="400" cy="130" r="45" fill="#ffffff" stroke="#3366cc" stroke-width="2" />
         <text x="400" y="130" font-family="Arial, sans-serif" font-size="12" fill="#333333"
             text-anchor="middle">Speech</text>
@@ -47,7 +65,7 @@
     </g>
 
     <!-- Machine Translation (1-2 o'clock) -->
-    <g opacity="0">
+    <g opacity="0" onclick="resetAnimations()">
         <circle cx="550" cy="190" r="45" fill="#ffffff" stroke="#3366cc" stroke-width="2" />
         <text x="550" y="190" font-family="Arial, sans-serif" font-size="12" fill="#333333"
             text-anchor="middle">Machine</text>
@@ -64,7 +82,7 @@
     </g>
 
     <!-- Image Recognition (3 o'clock) -->
-    <g opacity="0">
+    <g opacity="0" onclick="resetAnimations()">
         <circle cx="570" cy="300" r="45" fill="#ffffff" stroke="#3366cc" stroke-width="2" />
         <text x="570" y="300" font-family="Arial, sans-serif" font-size="12" fill="#333333"
             text-anchor="middle">Image</text>
@@ -81,7 +99,7 @@
     </g>
 
     <!-- Recommendation Engines (5 o'clock) -->
-    <g opacity="0">
+    <g opacity="0" onclick="resetAnimations()">
         <circle cx="530" cy="410" r="45" fill="#ffffff" stroke="#3366cc" stroke-width="2" />
         <text x="530" y="405" font-family="Arial, sans-serif" font-size="12" fill="#333333"
             text-anchor="middle">Recommendation</text>
@@ -98,7 +116,7 @@
     </g>
 
     <!-- Expert Systems (6 o'clock) -->
-    <g opacity="0">
+    <g opacity="0" onclick="resetAnimations()">
         <circle cx="400" cy="470" r="45" fill="#ffffff" stroke="#3366cc" stroke-width="2" />
         <text x="400" y="470" font-family="Arial, sans-serif" font-size="12" fill="#333333"
             text-anchor="middle">Expert</text>
@@ -115,7 +133,7 @@
     </g>
 
     <!-- Data Mining Tools (7-8 o'clock) -->
-    <g opacity="0">
+    <g opacity="0" onclick="resetAnimations()">
         <circle cx="270" cy="410" r="45" fill="#ffffff" stroke="#3366cc" stroke-width="2" />
         <text x="270" y="405" font-family="Arial, sans-serif" font-size="12" fill="#333333"
             text-anchor="middle">Data Mining</text>
@@ -132,7 +150,7 @@
     </g>
 
     <!-- Natural Language Processing (9 o'clock) -->
-    <g opacity="0">
+    <g opacity="0" onclick="resetAnimations()">
         <circle cx="230" cy="300" r="45" fill="#ffffff" stroke="#3366cc" stroke-width="2" />
         <text x="230" y="295" font-family="Arial, sans-serif" font-size="11" fill="#333333"
             text-anchor="middle">Natural Language</text>
@@ -149,7 +167,7 @@
     </g>
 
     <!-- Sentiment Analysis (10-11 o'clock) -->
-    <g opacity="0">
+    <g opacity="0" onclick="resetAnimations()">
         <circle cx="250" cy="190" r="45" fill="#ffffff" stroke="#3366cc" stroke-width="2" />
         <text x="250" y="190" font-family="Arial, sans-serif" font-size="12" fill="#333333"
             text-anchor="middle">Sentiment</text>
@@ -166,7 +184,7 @@
     </g>
 
     <!-- Particle effects to enhance the burst animation -->
-    <g opacity="0">
+    <g opacity="0" onclick="resetAnimations()">
         <circle cx="400" cy="300" r="2" fill="#3366cc">
             <animate attributeName="opacity" from="0" to="0" begin="0s" dur="12.5s" fill="freeze" />
             <animate attributeName="opacity" from="0" to="1" begin="12.5s" dur="0.1s" fill="freeze" />
