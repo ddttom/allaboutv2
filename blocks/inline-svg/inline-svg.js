@@ -14,15 +14,13 @@ export default function decorate(block) {
       
       // Create the new standardized structure
       const paragraph = document.createElement('p');
-      const span = document.createElement('span');
-      span.className = `icon icon-${iconName}`;
+    
       const img = document.createElement('img');
       img.src = `/icons/${iconName}.svg`;
       img.alt = '';
       img.loading = 'eager';
       
-      span.appendChild(img);
-      paragraph.appendChild(span);
+      block.appendChild(img);
       block.appendChild(paragraph);
     }
   } else {
