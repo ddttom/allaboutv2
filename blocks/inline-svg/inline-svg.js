@@ -17,8 +17,7 @@ export default function decorate(block) {
     
       const img = document.createElement('img');
       img.src = `/icons/${iconName}.svg`;
-      img.alt = '';
-      img.loading = 'eager';
+      img.alt = `${iconName} illustration`;
       
       block.appendChild(img);
       block.appendChild(paragraph);
