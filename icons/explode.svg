@@ -54,7 +54,6 @@
             text-anchor="middle">Speech</text>
         <text x="400" y="148" font-family="Arial, sans-serif" font-size="12" fill="#333333"
             text-anchor="middle">Recognition</text>
-        <animate attributeName="opacity" from="1" to="0" begin="17s" dur="0.5s" fill="freeze" repeatCount="indefinite" />
     </g>
 
     <!-- Machine Translation (1-2 o'clock) -->
@@ -64,7 +63,6 @@
             text-anchor="middle">Machine</text>
         <text x="550" y="208" font-family="Arial, sans-serif" font-size="12" fill="#333333"
             text-anchor="middle">Translation</text>
-        <animate attributeName="opacity" from="1" to="0" begin="17s" dur="0.5s" fill="freeze" repeatCount="indefinite" />
     </g>
 
     <!-- Image Recognition (3 o'clock) -->
@@ -74,7 +72,6 @@
             text-anchor="middle">Image</text>
         <text x="570" y="318" font-family="Arial, sans-serif" font-size="12" fill="#333333"
             text-anchor="middle">Recognition</text>
-        <animate attributeName="opacity" from="1" to="0" begin="17s" dur="0.5s" fill="freeze" repeatCount="indefinite" />
     </g>
 
     <!-- Recommendation Engines (5 o'clock) -->
@@ -84,7 +81,6 @@
             text-anchor="middle">Recommendation</text>
         <text x="530" y="423" font-family="Arial, sans-serif" font-size="12" fill="#333333"
             text-anchor="middle">Engines</text>
-        <animate attributeName="opacity" from="1" to="0" begin="17s" dur="0.5s" fill="freeze" repeatCount="indefinite" />
     </g>
 
     <!-- Expert Systems (6 o'clock) -->
@@ -94,7 +90,6 @@
             text-anchor="middle">Expert</text>
         <text x="400" y="488" font-family="Arial, sans-serif" font-size="12" fill="#333333"
             text-anchor="middle">Systems</text>
-        <animate attributeName="opacity" from="1" to="0" begin="17s" dur="0.5s" fill="freeze" repeatCount="indefinite" />
     </g>
 
     <!-- Data Mining Tools (7-8 o'clock) -->
@@ -104,7 +99,6 @@
             text-anchor="middle">Data Mining</text>
         <text x="270" y="423" font-family="Arial, sans-serif" font-size="12" fill="#333333"
             text-anchor="middle">Tools</text>
-        <animate attributeName="opacity" from="1" to="0" begin="17s" dur="0.5s" fill="freeze" repeatCount="indefinite" />
     </g>
 
     <!-- Natural Language Processing (9 o'clock) -->
@@ -114,7 +108,6 @@
             text-anchor="middle">Natural Language</text>
         <text x="230" y="313" font-family="Arial, sans-serif" font-size="11" fill="#333333"
             text-anchor="middle">Processing</text>
-        <animate attributeName="opacity" from="1" to="0" begin="17s" dur="0.5s" fill="freeze" repeatCount="indefinite" />
     </g>
 
     <!-- Sentiment Analysis (10-11 o'clock) -->
@@ -124,7 +117,6 @@
             text-anchor="middle">Sentiment</text>
         <text x="250" y="208" font-family="Arial, sans-serif" font-size="12" fill="#333333"
             text-anchor="middle">Analysis</text>
-        <animate attributeName="opacity" from="1" to="0" begin="17s" dur="0.5s" fill="freeze" repeatCount="indefinite" />
     </g>
 
     <!-- Particle effects to enhance the burst animation -->
