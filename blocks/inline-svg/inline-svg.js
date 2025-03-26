@@ -1,26 +1,54 @@
 export default function decorate(block) {
-  const svgText = block.textContent.trim();
-  if (svgText.startsWith('<svg')) {
-    // Clear the text content
-    block.textContent = '';
-
-    // Create a container for the SVG
-    const svgContainer = document.createElement('div');
-    svgContainer.innerHTML = svgText;
+  // Look for either a span with icon classes or SVG content
+  const iconSpan = block.querySelector('span[class*="icon-"]');
+  
+  if (iconSpan) {
+    // Get the icon name from the class
+    const iconClass = Array.from(iconSpan.classList)
+      .find(cls => cls.startsWith('icon-'));
+    const iconName = iconClass ? iconClass.replace('icon-', '') : '';
     
-    // Extract the SVG element
-    const svgElement = svgContainer.querySelector('svg');
-    if (svgElement) {
-      // Ensure the SVG takes full width and height
-      svgElement.setAttribute('width', '100%');
-      svgElement.setAttribute('height', '100%');
-      block.appendChild(svgElement);
-    } else {
-      // eslint-disable-next-line no-console
-      console.error('No SVG element found in the provided content');
+    if (iconName) {
+      // Clear the block content
+      block.textContent = '';
+      
+      // Create the standardized structure
+      const paragraph = document.createElement('p');
+      const span = document.createElement('span');
+      const img = document.createElement('img');
+      
+      span.className = `icon icon-${iconName}`;
+      img.src = `/icons/${iconName}.svg`;
+      img.alt = '';
+      img.loading = 'eager';
+      
+      span.appendChild(img);
+      paragraph.appendChild(span);
+      block.appendChild(paragraph);
     }
   } else {
-    // eslint-disable-next-line no-console
-    console.error('The block does not contain valid SVG content');
+    // Handle direct SVG content case
+    const svgText = block.textContent.trim();
+    if (svgText.startsWith('<svg')) {
+      // Extract filename from the block's context or default to 'icon'
+      const iconName = block.closest('[class*="icon-"]')?.className.match(/icon-([^\s]+)/)?.[1] || 'icon';
+      
+      // Clear the block content
+      block.textContent = '';
+      
+      // Create the standardized structure
+      const paragraph = document.createElement('p');
+      const span = document.createElement('span');
+      const img = document.createElement('img');
+      
+      span.className = `icon icon-${iconName}`;
+      img.src = `/icons/${iconName}.svg`;
+      img.alt = '';
+      img.loading = 'eager';
+      
+      span.appendChild(img);
+      paragraph.appendChild(span);
+      block.appendChild(paragraph);
+    }
   }
 }
