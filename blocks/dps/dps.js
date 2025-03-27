@@ -441,7 +441,7 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
   function updatePresenterNotes(slideIndex) {
     const currentSlide = slides[slideIndex];
     const slideData = currentSlide.dataset.presenterNotes || '';
-    notesContent.textContent = slideData;
+    notesContent.innerHTML = slideData;
   }
 
   // Function to show a specific slide
