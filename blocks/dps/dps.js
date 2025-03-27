@@ -445,73 +445,6 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
   let remainingTime = timerDuration;
   let hasStartedTimer = false;
 
-  // Function to handle viewport refresh
-  function handleRefresh() {
-    // Store current state
-    const currentSlide = slides[currentSlideIndex];
-    const currentImage = currentSlide.querySelector('.sequence-image.active');
-    const currentImageIndex = currentImage ? Array.from(currentSlide.querySelectorAll('.sequence-image')).indexOf(currentImage) : -1;
-    
-    // Store timer state
-    const timerWasRunning = timerInterval !== null;
-    const currentTime = remainingTime;
-    
-    // Stop timer if running
-    if (timerWasRunning) {
-      stopTimer();
-    }
-    
-    // Get the block element
-    const block = document.querySelector('.dps-block');
-    if (block) {
-      // Store the original Franklin structure
-      const originalRows = Array.from(block.children);
-      
-      // Clear the block
-      block.innerHTML = '';
-      
-      // Restore the original Franklin structure
-      originalRows.forEach(row => {
-        const newRow = document.createElement('div');
-        Array.from(row.children).forEach(cell => {
-          const newCell = document.createElement('div');
-          newCell.innerHTML = cell.innerHTML;
-          newRow.appendChild(newCell);
-        });
-        block.appendChild(newRow);
-      });
-      
-      // Reinitialize the block
-      decorate(block);
-      
-      // After a short delay to ensure reinitialization is complete
-      setTimeout(() => {
-        // Restore slide position
-        const newSlides = block.querySelectorAll('.slide');
-        if (newSlides[currentSlideIndex]) {
-          showSlide(currentSlideIndex);
-          
-          // Restore image sequence position if applicable
-          if (currentImageIndex >= 0) {
-            const newImages = newSlides[currentSlideIndex].querySelectorAll('.sequence-image');
-            if (newImages[currentImageIndex]) {
-              newImages.forEach(img => img.style.display = 'none');
-              newImages[currentImageIndex].style.display = 'block';
-              newImages[currentImageIndex].classList.add('active');
-            }
-          }
-        }
-        
-        // Restore timer state
-        if (timerWasRunning) {
-          remainingTime = currentTime;
-          document.querySelector(".timer").textContent = formatTime(remainingTime);
-          startTimer();
-        }
-      }, 100);
-    }
-  }
-
   // Function to update presenter notes
   function updatePresenterNotes(slideIndex) {
     const currentSlide = slides[slideIndex];
@@ -637,13 +570,6 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
     if (event.key === "Escape") {
       const navBar = document.querySelector(".dps-navigation");
       navBar.style.display = navBar.style.display === "none" ? "flex" : "none";
-      return;
-    }
-
-    // Handle refresh with 'r' key
-    if (event.key.toLowerCase() === "r") {
-      handleRefresh();
-      event.preventDefault();
       return;
     }
 
