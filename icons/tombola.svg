@@ -1,0 +1,148 @@
+<svg viewBox="0 0 800 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Arrow marker definition -->
+    <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6"
+            orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#3498db" />
+        </marker>
+    </defs>
+
+    <!-- Tombola Machine -->
+    <!-- Main Body -->
+    <rect id="tombola-body" x="50" y="50" width="250" height="350" rx="20" fill="#2c3e50" />
+    
+    <!-- Glass Dome -->
+    <path id="glass-dome" d="M70 70 L280 70 Q330 70 330 120 L330 400 L50 400 L50 120 Q50 70 90 70" 
+          fill="#3498db" opacity="0.2" />
+    
+    <!-- Inner Frame -->
+    <rect id="inner-frame" x="70" y="90" width="220" height="290" rx="15" fill="#34495e" />
+    
+    <!-- Metal Frame Details -->
+    <path d="M70 90 L290 90" stroke="#95a5a6" stroke-width="2" />
+    <path d="M70 380 L290 380" stroke="#95a5a6" stroke-width="2" />
+    <path d="M70 90 L70 380" stroke="#95a5a6" stroke-width="2" />
+    <path d="M290 90 L290 380" stroke="#95a5a6" stroke-width="2" />
+    
+    <!-- Handle -->
+    <path d="M300 150 Q350 150 350 200" stroke="#e74c3c" stroke-width="8" fill="none" />
+    <circle cx="350" cy="200" r="15" fill="#e74c3c" />
+    
+    <!-- Ticket List -->
+    <g id="ticket-list" transform="translate(500, 50)">
+        <!-- Ticket 1 -->
+        <g id="ticket-1" class="ticket">
+            <rect x="0" y="0" width="200" height="50" rx="5" fill="#e74c3c" opacity="0.7">
+                <animateTransform
+                    attributeName="transform"
+                    type="translate"
+                    from="0 0"
+                    to="-410 70"
+                    begin="5s; 12s"
+                    dur="1s"
+                    fill="freeze"
+                />
+            </rect>
+            <text x="100" y="30" text-anchor="middle" fill="white" font-size="16">LOVED</text>
+        </g>
+        
+        <!-- Ticket 2 -->
+        <g id="ticket-2" class="ticket">
+            <rect x="0" y="60" width="200" height="50" rx="5" fill="#e74c3c" opacity="0.7">
+                <animateTransform
+                    attributeName="transform"
+                    type="translate"
+                    from="0 0"
+                    to="-410 130"
+                    begin="5s; 12s"
+                    dur="1s"
+                    fill="freeze"
+                />
+                <animate
+                    attributeName="fill"
+                    values="#e74c3c;#2980b9;#e74c3c"
+                    begin="10s; 12s"
+                    dur="0.1s"
+                    fill="freeze"
+                />
+                <animateTransform
+                    attributeName="transform"
+                    type="translate"
+                    from="-410 130"
+                    to="-410 380"
+                    begin="10s"
+                    dur="1s"
+                    fill="freeze"
+                />
+            </rect>
+            <text x="100" y="90" text-anchor="middle" fill="white" font-size="16">KILLED</text>
+        </g>
+        
+        <!-- Ticket 3 -->
+        <g id="ticket-3" class="ticket">
+            <rect x="0" y="120" width="200" height="50" rx="5" fill="#e74c3c" opacity="0.7">
+                <animateTransform
+                    attributeName="transform"
+                    type="translate"
+                    from="0 0"
+                    to="-410 190"
+                    begin="5s; 12s"
+                    dur="1s"
+                    fill="freeze"
+                />
+            </rect>
+            <text x="100" y="150" text-anchor="middle" fill="white" font-size="16">ADORED</text>
+        </g>
+        
+        <!-- Ticket 4 -->
+        <g id="ticket-4" class="ticket">
+            <rect x="0" y="180" width="200" height="50" rx="5" fill="#e74c3c" opacity="0.7">
+                <animateTransform
+                    attributeName="transform"
+                    type="translate"
+                    from="0 0"
+                    to="-410 250"
+                    begin="5s; 12s"
+                    dur="1s"
+                    fill="freeze"
+                />
+            </rect>
+            <text x="100" y="210" text-anchor="middle" fill="white" font-size="16">DROVE</text>
+        </g>
+        
+        <!-- Ticket 5 -->
+        <g id="ticket-5" class="ticket">
+            <rect x="0" y="240" width="200" height="50" rx="5" fill="#e74c3c" opacity="0.7">
+                <animateTransform
+                    attributeName="transform"
+                    type="translate"
+                    from="0 0"
+                    to="-410 310"
+                    begin="5s; 12s"
+                    dur="1s"
+                    fill="freeze"
+                />
+            </rect>
+            <text x="100" y="270" text-anchor="middle" fill="white" font-size="16">FLOATED</text>
+        </g>
+        
+        <!-- Ticket 6 -->
+        <g id="ticket-6" class="ticket">
+            <rect x="0" y="300" width="200" height="50" rx="5" fill="#e74c3c" opacity="0.7">
+                <animateTransform
+                    attributeName="transform"
+                    type="translate"
+                    from="0 0"
+                    to="-410 370"
+                    begin="5s; 12s"
+                    dur="1s"
+                    fill="freeze"
+                />
+            </rect>
+            <text x="100" y="330" text-anchor="middle" fill="white" font-size="16">RAN</text>
+        </g>
+    </g>
+
+    <!-- Connecting Arrow (reversed direction) -->
+    <path id="arrow-path" d="M500 250 L300 250" stroke="#3498db" stroke-width="2" marker-end="url(#arrow)" />
+</svg> 
