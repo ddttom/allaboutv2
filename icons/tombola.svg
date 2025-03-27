@@ -63,7 +63,7 @@
     -->
     
     <!-- Initial Name Text -->
-    <text x="175" y="400" text-anchor="middle" fill="white" font-size="16" font-family="Arial">
+    <text x="175" y="400" text-anchor="middle" fill="black" font-size="16" font-family="Arial">
         <tspan>Arve Hjalmar Holmen</tspan>
         <animate
             attributeName="opacity"
@@ -82,7 +82,7 @@
     </text>
     
     <!-- Name with "killed" Text -->
-    <text x="175" y="400" text-anchor="middle" fill="white" font-size="16" font-family="Arial" opacity="0">
+    <text x="175" y="400" text-anchor="middle" fill="black" font-size="16" font-family="Arial" opacity="0">
         <tspan>Arve Hjalmar Holmen killed</tspan>
         <animate
             attributeName="opacity"
