@@ -445,6 +445,33 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
   let remainingTime = timerDuration;
   let hasStartedTimer = false;
 
+  // Function to handle viewport refresh
+  function handleRefresh() {
+    // Store current state
+    const currentSlide = slides[currentSlideIndex];
+    const currentImage = currentSlide.querySelector('.sequence-image.active');
+    const currentImageIndex = currentImage ? Array.from(currentSlide.querySelectorAll('.sequence-image')).indexOf(currentImage) : -1;
+    
+    // Refresh the viewport
+    window.location.reload();
+    
+    // After reload, restore the state
+    window.addEventListener('load', () => {
+      const newSlides = document.querySelectorAll('.slide');
+      if (newSlides[currentSlideIndex]) {
+        showSlide(currentSlideIndex);
+        if (currentImageIndex >= 0) {
+          const newImages = newSlides[currentSlideIndex].querySelectorAll('.sequence-image');
+          if (newImages[currentImageIndex]) {
+            newImages.forEach(img => img.style.display = 'none');
+            newImages[currentImageIndex].style.display = 'block';
+            newImages[currentImageIndex].classList.add('active');
+          }
+        }
+      }
+    }, { once: true });
+  }
+
   // Function to update presenter notes
   function updatePresenterNotes(slideIndex) {
     const currentSlide = slides[slideIndex];
@@ -570,6 +597,13 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
     if (event.key === "Escape") {
       const navBar = document.querySelector(".dps-navigation");
       navBar.style.display = navBar.style.display === "none" ? "flex" : "none";
+      return;
+    }
+
+    // Handle refresh with 'r' key
+    if (event.key.toLowerCase() === "r") {
+      handleRefresh();
+      event.preventDefault();
       return;
     }
 
