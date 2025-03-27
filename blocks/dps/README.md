@@ -27,6 +27,7 @@ A powerful presentation system that transforms structured content into an intera
 - **Escape**: Toggle navigation bar
 - **Plus (+)**: Show presenter notes
 - **Minus (-)**: Hide presenter notes
+- **R**: Refresh viewport while maintaining current slide and sub-slide state
 
 ### Image Sequence Navigation
 - Use left/right arrow keys to navigate through multiple images
@@ -247,6 +248,7 @@ Authors can include SVG code directly in the fourth column. Example:
 - Escape: Exit fullscreen mode
 - Plus (+) key: Show presenter notes
 - Minus (-) key: Hide presenter notes
+- R key: Refresh viewport while maintaining current slide and sub-slide state
 
 #### Image Sequence Navigation
 - Right arrow shows next image in the sequence

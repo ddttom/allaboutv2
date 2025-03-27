@@ -452,12 +452,28 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
     const currentImage = currentSlide.querySelector('.sequence-image.active');
     const currentImageIndex = currentImage ? Array.from(currentSlide.querySelectorAll('.sequence-image')).indexOf(currentImage) : -1;
     
-    // Refresh the viewport
-    window.location.reload();
+    // Store timer state
+    const timerWasRunning = timerInterval !== null;
+    const currentTime = remainingTime;
     
-    // After reload, restore the state
-    window.addEventListener('load', () => {
-      const newSlides = document.querySelectorAll('.slide');
+    // Stop timer if running
+    if (timerWasRunning) {
+      stopTimer();
+    }
+    
+    // Refresh only the content area
+    const contentArea = document.querySelector('.dps-container');
+    if (contentArea) {
+      // Create a temporary div to store the current content
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = contentArea.innerHTML;
+      
+      // Clear and re-render the content
+      contentArea.innerHTML = '';
+      contentArea.innerHTML = tempDiv.innerHTML;
+      
+      // Re-initialize the slides
+      const newSlides = contentArea.querySelectorAll('.slide');
       if (newSlides[currentSlideIndex]) {
         showSlide(currentSlideIndex);
         if (currentImageIndex >= 0) {
@@ -469,7 +485,14 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
           }
         }
       }
-    }, { once: true });
+      
+      // Restore timer state
+      if (timerWasRunning) {
+        remainingTime = currentTime;
+        document.querySelector(".timer").textContent = formatTime(remainingTime);
+        startTimer();
+      }
+    }
   }
 
   // Function to update presenter notes
