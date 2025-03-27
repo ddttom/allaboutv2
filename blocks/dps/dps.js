@@ -461,37 +461,46 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
       stopTimer();
     }
     
-    // Refresh only the content area
-    const contentArea = document.querySelector('.dps-container');
-    if (contentArea) {
-      // Create a temporary div to store the current content
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = contentArea.innerHTML;
+    // Get the block element
+    const block = document.querySelector('.dps-block');
+    if (block) {
+      // Store the current content
+      const currentContent = block.innerHTML;
       
-      // Clear and re-render the content
-      contentArea.innerHTML = '';
-      contentArea.innerHTML = tempDiv.innerHTML;
+      // Clear the block
+      block.innerHTML = '';
       
-      // Re-initialize the slides
-      const newSlides = contentArea.querySelectorAll('.slide');
-      if (newSlides[currentSlideIndex]) {
-        showSlide(currentSlideIndex);
-        if (currentImageIndex >= 0) {
-          const newImages = newSlides[currentSlideIndex].querySelectorAll('.sequence-image');
-          if (newImages[currentImageIndex]) {
-            newImages.forEach(img => img.style.display = 'none');
-            newImages[currentImageIndex].style.display = 'block';
-            newImages[currentImageIndex].classList.add('active');
+      // Restore the content
+      block.innerHTML = currentContent;
+      
+      // Reinitialize the block
+      decorate(block);
+      
+      // After a short delay to ensure reinitialization is complete
+      setTimeout(() => {
+        // Restore slide position
+        const newSlides = block.querySelectorAll('.slide');
+        if (newSlides[currentSlideIndex]) {
+          showSlide(currentSlideIndex);
+          
+          // Restore image sequence position if applicable
+          if (currentImageIndex >= 0) {
+            const newImages = newSlides[currentSlideIndex].querySelectorAll('.sequence-image');
+            if (newImages[currentImageIndex]) {
+              newImages.forEach(img => img.style.display = 'none');
+              newImages[currentImageIndex].style.display = 'block';
+              newImages[currentImageIndex].classList.add('active');
+            }
           }
         }
-      }
-      
-      // Restore timer state
-      if (timerWasRunning) {
-        remainingTime = currentTime;
-        document.querySelector(".timer").textContent = formatTime(remainingTime);
-        startTimer();
-      }
+        
+        // Restore timer state
+        if (timerWasRunning) {
+          remainingTime = currentTime;
+          document.querySelector(".timer").textContent = formatTime(remainingTime);
+          startTimer();
+        }
+      }, 100);
     }
   }
 
