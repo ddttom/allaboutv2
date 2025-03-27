@@ -103,9 +103,9 @@ Content authors should structure their content as follows:
 | ------------------ | --------------------- | ---------- | ------------------ | ------------------- |
 | Presentation Title | Presentation Subtitle | 25 (timer) |                    |                     |
 | ------------------ | --------------------- | ---------- | ------------------ | ------------------- |
-| Slide 1 Title      | Slide 1 Introduction  | Bullets    | Image(s) or SVG    | Presenter Notes 1   |
+| Slide 1 Title      | Slide 1 Introduction  | Bullets    | Image(s) or SVG(s) | Presenter Notes 1   |
 | ------------------ | --------------------- | ---------- | ------------------ | ------------------- |
-| Slide 2 Title      | Slide 2 Introduction  | Bullets    | Image(s) or SVG    | Presenter Notes 2   |
+| Slide 2 Title      | Slide 2 Introduction  | Bullets    | Image(s) or SVG(s) | Presenter Notes 2   |
 
 ```
 

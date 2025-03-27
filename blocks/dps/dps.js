@@ -157,7 +157,15 @@ function parseRows(rows) {
  * Get content from an element
  */
 function getElementContent(element) {
-  return element ? element.textContent.trim() : "";
+  if (!element) return "";
+  // For presenter notes (5th column), preserve HTML
+  if (element.parentElement && element.parentElement.parentElement && 
+      element.parentElement.parentElement.children.length === 5 && 
+      element.parentElement.parentElement.children[4] === element) {
+    return element.innerHTML.trim();
+  }
+  // For other columns, use textContent
+  return element.textContent.trim();
 }
 
 /**
