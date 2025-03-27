@@ -10,12 +10,13 @@ The DPS block transforms a structured table from a Google Doc into a full-screen
 
 - Automatic full-screen mode on startup
 - Consistent slide layout with 40/60 split for content and illustrations
-- Keyboard-based navigation
+- Keyboard-based navigation with image sequence support
+- Multiple images per slide with arrow key navigation
 - Automatic timer start after first slide
 - Visual timer warnings and countdown
 - Support for bullet points and sub-bullet points with optimized spacing
 - Support for mixed content (plain text and bullet points)
-- SVG and image illustration support
+- SVG and image illustration support with full viewport height
 - Responsive design for all screen sizes
 - Print-optimized layout
 - Q&A slide automatically added at the end
@@ -33,12 +34,12 @@ The DPS block transforms a structured table from a Google Doc into a full-screen
 Content authors should structure their content as follows:
 
 ```
-| DPS                |                       |            |           |
-| ------------------ | --------------------- | ---------- | --------- |
-| Presentation Title | Presentation Subtitle | 25 (timer) |           |
-| Slide 1 Title      | Slide 1 Introduction  | Bullets    | SVG/Image |
-| Slide 2 Title      | Slide 2 Introduction  | Bullets    | SVG/Image |
-| ...                | ...                   | ...        | ...       |
+| DPS                |                       |            |                    |
+| ------------------ | --------------------- | ---------- | ------------------ |
+| Presentation Title | Presentation Subtitle | 25 (timer) |                    |
+| Slide 1 Title      | Slide 1 Introduction  | Bullets    | Image(s) or SVG    |
+| Slide 2 Title      | Slide 2 Introduction  | Bullets    | Image(s) or SVG    |
+| ...                | ...                   | ...        | ...                |
 ```
 
 #### Column Definitions
@@ -50,7 +51,12 @@ Content authors should structure their content as follows:
    - Plain text will be displayed without bullets
    - Line breaks in plain text are preserved
    - HTML formatting (like `<code>` and `<strong>`) is supported
-4. **Fourth column**: SVG code or images for illustrations
+4. **Fourth column**: Images or SVG for illustrations
+   - Can contain multiple images that will be shown in sequence
+   - Images use full viewport height while maintaining aspect ratio
+   - Navigate between images using arrow keys
+   - When reaching the last image, right arrow advances to next slide
+   - When on first image, left arrow goes to previous slide
 
 ## Slide Layout
 
@@ -68,7 +74,10 @@ Each slide follows a consistent layout:
 
 3. **Illustration Area** (60% width)
    - SVG illustrations or images
-   - Automatically sized to fit
+   - Multiple images shown in sequence
+   - Images use full viewport height
+   - Maintains aspect ratio
+   - Smooth transitions between images
 
 ## Content Formatting
 
@@ -159,10 +168,17 @@ Authors can include SVG code directly in the fourth column. Example:
 ### Navigation
 
 #### Keyboard Controls
-- Left Arrow: Previous slide
-- Right Arrow: Next slide
+- Left Arrow: Previous image in sequence or previous slide if no more images
+- Right Arrow: Next image in sequence or next slide if no more images
 - Space Bar: Toggle timer (after first slide)
 - Escape: Exit fullscreen mode
+
+#### Image Sequence Navigation
+- Right arrow shows next image in the sequence
+- Left arrow shows previous image in the sequence
+- When reaching the last image, right arrow advances to next slide
+- When at the first image, left arrow goes to previous slide
+- Smooth fade transition between images
 
 ### Responsive Design
 
