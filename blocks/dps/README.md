@@ -1,26 +1,90 @@
 # Dynamic Presentation System (DPS) Block
 
-A block for creating interactive presentations directly within AEM/Franklin pages, with automatic fullscreen mode and consistent slide styling.
-
-## Overview
-
-The DPS block transforms a structured table from a Google Doc into a full-screen, interactive slideshow presentation. It adheres to Edge Delivery Services (EDS) best practices with proper namespacing and container usage.
+A powerful presentation system that transforms structured content into an interactive presentation with features like image sequences, presenter notes, and timer controls.
 
 ## Features
-
-- Automatic full-screen mode on startup
-- Consistent slide layout with 40/60 split for content and illustrations
-- Keyboard-based navigation with image sequence support
+- Full-screen presentation mode
+- Keyboard-based navigation
 - Multiple images per slide with arrow key navigation
+- Image sequence support
+- Full viewport height image support
 - Presenter notes with toggle functionality
-- Automatic timer start after first slide
-- Visual timer warnings and countdown
-- Support for bullet points and sub-bullet points with optimized spacing
-- Support for mixed content (plain text and bullet points)
-- SVG and image illustration support with full viewport height
-- Responsive design for all screen sizes
-- Print-optimized layout
-- Q&A slide automatically added at the end
+- Timer with warning system
+- Responsive design
+- Print-friendly handout mode
+
+## Content Structure
+| Title | Subtitle | Timer (minutes) | Content | Presenter Notes |
+| :---- | :------- | :-------------- | :------ | :-------------- |
+| Presentation Title | Optional subtitle | 25 | Main content | Presenter notes |
+| Slide Title | Introduction text | | Bullet points | Notes for this slide |
+| | | | Multiple images | Additional guidance |
+| | | | SVG illustrations | Key points to cover |
+
+## Navigation
+- **Arrow Keys**: Navigate between slides
+- **Space**: Toggle timer pause/play
+- **Escape**: Toggle navigation bar
+- **Plus (+)**: Show presenter notes
+- **Minus (-)**: Hide presenter notes
+
+### Image Sequence Navigation
+- Use left/right arrow keys to navigate through multiple images
+- Images maintain aspect ratio and use full viewport height
+- Smooth transitions between images
+- Navigation wraps around at sequence ends
+
+### Presenter Notes
+- Appears in bottom left third of viewport (31.25% width)
+- Light grey background with dark text for readability
+- Supports HTML formatting:
+  - Bullet points
+  - Bold text (highlighted in blue)
+  - Code blocks
+  - Line breaks
+- Toggle visibility with + and - keys
+- State persists across slide changes
+- Hidden by default on startup
+- Excluded from print mode
+
+## Styling
+- Modern, clean design
+- Responsive layout
+- Consistent typography
+- Smooth transitions
+- Print-optimized handouts
+
+## Performance
+- Optimized image loading
+- Efficient DOM updates
+- Smooth animations
+- Minimal dependencies
+
+## Browser Compatibility
+- Chrome (recommended)
+- Firefox
+- Safari
+- Edge
+
+## Authoring Guidelines
+1. Start with a configuration row containing title, subtitle, and timer duration
+2. Each subsequent row represents a slide
+3. Use the fourth column for images or illustrations
+4. Add presenter notes in the fifth column
+5. Multiple images in the fourth column will create an image sequence
+6. Use HTML formatting in presenter notes for better organization
+
+## Troubleshooting
+- If images don't load, check the image URLs
+- If presenter notes don't toggle, ensure no other keyboard shortcuts are active
+- For print issues, use the browser's print preview
+- If timer doesn't start, ensure you've advanced past the first slide
+
+## Notes
+- Presenter notes support HTML formatting for better organization
+- Images maintain aspect ratio while using available space
+- Timer starts automatically after first slide
+- Print mode excludes presenter notes and navigation elements
 
 ## Implementation
 

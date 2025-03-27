@@ -438,8 +438,8 @@ html, body {
     left: 20px;
     width: 31.25vw; /* Increased from 25vw by 25% */
     height: 25vh;
-    background-color: rgba(44, 62, 80, 0.95);
-    color: white;
+    background-color: rgba(236, 240, 241, 0.95); /* Light grey background */
+    color: #2c3e50; /* Dark text for better contrast */
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -460,12 +460,14 @@ html, body {
     font-weight: bold;
     margin-bottom: 10px;
     padding-bottom: 5px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    border-bottom: 1px solid rgba(44, 62, 80, 0.3); /* Darker border for light background */
+    color: #2c3e50;
 }
 
 .presenter-notes-content {
     line-height: 1.4;
     white-space: pre-line;
+    color: #2c3e50;
 }
 
 /* Style bullet points in presenter notes */
@@ -479,20 +481,21 @@ html, body {
     margin-bottom: 4px;
     position: relative;
     list-style-type: disc;
-    color: white;
+    color: #2c3e50;
 }
 
 /* Handle HTML elements in presenter notes */
 .presenter-notes-content strong {
     font-weight: bold;
-    color: #3498db; /* Highlight strong text */
+    color: #3498db; /* Keep blue highlight for strong text */
 }
 
 .presenter-notes-content code {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(44, 62, 80, 0.1);
     padding: 2px 4px;
     border-radius: 3px;
     font-family: monospace;
+    color: #2c3e50;
 }
 
 /* Adjust print styles for presenter notes */
