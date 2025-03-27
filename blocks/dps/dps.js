@@ -464,14 +464,19 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
     // Get the block element
     const block = document.querySelector('.dps-block');
     if (block) {
-      // Store the current content
-      const currentContent = block.innerHTML;
+      // Store the original rows structure
+      const rows = Array.from(block.children);
+      const originalContent = rows.map(row => row.innerHTML).join('');
       
       // Clear the block
       block.innerHTML = '';
       
-      // Restore the content
-      block.innerHTML = currentContent;
+      // Restore the original structure
+      rows.forEach(row => {
+        const newRow = document.createElement('div');
+        newRow.innerHTML = row.innerHTML;
+        block.appendChild(newRow);
+      });
       
       // Reinitialize the block
       decorate(block);
