@@ -5,7 +5,7 @@
     ================================
     0-5s: Initial state - All tickets visible on right, arrow visible at y=110
     5-10s: Phase 1 - All tickets move into tombola, arrow fades out
-    10-12s: Phase 2 - KILLED ticket turns blue and drops below tombola, text changes to "Arve Hjalmar Holmen killed"
+    10-12s: Phase 2 - KILLED ticket drops below tombola, text changes to "Arve Hjalmar Holmen killed"
     12-15s: Phase 3 - Hold dropped position
     15s+: Phase 4 - Reset to initial state and repeat cycle
     
@@ -13,7 +13,6 @@
     ==============
     5.0s: All tickets begin moving into tombola
     5.1s: Arrow fades out
-    10.0s: KILLED ticket turns blue
     10.1s: KILLED ticket begins dropping below tombola
     10.2s: Text changes to "Arve Hjalmar Holmen killed"
     15.0s: All elements reset to initial positions
@@ -63,7 +62,7 @@
     -->
     
     <!-- Initial Name Text -->
-    <text x="175" y="400" text-anchor="middle" fill="black" font-size="16" font-family="Arial">
+    <text x="175" y="400" text-anchor="middle" fill="blue" font-size="16" font-family="Arial">
         <tspan>Arve Hjalmar Holmen</tspan>
         <animate
             attributeName="opacity"
@@ -82,7 +81,7 @@
     </text>
     
     <!-- Name with "killed" Text -->
-    <text x="175" y="400" text-anchor="middle" fill="black" font-size="16" font-family="Arial" opacity="0">
+    <text x="175" y="400" text-anchor="middle" fill="blue" font-size="16" font-family="Arial" opacity="0">
         <tspan>Arve Hjalmar Holmen killed</tspan>
         <animate
             attributeName="opacity"
