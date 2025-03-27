@@ -13,7 +13,6 @@ The DPS block transforms a structured table from a Google Doc into a full-screen
 - Keyboard-based navigation with image sequence support
 - Multiple images per slide with arrow key navigation
 - Presenter notes with toggle functionality
-- Lazy loading of images for improved performance
 - Automatic timer start after first slide
 - Visual timer warnings and countdown
 - Support for bullet points and sub-bullet points with optimized spacing
@@ -27,7 +26,7 @@ The DPS block transforms a structured table from a Google Doc into a full-screen
 
 ### Files
 
-- `dps.js` - JavaScript implementation with IntersectionObserver for lazy loading
+- `dps.js` - JavaScript implementation
 - `dps.css` - CSS styling
 - `README.md` - Documentation (this file)
 
@@ -233,9 +232,9 @@ All colors and spacing can be customized through CSS variables.
 
 ### Performance Optimizations
 
-1. **Lazy Loading**
-   - Images are loaded only when they come close to the viewport
-   - Uses IntersectionObserver API for efficient loading
-   - 50px pre-loading margin for smoother experience
-   - Loading attribute set to "lazy" for native browser support
-   - Fallback to data-src pattern for older browsers
+The block implements several performance optimizations:
+- Efficient DOM manipulation
+- Optimized image sequence transitions
+- Minimal reflows and repaints
+- Event delegation for improved interaction handling
+- Smart state management for presentation controls

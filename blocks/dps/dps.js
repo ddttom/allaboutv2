@@ -312,23 +312,6 @@ function buildSlides(slides, container) {
   container.innerHTML = "";
   const totalSlides = slides.length;
 
-  // Create an Intersection Observer for lazy loading
-  const imageObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const img = entry.target;
-        if (img.dataset.src) {
-          img.src = img.dataset.src;
-          img.removeAttribute('data-src');
-        }
-        observer.unobserve(img);
-      }
-    });
-  }, {
-    rootMargin: '50px 0px',
-    threshold: 0.1
-  });
-
   slides.forEach((slide, index) => {
     const slideElement = document.createElement("div");
     slideElement.id = `slide-${index}`;
@@ -418,15 +401,14 @@ function buildSlides(slides, container) {
                 ? `<div class="image-sequence">
                     ${slide.illustration.content.map((img, imgIndex) => `
                       <img 
-                        data-src="${img.content}" 
+                        src="${img.content}" 
                         alt="${img.alt}" 
                         class="sequence-image ${imgIndex === 0 ? 'active' : ''}" 
-                        style="display: ${imgIndex === 0 ? 'block' : 'none'}"
-                        loading="lazy">
+                        style="display: ${imgIndex === 0 ? 'block' : 'none'}">
                     `).join('')}
                    </div>`
                 : slide.illustration.type === "image"
-                ? `<img data-src="${slide.illustration.content}" alt="${slide.title} illustration" loading="lazy">`
+                ? `<img src="${slide.illustration.content}" alt="${slide.title} illustration">`
                 : slide.illustration.content
             }
           </div>
@@ -435,12 +417,6 @@ function buildSlides(slides, container) {
 
       slideContent += "</div>"; // Close slide-content
       slideElement.innerHTML = slideContent;
-
-      // Observe all images in this slide for lazy loading
-      const images = slideElement.querySelectorAll('img[data-src]');
-      images.forEach(img => {
-        imageObserver.observe(img);
-      });
     }
 
     container.appendChild(slideElement);
