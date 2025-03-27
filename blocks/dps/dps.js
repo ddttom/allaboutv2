@@ -240,12 +240,16 @@ function parseBulletPoints(cell) {
 function parseIllustration(cell) {
   if (!cell) return null;
 
-  // Check for image first
-  const img = cell.querySelector("img");
-  if (img) {
+  // Check for multiple images first
+  const images = cell.querySelectorAll("img");
+  if (images.length > 0) {
     return {
-      type: "image",
-      content: img.src,
+      type: "images",
+      content: Array.from(images).map(img => ({
+        type: "image",
+        content: img.src,
+        alt: img.alt || ""
+      }))
     };
   }
 
@@ -374,7 +378,13 @@ function buildSlides(slides, container) {
         slideContent += `
           <div class="illustration">
             ${
-              slide.illustration.type === "image"
+              slide.illustration.type === "images"
+                ? `<div class="image-sequence">
+                    ${slide.illustration.content.map((img, imgIndex) => `
+                      <img src="${img.content}" alt="${img.alt}" class="sequence-image ${imgIndex === 0 ? 'active' : ''}" style="display: ${imgIndex === 0 ? 'block' : 'none'}">
+                    `).join('')}
+                   </div>`
+                : slide.illustration.type === "image"
                 ? `<img src="${slide.illustration.content}" alt="${slide.title} illustration">`
                 : slide.illustration.content
             }
@@ -424,6 +434,40 @@ function setupControls(slidesContainer, timerDuration) {
       startTimer();
       hasStartedTimer = true;
     }
+  }
+
+  // Function to handle image sequence navigation
+  function handleImageSequenceNavigation(direction) {
+    const currentSlide = slides[currentSlideIndex];
+    const imageSequence = currentSlide.querySelector('.image-sequence');
+    
+    if (!imageSequence) return false;
+
+    const images = imageSequence.querySelectorAll('.sequence-image');
+    const currentImage = imageSequence.querySelector('.sequence-image.active');
+    const currentImageIndex = Array.from(images).indexOf(currentImage);
+    
+    if (direction === 'next') {
+      if (currentImageIndex < images.length - 1) {
+        // Show next image in sequence
+        currentImage.style.display = 'none';
+        images[currentImageIndex + 1].style.display = 'block';
+        currentImage.classList.remove('active');
+        images[currentImageIndex + 1].classList.add('active');
+        return true;
+      }
+    } else {
+      if (currentImageIndex > 0) {
+        // Show previous image in sequence
+        currentImage.style.display = 'none';
+        images[currentImageIndex - 1].style.display = 'block';
+        currentImage.classList.remove('active');
+        images[currentImageIndex - 1].classList.add('active');
+        return true;
+      }
+    }
+    
+    return false;
   }
 
   // Timer functionality
@@ -493,14 +537,23 @@ function setupControls(slidesContainer, timerDuration) {
     }
 
     // Navigation using arrow keys
-    if (event.key === "ArrowLeft" && currentSlideIndex > 0) {
-      showSlide(currentSlideIndex - 1);
+    if (event.key === "ArrowLeft") {
+      // First try to navigate through images in current slide
+      if (!handleImageSequenceNavigation('prev')) {
+        // If no more images, go to previous slide
+        if (currentSlideIndex > 0) {
+          showSlide(currentSlideIndex - 1);
+        }
+      }
       event.preventDefault();
-    } else if (
-      event.key === "ArrowRight" &&
-      currentSlideIndex < slides.length - 1
-    ) {
-      showSlide(currentSlideIndex + 1);
+    } else if (event.key === "ArrowRight") {
+      // First try to navigate through images in current slide
+      if (!handleImageSequenceNavigation('next')) {
+        // If no more images, go to next slide
+        if (currentSlideIndex < slides.length - 1) {
+          showSlide(currentSlideIndex + 1);
+        }
+      }
       event.preventDefault();
     } else if (event.key === " " && hasStartedTimer) {
       // Space bar to toggle timer after it has started
