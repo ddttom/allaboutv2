@@ -12,6 +12,7 @@ The DPS block transforms a structured table from a Google Doc into a full-screen
 - Consistent slide layout with 40/60 split for content and illustrations
 - Keyboard-based navigation with image sequence support
 - Multiple images per slide with arrow key navigation
+- Presenter notes with toggle functionality
 - Lazy loading of images for improved performance
 - Automatic timer start after first slide
 - Visual timer warnings and countdown
@@ -35,12 +36,14 @@ The DPS block transforms a structured table from a Google Doc into a full-screen
 Content authors should structure their content as follows:
 
 ```
-| DPS                |                       |            |                    |
-| ------------------ | --------------------- | ---------- | ------------------ |
-| Presentation Title | Presentation Subtitle | 25 (timer) |                    |
-| Slide 1 Title      | Slide 1 Introduction  | Bullets    | Image(s) or SVG    |
-| Slide 2 Title      | Slide 2 Introduction  | Bullets    | Image(s) or SVG    |
-| ...                | ...                   | ...        | ...                |
+| DPS                |                       |            |                    |                     |
+| ------------------ | --------------------- | ---------- | ------------------ | ------------------- |
+| Presentation Title | Presentation Subtitle | 25 (timer) |                    |                     |
+| ------------------ | --------------------- | ---------- | ------------------ | ------------------- |
+| Slide 1 Title      | Slide 1 Introduction  | Bullets    | Image(s) or SVG    | Presenter Notes 1   |
+| ------------------ | --------------------- | ---------- | ------------------ | ------------------- |
+| Slide 2 Title      | Slide 2 Introduction  | Bullets    | Image(s) or SVG    | Presenter Notes 2   |
+
 ```
 
 #### Column Definitions
@@ -58,6 +61,12 @@ Content authors should structure their content as follows:
    - Navigate between images using arrow keys
    - When reaching the last image, right arrow advances to next slide
    - When on first image, left arrow goes to previous slide
+5. **Fifth column**: Presenter notes
+   - Private notes visible only to the presenter
+   - Toggle visibility with + and - keys
+   - Notes state (hidden/visible) persists across slides
+   - Appears in bottom left quarter of viewport
+   - Automatically updates when changing slides
 
 ## Slide Layout
 
@@ -173,6 +182,8 @@ Authors can include SVG code directly in the fourth column. Example:
 - Right Arrow: Next image in sequence or next slide if no more images
 - Space Bar: Toggle timer (after first slide)
 - Escape: Exit fullscreen mode
+- Plus (+) key: Show presenter notes
+- Minus (-) key: Hide presenter notes
 
 #### Image Sequence Navigation
 - Right arrow shows next image in the sequence
@@ -180,6 +191,14 @@ Authors can include SVG code directly in the fourth column. Example:
 - When reaching the last image, right arrow advances to next slide
 - When at the first image, left arrow goes to previous slide
 - Smooth fade transition between images
+
+#### Presenter Notes
+- Notes appear in bottom left quarter of viewport
+- Semi-transparent background for readability
+- Toggle visibility with + and - keys
+- State persists across slide changes
+- Hidden by default on startup
+- Not included in print mode
 
 ### Responsive Design
 

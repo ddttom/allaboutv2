@@ -430,3 +430,47 @@ html, body {
 .sequence-image.active {
     opacity: 1;
 }
+
+/* Presenter notes styling */
+.presenter-notes {
+    position: fixed;
+    bottom: 60px; /* Account for footer height */
+    left: 20px;
+    width: 25vw;
+    height: 25vh;
+    background-color: rgba(44, 62, 80, 0.95);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    overflow-y: auto;
+    font-size: 14px;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.presenter-notes.hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+}
+
+.presenter-notes-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.presenter-notes-content {
+    line-height: 1.4;
+    white-space: pre-line;
+}
+
+/* Adjust print styles for presenter notes */
+@media print {
+    .presenter-notes {
+        display: none;
+    }
+}

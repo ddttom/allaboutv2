@@ -11,6 +11,7 @@ export default function decorate(block) {
   const DPS_CONFIG = {
     TIMER_DURATION: 25 * 60, // Default 25 minutes in seconds
     SLIDE_TRANSITION_MS: 300, // Transition time in milliseconds
+    PRESENTER_NOTES_VISIBLE: false, // Initial state of presenter notes
   };
 
   // Get the rows (each row was a table row in the Google Doc)
@@ -56,6 +57,14 @@ export default function decorate(block) {
   slidesContainer.className = "slides-container";
   slidesContainer.id = "slides-container";
 
+  // Create presenter notes container
+  const presenterNotesContainer = document.createElement("div");
+  presenterNotesContainer.className = "presenter-notes hidden";
+  presenterNotesContainer.innerHTML = `
+    <div class="presenter-notes-title">Presenter Notes</div>
+    <div class="presenter-notes-content"></div>
+  `;
+  
   // Create footer section
   const footer = document.createElement("div");
   footer.className = "dps-footer";
@@ -70,6 +79,7 @@ export default function decorate(block) {
   // Append all elements to the presentation container
   presentationContainer.appendChild(header);
   presentationContainer.appendChild(slidesContainer);
+  presentationContainer.appendChild(presenterNotesContainer);
   presentationContainer.appendChild(footer);
 
   // Replace the block content with our presentation
@@ -82,7 +92,9 @@ export default function decorate(block) {
   // Set up presentation controls
   setupControls(
     slidesContainer,
-    presentationData.timerDuration * 60 || DPS_CONFIG.TIMER_DURATION
+    presenterNotesContainer,
+    presentationData.timerDuration * 60 || DPS_CONFIG.TIMER_DURATION,
+    DPS_CONFIG
   );
 
   // Set up fullscreen toggle
@@ -123,6 +135,7 @@ function parseRows(rows) {
       introText: getElementContent(slideCells[1]),
       bulletPoints: parseBulletPoints(slideCells[2]),
       illustration: parseIllustration(slideCells[3]),
+      presenterNotes: slideCells[4] ? getElementContent(slideCells[4]) : '',
     };
 
     presentationData.slides.push(slide);
@@ -134,6 +147,7 @@ function parseRows(rows) {
     title: "Questions & Answers",
     subtitle: "Your feedback and questions are valuable",
     thankYouText: "Thank You For Your Attention",
+    presenterNotes: "Final slide - Open for questions and discussion"
   });
 
   return presentationData;
@@ -311,7 +325,7 @@ function buildSlides(slides, container) {
       }
     });
   }, {
-    rootMargin: '50px 0px', // Start loading when image is 50px from viewport
+    rootMargin: '50px 0px',
     threshold: 0.1
   });
 
@@ -319,6 +333,11 @@ function buildSlides(slides, container) {
     const slideElement = document.createElement("div");
     slideElement.id = `slide-${index}`;
     slideElement.className = "slide";
+    
+    // Store presenter notes in the slide's dataset
+    if (slide.presenterNotes) {
+      slideElement.dataset.presenterNotes = slide.presenterNotes;
+    }
 
     // Special handling for Q&A slides
     if (slide.type === "qanda") {
@@ -433,31 +452,37 @@ function buildSlides(slides, container) {
 /**
  * Set up presentation controls
  */
-function setupControls(slidesContainer, timerDuration) {
+function setupControls(slidesContainer, presenterNotesContainer, timerDuration, config) {
   const slides = slidesContainer.querySelectorAll(".slide");
+  const notesContent = presenterNotesContainer.querySelector(".presenter-notes-content");
 
   let currentSlideIndex = 0;
   let timerInterval = null;
-  let remainingTime = timerDuration; // in seconds
+  let remainingTime = timerDuration;
   let hasStartedTimer = false;
+
+  // Function to update presenter notes
+  function updatePresenterNotes(slideIndex) {
+    const currentSlide = slides[slideIndex];
+    const slideData = currentSlide.dataset.presenterNotes || '';
+    notesContent.textContent = slideData;
+  }
 
   // Function to show a specific slide
   function showSlide(index) {
-    // Hide all slides first and remove active class
     slides.forEach((slide) => {
       slide.style.display = "none";
       slide.classList.remove("active");
     });
 
-    // Show the slide at the index and add active class
     if (slides[index]) {
       slides[index].style.display = "block";
       slides[index].classList.add("active");
+      updatePresenterNotes(index);
     }
 
     currentSlideIndex = index;
 
-    // Start timer automatically when advancing past first slide
     if (index > 0 && !hasStartedTimer) {
       startTimer();
       hasStartedTimer = true;
@@ -556,7 +581,7 @@ function setupControls(slidesContainer, timerDuration) {
     singleFlash();
   }
 
-  // Add keyboard navigation
+  // Add keyboard navigation including presenter notes toggle
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
       const navBar = document.querySelector(".dps-navigation");
@@ -564,36 +589,40 @@ function setupControls(slidesContainer, timerDuration) {
       return;
     }
 
-    // Navigation using arrow keys
+    // Toggle presenter notes with + and - keys
+    if (event.key === "+" || event.key === "=") {
+      presenterNotesContainer.classList.remove("hidden");
+      config.PRESENTER_NOTES_VISIBLE = true;
+      event.preventDefault();
+    } else if (event.key === "-" || event.key === "_") {
+      presenterNotesContainer.classList.add("hidden");
+      config.PRESENTER_NOTES_VISIBLE = false;
+      event.preventDefault();
+    }
+
+    // Existing navigation controls
     if (event.key === "ArrowLeft") {
-      // First try to navigate through images in current slide
       if (!handleImageSequenceNavigation('prev')) {
-        // If no more images, go to previous slide
         if (currentSlideIndex > 0) {
           showSlide(currentSlideIndex - 1);
         }
       }
       event.preventDefault();
     } else if (event.key === "ArrowRight") {
-      // First try to navigate through images in current slide
       if (!handleImageSequenceNavigation('next')) {
-        // If no more images, go to next slide
         if (currentSlideIndex < slides.length - 1) {
           showSlide(currentSlideIndex + 1);
         }
       }
       event.preventDefault();
     } else if (event.key === " " && hasStartedTimer) {
-      // Space bar to toggle timer after it has started
       toggleTimer();
       event.preventDefault();
     }
   });
 
-  // Initially set the timer display
+  // Initially set the timer display and show first slide
   document.querySelector(".timer").textContent = formatTime(remainingTime);
-
-  // Show the first slide initially
   showSlide(0);
 }
 
