@@ -32,46 +32,45 @@
     <g id="ticket-list" transform="translate(500, 50)">
         <!-- Ticket 1 -->
         <g id="ticket-1" class="ticket">
-            <rect x="0" y="0" width="200" height="50" rx="5" fill="#e74c3c" opacity="0.7">
-                <animateTransform
-                    attributeName="transform"
-                    type="translate"
-                    from="0 0"
-                    to="-410 70"
-                    begin="5s; 12s"
-                    dur="1s"
-                    fill="freeze"
-                />
-            </rect>
+            <animateTransform
+                attributeName="transform"
+                type="translate"
+                from="0 0"
+                to="-410 70"
+                begin="5s; 12s"
+                dur="1s"
+                fill="freeze"
+            />
+            <rect x="0" y="0" width="200" height="50" rx="5" fill="#e74c3c" opacity="0.7" />
             <text x="100" y="30" text-anchor="middle" fill="white" font-size="16">LOVED</text>
         </g>
         
         <!-- Ticket 2 -->
         <g id="ticket-2" class="ticket">
+            <animateTransform
+                attributeName="transform"
+                type="translate"
+                from="0 0"
+                to="-410 130"
+                begin="5s; 12s"
+                dur="1s"
+                fill="freeze"
+            />
+            <animateTransform
+                attributeName="transform"
+                type="translate"
+                from="-410 130"
+                to="-410 380"
+                begin="10s"
+                dur="1s"
+                fill="freeze"
+            />
             <rect x="0" y="60" width="200" height="50" rx="5" fill="#e74c3c" opacity="0.7">
-                <animateTransform
-                    attributeName="transform"
-                    type="translate"
-                    from="0 0"
-                    to="-410 130"
-                    begin="5s; 12s"
-                    dur="1s"
-                    fill="freeze"
-                />
                 <animate
                     attributeName="fill"
                     values="#e74c3c;#2980b9;#e74c3c"
                     begin="10s; 12s"
                     dur="0.1s"
-                    fill="freeze"
-                />
-                <animateTransform
-                    attributeName="transform"
-                    type="translate"
-                    from="-410 130"
-                    to="-410 380"
-                    begin="10s"
-                    dur="1s"
                     fill="freeze"
                 />
             </rect>
@@ -80,65 +79,61 @@
         
         <!-- Ticket 3 -->
         <g id="ticket-3" class="ticket">
-            <rect x="0" y="120" width="200" height="50" rx="5" fill="#e74c3c" opacity="0.7">
-                <animateTransform
-                    attributeName="transform"
-                    type="translate"
-                    from="0 0"
-                    to="-410 190"
-                    begin="5s; 12s"
-                    dur="1s"
-                    fill="freeze"
-                />
-            </rect>
+            <animateTransform
+                attributeName="transform"
+                type="translate"
+                from="0 0"
+                to="-410 190"
+                begin="5s; 12s"
+                dur="1s"
+                fill="freeze"
+            />
+            <rect x="0" y="120" width="200" height="50" rx="5" fill="#e74c3c" opacity="0.7" />
             <text x="100" y="150" text-anchor="middle" fill="white" font-size="16">ADORED</text>
         </g>
         
         <!-- Ticket 4 -->
         <g id="ticket-4" class="ticket">
-            <rect x="0" y="180" width="200" height="50" rx="5" fill="#e74c3c" opacity="0.7">
-                <animateTransform
-                    attributeName="transform"
-                    type="translate"
-                    from="0 0"
-                    to="-410 250"
-                    begin="5s; 12s"
-                    dur="1s"
-                    fill="freeze"
-                />
-            </rect>
+            <animateTransform
+                attributeName="transform"
+                type="translate"
+                from="0 0"
+                to="-410 250"
+                begin="5s; 12s"
+                dur="1s"
+                fill="freeze"
+            />
+            <rect x="0" y="180" width="200" height="50" rx="5" fill="#e74c3c" opacity="0.7" />
             <text x="100" y="210" text-anchor="middle" fill="white" font-size="16">DROVE</text>
         </g>
         
         <!-- Ticket 5 -->
         <g id="ticket-5" class="ticket">
-            <rect x="0" y="240" width="200" height="50" rx="5" fill="#e74c3c" opacity="0.7">
-                <animateTransform
-                    attributeName="transform"
-                    type="translate"
-                    from="0 0"
-                    to="-410 310"
-                    begin="5s; 12s"
-                    dur="1s"
-                    fill="freeze"
-                />
-            </rect>
+            <animateTransform
+                attributeName="transform"
+                type="translate"
+                from="0 0"
+                to="-410 310"
+                begin="5s; 12s"
+                dur="1s"
+                fill="freeze"
+            />
+            <rect x="0" y="240" width="200" height="50" rx="5" fill="#e74c3c" opacity="0.7" />
             <text x="100" y="270" text-anchor="middle" fill="white" font-size="16">FLOATED</text>
         </g>
         
         <!-- Ticket 6 -->
         <g id="ticket-6" class="ticket">
-            <rect x="0" y="300" width="200" height="50" rx="5" fill="#e74c3c" opacity="0.7">
-                <animateTransform
-                    attributeName="transform"
-                    type="translate"
-                    from="0 0"
-                    to="-410 370"
-                    begin="5s; 12s"
-                    dur="1s"
-                    fill="freeze"
-                />
-            </rect>
+            <animateTransform
+                attributeName="transform"
+                type="translate"
+                from="0 0"
+                to="-410 370"
+                begin="5s; 12s"
+                dur="1s"
+                fill="freeze"
+            />
+            <rect x="0" y="300" width="200" height="50" rx="5" fill="#e74c3c" opacity="0.7" />
             <text x="100" y="330" text-anchor="middle" fill="white" font-size="16">RAN</text>
         </g>
     </g>
