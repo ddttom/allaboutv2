@@ -464,17 +464,20 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
     // Get the block element
     const block = document.querySelector('.dps-block');
     if (block) {
-      // Store the original rows structure
-      const rows = Array.from(block.children);
-      const originalContent = rows.map(row => row.innerHTML).join('');
+      // Store the original Franklin structure
+      const originalRows = Array.from(block.children);
       
       // Clear the block
       block.innerHTML = '';
       
-      // Restore the original structure
-      rows.forEach(row => {
+      // Restore the original Franklin structure
+      originalRows.forEach(row => {
         const newRow = document.createElement('div');
-        newRow.innerHTML = row.innerHTML;
+        Array.from(row.children).forEach(cell => {
+          const newCell = document.createElement('div');
+          newCell.innerHTML = cell.innerHTML;
+          newRow.appendChild(newCell);
+        });
         block.appendChild(newRow);
       });
       
