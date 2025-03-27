@@ -436,7 +436,7 @@ html, body {
     position: fixed;
     bottom: 60px; /* Account for footer height */
     left: 20px;
-    width: 25vw;
+    width: 31.25vw; /* Increased from 25vw by 25% */
     height: 25vh;
     background-color: rgba(44, 62, 80, 0.95);
     color: white;

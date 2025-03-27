@@ -193,7 +193,7 @@ Authors can include SVG code directly in the fourth column. Example:
 - Smooth fade transition between images
 
 #### Presenter Notes
-- Notes appear in bottom left quarter of viewport
+- Notes appear in bottom left third of viewport (31.25% of viewport width)
 - Semi-transparent background for readability
 - Toggle visibility with + and - keys
 - State persists across slide changes
