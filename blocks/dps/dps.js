@@ -274,23 +274,26 @@ function parseIllustration(cell) {
 
   // Function to clean up Google Drive iframe
   function cleanGoogleDriveIframe(iframe) {
-    // Add sandbox attribute to restrict iframe capabilities
-    iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation');
+    // Extract the file ID from the URL
+    const fileId = iframe.src.match(/\/d\/([^\/]+)/)?.[1];
+    if (!fileId) return iframe;
+
+    // Create a new URL that works with CSP
+    const newUrl = `https://drive.google.com/file/d/${fileId}/preview?embedded=true&autoplay=1&loop=1&controls=0`;
     
-    // Add autoplay and controls attributes
+    // Update the iframe with new attributes
+    iframe.src = newUrl;
+    iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation');
     iframe.setAttribute('allow', 'autoplay');
     iframe.setAttribute('allowfullscreen', '');
-    
-    // Set consistent styling
+    iframe.setAttribute('loading', 'lazy');
     iframe.style.border = 'none';
     iframe.style.background = '#fff';
-    
-    // Add loading attribute for better performance
-    iframe.setAttribute('loading', 'lazy');
     
     // Add data attributes for video control
     iframe.setAttribute('data-autoplay', 'true');
     iframe.setAttribute('data-stop-at-end', 'true');
+    iframe.setAttribute('data-file-id', fileId);
     
     return iframe;
   }

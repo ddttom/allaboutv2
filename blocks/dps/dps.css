@@ -203,10 +203,6 @@ html, body {
     background-color: #fff;
     border: none;
     box-shadow: none;
-}
-
-/* Ensure proper aspect ratio for Google Drive previews */
-.iframe-container iframe[src*="drive.google.com"] {
     aspect-ratio: 16/9;
     max-height: calc(100vh - 200px);
     width: 100%;
@@ -285,6 +281,25 @@ html, body {
     background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.1));
     pointer-events: none;
     z-index: 1;
+}
+
+/* Handle forced-colors mode */
+@media (forced-colors: active) {
+    .iframe-container {
+        border: 1px solid CanvasText;
+    }
+    
+    .iframe-container iframe {
+        border: 1px solid CanvasText;
+    }
+    
+    .iframe-container::before {
+        background: Canvas;
+    }
+    
+    .iframe-container::after {
+        background: linear-gradient(to bottom, transparent, CanvasText);
+    }
 }
 
 /* Ensure SVG illustrations are full width within their container */
