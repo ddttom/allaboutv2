@@ -262,16 +262,16 @@ function parseBulletPoints(cell) {
 function parseIllustration(cell) {
   if (!cell) return null;
 
-  // Get all paragraph elements
-  const paragraphs = cell.querySelectorAll('p');
-  if (paragraphs.length === 0) return null;
+  // Get all paragraph and div elements
+  const elements = cell.querySelectorAll('p, div');
+  if (elements.length === 0) return null;
 
   // Array to store all illustrations found
   const illustrations = [];
 
-  // Process each paragraph
-  paragraphs.forEach(paragraph => {
-    const content = paragraph.innerHTML.trim();
+  // Process each element
+  elements.forEach(element => {
+    const content = element.innerHTML.trim();
     
     // Function to decode HTML entities
     function decodeHTMLEntities(text) {
@@ -401,7 +401,7 @@ function parseIllustration(cell) {
     }
 
     // Check for picture element
-    const picture = paragraph.querySelector('picture');
+    const picture = element.querySelector('picture');
     if (picture) {
       const img = picture.querySelector('img');
       if (img) {
@@ -415,7 +415,7 @@ function parseIllustration(cell) {
     }
 
     // Check for direct image
-    const img = paragraph.querySelector('img');
+    const img = element.querySelector('img');
     if (img) {
       illustrations.push({
         type: "image",
@@ -426,7 +426,7 @@ function parseIllustration(cell) {
     }
 
     // Check for SVG element
-    const svg = paragraph.querySelector('svg');
+    const svg = element.querySelector('svg');
     if (svg) {
       illustrations.push({
         type: "svg",
