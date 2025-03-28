@@ -175,8 +175,8 @@ html, body {
     object-fit: contain;
 }
 
-/* Video container styling */
-.video-container {
+/* iframe container styling */
+.iframe-container {
     width: 100%;
     height: 100%;
     display: flex;
@@ -188,8 +188,8 @@ html, body {
     position: relative;
 }
 
-/* Drive video styling */
-.drive-video {
+/* iframe styling */
+.iframe-container iframe {
     width: 100%;
     height: 100%;
     max-height: calc(100vh - 200px);
@@ -200,63 +200,24 @@ html, body {
     aspect-ratio: 16/9;
 }
 
-/* Loading state */
-.video-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #f8f9fa;
-    z-index: 1;
-    transition: opacity 0.3s ease;
-}
-
-.video-container iframe.loaded + .video-container::before {
-    opacity: 0;
-    pointer-events: none;
-}
-
-/* Video end state */
-.drive-video.video-ended {
-    opacity: 0.8;
-}
-
-.drive-video.video-ended::after {
-    content: '▶';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 48px;
-    color: #fff;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    cursor: pointer;
-    z-index: 2;
-    pointer-events: auto;
-}
-
 /* Handle forced-colors mode */
 @media (forced-colors: active) {
-    .video-container {
+    .iframe-container {
         border: 1px solid CanvasText;
     }
     
-    .drive-video {
+    .iframe-container iframe {
         border: 1px solid CanvasText;
-    }
-    
-    .video-container::before {
-        background: Canvas;
     }
 }
 
-/* Remove old iframe styles */
-.iframe-container,
-.iframe-container iframe,
-.iframe-container::before,
-.iframe-container::after {
+/* Remove old video container styles */
+.video-container,
+.video-container::before,
+.video-container::after,
+.drive-video,
+.drive-video.video-ended,
+.drive-video.video-ended::after {
     display: none;
 }
 

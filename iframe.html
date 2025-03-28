@@ -3,154 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Player</title>
+    <title>Hello World</title>
     <style>
-        /* Reset and base styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: #f8f9fa;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
-        }
-
-        /* Video container */
-        .video-container {
-            width: 100%;
-            max-width: 1200px;
-            aspect-ratio: 16/9;
-            background-color: #fff;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            position: relative;
-        }
-
-        /* Loading state */
-        .video-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: #f8f9fa;
-            z-index: 1;
-            transition: opacity 0.3s ease;
-        }
-
-        .video-container iframe.loaded + .video-container::before {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        /* Video iframe */
-        .video-player {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: #fff;
-        }
-
-        /* Controls overlay */
-        .controls-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 60px;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-
-        .video-container:hover .controls-overlay {
-            opacity: 1;
-        }
-
-        /* Handle forced-colors mode */
-        @media (forced-colors: active) {
-            .video-container {
-                border: 1px solid CanvasText;
-            }
-            
-            .video-player {
-                border: 1px solid CanvasText;
-            }
-            
-            .video-container::before {
-                background: Canvas;
-            }
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
     </style>
 </head>
 <body>
-    <div class="video-container">
-        <iframe 
-            class="video-player"
-            src="https://drive.google.com/file/d/1j3SSz9BUh8ljCsffa0gp5n1p4mcxE62z/preview?embedded=true&autoplay=1&loop=1&controls=0"
-            allow="autoplay"
-            allowfullscreen
-            loading="lazy"
-            title="Video Player"
-        ></iframe>
-        <div class="controls-overlay"></div>
-    </div>
-
-    <script>
-        // Configuration object
-        const CONFIG = {
-            VIDEO_ID: '1j3SSz9BUh8ljCsffa0gp5n1p4mcxE62z',
-            AUTOPLAY: true,
-            LOOP: true,
-            CONTROLS: false
-        };
-
-        // Get the iframe element
-        const iframe = document.querySelector('.video-player');
-
-        // Function to handle iframe load
-        function handleIframeLoad() {
-            iframe.classList.add('loaded');
-            
-            // Add message listener for iframe communication
-            window.addEventListener('message', (event) => {
-                // Check if the message is from our iframe
-                if (event.origin.includes('drive.google.com')) {
-                    try {
-                        const data = event.data;
-                        
-                        // Check for video end
-                        if (data.type === 'videoEnded') {
-                            // Handle video end
-                            console.log('Video ended');
-                        }
-                    } catch (e) {
-                        // eslint-disable-next-line no-console
-                        console.error('Error handling iframe message:', e);
-                    }
-                }
-            });
-        }
-
-        // Add load event listener
-        iframe.addEventListener('load', handleIframeLoad);
-    </script>
+    <h1>Hello World</h1>
 </body>
 </html> 

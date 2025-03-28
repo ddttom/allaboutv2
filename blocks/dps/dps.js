@@ -272,35 +272,6 @@ function parseIllustration(cell) {
     return textarea.value;
   }
 
-  // Function to clean up Google Drive iframe
-  function cleanGoogleDriveIframe(iframe) {
-    // Extract the file ID from the URL
-    const fileId = iframe.src.match(/\/d\/([^\/]+)/)?.[1];
-    if (!fileId) return iframe;
-
-    // Create a new iframe with the correct URL and attributes
-    const newIframe = document.createElement('iframe');
-    newIframe.className = 'drive-video';
-    newIframe.src = `https://drive.google.com/file/d/${fileId}/preview?embedded=true&autoplay=1&loop=1&controls=0`;
-    newIframe.setAttribute('allow', 'autoplay');
-    newIframe.setAttribute('allowfullscreen', '');
-    newIframe.setAttribute('loading', 'lazy');
-    newIframe.style.border = 'none';
-    newIframe.style.background = '#fff';
-    
-    // Add data attributes for video control
-    newIframe.setAttribute('data-autoplay', 'true');
-    newIframe.setAttribute('data-stop-at-end', 'true');
-    newIframe.setAttribute('data-file-id', fileId);
-    
-    // Create a container for the iframe
-    const container = document.createElement('div');
-    container.className = 'video-container';
-    container.appendChild(newIframe);
-    
-    return container;
-  }
-
   // Function to extract iframe content
   function extractIframeContent(rawContent) {
     // First try to decode HTML entities
@@ -319,17 +290,6 @@ function parseIllustration(cell) {
         // Find the iframe element
         const iframe = tempDiv.querySelector('iframe');
         if (iframe) {
-          // Clean up the iframe if it's from Google Drive
-          if (iframe.src && iframe.src.includes('drive.google.com')) {
-            const videoContainer = cleanGoogleDriveIframe(iframe);
-            return {
-              type: "video",
-              content: videoContainer.outerHTML,
-              width: "100%",
-              height: "100%"
-            };
-          }
-          
           return {
             type: "iframe",
             content: iframe.outerHTML,
@@ -542,10 +502,6 @@ function buildSlides(slides, container) {
                         class="sequence-image ${imgIndex === 0 ? 'active' : ''}" 
                         style="display: ${imgIndex === 0 ? 'block' : 'none'}">
                     `).join('')}
-                   </div>`
-                : slide.illustration.type === "video"
-                ? `<div class="video-container">
-                    ${slide.illustration.content}
                    </div>`
                 : slide.illustration.type === "iframe"
                 ? `<div class="iframe-container">

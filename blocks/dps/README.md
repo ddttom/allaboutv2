@@ -12,6 +12,7 @@ A powerful presentation system that transforms structured content into an intera
 - Timer with warning system
 - Responsive design
 - Print-friendly handout mode
+- iframe support for embedded content
 
 ## Content Structure
 | Title | Subtitle | Timer (minutes) | Content | Presenter Notes |
@@ -37,21 +38,31 @@ A powerful presentation system that transforms structured content into an intera
 - Navigation wraps around at sequence ends
 
 ### iframe Support
-- Fourth column supports embedded iframes
-- iframes automatically resize to fit the illustration area
-- Maintains aspect ratio while maximizing available space
-- Supports any valid iframe source (YouTube, Vimeo, custom content)
-- iframes are contained within a styled container for better presentation
-- Example iframe usage:
-  ```html
-  <iframe 
+The fourth column supports embedded iframes with the following features:
+- Automatic resizing to fit the illustration area
+- Maintains 16:9 aspect ratio
+- Responsive design that works on all screen sizes
+- Supports any valid iframe source
+- High contrast mode support
+
+#### iframe Usage
+Add your iframe code to the fourth column. Example:
+```html
+<iframe 
     src="https://example.com/embed" 
-    width="100%" 
-    height="100%" 
-    frameborder="0" 
-    allowfullscreen>
-  </iframe>
-  ```
+    allow="autoplay"
+    allowfullscreen
+    loading="lazy"
+    title="Embedded Content">
+</iframe>
+```
+
+#### iframe Best Practices
+1. Always include a descriptive title attribute
+2. Use appropriate allow attributes for functionality
+3. Set loading="lazy" for better performance
+4. Ensure the iframe source is secure (https)
+5. Test the iframe in both desktop and mobile views
 
 ### Presenter Notes
 - Appears in bottom left third of viewport (31.25% width)
@@ -98,12 +109,18 @@ A powerful presentation system that transforms structured content into an intera
 - If presenter notes don't toggle, ensure no other keyboard shortcuts are active
 - For print issues, use the browser's print preview
 - If timer doesn't start, ensure you've advanced past the first slide
+- For iframe issues:
+  - Check if the source URL is accessible
+  - Verify iframe permissions are set correctly
+  - Ensure the iframe source supports embedding
+  - Check browser console for any security policy errors
 
 ## Notes
 - Presenter notes support HTML formatting for better organization
 - Images maintain aspect ratio while using available space
 - Timer starts automatically after first slide
 - Print mode excludes presenter notes and navigation elements
+- iframes are contained within a styled container for better presentation
 
 ## Implementation
 
@@ -125,7 +142,6 @@ Content authors should structure their content as follows:
 | Slide 1 Title      | Slide 1 Introduction  | Bullets    | Image(s) or SVG(s) | Presenter Notes 1   |
 | ------------------ | --------------------- | ---------- | ------------------ | ------------------- |
 | Slide 2 Title      | Slide 2 Introduction  | Bullets    | Image(s) or SVG(s) | Presenter Notes 2   |
-
 ```
 
 #### Column Definitions
@@ -137,12 +153,13 @@ Content authors should structure their content as follows:
    - Plain text will be displayed without bullets
    - Line breaks in plain text are preserved
    - HTML formatting (like `<code>` and `<strong>`) is supported
-4. **Fourth column**: Images or SVG for illustrations
+4. **Fourth column**: Images, SVG, or iframes for illustrations
    - Can contain multiple images that will be shown in sequence
    - Images use full viewport height while maintaining aspect ratio
    - Navigate between images using arrow keys
    - When reaching the last image, right arrow advances to next slide
    - When on first image, left arrow goes to previous slide
+   - iframes are automatically sized and styled
 5. **Fifth column**: Presenter notes
    - Private notes visible only to the presenter
    - Toggle visibility with + and - keys
@@ -170,6 +187,7 @@ Each slide follows a consistent layout:
    - Images use full viewport height
    - Maintains aspect ratio
    - Smooth transitions between images
+   - iframes with proper sizing and styling
 
 ## Content Formatting
 
@@ -200,6 +218,7 @@ The following HTML elements are supported in the content:
 - `<code>` - Monospace text
 - `<strong>` - Bold text
 - `<br>` - Line breaks
+- `<iframe>` - Embedded content
 - Other HTML formatting elements
 
 ## Special Slides
@@ -233,7 +252,7 @@ This block follows these important EDS development principles:
    - Title (required)
    - Introduction text (optional)
    - Bullet points and plain text (use document's list formatting for bullets)
-   - SVG content or image (optional)
+   - SVG content, image, or iframe (optional)
 
 ## Advanced Features
 
@@ -246,6 +265,20 @@ Authors can include SVG code directly in the fourth column. Example:
   <ellipse cx="200" cy="100" rx="150" ry="80" fill="#BBDEFB" stroke="#3498db" stroke-width="2"/>
   <text x="200" y="105" font-size="24" text-anchor="middle">Sample SVG</text>
 </svg>
+```
+
+### iframe Support
+
+Authors can include iframes in the fourth column. Example:
+
+```html
+<iframe 
+    src="https://example.com/embed" 
+    allow="autoplay"
+    allowfullscreen
+    loading="lazy"
+    title="Embedded Content">
+</iframe>
 ```
 
 ### Timer Functionality
@@ -289,6 +322,7 @@ Authors can include SVG code directly in the fourth column. Example:
 - Mobile-optimized layout
 - Maintains readability on small screens
 - Adjusts illustration sizes automatically
+- iframes maintain aspect ratio and responsiveness
 
 ### Print Mode
 
@@ -303,6 +337,7 @@ Authors can include SVG code directly in the fourth column. Example:
 - Follows WCAG accessibility guidelines
 - Supports high-DPI displays
 - Touch-friendly interface
+- iframe support across major browsers
 
 ## Styling
 
@@ -322,3 +357,4 @@ The block implements several performance optimizations:
 - Minimal reflows and repaints
 - Event delegation for improved interaction handling
 - Smart state management for presentation controls
+- Lazy loading for iframes
