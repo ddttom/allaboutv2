@@ -20,6 +20,7 @@ A powerful presentation system that transforms structured content into an intera
 | Slide Title | Introduction text | | Bullet points | Notes for this slide |
 | | | | Multiple images | Additional guidance |
 | | | | SVG illustrations | Key points to cover |
+| | | | iframes | Additional notes |
 
 ## Navigation
 - **Arrow Keys**: Navigate between slides
@@ -34,6 +35,23 @@ A powerful presentation system that transforms structured content into an intera
 - Images maintain aspect ratio and use full viewport height
 - Smooth transitions between images
 - Navigation wraps around at sequence ends
+
+### iframe Support
+- Fourth column supports embedded iframes
+- iframes automatically resize to fit the illustration area
+- Maintains aspect ratio while maximizing available space
+- Supports any valid iframe source (YouTube, Vimeo, custom content)
+- iframes are contained within a styled container for better presentation
+- Example iframe usage:
+  ```html
+  <iframe 
+    src="https://example.com/embed" 
+    width="100%" 
+    height="100%" 
+    frameborder="0" 
+    allowfullscreen>
+  </iframe>
+  ```
 
 ### Presenter Notes
 - Appears in bottom left third of viewport (31.25% width)

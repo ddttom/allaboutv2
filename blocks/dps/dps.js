@@ -262,7 +262,19 @@ function parseBulletPoints(cell) {
 function parseIllustration(cell) {
   if (!cell) return null;
 
-  // Check for multiple images first
+  // Check for iframe first
+  const iframe = cell.querySelector("iframe");
+  if (iframe) {
+    return {
+      type: "iframe",
+      content: iframe.outerHTML,
+      src: iframe.src,
+      width: iframe.width || "100%",
+      height: iframe.height || "100%"
+    };
+  }
+
+  // Check for multiple images
   const images = cell.querySelectorAll("img");
   if (images.length > 0) {
     return {
@@ -415,9 +427,13 @@ function buildSlides(slides, container) {
                         style="display: ${imgIndex === 0 ? 'block' : 'none'}">
                     `).join('')}
                    </div>`
-                : slide.illustration.type === "image"
-                ? `<img src="${slide.illustration.content}" alt="${slide.title} illustration">`
-                : slide.illustration.content
+                : slide.illustration.type === "iframe"
+                ? `<div class="iframe-container">
+                    ${slide.illustration.content}
+                   </div>`
+                : slide.illustration.type === "svg"
+                ? slide.illustration.content
+                : `<img src="${slide.illustration.content}" alt="${slide.title} illustration">`
             }
           </div>
         `;
