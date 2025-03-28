@@ -290,12 +290,20 @@ function parseIllustration(cell) {
         // Find the iframe element
         const iframe = tempDiv.querySelector('iframe');
         if (iframe) {
+          // Create a new iframe with the correct attributes
+          const newIframe = document.createElement('iframe');
+          newIframe.src = iframe.src;
+          newIframe.allow = iframe.allow || 'autoplay; fullscreen';
+          newIframe.allowfullscreen = iframe.allowfullscreen || true;
+          newIframe.loading = iframe.loading || 'lazy';
+          newIframe.title = iframe.title || 'Embedded Content';
+          
           return {
             type: "iframe",
-            content: iframe.outerHTML,
-            src: iframe.src,
-            width: iframe.width || "100%",
-            height: iframe.height || "100%"
+            content: newIframe.outerHTML,
+            src: newIframe.src,
+            width: "100%",
+            height: "100%"
           };
         }
       } catch (e) {
