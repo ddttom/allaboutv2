@@ -281,6 +281,10 @@ function parseIllustration(cell) {
       /<a[^>]*href=["']([^"']+)["']/, // <a href="url">
       /<a[^>]*href=([^\s>]+)/, // <a href=url>
       /(https?:\/\/[^\s<>"]+)/, // plain URL
+      /&#x3C;iframe[^>]*>([^<]+)&#x3C;\/iframe>/, // HTML encoded iframe with content
+      /&#x3C;iframe[^>]*>/, // HTML encoded iframe start
+      /<p[^>]*>&#x3C;iframe[^>]*>([^<]+)&#x3C;\/iframe><\/p>/, // Paragraph wrapped HTML encoded iframe
+      /<p[^>]*>&#x3C;iframe[^>]*>/, // Paragraph wrapped HTML encoded iframe start
     ];
 
     for (const pattern of urlPatterns) {

@@ -66,6 +66,11 @@ https://example.com/embed
 &lt;iframe src="https://example.com/embed"&gt;
 ```
 
+6. Paragraph wrapped HTML encoded iframe:
+```html
+<p>&#x3C;iframe https://example.com/embed</p>
+```
+
 #### iframe Features
 - Automatic resizing to fit the illustration area
 - Maintains 16:9 aspect ratio
@@ -74,6 +79,7 @@ https://example.com/embed
 - High contrast mode support
 - Smart URL extraction and cleaning
 - Preserves original attributes while ensuring required ones
+- Handles HTML entities and paragraph wrapping
 
 #### iframe Best Practices
 1. Always include a descriptive title attribute
@@ -81,6 +87,7 @@ https://example.com/embed
 3. Set loading="lazy" for better performance
 4. Ensure the iframe source is secure (https)
 5. Test the iframe in both desktop and mobile views
+6. If using HTML entities, ensure proper encoding
 
 ### Presenter Notes
 - Appears in bottom left third of viewport (31.25% width)
@@ -135,6 +142,7 @@ https://example.com/embed
   - Ensure the iframe source supports embedding
   - Check browser console for any security policy errors
   - Try using a different URL format if one doesn't work
+  - If using HTML entities, ensure they are properly encoded
 
 ## Notes
 - Presenter notes support HTML formatting for better organization
@@ -143,6 +151,7 @@ https://example.com/embed
 - Print mode excludes presenter notes and navigation elements
 - iframes are contained within a styled container for better presentation
 - The system automatically handles various URL formats and HTML encodings
+- Paragraph wrapped iframes with HTML entities are supported
 
 ## Implementation
 
