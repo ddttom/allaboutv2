@@ -293,6 +293,14 @@ function parseIllustration(cell) {
       path = `https://allabout.network${path}`;
     }
 
+    // If path starts with /iframe, replace with correct domain
+    if (path.startsWith('/iframe')) {
+      path = `https://allabout.network${path}`;
+    }
+
+    // Clean up any malformed URLs
+    path = path.replace(/\s+/g, '').replace(/["']/g, '');
+    
     return path;
   }
 
@@ -632,7 +640,7 @@ function buildSlides(slides, container) {
                     ${slide.illustration.content.map((item, index) => {
                       if (item.type === "iframe") {
                         return `<div class="iframe-container sequence-image ${index === 0 ? 'active' : ''}" style="display: ${index === 0 ? 'block' : 'none'}">
-                          ${item.content}
+                          <iframe src="${item.src}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>
                         </div>`;
                       } else if (item.type === "picture") {
                         return `<div class="sequence-image ${index === 0 ? 'active' : ''}" style="display: ${index === 0 ? 'block' : 'none'}">
@@ -648,7 +656,7 @@ function buildSlides(slides, container) {
                    </div>`
                 : slide.illustration.type === "iframe"
                 ? `<div class="iframe-container">
-                    ${slide.illustration.content}
+                    <iframe src="${slide.illustration.src}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>
                    </div>`
                 : slide.illustration.type === "svg"
                 ? slide.illustration.content
