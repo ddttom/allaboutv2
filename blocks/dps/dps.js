@@ -278,27 +278,25 @@ function parseIllustration(cell) {
     const fileId = iframe.src.match(/\/d\/([^\/]+)/)?.[1];
     if (!fileId) return iframe;
 
-    // Create a video element instead of an iframe
-    const video = document.createElement('video');
-    video.className = 'drive-video';
-    video.setAttribute('controls', '');
-    video.setAttribute('autoplay', '');
-    video.setAttribute('loop', '');
-    video.setAttribute('muted', '');
-    video.setAttribute('playsinline', '');
-    
-    // Set the video source to the direct video URL
-    video.src = `https://drive.google.com/uc?export=download&id=${fileId}`;
+    // Create a new iframe with the correct URL and attributes
+    const newIframe = document.createElement('iframe');
+    newIframe.className = 'drive-video';
+    newIframe.src = `https://drive.google.com/file/d/${fileId}/preview?embedded=true&autoplay=1&loop=1&controls=0`;
+    newIframe.setAttribute('allow', 'autoplay');
+    newIframe.setAttribute('allowfullscreen', '');
+    newIframe.setAttribute('loading', 'lazy');
+    newIframe.style.border = 'none';
+    newIframe.style.background = '#fff';
     
     // Add data attributes for video control
-    video.setAttribute('data-autoplay', 'true');
-    video.setAttribute('data-stop-at-end', 'true');
-    video.setAttribute('data-file-id', fileId);
+    newIframe.setAttribute('data-autoplay', 'true');
+    newIframe.setAttribute('data-stop-at-end', 'true');
+    newIframe.setAttribute('data-file-id', fileId);
     
-    // Create a container for the video
+    // Create a container for the iframe
     const container = document.createElement('div');
     container.className = 'video-container';
-    container.appendChild(video);
+    container.appendChild(newIframe);
     
     return container;
   }
@@ -413,21 +411,34 @@ function parseIllustration(cell) {
 /**
  * Set up video controls
  */
-function setupVideoControls(video) {
-  if (!video || !video.classList.contains('drive-video')) return;
+function setupVideoControls(iframe) {
+  if (!iframe || !iframe.classList.contains('drive-video')) return;
 
-  // Function to handle video end
-  function handleVideoEnd() {
-    video.classList.add('video-ended');
-    video.pause();
-    video.currentTime = 0;
+  // Function to handle iframe load
+  function handleIframeLoad() {
+    iframe.classList.add('loaded');
+    
+    // Add message listener for iframe communication
+    window.addEventListener('message', (event) => {
+      // Check if the message is from our iframe
+      if (event.origin.includes('drive.google.com')) {
+        try {
+          const data = event.data;
+          
+          // Check for video end
+          if (data.type === 'videoEnded') {
+            iframe.classList.add('video-ended');
+          }
+        } catch (e) {
+          // eslint-disable-next-line no-console
+          console.error('Error handling iframe message:', e);
+        }
+      }
+    });
   }
 
-  // Add event listeners
-  video.addEventListener('ended', handleVideoEnd);
-  video.addEventListener('play', () => {
-    video.classList.remove('video-ended');
-  });
+  // Add load event listener
+  iframe.addEventListener('load', handleIframeLoad);
 }
 
 /**
