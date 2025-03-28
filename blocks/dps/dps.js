@@ -272,6 +272,29 @@ function parseIllustration(cell) {
     return textarea.value;
   }
 
+  // Function to clean up Google Drive iframe
+  function cleanGoogleDriveIframe(iframe) {
+    // Add sandbox attribute to restrict iframe capabilities
+    iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation');
+    
+    // Add autoplay and controls attributes
+    iframe.setAttribute('allow', 'autoplay');
+    iframe.setAttribute('allowfullscreen', '');
+    
+    // Set consistent styling
+    iframe.style.border = 'none';
+    iframe.style.background = '#fff';
+    
+    // Add loading attribute for better performance
+    iframe.setAttribute('loading', 'lazy');
+    
+    // Add data attributes for video control
+    iframe.setAttribute('data-autoplay', 'true');
+    iframe.setAttribute('data-stop-at-end', 'true');
+    
+    return iframe;
+  }
+
   // Function to extract iframe content
   function extractIframeContent(rawContent) {
     // First try to decode HTML entities
@@ -290,6 +313,11 @@ function parseIllustration(cell) {
         // Find the iframe element
         const iframe = tempDiv.querySelector('iframe');
         if (iframe) {
+          // Clean up the iframe if it's from Google Drive
+          if (iframe.src && iframe.src.includes('drive.google.com')) {
+            cleanGoogleDriveIframe(iframe);
+          }
+          
           return {
             type: "iframe",
             content: iframe.outerHTML,
@@ -366,6 +394,42 @@ function parseIllustration(cell) {
 
   // If no recognized illustration format, return null
   return null;
+}
+
+/**
+ * Set up iframe controls
+ */
+function setupIframeControls(iframe) {
+  if (!iframe || !iframe.src || !iframe.src.includes('drive.google.com')) return;
+
+  // Function to handle iframe load
+  function handleIframeLoad() {
+    iframe.classList.add('loaded');
+    
+    // Add message listener for iframe communication
+    window.addEventListener('message', (event) => {
+      // Check if the message is from our iframe
+      if (event.origin.includes('drive.google.com')) {
+        try {
+          const data = event.data;
+          
+          // Check for video end
+          if (data.type === 'videoEnded') {
+            // Stop the video
+            iframe.contentWindow.postMessage({
+              type: 'pauseVideo'
+            }, '*');
+          }
+        } catch (e) {
+          // eslint-disable-next-line no-console
+          console.error('Error handling iframe message:', e);
+        }
+      }
+    });
+  }
+
+  // Add load event listener
+  iframe.addEventListener('load', handleIframeLoad);
 }
 
 /**
@@ -488,6 +552,10 @@ function buildSlides(slides, container) {
 
     container.appendChild(slideElement);
   });
+
+  // Set up iframe controls for all iframes
+  const iframes = container.querySelectorAll('iframe');
+  iframes.forEach(setupIframeControls);
 
   // First slide will be shown by setupControls
 }

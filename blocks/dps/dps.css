@@ -185,6 +185,7 @@ html, body {
     background-color: #f8f9fa;
     border-radius: 8px;
     overflow: hidden;
+    position: relative;
 }
 
 .iframe-container iframe {
@@ -192,6 +193,98 @@ html, body {
     height: 100%;
     border: none;
     background-color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Google Drive specific iframe styling */
+.iframe-container iframe[src*="drive.google.com"] {
+    background-color: #fff;
+    border: none;
+    box-shadow: none;
+}
+
+/* Ensure proper aspect ratio for Google Drive previews */
+.iframe-container iframe[src*="drive.google.com"] {
+    aspect-ratio: 16/9;
+    max-height: calc(100vh - 200px);
+    width: 100%;
+    height: auto;
+}
+
+/* Remove any debug overlays */
+.iframe-container iframe[src*="drive.google.com"]::before,
+.iframe-container iframe[src*="drive.google.com"]::after {
+    display: none !important;
+}
+
+/* Ensure proper scrolling behavior */
+.iframe-container {
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Add a subtle loading state */
+.iframe-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #f8f9fa;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+}
+
+.iframe-container iframe.loaded + .iframe-container::before {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Autoplay state */
+.iframe-container iframe[data-autoplay="true"] {
+    pointer-events: none; /* Prevent user interaction */
+}
+
+/* End of video state */
+.iframe-container iframe[data-video-ended="true"] {
+    opacity: 0.8;
+}
+
+/* Add a subtle play button overlay when video ends */
+.iframe-container iframe[data-video-ended="true"]::after {
+    content: '▶';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    cursor: pointer;
+    z-index: 2;
+    pointer-events: auto;
+}
+
+/* Ensure proper video controls visibility */
+.iframe-container iframe[src*="drive.google.com"] {
+    --video-controls-height: 40px;
+    padding-bottom: var(--video-controls-height);
+}
+
+/* Add a subtle gradient overlay at the bottom for controls */
+.iframe-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--video-controls-height);
+    background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.1));
+    pointer-events: none;
+    z-index: 1;
 }
 
 /* Ensure SVG illustrations are full width within their container */
