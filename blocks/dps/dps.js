@@ -272,6 +272,32 @@ function parseIllustration(cell) {
     return textarea.value;
   }
 
+  // Function to extract and clean URL from various formats
+  function extractUrl(content) {
+    // Try to find URL in various formats
+    const urlPatterns = [
+      /src=["']([^"']+)["']/, // src="url" or src='url'
+      /src=([^\s>]+)/, // src=url
+      /<a[^>]*href=["']([^"']+)["']/, // <a href="url">
+      /<a[^>]*href=([^\s>]+)/, // <a href=url>
+      /(https?:\/\/[^\s<>"]+)/, // plain URL
+    ];
+
+    for (const pattern of urlPatterns) {
+      const match = content.match(pattern);
+      if (match && match[1]) {
+        // Clean the URL
+        let url = match[1].trim();
+        // Remove any trailing quotes or angle brackets
+        url = url.replace(/["']$/, '').replace(/>$/, '');
+        // Remove any HTML entities
+        url = decodeHTMLEntities(url);
+        return url;
+      }
+    }
+    return null;
+  }
+
   // Function to extract iframe content
   function extractIframeContent(rawContent) {
     // First try to decode HTML entities
@@ -292,17 +318,44 @@ function parseIllustration(cell) {
         if (iframe) {
           // Create a new iframe with the correct attributes
           const newIframe = document.createElement('iframe');
-          newIframe.src = iframe.src;
-          newIframe.allowfullscreen = iframe.allowfullscreen || true;
-          newIframe.loading = iframe.loading || 'lazy';
-          newIframe.title = iframe.title || 'Embedded Content';
           
-          // Copy any additional attributes from the original iframe
-          Array.from(iframe.attributes).forEach(attr => {
-            if (!newIframe.hasAttribute(attr.name)) {
-              newIframe.setAttribute(attr.name, attr.value);
-            }
-          });
+          // Try to get URL from various sources
+          let url = iframe.src;
+          if (!url) {
+            url = extractUrl(iframeMatch[0]);
+          }
+          
+          if (url) {
+            newIframe.src = url;
+            newIframe.allowfullscreen = iframe.allowfullscreen || true;
+            newIframe.loading = iframe.loading || 'lazy';
+            newIframe.title = iframe.title || 'Embedded Content';
+            
+            // Copy any additional attributes from the original iframe
+            Array.from(iframe.attributes).forEach(attr => {
+              if (!newIframe.hasAttribute(attr.name)) {
+                newIframe.setAttribute(attr.name, attr.value);
+              }
+            });
+            
+            return {
+              type: "iframe",
+              content: newIframe.outerHTML,
+              src: newIframe.src,
+              width: "100%",
+              height: "100%"
+            };
+          }
+        }
+      } catch (e) {
+        // If parsing fails, try to extract URL from raw content
+        const url = extractUrl(iframeMatch[0]);
+        if (url) {
+          const newIframe = document.createElement('iframe');
+          newIframe.src = url;
+          newIframe.allowfullscreen = true;
+          newIframe.loading = 'lazy';
+          newIframe.title = 'Embedded Content';
           
           return {
             type: "iframe",
@@ -312,15 +365,6 @@ function parseIllustration(cell) {
             height: "100%"
           };
         }
-      } catch (e) {
-        // If parsing fails, return the raw content
-        return {
-          type: "iframe",
-          content: iframeMatch[0],
-          src: "",
-          width: "100%",
-          height: "100%"
-        };
       }
     }
     return null;

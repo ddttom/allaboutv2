@@ -12,7 +12,7 @@ A powerful presentation system that transforms structured content into an intera
 - Timer with warning system
 - Responsive design
 - Print-friendly handout mode
-- iframe support for embedded content
+- Flexible iframe support with smart URL handling
 
 ## Content Structure
 | Title | Subtitle | Timer (minutes) | Content | Presenter Notes |
@@ -38,24 +38,42 @@ A powerful presentation system that transforms structured content into an intera
 - Navigation wraps around at sequence ends
 
 ### iframe Support
-The fourth column supports embedded iframes with the following features:
+The fourth column supports embedded iframes with flexible URL handling:
+
+#### Supported URL Formats
+1. Standard iframe format:
+```html
+<iframe src="https://example.com/embed"></iframe>
+```
+
+2. URL without src attribute:
+```html
+<iframe https://example.com/embed>
+```
+
+3. Franklin link format (automatically converted):
+```html
+<a href="https://example.com/embed">Link</a>
+```
+
+4. Plain URL:
+```
+https://example.com/embed
+```
+
+5. HTML encoded content:
+```html
+&lt;iframe src="https://example.com/embed"&gt;
+```
+
+#### iframe Features
 - Automatic resizing to fit the illustration area
 - Maintains 16:9 aspect ratio
 - Responsive design that works on all screen sizes
 - Supports any valid iframe source
 - High contrast mode support
-
-#### iframe Usage
-Add your iframe code to the fourth column. Example:
-```html
-<iframe 
-    src="https://example.com/embed" 
-    allow="autoplay"
-    allowfullscreen
-    loading="lazy"
-    title="Embedded Content">
-</iframe>
-```
+- Smart URL extraction and cleaning
+- Preserves original attributes while ensuring required ones
 
 #### iframe Best Practices
 1. Always include a descriptive title attribute
@@ -89,6 +107,7 @@ Add your iframe code to the fourth column. Example:
 - Efficient DOM updates
 - Smooth animations
 - Minimal dependencies
+- Smart iframe URL handling
 
 ## Browser Compatibility
 - Chrome (recommended)
@@ -103,6 +122,7 @@ Add your iframe code to the fourth column. Example:
 4. Add presenter notes in the fifth column
 5. Multiple images in the fourth column will create an image sequence
 6. Use HTML formatting in presenter notes for better organization
+7. Add iframes using any supported format - the system will handle the conversion
 
 ## Troubleshooting
 - If images don't load, check the image URLs
@@ -114,6 +134,7 @@ Add your iframe code to the fourth column. Example:
   - Verify iframe permissions are set correctly
   - Ensure the iframe source supports embedding
   - Check browser console for any security policy errors
+  - Try using a different URL format if one doesn't work
 
 ## Notes
 - Presenter notes support HTML formatting for better organization
@@ -121,6 +142,7 @@ Add your iframe code to the fourth column. Example:
 - Timer starts automatically after first slide
 - Print mode excludes presenter notes and navigation elements
 - iframes are contained within a styled container for better presentation
+- The system automatically handles various URL formats and HTML encodings
 
 ## Implementation
 
@@ -160,6 +182,7 @@ Content authors should structure their content as follows:
    - When reaching the last image, right arrow advances to next slide
    - When on first image, left arrow goes to previous slide
    - iframes are automatically sized and styled
+   - Supports various URL formats and HTML encodings
 5. **Fifth column**: Presenter notes
    - Private notes visible only to the presenter
    - Toggle visibility with + and - keys
@@ -188,6 +211,7 @@ Each slide follows a consistent layout:
    - Maintains aspect ratio
    - Smooth transitions between images
    - iframes with proper sizing and styling
+   - Smart URL handling for various formats
 
 ## Content Formatting
 
@@ -239,6 +263,7 @@ This block follows these important EDS development principles:
 2. **No Container Styling**: Container elements have no styles applied
 3. **Semantic Structure**: Uses appropriate semantic elements
 4. **Consistent Layout**: Maintains consistent spacing and alignment
+5. **Flexible Content Handling**: Supports various content formats and encodings
 
 ## Usage Guide for Authors
 
@@ -253,6 +278,7 @@ This block follows these important EDS development principles:
    - Introduction text (optional)
    - Bullet points and plain text (use document's list formatting for bullets)
    - SVG content, image, or iframe (optional)
+   - Presenter notes (optional)
 
 ## Advanced Features
 
@@ -269,16 +295,31 @@ Authors can include SVG code directly in the fourth column. Example:
 
 ### iframe Support
 
-Authors can include iframes in the fourth column. Example:
+Authors can include iframes in the fourth column using any of these formats:
 
+1. Standard iframe:
 ```html
-<iframe 
-    src="https://example.com/embed" 
-    allow="autoplay"
-    allowfullscreen
-    loading="lazy"
-    title="Embedded Content">
-</iframe>
+<iframe src="https://example.com/embed"></iframe>
+```
+
+2. URL without src:
+```html
+<iframe https://example.com/embed>
+```
+
+3. Franklin link:
+```html
+<a href="https://example.com/embed">Link</a>
+```
+
+4. Plain URL:
+```
+https://example.com/embed
+```
+
+5. HTML encoded:
+```html
+&lt;iframe src="https://example.com/embed"&gt;
 ```
 
 ### Timer Functionality
@@ -338,6 +379,7 @@ Authors can include iframes in the fourth column. Example:
 - Supports high-DPI displays
 - Touch-friendly interface
 - iframe support across major browsers
+- Handles various URL formats and encodings
 
 ## Styling
 
@@ -358,3 +400,4 @@ The block implements several performance optimizations:
 - Event delegation for improved interaction handling
 - Smart state management for presentation controls
 - Lazy loading for iframes
+- Smart URL handling and cleaning
