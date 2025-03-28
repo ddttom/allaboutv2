@@ -293,7 +293,6 @@ function parseIllustration(cell) {
           // Create a new iframe with the correct attributes
           const newIframe = document.createElement('iframe');
           newIframe.src = iframe.src;
-          newIframe.allow = iframe.allow || 'autoplay; fullscreen';
           newIframe.allowfullscreen = iframe.allowfullscreen || true;
           newIframe.loading = iframe.loading || 'lazy';
           newIframe.title = iframe.title || 'Embedded Content';
@@ -374,39 +373,6 @@ function parseIllustration(cell) {
 
   // If no recognized illustration format, return null
   return null;
-}
-
-/**
- * Set up video controls
- */
-function setupVideoControls(iframe) {
-  if (!iframe || !iframe.classList.contains('drive-video')) return;
-
-  // Function to handle iframe load
-  function handleIframeLoad() {
-    iframe.classList.add('loaded');
-    
-    // Add message listener for iframe communication
-    window.addEventListener('message', (event) => {
-      // Check if the message is from our iframe
-      if (event.origin.includes('drive.google.com')) {
-        try {
-          const data = event.data;
-          
-          // Check for video end
-          if (data.type === 'videoEnded') {
-            iframe.classList.add('video-ended');
-          }
-        } catch (e) {
-          // eslint-disable-next-line no-console
-          console.error('Error handling iframe message:', e);
-        }
-      }
-    });
-  }
-
-  // Add load event listener
-  iframe.addEventListener('load', handleIframeLoad);
 }
 
 /**
@@ -529,10 +495,6 @@ function buildSlides(slides, container) {
 
     container.appendChild(slideElement);
   });
-
-  // Set up video controls for all videos
-  const videos = container.querySelectorAll('.drive-video');
-  videos.forEach(setupVideoControls);
 
   // First slide will be shown by setupControls
 }
