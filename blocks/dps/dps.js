@@ -273,31 +273,6 @@ function parseIllustration(cell) {
   function convertToAbsolutePath(path) {
     if (!path) return path;
     
-    // If path starts with ./ or ../, remove it
-    if (path.startsWith('./') || path.startsWith('../')) {
-      path = path.replace(/^\.\/|^\.\.\//, '');
-    }
-
-    // If path starts with /icons/, replace with correct domain
-    if (path.startsWith('/icons/')) {
-      path = `https://allabout.network${path}`;
-    }
-
-    // If path starts with /media_, replace with correct domain
-    if (path.startsWith('/media_')) {
-      path = `https://allabout.network${path}`;
-    }
-
-    // If path starts with /blogs/, replace with correct domain
-    if (path.startsWith('/blogs/')) {
-      path = `https://allabout.network${path}`;
-    }
-
-    // If path starts with /iframe, replace with correct domain
-    if (path.startsWith('/iframe')) {
-      path = `https://allabout.network${path}`;
-    }
-
     // Clean up any malformed URLs
     path = path.replace(/\s+/g, '').replace(/["']/g, '');
     
@@ -341,8 +316,6 @@ function parseIllustration(cell) {
           url = url.replace(/["']$/, '').replace(/>$/, '');
           // Remove any HTML entities
           url = decodeHTMLEntities(url);
-          // Convert relative paths to absolute
-          url = convertToAbsolutePath(url);
           return url;
         }
       }
@@ -352,7 +325,6 @@ function parseIllustration(cell) {
       if (iframeAnchorMatch && iframeAnchorMatch[1]) {
         let url = iframeAnchorMatch[1].trim();
         url = decodeHTMLEntities(url);
-        url = convertToAbsolutePath(url);
         return url;
       }
 
@@ -387,8 +359,6 @@ function parseIllustration(cell) {
             }
             
             if (url) {
-              // Convert relative paths to absolute
-              url = convertToAbsolutePath(url);
               newIframe.src = url;
               newIframe.allowfullscreen = iframe.allowfullscreen || true;
               newIframe.loading = iframe.loading || 'lazy';
@@ -414,10 +384,8 @@ function parseIllustration(cell) {
           // If parsing fails, try to extract URL from raw content
           const url = extractUrl(iframeMatch[0]);
           if (url) {
-            // Convert relative paths to absolute
-            const absoluteUrl = convertToAbsolutePath(url);
             const newIframe = document.createElement('iframe');
-            newIframe.src = absoluteUrl;
+            newIframe.src = url;
             newIframe.allowfullscreen = true;
             newIframe.loading = 'lazy';
             newIframe.title = 'Embedded Content';

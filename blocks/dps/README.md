@@ -417,16 +417,16 @@ The fourth column supports various types of content for illustrations:
 #### 1. Responsive Images (Picture Element)
 ```html
 <picture>
-  <source type="image/webp" srcset="..." media="(min-width: 600px)">
-  <source type="image/webp" srcset="...">
-  <source type="image/jpeg" srcset="..." media="(min-width: 600px)">
-  <img loading="lazy" alt="" src="..." width="1200" height="1600">
+  <source type="image/webp" srcset="/path/to/image.webp" media="(min-width: 600px)">
+  <source type="image/webp" srcset="/path/to/image.webp">
+  <source type="image/jpeg" srcset="/path/to/image.jpg" media="(min-width: 600px)">
+  <img loading="lazy" alt="" src="/path/to/image.jpg" width="1200" height="1600">
 </picture>
 ```
 
 #### 2. Direct Images
 ```html
-<img src="..." alt="..." width="1200" height="1600">
+<img src="/path/to/image.jpg" alt="Description">
 ```
 
 #### 3. iframes (Multiple Formats)
@@ -493,10 +493,10 @@ The fourth column supports mixing different types of content in sequence:
 <p>&#x3C;iframe src="https://example.com"></iframe></p>
 <p>
   <picture>
-    <source type="image/webp" srcset="..." media="(min-width: 600px)">
-    <source type="image/webp" srcset="...">
-    <source type="image/jpeg" srcset="..." media="(min-width: 600px)">
-    <img loading="lazy" alt="" src="..." width="1200" height="1600">
+    <source type="image/webp" srcset="/path/to/image.webp" media="(min-width: 600px)">
+    <source type="image/webp" srcset="/path/to/image.webp">
+    <source type="image/jpeg" srcset="/path/to/image.jpg" media="(min-width: 600px)">
+    <img loading="lazy" alt="" src="/path/to/image.jpg" width="1200" height="1600">
   </picture>
 </p>
 ```
@@ -506,10 +506,10 @@ The fourth column supports mixing different types of content in sequence:
 <p>&#x3C;iframe <a href="https://example.com">https://example.com</a>>&#x3C;/iframe></p>
 <p>
   <picture>
-    <source type="image/webp" srcset="..." media="(min-width: 600px)">
-    <source type="image/webp" srcset="...">
-    <source type="image/jpeg" srcset="..." media="(min-width: 600px)">
-    <img loading="lazy" alt="" src="..." width="1200" height="1600">
+    <source type="image/webp" srcset="/path/to/image.webp" media="(min-width: 600px)">
+    <source type="image/webp" srcset="/path/to/image.webp">
+    <source type="image/jpeg" srcset="/path/to/image.jpg" media="(min-width: 600px)">
+    <img loading="lazy" alt="" src="/path/to/image.jpg" width="1200" height="1600">
   </picture>
 </p>
 ```
@@ -564,3 +564,37 @@ The fourth column supports mixing different types of content in sequence:
   - Ensure proper encoding
   - Check for missing closing tags
   - Verify entity decoding
+
+### Image Handling
+The block preserves all image paths exactly as they are in the original content, without any path manipulation or conversion. This ensures compatibility with Franklin's image handling system:
+
+1. **Direct Images**
+```html
+<img src="/path/to/image.jpg" alt="Description">
+```
+
+2. **Picture Elements**
+```html
+<picture>
+  <source type="image/webp" srcset="/path/to/image.webp" media="(min-width: 600px)">
+  <source type="image/webp" srcset="/path/to/image.webp">
+  <source type="image/jpeg" srcset="/path/to/image.jpg" media="(min-width: 600px)">
+  <img loading="lazy" alt="" src="/path/to/image.jpg" width="1200" height="1600">
+</picture>
+```
+
+3. **SVG Content**
+```html
+<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="200" cy="100" rx="150" ry="80" fill="#BBDEFB" stroke="#3498db" stroke-width="2"/>
+  <text x="200" y="105" font-size="24" text-anchor="middle">Sample SVG</text>
+</svg>
+```
+
+Key points about image handling:
+- All image paths are preserved exactly as they are in the original content
+- No path manipulation or conversion is performed
+- Franklin's image optimization system handles all image processing
+- Relative paths work as expected
+- Picture elements maintain their original structure and attributes
+- SVG content is preserved exactly as provided
