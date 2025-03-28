@@ -278,24 +278,29 @@ function parseIllustration(cell) {
     const fileId = iframe.src.match(/\/d\/([^\/]+)/)?.[1];
     if (!fileId) return iframe;
 
-    // Create a new URL that works with CSP
-    const newUrl = `https://drive.google.com/file/d/${fileId}/preview?embedded=true&autoplay=1&loop=1&controls=0`;
+    // Create a video element instead of an iframe
+    const video = document.createElement('video');
+    video.className = 'drive-video';
+    video.setAttribute('controls', '');
+    video.setAttribute('autoplay', '');
+    video.setAttribute('loop', '');
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
     
-    // Update the iframe with new attributes
-    iframe.src = newUrl;
-    iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation');
-    iframe.setAttribute('allow', 'autoplay');
-    iframe.setAttribute('allowfullscreen', '');
-    iframe.setAttribute('loading', 'lazy');
-    iframe.style.border = 'none';
-    iframe.style.background = '#fff';
+    // Set the video source to the direct video URL
+    video.src = `https://drive.google.com/uc?export=download&id=${fileId}`;
     
     // Add data attributes for video control
-    iframe.setAttribute('data-autoplay', 'true');
-    iframe.setAttribute('data-stop-at-end', 'true');
-    iframe.setAttribute('data-file-id', fileId);
+    video.setAttribute('data-autoplay', 'true');
+    video.setAttribute('data-stop-at-end', 'true');
+    video.setAttribute('data-file-id', fileId);
     
-    return iframe;
+    // Create a container for the video
+    const container = document.createElement('div');
+    container.className = 'video-container';
+    container.appendChild(video);
+    
+    return container;
   }
 
   // Function to extract iframe content
@@ -318,7 +323,13 @@ function parseIllustration(cell) {
         if (iframe) {
           // Clean up the iframe if it's from Google Drive
           if (iframe.src && iframe.src.includes('drive.google.com')) {
-            cleanGoogleDriveIframe(iframe);
+            const videoContainer = cleanGoogleDriveIframe(iframe);
+            return {
+              type: "video",
+              content: videoContainer.outerHTML,
+              width: "100%",
+              height: "100%"
+            };
           }
           
           return {
@@ -400,39 +411,23 @@ function parseIllustration(cell) {
 }
 
 /**
- * Set up iframe controls
+ * Set up video controls
  */
-function setupIframeControls(iframe) {
-  if (!iframe || !iframe.src || !iframe.src.includes('drive.google.com')) return;
+function setupVideoControls(video) {
+  if (!video || !video.classList.contains('drive-video')) return;
 
-  // Function to handle iframe load
-  function handleIframeLoad() {
-    iframe.classList.add('loaded');
-    
-    // Add message listener for iframe communication
-    window.addEventListener('message', (event) => {
-      // Check if the message is from our iframe
-      if (event.origin.includes('drive.google.com')) {
-        try {
-          const data = event.data;
-          
-          // Check for video end
-          if (data.type === 'videoEnded') {
-            // Stop the video
-            iframe.contentWindow.postMessage({
-              type: 'pauseVideo'
-            }, '*');
-          }
-        } catch (e) {
-          // eslint-disable-next-line no-console
-          console.error('Error handling iframe message:', e);
-        }
-      }
-    });
+  // Function to handle video end
+  function handleVideoEnd() {
+    video.classList.add('video-ended');
+    video.pause();
+    video.currentTime = 0;
   }
 
-  // Add load event listener
-  iframe.addEventListener('load', handleIframeLoad);
+  // Add event listeners
+  video.addEventListener('ended', handleVideoEnd);
+  video.addEventListener('play', () => {
+    video.classList.remove('video-ended');
+  });
 }
 
 /**
@@ -537,6 +532,10 @@ function buildSlides(slides, container) {
                         style="display: ${imgIndex === 0 ? 'block' : 'none'}">
                     `).join('')}
                    </div>`
+                : slide.illustration.type === "video"
+                ? `<div class="video-container">
+                    ${slide.illustration.content}
+                   </div>`
                 : slide.illustration.type === "iframe"
                 ? `<div class="iframe-container">
                     ${slide.illustration.content}
@@ -556,9 +555,9 @@ function buildSlides(slides, container) {
     container.appendChild(slideElement);
   });
 
-  // Set up iframe controls for all iframes
-  const iframes = container.querySelectorAll('iframe');
-  iframes.forEach(setupIframeControls);
+  // Set up video controls for all videos
+  const videos = container.querySelectorAll('.drive-video');
+  videos.forEach(setupVideoControls);
 
   // First slide will be shown by setupControls
 }

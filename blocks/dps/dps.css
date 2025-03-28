@@ -175,8 +175,8 @@ html, body {
     object-fit: contain;
 }
 
-/* Iframe container styling */
-.iframe-container {
+/* Video container styling */
+.video-container {
     width: 100%;
     height: 100%;
     display: flex;
@@ -188,69 +188,39 @@ html, body {
     position: relative;
 }
 
-.iframe-container iframe {
+/* Drive video styling */
+.drive-video {
     width: 100%;
     height: 100%;
-    border: none;
-    background-color: #fff;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-/* Google Drive specific iframe styling */
-.iframe-container iframe[src*="drive.google.com"] {
+    max-height: calc(100vh - 200px);
+    object-fit: contain;
     background-color: #fff;
     border: none;
     box-shadow: none;
     aspect-ratio: 16/9;
-    max-height: calc(100vh - 200px);
-    width: 100%;
-    height: auto;
 }
 
-/* Remove any debug overlays */
-.iframe-container iframe[src*="drive.google.com"]::before,
-.iframe-container iframe[src*="drive.google.com"]::after {
-    display: none !important;
+/* Video controls */
+.drive-video::-webkit-media-controls {
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* Ensure proper scrolling behavior */
-.iframe-container {
-    overflow: hidden;
-    -webkit-overflow-scrolling: touch;
-}
-
-/* Add a subtle loading state */
-.iframe-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #f8f9fa;
-    z-index: 1;
+.drive-video::-webkit-media-controls-panel {
+    display: flex !important;
+    opacity: 0;
     transition: opacity 0.3s ease;
 }
 
-.iframe-container iframe.loaded + .iframe-container::before {
-    opacity: 0;
-    pointer-events: none;
+.drive-video:hover::-webkit-media-controls-panel {
+    opacity: 1;
 }
 
-/* Autoplay state */
-.iframe-container iframe[data-autoplay="true"] {
-    pointer-events: none; /* Prevent user interaction */
-}
-
-/* End of video state */
-.iframe-container iframe[data-video-ended="true"] {
+/* Video end state */
+.drive-video.video-ended {
     opacity: 0.8;
 }
 
-/* Add a subtle play button overlay when video ends */
-.iframe-container iframe[data-video-ended="true"]::after {
+.drive-video.video-ended::after {
     content: '▶';
     position: absolute;
     top: 50%;
@@ -264,50 +234,27 @@ html, body {
     pointer-events: auto;
 }
 
-/* Ensure proper video controls visibility */
-.iframe-container iframe[src*="drive.google.com"] {
-    --video-controls-height: 40px;
-    padding-bottom: var(--video-controls-height);
-}
-
-/* Add a subtle gradient overlay at the bottom for controls */
-.iframe-container::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: var(--video-controls-height);
-    background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.1));
-    pointer-events: none;
-    z-index: 1;
-}
-
 /* Handle forced-colors mode */
 @media (forced-colors: active) {
-    .iframe-container {
+    .video-container {
         border: 1px solid CanvasText;
     }
     
-    .iframe-container iframe {
+    .drive-video {
         border: 1px solid CanvasText;
     }
     
-    .iframe-container::before {
-        background: Canvas;
-    }
-    
-    .iframe-container::after {
-        background: linear-gradient(to bottom, transparent, CanvasText);
+    .drive-video::-webkit-media-controls {
+        background-color: Canvas;
     }
 }
 
-/* Ensure SVG illustrations are full width within their container */
-.illustration svg {
-    width: 100%;
-    height: auto;
-    max-width: 100%;
-    max-height: 100%;
+/* Remove old iframe styles */
+.iframe-container,
+.iframe-container iframe,
+.iframe-container::before,
+.iframe-container::after {
+    display: none;
 }
 
 /* Bullet lists */
