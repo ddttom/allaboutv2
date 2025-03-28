@@ -272,10 +272,27 @@ function parseIllustration(cell) {
   // Function to convert relative paths to absolute
   function convertToAbsolutePath(path) {
     if (!path) return path;
+    
     // If path starts with ./ or ../, remove it
     if (path.startsWith('./') || path.startsWith('../')) {
-      return path.replace(/^\.\/|^\.\.\//, '');
+      path = path.replace(/^\.\/|^\.\.\//, '');
     }
+
+    // If path starts with /icons/, replace with correct domain
+    if (path.startsWith('/icons/')) {
+      path = `https://allabout.network${path}`;
+    }
+
+    // If path starts with /media_, replace with correct domain
+    if (path.startsWith('/media_')) {
+      path = `https://allabout.network${path}`;
+    }
+
+    // If path starts with /blogs/, replace with correct domain
+    if (path.startsWith('/blogs/')) {
+      path = `https://allabout.network${path}`;
+    }
+
     return path;
   }
 
