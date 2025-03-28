@@ -410,3 +410,157 @@ The block implements several performance optimizations:
 - Smart state management for presentation controls
 - Lazy loading for iframes
 - Smart URL handling and cleaning
+
+### Fourth Column Content Types
+The fourth column supports various types of content for illustrations:
+
+#### 1. Responsive Images (Picture Element)
+```html
+<picture>
+  <source type="image/webp" srcset="..." media="(min-width: 600px)">
+  <source type="image/webp" srcset="...">
+  <source type="image/jpeg" srcset="..." media="(min-width: 600px)">
+  <img loading="lazy" alt="" src="..." width="1200" height="1600">
+</picture>
+```
+
+#### 2. Direct Images
+```html
+<img src="..." alt="..." width="1200" height="1600">
+```
+
+#### 3. iframes (Multiple Formats)
+1. Standard iframe:
+```html
+<iframe src="https://example.com/embed"></iframe>
+```
+
+2. URL without src:
+```html
+<iframe https://example.com/embed>
+```
+
+3. Franklin link:
+```html
+<a href="https://example.com/embed">Link</a>
+```
+
+4. Plain URL:
+```
+https://example.com/embed
+```
+
+5. HTML encoded:
+```html
+&lt;iframe src="https://example.com/embed"&gt;
+```
+
+6. Paragraph wrapped HTML encoded iframe:
+```html
+<p>&#x3C;iframe https://example.com/embed</p>
+```
+
+7. Mixed content with anchor tags:
+```html
+<p>&#x3C;iframe <a href="https://example.com/embed">https://example.com/embed</a>>&#x3C;/iframe></p>
+```
+
+#### 4. SVG Content
+1. SVG Element:
+```html
+<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="200" cy="100" rx="150" ry="80" fill="#BBDEFB" stroke="#3498db" stroke-width="2"/>
+  <text x="200" y="105" font-size="24" text-anchor="middle">Sample SVG</text>
+</svg>
+```
+
+2. Raw SVG Content:
+```html
+<svg>...</svg>
+```
+
+#### Mixed Content Support
+The fourth column supports mixing different types of content in sequence:
+
+1. Multiple iframes:
+```html
+<p>&#x3C;iframe src="https://example1.com"></iframe></p>
+<p>&#x3C;iframe src="https://example2.com"></iframe></p>
+```
+
+2. Mixed iframes and images:
+```html
+<p>&#x3C;iframe src="https://example.com"></iframe></p>
+<p>
+  <picture>
+    <source type="image/webp" srcset="..." media="(min-width: 600px)">
+    <source type="image/webp" srcset="...">
+    <source type="image/jpeg" srcset="..." media="(min-width: 600px)">
+    <img loading="lazy" alt="" src="..." width="1200" height="1600">
+  </picture>
+</p>
+```
+
+3. Mixed content with HTML entities:
+```html
+<p>&#x3C;iframe <a href="https://example.com">https://example.com</a>>&#x3C;/iframe></p>
+<p>
+  <picture>
+    <source type="image/webp" srcset="..." media="(min-width: 600px)">
+    <source type="image/webp" srcset="...">
+    <source type="image/jpeg" srcset="..." media="(min-width: 600px)">
+    <img loading="lazy" alt="" src="..." width="1200" height="1600">
+  </picture>
+</p>
+```
+
+#### Content Features
+- All content types maintain proper aspect ratio
+- Responsive design that works on all screen sizes
+- Smooth transitions between content in sequences
+- Navigation between mixed content types using arrow keys
+- High contrast mode support
+- Proper handling of HTML entities and encodings
+- Preservation of original attributes and structure
+
+#### Best Practices
+1. For responsive images:
+   - Use appropriate media queries
+   - Include multiple formats (webp, jpeg)
+   - Set proper width and height attributes
+   - Include descriptive alt text
+
+2. For iframes:
+   - Always include a descriptive title attribute
+   - Use appropriate allow attributes
+   - Set loading="lazy" for better performance
+   - Ensure the source is secure (https)
+
+3. For SVG content:
+   - Include proper viewBox attribute
+   - Use semantic elements and attributes
+   - Optimize SVG code for performance
+   - Consider accessibility with ARIA attributes
+
+4. For mixed content:
+   - Use separate paragraph elements for each item
+   - Test sequence navigation
+   - Ensure consistent sizing across content types
+   - Verify responsive behavior
+
+#### Troubleshooting
+- If images don't load, check the image URLs
+- For iframe issues:
+  - Check if the source URL is accessible
+  - Verify iframe permissions
+  - Ensure the source supports embedding
+  - Check browser console for security policy errors
+  - Try different URL formats if one doesn't work
+- For mixed content:
+  - Ensure each item is in its own paragraph
+  - Test sequence navigation with mixed content types
+  - Verify proper display order
+- For HTML entities:
+  - Ensure proper encoding
+  - Check for missing closing tags
+  - Verify entity decoding

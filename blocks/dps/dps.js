@@ -403,15 +403,35 @@ function parseIllustration(cell) {
     // Check for picture element
     const picture = element.querySelector('picture');
     if (picture) {
+      // Create a new picture element to preserve the structure
+      const newPicture = document.createElement('picture');
+      
+      // Copy all source elements
+      picture.querySelectorAll('source').forEach(source => {
+        const newSource = document.createElement('source');
+        // Copy all attributes from the original source
+        Array.from(source.attributes).forEach(attr => {
+          newSource.setAttribute(attr.name, attr.value);
+        });
+        newPicture.appendChild(newSource);
+      });
+      
+      // Copy the img element
       const img = picture.querySelector('img');
       if (img) {
-        illustrations.push({
-          type: "image",
-          content: img.src,
-          alt: img.alt || ""
+        const newImg = document.createElement('img');
+        // Copy all attributes from the original img
+        Array.from(img.attributes).forEach(attr => {
+          newImg.setAttribute(attr.name, attr.value);
         });
-        return;
+        newPicture.appendChild(newImg);
       }
+      
+      illustrations.push({
+        type: "picture",
+        content: newPicture.outerHTML
+      });
+      return;
     }
 
     // Check for direct image
@@ -567,6 +587,10 @@ function buildSlides(slides, container) {
                         return `<div class="iframe-container sequence-image ${index === 0 ? 'active' : ''}" style="display: ${index === 0 ? 'block' : 'none'}">
                           ${item.content}
                         </div>`;
+                      } else if (item.type === "picture") {
+                        return `<div class="sequence-image ${index === 0 ? 'active' : ''}" style="display: ${index === 0 ? 'block' : 'none'}">
+                          ${item.content}
+                        </div>`;
                       }
                       return `<img 
                         src="${item.content}" 
@@ -580,6 +604,8 @@ function buildSlides(slides, container) {
                     ${slide.illustration.content}
                    </div>`
                 : slide.illustration.type === "svg"
+                ? slide.illustration.content
+                : slide.illustration.type === "picture"
                 ? slide.illustration.content
                 : `<img src="${slide.illustration.content}" alt="${slide.title} illustration">`
             }
