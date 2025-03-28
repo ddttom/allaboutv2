@@ -262,16 +262,37 @@ function parseBulletPoints(cell) {
 function parseIllustration(cell) {
   if (!cell) return null;
 
-  // Check for iframe first
-  const iframe = cell.querySelector("iframe");
-  if (iframe) {
-    return {
-      type: "iframe",
-      content: iframe.outerHTML,
-      src: iframe.src,
-      width: iframe.width || "100%",
-      height: iframe.height || "100%"
-    };
+  // Get the raw content first
+  const content = cell.innerHTML.trim();
+  
+  // Check for iframe content in the text
+  if (content.includes('<iframe') && content.includes('</iframe>')) {
+    try {
+      // Create a temporary container to parse the HTML
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = content;
+      
+      // Find the iframe element
+      const iframe = tempDiv.querySelector('iframe');
+      if (iframe) {
+        return {
+          type: "iframe",
+          content: iframe.outerHTML,
+          src: iframe.src,
+          width: iframe.width || "100%",
+          height: iframe.height || "100%"
+        };
+      }
+    } catch (e) {
+      // If parsing fails, return the raw content
+      return {
+        type: "iframe",
+        content: content,
+        src: "",
+        width: "100%",
+        height: "100%"
+      };
+    }
   }
 
   // Check for multiple images
@@ -297,7 +318,6 @@ function parseIllustration(cell) {
   }
 
   // Check if content contains SVG tags (common in Franklin output)
-  const content = cell.textContent.trim();
   if (content.startsWith("<svg") && content.includes("</svg>")) {
     // We found an SVG string, parse it to a real SVG
     try {
