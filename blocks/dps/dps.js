@@ -562,13 +562,18 @@ function buildSlides(slides, container) {
             ${
               slide.illustration.type === "images"
                 ? `<div class="image-sequence">
-                    ${slide.illustration.content.map((img, imgIndex) => `
-                      <img 
-                        src="${img.content}" 
-                        alt="${img.alt}" 
-                        class="sequence-image ${imgIndex === 0 ? 'active' : ''}" 
-                        style="display: ${imgIndex === 0 ? 'block' : 'none'}">
-                    `).join('')}
+                    ${slide.illustration.content.map((item, index) => {
+                      if (item.type === "iframe") {
+                        return `<div class="iframe-container sequence-image ${index === 0 ? 'active' : ''}" style="display: ${index === 0 ? 'block' : 'none'}">
+                          ${item.content}
+                        </div>`;
+                      }
+                      return `<img 
+                        src="${item.content}" 
+                        alt="${item.alt}" 
+                        class="sequence-image ${index === 0 ? 'active' : ''}" 
+                        style="display: ${index === 0 ? 'block' : 'none'}">`;
+                    }).join('')}
                    </div>`
                 : slide.illustration.type === "iframe"
                 ? `<div class="iframe-container">
