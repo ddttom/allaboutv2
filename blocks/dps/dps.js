@@ -262,85 +262,112 @@ function parseBulletPoints(cell) {
 function parseIllustration(cell) {
   if (!cell) return null;
 
-  // Get the raw content first
-  const content = cell.innerHTML.trim();
-  
-  // Function to decode HTML entities
-  function decodeHTMLEntities(text) {
-    const textarea = document.createElement('textarea');
-    textarea.innerHTML = text;
-    return textarea.value;
-  }
+  // Get all paragraph elements
+  const paragraphs = cell.querySelectorAll('p');
+  if (paragraphs.length === 0) return null;
 
-  // Function to extract and clean URL from various formats
-  function extractUrl(content) {
-    // Try to find URL in various formats
-    const urlPatterns = [
-      /src=["']([^"']+)["']/, // src="url" or src='url'
-      /src=([^\s>]+)/, // src=url
-      /<a[^>]*href=["']([^"']+)["']/, // <a href="url">
-      /<a[^>]*href=([^\s>]+)/, // <a href=url>
-      /(https?:\/\/[^\s<>"]+)/, // plain URL
-      /&#x3C;iframe[^>]*>([^<]+)&#x3C;\/iframe>/, // HTML encoded iframe with content
-      /&#x3C;iframe[^>]*>/, // HTML encoded iframe start
-      /<p[^>]*>&#x3C;iframe[^>]*>([^<]+)&#x3C;\/iframe><\/p>/, // Paragraph wrapped HTML encoded iframe
-      /<p[^>]*>&#x3C;iframe[^>]*>/, // Paragraph wrapped HTML encoded iframe start
-    ];
+  // Array to store all illustrations found
+  const illustrations = [];
 
-    for (const pattern of urlPatterns) {
-      const match = content.match(pattern);
-      if (match && match[1]) {
-        // Clean the URL
-        let url = match[1].trim();
-        // Remove any trailing quotes or angle brackets
-        url = url.replace(/["']$/, '').replace(/>$/, '');
-        // Remove any HTML entities
-        url = decodeHTMLEntities(url);
-        return url;
-      }
+  // Process each paragraph
+  paragraphs.forEach(paragraph => {
+    const content = paragraph.innerHTML.trim();
+    
+    // Function to decode HTML entities
+    function decodeHTMLEntities(text) {
+      const textarea = document.createElement('textarea');
+      textarea.innerHTML = text;
+      return textarea.value;
     }
-    return null;
-  }
 
-  // Function to extract iframe content
-  function extractIframeContent(rawContent) {
-    // First try to decode HTML entities
-    const decodedContent = decodeHTMLEntities(rawContent);
-    
-    // Check for iframe tags in both raw and decoded content
-    const iframeRegex = /<iframe[^>]*>.*?<\/iframe>/i;
-    const iframeMatch = decodedContent.match(iframeRegex) || rawContent.match(iframeRegex);
-    
-    if (iframeMatch) {
-      try {
-        // Create a temporary container to parse the HTML
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = iframeMatch[0];
-        
-        // Find the iframe element
-        const iframe = tempDiv.querySelector('iframe');
-        if (iframe) {
-          // Create a new iframe with the correct attributes
-          const newIframe = document.createElement('iframe');
+    // Function to extract and clean URL from various formats
+    function extractUrl(content) {
+      // Try to find URL in various formats
+      const urlPatterns = [
+        /src=["']([^"']+)["']/, // src="url" or src='url'
+        /src=([^\s>]+)/, // src=url
+        /<a[^>]*href=["']([^"']+)["']/, // <a href="url">
+        /<a[^>]*href=([^\s>]+)/, // <a href=url>
+        /(https?:\/\/[^\s<>"]+)/, // plain URL
+        /&#x3C;iframe[^>]*>([^<]+)&#x3C;\/iframe>/, // HTML encoded iframe with content
+        /&#x3C;iframe[^>]*>/, // HTML encoded iframe start
+        /<p[^>]*>&#x3C;iframe[^>]*>([^<]+)&#x3C;\/iframe><\/p>/, // Paragraph wrapped HTML encoded iframe
+        /<p[^>]*>&#x3C;iframe[^>]*>/, // Paragraph wrapped HTML encoded iframe start
+      ];
+
+      for (const pattern of urlPatterns) {
+        const match = content.match(pattern);
+        if (match && match[1]) {
+          // Clean the URL
+          let url = match[1].trim();
+          // Remove any trailing quotes or angle brackets
+          url = url.replace(/["']$/, '').replace(/>$/, '');
+          // Remove any HTML entities
+          url = decodeHTMLEntities(url);
+          return url;
+        }
+      }
+      return null;
+    }
+
+    // Function to extract iframe content
+    function extractIframeContent(rawContent) {
+      // First try to decode HTML entities
+      const decodedContent = decodeHTMLEntities(rawContent);
+      
+      // Check for iframe tags in both raw and decoded content
+      const iframeRegex = /<iframe[^>]*>.*?<\/iframe>/i;
+      const iframeMatch = decodedContent.match(iframeRegex) || rawContent.match(iframeRegex);
+      
+      if (iframeMatch) {
+        try {
+          // Create a temporary container to parse the HTML
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = iframeMatch[0];
           
-          // Try to get URL from various sources
-          let url = iframe.src;
-          if (!url) {
-            url = extractUrl(iframeMatch[0]);
-          }
-          
-          if (url) {
-            newIframe.src = url;
-            newIframe.allowfullscreen = iframe.allowfullscreen || true;
-            newIframe.loading = iframe.loading || 'lazy';
-            newIframe.title = iframe.title || 'Embedded Content';
+          // Find the iframe element
+          const iframe = tempDiv.querySelector('iframe');
+          if (iframe) {
+            // Create a new iframe with the correct attributes
+            const newIframe = document.createElement('iframe');
             
-            // Copy any additional attributes from the original iframe
-            Array.from(iframe.attributes).forEach(attr => {
-              if (!newIframe.hasAttribute(attr.name)) {
-                newIframe.setAttribute(attr.name, attr.value);
-              }
-            });
+            // Try to get URL from various sources
+            let url = iframe.src;
+            if (!url) {
+              url = extractUrl(iframeMatch[0]);
+            }
+            
+            if (url) {
+              newIframe.src = url;
+              newIframe.allowfullscreen = iframe.allowfullscreen || true;
+              newIframe.loading = iframe.loading || 'lazy';
+              newIframe.title = iframe.title || 'Embedded Content';
+              
+              // Copy any additional attributes from the original iframe
+              Array.from(iframe.attributes).forEach(attr => {
+                if (!newIframe.hasAttribute(attr.name)) {
+                  newIframe.setAttribute(attr.name, attr.value);
+                }
+              });
+              
+              return {
+                type: "iframe",
+                content: newIframe.outerHTML,
+                src: newIframe.src,
+                width: "100%",
+                height: "100%"
+              };
+            }
+          }
+        } catch (e) {
+          // If parsing fails, try to extract URL from raw content
+          const url = extractUrl(iframeMatch[0]);
+          if (url) {
+            const newIframe = document.createElement('iframe');
+            newIframe.src = url;
+            newIframe.allowfullscreen = true;
+            newIframe.loading = 'lazy';
+            newIframe.title = 'Embedded Content';
             
             return {
               type: "iframe",
@@ -351,79 +378,79 @@ function parseIllustration(cell) {
             };
           }
         }
-      } catch (e) {
-        // If parsing fails, try to extract URL from raw content
-        const url = extractUrl(iframeMatch[0]);
-        if (url) {
-          const newIframe = document.createElement('iframe');
-          newIframe.src = url;
-          newIframe.allowfullscreen = true;
-          newIframe.loading = 'lazy';
-          newIframe.title = 'Embedded Content';
-          
-          return {
-            type: "iframe",
-            content: newIframe.outerHTML,
-            src: newIframe.src,
-            width: "100%",
-            height: "100%"
-          };
-        }
+      }
+      return null;
+    }
+
+    // Check for iframe content first
+    const iframeContent = extractIframeContent(content);
+    if (iframeContent) {
+      illustrations.push(iframeContent);
+      return;
+    }
+
+    // Check for picture element
+    const picture = paragraph.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        illustrations.push({
+          type: "image",
+          content: img.src,
+          alt: img.alt || ""
+        });
+        return;
       }
     }
-    return null;
-  }
 
-  // Try to extract iframe content
-  const iframeContent = extractIframeContent(content);
-  if (iframeContent) {
-    return iframeContent;
-  }
-
-  // Check for multiple images
-  const images = cell.querySelectorAll("img");
-  if (images.length > 0) {
-    return {
-      type: "images",
-      content: Array.from(images).map(img => ({
+    // Check for direct image
+    const img = paragraph.querySelector('img');
+    if (img) {
+      illustrations.push({
         type: "image",
         content: img.src,
         alt: img.alt || ""
-      }))
-    };
-  }
-
-  // Check for SVG element
-  const svg = cell.querySelector("svg");
-  if (svg) {
-    return {
-      type: "svg",
-      content: svg.outerHTML,
-    };
-  }
-
-  // Check if content contains SVG tags (common in Franklin output)
-  if (content.startsWith("<svg") && content.includes("</svg>")) {
-    // We found an SVG string, parse it to a real SVG
-    try {
-      const container = document.createElement("div");
-      container.innerHTML = content;
-
-      // If parsing succeeded, we should have an SVG element
-      const parsedSvg = container.querySelector("svg");
-      if (parsedSvg) {
-        return {
-          type: "svg",
-          content: parsedSvg.outerHTML,
-        };
-      }
-    } catch (e) {
-      // If parsing failed, return the raw content
-      return {
-        type: "svg",
-        content: content,
-      };
+      });
+      return;
     }
+
+    // Check for SVG element
+    const svg = paragraph.querySelector('svg');
+    if (svg) {
+      illustrations.push({
+        type: "svg",
+        content: svg.outerHTML,
+      });
+      return;
+    }
+
+    // Check if content contains SVG tags
+    if (content.startsWith("<svg") && content.includes("</svg>")) {
+      try {
+        const container = document.createElement("div");
+        container.innerHTML = content;
+        const parsedSvg = container.querySelector("svg");
+        if (parsedSvg) {
+          illustrations.push({
+            type: "svg",
+            content: parsedSvg.outerHTML,
+          });
+        }
+      } catch (e) {
+        illustrations.push({
+          type: "svg",
+          content: content,
+        });
+      }
+    }
+  });
+
+  // If we found any illustrations, return them
+  if (illustrations.length > 0) {
+    return {
+      type: "images",
+      content: illustrations
+    };
   }
 
   // If no recognized illustration format, return null
