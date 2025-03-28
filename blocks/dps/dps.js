@@ -269,6 +269,16 @@ function parseIllustration(cell) {
   // Array to store all illustrations found
   const illustrations = [];
 
+  // Function to convert relative paths to absolute
+  function convertToAbsolutePath(path) {
+    if (!path) return path;
+    // If path starts with ./ or ../, remove it
+    if (path.startsWith('./') || path.startsWith('../')) {
+      return path.replace(/^\.\/|^\.\.\//, '');
+    }
+    return path;
+  }
+
   // Process each element
   elements.forEach(element => {
     const content = element.innerHTML.trim();
@@ -306,6 +316,8 @@ function parseIllustration(cell) {
           url = url.replace(/["']$/, '').replace(/>$/, '');
           // Remove any HTML entities
           url = decodeHTMLEntities(url);
+          // Convert relative paths to absolute
+          url = convertToAbsolutePath(url);
           return url;
         }
       }
@@ -315,6 +327,7 @@ function parseIllustration(cell) {
       if (iframeAnchorMatch && iframeAnchorMatch[1]) {
         let url = iframeAnchorMatch[1].trim();
         url = decodeHTMLEntities(url);
+        url = convertToAbsolutePath(url);
         return url;
       }
 
@@ -349,6 +362,8 @@ function parseIllustration(cell) {
             }
             
             if (url) {
+              // Convert relative paths to absolute
+              url = convertToAbsolutePath(url);
               newIframe.src = url;
               newIframe.allowfullscreen = iframe.allowfullscreen || true;
               newIframe.loading = iframe.loading || 'lazy';
@@ -374,8 +389,10 @@ function parseIllustration(cell) {
           // If parsing fails, try to extract URL from raw content
           const url = extractUrl(iframeMatch[0]);
           if (url) {
+            // Convert relative paths to absolute
+            const absoluteUrl = convertToAbsolutePath(url);
             const newIframe = document.createElement('iframe');
-            newIframe.src = url;
+            newIframe.src = absoluteUrl;
             newIframe.allowfullscreen = true;
             newIframe.loading = 'lazy';
             newIframe.title = 'Embedded Content';
@@ -411,7 +428,15 @@ function parseIllustration(cell) {
         const newSource = document.createElement('source');
         // Copy all attributes from the original source
         Array.from(source.attributes).forEach(attr => {
-          newSource.setAttribute(attr.name, attr.value);
+          let value = attr.value;
+          // Convert relative paths to absolute for srcset
+          if (attr.name === 'srcset') {
+            value = value.split(',').map(src => {
+              const [url, size] = src.trim().split(/\s+/);
+              return `${convertToAbsolutePath(url)} ${size}`;
+            }).join(', ');
+          }
+          newSource.setAttribute(attr.name, value);
         });
         newPicture.appendChild(newSource);
       });
@@ -422,7 +447,12 @@ function parseIllustration(cell) {
         const newImg = document.createElement('img');
         // Copy all attributes from the original img
         Array.from(img.attributes).forEach(attr => {
-          newImg.setAttribute(attr.name, attr.value);
+          let value = attr.value;
+          // Convert relative paths to absolute for src
+          if (attr.name === 'src') {
+            value = convertToAbsolutePath(value);
+          }
+          newImg.setAttribute(attr.name, value);
         });
         newPicture.appendChild(newImg);
       }
@@ -439,7 +469,7 @@ function parseIllustration(cell) {
     if (img) {
       illustrations.push({
         type: "image",
-        content: img.src,
+        content: convertToAbsolutePath(img.src),
         alt: img.alt || ""
       });
       return;
