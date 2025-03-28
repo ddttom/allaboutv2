@@ -293,6 +293,8 @@ function parseIllustration(cell) {
         /&#x3C;iframe[^>]*>/, // HTML encoded iframe start
         /<p[^>]*>&#x3C;iframe[^>]*>([^<]+)&#x3C;\/iframe><\/p>/, // Paragraph wrapped HTML encoded iframe
         /<p[^>]*>&#x3C;iframe[^>]*>/, // Paragraph wrapped HTML encoded iframe start
+        /&#x3C;iframe[^>]*<a[^>]*href=["']([^"']+)["'][^>]*>/, // HTML encoded iframe with anchor
+        /&#x3C;iframe[^>]*<a[^>]*href=([^\s>]+)[^>]*>/, // HTML encoded iframe with anchor (no quotes)
       ];
 
       for (const pattern of urlPatterns) {
@@ -307,6 +309,15 @@ function parseIllustration(cell) {
           return url;
         }
       }
+
+      // Special handling for iframe with anchor tag
+      const iframeAnchorMatch = content.match(/&#x3C;iframe[^>]*<a[^>]*>([^<]+)<\/a>&#x3C;\/iframe>/);
+      if (iframeAnchorMatch && iframeAnchorMatch[1]) {
+        let url = iframeAnchorMatch[1].trim();
+        url = decodeHTMLEntities(url);
+        return url;
+      }
+
       return null;
     }
 
