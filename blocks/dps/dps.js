@@ -297,6 +297,13 @@ function parseIllustration(cell) {
           newIframe.loading = iframe.loading || 'lazy';
           newIframe.title = iframe.title || 'Embedded Content';
           
+          // Copy any additional attributes from the original iframe
+          Array.from(iframe.attributes).forEach(attr => {
+            if (!newIframe.hasAttribute(attr.name)) {
+              newIframe.setAttribute(attr.name, attr.value);
+            }
+          });
+          
           return {
             type: "iframe",
             content: newIframe.outerHTML,
