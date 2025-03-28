@@ -265,34 +265,57 @@ function parseIllustration(cell) {
   // Get the raw content first
   const content = cell.innerHTML.trim();
   
-  // Check for iframe content in the text
-  if (content.includes('<iframe') && content.includes('</iframe>')) {
-    try {
-      // Create a temporary container to parse the HTML
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = content;
-      
-      // Find the iframe element
-      const iframe = tempDiv.querySelector('iframe');
-      if (iframe) {
+  // Function to decode HTML entities
+  function decodeHTMLEntities(text) {
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = text;
+    return textarea.value;
+  }
+
+  // Function to extract iframe content
+  function extractIframeContent(rawContent) {
+    // First try to decode HTML entities
+    const decodedContent = decodeHTMLEntities(rawContent);
+    
+    // Check for iframe tags in both raw and decoded content
+    const iframeRegex = /<iframe[^>]*>.*?<\/iframe>/i;
+    const iframeMatch = decodedContent.match(iframeRegex) || rawContent.match(iframeRegex);
+    
+    if (iframeMatch) {
+      try {
+        // Create a temporary container to parse the HTML
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = iframeMatch[0];
+        
+        // Find the iframe element
+        const iframe = tempDiv.querySelector('iframe');
+        if (iframe) {
+          return {
+            type: "iframe",
+            content: iframe.outerHTML,
+            src: iframe.src,
+            width: iframe.width || "100%",
+            height: iframe.height || "100%"
+          };
+        }
+      } catch (e) {
+        // If parsing fails, return the raw content
         return {
           type: "iframe",
-          content: iframe.outerHTML,
-          src: iframe.src,
-          width: iframe.width || "100%",
-          height: iframe.height || "100%"
+          content: iframeMatch[0],
+          src: "",
+          width: "100%",
+          height: "100%"
         };
       }
-    } catch (e) {
-      // If parsing fails, return the raw content
-      return {
-        type: "iframe",
-        content: content,
-        src: "",
-        width: "100%",
-        height: "100%"
-      };
     }
+    return null;
+  }
+
+  // Try to extract iframe content
+  const iframeContent = extractIframeContent(content);
+  if (iframeContent) {
+    return iframeContent;
   }
 
   // Check for multiple images
