@@ -431,51 +431,81 @@ function parseIllustration(cell) {
   
   // First, check for direct child elements
   const elements = Array.from(cell.children);
-  
+
   // Handle cases where there might be SVG icons and other elements
   elements.forEach(element => {
     // Process each type of content
     const content = element.innerHTML.trim();
     
-    // Check for picture element
+    // Check if element itself is a picture
+    if (element.tagName === 'PICTURE') {
+      illustrations.push({
+        type: "picture",
+        content: element.outerHTML
+      });
+      return;
+    }
+    
+    // Check if element itself is an img
+    if (element.tagName === 'IMG') {
+      illustrations.push({
+        type: "image",
+        content: element.src,
+        alt: element.alt || ""
+      });
+      return;
+    }
+    
+    // Check if element itself is an svg
+    if (element.tagName === 'SVG') {
+      illustrations.push({
+        type: "svg",
+        content: element.outerHTML,
+      });
+      return;
+    }
+
+    // Check if element itself is an icon span
+    if (element.classList.contains('icon')) {
+      illustrations.push({
+        type: "icon",
+        content: element.outerHTML,
+      });
+      return;
+    }
+
+    // Check for nested elements
     const picture = element.querySelector('picture');
     if (picture) {
       illustrations.push({
         type: "picture",
         content: picture.outerHTML
       });
-      return;
     }
     
-    // Check for direct image
-    const img = element.querySelector('img');
+    const img = element.querySelector('img:not(picture img)');
     if (img) {
       illustrations.push({
         type: "image",
         content: img.src,
         alt: img.alt || ""
       });
-      return;
     }
     
-    // Check for SVG element
     const svg = element.querySelector('svg');
     if (svg) {
       illustrations.push({
         type: "svg",
         content: svg.outerHTML,
       });
-      return;
     }
 
-    // Check for icon spans
     const icon = element.querySelector('span.icon');
     if (icon) {
       illustrations.push({
         type: "icon",
-        content: element.outerHTML,
+        content: icon.outerHTML,
       });
-      return;
     }
 
     // Check if content contains SVG tags
