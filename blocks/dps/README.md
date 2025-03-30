@@ -638,7 +638,19 @@ The system now better handles mixed content scenarios:
 </p>
 ```
 
-4. **Fallback to Plain Text**
+4. **Icon + Picture Pairs**
+```html
+<p><span class="icon icon-methods"></span></p>
+<p><picture>
+  <source srcset="/path/to/image.webp">
+  <img src="/path/to/image.jpg">
+</picture></p>
+```
+- Automatically wrapped together in a container
+- Maintains proper display state during navigation
+- Preserves original styling and positioning
+
+5. **Fallback to Plain Text**
 ```html
 <p>This text will be displayed if no other content types are detected</p>
 ```
@@ -648,6 +660,7 @@ The system now better handles mixed content scenarios:
 - All content types are evaluated for each element
 - Multiple content types can be detected per element
 - Better handling of nested structures
+- Special handling for icon + picture pairs
 - Fallback to plain text when no other types match
 - More flexible content authoring
 
