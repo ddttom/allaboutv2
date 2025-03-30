@@ -164,17 +164,6 @@ export default function decorate(block) {
 
 /**
  * Parse rows from the block to extract presentation data
- *
- * Expected row structure:
- * Row 1: Configuration (title, subtitle, timer duration)
- * Row 2+: Slides (title, intro text, bullet points, illustration, presenter notes)
- *
- * @param {Array} rows - Array of row elements from the block
- * @returns {Object} Structured presentation data
- */
-
-/**
- * Parse rows from the block to extract presentation data
  * 
  * Expected row structure:
  * Row 1: Configuration (title, subtitle, timer duration)
@@ -367,139 +356,150 @@ function parseIllustration(cell) {
   
   const illustrations = [];
   
-  // Process all content types without early returns to handle mixed content
+  // Process HTML content directly from cell to capture all elements
+  const cellContent = cell.innerHTML;
+  
+  // Process icon spans - FIXED: Check cell.innerHTML directly to find icons
+  const iconRegex = /<span\s+class=["'][^"']*icon[^"']*["'][^>]*>.*?<\/span>/gi;
+  const iconMatches = cellContent.matchAll(iconRegex);
+  
+  for (const match of iconMatches) {
+    illustrations.push({
+      type: "icon",
+      content: match[0]
+    });
+  }
+  
+  // Process all elements as separate content pieces
   const elements = Array.from(cell.children);
   
-  elements.forEach(element => {
-    const content = element.innerHTML.trim();
-    const foundTypes = [];
+  for (const element of elements) {
+    // Create a temporary container to extract HTML content accurately
+    const tempContainer = document.createElement('div');
+    tempContainer.appendChild(element.cloneNode(true));
+    const elementHtml = tempContainer.innerHTML;
     
-    // Check all possible content types for this element
-    if (element.tagName === 'SVG' || content.startsWith("<svg")) {
-      foundTypes.push({
+    // Process based on element type
+    if (element.tagName === 'SVG' || elementHtml.includes('<svg')) {
+      illustrations.push({
         type: "svg",
-        content: element.outerHTML,
+        content: elementHtml
       });
-    }
-    
-    if (element.tagName === 'PICTURE') {
-      foundTypes.push({
-        type: "picture",
-        content: element.outerHTML
-      });
-    }
-    
-    if (element.tagName === 'IMG') {
-      foundTypes.push({
-        type: "image",
-        content: element.src,
-        alt: element.alt || ""
-      });
-    }
-
-    if (element.classList.contains('icon')) {
-      foundTypes.push({
-        type: "icon",
-        content: element.outerHTML,
-      });
-    }
-
-    const picture = element.querySelector('picture');
-    if (picture) {
-      foundTypes.push({
-        type: "picture",
-        content: picture.outerHTML
-      });
-    }
-    
-    const img = element.querySelector('img:not(picture img)');
-    if (img) {
-      foundTypes.push({
-        type: "image",
-        content: img.src,
-        alt: img.alt || ""
-      });
-    }
-    
-    const svg = element.querySelector('svg');
-    if (svg) {
-      foundTypes.push({
-        type: "svg",
-        content: svg.outerHTML,
-      });
-    }
-
-    // Check for icon elements with more comprehensive selectors
-    const icons = element.querySelectorAll('.icon, [class*="icon-"], [class^="icon-"], [class$="-icon"]');
-    if (icons.length > 0) {
-      icons.forEach(icon => {
-        foundTypes.push({
-          type: "icon",
-          content: icon.outerHTML,
-        });
-      });
-    } else if (element.classList.contains('icon') ||
-               element.classList.value.includes('icon-') ||
-               element.classList.value.includes('-icon')) {
-      // Handle element itself being an icon
-      foundTypes.push({
-        type: "icon",
-        content: element.outerHTML,
-      });
-    }
-
-    if (content.startsWith("<svg") && content.includes("</svg>")) {
-      try {
-        const container = document.createElement("div");
-        container.innerHTML = content;
-        const parsedSvg = container.querySelector("svg");
-        if (parsedSvg) {
-          foundTypes.push({
-            type: "svg",
-            content: parsedSvg.outerHTML,
-          });
-        }
-      } catch (e) {
-        foundTypes.push({
-          type: "svg",
-          content: content,
+    } 
+    else if (element.tagName === 'PICTURE' || element.querySelector('picture')) {
+      // Handle picture elements
+      const picture = element.tagName === 'PICTURE' ? element : element.querySelector('picture');
+      
+      if (picture) {
+        illustrations.push({
+          type: "picture",
+          content: picture.outerHTML
         });
       }
     }
-
-    const iframeContent = extractIframeContent(content);
-    if (iframeContent) {
-      foundTypes.push(iframeContent);
-    }
-    
-    const url = extractUrl(content);
-    if (url) {
-      if (url.match(/\.(jpg|jpeg|png|gif|svg|webp)$/i)) {
-        foundTypes.push({
+    else if (element.tagName === 'IMG' || element.querySelector('img:not(picture img)')) {
+      // Handle img elements
+      const img = element.tagName === 'IMG' ? element : element.querySelector('img:not(picture img)');
+      
+      if (img) {
+        illustrations.push({
           type: "image",
-          content: url,
-          alt: "Image"
+          content: img.src,
+          alt: img.alt || ""
         });
-      } else {
-        foundTypes.push({
+      }
+    }
+    else if (element.tagName === 'SPAN' && element.classList.contains('icon')) {
+      // Process icon spans
+      illustrations.push({
+        type: "icon",
+        content: elementHtml
+      });
+    }
+    else if (element.classList && [...element.classList].some(cls => cls.includes('icon'))) {
+      // Any element with icon in class name
+      illustrations.push({
+        type: "icon",
+        content: elementHtml
+      });
+    }
+    else if (element.querySelector('.icon, [class*="icon-"], [class^="icon-"]')) {
+      // Elements containing icons
+      const iconElements = element.querySelectorAll('.icon, [class*="icon-"], [class^="icon-"]');
+      
+      iconElements.forEach(iconEl => {
+        const tempIconContainer = document.createElement('div');
+        tempIconContainer.appendChild(iconEl.cloneNode(true));
+        
+        illustrations.push({
+          type: "icon",
+          content: tempIconContainer.innerHTML
+        });
+      });
+    }
+    else {
+      // Process potential iframe content
+      const content = elementHtml;
+      
+      // Check for iframe first
+      const iframeContent = extractIframeContent(content);
+      if (iframeContent) {
+        illustrations.push(iframeContent);
+      }
+      // Then check for plain URLs
+      else {
+        const url = extractUrl(content);
+        if (url) {
+          if (url.match(/\.(jpg|jpeg|png|gif|svg|webp)$/i)) {
+            illustrations.push({
+              type: "image",
+              content: url,
+              alt: "Image"
+            });
+          } else {
+            illustrations.push({
+              type: "iframe",
+              src: url,
+              content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+            });
+          }
+        }
+        // If no content type detected, include as text
+        else if (content.trim() && !illustrations.some(item => item.content.includes(content))) {
+          illustrations.push({
+            type: "text",
+            content: content
+          });
+        }
+      }
+    }
+  }
+  
+  // Process HTML encoded iframes that might be directly in the cell innerHTML
+  const htmlEncodedIframeRegex = /(?:&lt;|&#x3C;)iframe(?:\s+|&gt;)(.*?)(?:&lt;\/iframe&gt;|(?:\/)?&gt;)/gi;
+  const htmlEncodedMatches = cellContent.matchAll(htmlEncodedIframeRegex);
+  
+  for (const match of htmlEncodedMatches) {
+    const fullMatch = match[0];
+    const contentPart = match[1] || '';
+    
+    // Extract URL from content
+    const urlMatch = contentPart.match(/(https?:\/\/[^\s"'&<>]+)/i);
+    if (urlMatch && urlMatch[1]) {
+      // Check if this URL is already included
+      const url = urlMatch[1];
+      if (!illustrations.some(item => 
+        (item.type === "iframe" && item.src === url) ||
+        (item.content && item.content.includes(url))
+      )) {
+        illustrations.push({
           type: "iframe",
           src: url,
           content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
         });
       }
     }
-    
-    // Add all found content types to illustrations
-    if (foundTypes.length > 0) {
-      illustrations.push(...foundTypes);
-    } else if (content.trim()) {
-      // Fallback for plain text content
-      illustrations.push({
-        type: "text",
-        content: content
-      });
-    }
-  });
+  }
 
   // Return illustrations if found, null otherwise
   if (illustrations.length > 0) {
@@ -632,48 +632,38 @@ function createSlideContent(slide) {
       // Properly handle multiple images in a sequence
       slide.illustration.content.forEach((item, index) => {
         const isActive = index === 0 ? 'active' : '';
-        const display = index === 0 ? 'block' : 'none';
-        
-        // Handle mixed content (icon + picture) by wrapping in container
-        if (item.type === "icon" && index < slide.illustration.content.length - 1) {
-          const nextItem = slide.illustration.content[index + 1];
-          if (nextItem.type === "picture") {
-            slideContent += `
-              <div class="mixed-content-container ${isActive}" style="display: ${display}">
-                ${item.content}
-                ${nextItem.content}
-              </div>`;
-            return; // Skip next item since we've handled it
-          }
-        }
         
         if (item.type === "iframe") {
           slideContent += `
-            <div class="iframe-container sequence-image ${isActive}" style="display: ${display}">
-              <iframe src="${item.src}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>
+            <div class="iframe-container sequence-image ${isActive}">
+              ${item.content}
             </div>`;
         } else if (item.type === "picture") {
           slideContent += `
-            <div class="sequence-image ${isActive}" style="display: ${display}">
+            <div class="sequence-image ${isActive}">
               ${item.content}
             </div>`;
         } else if (item.type === "svg") {
           slideContent += `
-            <div class="sequence-image ${isActive}" style="display: ${display}">
+            <div class="sequence-image ${isActive}">
               ${item.content}
             </div>`;
         } else if (item.type === "icon") {
           slideContent += `
-            <div class="sequence-image icon-container ${isActive}" style="display: ${display}">
+            <div class="sequence-image icon-container ${isActive}">
               ${item.content}
             </div>`;
-        } else {
+        } else if (item.type === "image") {
           slideContent += `
             <img 
               src="${item.content}" 
               alt="${item.alt || ''}" 
-              class="sequence-image ${isActive}" 
-              style="display: ${display}">`;
+              class="sequence-image ${isActive}">`;
+        } else {
+          slideContent += `
+            <div class="sequence-image text-container ${isActive}">
+              ${item.content}
+            </div>`;
         }
       });
       
@@ -681,7 +671,7 @@ function createSlideContent(slide) {
     } else if (slide.illustration.type === "iframe") {
       slideContent += `
         <div class="iframe-container">
-          <iframe src="${slide.illustration.src}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>
+          ${slide.illustration.content}
         </div>`;
     } else if (slide.illustration.type === "svg") {
       slideContent += slide.illustration.content;
@@ -767,6 +757,23 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
               img.style.display = 'none';
             }
           });
+        }
+      } else {
+        // Initialize the first image in sequence as active
+        const imageSequence = slides[index].querySelector('.image-sequence');
+        if (imageSequence) {
+          const sequenceImages = imageSequence.querySelectorAll('.sequence-image');
+          if (sequenceImages.length > 0) {
+            sequenceImages.forEach((img, idx) => {
+              if (idx === 0) {
+                img.classList.add('active');
+                img.style.display = 'block';
+              } else {
+                img.classList.remove('active');
+                img.style.display = 'none';
+              }
+            });
+          }
         }
       }
       
@@ -888,91 +895,91 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
     }
   }
 
-  /* Visual warning system for timer
+/* Visual warning system for timer
    * Flashes red three times when time is running low
    */
-  function flashTimeWarning() {
-    const container = document.querySelector(".dps-container");
-    let flashCount = 0;
+function flashTimeWarning() {
+  const container = document.querySelector(".dps-container");
+  let flashCount = 0;
 
-    function singleFlash() {
-      container.style.backgroundColor = "#e74c3c";
+  function singleFlash() {
+    container.style.backgroundColor = "#e74c3c";
 
-      setTimeout(() => {
-        container.style.backgroundColor = "";
-        flashCount++;
+    setTimeout(() => {
+      container.style.backgroundColor = "";
+      flashCount++;
 
-        if (flashCount < 3) {
-          setTimeout(singleFlash, 300);
-        }
-      }, 300);
-    }
-
-    singleFlash();
+      if (flashCount < 3) {
+        setTimeout(singleFlash, 300);
+      }
+    }, 300);
   }
 
-  /* Add keyboard navigation
-   * Supports slide progression, timer control, and presenter notes
+  singleFlash();
+}
+
+/* Add keyboard navigation
+ * Supports slide progression, timer control, and presenter notes
+ */
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    const navBar = document.querySelector(".dps-navigation");
+    if (navBar) {
+      navBar.style.display = navBar.style.display === "none" ? "flex" : "none";
+    }
+    return;
+  }
+
+  /* Toggle presenter notes with + and - keys
+   * Provides quick access to presenter guidance
    */
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      const navBar = document.querySelector(".dps-navigation");
-      if (navBar) {
-        navBar.style.display = navBar.style.display === "none" ? "flex" : "none";
-      }
-      return;
-    }
+  if (event.key === "+" || event.key === "=") {
+    presenterNotesContainer.classList.remove("hidden");
+    config.PRESENTER_NOTES_VISIBLE = true;
+    event.preventDefault();
+  } else if (event.key === "-" || event.key === "_") {
+    presenterNotesContainer.classList.add("hidden");
+    config.PRESENTER_NOTES_VISIBLE = false;
+    event.preventDefault();
+  }
 
-    /* Toggle presenter notes with + and - keys
-     * Provides quick access to presenter guidance
-     */
-    if (event.key === "+" || event.key === "=") {
-      presenterNotesContainer.classList.remove("hidden");
-      config.PRESENTER_NOTES_VISIBLE = true;
-      event.preventDefault();
-    } else if (event.key === "-" || event.key === "_") {
-      presenterNotesContainer.classList.add("hidden");
-      config.PRESENTER_NOTES_VISIBLE = false;
-      event.preventDefault();
-    }
-
-    /* Handle navigation controls
-     * Supports slide progression and image sequences
-     */
-    if (event.key === "ArrowLeft") {
-      if (!handleImageSequenceNavigation('prev')) {
-        if (currentSlideIndex > 0) {
-          showSlide(currentSlideIndex - 1);
-        }
-      }
-      event.preventDefault();
-    } else if (event.key === "ArrowRight") {
-      if (!handleImageSequenceNavigation('next')) {
-        if (currentSlideIndex < slides.length - 1) {
-          showSlide(currentSlideIndex + 1);
-        }
-      }
-      event.preventDefault();
-    } else if (event.key === " " && hasStartedTimer) {
-      toggleTimer();
-      event.preventDefault();
-    } else if (event.key === "r" || event.key === "R") {
-      // Refresh viewport while maintaining current slide and sub-slide state
-      const currentSlideElement = slides[currentSlideIndex];
-      const imageSequence = currentSlideElement.querySelector('.image-sequence');
-      
-      if (imageSequence) {
-        const currentImageIndex = Array.from(imageSequence.querySelectorAll('.sequence-image'))
-          .findIndex(img => img.classList.contains('active'));
-          
-        // Reapply the active state to maintain sequence position
-        showSlide(currentSlideIndex, currentImageIndex);
-      } else {
-        showSlide(currentSlideIndex);
+  /* Handle navigation controls
+   * Supports slide progression and image sequences
+   */
+  if (event.key === "ArrowLeft") {
+    if (!handleImageSequenceNavigation('prev')) {
+      if (currentSlideIndex > 0) {
+        showSlide(currentSlideIndex - 1);
       }
     }
-  });
+    event.preventDefault();
+  } else if (event.key === "ArrowRight") {
+    if (!handleImageSequenceNavigation('next')) {
+      if (currentSlideIndex < slides.length - 1) {
+        showSlide(currentSlideIndex + 1);
+      }
+    }
+    event.preventDefault();
+  } else if (event.key === " " && hasStartedTimer) {
+    toggleTimer();
+    event.preventDefault();
+  } else if (event.key === "r" || event.key === "R") {
+    // Refresh viewport while maintaining current slide and sub-slide state
+    const currentSlideElement = slides[currentSlideIndex];
+    const imageSequence = currentSlideElement.querySelector('.image-sequence');
+    
+    if (imageSequence) {
+      const currentImageIndex = Array.from(imageSequence.querySelectorAll('.sequence-image'))
+        .findIndex(img => img.classList.contains('active'));
+        
+      // Reapply the active state to maintain sequence position
+      showSlide(currentSlideIndex, currentImageIndex);
+    } else {
+      showSlide(currentSlideIndex);
+    }
+  }
+});
 
-  // Show first slide on initial load
-  showSlide(0);
+// Show first slide on initial load
+showSlide(0);
 }
