@@ -461,6 +461,19 @@ function parseIllustration(cell) {
       return;
     }
 
+    /* Check for icon spans
+     * - Handles icon elements
+     * - Preserves icon classes
+     */
+    const icon = element.querySelector('.icon');
+    if (icon) {
+      illustrations.push({
+        type: "icon",
+        content: icon.outerHTML
+      });
+      return;
+    }
+
     /* Check for direct image
      * - Simple img elements
      * - Preserves alt text
@@ -513,66 +526,18 @@ function parseIllustration(cell) {
       }
     }
 
-    /* Check for standard iframe
-     * - Preserves original attributes
-     * - Adds required attributes if missing
+    /* Check for Franklin link format
+     * - Handles both image and iframe links
+     * - Preserves link text as alt text
      */
-    const iframe = element.querySelector('iframe');
-    if (iframe) {
-      illustrations.push({
-        type: "iframe",
-        content: iframe.outerHTML,
-        src: iframe.src
-      });
-      return;
-    }
-
-    /* Check for iframe without src attribute
-     * - Handles malformed iframe content
-     * - Extracts URL from content
-     */
-    const iframeMatch = content.match(/<iframe[^>]*>(.*?)<\/iframe>/i);
-    if (iframeMatch) {
-      const url = extractUrl(iframeMatch[1]);
-      if (url) {
+    const link = element.querySelector('a');
+    if (link && link.href) {
+      const href = link.href;
+      if (href.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
         illustrations.push({
-          type: "iframe",
-          content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`,
-          src: url
-        });
-        return;
-      }
-    }
-
-    /* Check for HTML encoded iframe
-     * - Handles escaped HTML content
-     * - Decodes HTML entities
-     */
-    const encodedIframeMatch = content.match(/&#x3C;iframe[^>]*>([^<]+)&#x3C;\/iframe>/);
-    if (encodedIframeMatch) {
-      const url = decodeHTMLEntities(encodedIframeMatch[1]);
-      if (url) {
-        illustrations.push({
-          type: "iframe",
-          content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`,
-          src: url
-        });
-        return;
-      }
-    }
-
-    /* Check for paragraph wrapped HTML encoded iframe
-     * - Handles nested HTML entities
-     * - Preserves paragraph structure
-     */
-    const paragraphIframeMatch = content.match(/<p[^>]*>&#x3C;iframe[^>]*>([^<]+)&#x3C;\/iframe><\/p>/);
-    if (paragraphIframeMatch) {
-      const url = decodeHTMLEntities(paragraphIframeMatch[1]);
-      if (url) {
-        illustrations.push({
-          type: "iframe",
-          content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`,
-          src: url
+          type: "image",
+          content: href,
+          alt: link.textContent || ""
         });
         return;
       }
@@ -600,28 +565,6 @@ function parseIllustration(cell) {
         src: url
       });
       return;
-    }
-
-    /* Check for Franklin link format
-     * - Handles both image and iframe links
-     * - Preserves link text as alt text
-     */
-    const link = element.querySelector('a');
-    if (link && link.href) {
-      const href = link.href;
-      if (href.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
-        illustrations.push({
-          type: "image",
-          content: href,
-          alt: link.textContent || ""
-        });
-      } else {
-        illustrations.push({
-          type: "iframe",
-          content: `<iframe src="${href}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`,
-          src: href
-        });
-      }
     }
   });
 
@@ -1058,7 +1001,54 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
  * @param {HTMLElement} block - Main presentation block
  */
 function setupFullscreenToggle(fullscreenBtn, block) {
-  // Implementation of setupFullscreenToggle function
+  if (!fullscreenBtn || !block) return;
+
+  fullscreenBtn.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      // Try to enter fullscreen mode
+      if (block.requestFullscreen) {
+        block.requestFullscreen();
+      } else if (block.webkitRequestFullscreen) {
+        block.webkitRequestFullscreen();
+      } else if (block.msRequestFullscreen) {
+        block.msRequestFullscreen();
+      }
+    } else {
+      // Try to exit fullscreen mode
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+    }
+  });
+
+  // Handle fullscreen change events
+  document.addEventListener('fullscreenchange', () => {
+    if (document.fullscreenElement) {
+      block.classList.add('fullscreen');
+    } else {
+      block.classList.remove('fullscreen');
+    }
+  });
+
+  document.addEventListener('webkitfullscreenchange', () => {
+    if (document.webkitFullscreenElement) {
+      block.classList.add('fullscreen');
+    } else {
+      block.classList.remove('fullscreen');
+    }
+  });
+
+  document.addEventListener('MSFullscreenChange', () => {
+    if (document.msFullscreenElement) {
+      block.classList.add('fullscreen');
+    } else {
+      block.classList.remove('fullscreen');
+    }
+  });
 }
 
 /**
@@ -1068,5 +1058,10 @@ function setupFullscreenToggle(fullscreenBtn, block) {
  * @returns {string} Formatted time string
  */
 function formatTime(seconds) {
-  // Implementation of formatTime function
+  if (seconds <= 0) return 'Time Up!';
+  
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  
+  return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
 }
