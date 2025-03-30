@@ -131,18 +131,85 @@ https://example.com/embed
 6. Use HTML formatting in presenter notes for better organization
 7. Add iframes using any supported format - the system will handle the conversion
 
-## Troubleshooting
-- If images don't load, check the image URLs
-- If presenter notes don't toggle, ensure no other keyboard shortcuts are active
-- For print issues, use the browser's print preview
-- If timer doesn't start, ensure you've advanced past the first slide
-- For iframe issues:
-  - Check if the source URL is accessible
-  - Verify iframe permissions are set correctly
-  - Ensure the iframe source supports embedding
-  - Check browser console for any security policy errors
-  - Try using a different URL format if one doesn't work
-  - If using HTML entities, ensure they are properly encoded
+## Image Handling
+
+### Supported Image Formats
+The fourth column supports various image formats and sources:
+
+1. **Picture Elements**
+```html
+<picture>
+  <source type="image/webp" srcset="/path/to/image.webp" media="(min-width: 600px)">
+  <source type="image/webp" srcset="/path/to/image.webp">
+  <source type="image/jpeg" srcset="/path/to/image.jpg" media="(min-width: 600px)">
+  <img loading="lazy" alt="" src="/path/to/image.jpg" width="1200" height="1600">
+</picture>
+```
+
+2. **Direct Images**
+```html
+<img src="/path/to/image.jpg" alt="Description">
+```
+
+3. **Direct Image URLs**
+```
+/path/to/image.jpg
+```
+
+4. **URLs in Anchor Tags (Franklin Format)**
+```html
+<a href="https://example.com/path/to/image.jpg">https://example.com/path/to/image.jpg</a>
+```
+
+5. **SVG Content**
+```html
+<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="200" cy="100" rx="150" ry="80" fill="#BBDEFB" stroke="#3498db" stroke-width="2"/>
+  <text x="200" y="105" font-size="24" text-anchor="middle">Sample SVG</text>
+</svg>
+```
+
+6. **Simple iframe Format**
+```
+iframe = https://example.com/embed
+```
+
+### Image Path Handling
+- Relative paths are preserved exactly as provided
+- No automatic domain addition to relative paths
+- Franklin's image optimization system handles all image processing
+- Picture elements maintain their original structure and attributes
+- SVG content is preserved exactly as provided
+- URLs in anchor tags are extracted and used as-is
+- Full URLs (starting with http:// or https://) are preserved exactly as provided
+- Simple iframe format is supported with 'iframe =' prefix
+
+### Image Best Practices
+1. Use relative paths for all images
+2. Include appropriate alt text for accessibility
+3. Use picture elements for responsive images
+4. Set proper width and height attributes
+5. Use appropriate image formats (webp, jpeg, png)
+6. Optimize images before uploading
+7. Test images across different screen sizes
+8. When using anchor tags, ensure the href and content match
+
+### Troubleshooting Images
+- If images don't load, check:
+  - Image paths are correct and relative
+  - Image files exist in the specified location
+  - Image permissions are set correctly
+  - Franklin's image optimization is working
+  - Browser console for any 404 errors
+  - For anchor tag URLs, verify both href and content match
+- For picture elements:
+  - Verify all source elements have correct paths
+  - Check media queries are appropriate
+  - Ensure fallback img element is present
+- For SVG content:
+  - Verify SVG code is valid
+  - Check for proper namespace declarations
+  - Ensure viewBox attribute is set
 
 ## Notes
 - Presenter notes support HTML formatting for better organization
@@ -549,7 +616,20 @@ The fourth column supports mixing different types of content in sequence:
    - Verify responsive behavior
 
 #### Troubleshooting
-- If images don't load, check the image URLs
+- If images don't load, check:
+  - Image paths are correct and relative
+  - Image files exist in the specified location
+  - Image permissions are set correctly
+  - Franklin's image optimization is working
+  - Browser console for any 404 errors
+- For picture elements:
+  - Verify all source elements have correct paths
+  - Check media queries are appropriate
+  - Ensure fallback img element is present
+- For SVG content:
+  - Verify SVG code is valid
+  - Check for proper namespace declarations
+  - Ensure viewBox attribute is set
 - For iframe issues:
   - Check if the source URL is accessible
   - Verify iframe permissions

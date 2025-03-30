@@ -276,6 +276,12 @@ function parseIllustration(cell) {
     // Clean up any malformed URLs
     path = path.replace(/\s+/g, '').replace(/["']/g, '');
     
+    // If it's already an absolute URL, return it
+    if (path.startsWith('http://') || path.startsWith('https://')) {
+      return path;
+    }
+    
+    // Return the path as is, keeping relative paths relative
     return path;
   }
 
@@ -283,6 +289,28 @@ function parseIllustration(cell) {
   elements.forEach(element => {
     const content = element.innerHTML.trim();
     
+    // Check for 'iframe =' format at the start of content
+    const iframeEqualsMatch = content.match(/^\s*iframe\s*=\s*([^\s<>]+)/i);
+    if (iframeEqualsMatch && iframeEqualsMatch[1]) {
+      const url = decodeHTMLEntities(iframeEqualsMatch[1]);
+      if (url) {
+        const newIframe = document.createElement('iframe');
+        newIframe.src = url;
+        newIframe.allowfullscreen = true;
+        newIframe.loading = 'lazy';
+        newIframe.title = 'Embedded Content';
+        
+        illustrations.push({
+          type: "iframe",
+          content: newIframe.outerHTML,
+          src: url,
+          width: "100%",
+          height: "100%"
+        });
+        return;
+      }
+    }
+
     // Function to decode HTML entities
     function decodeHTMLEntities(text) {
       const textarea = document.createElement('textarea');
@@ -403,14 +431,7 @@ function parseIllustration(cell) {
       return null;
     }
 
-    // Check for iframe content first
-    const iframeContent = extractIframeContent(content);
-    if (iframeContent) {
-      illustrations.push(iframeContent);
-      return;
-    }
-
-    // Check for picture element
+    // Check for picture element first
     const picture = element.querySelector('picture');
     if (picture) {
       // Create a new picture element to preserve the structure
@@ -468,6 +489,17 @@ function parseIllustration(cell) {
       return;
     }
 
+    // Check for direct URL (if the content is just a URL)
+    const url = extractUrl(content);
+    if (url && (url.endsWith('.jpg') || url.endsWith('.jpeg') || url.endsWith('.png') || url.endsWith('.gif') || url.endsWith('.webp'))) {
+      illustrations.push({
+        type: "image",
+        content: convertToAbsolutePath(url),
+        alt: ""
+      });
+      return;
+    }
+
     // Check for SVG element
     const svg = element.querySelector('svg');
     if (svg) {
@@ -496,6 +528,12 @@ function parseIllustration(cell) {
           content: content,
         });
       }
+    }
+
+    // Check for iframe content
+    const iframeContent = extractIframeContent(content);
+    if (iframeContent) {
+      illustrations.push(iframeContent);
     }
   });
 
