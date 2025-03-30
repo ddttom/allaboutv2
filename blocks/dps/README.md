@@ -4,7 +4,7 @@ A powerful presentation system that transforms structured content into an intera
 
 ## Features
 - Full-screen presentation mode
-- Keyboard-based navigation
+- Keyboard and click-based navigation
 - Multiple images per slide with arrow key navigation
 - Image sequence support
 - Full viewport height image support
@@ -30,6 +30,7 @@ A powerful presentation system that transforms structured content into an intera
 - **Plus (+)**: Show presenter notes
 - **Minus (-)**: Hide presenter notes
 - **R**: Refresh viewport while maintaining current slide and sub-slide state
+- **Click Navigation**: Use left/right arrow buttons in footer
 
 ### Image Sequence Navigation
 - Use left/right arrow keys to navigate through multiple images
@@ -417,6 +418,14 @@ https://example.com/embed
 - Plus (+) key: Show presenter notes
 - Minus (-) key: Hide presenter notes
 - R key: Refresh viewport while maintaining current slide and sub-slide state
+
+#### Click Navigation
+- Left/Right arrow buttons in footer for slide navigation
+- Buttons are styled for clear visibility and interaction
+- Supports both desktop and mobile devices
+- Maintains accessibility with proper ARIA labels
+- Visual feedback on hover and click
+- High contrast mode support
 
 #### Image Sequence Navigation
 - Right arrow shows next image in the sequence

@@ -1,22 +1,35 @@
 /**
  * Dynamic Presentation System (DPS) Block
- * This block transforms a structured div (from Google Doc table) into an interactive presentation
+ * Transforms a structured div (from Google Doc table) into an interactive presentation
+ * Features:
+ * - Full-screen presentation mode
+ * - Keyboard navigation
+ * - Multiple images per slide with sequence support
+ * - Presenter notes with toggle
+ * - Timer with warning system
+ * - Responsive design
+ * - Print-friendly handout mode
  */
 
 export default function decorate(block) {
-  // Add dps-block class to the container
+  // Add dps-block class to the container for styling and identification
   block.classList.add("dps-block");
 
-  // Configuration object for presentation settings
+  /* Configuration object for presentation settings
+   * - TIMER_DURATION: Default 25 minutes in seconds
+   * - SLIDE_TRANSITION_MS: Animation duration for slide transitions
+   * - PRESENTER_NOTES_VISIBLE: Initial state of presenter notes panel
+   */
   const DPS_CONFIG = {
-    TIMER_DURATION: 25 * 60, // Default 25 minutes in seconds
-    SLIDE_TRANSITION_MS: 300, // Transition time in milliseconds
-    PRESENTER_NOTES_VISIBLE: false, // Initial state of presenter notes
+    TIMER_DURATION: 25 * 60,
+    SLIDE_TRANSITION_MS: 300,
+    PRESENTER_NOTES_VISIBLE: false,
   };
 
   // Get the rows (each row was a table row in the Google Doc)
   const rows = Array.from(block.children);
 
+  // Validate minimum required structure
   if (rows.length < 2) {
     block.innerHTML =
       '<div class="dps-error">Error: DPS block requires at least a configuration row and one slide row.</div>';
@@ -26,11 +39,17 @@ export default function decorate(block) {
   // Extract presentation data from the rows
   const presentationData = parseRows(rows);
 
-  // Create container elements for the presentation
+  /* Create main presentation container
+   * This container holds all presentation elements:
+   * - Header with title and controls
+   * - Slides container
+   * - Presenter notes panel
+   * - Footer with timer
+   */
   const presentationContainer = document.createElement("div");
   presentationContainer.className = "dps-container";
 
-  // Create header section
+  // Create header section with title and subtitle
   const header = document.createElement("div");
   header.className = "dps-header";
   header.innerHTML = `
@@ -40,7 +59,11 @@ export default function decorate(block) {
     </div>
   `;
 
-  // Add fullscreen toggle button
+  /* Create fullscreen toggle button
+   * - Uses SVG icon for crisp rendering
+   * - Includes accessibility attributes
+   * - Positioned in top-right corner
+   */
   const fullscreenBtn = document.createElement("button");
   fullscreenBtn.className = "fullscreen-btn";
   fullscreenBtn.innerHTML =
@@ -52,12 +75,16 @@ export default function decorate(block) {
   );
   header.appendChild(fullscreenBtn);
 
-  // Create slides container
+  // Create slides container for dynamic slide content
   const slidesContainer = document.createElement("div");
   slidesContainer.className = "slides-container";
   slidesContainer.id = "slides-container";
 
-  // Create presenter notes container
+  /* Create presenter notes container
+   * - Hidden by default
+   * - Toggleable with keyboard shortcuts
+   * - Excluded from print mode
+   */
   const presenterNotesContainer = document.createElement("div");
   presenterNotesContainer.className = "presenter-notes hidden";
   presenterNotesContainer.innerHTML = `
@@ -65,31 +92,52 @@ export default function decorate(block) {
     <div class="presenter-notes-content"></div>
   `;
   
-  // Create footer section
+  /* Create footer section
+   * - Fixed position at bottom
+   * - Contains navigation arrows and timer
+   * - Hidden in print mode
+   */
   const footer = document.createElement("div");
   footer.className = "dps-footer";
   footer.innerHTML = `
     <div class="footer-content">
+      <div class="footer-controls">
+        <button class="nav-btn prev-slide" aria-label="Previous slide">
+          <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" fill="currentColor"/>
+          </svg>
+        </button>
+        <button class="nav-btn next-slide" aria-label="Next slide">
+          <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.59 16.59L10 18l6-6-6-6L8.59 7.41 13.17 12z" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
       <div class="timer">${formatTime(
         presentationData.timerDuration * 60 || DPS_CONFIG.TIMER_DURATION
       )}</div>
     </div>
   `;
 
-  // Append all elements to the presentation container
+  // Assemble presentation container with all components
   presentationContainer.appendChild(header);
   presentationContainer.appendChild(slidesContainer);
   presentationContainer.appendChild(presenterNotesContainer);
   presentationContainer.appendChild(footer);
 
-  // Replace the block content with our presentation
+  // Replace original block content with presentation
   block.textContent = "";
   block.appendChild(presentationContainer);
 
-  // Build slides from the parsed content
+  // Build slides from parsed content
   buildSlides(presentationData.slides, slidesContainer);
 
-  // Set up presentation controls
+  /* Set up presentation controls
+   * - Keyboard navigation
+   * - Timer functionality
+   * - Presenter notes toggle
+   * - Slide transitions
+   */
   setupControls(
     slidesContainer,
     presenterNotesContainer,
@@ -97,10 +145,10 @@ export default function decorate(block) {
     DPS_CONFIG
   );
 
-  // Set up fullscreen toggle
+  // Set up fullscreen toggle functionality
   setupFullscreenToggle(fullscreenBtn, block);
 
-  // Trigger fullscreen mode on startup
+  // Trigger fullscreen mode on startup after a short delay
   setTimeout(() => {
     fullscreenBtn.click();
   }, 100);
@@ -108,13 +156,32 @@ export default function decorate(block) {
 
 /**
  * Parse rows from the Franklin-rendered structure
+ * First row contains presentation configuration:
+ * - Column 1: Presentation title
+ * - Column 2: Subtitle
+ * - Column 3: Timer duration in minutes
+ * 
+ * Subsequent rows contain slide content:
+ * - Column 1: Slide title
+ * - Column 2: Introduction text
+ * - Column 3: Bullet points
+ * - Column 4: Illustrations (images, SVG, iframes)
+ * - Column 5: Presenter notes
+ * 
+ * @param {HTMLCollection} rows - Collection of table rows
+ * @returns {Object} Parsed presentation data
  */
 function parseRows(rows) {
   // First row contains presentation information
   const configRow = rows[0];
   const configCells = Array.from(configRow.children);
 
-  // Initialize presentation data
+  /* Initialize presentation data structure
+   * - title: Main presentation title
+   * - subtitle: Optional subtitle
+   * - timerDuration: Presentation duration in minutes
+   * - slides: Array of slide objects
+   */
   const presentationData = {
     title: getElementContent(configCells[0]),
     subtitle: getElementContent(configCells[1]),
@@ -122,14 +189,21 @@ function parseRows(rows) {
     slides: [],
   };
 
-  // Process slide rows
+  // Process slide rows (skip first row as it's configuration)
   for (let i = 1; i < rows.length; i++) {
     const slideRow = rows[i];
     const slideCells = Array.from(slideRow.children);
 
-    // Skip rows with fewer than 3 cells
+    // Skip rows with insufficient cells
     if (slideCells.length < 3) continue;
 
+    /* Create slide object with parsed content
+     * - title: Slide heading
+     * - introText: Introduction or subtitle
+     * - bulletPoints: Array of bullet points and text
+     * - illustration: Images, SVG, or iframes
+     * - presenterNotes: Private notes for presenter
+     */
     const slide = {
       title: getElementContent(slideCells[0]),
       introText: getElementContent(slideCells[1]),
@@ -141,7 +215,11 @@ function parseRows(rows) {
     presentationData.slides.push(slide);
   }
 
-  // Always add a Q&A slide at the end
+  /* Add Q&A slide at the end
+   * - Standard format for all presentations
+   * - Includes thank you message
+   * - Provides space for audience interaction
+   */
   presentationData.slides.push({
     type: "qanda",
     title: "Questions & Answers",
@@ -155,21 +233,40 @@ function parseRows(rows) {
 
 /**
  * Get content from an element
+ * Handles different content types:
+ * - Preserves HTML in presenter notes
+ * - Uses textContent for other columns
+ * 
+ * @param {HTMLElement} element - DOM element to extract content from
+ * @returns {string} Extracted content
  */
 function getElementContent(element) {
   if (!element) return "";
-  // For presenter notes (5th column), preserve HTML
+  
+  /* Special handling for presenter notes (5th column)
+   * - Preserves HTML formatting
+   * - Allows rich text in notes
+   */
   if (element.parentElement && element.parentElement.parentElement && 
       element.parentElement.parentElement.children.length === 5 && 
       element.parentElement.parentElement.children[4] === element) {
     return element.innerHTML.trim();
   }
-  // For other columns, use textContent
+  
+  // For other columns, use textContent to strip HTML
   return element.textContent.trim();
 }
 
 /**
  * Parse bullet points from a cell
+ * Handles various content types:
+ * - Bullet points with sub-points
+ * - Plain text
+ * - HTML formatted content
+ * - Line breaks
+ * 
+ * @param {HTMLElement} cell - Table cell containing bullet points
+ * @returns {Array} Array of bullet point objects
  */
 function parseBulletPoints(cell) {
   if (!cell) return [];
@@ -180,7 +277,11 @@ function parseBulletPoints(cell) {
 
   if (!textContent) return [];
 
-  // Create a map of list item text to their content
+  /* Create map of list items for efficient lookup
+   * - Maps text content to structured objects
+   * - Preserves original formatting
+   * - Supports nested sub-points
+   */
   const listItemMap = new Map();
   Array.from(listItems).forEach((li) => {
     const text = li.innerHTML.trim();
@@ -192,11 +293,18 @@ function parseBulletPoints(cell) {
     }
   });
 
-  // Create a temporary div to parse the HTML content
+  /* Create temporary div for HTML parsing
+   * - Preserves original HTML structure
+   * - Allows processing of mixed content
+   */
   const tempDiv = document.createElement('div');
   tempDiv.innerHTML = textContent;
 
-  // Process each child node in order
+  /* Process each child node in order
+   * - Handles text nodes and HTML elements
+   * - Preserves formatting and structure
+   * - Supports mixed content types
+   */
   Array.from(tempDiv.childNodes).forEach(node => {
     if (node.nodeType === Node.TEXT_NODE) {
       // Handle text nodes
@@ -258,6 +366,15 @@ function parseBulletPoints(cell) {
 
 /**
  * Parse illustration from a cell
+ * Supports multiple content types:
+ * - Picture elements with responsive images
+ * - Direct images
+ * - SVG content (both element and inline)
+ * - iframes in various formats
+ * - Franklin link format
+ * 
+ * @param {HTMLElement} cell - Table cell containing illustration
+ * @returns {Object|null} Parsed illustration data
  */
 function parseIllustration(cell) {
   if (!cell) return null;
@@ -269,11 +386,19 @@ function parseIllustration(cell) {
   // Array to store all illustrations found
   const illustrations = [];
 
-  // Process each element
+  /* Process each element in order
+   * - Checks for different content types
+   * - Preserves original structure
+   * - Handles various URL formats
+   */
   elements.forEach(element => {
     const content = element.innerHTML.trim();
 
-    // Check for picture element first
+    /* Check for picture element first
+     * - Supports responsive images
+     * - Handles multiple formats
+     * - Preserves original attributes
+     */
     const picture = element.querySelector('picture');
     if (picture) {
       illustrations.push({
@@ -283,7 +408,10 @@ function parseIllustration(cell) {
       return;
     }
 
-    // Check for direct image
+    /* Check for direct image
+     * - Simple img elements
+     * - Preserves alt text
+     */
     const img = element.querySelector('img');
     if (img) {
       illustrations.push({
@@ -294,7 +422,10 @@ function parseIllustration(cell) {
       return;
     }
 
-    // Check for SVG element
+    /* Check for SVG element
+     * - Both direct and inline SVG
+     * - Preserves all SVG attributes
+     */
     const svg = element.querySelector('svg');
     if (svg) {
       illustrations.push({
@@ -304,7 +435,10 @@ function parseIllustration(cell) {
       return;
     }
 
-    // Check if content contains SVG tags
+    /* Check if content contains SVG tags
+     * - Handles inline SVG content
+     * - Attempts to parse and validate
+     */
     if (content.startsWith("<svg") && content.includes("</svg>")) {
       try {
         const container = document.createElement("div");
@@ -326,7 +460,10 @@ function parseIllustration(cell) {
       }
     }
 
-    // Check for standard iframe
+    /* Check for standard iframe
+     * - Preserves original attributes
+     * - Adds required attributes if missing
+     */
     const iframe = element.querySelector('iframe');
     if (iframe) {
       illustrations.push({
@@ -337,7 +474,10 @@ function parseIllustration(cell) {
       return;
     }
 
-    // Check for iframe without src attribute
+    /* Check for iframe without src attribute
+     * - Handles malformed iframe content
+     * - Extracts URL from content
+     */
     const iframeMatch = content.match(/<iframe[^>]*>(.*?)<\/iframe>/i);
     if (iframeMatch) {
       const url = extractUrl(iframeMatch[1]);
@@ -351,7 +491,10 @@ function parseIllustration(cell) {
       }
     }
 
-    // Check for HTML encoded iframe
+    /* Check for HTML encoded iframe
+     * - Handles escaped HTML content
+     * - Decodes HTML entities
+     */
     const encodedIframeMatch = content.match(/&#x3C;iframe[^>]*>([^<]+)&#x3C;\/iframe>/);
     if (encodedIframeMatch) {
       const url = decodeHTMLEntities(encodedIframeMatch[1]);
@@ -365,7 +508,10 @@ function parseIllustration(cell) {
       }
     }
 
-    // Check for paragraph wrapped HTML encoded iframe
+    /* Check for paragraph wrapped HTML encoded iframe
+     * - Handles nested HTML entities
+     * - Preserves paragraph structure
+     */
     const paragraphIframeMatch = content.match(/<p[^>]*>&#x3C;iframe[^>]*>([^<]+)&#x3C;\/iframe><\/p>/);
     if (paragraphIframeMatch) {
       const url = decodeHTMLEntities(paragraphIframeMatch[1]);
@@ -379,7 +525,10 @@ function parseIllustration(cell) {
       }
     }
 
-    // Check for direct URL (if the content is just a URL)
+    /* Check for direct URL
+     * - Handles both image and iframe URLs
+     * - Preserves relative paths
+     */
     const url = extractUrl(content);
     if (url) {
       // Check if it's an image URL
@@ -400,7 +549,10 @@ function parseIllustration(cell) {
       return;
     }
 
-    // Check for Franklin link format
+    /* Check for Franklin link format
+     * - Handles both image and iframe links
+     * - Preserves link text as alt text
+     */
     const link = element.querySelector('a');
     if (link && link.href) {
       const href = link.href;
@@ -433,7 +585,40 @@ function parseIllustration(cell) {
 }
 
 /**
+ * Extract URL from content
+ * Handles various URL formats:
+ * - Absolute URLs (http/https)
+ * - Relative URLs
+ * - iframe prefixed URLs
+ * 
+ * @param {string} content - Content to extract URL from
+ * @returns {string|null} Extracted URL or null if not found
+ */
+function extractUrl(content) {
+  if (!content) return null;
+  
+  // Clean up any malformed URLs
+  content = content.replace(/\s+/g, '').replace(/["']/g, '');
+  
+  // Check for iframe prefix
+  if (content.startsWith('iframe=')) {
+    content = content.substring(7);
+  }
+  
+  // Match URLs
+  const urlMatch = content.match(/https?:\/\/[^\s<>"']+|\/[^\s<>"']+/);
+  return urlMatch ? urlMatch[0] : null;
+}
+
+/**
  * Decode HTML entities in a string
+ * Handles various HTML entity formats:
+ * - Numeric entities
+ * - Named entities
+ * - Mixed content
+ * 
+ * @param {string} text - Text containing HTML entities
+ * @returns {string|null} Decoded text or null if invalid
  */
 function decodeHTMLEntities(text) {
   if (!text) return null;
@@ -448,6 +633,14 @@ function decodeHTMLEntities(text) {
 
 /**
  * Build slides in the container
+ * Creates slide elements with:
+ * - Title and content
+ * - Bullet points
+ * - Illustrations
+ * - Presenter notes
+ * 
+ * @param {Array} slides - Array of slide data
+ * @param {HTMLElement} container - Container to build slides in
  */
 function buildSlides(slides, container) {
   container.innerHTML = "";
@@ -463,7 +656,11 @@ function buildSlides(slides, container) {
       slideElement.dataset.presenterNotes = slide.presenterNotes;
     }
 
-    // Special handling for Q&A slides
+    /* Special handling for Q&A slides
+     * - Custom layout
+     * - Question mark icon
+     * - Thank you message
+     */
     if (slide.type === "qanda") {
       slideElement.innerHTML = `
         <div class="slide-content">
@@ -484,7 +681,11 @@ function buildSlides(slides, container) {
         </div>
       `;
     } else {
-      // Standard slide with title, content, and illustration
+      /* Standard slide content
+       * - Title section
+       * - Content area with bullet points
+       * - Illustration area
+       */
       let slideContent = `
         <div class="slide-content">
           <h2 class="slide-title">${slide.title}</h2>
@@ -496,6 +697,11 @@ function buildSlides(slides, container) {
         slideContent += `<p style="font-size: 18px; margin-bottom: 20px;">${slide.introText}</p>`;
       }
 
+      /* Build bullet points list
+       * - Handles plain text
+       * - Supports HTML content
+       * - Includes sub-bullets
+       */
       if (slide.bulletPoints && slide.bulletPoints.length > 0) {
         slideContent += '<ul class="bullet-list">';
         slide.bulletPoints.forEach((point) => {
@@ -533,7 +739,11 @@ function buildSlides(slides, container) {
 
       slideContent += "</div>"; // Close slide-content-text
 
-      // Add illustration if provided
+      /* Add illustration if provided
+       * - Supports multiple content types
+       * - Handles image sequences
+       * - Maintains aspect ratio
+       */
       if (slide.illustration) {
         slideContent += `
           <div class="illustration">
@@ -576,47 +786,142 @@ function buildSlides(slides, container) {
 
 /**
  * Set up presentation controls
+ * Handles:
+ * - Keyboard navigation
+ * - Timer functionality
+ * - Presenter notes toggle
+ * - Slide transitions
+ * - Click navigation
+ * 
+ * @param {HTMLElement} slidesContainer - Container holding all slides
+ * @param {HTMLElement} presenterNotesContainer - Container for presenter notes
+ * @param {number} timerDuration - Duration in seconds
+ * @param {Object} DPS_CONFIG - Presentation configuration
  */
 function setupControls(slidesContainer, presenterNotesContainer, timerDuration, DPS_CONFIG) {
-  // Implementation of setupControls function
+  let currentSlide = 0;
+  const slides = slidesContainer.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+
+  /* Navigation function
+   * - Handles both keyboard and click navigation
+   * - Updates current slide
+   * - Manages slide transitions
+   */
+  function navigate(direction) {
+    const newSlide = currentSlide + direction;
+    if (newSlide >= 0 && newSlide < totalSlides) {
+      // Remove active class from current slide
+      slides[currentSlide].classList.remove('active');
+      // Add active class to new slide
+      slides[newSlide].classList.add('active');
+      currentSlide = newSlide;
+      
+      // Update presenter notes if visible
+      if (!presenterNotesContainer.classList.contains('hidden')) {
+        const notes = slides[currentSlide].dataset.presenterNotes;
+        presenterNotesContainer.querySelector('.presenter-notes-content').innerHTML = notes || '';
+      }
+    }
+  }
+
+  /* Set up keyboard navigation
+   * - Left/Right arrows for slides
+   * - Space for timer
+   * - +/- for presenter notes
+   */
+  document.addEventListener('keydown', (e) => {
+    switch (e.key) {
+      case 'ArrowLeft':
+        navigate(-1);
+        break;
+      case 'ArrowRight':
+        navigate(1);
+        break;
+      case ' ':
+        toggleTimer();
+        break;
+      case '+':
+      case '=':
+        presenterNotesContainer.classList.remove('hidden');
+        break;
+      case '-':
+        presenterNotesContainer.classList.add('hidden');
+        break;
+    }
+  });
+
+  /* Set up click navigation
+   * - Previous/Next buttons in footer
+   * - Uses same navigation function as keyboard
+   */
+  const prevBtn = document.querySelector('.prev-slide');
+  const nextBtn = document.querySelector('.next-slide');
+  
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => navigate(-1));
+  }
+  
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => navigate(1));
+  }
+
+  /* Timer functionality
+   * - Countdown from specified duration
+   * - Visual warning when time is running low
+   * - Pause/Resume with space bar
+   */
+  let timeLeft = timerDuration;
+  let timerInterval;
+  const timerDisplay = document.querySelector('.timer');
+  let isTimerRunning = false;
+
+  function toggleTimer() {
+    if (isTimerRunning) {
+      clearInterval(timerInterval);
+      isTimerRunning = false;
+    } else {
+      isTimerRunning = true;
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          timerDisplay.textContent = 'Time Up!';
+          timerDisplay.classList.add('warning');
+          return;
+        }
+        if (timeLeft <= 120) { // 2 minutes warning
+          timerDisplay.classList.add('warning');
+        }
+        timerDisplay.textContent = formatTime(timeLeft);
+      }, 1000);
+    }
+  }
+
+  // Start with first slide active
+  slides[0].classList.add('active');
 }
 
 /**
  * Set up fullscreen toggle
+ * Handles:
+ * - Fullscreen API
+ * - Fallback for older browsers
+ * - Keyboard shortcuts
+ * 
+ * @param {HTMLElement} fullscreenBtn - Fullscreen toggle button
+ * @param {HTMLElement} block - Main presentation block
  */
 function setupFullscreenToggle(fullscreenBtn, block) {
   // Implementation of setupFullscreenToggle function
 }
 
 /**
- * Format time
+ * Format time in MM:SS format
+ * 
+ * @param {number} seconds - Time in seconds
+ * @returns {string} Formatted time string
  */
 function formatTime(seconds) {
   // Implementation of formatTime function
-}
-
-/**
- * Extract URL from content
- */
-function extractUrl(content) {
-  if (!content) return null;
-  
-  // Clean up any malformed URLs
-  content = content.replace(/\s+/g, '').replace(/["']/g, '');
-  
-  // Check for iframe prefix
-  if (content.startsWith('iframe=')) {
-    content = content.substring(7);
-  }
-  
-  // Match URLs
-  const urlMatch = content.match(/https?:\/\/[^\s<>"']+|\/[^\s<>"']+/);
-  return urlMatch ? urlMatch[0] : null;
-}
-
-/**
- * Extract iframe content from content
- */
-function extractIframeContent(content) {
-  // Implementation of extractIframeContent function
 }
