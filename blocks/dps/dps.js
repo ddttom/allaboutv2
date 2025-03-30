@@ -153,64 +153,6 @@ function parseIllustration(cell) {
 }
 
 /**
- * Set up fullscreen toggle
- * Handles:
- * - Fullscreen API
- * - Fallback for older browsers
- * - Keyboard shortcuts
- * 
- * @param {HTMLElement} fullscreenBtn - Fullscreen toggle button
- * @param {HTMLElement} block - Main presentation block
- */
-function setupFullscreenToggle(fullscreenBtn, block) {
-  if (!fullscreenBtn || !block) return;
-
-  const enterFullscreen = () => {
-    if (block.requestFullscreen) {
-      block.requestFullscreen();
-    } else if (block.webkitRequestFullscreen) {
-      block.webkitRequestFullscreen();
-    } else if (block.msRequestFullscreen) {
-      block.msRequestFullscreen();
-    }
-  };
-
-  const exitFullscreen = () => {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen();
-    }
-  };
-
-  fullscreenBtn.addEventListener('click', () => {
-    if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
-      enterFullscreen();
-    } else {
-      exitFullscreen();
-    }
-  });
-
-  // Handle fullscreen change events
-  document.addEventListener('fullscreenchange', () => {
-    block.classList.toggle(DPS_CONFIG.CLASSES.FULLSCREEN, !!document.fullscreenElement);
-  });
-
-  document.addEventListener('webkitfullscreenchange', () => {
-    block.classList.toggle(DPS_CONFIG.CLASSES.FULLSCREEN, !!document.webkitFullscreenElement);
-  });
-
-  document.addEventListener('MSFullscreenChange', () => {
-    block.classList.toggle(DPS_CONFIG.CLASSES.FULLSCREEN, !!document.msFullscreenElement);
-  });
-
-  // Enter fullscreen on load
-  enterFullscreen();
-}
-
-/**
  * Format time in MM:SS format
  * 
  * @param {number} seconds - Time in seconds
@@ -236,29 +178,6 @@ export default async function decorate(block) {
   const container = document.createElement('div');
   container.className = 'dps-container';
   block.appendChild(container);
-
-  // Create header
-  const header = document.createElement('div');
-  header.className = 'dps-header';
-  container.appendChild(header);
-
-  const headerContent = document.createElement('div');
-  headerContent.className = 'header-content';
-  header.appendChild(headerContent);
-
-  const title = document.createElement('h1');
-  title.textContent = 'Dynamic Presentation System';
-  headerContent.appendChild(title);
-
-  const subtitle = document.createElement('p');
-  subtitle.textContent = 'Press Space or Arrow keys to navigate';
-  headerContent.appendChild(subtitle);
-
-  // Create fullscreen button
-  const fullscreenBtn = document.createElement('button');
-  fullscreenBtn.className = 'fullscreen-btn';
-  fullscreenBtn.innerHTML = '⛶';
-  header.appendChild(fullscreenBtn);
 
   // Create slides container
   const slidesContainer = document.createElement('div');
@@ -287,9 +206,6 @@ export default async function decorate(block) {
   const timer = document.createElement('div');
   timer.className = 'timer';
   footer.appendChild(timer);
-
-  // Set up fullscreen toggle
-  setupFullscreenToggle(fullscreenBtn, block);
 
   // Initialize presentation
   let currentSlide = 0;
@@ -377,13 +293,6 @@ export default async function decorate(block) {
         break;
       case '-':
         hidePresenterNotes();
-        break;
-      case 'Escape':
-        if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
-          if (document.exitFullscreen) document.exitFullscreen();
-          else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-          else if (document.msExitFullscreen) document.msExitFullscreen();
-        }
         break;
     }
   });
