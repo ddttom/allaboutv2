@@ -12,146 +12,151 @@
  */
 
 export default function decorate(block) {
-  // Add dps-block class to the container for styling and identification
-  block.classList.add("dps-block");
+  try {
+    // Add dps-block class to the container for styling and identification
+    block.classList.add("dps-block");
 
-  /* Configuration object for presentation settings
-   * - TIMER_DURATION: Default 25 minutes in seconds
-   * - SLIDE_TRANSITION_MS: Animation duration for slide transitions
-   * - PRESENTER_NOTES_VISIBLE: Initial state of presenter notes panel
-   */
-  const DPS_CONFIG = {
-    TIMER_DURATION: 25 * 60,
-    SLIDE_TRANSITION_MS: 300,
-    PRESENTER_NOTES_VISIBLE: false,
-  };
+    /* Configuration object for presentation settings
+     * - TIMER_DURATION: Default 25 minutes in seconds
+     * - SLIDE_TRANSITION_MS: Animation duration for slide transitions
+     * - PRESENTER_NOTES_VISIBLE: Initial state of presenter notes panel
+     */
+    const DPS_CONFIG = {
+      TIMER_DURATION: 25 * 60,
+      SLIDE_TRANSITION_MS: 300,
+      PRESENTER_NOTES_VISIBLE: false,
+    };
 
-  // Get the rows (each row was a table row in the Google Doc)
-  const rows = Array.from(block.children);
+    // Get the rows (each row was a table row in the Google Doc)
+    const rows = Array.from(block.children);
 
-  // Validate minimum required structure
-  if (rows.length < 2) {
-    block.innerHTML =
-      '<div class="dps-error">Error: DPS block requires at least a configuration row and one slide row.</div>';
-    return;
-  }
+    // Validate minimum required structure
+    if (rows.length < 2) {
+      block.innerHTML =
+        '<div class="dps-error">Error: DPS block requires at least a configuration row and one slide row.</div>';
+      return;
+    }
 
-  // Extract presentation data from the rows
-  const presentationData = parseRows(rows);
+    // Extract presentation data from the rows
+    const presentationData = parseRows(rows);
 
-  /* Create main presentation container
-   * This container holds all presentation elements:
-   * - Header with title and controls
-   * - Slides container
-   * - Presenter notes panel
-   * - Footer with timer
-   */
-  const presentationContainer = document.createElement("div");
-  presentationContainer.className = "dps-container";
+    /* Create main presentation container
+     * This container holds all presentation elements:
+     * - Header with title and controls
+     * - Slides container
+     * - Presenter notes panel
+     * - Footer with timer
+     */
+    const presentationContainer = document.createElement("div");
+    presentationContainer.className = "dps-container";
 
-  // Create header section with title and subtitle
-  const header = document.createElement("div");
-  header.className = "dps-header";
-  header.innerHTML = `
-    <div class="header-content">
-      <h1 id="presentation-title">${presentationData.title}</h1>
-      <p id="presentation-subtitle">${presentationData.subtitle || ""}</p>
-    </div>
-  `;
-
-  /* Create fullscreen toggle button
-   * - Uses SVG icon for crisp rendering
-   * - Includes accessibility attributes
-   * - Positioned in top-right corner
-   */
-  const fullscreenBtn = document.createElement("button");
-  fullscreenBtn.className = "fullscreen-btn";
-  fullscreenBtn.innerHTML =
-    '<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path d="M2 9H0v5h5v-2H2V9zM0 5h2V2h3V0H0v5zm12 7H9v2h5V9h-2v3zM9 0v2h3v3h2V0H9z" fill="#FFF"/></svg>';
-  fullscreenBtn.title = "Toggle fullscreen";
-  fullscreenBtn.setAttribute(
-    "aria-label",
-    "Toggle fullscreen presentation mode"
-  );
-  header.appendChild(fullscreenBtn);
-
-  // Create slides container for dynamic slide content
-  const slidesContainer = document.createElement("div");
-  slidesContainer.className = "slides-container";
-  slidesContainer.id = "slides-container";
-
-  /* Create presenter notes container
-   * - Hidden by default
-   * - Toggleable with keyboard shortcuts
-   * - Excluded from print mode
-   */
-  const presenterNotesContainer = document.createElement("div");
-  presenterNotesContainer.className = "presenter-notes hidden";
-  presenterNotesContainer.innerHTML = `
-    <div class="presenter-notes-title">Presenter Notes</div>
-    <div class="presenter-notes-content"></div>
-  `;
-  
-  /* Create footer section
-   * - Fixed position at bottom
-   * - Contains navigation arrows and timer
-   * - Hidden in print mode
-   */
-  const footer = document.createElement("div");
-  footer.className = "dps-footer";
-  footer.innerHTML = `
-    <div class="footer-content">
-      <div class="footer-controls">
-        <button class="nav-btn prev-slide" aria-label="Previous slide">
-          <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" fill="currentColor"/>
-          </svg>
-        </button>
-        <button class="nav-btn next-slide" aria-label="Next slide">
-          <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8.59 16.59L10 18l6-6-6-6L8.59 7.41 13.17 12z" fill="currentColor"/>
-          </svg>
-        </button>
+    // Create header section with title and subtitle
+    const header = document.createElement("div");
+    header.className = "dps-header";
+    header.innerHTML = `
+      <div class="header-content">
+        <h1 id="presentation-title">${presentationData.title}</h1>
+        <p id="presentation-subtitle">${presentationData.subtitle || ""}</p>
       </div>
-      <div class="timer">${formatTime(
-        presentationData.timerDuration * 60 || DPS_CONFIG.TIMER_DURATION
-      )}</div>
-    </div>
-  `;
+    `;
 
-  // Assemble presentation container with all components
-  presentationContainer.appendChild(header);
-  presentationContainer.appendChild(slidesContainer);
-  presentationContainer.appendChild(presenterNotesContainer);
-  presentationContainer.appendChild(footer);
+    /* Create fullscreen toggle button
+     * - Uses SVG icon for crisp rendering
+     * - Includes accessibility attributes
+     * - Positioned in top-right corner
+     */
+    const fullscreenBtn = document.createElement("button");
+    fullscreenBtn.className = "fullscreen-btn";
+    fullscreenBtn.innerHTML =
+      '<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path d="M2 9H0v5h5v-2H2V9zM0 5h2V2h3V0H0v5zm12 7H9v2h5V9h-2v3zM9 0v2h3v3h2V0H9z" fill="#FFF"/></svg>';
+    fullscreenBtn.title = "Toggle fullscreen";
+    fullscreenBtn.setAttribute(
+      "aria-label",
+      "Toggle fullscreen presentation mode"
+    );
+    header.appendChild(fullscreenBtn);
 
-  // Replace original block content with presentation
-  block.textContent = "";
-  block.appendChild(presentationContainer);
+    // Create slides container for dynamic slide content
+    const slidesContainer = document.createElement("div");
+    slidesContainer.className = "slides-container";
+    slidesContainer.id = "slides-container";
 
-  // Build slides from parsed content
-  buildSlides(presentationData.slides, slidesContainer);
+    /* Create presenter notes container
+     * - Hidden by default
+     * - Toggleable with keyboard shortcuts
+     * - Excluded from print mode
+     */
+    const presenterNotesContainer = document.createElement("div");
+    presenterNotesContainer.className = "presenter-notes hidden";
+    presenterNotesContainer.innerHTML = `
+      <div class="presenter-notes-title">Presenter Notes</div>
+      <div class="presenter-notes-content"></div>
+    `;
+    
+    /* Create footer section
+     * - Fixed position at bottom
+     * - Contains navigation arrows and timer
+     * - Hidden in print mode
+     */
+    const footer = document.createElement("div");
+    footer.className = "dps-footer";
+    footer.innerHTML = `
+      <div class="footer-content">
+        <div class="footer-controls">
+          <button class="nav-btn prev-slide" aria-label="Previous slide">
+            <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" fill="currentColor"/>
+            </svg>
+          </button>
+          <button class="nav-btn next-slide" aria-label="Next slide">
+            <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8.59 16.59L10 18l6-6-6-6L8.59 7.41 13.17 12z" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+        <div class="timer">${formatTime(
+          presentationData.timerDuration * 60 || DPS_CONFIG.TIMER_DURATION
+        )}</div>
+      </div>
+    `;
 
-  /* Set up presentation controls
-   * - Keyboard navigation
-   * - Timer functionality
-   * - Presenter notes toggle
-   * - Slide transitions
-   */
-  setupControls(
-    slidesContainer,
-    presenterNotesContainer,
-    presentationData.timerDuration * 60 || DPS_CONFIG.TIMER_DURATION,
-    DPS_CONFIG
-  );
+    // Assemble presentation container with all components
+    presentationContainer.appendChild(header);
+    presentationContainer.appendChild(slidesContainer);
+    presentationContainer.appendChild(presenterNotesContainer);
+    presentationContainer.appendChild(footer);
 
-  // Set up fullscreen toggle functionality
-  setupFullscreenToggle(fullscreenBtn, block);
+    // Replace original block content with presentation
+    block.textContent = "";
+    block.appendChild(presentationContainer);
 
-  // Trigger fullscreen mode on startup after a short delay
-  setTimeout(() => {
-    fullscreenBtn.click();
-  }, 100);
+    // Build slides from parsed content
+    buildSlides(presentationData.slides, slidesContainer);
+
+    /* Set up presentation controls
+     * - Keyboard navigation
+     * - Timer functionality
+     * - Presenter notes toggle
+     * - Slide transitions
+     */
+    setupControls(
+      slidesContainer,
+      presenterNotesContainer,
+      presentationData.timerDuration * 60 || DPS_CONFIG.TIMER_DURATION,
+      DPS_CONFIG
+    );
+
+    // Set up fullscreen toggle functionality
+    setupFullscreenToggle(fullscreenBtn, block);
+
+    // Trigger fullscreen mode on startup after a short delay
+    setTimeout(() => {
+      fullscreenBtn.click();
+    }, 100);
+  } catch (error) {
+    console.error('Error in DPS block initialization:', error);
+    block.innerHTML = '<div class="dps-error">Error initializing presentation. Please check the console for details.</div>';
+  }
 }
 
 /**
@@ -799,8 +804,19 @@ function buildSlides(slides, container) {
  * @param {Object} DPS_CONFIG - Presentation configuration
  */
 function setupControls(slidesContainer, presenterNotesContainer, timerDuration, DPS_CONFIG) {
-  let currentSlide = 0;
+  // Validate required elements
+  if (!slidesContainer || !presenterNotesContainer) {
+    console.error('Required containers not found for setupControls');
+    return;
+  }
+
   const slides = slidesContainer.querySelectorAll('.slide');
+  if (!slides || slides.length === 0) {
+    console.error('No slides found in container');
+    return;
+  }
+
+  let currentSlide = 0;
   const totalSlides = slides.length;
 
   /* Navigation function
@@ -820,7 +836,10 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
       // Update presenter notes if visible
       if (!presenterNotesContainer.classList.contains('hidden')) {
         const notes = slides[currentSlide].dataset.presenterNotes;
-        presenterNotesContainer.querySelector('.presenter-notes-content').innerHTML = notes || '';
+        const notesContent = presenterNotesContainer.querySelector('.presenter-notes-content');
+        if (notesContent) {
+          notesContent.innerHTML = notes || '';
+        }
       }
     }
   }
@@ -877,6 +896,8 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
   let isTimerRunning = false;
 
   function toggleTimer() {
+    if (!timerDisplay) return;
+    
     if (isTimerRunning) {
       clearInterval(timerInterval);
       isTimerRunning = false;
