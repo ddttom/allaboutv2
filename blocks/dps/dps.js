@@ -270,6 +270,16 @@ function parseRows(rows) {
 }
 
 /**
+ * Determines if a URL is an image based on its file extension
+ * 
+ * @param {string} url - URL to check
+ * @returns {boolean} True if the URL appears to be an image
+ */
+function isImageUrl(url) {
+  return url.match(/\.(jpg|jpeg|png|gif|svg|webp|bmp|ico|tiff)($|\?)/i) !== null;
+}
+
+/**
  * Extract iframe content from a string
  * Supports multiple URL formats and HTML encodings
  * 
@@ -314,32 +324,64 @@ function extractIframeContent(content) {
     }
   }
   
-  /* Check for URL directly in content
-   * Supports plain URLs without iframe tags
+  /* Check for simplified "iframe url" format
+   * Makes it easier for authors to add iframes
    */
-  const urlMatch = content.match(/^(https?:\/\/[^\s"'<>]+)$/i);
-  if (urlMatch) {
+  const simpleIframeMatch = content.match(/^iframe\s+(https?:\/\/[^\s"'<>]+)$/i);
+  if (simpleIframeMatch && simpleIframeMatch[1]) {
     return {
       type: "iframe",
-      src: urlMatch[0],
-      content: `<iframe src="${urlMatch[0]}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+      src: simpleIframeMatch[1],
+      content: `<iframe src="${simpleIframeMatch[1]}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
     };
   }
+  
+  /* We're not checking for plain URLs here anymore.
+   * Plain URLs should be handled by the parseIllustration function,
+   * which will determine if they are images or iframes based on the file extension.
+   */
   
   return null;
 }
 
 /**
  * Extract URL from content
- * Used for identifying potential iframe sources
+ * Used for identifying potential iframe or image sources
  * 
  * @param {string} content - String containing potential URL
- * @returns {string|null} Extracted URL or null if no URL found
+ * @returns {Object|null} URL object with type and URL or null if no URL found
  */
 function extractUrl(content) {
   const urlMatch = content.match(/(https?:\/\/[^\s"'<>]+)/i);
   if (urlMatch) {
-    return urlMatch[0];
+    const url = urlMatch[0];
+    // Determine if this is an image URL or an iframe URL based on extension
+    if (isImageUrl(url)) {
+      return {
+        type: "image",
+        url: url
+      };
+    } else {
+      return {
+        type: "iframe",
+        url: url
+      };
+    }
+  }
+  return null;
+}
+
+/**
+ * Extract icon name from class
+ * Gets the specific icon name from the icon-* class
+ * 
+ * @param {string} className - Class string containing icon-name
+ * @returns {string|null} The extracted icon name or null if not found
+ */
+function extractIconName(className) {
+  const iconClassMatch = className.match(/icon-([a-zA-Z0-9_-]+)/);
+  if (iconClassMatch && iconClassMatch[1]) {
+    return iconClassMatch[1];
   }
   return null;
 }
@@ -359,15 +401,27 @@ function parseIllustration(cell) {
   // Process HTML content directly from cell to capture all elements
   const cellContent = cell.innerHTML;
   
-  // Process icon spans - FIXED: Check cell.innerHTML directly to find icons
+  // Process icon spans first - convert to image tags
   const iconRegex = /<span\s+class=["'][^"']*icon[^"']*["'][^>]*>.*?<\/span>/gi;
-  const iconMatches = cellContent.matchAll(iconRegex);
+  const iconMatches = Array.from(cellContent.matchAll(iconRegex));
   
   for (const match of iconMatches) {
-    illustrations.push({
-      type: "icon",
-      content: match[0]
-    });
+    const iconHtml = match[0];
+    const classMatch = iconHtml.match(/class=["']([^"']*)["']/i);
+    
+    if (classMatch && classMatch[1]) {
+      const classString = classMatch[1];
+      const iconName = extractIconName(classString);
+      
+      if (iconName) {
+        illustrations.push({
+          type: "icon",
+          iconName: iconName,
+          content: `/icons/${iconName}.svg`,
+          alt: `${iconName} Illustration`
+        });
+      }
+    }
   }
   
   // Process all elements as separate content pieces
@@ -410,32 +464,16 @@ function parseIllustration(cell) {
       }
     }
     else if (element.tagName === 'SPAN' && element.classList.contains('icon')) {
-      // Process icon spans
-      illustrations.push({
-        type: "icon",
-        content: elementHtml
-      });
-    }
-    else if (element.classList && [...element.classList].some(cls => cls.includes('icon'))) {
-      // Any element with icon in class name
-      illustrations.push({
-        type: "icon",
-        content: elementHtml
-      });
-    }
-    else if (element.querySelector('.icon, [class*="icon-"], [class^="icon-"]')) {
-      // Elements containing icons
-      const iconElements = element.querySelectorAll('.icon, [class*="icon-"], [class^="icon-"]');
-      
-      iconElements.forEach(iconEl => {
-        const tempIconContainer = document.createElement('div');
-        tempIconContainer.appendChild(iconEl.cloneNode(true));
-        
+      // Handle icon spans - convert to image tags
+      const iconName = extractIconName(element.className);
+      if (iconName) {
         illustrations.push({
           type: "icon",
-          content: tempIconContainer.innerHTML
+          iconName: iconName,
+          content: `/icons/${iconName}.svg`,
+          alt: `${iconName} Illustration`
         });
-      });
+      }
     }
     else {
       // Process potential iframe content
@@ -448,24 +486,26 @@ function parseIllustration(cell) {
       }
       // Then check for plain URLs
       else {
-        const url = extractUrl(content);
-        if (url) {
-          if (url.match(/\.(jpg|jpeg|png|gif|svg|webp)$/i)) {
+        const urlData = extractUrl(content);
+        if (urlData) {
+          if (urlData.type === "image") {
             illustrations.push({
               type: "image",
-              content: url,
+              content: urlData.url,
               alt: "Image"
             });
           } else {
             illustrations.push({
               type: "iframe",
-              src: url,
-              content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+              src: urlData.url,
+              content: `<iframe src="${urlData.url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
             });
           }
         }
         // If no content type detected, include as text
-        else if (content.trim() && !illustrations.some(item => item.content.includes(content))) {
+        else if (content.trim() && !illustrations.some(item => 
+          (typeof item.content === 'string' && item.content.includes(content))
+        )) {
           illustrations.push({
             type: "text",
             content: content
@@ -477,7 +517,7 @@ function parseIllustration(cell) {
   
   // Process HTML encoded iframes that might be directly in the cell innerHTML
   const htmlEncodedIframeRegex = /(?:&lt;|&#x3C;)iframe(?:\s+|&gt;)(.*?)(?:&lt;\/iframe&gt;|(?:\/)?&gt;)/gi;
-  const htmlEncodedMatches = cellContent.matchAll(htmlEncodedIframeRegex);
+  const htmlEncodedMatches = Array.from(cellContent.matchAll(htmlEncodedIframeRegex));
   
   for (const match of htmlEncodedMatches) {
     const fullMatch = match[0];
@@ -490,7 +530,7 @@ function parseIllustration(cell) {
       const url = urlMatch[1];
       if (!illustrations.some(item => 
         (item.type === "iframe" && item.src === url) ||
-        (item.content && item.content.includes(url))
+        (item.content && typeof item.content === 'string' && item.content.includes(url))
       )) {
         illustrations.push({
           type: "iframe",
@@ -649,10 +689,13 @@ function createSlideContent(slide) {
               ${item.content}
             </div>`;
         } else if (item.type === "icon") {
+          // Convert icon to image tag with correct path
           slideContent += `
-            <div class="sequence-image icon-container ${isActive}">
-              ${item.content}
-            </div>`;
+            <img 
+              src="${item.content}" 
+              alt="${item.alt}" 
+              class="sequence-image icon-image ${isActive}"
+              data-icon-name="${item.iconName}">`;
         } else if (item.type === "image") {
           slideContent += `
             <img 
@@ -895,91 +938,91 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
     }
   }
 
-/* Visual warning system for timer
+  /* Visual warning system for timer
    * Flashes red three times when time is running low
    */
-function flashTimeWarning() {
-  const container = document.querySelector(".dps-container");
-  let flashCount = 0;
+  function flashTimeWarning() {
+    const container = document.querySelector(".dps-container");
+    let flashCount = 0;
 
-  function singleFlash() {
-    container.style.backgroundColor = "#e74c3c";
+    function singleFlash() {
+      container.style.backgroundColor = "#e74c3c";
 
-    setTimeout(() => {
-      container.style.backgroundColor = "";
-      flashCount++;
+      setTimeout(() => {
+        container.style.backgroundColor = "";
+        flashCount++;
 
-      if (flashCount < 3) {
-        setTimeout(singleFlash, 300);
-      }
-    }, 300);
-  }
-
-  singleFlash();
-}
-
-/* Add keyboard navigation
- * Supports slide progression, timer control, and presenter notes
- */
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") {
-    const navBar = document.querySelector(".dps-navigation");
-    if (navBar) {
-      navBar.style.display = navBar.style.display === "none" ? "flex" : "none";
+        if (flashCount < 3) {
+          setTimeout(singleFlash, 300);
+        }
+      }, 300);
     }
-    return;
+
+    singleFlash();
   }
 
-  /* Toggle presenter notes with + and - keys
-   * Provides quick access to presenter guidance
+  /* Add keyboard navigation
+   * Supports slide progression, timer control, and presenter notes
    */
-  if (event.key === "+" || event.key === "=") {
-    presenterNotesContainer.classList.remove("hidden");
-    config.PRESENTER_NOTES_VISIBLE = true;
-    event.preventDefault();
-  } else if (event.key === "-" || event.key === "_") {
-    presenterNotesContainer.classList.add("hidden");
-    config.PRESENTER_NOTES_VISIBLE = false;
-    event.preventDefault();
-  }
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      const navBar = document.querySelector(".dps-navigation");
+      if (navBar) {
+        navBar.style.display = navBar.style.display === "none" ? "flex" : "none";
+      }
+      return;
+    }
 
-  /* Handle navigation controls
-   * Supports slide progression and image sequences
-   */
-  if (event.key === "ArrowLeft") {
-    if (!handleImageSequenceNavigation('prev')) {
-      if (currentSlideIndex > 0) {
-        showSlide(currentSlideIndex - 1);
+    /* Toggle presenter notes with + and - keys
+     * Provides quick access to presenter guidance
+     */
+    if (event.key === "+" || event.key === "=") {
+      presenterNotesContainer.classList.remove("hidden");
+      config.PRESENTER_NOTES_VISIBLE = true;
+      event.preventDefault();
+    } else if (event.key === "-" || event.key === "_") {
+      presenterNotesContainer.classList.add("hidden");
+      config.PRESENTER_NOTES_VISIBLE = false;
+      event.preventDefault();
+    }
+
+    /* Handle navigation controls
+     * Supports slide progression and image sequences
+     */
+    if (event.key === "ArrowLeft") {
+      if (!handleImageSequenceNavigation('prev')) {
+        if (currentSlideIndex > 0) {
+          showSlide(currentSlideIndex - 1);
+        }
+      }
+      event.preventDefault();
+    } else if (event.key === "ArrowRight") {
+      if (!handleImageSequenceNavigation('next')) {
+        if (currentSlideIndex < slides.length - 1) {
+          showSlide(currentSlideIndex + 1);
+        }
+      }
+      event.preventDefault();
+    } else if (event.key === " " && hasStartedTimer) {
+      toggleTimer();
+      event.preventDefault();
+    } else if (event.key === "r" || event.key === "R") {
+      // Refresh viewport while maintaining current slide and sub-slide state
+      const currentSlideElement = slides[currentSlideIndex];
+      const imageSequence = currentSlideElement.querySelector('.image-sequence');
+      
+      if (imageSequence) {
+        const currentImageIndex = Array.from(imageSequence.querySelectorAll('.sequence-image'))
+          .findIndex(img => img.classList.contains('active'));
+          
+        // Reapply the active state to maintain sequence position
+        showSlide(currentSlideIndex, currentImageIndex);
+      } else {
+        showSlide(currentSlideIndex);
       }
     }
-    event.preventDefault();
-  } else if (event.key === "ArrowRight") {
-    if (!handleImageSequenceNavigation('next')) {
-      if (currentSlideIndex < slides.length - 1) {
-        showSlide(currentSlideIndex + 1);
-      }
-    }
-    event.preventDefault();
-  } else if (event.key === " " && hasStartedTimer) {
-    toggleTimer();
-    event.preventDefault();
-  } else if (event.key === "r" || event.key === "R") {
-    // Refresh viewport while maintaining current slide and sub-slide state
-    const currentSlideElement = slides[currentSlideIndex];
-    const imageSequence = currentSlideElement.querySelector('.image-sequence');
-    
-    if (imageSequence) {
-      const currentImageIndex = Array.from(imageSequence.querySelectorAll('.sequence-image'))
-        .findIndex(img => img.classList.contains('active'));
-        
-      // Reapply the active state to maintain sequence position
-      showSlide(currentSlideIndex, currentImageIndex);
-    } else {
-      showSlide(currentSlideIndex);
-    }
-  }
-});
+  });
 
-// Show first slide on initial load
-showSlide(0);
+  // Show first slide on initial load
+  showSlide(0);
 }
