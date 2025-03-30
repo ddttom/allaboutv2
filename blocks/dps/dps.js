@@ -27,6 +27,63 @@ export default function decorate(block) {
     PRESENTER_NOTES_VISIBLE: false,
   };
 
+  /**
+   * Format time as MM:SS
+   * Ensures consistent time display format
+   *
+   * @param {number} seconds - Time in seconds
+   * @returns {string} Formatted time string
+   */
+  function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  }
+
+/**
+ * Set up fullscreen toggle functionality
+ * Handles entering and exiting fullscreen mode
+ * 
+ * @param {Element} button - Fullscreen toggle button
+ * @param {Element} block - Main presentation block
+ */
+function setupFullscreenToggle(button, block) {
+  button.addEventListener("click", () => {
+    /* Toggle fullscreen class on document body
+     * Updates button icon and title based on state
+     */
+    document.body.classList.toggle("dps-fullscreen");
+
+    if (document.body.classList.contains("dps-fullscreen")) {
+      button.innerHTML =
+        '<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path d="M5 0H0v5h2V2h3V0zm0 12H2V9H0v5h5v-2zm7-7h2V0H9v2h3v3zm-3 7h5V9h-2v3H9v2z" fill="#FFF"/></svg>';
+      button.title = "Exit fullscreen";
+
+      // Scroll to top when entering fullscreen
+      window.scrollTo(0, 0);
+    } else {
+      button.innerHTML =
+        '<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path d="M2 9H0v5h5v-2H2V9zM0 5h2V2h3V0H0v5zm12 7H9v2h5V9h-2v3zM9 0v2h3v3h2V0H9z" fill="#FFF"/></svg>';
+      button.title = "Enter fullscreen";
+    }
+  });
+
+  /* Close fullscreen with Escape key
+   * Provides alternative way to exit fullscreen mode
+   */
+  document.addEventListener("keydown", (event) => {
+    if (
+      event.key === "Escape" &&
+      document.body.classList.contains("dps-fullscreen")
+    ) {
+      document.body.classList.remove("dps-fullscreen");
+      button.innerHTML =
+        '<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path d="M2 9H0v5h5v-2H2V9zM0 5h2V2h3V0H0v5zm12 7H9v2h5V9h-2v3zM9 0v2h3v3h2V0H9z" fill="#FFF"/></svg>';
+      button.title = "Enter fullscreen";
+    }
+  });
+};
+
   /* Force full viewport mode by removing existing page elements
    * This ensures the presentation takes up the entire screen without interference
    * from other page elements
@@ -166,6 +223,17 @@ export default function decorate(block) {
   // Set up fullscreen toggle functionality
   setupFullscreenToggle(fullscreenBtn, block);
 }
+
+/**
+ * Parse rows from the block to extract presentation data
+ *
+ * Expected row structure:
+ * Row 1: Configuration (title, subtitle, timer duration)
+ * Row 2+: Slides (title, intro text, bullet points, illustration, presenter notes)
+ *
+ * @param {Array} rows - Array of row elements from the block
+ * @returns {Object} Structured presentation data
+ */
 
 /**
  * Parse rows from the block to extract presentation data
@@ -360,14 +428,16 @@ function parseIllustration(cell) {
   if (!cell) return null;
   
   const illustrations = [];
+  
+  // First, check for direct child elements
   const elements = Array.from(cell.children);
   
+  // Handle cases where there might be SVG icons and other elements
   elements.forEach(element => {
+    // Process each type of content
     const content = element.innerHTML.trim();
     
-    /* Check for picture element first
-     * Supports responsive images with multiple sources
-     */
+    // Check for picture element
     const picture = element.querySelector('picture');
     if (picture) {
       illustrations.push({
@@ -377,9 +447,7 @@ function parseIllustration(cell) {
       return;
     }
     
-    /* Check for direct image
-     * Supports standard img tags
-     */
+    // Check for direct image
     const img = element.querySelector('img');
     if (img) {
       illustrations.push({
@@ -390,9 +458,7 @@ function parseIllustration(cell) {
       return;
     }
     
-    /* Check for SVG element
-     * Supports inline SVG content
-     */
+    // Check for SVG element
     const svg = element.querySelector('svg');
     if (svg) {
       illustrations.push({
@@ -402,9 +468,17 @@ function parseIllustration(cell) {
       return;
     }
 
-    /* Check if content contains SVG tags
-     * Handles HTML encoded SVG content
-     */
+    // Check for icon spans
+    const icon = element.querySelector('span.icon');
+    if (icon) {
+      illustrations.push({
+        type: "icon",
+        content: element.outerHTML,
+      });
+      return;
+    }
+
+    // Check if content contains SVG tags
     if (content.startsWith("<svg") && content.includes("</svg>")) {
       try {
         const container = document.createElement("div");
@@ -422,14 +496,32 @@ function parseIllustration(cell) {
           content: content,
         });
       }
+      return;
     }
 
-    /* Check for iframe content
-     * Supports various iframe formats and encodings
-     */
+    // Check for iframe content
     const iframeContent = extractIframeContent(content);
     if (iframeContent) {
       illustrations.push(iframeContent);
+      return;
+    }
+    
+    // If none of the above matched, check if it's a direct URL or contains a URL
+    const url = extractUrl(content);
+    if (url) {
+      if (url.match(/\.(jpg|jpeg|png|gif|svg|webp)$/i)) {
+        illustrations.push({
+          type: "image",
+          content: url,
+          alt: "Image"
+        });
+      } else {
+        illustrations.push({
+          type: "iframe",
+          src: url,
+          content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+        });
+      }
     }
   });
 
@@ -490,108 +582,132 @@ function buildSlides(slides, container) {
         </div>
       `;
     } else {
-      /* Build standard slide content
-       * Includes title, text content, and illustration
-       */
-      let slideContent = `
-        <div class="slide-content">
-          <h2 class="slide-title">${slide.title}</h2>
-          <div class="slide-content-text">
-      `;
-
-      /* Add content text or bullet points
-       * Supports both plain text and formatted lists
-       */
-      if (slide.introText) {
-        slideContent += `<p style="font-size: 18px; margin-bottom: 20px;">${slide.introText}</p>`;
-      }
-
-      if (slide.bulletPoints && slide.bulletPoints.length > 0) {
-        slideContent += '<ul class="bullet-list">';
-        slide.bulletPoints.forEach((point) => {
-          if (point.isPlainText) {
-            /* Handle plain text or HTML content
-             * Renders without bullet styling
-             */
-            if (point.isHTML) {
-              if (point.text === '<br>') {
-                slideContent += '<br>';
-              } else {
-                slideContent += `<li class="plain-text">${point.text}</li>`;
-              }
-            } else {
-              slideContent += `<li class="plain-text">${point.text}</li>`;
-            }
-          } else {
-            /* Handle bullet points
-             * Includes support for sub-bullets
-             */
-            slideContent += `<li>${point.text}`;
-
-            if (point.subPoints && point.subPoints.length > 0) {
-              slideContent += '<ul class="sub-bullet-list">';
-              point.subPoints.forEach((subPoint) => {
-                slideContent += `<li>${subPoint}</li>`;
-              });
-              slideContent += "</ul>";
-            }
-
-            slideContent += "</li>";
-          }
-        });
-        slideContent += "</ul>";
-      }
-
-      slideContent += "</div>"; // Close slide-content-text
-
-      /* Add illustration if provided
-       * Supports multiple content types and sequences
-       */
-      if (slide.illustration) {
-        slideContent += `
-          <div class="illustration">
-            ${
-              slide.illustration.type === "images"
-                ? `<div class="image-sequence">
-                    ${slide.illustration.content.map((item, index) => {
-                      if (item.type === "iframe") {
-                        return `<div class="iframe-container sequence-image ${index === 0 ? 'active' : ''}" style="display: ${index === 0 ? 'block' : 'none'}">
-                          <iframe src="${item.src}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>
-                        </div>`;
-                      } else if (item.type === "picture") {
-                        return `<div class="sequence-image ${index === 0 ? 'active' : ''}" style="display: ${index === 0 ? 'block' : 'none'}">
-                          ${item.content}
-                        </div>`;
-                      }
-                      return `<img 
-                        src="${item.content}" 
-                        alt="${item.alt}" 
-                        class="sequence-image ${index === 0 ? 'active' : ''}" 
-                        style="display: ${index === 0 ? 'block' : 'none'}">`;
-                    }).join('')}
-                   </div>`
-                : slide.illustration.type === "iframe"
-                ? `<div class="iframe-container">
-                    <iframe src="${slide.illustration.src}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>
-                   </div>`
-                : slide.illustration.type === "svg"
-                ? slide.illustration.content
-                : slide.illustration.type === "picture"
-                ? slide.illustration.content
-                : `<img src="${slide.illustration.content}" alt="${slide.title} illustration">`
-            }
-          </div>
-        `;
-      }
-
-      slideContent += "</div>"; // Close slide-content
-      slideElement.innerHTML = slideContent;
+      // Create standard slide content
+      slideElement.innerHTML = createSlideContent(slide);
     }
 
     container.appendChild(slideElement);
   });
 
   // First slide will be shown by setupControls
+}
+
+/**
+ * Create slide content with proper image sequence support
+ * 
+ * @param {Object} slide - Slide data
+ * @returns {string} HTML content for the slide
+ */
+function createSlideContent(slide) {
+  let slideContent = `
+    <div class="slide-content">
+      <h2 class="slide-title">${slide.title}</h2>
+      <div class="slide-content-text">
+  `;
+
+  /* Add content text or bullet points */
+  if (slide.introText) {
+    slideContent += `<p style="font-size: 18px; margin-bottom: 20px;">${slide.introText}</p>`;
+  }
+
+  if (slide.bulletPoints && slide.bulletPoints.length > 0) {
+    slideContent += '<ul class="bullet-list">';
+    slide.bulletPoints.forEach((point) => {
+      if (point.isPlainText) {
+        /* Handle plain text or HTML content */
+        if (point.isHTML) {
+          if (point.text === '<br>') {
+            slideContent += '<br>';
+          } else {
+            slideContent += `<li class="plain-text">${point.text}</li>`;
+          }
+        } else {
+          slideContent += `<li class="plain-text">${point.text}</li>`;
+        }
+      } else {
+        /* Handle bullet points */
+        slideContent += `<li>${point.text}`;
+
+        if (point.subPoints && point.subPoints.length > 0) {
+          slideContent += '<ul class="sub-bullet-list">';
+          point.subPoints.forEach((subPoint) => {
+            slideContent += `<li>${subPoint}</li>`;
+          });
+          slideContent += "</ul>";
+        }
+
+        slideContent += "</li>";
+      }
+    });
+    slideContent += "</ul>";
+  }
+
+  slideContent += "</div>"; // Close slide-content-text
+
+  /* Add illustration if provided */
+  if (slide.illustration) {
+    slideContent += `
+      <div class="illustration">
+    `;
+    
+    if (slide.illustration.type === "images") {
+      slideContent += `<div class="image-sequence">`;
+      
+      // Properly handle multiple images in a sequence
+      slide.illustration.content.forEach((item, index) => {
+        const isActive = index === 0 ? 'active' : '';
+        const display = index === 0 ? 'block' : 'none';
+        
+        if (item.type === "iframe") {
+          slideContent += `
+            <div class="iframe-container sequence-image ${isActive}" style="display: ${display}">
+              <iframe src="${item.src}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>
+            </div>`;
+        } else if (item.type === "picture") {
+          slideContent += `
+            <div class="sequence-image ${isActive}" style="display: ${display}">
+              ${item.content}
+            </div>`;
+        } else if (item.type === "svg") {
+          slideContent += `
+            <div class="sequence-image ${isActive}" style="display: ${display}">
+              ${item.content}
+            </div>`;
+        } else if (item.type === "icon") {
+          slideContent += `
+            <div class="sequence-image ${isActive}" style="display: ${display}">
+              ${item.content}
+            </div>`;
+        } else {
+          slideContent += `
+            <img 
+              src="${item.content}" 
+              alt="${item.alt || ''}" 
+              class="sequence-image ${isActive}" 
+              style="display: ${display}">`;
+        }
+      });
+      
+      slideContent += `</div>`;
+    } else if (slide.illustration.type === "iframe") {
+      slideContent += `
+        <div class="iframe-container">
+          <iframe src="${slide.illustration.src}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>
+        </div>`;
+    } else if (slide.illustration.type === "svg") {
+      slideContent += slide.illustration.content;
+    } else if (slide.illustration.type === "picture") {
+      slideContent += slide.illustration.content;
+    } else {
+      slideContent += `<img src="${slide.illustration.content}" alt="${slide.title} illustration">`;
+    }
+    
+    slideContent += `</div>`; // Close illustration
+  }
+
+  slideContent += "</div>"; // Close slide-content
+  
+  return slideContent;
 }
 
 /**
@@ -638,7 +754,7 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
   /* Show a specific slide
    * Handles display logic and updates related elements
    */
-  function showSlide(index) {
+  function showSlide(index, sequenceIndex) {
     slides.forEach((slide) => {
       slide.style.display = "none";
       slide.classList.remove("active");
@@ -647,6 +763,24 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
     if (slides[index]) {
       slides[index].style.display = "block";
       slides[index].classList.add("active");
+      
+      // If a specific sequence index is provided, set it as active
+      if (sequenceIndex !== undefined) {
+        const imageSequence = slides[index].querySelector('.image-sequence');
+        if (imageSequence) {
+          const sequenceImages = imageSequence.querySelectorAll('.sequence-image');
+          sequenceImages.forEach((img, idx) => {
+            if (idx === sequenceIndex) {
+              img.classList.add('active');
+              img.style.display = 'block';
+            } else {
+              img.classList.remove('active');
+              img.style.display = 'none';
+            }
+          });
+        }
+      }
+      
       updatePresenterNotes(index);
       updateNavButtons();
     }
@@ -691,28 +825,30 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
     if (!imageSequence) return false;
 
     const images = imageSequence.querySelectorAll('.sequence-image');
+    if (images.length <= 1) return false;
+    
     const currentImage = imageSequence.querySelector('.sequence-image.active');
+    if (!currentImage) return false;
+    
     const currentImageIndex = Array.from(images).indexOf(currentImage);
     
     if (direction === 'next') {
       if (currentImageIndex < images.length - 1) {
-        /* Show next image in sequence
-         * Updates display and active state
-         */
+        // Show next image in sequence
         currentImage.style.display = 'none';
-        images[currentImageIndex + 1].style.display = 'block';
         currentImage.classList.remove('active');
+        
+        images[currentImageIndex + 1].style.display = 'block';
         images[currentImageIndex + 1].classList.add('active');
         return true;
       }
     } else {
       if (currentImageIndex > 0) {
-        /* Show previous image in sequence
-         * Updates display and active state
-         */
+        // Show previous image in sequence
         currentImage.style.display = 'none';
-        images[currentImageIndex - 1].style.display = 'block';
         currentImage.classList.remove('active');
+        
+        images[currentImageIndex - 1].style.display = 'block';
         images[currentImageIndex - 1].classList.add('active');
         return true;
       }
@@ -792,7 +928,9 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
       const navBar = document.querySelector(".dps-navigation");
-      navBar.style.display = navBar.style.display === "none" ? "flex" : "none";
+      if (navBar) {
+        navBar.style.display = navBar.style.display === "none" ? "flex" : "none";
+      }
       return;
     }
 
@@ -829,67 +967,20 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
     } else if (event.key === " " && hasStartedTimer) {
       toggleTimer();
       event.preventDefault();
-    }
-  });
-
-  // Initialize timer display and show first slide
-  document.querySelector(".timer").textContent = formatTime(remainingTime);
-  showSlide(0);
-}
-
-/**
- * Format time as MM:SS
- * Ensures consistent time display format
- * 
- * @param {number} seconds - Time in seconds
- * @returns {string} Formatted time string
- */
-function formatTime(seconds) {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
-  return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
-}
-
-/**
- * Set up fullscreen toggle functionality
- * Handles entering and exiting fullscreen mode
- * 
- * @param {Element} button - Fullscreen toggle button
- * @param {Element} block - Main presentation block
- */
-function setupFullscreenToggle(button, block) {
-  button.addEventListener("click", () => {
-    /* Toggle fullscreen class on document body
-     * Updates button icon and title based on state
-     */
-    document.body.classList.toggle("dps-fullscreen");
-
-    if (document.body.classList.contains("dps-fullscreen")) {
-      button.innerHTML =
-        '<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path d="M5 0H0v5h2V2h3V0zm0 12H2V9H0v5h5v-2zm7-7h2V0H9v2h3v3zm-3 7h5V9h-2v3H9v2z" fill="#FFF"/></svg>';
-      button.title = "Exit fullscreen";
-
-      // Scroll to top when entering fullscreen
-      window.scrollTo(0, 0);
-    } else {
-      button.innerHTML =
-        '<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path d="M2 9H0v5h5v-2H2V9zM0 5h2V2h3V0H0v5zm12 7H9v2h5V9h-2v3zM9 0v2h3v3h2V0H9z" fill="#FFF"/></svg>';
-      button.title = "Enter fullscreen";
-    }
-  });
-
-  /* Close fullscreen with Escape key
-   * Provides alternative way to exit fullscreen mode
-   */
-  document.addEventListener("keydown", (event) => {
-    if (
-      event.key === "Escape" &&
-      document.body.classList.contains("dps-fullscreen")
-    ) {
-      document.body.classList.remove("dps-fullscreen");
-      button.innerHTML =
-        '<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path d="M2 9H0v5h5v-2H2V9zM0 5h2V2h3V0H0v5zm12 7H9v2h5V9h-2v3zM9 0v2h3v3h2V0H9z" fill="#FFF"/></svg>';
-      button.title = "Enter fullscreen";
+    } else if (event.key === "r" || event.key === "R") {
+      // Refresh viewport while maintaining current slide and sub-slide state
+      const currentSlideElement = slides[currentSlideIndex];
+      const imageSequence = currentSlideElement.querySelector('.image-sequence');
+      
+      if (imageSequence) {
+        const currentImageIndex = Array.from(imageSequence.querySelectorAll('.sequence-image'))
+          .findIndex(img => img.classList.contains('active'));
+          
+        // Reapply the active state to maintain sequence position
+        showSlide(currentSlideIndex, currentImageIndex);
+      } else {
+        showSlide(currentSlideIndex);
+      }
     }
   });
 }

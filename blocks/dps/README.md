@@ -24,7 +24,7 @@ A powerful presentation system that transforms structured content into an intera
 | | | | iframes | Additional notes |
 
 ## Navigation
-- **Arrow Keys**: Navigate between slides
+- **Arrow Keys**: Navigate between slides and within image sequences
 - **Space**: Toggle timer pause/play
 - **Escape**: Toggle navigation bar
 - **Plus (+)**: Show presenter notes
@@ -34,8 +34,18 @@ A powerful presentation system that transforms structured content into an intera
 ### Image Sequence Navigation
 - Use left/right arrow keys to navigate through multiple images
 - Images maintain aspect ratio and use full viewport height
-- Smooth transitions between images
+- Smooth transitions between images with 300ms fade effect
 - Navigation wraps around at sequence ends
+- Sequence navigation works with mixed content types (icons, iframes, images, SVGs)
+
+### Icon Support
+The fourth column supports icon spans with specific class names:
+
+```html
+<span class="icon icon-methods"></span>
+```
+
+Icons are treated as sequence items and can be navigated through with arrow keys alongside other content types. The system properly maintains display state for all content types during navigation.
 
 ### iframe Support
 The fourth column supports embedded iframes with flexible URL handling:
@@ -70,6 +80,14 @@ https://example.com/embed
 ```html
 <p>&#x3C;iframe https://example.com/embed</p>
 ```
+
+#### HTML Entity Handling for iframes
+The system intelligently handles HTML entities in iframe definitions:
+- Supports both numeric (`&#x3C;`) and named (`&lt;`) entity references
+- Automatically decodes entity references to proper characters
+- Correctly extracts URLs from mixed content containing HTML entities
+- Maintains proper display when entities are present in sequence items
+- Works with paragraph-wrapped entity content seamlessly
 
 #### iframe Features
 - Automatic resizing to fit the illustration area
@@ -127,6 +145,39 @@ https://example.com/embed
 5. Multiple images in the fourth column will create an image sequence
 6. Use HTML formatting in presenter notes for better organization
 7. Add iframes using any supported format - the system will handle the conversion
+
+## Content Detection Mechanisms
+The system uses sophisticated detection methods to identify different content types:
+
+1. **Picture Elements**: Detected by querying for `<picture>` elements
+2. **Images**: Identified via `<img>` tags
+3. **SVGs**: Recognized both as `<svg>` elements and by analyzing element innerHTML
+4. **Icons**: Detected through `span.icon` query selectors
+5. **iframes**: Identified using regex pattern matching on multiple iframe formats
+6. **URLs**: Extracted using pattern matching for http/https URL strings
+
+Content type detection follows a priority order, with more specific formats (like picture elements) being checked before more general ones (like plain URLs).
+
+## Animation and Transition Behavior
+The system applies smooth transitions between items in sequences:
+
+- **Fade Effect**: 300ms ease-in-out opacity transition between sequence items
+- **Display Property**: Toggled between 'block' and 'none' after opacity changes
+- **Active Class**: Added/removed to track currently displayed item
+- **Z-Index Management**: Ensures proper stacking of sequence items
+- **Background Transitions**: Background colors transition smoothly for visual feedback
+- **Timer Warning Effects**: Visual flash effect when time is running low
+
+## Mixed Content Sequence Behavior
+When Column 4 contains multiple different content types:
+
+1. All items are added to the same sequence regardless of type
+2. Left/right arrow keys navigate through all items in order
+3. The system maintains proper display state for each content type
+4. Smooth transitions apply between all content types
+5. The active item receives proper styling based on its content type
+6. Content rendering adapts to maintain optimal display for each type
+7. Sequence navigation wraps appropriately at sequence boundaries
 
 ## Image Handling
 
@@ -207,6 +258,34 @@ iframe = https://example.com/embed
   - Verify SVG code is valid
   - Check for proper namespace declarations
   - Ensure viewBox attribute is set
+
+## Detailed Parsing Process
+The system follows a sophisticated parsing workflow:
+
+1. **Row Parsing**: Extracts configuration and slide data from table rows
+2. **Cell Processing**: Analyzes each cell to extract specific content
+3. **Content Identification**: Uses pattern recognition to identify content types
+4. **Data Structuring**: Organizes extracted data into a structured format
+5. **Sequence Building**: Groups multiple items from Column 4 into sequences
+6. **HTML Generation**: Transforms structured data into semantic HTML
+7. **Event Binding**: Attaches event listeners for interactive features
+8. **State Management**: Tracks presentation state (current slide, timer, etc.)
+
+The parsing process prioritizes content flexibility while ensuring correct semantic structure in the final output.
+
+## Slide Content Creation Logic
+The system follows these steps when rendering slide content:
+
+1. **Structure Creation**: Establishes slide container with semantic regions
+2. **Title Rendering**: Sets up title area with appropriate styling
+3. **Text Content Processing**: Formats introductory text and bullet points
+4. **Illustration Handling**: Creates appropriate container based on content type
+5. **Sequence Building**: For multiple items, creates navigable sequence
+6. **Special Slide Detection**: Applies unique layouts for specific slide types (e.g., Q&A)
+7. **State Application**: Sets initial display states for all elements
+8. **Event Preparation**: Ensures elements are ready for interaction events
+
+This structured approach ensures consistent rendering while accommodating diverse content types.
 
 ## Notes
 - Presenter notes support HTML formatting for better organization
@@ -543,6 +622,11 @@ https://example.com/embed
 <svg>...</svg>
 ```
 
+#### 5. Icons
+```html
+<span class="icon icon-methods"></span>
+```
+
 #### Mixed Content Support
 The fourth column supports mixing different types of content in sequence:
 
@@ -576,6 +660,12 @@ The fourth column supports mixing different types of content in sequence:
     <img loading="lazy" alt="" src="/path/to/image.jpg" width="1200" height="1600">
   </picture>
 </p>
+```
+
+4. Icons and other content:
+```html
+<p><span class="icon icon-methods"></span></p>
+<p>&#x3C;iframe https://allabout.network/iframe3.html>&#x3C;/iframe></p>
 ```
 
 #### Content Features
@@ -612,6 +702,12 @@ The fourth column supports mixing different types of content in sequence:
    - Ensure consistent sizing across content types
    - Verify responsive behavior
 
+5. For icons:
+   - Use consistent naming conventions
+   - Provide appropriate accessibility attributes
+   - Test icon display across browsers
+   - Ensure proper sizing in presentation context
+
 #### Troubleshooting
 - If images don't load, check:
   - Image paths are correct and relative
@@ -641,6 +737,11 @@ The fourth column supports mixing different types of content in sequence:
   - Ensure proper encoding
   - Check for missing closing tags
   - Verify entity decoding
+- For icon issues:
+  - Verify icon class names are correct
+  - Check if SVG files exist in the expected location
+  - Test icon display across browsers
+  - Ensure proper sizing in the presentation context
 
 ### Image Handling
 The block preserves all image paths exactly as they are in the original content, without any path manipulation or conversion. This ensures compatibility with Franklin's image handling system:
