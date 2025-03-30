@@ -555,9 +555,17 @@ The block implements several performance optimizations:
 - Smart URL handling and cleaning
 
 ### Fourth Column Content Types
-The fourth column supports various types of content for illustrations:
+The fourth column supports various types of content for illustrations in any order:
 
-#### 1. Responsive Images (Picture Element)
+#### Content Type Detection
+The system now processes all content types without early returns, allowing for:
+- Mixed content types in any order
+- Multiple content types within a single element
+- Better handling of nested content
+- More flexible content authoring
+
+#### Supported Content Types
+1. **Responsive Images (Picture Element)**
 ```html
 <picture>
   <source type="image/webp" srcset="/path/to/image.webp" media="(min-width: 600px)">
@@ -567,49 +575,22 @@ The fourth column supports various types of content for illustrations:
 </picture>
 ```
 
-#### 2. Direct Images
+2. **Direct Images**
 ```html
 <img src="/path/to/image.jpg" alt="Description">
 ```
 
-#### 3. iframes (Multiple Formats)
-1. Standard iframe:
+3. **iframes (Multiple Formats)**
 ```html
 <iframe src="https://example.com/embed"></iframe>
-```
-
-2. URL without src:
-```html
 <iframe https://example.com/embed>
-```
-
-3. Franklin link:
-```html
 <a href="https://example.com/embed">Link</a>
-```
-
-4. Plain URL:
-```
 https://example.com/embed
-```
-
-5. HTML encoded:
-```html
 &lt;iframe src="https://example.com/embed"&gt;
-```
-
-6. Paragraph wrapped HTML encoded iframe:
-```html
 <p>&#x3C;iframe https://example.com/embed</p>
 ```
 
-7. Mixed content with anchor tags:
-```html
-<p>&#x3C;iframe <a href="https://example.com/embed">https://example.com/embed</a>>&#x3C;/iframe></p>
-```
-
-#### 4. SVG Content
-1. SVG Element:
+4. **SVG Content**
 ```html
 <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
   <ellipse cx="200" cy="100" rx="150" ry="80" fill="#BBDEFB" stroke="#3498db" stroke-width="2"/>
@@ -617,56 +598,58 @@ https://example.com/embed
 </svg>
 ```
 
-2. Raw SVG Content:
-```html
-<svg>...</svg>
-```
-
-#### 5. Icons
+5. **Icons**
 ```html
 <span class="icon icon-methods"></span>
 ```
 
+6. **Plain Text (Fallback)**
+```
+Any text content without HTML markup
+```
+
 #### Mixed Content Support
-The fourth column supports mixing different types of content in sequence:
+The system now better handles mixed content scenarios:
 
-1. Multiple iframes:
-```html
-<p>&#x3C;iframe src="https://example1.com"></iframe></p>
-<p>&#x3C;iframe src="https://example2.com"></iframe></p>
-```
-
-2. Mixed iframes and images:
-```html
-<p>&#x3C;iframe src="https://example.com"></iframe></p>
-<p>
-  <picture>
-    <source type="image/webp" srcset="/path/to/image.webp" media="(min-width: 600px)">
-    <source type="image/webp" srcset="/path/to/image.webp">
-    <source type="image/jpeg" srcset="/path/to/image.jpg" media="(min-width: 600px)">
-    <img loading="lazy" alt="" src="/path/to/image.jpg" width="1200" height="1600">
-  </picture>
-</p>
-```
-
-3. Mixed content with HTML entities:
-```html
-<p>&#x3C;iframe <a href="https://example.com">https://example.com</a>>&#x3C;/iframe></p>
-<p>
-  <picture>
-    <source type="image/webp" srcset="/path/to/image.webp" media="(min-width: 600px)">
-    <source type="image/webp" srcset="/path/to/image.webp">
-    <source type="image/jpeg" srcset="/path/to/image.jpg" media="(min-width: 600px)">
-    <img loading="lazy" alt="" src="/path/to/image.jpg" width="1200" height="1600">
-  </picture>
-</p>
-```
-
-4. Icons and other content:
+1. **Multiple Content Types in Sequence**
 ```html
 <p><span class="icon icon-methods"></span></p>
-<p>&#x3C;iframe https://allabout.network/iframe3.html>&#x3C;/iframe></p>
+<p><img src="/path/to/image.jpg"></p>
+<p><iframe src="https://example.com"></iframe></p>
 ```
+
+2. **Nested Content Types**
+```html
+<div>
+  <picture>
+    <source srcset="/path/to/image.webp">
+    <img src="/path/to/image.jpg">
+  </picture>
+  <svg>...</svg>
+</div>
+```
+
+3. **Complex HTML Structures**
+```html
+<p>
+  <span class="icon icon-methods"></span>
+  <img src="/path/to/image.jpg">
+  <iframe src="https://example.com"></iframe>
+</p>
+```
+
+4. **Fallback to Plain Text**
+```html
+<p>This text will be displayed if no other content types are detected</p>
+```
+
+#### Key Improvements
+- No early returns during content processing
+- All content types are evaluated for each element
+- Multiple content types can be detected per element
+- Better handling of nested structures
+- Fallback to plain text when no other types match
+- More flexible content authoring
 
 #### Content Features
 - All content types maintain proper aspect ratio

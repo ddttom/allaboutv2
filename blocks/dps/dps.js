@@ -40,50 +40,6 @@ export default function decorate(block) {
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   }
 
-/**
- * Set up fullscreen toggle functionality
- * Handles entering and exiting fullscreen mode
- * 
- * @param {Element} button - Fullscreen toggle button
- * @param {Element} block - Main presentation block
- */
-function setupFullscreenToggle(button, block) {
-  button.addEventListener("click", () => {
-    /* Toggle fullscreen class on document body
-     * Updates button icon and title based on state
-     */
-    document.body.classList.toggle("dps-fullscreen");
-
-    if (document.body.classList.contains("dps-fullscreen")) {
-      button.innerHTML =
-        '<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path d="M5 0H0v5h2V2h3V0zm0 12H2V9H0v5h5v-2zm7-7h2V0H9v2h3v3zm-3 7h5V9h-2v3H9v2z" fill="#FFF"/></svg>';
-      button.title = "Exit fullscreen";
-
-      // Scroll to top when entering fullscreen
-      window.scrollTo(0, 0);
-    } else {
-      button.innerHTML =
-        '<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path d="M2 9H0v5h5v-2H2V9zM0 5h2V2h3V0H0v5zm12 7H9v2h5V9h-2v3zM9 0v2h3v3h2V0H9z" fill="#FFF"/></svg>';
-      button.title = "Enter fullscreen";
-    }
-  });
-
-  /* Close fullscreen with Escape key
-   * Provides alternative way to exit fullscreen mode
-   */
-  document.addEventListener("keydown", (event) => {
-    if (
-      event.key === "Escape" &&
-      document.body.classList.contains("dps-fullscreen")
-    ) {
-      document.body.classList.remove("dps-fullscreen");
-      button.innerHTML =
-        '<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path d="M2 9H0v5h5v-2H2V9zM0 5h2V2h3V0H0v5zm12 7H9v2h5V9h-2v3zM9 0v2h3v3h2V0H9z" fill="#FFF"/></svg>';
-      button.title = "Enter fullscreen";
-    }
-  });
-};
-
   /* Force full viewport mode by removing existing page elements
    * This ensures the presentation takes up the entire screen without interference
    * from other page elements
@@ -123,7 +79,6 @@ function setupFullscreenToggle(button, block) {
   presentationContainer.className = "dps-container";
 
   /* Create header section with title and subtitle
-   * Includes fullscreen toggle button for presentation control
    */
   const header = document.createElement("div");
   header.className = "dps-header";
@@ -133,20 +88,6 @@ function setupFullscreenToggle(button, block) {
       <p id="presentation-subtitle">${presentationData.subtitle || ""}</p>
     </div>
   `;
-
-  /* Add fullscreen toggle button with SVG icon
-   * Positioned in top-right corner for easy access
-   */
-  const fullscreenBtn = document.createElement("button");
-  fullscreenBtn.className = "fullscreen-btn";
-  fullscreenBtn.innerHTML =
-    '<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path d="M2 9H0v5h5v-2H2V9zM0 5h2V2h3V0H0v5zm12 7H9v2h5V9h-2v3zM9 0v2h3v3h2V0H9z" fill="#FFF"/></svg>';
-  fullscreenBtn.title = "Toggle fullscreen";
-  fullscreenBtn.setAttribute(
-    "aria-label",
-    "Toggle fullscreen presentation mode"
-  );
-  header.appendChild(fullscreenBtn);
 
   /* Create slides container
    * This will hold all slides and handle their display/hide logic
@@ -219,9 +160,6 @@ function setupFullscreenToggle(button, block) {
    */
   document.body.classList.add("dps-fullscreen");
   window.scrollTo(0, 0);
-
-  // Set up fullscreen toggle functionality
-  setupFullscreenToggle(fullscreenBtn, block);
 }
 
 /**
@@ -429,55 +367,46 @@ function parseIllustration(cell) {
   
   const illustrations = [];
   
-  // First, check for direct child elements
+  // Process all content types without early returns to handle mixed content
   const elements = Array.from(cell.children);
-
-  // Handle cases where there might be SVG icons and other elements
+  
   elements.forEach(element => {
-    // Process each type of content
     const content = element.innerHTML.trim();
+    const foundTypes = [];
     
-    // Check if element itself is a picture
+    // Check all possible content types for this element
+    if (element.tagName === 'SVG' || content.startsWith("<svg")) {
+      foundTypes.push({
+        type: "svg",
+        content: element.outerHTML,
+      });
+    }
+    
     if (element.tagName === 'PICTURE') {
-      illustrations.push({
+      foundTypes.push({
         type: "picture",
         content: element.outerHTML
       });
-      return;
     }
     
-    // Check if element itself is an img
     if (element.tagName === 'IMG') {
-      illustrations.push({
+      foundTypes.push({
         type: "image",
         content: element.src,
         alt: element.alt || ""
       });
-      return;
-    }
-    
-    // Check if element itself is an svg
-    if (element.tagName === 'SVG') {
-      illustrations.push({
-        type: "svg",
-        content: element.outerHTML,
-      });
-      return;
     }
 
-    // Check if element itself is an icon span
     if (element.classList.contains('icon')) {
-      illustrations.push({
+      foundTypes.push({
         type: "icon",
         content: element.outerHTML,
       });
-      return;
     }
 
-    // Check for nested elements
     const picture = element.querySelector('picture');
     if (picture) {
-      illustrations.push({
+      foundTypes.push({
         type: "picture",
         content: picture.outerHTML
       });
@@ -485,7 +414,7 @@ function parseIllustration(cell) {
     
     const img = element.querySelector('img:not(picture img)');
     if (img) {
-      illustrations.push({
+      foundTypes.push({
         type: "image",
         content: img.src,
         alt: img.alt || ""
@@ -494,7 +423,7 @@ function parseIllustration(cell) {
     
     const svg = element.querySelector('svg');
     if (svg) {
-      illustrations.push({
+      foundTypes.push({
         type: "svg",
         content: svg.outerHTML,
       });
@@ -502,56 +431,62 @@ function parseIllustration(cell) {
 
     const icon = element.querySelector('span.icon');
     if (icon) {
-      illustrations.push({
+      foundTypes.push({
         type: "icon",
         content: icon.outerHTML,
       });
     }
 
-    // Check if content contains SVG tags
     if (content.startsWith("<svg") && content.includes("</svg>")) {
       try {
         const container = document.createElement("div");
         container.innerHTML = content;
         const parsedSvg = container.querySelector("svg");
         if (parsedSvg) {
-          illustrations.push({
+          foundTypes.push({
             type: "svg",
             content: parsedSvg.outerHTML,
           });
         }
       } catch (e) {
-        illustrations.push({
+        foundTypes.push({
           type: "svg",
           content: content,
         });
       }
-      return;
     }
 
-    // Check for iframe content
     const iframeContent = extractIframeContent(content);
     if (iframeContent) {
-      illustrations.push(iframeContent);
-      return;
+      foundTypes.push(iframeContent);
     }
     
-    // If none of the above matched, check if it's a direct URL or contains a URL
     const url = extractUrl(content);
     if (url) {
       if (url.match(/\.(jpg|jpeg|png|gif|svg|webp)$/i)) {
-        illustrations.push({
+        foundTypes.push({
           type: "image",
           content: url,
           alt: "Image"
         });
       } else {
-        illustrations.push({
+        foundTypes.push({
           type: "iframe",
           src: url,
           content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
         });
       }
+    }
+    
+    // Add all found content types to illustrations
+    if (foundTypes.length > 0) {
+      illustrations.push(...foundTypes);
+    } else if (content.trim()) {
+      // Fallback for plain text content
+      illustrations.push({
+        type: "text",
+        content: content
+      });
     }
   });
 
