@@ -429,11 +429,22 @@ function parseIllustration(cell) {
       });
     }
 
-    const icon = element.querySelector('span.icon');
-    if (icon) {
+    // Check for icon elements with more comprehensive selectors
+    const icons = element.querySelectorAll('.icon, [class*="icon-"], [class^="icon-"], [class$="-icon"]');
+    if (icons.length > 0) {
+      icons.forEach(icon => {
+        foundTypes.push({
+          type: "icon",
+          content: icon.outerHTML,
+        });
+      });
+    } else if (element.classList.contains('icon') ||
+               element.classList.value.includes('icon-') ||
+               element.classList.value.includes('-icon')) {
+      // Handle element itself being an icon
       foundTypes.push({
         type: "icon",
-        content: icon.outerHTML,
+        content: element.outerHTML,
       });
     }
 
@@ -623,6 +634,19 @@ function createSlideContent(slide) {
         const isActive = index === 0 ? 'active' : '';
         const display = index === 0 ? 'block' : 'none';
         
+        // Handle mixed content (icon + picture) by wrapping in container
+        if (item.type === "icon" && index < slide.illustration.content.length - 1) {
+          const nextItem = slide.illustration.content[index + 1];
+          if (nextItem.type === "picture") {
+            slideContent += `
+              <div class="mixed-content-container ${isActive}" style="display: ${display}">
+                ${item.content}
+                ${nextItem.content}
+              </div>`;
+            return; // Skip next item since we've handled it
+          }
+        }
+        
         if (item.type === "iframe") {
           slideContent += `
             <div class="iframe-container sequence-image ${isActive}" style="display: ${display}">
@@ -640,7 +664,7 @@ function createSlideContent(slide) {
             </div>`;
         } else if (item.type === "icon") {
           slideContent += `
-            <div class="sequence-image ${isActive}" style="display: ${display}">
+            <div class="sequence-image icon-container ${isActive}" style="display: ${display}">
               ${item.content}
             </div>`;
         } else {
