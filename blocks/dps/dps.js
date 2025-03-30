@@ -433,25 +433,6 @@ function parseIllustration(cell) {
 }
 
 /**
- * Extract URL from content
- */
-function extractUrl(content) {
-  if (!content) return null;
-  
-  // Clean up any malformed URLs
-  content = content.replace(/\s+/g, '').replace(/["']/g, '');
-  
-  // Check for iframe prefix
-  if (content.startsWith('iframe=')) {
-    content = content.substring(7);
-  }
-  
-  // Match URLs
-  const urlMatch = content.match(/https?:\/\/[^\s<>"']+|\/[^\s<>"']+/);
-  return urlMatch ? urlMatch[0] : null;
-}
-
-/**
  * Decode HTML entities in a string
  */
 function decodeHTMLEntities(text) {
@@ -618,7 +599,19 @@ function formatTime(seconds) {
  * Extract URL from content
  */
 function extractUrl(content) {
-  // Implementation of extractUrl function
+  if (!content) return null;
+  
+  // Clean up any malformed URLs
+  content = content.replace(/\s+/g, '').replace(/["']/g, '');
+  
+  // Check for iframe prefix
+  if (content.startsWith('iframe=')) {
+    content = content.substring(7);
+  }
+  
+  // Match URLs
+  const urlMatch = content.match(/https?:\/\/[^\s<>"']+|\/[^\s<>"']+/);
+  return urlMatch ? urlMatch[0] : null;
 }
 
 /**
