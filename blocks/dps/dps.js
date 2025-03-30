@@ -177,63 +177,111 @@ export default function decorate(block) {
  * @returns {Object} Parsed presentation data
  */
 function parseRows(rows) {
-  // First row contains presentation information
-  const configRow = rows[0];
-  const configCells = Array.from(configRow.children);
-
-  /* Initialize presentation data structure
-   * - title: Main presentation title
-   * - subtitle: Optional subtitle
-   * - timerDuration: Presentation duration in minutes
-   * - slides: Array of slide objects
-   */
-  const presentationData = {
-    title: getElementContent(configCells[0]),
-    subtitle: getElementContent(configCells[1]),
-    timerDuration: parseInt(getElementContent(configCells[2])) || 25,
-    slides: [],
-  };
-
-  // Process slide rows (skip first row as it's configuration)
-  for (let i = 1; i < rows.length; i++) {
-    const slideRow = rows[i];
-    const slideCells = Array.from(slideRow.children);
-
-    // Skip rows with insufficient cells
-    if (slideCells.length < 3) continue;
-
-    /* Create slide object with parsed content
-     * - title: Slide heading
-     * - introText: Introduction or subtitle
-     * - bulletPoints: Array of bullet points and text
-     * - illustration: Images, SVG, or iframes
-     * - presenterNotes: Private notes for presenter
-     */
-    const slide = {
-      title: getElementContent(slideCells[0]),
-      introText: getElementContent(slideCells[1]),
-      bulletPoints: parseBulletPoints(slideCells[2]),
-      illustration: parseIllustration(slideCells[3]),
-      presenterNotes: slideCells[4] ? getElementContent(slideCells[4]) : '',
-    };
-
-    presentationData.slides.push(slide);
+  // Validate input
+  if (!rows || !Array.isArray(rows) || rows.length < 2) {
+    console.error('Invalid rows data:', rows);
+    throw new Error('Invalid rows data: At least two rows are required');
   }
 
-  /* Add Q&A slide at the end
-   * - Standard format for all presentations
-   * - Includes thank you message
-   * - Provides space for audience interaction
-   */
-  presentationData.slides.push({
-    type: "qanda",
-    title: "Questions & Answers",
-    subtitle: "Your feedback and questions are valuable",
-    thankYouText: "Thank You For Your Attention",
-    presenterNotes: "Final slide - Open for questions and discussion"
-  });
+  try {
+    // First row contains presentation information
+    const configRow = rows[0];
+    const configCells = Array.from(configRow.children);
 
-  return presentationData;
+    // Validate configuration row
+    if (!configCells || configCells.length < 3) {
+      console.error('Invalid configuration row:', configCells);
+      throw new Error('Invalid configuration row: Missing required cells');
+    }
+
+    /* Initialize presentation data structure
+     * - title: Main presentation title
+     * - subtitle: Optional subtitle
+     * - timerDuration: Presentation duration in minutes
+     * - slides: Array of slide objects
+     */
+    const presentationData = {
+      title: getElementContent(configCells[0]),
+      subtitle: getElementContent(configCells[1]),
+      timerDuration: parseInt(getElementContent(configCells[2])) || 25,
+      slides: [],
+    };
+
+    // Log configuration data for debugging
+    console.log('Presentation configuration:', {
+      title: presentationData.title,
+      subtitle: presentationData.subtitle,
+      timerDuration: presentationData.timerDuration
+    });
+
+    // Process slide rows (skip first row as it's configuration)
+    for (let i = 1; i < rows.length; i++) {
+      const slideRow = rows[i];
+      const slideCells = Array.from(slideRow.children);
+
+      // Skip rows with insufficient cells
+      if (slideCells.length < 3) {
+        console.warn(`Skipping row ${i}: Insufficient cells (${slideCells.length})`);
+        continue;
+      }
+
+      /* Create slide object with parsed content
+       * - title: Slide heading
+       * - introText: Introduction or subtitle
+       * - bulletPoints: Array of bullet points and text
+       * - illustration: Images, SVG, or iframes
+       * - presenterNotes: Private notes for presenter
+       */
+      const slide = {
+        title: getElementContent(slideCells[0]),
+        introText: getElementContent(slideCells[1]),
+        bulletPoints: parseBulletPoints(slideCells[2]),
+        illustration: parseIllustration(slideCells[3]),
+        presenterNotes: slideCells[4] ? getElementContent(slideCells[4]) : '',
+      };
+
+      // Log slide data for debugging
+      console.log(`Slide ${i}:`, {
+        title: slide.title,
+        hasIntroText: !!slide.introText,
+        bulletPointsCount: slide.bulletPoints?.length || 0,
+        hasIllustration: !!slide.illustration,
+        hasPresenterNotes: !!slide.presenterNotes
+      });
+
+      presentationData.slides.push(slide);
+    }
+
+    /* Add Q&A slide at the end
+     * - Standard format for all presentations
+     * - Includes thank you message
+     * - Provides space for audience interaction
+     */
+    presentationData.slides.push({
+      type: "qanda",
+      title: "Questions & Answers",
+      subtitle: "Your feedback and questions are valuable",
+      thankYouText: "Thank You For Your Attention",
+      presenterNotes: "Final slide - Open for questions and discussion"
+    });
+
+    // Validate final slides array
+    if (presentationData.slides.length === 0) {
+      throw new Error('No valid slides were parsed from the rows');
+    }
+
+    // Log final presentation data for debugging
+    console.log('Final presentation data:', {
+      totalSlides: presentationData.slides.length,
+      hasConfiguration: !!presentationData.title,
+      hasQASlide: presentationData.slides.some(slide => slide.type === 'qanda')
+    });
+
+    return presentationData;
+  } catch (error) {
+    console.error('Error parsing rows:', error);
+    throw error;
+  }
 }
 
 /**
@@ -648,145 +696,206 @@ function decodeHTMLEntities(text) {
  * @param {HTMLElement} container - Container to build slides in
  */
 function buildSlides(slides, container) {
-  container.innerHTML = "";
-  const totalSlides = slides.length;
+  // Validate inputs
+  if (!container) {
+    console.error('Container element is required for buildSlides');
+    return;
+  }
 
-  slides.forEach((slide, index) => {
-    const slideElement = document.createElement("div");
-    slideElement.id = `slide-${index}`;
-    slideElement.className = "slide";
-    
-    // Store presenter notes in the slide's dataset
-    if (slide.presenterNotes) {
-      slideElement.dataset.presenterNotes = slide.presenterNotes;
-    }
+  if (!Array.isArray(slides) || slides.length === 0) {
+    console.error('No slides data provided to buildSlides');
+    container.innerHTML = '<div class="dps-error">Error: No slides data available</div>';
+    return;
+  }
 
-    /* Special handling for Q&A slides
-     * - Custom layout
-     * - Question mark icon
-     * - Thank you message
-     */
-    if (slide.type === "qanda") {
-      slideElement.innerHTML = `
-        <div class="slide-content">
-          <h2 class="slide-title">${slide.title}</h2>
-          <div class="slide-content-text">
-            <p class="slide-subtitle">${slide.subtitle}</p>
-          </div>
-          <div class="illustration qanda-content">
-            <div class="qanda-circle">
-              <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" width="200" height="200">
-                <circle cx="100" cy="100" r="90" fill="#3498db" stroke="white" stroke-width="4" />
-                <text x="100" y="95" text-anchor="middle" fill="white" font-size="70" font-weight="bold">?</text>
-                <text x="100" y="130" text-anchor="middle" fill="white" font-size="18" font-weight="bold">QUESTIONS</text>
-              </svg>
+  try {
+    // Clear existing content
+    container.innerHTML = "";
+    const totalSlides = slides.length;
+
+    // Log start of slide building
+    console.log(`Building ${totalSlides} slides...`);
+
+    // Build each slide
+    slides.forEach((slide, index) => {
+      try {
+        // Create slide element
+        const slideElement = document.createElement("div");
+        slideElement.id = `slide-${index}`;
+        slideElement.className = "slide";
+        
+        // Store presenter notes in the slide's dataset
+        if (slide.presenterNotes) {
+          slideElement.dataset.presenterNotes = slide.presenterNotes;
+        }
+
+        /* Special handling for Q&A slides
+         * - Custom layout
+         * - Question mark icon
+         * - Thank you message
+         */
+        if (slide.type === "qanda") {
+          slideElement.innerHTML = `
+            <div class="slide-content">
+              <h2 class="slide-title">${slide.title || 'Questions & Answers'}</h2>
+              <div class="slide-content-text">
+                <p class="slide-subtitle">${slide.subtitle || 'Your feedback and questions are valuable'}</p>
+              </div>
+              <div class="illustration qanda-content">
+                <div class="qanda-circle">
+                  <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+                    <circle cx="100" cy="100" r="90" fill="#3498db" stroke="white" stroke-width="4" />
+                    <text x="100" y="95" text-anchor="middle" fill="white" font-size="70" font-weight="bold">?</text>
+                    <text x="100" y="130" text-anchor="middle" fill="white" font-size="18" font-weight="bold">QUESTIONS</text>
+                  </svg>
+                </div>
+                <p class="thank-you-text">${slide.thankYouText || "Thank You"}</p>
+              </div>
             </div>
-            <p class="thank-you-text">${slide.thankYouText || "Thank You"}</p>
-          </div>
-        </div>
-      `;
-    } else {
-      /* Standard slide content
-       * - Title section
-       * - Content area with bullet points
-       * - Illustration area
-       */
-      let slideContent = `
-        <div class="slide-content">
-          <h2 class="slide-title">${slide.title}</h2>
-          <div class="slide-content-text">
-      `;
+          `;
+        } else {
+          /* Standard slide content
+           * - Title section
+           * - Content area with bullet points
+           * - Illustration area
+           */
+          let slideContent = `
+            <div class="slide-content">
+              <h2 class="slide-title">${slide.title || ''}</h2>
+              <div class="slide-content-text">
+          `;
 
-      // Add content text or bullet points
-      if (slide.introText) {
-        slideContent += `<p style="font-size: 18px; margin-bottom: 20px;">${slide.introText}</p>`;
-      }
-
-      /* Build bullet points list
-       * - Handles plain text
-       * - Supports HTML content
-       * - Includes sub-bullets
-       */
-      if (slide.bulletPoints && slide.bulletPoints.length > 0) {
-        slideContent += '<ul class="bullet-list">';
-        slide.bulletPoints.forEach((point) => {
-          if (point.isPlainText) {
-            // For plain text or HTML content, render without bullet styling
-            if (point.isHTML) {
-              // For HTML content, render the HTML directly
-              if (point.text === '<br>') {
-                slideContent += '<br>';
-              } else {
-                slideContent += `<li class="plain-text">${point.text}</li>`;
-              }
-            } else {
-              // For plain text, render as text
-              slideContent += `<li class="plain-text">${point.text}</li>`;
-            }
-          } else {
-            // For bullet points, render with bullet styling
-            slideContent += `<li>${point.text}`;
-
-            // Add sub-bullets if they exist
-            if (point.subPoints && point.subPoints.length > 0) {
-              slideContent += '<ul class="sub-bullet-list">';
-              point.subPoints.forEach((subPoint) => {
-                slideContent += `<li>${subPoint}</li>`;
-              });
-              slideContent += "</ul>";
-            }
-
-            slideContent += "</li>";
+          // Add content text or bullet points
+          if (slide.introText) {
+            slideContent += `<p style="font-size: 18px; margin-bottom: 20px;">${slide.introText}</p>`;
           }
+
+          /* Build bullet points list
+           * - Handles plain text
+           * - Supports HTML content
+           * - Includes sub-bullets
+           */
+          if (slide.bulletPoints && slide.bulletPoints.length > 0) {
+            slideContent += '<ul class="bullet-list">';
+            slide.bulletPoints.forEach((point) => {
+              if (point.isPlainText) {
+                // For plain text or HTML content, render without bullet styling
+                if (point.isHTML) {
+                  // For HTML content, render the HTML directly
+                  if (point.text === '<br>') {
+                    slideContent += '<br>';
+                  } else {
+                    slideContent += `<li class="plain-text">${point.text}</li>`;
+                  }
+                } else {
+                  // For plain text, render as text
+                  slideContent += `<li class="plain-text">${point.text}</li>`;
+                }
+              } else {
+                // For bullet points, render with bullet styling
+                slideContent += `<li>${point.text}`;
+
+                // Add sub-bullets if they exist
+                if (point.subPoints && point.subPoints.length > 0) {
+                  slideContent += '<ul class="sub-bullet-list">';
+                  point.subPoints.forEach((subPoint) => {
+                    slideContent += `<li>${subPoint}</li>`;
+                  });
+                  slideContent += "</ul>";
+                }
+
+                slideContent += "</li>";
+              }
+            });
+            slideContent += "</ul>";
+          }
+
+          slideContent += "</div>"; // Close slide-content-text
+
+          /* Add illustration if provided
+           * - Supports multiple content types
+           * - Handles image sequences
+           * - Maintains aspect ratio
+           */
+          if (slide.illustration) {
+            slideContent += `
+              <div class="illustration">
+                ${
+                  slide.illustration.type === "images"
+                    ? `<div class="image-sequence">
+                        ${slide.illustration.content.map((item, imgIndex) => {
+                          if (item.type === "iframe") {
+                            return `<div class="iframe-container sequence-image ${imgIndex === 0 ? 'active' : ''}" style="display: ${imgIndex === 0 ? 'block' : 'none'}">
+                              <iframe src="${item.src}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>
+                            </div>`;
+                          } else if (item.type === "picture") {
+                            return `<div class="sequence-image ${imgIndex === 0 ? 'active' : ''}" style="display: ${imgIndex === 0 ? 'block' : 'none'}">
+                              ${item.content}
+                            </div>`;
+                          }
+                          return `<img 
+                            src="${item.content}" 
+                            alt="${item.alt || ''}" 
+                            class="sequence-image ${imgIndex === 0 ? 'active' : ''}" 
+                            style="display: ${imgIndex === 0 ? 'block' : 'none'}">`;
+                        }).join('')}
+                       </div>`
+                    : slide.illustration.type === "iframe"
+                    ? `<div class="iframe-container">
+                        <iframe src="${slide.illustration.src}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>
+                       </div>`
+                    : slide.illustration.type === "svg"
+                    ? slide.illustration.content
+                    : slide.illustration.type === "picture"
+                    ? slide.illustration.content
+                    : `<img src="${slide.illustration.content}" alt="${slide.title || ''} illustration">`
+                }
+              </div>
+            `;
+          }
+
+          slideElement.innerHTML = slideContent;
+        }
+
+        // Add the slide to the container
+        container.appendChild(slideElement);
+        
+        // Log successful slide creation
+        console.log(`Slide ${index + 1} created successfully:`, {
+          title: slide.title,
+          hasContent: !!slide.introText || (slide.bulletPoints && slide.bulletPoints.length > 0),
+          hasIllustration: !!slide.illustration,
+          hasPresenterNotes: !!slide.presenterNotes
         });
-        slideContent += "</ul>";
-      }
 
-      slideContent += "</div>"; // Close slide-content-text
-
-      /* Add illustration if provided
-       * - Supports multiple content types
-       * - Handles image sequences
-       * - Maintains aspect ratio
-       */
-      if (slide.illustration) {
-        slideContent += `
-          <div class="illustration">
-            ${
-              slide.illustration.type === "images"
-                ? `<div class="image-sequence">
-                    ${slide.illustration.content.map((item, index) => {
-                      if (item.type === "iframe") {
-                        return `<div class="iframe-container sequence-image ${index === 0 ? 'active' : ''}" style="display: ${index === 0 ? 'block' : 'none'}">
-                          <iframe src="${item.src}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>
-                        </div>`;
-                      } else if (item.type === "picture") {
-                        return `<div class="sequence-image ${index === 0 ? 'active' : ''}" style="display: ${index === 0 ? 'block' : 'none'}">
-                          ${item.content}
-                        </div>`;
-                      }
-                      return `<img 
-                        src="${item.content}" 
-                        alt="${item.alt}" 
-                        class="sequence-image ${index === 0 ? 'active' : ''}" 
-                        style="display: ${index === 0 ? 'block' : 'none'}">`;
-                    }).join('')}
-                   </div>`
-                : slide.illustration.type === "iframe"
-                ? `<div class="iframe-container">
-                    <iframe src="${slide.illustration.src}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>
-                   </div>`
-                : slide.illustration.type === "svg"
-                ? slide.illustration.content
-                : slide.illustration.type === "picture"
-                ? slide.illustration.content
-                : `<img src="${slide.illustration.content}" alt="${slide.title} illustration">`
-            }
+      } catch (slideError) {
+        console.error(`Error creating slide ${index + 1}:`, slideError);
+        // Create error slide
+        const errorSlide = document.createElement("div");
+        errorSlide.className = "slide dps-error";
+        errorSlide.innerHTML = `<div class="slide-content">
+          <h2 class="slide-title">Error Loading Slide ${index + 1}</h2>
+          <div class="slide-content-text">
+            <p>There was an error loading this slide. Please check the console for details.</p>
           </div>
-        `;
+        </div>`;
+        container.appendChild(errorSlide);
       }
+    });
+
+    // Verify slides were created
+    const createdSlides = container.querySelectorAll('.slide');
+    if (createdSlides.length === 0) {
+      throw new Error('No slides were created in the container');
     }
-  });
+
+    // Log final slide count
+    console.log(`Successfully created ${createdSlides.length} slides`);
+
+  } catch (error) {
+    console.error('Error building slides:', error);
+    container.innerHTML = `<div class="dps-error">Error building slides: ${error.message}</div>`;
+  }
 }
 
 /**
@@ -805,11 +914,17 @@ function buildSlides(slides, container) {
  */
 function setupControls(slidesContainer, presenterNotesContainer, timerDuration, DPS_CONFIG) {
   // Validate required elements
-  if (!slidesContainer || !presenterNotesContainer) {
-    console.error('Required containers not found for setupControls');
+  if (!slidesContainer) {
+    console.error('Slides container is required for setupControls');
     return;
   }
 
+  if (!presenterNotesContainer) {
+    console.error('Presenter notes container is required for setupControls');
+    return;
+  }
+
+  // Get all slides and validate
   const slides = slidesContainer.querySelectorAll('.slide');
   if (!slides || slides.length === 0) {
     console.error('No slides found in container');
@@ -825,6 +940,12 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
    * - Manages slide transitions
    */
   function navigate(direction) {
+    // Validate current slide index
+    if (currentSlide < 0 || currentSlide >= totalSlides) {
+      console.error('Invalid current slide index:', currentSlide);
+      return;
+    }
+
     const newSlide = currentSlide + direction;
     if (newSlide >= 0 && newSlide < totalSlides) {
       // Remove active class from current slide
@@ -896,7 +1017,10 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
   let isTimerRunning = false;
 
   function toggleTimer() {
-    if (!timerDisplay) return;
+    if (!timerDisplay) {
+      console.error('Timer display element not found');
+      return;
+    }
     
     if (isTimerRunning) {
       clearInterval(timerInterval);
