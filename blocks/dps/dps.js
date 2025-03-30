@@ -983,4 +983,7 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
       }
     }
   });
+
+  // Show first slide on initial load
+  showSlide(0);
 }
