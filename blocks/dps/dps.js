@@ -992,19 +992,41 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
      * Supports slide progression and image sequences
      */
     if (event.key === "ArrowLeft") {
+      // eslint-disable-next-line no-console
+      console.log('Left arrow keydown event detected');
       event.preventDefault();
       // First try to handle image sequence navigation
       const sequenceHandled = handleImageSequenceNavigation('prev');
-      if (!sequenceHandled && currentSlideIndex > 0) {
-        showSlide(currentSlideIndex - 1);
+      // eslint-disable-next-line no-console
+      console.log('Sequence navigation handled:', sequenceHandled);
+      if (!sequenceHandled) {
+        if (currentSlideIndex > 0) {
+          // eslint-disable-next-line no-console
+          console.log('Moving to previous slide:', currentSlideIndex - 1);
+          showSlide(currentSlideIndex - 1);
+        } else {
+          // eslint-disable-next-line no-console
+          console.log('Already at first slide');
+        }
       }
       return;
     } else if (event.key === "ArrowRight") {
+      // eslint-disable-next-line no-console
+      console.log('Right arrow keydown event detected');
       event.preventDefault();
       // First try to handle image sequence navigation
       const sequenceHandled = handleImageSequenceNavigation('next');
-      if (!sequenceHandled && currentSlideIndex < slides.length - 1) {
-        showSlide(currentSlideIndex + 1);
+      // eslint-disable-next-line no-console
+      console.log('Sequence navigation handled:', sequenceHandled);
+      if (!sequenceHandled) {
+        if (currentSlideIndex < slides.length - 1) {
+          // eslint-disable-next-line no-console
+          console.log('Moving to next slide:', currentSlideIndex + 1);
+          showSlide(currentSlideIndex + 1);
+        } else {
+          // eslint-disable-next-line no-console
+          console.log('Already at last slide');
+        }
       }
       return;
     } else if (event.key === " " && hasStartedTimer) {
