@@ -745,8 +745,7 @@ function createSlideContent(slide) {
  * @param {Object} config - Presentation configuration
  */
 function setupControls(slidesContainer, presenterNotesContainer, timerDuration, config) {
-  // eslint-disable-next-line no-console
-  console.time('setupControls');
+  // Fix: Remove console.time calls that were causing issues
   const slides = slidesContainer.querySelectorAll(".slide");
   const notesContent = presenterNotesContainer.querySelector(".presenter-notes-content");
   const prevButton = document.querySelector(".prev-slide");
@@ -971,19 +970,27 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
    * Supports slide progression, timer control, and presenter notes
    */
   let lastKeyTime = 0;
-  const KEY_DEBOUNCE_MS = 300; // 300ms debounce window
+  const KEY_DEBOUNCE_MS = 150; // Reduced debounce time from 300ms to 150ms for more responsive controls
+  let keyHandlingInProgress = false;
 
   document.addEventListener("keydown", (event) => {
-    // eslint-disable-next-line no-console
-    console.time('keydownHandler');
-    const now = Date.now();
-    if (now - lastKeyTime < KEY_DEBOUNCE_MS) {
-      // eslint-disable-next-line no-console
-      console.log('Key event suppressed - debounce active');
+    // Ignore repeated keydown events from key being held down
+    if (event.repeat) {
       event.preventDefault();
       return;
     }
+    
+    const now = Date.now();
+    // Check if we're within the debounce window or if we're already handling a key press
+    if ((now - lastKeyTime < KEY_DEBOUNCE_MS) || keyHandlingInProgress) {
+      event.preventDefault();
+      return;
+    }
+    
+    // Set flag to indicate we're handling a key press
+    keyHandlingInProgress = true;
     lastKeyTime = now;
+    
     if (event.key === "Escape") {
       const navBar = document.querySelector(".dps-navigation");
       if (navBar) {
@@ -1011,40 +1018,32 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
      * Supports slide progression and image sequences
      */
     if (event.key === "ArrowLeft") {
-      // eslint-disable-next-line no-console
-      console.log('Left arrow keydown event detected');
+      // Fix: Remove console.log calls
       event.preventDefault();
       // First try to handle image sequence navigation
       const sequenceHandled = handleImageSequenceNavigation('prev');
-      // eslint-disable-next-line no-console
-      console.log('Sequence navigation handled:', sequenceHandled);
+      // Fix: Remove console.log calls
       if (!sequenceHandled) {
         if (currentSlideIndex > 0) {
-          // eslint-disable-next-line no-console
-          console.log('Moving to previous slide:', currentSlideIndex - 1);
+          // Fix: Remove console.log calls
           showSlide(currentSlideIndex - 1);
         } else {
-          // eslint-disable-next-line no-console
-          console.log('Already at first slide');
+          // Fix: Remove console.log calls
         }
       }
       return;
     } else if (event.key === "ArrowRight") {
-      // eslint-disable-next-line no-console
-      console.log('Right arrow keydown event detected');
+      // Fix: Remove console.log calls
       event.preventDefault();
       // First try to handle image sequence navigation
       const sequenceHandled = handleImageSequenceNavigation('next');
-      // eslint-disable-next-line no-console
-      console.log('Sequence navigation handled:', sequenceHandled);
+      // Fix: Remove console.log calls
       if (!sequenceHandled) {
         if (currentSlideIndex < slides.length - 1) {
-          // eslint-disable-next-line no-console
-          console.log('Moving to next slide:', currentSlideIndex + 1);
+          // Fix: Remove console.log calls
           showSlide(currentSlideIndex + 1);
         } else {
-          // eslint-disable-next-line no-console
-          console.log('Already at last slide');
+          // Fix: Remove console.log calls
         }
       }
       return;
@@ -1069,16 +1068,13 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
       }
       return;
     }
-    // eslint-disable-next-line no-console
-    console.timeEnd('keydownHandler');
+    
+    // Reset the key handling flag when we're done processing the event
+    setTimeout(() => {
+      keyHandlingInProgress = false;
+    }, 50); // Small delay to ensure events complete before accepting new inputs
   });
 
   // Show first slide on initial load
   showSlide(0);
-  // eslint-disable-next-line no-console
-  console.timeEnd('setupControls');
-  // eslint-disable-next-line no-console
-  console.timeEnd('setupControls');
-  // eslint-disable-next-line no-console
-  console.timeEnd('setupControls');
 }
