@@ -418,6 +418,21 @@ function parseIllustration(cell) {
     .replace(/\s*<br>\s*(?=\w)/gi, ' ') // Replace <br> followed by text with space
     .replace(/\s+/g, ' ') // Collapse multiple whitespace
     .trim();
+
+  // Special handling for simplified iframe format wrapped in paragraphs
+  const simplifiedIframeRegex = /<p>\s*iframe\s+(https?:\/\/[^\s"'<>]+)\s*<\/p>/gi;
+  const simplifiedIframeMatches = Array.from(cellContent.matchAll(simplifiedIframeRegex));
+  
+  for (const match of simplifiedIframeMatches) {
+    const url = match[1];
+    if (!illustrations.some(item => item.type === "iframe" && item.src === url)) {
+      illustrations.push({
+        type: "iframe",
+        src: url,
+        content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+      });
+    }
+  }
   
   // Process icon spans first - convert to image tags
   const iconRegex = /<span\s+class=["'][^"']*icon[^"']*["'][^>]*>.*?<\/span>/gi;
