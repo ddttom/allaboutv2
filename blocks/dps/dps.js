@@ -105,7 +105,7 @@ export default function decorate(block) {
   presenterNotesContainer.className = "presenter-notes hidden";
   presenterNotesContainer.innerHTML = `
     <div class="presenter-notes-title">
-      <span>Presenter Notes (-)hide (+)show (p) expand notes</span>
+      <span>Presenter Notes (-)hide (+)show</span>
       <div class="resize-grip">↕</div>
     </div>
     <div class="presenter-notes-content"></div>
