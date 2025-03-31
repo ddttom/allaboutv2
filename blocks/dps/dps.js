@@ -104,7 +104,7 @@ export default function decorate(block) {
   const presenterNotesContainer = document.createElement("div");
   presenterNotesContainer.className = "presenter-notes hidden";
   presenterNotesContainer.innerHTML = `
-    <div class="presenter-notes-title">Presenter Notes (-)hide (+)show (p) only notes</div>
+    <div class="presenter-notes-title">Presenter Notes (-)hide (+)show (p) expand notes</div>
     <div class="presenter-notes-content"></div>
   `;
   
@@ -1090,10 +1090,18 @@ document.addEventListener("keydown", (event) => {
     }
     handled = true;
   } else if (event.key === "p" || event.key === "P") {
-    // First ensure notes are visible, then toggle presenter mode
-    presenterNotesContainer.classList.remove("hidden");
-    config.PRESENTER_NOTES_VISIBLE = true;
-    togglePresenterMode();
+    const presenterNotes = document.querySelector('.presenter-notes');
+    if (presenterNotes.classList.contains('enlarged')) {
+      presenterNotes.classList.remove('enlarged');
+      presenterNotes.style.transform = '';
+      presenterNotes.style.zIndex = '';
+    } else {
+      presenterNotes.classList.remove('hidden');
+      presenterNotes.classList.add('enlarged');
+      presenterNotes.style.transform = 'scale(1.67)';
+      presenterNotes.style.zIndex = '1000';
+      config.PRESENTER_NOTES_VISIBLE = true;
+    }
     handled = true;
   }
   /* Toggle presenter notes with + and - keys

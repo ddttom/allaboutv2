@@ -33,6 +33,7 @@ A powerful presentation system that transforms structured content into an intera
 - **Plus (+)**: Show presenter notes
 - **Minus (-)**: Hide presenter notes
 - **R**: Refresh viewport while maintaining current slide and sub-slide state
+- **P**: Toggle enlarged presenter notes (2/3 scale)
 
 ### Image Sequence Navigation
 - Use left/right arrow keys to navigate through multiple images
@@ -141,7 +142,8 @@ The system intelligently handles HTML entities in iframe definitions:
 5. Consider fallback content for cases where embedding fails
 
 ### Presenter Notes
-- Appears in bottom left third of viewport (31.25% width)
+- Appears in bottom left third of viewport (31.25% width) by default
+- Can be enlarged to 2/3 scale with 'P' key
 - Light grey background with dark text for readability
 - Supports HTML formatting:
   - Bullet points
@@ -335,6 +337,7 @@ The fourth column supports various image formats and sources:
 
 ## Notes
 - Presenter notes support HTML formatting for better organization
+- Can be enlarged to 2/3 scale with 'P' key for better visibility
 - Images maintain aspect ratio while using available space
 - Timer starts automatically after first slide
 - Print mode excludes presenter notes and navigation elements
@@ -452,6 +455,7 @@ For images, you can simply paste the URL directly.
 ## Presenter Mode
 The DPS system includes a dedicated presenter mode that:
 - Extracts and displays only the presenter notes from slides
+- Supports toggling between normal and enlarged (2/3 scale) views
 - Provides a clean, tablet-optimized interface
 - Matches the existing DPS styling for consistency
 - Supports all the same navigation methods as DPS
