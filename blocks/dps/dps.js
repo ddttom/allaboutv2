@@ -104,7 +104,7 @@ export default function decorate(block) {
   const presenterNotesContainer = document.createElement("div");
   presenterNotesContainer.className = "presenter-notes hidden";
   presenterNotesContainer.innerHTML = `
-    <div class="presenter-notes-title">Presenter Notes</div>
+    <div class="presenter-notes-title">Presenter Notes (-) to hide (+) to show</div>
     <div class="presenter-notes-content"></div>
   `;
   
