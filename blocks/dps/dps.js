@@ -973,41 +973,38 @@ config.PRESENTER_NOTES_VISIBLE = true;
 
 const styleElement = document.createElement('style');
 styleElement.textContent = `
-  /* Ultra-compact styling for presenter notes */
+  /* Fix for paragraph spacing in presenter notes */
   .presenter-notes-content {
     line-height: 1;
-    font-size: 14px;
   }
   
+  .presenter-notes-content p {
+    margin: 0;
+    padding: 0;
+    line-height: 1.1;
+  }
+  
+  /* Add minimal spacing between paragraphs */
+  .presenter-notes-content p + p {
+    margin-top: 0.25em;
+  }
+  
+  /* Ensure lists have proper spacing too */
   .presenter-notes-content ul,
   .presenter-notes-content ol {
-    margin: 0;
+    margin: 0.25em 0;
     padding-left: 1.2em;
   }
 
   .presenter-notes-content li {
     margin: 0;
     padding: 0;
-    line-height: 1;
-    display: block;
-  }
-
-  .presenter-notes-content p {
-    margin: 0.1em 0;
-  }
-  
-  /* Remove extra spacing between paragraphs and lists */
-  .presenter-notes-content p + ul,
-  .presenter-notes-content p + ol {
-    margin-top: 0.1em;
-  }
-  
-  /* Handle spacing between bullet points */
-  .presenter-notes-content li + li {
-    margin-top: 0em;
+    line-height: 1.1;
   }
 `;
 document.head.appendChild(styleElement);
+
+
 /* Add keyboard navigation
  * Supports slide progression, timer control, and presenter notes
  */
