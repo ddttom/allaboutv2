@@ -969,41 +969,45 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
 presenterNotesContainer.classList.remove("hidden");
 config.PRESENTER_NOTES_VISIBLE = true;
 
-// Add this right after making presenter notes visible at startup in setupControls function
+/// ultra-compact styling for presenter notes
 
-// Add custom styling for presenter notes to reduce white space
 const styleElement = document.createElement('style');
 styleElement.textContent = `
-  /* More aggressive reduction of spacing in presenter notes */
+  /* Ultra-compact styling for presenter notes */
   .presenter-notes-content {
-    line-height: 1.2;
+    line-height: 1;
+    font-size: 14px;
   }
   
   .presenter-notes-content ul,
   .presenter-notes-content ol {
-    margin-top: 0.3em;
-    margin-bottom: 0.3em;
-    padding-left: 1.5em;
+    margin: 0;
+    padding-left: 1.2em;
   }
 
   .presenter-notes-content li {
-    margin-top: 0.1em;
-    margin-bottom: 0.1em;
-    line-height: 1.1;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    display: block;
   }
 
   .presenter-notes-content p {
-    margin-top: 0.3em;
-    margin-bottom: 0.3em;
+    margin: 0.1em 0;
   }
   
-  /* Fix spacing between list items with bullet points */
+  /* Remove extra spacing between paragraphs and lists */
+  .presenter-notes-content p + ul,
+  .presenter-notes-content p + ol {
+    margin-top: 0.1em;
+  }
+  
+  /* Handle spacing between bullet points */
   .presenter-notes-content li + li {
-    margin-top: 0.2em;
+    margin-top: 0em;
   }
 `;
 document.head.appendChild(styleElement);
-
 /* Add keyboard navigation
  * Supports slide progression, timer control, and presenter notes
  */
