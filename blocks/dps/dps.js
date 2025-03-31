@@ -104,7 +104,7 @@ export default function decorate(block) {
   const presenterNotesContainer = document.createElement("div");
   presenterNotesContainer.className = "presenter-notes hidden";
   presenterNotesContainer.innerHTML = `
-    <div class="presenter-notes-title">Presenter Notes (-) to hide (+) to show</div>
+    <div class="presenter-notes-title">Presenter Notes (-)hide (+)show</div>
     <div class="presenter-notes-content"></div>
   `;
   
@@ -969,29 +969,41 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
 presenterNotesContainer.classList.remove("hidden");
 config.PRESENTER_NOTES_VISIBLE = true;
 
-// Add custom styling for presenter notes to reduce line spacing by 50%
+// Add this right after making presenter notes visible at startup in setupControls function
+
+// Add custom styling for presenter notes to reduce white space
 const styleElement = document.createElement('style');
 styleElement.textContent = `
-  /* Reduce line spacing in presenter notes by 50% */
+  /* More aggressive reduction of spacing in presenter notes */
+  .presenter-notes-content {
+    line-height: 1.2;
+  }
+  
   .presenter-notes-content ul,
   .presenter-notes-content ol {
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+    padding-left: 1.5em;
   }
 
   .presenter-notes-content li {
-    margin-bottom: 0.5em; /* Reduce the space between list items */
-    line-height: 1.2; /* Reduce the line height for list items */
+    margin-top: 0.1em;
+    margin-bottom: 0.1em;
+    line-height: 1.1;
   }
 
-  /* Also adjust paragraph spacing in presenter notes for consistency */
   .presenter-notes-content p {
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-    line-height: 1.2;
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+  }
+  
+  /* Fix spacing between list items with bullet points */
+  .presenter-notes-content li + li {
+    margin-top: 0.2em;
   }
 `;
 document.head.appendChild(styleElement);
+
 /* Add keyboard navigation
  * Supports slide progression, timer control, and presenter notes
  */
