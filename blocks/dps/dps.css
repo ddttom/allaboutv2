@@ -242,6 +242,28 @@ body.dps-fullscreen main .section > div {
     }
 }
 
+/* Right-aligned iframe styling */
+.iframe-right {
+    float: right;
+    width: 50%;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.iframe-right iframe {
+    max-height: 60vh;
+    aspect-ratio: 16/9;
+}
+
+@media (max-width: 768px) {
+    .iframe-right {
+        float: none;
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: 20px;
+    }
+}
+
 /* Remove old video container styles */
 .video-container,
 .video-container::before,

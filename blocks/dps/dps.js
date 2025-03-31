@@ -329,7 +329,7 @@ function extractIframeContent(content) {
       return {
         type: "iframe",
         src,
-        content: `<iframe src="${src}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+        content: `<div class="iframe-right"><iframe src="${src}" loading="lazy" title="Embedded Content" allowfullscreen></iframe></div>`
       };
     }
   }
@@ -342,7 +342,7 @@ function extractIframeContent(content) {
     return {
       type: "iframe",
       src: simpleIframeMatch[1],
-      content: `<iframe src="${simpleIframeMatch[1]}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+      content: `<div class="iframe-right"><iframe src="${simpleIframeMatch[1]}" loading="lazy" title="Embedded Content" allowfullscreen></iframe></div>`
     };
   }
   
