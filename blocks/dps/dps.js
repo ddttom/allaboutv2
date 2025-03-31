@@ -2,7 +2,7 @@
  * Dynamic Presentation System (DPS) Block
  * Transforms structured content from Google Docs tables into an interactive presentation
  * with features like image sequences, presenter notes, and timer controls.
- * 
+ *
  * Key Features:
  * - Full-screen presentation mode with automatic viewport handling
  * - Keyboard-based navigation with support for image sequences
@@ -12,6 +12,20 @@
  * - Flexible iframe and image content support
  */
 
+/**
+ * Formats seconds into MM:SS display format for the presentation timer
+ * This utility function is critical for the timer display and must remain
+ * at module scope since it's used in both the initial footer template
+ * and the timer update logic.
+ * Format time in minutes:seconds
+ * @param {number} seconds - Total seconds to format
+ * @returns {string} Formatted time string (MM:SS)
+ */
+function formatTime(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+}
 
 export default function decorate(block) {
   // Add dps-block class to the container for proper styling isolation
@@ -25,7 +39,7 @@ export default function decorate(block) {
   const DPS_CONFIG = {
     TIMER_DURATION: 25 * 60,
     SLIDE_TRANSITION_MS: 300,
-    PRESENTER_NOTES_VISIBLE: false,
+    PRESENTER_NOTES_VISIBLE: true,
   };
 
   /* Force full viewport mode by removing existing page elements
@@ -890,11 +904,6 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
   /* Timer functionality
    * Handles countdown and warning system
    */
-  function formatTime(seconds) {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-  }
 
   function updateTimer() {
     if (remainingTime > 0) {
