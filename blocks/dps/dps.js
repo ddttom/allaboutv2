@@ -399,7 +399,7 @@ function parseIllustration(cell) {
   const illustrations = [];
   
   // Process HTML content directly from cell to capture all elements
-  const cellContent = cell.innerHTML;
+  const cellContent = cell.innerHTML.trim();
   
   // Process icon spans first - convert to image tags
   const iconRegex = /<span\s+class=["'][^"']*icon[^"']*["'][^>]*>.*?<\/span>/gi;
