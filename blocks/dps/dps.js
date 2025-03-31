@@ -965,11 +965,33 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
 
     singleFlash();
   }
-
 // Make presenter notes visible at startup
 presenterNotesContainer.classList.remove("hidden");
 config.PRESENTER_NOTES_VISIBLE = true;
 
+// Add custom styling for presenter notes to reduce line spacing by 50%
+const styleElement = document.createElement('style');
+styleElement.textContent = `
+  /* Reduce line spacing in presenter notes by 50% */
+  .presenter-notes-content ul,
+  .presenter-notes-content ol {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+
+  .presenter-notes-content li {
+    margin-bottom: 0.5em; /* Reduce the space between list items */
+    line-height: 1.2; /* Reduce the line height for list items */
+  }
+
+  /* Also adjust paragraph spacing in presenter notes for consistency */
+  .presenter-notes-content p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    line-height: 1.2;
+  }
+`;
+document.head.appendChild(styleElement);
 /* Add keyboard navigation
  * Supports slide progression, timer control, and presenter notes
  */
