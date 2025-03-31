@@ -329,7 +329,7 @@ function extractIframeContent(content) {
       return {
         type: "iframe",
         src,
-        content: `<div class="iframe-right"><iframe src="${src}" loading="lazy" title="Embedded Content" allowfullscreen></iframe></div>`
+        content: `<iframe src="${src}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
       };
     }
   }
@@ -342,7 +342,7 @@ function extractIframeContent(content) {
     return {
       type: "iframe",
       src: simpleIframeMatch[1],
-      content: `<div class="iframe-right"><iframe src="${simpleIframeMatch[1]}" loading="lazy" title="Embedded Content" allowfullscreen></iframe></div>`
+      content: `<iframe src="${simpleIframeMatch[1]}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
     };
   }
   
@@ -708,7 +708,7 @@ function createSlideContent(slide) {
         
         if (item.type === "iframe") {
           slideContent += `
-            <div class="iframe-container sequence-image ${isActive}">
+            <div class="iframe-container sequence-image ${isActive}" style="width: 100%; height: 100%;">
               ${item.content}
             </div>`;
         } else if (item.type === "picture") {
@@ -746,7 +746,7 @@ function createSlideContent(slide) {
       slideContent += `</div>`;
     } else if (slide.illustration.type === "iframe") {
       slideContent += `
-        <div class="iframe-container">
+        <div class="iframe-container" style="width: 100%; height: 100%;">
           ${slide.illustration.content}
         </div>`;
     } else if (slide.illustration.type === "svg") {
