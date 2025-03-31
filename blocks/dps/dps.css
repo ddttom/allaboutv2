@@ -244,15 +244,19 @@ body.dps-fullscreen main .section > div {
 
 /* Right-aligned iframe styling */
 .iframe-right {
-    float: right;
-    width: 50%;
-    margin-left: 20px;
-    margin-bottom: 20px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .iframe-right iframe {
-    max-height: 60vh;
+    width: 100%;
+    height: 100%;
+    max-height: calc(100vh - 200px);
     aspect-ratio: 16/9;
+    border: none;
 }
 
 @media (max-width: 768px) {
