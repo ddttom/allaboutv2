@@ -965,6 +965,11 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
 
     singleFlash();
   }
+
+// Make presenter notes visible at startup
+presenterNotesContainer.classList.remove("hidden");
+config.PRESENTER_NOTES_VISIBLE = true;
+
 /* Add keyboard navigation
  * Supports slide progression, timer control, and presenter notes
  */
