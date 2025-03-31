@@ -1090,6 +1090,9 @@ document.addEventListener("keydown", (event) => {
     }
     handled = true;
   } else if (event.key === "p" || event.key === "P") {
+    // First ensure notes are visible, then toggle presenter mode
+    presenterNotesContainer.classList.remove("hidden");
+    config.PRESENTER_NOTES_VISIBLE = true;
     togglePresenterMode();
     handled = true;
   }
