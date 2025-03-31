@@ -965,115 +965,71 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
 
     singleFlash();
   }
-
-  /* Add keyboard navigation
-   * Supports slide progression, timer control, and presenter notes
+/* Add keyboard navigation
+ * Supports slide progression, timer control, and presenter notes
+ */
+document.addEventListener("keydown", (event) => {
+  // Ignore repeated keydown events from key being held down
+  if (event.repeat) {
+    event.preventDefault();
+    return;
+  }
+  
+  // Use a variable to track if we handled the event
+  let handled = false;
+  
+  if (event.key === "Escape") {
+    const navBar = document.querySelector(".dps-navigation");
+    if (navBar) {
+      navBar.style.display = navBar.style.display === "none" ? "flex" : "none";
+    }
+    handled = true;
+  }
+  /* Toggle presenter notes with + and - keys
+   * Provides quick access to presenter guidance
    */
-  let lastKeyTime = 0;
-  const KEY_DEBOUNCE_MS = 150; // Reduced debounce time from 300ms to 150ms for more responsive controls
-  let keyHandlingInProgress = false;
-
-  document.addEventListener("keydown", (event) => {
-    // Ignore repeated keydown events from key being held down
-    if (event.repeat) {
-      event.preventDefault();
-      return;
-    }
+  else if (event.key === "+" || event.key === "=") {
+    presenterNotesContainer.classList.remove("hidden");
+    config.PRESENTER_NOTES_VISIBLE = true;
+    event.preventDefault();
+    handled = true;
+  } 
+  else if (event.key === "-" || event.key === "_") {
+    presenterNotesContainer.classList.add("hidden");
+    config.PRESENTER_NOTES_VISIBLE = false;
+    event.preventDefault();
+    handled = true;
+  }
+  /* Handle navigation controls
+   * Supports slide progression and image sequences
+   */
+  else if (event.key === "ArrowLeft") {
+    event.preventDefault();
+    // First try to handle image sequence navigation
+    const sequenceHandled = handleImageSequenceNavigation('prev');
     
-    const now = Date.now();
-    // Check if we're within the debounce window or if we're already handling a key press
-    if ((now - lastKeyTime < KEY_DEBOUNCE_MS) || keyHandlingInProgress) {
-      event.preventDefault();
-      return;
+    if (!sequenceHandled && currentSlideIndex > 0) {
+      showSlide(currentSlideIndex - 1);
     }
+    handled = true;
+  } 
+  else if (event.key === "ArrowRight") {
+    event.preventDefault();
+    // First try to handle image sequence navigation
+    const sequenceHandled = handleImageSequenceNavigation('next');
     
-    // Set flag to indicate we're handling a key press
-    keyHandlingInProgress = true;
-    lastKeyTime = now;
-    
-    if (event.key === "Escape") {
-      const navBar = document.querySelector(".dps-navigation");
-      if (navBar) {
-        navBar.style.display = navBar.style.display === "none" ? "flex" : "none";
-      }
-      return;
+    if (!sequenceHandled && currentSlideIndex < slides.length - 1) {
+      showSlide(currentSlideIndex + 1);
     }
-
-    /* Toggle presenter notes with + and - keys
-     * Provides quick access to presenter guidance
-     */
-    if (event.key === "+" || event.key === "=") {
-      presenterNotesContainer.classList.remove("hidden");
-      config.PRESENTER_NOTES_VISIBLE = true;
-      event.preventDefault();
-      return;
-    } else if (event.key === "-" || event.key === "_") {
-      presenterNotesContainer.classList.add("hidden");
-      config.PRESENTER_NOTES_VISIBLE = false;
-      event.preventDefault();
-      return;
-    }
-
-    /* Handle navigation controls
-     * Supports slide progression and image sequences
-     */
-    if (event.key === "ArrowLeft") {
-      // Fix: Remove console.log calls
-      event.preventDefault();
-      // First try to handle image sequence navigation
-      const sequenceHandled = handleImageSequenceNavigation('prev');
-      // Fix: Remove console.log calls
-      if (!sequenceHandled) {
-        if (currentSlideIndex > 0) {
-          // Fix: Remove console.log calls
-          showSlide(currentSlideIndex - 1);
-        } else {
-          // Fix: Remove console.log calls
-        }
-      }
-      return;
-    } else if (event.key === "ArrowRight") {
-      // Fix: Remove console.log calls
-      event.preventDefault();
-      // First try to handle image sequence navigation
-      const sequenceHandled = handleImageSequenceNavigation('next');
-      // Fix: Remove console.log calls
-      if (!sequenceHandled) {
-        if (currentSlideIndex < slides.length - 1) {
-          // Fix: Remove console.log calls
-          showSlide(currentSlideIndex + 1);
-        } else {
-          // Fix: Remove console.log calls
-        }
-      }
-      return;
-    } else if (event.key === " " && hasStartedTimer) {
-      event.preventDefault();
-      toggleTimer();
-      return;
-    } else if (event.key === "r" || event.key === "R") {
-      event.preventDefault();
-      // Refresh viewport while maintaining current slide and sub-slide state
-      const currentSlideElement = slides[currentSlideIndex];
-      const imageSequence = currentSlideElement.querySelector('.image-sequence');
-      
-      if (imageSequence) {
-        const currentImageIndex = Array.from(imageSequence.querySelectorAll('.sequence-image'))
-          .findIndex(img => img.classList.contains('active'));
-          
-        // Reapply the active state to maintain sequence position
-        showSlide(currentSlideIndex, currentImageIndex);
-      } else {
-        showSlide(currentSlideIndex);
-      }
-      return;
-    }
-    
-    // Reset the key handling flag when we're done processing the event
-    setTimeout(() => {
-      keyHandlingInProgress = false;
-    }, 50); // Small delay to ensure events complete before accepting new inputs
-  });
+    handled = true;
+  } 
+  else if (event.key === " " && hasStartedTimer) {
+    event.preventDefault();
+    toggleTimer();
+    handled = true;
+  }
+  // R key handling removed as requested
+});
 
   // Show first slide on initial load
   showSlide(0);
