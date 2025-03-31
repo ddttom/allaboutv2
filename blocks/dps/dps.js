@@ -409,7 +409,15 @@ function parseIllustration(cell) {
   const illustrations = [];
   
   // Process HTML content directly from cell to capture all elements
-  const cellContent = cell.innerHTML.trim();
+  let cellContent = cell.innerHTML.trim();
+  
+  // Clean up content - remove lone <br> tags and whitespace
+  cellContent = cellContent
+    .replace(/<p>\s*<br>\s*<\/p>/gi, '') // Remove empty paragraphs with just <br>
+    .replace(/<br>\s*(?=<)/gi, '') // Remove <br> tags at start of elements
+    .replace(/\s*<br>\s*(?=\w)/gi, ' ') // Replace <br> followed by text with space
+    .replace(/\s+/g, ' ') // Collapse multiple whitespace
+    .trim();
   
   // Process icon spans first - convert to image tags
   const iconRegex = /<span\s+class=["'][^"']*icon[^"']*["'][^>]*>.*?<\/span>/gi;
