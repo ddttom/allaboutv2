@@ -603,6 +603,38 @@ body.dps-fullscreen main .section > div {
     padding-bottom: 5px;
     border-bottom: 1px solid rgba(44, 62, 80, 0.3); /* Darker border for light background */
     color: #2c3e50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: ns-resize;
+}
+
+.presenter-notes-title::after {
+    content: "⤒⤓";
+    font-size: 14px;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+.presenter-notes-title:hover::after {
+    opacity: 1;
+}
+
+.presenter-notes.presenter-mode {
+    width: 66.66vw;
+    height: 66.66vh;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 80px;
+    transition: all 0.3s ease;
+}
+
+.presenter-notes.presenter-mode .presenter-notes-title {
+    cursor: default;
+}
+
+.presenter-notes.presenter-mode .presenter-notes-title::after {
+    display: none;
 }
 
 .presenter-notes-content {

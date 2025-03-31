@@ -104,7 +104,10 @@ export default function decorate(block) {
   const presenterNotesContainer = document.createElement("div");
   presenterNotesContainer.className = "presenter-notes hidden";
   presenterNotesContainer.innerHTML = `
-    <div class="presenter-notes-title">Presenter Notes (-)hide (+)show (p) expand notes</div>
+    <div class="presenter-notes-title">
+      <span>Presenter Notes (-)hide (+)show (p) expand notes</span>
+      <div class="resize-grip">↕</div>
+    </div>
     <div class="presenter-notes-content"></div>
   `;
   
@@ -1011,6 +1014,32 @@ document.head.appendChild(styleElement);
 
 
 let isPresenterMode = false;
+let isExpandedMode = false;
+let isResizing = false;
+let startY, startHeight;
+
+function setupResizeHandler() {
+  const grip = document.querySelector('.resize-grip');
+  const notes = document.querySelector('.presenter-notes');
+  
+  grip.addEventListener('mousedown', (e) => {
+    isResizing = true;
+    startY = e.clientY;
+    startHeight = parseInt(document.defaultView.getComputedStyle(notes).height, 10);
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!isResizing) return;
+    
+    const height = startHeight + (startY - e.clientY);
+    notes.style.height = `${Math.max(200, Math.min(window.innerHeight - 60, height))}px`;
+  });
+
+  document.addEventListener('mouseup', () => {
+    isResizing = false;
+  });
+}
 
 function togglePresenterMode() {
   isPresenterMode = !isPresenterMode;
@@ -1020,6 +1049,7 @@ function togglePresenterMode() {
   const currentSlide = slides[currentSlideIndex];
   const presenterNotes = document.querySelector('.presenter-notes');
   const presenterButton = document.querySelector('.presenter-toggle');
+  const notesContent = presenterNotes.querySelector('.presenter-notes-content');
   
   if (isPresenterMode) {
     // Hide header and slides but keep footer
@@ -1033,15 +1063,32 @@ function togglePresenterMode() {
     // Show notes in full screen
     presenterNotes.classList.remove('hidden');
     presenterNotes.classList.add('presenter-mode');
-    presenterNotes.style.width = '100%';
-    presenterNotes.style.height = 'calc(100vh - 60px)'; // Account for footer height
-    presenterNotes.style.position = 'fixed';
-    presenterNotes.style.top = '0';
-    presenterNotes.style.left = '0';
-    presenterNotes.style.zIndex = '1000';
-    presenterNotes.style.backgroundColor = 'white';
-    presenterNotes.style.padding = '20px';
-    presenterNotes.style.overflow = 'auto';
+    
+    if (isExpandedMode) {
+      // Expanded view (2/3 of screen)
+      presenterNotes.style.width = '66%';
+      presenterNotes.style.left = '33%';
+      presenterNotes.style.height = 'calc(100vh - 60px)';
+      presenterNotes.style.position = 'fixed';
+      presenterNotes.style.top = '0';
+      presenterNotes.style.zIndex = '1000';
+      presenterNotes.style.backgroundColor = 'white';
+      presenterNotes.style.padding = '20px';
+      presenterNotes.style.overflow = 'auto';
+      notesContent.style.transform = 'none';
+      notesContent.style.fontSize = 'inherit';
+    } else {
+      // Normal view
+      presenterNotes.style.width = '100%';
+      presenterNotes.style.left = '0';
+      presenterNotes.style.height = 'calc(100vh - 60px)';
+      presenterNotes.style.position = 'fixed';
+      presenterNotes.style.top = '0';
+      presenterNotes.style.zIndex = '1000';
+      presenterNotes.style.backgroundColor = 'white';
+      presenterNotes.style.padding = '20px';
+      presenterNotes.style.overflow = 'auto';
+    }
   } else {
     // Restore normal view
     header.style.display = '';
@@ -1053,14 +1100,30 @@ function togglePresenterMode() {
     
     presenterNotes.classList.remove('presenter-mode');
     presenterNotes.style.width = '';
+    presenterNotes.style.left = '';
     presenterNotes.style.height = '';
     presenterNotes.style.position = '';
     presenterNotes.style.top = '';
-    presenterNotes.style.left = '';
     presenterNotes.style.zIndex = '';
     presenterNotes.style.backgroundColor = '';
     presenterNotes.style.padding = '';
     presenterNotes.style.overflow = '';
+  }
+}
+
+function toggleExpandedMode() {
+  isExpandedMode = !isExpandedMode;
+  const presenterNotes = document.querySelector('.presenter-notes');
+  const notesContent = presenterNotes.querySelector('.presenter-notes-content');
+  
+  if (isExpandedMode) {
+    // Switch to expanded view
+    presenterNotes.style.width = '66%';
+    presenterNotes.style.left = '33%';
+  } else {
+    // Switch back to normal view
+    presenterNotes.style.width = '100%';
+    presenterNotes.style.left = '0';
   }
 }
 
@@ -1147,9 +1210,16 @@ document.addEventListener("keydown", (event) => {
     toggleTimer();
     handled = true;
   }
+  else if (event.key === "p" || event.key === "P") {
+    toggleExpandedMode();
+    handled = true;
+  }
   // R key handling removed as requested
 });
 
   // Show first slide on initial load
   showSlide(0);
+  
+  // Setup resize handler
+  setupResizeHandler();
 }
