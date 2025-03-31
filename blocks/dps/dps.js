@@ -964,7 +964,18 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
   /* Add keyboard navigation
    * Supports slide progression, timer control, and presenter notes
    */
+  let lastKeyTime = 0;
+  const KEY_DEBOUNCE_MS = 300; // 300ms debounce window
+
   document.addEventListener("keydown", (event) => {
+    const now = Date.now();
+    if (now - lastKeyTime < KEY_DEBOUNCE_MS) {
+      // eslint-disable-next-line no-console
+      console.log('Key event suppressed - debounce active');
+      event.preventDefault();
+      return;
+    }
+    lastKeyTime = now;
     if (event.key === "Escape") {
       const navBar = document.querySelector(".dps-navigation");
       if (navBar) {
