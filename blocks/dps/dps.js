@@ -131,6 +131,11 @@ export default function decorate(block) {
       <div class="timer">${formatTime(
         presentationData.timerDuration * 60 || DPS_CONFIG.TIMER_DURATION
       )}</div>
+      <button class="presenter-toggle" aria-label="Toggle presenter view">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+        </svg>
+      </button>
     </div>
   `;
 
@@ -1005,6 +1010,66 @@ styleElement.textContent = `
 document.head.appendChild(styleElement);
 
 
+let isPresenterMode = false;
+
+function togglePresenterMode() {
+  isPresenterMode = !isPresenterMode;
+  const header = document.querySelector('.dps-header');
+  const footer = document.querySelector('.dps-footer');
+  const slides = document.querySelectorAll('.slide');
+  const currentSlide = slides[currentSlideIndex];
+  const presenterNotes = document.querySelector('.presenter-notes');
+  const presenterButton = document.querySelector('.presenter-toggle');
+  
+  if (isPresenterMode) {
+    // Hide header and slides but keep footer
+    header.style.display = 'none';
+    slides.forEach(slide => slide.style.display = 'none');
+    currentSlide.style.display = 'none';
+    
+    // Highlight presenter button
+    presenterButton.classList.add('active');
+    
+    // Show notes in full screen
+    presenterNotes.classList.remove('hidden');
+    presenterNotes.classList.add('presenter-mode');
+    presenterNotes.style.width = '100%';
+    presenterNotes.style.height = 'calc(100vh - 60px)'; // Account for footer height
+    presenterNotes.style.position = 'fixed';
+    presenterNotes.style.top = '0';
+    presenterNotes.style.left = '0';
+    presenterNotes.style.zIndex = '1000';
+    presenterNotes.style.backgroundColor = 'white';
+    presenterNotes.style.padding = '20px';
+    presenterNotes.style.overflow = 'auto';
+  } else {
+    // Restore normal view
+    header.style.display = '';
+    slides.forEach(slide => slide.style.display = '');
+    currentSlide.style.display = 'block';
+    
+    // Remove button highlight
+    presenterButton.classList.remove('active');
+    
+    presenterNotes.classList.remove('presenter-mode');
+    presenterNotes.style.width = '';
+    presenterNotes.style.height = '';
+    presenterNotes.style.position = '';
+    presenterNotes.style.top = '';
+    presenterNotes.style.left = '';
+    presenterNotes.style.zIndex = '';
+    presenterNotes.style.backgroundColor = '';
+    presenterNotes.style.padding = '';
+    presenterNotes.style.overflow = '';
+  }
+}
+
+// Add click handler for presenter button
+const presenterButton = document.querySelector('.presenter-toggle');
+if (presenterButton) {
+  presenterButton.addEventListener('click', togglePresenterMode);
+}
+
 /* Add keyboard navigation
  * Supports slide progression, timer control, and presenter notes
  */
@@ -1023,6 +1088,9 @@ document.addEventListener("keydown", (event) => {
     if (navBar) {
       navBar.style.display = navBar.style.display === "none" ? "flex" : "none";
     }
+    handled = true;
+  } else if (event.key === "p" || event.key === "P") {
+    togglePresenterMode();
     handled = true;
   }
   /* Toggle presenter notes with + and - keys

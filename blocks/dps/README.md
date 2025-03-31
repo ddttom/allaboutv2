@@ -9,6 +9,7 @@ A powerful presentation system that transforms structured content into an intera
 - Image sequence support
 - Full viewport height image support
 - Presenter notes with toggle functionality
+- Dedicated presenter mode for tablet viewing
 - Timer with warning system
 - Responsive design
 - Print-friendly handout mode
@@ -447,3 +448,30 @@ For images, you can simply paste the URL directly.
 - More readable content in the document
 - Consistent output in the presentation
 - Easier editing and maintenance
+
+## Presenter Mode
+The DPS system includes a dedicated presenter mode that:
+- Extracts and displays only the presenter notes from slides
+- Provides a clean, tablet-optimized interface
+- Matches the existing DPS styling for consistency
+- Supports all the same navigation methods as DPS
+- Automatically advances through notes in sequence
+- Maintains the same HTML formatting support as regular presenter notes
+
+### Activating Presenter Mode
+To use presenter mode:
+1. Add `?presenter=true` to the presentation URL
+2. The system will automatically:
+   - Hide all slide content
+   - Display only the presenter notes
+   - Format notes for optimal tablet viewing
+   - Enable touch navigation
+
+### Presenter Mode Features
+- Full-screen notes display
+- Touch and keyboard navigation
+- Automatic slide advancement
+- Consistent styling with main DPS interface
+- Responsive layout for all tablet sizes
+- Dark/light mode support
+- Print-friendly formatting

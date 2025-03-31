@@ -509,6 +509,44 @@ body.dps-fullscreen main .section > div {
     }
 }
 
+/* Presenter toggle button styles */
+.presenter-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    margin-left: 10px;
+    color: var(--color-text);
+    transition: all 0.2s ease;
+}
+
+.presenter-toggle svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+}
+
+.presenter-toggle:hover {
+    color: var(--color-primary);
+}
+
+.presenter-toggle.active {
+    color: var(--color-primary);
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+.presenter-toggle:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-primary);
+}
+
+/* Presenter mode adjustments */
+.presenter-notes.presenter-mode {
+    height: calc(100vh - 60px); /* Account for footer height */
+    bottom: 60px;
+}
+
 /* Image sequence styling */
 .image-sequence {
     position: relative;
