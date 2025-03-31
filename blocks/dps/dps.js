@@ -12,18 +12,6 @@
  * - Flexible iframe and image content support
  */
 
-/**
- * Format time as MM:SS
- * Ensures consistent time display format
- *
- * @param {number} seconds - Time in seconds
- * @returns {string} Formatted time string
- */
-function formatTime(seconds) {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
-  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-}
 
 export default function decorate(block) {
   // Add dps-block class to the container for proper styling isolation
@@ -732,16 +720,19 @@ function createSlideContent(slide) {
   return slideContent;
 }
 
+
 /**
  * Set up presentation controls
  * Handles slide navigation, timer, and presenter notes functionality
- * 
+ *
  * @param {Element} slidesContainer - Container for all slides
  * @param {Element} presenterNotesContainer - Container for presenter notes
  * @param {number} timerDuration - Duration in seconds
  * @param {Object} config - Presentation configuration
  */
 function setupControls(slidesContainer, presenterNotesContainer, timerDuration, config) {
+  // eslint-disable-next-line no-console
+  console.time('setupControls');
   const slides = slidesContainer.querySelectorAll(".slide");
   const notesContent = presenterNotesContainer.querySelector(".presenter-notes-content");
   const prevButton = document.querySelector(".prev-slide");
@@ -899,6 +890,12 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
   /* Timer functionality
    * Handles countdown and warning system
    */
+  function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  }
+
   function updateTimer() {
     if (remainingTime > 0) {
       remainingTime--;
@@ -968,6 +965,8 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
   const KEY_DEBOUNCE_MS = 300; // 300ms debounce window
 
   document.addEventListener("keydown", (event) => {
+    // eslint-disable-next-line no-console
+    console.time('keydownHandler');
     const now = Date.now();
     if (now - lastKeyTime < KEY_DEBOUNCE_MS) {
       // eslint-disable-next-line no-console
@@ -1061,8 +1060,16 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
       }
       return;
     }
+    // eslint-disable-next-line no-console
+    console.timeEnd('keydownHandler');
   });
 
   // Show first slide on initial load
   showSlide(0);
+  // eslint-disable-next-line no-console
+  console.timeEnd('setupControls');
+  // eslint-disable-next-line no-console
+  console.timeEnd('setupControls');
+  // eslint-disable-next-line no-console
+  console.timeEnd('setupControls');
 }
