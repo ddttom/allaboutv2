@@ -12,6 +12,19 @@
  * - Flexible iframe and image content support
  */
 
+/**
+ * Format time as MM:SS
+ * Ensures consistent time display format
+ *
+ * @param {number} seconds - Time in seconds
+ * @returns {string} Formatted time string
+ */
+function formatTime(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+}
+
 export default function decorate(block) {
   // Add dps-block class to the container for proper styling isolation
   block.classList.add("dps-block");
@@ -26,19 +39,6 @@ export default function decorate(block) {
     SLIDE_TRANSITION_MS: 300,
     PRESENTER_NOTES_VISIBLE: false,
   };
-
-  /**
-   * Format time as MM:SS
-   * Ensures consistent time display format
-   *
-   * @param {number} seconds - Time in seconds
-   * @returns {string} Formatted time string
-   */
-  function formatTime(seconds) {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-  }
 
   /* Force full viewport mode by removing existing page elements
    * This ensures the presentation takes up the entire screen without interference
@@ -990,16 +990,36 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
      * Supports slide progression and image sequences
      */
     if (event.key === "ArrowLeft") {
-      if (!handleImageSequenceNavigation('prev')) {
+      // eslint-disable-next-line no-console
+      console.log('Left arrow pressed - current slide:', currentSlideIndex);
+      const sequenceHandled = handleImageSequenceNavigation('prev');
+      // eslint-disable-next-line no-console
+      console.log('Sequence navigation handled:', sequenceHandled);
+      if (!sequenceHandled) {
         if (currentSlideIndex > 0) {
+          // eslint-disable-next-line no-console
+          console.log('Moving to previous slide:', currentSlideIndex - 1);
           showSlide(currentSlideIndex - 1);
+        } else {
+          // eslint-disable-next-line no-console
+          console.log('Already at first slide');
         }
       }
       event.preventDefault();
     } else if (event.key === "ArrowRight") {
-      if (!handleImageSequenceNavigation('next')) {
+      // eslint-disable-next-line no-console
+      console.log('Right arrow pressed - current slide:', currentSlideIndex);
+      const sequenceHandled = handleImageSequenceNavigation('next');
+      // eslint-disable-next-line no-console
+      console.log('Sequence navigation handled:', sequenceHandled);
+      if (!sequenceHandled) {
         if (currentSlideIndex < slides.length - 1) {
+          // eslint-disable-next-line no-console
+          console.log('Moving to next slide:', currentSlideIndex + 1);
           showSlide(currentSlideIndex + 1);
+        } else {
+          // eslint-disable-next-line no-console
+          console.log('Already at last slide');
         }
       }
       event.preventDefault();
