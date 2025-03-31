@@ -980,53 +980,39 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
       presenterNotesContainer.classList.remove("hidden");
       config.PRESENTER_NOTES_VISIBLE = true;
       event.preventDefault();
+      return;
     } else if (event.key === "-" || event.key === "_") {
       presenterNotesContainer.classList.add("hidden");
       config.PRESENTER_NOTES_VISIBLE = false;
       event.preventDefault();
+      return;
     }
 
     /* Handle navigation controls
      * Supports slide progression and image sequences
      */
     if (event.key === "ArrowLeft") {
-      // eslint-disable-next-line no-console
-      console.log('Left arrow pressed - current slide:', currentSlideIndex);
+      event.preventDefault();
+      // First try to handle image sequence navigation
       const sequenceHandled = handleImageSequenceNavigation('prev');
-      // eslint-disable-next-line no-console
-      console.log('Sequence navigation handled:', sequenceHandled);
-      if (!sequenceHandled) {
-        if (currentSlideIndex > 0) {
-          // eslint-disable-next-line no-console
-          console.log('Moving to previous slide:', currentSlideIndex - 1);
-          showSlide(currentSlideIndex - 1);
-        } else {
-          // eslint-disable-next-line no-console
-          console.log('Already at first slide');
-        }
+      if (!sequenceHandled && currentSlideIndex > 0) {
+        showSlide(currentSlideIndex - 1);
       }
-      event.preventDefault();
+      return;
     } else if (event.key === "ArrowRight") {
-      // eslint-disable-next-line no-console
-      console.log('Right arrow pressed - current slide:', currentSlideIndex);
+      event.preventDefault();
+      // First try to handle image sequence navigation
       const sequenceHandled = handleImageSequenceNavigation('next');
-      // eslint-disable-next-line no-console
-      console.log('Sequence navigation handled:', sequenceHandled);
-      if (!sequenceHandled) {
-        if (currentSlideIndex < slides.length - 1) {
-          // eslint-disable-next-line no-console
-          console.log('Moving to next slide:', currentSlideIndex + 1);
-          showSlide(currentSlideIndex + 1);
-        } else {
-          // eslint-disable-next-line no-console
-          console.log('Already at last slide');
-        }
+      if (!sequenceHandled && currentSlideIndex < slides.length - 1) {
+        showSlide(currentSlideIndex + 1);
       }
-      event.preventDefault();
+      return;
     } else if (event.key === " " && hasStartedTimer) {
-      toggleTimer();
       event.preventDefault();
+      toggleTimer();
+      return;
     } else if (event.key === "r" || event.key === "R") {
+      event.preventDefault();
       // Refresh viewport while maintaining current slide and sub-slide state
       const currentSlideElement = slides[currentSlideIndex];
       const imageSequence = currentSlideElement.querySelector('.image-sequence');
@@ -1040,6 +1026,7 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
       } else {
         showSlide(currentSlideIndex);
       }
+      return;
     }
   });
 
