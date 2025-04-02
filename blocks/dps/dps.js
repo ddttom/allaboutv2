@@ -921,6 +921,32 @@ function createSlideContent(slide) {
 function setupControls(slidesContainer, presenterNotesContainer, timerDuration, config) {
   // Fix: Remove console.time calls that were causing issues
   let isNavigating = false; // Flag to prevent rapid consecutive navigations
+
+  /**
+   * Initialize image sequences for a slide
+   * Properly sets up all images with consistent visibility states
+   *
+   * @param {Element} slide - The slide element containing image sequences
+   */
+  function initializeImageSequence(slide) {
+    const imageSequence = slide.querySelector('.image-sequence');
+    if (!imageSequence) return;
+    
+    const sequenceImages = imageSequence.querySelectorAll('.sequence-image');
+    if (sequenceImages.length === 0) return;
+    
+    // First, set all images to a consistent base state
+    sequenceImages.forEach(img => {
+      img.style.display = 'block';      // Always keep display:block
+      img.style.visibility = 'hidden';  // Start with all hidden
+      img.classList.remove('active');   // Remove active class from all
+    });
+    
+    // Then, make only the first one visible
+    const firstImage = sequenceImages[0];
+    firstImage.classList.add('active');
+    firstImage.style.visibility = 'visible';
+  }
   const slides = slidesContainer.querySelectorAll('.slide');
   const notesContent = presenterNotesContainer.querySelector('.presenter-notes-content');
   const prevButton = document.querySelector('.prev-slide');
@@ -983,83 +1009,37 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
     }
   }
 
-  /* Show a specific slide
-   * Handles display logic and updates related elements
+  /**
+   * Show a specific slide and properly initialize image sequences
+   *
+   * @param {number} index - Index of the slide to show
    */
-  function showSlide(index, sequenceIndex) {
+  function showSlide(index) {
+    // First hide all slides
     slides.forEach((slide) => {
       slide.style.display = 'none';
       slide.classList.remove('active');
     });
-
+    
+    // Show the target slide
     if (slides[index]) {
-      slides[index].style.display = 'block';
-      slides[index].classList.add('active');
+      const slide = slides[index];
+      slide.style.display = 'block';
+      slide.classList.add('active');
       
-      // If a specific sequence index is provided, set it as active
-      if (sequenceIndex !== undefined) {
-        const imageSequence = slides[index].querySelector('.image-sequence');
-        if (imageSequence) {
-          const sequenceImages = imageSequence.querySelectorAll('.sequence-image');
-          sequenceImages.forEach((img, idx) => {
-            if (idx === sequenceIndex) {
-              img.classList.add('active');
-              img.style.display = 'block';
-            } else {
-              img.classList.remove('active');
-              img.style.display = 'none';
-            }
-          });
-        }
-      } else {
-        // Initialize the first image in sequence as active
-        const imageSequence = slides[index].querySelector('.image-sequence');
-        if (imageSequence) {
-          // eslint-disable-next-line no-console
-          console.log('[DEBUG] showSlide: Found image sequence, initializing first image');
-          
-          const sequenceImages = imageSequence.querySelectorAll('.sequence-image');
-          // eslint-disable-next-line no-console
-          console.log(`[DEBUG] showSlide: Found ${sequenceImages.length} sequence images`);
-          
-          if (sequenceImages.length > 0) {
-            sequenceImages.forEach((img, idx) => {
-              if (idx === 0) {
-                // eslint-disable-next-line no-console
-                console.log('[DEBUG] showSlide: Setting first image as active');
-                // Make sure all images have display: block, but only the first one has active class
-                img.style.display = 'block';
-                img.classList.add('active');
-                img.style.visibility = 'visible'; // Directly set visibility to visible
-                // eslint-disable-next-line no-console
-                console.log(`[DEBUG] First image display: ${img.style.display}, has active class: ${img.classList.contains('active')}, visibility: ${window.getComputedStyle(img).visibility}`);
-              } else {
-                // For other images, set display: block but remove active class
-                img.style.display = 'block';
-                img.classList.remove('active');
-                img.style.visibility = 'hidden'; // Directly set visibility to hidden
-                // eslint-disable-next-line no-console
-                console.log(`[DEBUG] Other image (${idx}) display: ${img.style.display}, has active class: ${img.classList.contains('active')}, visibility: ${window.getComputedStyle(img).visibility}`);
-              }
-            });
-          }
-        }
-      }
+      // Initialize any image sequence in this slide
+      initializeImageSequence(slide);
       
-      // Check if we're in presenter mode to show enhanced content
+      // Update presenter notes and navigation
       const presenterNotes = document.querySelector('.presenter-notes');
       const isInPresenterMode = presenterNotes.classList.contains('presenter-mode');
-      
-      // Pass isPresenterToggle=true if in presenter mode to show enhanced content
       updatePresenterNotes(index, false, isInPresenterMode);
       updateNavButtons();
     }
-
+    
     currentSlideIndex = index;
-
-    /* Start timer after first slide
-     * Ensures timer only starts when presentation begins
-     */
+    
+    // Start timer if moving past first slide
     if (index > 0 && !hasStartedTimer) {
       startTimer();
       hasStartedTimer = true;
@@ -1101,98 +1081,87 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
     });
   }
 
-  /* Handle image sequence navigation
-   * Allows progression through multiple images within a slide
-   * With improved state management to fix double-click issue
+  /**
+   * Handle image sequence navigation with robust state management
+   *
+   * @param {string} direction - Direction to navigate ('prev' or 'next')
+   * @returns {boolean} - True if navigation was handled, false otherwise
    */
   function handleImageSequenceNavigation(direction) {
-    // If already navigating, block all navigation attempts
+    // Block if we're already processing a navigation
     if (isNavigating) {
-      return true; // Return true to prevent slide navigation
+      return true;
     }
     
-    // Get the current slide and check if it has an image sequence
+    // Get the current slide
     const currentSlide = slides[currentSlideIndex];
     if (!currentSlide) {
       return false;
     }
     
+    // Check if this slide has an image sequence
     const imageSequence = currentSlide.querySelector('.image-sequence');
     if (!imageSequence) {
       return false;
     }
-
+    
     // Get all images in the sequence
     const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
     if (images.length <= 1) {
       return false;
     }
     
-    // Find the currently active image
-    let currentImage = imageSequence.querySelector('.sequence-image.active');
+    // Find which image is currently active
+    let activeIndex = -1;
+    images.forEach((img, idx) => {
+      if (img.classList.contains('active')) {
+        activeIndex = idx;
+      }
+    });
     
-    // If no active image is found, activate the first one
-    if (!currentImage) {
-      // Initialize all images - set display: block but only first one active
-      images.forEach((img, idx) => {
-        img.style.display = 'block';
-        
-        if (idx === 0) {
-          img.classList.add('active');
-          // Let CSS handle visibility via the .active class
-        } else {
-          img.classList.remove('active');
-          // Let CSS handle visibility via the .active class
-        }
-      });
-      
-      currentImage = images[0];
-      return true; // First initialization completed
-    }
-    
-    // Get the index of the current image
-    const currentImageIndex = images.indexOf(currentImage);
-    
-    // Handle navigation based on direction
-    if (direction === 'next' && currentImageIndex < images.length - 1) {
-      isNavigating = true; // Set navigation lock
-      
-      // Get the next image
-      const nextImage = images[currentImageIndex + 1];
-      
-      // *** SIMPLER STATE MANAGEMENT ***
-      // Let CSS handle visibility through classes only - don't set visibility directly
-      currentImage.classList.remove('active');
-      nextImage.classList.add('active');
-      
-      // Release the navigation lock after transition completes
-      setTimeout(() => {
-        isNavigating = false;
-      }, 350); // Slightly longer than CSS transition to ensure completion
-      
-      return true;
-    }
-    else if (direction === 'prev' && currentImageIndex > 0) {
-      isNavigating = true; // Set navigation lock
-      
-      // Get the previous image
-      const prevImage = images[currentImageIndex - 1];
-      
-      // *** SIMPLER STATE MANAGEMENT ***
-      // Let CSS handle visibility through classes only - don't set visibility directly
-      currentImage.classList.remove('active');
-      prevImage.classList.add('active');
-      
-      // Release the navigation lock after transition completes
-      setTimeout(() => {
-        isNavigating = false;
-      }, 350); // Slightly longer than CSS transition to ensure completion
-      
+    // If no active image (shouldn't happen, but just in case), activate the first one
+    if (activeIndex === -1) {
+      initializeImageSequence(currentSlide);
       return true;
     }
     
-    // If we reach here, we couldn't navigate in the requested direction
-    return false;
+    // Determine target image based on direction
+    let targetIndex = activeIndex;
+    if (direction === 'next' && activeIndex < images.length - 1) {
+      targetIndex = activeIndex + 1;
+    } else if (direction === 'prev' && activeIndex > 0) {
+      targetIndex = activeIndex - 1;
+    } else {
+      // Can't move in requested direction
+      return false;
+    }
+    
+    // If we get here, we have a valid navigation to perform
+    isNavigating = true;
+    
+    // Get the current active image and the target image
+    const currentImage = images[activeIndex];
+    const targetImage = images[targetIndex];
+    
+    // Update the DOM synchronously in a clear sequence
+    // 1. First remove active class from current image
+    currentImage.classList.remove('active');
+    
+    // 2. Hide the current image immediately
+    currentImage.style.visibility = 'hidden';
+    
+    // 3. Add active class to target image
+    targetImage.classList.add('active');
+    
+    // 4. Make target image visible
+    targetImage.style.visibility = 'visible';
+    
+    // Release the navigation lock after a delay to prevent rapid clicks
+    setTimeout(() => {
+      isNavigating = false;
+    }, 350);
+    
+    return true;
   }
 
   /* Timer functionality
@@ -1260,6 +1229,32 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
 
     singleFlash();
   }
+  
+  // Add styles for image sequences
+  const sequenceStyles = document.createElement('style');
+  sequenceStyles.textContent = `
+    .sequence-image {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block !important;
+      /* Use visibility for show/hide, not display */
+      transition: visibility 0ms;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+    }
+
+    .sequence-image.active {
+      visibility: visible !important;
+    }
+  `;
+  document.head.appendChild(sequenceStyles);
   // Make presenter notes visible at startup
   presenterNotesContainer.classList.remove('hidden');
   config.PRESENTER_NOTES_VISIBLE = true;

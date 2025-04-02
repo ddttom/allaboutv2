@@ -38,7 +38,8 @@ A powerful presentation system that transforms structured content into an intera
 - Use left/right arrow keys to navigate through multiple images
 - Images maintain aspect ratio and use full viewport height
 - Smooth transitions between images with 300ms fade effect
-- Navigation wraps around at sequence ends
+- Navigation lock prevents rapid consecutive clicks causing state conflicts
+- CSS-based visibility management ensures consistent display behavior
 - Sequence navigation works with mixed content types (icons, iframes, images, SVGs)
 
 ### Icon Support
@@ -197,9 +198,11 @@ Content type detection follows a priority order with more specific formats being
 ## Animation and Transition Behavior
 The system applies smooth transitions between items in sequences:
 
-- **Fade Effect**: 300ms ease-in-out opacity transition between sequence items
-- **Display Property**: Toggled between 'block' and 'none' after opacity changes
+- **Visibility Management**: Uses CSS classes and visibility properties for consistent display
+- **Navigation Lock**: Prevents rapid consecutive clicks from causing state conflicts
+- **Fade Effect**: 300ms ease-in-out transition between sequence items
 - **Active Class**: Added/removed to track currently displayed item
+- **Synchronous DOM Updates**: Ensures changes happen in the correct order
 - **Z-Index Management**: Ensures proper stacking of sequence items
 - **Background Transitions**: Background colors transition smoothly for visual feedback
 - **Timer Warning Effects**: Visual flash effect when time is running low
@@ -346,6 +349,8 @@ The fourth column supports various image formats and sources:
 - The system handles various content types in any order
 - Multiple content types can be combined in a sequence
 - For iframes, use the simplified "iframe URL" format for easiest authoring
+- Image sequence navigation uses a robust state management system to prevent display issues
+- Navigation lock prevents rapid consecutive clicks from causing state conflicts
 
 ## Implementation
 
