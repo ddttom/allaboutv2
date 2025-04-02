@@ -457,10 +457,32 @@ function parseIllustration(cell) {
     }
   }
   
-  // Process all elements as separate content pieces
-  const elements = Array.from(cell.children);
-  
-  for (const element of elements) {
+  // Helper function to process an element and its children
+  function processElement(element) {
+    // If this is a paragraph, process its children instead
+    if (element.tagName === 'P') {
+      // Process each child of the paragraph
+      Array.from(element.children).forEach(child => {
+        processElement(child);
+      });
+      
+      // Also check for direct span elements that might be icons
+      const iconSpan = element.querySelector('span.icon');
+      if (iconSpan) {
+        const iconName = extractIconName(iconSpan.className);
+        if (iconName && !illustrations.some(item => item.type === "icon" && item.iconName === iconName)) {
+          illustrations.push({
+            type: "icon",
+            iconName: iconName,
+            content: `/icons/${iconName}.svg`,
+            alt: `${iconName} Illustration`
+          });
+        }
+      }
+      
+      return;
+    }
+    
     // Create a temporary container to extract HTML content accurately
     const tempContainer = document.createElement('div');
     tempContainer.appendChild(element.cloneNode(true));
@@ -472,7 +494,7 @@ function parseIllustration(cell) {
         type: "svg",
         content: elementHtml
       });
-    } 
+    }
     else if (element.tagName === 'PICTURE' || element.querySelector('picture')) {
       // Handle picture elements
       const picture = element.tagName === 'PICTURE' ? element : element.querySelector('picture');
@@ -535,17 +557,16 @@ function parseIllustration(cell) {
             });
           }
         }
-        // If no content type detected, include as text
-        else if (content.trim() && !illustrations.some(item => 
-          (typeof item.content === 'string' && item.content.includes(content))
-        )) {
-          illustrations.push({
-            type: "text",
-            content: content
-          });
-        }
       }
     }
+  }
+  
+  // Process all elements as separate content pieces
+  const elements = Array.from(cell.children);
+  
+  // Process each top-level element
+  for (const element of elements) {
+    processElement(element);
   }
   
   // Process HTML encoded iframes that might be directly in the cell innerHTML
