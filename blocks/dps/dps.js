@@ -826,7 +826,31 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
   function updatePresenterNotes(slideIndex) {
     const currentSlide = slides[slideIndex];
     const slideData = currentSlide.dataset.presenterNotes || '';
-    notesContent.innerHTML = slideData;
+    const presenterNotes = document.querySelector('.presenter-notes');
+    
+    // Check if we're in presenter mode or enlarged mode
+    if (presenterNotes.classList.contains('presenter-mode') || presenterNotes.classList.contains('enlarged')) {
+      // Get the current slide content
+      const slideTitle = currentSlide.querySelector('.slide-title')?.textContent || '';
+      let bulletPointsHTML = '';
+      
+      // Get bullet points
+      const bulletList = currentSlide.querySelector('.bullet-list');
+      if (bulletList) {
+        bulletPointsHTML = bulletList.outerHTML;
+      }
+      
+      // Combine everything with an HR separator
+      notesContent.innerHTML = `
+        <h3>${slideTitle}</h3>
+        ${bulletPointsHTML}
+        <hr style="margin: 15px 0; border: 0; border-top: 1px solid #ccc;">
+        ${slideData}
+      `;
+    } else {
+      // Normal mode - just show the notes
+      notesContent.innerHTML = slideData;
+    }
   }
 
   /* Show a specific slide
@@ -1131,7 +1155,13 @@ function togglePresenterMode() {
       presenterNotes.style.backgroundColor = 'white';
       presenterNotes.style.padding = '20px';
       presenterNotes.style.overflow = 'auto';
+      
+      // Update presenter notes content to show only notes
+      updatePresenterNotes(currentSlideIndex);
     }
+    
+    // Update presenter notes content to include title and bullet points
+    updatePresenterNotes(currentSlideIndex);
   } else {
     // Restore normal view
     header.style.display = '';
@@ -1206,6 +1236,9 @@ document.addEventListener("keydown", (event) => {
       presenterNotes.style.height = '25vh'; // Original height from CSS
       presenterNotes.style.left = '20px'; // Keep pinned to left
       presenterNotes.style.zIndex = '';
+      
+      // Update presenter notes content to show only notes
+      updatePresenterNotes(currentSlideIndex);
     } else {
       // Enlarge while staying pinned to left
       presenterNotes.classList.remove('hidden');
@@ -1215,6 +1248,9 @@ document.addEventListener("keydown", (event) => {
       presenterNotes.style.left = '20px'; // Keep pinned to left
       presenterNotes.style.zIndex = '1000';
       config.PRESENTER_NOTES_VISIBLE = true;
+      
+      // Update presenter notes content to include title and bullet points
+      updatePresenterNotes(currentSlideIndex);
     }
     handled = true;
   }
