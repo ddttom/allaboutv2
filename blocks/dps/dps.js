@@ -1090,41 +1090,68 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
    * Allows progression through multiple images within a slide
    */
   function handleImageSequenceNavigation(direction) {
+    // Get the current slide and check if it has an image sequence
     const currentSlide = slides[currentSlideIndex];
-    const imageSequence = currentSlide.querySelector('.image-sequence');
+    if (!currentSlide) return false;
     
+    const imageSequence = currentSlide.querySelector('.image-sequence');
     if (!imageSequence) return false;
 
-    const images = imageSequence.querySelectorAll('.sequence-image');
+    // Get all images in the sequence
+    const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
     if (images.length <= 1) return false;
     
-    const currentImage = imageSequence.querySelector('.sequence-image.active');
-    if (!currentImage) return false;
+    // Find the currently active image
+    let currentImage = imageSequence.querySelector('.sequence-image.active');
     
-    const currentImageIndex = Array.from(images).indexOf(currentImage);
+    // If no active image is found, activate the first one and return
+    if (!currentImage) {
+      images[0].style.display = 'block';
+      images[0].classList.add('active');
+      return true;
+    }
     
+    // Get the index of the current image
+    const currentImageIndex = images.indexOf(currentImage);
+    
+    // Handle navigation based on direction
     if (direction === 'next') {
+      // Check if we're not at the end of the sequence
       if (currentImageIndex < images.length - 1) {
-        // Show next image in sequence
+        // Hide current image
         currentImage.style.display = 'none';
         currentImage.classList.remove('active');
         
-        images[currentImageIndex + 1].style.display = 'block';
-        images[currentImageIndex + 1].classList.add('active');
+        // Show next image
+        const nextImage = images[currentImageIndex + 1];
+        nextImage.style.display = 'block';
+        nextImage.classList.add('active');
+        
+        // Force a reflow to ensure the DOM updates
+        void imageSequence.offsetHeight;
+        
         return true;
       }
-    } else {
+    } else if (direction === 'prev') {
+      // Check if we're not at the beginning of the sequence
       if (currentImageIndex > 0) {
-        // Show previous image in sequence
+        // Hide current image
         currentImage.style.display = 'none';
         currentImage.classList.remove('active');
         
-        images[currentImageIndex - 1].style.display = 'block';
-        images[currentImageIndex - 1].classList.add('active');
+        // Show previous image
+        const prevImage = images[currentImageIndex - 1];
+        prevImage.style.display = 'block';
+        prevImage.classList.add('active');
+        
+        // Force a reflow to ensure the DOM updates
+        void imageSequence.offsetHeight;
+        
         return true;
       }
     }
     
+    // If we reach here, we couldn't navigate in the requested direction
     return false;
   }
 
