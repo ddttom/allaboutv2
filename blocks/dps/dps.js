@@ -333,6 +333,7 @@ function extractIframeContent(content) {
       };
     }
   }
+  
   /* Check for simplified "iframe url" format
    * Makes it easier for authors to add iframes
    * This handles both standalone "iframe URL" and "iframe URL" within other content
@@ -1446,7 +1447,6 @@ document.addEventListener("keydown", (event) => {
 
   // Show first slide on initial load
   showSlide(0);
-  
   // Setup resize handler
   setupResizeHandler();
 }
