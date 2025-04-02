@@ -1093,11 +1093,12 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
     // Find the currently active image
     let currentImage = imageSequence.querySelector('.sequence-image.active');
     
-    // If no active image is found, activate the first one and return
+    // If no active image is found, activate the first one but DON'T return yet
+    // This allows the navigation to continue to the next image in the same key press
     if (!currentImage) {
       images[0].style.display = 'block';
       images[0].classList.add('active');
-      return true;
+      currentImage = images[0]; // Update currentImage to the now-active first image
     }
     
     // Get the index of the current image
