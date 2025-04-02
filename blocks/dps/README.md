@@ -74,7 +74,7 @@ The DPS block now properly handles mixed content in any order:
 - Multiple icons in sequence
 - Any combination of icons, pictures, SVGs, and iframes
 
-All content elements maintain their proper sequence order and can be navigated through with the arrow keys.
+All content elements maintain their proper sequence order based on their original position in the DOM and can be navigated through with the arrow keys. The system uses a sophisticated position tracking mechanism to ensure content appears in the correct order regardless of content type.
 
 ### iframe Support
 The fourth column supports embedded iframes with flexible URL handling:
@@ -193,7 +193,7 @@ The system uses sophisticated detection methods to identify different content ty
    - Plain URL detection
 6. **URLs**: Extracted using pattern matching for http/https URL strings
 
-Content type detection follows a priority order with more specific formats being checked before more general ones.
+Content type detection follows a priority order with more specific formats being checked before more general ones. The system tracks the original position of each content element in the DOM to maintain proper sequence order regardless of content type.
 
 ## Animation and Transition Behavior
 The system applies smooth transitions between items in sequences:
@@ -217,6 +217,9 @@ When Column 4 contains multiple different content types:
 5. The active item receives proper styling based on its content type
 6. Content rendering adapts to maintain optimal display for each type
 7. Sequence navigation wraps appropriately at sequence boundaries
+8. Content order is preserved based on original DOM position
+9. iframes are prioritized over icons when both exist in the same content
+10. Duplicate content is intelligently filtered while preserving order
 
 ## Icon Processing Details
 
@@ -351,6 +354,9 @@ The fourth column supports various image formats and sources:
 - For iframes, use the simplified "iframe URL" format for easiest authoring
 - Image sequence navigation uses a robust state management system to prevent display issues
 - Navigation lock prevents rapid consecutive clicks from causing state conflicts
+- Content order is preserved based on original DOM position
+- iframes are prioritized over icons when both exist in the same content
+- Duplicate content is intelligently filtered while preserving order
 
 ## Implementation
 

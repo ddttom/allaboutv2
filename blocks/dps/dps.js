@@ -425,10 +425,17 @@ function extractIconName(className) {
  * @param {Element} cell - Cell element containing illustration content
  * @returns {Object|null} Structured illustration data or null if no illustration found
  */
+/**
+ * Parse illustration from a cell with priority handling
+ * Modified to prioritize iframes over icons when both exist
+ *
+ * @param {Element} cell - Cell element containing illustration content
+ * @returns {Object|null} Structured illustration data or null if no illustration found
+ */
 function parseIllustration(cell) {
   if (!cell) return null;
   
-  const illustrations = [];
+  let illustrations = [];
   
   // Process HTML content directly from cell to capture all elements
   let cellContent = cell.innerHTML.trim();
@@ -441,43 +448,37 @@ function parseIllustration(cell) {
     .replace(new RegExp('\\s+', 'g'), ' ') // Collapse multiple whitespace
     .trim();
 
-  // Special handling for simplified iframe format wrapped in paragraphs or other elements
-  const simplifiedIframeRegex = new RegExp('<(?:p|div)[^>]*>\\s*iframe\\s+(https?://[^\\s"\'<>]+)\\s*</(?:p|div)>', 'gi');
-  const simplifiedIframeMatches = Array.from(cellContent.matchAll(simplifiedIframeRegex));
+  // Handle simplified iframe format
+  // We'll store these matches, but process them in order with other content
+  const iframeRegex = new RegExp('iframe\\s+(https?://[^\\s"\'<>]+)', 'gi');
+  const iframeMatches = Array.from(cellContent.matchAll(iframeRegex));
   
-  for (const match of simplifiedIframeMatches) {
+  // Create a mapping of original positions in the HTML to maintain order
+  const contentPositions = [];
+  
+  // Track iframe positions in the content
+  for (const match of iframeMatches) {
     const url = match[1];
-    if (!illustrations.some(item => item.type === 'iframe' && item.src === url)) {
-      illustrations.push({
+    const position = cellContent.indexOf(match[0]);
+    contentPositions.push({
+      type: 'iframe',
+      position: position,
+      data: {
         type: 'iframe',
         src: url,
         content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-      });
-    }
+      }
+    });
   }
   
-  // Also check for iframe format without HTML tags
-  const plainIframeRegex = new RegExp('iframe\\s+(https?://[^\\s"\'<>]+)', 'gi');
-  const plainIframeMatches = Array.from(cellContent.matchAll(plainIframeRegex));
-  
-  for (const match of plainIframeMatches) {
-    const url = match[1];
-    // Skip if already processed by the HTML version above
-    if (!illustrations.some(item => item.type === 'iframe' && item.src === url)) {
-      illustrations.push({
-        type: 'iframe',
-        src: url,
-        content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-      });
-    }
-  }
-  
-  // Process icon spans first - convert to image tags
+  // Process icon spans - convert to image tags
   const iconRegex = new RegExp('<span\\s+class=["|\'][^"\']*icon[^"\']*["|\'][^>]*>.*?</span>', 'gi');
   const iconMatches = Array.from(cellContent.matchAll(iconRegex));
   
+  // Track icon positions in the content
   for (const match of iconMatches) {
     const iconHtml = match[0];
+    const position = cellContent.indexOf(iconHtml);
     const classMatch = iconHtml.match(new RegExp('class=["\'](\\S*)["\']', 'i'));
     
     if (classMatch && classMatch[1]) {
@@ -485,11 +486,15 @@ function parseIllustration(cell) {
       const iconName = extractIconName(classString);
       
       if (iconName) {
-        illustrations.push({
+        contentPositions.push({
           type: 'icon',
-          iconName,
-          content: `/icons/${iconName}.svg`,
-          alt: `${iconName} Illustration`
+          position: position,
+          data: {
+            type: 'icon',
+            iconName,
+            content: `/icons/${iconName}.svg`,
+            alt: `${iconName} Illustration`
+          }
         });
       }
     }
@@ -499,75 +504,6 @@ function parseIllustration(cell) {
   function processElement(element) {
     // If this is a paragraph, process both its text content and children
     if (element.tagName === 'P') {
-      // Process the paragraph's HTML content to capture text nodes and embedded URLs
-      const paragraphHtml = element.innerHTML;
-      
-      // Check if paragraph contains iframe content
-      const iframeContent = extractIframeContent(paragraphHtml);
-      if (iframeContent) {
-        illustrations.push(iframeContent);
-      }
-      
-      // Check for URLs in the paragraph - process all URLs, not just the first one
-      const urlMatches = paragraphHtml.match(new RegExp('(https?://[^\\s"\'<>]+)', 'gi'));
-      if (urlMatches) {
-        for (const url of urlMatches) {
-          // Skip if this URL is already part of an iframe that was processed
-          if (iframeContent && iframeContent.src === url) continue;
-          
-          // Skip if this URL is already in the illustrations
-          if (illustrations.some(item =>
-            (item.type === 'iframe' && item.src === url) ||
-            (item.type === 'image' && item.content === url)
-          )) continue;
-          
-          // Add as image or iframe based on extension
-          if (isImageUrl(url)) {
-            illustrations.push({
-              type: 'image',
-              content: url,
-              alt: 'Image'
-            });
-          } else {
-            illustrations.push({
-              type: 'iframe',
-              src: url,
-              content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-            });
-          }
-        }
-      }
-      
-      // Also check for URLs in anchor tags
-      const anchorRegex = new RegExp('<a[^>]*href=["\'](\\S*)["\'][^>]*>.*?</a>', 'gi');
-      const anchorMatches = Array.from(paragraphHtml.matchAll(anchorRegex));
-      
-      for (const match of anchorMatches) {
-        const url = match[1];
-        if (url && url.startsWith('http')) {
-          // Skip if this URL is already in the illustrations
-          if (illustrations.some(item =>
-            (item.type === 'iframe' && item.src === url) ||
-            (item.type === 'image' && item.content === url)
-          )) continue;
-          
-          // Add as image or iframe based on extension
-          if (isImageUrl(url)) {
-            illustrations.push({
-              type: 'image',
-              content: url,
-              alt: 'Image'
-            });
-          } else {
-            illustrations.push({
-              type: 'iframe',
-              src: url,
-              content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-            });
-          }
-        }
-      }
-      
       // Process each child of the paragraph
       Array.from(element.children).forEach(child => {
         processElement(child);
@@ -577,12 +513,22 @@ function parseIllustration(cell) {
       const iconSpan = element.querySelector('span.icon');
       if (iconSpan) {
         const iconName = extractIconName(iconSpan.className);
-        if (iconName && !illustrations.some(item => item.type === 'icon' && item.iconName === iconName)) {
-          illustrations.push({
+        // Calculate approximate position based on parent element position in original content
+        const parentPosition = cellContent.indexOf(element.outerHTML);
+        const elementPosition = parentPosition > -1 ? parentPosition : contentPositions.length * 1000;
+        
+        // Check if this icon is already in our positions list
+        if (iconName && !contentPositions.some(item =>
+            item.type === 'icon' && item.data.iconName === iconName)) {
+          contentPositions.push({
             type: 'icon',
-            iconName,
-            content: `/icons/${iconName}.svg`,
-            alt: `${iconName} Illustration`
+            position: elementPosition,
+            data: {
+              type: 'icon',
+              iconName,
+              content: `/icons/${iconName}.svg`,
+              alt: `${iconName} Illustration`
+            }
           });
         }
       }
@@ -595,11 +541,18 @@ function parseIllustration(cell) {
     tempContainer.appendChild(element.cloneNode(true));
     const elementHtml = tempContainer.innerHTML;
     
+    // Get position of this element in the original content
+    const elementPosition = cellContent.indexOf(elementHtml);
+    
     // Process based on element type
     if (element.tagName === 'SVG' || elementHtml.includes('<svg')) {
-      illustrations.push({
+      contentPositions.push({
         type: 'svg',
-        content: elementHtml
+        position: elementPosition,
+        data: {
+          type: 'svg',
+          content: elementHtml
+        }
       });
     }
     else if (element.tagName === 'PICTURE' || element.querySelector('picture')) {
@@ -607,9 +560,13 @@ function parseIllustration(cell) {
       const picture = element.tagName === 'PICTURE' ? element : element.querySelector('picture');
       
       if (picture) {
-        illustrations.push({
+        contentPositions.push({
           type: 'picture',
-          content: picture.outerHTML
+          position: elementPosition,
+          data: {
+            type: 'picture',
+            content: picture.outerHTML
+          }
         });
       }
     }
@@ -618,10 +575,14 @@ function parseIllustration(cell) {
       const img = element.tagName === 'IMG' ? element : element.querySelector('img:not(picture img)');
       
       if (img) {
-        illustrations.push({
+        contentPositions.push({
           type: 'image',
-          content: img.src,
-          alt: img.alt || ''
+          position: elementPosition,
+          data: {
+            type: 'image',
+            content: img.src,
+            alt: img.alt || ''
+          }
         });
       }
     }
@@ -629,41 +590,16 @@ function parseIllustration(cell) {
       // Handle icon spans - convert to image tags
       const iconName = extractIconName(element.className);
       if (iconName) {
-        illustrations.push({
+        contentPositions.push({
           type: 'icon',
-          iconName,
-          content: `/icons/${iconName}.svg`,
-          alt: `${iconName} Illustration`
-        });
-      }
-    }
-    else {
-      // Process potential iframe content
-      const content = elementHtml;
-      
-      // Check for iframe first
-      const iframeContent = extractIframeContent(content);
-      if (iframeContent) {
-        illustrations.push(iframeContent);
-      }
-      // Then check for plain URLs
-      else {
-        const urlData = extractUrl(content);
-        if (urlData) {
-          if (urlData.type === 'image') {
-            illustrations.push({
-              type: 'image',
-              content: urlData.url,
-              alt: 'Image'
-            });
-          } else {
-            illustrations.push({
-              type: 'iframe',
-              src: urlData.url,
-              content: `<iframe src="${urlData.url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-            });
+          position: elementPosition,
+          data: {
+            type: 'icon',
+            iconName,
+            content: `/icons/${iconName}.svg`,
+            alt: `${iconName} Illustration`
           }
-        }
+        });
       }
     }
   }
@@ -674,25 +610,18 @@ function parseIllustration(cell) {
   // Check if there's any direct text content in the cell
   if (cell.textContent.trim() && cell.childElementCount === 0) {
     const textContent = cell.textContent.trim();
-    const iframeContent = extractIframeContent(textContent);
-    if (iframeContent) {
-      illustrations.push(iframeContent);
-    } else {
-      const urlData = extractUrl(textContent);
-      if (urlData) {
-        if (urlData.type === 'image') {
-          illustrations.push({
+    const urlData = extractUrl(textContent);
+    if (urlData) {
+      if (urlData.type === 'image') {
+        contentPositions.push({
+          type: 'image',
+          position: 0, // Direct text is usually at the beginning
+          data: {
             type: 'image',
             content: urlData.url,
             alt: 'Image'
-          });
-        } else {
-          illustrations.push({
-            type: 'iframe',
-            src: urlData.url,
-            content: `<iframe src="${urlData.url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-          });
-        }
+          }
+        });
       }
     }
   }
@@ -702,31 +631,21 @@ function parseIllustration(cell) {
     processElement(element);
   }
   
-  // Process HTML encoded iframes that might be directly in the cell innerHTML
-  const htmlEncodedIframeRegex = new RegExp('(?:&lt;|&#x3C;)iframe(?:\\s+|&gt;)(.*?)(?:&lt;\\/iframe&gt;|(?:\\/)?&gt;)', 'gi');
-  const htmlEncodedMatches = Array.from(cellContent.matchAll(htmlEncodedIframeRegex));
+  // Sort all content by its original position in the DOM
+  contentPositions.sort((a, b) => a.position - b.position);
   
-  for (const match of htmlEncodedMatches) {
-    const fullMatch = match[0];
-    const contentPart = match[1] || '';
-    
-    // Extract URL from content
-    const urlMatch = contentPart.match(new RegExp('(https?://[^\\s"\'&<>]+)', 'i'));
-    if (urlMatch && urlMatch[1]) {
-      // Check if this URL is already included
-      const url = urlMatch[1];
-      if (!illustrations.some(item =>
-        (item.type === 'iframe' && item.src === url) ||
-        (item.content && typeof item.content === 'string' && item.content.includes(url))
-      )) {
-        illustrations.push({
-          type: 'iframe',
-          src: url,
-          content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-        });
-      }
-    }
-  }
+  // Extract the sorted data into our illustrations array
+  illustrations = contentPositions.map(item => item.data);
+  
+  // Remove any duplicates that might have been added
+  illustrations = illustrations.filter((item, index, self) =>
+    index === self.findIndex((t) =>
+      (t.type === item.type &&
+       ((t.iconName && item.iconName && t.iconName === item.iconName) ||
+        (t.src && item.src && t.src === item.src) ||
+        (t.content && item.content && t.content === item.content)))
+    )
+  );
 
   // Return illustrations if found, null otherwise
   if (illustrations.length > 0) {
