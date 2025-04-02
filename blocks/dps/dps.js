@@ -506,6 +506,8 @@ function organizeImageSequence(illustrations) {
   console.log(`[OrganizeSequence] Returning ${orderedIllustrations.length} unique illustrations`);
   return orderedIllustrations;
 }
+
+
 function createImageSequenceHTML(illustrations) {
   if (!illustrations || !Array.isArray(illustrations) || illustrations.length === 0) {
     return '';
@@ -593,7 +595,7 @@ function addImageSequenceStyles() {
 /**
  * Parse illustration from a cell
  * Supports multiple content types: images, SVGs, iframes
- * FIXED: Properly handles icon detection without double-counting
+ * FIXED: Properly handles illustration detection without double-counting
  *
  * @param {Element} cell - Cell element containing illustration content
  * @returns {Object|null} Structured illustration data or null if no illustration found
@@ -602,7 +604,6 @@ function parseIllustration(cell) {
   if (!cell) return null;
   
   let illustrations = [];
-  let contentPositions = [];
   
   // Process HTML content directly from cell to capture all elements
   let cellContent = cell.innerHTML.trim();
@@ -618,34 +619,41 @@ function parseIllustration(cell) {
   // Debug log to check what's in the cell content
   console.log(`[Illustration Parser] Cell content: ${cellContent.substring(0, 100)}...`);
   
+  // Create a mapping of original positions in the HTML to maintain order
+  const contentPositions = [];
+  
+  // CRITICAL: Create a set to track processed illustrations by unique identifier
+  // This prevents double-counting the same illustration
+  const processedContent = new Set();
+  
   // Handle simplified iframe format
-  // We'll store these matches, but process them in order with other content
   const iframeRegex = new RegExp('iframe\\s+(https?://[^\\s"\'<>]+)', 'gi');
   const iframeMatches = Array.from(cellContent.matchAll(iframeRegex));
-  // Use the existing contentPositions array declared above
-  // (no need to redeclare it here)
   
   // Track iframe positions in the content
   for (const match of iframeMatches) {
     const url = match[1];
     const position = cellContent.indexOf(match[0]);
-    contentPositions.push({
-      type: 'iframe',
-      position: position,
-      data: {
+    // Create a unique identifier for this iframe
+    const identifier = `iframe-${url}`;
+    
+    // Only add if we haven't processed this content before
+    if (!processedContent.has(identifier)) {
+      processedContent.add(identifier);
+      
+      contentPositions.push({
         type: 'iframe',
-        src: url,
-        content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-      }
-    });
+        position: position,
+        data: {
+          type: 'iframe',
+          src: url,
+          content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+        }
+      });
+    }
   }
   
-  // FIXED: Create a set to track processed icons by name
-  // This prevents double-counting the same icon
-  const processedIcons = new Set();
-  
   // Process icon spans - convert to image tags
-  // But only if they're not already processed
   const iconRegex = new RegExp('<span\\s+class=["|\'][^"\']*icon[^"\']*["|\'][^>]*>.*?</span>', 'gi');
   const iconMatches = Array.from(cellContent.matchAll(iconRegex));
   
@@ -659,24 +667,25 @@ function parseIllustration(cell) {
       const classString = classMatch[1];
       const iconName = extractIconName(classString);
       
-      // FIXED: Only add if we haven't processed this icon before
-      if (iconName && !processedIcons.has(iconName)) {
-        processedIcons.add(iconName); // Mark as processed
+      if (iconName) {
+        // Create a unique identifier for this icon
+        const identifier = `icon-${iconName}`;
         
-        contentPositions.push({
-          type: 'icon',
-          position: position,
-          data: {
+        // Only add if we haven't processed this content before
+        if (!processedContent.has(identifier)) {
+          processedContent.add(identifier);
+          
+          contentPositions.push({
             type: 'icon',
-            iconName,
-            content: `/icons/${iconName}.svg`,
-            alt: `${iconName} Illustration`
-          }
-        });
-        
-        console.log(`[ParseIllustration] Added icon: ${iconName} at position ${position}`);
-      } else if (iconName) {
-        console.log(`[ParseIllustration] Skipped duplicate icon: ${iconName}`);
+            position: position,
+            data: {
+              type: 'icon',
+              iconName,
+              content: `/icons/${iconName}.svg`,
+              alt: `${iconName} Illustration`
+            }
+          });
+        }
       }
     }
   }
@@ -693,36 +702,33 @@ function parseIllustration(cell) {
       // Also check for direct span elements that might be icons
       const iconSpans = element.querySelectorAll('span.icon');
       if (iconSpans.length > 0) {
-        // Log what we've found for debugging
-        console.log(`[ParseIllustration] Found ${iconSpans.length} icon spans in paragraph`);
-        
         // Process each icon span separately
         iconSpans.forEach(iconSpan => {
           const iconName = extractIconName(iconSpan.className);
           
-          // FIXED: Only add if we haven't processed this icon before
-          if (iconName && !processedIcons.has(iconName)) {
-            processedIcons.add(iconName); // Mark as processed
+          if (iconName) {
+            // Create a unique identifier for this icon
+            const identifier = `icon-${iconName}`;
             
-            // Calculate approximate position based on parent element position in original content
-            const parentPosition = cellContent.indexOf(element.outerHTML);
-            const elementPosition = parentPosition > -1 ? parentPosition : contentPositions.length * 1000;
-            
-            console.log(`[ParseIllustration] Processing icon: ${iconName}`);
-            
-            contentPositions.push({
-              type: 'icon',
-              position: elementPosition,
-              data: {
+            // Only add if we haven't processed this content before
+            if (!processedContent.has(identifier)) {
+              processedContent.add(identifier);
+              
+              // Calculate approximate position based on parent element position in original content
+              const parentPosition = cellContent.indexOf(element.outerHTML);
+              const elementPosition = parentPosition > -1 ? parentPosition : contentPositions.length * 1000;
+              
+              contentPositions.push({
                 type: 'icon',
-                iconName,
-                content: `/icons/${iconName}.svg`,
-                alt: `${iconName} Illustration`
-              }
-            });
-            console.log(`[ParseIllustration] Added icon: ${iconName}`);
-          } else if (iconName) {
-            console.log(`[ParseIllustration] Skipped duplicate icon: ${iconName}`);
+                position: elementPosition,
+                data: {
+                  type: 'icon',
+                  iconName,
+                  content: `/icons/${iconName}.svg`,
+                  alt: `${iconName} Illustration`
+                }
+              });
+            }
           }
         });
       }
@@ -740,28 +746,44 @@ function parseIllustration(cell) {
     
     // Process based on element type
     if (element.tagName === 'SVG' || elementHtml.includes('<svg')) {
-      contentPositions.push({
-        type: 'svg',
-        position: elementPosition,
-        data: {
+      // Create a unique identifier for this SVG
+      const identifier = `svg-${elementHtml.substring(0, 50)}`;
+      
+      // Only add if we haven't processed this content before
+      if (!processedContent.has(identifier)) {
+        processedContent.add(identifier);
+        
+        contentPositions.push({
           type: 'svg',
-          content: elementHtml
-        }
-      });
+          position: elementPosition,
+          data: {
+            type: 'svg',
+            content: elementHtml
+          }
+        });
+      }
     }
     else if (element.tagName === 'PICTURE' || element.querySelector('picture')) {
       // Handle picture elements
       const picture = element.tagName === 'PICTURE' ? element : element.querySelector('picture');
       
       if (picture) {
-        contentPositions.push({
-          type: 'picture',
-          position: elementPosition,
-          data: {
+        // Create a unique identifier for this picture
+        const identifier = `picture-${picture.outerHTML.substring(0, 50)}`;
+        
+        // Only add if we haven't processed this content before
+        if (!processedContent.has(identifier)) {
+          processedContent.add(identifier);
+          
+          contentPositions.push({
             type: 'picture',
-            content: picture.outerHTML
-          }
-        });
+            position: elementPosition,
+            data: {
+              type: 'picture',
+              content: picture.outerHTML
+            }
+          });
+        }
       }
     }
     else if (element.tagName === 'IMG' || element.querySelector('img:not(picture img)')) {
@@ -769,60 +791,90 @@ function parseIllustration(cell) {
       const img = element.tagName === 'IMG' ? element : element.querySelector('img:not(picture img)');
       
       if (img) {
-        contentPositions.push({
-          type: 'image',
-          position: elementPosition,
-          data: {
+        // Create a unique identifier for this image
+        const identifier = `image-${img.src}`;
+        
+        // Only add if we haven't processed this content before
+        if (!processedContent.has(identifier)) {
+          processedContent.add(identifier);
+          
+          contentPositions.push({
             type: 'image',
-            content: img.src,
-            alt: img.alt || ''
-          }
-        });
+            position: elementPosition,
+            data: {
+              type: 'image',
+              content: img.src,
+              alt: img.alt || ''
+            }
+          });
+        }
       }
     }
     else if (element.tagName === 'SPAN' && element.classList.contains('icon')) {
       // Handle icon spans - convert to image tags
       const iconName = extractIconName(element.className);
       
-      // FIXED: Only add if we haven't processed this icon before
-      if (iconName && !processedIcons.has(iconName)) {
-        processedIcons.add(iconName); // Mark as processed
+      if (iconName) {
+        // Create a unique identifier for this icon
+        const identifier = `icon-${iconName}`;
         
-        contentPositions.push({
-          type: 'icon',
-          position: elementPosition,
-          data: {
+        // Only add if we haven't processed this content before
+        if (!processedContent.has(identifier)) {
+          processedContent.add(identifier);
+          
+          contentPositions.push({
             type: 'icon',
-            iconName,
-            content: `/icons/${iconName}.svg`,
-            alt: `${iconName} Illustration`
-          }
-        });
+            position: elementPosition,
+            data: {
+              type: 'icon',
+              iconName,
+              content: `/icons/${iconName}.svg`,
+              alt: `${iconName} Illustration`
+            }
+          });
+        }
       }
     }
     else if (element.tagName === 'A' && element.href) {
       // Handle anchor elements
       const url = element.href;
+      
       if (isImageUrl(url)) {
-        contentPositions.push({
-          type: 'image',
-          position: elementPosition,
-          data: {
+        // Create a unique identifier for this image URL
+        const identifier = `image-url-${url}`;
+        
+        // Only add if we haven't processed this content before
+        if (!processedContent.has(identifier)) {
+          processedContent.add(identifier);
+          
+          contentPositions.push({
             type: 'image',
-            content: url,
-            alt: element.textContent || 'Image'
-          }
-        });
+            position: elementPosition,
+            data: {
+              type: 'image',
+              content: url,
+              alt: element.textContent || 'Image'
+            }
+          });
+        }
       } else {
-        contentPositions.push({
-          type: 'iframe',
-          position: elementPosition,
-          data: {
+        // Create a unique identifier for this iframe URL
+        const identifier = `iframe-url-${url}`;
+        
+        // Only add if we haven't processed this content before
+        if (!processedContent.has(identifier)) {
+          processedContent.add(identifier);
+          
+          contentPositions.push({
             type: 'iframe',
-            src: url,
-            content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-          }
-        });
+            position: elementPosition,
+            data: {
+              type: 'iframe',
+              src: url,
+              content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+            }
+          });
+        }
       }
     }
     
@@ -839,40 +891,68 @@ function parseIllustration(cell) {
     // Check if this contains an iframe anchor pattern
     const iframeAnchorMatch = textContent.match(/iframe\s+<a[^>]*href=["']([^"']+)["'][^>]*>/i);
     if (iframeAnchorMatch && iframeAnchorMatch[1]) {
-      // Found iframe with anchor pattern
-      contentPositions.push({
-        type: 'iframe',
-        position: 0,
-        data: {
+      const url = iframeAnchorMatch[1];
+      
+      // Create a unique identifier for this iframe URL
+      const identifier = `iframe-anchor-${url}`;
+      
+      // Only add if we haven't processed this content before
+      if (!processedContent.has(identifier)) {
+        processedContent.add(identifier);
+        
+        // Found iframe with anchor pattern
+        contentPositions.push({
           type: 'iframe',
-          src: iframeAnchorMatch[1],
-          content: `<iframe src="${iframeAnchorMatch[1]}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-        }
-      });
+          position: 0,
+          data: {
+            type: 'iframe',
+            src: url,
+            content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+          }
+        });
+      }
     } else {
       // Otherwise check with extractUrl
       const urlData = extractUrl(textContent);
       if (urlData) {
+        const url = urlData.url;
+        
         if (urlData.type === 'image') {
-          contentPositions.push({
-            type: 'image',
-            position: 0,
-            data: {
+          // Create a unique identifier for this image URL
+          const identifier = `image-extracted-${url}`;
+          
+          // Only add if we haven't processed this content before
+          if (!processedContent.has(identifier)) {
+            processedContent.add(identifier);
+            
+            contentPositions.push({
               type: 'image',
-              content: urlData.url,
-              alt: 'Image'
-            }
-          });
+              position: 0,
+              data: {
+                type: 'image',
+                content: url,
+                alt: 'Image'
+              }
+            });
+          }
         } else if (urlData.type === 'iframe') {
-          contentPositions.push({
-            type: 'iframe',
-            position: 0,
-            data: {
+          // Create a unique identifier for this iframe URL
+          const identifier = `iframe-extracted-${url}`;
+          
+          // Only add if we haven't processed this content before
+          if (!processedContent.has(identifier)) {
+            processedContent.add(identifier);
+            
+            contentPositions.push({
               type: 'iframe',
-              src: urlData.url,
-              content: `<iframe src="${urlData.url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-            }
-          });
+              position: 0,
+              data: {
+                type: 'iframe',
+                src: url,
+                content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+              }
+            });
+          }
         }
       }
     }
@@ -889,13 +969,10 @@ function parseIllustration(cell) {
   
   // Extract the sorted data into our illustrations array
   illustrations = contentPositions.map(item => item.data);
-  
-  // Log the number of found illustrations
-  console.log(`[ParseIllustration] Found ${illustrations.length} illustrations`);
-  console.log(`[ParseIllustration] Processed ${processedIcons.size} unique icons`);
 
   // Return illustrations if found, null otherwise
   if (illustrations.length > 0) {
+    console.log(`[ParseIllustration] Found ${illustrations.length} total illustrations (processed ${processedContent.size} unique items)`);
     return {
       type: 'images',
       content: illustrations

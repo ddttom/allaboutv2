@@ -298,16 +298,24 @@ The system detects icon spans using multiple techniques:
 3. **Element traversal**: Finds nested icon spans within other elements
 4. **Multiple icon processing**: Handles multiple icon spans within a single paragraph
 
-### Icon Counting Fix
-The system includes a fix for accurate icon counting in the parseIllustration function:
-1. **Issue**: Previous implementation double-counted icons by processing them in two different ways:
-   - First through regex approach to find all `<span class="icon">` elements in HTML string
-   - Then separately processing each DOM element, including paragraphs containing icon spans
+### Content Deduplication System
+The system includes a comprehensive deduplication mechanism for all content types in the parseIllustration function:
+1. **Issue**: Previous implementation could double-count content by processing it in multiple ways:
+   - First through regex approaches to find elements in HTML strings
+   - Then separately processing each DOM element, including nested content
+   - This affected icons, images, iframes, and other content types
 2. **Solution**:
-   - Uses a `processedIcons` Set to track which icons have already been processed
-   - Checks this Set before adding any icon to the contentPositions array
-   - Adds clear logging to show exactly how many unique icons are processed
-3. **Result**: Each unique icon is only counted once, regardless of how it's found in the HTML content
+   - Uses a `processedContent` Set to track all content types by unique identifiers
+   - Creates specific identifiers for each content type:
+     - Icons: `icon-{iconName}`
+     - SVGs: `svg-{first 50 chars of content}`
+     - Pictures: `picture-{first 50 chars of HTML}`
+     - Images: `image-{src URL}`
+     - Iframe URLs: `iframe-url-{URL}`
+     - Extracted content: `{type}-extracted-{URL}`
+   - Checks this Set before adding any content to the contentPositions array
+   - Adds enhanced logging to show exactly how many unique items are processed
+3. **Result**: Each unique content item is only counted once, regardless of how it's found in the HTML content
 
 ### Icon Transformation
 Icons undergo a specific transformation process:
@@ -326,7 +334,7 @@ Icons in the sequence are displayed with these properties:
 4. Maintain the sequence-image class for navigation handling
 5. Participate in the active/inactive states within sequence navigation
 6. Display a sequence label showing position (e.g., "Icon 1/3" or "Icon 1/1" for single icons)
-7. Deduplicated to prevent redundant display of identical icons
+7. Deduplicated using the universal content tracking system to prevent redundant display
 
 ## iframe Simplified Format
 
@@ -439,12 +447,13 @@ The fourth column supports various image formats and sources:
 - Navigation lock prevents rapid consecutive clicks from causing state conflicts
 - Content order is preserved based on original DOM position
 - iframes are prioritized over icons when both exist in the same content
+- All content types (images, icons, iframes, SVGs) are deduplicated using unique identifiers
 - Duplicate content is intelligently filtered while preserving order
 - **IMPROVED: Better handling of iframe URLs in text content**
 - **IMPROVED: All images (including single images) now show position labels (e.g., "Icon 1/1")**
 - **IMPROVED: Better handling of single images during navigation**
-- **IMPROVED: Deduplication of icons to prevent duplicates during navigation**
-- **FIXED: Icon counting in parseIllustration function to prevent double-counting**
+- **IMPROVED: Universal content deduplication system for all content types (icons, images, iframes, etc.)**
+- **FIXED: Content counting in parseIllustration function to prevent double-counting of any content type**
 - **NEW: Proper handling of anchor elements as either images or iframes**
 - **NEW: Support for iframe with anchor tag pattern (`iframe <a href="...">Link</a>`)**
 - **NEW: Support for multiple icon spans within a single paragraph**
