@@ -143,7 +143,8 @@ The system intelligently handles HTML entities in iframe definitions:
 
 ### Presenter Notes
 - Appears in bottom left third of viewport (31.25% width) by default
-- Can be enlarged to 2/3 scale with 'P' key
+- Can be enlarged to 50% width with 'P' key while staying pinned to the left
+- Always stays pinned to the left of the viewport and grows to the right when enlarged
 - Light grey background with dark text for readability
 - Supports HTML formatting:
   - Bullet points
@@ -337,7 +338,8 @@ The fourth column supports various image formats and sources:
 
 ## Notes
 - Presenter notes support HTML formatting for better organization
-- Can be enlarged to 2/3 scale with 'P' key for better visibility
+- Can be enlarged to 50% width with 'P' key for better visibility while staying pinned to the left
+- Presenter notes always stay pinned to the left of the viewport and grow to the right when enlarged
 - Images maintain aspect ratio while using available space
 - Timer starts automatically after first slide
 - Print mode excludes presenter notes and navigation elements
@@ -455,7 +457,7 @@ For images, you can simply paste the URL directly.
 ## Presenter Mode
 The DPS system includes a dedicated presenter mode that:
 - Extracts and displays only the presenter notes from slides
-- Supports toggling between normal and enlarged (2/3 scale) views
+- Supports toggling between normal (31.25% width) and enlarged (50% width) views while staying pinned to the left
 - Provides a clean, tablet-optimized interface
 - Matches the existing DPS styling for consistency
 - Supports all the same navigation methods as DPS

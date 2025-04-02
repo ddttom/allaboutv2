@@ -1084,7 +1084,6 @@ function setupResizeHandler() {
     isResizing = false;
   });
 }
-
 function togglePresenterMode() {
   isPresenterMode = !isPresenterMode;
   const header = document.querySelector('.dps-header');
@@ -1109,9 +1108,9 @@ function togglePresenterMode() {
     presenterNotes.classList.add('presenter-mode');
     
     if (isExpandedMode) {
-      // Expanded view (2/3 of screen)
+      // Expanded view (2/3 of screen) - stay pinned to left
       presenterNotes.style.width = '66%';
-      presenterNotes.style.left = '33%';
+      presenterNotes.style.left = '20px'; // Keep pinned to left
       presenterNotes.style.height = 'calc(100vh - 60px)';
       presenterNotes.style.position = 'fixed';
       presenterNotes.style.top = '0';
@@ -1122,9 +1121,9 @@ function togglePresenterMode() {
       notesContent.style.transform = 'none';
       notesContent.style.fontSize = 'inherit';
     } else {
-      // Normal view
-      presenterNotes.style.width = '100%';
-      presenterNotes.style.left = '0';
+      // Normal view - stay pinned to left
+      presenterNotes.style.width = '50%'; // Reduced from 100% to stay on left side
+      presenterNotes.style.left = '20px'; // Keep pinned to left
       presenterNotes.style.height = 'calc(100vh - 60px)';
       presenterNotes.style.position = 'fixed';
       presenterNotes.style.top = '0';
@@ -1161,13 +1160,13 @@ function toggleExpandedMode() {
   const notesContent = presenterNotes.querySelector('.presenter-notes-content');
   
   if (isExpandedMode) {
-    // Switch to expanded view
+    // Switch to expanded view - stay pinned to left and grow to the right
     presenterNotes.style.width = '66%';
-    presenterNotes.style.left = '33%';
+    presenterNotes.style.left = '20px'; // Keep pinned to left
   } else {
     // Switch back to normal view
-    presenterNotes.style.width = '100%';
-    presenterNotes.style.left = '0';
+    presenterNotes.style.width = '31.25vw'; // Original width from CSS
+    presenterNotes.style.left = '20px'; // Keep pinned to left
   }
 }
 
@@ -1199,13 +1198,19 @@ document.addEventListener("keydown", (event) => {
   } else if (event.key === "p" || event.key === "P") {
     const presenterNotes = document.querySelector('.presenter-notes');
     if (presenterNotes.classList.contains('enlarged')) {
+      // Return to normal size
       presenterNotes.classList.remove('enlarged');
-      presenterNotes.style.transform = '';
+      presenterNotes.style.width = '31.25vw'; // Original width from CSS
+      presenterNotes.style.height = '25vh'; // Original height from CSS
+      presenterNotes.style.left = '20px'; // Keep pinned to left
       presenterNotes.style.zIndex = '';
     } else {
+      // Enlarge while staying pinned to left
       presenterNotes.classList.remove('hidden');
       presenterNotes.classList.add('enlarged');
-      presenterNotes.style.transform = 'scale(1.67)';
+      presenterNotes.style.width = '50vw'; // Grow to the right
+      presenterNotes.style.height = '50vh';
+      presenterNotes.style.left = '20px'; // Keep pinned to left
       presenterNotes.style.zIndex = '1000';
       config.PRESENTER_NOTES_VISIBLE = true;
     }
@@ -1254,10 +1259,7 @@ document.addEventListener("keydown", (event) => {
     toggleTimer();
     handled = true;
   }
-  else if (event.key === "p" || event.key === "P") {
-    toggleExpandedMode();
-    handled = true;
-  }
+  // Removed duplicate 'p' key handler as it's already handled above
   // R key handling removed as requested
 });
 
