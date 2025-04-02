@@ -1013,10 +1013,18 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
         // Initialize the first image in sequence as active
         const imageSequence = slides[index].querySelector('.image-sequence');
         if (imageSequence) {
+          // eslint-disable-next-line no-console
+          console.log('[DEBUG] showSlide: Found image sequence, initializing first image');
+          
           const sequenceImages = imageSequence.querySelectorAll('.sequence-image');
+          // eslint-disable-next-line no-console
+          console.log(`[DEBUG] showSlide: Found ${sequenceImages.length} sequence images`);
+          
           if (sequenceImages.length > 0) {
             sequenceImages.forEach((img, idx) => {
               if (idx === 0) {
+                // eslint-disable-next-line no-console
+                console.log('[DEBUG] showSlide: Setting first image as active');
                 img.classList.add('active');
                 img.style.display = 'block';
               } else {
@@ -1065,11 +1073,19 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
 
   if (nextButton) {
     nextButton.addEventListener('click', () => {
+      // eslint-disable-next-line no-console
+      console.log('[DEBUG] Next button clicked');
+      
       // First try to handle image sequence navigation, just like arrow keys
       const sequenceHandled = handleImageSequenceNavigation('next');
       
+      // eslint-disable-next-line no-console
+      console.log(`[DEBUG] Next button: sequenceHandled = ${sequenceHandled}`);
+      
       // If no sequence to navigate or at the end of sequence, go to next slide
       if (!sequenceHandled && currentSlideIndex < slides.length - 1) {
+        // eslint-disable-next-line no-console
+        console.log(`[DEBUG] Next button: moving to next slide (${currentSlideIndex + 1})`);
         showSlide(currentSlideIndex + 1);
       }
     });
@@ -1079,23 +1095,45 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
    * Allows progression through multiple images within a slide
    */
   function handleImageSequenceNavigation(direction) {
+    // eslint-disable-next-line no-console
+    console.log(`[DEBUG] handleImageSequenceNavigation called with direction: ${direction}`);
+    
     // Get the current slide and check if it has an image sequence
     const currentSlide = slides[currentSlideIndex];
-    if (!currentSlide) return false;
+    if (!currentSlide) {
+      // eslint-disable-next-line no-console
+      console.log('[DEBUG] No current slide found, returning false');
+      return false;
+    }
     
     const imageSequence = currentSlide.querySelector('.image-sequence');
-    if (!imageSequence) return false;
+    if (!imageSequence) {
+      // eslint-disable-next-line no-console
+      console.log('[DEBUG] No image sequence found in current slide, returning false');
+      return false;
+    }
 
     // Get all images in the sequence
     const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
-    if (images.length <= 1) return false;
+    // eslint-disable-next-line no-console
+    console.log(`[DEBUG] Found ${images.length} images in sequence`);
+    
+    if (images.length <= 1) {
+      // eslint-disable-next-line no-console
+      console.log('[DEBUG] Not enough images in sequence (<=1), returning false');
+      return false;
+    }
     
     // Find the currently active image
     let currentImage = imageSequence.querySelector('.sequence-image.active');
+    // eslint-disable-next-line no-console
+    console.log(`[DEBUG] Current active image found: ${currentImage !== null}`);
     
     // If no active image is found, activate the first one but DON'T return yet
     // This allows the navigation to continue to the next image in the same key press
     if (!currentImage) {
+      // eslint-disable-next-line no-console
+      console.log('[DEBUG] No active image found, activating first image');
       images[0].style.display = 'block';
       images[0].classList.add('active');
       currentImage = images[0]; // Update currentImage to the now-active first image
@@ -1103,11 +1141,16 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
     
     // Get the index of the current image
     const currentImageIndex = images.indexOf(currentImage);
+    // eslint-disable-next-line no-console
+    console.log(`[DEBUG] Current image index: ${currentImageIndex}`);
     
     // Handle navigation based on direction
     if (direction === 'next') {
       // Check if we're not at the end of the sequence
       if (currentImageIndex < images.length - 1) {
+        // eslint-disable-next-line no-console
+        console.log(`[DEBUG] Moving to next image (index ${currentImageIndex + 1})`);
+        
         // Hide current image
         currentImage.style.display = 'none';
         currentImage.classList.remove('active');
@@ -1120,11 +1163,19 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
         // Trigger reflow in a lint-friendly way
         imageSequence.getBoundingClientRect();
         
+        // eslint-disable-next-line no-console
+        console.log('[DEBUG] Successfully moved to next image, returning true');
         return true;
+      } else {
+        // eslint-disable-next-line no-console
+        console.log('[DEBUG] Already at last image, returning false');
       }
     } else if (direction === 'prev') {
       // Check if we're not at the beginning of the sequence
       if (currentImageIndex > 0) {
+        // eslint-disable-next-line no-console
+        console.log(`[DEBUG] Moving to previous image (index ${currentImageIndex - 1})`);
+        
         // Hide current image
         currentImage.style.display = 'none';
         currentImage.classList.remove('active');
@@ -1137,11 +1188,18 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
         // Trigger reflow in a lint-friendly way
         imageSequence.getBoundingClientRect();
         
+        // eslint-disable-next-line no-console
+        console.log('[DEBUG] Successfully moved to previous image, returning true');
         return true;
+      } else {
+        // eslint-disable-next-line no-console
+        console.log('[DEBUG] Already at first image, returning false');
       }
     }
     
     // If we reach here, we couldn't navigate in the requested direction
+    // eslint-disable-next-line no-console
+    console.log('[DEBUG] Could not navigate in requested direction, returning false');
     return false;
   }
 
@@ -1443,20 +1501,36 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
    */
     else if (event.key === 'ArrowLeft') {
       event.preventDefault();
+      // eslint-disable-next-line no-console
+      console.log('[DEBUG] ArrowLeft key pressed');
+      
       // First try to handle image sequence navigation
       const sequenceHandled = handleImageSequenceNavigation('prev');
       
+      // eslint-disable-next-line no-console
+      console.log(`[DEBUG] ArrowLeft: sequenceHandled = ${sequenceHandled}`);
+      
       if (!sequenceHandled && currentSlideIndex > 0) {
+        // eslint-disable-next-line no-console
+        console.log(`[DEBUG] ArrowLeft: moving to previous slide (${currentSlideIndex - 1})`);
         showSlide(currentSlideIndex - 1);
       }
       handled = true;
     }
     else if (event.key === 'ArrowRight') {
       event.preventDefault();
+      // eslint-disable-next-line no-console
+      console.log('[DEBUG] ArrowRight key pressed');
+      
       // First try to handle image sequence navigation
       const sequenceHandled = handleImageSequenceNavigation('next');
       
+      // eslint-disable-next-line no-console
+      console.log(`[DEBUG] ArrowRight: sequenceHandled = ${sequenceHandled}`);
+      
       if (!sequenceHandled && currentSlideIndex < slides.length - 1) {
+        // eslint-disable-next-line no-console
+        console.log(`[DEBUG] ArrowRight: moving to next slide (${currentSlideIndex + 1})`);
         showSlide(currentSlideIndex + 1);
       }
       handled = true;
