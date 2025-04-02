@@ -1028,16 +1028,16 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
                 // Make sure all images have display: block, but only the first one has active class
                 img.style.display = 'block';
                 img.classList.add('active');
-                img.style.opacity = '1'; // Directly set opacity to 1
+                img.style.visibility = 'visible'; // Directly set visibility to visible
                 // eslint-disable-next-line no-console
-                console.log(`[DEBUG] First image display: ${img.style.display}, has active class: ${img.classList.contains('active')}, opacity: ${window.getComputedStyle(img).opacity}`);
+                console.log(`[DEBUG] First image display: ${img.style.display}, has active class: ${img.classList.contains('active')}, visibility: ${window.getComputedStyle(img).visibility}`);
               } else {
                 // For other images, set display: block but remove active class
                 img.style.display = 'block';
                 img.classList.remove('active');
-                img.style.opacity = '0'; // Directly set opacity to 0
+                img.style.visibility = 'hidden'; // Directly set visibility to hidden
                 // eslint-disable-next-line no-console
-                console.log(`[DEBUG] Other image (${idx}) display: ${img.style.display}, has active class: ${img.classList.contains('active')}, opacity: ${window.getComputedStyle(img).opacity}`);
+                console.log(`[DEBUG] Other image (${idx}) display: ${img.style.display}, has active class: ${img.classList.contains('active')}, visibility: ${window.getComputedStyle(img).visibility}`);
               }
             });
           }
@@ -1143,16 +1143,16 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
       // eslint-disable-next-line no-console
       console.log('[DEBUG] No active image found, activating first image');
       
-      // Make sure all images have display: block and set opacity
+      // Make sure all images have display: block and set visibility
       images.forEach((img, idx) => {
         // eslint-disable-next-line no-console
         console.log(`[DEBUG] Setting image ${idx} display to block`);
         img.style.display = 'block';
         
         if (idx === 0) {
-          img.style.opacity = '1'; // First image visible
+          img.style.visibility = 'visible'; // First image visible
         } else {
-          img.style.opacity = '0'; // Other images hidden
+          img.style.visibility = 'hidden'; // Other images hidden
         }
       });
       
@@ -1161,7 +1161,7 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
       currentImage = images[0]; // Update currentImage to the now-active first image
       
       // eslint-disable-next-line no-console
-      console.log(`[DEBUG] First image now has display: ${currentImage.style.display}, active class: ${currentImage.classList.contains('active')}, opacity: ${window.getComputedStyle(currentImage).opacity}`);
+      console.log(`[DEBUG] First image now has display: ${currentImage.style.display}, active class: ${currentImage.classList.contains('active')}, visibility: ${window.getComputedStyle(currentImage).visibility}`);
     }
     
     // Get the index of the current image
@@ -1178,28 +1178,28 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
         
         // Hide current image - IMPORTANT: Don't change display property, only remove active class
         // eslint-disable-next-line no-console
-        console.log(`[DEBUG] BEFORE CHANGE - Current image (${currentImageIndex}) display: ${currentImage.style.display}, has active class: ${currentImage.classList.contains('active')}, opacity: ${window.getComputedStyle(currentImage).opacity}`);
+        console.log(`[DEBUG] BEFORE CHANGE - Current image (${currentImageIndex}) display: ${currentImage.style.display}, has active class: ${currentImage.classList.contains('active')}, visibility: ${window.getComputedStyle(currentImage).visibility}`);
         
-        // Don't set display: none - just remove the active class and set opacity directly
+        // Don't set display: none - just remove the active class and set visibility directly
         currentImage.classList.remove('active');
-        currentImage.style.opacity = '0'; // Directly set opacity to 0
+        currentImage.style.visibility = 'hidden'; // Directly set visibility to hidden
         
         // Show next image
         const nextImage = images[currentImageIndex + 1];
         
         // eslint-disable-next-line no-console
-        console.log(`[DEBUG] BEFORE CHANGE - Next image (${currentImageIndex + 1}) display: ${nextImage.style.display}, has active class: ${nextImage.classList.contains('active')}, opacity: ${window.getComputedStyle(nextImage).opacity}`);
+        console.log(`[DEBUG] BEFORE CHANGE - Next image (${currentImageIndex + 1}) display: ${nextImage.style.display}, has active class: ${nextImage.classList.contains('active')}, visibility: ${window.getComputedStyle(nextImage).visibility}`);
         
-        // Make sure display is set to block first, then add active class and set opacity directly
+        // Make sure display is set to block first, then add active class and set visibility directly
         nextImage.style.display = 'block';
         nextImage.classList.add('active');
-        nextImage.style.opacity = '1'; // Directly set opacity to 1
+        nextImage.style.visibility = 'visible'; // Directly set visibility to visible
         
         // Log after changes
         // eslint-disable-next-line no-console
-        console.log(`[DEBUG] AFTER CHANGE - Current image (${currentImageIndex}) display: ${currentImage.style.display}, has active class: ${currentImage.classList.contains('active')}, opacity: ${window.getComputedStyle(currentImage).opacity}`);
+        console.log(`[DEBUG] AFTER CHANGE - Current image (${currentImageIndex}) display: ${currentImage.style.display}, has active class: ${currentImage.classList.contains('active')}, visibility: ${window.getComputedStyle(currentImage).visibility}`);
         // eslint-disable-next-line no-console
-        console.log(`[DEBUG] AFTER CHANGE - Next image (${currentImageIndex + 1}) display: ${nextImage.style.display}, has active class: ${nextImage.classList.contains('active')}, opacity: ${window.getComputedStyle(nextImage).opacity}`);
+        console.log(`[DEBUG] AFTER CHANGE - Next image (${currentImageIndex + 1}) display: ${nextImage.style.display}, has active class: ${nextImage.classList.contains('active')}, visibility: ${window.getComputedStyle(nextImage).visibility}`);
         
         // Force a reflow to ensure the browser updates the display
         // eslint-disable-next-line no-console
@@ -1215,9 +1215,9 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
           // eslint-disable-next-line no-console
           console.log('[DEBUG] After delay - checking display states:');
           // eslint-disable-next-line no-console
-          console.log(`[DEBUG] Current image (${currentImageIndex}) display: ${currentImage.style.display}, has active class: ${currentImage.classList.contains('active')}, opacity: ${window.getComputedStyle(currentImage).opacity}`);
+          console.log(`[DEBUG] Current image (${currentImageIndex}) display: ${currentImage.style.display}, has active class: ${currentImage.classList.contains('active')}, visibility: ${window.getComputedStyle(currentImage).visibility}`);
           // eslint-disable-next-line no-console
-          console.log(`[DEBUG] Next image (${currentImageIndex + 1}) display: ${nextImage.style.display}, has active class: ${nextImage.classList.contains('active')}, opacity: ${window.getComputedStyle(nextImage).opacity}`);
+          console.log(`[DEBUG] Next image (${currentImageIndex + 1}) display: ${nextImage.style.display}, has active class: ${nextImage.classList.contains('active')}, visibility: ${window.getComputedStyle(nextImage).visibility}`);
         }, 300); // Increased to 300ms to match the CSS transition duration
         
         // eslint-disable-next-line no-console
@@ -1235,28 +1235,28 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
         
         // Hide current image - IMPORTANT: Don't change display property, only remove active class
         // eslint-disable-next-line no-console
-        console.log(`[DEBUG] BEFORE CHANGE - Current image (${currentImageIndex}) display: ${currentImage.style.display}, has active class: ${currentImage.classList.contains('active')}, opacity: ${window.getComputedStyle(currentImage).opacity}`);
+        console.log(`[DEBUG] BEFORE CHANGE - Current image (${currentImageIndex}) display: ${currentImage.style.display}, has active class: ${currentImage.classList.contains('active')}, visibility: ${window.getComputedStyle(currentImage).visibility}`);
         
-        // Don't set display: none - just remove the active class and set opacity directly
+        // Don't set display: none - just remove the active class and set visibility directly
         currentImage.classList.remove('active');
-        currentImage.style.opacity = '0'; // Directly set opacity to 0
+        currentImage.style.visibility = 'hidden'; // Directly set visibility to hidden
         
         // Show previous image
         const prevImage = images[currentImageIndex - 1];
         
         // eslint-disable-next-line no-console
-        console.log(`[DEBUG] BEFORE CHANGE - Prev image (${currentImageIndex - 1}) display: ${prevImage.style.display}, has active class: ${prevImage.classList.contains('active')}, opacity: ${window.getComputedStyle(prevImage).opacity}`);
+        console.log(`[DEBUG] BEFORE CHANGE - Prev image (${currentImageIndex - 1}) display: ${prevImage.style.display}, has active class: ${prevImage.classList.contains('active')}, visibility: ${window.getComputedStyle(prevImage).visibility}`);
         
-        // Make sure display is set to block first, then add active class and set opacity directly
+        // Make sure display is set to block first, then add active class and set visibility directly
         prevImage.style.display = 'block';
         prevImage.classList.add('active');
-        prevImage.style.opacity = '1'; // Directly set opacity to 1
+        prevImage.style.visibility = 'visible'; // Directly set visibility to visible
         
         // Log after changes
         // eslint-disable-next-line no-console
-        console.log(`[DEBUG] AFTER CHANGE - Current image (${currentImageIndex}) display: ${currentImage.style.display}, has active class: ${currentImage.classList.contains('active')}, opacity: ${window.getComputedStyle(currentImage).opacity}`);
+        console.log(`[DEBUG] AFTER CHANGE - Current image (${currentImageIndex}) display: ${currentImage.style.display}, has active class: ${currentImage.classList.contains('active')}, visibility: ${window.getComputedStyle(currentImage).visibility}`);
         // eslint-disable-next-line no-console
-        console.log(`[DEBUG] AFTER CHANGE - Prev image (${currentImageIndex - 1}) display: ${prevImage.style.display}, has active class: ${prevImage.classList.contains('active')}, opacity: ${window.getComputedStyle(prevImage).opacity}`);
+        console.log(`[DEBUG] AFTER CHANGE - Prev image (${currentImageIndex - 1}) display: ${prevImage.style.display}, has active class: ${prevImage.classList.contains('active')}, visibility: ${window.getComputedStyle(prevImage).visibility}`);
         
         // Force a reflow to ensure the browser updates the display
         // eslint-disable-next-line no-console
@@ -1272,9 +1272,9 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
           // eslint-disable-next-line no-console
           console.log('[DEBUG] After delay - checking display states:');
           // eslint-disable-next-line no-console
-          console.log(`[DEBUG] Current image (${currentImageIndex}) display: ${currentImage.style.display}, has active class: ${currentImage.classList.contains('active')}, opacity: ${window.getComputedStyle(currentImage).opacity}`);
+          console.log(`[DEBUG] Current image (${currentImageIndex}) display: ${currentImage.style.display}, has active class: ${currentImage.classList.contains('active')}, visibility: ${window.getComputedStyle(currentImage).visibility}`);
           // eslint-disable-next-line no-console
-          console.log(`[DEBUG] Prev image (${currentImageIndex - 1}) display: ${prevImage.style.display}, has active class: ${prevImage.classList.contains('active')}, opacity: ${window.getComputedStyle(prevImage).opacity}`);
+          console.log(`[DEBUG] Prev image (${currentImageIndex - 1}) display: ${prevImage.style.display}, has active class: ${prevImage.classList.contains('active')}, visibility: ${window.getComputedStyle(prevImage).visibility}`);
         }, 300); // Increased to 300ms to match the CSS transition duration
         
         // eslint-disable-next-line no-console
