@@ -907,7 +907,12 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
         }
       }
       
-      updatePresenterNotes(index);
+      // Check if we're in presenter mode to show enhanced content
+      const presenterNotes = document.querySelector('.presenter-notes');
+      const isInPresenterMode = presenterNotes.classList.contains('presenter-mode');
+      
+      // Pass isPresenterToggle=true if in presenter mode to show enhanced content
+      updatePresenterNotes(index, false, isInPresenterMode);
       updateNavButtons();
     }
 
