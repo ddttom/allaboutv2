@@ -1152,16 +1152,45 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
         console.log(`[DEBUG] Moving to next image (index ${currentImageIndex + 1})`);
         
         // Hide current image
+        // eslint-disable-next-line no-console
+        console.log(`[DEBUG] BEFORE CHANGE - Current image (${currentImageIndex}) display: ${currentImage.style.display}, has active class: ${currentImage.classList.contains('active')}`);
+        
         currentImage.style.display = 'none';
         currentImage.classList.remove('active');
         
         // Show next image
         const nextImage = images[currentImageIndex + 1];
+        
+        // eslint-disable-next-line no-console
+        console.log(`[DEBUG] BEFORE CHANGE - Next image (${currentImageIndex + 1}) display: ${nextImage.style.display}, has active class: ${nextImage.classList.contains('active')}`);
+        
         nextImage.style.display = 'block';
         nextImage.classList.add('active');
         
-        // Trigger reflow in a lint-friendly way
+        // Log after changes
+        // eslint-disable-next-line no-console
+        console.log(`[DEBUG] AFTER CHANGE - Current image (${currentImageIndex}) display: ${currentImage.style.display}, has active class: ${currentImage.classList.contains('active')}`);
+        // eslint-disable-next-line no-console
+        console.log(`[DEBUG] AFTER CHANGE - Next image (${currentImageIndex + 1}) display: ${nextImage.style.display}, has active class: ${nextImage.classList.contains('active')}`);
+        
+        // Force a reflow to ensure the browser updates the display
+        // eslint-disable-next-line no-console
+        console.log('[DEBUG] Forcing reflow');
         imageSequence.getBoundingClientRect();
+        
+        // Add a small delay to ensure the browser has time to update the display
+        // eslint-disable-next-line no-console
+        console.log('[DEBUG] Adding small delay for browser to update display');
+        
+        // Use setTimeout to add a small delay before returning
+        setTimeout(() => {
+          // eslint-disable-next-line no-console
+          console.log('[DEBUG] After delay - checking display states:');
+          // eslint-disable-next-line no-console
+          console.log(`[DEBUG] Current image (${currentImageIndex}) display: ${currentImage.style.display}`);
+          // eslint-disable-next-line no-console
+          console.log(`[DEBUG] Next image (${currentImageIndex + 1}) display: ${nextImage.style.display}`);
+        }, 50); // 50ms delay
         
         // eslint-disable-next-line no-console
         console.log('[DEBUG] Successfully moved to next image, returning true');
@@ -1177,16 +1206,45 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
         console.log(`[DEBUG] Moving to previous image (index ${currentImageIndex - 1})`);
         
         // Hide current image
+        // eslint-disable-next-line no-console
+        console.log(`[DEBUG] BEFORE CHANGE - Current image (${currentImageIndex}) display: ${currentImage.style.display}, has active class: ${currentImage.classList.contains('active')}`);
+        
         currentImage.style.display = 'none';
         currentImage.classList.remove('active');
         
         // Show previous image
         const prevImage = images[currentImageIndex - 1];
+        
+        // eslint-disable-next-line no-console
+        console.log(`[DEBUG] BEFORE CHANGE - Prev image (${currentImageIndex - 1}) display: ${prevImage.style.display}, has active class: ${prevImage.classList.contains('active')}`);
+        
         prevImage.style.display = 'block';
         prevImage.classList.add('active');
         
-        // Trigger reflow in a lint-friendly way
+        // Log after changes
+        // eslint-disable-next-line no-console
+        console.log(`[DEBUG] AFTER CHANGE - Current image (${currentImageIndex}) display: ${currentImage.style.display}, has active class: ${currentImage.classList.contains('active')}`);
+        // eslint-disable-next-line no-console
+        console.log(`[DEBUG] AFTER CHANGE - Prev image (${currentImageIndex - 1}) display: ${prevImage.style.display}, has active class: ${prevImage.classList.contains('active')}`);
+        
+        // Force a reflow to ensure the browser updates the display
+        // eslint-disable-next-line no-console
+        console.log('[DEBUG] Forcing reflow');
         imageSequence.getBoundingClientRect();
+        
+        // Add a small delay to ensure the browser has time to update the display
+        // eslint-disable-next-line no-console
+        console.log('[DEBUG] Adding small delay for browser to update display');
+        
+        // Use setTimeout to add a small delay before returning
+        setTimeout(() => {
+          // eslint-disable-next-line no-console
+          console.log('[DEBUG] After delay - checking display states:');
+          // eslint-disable-next-line no-console
+          console.log(`[DEBUG] Current image (${currentImageIndex}) display: ${currentImage.style.display}`);
+          // eslint-disable-next-line no-console
+          console.log(`[DEBUG] Prev image (${currentImageIndex - 1}) display: ${prevImage.style.display}`);
+        }, 50); // 50ms delay
         
         // eslint-disable-next-line no-console
         console.log('[DEBUG] Successfully moved to previous image, returning true');
