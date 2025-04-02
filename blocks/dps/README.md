@@ -167,6 +167,12 @@ https://example.com/embed
 <p>&#x3C;iframe https://example.com/embed</p>
 ```
 
+8. **NEW: iframe with anchor tag pattern:**
+```
+iframe <a href="https://example.com/embed">Link text</a>
+```
+This format allows authors to use the simplified iframe keyword with Franklin's link format.
+
 #### HTML Entity Handling for iframes
 The system intelligently handles HTML entities in iframe definitions:
 - Supports both numeric (`&#x3C;`) and named (`&lt;`) entity references
@@ -237,12 +243,15 @@ The system uses sophisticated detection methods to identify different content ty
 2. **Picture Elements**: Detected by querying for `<picture>` elements
 3. **Images**: Identified via `<img>` tags
 4. **SVGs**: Recognized both as `<svg>` elements and by analyzing element innerHTML
-5. **iframes**: 
+5. **iframes**:
    - Simplified "iframe URL" format detection
    - Standard iframe tag detection
    - HTML encoded iframe detection
    - Plain URL detection
+   - **NEW: iframe with anchor tag pattern detection**
+   - **IMPROVED: Better handling of iframe URLs in text content**
 6. **URLs**: Extracted using pattern matching for http/https URL strings
+7. **Anchor Elements**: Now properly processed as either images or iframes based on URL
 
 Content type detection follows a priority order with more specific formats being checked before more general ones. The system tracks the original position of each content element in the DOM to maintain proper sequence order regardless of content type.
 
@@ -271,6 +280,9 @@ When Column 4 contains multiple different content types:
 8. Content order is preserved based on original DOM position
 9. iframes are prioritized over icons when both exist in the same content
 10. Duplicate content is intelligently filtered while preserving order
+11. **IMPROVED: Better handling of iframe URLs in text content**
+12. **NEW: Proper handling of anchor elements as either images or iframes**
+13. **NEW: Support for iframe with anchor tag pattern**
 
 ## Icon Processing Details
 
@@ -408,6 +420,9 @@ The fourth column supports various image formats and sources:
 - Content order is preserved based on original DOM position
 - iframes are prioritized over icons when both exist in the same content
 - Duplicate content is intelligently filtered while preserving order
+- **IMPROVED: Better handling of iframe URLs in text content**
+- **NEW: Proper handling of anchor elements as either images or iframes**
+- **NEW: Support for iframe with anchor tag pattern (`iframe <a href="...">Link</a>`)**
 
 ## Implementation
 
@@ -479,6 +494,8 @@ Content authors should structure their content as follows:
 6. For iframes, use the format `iframe URL`
    - Simply type the word "iframe" followed by a space and then the URL
    - This is the easiest way to add embedded content to your slides
+   - **NEW: You can also use `iframe <a href="URL">Link text</a>` format**
+   - **IMPROVED: The system now better handles iframe URLs in text content**
 
 ## Author-Friendly Formats
 
@@ -489,6 +506,12 @@ To simplify the authoring experience, DPS provides these easy-to-use formats:
 iframe https://example.com/embed
 ```
 Just type "iframe" followed by the URL - no HTML tags needed!
+
+You can also use the new anchor tag pattern:
+```
+iframe <a href="https://example.com/embed">Link text</a>
+```
+This combines the simplified iframe keyword with Franklin's link format for better integration.
 
 ### Icon Spans
 ```html
