@@ -42,6 +42,57 @@ A powerful presentation system that transforms structured content into an intera
 - CSS-based visibility management ensures consistent display behavior
 - Sequence navigation works with mixed content types (icons, iframes, images, SVGs)
 
+### Enhanced Navigation for Image Sequences
+The enhanced navigation provides a better user experience when a slide contains multiple illustrations (like icons, images, and iframes) by adding visual cues and organization to the content. Here's what it does:
+
+#### 1. Visual Labels for Navigation
+When a slide has multiple illustration items (for example, both an icon and an iframe), the enhanced navigation adds clear labels to each item showing:
+
+- The type of content (Icon, Iframe, Image, etc.)
+- The current position and total count (e.g., "1/3", "2/3", "3/3")
+
+This helps users understand:
+
+- What type of content they're currently viewing
+- How many total items are in the sequence
+- Which position they're currently at in the sequence
+
+#### 2. Consistent Interface
+The labels appear in a small, semi-transparent black box in the top-left corner of each illustration. This provides:
+
+- Consistent placement across all slides
+- Minimal visual interference with the actual content
+- Clear visibility against any background
+
+#### 3. Implementation Details
+The enhanced navigation works by:
+
+- Keeping the exact same order of content as in your original HTML
+- Adding a container around each item in the sequence
+- Injecting label elements with position information
+- Applying CSS styling to ensure proper display
+
+#### 4. Benefits
+- Reduces confusion: Users understand when they're navigating through multiple items
+- Improves orientation: The "x/y" format helps users know how far they've progressed
+- Maintains content integrity: All your original content remains in its intended order
+- Solves the "double iframe" issue: Makes it clear when a user has navigated from an icon to an iframe
+
+#### 5. Visual Example
+Without enhanced navigation, a user might see this sequence with no indication of what's happening:
+
+[Icon appears]
+[Press right arrow]
+[Iframe appears] - User might wonder "Why did the content change?"
+
+With enhanced navigation, they would instead see:
+
+[Icon appears with label "Icon 1/2"]
+[Press right arrow]
+[Iframe appears with label "Iframe 2/2"] - Clear indication of navigation progress
+
+This approach maintains the exact same content and ordering while providing better visual feedback to the user about the navigation process.
+
 ### Icon Support
 The fourth column supports icon spans with specific class names:
 
