@@ -622,9 +622,8 @@ function parseIllustration(cell) {
   // We'll store these matches, but process them in order with other content
   const iframeRegex = new RegExp('iframe\\s+(https?://[^\\s"\'<>]+)', 'gi');
   const iframeMatches = Array.from(cellContent.matchAll(iframeRegex));
-  
-  // Create a mapping of original positions in the HTML to maintain order
-  const contentPositions = [];
+  // Use the existing contentPositions array declared above
+  // (no need to redeclare it here)
   
   // Track iframe positions in the content
   for (const match of iframeMatches) {
