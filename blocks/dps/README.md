@@ -16,6 +16,7 @@ A powerful presentation system that transforms structured content into an intera
 - Flexible iframe support with smart URL handling
 - Improved icon handling with SVG support
 - Simplified iframe format for easier authoring
+- System Info button for debugging and diagnostics
 
 ## Content Structure
 | Title | Subtitle | Timer (minutes) | Content | Presenter Notes |
@@ -33,6 +34,7 @@ A powerful presentation system that transforms structured content into an intera
 - **Plus (+)**: Show presenter notes
 - **Minus (-)**: Hide presenter notes
 - **P**: Toggle enlarged presenter notes (shows only notes content)
+- **System Info Button**: Copy debug information to clipboard
 
 ### Image Sequence Navigation
 - Use left/right arrow keys to navigate through multiple images
@@ -455,6 +457,7 @@ The fourth column supports various image formats and sources:
 - **IMPROVED: Universal content deduplication system for all content types (icons, images, iframes, etc.)**
 - **FIXED: Content counting in parseIllustration function to prevent double-counting of any content type**
 - **NEW: Proper handling of anchor elements as either images or iframes**
+- **NEW: System Info button for copying debug information to clipboard**
 - **NEW: Support for iframe with anchor tag pattern (`iframe <a href="...">Link</a>`)**
 - **NEW: Support for multiple icon spans within a single paragraph**
 
@@ -630,3 +633,51 @@ To use presenter mode:
 - Responsive layout for all tablet sizes
 - Dark/light mode support
 - Print-friendly formatting
+
+## System Info Button
+
+The DPS block includes a System Info button in the footer for debugging and diagnostics purposes. This feature provides comprehensive information about the presentation state.
+
+### Button Location
+- Located in the footer next to the presenter toggle button
+- Displays an information icon (i)
+
+### Functionality
+When clicked, the System Info button:
+1. Collects comprehensive debug information about the presentation
+2. Formats it as a JSON object
+3. Copies it to the clipboard
+4. Displays a "System Info Copied!" tooltip for confirmation
+
+### Debug Information Included
+The copied JSON object contains:
+- **Timestamp**: When the information was copied
+- **Slides**: Complete array of all slides discovered during the presentation run
+  - Index
+  - Title
+  - Type
+  - Whether it has illustrations
+  - Discovery timestamp
+- **Illustrations**: Detailed log of every illustration and slideshow
+  - Slide title and index
+  - Illustration type
+  - Content summary
+  - Discovery timestamp
+- **Navigation State**:
+  - Current slide index
+  - Current navigation index
+  - Total slides count
+  - Total navigation points
+- **Timer State**:
+  - Remaining time
+  - Whether timer has started
+  - Whether timer is currently running
+- **Presenter State**:
+  - Whether presenter mode is active
+  - Whether notes are visible
+
+### Usage
+- Use during development or troubleshooting
+- Helpful for diagnosing issues with slide or illustration discovery
+- Provides insights into the presentation's internal state
+- Paste the copied JSON into a text editor or developer console for analysis

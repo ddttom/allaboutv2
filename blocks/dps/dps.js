@@ -36,11 +36,18 @@ export default function decorate(block) {
    * - Timer duration defaults to 25 minutes
    * - Slide transitions use 300ms for smooth animation
    * - Presenter notes start hidden by default
+   * - Debug info tracking enabled by default
    */
   const DPS_CONFIG = {
     TIMER_DURATION: 25 * 60,
     SLIDE_TRANSITION_MS: 300,
     PRESENTER_NOTES_VISIBLE: true,
+    DEBUG_INFO: {
+      enabled: true,
+      slides: [],
+      illustrations: [],
+      events: []
+    }
   };
 
   // Add dps-block class to the container for proper styling isolation
@@ -121,6 +128,7 @@ export default function decorate(block) {
   /* Create footer section with navigation and timer
    * Navigation arrows provide visual controls for slide progression
    * Timer shows remaining presentation time
+   * System Info button provides debug information
    */
   const footer = document.createElement('div');
   footer.className = 'dps-footer';
@@ -141,11 +149,18 @@ export default function decorate(block) {
       <div class="timer">${formatTime(
         presentationData.timerDuration * 60 || DPS_CONFIG.TIMER_DURATION
       )}</div>
-      <button class="presenter-toggle" aria-label="Toggle presenter view">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
-        </svg>
-      </button>
+      <div class="footer-buttons">
+        <button class="presenter-toggle" aria-label="Toggle presenter view">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+          </svg>
+        </button>
+        <button class="system-info-button" aria-label="Copy system info">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+          </svg>
+        </button>
+      </div>
     </div>
   `;
 
@@ -161,6 +176,9 @@ export default function decorate(block) {
 
   // Build slides from the parsed content
   buildSlides(presentationData.slides, slidesContainer);
+  
+  // Set up system info button
+  setupSystemInfoButton();
 
   /* Set up presentation controls
    * Handles slide navigation, timer, and presenter notes functionality
@@ -252,6 +270,19 @@ function parseRows(rows) {
      */
     const illustrationCell = cells[3];
     const illustration = parseIllustration(illustrationCell);
+    
+    // Log illustration discovery with timestamp
+    if (illustration && DPS_CONFIG.DEBUG_INFO.enabled) {
+      DPS_CONFIG.DEBUG_INFO.illustrations.push({
+        slideTitle: slideTitle,
+        slideIndex: i,
+        type: illustration.type,
+        timestamp: new Date().toISOString(),
+        content: illustration.type === 'images' ?
+          `${illustration.content.length} items` :
+          'single item'
+      });
+    }
     
     /* Process presenter notes from the fifth cell
      * Supports HTML formatting for better organization
@@ -991,6 +1022,11 @@ function parseIllustration(cell) {
  */
 function buildSlides(slides, container) {
   container.innerHTML = '';
+  
+  // Clear previous slide debug info
+  if (DPS_CONFIG.DEBUG_INFO.enabled) {
+    DPS_CONFIG.DEBUG_INFO.slides = [];
+  }
   const totalSlides = slides.length;
 
   slides.forEach((slide, index) => {
@@ -1027,6 +1063,17 @@ function buildSlides(slides, container) {
       slideElement.innerHTML = enhancedCreateSlideContent(slide);
     }
 
+    // Log slide discovery with timestamp
+    if (DPS_CONFIG.DEBUG_INFO.enabled) {
+      DPS_CONFIG.DEBUG_INFO.slides.push({
+        index,
+        title: slide.title,
+        type: slide.type || 'standard',
+        hasIllustration: !!slide.illustration,
+        timestamp: new Date().toISOString()
+      });
+    }
+    
     container.appendChild(slideElement);
   });
 
@@ -2410,4 +2457,179 @@ function addSeamlessNavigationStyles() {
     }
   `;
   document.head.appendChild(styleElement);
+}
+
+/**
+ * Set up the System Info button functionality
+ * Creates a button that copies debug information to clipboard when clicked
+ */
+function setupSystemInfoButton() {
+  const systemInfoButton = document.querySelector('.system-info-button');
+  
+  if (!systemInfoButton) return;
+  
+  systemInfoButton.addEventListener('click', () => {
+    // Log the button click event
+    if (DPS_CONFIG.DEBUG_INFO.enabled) {
+      DPS_CONFIG.DEBUG_INFO.events.push({
+        type: 'system_info_button_clicked',
+        timestamp: new Date().toISOString()
+      });
+    }
+    
+    // Generate debug information
+    const debugInfo = generateDebugInfo();
+    
+    // Copy to clipboard
+    copyToClipboard(debugInfo);
+    
+    // Show feedback to user
+    showCopyFeedback(systemInfoButton);
+  });
+  
+  // Add styles for the system info button
+  addSystemInfoStyles();
+}
+
+/**
+ * Generate debug information as a JSON string
+ * @returns {string} Formatted JSON string with debug information
+ */
+function generateDebugInfo() {
+  // Create a comprehensive debug object
+  const debugObject = {
+    timestamp: new Date().toISOString(),
+    slides: DPS_CONFIG.DEBUG_INFO.slides,
+    illustrations: DPS_CONFIG.DEBUG_INFO.illustrations,
+    events: DPS_CONFIG.DEBUG_INFO.events,
+    navigationState: {
+      currentSlideIndex,
+      currentNavIndex,
+      totalSlides: document.querySelectorAll('.slide').length,
+      totalNavPoints: flatNavigation.length
+    },
+    timerState: {
+      remainingTime,
+      hasStartedTimer,
+      isTimerRunning: !!timerInterval
+    },
+    presenterState: {
+      isPresenterMode: document.querySelector('.presenter-notes')?.classList.contains('presenter-mode') || false,
+      isNotesVisible: !document.querySelector('.presenter-notes')?.classList.contains('hidden')
+    }
+  };
+  
+  // Format as pretty JSON with 2-space indentation
+  return JSON.stringify(debugObject, null, 2);
+}
+
+/**
+ * Copy text to clipboard
+ * @param {string} text - Text to copy to clipboard
+ */
+function copyToClipboard(text) {
+  // Create a temporary textarea element
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.setAttribute('readonly', '');
+  textarea.style.position = 'absolute';
+  textarea.style.left = '-9999px';
+  document.body.appendChild(textarea);
+  
+  // Select and copy the text
+  textarea.select();
+  document.execCommand('copy');
+  
+  // Clean up
+  document.body.removeChild(textarea);
+  
+  // Log the copy event
+  if (DPS_CONFIG.DEBUG_INFO.enabled) {
+    DPS_CONFIG.DEBUG_INFO.events.push({
+      type: 'debug_info_copied',
+      timestamp: new Date().toISOString(),
+      contentLength: text.length
+    });
+  }
+}
+
+/**
+ * Show feedback to the user that the copy was successful
+ * @param {Element} button - The button element that was clicked
+ */
+function showCopyFeedback(button) {
+  // Create a tooltip element
+  const tooltip = document.createElement('div');
+  tooltip.className = 'copy-tooltip';
+  tooltip.textContent = 'System Info Copied!';
+  
+  // Position the tooltip
+  const buttonRect = button.getBoundingClientRect();
+  tooltip.style.position = 'absolute';
+  tooltip.style.top = `${buttonRect.top - 30}px`;
+  tooltip.style.left = `${buttonRect.left + (buttonRect.width / 2) - 60}px`;
+  
+  // Add the tooltip to the document
+  document.body.appendChild(tooltip);
+  
+  // Remove the tooltip after a delay
+  setTimeout(() => {
+    tooltip.classList.add('fade-out');
+    setTimeout(() => {
+      document.body.removeChild(tooltip);
+    }, 300);
+  }, 2000);
+}
+
+/**
+ * Add styles for the system info button and tooltip
+ */
+function addSystemInfoStyles() {
+  const style = document.createElement('style');
+  style.textContent = `
+    .footer-buttons {
+      display: flex;
+      align-items: center;
+    }
+    
+    .system-info-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 5px;
+      margin-left: 10px;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s;
+    }
+    
+    .system-info-button:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .system-info-button svg {
+      width: 24px;
+      height: 24px;
+      fill: white;
+    }
+    
+    .copy-tooltip {
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 14px;
+      z-index: 1000;
+      transition: opacity 0.3s;
+    }
+    
+    .copy-tooltip.fade-out {
+      opacity: 0;
+    }
+  `;
+  document.head.appendChild(style);
 }
