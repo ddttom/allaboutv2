@@ -273,17 +273,7 @@ body.dps-fullscreen main .section > div {
         margin-bottom: 20px;
     }
 }
-
-/* Remove old video container styles */
-.video-container,
-.video-container::before,
-.video-container::after,
-.drive-video,
-.drive-video.video-ended,
-.drive-video.video-ended::after {
-    display: none;
-}
-
+ 
 /* Bullet lists */
 .bullet-list {
     list-style-type: none;
@@ -490,29 +480,6 @@ body.dps-fullscreen main .section > div {
     width: 100%;
 }
 
-/* Button to toggle fullscreen */
-.fullscreen-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 5px;
-    background-color: rgba(0, 0, 0, 0.3);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.3s;
-}
-
-.fullscreen-btn:hover {
-    background-color: rgba(0, 0, 0, 0.5);
-}
 
 /* Print styles for handouts */
 @media print {
@@ -618,7 +585,7 @@ body.dps-fullscreen main .section > div {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     z-index: 1000;
     overflow-y: auto;
-    font-size: 14px;
+    font-size: 12px;
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
@@ -629,7 +596,7 @@ body.dps-fullscreen main .section > div {
 }
 
 .presenter-notes-title {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
     padding-bottom: 5px;
@@ -643,7 +610,7 @@ body.dps-fullscreen main .section > div {
 
 .presenter-notes-title::after {
     content: "⤒⤓";
-    font-size: 14px;
+    font-size: 12px;
     opacity: 0.6;
     transition: opacity 0.2s ease;
 }
@@ -670,7 +637,7 @@ body.dps-fullscreen main .section > div {
 }
 
 .presenter-notes-content {
-    line-height: 1.4;
+    line-height: 1.2;
     white-space: pre-line;
     color: #2c3e50;
     font-size: 14px; /* Base font size */
@@ -679,7 +646,7 @@ body.dps-fullscreen main .section > div {
 /* Increase font size when in presenter mode or enlarged */
 .presenter-notes.presenter-mode .presenter-notes-content,
 .presenter-notes.enlarged .presenter-notes-content {
-    font-size: 21px !important; /* 50% larger than base - !important to override inline styles */
+    font-size: 20px !important; /* 50% larger than base - !important to override inline styles */
 }
 
 /* Style bullet points in presenter notes */

@@ -32,8 +32,7 @@ A powerful presentation system that transforms structured content into an intera
 - **Escape**: Toggle navigation bar
 - **Plus (+)**: Show presenter notes
 - **Minus (-)**: Hide presenter notes
-- **R**: Refresh viewport while maintaining current slide and sub-slide state
-- **P**: Toggle enlarged presenter notes (2/3 scale)
+- **P**: Toggle enlarged presenter notes (shows only notes content)
 
 ### Image Sequence Navigation
 - Use left/right arrow keys to navigate through multiple images
@@ -146,13 +145,8 @@ The system intelligently handles HTML entities in iframe definitions:
 - Can be enlarged to 50% width with 'P' key while staying pinned to the left
 - Always stays pinned to the left of the viewport and grows to the right when enlarged
 - Font size increases by 50% when enlarged for better readability
-- Light grey background with dark text for readability
-- Supports HTML formatting:
-  - Bullet points
-  - Bold text (highlighted in blue)
-  - Code blocks
-  - Line breaks
-- Toggle visibility with + and - keys
+- When using 'P' key, only the notes are shown (no title or bullet points)
+- When using the note icon, the notes are shown with slide title and bullet points
 
 ## Styling
 - Modern, clean design
@@ -342,6 +336,8 @@ The fourth column supports various image formats and sources:
 - Can be enlarged to 50% width with 'P' key for better visibility while staying pinned to the left
 - Presenter notes always stay pinned to the left of the viewport and grow to the right when enlarged
 - Font size increases by 50% when enlarged for better readability
+- 'P' key shows only the notes content for focused reading
+- Note icon shows enhanced content with slide title and bullet points for comprehensive view
 - Images maintain aspect ratio while using available space
 - Timer starts automatically after first slide
 - Print mode excludes presenter notes and navigation elements
@@ -398,6 +394,8 @@ Content authors should structure their content as follows:
    - Notes state (hidden/visible) persists across slides
    - Appears in bottom left quarter of viewport
    - Automatically updates when changing slides
+   - 'P' key shows only notes content
+   - Note icon shows notes with slide title and bullet points
 
 ## Usage Guide for Authors
 
@@ -461,6 +459,8 @@ The DPS system includes a dedicated presenter mode that:
 - Extracts and displays only the presenter notes from slides
 - Supports toggling between normal (31.25% width) and enlarged (50% width) views while staying pinned to the left
 - Increases font size by 50% when enlarged for better readability
+- 'P' key shows only notes content for focused reading
+- Note icon shows enhanced content with slide title and bullet points for comprehensive view
 - Provides a clean, tablet-optimized interface
 - Matches the existing DPS styling for consistency
 - Supports all the same navigation methods as DPS
