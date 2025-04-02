@@ -43,6 +43,12 @@ export default function decorate(block) {
     PRESENTER_NOTES_VISIBLE: true,
   };
 
+  // Add dps-block class to the container for proper styling isolation
+  block.classList.add('dps-block')
+    // Add styles for enhanced image sequence navigation
+    addImageSequenceStyles();
+  
+
   /* Force full viewport mode by removing existing page elements
    * This ensures the presentation takes up the entire screen without interference
    * from other page elements
@@ -418,6 +424,127 @@ function extractIconName(className) {
   return null;
 }
 
+
+function organizeImageSequence(illustrations) {
+  if (!illustrations || !Array.isArray(illustrations)) return illustrations;
+  
+  // Group items by type
+  const groups = {};
+  illustrations.forEach(item => {
+    if (!groups[item.type]) {
+      groups[item.type] = [];
+    }
+    groups[item.type].push(item);
+  });
+  
+  // Define display order preference
+  const orderPreference = ['icon', 'svg', 'image', 'picture', 'iframe'];
+  
+  // Create a new array with items ordered by group
+  const orderedIllustrations = [];
+  orderPreference.forEach(type => {
+    if (groups[type]) {
+      orderedIllustrations.push(...groups[type]);
+    }
+  });
+  
+  // Add any remaining types not in our preference list
+  Object.keys(groups).forEach(type => {
+    if (!orderPreference.includes(type)) {
+      orderedIllustrations.push(...groups[type]);
+    }
+  });
+  
+  return orderedIllustrations;
+}
+
+function createImageSequenceHTML(illustrations) {
+  if (!illustrations || !Array.isArray(illustrations) || illustrations.length === 0) {
+    return '';
+  }
+  
+  let html = '<div class="image-sequence">';
+  
+  // Add each item to the sequence with appropriate styling
+  illustrations.forEach((item, index) => {
+    const isActive = index === 0 ? 'active' : '';
+    const typeLabel = item.type.charAt(0).toUpperCase() + item.type.slice(1);
+    
+    // Create container with label
+    html += `<div class="sequence-item-container ${isActive}">`;
+    
+    // Add label if there are multiple items
+    if (illustrations.length > 1) {
+      html += `<div class="sequence-item-label">${typeLabel} ${index + 1}/${illustrations.length}</div>`;
+    }
+    
+    // Add the content based on type
+    if (item.type === 'iframe') {
+      html += `<div class="iframe-container sequence-image ${isActive}" style="width: 100%; height: 100%;">
+          ${item.content}
+        </div>`;
+    } else if (item.type === 'picture') {
+      html += `<div class="sequence-image ${isActive}">
+          ${item.content}
+        </div>`;
+    } else if (item.type === 'svg') {
+      html += `<div class="sequence-image ${isActive}">
+          ${item.content}
+        </div>`;
+    } else if (item.type === 'icon') {
+      html += `<img
+          src="${item.content}"
+          alt="${item.alt}"
+          class="sequence-image icon-image ${isActive}"
+          data-icon-name="${item.iconName}">`;
+    } else if (item.type === 'image') {
+      html += `<img
+          src="${item.content}"
+          alt="${item.alt || ''}"
+          class="sequence-image ${isActive}">`;
+    } else {
+      html += `<div class="sequence-image text-container ${isActive}">
+          ${item.content}
+        </div>`;
+    }
+    
+    html += '</div>'; // Close sequence-item-container
+  });
+  
+  html += '</div>'; // Close image-sequence
+  return html;
+}
+
+function addImageSequenceStyles() {
+  const style = document.createElement('style');
+  style.textContent = `
+    .sequence-item-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      visibility: hidden;
+    }
+    
+    .sequence-item-container.active {
+      visibility: visible;
+    }
+    
+    .sequence-item-label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 2px 6px;
+      font-size: 12px;
+      border-radius: 0 0 4px 0;
+      z-index: 5;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+
 /**
  * Parse illustration from a cell
  * Supports multiple content types: images, SVGs, iframes
@@ -670,9 +797,6 @@ function buildSlides(slides, container) {
   const totalSlides = slides.length;
 
   slides.forEach((slide, index) => {
-    /* Create slide element with unique ID
-     * Stores presenter notes in dataset for easy access
-     */
     const slideElement = document.createElement('div');
     slideElement.id = `slide-${index}`;
     slideElement.className = 'slide';
@@ -681,10 +805,8 @@ function buildSlides(slides, container) {
       slideElement.dataset.presenterNotes = slide.presenterNotes;
     }
 
-    /* Special handling for Q&A slides
-     * Creates a distinct layout for the final slide
-     */
     if (slide.type === 'qanda') {
+      // Keep original Q&A slide handling
       slideElement.innerHTML = `
         <div class="slide-content">
           <h2 class="slide-title">${slide.title}</h2>
@@ -704,14 +826,13 @@ function buildSlides(slides, container) {
         </div>
       `;
     } else {
-      // Create standard slide content
-      slideElement.innerHTML = createSlideContent(slide);
+      // Use enhanced slide content for regular slides
+      slideElement.innerHTML = enhancedCreateSlideContent(slide);
     }
 
     container.appendChild(slideElement);
   });
 
-  // First slide will be shown by setupControls
 }
 
 /**
@@ -826,7 +947,34 @@ function createSlideContent(slide) {
   
   return slideContent;
 }
+// Store reference to the original function
+const originalCreateSlideContent = createSlideContent;
 
+// Create an enhanced version
+function enhancedCreateSlideContent(slide) {
+  // Get the basic slide content
+  let slideContent = originalCreateSlideContent(slide);
+  
+  // If the slide has an illustration with multiple images, enhance it
+  if (slide.illustration && slide.illustration.type === 'images' && 
+      slide.illustration.content && slide.illustration.content.length > 1) {
+    
+    // Find the image sequence in the generated content
+    const sequenceMatch = slideContent.match(/<div class="image-sequence">[\s\S]*?<\/div>/);
+    if (sequenceMatch) {
+      // Organize the illustrations by type
+      const organizedIllustrations = organizeImageSequence(slide.illustration.content);
+      
+      // Create improved HTML for the image sequence
+      const enhancedSequence = createImageSequenceHTML(organizedIllustrations);
+      
+      // Replace the original sequence with our enhanced version
+      slideContent = slideContent.replace(sequenceMatch[0], enhancedSequence);
+    }
+  }
+  
+  return slideContent;
+}
 
 /**
  * Set up presentation controls
