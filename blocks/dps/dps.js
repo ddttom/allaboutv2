@@ -1,3 +1,4 @@
+
 /**
  * Dynamic Presentation System (DPS) Block
  * Transforms structured content from Google Docs tables into an interactive presentation
@@ -1638,4 +1639,3 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
   // Setup resize handler
   setupResizeHandler();
 }
-
