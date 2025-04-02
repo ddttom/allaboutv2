@@ -1142,15 +1142,16 @@ function togglePresenterMode() {
     presenterButton.classList.remove('active');
     
     presenterNotes.classList.remove('presenter-mode');
-    presenterNotes.style.width = '';
-    presenterNotes.style.left = '';
-    presenterNotes.style.height = '';
-    presenterNotes.style.position = '';
+    presenterNotes.style.width = '31.25vw'; // Original width from CSS
+    presenterNotes.style.left = '20px'; // Keep pinned to left
+    presenterNotes.style.height = '25vh'; // Original height from CSS
+    presenterNotes.style.position = 'fixed';
     presenterNotes.style.top = '';
-    presenterNotes.style.zIndex = '';
+    presenterNotes.style.bottom = '60px'; // Position at bottom as in CSS
+    presenterNotes.style.zIndex = '1000';
     presenterNotes.style.backgroundColor = '';
     presenterNotes.style.padding = '';
-    presenterNotes.style.overflow = '';
+    presenterNotes.style.overflow = 'auto';
   }
 }
 
