@@ -29,7 +29,7 @@ function formatTime(seconds) {
 
 export default function decorate(block) {
   // Add dps-block class to the container for proper styling isolation
-  block.classList.add("dps-block");
+  block.classList.add('dps-block');
 
   /* Configuration object for presentation settings
    * - Timer duration defaults to 25 minutes
@@ -77,32 +77,32 @@ export default function decorate(block) {
   /* Create the main presentation container
    * This will hold all presentation elements in a structured layout
    */
-  const presentationContainer = document.createElement("div");
-  presentationContainer.className = "dps-container";
+  const presentationContainer = document.createElement('div');
+  presentationContainer.className = 'dps-container';
 
   /* Create header section with title and subtitle
    */
-  const header = document.createElement("div");
-  header.className = "dps-header";
+  const header = document.createElement('div');
+  header.className = 'dps-header';
   header.innerHTML = `
     <div class="header-content">
       <h1 id="presentation-title">${presentationData.title}</h1>
-      <p id="presentation-subtitle">${presentationData.subtitle || ""}</p>
+      <p id="presentation-subtitle">${presentationData.subtitle || ''}</p>
     </div>
   `;
 
   /* Create slides container
    * This will hold all slides and handle their display/hide logic
    */
-  const slidesContainer = document.createElement("div");
-  slidesContainer.className = "slides-container";
-  slidesContainer.id = "slides-container";
+  const slidesContainer = document.createElement('div');
+  slidesContainer.className = 'slides-container';
+  slidesContainer.id = 'slides-container';
 
   /* Create presenter notes container
    * Initially hidden, can be toggled with keyboard shortcuts
    */
-  const presenterNotesContainer = document.createElement("div");
-  presenterNotesContainer.className = "presenter-notes hidden";
+  const presenterNotesContainer = document.createElement('div');
+  presenterNotesContainer.className = 'presenter-notes hidden';
   presenterNotesContainer.innerHTML = `
     <div class="presenter-notes-title">
       <span>Presenter Notes (-)hide (+)show</span>
@@ -115,8 +115,8 @@ export default function decorate(block) {
    * Navigation arrows provide visual controls for slide progression
    * Timer shows remaining presentation time
    */
-  const footer = document.createElement("div");
-  footer.className = "dps-footer";
+  const footer = document.createElement('div');
+  footer.className = 'dps-footer';
   footer.innerHTML = `
     <div class="footer-content">
       <div class="nav-arrows">
@@ -149,7 +149,7 @@ export default function decorate(block) {
   presentationContainer.appendChild(footer);
 
   // Replace the block content with our presentation
-  block.textContent = "";
+  block.textContent = '';
   block.appendChild(presentationContainer);
 
   // Build slides from the parsed content
@@ -168,7 +168,7 @@ export default function decorate(block) {
   /* Force fullscreen mode immediately
    * This ensures the presentation starts in the correct display mode
    */
-  document.body.classList.add("dps-fullscreen");
+  document.body.classList.add('dps-fullscreen');
   window.scrollTo(0, 0);
 }
 
@@ -186,10 +186,10 @@ function parseRows(rows) {
   /* Extract configuration from first row
    * Contains title, subtitle, and timer duration
    */
-  const configRow = rows[0].querySelector("div");
+  const configRow = rows[0].querySelector('div');
   const title = configRow.textContent.trim();
-  const subtitle = rows[0].querySelector("div:nth-child(2)")?.textContent.trim() || "";
-  const timerDuration = parseInt(rows[0].querySelector("div:nth-child(3)")?.textContent.trim() || "25", 10);
+  const subtitle = rows[0].querySelector('div:nth-child(2)')?.textContent.trim() || '';
+  const timerDuration = parseInt(rows[0].querySelector('div:nth-child(3)')?.textContent.trim() || '25', 10);
 
   // Process remaining rows as slides
   const slides = [];
@@ -205,7 +205,7 @@ function parseRows(rows) {
      * Each cell contains specific content type
      */
     const slideTitle = cells[0]?.textContent.trim() || `Slide ${i}`;
-    const introText = cells[1]?.textContent.trim() || "";
+    const introText = cells[1]?.textContent.trim() || '';
     
     /* Process bullet points from the third cell
      * Supports both bullet points and plain text
@@ -218,7 +218,7 @@ function parseRows(rows) {
        * Splits content by line breaks and identifies content type
        */
       const bulletContent = bulletPointsCell.innerHTML;
-      const bulletItems = bulletContent.split("<br>");
+      const bulletItems = bulletContent.split('<br>');
       
       bulletItems.forEach(item => {
         const trimmedItem = item.trim();
@@ -228,8 +228,8 @@ function parseRows(rows) {
            * - HTML: Contains HTML tags
            * - Bullet points: Contains bullet markers
            */
-          const isPlainText = !trimmedItem.includes("•") && !trimmedItem.includes("<li>");
-          const isHTML = trimmedItem.includes("<") && trimmedItem.includes(">");
+          const isPlainText = !trimmedItem.includes('•') && !trimmedItem.includes('<li>');
+          const isHTML = trimmedItem.includes('<') && trimmedItem.includes('>');
           
           bulletPoints.push({
             text: trimmedItem,
@@ -249,7 +249,7 @@ function parseRows(rows) {
     /* Process presenter notes from the fifth cell
      * Supports HTML formatting for better organization
      */
-    const presenterNotes = cells[4]?.innerHTML.trim() || "";
+    const presenterNotes = cells[4]?.innerHTML.trim() || '';
     
     // Add slide to the collection
     slides.push({
@@ -265,10 +265,10 @@ function parseRows(rows) {
    * Provides a dedicated space for audience interaction
    */
   slides.push({
-    type: "qanda",
-    title: "Questions & Answers",
-    subtitle: "Your feedback and questions are valuable",
-    thankYouText: "Thank You For Your Attention"
+    type: 'qanda',
+    title: 'Questions & Answers',
+    subtitle: 'Your feedback and questions are valuable',
+    thankYouText: 'Thank You For Your Attention'
   });
   
   return {
@@ -286,7 +286,7 @@ function parseRows(rows) {
  * @returns {boolean} True if the URL appears to be an image
  */
 function isImageUrl(url) {
-  return url.match(/\.(jpg|jpeg|png|gif|svg|webp|bmp|ico|tiff)($|\?)/i) !== null;
+  return url.match(new RegExp('\\.(jpg|jpeg|png|gif|svg|webp|bmp|ico|tiff)($|\\?)', 'i')) !== null;
 }
 
 /**
@@ -300,25 +300,25 @@ function extractIframeContent(content) {
   /* Check for iframe tag in various formats
    * Supports standard iframe tags, URL-only content, and HTML encoded content
    */
-  const iframeMatch = content.match(/<iframe[^>]*src=["']([^"']*)["'][^>]*>/i) || 
-                      content.match(/<iframe[^>]*>([^<]*)<\/iframe>/i) ||
-                      content.match(/<iframe\s+([^>]*)>/i);
+  const iframeMatch = content.match(new RegExp('<iframe[^>]*src=["\'](\\S*)["\'][^>]*>', 'i')) ||
+                      content.match(new RegExp('<iframe[^>]*>([^<]*)</iframe>', 'i')) ||
+                      content.match(new RegExp('<iframe\\s+([^>]*)>', 'i'));
   
   if (iframeMatch) {
     /* Extract src from iframe tag
      * Handles various URL formats and encodings
      */
-    let src = "";
+    let src = '';
     if (iframeMatch[1]) {
       if (iframeMatch[1].includes('src=')) {
-        const srcMatch = iframeMatch[1].match(/src=["']([^"']*)["']/i);
+        const srcMatch = iframeMatch[1].match(new RegExp('src=["\'](\\S*)["\']', 'i'));
         if (srcMatch && srcMatch[1]) {
           src = srcMatch[1];
         }
       } else if (iframeMatch[1].startsWith('http')) {
         src = iframeMatch[1];
       } else if (iframeMatch[1].includes('http')) {
-        const urlMatch = iframeMatch[1].match(/(https?:\/\/[^\s"'<>]+)/i);
+        const urlMatch = iframeMatch[1].match(new RegExp('(https?://[^\\s"\'<>]+)', 'i'));
         if (urlMatch) {
           src = urlMatch[0];
         }
@@ -327,7 +327,7 @@ function extractIframeContent(content) {
     
     if (src) {
       return {
-        type: "iframe",
+        type: 'iframe',
         src,
         content: `<iframe src="${src}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
       };
@@ -338,10 +338,10 @@ function extractIframeContent(content) {
    * Makes it easier for authors to add iframes
    * This handles both standalone "iframe URL" and "iframe URL" within other content
    */
-  const simpleIframeMatch = content.match(/iframe\s+(https?:\/\/[^\s"'<>]+)/i);
+  const simpleIframeMatch = content.match(new RegExp('iframe\\s+(https?://[^\\s"\'<>]+)', 'i'));
   if (simpleIframeMatch && simpleIframeMatch[1]) {
     return {
-      type: "iframe",
+      type: 'iframe',
       src: simpleIframeMatch[1],
       content: `<iframe src="${simpleIframeMatch[1]}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
     };
@@ -364,37 +364,37 @@ function extractIframeContent(content) {
  */
 function extractUrl(content) {
   // First check for URLs in anchor tags
-  const anchorMatch = content.match(/<a[^>]*href=["']([^"']*)["'][^>]*>(.*?)<\/a>/i);
+  const anchorMatch = content.match(new RegExp('<a[^>]*href=["\'](\\S*)["\'][^>]*>(.*?)</a>', 'i'));
   if (anchorMatch && anchorMatch[1] && anchorMatch[1].startsWith('http')) {
     const url = anchorMatch[1];
     // Determine if this is an image URL or an iframe URL based on extension
     if (isImageUrl(url)) {
       return {
-        type: "image",
-        url: url
+        type: 'image',
+        url
       };
     } else {
       return {
-        type: "iframe",
-        url: url
+        type: 'iframe',
+        url
       };
     }
   }
   
   // Then check for raw URLs
-  const urlMatches = content.match(/(https?:\/\/[^\s"'<>]+)/gi);
+  const urlMatches = content.match(new RegExp('(https?://[^\\s"\'<>]+)', 'gi'));
   if (urlMatches && urlMatches.length > 0) {
     const url = urlMatches[0]; // Use the first URL found
     // Determine if this is an image URL or an iframe URL based on extension
     if (isImageUrl(url)) {
       return {
-        type: "image",
-        url: url
+        type: 'image',
+        url
       };
     } else {
       return {
-        type: "iframe",
-        url: url
+        type: 'iframe',
+        url
       };
     }
   }
@@ -410,7 +410,7 @@ function extractUrl(content) {
  * @returns {string|null} The extracted icon name or null if not found
  */
 function extractIconName(className) {
-  const iconClassMatch = className.match(/icon-([a-zA-Z0-9_-]+)/);
+  const iconClassMatch = className.match(new RegExp('icon-([a-zA-Z0-9_-]+)'));
   if (iconClassMatch && iconClassMatch[1]) {
     return iconClassMatch[1];
   }
@@ -434,21 +434,21 @@ function parseIllustration(cell) {
   
   // Clean up content - remove lone <br> tags and whitespace
   cellContent = cellContent
-    .replace(/<p>\s*<br>\s*<\/p>/gi, '') // Remove empty paragraphs with just <br>
-    .replace(/<br>\s*(?=<)/gi, '') // Remove <br> tags at start of elements
-    .replace(/\s*<br>\s*(?=\w)/gi, ' ') // Replace <br> followed by text with space
-    .replace(/\s+/g, ' ') // Collapse multiple whitespace
+    .replace(new RegExp('<p>\\s*<br>\\s*</p>', 'gi'), '') // Remove empty paragraphs with just <br>
+    .replace(new RegExp('<br>\\s*(?=<)', 'gi'), '') // Remove <br> tags at start of elements
+    .replace(new RegExp('\\s*<br>\\s*(?=\\w)', 'gi'), ' ') // Replace <br> followed by text with space
+    .replace(new RegExp('\\s+', 'g'), ' ') // Collapse multiple whitespace
     .trim();
 
   // Special handling for simplified iframe format wrapped in paragraphs or other elements
-  const simplifiedIframeRegex = /<(?:p|div)[^>]*>\s*iframe\s+(https?:\/\/[^\s"'<>]+)\s*<\/(?:p|div)>/gi;
+  const simplifiedIframeRegex = new RegExp('<(?:p|div)[^>]*>\\s*iframe\\s+(https?://[^\\s"\'<>]+)\\s*</(?:p|div)>', 'gi');
   const simplifiedIframeMatches = Array.from(cellContent.matchAll(simplifiedIframeRegex));
   
   for (const match of simplifiedIframeMatches) {
     const url = match[1];
-    if (!illustrations.some(item => item.type === "iframe" && item.src === url)) {
+    if (!illustrations.some(item => item.type === 'iframe' && item.src === url)) {
       illustrations.push({
-        type: "iframe",
+        type: 'iframe',
         src: url,
         content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
       });
@@ -456,15 +456,15 @@ function parseIllustration(cell) {
   }
   
   // Also check for iframe format without HTML tags
-  const plainIframeRegex = /iframe\s+(https?:\/\/[^\s"'<>]+)/gi;
+  const plainIframeRegex = new RegExp('iframe\\s+(https?://[^\\s"\'<>]+)', 'gi');
   const plainIframeMatches = Array.from(cellContent.matchAll(plainIframeRegex));
   
   for (const match of plainIframeMatches) {
     const url = match[1];
     // Skip if already processed by the HTML version above
-    if (!illustrations.some(item => item.type === "iframe" && item.src === url)) {
+    if (!illustrations.some(item => item.type === 'iframe' && item.src === url)) {
       illustrations.push({
-        type: "iframe",
+        type: 'iframe',
         src: url,
         content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
       });
@@ -472,12 +472,12 @@ function parseIllustration(cell) {
   }
   
   // Process icon spans first - convert to image tags
-  const iconRegex = /<span\s+class=["'][^"']*icon[^"']*["'][^>]*>.*?<\/span>/gi;
+  const iconRegex = new RegExp('<span\\s+class=["|\'][^"\']*icon[^"\']*["|\'][^>]*>.*?</span>', 'gi');
   const iconMatches = Array.from(cellContent.matchAll(iconRegex));
   
   for (const match of iconMatches) {
     const iconHtml = match[0];
-    const classMatch = iconHtml.match(/class=["']([^"']*)["']/i);
+    const classMatch = iconHtml.match(new RegExp('class=["\'](\\S*)["\']', 'i'));
     
     if (classMatch && classMatch[1]) {
       const classString = classMatch[1];
@@ -485,8 +485,8 @@ function parseIllustration(cell) {
       
       if (iconName) {
         illustrations.push({
-          type: "icon",
-          iconName: iconName,
+          type: 'icon',
+          iconName,
           content: `/icons/${iconName}.svg`,
           alt: `${iconName} Illustration`
         });
@@ -508,7 +508,7 @@ function parseIllustration(cell) {
       }
       
       // Check for URLs in the paragraph - process all URLs, not just the first one
-      const urlMatches = paragraphHtml.match(/(https?:\/\/[^\s"'<>]+)/gi);
+      const urlMatches = paragraphHtml.match(new RegExp('(https?://[^\\s"\'<>]+)', 'gi'));
       if (urlMatches) {
         for (const url of urlMatches) {
           // Skip if this URL is already part of an iframe that was processed
@@ -516,20 +516,20 @@ function parseIllustration(cell) {
           
           // Skip if this URL is already in the illustrations
           if (illustrations.some(item =>
-            (item.type === "iframe" && item.src === url) ||
-            (item.type === "image" && item.content === url)
+            (item.type === 'iframe' && item.src === url) ||
+            (item.type === 'image' && item.content === url)
           )) continue;
           
           // Add as image or iframe based on extension
           if (isImageUrl(url)) {
             illustrations.push({
-              type: "image",
+              type: 'image',
               content: url,
-              alt: "Image"
+              alt: 'Image'
             });
           } else {
             illustrations.push({
-              type: "iframe",
+              type: 'iframe',
               src: url,
               content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
             });
@@ -538,7 +538,7 @@ function parseIllustration(cell) {
       }
       
       // Also check for URLs in anchor tags
-      const anchorRegex = /<a[^>]*href=["']([^"']*)["'][^>]*>.*?<\/a>/gi;
+      const anchorRegex = new RegExp('<a[^>]*href=["\'](\\S*)["\'][^>]*>.*?</a>', 'gi');
       const anchorMatches = Array.from(paragraphHtml.matchAll(anchorRegex));
       
       for (const match of anchorMatches) {
@@ -546,20 +546,20 @@ function parseIllustration(cell) {
         if (url && url.startsWith('http')) {
           // Skip if this URL is already in the illustrations
           if (illustrations.some(item =>
-            (item.type === "iframe" && item.src === url) ||
-            (item.type === "image" && item.content === url)
+            (item.type === 'iframe' && item.src === url) ||
+            (item.type === 'image' && item.content === url)
           )) continue;
           
           // Add as image or iframe based on extension
           if (isImageUrl(url)) {
             illustrations.push({
-              type: "image",
+              type: 'image',
               content: url,
-              alt: "Image"
+              alt: 'Image'
             });
           } else {
             illustrations.push({
-              type: "iframe",
+              type: 'iframe',
               src: url,
               content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
             });
@@ -576,10 +576,10 @@ function parseIllustration(cell) {
       const iconSpan = element.querySelector('span.icon');
       if (iconSpan) {
         const iconName = extractIconName(iconSpan.className);
-        if (iconName && !illustrations.some(item => item.type === "icon" && item.iconName === iconName)) {
+        if (iconName && !illustrations.some(item => item.type === 'icon' && item.iconName === iconName)) {
           illustrations.push({
-            type: "icon",
-            iconName: iconName,
+            type: 'icon',
+            iconName,
             content: `/icons/${iconName}.svg`,
             alt: `${iconName} Illustration`
           });
@@ -597,7 +597,7 @@ function parseIllustration(cell) {
     // Process based on element type
     if (element.tagName === 'SVG' || elementHtml.includes('<svg')) {
       illustrations.push({
-        type: "svg",
+        type: 'svg',
         content: elementHtml
       });
     }
@@ -607,7 +607,7 @@ function parseIllustration(cell) {
       
       if (picture) {
         illustrations.push({
-          type: "picture",
+          type: 'picture',
           content: picture.outerHTML
         });
       }
@@ -618,9 +618,9 @@ function parseIllustration(cell) {
       
       if (img) {
         illustrations.push({
-          type: "image",
+          type: 'image',
           content: img.src,
-          alt: img.alt || ""
+          alt: img.alt || ''
         });
       }
     }
@@ -629,8 +629,8 @@ function parseIllustration(cell) {
       const iconName = extractIconName(element.className);
       if (iconName) {
         illustrations.push({
-          type: "icon",
-          iconName: iconName,
+          type: 'icon',
+          iconName,
           content: `/icons/${iconName}.svg`,
           alt: `${iconName} Illustration`
         });
@@ -649,15 +649,15 @@ function parseIllustration(cell) {
       else {
         const urlData = extractUrl(content);
         if (urlData) {
-          if (urlData.type === "image") {
+          if (urlData.type === 'image') {
             illustrations.push({
-              type: "image",
+              type: 'image',
               content: urlData.url,
-              alt: "Image"
+              alt: 'Image'
             });
           } else {
             illustrations.push({
-              type: "iframe",
+              type: 'iframe',
               src: urlData.url,
               content: `<iframe src="${urlData.url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
             });
@@ -679,15 +679,15 @@ function parseIllustration(cell) {
     } else {
       const urlData = extractUrl(textContent);
       if (urlData) {
-        if (urlData.type === "image") {
+        if (urlData.type === 'image') {
           illustrations.push({
-            type: "image",
+            type: 'image',
             content: urlData.url,
-            alt: "Image"
+            alt: 'Image'
           });
         } else {
           illustrations.push({
-            type: "iframe",
+            type: 'iframe',
             src: urlData.url,
             content: `<iframe src="${urlData.url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
           });
@@ -702,7 +702,7 @@ function parseIllustration(cell) {
   }
   
   // Process HTML encoded iframes that might be directly in the cell innerHTML
-  const htmlEncodedIframeRegex = /(?:&lt;|&#x3C;)iframe(?:\s+|&gt;)(.*?)(?:&lt;\/iframe&gt;|(?:\/)?&gt;)/gi;
+  const htmlEncodedIframeRegex = new RegExp('(?:&lt;|&#x3C;)iframe(?:\\s+|&gt;)(.*?)(?:&lt;\\/iframe&gt;|(?:\\/)?&gt;)', 'gi');
   const htmlEncodedMatches = Array.from(cellContent.matchAll(htmlEncodedIframeRegex));
   
   for (const match of htmlEncodedMatches) {
@@ -710,16 +710,16 @@ function parseIllustration(cell) {
     const contentPart = match[1] || '';
     
     // Extract URL from content
-    const urlMatch = contentPart.match(/(https?:\/\/[^\s"'&<>]+)/i);
+    const urlMatch = contentPart.match(new RegExp('(https?://[^\\s"\'&<>]+)', 'i'));
     if (urlMatch && urlMatch[1]) {
       // Check if this URL is already included
       const url = urlMatch[1];
-      if (!illustrations.some(item => 
-        (item.type === "iframe" && item.src === url) ||
+      if (!illustrations.some(item =>
+        (item.type === 'iframe' && item.src === url) ||
         (item.content && typeof item.content === 'string' && item.content.includes(url))
       )) {
         illustrations.push({
-          type: "iframe",
+          type: 'iframe',
           src: url,
           content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
         });
@@ -730,7 +730,7 @@ function parseIllustration(cell) {
   // Return illustrations if found, null otherwise
   if (illustrations.length > 0) {
     return {
-      type: "images",
+      type: 'images',
       content: illustrations
     };
   }
@@ -746,16 +746,16 @@ function parseIllustration(cell) {
  * @param {Element} container - Container element for slides
  */
 function buildSlides(slides, container) {
-  container.innerHTML = "";
+  container.innerHTML = '';
   const totalSlides = slides.length;
 
   slides.forEach((slide, index) => {
     /* Create slide element with unique ID
      * Stores presenter notes in dataset for easy access
      */
-    const slideElement = document.createElement("div");
+    const slideElement = document.createElement('div');
     slideElement.id = `slide-${index}`;
-    slideElement.className = "slide";
+    slideElement.className = 'slide';
     
     if (slide.presenterNotes) {
       slideElement.dataset.presenterNotes = slide.presenterNotes;
@@ -764,7 +764,7 @@ function buildSlides(slides, container) {
     /* Special handling for Q&A slides
      * Creates a distinct layout for the final slide
      */
-    if (slide.type === "qanda") {
+    if (slide.type === 'qanda') {
       slideElement.innerHTML = `
         <div class="slide-content">
           <h2 class="slide-title">${slide.title}</h2>
@@ -779,7 +779,7 @@ function buildSlides(slides, container) {
                 <text x="100" y="130" text-anchor="middle" fill="white" font-size="18" font-weight="bold">QUESTIONS</text>
               </svg>
             </div>
-            <p class="thank-you-text">${slide.thankYouText || "Thank You"}</p>
+            <p class="thank-you-text">${slide.thankYouText || 'Thank You'}</p>
           </div>
         </div>
       `;
@@ -801,11 +801,9 @@ function buildSlides(slides, container) {
  * @returns {string} HTML content for the slide
  */
 function createSlideContent(slide) {
-  let slideContent = `
-    <div class="slide-content">
-      <h2 class="slide-title">${slide.title}</h2>
-      <div class="slide-content-text">
-  `;
+  let slideContent = `<div class="slide-content">
+    <h2 class="slide-title">${slide.title}</h2>
+    <div class="slide-content-text">`;
 
   /* Add content text or bullet points */
   if (slide.introText) {
@@ -835,85 +833,76 @@ function createSlideContent(slide) {
           point.subPoints.forEach((subPoint) => {
             slideContent += `<li>${subPoint}</li>`;
           });
-          slideContent += "</ul>";
+          slideContent += '</ul>';
         }
 
-        slideContent += "</li>";
+        slideContent += '</li>';
       }
     });
-    slideContent += "</ul>";
+    slideContent += '</ul>';
   }
 
-  slideContent += "</div>"; // Close slide-content-text
+  slideContent += '</div>'; // Close slide-content-text
 
   /* Add illustration if provided */
   if (slide.illustration) {
-    slideContent += `
-      <div class="illustration">
-    `;
+    slideContent += '<div class="illustration">';
     
-    if (slide.illustration.type === "images") {
-      slideContent += `<div class="image-sequence">`;
+    if (slide.illustration.type === 'images') {
+      slideContent += '<div class="image-sequence">';
       
       // Properly handle multiple images in a sequence
       slide.illustration.content.forEach((item, index) => {
         const isActive = index === 0 ? 'active' : '';
         
-        if (item.type === "iframe") {
-          slideContent += `
-            <div class="iframe-container sequence-image ${isActive}" style="width: 100%; height: 100%;">
+        if (item.type === 'iframe') {
+          slideContent += `<div class="iframe-container sequence-image ${isActive}" style="width: 100%; height: 100%;">
               ${item.content}
             </div>`;
-        } else if (item.type === "picture") {
-          slideContent += `
-            <div class="sequence-image ${isActive}">
+        } else if (item.type === 'picture') {
+          slideContent += `<div class="sequence-image ${isActive}">
               ${item.content}
             </div>`;
-        } else if (item.type === "svg") {
-          slideContent += `
-            <div class="sequence-image ${isActive}">
+        } else if (item.type === 'svg') {
+          slideContent += `<div class="sequence-image ${isActive}">
               ${item.content}
             </div>`;
-        } else if (item.type === "icon") {
+        } else if (item.type === 'icon') {
           // Convert icon to image tag with correct path
-          slideContent += `
-            <img 
-              src="${item.content}" 
-              alt="${item.alt}" 
+          slideContent += `<img
+              src="${item.content}"
+              alt="${item.alt}"
               class="sequence-image icon-image ${isActive}"
               data-icon-name="${item.iconName}">`;
-        } else if (item.type === "image") {
-          slideContent += `
-            <img 
-              src="${item.content}" 
-              alt="${item.alt || ''}" 
+        } else if (item.type === 'image') {
+          slideContent += `<img
+              src="${item.content}"
+              alt="${item.alt || ''}"
               class="sequence-image ${isActive}">`;
         } else {
-          slideContent += `
-            <div class="sequence-image text-container ${isActive}">
+          slideContent += `<div class="sequence-image text-container ${isActive}">
               ${item.content}
             </div>`;
         }
       });
       
-      slideContent += `</div>`;
-    } else if (slide.illustration.type === "iframe") {
-      slideContent += `
-        <div class="iframe-container" style="width: 100%; height: 100%;">
+      slideContent += '</div>';
+    } else if (slide.illustration.type === 'iframe') {
+      slideContent += `<div class="iframe-container" style="width: 100%; height: 100%;">
           ${slide.illustration.content}
         </div>`;
-    } else if (slide.illustration.type === "svg") {
+    } else if (slide.illustration.type === 'svg') {
       slideContent += slide.illustration.content;
-    } else if (slide.illustration.type === "picture") {
+    } else if (slide.illustration.type === 'picture') {
       slideContent += slide.illustration.content;
     } else {
       slideContent += `<img src="${slide.illustration.content}" alt="${slide.title} illustration">`;
     }
     
-    slideContent += `</div>`; // Close illustration
+    slideContent += '</div>'; // Close illustration
   }
 
-  slideContent += "</div>"; // Close slide-content
+  slideContent += '</div>'; // Close slide-content
   
   return slideContent;
 }
@@ -930,10 +919,10 @@ function createSlideContent(slide) {
  */
 function setupControls(slidesContainer, presenterNotesContainer, timerDuration, config) {
   // Fix: Remove console.time calls that were causing issues
-  const slides = slidesContainer.querySelectorAll(".slide");
-  const notesContent = presenterNotesContainer.querySelector(".presenter-notes-content");
-  const prevButton = document.querySelector(".prev-slide");
-  const nextButton = document.querySelector(".next-slide");
+  const slides = slidesContainer.querySelectorAll('.slide');
+  const notesContent = presenterNotesContainer.querySelector('.presenter-notes-content');
+  const prevButton = document.querySelector('.prev-slide');
+  const nextButton = document.querySelector('.next-slide');
 
   let currentSlideIndex = 0;
   let timerInterval = null;
@@ -997,13 +986,13 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
    */
   function showSlide(index, sequenceIndex) {
     slides.forEach((slide) => {
-      slide.style.display = "none";
-      slide.classList.remove("active");
+      slide.style.display = 'none';
+      slide.classList.remove('active');
     });
 
     if (slides[index]) {
-      slides[index].style.display = "block";
-      slides[index].classList.add("active");
+      slides[index].style.display = 'block';
+      slides[index].classList.add('active');
       
       // If a specific sequence index is provided, set it as active
       if (sequenceIndex !== undefined) {
@@ -1063,7 +1052,7 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
    * Provides visual controls for slide progression
    */
   if (prevButton) {
-    prevButton.addEventListener("click", () => {
+    prevButton.addEventListener('click', () => {
       // First try to handle image sequence navigation, just like arrow keys
       const sequenceHandled = handleImageSequenceNavigation('prev');
       
@@ -1075,7 +1064,7 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
   }
 
   if (nextButton) {
-    nextButton.addEventListener("click", () => {
+    nextButton.addEventListener('click', () => {
       // First try to handle image sequence navigation, just like arrow keys
       const sequenceHandled = handleImageSequenceNavigation('next');
       
@@ -1127,8 +1116,8 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
         nextImage.style.display = 'block';
         nextImage.classList.add('active');
         
-        // Force a reflow to ensure the DOM updates
-        void imageSequence.offsetHeight;
+        // Trigger reflow in a lint-friendly way
+        imageSequence.getBoundingClientRect();
         
         return true;
       }
@@ -1144,8 +1133,8 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
         prevImage.style.display = 'block';
         prevImage.classList.add('active');
         
-        // Force a reflow to ensure the DOM updates
-        void imageSequence.offsetHeight;
+        // Trigger reflow in a lint-friendly way
+        imageSequence.getBoundingClientRect();
         
         return true;
       }
@@ -1162,7 +1151,7 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
   function updateTimer() {
     if (remainingTime > 0) {
       remainingTime--;
-      document.querySelector(".timer").textContent = formatTime(remainingTime);
+      document.querySelector('.timer').textContent = formatTime(remainingTime);
 
       /* Flash warning when 2 minutes remain
        * Provides visual cue for time management
@@ -1172,8 +1161,8 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
       }
     } else {
       clearInterval(timerInterval);
-      document.querySelector(".timer").textContent = "Time Up!";
-      document.querySelector(".timer").style.color = "#e74c3c";
+      document.querySelector('.timer').textContent = 'Time Up!';
+      document.querySelector('.timer').style.color = '#e74c3c';
     }
   }
 
@@ -1202,14 +1191,14 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
    * Flashes red three times when time is running low
    */
   function flashTimeWarning() {
-    const container = document.querySelector(".dps-container");
+    const container = document.querySelector('.dps-container');
     let flashCount = 0;
 
     function singleFlash() {
-      container.style.backgroundColor = "#e74c3c";
+      container.style.backgroundColor = '#e74c3c';
 
       setTimeout(() => {
-        container.style.backgroundColor = "";
+        container.style.backgroundColor = '';
         flashCount++;
 
         if (flashCount < 3) {
@@ -1220,14 +1209,14 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
 
     singleFlash();
   }
-// Make presenter notes visible at startup
-presenterNotesContainer.classList.remove("hidden");
-config.PRESENTER_NOTES_VISIBLE = true;
+  // Make presenter notes visible at startup
+  presenterNotesContainer.classList.remove('hidden');
+  config.PRESENTER_NOTES_VISIBLE = true;
 
 /// ultra-compact styling for presenter notes
 
-const styleElement = document.createElement('style');
-styleElement.textContent = `
+  const styleElement = document.createElement('style');
+  styleElement.textContent = `
   /* Fix for paragraph spacing in presenter notes */
   .presenter-notes-content {
     line-height: 1;
@@ -1257,228 +1246,228 @@ styleElement.textContent = `
     line-height: 1.1;
   }
 `;
-document.head.appendChild(styleElement);
+  document.head.appendChild(styleElement);
 
 
-let isPresenterMode = false;
-let isExpandedMode = false;
-let isResizing = false;
-let startY, startHeight;
+  let isPresenterMode = false;
+  let isExpandedMode = false;
+  let isResizing = false;
+  let startY, startHeight;
 
-function setupResizeHandler() {
-  const grip = document.querySelector('.resize-grip');
-  const notes = document.querySelector('.presenter-notes');
+  function setupResizeHandler() {
+    const grip = document.querySelector('.resize-grip');
+    const notes = document.querySelector('.presenter-notes');
   
-  grip.addEventListener('mousedown', (e) => {
-    isResizing = true;
-    startY = e.clientY;
-    startHeight = parseInt(document.defaultView.getComputedStyle(notes).height, 10);
-    e.preventDefault();
-  });
+    grip.addEventListener('mousedown', (e) => {
+      isResizing = true;
+      startY = e.clientY;
+      startHeight = parseInt(document.defaultView.getComputedStyle(notes).height, 10);
+      e.preventDefault();
+    });
 
-  document.addEventListener('mousemove', (e) => {
-    if (!isResizing) return;
-    
-    const height = startHeight + (startY - e.clientY);
-    notes.style.height = `${Math.max(200, Math.min(window.innerHeight - 60, height))}px`;
-  });
-
-  document.addEventListener('mouseup', () => {
-    isResizing = false;
-  });
-}
-function togglePresenterMode() {
-  isPresenterMode = !isPresenterMode;
-  const header = document.querySelector('.dps-header');
-  const footer = document.querySelector('.dps-footer');
-  const slides = document.querySelectorAll('.slide');
-  const currentSlide = slides[currentSlideIndex];
-  const presenterNotes = document.querySelector('.presenter-notes');
-  const presenterButton = document.querySelector('.presenter-toggle');
-  const notesContent = presenterNotes.querySelector('.presenter-notes-content');
-  
-  if (isPresenterMode) {
-    // Hide header and slides but keep footer
-    header.style.display = 'none';
-    slides.forEach(slide => slide.style.display = 'none');
-    currentSlide.style.display = 'none';
-    
-    // Highlight presenter button
-    presenterButton.classList.add('active');
-    
-    // Show notes in full screen
-    presenterNotes.classList.remove('hidden');
-    presenterNotes.classList.add('presenter-mode');
-    
-    if (isExpandedMode) {
-      // Expanded view (2/3 of screen) - stay pinned to left
-      presenterNotes.style.width = '66%';
-      presenterNotes.style.left = '20px'; // Keep pinned to left
-      presenterNotes.style.height = 'calc(100vh - 60px)';
-      presenterNotes.style.position = 'fixed';
-      presenterNotes.style.top = '0';
-      presenterNotes.style.zIndex = '1000';
-      presenterNotes.style.backgroundColor = 'white';
-      presenterNotes.style.padding = '20px';
-      presenterNotes.style.overflow = 'auto';
-      presenterNotes.style.transform = 'none'; // Override the CSS transform
-      notesContent.style.transform = 'none';
-    } else {
-      // Normal view - stay pinned to left
-      presenterNotes.style.width = '50%'; // Reduced from 100% to stay on left side
-      presenterNotes.style.left = '20px'; // Keep pinned to left
-      presenterNotes.style.height = 'calc(100vh - 60px)';
-      presenterNotes.style.position = 'fixed';
-      presenterNotes.style.top = '0';
-      presenterNotes.style.zIndex = '1000';
-      presenterNotes.style.backgroundColor = 'white';
-      presenterNotes.style.padding = '20px';
-      presenterNotes.style.overflow = 'auto';
+    document.addEventListener('mousemove', (e) => {
+      if (!isResizing) return;
       
-      // Update presenter notes content to show only notes
-      updatePresenterNotes(currentSlideIndex, true, true); // Force normal mode, isPresenterToggle=true
-    }
+      const height = startHeight + (startY - e.clientY);
+      notes.style.height = `${Math.max(200, Math.min(window.innerHeight - 60, height))}px`;
+    });
+
+    document.addEventListener('mouseup', () => {
+      isResizing = false;
+    });
+}
+  function togglePresenterMode() {
+    isPresenterMode = !isPresenterMode;
+    const header = document.querySelector('.dps-header');
+    const footer = document.querySelector('.dps-footer');
+    const slides = document.querySelectorAll('.slide');
+    const currentSlide = slides[currentSlideIndex];
+    const presenterNotes = document.querySelector('.presenter-notes');
+    const presenterButton = document.querySelector('.presenter-toggle');
+    const notesContent = presenterNotes.querySelector('.presenter-notes-content');
+  
+    if (isPresenterMode) {
+      // Hide header and slides but keep footer
+      header.style.display = 'none';
+      slides.forEach(slide => slide.style.display = 'none');
+      currentSlide.style.display = 'none';
+      
+      // Highlight presenter button
+      presenterButton.classList.add('active');
     
-    // Update presenter notes content to include title and bullet points
-    updatePresenterNotes(currentSlideIndex, false, true); // Pass isPresenterToggle=true
-  } else {
-    // Restore normal view
-    header.style.display = '';
-    slides.forEach(slide => slide.style.display = '');
-    currentSlide.style.display = 'block';
+      // Show notes in full screen
+      presenterNotes.classList.remove('hidden');
+      presenterNotes.classList.add('presenter-mode');
     
-    // Remove button highlight
-    presenterButton.classList.remove('active');
+      if (isExpandedMode) {
+        // Expanded view (2/3 of screen) - stay pinned to left
+        presenterNotes.style.width = '66%';
+        presenterNotes.style.left = '20px'; // Keep pinned to left
+        presenterNotes.style.height = 'calc(100vh - 60px)';
+        presenterNotes.style.position = 'fixed';
+        presenterNotes.style.top = '0';
+        presenterNotes.style.zIndex = '1000';
+        presenterNotes.style.backgroundColor = 'white';
+        presenterNotes.style.padding = '20px';
+        presenterNotes.style.overflow = 'auto';
+        presenterNotes.style.transform = 'none'; // Override the CSS transform
+        notesContent.style.transform = 'none';
+      } else {
+        // Normal view - stay pinned to left
+        presenterNotes.style.width = '50%'; // Reduced from 100% to stay on left side
+        presenterNotes.style.left = '20px'; // Keep pinned to left
+        presenterNotes.style.height = 'calc(100vh - 60px)';
+        presenterNotes.style.position = 'fixed';
+        presenterNotes.style.top = '0';
+        presenterNotes.style.zIndex = '1000';
+        presenterNotes.style.backgroundColor = 'white';
+        presenterNotes.style.padding = '20px';
+        presenterNotes.style.overflow = 'auto';
+        
+        // Update presenter notes content to show only notes
+        updatePresenterNotes(currentSlideIndex, true, true); // Force normal mode, isPresenterToggle=true
+      }
     
-    presenterNotes.classList.remove('presenter-mode');
-    presenterNotes.style.width = '31.25vw'; // Original width from CSS
-    presenterNotes.style.left = '20px'; // Keep pinned to left
-    presenterNotes.style.height = '25vh'; // Original height from CSS
-    presenterNotes.style.position = 'fixed';
-    presenterNotes.style.top = '';
-    presenterNotes.style.bottom = '60px'; // Position at bottom as in CSS
-    presenterNotes.style.zIndex = '1000';
-    presenterNotes.style.backgroundColor = '';
-    presenterNotes.style.padding = '';
-    presenterNotes.style.overflow = 'auto';
+      // Update presenter notes content to include title and bullet points
+      updatePresenterNotes(currentSlideIndex, false, true); // Pass isPresenterToggle=true
+    } else {
+      // Restore normal view
+      header.style.display = '';
+      slides.forEach(slide => slide.style.display = '');
+      currentSlide.style.display = 'block';
+      
+      // Remove button highlight
+      presenterButton.classList.remove('active');
+    
+      presenterNotes.classList.remove('presenter-mode');
+      presenterNotes.style.width = '31.25vw'; // Original width from CSS
+      presenterNotes.style.left = '20px'; // Keep pinned to left
+      presenterNotes.style.height = '25vh'; // Original height from CSS
+      presenterNotes.style.position = 'fixed';
+      presenterNotes.style.top = '';
+      presenterNotes.style.bottom = '60px'; // Position at bottom as in CSS
+      presenterNotes.style.zIndex = '1000';
+      presenterNotes.style.backgroundColor = '';
+      presenterNotes.style.padding = '';
+      presenterNotes.style.overflow = 'auto';
   }
 }
 
-function toggleExpandedMode() {
-  isExpandedMode = !isExpandedMode;
-  const presenterNotes = document.querySelector('.presenter-notes');
-  const notesContent = presenterNotes.querySelector('.presenter-notes-content');
+  function toggleExpandedMode() {
+    isExpandedMode = !isExpandedMode;
+    const presenterNotes = document.querySelector('.presenter-notes');
+    const notesContent = presenterNotes.querySelector('.presenter-notes-content');
   
-  if (isExpandedMode) {
-    // Switch to expanded view - stay pinned to left and grow to the right
-    presenterNotes.style.width = '66%';
-    presenterNotes.style.left = '20px'; // Keep pinned to left
-  } else {
-    // Switch back to normal view
-    presenterNotes.style.width = '31.25vw'; // Original width from CSS
-    presenterNotes.style.left = '20px'; // Keep pinned to left
+    if (isExpandedMode) {
+      // Switch to expanded view - stay pinned to left and grow to the right
+      presenterNotes.style.width = '66%';
+      presenterNotes.style.left = '20px'; // Keep pinned to left
+    } else {
+      // Switch back to normal view
+      presenterNotes.style.width = '31.25vw'; // Original width from CSS
+      presenterNotes.style.left = '20px'; // Keep pinned to left
   }
 }
 
 // Add click handler for presenter button
-const presenterButton = document.querySelector('.presenter-toggle');
-if (presenterButton) {
-  presenterButton.addEventListener('click', togglePresenterMode);
-}
+  const presenterButton = document.querySelector('.presenter-toggle');
+  if (presenterButton) {
+    presenterButton.addEventListener('click', togglePresenterMode);
+  }
 
 /* Add keyboard navigation
  * Supports slide progression, timer control, and presenter notes
  */
-document.addEventListener("keydown", (event) => {
-  // Ignore repeated keydown events from key being held down
-  if (event.repeat) {
-    event.preventDefault();
-    return;
-  }
-  
-  // Use a variable to track if we handled the event
-  let handled = false;
-  
-  if (event.key === "Escape") {
-    const navBar = document.querySelector(".dps-navigation");
-    if (navBar) {
-      navBar.style.display = navBar.style.display === "none" ? "flex" : "none";
+  document.addEventListener('keydown', (event) => {
+    // Ignore repeated keydown events from key being held down
+    if (event.repeat) {
+      event.preventDefault();
+      return;
     }
-    handled = true;
-  } else if (event.key === "p" || event.key === "P") {
-    const presenterNotes = document.querySelector('.presenter-notes');
-    const notesContent = presenterNotes.querySelector('.presenter-notes-content');
-    if (presenterNotes.classList.contains('enlarged')) {
-      // Return to normal size
-      presenterNotes.classList.remove('enlarged');
-      presenterNotes.style.width = '31.25vw'; // Original width from CSS
-      presenterNotes.style.height = '25vh'; // Original height from CSS
-      presenterNotes.style.left = '20px'; // Keep pinned to left
-      presenterNotes.style.zIndex = '';
-      
-      // Update presenter notes content to show only notes
-      updatePresenterNotes(currentSlideIndex, true); // Force normal mode
-    } else {
-      // Enlarge while staying pinned to left
-      presenterNotes.classList.remove('hidden');
-      presenterNotes.classList.add('enlarged');
-      presenterNotes.style.width = '50vw'; // Grow to the right
-      presenterNotes.style.height = '50vh';
-      presenterNotes.style.left = '20px'; // Keep pinned to left
-      presenterNotes.style.zIndex = '1000';
-      config.PRESENTER_NOTES_VISIBLE = true;
-      
-      // For 'p' key, just show the notes without title and bullets
-      updatePresenterNotes(currentSlideIndex, false, false); // Pass isPresenterToggle=false
+  
+    // Use a variable to track if we handled the event
+    let handled = false;
+  
+    if (event.key === 'Escape') {
+      const navBar = document.querySelector('.dps-navigation');
+      if (navBar) {
+        navBar.style.display = navBar.style.display === 'none' ? 'flex' : 'none';
+      }
+      handled = true;
+    } else if (event.key === 'p' || event.key === 'P') {
+      const presenterNotes = document.querySelector('.presenter-notes');
+      const notesContent = presenterNotes.querySelector('.presenter-notes-content');
+      if (presenterNotes.classList.contains('enlarged')) {
+        // Return to normal size
+        presenterNotes.classList.remove('enlarged');
+        presenterNotes.style.width = '31.25vw'; // Original width from CSS
+        presenterNotes.style.height = '25vh'; // Original height from CSS
+        presenterNotes.style.left = '20px'; // Keep pinned to left
+        presenterNotes.style.zIndex = '';
+        
+        // Update presenter notes content to show only notes
+        updatePresenterNotes(currentSlideIndex, true); // Force normal mode
+      } else {
+        // Enlarge while staying pinned to left
+        presenterNotes.classList.remove('hidden');
+        presenterNotes.classList.add('enlarged');
+        presenterNotes.style.width = '50vw'; // Grow to the right
+        presenterNotes.style.height = '50vh';
+        presenterNotes.style.left = '20px'; // Keep pinned to left
+        presenterNotes.style.zIndex = '1000';
+        config.PRESENTER_NOTES_VISIBLE = true;
+        
+        // For 'p' key, just show the notes without title and bullets
+        updatePresenterNotes(currentSlideIndex, false, false); // Pass isPresenterToggle=false
+      }
+      handled = true;
     }
-    handled = true;
-  }
   /* Toggle presenter notes with + and - keys
    * Provides quick access to presenter guidance
    */
-  else if (event.key === "+" || event.key === "=") {
-    presenterNotesContainer.classList.remove("hidden");
-    config.PRESENTER_NOTES_VISIBLE = true;
-    event.preventDefault();
-    handled = true;
-  } 
-  else if (event.key === "-" || event.key === "_") {
-    presenterNotesContainer.classList.add("hidden");
-    config.PRESENTER_NOTES_VISIBLE = false;
-    event.preventDefault();
-    handled = true;
-  }
+    else if (event.key === '+' || event.key === '=') {
+      presenterNotesContainer.classList.remove('hidden');
+      config.PRESENTER_NOTES_VISIBLE = true;
+      event.preventDefault();
+      handled = true;
+    }
+    else if (event.key === '-' || event.key === '_') {
+      presenterNotesContainer.classList.add('hidden');
+      config.PRESENTER_NOTES_VISIBLE = false;
+      event.preventDefault();
+      handled = true;
+    }
   /* Handle navigation controls
    * Supports slide progression and image sequences
    */
-  else if (event.key === "ArrowLeft") {
-    event.preventDefault();
-    // First try to handle image sequence navigation
-    const sequenceHandled = handleImageSequenceNavigation('prev');
-    
-    if (!sequenceHandled && currentSlideIndex > 0) {
-      showSlide(currentSlideIndex - 1);
+    else if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      // First try to handle image sequence navigation
+      const sequenceHandled = handleImageSequenceNavigation('prev');
+      
+      if (!sequenceHandled && currentSlideIndex > 0) {
+        showSlide(currentSlideIndex - 1);
+      }
+      handled = true;
     }
-    handled = true;
-  } 
-  else if (event.key === "ArrowRight") {
-    event.preventDefault();
-    // First try to handle image sequence navigation
-    const sequenceHandled = handleImageSequenceNavigation('next');
-    
-    if (!sequenceHandled && currentSlideIndex < slides.length - 1) {
-      showSlide(currentSlideIndex + 1);
+    else if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      // First try to handle image sequence navigation
+      const sequenceHandled = handleImageSequenceNavigation('next');
+      
+      if (!sequenceHandled && currentSlideIndex < slides.length - 1) {
+        showSlide(currentSlideIndex + 1);
+      }
+      handled = true;
     }
-    handled = true;
-  } 
-  else if (event.key === " " && hasStartedTimer) {
-    event.preventDefault();
-    toggleTimer();
-    handled = true;
-  }
-  // Removed duplicate 'p' key handler as it's already handled above
-  // R key handling removed as requested
-});
+    else if (event.key === ' ' && hasStartedTimer) {
+      event.preventDefault();
+      toggleTimer();
+      handled = true;
+    }
+    // Removed duplicate 'p' key handler as it's already handled above
+    // R key handling removed as requested
+  });
 
   // Show first slide on initial load
   showSlide(0);
