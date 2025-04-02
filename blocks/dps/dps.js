@@ -1120,7 +1120,6 @@ function togglePresenterMode() {
       presenterNotes.style.overflow = 'auto';
       presenterNotes.style.transform = 'none'; // Override the CSS transform
       notesContent.style.transform = 'none';
-      notesContent.style.fontSize = '21px'; // Increase font size by 50% (from 14px)
     } else {
       // Normal view - stay pinned to left
       presenterNotes.style.width = '50%'; // Reduced from 100% to stay on left side
@@ -1153,7 +1152,6 @@ function togglePresenterMode() {
     presenterNotes.style.backgroundColor = '';
     presenterNotes.style.padding = '';
     presenterNotes.style.overflow = 'auto';
-    notesContent.style.fontSize = '14px'; // Reset font size to original
   }
 }
 
@@ -1208,7 +1206,6 @@ document.addEventListener("keydown", (event) => {
       presenterNotes.style.height = '25vh'; // Original height from CSS
       presenterNotes.style.left = '20px'; // Keep pinned to left
       presenterNotes.style.zIndex = '';
-      notesContent.style.fontSize = '14px'; // Reset font size to original
     } else {
       // Enlarge while staying pinned to left
       presenterNotes.classList.remove('hidden');
@@ -1217,7 +1214,6 @@ document.addEventListener("keydown", (event) => {
       presenterNotes.style.height = '50vh';
       presenterNotes.style.left = '20px'; // Keep pinned to left
       presenterNotes.style.zIndex = '1000';
-      notesContent.style.fontSize = '21px'; // Increase font size by 50% (from 14px)
       config.PRESENTER_NOTES_VISIBLE = true;
     }
     handled = true;

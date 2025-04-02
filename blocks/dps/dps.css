@@ -673,6 +673,13 @@ body.dps-fullscreen main .section > div {
     line-height: 1.4;
     white-space: pre-line;
     color: #2c3e50;
+    font-size: 14px; /* Base font size */
+}
+
+/* Increase font size when in presenter mode or enlarged */
+.presenter-notes.presenter-mode .presenter-notes-content,
+.presenter-notes.enlarged .presenter-notes-content {
+    font-size: 21px !important; /* 50% larger than base - !important to override inline styles */
 }
 
 /* Style bullet points in presenter notes */
