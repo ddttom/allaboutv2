@@ -198,6 +198,7 @@ export default function decorate(block) {
    */
   document.body.classList.add('dps-fullscreen');
   window.scrollTo(0, 0);
+  initNavigationFix();
 }
 
 /**
@@ -3010,3 +3011,282 @@ window.takeStateSnapshot = takeStateSnapshot;
 window.getDPSStateReport = getDPSStateReport;
 window.fixDPSState = fixDPSState;
 window.initStateTracker = initStateTracker;
+
+
+/**
+ * DPS Navigation System Fix
+ * Resolves navigation index inconsistencies by implementing a more robust
+ * navigation structure and synchronization mechanism.
+ */
+
+/**
+ * Create a properly indexed flat navigation array
+ * This function creates a navigation structure that properly accounts for
+ * all slides and their sequences.
+ * 
+ * @returns {Array} Properly structured navigation points array
+ */
+function createFlatNavigationArray() {
+  console.log("[NavFix] Creating flat navigation array");
+  const flatNavigation = [];
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  
+  // Process each slide
+  slides.forEach((slide, slideIndex) => {
+    console.log(`[NavFix] Processing slide ${slideIndex}: "${slide.querySelector('.slide-title')?.textContent || 'Untitled'}"`);
+    
+    // Add the slide itself as a navigation point
+    flatNavigation.push({
+      type: 'slide',
+      slideIndex: slideIndex,
+      sequenceIndex: null,
+      element: slide,
+      id: `slide-${slideIndex}`
+    });
+    
+    // Process image sequences if present
+    const imageSequence = slide.querySelector('.image-sequence');
+    if (imageSequence) {
+      const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
+      console.log(`[NavFix] Found sequence with ${images.length} images in slide ${slideIndex}`);
+      
+      // Only add additional nav points if there's more than one image
+      if (images.length > 1) {
+        // Skip the first image (index 0) since it's shown with the slide
+        for (let i = 1; i < images.length; i++) {
+          flatNavigation.push({
+            type: 'sequence',
+            slideIndex: slideIndex,
+            sequenceIndex: i,
+            element: images[i],
+            id: `slide-${slideIndex}-seq-${i}`
+          });
+          console.log(`[NavFix] Added navigation point for slide ${slideIndex}, sequence ${i}`);
+        }
+      } else {
+        console.log(`[NavFix] Single image sequence - not adding navigation points`);
+      }
+    }
+  });
+  
+  // Log the full navigation structure
+  console.log(`[NavFix] Created navigation structure with ${flatNavigation.length} points`);
+  flatNavigation.forEach((point, index) => {
+    console.log(`[NavFix] Nav point ${index}: ${point.type}, slide=${point.slideIndex}, seq=${point.sequenceIndex}`);
+  });
+  
+  return flatNavigation;
+}
+
+/**
+ * Synchronize navigation indices
+ * Ensures currentNavIndex correctly reflects currentSlideIndex
+ */
+function synchronizeNavigationIndices() {
+  if (!window.flatNavigation || !window.flatNavigation.length) {
+    console.error("[NavFix] Cannot synchronize - flatNavigation not initialized");
+    return;
+  }
+  
+  const currentSlide = window.currentSlideIndex || 0;
+  
+  // Find the navigation point that corresponds to the current slide
+  const matchingNavIndex = window.flatNavigation.findIndex(item => 
+    item.type === 'slide' && item.slideIndex === currentSlide
+  );
+  
+  if (matchingNavIndex >= 0) {
+    console.log(`[NavFix] Synchronizing navigation: Setting currentNavIndex to ${matchingNavIndex} (was ${window.currentNavIndex})`);
+    window.currentNavIndex = matchingNavIndex;
+  } else {
+    console.error(`[NavFix] Failed to find matching nav point for slide ${currentSlide}`);
+  }
+}
+
+/**
+ * Apply navigation with verification
+ * More robust version of applyCurrentNavigation that verifies the state
+ * after applying changes and includes additional error handling
+ */
+function applyNavigationWithVerification() {
+  if (!window.flatNavigation || window.currentNavIndex >= window.flatNavigation.length) {
+    console.error(`[NavFix] Cannot apply navigation - invalid indices`);
+    return false;
+  }
+  
+  const navItem = window.flatNavigation[window.currentNavIndex];
+  console.log(`[NavFix] Applying navigation item ${window.currentNavIndex}: type=${navItem.type}, slide=${navItem.slideIndex}, seq=${navItem.sequenceIndex}`);
+  
+  if (navItem.type === 'slide') {
+    // Show this slide, hide all others
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    slides.forEach((slide, index) => {
+      const isCurrentSlide = index === navItem.slideIndex;
+      slide.style.display = isCurrentSlide ? 'block' : 'none';
+      slide.classList.toggle('active', isCurrentSlide);
+      
+      if (isCurrentSlide) {
+        // Initialize any image sequence in this slide
+        initializeImageSequence(slide);
+        
+        // Update presenter notes and navigation UI
+        updatePresenterNotes(navItem.slideIndex);
+        updateNavButtons(navItem.slideIndex);
+        
+        // Update currentSlideIndex to stay in sync
+        window.currentSlideIndex = navItem.slideIndex;
+        console.log(`[NavFix] Updated currentSlideIndex to ${navItem.slideIndex}`);
+      }
+    });
+    
+    // Start timer if moving past first slide
+    if (navItem.slideIndex > 0 && !window.hasStartedTimer) {
+      startTimer();
+      window.hasStartedTimer = true;
+    }
+    
+    return true;
+  } 
+  else if (navItem.type === 'sequence') {
+    // First make sure the correct slide is shown
+    if (window.currentSlideIndex !== navItem.slideIndex) {
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      slides.forEach((slide, index) => {
+        slide.style.display = index === navItem.slideIndex ? 'block' : 'none';
+        slide.classList.toggle('active', index === navItem.slideIndex);
+      });
+      
+      window.currentSlideIndex = navItem.slideIndex;
+      console.log(`[NavFix] Updated currentSlideIndex to ${navItem.slideIndex} for sequence`);
+    }
+    
+    // Then handle the sequence navigation
+    const slide = document.querySelectorAll('.slide')[navItem.slideIndex];
+    const imageSequence = slide?.querySelector('.image-sequence');
+    if (!imageSequence) {
+      console.error(`[NavFix] Cannot find image sequence for slide ${navItem.slideIndex}`);
+      return false;
+    }
+    
+    const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
+    if (navItem.sequenceIndex >= images.length) {
+      console.error(`[NavFix] Invalid sequence index ${navItem.sequenceIndex} (max: ${images.length-1})`);
+      return false;
+    }
+    
+    // Reset all images with both visibility and class
+    images.forEach((img, idx) => {
+      img.classList.remove('active');
+      img.style.visibility = 'hidden';
+      img.style.display = 'block';
+    });
+    
+    // Activate the target image with both visibility and class
+    const targetImage = images[navItem.sequenceIndex];
+    targetImage.classList.add('active');
+    targetImage.style.visibility = 'visible';
+    
+    console.log(`[NavFix] Activated image ${navItem.sequenceIndex} in sequence`);
+    
+    return true;
+  }
+  
+  return false;
+}
+
+/**
+ * Navigate forward with verification
+ * Enhanced navigation function that checks state consistency
+ */
+function navigateForwardWithVerification() {
+  if (!window.flatNavigation || !window.flatNavigation.length) {
+    console.error("[NavFix] Cannot navigate - flatNavigation not initialized");
+    return false;
+  }
+  
+  if (window.currentNavIndex < window.flatNavigation.length - 1) {
+    window.currentNavIndex++;
+    console.log(`[NavFix] Navigating forward to item ${window.currentNavIndex}`);
+    return applyNavigationWithVerification();
+  }
+  
+  console.log("[NavFix] Already at last navigation point");
+  return false;
+}
+
+/**
+ * Navigate backward with verification
+ * Enhanced navigation function that checks state consistency
+ */
+function navigateBackwardWithVerification() {
+  if (!window.flatNavigation || !window.flatNavigation.length) {
+    console.error("[NavFix] Cannot navigate - flatNavigation not initialized");
+    return false;
+  }
+  
+  if (window.currentNavIndex > 0) {
+    window.currentNavIndex--;
+    console.log(`[NavFix] Navigating backward to item ${window.currentNavIndex}`);
+    return applyNavigationWithVerification();
+  }
+  
+  console.log("[NavFix] Already at first navigation point");
+  return false;
+}
+
+/**
+ * Reset and reinitialize navigation system
+ * Call this if you detect navigation problems
+ */
+function resetNavigationSystem() {
+  console.log("[NavFix] Resetting navigation system");
+  
+  // Create a new navigation structure
+  window.flatNavigation = createFlatNavigationArray();
+  
+  // Force synchronization
+  synchronizeNavigationIndices();
+  
+  // Apply current navigation
+  applyNavigationWithVerification();
+  
+  console.log("[NavFix] Navigation system reset complete");
+  return true;
+}
+
+/**
+ * Initialize the navigation fix system
+ * Call this to set up the enhanced navigation
+ */
+function initNavigationFix() {
+  console.log("[NavFix] Initializing navigation fix system");
+  
+  // Back up original functions
+  window._originalNavigateForward = window.navigateForward;
+  window._originalNavigateBackward = window.navigateBackward;
+  window._originalApplyCurrentNavigation = window.applyCurrentNavigation;
+  
+  // Replace with our enhanced versions
+  window.navigateForward = navigateForwardWithVerification;
+  window.navigateBackward = navigateBackwardWithVerification;
+  window.applyCurrentNavigation = applyNavigationWithVerification;
+  
+  // Set up emergency keyboard shortcut for navigation reset
+  document.addEventListener('keydown', function(event) {
+    // Ctrl+Alt+R to reset navigation
+    if (event.ctrlKey && event.altKey && event.key === 'r') {
+      console.log("[NavFix] Navigation reset triggered by keyboard shortcut");
+      resetNavigationSystem();
+    }
+  });
+  
+  // Perform initial reset
+  setTimeout(resetNavigationSystem, 500);
+  
+  console.log("[NavFix] Navigation fix system initialized");
+}
+
+// Expose functions for global use
+window.initNavigationFix = initNavigationFix;
+window.resetNavigationSystem = resetNavigationSystem;
+window.synchronizeNavigationIndices = synchronizeNavigationIndices;
