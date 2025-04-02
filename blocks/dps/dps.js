@@ -1064,18 +1064,18 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
   if (nextButton) {
     nextButton.addEventListener('click', () => {
       // eslint-disable-next-line no-console
-      console.log('[DEBUG] Next button clicked');
+      console.log(`[DEBUG][${performance.now().toFixed(2)}ms] Next button clicked`);
       
       // First try to handle image sequence navigation, just like arrow keys
       const sequenceHandled = handleImageSequenceNavigation('next');
       
       // eslint-disable-next-line no-console
-      console.log(`[DEBUG] Next button: sequenceHandled = ${sequenceHandled}`);
+      console.log(`[DEBUG][${performance.now().toFixed(2)}ms] Next button: sequenceHandled = ${sequenceHandled}`);
       
       // If no sequence to navigate or at the end of sequence, go to next slide
       if (!sequenceHandled && currentSlideIndex < slides.length - 1) {
         // eslint-disable-next-line no-console
-        console.log(`[DEBUG] Next button: moving to next slide (${currentSlideIndex + 1})`);
+        console.log(`[DEBUG][${performance.now().toFixed(2)}ms] Next button: moving to next slide (${currentSlideIndex + 1})`);
         showSlide(currentSlideIndex + 1);
       }
     });
@@ -1489,17 +1489,17 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
     else if (event.key === 'ArrowLeft') {
       event.preventDefault();
       // eslint-disable-next-line no-console
-      console.log('[DEBUG] ArrowLeft key pressed');
+      console.log(`[DEBUG][${performance.now().toFixed(2)}ms] ArrowLeft key pressed`);
       
       // First try to handle image sequence navigation
       const sequenceHandled = handleImageSequenceNavigation('prev');
       
       // eslint-disable-next-line no-console
-      console.log(`[DEBUG] ArrowLeft: sequenceHandled = ${sequenceHandled}`);
+      console.log(`[DEBUG][${performance.now().toFixed(2)}ms] ArrowLeft: sequenceHandled = ${sequenceHandled}`);
       
       if (!sequenceHandled && currentSlideIndex > 0) {
         // eslint-disable-next-line no-console
-        console.log(`[DEBUG] ArrowLeft: moving to previous slide (${currentSlideIndex - 1})`);
+        console.log(`[DEBUG][${performance.now().toFixed(2)}ms] ArrowLeft: moving to previous slide (${currentSlideIndex - 1})`);
         showSlide(currentSlideIndex - 1);
       }
       handled = true;
@@ -1507,17 +1507,17 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
     else if (event.key === 'ArrowRight') {
       event.preventDefault();
       // eslint-disable-next-line no-console
-      console.log('[DEBUG] ArrowRight key pressed');
+      console.log(`[DEBUG][${performance.now().toFixed(2)}ms] ArrowRight key pressed`);
       
       // First try to handle image sequence navigation
       const sequenceHandled = handleImageSequenceNavigation('next');
       
       // eslint-disable-next-line no-console
-      console.log(`[DEBUG] ArrowRight: sequenceHandled = ${sequenceHandled}`);
+      console.log(`[DEBUG][${performance.now().toFixed(2)}ms] ArrowRight: sequenceHandled = ${sequenceHandled}`);
       
       if (!sequenceHandled && currentSlideIndex < slides.length - 1) {
         // eslint-disable-next-line no-console
-        console.log(`[DEBUG] ArrowRight: moving to next slide (${currentSlideIndex + 1})`);
+        console.log(`[DEBUG][${performance.now().toFixed(2)}ms] ArrowRight: moving to next slide (${currentSlideIndex + 1})`);
         showSlide(currentSlideIndex + 1);
       }
       handled = true;
