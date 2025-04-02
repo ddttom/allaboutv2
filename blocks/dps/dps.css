@@ -231,11 +231,22 @@ body.dps-fullscreen main .section > div {
     aspect-ratio: 16/9;
 }
 
-/* Ensure iframe containers in image sequences take full width */
+/* Ensure iframe containers in image sequences are properly sized and centered */
 .image-sequence .iframe-container {
     width: 100%;
     height: 100%;
-    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+/* Ensure iframes within sequence images are properly sized and centered */
+.sequence-image.iframe-container iframe {
+    max-width: 90%;
+    max-height: 90%;
+    margin: auto;
+    display: block;
 }
 
 /* Handle forced-colors mode */
@@ -258,11 +269,14 @@ body.dps-fullscreen main .section > div {
     border: none;
 }
 
-/* Ensure sequence images with iframes take full width */
+/* Ensure sequence images with iframes maintain consistent positioning */
 .sequence-image.iframe-container {
     width: 100% !important;
     height: 100% !important;
-    position: relative !important;
+    position: absolute !important; /* Keep position absolute for consistency */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @media (max-width: 768px) {
@@ -554,17 +568,25 @@ body.dps-fullscreen main .section > div {
     display: flex;
     align-items: center;
     justify-content: center;
+    /* Add a fixed height to prevent container resizing */
+    min-height: 400px;
 }
 
 .sequence-image {
     position: absolute;
-    width: auto;
-    height: auto;
+    width: 100%;
+    height: 100%;
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
+    /* Center all sequence images */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
 }
 
 .sequence-image.active {
