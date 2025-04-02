@@ -28,27 +28,27 @@ function formatTime(seconds) {
   return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
 }
 
+/* Configuration object for presentation settings
+ * - Timer duration defaults to 25 minutes
+ * - Slide transitions use 300ms for smooth animation
+ * - Presenter notes start hidden by default
+ * - Debug info tracking enabled by default
+ */
+const DPS_CONFIG = {
+  TIMER_DURATION: 25 * 60,
+  SLIDE_TRANSITION_MS: 300,
+  PRESENTER_NOTES_VISIBLE: true,
+  DEBUG_INFO: {
+    enabled: true,
+    slides: [],
+    illustrations: [],
+    events: []
+  }
+};
+
 export default function decorate(block) {
   // Add dps-block class to the container for proper styling isolation
   block.classList.add('dps-block');
-
-  /* Configuration object for presentation settings
-   * - Timer duration defaults to 25 minutes
-   * - Slide transitions use 300ms for smooth animation
-   * - Presenter notes start hidden by default
-   * - Debug info tracking enabled by default
-   */
-  const DPS_CONFIG = {
-    TIMER_DURATION: 25 * 60,
-    SLIDE_TRANSITION_MS: 300,
-    PRESENTER_NOTES_VISIBLE: true,
-    DEBUG_INFO: {
-      enabled: true,
-      slides: [],
-      illustrations: [],
-      events: []
-    }
-  };
 
   // Add dps-block class to the container for proper styling isolation
   block.classList.add('dps-block')
@@ -184,7 +184,7 @@ export default function decorate(block) {
    * Handles slide navigation, timer, and presenter notes functionality
    */
   // Initialize the timer duration
-  remainingTime = presentationData.timerDuration * 60 || DPS_CONFIG.TIMER_DURATION;
+  window.remainingTime = presentationData.timerDuration * 60 || DPS_CONFIG.TIMER_DURATION;
   
   // Set up the seamless navigation
   setupSeamlessControls();
@@ -1338,10 +1338,10 @@ function initializeImageSequence(slide) {
   const prevButton = document.querySelector('.prev-slide');
   const nextButton = document.querySelector('.next-slide');
 
-  let currentSlideIndex = 0;
-  let timerInterval = null;
-  let remainingTime = timerDuration;
-  let hasStartedTimer = false;
+  window.currentSlideIndex = 0;
+  window.timerInterval = null;
+  window.remainingTime = timerDuration;
+  window.hasStartedTimer = false;
 
   /* Update navigation buttons state
    * Disables buttons when at first/last slide
@@ -1435,7 +1435,7 @@ function showSlide(index) {
     console.log(`[Slide][${performance.now().toFixed(2)}ms] Slide ${index} not found`);
   }
   
-  currentSlideIndex = index;
+  window.currentSlideIndex = index;
   
   // Start timer if moving past first slide
   if (index > 0 && !hasStartedTimer) {
@@ -1582,9 +1582,9 @@ function showSlide(index) {
    */
 
   function updateTimer() {
-    if (remainingTime > 0) {
-      remainingTime--;
-      document.querySelector('.timer').textContent = formatTime(remainingTime);
+    if (window.remainingTime > 0) {
+      window.remainingTime--;
+      document.querySelector('.timer').textContent = formatTime(window.remainingTime);
 
       /* Flash warning when 2 minutes remain
        * Provides visual cue for time management
@@ -1600,20 +1600,20 @@ function showSlide(index) {
   }
 
   function startTimer() {
-    if (!timerInterval) {
-      timerInterval = setInterval(updateTimer, 1000);
+    if (!window.timerInterval) {
+      window.timerInterval = setInterval(updateTimer, 1000);
     }
   }
 
   function stopTimer() {
-    if (timerInterval) {
-      clearInterval(timerInterval);
-      timerInterval = null;
+    if (window.timerInterval) {
+      clearInterval(window.timerInterval);
+      window.timerInterval = null;
     }
   }
 
   function toggleTimer() {
-    if (timerInterval) {
+    if (window.timerInterval) {
       stopTimer();
     } else {
       startTimer();
@@ -1954,11 +1954,11 @@ function showSlide(index) {
  * Toggle the timer on/off
  */
 function toggleTimer() {
-  if (timerInterval) {
-    clearInterval(timerInterval);
-    timerInterval = null;
+  if (window.timerInterval) {
+    clearInterval(window.timerInterval);
+    window.timerInterval = null;
   } else {
-    timerInterval = setInterval(updateTimer, 1000);
+    window.timerInterval = setInterval(updateTimer, 1000);
   }
 }
 
@@ -2126,8 +2126,8 @@ function updatePresenterNotes(slideIndex, forceNormalMode = false, isPresenterTo
  * Start the presentation timer
  */
 function startTimer() {
-  if (!timerInterval) {
-    timerInterval = setInterval(updateTimer, 1000);
+  if (!window.timerInterval) {
+    window.timerInterval = setInterval(updateTimer, 1000);
   }
 }
 
@@ -2135,9 +2135,9 @@ function startTimer() {
  * Update the timer display
  */
 function updateTimer() {
-  if (remainingTime > 0) {
-    remainingTime--;
-    document.querySelector('.timer').textContent = formatTime(remainingTime);
+  if (window.remainingTime > 0) {
+    window.remainingTime--;
+    document.querySelector('.timer').textContent = formatTime(window.remainingTime);
 
     /* Flash warning when 2 minutes remain
      * Provides visual cue for time management
@@ -2509,9 +2509,9 @@ function generateDebugInfo() {
       totalNavPoints: flatNavigation.length
     },
     timerState: {
-      remainingTime,
-      hasStartedTimer,
-      isTimerRunning: !!timerInterval
+      remainingTime: window.remainingTime,
+      hasStartedTimer: window.hasStartedTimer,
+      isTimerRunning: !!window.timerInterval
     },
     presenterState: {
       isPresenterMode: document.querySelector('.presenter-notes')?.classList.contains('presenter-mode') || false,
