@@ -159,12 +159,8 @@ export default function decorate(block) {
   /* Set up presentation controls
    * Handles slide navigation, timer, and presenter notes functionality
    */
-  setupControls(
-    slidesContainer,
-    presenterNotesContainer,
-    presentationData.timerDuration * 60 || DPS_CONFIG.TIMER_DURATION,
-    DPS_CONFIG
-  );
+  setupSeamlessControls();
+  addSeamlessNavigationStyles();
 
   /* Force fullscreen mode immediately
    * This ensures the presentation starts in the correct display mode
@@ -1630,4 +1626,256 @@ function showSlide(index) {
   showSlide(0);
   // Setup resize handler
   setupResizeHandler();
+}
+
+/**
+ * Completely revised navigation approach for seamless progression
+ * This implementation flattens the navigation hierarchy so users can progress
+ * through all content (slides and image sequences) with single button presses
+ */
+
+// First, create a flat navigation structure
+function createFlatNavigationArray() {
+  const flatNavigation = [];
+  
+  // Get all slides
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  
+  // Process each slide
+  slides.forEach((slide, slideIndex) => {
+    // Each slide is a navigation point
+    const slideNav = {
+      type: 'slide',
+      slideIndex: slideIndex,
+      sequenceIndex: null,
+      element: slide
+    };
+    
+    flatNavigation.push(slideNav);
+    
+    // Check if this slide has image sequences
+    const imageSequence = slide.querySelector('.image-sequence');
+    if (imageSequence) {
+      const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
+      
+      // Skip the first image since it's shown with the slide itself
+      if (images.length > 1) {
+        for (let i = 1; i < images.length; i++) {
+          const sequenceNav = {
+            type: 'sequence',
+            slideIndex: slideIndex,
+            sequenceIndex: i,
+            element: images[i]
+          };
+          
+          flatNavigation.push(sequenceNav);
+        }
+      }
+    }
+  });
+  
+  return flatNavigation;
+}
+
+// Current position in the flat navigation
+let currentNavIndex = 0;
+let flatNavigation = [];
+
+/**
+ * Initialize the seamless navigation system
+ */
+function initializeSeamlessNavigation() {
+  // Create flat navigation array
+  flatNavigation = createFlatNavigationArray();
+  
+  // Start at the first item
+  currentNavIndex = 0;
+  
+  console.log(`[SeamlessNav] Initialized with ${flatNavigation.length} total navigation points`);
+}
+
+/**
+ * Navigate forward one step in the seamless navigation
+ */
+function navigateForward() {
+  if (currentNavIndex < flatNavigation.length - 1) {
+    currentNavIndex++;
+    applyCurrentNavigation();
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Navigate backward one step in the seamless navigation
+ */
+function navigateBackward() {
+  if (currentNavIndex > 0) {
+    currentNavIndex--;
+    applyCurrentNavigation();
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Apply the current navigation state
+ */
+function applyCurrentNavigation() {
+  const navItem = flatNavigation[currentNavIndex];
+  
+  console.log(`[SeamlessNav] Navigating to item ${currentNavIndex}: type=${navItem.type}, slide=${navItem.slideIndex}, sequence=${navItem.sequenceIndex}`);
+  
+  if (navItem.type === 'slide') {
+    // Show this slide, hide all others
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    slides.forEach((slide, index) => {
+      if (index === navItem.slideIndex) {
+        slide.style.display = 'block';
+        slide.classList.add('active');
+        
+        // Initialize any image sequence in this slide
+        initializeImageSequence(slide);
+        
+        // Update presenter notes and navigation
+        const presenterNotes = document.querySelector('.presenter-notes');
+        const isInPresenterMode = presenterNotes.classList.contains('presenter-mode');
+        updatePresenterNotes(navItem.slideIndex, false, isInPresenterMode);
+        updateNavButtons(navItem.slideIndex);
+      } else {
+        slide.style.display = 'none';
+        slide.classList.remove('active');
+      }
+    });
+    
+    // Start timer if moving past first slide
+    if (navItem.slideIndex > 0 && !hasStartedTimer) {
+      startTimer();
+      hasStartedTimer = true;
+    }
+  } else if (navItem.type === 'sequence') {
+    // It's a sequence item, show this specific image
+    const slide = flatNavigation.find(item => item.type === 'slide' && item.slideIndex === navItem.slideIndex).element;
+    const imageSequence = slide.querySelector('.image-sequence');
+    const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
+    
+    // Hide all images first
+    images.forEach(img => {
+      img.classList.remove('active');
+      img.style.visibility = 'hidden';
+    });
+    
+    // Show just the target image
+    const targetImage = images[navItem.sequenceIndex];
+    targetImage.classList.add('active');
+    targetImage.style.visibility = 'visible';
+  }
+}
+
+/**
+ * Initialize image sequence for a slide
+ */
+function initializeImageSequence(slide) {
+  const imageSequence = slide.querySelector('.image-sequence');
+  if (!imageSequence) return;
+  
+  const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
+  if (images.length === 0) return;
+  
+  // Reset all images
+  images.forEach(img => {
+    img.classList.remove('active');
+    img.style.visibility = 'hidden';
+    img.style.display = 'block';
+  });
+  
+  // Show only the first image
+  images[0].classList.add('active');
+  images[0].style.visibility = 'visible';
+}
+
+// Replace event handlers with our seamless navigation
+function setupSeamlessControls() {
+  const prevButton = document.querySelector('.prev-slide');
+  const nextButton = document.querySelector('.next-slide');
+  
+  if (prevButton) {
+    prevButton.addEventListener('click', () => {
+      navigateBackward();
+    });
+  }
+  
+  if (nextButton) {
+    nextButton.addEventListener('click', () => {
+      navigateForward();
+    });
+  }
+  
+  // Handle keyboard navigation
+  document.addEventListener('keydown', (event) => {
+    // Ignore repeated keydown events from key being held down
+    if (event.repeat) {
+      event.preventDefault();
+      return;
+    }
+    
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      navigateBackward();
+    }
+    else if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      navigateForward();
+    }
+    // Keep other existing keyboard handlers
+  });
+  
+  // Initialize navigation
+  initializeSeamlessNavigation();
+  applyCurrentNavigation();
+}
+
+// Add a style block for proper image sequence styling
+function addSeamlessNavigationStyles() {
+  const styleElement = document.createElement('style');
+  styleElement.textContent = `
+    .sequence-image {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block !important;
+      visibility: hidden;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+    }
+
+    .sequence-image.active {
+      visibility: visible !important;
+    }
+    
+    /* Better slide transitions */
+    .slide {
+      transition: opacity 0.3s ease;
+    }
+    
+    /* Ensure illustration container has proper positioning */
+    .illustration {
+      position: relative;
+      min-height: 200px;
+    }
+    
+    .image-sequence {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 200px;
+    }
+  `;
+  document.head.appendChild(styleElement);
 }
