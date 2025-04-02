@@ -299,6 +299,7 @@ function isImageUrl(url) {
 /**
  * Extract iframe content from a string
  * Supports multiple URL formats and HTML encodings
+ * MODIFIED: Added support for iframe followed by anchor tags
  * 
  * @param {string} content - String containing iframe content
  * @returns {Object|null} Structured iframe data or null if no iframe found
@@ -350,7 +351,20 @@ function extractIframeContent(content) {
     return {
       type: 'iframe',
       src: simpleIframeMatch[1],
-      content: `<iframe src="${simpleIframeMatch[1]}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+      content: `<iframe src="${simpleIframeMatch[1]}\" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+    };
+  }
+  
+  /* NEW: Check for iframe followed by anchor tag
+   * This handles the format: iframe <a href="https://example.com">link text</a>
+   */
+  const iframeAnchorMatch = content.match(new RegExp('iframe\\s+<a[^>]*href=["\']([^"\']+)["\'][^>]*>.*?</a>', 'i'));
+  if (iframeAnchorMatch && iframeAnchorMatch[1]) {
+    const src = iframeAnchorMatch[1];
+    return {
+      type: 'iframe',
+      src,
+      content: `<iframe src="${src}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
     };
   }
   
@@ -361,7 +375,6 @@ function extractIframeContent(content) {
   
   return null;
 }
-
 /**
  * Extract URL from content
  * Used for identifying potential iframe or image sources
@@ -553,8 +566,9 @@ function addImageSequenceStyles() {
  * @returns {Object|null} Structured illustration data or null if no illustration found
  */
 /**
- * Parse illustration from a cell with priority handling
- * Modified to prioritize iframes over icons when both exist
+ * Parse illustration from a cell
+ * Supports multiple content types: images, SVGs, iframes
+ * FIXED: Now properly handles iframe URLs in text content
  *
  * @param {Element} cell - Cell element containing illustration content
  * @returns {Object|null} Structured illustration data or null if no illustration found
@@ -729,6 +743,31 @@ function parseIllustration(cell) {
         });
       }
     }
+    else if (element.tagName === 'A' && element.href) {
+      // Handle anchor elements
+      const url = element.href;
+      if (isImageUrl(url)) {
+        contentPositions.push({
+          type: 'image',
+          position: elementPosition,
+          data: {
+            type: 'image',
+            content: url,
+            alt: element.textContent || 'Image'
+          }
+        });
+      } else {
+        contentPositions.push({
+          type: 'iframe',
+          position: elementPosition,
+          data: {
+            type: 'iframe',
+            src: url,
+            content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+          }
+        });
+      }
+    }
   }
   
   // Process all elements as separate content pieces
@@ -737,18 +776,46 @@ function parseIllustration(cell) {
   // Check if there's any direct text content in the cell
   if (cell.textContent.trim() && cell.childElementCount === 0) {
     const textContent = cell.textContent.trim();
-    const urlData = extractUrl(textContent);
-    if (urlData) {
-      if (urlData.type === 'image') {
-        contentPositions.push({
-          type: 'image',
-          position: 0, // Direct text is usually at the beginning
-          data: {
+    
+    // Check if this contains an iframe anchor pattern
+    const iframeAnchorMatch = textContent.match(/iframe\s+<a[^>]*href=["']([^"']+)["'][^>]*>/i);
+    if (iframeAnchorMatch && iframeAnchorMatch[1]) {
+      // Found iframe with anchor pattern
+      contentPositions.push({
+        type: 'iframe',
+        position: 0,
+        data: {
+          type: 'iframe',
+          src: iframeAnchorMatch[1],
+          content: `<iframe src="${iframeAnchorMatch[1]}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+        }
+      });
+    } else {
+      // Otherwise check with extractUrl
+      const urlData = extractUrl(textContent);
+      if (urlData) {
+        if (urlData.type === 'image') {
+          contentPositions.push({
             type: 'image',
-            content: urlData.url,
-            alt: 'Image'
-          }
-        });
+            position: 0,
+            data: {
+              type: 'image',
+              content: urlData.url,
+              alt: 'Image'
+            }
+          });
+        } else if (urlData.type === 'iframe') {
+          // FIXED: Handle iframe type from extractUrl
+          contentPositions.push({
+            type: 'iframe',
+            position: 0,
+            data: {
+              type: 'iframe',
+              src: urlData.url,
+              content: `<iframe src="${urlData.url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+            }
+          });
+        }
       }
     }
   }
