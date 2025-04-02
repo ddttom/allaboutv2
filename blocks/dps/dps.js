@@ -441,9 +441,44 @@ function extractIconName(className) {
 function organizeImageSequence(illustrations) {
   if (!illustrations || !Array.isArray(illustrations)) return illustrations;
   
+  // Debug log
+  console.log(`[OrganizeSequence] Processing ${illustrations.length} illustrations`);
+  
+  // Deduplicate items - remove any duplicate references to the same content
+  const uniqueIllustrations = [];
+  const seen = new Set();
+  
+  illustrations.forEach(item => {
+    // Create a unique identifier based on type and content
+    let identifier;
+    if (item.iconName) {
+      identifier = `icon-${item.iconName}`;
+    } else if (item.src) {
+      identifier = `src-${item.src}`;
+    } else if (item.content) {
+      // Use a truncated version of content for ID if it's a string
+      const contentId = typeof item.content === 'string' ? 
+        item.content.substring(0, 50) : 
+        JSON.stringify(item).substring(0, 50);
+      identifier = `content-${contentId}`;
+    } else {
+      // Fallback to stringified object
+      identifier = JSON.stringify(item).substring(0, 100);
+    }
+    
+    // Only add if we haven't seen this item before
+    if (!seen.has(identifier)) {
+      seen.add(identifier);
+      uniqueIllustrations.push(item);
+      console.log(`[OrganizeSequence] Added unique item: ${item.type}${item.iconName ? ' - ' + item.iconName : ''}`);
+    } else {
+      console.log(`[OrganizeSequence] Skipped duplicate: ${item.type}${item.iconName ? ' - ' + item.iconName : ''}`);
+    }
+  });
+  
   // Group items by type
   const groups = {};
-  illustrations.forEach(item => {
+  uniqueIllustrations.forEach(item => {
     if (!groups[item.type]) {
       groups[item.type] = [];
     }
@@ -468,9 +503,9 @@ function organizeImageSequence(illustrations) {
     }
   });
   
+  console.log(`[OrganizeSequence] Returning ${orderedIllustrations.length} unique illustrations`);
   return orderedIllustrations;
 }
-
 function createImageSequenceHTML(illustrations) {
   if (!illustrations || !Array.isArray(illustrations) || illustrations.length === 0) {
     return '';
@@ -486,10 +521,8 @@ function createImageSequenceHTML(illustrations) {
     // Create container with label
     html += `<div class="sequence-item-container ${isActive}">`;
     
-    // Add label if there are multiple items
-    if (illustrations.length > 1) {
-      html += `<div class="sequence-item-label">${typeLabel} ${index + 1}/${illustrations.length}</div>`;
-    }
+    // Always add label to show position in overall sequence
+    html += `<div class="sequence-item-label">${typeLabel} ${index + 1}/${illustrations.length}</div>`;
     
     // Add the content based on type
     if (item.type === 'iframe') {
@@ -573,22 +606,26 @@ function addImageSequenceStyles() {
  * @param {Element} cell - Cell element containing illustration content
  * @returns {Object|null} Structured illustration data or null if no illustration found
  */
-function parseIllustration(cell) {
-  if (!cell) return null;
-  
-  let illustrations = [];
-  
-  // Process HTML content directly from cell to capture all elements
-  let cellContent = cell.innerHTML.trim();
-  
-  // Clean up content - remove lone <br> tags and whitespace
-  cellContent = cellContent
-    .replace(new RegExp('<p>\\s*<br>\\s*</p>', 'gi'), '') // Remove empty paragraphs with just <br>
-    .replace(new RegExp('<br>\\s*(?=<)', 'gi'), '') // Remove <br> tags at start of elements
-    .replace(new RegExp('\\s*<br>\\s*(?=\\w)', 'gi'), ' ') // Replace <br> followed by text with space
-    .replace(new RegExp('\\s+', 'g'), ' ') // Collapse multiple whitespace
-    .trim();
 
+function parseIllustration(cell) {
+    if (!cell) return null;
+    
+    let illustrations = [];
+    
+    // Process HTML content directly from cell to capture all elements
+    let cellContent = cell.innerHTML.trim();
+    
+    // Clean up content - remove lone <br> tags and whitespace
+    cellContent = cellContent
+      .replace(new RegExp('<p>\\s*<br>\\s*</p>', 'gi'), '') // Remove empty paragraphs with just <br>
+      .replace(new RegExp('<br>\\s*(?=<)', 'gi'), '') // Remove <br> tags at start of elements
+      .replace(new RegExp('\\s*<br>\\s*(?=\\w)', 'gi'), ' ') // Replace <br> followed by text with space
+      .replace(new RegExp('\\s+', 'g'), ' ') // Collapse multiple whitespace
+      .trim();
+      
+    // Debug log to check what's in the cell content
+    console.log(`[Illustration Parser] Cell content: ${cellContent.substring(0, 100)}...`);
+    
   // Handle simplified iframe format
   // We'll store these matches, but process them in order with other content
   const iframeRegex = new RegExp('iframe\\s+(https?://[^\\s"\'<>]+)', 'gi');
@@ -651,32 +688,44 @@ function parseIllustration(cell) {
       });
       
       // Also check for direct span elements that might be icons
-      const iconSpan = element.querySelector('span.icon');
-      if (iconSpan) {
-        const iconName = extractIconName(iconSpan.className);
-        // Calculate approximate position based on parent element position in original content
-        const parentPosition = cellContent.indexOf(element.outerHTML);
-        const elementPosition = parentPosition > -1 ? parentPosition : contentPositions.length * 1000;
+      const iconSpans = element.querySelectorAll('span.icon');
+      if (iconSpans.length > 0) {
+        // Log what we've found for debugging
+        console.log(`[ParseIllustration] Found ${iconSpans.length} icon spans in paragraph`);
         
-        // Check if this icon is already in our positions list
-        if (iconName && !contentPositions.some(item =>
-            item.type === 'icon' && item.data.iconName === iconName)) {
-          contentPositions.push({
-            type: 'icon',
-            position: elementPosition,
-            data: {
+        // Process each icon span separately
+        iconSpans.forEach(iconSpan => {
+          const iconName = extractIconName(iconSpan.className);
+          // Calculate approximate position based on parent element position in original content
+          const parentPosition = cellContent.indexOf(element.outerHTML);
+          const elementPosition = parentPosition > -1 ? parentPosition : contentPositions.length * 1000;
+          
+          console.log(`[ParseIllustration] Processing icon: ${iconName}`);
+          
+          // Check if this icon is already in our positions list
+          const isDuplicate = contentPositions.some(item => 
+            item.type === 'icon' && item.data.iconName === iconName);
+            
+          if (iconName && !isDuplicate) {
+            contentPositions.push({
               type: 'icon',
-              iconName,
-              content: `/icons/${iconName}.svg`,
-              alt: `${iconName} Illustration`
-            }
-          });
-        }
+              position: elementPosition,
+              data: {
+                type: 'icon',
+                iconName,
+                content: `/icons/${iconName}.svg`,
+                alt: `${iconName} Illustration`
+              }
+            });
+            console.log(`[ParseIllustration] Added icon: ${iconName}`);
+          } else if (isDuplicate) {
+            console.log(`[ParseIllustration] Skipped duplicate icon: ${iconName}`);
+          }
+        });
       }
       
       return;
-    }
-    
+    }  
     // Create a temporary container to extract HTML content accurately
     const tempContainer = document.createElement('div');
     tempContainer.appendChild(element.cloneNode(true));
@@ -1309,90 +1358,97 @@ function showSlide(index) {
   * @returns {boolean} - True if navigation was handled within a sequence, false if we should move to next/prev slide
   */
  function handleImageSequenceNavigation(direction) {
-   // Debug logging
-   console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Handling ${direction} navigation`);
+  // Debug logging
+  console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Handling ${direction} navigation`);
    
-   // Get the current slide
-   const currentSlide = slides[currentSlideIndex];
-   if (!currentSlide) {
-     console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] No current slide found`);
-     return false;
-   }
+  // Get the current slide
+  const currentSlide = slides[currentSlideIndex];
+  if (!currentSlide) {
+    console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] No current slide found`);
+    return false;
+  }
    
-   // Check if this slide has an image sequence
-   const imageSequence = currentSlide.querySelector('.image-sequence');
-   if (!imageSequence) {
-     console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] No image sequence found in slide`);
-     return false;
-   }
+  // Check if this slide has an image sequence
+  const imageSequence = currentSlide.querySelector('.image-sequence');
+  if (!imageSequence) {
+    console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] No image sequence found in slide`);
+    return false;
+  }
    
-   // Get all images in the sequence
-   const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
-   if (images.length <= 1) {
-     console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Only one or zero images in sequence`);
-     return false;
-   }
-   
-   console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Found ${images.length} images in sequence`);
-   
-   // Find which image is currently active
-   let activeIndex = -1;
-   images.forEach((img, idx) => {
-     if (img.classList.contains('active')) {
-       activeIndex = idx;
-     }
-   });
-   
-   console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Current activeIndex is ${activeIndex}`);
-   
-   // If no active image found, activate the first one
-   if (activeIndex === -1) {
-     console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] No active image found, activating first image`);
-     
-     // Reset all images first
-     images.forEach(img => {
-       img.classList.remove('active');
-       img.style.visibility = 'hidden';
-     });
-     
-     // Make the first image active
-     images[0].classList.add('active');
-     images[0].style.visibility = 'visible';
-     return true;
-   }
-   
-   // Calculate the next index based on direction
-   let nextIndex;
-   if (direction === 'next') {
-     nextIndex = activeIndex + 1;
-     // If at the end of the sequence, signal to move to next slide
-     if (nextIndex >= images.length) {
-       console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] At end of sequence, returning false to move to next slide`);
-       return false;
-     }
-   } else { // 'prev'
-     nextIndex = activeIndex - 1;
-     // If at the beginning of the sequence, signal to move to previous slide
-     if (nextIndex < 0) {
-       console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] At beginning of sequence, returning false to move to prev slide`);
-       return false;
-     }
-   }
-   
-   console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Moving to image index ${nextIndex}`);
-   
-   // Reset all images first
-   images.forEach(img => {
-     img.classList.remove('active');
-     img.style.visibility = 'hidden';
-   });
-   
-   // Make the target image active
-   images[nextIndex].classList.add('active');
-   images[nextIndex].style.visibility = 'visible';
-   
-   return true;
- }
+  // Get all images in the sequence
+  const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
+  
+  // Log the number of images found
+  console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Found ${images.length} images in sequence`);
+  
+  // Single image case - don't handle sequence navigation
+  // but still show label (handled in createImageSequenceHTML)
+  if (images.length <= 1) {
+    console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Only one image - not handling as sequence navigation`);
+    return false;
+  }
+  
+  console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Found ${images.length} images in sequence`);
+  
+  // Find which image is currently active
+  let activeIndex = -1;
+  images.forEach((img, idx) => {
+    if (img.classList.contains('active')) {
+      activeIndex = idx;
+    }
+  });
+  
+  console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Current activeIndex is ${activeIndex}`);
+  
+  // If no active image found, activate the first one
+  if (activeIndex === -1) {
+    console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] No active image found, activating first image`);
+    
+    // Reset all images first
+    images.forEach(img => {
+      img.classList.remove('active');
+      img.style.visibility = 'hidden';
+    });
+    
+    // Make the first image active
+    images[0].classList.add('active');
+    images[0].style.visibility = 'visible';
+    return true;
+  }
+  
+  // Calculate the next index based on direction
+  let nextIndex;
+  if (direction === 'next') {
+    nextIndex = activeIndex + 1;
+    // If at the end of the sequence, signal to move to next slide
+    if (nextIndex >= images.length) {
+      console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] At end of sequence, returning false to move to next slide`);
+      return false;
+    }
+  } else { // 'prev'
+    nextIndex = activeIndex - 1;
+    // If at the beginning of the sequence, signal to move to previous slide
+    if (nextIndex < 0) {
+      console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] At beginning of sequence, returning false to move to prev slide`);
+      return false;
+    }
+  }
+  
+  console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Moving to image index ${nextIndex}`);
+  
+  // Reset all images first
+  images.forEach(img => {
+    img.classList.remove('active');
+    img.style.visibility = 'hidden';
+  });
+  
+  // Make the target image active
+  images[nextIndex].classList.add('active');
+  images[nextIndex].style.visibility = 'visible';
+  
+  return true;
+}
+
   /* Timer functionality
    * Handles countdown and warning system
    */

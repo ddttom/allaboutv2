@@ -46,16 +46,17 @@ A powerful presentation system that transforms structured content into an intera
 The enhanced navigation provides a better user experience when a slide contains multiple illustrations (like icons, images, and iframes) by adding visual cues and organization to the content. Here's what it does:
 
 #### 1. Visual Labels for Navigation
-When a slide has multiple illustration items (for example, both an icon and an iframe), the enhanced navigation adds clear labels to each item showing:
+When a slide has illustration items (including single items), the enhanced navigation adds clear labels to each item showing:
 
 - The type of content (Icon, Iframe, Image, etc.)
-- The current position and total count (e.g., "1/3", "2/3", "3/3")
+- The current position and total count (e.g., "1/3", "2/3", "3/3", or "1/1" for single items)
 
 This helps users understand:
 
 - What type of content they're currently viewing
 - How many total items are in the sequence
 - Which position they're currently at in the sequence
+- That a single item is still part of the navigation system (shown as "1/1")
 
 #### 2. Consistent Interface
 The labels appear in a small, semi-transparent black box in the top-left corner of each illustration. This provides:
@@ -77,7 +78,6 @@ The enhanced navigation works by:
 - Improves orientation: The "x/y" format helps users know how far they've progressed
 - Maintains content integrity: All your original content remains in its intended order
 - Solves the "double iframe" issue: Makes it clear when a user has navigated from an icon to an iframe
-
 #### 5. Visual Example
 Without enhanced navigation, a user might see this sequence with no indication of what's happening:
 
@@ -89,6 +89,10 @@ With enhanced navigation, they would instead see:
 
 [Icon appears with label "Icon 1/2"]
 [Press right arrow]
+[Iframe appears with label "Iframe 2/2"] - Clear indication of navigation progress
+
+Even for single items, the label provides context:
+[Single icon appears with label "Icon 1/1"] - Clearly indicates this is a standalone item
 [Iframe appears with label "Iframe 2/2"] - Clear indication of navigation progress
 
 This approach maintains the exact same content and ordering while providing better visual feedback to the user about the navigation process.
@@ -124,6 +128,7 @@ The DPS block now properly handles mixed content in any order:
 - Pictures followed by icons
 - Multiple icons in sequence
 - Any combination of icons, pictures, SVGs, and iframes
+- Multiple icon spans within a single paragraph
 
 All content elements maintain their proper sequence order based on their original position in the DOM and can be navigated through with the arrow keys. The system uses a sophisticated position tracking mechanism to ensure content appears in the correct order regardless of content type.
 
@@ -291,6 +296,7 @@ The system detects icon spans using multiple techniques:
 1. **Regex pattern matching**: Identifies spans with icon classes directly in HTML
 2. **Class name analysis**: Extracts specific icon name from class strings
 3. **Element traversal**: Finds nested icon spans within other elements
+4. **Multiple icon processing**: Handles multiple icon spans within a single paragraph
 
 ### Icon Transformation
 Icons undergo a specific transformation process:
@@ -299,6 +305,7 @@ Icons undergo a specific transformation process:
 3. An image path is constructed using the icon name: `/icons/[icon-name].svg`
 4. An alt text is created as "[icon-name] Illustration"
 5. The span is converted to an image tag with proper attributes and classes
+6. Duplicate icons are detected and filtered to prevent redundant display
 
 ### Icon Display
 Icons in the sequence are displayed with these properties:
@@ -307,6 +314,8 @@ Icons in the sequence are displayed with these properties:
 3. Include a "data-icon-name" attribute for potential scripting
 4. Maintain the sequence-image class for navigation handling
 5. Participate in the active/inactive states within sequence navigation
+6. Display a sequence label showing position (e.g., "Icon 1/3" or "Icon 1/1" for single icons)
+7. Deduplicated to prevent redundant display of identical icons
 
 ## iframe Simplified Format
 
@@ -421,8 +430,12 @@ The fourth column supports various image formats and sources:
 - iframes are prioritized over icons when both exist in the same content
 - Duplicate content is intelligently filtered while preserving order
 - **IMPROVED: Better handling of iframe URLs in text content**
+- **IMPROVED: All images (including single images) now show position labels (e.g., "Icon 1/1")**
+- **IMPROVED: Better handling of single images during navigation**
+- **IMPROVED: Deduplication of icons to prevent duplicates during navigation**
 - **NEW: Proper handling of anchor elements as either images or iframes**
 - **NEW: Support for iframe with anchor tag pattern (`iframe <a href="...">Link</a>`)**
+- **NEW: Support for multiple icon spans within a single paragraph**
 
 ## Implementation
 
@@ -449,6 +462,33 @@ Content authors should structure their content as follows:
 #### Column Definitions
 
 1. **First column**: Slide titles
+2. **Second column**: Slide introduction text or subtitle
+3. **Third column**: Bullet points and plain text
+   - Use document list formatting for bullet points
+   - Plain text will be displayed without bullets
+   - Line breaks in plain text are preserved
+   - HTML formatting (like `<code>` and `<strong>`) is supported
+4. **Fourth column**: Images, icons, SVG, or iframes for illustrations
+   - Can contain multiple items that will be shown in sequence
+   - Images use full viewport height while maintaining aspect ratio
+   - Icons use the format `<span class="icon icon-name"></span>`
+   - iframes use the format `iframe URL` (simplified format)
+   - Navigate between images using arrow keys
+   - When reaching the last item, right arrow advances to next slide
+   - When on first item, left arrow goes to previous slide
+   - Items can be in any order (icons, images, iframes)
+   - All items maintain their sequence order for navigation
+   - Multiple icon spans within a paragraph are properly processed
+   - Single images show appropriate labels (e.g., "Icon 1/1")
+   - Duplicate icons are deduplicated to prevent redundant display
+5. **Fifth column**: Presenter notes
+   - Private notes visible only to the presenter
+   - Toggle visibility with + and - keys
+   - Notes state (hidden/visible) persists across slides
+   - Appears in bottom left quarter of viewport
+   - Automatically updates when changing slides
+   - 'P' key shows only notes content
+   - Note icon shows notes with slide title and bullet points1. **First column**: Slide titles
 2. **Second column**: Slide introduction text or subtitle
 3. **Third column**: Bullet points and plain text
    - Use document list formatting for bullet points
