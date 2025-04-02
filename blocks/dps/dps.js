@@ -1064,7 +1064,11 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
    */
   if (prevButton) {
     prevButton.addEventListener("click", () => {
-      if (currentSlideIndex > 0) {
+      // First try to handle image sequence navigation, just like arrow keys
+      const sequenceHandled = handleImageSequenceNavigation('prev');
+      
+      // If no sequence to navigate or at the beginning of sequence, go to previous slide
+      if (!sequenceHandled && currentSlideIndex > 0) {
         showSlide(currentSlideIndex - 1);
       }
     });
@@ -1072,7 +1076,11 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
 
   if (nextButton) {
     nextButton.addEventListener("click", () => {
-      if (currentSlideIndex < slides.length - 1) {
+      // First try to handle image sequence navigation, just like arrow keys
+      const sequenceHandled = handleImageSequenceNavigation('next');
+      
+      // If no sequence to navigate or at the end of sequence, go to next slide
+      if (!sequenceHandled && currentSlideIndex < slides.length - 1) {
         showSlide(currentSlideIndex + 1);
       }
     });
