@@ -920,6 +920,7 @@ function createSlideContent(slide) {
  */
 function setupControls(slidesContainer, presenterNotesContainer, timerDuration, config) {
   // Fix: Remove console.time calls that were causing issues
+  let isNavigating = false; // Flag to prevent rapid consecutive navigations
   const slides = slidesContainer.querySelectorAll('.slide');
   const notesContent = presenterNotesContainer.querySelector('.presenter-notes-content');
   const prevButton = document.querySelector('.prev-slide');
@@ -1102,194 +1103,95 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
 
   /* Handle image sequence navigation
    * Allows progression through multiple images within a slide
+   * With improved state management to fix double-click issue
    */
   function handleImageSequenceNavigation(direction) {
-    // eslint-disable-next-line no-console
-    console.log(`[DEBUG] handleImageSequenceNavigation called with direction: ${direction}`);
+    // If already navigating, block all navigation attempts
+    if (isNavigating) {
+      return true; // Return true to prevent slide navigation
+    }
     
     // Get the current slide and check if it has an image sequence
     const currentSlide = slides[currentSlideIndex];
     if (!currentSlide) {
-      // eslint-disable-next-line no-console
-      console.log('[DEBUG] No current slide found, returning false');
       return false;
     }
     
     const imageSequence = currentSlide.querySelector('.image-sequence');
     if (!imageSequence) {
-      // eslint-disable-next-line no-console
-      console.log('[DEBUG] No image sequence found in current slide, returning false');
       return false;
     }
 
     // Get all images in the sequence
     const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
-    // eslint-disable-next-line no-console
-    console.log(`[DEBUG] Found ${images.length} images in sequence`);
-    
     if (images.length <= 1) {
-      // eslint-disable-next-line no-console
-      console.log('[DEBUG] Not enough images in sequence (<=1), returning false');
       return false;
     }
     
     // Find the currently active image
     let currentImage = imageSequence.querySelector('.sequence-image.active');
-    // eslint-disable-next-line no-console
-    console.log(`[DEBUG] Current active image found: ${currentImage !== null}`);
     
-    // If no active image is found, activate the first one but DON'T return yet
-    // This allows the navigation to continue to the next image in the same key press
+    // If no active image is found, activate the first one
     if (!currentImage) {
-      // eslint-disable-next-line no-console
-      console.log('[DEBUG] No active image found, activating first image');
-      
-      // Make sure all images have display: block and set visibility
+      // Initialize all images - set display: block but only first one active
       images.forEach((img, idx) => {
-        // eslint-disable-next-line no-console
-        console.log(`[DEBUG] Setting image ${idx} display to block`);
         img.style.display = 'block';
         
         if (idx === 0) {
-          img.style.visibility = 'visible'; // First image visible
+          img.classList.add('active');
+          // Let CSS handle visibility via the .active class
         } else {
-          img.style.visibility = 'hidden'; // Other images hidden
+          img.classList.remove('active');
+          // Let CSS handle visibility via the .active class
         }
       });
       
-      // Add active class to the first image
-      images[0].classList.add('active');
-      currentImage = images[0]; // Update currentImage to the now-active first image
-      
-      // eslint-disable-next-line no-console
-      console.log(`[DEBUG] First image now has display: ${currentImage.style.display}, active class: ${currentImage.classList.contains('active')}, visibility: ${window.getComputedStyle(currentImage).visibility}`);
+      currentImage = images[0];
+      return true; // First initialization completed
     }
     
     // Get the index of the current image
     const currentImageIndex = images.indexOf(currentImage);
-    // eslint-disable-next-line no-console
-    console.log(`[DEBUG] Current image index: ${currentImageIndex}`);
     
     // Handle navigation based on direction
-    if (direction === 'next') {
-      // Check if we're not at the end of the sequence
-      if (currentImageIndex < images.length - 1) {
-        // eslint-disable-next-line no-console
-        console.log(`[DEBUG] Moving to next image (index ${currentImageIndex + 1})`);
-        
-        // Hide current image - IMPORTANT: Don't change display property, only remove active class
-        // eslint-disable-next-line no-console
-        console.log(`[DEBUG] BEFORE CHANGE - Current image (${currentImageIndex}) display: ${currentImage.style.display}, has active class: ${currentImage.classList.contains('active')}, visibility: ${window.getComputedStyle(currentImage).visibility}`);
-        
-        // Don't set display: none - just remove the active class and set visibility directly
-        currentImage.classList.remove('active');
-        currentImage.style.visibility = 'hidden'; // Directly set visibility to hidden
-        
-        // Show next image
-        const nextImage = images[currentImageIndex + 1];
-        
-        // eslint-disable-next-line no-console
-        console.log(`[DEBUG] BEFORE CHANGE - Next image (${currentImageIndex + 1}) display: ${nextImage.style.display}, has active class: ${nextImage.classList.contains('active')}, visibility: ${window.getComputedStyle(nextImage).visibility}`);
-        
-        // Make sure display is set to block first, then add active class and set visibility directly
-        nextImage.style.display = 'block';
-        nextImage.classList.add('active');
-        nextImage.style.visibility = 'visible'; // Directly set visibility to visible
-        
-        // Log after changes
-        // eslint-disable-next-line no-console
-        console.log(`[DEBUG] AFTER CHANGE - Current image (${currentImageIndex}) display: ${currentImage.style.display}, has active class: ${currentImage.classList.contains('active')}, visibility: ${window.getComputedStyle(currentImage).visibility}`);
-        // eslint-disable-next-line no-console
-        console.log(`[DEBUG] AFTER CHANGE - Next image (${currentImageIndex + 1}) display: ${nextImage.style.display}, has active class: ${nextImage.classList.contains('active')}, visibility: ${window.getComputedStyle(nextImage).visibility}`);
-        
-        // Force a reflow to ensure the browser updates the display
-        // eslint-disable-next-line no-console
-        console.log('[DEBUG] Forcing reflow');
-        imageSequence.getBoundingClientRect();
-        
-        // Add a small delay to ensure the browser has time to update the display
-        // eslint-disable-next-line no-console
-        console.log('[DEBUG] Adding small delay for browser to update display');
-        
-        // Use setTimeout to add a small delay before returning
-        setTimeout(() => {
-          // eslint-disable-next-line no-console
-          console.log('[DEBUG] After delay - checking display states:');
-          // eslint-disable-next-line no-console
-          console.log(`[DEBUG] Current image (${currentImageIndex}) display: ${currentImage.style.display}, has active class: ${currentImage.classList.contains('active')}, visibility: ${window.getComputedStyle(currentImage).visibility}`);
-          // eslint-disable-next-line no-console
-          console.log(`[DEBUG] Next image (${currentImageIndex + 1}) display: ${nextImage.style.display}, has active class: ${nextImage.classList.contains('active')}, visibility: ${window.getComputedStyle(nextImage).visibility}`);
-        }, 300); // Increased to 300ms to match the CSS transition duration
-        
-        // eslint-disable-next-line no-console
-        console.log('[DEBUG] Successfully moved to next image, returning true');
-        return true;
-      } else {
-        // eslint-disable-next-line no-console
-        console.log('[DEBUG] Already at last image, returning false');
-      }
-    } else if (direction === 'prev') {
-      // Check if we're not at the beginning of the sequence
-      if (currentImageIndex > 0) {
-        // eslint-disable-next-line no-console
-        console.log(`[DEBUG] Moving to previous image (index ${currentImageIndex - 1})`);
-        
-        // Hide current image - IMPORTANT: Don't change display property, only remove active class
-        // eslint-disable-next-line no-console
-        console.log(`[DEBUG] BEFORE CHANGE - Current image (${currentImageIndex}) display: ${currentImage.style.display}, has active class: ${currentImage.classList.contains('active')}, visibility: ${window.getComputedStyle(currentImage).visibility}`);
-        
-        // Don't set display: none - just remove the active class and set visibility directly
-        currentImage.classList.remove('active');
-        currentImage.style.visibility = 'hidden'; // Directly set visibility to hidden
-        
-        // Show previous image
-        const prevImage = images[currentImageIndex - 1];
-        
-        // eslint-disable-next-line no-console
-        console.log(`[DEBUG] BEFORE CHANGE - Prev image (${currentImageIndex - 1}) display: ${prevImage.style.display}, has active class: ${prevImage.classList.contains('active')}, visibility: ${window.getComputedStyle(prevImage).visibility}`);
-        
-        // Make sure display is set to block first, then add active class and set visibility directly
-        prevImage.style.display = 'block';
-        prevImage.classList.add('active');
-        prevImage.style.visibility = 'visible'; // Directly set visibility to visible
-        
-        // Log after changes
-        // eslint-disable-next-line no-console
-        console.log(`[DEBUG] AFTER CHANGE - Current image (${currentImageIndex}) display: ${currentImage.style.display}, has active class: ${currentImage.classList.contains('active')}, visibility: ${window.getComputedStyle(currentImage).visibility}`);
-        // eslint-disable-next-line no-console
-        console.log(`[DEBUG] AFTER CHANGE - Prev image (${currentImageIndex - 1}) display: ${prevImage.style.display}, has active class: ${prevImage.classList.contains('active')}, visibility: ${window.getComputedStyle(prevImage).visibility}`);
-        
-        // Force a reflow to ensure the browser updates the display
-        // eslint-disable-next-line no-console
-        console.log('[DEBUG] Forcing reflow');
-        imageSequence.getBoundingClientRect();
-        
-        // Add a small delay to ensure the browser has time to update the display
-        // eslint-disable-next-line no-console
-        console.log('[DEBUG] Adding small delay for browser to update display');
-        
-        // Use setTimeout to add a small delay before returning
-        setTimeout(() => {
-          // eslint-disable-next-line no-console
-          console.log('[DEBUG] After delay - checking display states:');
-          // eslint-disable-next-line no-console
-          console.log(`[DEBUG] Current image (${currentImageIndex}) display: ${currentImage.style.display}, has active class: ${currentImage.classList.contains('active')}, visibility: ${window.getComputedStyle(currentImage).visibility}`);
-          // eslint-disable-next-line no-console
-          console.log(`[DEBUG] Prev image (${currentImageIndex - 1}) display: ${prevImage.style.display}, has active class: ${prevImage.classList.contains('active')}, visibility: ${window.getComputedStyle(prevImage).visibility}`);
-        }, 300); // Increased to 300ms to match the CSS transition duration
-        
-        // eslint-disable-next-line no-console
-        console.log('[DEBUG] Successfully moved to previous image, returning true');
-        return true;
-      } else {
-        // eslint-disable-next-line no-console
-        console.log('[DEBUG] Already at first image, returning false');
-      }
+    if (direction === 'next' && currentImageIndex < images.length - 1) {
+      isNavigating = true; // Set navigation lock
+      
+      // Get the next image
+      const nextImage = images[currentImageIndex + 1];
+      
+      // *** SIMPLER STATE MANAGEMENT ***
+      // Let CSS handle visibility through classes only - don't set visibility directly
+      currentImage.classList.remove('active');
+      nextImage.classList.add('active');
+      
+      // Release the navigation lock after transition completes
+      setTimeout(() => {
+        isNavigating = false;
+      }, 350); // Slightly longer than CSS transition to ensure completion
+      
+      return true;
+    }
+    else if (direction === 'prev' && currentImageIndex > 0) {
+      isNavigating = true; // Set navigation lock
+      
+      // Get the previous image
+      const prevImage = images[currentImageIndex - 1];
+      
+      // *** SIMPLER STATE MANAGEMENT ***
+      // Let CSS handle visibility through classes only - don't set visibility directly
+      currentImage.classList.remove('active');
+      prevImage.classList.add('active');
+      
+      // Release the navigation lock after transition completes
+      setTimeout(() => {
+        isNavigating = false;
+      }, 350); // Slightly longer than CSS transition to ensure completion
+      
+      return true;
     }
     
     // If we reach here, we couldn't navigate in the requested direction
-    // eslint-disable-next-line no-console
-    console.log('[DEBUG] Could not navigate in requested direction, returning false');
     return false;
   }
 
