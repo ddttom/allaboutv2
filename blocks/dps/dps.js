@@ -159,6 +159,10 @@ export default function decorate(block) {
   /* Set up presentation controls
    * Handles slide navigation, timer, and presenter notes functionality
    */
+  // Initialize the timer duration
+  remainingTime = presentationData.timerDuration * 60 || DPS_CONFIG.TIMER_DURATION;
+  
+  // Set up the seamless navigation
   setupSeamlessControls();
   addSeamlessNavigationStyles();
 
@@ -1629,6 +1633,232 @@ function showSlide(index) {
 }
 
 /**
+ * Toggle the timer on/off
+ */
+function toggleTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  } else {
+    timerInterval = setInterval(updateTimer, 1000);
+  }
+}
+
+/**
+ * Toggle presenter mode
+ */
+function togglePresenterMode() {
+  const isPresenterMode = document.querySelector('.presenter-notes').classList.contains('presenter-mode');
+  const header = document.querySelector('.dps-header');
+  const footer = document.querySelector('.dps-footer');
+  const slides = document.querySelectorAll('.slide');
+  const currentSlide = slides[currentSlideIndex];
+  const presenterNotes = document.querySelector('.presenter-notes');
+  const presenterButton = document.querySelector('.presenter-toggle');
+  const notesContent = presenterNotes.querySelector('.presenter-notes-content');
+
+  if (!isPresenterMode) {
+    // Hide header and slides but keep footer
+    header.style.display = 'none';
+    slides.forEach(slide => slide.style.display = 'none');
+    currentSlide.style.display = 'none';
+    
+    // Highlight presenter button
+    presenterButton.classList.add('active');
+  
+    // Show notes in full screen
+    presenterNotes.classList.remove('hidden');
+    presenterNotes.classList.add('presenter-mode');
+  
+    // Normal view - stay pinned to left
+    presenterNotes.style.width = '50%'; // Reduced from 100% to stay on left side
+    presenterNotes.style.left = '20px'; // Keep pinned to left
+    presenterNotes.style.height = 'calc(100vh - 60px)';
+    presenterNotes.style.position = 'fixed';
+    presenterNotes.style.top = '0';
+    presenterNotes.style.zIndex = '1000';
+    presenterNotes.style.backgroundColor = 'white';
+    presenterNotes.style.padding = '20px';
+    presenterNotes.style.overflow = 'auto';
+    
+    // Update presenter notes content to include title and bullet points
+    updatePresenterNotes(currentSlideIndex, false, true); // Pass isPresenterToggle=true
+  } else {
+    // Restore normal view
+    header.style.display = '';
+    slides.forEach(slide => slide.style.display = '');
+    currentSlide.style.display = 'block';
+    
+    // Remove button highlight
+    presenterButton.classList.remove('active');
+  
+    presenterNotes.classList.remove('presenter-mode');
+    presenterNotes.style.width = '31.25vw'; // Original width from CSS
+    presenterNotes.style.left = '20px'; // Keep pinned to left
+    presenterNotes.style.height = '25vh'; // Original height from CSS
+    presenterNotes.style.position = 'fixed';
+    presenterNotes.style.top = '';
+    presenterNotes.style.bottom = '60px'; // Position at bottom as in CSS
+    presenterNotes.style.zIndex = '1000';
+    presenterNotes.style.backgroundColor = '';
+    presenterNotes.style.padding = '';
+    presenterNotes.style.overflow = 'auto';
+  }
+}
+
+/**
+ * Setup resize handler for presenter notes
+ */
+function setupResizeHandler() {
+  const grip = document.querySelector('.resize-grip');
+  const notes = document.querySelector('.presenter-notes');
+
+  if (!grip || !notes) return;
+
+  grip.addEventListener('mousedown', (e) => {
+    const isResizing = true;
+    const startY = e.clientY;
+    const startHeight = parseInt(document.defaultView.getComputedStyle(notes).height, 10);
+    e.preventDefault();
+
+    const moveHandler = (moveEvent) => {
+      if (!isResizing) return;
+      
+      const height = startHeight + (startY - moveEvent.clientY);
+      notes.style.height = `${Math.max(200, Math.min(window.innerHeight - 60, height))}px`;
+    };
+
+    const upHandler = () => {
+      document.removeEventListener('mousemove', moveHandler);
+      document.removeEventListener('mouseup', upHandler);
+    };
+
+    document.addEventListener('mousemove', moveHandler);
+    document.addEventListener('mouseup', upHandler);
+  });
+}
+
+// Global variables needed for seamless navigation
+let currentSlideIndex = 0;
+let timerInterval = null;
+let remainingTime = 0;
+let hasStartedTimer = false;
+
+/**
+ * Update navigation buttons state
+ * Disables buttons when at first/last slide
+ */
+function updateNavButtons(slideIndex) {
+  const prevButton = document.querySelector('.prev-slide');
+  const nextButton = document.querySelector('.next-slide');
+  const slides = document.querySelectorAll('.slide');
+  
+  if (prevButton) {
+    prevButton.disabled = slideIndex === 0;
+  }
+  if (nextButton) {
+    nextButton.disabled = slideIndex === slides.length - 1;
+  }
+}
+
+/**
+ * Update presenter notes
+ * Shows notes for current slide
+ */
+function updatePresenterNotes(slideIndex, forceNormalMode = false, isPresenterToggle = false) {
+  const slides = document.querySelectorAll('.slide');
+  const currentSlide = slides[slideIndex];
+  const slideData = currentSlide.dataset.presenterNotes || '';
+  const presenterNotes = document.querySelector('.presenter-notes');
+  const notesContent = presenterNotes.querySelector('.presenter-notes-content');
+  
+  // Always use normal mode content when forceNormalMode is true
+  if (forceNormalMode) {
+    // Normal mode - just show the notes
+    notesContent.innerHTML = slideData;
+    return; // Exit early to ensure we don't run the other logic
+  }
+  
+  // Only show enhanced content for presenter mode (icon click), not for 'p' key (enlarged)
+  if (presenterNotes.classList.contains('presenter-mode') && isPresenterToggle) {
+    // Get the current slide content
+    const slideTitle = currentSlide.querySelector('.slide-title')?.textContent || '';
+    let bulletPointsHTML = '';
+    
+    // Get bullet points
+    const bulletList = currentSlide.querySelector('.bullet-list');
+    if (bulletList) {
+      bulletPointsHTML = bulletList.outerHTML;
+    }
+    
+    // Combine everything with an HR separator
+    notesContent.innerHTML = `
+      <h3>${slideTitle}</h3>
+      ${bulletPointsHTML}
+      <hr style="margin: 15px 0; border: 0; border-top: 1px solid #ccc;">
+      ${slideData}
+    `;
+  } else {
+    // Normal mode - just show the notes
+    notesContent.innerHTML = slideData;
+  }
+}
+
+/**
+ * Start the presentation timer
+ */
+function startTimer() {
+  if (!timerInterval) {
+    timerInterval = setInterval(updateTimer, 1000);
+  }
+}
+
+/**
+ * Update the timer display
+ */
+function updateTimer() {
+  if (remainingTime > 0) {
+    remainingTime--;
+    document.querySelector('.timer').textContent = formatTime(remainingTime);
+
+    /* Flash warning when 2 minutes remain
+     * Provides visual cue for time management
+     */
+    if (remainingTime === 120) {
+      flashTimeWarning();
+    }
+  } else {
+    clearInterval(timerInterval);
+    document.querySelector('.timer').textContent = 'Time Up!';
+    document.querySelector('.timer').style.color = '#e74c3c';
+  }
+}
+
+/**
+ * Visual warning system for timer
+ * Flashes red three times when time is running low
+ */
+function flashTimeWarning() {
+  const container = document.querySelector('.dps-container');
+  let flashCount = 0;
+
+  function singleFlash() {
+    container.style.backgroundColor = '#e74c3c';
+
+    setTimeout(() => {
+      container.style.backgroundColor = '';
+      flashCount++;
+
+      if (flashCount < 3) {
+        setTimeout(singleFlash, 300);
+      }
+    }, 300);
+  }
+
+  singleFlash();
+}
+
+/**
  * Completely revised navigation approach for seamless progression
  * This implementation flattens the navigation hierarchy so users can progress
  * through all content (slides and image sequences) with single button presses
@@ -1798,6 +2028,12 @@ function initializeImageSequence(slide) {
 function setupSeamlessControls() {
   const prevButton = document.querySelector('.prev-slide');
   const nextButton = document.querySelector('.next-slide');
+  const presenterButton = document.querySelector('.presenter-toggle');
+  
+  // Set up presenter mode toggle
+  if (presenterButton) {
+    presenterButton.addEventListener('click', togglePresenterMode);
+  }
   
   if (prevButton) {
     prevButton.addEventListener('click', () => {
@@ -1810,6 +2046,13 @@ function setupSeamlessControls() {
       navigateForward();
     });
   }
+  
+  // Force fullscreen mode immediately
+  document.body.classList.add('dps-fullscreen');
+  window.scrollTo(0, 0);
+  
+  // Setup resize handler for presenter notes
+  setupResizeHandler();
   
   // Handle keyboard navigation
   document.addEventListener('keydown', (event) => {
@@ -1826,6 +2069,24 @@ function setupSeamlessControls() {
     else if (event.key === 'ArrowRight') {
       event.preventDefault();
       navigateForward();
+    }
+    else if (event.key === 'Escape') {
+      const navBar = document.querySelector('.dps-navigation');
+      if (navBar) {
+        navBar.style.display = navBar.style.display === 'none' ? 'flex' : 'none';
+      }
+    }
+    else if (event.key === '+' || event.key === '=') {
+      const presenterNotes = document.querySelector('.presenter-notes');
+      presenterNotes.classList.remove('hidden');
+    }
+    else if (event.key === '-' || event.key === '_') {
+      const presenterNotes = document.querySelector('.presenter-notes');
+      presenterNotes.classList.add('hidden');
+    }
+    else if (event.key === ' ' && hasStartedTimer) {
+      event.preventDefault();
+      toggleTimer();
     }
     // Keep other existing keyboard handlers
   });
