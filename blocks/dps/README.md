@@ -298,6 +298,17 @@ The system detects icon spans using multiple techniques:
 3. **Element traversal**: Finds nested icon spans within other elements
 4. **Multiple icon processing**: Handles multiple icon spans within a single paragraph
 
+### Icon Counting Fix
+The system includes a fix for accurate icon counting in the parseIllustration function:
+1. **Issue**: Previous implementation double-counted icons by processing them in two different ways:
+   - First through regex approach to find all `<span class="icon">` elements in HTML string
+   - Then separately processing each DOM element, including paragraphs containing icon spans
+2. **Solution**:
+   - Uses a `processedIcons` Set to track which icons have already been processed
+   - Checks this Set before adding any icon to the contentPositions array
+   - Adds clear logging to show exactly how many unique icons are processed
+3. **Result**: Each unique icon is only counted once, regardless of how it's found in the HTML content
+
 ### Icon Transformation
 Icons undergo a specific transformation process:
 1. The icon span is identified via its class (e.g., `<span class="icon icon-explode"></span>`)
@@ -433,6 +444,7 @@ The fourth column supports various image formats and sources:
 - **IMPROVED: All images (including single images) now show position labels (e.g., "Icon 1/1")**
 - **IMPROVED: Better handling of single images during navigation**
 - **IMPROVED: Deduplication of icons to prevent duplicates during navigation**
+- **FIXED: Icon counting in parseIllustration function to prevent double-counting**
 - **NEW: Proper handling of anchor elements as either images or iframes**
 - **NEW: Support for iframe with anchor tag pattern (`iframe <a href="...">Link</a>`)**
 - **NEW: Support for multiple icon spans within a single paragraph**

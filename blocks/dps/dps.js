@@ -590,42 +590,34 @@ function addImageSequenceStyles() {
   document.head.appendChild(style);
 }
 
-
 /**
  * Parse illustration from a cell
  * Supports multiple content types: images, SVGs, iframes
- * 
- * @param {Element} cell - Cell element containing illustration content
- * @returns {Object|null} Structured illustration data or null if no illustration found
- */
-/**
- * Parse illustration from a cell
- * Supports multiple content types: images, SVGs, iframes
- * FIXED: Now properly handles iframe URLs in text content
+ * FIXED: Properly handles icon detection without double-counting
  *
  * @param {Element} cell - Cell element containing illustration content
  * @returns {Object|null} Structured illustration data or null if no illustration found
  */
-
 function parseIllustration(cell) {
-    if (!cell) return null;
+  if (!cell) return null;
+  
+  let illustrations = [];
+  let contentPositions = [];
+  
+  // Process HTML content directly from cell to capture all elements
+  let cellContent = cell.innerHTML.trim();
+  
+  // Clean up content - remove lone <br> tags and whitespace
+  cellContent = cellContent
+    .replace(new RegExp('<p>\\s*<br>\\s*</p>', 'gi'), '') // Remove empty paragraphs with just <br>
+    .replace(new RegExp('<br>\\s*(?=<)', 'gi'), '') // Remove <br> tags at start of elements
+    .replace(new RegExp('\\s*<br>\\s*(?=\\w)', 'gi'), ' ') // Replace <br> followed by text with space
+    .replace(new RegExp('\\s+', 'g'), ' ') // Collapse multiple whitespace
+    .trim();
     
-    let illustrations = [];
-    
-    // Process HTML content directly from cell to capture all elements
-    let cellContent = cell.innerHTML.trim();
-    
-    // Clean up content - remove lone <br> tags and whitespace
-    cellContent = cellContent
-      .replace(new RegExp('<p>\\s*<br>\\s*</p>', 'gi'), '') // Remove empty paragraphs with just <br>
-      .replace(new RegExp('<br>\\s*(?=<)', 'gi'), '') // Remove <br> tags at start of elements
-      .replace(new RegExp('\\s*<br>\\s*(?=\\w)', 'gi'), ' ') // Replace <br> followed by text with space
-      .replace(new RegExp('\\s+', 'g'), ' ') // Collapse multiple whitespace
-      .trim();
-      
-    // Debug log to check what's in the cell content
-    console.log(`[Illustration Parser] Cell content: ${cellContent.substring(0, 100)}...`);
-    
+  // Debug log to check what's in the cell content
+  console.log(`[Illustration Parser] Cell content: ${cellContent.substring(0, 100)}...`);
+  
   // Handle simplified iframe format
   // We'll store these matches, but process them in order with other content
   const iframeRegex = new RegExp('iframe\\s+(https?://[^\\s"\'<>]+)', 'gi');
@@ -649,7 +641,12 @@ function parseIllustration(cell) {
     });
   }
   
+  // FIXED: Create a set to track processed icons by name
+  // This prevents double-counting the same icon
+  const processedIcons = new Set();
+  
   // Process icon spans - convert to image tags
+  // But only if they're not already processed
   const iconRegex = new RegExp('<span\\s+class=["|\'][^"\']*icon[^"\']*["|\'][^>]*>.*?</span>', 'gi');
   const iconMatches = Array.from(cellContent.matchAll(iconRegex));
   
@@ -663,7 +660,10 @@ function parseIllustration(cell) {
       const classString = classMatch[1];
       const iconName = extractIconName(classString);
       
-      if (iconName) {
+      // FIXED: Only add if we haven't processed this icon before
+      if (iconName && !processedIcons.has(iconName)) {
+        processedIcons.add(iconName); // Mark as processed
+        
         contentPositions.push({
           type: 'icon',
           position: position,
@@ -674,6 +674,10 @@ function parseIllustration(cell) {
             alt: `${iconName} Illustration`
           }
         });
+        
+        console.log(`[ParseIllustration] Added icon: ${iconName} at position ${position}`);
+      } else if (iconName) {
+        console.log(`[ParseIllustration] Skipped duplicate icon: ${iconName}`);
       }
     }
   }
@@ -696,17 +700,17 @@ function parseIllustration(cell) {
         // Process each icon span separately
         iconSpans.forEach(iconSpan => {
           const iconName = extractIconName(iconSpan.className);
-          // Calculate approximate position based on parent element position in original content
-          const parentPosition = cellContent.indexOf(element.outerHTML);
-          const elementPosition = parentPosition > -1 ? parentPosition : contentPositions.length * 1000;
           
-          console.log(`[ParseIllustration] Processing icon: ${iconName}`);
-          
-          // Check if this icon is already in our positions list
-          const isDuplicate = contentPositions.some(item => 
-            item.type === 'icon' && item.data.iconName === iconName);
+          // FIXED: Only add if we haven't processed this icon before
+          if (iconName && !processedIcons.has(iconName)) {
+            processedIcons.add(iconName); // Mark as processed
             
-          if (iconName && !isDuplicate) {
+            // Calculate approximate position based on parent element position in original content
+            const parentPosition = cellContent.indexOf(element.outerHTML);
+            const elementPosition = parentPosition > -1 ? parentPosition : contentPositions.length * 1000;
+            
+            console.log(`[ParseIllustration] Processing icon: ${iconName}`);
+            
             contentPositions.push({
               type: 'icon',
               position: elementPosition,
@@ -718,14 +722,15 @@ function parseIllustration(cell) {
               }
             });
             console.log(`[ParseIllustration] Added icon: ${iconName}`);
-          } else if (isDuplicate) {
+          } else if (iconName) {
             console.log(`[ParseIllustration] Skipped duplicate icon: ${iconName}`);
           }
         });
       }
       
       return;
-    }  
+    }
+    
     // Create a temporary container to extract HTML content accurately
     const tempContainer = document.createElement('div');
     tempContainer.appendChild(element.cloneNode(true));
@@ -779,7 +784,11 @@ function parseIllustration(cell) {
     else if (element.tagName === 'SPAN' && element.classList.contains('icon')) {
       // Handle icon spans - convert to image tags
       const iconName = extractIconName(element.className);
-      if (iconName) {
+      
+      // FIXED: Only add if we haven't processed this icon before
+      if (iconName && !processedIcons.has(iconName)) {
+        processedIcons.add(iconName); // Mark as processed
+        
         contentPositions.push({
           type: 'icon',
           position: elementPosition,
@@ -817,12 +826,14 @@ function parseIllustration(cell) {
         });
       }
     }
+    
+    // Process children recursively
+    Array.from(element.children).forEach(child => {
+      processElement(child);
+    });
   }
   
-  // Process all elements as separate content pieces
-  const elements = Array.from(cell.children);
-  
-  // Check if there's any direct text content in the cell
+  // Process all direct text content in the cell
   if (cell.textContent.trim() && cell.childElementCount === 0) {
     const textContent = cell.textContent.trim();
     
@@ -854,7 +865,6 @@ function parseIllustration(cell) {
             }
           });
         } else if (urlData.type === 'iframe') {
-          // FIXED: Handle iframe type from extractUrl
           contentPositions.push({
             type: 'iframe',
             position: 0,
@@ -870,6 +880,7 @@ function parseIllustration(cell) {
   }
   
   // Process each top-level element
+  const elements = Array.from(cell.children);
   for (const element of elements) {
     processElement(element);
   }
@@ -880,15 +891,9 @@ function parseIllustration(cell) {
   // Extract the sorted data into our illustrations array
   illustrations = contentPositions.map(item => item.data);
   
-  // Remove any duplicates that might have been added
-  illustrations = illustrations.filter((item, index, self) =>
-    index === self.findIndex((t) =>
-      (t.type === item.type &&
-       ((t.iconName && item.iconName && t.iconName === item.iconName) ||
-        (t.src && item.src && t.src === item.src) ||
-        (t.content && item.content && t.content === item.content)))
-    )
-  );
+  // Log the number of found illustrations
+  console.log(`[ParseIllustration] Found ${illustrations.length} illustrations`);
+  console.log(`[ParseIllustration] Processed ${processedIcons.size} unique icons`);
 
   // Return illustrations if found, null otherwise
   if (illustrations.length > 0) {
