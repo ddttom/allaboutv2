@@ -333,11 +333,11 @@ function extractIframeContent(content) {
       };
     }
   }
-  
   /* Check for simplified "iframe url" format
    * Makes it easier for authors to add iframes
+   * This handles both standalone "iframe URL" and "iframe URL" within other content
    */
-  const simpleIframeMatch = content.match(/^iframe\s+(https?:\/\/[^\s"'<>]+)$/i);
+  const simpleIframeMatch = content.match(/iframe\s+(https?:\/\/[^\s"'<>]+)/i);
   if (simpleIframeMatch && simpleIframeMatch[1]) {
     return {
       type: "iframe",
@@ -362,9 +362,10 @@ function extractIframeContent(content) {
  * @returns {Object|null} URL object with type and URL or null if no URL found
  */
 function extractUrl(content) {
-  const urlMatch = content.match(/(https?:\/\/[^\s"'<>]+)/i);
-  if (urlMatch) {
-    const url = urlMatch[0];
+  // First check for URLs in anchor tags
+  const anchorMatch = content.match(/<a[^>]*href=["']([^"']*)["'][^>]*>(.*?)<\/a>/i);
+  if (anchorMatch && anchorMatch[1] && anchorMatch[1].startsWith('http')) {
+    const url = anchorMatch[1];
     // Determine if this is an image URL or an iframe URL based on extension
     if (isImageUrl(url)) {
       return {
@@ -378,6 +379,25 @@ function extractUrl(content) {
       };
     }
   }
+  
+  // Then check for raw URLs
+  const urlMatches = content.match(/(https?:\/\/[^\s"'<>]+)/gi);
+  if (urlMatches && urlMatches.length > 0) {
+    const url = urlMatches[0]; // Use the first URL found
+    // Determine if this is an image URL or an iframe URL based on extension
+    if (isImageUrl(url)) {
+      return {
+        type: "image",
+        url: url
+      };
+    } else {
+      return {
+        type: "iframe",
+        url: url
+      };
+    }
+  }
+  
   return null;
 }
 
@@ -419,12 +439,28 @@ function parseIllustration(cell) {
     .replace(/\s+/g, ' ') // Collapse multiple whitespace
     .trim();
 
-  // Special handling for simplified iframe format wrapped in paragraphs
-  const simplifiedIframeRegex = /<p>\s*iframe\s+(https?:\/\/[^\s"'<>]+)\s*<\/p>/gi;
+  // Special handling for simplified iframe format wrapped in paragraphs or other elements
+  const simplifiedIframeRegex = /<(?:p|div)[^>]*>\s*iframe\s+(https?:\/\/[^\s"'<>]+)\s*<\/(?:p|div)>/gi;
   const simplifiedIframeMatches = Array.from(cellContent.matchAll(simplifiedIframeRegex));
   
   for (const match of simplifiedIframeMatches) {
     const url = match[1];
+    if (!illustrations.some(item => item.type === "iframe" && item.src === url)) {
+      illustrations.push({
+        type: "iframe",
+        src: url,
+        content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+      });
+    }
+  }
+  
+  // Also check for iframe format without HTML tags
+  const plainIframeRegex = /iframe\s+(https?:\/\/[^\s"'<>]+)/gi;
+  const plainIframeMatches = Array.from(cellContent.matchAll(plainIframeRegex));
+  
+  for (const match of plainIframeMatches) {
+    const url = match[1];
+    // Skip if already processed by the HTML version above
     if (!illustrations.some(item => item.type === "iframe" && item.src === url)) {
       illustrations.push({
         type: "iframe",
@@ -459,8 +495,77 @@ function parseIllustration(cell) {
   
   // Helper function to process an element and its children
   function processElement(element) {
-    // If this is a paragraph, process its children instead
+    // If this is a paragraph, process both its text content and children
     if (element.tagName === 'P') {
+      // Process the paragraph's HTML content to capture text nodes and embedded URLs
+      const paragraphHtml = element.innerHTML;
+      
+      // Check if paragraph contains iframe content
+      const iframeContent = extractIframeContent(paragraphHtml);
+      if (iframeContent) {
+        illustrations.push(iframeContent);
+      }
+      
+      // Check for URLs in the paragraph - process all URLs, not just the first one
+      const urlMatches = paragraphHtml.match(/(https?:\/\/[^\s"'<>]+)/gi);
+      if (urlMatches) {
+        for (const url of urlMatches) {
+          // Skip if this URL is already part of an iframe that was processed
+          if (iframeContent && iframeContent.src === url) continue;
+          
+          // Skip if this URL is already in the illustrations
+          if (illustrations.some(item =>
+            (item.type === "iframe" && item.src === url) ||
+            (item.type === "image" && item.content === url)
+          )) continue;
+          
+          // Add as image or iframe based on extension
+          if (isImageUrl(url)) {
+            illustrations.push({
+              type: "image",
+              content: url,
+              alt: "Image"
+            });
+          } else {
+            illustrations.push({
+              type: "iframe",
+              src: url,
+              content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+            });
+          }
+        }
+      }
+      
+      // Also check for URLs in anchor tags
+      const anchorRegex = /<a[^>]*href=["']([^"']*)["'][^>]*>.*?<\/a>/gi;
+      const anchorMatches = Array.from(paragraphHtml.matchAll(anchorRegex));
+      
+      for (const match of anchorMatches) {
+        const url = match[1];
+        if (url && url.startsWith('http')) {
+          // Skip if this URL is already in the illustrations
+          if (illustrations.some(item =>
+            (item.type === "iframe" && item.src === url) ||
+            (item.type === "image" && item.content === url)
+          )) continue;
+          
+          // Add as image or iframe based on extension
+          if (isImageUrl(url)) {
+            illustrations.push({
+              type: "image",
+              content: url,
+              alt: "Image"
+            });
+          } else {
+            illustrations.push({
+              type: "iframe",
+              src: url,
+              content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+            });
+          }
+        }
+      }
+      
       // Process each child of the paragraph
       Array.from(element.children).forEach(child => {
         processElement(child);
@@ -563,6 +668,32 @@ function parseIllustration(cell) {
   
   // Process all elements as separate content pieces
   const elements = Array.from(cell.children);
+  
+  // Check if there's any direct text content in the cell
+  if (cell.textContent.trim() && cell.childElementCount === 0) {
+    const textContent = cell.textContent.trim();
+    const iframeContent = extractIframeContent(textContent);
+    if (iframeContent) {
+      illustrations.push(iframeContent);
+    } else {
+      const urlData = extractUrl(textContent);
+      if (urlData) {
+        if (urlData.type === "image") {
+          illustrations.push({
+            type: "image",
+            content: urlData.url,
+            alt: "Image"
+          });
+        } else {
+          illustrations.push({
+            type: "iframe",
+            src: urlData.url,
+            content: `<iframe src="${urlData.url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+          });
+        }
+      }
+    }
+  }
   
   // Process each top-level element
   for (const element of elements) {
