@@ -655,8 +655,8 @@ body.dps-fullscreen main .section > div {
 .presenter-notes.presenter-mode {
     width: 66.66vw;
     height: 66.66vh;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 20px; /* Keep pinned to left */
+    transform: none; /* Remove centering transform */
     bottom: 80px;
     transition: all 0.3s ease;
 }

@@ -1118,6 +1118,7 @@ function togglePresenterMode() {
       presenterNotes.style.backgroundColor = 'white';
       presenterNotes.style.padding = '20px';
       presenterNotes.style.overflow = 'auto';
+      presenterNotes.style.transform = 'none'; // Override the CSS transform
       notesContent.style.transform = 'none';
       notesContent.style.fontSize = 'inherit';
     } else {
