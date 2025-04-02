@@ -823,7 +823,7 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
   /* Update presenter notes
    * Shows notes for current slide
    */
-  function updatePresenterNotes(slideIndex, forceNormalMode = false) {
+  function updatePresenterNotes(slideIndex, forceNormalMode = false, isPresenterToggle = false) {
     const currentSlide = slides[slideIndex];
     const slideData = currentSlide.dataset.presenterNotes || '';
     const presenterNotes = document.querySelector('.presenter-notes');
@@ -835,8 +835,8 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
       return; // Exit early to ensure we don't run the other logic
     }
     
-    // Check if we're in presenter mode or enlarged mode
-    if (presenterNotes.classList.contains('presenter-mode') || presenterNotes.classList.contains('enlarged')) {
+    // Only show enhanced content for presenter mode (icon click), not for 'p' key (enlarged)
+    if (presenterNotes.classList.contains('presenter-mode') && isPresenterToggle) {
       // Get the current slide content
       const slideTitle = currentSlide.querySelector('.slide-title')?.textContent || '';
       let bulletPointsHTML = '';
@@ -1164,11 +1164,11 @@ function togglePresenterMode() {
       presenterNotes.style.overflow = 'auto';
       
       // Update presenter notes content to show only notes
-      updatePresenterNotes(currentSlideIndex, true); // Force normal mode
+      updatePresenterNotes(currentSlideIndex, true, true); // Force normal mode, isPresenterToggle=true
     }
     
     // Update presenter notes content to include title and bullet points
-    updatePresenterNotes(currentSlideIndex);
+    updatePresenterNotes(currentSlideIndex, false, true); // Pass isPresenterToggle=true
   } else {
     // Restore normal view
     header.style.display = '';
@@ -1256,8 +1256,8 @@ document.addEventListener("keydown", (event) => {
       presenterNotes.style.zIndex = '1000';
       config.PRESENTER_NOTES_VISIBLE = true;
       
-      // Update presenter notes content to include title and bullet points
-      updatePresenterNotes(currentSlideIndex);
+      // For 'p' key, just show the notes without title and bullets
+      updatePresenterNotes(currentSlideIndex, false, false); // Pass isPresenterToggle=false
     }
     handled = true;
   }
