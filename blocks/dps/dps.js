@@ -76,6 +76,9 @@ export default function decorate(block) {
   // Extract rows from the block (each row was a table row in the Google Doc)
   const rows = Array.from(block.children);
 
+  // Initialize the state tracker
+  initStateTracker();
+
   /* Validate minimum content requirements
    * Need at least configuration row and one slide row
    */
@@ -1300,6 +1303,11 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
  *
  * @param {Element} slide - The slide element containing image sequences
  */
+f/**
+ * Initialize image sequence for a slide with robust state management
+ * 
+ * @param {Element} slide - The slide element containing image sequences
+ */
 function initializeImageSequence(slide) {
   console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Initializing image sequence`);
   
@@ -1317,19 +1325,48 @@ function initializeImageSequence(slide) {
   
   console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Found ${images.length} images in sequence`);
   
-  // Reset all images to a consistent state
+  // CRITICAL: Reset ALL images with both class and style properties
+  // This ensures a consistent state across all browsers and prevents conflicts
   images.forEach((img, index) => {
     // Always keep display block, but hide with visibility
     img.style.display = 'block';
     img.style.visibility = 'hidden';
     img.classList.remove('active');
     
+    // Ensure z-index is reset to avoid stacking context issues
+    img.style.zIndex = '';
+    
     console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Reset image ${index}`);
   });
   
-  // Activate only the first image
+  // CRITICAL: Activate ONLY the first image with both class and style
   images[0].classList.add('active');
   images[0].style.visibility = 'visible';
+  
+  // Force a small delay to ensure DOM updates are processed
+  // This can help avoid race conditions in some browsers
+  setTimeout(() => {
+    // Double-check that our state is consistent
+    const activeImages = imageSequence.querySelectorAll('.sequence-image.active');
+    if (activeImages.length !== 1) {
+      console.warn(`[ImageSequence] Inconsistent state detected after initialization. Active count: ${activeImages.length}`);
+      
+      // Force correction if needed
+      if (activeImages.length > 1) {
+        // Too many active images - fix it
+        Array.from(activeImages).forEach((img, idx) => {
+          if (idx > 0) {
+            img.classList.remove('active');
+            img.style.visibility = 'hidden';
+          }
+        });
+      } else if (activeImages.length === 0) {
+        // No active images - activate the first one
+        images[0].classList.add('active');
+        images[0].style.visibility = 'visible';
+      }
+    }
+  }, 0);
   
   console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Activated first image`);
 }
@@ -1480,12 +1517,12 @@ function showSlide(index) {
   }
 
  /**
-  * Handle image sequence navigation with robust error handling and state tracking
-  *
-  * @param {string} direction - Direction to navigate ('prev' or 'next')
-  * @returns {boolean} - True if navigation was handled within a sequence, false if we should move to next/prev slide
-  */
- function handleImageSequenceNavigation(direction) {
+ * Handle image sequence navigation with robust error handling and state tracking
+ *
+ * @param {string} direction - Direction to navigate ('prev' or 'next')
+ * @returns {boolean} - True if navigation was handled within a sequence, false if we should move to next/prev slide
+ */
+function handleImageSequenceNavigation(direction) {
   // Debug logging
   console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Handling ${direction} navigation`);
    
@@ -1532,13 +1569,14 @@ function showSlide(index) {
   if (activeIndex === -1) {
     console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] No active image found, activating first image`);
     
-    // Reset all images first
+    // Reset all images first - using both class and style for consistency
     images.forEach(img => {
       img.classList.remove('active');
       img.style.visibility = 'hidden';
+      img.style.display = 'block';
     });
     
-    // Make the first image active
+    // Make the first image active - using both class and style
     images[0].classList.add('active');
     images[0].style.visibility = 'visible';
     return true;
@@ -1564,15 +1602,31 @@ function showSlide(index) {
   
   console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Moving to image index ${nextIndex}`);
   
-  // Reset all images first
+  // Reset all images first - using both class and style for consistency
   images.forEach(img => {
     img.classList.remove('active');
     img.style.visibility = 'hidden';
+    img.style.display = 'block';
   });
   
-  // Make the target image active
+  // Make the target image active - using both class and style
   images[nextIndex].classList.add('active');
   images[nextIndex].style.visibility = 'visible';
+  
+  // Add a verification step to ensure the change took effect
+  setTimeout(() => {
+    const activeImages = imageSequence.querySelectorAll('.sequence-image.active');
+    if (activeImages.length !== 1) {
+      console.warn(`[ImageSequence] State inconsistency detected after navigation. Found ${activeImages.length} active images.`);
+      
+      // Force correction
+      images.forEach((img, idx) => {
+        const shouldBeActive = idx === nextIndex;
+        img.classList.toggle('active', shouldBeActive);
+        img.style.visibility = shouldBeActive ? 'visible' : 'hidden';
+      });
+    }
+  }, 0);
   
   return true;
 }
@@ -2633,3 +2687,326 @@ function addSystemInfoStyles() {
   `;
   document.head.appendChild(style);
 }
+
+/**
+ * DPS State Tracker - A focused tool to identify state inconsistencies
+ * Add this to your DPS.js file to track state changes and identify issues
+ */
+
+// State tracking variables
+let stateSnapshots = [];
+const MAX_SNAPSHOTS = 20;
+
+/**
+ * Take a snapshot of the current DPS state
+ * @param {string} trigger - What triggered this snapshot
+ */
+function takeStateSnapshot(trigger) {
+  // Get the current slide
+  const currentSlide = document.querySelectorAll('.slide')[currentSlideIndex];
+  
+  // Check for image sequence
+  const imageSequence = currentSlide ? currentSlide.querySelector('.image-sequence') : null;
+  const sequenceImages = imageSequence ? Array.from(imageSequence.querySelectorAll('.sequence-image')) : [];
+  
+  // Analyze active states
+  const activeImages = sequenceImages.filter(img => img.classList.contains('active'));
+  const visibleImages = sequenceImages.filter(img => img.style.visibility === 'visible');
+  
+  // State inconsistency detection
+  const activeCount = activeImages.length;
+  const visibleCount = visibleImages.length;
+  const hasInconsistentState = activeCount !== visibleCount || activeCount > 1;
+  
+  // Create the snapshot
+  const snapshot = {
+    timestamp: new Date().toISOString(),
+    performanceTime: performance.now(),
+    trigger: trigger,
+    
+    navigation: {
+      currentSlideIndex: currentSlideIndex,
+      currentNavIndex: currentNavIndex,
+      totalNavPoints: flatNavigation ? flatNavigation.length : 'unknown',
+      currentNavType: flatNavigation && currentNavIndex < flatNavigation.length ? 
+                     flatNavigation[currentNavIndex].type : 'unknown'
+    },
+    
+    sequence: {
+      exists: !!imageSequence,
+      totalImages: sequenceImages.length,
+      activeCount: activeCount,
+      visibleCount: visibleCount,
+      hasInconsistentState: hasInconsistentState,
+      
+      // Which images are active/visible
+      activeIndices: activeImages.map(img => sequenceImages.indexOf(img)),
+      visibleIndices: visibleImages.map(img => sequenceImages.indexOf(img)),
+      
+      // Details of active images
+      activeDetails: activeImages.map(img => ({
+        index: sequenceImages.indexOf(img),
+        type: getImageType(img),
+        visibility: img.style.visibility,
+        display: img.style.display
+      }))
+    }
+  };
+  
+  // Add to snapshots history, maintaining max length
+  stateSnapshots.push(snapshot);
+  if (stateSnapshots.length > MAX_SNAPSHOTS) {
+    stateSnapshots.shift();
+  }
+  
+  // Log to console if there's an inconsistency
+  if (hasInconsistentState) {
+    console.warn(`[DPS State] Inconsistent state detected (${trigger}):`, 
+                 `active=${activeCount}, visible=${visibleCount}`);
+  }
+  
+  return snapshot;
+}
+
+/**
+ * Get type information for an image element
+ * @param {Element} img - The image element to analyze
+ * @returns {string} Image type descriptor
+ */
+function getImageType(img) {
+  if (!img) return 'unknown';
+  
+  if (img.tagName === 'IFRAME' || img.classList.contains('iframe-container')) {
+    return 'iframe';
+  } else if (img.tagName === 'IMG') {
+    if (img.dataset.iconName) {
+      return `icon:${img.dataset.iconName}`;
+    }
+    return 'image';
+  } else if (img.classList.contains('text-container')) {
+    return 'text';
+  } else if (img.tagName === 'DIV' && img.innerHTML.includes('<svg')) {
+    return 'svg';
+  }
+  
+  return img.tagName.toLowerCase();
+}
+
+/**
+ * Get the full DPS state report as JSON
+ * @returns {string} JSON string with full state report
+ */
+function getDPSStateReport() {
+  // Add one final snapshot of current state
+  takeStateSnapshot('report_requested');
+  
+  const report = {
+    timestamp: new Date().toISOString(),
+    currentState: stateSnapshots[stateSnapshots.length - 1],
+    history: stateSnapshots,
+    
+    // Slide details
+    slides: Array.from(document.querySelectorAll('.slide')).map((slide, index) => {
+      const imageSequence = slide.querySelector('.image-sequence');
+      return {
+        index: index,
+        title: slide.querySelector('.slide-title')?.textContent || `Slide ${index}`,
+        display: slide.style.display,
+        isActive: index === currentSlideIndex,
+        hasSequence: !!imageSequence,
+        sequenceImageCount: imageSequence ? 
+                          imageSequence.querySelectorAll('.sequence-image').length : 0
+      };
+    }),
+    
+    // Navigation analysis
+    navigationStructure: flatNavigation ? 
+      flatNavigation.map((item, index) => ({
+        index: index,
+        type: item.type,
+        slideIndex: item.slideIndex,
+        sequenceIndex: item.sequenceIndex,
+        isCurrent: index === currentNavIndex
+      })) : 'Not available'
+  };
+  
+  return JSON.stringify(report, null, 2);
+}
+
+/**
+ * Apply fixes to ensure consistent state
+ * Call this if you detect inconsistencies
+ */
+function fixDPSState() {
+  // Get current slide
+  const currentSlide = document.querySelectorAll('.slide')[currentSlideIndex];
+  if (!currentSlide) return;
+  
+  // Find image sequence
+  const imageSequence = currentSlide.querySelector('.image-sequence');
+  if (!imageSequence) return;
+  
+  // Get all images
+  const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
+  if (images.length === 0) return;
+  
+  console.log('[DPS Fix] Applying state fixes to slide', currentSlideIndex);
+  
+  // Find active image index (use first active or default to 0)
+  const activeIndex = images.findIndex(img => img.classList.contains('active'));
+  const targetIndex = activeIndex >= 0 ? activeIndex : 0;
+  
+  // Reset all images to consistent state
+  images.forEach((img, idx) => {
+    // Remove active class
+    img.classList.remove('active');
+    // Set visibility to hidden
+    img.style.visibility = 'hidden';
+    // Ensure display is block
+    img.style.display = 'block';
+  });
+  
+  // Set the target image as active
+  if (images[targetIndex]) {
+    images[targetIndex].classList.add('active');
+    images[targetIndex].style.visibility = 'visible';
+  }
+  
+  // Update navigation indices if needed
+  if (flatNavigation) {
+    // Find the corresponding nav item for this slide+sequence
+    const navIndex = flatNavigation.findIndex(item => 
+      item.type === 'sequence' && 
+      item.slideIndex === currentSlideIndex && 
+      item.sequenceIndex === targetIndex
+    );
+    
+    if (navIndex >= 0) {
+      currentNavIndex = navIndex;
+      console.log('[DPS Fix] Updated currentNavIndex to', navIndex);
+    }
+  }
+  
+  // Take a snapshot after fixing
+  takeStateSnapshot('after_fix');
+  
+  return true;
+}
+
+/**
+ * Initialize the state tracker by wrapping key functions
+ */
+function initStateTracker() {
+  console.log('[DPS State Tracker] Initializing...');
+  
+  // Patch navigation functions to track state changes
+  const origNavigateForward = window.navigateForward;
+  window.navigateForward = function() {
+    takeStateSnapshot('before_navigate_forward');
+    const result = origNavigateForward.apply(this, arguments);
+    takeStateSnapshot('after_navigate_forward');
+    return result;
+  };
+  
+  const origNavigateBackward = window.navigateBackward;
+  window.navigateBackward = function() {
+    takeStateSnapshot('before_navigate_backward');
+    const result = origNavigateBackward.apply(this, arguments);
+    takeStateSnapshot('after_navigate_backward');
+    return result;
+  };
+  
+  // Patch sequence navigation
+  const origHandleImageSequenceNavigation = window.handleImageSequenceNavigation;
+  if (origHandleImageSequenceNavigation) {
+    window.handleImageSequenceNavigation = function(direction) {
+      takeStateSnapshot('before_sequence_nav_' + direction);
+      const result = origHandleImageSequenceNavigation.apply(this, arguments);
+      takeStateSnapshot('after_sequence_nav_' + direction);
+      return result;
+    };
+  }
+  
+  // Patch applyCurrentNavigation
+  const origApplyCurrentNavigation = window.applyCurrentNavigation;
+  if (origApplyCurrentNavigation) {
+    window.applyCurrentNavigation = function() {
+      takeStateSnapshot('before_apply_navigation');
+      const result = origApplyCurrentNavigation.apply(this, arguments);
+      takeStateSnapshot('after_apply_navigation');
+      return result;
+    };
+  }
+  
+  // Add keyboard handler to trigger fix
+  document.addEventListener('keydown', function(event) {
+    // Ctrl+Alt+F to fix DPS state
+    if (event.ctrlKey && event.altKey && event.key === 'f') {
+      console.log('[DPS State Tracker] Manual fix triggered');
+      fixDPSState();
+    }
+  });
+  
+  // Enhance system info button
+  enhanceSystemInfoButton();
+  
+  // Take initial snapshot
+  takeStateSnapshot('initialization');
+  
+  console.log('[DPS State Tracker] Initialized successfully.');
+}
+
+/**
+ * Enhance system info button to include state tracking data
+ */
+function enhanceSystemInfoButton() {
+  const systemInfoButton = document.querySelector('.system-info-button');
+  if (!systemInfoButton) return;
+  
+  // Replace click handler
+  systemInfoButton.addEventListener('click', function() {
+    // Generate state report
+    const stateReport = getDPSStateReport();
+    
+    // Copy to clipboard
+    const textarea = document.createElement('textarea');
+    textarea.value = stateReport;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'absolute';
+    textarea.style.left = '-9999px';
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    
+    // Show feedback
+    const tooltip = document.createElement('div');
+    tooltip.className = 'copy-tooltip';
+    tooltip.textContent = 'Enhanced DPS State Report Copied!';
+    tooltip.style.position = 'absolute';
+    const buttonRect = systemInfoButton.getBoundingClientRect();
+    tooltip.style.top = `${buttonRect.top - 30}px`;
+    tooltip.style.left = `${buttonRect.left + (buttonRect.width / 2) - 100}px`;
+    tooltip.style.width = '200px';
+    tooltip.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+    tooltip.style.color = 'white';
+    tooltip.style.padding = '5px 10px';
+    tooltip.style.borderRadius = '4px';
+    tooltip.style.fontSize = '14px';
+    tooltip.style.zIndex = '1000';
+    document.body.appendChild(tooltip);
+    
+    setTimeout(() => {
+      tooltip.style.opacity = '0';
+      setTimeout(() => {
+        document.body.removeChild(tooltip);
+      }, 300);
+    }, 2000);
+  });
+}
+
+// Exported functions for global use
+window.takeStateSnapshot = takeStateSnapshot;
+window.getDPSStateReport = getDPSStateReport;
+window.fixDPSState = fixDPSState;
+window.initStateTracker = initStateTracker;
