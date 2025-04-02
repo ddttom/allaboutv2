@@ -828,8 +828,15 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
     const slideData = currentSlide.dataset.presenterNotes || '';
     const presenterNotes = document.querySelector('.presenter-notes');
     
-    // Check if we're in presenter mode or enlarged mode AND not forcing normal mode
-    if (!forceNormalMode && (presenterNotes.classList.contains('presenter-mode') || presenterNotes.classList.contains('enlarged'))) {
+    // Always use normal mode content when forceNormalMode is true
+    if (forceNormalMode) {
+      // Normal mode - just show the notes
+      notesContent.innerHTML = slideData;
+      return; // Exit early to ensure we don't run the other logic
+    }
+    
+    // Check if we're in presenter mode or enlarged mode
+    if (presenterNotes.classList.contains('presenter-mode') || presenterNotes.classList.contains('enlarged')) {
       // Get the current slide content
       const slideTitle = currentSlide.querySelector('.slide-title')?.textContent || '';
       let bulletPointsHTML = '';
