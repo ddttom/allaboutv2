@@ -823,13 +823,13 @@ function setupControls(slidesContainer, presenterNotesContainer, timerDuration, 
   /* Update presenter notes
    * Shows notes for current slide
    */
-  function updatePresenterNotes(slideIndex) {
+  function updatePresenterNotes(slideIndex, forceNormalMode = false) {
     const currentSlide = slides[slideIndex];
     const slideData = currentSlide.dataset.presenterNotes || '';
     const presenterNotes = document.querySelector('.presenter-notes');
     
-    // Check if we're in presenter mode or enlarged mode
-    if (presenterNotes.classList.contains('presenter-mode') || presenterNotes.classList.contains('enlarged')) {
+    // Check if we're in presenter mode or enlarged mode AND not forcing normal mode
+    if (!forceNormalMode && (presenterNotes.classList.contains('presenter-mode') || presenterNotes.classList.contains('enlarged'))) {
       // Get the current slide content
       const slideTitle = currentSlide.querySelector('.slide-title')?.textContent || '';
       let bulletPointsHTML = '';
@@ -1157,7 +1157,7 @@ function togglePresenterMode() {
       presenterNotes.style.overflow = 'auto';
       
       // Update presenter notes content to show only notes
-      updatePresenterNotes(currentSlideIndex);
+      updatePresenterNotes(currentSlideIndex, true); // Force normal mode
     }
     
     // Update presenter notes content to include title and bullet points
@@ -1238,7 +1238,7 @@ document.addEventListener("keydown", (event) => {
       presenterNotes.style.zIndex = '';
       
       // Update presenter notes content to show only notes
-      updatePresenterNotes(currentSlideIndex);
+      updatePresenterNotes(currentSlideIndex, true); // Force normal mode
     } else {
       // Enlarge while staying pinned to left
       presenterNotes.classList.remove('hidden');
