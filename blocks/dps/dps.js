@@ -635,379 +635,51 @@ function addImageSequenceStyles() {
  * @param {Element} cell - Cell element containing illustration content
  * @returns {Object|null} Structured illustration data or null if no illustration found
  */
+/**
+ * Parse illustration from a cell - FINAL VERSION
+ * Handles all content types and patterns including iframe followed by anchor
+ *
+ * @param {Element} cell - Cell element containing illustration content
+ * @returns {Object|null} Structured illustration data or null if no illustration found
+ */
 function parseIllustration(cell) {
   if (!cell) return null;
   
-  let illustrations = [];
+  // Create a collection for all illustration elements with their positions
+  const illustrationElements = [];
   
-  // Process HTML content directly from cell to capture all elements
-  let cellContent = cell.innerHTML.trim();
-  
-  // Clean up content - remove lone <br> tags and whitespace
-  cellContent = cellContent
-    .replace(new RegExp('<p>\\s*<br>\\s*</p>', 'gi'), '') // Remove empty paragraphs with just <br>
-    .replace(new RegExp('<br>\\s*(?=<)', 'gi'), '') // Remove <br> tags at start of elements
-    .replace(new RegExp('\\s*<br>\\s*(?=\\w)', 'gi'), ' ') // Replace <br> followed by text with space
-    .replace(new RegExp('\\s+', 'g'), ' ') // Collapse multiple whitespace
-    .trim();
-    
-  // Debug log to check what's in the cell content
-  console.log(`[Illustration Parser] Cell content: ${cellContent.substring(0, 100)}...`);
-  
-  // Create a mapping of original positions in the HTML to maintain order
-  const contentPositions = [];
-  
-  // CRITICAL: Create a set to track processed illustrations by unique identifier
-  // This prevents double-counting the same illustration
+  // Use a Set to track processed content and prevent duplicates
   const processedContent = new Set();
   
-  // Handle simplified iframe format
-  const iframeRegex = new RegExp('iframe\\s+(https?://[^\\s"\'<>]+)', 'gi');
-  const iframeMatches = Array.from(cellContent.matchAll(iframeRegex));
+  // Get the raw HTML content for pattern matching and position tracking
+  const cellHTML = cell.innerHTML;
   
-  // Track iframe positions in the content
-  for (const match of iframeMatches) {
-    const url = match[1];
-    const position = cellContent.indexOf(match[0]);
-    // Create a unique identifier for this iframe
-    const identifier = `iframe-${url}`;
-    
-    // Only add if we haven't processed this content before
-    if (!processedContent.has(identifier)) {
-      processedContent.add(identifier);
-      
-      contentPositions.push({
-        type: 'iframe',
-        position: position,
-        data: {
-          type: 'iframe',
-          src: url,
-          content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-        }
-      });
-    }
-  }
+  console.log(`[ParseIllustration] Processing cell with HTML length ${cellHTML.length}`);
   
-  // Process icon spans - convert to image tags
-  const iconRegex = new RegExp('<span\\s+class=["|\'][^"\']*icon[^"\']*["|\'][^>]*>.*?</span>', 'gi');
-  const iconMatches = Array.from(cellContent.matchAll(iconRegex));
+  // STEP 1: First scan for specific patterns in the HTML
+  scanForPatterns(cellHTML, illustrationElements, processedContent);
   
-  // Track icon positions in the content
-  for (const match of iconMatches) {
-    const iconHtml = match[0];
-    const position = cellContent.indexOf(iconHtml);
-    const classMatch = iconHtml.match(new RegExp('class=["\'](\\S*)["\']', 'i'));
-    
-    if (classMatch && classMatch[1]) {
-      const classString = classMatch[1];
-      const iconName = extractIconName(classString);
-      
-      if (iconName) {
-        // Create a unique identifier for this icon
-        const identifier = `icon-${iconName}`;
-        
-        // Only add if we haven't processed this content before
-        if (!processedContent.has(identifier)) {
-          processedContent.add(identifier);
-          
-          contentPositions.push({
-            type: 'icon',
-            position: position,
-            data: {
-              type: 'icon',
-              iconName,
-              content: `/icons/${iconName}.svg`,
-              alt: `${iconName} Illustration`
-            }
-          });
-        }
-      }
-    }
-  }
+  // STEP 2: Process all DOM elements systematically
+  processElementsByType(cell, illustrationElements, processedContent, cellHTML);
   
-  // Helper function to process an element and its children
-  function processElement(element) {
-    // If this is a paragraph, process both its text content and children
-    if (element.tagName === 'P') {
-      // Process each child of the paragraph
-      Array.from(element.children).forEach(child => {
-        processElement(child);
-      });
-      
-      // Also check for direct span elements that might be icons
-      const iconSpans = element.querySelectorAll('span.icon');
-      if (iconSpans.length > 0) {
-        // Process each icon span separately
-        iconSpans.forEach(iconSpan => {
-          const iconName = extractIconName(iconSpan.className);
-          
-          if (iconName) {
-            // Create a unique identifier for this icon
-            const identifier = `icon-${iconName}`;
-            
-            // Only add if we haven't processed this content before
-            if (!processedContent.has(identifier)) {
-              processedContent.add(identifier);
-              
-              // Calculate approximate position based on parent element position in original content
-              const parentPosition = cellContent.indexOf(element.outerHTML);
-              const elementPosition = parentPosition > -1 ? parentPosition : contentPositions.length * 1000;
-              
-              contentPositions.push({
-                type: 'icon',
-                position: elementPosition,
-                data: {
-                  type: 'icon',
-                  iconName,
-                  content: `/icons/${iconName}.svg`,
-                  alt: `${iconName} Illustration`
-                }
-              });
-            }
-          }
-        });
-      }
-      
-      return;
-    }
-    
-    // Create a temporary container to extract HTML content accurately
-    const tempContainer = document.createElement('div');
-    tempContainer.appendChild(element.cloneNode(true));
-    const elementHtml = tempContainer.innerHTML;
-    
-    // Get position of this element in the original content
-    const elementPosition = cellContent.indexOf(elementHtml);
-    
-    // Process based on element type
-    if (element.tagName === 'SVG' || elementHtml.includes('<svg')) {
-      // Create a unique identifier for this SVG
-      const identifier = `svg-${elementHtml.substring(0, 50)}`;
-      
-      // Only add if we haven't processed this content before
-      if (!processedContent.has(identifier)) {
-        processedContent.add(identifier);
-        
-        contentPositions.push({
-          type: 'svg',
-          position: elementPosition,
-          data: {
-            type: 'svg',
-            content: elementHtml
-          }
-        });
-      }
-    }
-    else if (element.tagName === 'PICTURE' || element.querySelector('picture')) {
-      // Handle picture elements
-      const picture = element.tagName === 'PICTURE' ? element : element.querySelector('picture');
-      
-      if (picture) {
-        // Create a unique identifier for this picture
-        const identifier = `picture-${picture.outerHTML.substring(0, 50)}`;
-        
-        // Only add if we haven't processed this content before
-        if (!processedContent.has(identifier)) {
-          processedContent.add(identifier);
-          
-          contentPositions.push({
-            type: 'picture',
-            position: elementPosition,
-            data: {
-              type: 'picture',
-              content: picture.outerHTML
-            }
-          });
-        }
-      }
-    }
-    else if (element.tagName === 'IMG' || element.querySelector('img:not(picture img)')) {
-      // Handle img elements
-      const img = element.tagName === 'IMG' ? element : element.querySelector('img:not(picture img)');
-      
-      if (img) {
-        // Create a unique identifier for this image
-        const identifier = `image-${img.src}`;
-        
-        // Only add if we haven't processed this content before
-        if (!processedContent.has(identifier)) {
-          processedContent.add(identifier);
-          
-          contentPositions.push({
-            type: 'image',
-            position: elementPosition,
-            data: {
-              type: 'image',
-              content: img.src,
-              alt: img.alt || ''
-            }
-          });
-        }
-      }
-    }
-    else if (element.tagName === 'SPAN' && element.classList.contains('icon')) {
-      // Handle icon spans - convert to image tags
-      const iconName = extractIconName(element.className);
-      
-      if (iconName) {
-        // Create a unique identifier for this icon
-        const identifier = `icon-${iconName}`;
-        
-        // Only add if we haven't processed this content before
-        if (!processedContent.has(identifier)) {
-          processedContent.add(identifier);
-          
-          contentPositions.push({
-            type: 'icon',
-            position: elementPosition,
-            data: {
-              type: 'icon',
-              iconName,
-              content: `/icons/${iconName}.svg`,
-              alt: `${iconName} Illustration`
-            }
-          });
-        }
-      }
-    }
-    else if (element.tagName === 'A' && element.href) {
-      // Handle anchor elements
-      const url = element.href;
-      
-      if (isImageUrl(url)) {
-        // Create a unique identifier for this image URL
-        const identifier = `image-url-${url}`;
-        
-        // Only add if we haven't processed this content before
-        if (!processedContent.has(identifier)) {
-          processedContent.add(identifier);
-          
-          contentPositions.push({
-            type: 'image',
-            position: elementPosition,
-            data: {
-              type: 'image',
-              content: url,
-              alt: element.textContent || 'Image'
-            }
-          });
-        }
-      } else {
-        // Create a unique identifier for this iframe URL
-        const identifier = `iframe-url-${url}`;
-        
-        // Only add if we haven't processed this content before
-        if (!processedContent.has(identifier)) {
-          processedContent.add(identifier);
-          
-          contentPositions.push({
-            type: 'iframe',
-            position: elementPosition,
-            data: {
-              type: 'iframe',
-              src: url,
-              content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-            }
-          });
-        }
-      }
-    }
-    
-    // Process children recursively
-    Array.from(element.children).forEach(child => {
-      processElement(child);
-    });
-  }
+  // Sort by position to maintain the original order
+  illustrationElements.sort((a, b) => a.position - b.position);
   
-  // Process all direct text content in the cell
-  if (cell.textContent.trim() && cell.childElementCount === 0) {
-    const textContent = cell.textContent.trim();
-    
-    // Check if this contains an iframe anchor pattern
-    const iframeAnchorMatch = textContent.match(/iframe\s+<a[^>]*href=["']([^"']+)["'][^>]*>/i);
-    if (iframeAnchorMatch && iframeAnchorMatch[1]) {
-      const url = iframeAnchorMatch[1];
-      
-      // Create a unique identifier for this iframe URL
-      const identifier = `iframe-anchor-${url}`;
-      
-      // Only add if we haven't processed this content before
-      if (!processedContent.has(identifier)) {
-        processedContent.add(identifier);
-        
-        // Found iframe with anchor pattern
-        contentPositions.push({
-          type: 'iframe',
-          position: 0,
-          data: {
-            type: 'iframe',
-            src: url,
-            content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-          }
-        });
-      }
-    } else {
-      // Otherwise check with extractUrl
-      const urlData = extractUrl(textContent);
-      if (urlData) {
-        const url = urlData.url;
-        
-        if (urlData.type === 'image') {
-          // Create a unique identifier for this image URL
-          const identifier = `image-extracted-${url}`;
-          
-          // Only add if we haven't processed this content before
-          if (!processedContent.has(identifier)) {
-            processedContent.add(identifier);
-            
-            contentPositions.push({
-              type: 'image',
-              position: 0,
-              data: {
-                type: 'image',
-                content: url,
-                alt: 'Image'
-              }
-            });
-          }
-        } else if (urlData.type === 'iframe') {
-          // Create a unique identifier for this iframe URL
-          const identifier = `iframe-extracted-${url}`;
-          
-          // Only add if we haven't processed this content before
-          if (!processedContent.has(identifier)) {
-            processedContent.add(identifier);
-            
-            contentPositions.push({
-              type: 'iframe',
-              position: 0,
-              data: {
-                type: 'iframe',
-                src: url,
-                content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-              }
-            });
-          }
-        }
-      }
-    }
-  }
+  // Extract the illustration data
+  const illustrations = illustrationElements.map(item => item.data);
   
-  // Process each top-level element
-  const elements = Array.from(cell.children);
-  for (const element of elements) {
-    processElement(element);
-  }
-  
-  // Sort all content by its original position in the DOM
-  contentPositions.sort((a, b) => a.position - b.position);
-  
-  // Extract the sorted data into our illustrations array
-  illustrations = contentPositions.map(item => item.data);
-
   // Return illustrations if found, null otherwise
   if (illustrations.length > 0) {
     console.log(`[ParseIllustration] Found ${illustrations.length} total illustrations (processed ${processedContent.size} unique items)`);
+    
+    // Log each illustration to help with debugging
+    illustrations.forEach((item, index) => {
+      const identifier = item.iconName || item.src ||
+                      (typeof item.content === 'string' && item.content.length < 50 ?
+                       item.content : 'complex content');
+      console.log(`[ParseIllustration] Item ${index}: type=${item.type}, identifier=${identifier}`);
+    });
+    
     return {
       type: 'images',
       content: illustrations
@@ -1322,6 +994,556 @@ function initializeImageSequence(slide) {
   if (images.length === 0) {
     console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] No images found in sequence`);
     return;
+  }
+  
+  /**
+   * Scan for all iframe and URL patterns in HTML content
+   *
+   * @param {string} html - HTML content to scan
+   * @param {Array} illustrationElements - Collection of illustration elements
+   * @param {Set} processedContent - Set of processed content identifiers
+   */
+  function scanForPatterns(html, illustrationElements, processedContent) {
+    // Pattern 1: Simple "iframe URL" pattern
+    scanForSimpleIframePattern(html, illustrationElements, processedContent);
+    
+    // Pattern 2: "iframe <a href...>" pattern
+    scanForIframeAnchorPattern(html, illustrationElements, processedContent);
+    
+    // Pattern 3: NEW - "iframe" followed by an <a> tag on the same line
+    scanForIframeFollowedByAnchorPattern(html, illustrationElements, processedContent);
+    
+    // Pattern 4: Standard iframe tags
+    scanForStandardIframeTags(html, illustrationElements, processedContent);
+    
+    // Pattern 5: Raw URLs in text
+    scanForRawURLs(html, illustrationElements, processedContent);
+  }
+  
+  /**
+   * Scan for the simple "iframe URL" pattern
+   */
+  function scanForSimpleIframePattern(html, illustrationElements, processedContent) {
+    const regex = /iframe\s+(https?:\/\/[^\s"'<>]+)/gi;
+    let match;
+    
+    while ((match = regex.exec(html)) !== null) {
+      const url = match[1];
+      const position = match.index;
+      const identifier = `iframe-simple-${url}`;
+      
+      if (!processedContent.has(identifier)) {
+        processedContent.add(identifier);
+        
+        illustrationElements.push({
+          type: 'iframe',
+          position: position,
+          data: {
+            type: 'iframe',
+            src: url,
+            content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+          }
+        });
+        
+        console.log(`[ParseIllustration] Found simple iframe pattern: ${url}`);
+      }
+    }
+  }
+  
+  /**
+   * Scan for the "iframe <a href...>" pattern
+   */
+  function scanForIframeAnchorPattern(html, illustrationElements, processedContent) {
+    const regex = /iframe\s+<a[^>]*href=["']([^"']+)["'][^>]*>/gi;
+    let match;
+    
+    while ((match = regex.exec(html)) !== null) {
+      const url = match[1];
+      const position = match.index;
+      const identifier = `iframe-anchor-${url}`;
+      
+      if (!processedContent.has(identifier)) {
+        processedContent.add(identifier);
+        
+        illustrationElements.push({
+          type: 'iframe',
+          position: position,
+          data: {
+            type: 'iframe',
+            src: url,
+            content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+          }
+        });
+        
+        console.log(`[ParseIllustration] Found iframe anchor pattern: ${url}`);
+      }
+    }
+  }
+  
+  /**
+   * Scan for "iframe" followed by an <a> tag (not directly connected)
+   */
+  function scanForIframeFollowedByAnchorPattern(html, illustrationElements, processedContent) {
+    // Look for "iframe" followed by an <a> tag within a reasonable distance
+    // This handles cases like:
+    // - "iframe <a href=..."
+    // - "iframe\n<a href=..."
+    // - "iframe </p><p><a href=..."
+    
+    // First find all occurrences of "iframe" that aren't part of the other patterns
+    const iframePos = [];
+    const simpleRegex = /\biframe\b(?!\s+(?:https?:\/\/|<a))/gi;
+    let match;
+    
+    while ((match = simpleRegex.exec(html)) !== null) {
+      iframePos.push(match.index);
+    }
+    
+    // For each standalone "iframe", look for the next <a> tag
+    iframePos.forEach(pos => {
+      // Look for an <a> tag within the next 100 characters
+      const nextChunk = html.substring(pos, pos + 100);
+      const anchorMatch = /<a[^>]*href=["']([^"']+)["'][^>]*>/i.exec(nextChunk);
+      
+      if (anchorMatch) {
+        const url = anchorMatch[1];
+        const identifier = `iframe-followed-by-a-${url}`;
+        
+        if (!processedContent.has(identifier)) {
+          processedContent.add(identifier);
+          
+          illustrationElements.push({
+            type: 'iframe',
+            position: pos,
+            data: {
+              type: 'iframe',
+              src: url,
+              content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+            }
+          });
+          
+          console.log(`[ParseIllustration] Found iframe followed by anchor: ${url}`);
+        }
+      }
+    });
+  }
+  
+  /**
+   * Scan for standard iframe tags
+   */
+  function scanForStandardIframeTags(html, illustrationElements, processedContent) {
+    const regex = /<iframe[^>]*src=["']([^"']+)["'][^>]*>/gi;
+    let match;
+    
+    while ((match = regex.exec(html)) !== null) {
+      const url = match[1];
+      const position = match.index;
+      const identifier = `iframe-tag-${url}`;
+      
+      if (!processedContent.has(identifier)) {
+        processedContent.add(identifier);
+        
+        illustrationElements.push({
+          type: 'iframe',
+          position: position,
+          data: {
+            type: 'iframe',
+            src: url,
+            content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+          }
+        });
+        
+        console.log(`[ParseIllustration] Found standard iframe tag: ${url}`);
+      }
+    }
+  }
+  
+  /**
+   * Scan for raw URLs in text
+   */
+  function scanForRawURLs(html, illustrationElements, processedContent) {
+    // First remove tags to avoid matching URLs in attributes
+    const textContent = html.replace(/<[^>]*>/g, ' ');
+    
+    // Match URLs not preceded by "iframe" or within attributes
+    const regex = /(?<!\biframe\s+)(https?:\/\/[^\s"'<>]+)/gi;
+    let match;
+    
+    while ((match = regex.exec(textContent)) !== null) {
+      const url = match[1];
+      const position = match.index + 1000000; // Place after other content
+      
+      // Determine if it's an image or iframe URL
+      if (isImageUrl(url)) {
+        const identifier = `raw-image-url-${url}`;
+        
+        if (!processedContent.has(identifier)) {
+          processedContent.add(identifier);
+          
+          illustrationElements.push({
+            type: 'image',
+            position: position,
+            data: {
+              type: 'image',
+              content: url,
+              alt: 'Image'
+            }
+          });
+          
+          console.log(`[ParseIllustration] Found raw image URL: ${url}`);
+        }
+      } else {
+        const identifier = `raw-iframe-url-${url}`;
+        
+        if (!processedContent.has(identifier)) {
+          processedContent.add(identifier);
+          
+          illustrationElements.push({
+            type: 'iframe',
+            position: position,
+            data: {
+              type: 'iframe',
+              src: url,
+              content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+            }
+          });
+          
+          console.log(`[ParseIllustration] Found raw iframe URL: ${url}`);
+        }
+      }
+    }
+  }
+  
+  /**
+   * Process all elements by type to find illustrations
+   *
+   * @param {Element} container - Container element to process
+   * @param {Array} illustrationElements - Collection of illustration elements
+   * @param {Set} processedContent - Set of processed content identifiers
+   * @param {string} cellHTML - Original cell HTML for position calculation
+   */
+  function processElementsByType(container, illustrationElements, processedContent, cellHTML) {
+    // Create a flattened list of all elements with their depth and parent info
+    const allElements = [];
+    
+    // Walk the DOM tree and collect all elements with their depth
+    function walkDOM(element, depth, parent) {
+      // Skip text nodes, comments, etc.
+      if (element.nodeType !== Node.ELEMENT_NODE) return;
+      
+      allElements.push({
+        element: element,
+        depth: depth,
+        parent: parent
+      });
+      
+      // Process children
+      Array.from(element.childNodes).forEach(child => {
+        walkDOM(child, depth + 1, element);
+      });
+    }
+    
+    // Start walking from the container
+    walkDOM(container, 0, null);
+    
+    // First process icon spans - these have highest priority
+    processElementsOfType(allElements, 'span', 'icon', cellHTML, (element, position) => {
+      processIconSpan(element, illustrationElements, processedContent, position);
+    });
+    
+    // Process images
+    processElementsOfType(allElements, 'img', null, cellHTML, (element, position) => {
+      processImgElement(element, illustrationElements, processedContent, position);
+    });
+    
+    // Process picture elements
+    processElementsOfType(allElements, 'picture', null, cellHTML, (element, position) => {
+      processPictureElement(element, illustrationElements, processedContent, position);
+    });
+    
+    // Process SVG elements
+    processElementsOfType(allElements, 'svg', null, cellHTML, (element, position) => {
+      processSvgElement(element, illustrationElements, processedContent, position);
+    });
+    
+    // Process anchor elements - CRITICAL for URL-derived images
+    processElementsOfType(allElements, 'a', null, cellHTML, (element, position) => {
+      processAnchorElement(element, illustrationElements, processedContent, position);
+    });
+  }
+  
+  /**
+   * Process elements of a specific type
+   *
+   * @param {Array} elements - All elements collection
+   * @param {string} tagName - Tag name to filter for
+   * @param {string|null} className - Class name to filter for (optional)
+   * @param {string} cellHTML - Original HTML for position calculation
+   * @param {Function} processorFn - Function to process each matching element
+   */
+  function processElementsOfType(elements, tagName, className, cellHTML, processorFn) {
+    // Filter elements by tag name and optional class name
+    const matchingElements = elements.filter(item => {
+      if (item.element.tagName.toLowerCase() !== tagName.toLowerCase()) {
+        return false;
+      }
+      
+      if (className && !item.element.classList.contains(className)) {
+        return false;
+      }
+      
+      return true;
+    });
+    
+    // Process each matching element
+    matchingElements.forEach(item => {
+      // Create a temporary container to get the outerHTML
+      const temp = document.createElement('div');
+      temp.appendChild(item.element.cloneNode(true));
+      
+      // Estimate the position in the original HTML
+      let position;
+      try {
+        const elementHTML = temp.innerHTML;
+        position = cellHTML.indexOf(elementHTML);
+        
+        // If we couldn't find the exact HTML, use a position based on depth
+        if (position === -1) {
+          position = 100000 + (item.depth * 1000);
+        }
+      } catch (error) {
+        // Fallback position based on depth
+        position = 100000 + (item.depth * 1000);
+      }
+      
+      // Call the processor function
+      processorFn(item.element, position);
+    });
+  }
+  
+  /**
+   * Process an icon span element
+   *
+   * @param {Element} element - Icon span element
+   * @param {Array} illustrationElements - Collection of illustration elements
+   * @param {Set} processedContent - Set of processed content identifiers
+   * @param {number} position - Position in the original HTML
+   */
+  function processIconSpan(element, illustrationElements, processedContent, position) {
+    // Extract the icon name from the class
+    const iconName = extractIconName(element.className);
+    
+    if (!iconName) return;
+    
+    // Create a unique identifier
+    const identifier = `icon-${iconName}`;
+    
+    // Only process if not already processed
+    if (!processedContent.has(identifier)) {
+      processedContent.add(identifier);
+      
+      illustrationElements.push({
+        type: 'icon',
+        position: position,
+        data: {
+          type: 'icon',
+          iconName: iconName,
+          content: `/icons/${iconName}.svg`,
+          alt: `${iconName} Illustration`
+        }
+      });
+      
+      console.log(`[ParseIllustration] Processed icon: ${iconName}`);
+    }
+  }
+  
+  /**
+   * Process an img element
+   *
+   * @param {Element} element - Img element
+   * @param {Array} illustrationElements - Collection of illustration elements
+   * @param {Set} processedContent - Set of processed content identifiers
+   * @param {number} position - Position in the original HTML
+   */
+  function processImgElement(element, illustrationElements, processedContent, position) {
+    const src = element.getAttribute('src');
+    if (!src) return;
+    
+    // Create a unique identifier
+    const identifier = `image-${src}`;
+    
+    // Only process if not already processed
+    if (!processedContent.has(identifier)) {
+      processedContent.add(identifier);
+      
+      illustrationElements.push({
+        type: 'image',
+        position: position,
+        data: {
+          type: 'image',
+          content: src,
+          alt: element.getAttribute('alt') || ''
+        }
+      });
+      
+      console.log(`[ParseIllustration] Processed image: ${src}`);
+    }
+  }
+  
+  /**
+   * Process a picture element
+   *
+   * @param {Element} element - Picture element
+   * @param {Array} illustrationElements - Collection of illustration elements
+   * @param {Set} processedContent - Set of processed content identifiers
+   * @param {number} position - Position in the original HTML
+   */
+  function processPictureElement(element, illustrationElements, processedContent, position) {
+    // Create a temporary container to get the outerHTML
+    const temp = document.createElement('div');
+    temp.appendChild(element.cloneNode(true));
+    const pictureHTML = temp.innerHTML;
+    
+    // Create a unique identifier using a hash of the HTML
+    const identifier = `picture-${simpleHash(pictureHTML)}`;
+    
+    // Only process if not already processed
+    if (!processedContent.has(identifier)) {
+      processedContent.add(identifier);
+      
+      illustrationElements.push({
+        type: 'picture',
+        position: position,
+        data: {
+          type: 'picture',
+          content: pictureHTML
+        }
+      });
+      
+      console.log(`[ParseIllustration] Processed picture element`);
+    }
+  }
+  
+  /**
+   * Process an SVG element
+   *
+   * @param {Element} element - SVG element
+   * @param {Array} illustrationElements - Collection of illustration elements
+   * @param {Set} processedContent - Set of processed content identifiers
+   * @param {number} position - Position in the original HTML
+   */
+  function processSvgElement(element, illustrationElements, processedContent, position) {
+    // Create a temporary container to get the outerHTML
+    const temp = document.createElement('div');
+    temp.appendChild(element.cloneNode(true));
+    const svgHTML = temp.innerHTML;
+    
+    // Create a unique identifier using a hash of the HTML
+    const identifier = `svg-${simpleHash(svgHTML)}`;
+    
+    // Only process if not already processed
+    if (!processedContent.has(identifier)) {
+      processedContent.add(identifier);
+      
+      illustrationElements.push({
+        type: 'svg',
+        position: position,
+        data: {
+          type: 'svg',
+          content: svgHTML
+        }
+      });
+      
+      console.log(`[ParseIllustration] Processed SVG element`);
+    }
+  }
+  
+  /**
+   * Process an anchor element - CRITICAL for URL-derived images
+   *
+   * @param {Element} element - Anchor element
+   * @param {Array} illustrationElements - Collection of illustration elements
+   * @param {Set} processedContent - Set of processed content identifiers
+   * @param {number} position - Position in the original HTML
+   */
+  function processAnchorElement(element, illustrationElements, processedContent, position) {
+    const href = element.getAttribute('href');
+    if (!href) return;
+    
+    // Skip if this anchor is part of an iframe pattern
+    // Check if the parent or previous element contains "iframe"
+    const parentText = element.parentElement?.textContent || '';
+    if (parentText.includes('iframe')) {
+      // This might be part of an iframe pattern, check if it was already processed
+      const iframeIdentifier = `iframe-anchor-${href}`;
+      const iframeFollowedIdentifier = `iframe-followed-by-a-${href}`;
+      
+      if (processedContent.has(iframeIdentifier) || processedContent.has(iframeFollowedIdentifier)) {
+        // This was already processed as part of an iframe pattern
+        return;
+      }
+    }
+    
+    // Determine if this is an image URL or a general URL
+    if (isImageUrl(href)) {
+      // This is an image URL
+      const identifier = `image-url-${href}`;
+      
+      if (!processedContent.has(identifier)) {
+        processedContent.add(identifier);
+        
+        illustrationElements.push({
+          type: 'image',
+          position: position,
+          data: {
+            type: 'image',
+            content: href,
+            alt: element.textContent || 'Image'
+          }
+        });
+        
+        console.log(`[ParseIllustration] Processed image URL from anchor: ${href}`);
+      }
+    } else {
+      // This is a general URL - treat as iframe
+      const identifier = `iframe-url-${href}`;
+      
+      if (!processedContent.has(identifier)) {
+        processedContent.add(identifier);
+        
+        illustrationElements.push({
+          type: 'iframe',
+          position: position,
+          data: {
+            type: 'iframe',
+            src: href,
+            content: `<iframe src="${href}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+          }
+        });
+        
+        console.log(`[ParseIllustration] Processed iframe URL from anchor: ${href}`);
+      }
+    }
+  }
+  
+  /**
+   * Generate a simple hash from a string
+   * Used for creating unique identifiers from HTML content
+   *
+   * @param {string} str - String to hash
+   * @returns {string} Simple hash of the string
+   */
+  function simpleHash(str) {
+    let hash = 0;
+    if (str.length === 0) return hash.toString();
+    
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash; // Convert to 32bit integer
+    }
+    
+    return Math.abs(hash).toString(16);
   }
   
   console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Found ${images.length} images in sequence`);

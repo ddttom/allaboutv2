@@ -298,6 +298,23 @@ When Column 4 contains multiple different content types:
 15. **NEW: Support for iframe with anchor tag pattern**
 16. **NEW: Detailed debug logging for easier troubleshooting of sequence issues**
 
+## Complete Solution for Mixed Content Illustrations
+This comprehensive solution:
+
+- **Properly identifies image URLs from anchors**: Detects when an `<a href>` is pointing to an image file (jpg, png, etc.) and adds it as an image rather than an iframe
+- **Uses a DOM-walking approach**: Systematically traverses the entire DOM tree to find all possible illustration elements
+- **Maintains original content order**: Uses position tracking to preserve the original order of elements in the document
+- **Prevents double-counting**: Uses a robust identifier system to ensure each unique content item is only processed once
+- **Handles all content types**: Works with icons, images, pictures, SVGs, iframes, and URLs in any combination
+
+### Key Technical Improvements
+
+- **DOM Tree Walking**: Instead of relying on selector queries that might miss some elements, this approach walks the entire DOM tree to find all elements
+- **Position-Based Sorting**: Uses the original position in HTML to sort items, ensuring they appear in the same order as in the document
+- **Content-Type Detection**: Intelligently detects content types, including identifying image URLs in anchors
+- **Unified Processing**: Handles all kinds of content with a consistent approach to avoid special cases
+- **Improved Logging**: Provides detailed logs of what content was found to help with debugging
+
 ## Icon Processing Details
 
 ### Icon Detection
