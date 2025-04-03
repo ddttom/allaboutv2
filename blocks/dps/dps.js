@@ -499,9 +499,9 @@ function extractIconName(className) {
   }
   return null;
 }
-
 /**
  * Organize image sequence illustrations by type and deduplicate
+ * Improved to ensure more reliable deduplication
  * 
  * @param {Array} illustrations - Array of illustration objects
  * @returns {Array} Organized and deduplicated array of illustrations
@@ -523,15 +523,15 @@ function organizeImageSequence(illustrations) {
       identifier = `icon-${item.iconName}`;
     } else if (item.src) {
       identifier = `src-${item.src}`;
+    } else if (item.content && typeof item.content === 'string') {
+      // For strings, use a hash of the truncated content
+      identifier = `${item.type}-${simpleHash(item.content.substring(0, 100))}`;
     } else if (item.content) {
-      // Use a truncated version of content for ID if it's a string
-      const contentId = typeof item.content === 'string' ? 
-        item.content.substring(0, 50) : 
-        JSON.stringify(item).substring(0, 50);
-      identifier = `content-${contentId}`;
+      // For objects or arrays, use a hash of the stringified content
+      identifier = `${item.type}-${simpleHash(JSON.stringify(item.content).substring(0, 100))}`;
     } else {
-      // Fallback to stringified object
-      identifier = JSON.stringify(item).substring(0, 100);
+      // Fallback to a hash of the entire item
+      identifier = `${item.type}-${simpleHash(JSON.stringify(item))}`;
     }
     
     // Only add if we haven't seen this item before
@@ -577,6 +577,7 @@ function organizeImageSequence(illustrations) {
 
 /**
  * Create HTML for an image sequence
+ * Fixed to prevent duplicate containers and ensure consistent state
  * 
  * @param {Array} illustrations - Array of illustration objects
  * @returns {string} HTML string for the image sequence
@@ -586,30 +587,58 @@ function createImageSequenceHTML(illustrations) {
     return '';
   }
   
+  // Use a Set to track unique identifiers and prevent duplicates
+  const processedContent = new Set();
   let html = '<div class="image-sequence">';
   
   // Add each item to the sequence with appropriate styling
   illustrations.forEach((item, index) => {
+    // Create a unique identifier for this item to prevent duplicates
+    let identifier;
+    if (item.iconName) {
+      identifier = `icon-${item.iconName}`;
+    } else if (item.src) {
+      identifier = `src-${item.src}`;
+    } else if (item.content) {
+      // Use a truncated version of content for ID if it's a string
+      const contentId = typeof item.content === 'string' ? 
+        item.content.substring(0, 50) : 
+        JSON.stringify(item).substring(0, 50);
+      identifier = `content-${contentId}`;
+    } else {
+      // Fallback to stringified object
+      identifier = JSON.stringify(item).substring(0, 100);
+    }
+    
+    // Skip if this item has already been processed (prevents duplicates)
+    if (processedContent.has(identifier)) {
+      console.log(`[CreateSequenceHTML] Skipping duplicate item ${index}: ${identifier}`);
+      return;
+    }
+    
+    // Add to processed set
+    processedContent.add(identifier);
+    
     const isActive = index === 0 ? 'active' : '';
     const typeLabel = item.type.charAt(0).toUpperCase() + item.type.slice(1);
     
-    // Create container with label
-    html += `<div class="sequence-item-container ${isActive}">`;
+    // Create container with label and unique id
+    html += `<div class="sequence-item-container ${isActive}" data-sequence-id="${index}">`;
     
     // Always add label to show position in overall sequence
     html += `<div class="sequence-item-label">${typeLabel} ${index + 1}/${illustrations.length}</div>`;
     
-    // Add the content based on type
+    // Add the content based on type with consistent styling
     if (item.type === 'iframe') {
-      html += `<div class="iframe-container sequence-image ${isActive}" style="width: 100%; height: 100%;">
+      html += `<div class="iframe-container sequence-image ${isActive}" style="width: 100%; height: 100%; visibility: ${isActive ? 'visible' : 'hidden'};">
           ${item.content}
         </div>`;
     } else if (item.type === 'picture') {
-      html += `<div class="sequence-image ${isActive}">
+      html += `<div class="sequence-image ${isActive}" style="visibility: ${isActive ? 'visible' : 'hidden'};">
           ${item.content}
         </div>`;
     } else if (item.type === 'svg') {
-      html += `<div class="sequence-image ${isActive}">
+      html += `<div class="sequence-image ${isActive}" style="visibility: ${isActive ? 'visible' : 'hidden'};">
           ${item.content}
         </div>`;
     } else if (item.type === 'icon') {
@@ -617,19 +646,23 @@ function createImageSequenceHTML(illustrations) {
           src="${item.content}"
           alt="${item.alt}"
           class="sequence-image icon-image ${isActive}"
-          data-icon-name="${item.iconName}">`;
+          data-icon-name="${item.iconName}"
+          style="visibility: ${isActive ? 'visible' : 'hidden'};">`;
     } else if (item.type === 'image') {
       html += `<img
           src="${item.content}"
           alt="${item.alt || ''}"
-          class="sequence-image ${isActive}">`;
+          class="sequence-image ${isActive}"
+          style="visibility: ${isActive ? 'visible' : 'hidden'};">`;
     } else {
-      html += `<div class="sequence-image text-container ${isActive}">
+      html += `<div class="sequence-image text-container ${isActive}" style="visibility: ${isActive ? 'visible' : 'hidden'};">
           ${item.content}
         </div>`;
     }
     
     html += '</div>'; // Close sequence-item-container
+    
+    console.log(`[CreateSequenceHTML] Added ${typeLabel} item ${index+1}/${illustrations.length}`);
   });
   
   html += '</div>'; // Close image-sequence
@@ -1355,8 +1388,52 @@ function createSlideContent(slide) {
 }
 
 /**
+ * Verify that the sequence is in a consistent state
+ * Detects and corrects inconsistencies
+ * 
+ * @param {Element} imageSequence - The image sequence container
+ */
+function verifySequenceState(imageSequence) {
+  if (!imageSequence) return;
+  
+  // Count active containers and images
+  const containers = Array.from(imageSequence.querySelectorAll('.sequence-item-container'));
+  const activeContainers = containers.filter(container => container.classList.contains('active'));
+  
+  let activeImages = [];
+  let visibleImages = [];
+  
+  containers.forEach(container => {
+    const images = Array.from(container.querySelectorAll('.sequence-image'));
+    activeImages = activeImages.concat(images.filter(img => img.classList.contains('active')));
+    visibleImages = visibleImages.concat(images.filter(img => img.style.visibility === 'visible'));
+  });
+  
+  console.log(`[VerifySequence] Found ${activeContainers.length} active containers, ${activeImages.length} active images, ${visibleImages.length} visible images`);
+  
+  // Detect inconsistencies - should have exactly one active container and its images active/visible
+  if (activeContainers.length !== 1 || activeImages.length === 0 || activeImages.length !== visibleImages.length) {
+    console.warn(`[VerifySequence] Inconsistent state detected: ${activeContainers.length} active containers, ${activeImages.length} active images, ${visibleImages.length} visible images`);
+    
+    // Force correction - reset everything and activate only the first container
+    containers.forEach((container, index) => {
+      const shouldBeActive = index === 0;
+      container.classList.toggle('active', shouldBeActive);
+      
+      const images = Array.from(container.querySelectorAll('.sequence-image'));
+      images.forEach(img => {
+        img.classList.toggle('active', shouldBeActive);
+        img.style.visibility = shouldBeActive ? 'visible' : 'hidden';
+      });
+    });
+    
+    console.log('[VerifySequence] State corrected - reset and activated first container only');
+  }
+}
+
+/**
  * Initialize image sequence for a slide
- * Properly initializes image sequence in a slide for consistent visibility
+ * Improved to ensure consistent state and prevent duplicates
  * 
  * @param {Element} slide - The slide element containing image sequences
  */
@@ -1369,27 +1446,50 @@ function initializeImageSequence(slide) {
     return;
   }
   
-  const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
-  if (images.length === 0) {
-    console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] No images found in sequence`);
+  // First handle the containers
+  const containers = Array.from(imageSequence.querySelectorAll('.sequence-item-container'));
+  if (containers.length === 0) {
+    console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] No container items found in sequence`);
     return;
   }
   
-  console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Found ${images.length} images in sequence`);
+  console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Found ${containers.length} containers in sequence`);
   
-  // Reset ALL images with both class and style properties
-  // This ensures a consistent state across all browsers and prevents conflicts
-  images.forEach((img, index) => {
-    // Always keep display block, but hide with visibility
-    img.style.display = 'block';
-    img.style.visibility = 'hidden';
-    img.classList.remove('active');
+  // Reset ALL containers and their content - this ensures clean state
+  containers.forEach((container, index) => {
+    // Set container state
+    container.classList.remove('active');
     
-    // Ensure z-index is reset to avoid stacking context issues
-    img.style.zIndex = '';
+    // Find and reset all sequence images within this container
+    const sequenceImages = container.querySelectorAll('.sequence-image');
+    sequenceImages.forEach(img => {
+      // Always keep display block, but hide with visibility
+      img.style.display = 'block';
+      img.style.visibility = 'hidden';
+      img.classList.remove('active');
+    });
     
-    console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Reset image ${index}`);
+    console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Reset container ${index} and its content`);
   });
+  
+  // Activate ONLY the first container and its content
+  if (containers[0]) {
+    containers[0].classList.add('active');
+    
+    // Activate all sequence images in this container
+    const sequenceImages = containers[0].querySelectorAll('.sequence-image');
+    sequenceImages.forEach(img => {
+      img.classList.add('active');
+      img.style.visibility = 'visible';
+    });
+    
+    console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Activated first container and its content`);
+  }
+  
+  // Verify the sequence is in a consistent state
+  verifySequenceState(imageSequence);
+}
+
   
   // Activate ONLY the first image with both class and style
   images[0].classList.add('active');
@@ -1582,6 +1682,7 @@ function showSlide(index) {
 
 /**
  * Handle image sequence navigation
+ * Improved to ensure consistent state management
  * 
  * @param {string} direction - Direction to navigate ('prev' or 'next')
  * @returns {boolean} - True if navigation was handled within a sequence
@@ -1605,44 +1706,51 @@ function handleImageSequenceNavigation(direction) {
     return false;
   }
    
-  // Get all images in the sequence
-  const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
+  // Get all containers in the sequence - we navigate by container
+  const containers = Array.from(imageSequence.querySelectorAll('.sequence-item-container'));
   
-  // Log the number of images found
-  console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Found ${images.length} images in sequence`);
+  // Log the number of containers found
+  console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Found ${containers.length} containers in sequence`);
   
-  // Single image case - don't handle sequence navigation
-  if (images.length <= 1) {
-    console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Only one image - not handling as sequence navigation`);
+  // Single container case - don't handle sequence navigation
+  if (containers.length <= 1) {
+    console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Only one container - not handling as sequence navigation`);
     return false;
   }
   
-  console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Found ${images.length} images in sequence`);
-  
-  // Find which image is currently active
+  // Find which container is currently active
   let activeIndex = -1;
-  images.forEach((img, idx) => {
-    if (img.classList.contains('active')) {
+  containers.forEach((container, idx) => {
+    if (container.classList.contains('active')) {
       activeIndex = idx;
     }
   });
   
   console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Current activeIndex is ${activeIndex}`);
   
-  // If no active image found, activate the first one
+  // If no active container found, activate the first one
   if (activeIndex === -1) {
-    console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] No active image found, activating first image`);
+    console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] No active container found, activating first container`);
     
-    // Reset all images first - using both class and style for consistency
-    images.forEach(img => {
-      img.classList.remove('active');
-      img.style.visibility = 'hidden';
-      img.style.display = 'block';
+    // Reset all containers and their content
+    containers.forEach(container => {
+      container.classList.remove('active');
+      
+      const images = container.querySelectorAll('.sequence-image');
+      images.forEach(img => {
+        img.classList.remove('active');
+        img.style.visibility = 'hidden';
+      });
     });
     
-    // Make the first image active - using both class and style
-    images[0].classList.add('active');
-    images[0].style.visibility = 'visible';
+    // Make the first container active and its content visible
+    containers[0].classList.add('active');
+    const firstImages = containers[0].querySelectorAll('.sequence-image');
+    firstImages.forEach(img => {
+      img.classList.add('active');
+      img.style.visibility = 'visible';
+    });
+    
     return true;
   }
   
@@ -1651,7 +1759,7 @@ function handleImageSequenceNavigation(direction) {
   if (direction === 'next') {
     nextIndex = activeIndex + 1;
     // If at the end of the sequence, signal to move to next slide
-    if (nextIndex >= images.length) {
+    if (nextIndex >= containers.length) {
       console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] At end of sequence, returning false to move to next slide`);
       return false;
     }
@@ -1664,125 +1772,139 @@ function handleImageSequenceNavigation(direction) {
     }
   }
   
-  console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Moving to image index ${nextIndex}`);
+  console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Moving to container index ${nextIndex}`);
   
-  // Reset all images first - using both class and style for consistency
-  images.forEach(img => {
-    img.classList.remove('active');
-    img.style.visibility = 'hidden';
-    img.style.display = 'block';
+  // Reset all containers and their content
+  containers.forEach(container => {
+    container.classList.remove('active');
+    
+    const images = container.querySelectorAll('.sequence-image');
+    images.forEach(img => {
+      img.classList.remove('active');
+      img.style.visibility = 'hidden';
+    });
   });
   
- // Make the target image active - using both class and style
- images[nextIndex].classList.add('active');
- images[nextIndex].style.visibility = 'visible';
+  // Make the target container active and its content visible
+  containers[nextIndex].classList.add('active');
+  const targetImages = containers[nextIndex].querySelectorAll('.sequence-image');
+  targetImages.forEach(img => {
+    img.classList.add('active');
+    img.style.visibility = 'visible';
+  });
  
- // Add a verification step to ensure the change took effect
- setTimeout(() => {
-   const activeImages = imageSequence.querySelectorAll('.sequence-image.active');
-   if (activeImages.length !== 1) {
-     console.warn(`[ImageSequence] State inconsistency detected after navigation. Found ${activeImages.length} active images.`);
-     
-     // Force correction
-     images.forEach((img, idx) => {
-       const shouldBeActive = idx === nextIndex;
-       img.classList.toggle('active', shouldBeActive);
-       img.style.visibility = shouldBeActive ? 'visible' : 'hidden';
-     });
-   }
- }, 0);
+  // Verify the state after navigation to catch any inconsistencies
+  setTimeout(() => {
+    verifySequenceState(imageSequence);
+  }, 0);
  
- return true;
+  return true;
 }
-
 /**
-* Apply the current navigation state
-* Shows the correct slide and/or sequence item based on currentNavIndex
-*/
+ * Apply the current navigation state
+ * Improved to maintain consistent state between container and image elements
+ * 
+ * @returns {boolean} True if navigation was applied successfully
+ */
 function applyCurrentNavigation() {
- if (!flatNavigation || currentNavIndex >= flatNavigation.length) {
-   console.error(`[NavFix] Cannot apply navigation - invalid indices`);
-   return false;
- }
- 
- const navItem = flatNavigation[currentNavIndex];
- console.log(`[NavFix] Applying navigation item ${currentNavIndex}: type=${navItem.type}, slide=${navItem.slideIndex}, seq=${navItem.sequenceIndex}`);
- 
- if (navItem.type === 'slide') {
-   // Show this slide, hide all others
-   const slides = Array.from(document.querySelectorAll('.slide'));
-   slides.forEach((slide, index) => {
-     const isCurrentSlide = index === navItem.slideIndex;
-     slide.style.display = isCurrentSlide ? 'block' : 'none';
-     slide.classList.toggle('active', isCurrentSlide);
-     
-     if (isCurrentSlide) {
-       // Initialize any image sequence in this slide
-       initializeImageSequence(slide);
-       
-       // Update presenter notes and navigation UI
-       updatePresenterNotes(navItem.slideIndex);
-       updateNavButtons();
-       
-       // Update currentSlideIndex to stay in sync
-       currentSlideIndex = navItem.slideIndex;
-       console.log(`[NavFix] Updated currentSlideIndex to ${navItem.slideIndex}`);
-     }
-   });
-   
-   // Start timer if moving past first slide
-   if (navItem.slideIndex > 0 && !hasStartedTimer) {
-     startTimer();
-     hasStartedTimer = true;
-   }
-   
-   return true;
- } 
- else if (navItem.type === 'sequence') {
-   // First make sure the correct slide is shown
-   if (currentSlideIndex !== navItem.slideIndex) {
-     const slides = Array.from(document.querySelectorAll('.slide'));
-     slides.forEach((slide, index) => {
-       slide.style.display = index === navItem.slideIndex ? 'block' : 'none';
-       slide.classList.toggle('active', index === navItem.slideIndex);
-     });
-     
-     currentSlideIndex = navItem.slideIndex;
-     console.log(`[NavFix] Updated currentSlideIndex to ${navItem.slideIndex} for sequence`);
-   }
-   
-   // Then handle the sequence navigation
-   const slide = document.querySelectorAll('.slide')[navItem.slideIndex];
-   const imageSequence = slide?.querySelector('.image-sequence');
-   if (!imageSequence) {
-     console.error(`[NavFix] Cannot find image sequence for slide ${navItem.slideIndex}`);
-     return false;
-   }
-   
-   const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
-   if (navItem.sequenceIndex >= images.length) {
-     console.error(`[NavFix] Invalid sequence index ${navItem.sequenceIndex} (max: ${images.length-1})`);
-     return false;
-   }
-   
-   // Reset all images with both visibility and class
-   images.forEach((img, idx) => {
-     img.classList.remove('active');
-     img.style.visibility = 'hidden';
-     img.style.display = 'block';
-   });
-   
-   // Activate the target image with both visibility and class
-   const targetImage = images[navItem.sequenceIndex];
-   targetImage.classList.add('active');
-   targetImage.style.visibility = 'visible';
-   
-   console.log(`[NavFix] Activated image ${navItem.sequenceIndex} in sequence`);
-   
-   return true;
- }
- 
- return false;
+  if (!flatNavigation || currentNavIndex >= flatNavigation.length) {
+    console.error(`[NavFix] Cannot apply navigation - invalid indices`);
+    return false;
+  }
+  
+  const navItem = flatNavigation[currentNavIndex];
+  console.log(`[NavFix] Applying navigation item ${currentNavIndex}: type=${navItem.type}, slide=${navItem.slideIndex}, seq=${navItem.sequenceIndex}`);
+  
+  if (navItem.type === 'slide') {
+    // Show this slide, hide all others
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    slides.forEach((slide, index) => {
+      const isCurrentSlide = index === navItem.slideIndex;
+      slide.style.display = isCurrentSlide ? 'block' : 'none';
+      slide.classList.toggle('active', isCurrentSlide);
+      
+      if (isCurrentSlide) {
+        // Initialize any image sequence in this slide
+        initializeImageSequence(slide);
+        
+        // Update presenter notes and navigation UI
+        updatePresenterNotes(navItem.slideIndex);
+        updateNavButtons();
+        
+        // Update currentSlideIndex to stay in sync
+        currentSlideIndex = navItem.slideIndex;
+        console.log(`[NavFix] Updated currentSlideIndex to ${navItem.slideIndex}`);
+      }
+    });
+    
+    // Start timer if moving past first slide
+    if (navItem.slideIndex > 0 && !hasStartedTimer) {
+      startTimer();
+      hasStartedTimer = true;
+    }
+    
+    return true;
+  } 
+  else if (navItem.type === 'sequence') {
+    // First make sure the correct slide is shown
+    if (currentSlideIndex !== navItem.slideIndex) {
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      slides.forEach((slide, index) => {
+        slide.style.display = index === navItem.slideIndex ? 'block' : 'none';
+        slide.classList.toggle('active', index === navItem.slideIndex);
+      });
+      
+      currentSlideIndex = navItem.slideIndex;
+      console.log(`[NavFix] Updated currentSlideIndex to ${navItem.slideIndex} for sequence`);
+    }
+    
+    // Then handle the sequence navigation
+    const slide = document.querySelectorAll('.slide')[navItem.slideIndex];
+    const imageSequence = slide?.querySelector('.image-sequence');
+    if (!imageSequence) {
+      console.error(`[NavFix] Cannot find image sequence for slide ${navItem.slideIndex}`);
+      return false;
+    }
+    
+    // Getting containers instead of images - we navigate by container now
+    const containers = Array.from(imageSequence.querySelectorAll('.sequence-item-container'));
+    if (navItem.sequenceIndex >= containers.length) {
+      console.error(`[NavFix] Invalid sequence index ${navItem.sequenceIndex} (max: ${containers.length-1})`);
+      return false;
+    }
+    
+    // Reset all containers and their content
+    containers.forEach(container => {
+      container.classList.remove('active');
+      
+      const images = container.querySelectorAll('.sequence-image');
+      images.forEach(img => {
+        img.classList.remove('active');
+        img.style.visibility = 'hidden';
+      });
+    });
+    
+    // Activate the target container and its content
+    const targetContainer = containers[navItem.sequenceIndex];
+    targetContainer.classList.add('active');
+    
+    const targetImages = targetContainer.querySelectorAll('.sequence-image');
+    targetImages.forEach(img => {
+      img.classList.add('active');
+      img.style.visibility = 'visible';
+    });
+    
+    console.log(`[NavFix] Activated container ${navItem.sequenceIndex} in sequence`);
+    
+    // Verify the state after navigation
+    setTimeout(() => {
+      verifySequenceState(imageSequence);
+    }, 0);
+    
+    return true;
+  }
+  
+  return false;
 }
 
 /**
