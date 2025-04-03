@@ -2228,33 +2228,312 @@ function setupSystemInfoButton() {
 * @returns {string} Formatted JSON string with debug information
 */
 function generateDebugInfo() {
- // Create a comprehensive debug object
- const debugObject = {
-   timestamp: new Date().toISOString(),
-   slides: DPS_CONFIG.DEBUG_INFO.slides,
-   illustrations: DPS_CONFIG.DEBUG_INFO.illustrations,
-   events: DPS_CONFIG.DEBUG_INFO.events,
-   navigationState: {
-     currentSlideIndex,
-     currentNavIndex,
-     totalSlides: document.querySelectorAll('.slide').length,
-     totalNavPoints: flatNavigation ? flatNavigation.length : 0
-   },
-   timerState: {
-     remainingTime,
-     hasStartedTimer,
-     isTimerRunning: !!timerInterval
-   },
-   presenterState: {
-     isPresenterMode: document.querySelector('.presenter-notes')?.classList.contains('presenter-mode') || false,
-     isNotesVisible: !document.querySelector('.presenter-notes')?.classList.contains('hidden')
-   }
- };
- 
- // Format as pretty JSON with 2-space indentation
- return JSON.stringify(debugObject, null, 2);
+  // Get the current slide for detailed analysis
+  const currentSlide = document.querySelectorAll('.slide')[currentSlideIndex];
+  const imageSequence = currentSlide ? currentSlide.querySelector('.image-sequence') : null;
+  
+  // Capture hash information for current content
+  const hashDebugInfo = {
+    currentSlideContentHash: currentSlide ? simpleHash(currentSlide.innerHTML.substring(0, 200)) : null,
+    imageSequenceHash: imageSequence ? simpleHash(imageSequence.innerHTML.substring(0, 200)) : null,
+    contentHashes: collectContentHashes(currentSlide),
+    illustrationHashes: collectIllustrationHashes(currentSlide),
+    hashCollisions: detectHashCollisions(currentSlide)
+  };
+  
+  // Detailed analysis of illustrations in the current slide
+  const illustrationDetails = {
+    // ... (existing code)
+  };
+  
+  // Create the comprehensive debug object with the additional details
+  const debugObject = {
+    timestamp: new Date().toISOString(),
+    slides: DPS_CONFIG.DEBUG_INFO.slides,
+    illustrations: DPS_CONFIG.DEBUG_INFO.illustrations,
+    events: DPS_CONFIG.DEBUG_INFO.events,
+    navigationState: {
+      currentSlideIndex,
+      currentNavIndex,
+      totalSlides: document.querySelectorAll('.slide').length,
+      totalNavPoints: flatNavigation ? flatNavigation.length : 0
+    },
+    timerState: {
+      remainingTime,
+      hasStartedTimer,
+      isTimerRunning: !!timerInterval
+    },
+    presenterState: {
+      isPresenterMode: document.querySelector('.presenter-notes')?.classList.contains('presenter-mode') || false,
+      isNotesVisible: !document.querySelector('.presenter-notes')?.classList.contains('hidden')
+    },
+    // Add the detailed illustration analysis
+    currentIllustration: illustrationDetails,
+    // Add hash debugging information
+    hashDebug: hashDebugInfo,
+    // Navigation history
+    navigationHistory: stateSnapshots.slice(-5) // Get last 5 navigation events
+  };
+  
+  // Format as pretty JSON with 2-space indentation
+  return JSON.stringify(debugObject, null, 2);
 }
 
+/**
+ * Collect content hash information for elements in a container
+ * @param {Element} container - The container element
+ * @returns {Array} Array of element hashes with details
+ */
+function collectContentHashes(container) {
+  if (!container) return [];
+  
+  const elements = Array.from(container.querySelectorAll('.sequence-image, .sequence-item-container, picture, img, iframe'));
+  
+  return elements.map((element, index) => {
+    // Create temporary container to get HTML
+    const tempContainer = document.createElement('div');
+    tempContainer.appendChild(element.cloneNode(true));
+    const elementHTML = tempContainer.innerHTML;
+    
+    // Generate hash for the element
+    const contentHash = simpleHash(elementHTML);
+    const shortContent = elementHTML.substring(0, 100).replace(/\n/g, '');
+    
+    return {
+      index,
+      elementType: element.tagName,
+      classes: Array.from(element.classList),
+      contentHash,
+      shortContent,
+      contentLength: elementHTML.length
+    };
+  });
+}
+
+/**
+ * Collect hash information specifically for illustrations
+ * @param {Element} container - The container element 
+ * @returns {Object} Hash information for illustrations
+ */
+function collectIllustrationHashes(container) {
+  if (!container) return null;
+  
+  // Find the illustration container
+  const illustration = container.querySelector('.illustration');
+  if (!illustration) return null;
+  
+  // Process different illustration types
+  const imageSequence = illustration.querySelector('.image-sequence');
+  const iframeContainer = illustration.querySelector('.iframe-container');
+  const svgElement = illustration.querySelector('svg');
+  const pictureElement = illustration.querySelector('picture');
+  const imgElement = illustration.querySelector('img:not(.sequence-image)'); // Direct image
+  
+  const result = {
+    illustrationType: null,
+    contentHash: null,
+    elementDetails: null
+  };
+  
+  if (imageSequence) {
+    result.illustrationType = 'sequence';
+    result.contentHash = simpleHash(imageSequence.innerHTML.substring(0, 200));
+    
+    // Get detailed info on sequence items
+    const sequenceItems = Array.from(imageSequence.querySelectorAll('.sequence-item-container'));
+    result.elementDetails = sequenceItems.map((item, index) => {
+      const label = item.querySelector('.sequence-item-label');
+      const image = item.querySelector('.sequence-image');
+      const imageHTML = image ? (image.outerHTML || '').substring(0, 100) : 'No image';
+      
+      return {
+        index,
+        labelText: label ? label.textContent : 'No label',
+        isActive: item.classList.contains('active'),
+        itemHash: simpleHash(item.innerHTML),
+        imageType: image ? image.tagName : 'None',
+        imageClasses: image ? Array.from(image.classList) : [],
+        imageHTML: imageHTML,
+        imageContentHash: image ? simpleHash(imageHTML) : null
+      };
+    });
+  } else if (iframeContainer) {
+    result.illustrationType = 'iframe';
+    const iframe = iframeContainer.querySelector('iframe');
+    result.contentHash = iframe ? simpleHash(iframe.outerHTML) : simpleHash(iframeContainer.innerHTML);
+    result.elementDetails = {
+      src: iframe ? iframe.getAttribute('src') : 'No iframe found',
+      containerHTML: iframeContainer.outerHTML.substring(0, 100)
+    };
+  } else if (svgElement) {
+    result.illustrationType = 'svg';
+    result.contentHash = simpleHash(svgElement.outerHTML.substring(0, 200));
+    result.elementDetails = {
+      viewBox: svgElement.getAttribute('viewBox'),
+      svgHTML: svgElement.outerHTML.substring(0, 100)
+    };
+  } else if (pictureElement) {
+    result.illustrationType = 'picture';
+    result.contentHash = simpleHash(pictureElement.outerHTML.substring(0, 200));
+    result.elementDetails = {
+      sources: Array.from(pictureElement.querySelectorAll('source')).length,
+      pictureHTML: pictureElement.outerHTML.substring(0, 100)
+    };
+  } else if (imgElement) {
+    result.illustrationType = 'image';
+    result.contentHash = simpleHash(imgElement.outerHTML);
+    result.elementDetails = {
+      src: imgElement.getAttribute('src'),
+      alt: imgElement.getAttribute('alt'),
+      imgHTML: imgElement.outerHTML.substring(0, 100)
+    };
+  }
+  
+  return result;
+}
+
+/**
+ * Detect potential hash collisions in content identification
+ * @param {Element} container - The container to analyze
+ * @returns {Object} Information about potential hash collisions
+ */
+function detectHashCollisions(container) {
+  if (!container) return null;
+  
+  // Get elements that would typically be hashed for content identification
+  const elements = Array.from(container.querySelectorAll('img, svg, picture, iframe, .sequence-image'));
+  
+  // Map of hashes to elements to detect collisions
+  const hashMap = {};
+  const collisions = [];
+  
+  elements.forEach((element, index) => {
+    // Create temporary container to get HTML
+    const tempContainer = document.createElement('div');
+    tempContainer.appendChild(element.cloneNode(true));
+    const elementHTML = tempContainer.innerHTML;
+    
+    // Generate content hash
+    const contentHash = simpleHash(elementHTML);
+    
+    // Check for collisions
+    if (hashMap[contentHash]) {
+      // Potential collision found
+      collisions.push({
+        hash: contentHash,
+        elements: [
+          {
+            index: hashMap[contentHash].index,
+            type: hashMap[contentHash].element.tagName,
+            classes: Array.from(hashMap[contentHash].element.classList),
+            shortContent: hashMap[contentHash].html.substring(0, 50)
+          },
+          {
+            index,
+            type: element.tagName,
+            classes: Array.from(element.classList),
+            shortContent: elementHTML.substring(0, 50)
+          }
+        ],
+        // Compute similarity to determine if this is a true collision
+        similarity: calculateSimilarity(hashMap[contentHash].html, elementHTML)
+      });
+    } else {
+      // Store this hash
+      hashMap[contentHash] = {
+        index,
+        element,
+        html: elementHTML
+      };
+    }
+  });
+  
+  return {
+    totalElementsHashed: elements.length,
+    uniqueHashes: Object.keys(hashMap).length,
+    collisions
+  };
+}
+
+/**
+ * Calculate similarity between two HTML strings
+ * @param {string} html1 - First HTML string
+ * @param {string} html2 - Second HTML string
+ * @returns {number} Similarity score (0-1)
+ */
+function calculateSimilarity(html1, html2) {
+  if (!html1 || !html2) return 0;
+  
+  // Very simple similarity check - compare string lengths
+  const lengthDiff = Math.abs(html1.length - html2.length);
+  const maxLength = Math.max(html1.length, html2.length);
+  
+  // If lengths are very different, they're probably different content
+  if (lengthDiff > maxLength * 0.5) return 0;
+  
+  // For strings of similar length, check character-by-character
+  let sameChars = 0;
+  const minLength = Math.min(html1.length, html2.length);
+  
+  for (let i = 0; i < minLength; i++) {
+    if (html1[i] === html2[i]) {
+      sameChars++;
+    }
+  }
+  
+  return sameChars / maxLength;
+}
+
+/**
+ * Detect potential style conflicts in the current slide
+ * @param {Element} slide - The current slide element
+ * @returns {Object} Analysis of style conflicts
+ */
+function detectStyleConflicts(slide) {
+  if (!slide) return null;
+  
+  // Check for duplicate IDs
+  const allElements = Array.from(slide.querySelectorAll('*'));
+  const idCounts = {};
+  
+  allElements.forEach(element => {
+    const id = element.id;
+    if (id) {
+      idCounts[id] = (idCounts[id] || 0) + 1;
+    }
+  });
+  
+  const duplicateIds = Object.entries(idCounts)
+    .filter(([id, count]) => count > 1)
+    .map(([id, count]) => ({ id, count }));
+  
+  // Check for z-index issues
+  const elementsWithZIndex = Array.from(slide.querySelectorAll('*'))
+    .filter(el => {
+      const computedStyle = window.getComputedStyle(el);
+      return computedStyle.getPropertyValue('z-index') !== 'auto';
+    })
+    .map(el => ({
+      element: el.tagName + (el.classList.length ? '.' + Array.from(el.classList).join('.') : ''),
+      zIndex: window.getComputedStyle(el).getPropertyValue('z-index')
+    }));
+  
+  // Check for position conflicts
+  const positionAbsolute = slide.querySelectorAll('*[style*="position: absolute"]').length;
+  const visibility = {
+    hidden: slide.querySelectorAll('*[style*="visibility: hidden"]').length,
+    visible: slide.querySelectorAll('*[style*="visibility: visible"]').length
+  };
+  
+  return {
+    duplicateIds,
+    elementsWithZIndex,
+    positionStyles: {
+      absolute: positionAbsolute,
+      visibility
+    }
+  };
+}
 /**
 * Copy text to clipboard
 * @param {string} text - Text to copy to clipboard
