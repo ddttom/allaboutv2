@@ -1490,38 +1490,7 @@ function initializeImageSequence(slide) {
   verifySequenceState(imageSequence);
 }
 
-  
-  // Activate ONLY the first image with both class and style
-  images[0].classList.add('active');
-  images[0].style.visibility = 'visible';
-  
-  // Force a small delay to ensure DOM updates are processed
-  setTimeout(() => {
-    // Double-check that our state is consistent
-    const activeImages = imageSequence.querySelectorAll('.sequence-image.active');
-    if (activeImages.length !== 1) {
-      console.warn(`[ImageSequence] Inconsistent state detected after initialization. Active count: ${activeImages.length}`);
-      
-      // Force correction if needed
-      if (activeImages.length > 1) {
-        // Too many active images - fix it
-        Array.from(activeImages).forEach((img, idx) => {
-          if (idx > 0) {
-            img.classList.remove('active');
-            img.style.visibility = 'hidden';
-          }
-        });
-      } else if (activeImages.length === 0) {
-        // No active images - activate the first one
-        images[0].classList.add('active');
-        images[0].style.visibility = 'visible';
-      }
-    }
-  }, 0);
-  
-  console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Activated first image`);
-}
-
+ 
 /**
  * Create a flat navigation array from slides and their sequences
  * This builds a linear progression of navigation points for seamless navigation
