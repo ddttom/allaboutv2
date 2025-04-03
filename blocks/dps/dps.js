@@ -2459,48 +2459,9 @@ function flashTimeWarning() {
  * through all content (slides and image sequences) with single button presses
  */
 
-// First, create a flat navigation structure
-function createFlatNavigationArray() {
-  const flatNavigation = [];
-  
-  // Get all slides
-  const slides = Array.from(document.querySelectorAll('.slide'));
-  
-  // Process each slide
-  slides.forEach((slide, slideIndex) => {
-    // Each slide is a navigation point
-    const slideNav = {
-      type: 'slide',
-      slideIndex: slideIndex,
-      sequenceIndex: null,
-      element: slide
-    };
-    
-    flatNavigation.push(slideNav);
-    
-    // Check if this slide has image sequences
-    const imageSequence = slide.querySelector('.image-sequence');
-    if (imageSequence) {
-      const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
-      
-      // Skip the first image since it's shown with the slide itself
-      if (images.length > 1) {
-        for (let i = 1; i < images.length; i++) {
-          const sequenceNav = {
-            type: 'sequence',
-            slideIndex: slideIndex,
-            sequenceIndex: i,
-            element: images[i]
-          };
-          
-          flatNavigation.push(sequenceNav);
-        }
-      }
-    }
-  });
-  
-  return flatNavigation;
-}
+// Create a flat navigation structure for seamless navigation
+// This function builds an array of all navigation points (slides and sequence items)
+// that can be traversed linearly with next/previous operations
 
 // Current position in the flat navigation
 let currentNavIndex = 0;
