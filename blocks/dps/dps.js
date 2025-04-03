@@ -199,6 +199,12 @@ export default function decorate(block) {
   
   // Set up navigation system
   setupNavigationSystem();
+
+  // Initialize the resize handler for presenter notes
+  setupResizeHandler();
+
+  // Set up the presenter toggle button event handler
+  setupPresenterToggle();
   
   // Force fullscreen mode immediately
   document.body.classList.add('dps-fullscreen');
@@ -1888,67 +1894,87 @@ function setupNavigationSystem() {
 }
 
 /**
-* Toggle presenter mode on/off
-*/
+ * Toggle presenter mode on/off
+ */
 function togglePresenterMode() {
- const presenterNotes = document.querySelector('.presenter-notes');
- const isPresenterMode = presenterNotes.classList.contains('presenter-mode');
- const header = document.querySelector('.dps-header');
- const footer = document.querySelector('.dps-footer');
- const slides = document.querySelectorAll('.slide');
- const currentSlide = slides[currentSlideIndex];
- const presenterButton = document.querySelector('.presenter-toggle');
- const notesContent = presenterNotes.querySelector('.presenter-notes-content');
-
- if (!isPresenterMode) {
-   // Hide header and slides but keep footer
-   header.style.display = 'none';
-   slides.forEach(slide => slide.style.display = 'none');
-   currentSlide.style.display = 'none';
-   
-   // Highlight presenter button
-   presenterButton.classList.add('active');
+  console.log('[PresenterToggle] Toggle presenter mode function called');
+  const presenterNotes = document.querySelector('.presenter-notes');
+  
+  if (!presenterNotes) {
+    console.error('[PresenterToggle] Presenter notes container not found');
+    return;
+  }
+  
+  const isPresenterMode = presenterNotes.classList.contains('presenter-mode');
+  const header = document.querySelector('.dps-header');
+  const footer = document.querySelector('.dps-footer');
+  const slides = document.querySelectorAll('.slide');
+  const currentSlide = slides[currentSlideIndex];
+  const presenterButton = document.querySelector('.presenter-toggle');
+  
+  console.log('[PresenterToggle] Current state:', isPresenterMode ? 'presenter mode' : 'normal mode');
+  
+  if (!isPresenterMode) {
+    // First make presenter notes visible by removing 'hidden' class if present
+    presenterNotes.classList.remove('hidden');
+    
+    // Hide header and slides but keep footer
+    if (header) header.style.display = 'none';
+    if (slides.length > 0) {
+      slides.forEach(slide => slide.style.display = 'none');
+      if (currentSlide) currentSlide.style.display = 'none';
+    }
+    
+    // Highlight presenter button
+    if (presenterButton) presenterButton.classList.add('active');
  
-   // Show notes in full screen
-   presenterNotes.classList.remove('hidden');
-   presenterNotes.classList.add('presenter-mode');
+    // Show notes in full screen
+    presenterNotes.classList.add('presenter-mode');
  
-   // Normal view - stay pinned to left
-   presenterNotes.style.width = '50%'; // Reduced from 100% to stay on left side
-   presenterNotes.style.left = '20px'; // Keep pinned to left
-   presenterNotes.style.height = 'calc(100vh - 60px)';
-   presenterNotes.style.position = 'fixed';
-   presenterNotes.style.top = '0';
-   presenterNotes.style.zIndex = '1000';
-   presenterNotes.style.backgroundColor = 'white';
-   presenterNotes.style.padding = '20px';
-   presenterNotes.style.overflow = 'auto';
-   
-   // Update presenter notes content to include title and bullet points
-   updatePresenterNotes(currentSlideIndex, false, true); // Pass isPresenterToggle=true
- } else {
-   // Restore normal view
-   header.style.display = '';
-   slides.forEach(slide => slide.style.display = '');
-   currentSlide.style.display = 'block';
-   
-   // Remove button highlight
-   presenterButton.classList.remove('active');
+    // Adjust positioning and styling
+    presenterNotes.style.width = '50%'; // Reduced from 100% to stay on left side
+    presenterNotes.style.left = '20px'; // Keep pinned to left
+    presenterNotes.style.height = 'calc(100vh - 60px)';
+    presenterNotes.style.position = 'fixed';
+    presenterNotes.style.top = '0';
+    presenterNotes.style.zIndex = '1000';
+    presenterNotes.style.backgroundColor = 'white';
+    presenterNotes.style.padding = '20px';
+    presenterNotes.style.overflow = 'auto';
+    
+    // Update presenter notes content to include title and bullet points
+    updatePresenterNotes(currentSlideIndex, false, true); // Pass isPresenterToggle=true
+    
+    console.log('[PresenterToggle] Switched to presenter mode');
+  } else {
+    // Restore normal view
+    if (header) header.style.display = '';
+    if (slides.length > 0) {
+      slides.forEach(slide => slide.style.display = '');
+      if (currentSlide) currentSlide.style.display = 'block';
+    }
+    
+    // Remove button highlight
+    if (presenterButton) presenterButton.classList.remove('active');
  
-   presenterNotes.classList.remove('presenter-mode');
-   presenterNotes.style.width = '31.25vw'; // Original width from CSS
-   presenterNotes.style.left = '20px'; // Keep pinned to left
-   presenterNotes.style.height = '25vh'; // Original height from CSS
-   presenterNotes.style.position = 'fixed';
-   presenterNotes.style.top = '';
-   presenterNotes.style.bottom = '60px'; // Position at bottom as in CSS
-   presenterNotes.style.zIndex = '1000';
-   presenterNotes.style.backgroundColor = '';
-   presenterNotes.style.padding = '';
-   presenterNotes.style.overflow = 'auto';
- }
+    presenterNotes.classList.remove('presenter-mode');
+    presenterNotes.style.width = '31.25vw'; // Original width from CSS
+    presenterNotes.style.left = '20px'; // Keep pinned to left
+    presenterNotes.style.height = '25vh'; // Original height from CSS
+    presenterNotes.style.position = 'fixed';
+    presenterNotes.style.top = '';
+    presenterNotes.style.bottom = '60px'; // Position at bottom as in CSS
+    presenterNotes.style.zIndex = '1000';
+    presenterNotes.style.backgroundColor = '';
+    presenterNotes.style.padding = '';
+    presenterNotes.style.overflow = 'auto';
+    
+    // Update presenter notes with standard content
+    updatePresenterNotes(currentSlideIndex);
+    
+    console.log('[PresenterToggle] Switched back to normal mode');
+  }
 }
-
 /**
 * Show presenter notes
 */
@@ -2145,6 +2171,25 @@ function setupResizeHandler() {
    document.addEventListener('mouseup', upHandler);
  });
 }
+
+
+/**
+ * Setup the presenter toggle button
+ * This connects the button click event to the togglePresenterMode function
+ */
+function setupPresenterToggle() {
+  const presenterToggleButton = document.querySelector('.presenter-toggle');
+  if (presenterToggleButton) {
+    console.log('[PresenterToggle] Setting up presenter toggle button');
+    presenterToggleButton.addEventListener('click', function() {
+      console.log('[PresenterToggle] Button clicked');
+      togglePresenterMode();
+    });
+  } else {
+    console.error('[PresenterToggle] Presenter toggle button not found');
+  }
+}
+
 
 /**
 * Set up the System Info button functionality
