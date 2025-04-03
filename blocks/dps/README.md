@@ -46,6 +46,14 @@ A powerful presentation system that transforms structured content into an intera
 - Robust state verification prevents UI inconsistencies during rapid navigation
 - Sequence navigation works with mixed content types (icons, iframes, images, SVGs)
 
+### Container-Based Navigation System (New)
+- Navigation now operates at the container level rather than individual image level
+- Each sequence item is contained in its own `.sequence-item-container`
+- Containers maintain proper state for all child elements during navigation
+- Eliminates doubled labels and inconsistent layouts during transitions
+- State verification ensures consistent visibility between classes and style properties
+- Sequence navigation works with mixed content types (icons, iframes, images, SVGs)
+
 ### Enhanced Navigation for Image Sequences
 The enhanced navigation provides a better user experience when a slide contains multiple illustrations (like icons, images, and iframes) by adding visual cues and organization to the content. Here's what it does:
 
@@ -81,6 +89,13 @@ The enhanced navigation works by:
 - Reduces confusion: Users understand when they're navigating through multiple items
 - Improves orientation: The "x/y" format helps users know how far they've progressed
 - Maintains content integrity: All your original content remains in its intended order
+
+#### 5. Container-Based Structure
+The sequence now uses a reliable container-based structure where:
+- Each item lives in its own container with consistent styling
+- Navigation transitions move between containers rather than individual images
+- Active states are properly synchronized between containers and their contents
+- This prevents UI inconsistencies especially with complex content like nested iframes
 - Solves the "double iframe" issue: Makes it clear when a user has navigated from an icon to an iframe
 #### 5. Visual Example
 Without enhanced navigation, a user might see this sequence with no indication of what's happening:
@@ -494,6 +509,9 @@ The fourth column supports various image formats and sources:
 - **IMPROVED: Fixed class/style synchronization for image sequences**
 - **IMPROVED: Better boundary handling at sequence beginning/end**
 - **FIXED: Content counting in parseIllustration function to prevent double-counting of any content type**
+- **FIXED: Navigation issues with image sequences causing doubled labels and inconsistent layouts**
+- **FIXED: State inconsistencies between active classes and visibility properties**
+- **FIXED: Properly reset sequence state when changing slides or during navigation**
 - **NEW: Verification steps to detect and recover from state inconsistencies**
 - **NEW: Detailed debug logging for easier troubleshooting**
 - **NEW: Proper handling of anchor elements as either images or iframes**
@@ -726,3 +744,31 @@ The copied JSON object contains:
 - Helpful for diagnosing issues with slide or illustration discovery
 - Provides insights into the presentation's internal state
 - Paste the copied JSON into a text editor or developer console for analysis
+
+## Enhanced Debugging
+The system now includes comprehensive debugging capabilities for troubleshooting display issues:
+
+### Hash Debugging
+- Tracks content hash information for sequence elements
+- Detects potential hash collisions in content identification
+- Helps identify issues with duplicate content detection
+
+### DOM Structure Analysis
+- Provides detailed DOM structure analysis for image sequences
+- Shows relationships between containers and their nested elements
+- Reports on active/visible state inconsistencies
+
+### Style Conflict Detection
+- Identifies conflicting CSS styles that might cause display issues
+- Detects z-index conflicts and visibility inconsistencies
+- Shows duplicate element IDs and positioning conflicts
+
+### State Verification
+- Automatically detects and corrects inconsistent sequence states
+- Ensures alignment between containers and their content
+- Maintains proper active/inactive state during navigation
+
+### Debug Access
+- Enhanced system info output includes all the above information
+- Copy debug info to clipboard with the system info button
+- Detailed console logging for troubleshooting
