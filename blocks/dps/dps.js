@@ -1,4 +1,3 @@
-
 /**
  * Dynamic Presentation System (DPS) Block
  * Transforms structured content from Google Docs tables into an interactive presentation
@@ -46,15 +45,24 @@ const DPS_CONFIG = {
   }
 };
 
+// Global navigation state variables
+let currentSlideIndex = 0;
+let currentNavIndex = 0;
+let flatNavigation = [];
+let timerInterval = null;
+let remainingTime = 0;
+let hasStartedTimer = false;
+
+/**
+ * Main entry point for the DPS block
+ * @param {Element} block - The block element to decorate
+ */
 export default function decorate(block) {
   // Add dps-block class to the container for proper styling isolation
   block.classList.add('dps-block');
-
-  // Add dps-block class to the container for proper styling isolation
-  block.classList.add('dps-block')
-    // Add styles for enhanced image sequence navigation
-    addImageSequenceStyles();
   
+  // Add CSS for image sequences
+  addImageSequenceStyles();
 
   /* Force full viewport mode by removing existing page elements
    * This ensures the presentation takes up the entire screen without interference
@@ -75,9 +83,6 @@ export default function decorate(block) {
 
   // Extract rows from the block (each row was a table row in the Google Doc)
   const rows = Array.from(block.children);
-
-  // Initialize the state tracker
-  initStateTracker();
 
   /* Validate minimum content requirements
    * Need at least configuration row and one slide row
@@ -180,25 +185,24 @@ export default function decorate(block) {
   // Build slides from the parsed content
   buildSlides(presentationData.slides, slidesContainer);
   
-  // Set up system info button
-  setupSystemInfoButton();
-
-  /* Set up presentation controls
-   * Handles slide navigation, timer, and presenter notes functionality
-   */
+  // Add styles for better navigation and presentation
+  addSeamlessNavigationStyles();
+  
   // Initialize the timer duration
   window.remainingTime = presentationData.timerDuration * 60 || DPS_CONFIG.TIMER_DURATION;
   
-  // Set up the seamless navigation
-  setupSeamlessControls();
-  addSeamlessNavigationStyles();
-
-  /* Force fullscreen mode immediately
-   * This ensures the presentation starts in the correct display mode
-   */
+  // Set up the state tracker (for debugging)
+  initStateTracker();
+  
+  // Set up the system info button
+  setupSystemInfoButton();
+  
+  // Set up navigation system
+  setupNavigationSystem();
+  
+  // Force fullscreen mode immediately
   document.body.classList.add('dps-fullscreen');
   window.scrollTo(0, 0);
-  initNavigationFix();
 }
 
 /**
@@ -328,7 +332,27 @@ function parseRows(rows) {
  * @returns {boolean} True if the URL appears to be an image
  */
 function isImageUrl(url) {
-  return url.match(new RegExp('\\.(jpg|jpeg|png|gif|svg|webp|bmp|ico|tiff)($|\\?)', 'i')) !== null;
+  return url.match(/\.(jpg|jpeg|png|gif|svg|webp|bmp|ico|tiff)($|\?)/i) !== null;
+}
+
+/**
+ * Generate a simple hash from a string
+ * Used for creating unique identifiers from HTML content
+ *
+ * @param {string} str - String to hash
+ * @returns {string} Simple hash of the string
+ */
+function simpleHash(str) {
+  let hash = 0;
+  if (str.length === 0) return hash.toString();
+  
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  
+  return Math.abs(hash).toString(16);
 }
 
 /**
@@ -343,9 +367,9 @@ function extractIframeContent(content) {
   /* Check for iframe tag in various formats
    * Supports standard iframe tags, URL-only content, and HTML encoded content
    */
-  const iframeMatch = content.match(new RegExp('<iframe[^>]*src=["\'](\\S*)["\'][^>]*>', 'i')) ||
-                      content.match(new RegExp('<iframe[^>]*>([^<]*)</iframe>', 'i')) ||
-                      content.match(new RegExp('<iframe\\s+([^>]*)>', 'i'));
+  const iframeMatch = content.match(/<iframe[^>]*src=["'](\\S*)["\'][^>]*>/i) ||
+                     content.match(/<iframe[^>]*>([^<]*)<\/iframe>/i) ||
+                     content.match(/<iframe\\s+([^>]*)>/i);
   
   if (iframeMatch) {
     /* Extract src from iframe tag
@@ -354,14 +378,14 @@ function extractIframeContent(content) {
     let src = '';
     if (iframeMatch[1]) {
       if (iframeMatch[1].includes('src=')) {
-        const srcMatch = iframeMatch[1].match(new RegExp('src=["\'](\\S*)["\']', 'i'));
+        const srcMatch = iframeMatch[1].match(/src=["'](\\S*)["']/i);
         if (srcMatch && srcMatch[1]) {
           src = srcMatch[1];
         }
       } else if (iframeMatch[1].startsWith('http')) {
         src = iframeMatch[1];
       } else if (iframeMatch[1].includes('http')) {
-        const urlMatch = iframeMatch[1].match(new RegExp('(https?://[^\\s"\'<>]+)', 'i'));
+        const urlMatch = iframeMatch[1].match(/(https?:\/\/[^\\s"'<>]+)/i);
         if (urlMatch) {
           src = urlMatch[0];
         }
@@ -381,7 +405,7 @@ function extractIframeContent(content) {
    * Makes it easier for authors to add iframes
    * This handles both standalone "iframe URL" and "iframe URL" within other content
    */
-  const simpleIframeMatch = content.match(new RegExp('iframe\\s+(https?://[^\\s"\'<>]+)', 'i'));
+  const simpleIframeMatch = content.match(/iframe\\s+(https?:\/\/[^\\s"'<>]+)/i);
   if (simpleIframeMatch && simpleIframeMatch[1]) {
     return {
       type: 'iframe',
@@ -390,10 +414,10 @@ function extractIframeContent(content) {
     };
   }
   
-  /* NEW: Check for iframe followed by anchor tag
+  /* Check for iframe followed by anchor tag
    * This handles the format: iframe <a href="https://example.com">link text</a>
    */
-  const iframeAnchorMatch = content.match(new RegExp('iframe\\s+<a[^>]*href=["\']([^"\']+)["\'][^>]*>.*?</a>', 'i'));
+  const iframeAnchorMatch = content.match(/iframe\\s+<a[^>]*href=["\']([^"\']+)["\'][^>]*>.*?<\/a>/i);
   if (iframeAnchorMatch && iframeAnchorMatch[1]) {
     const src = iframeAnchorMatch[1];
     return {
@@ -403,13 +427,9 @@ function extractIframeContent(content) {
     };
   }
   
-  /* We're not checking for plain URLs here anymore.
-   * Plain URLs should be handled by the parseIllustration function,
-   * which will determine if they are images or iframes based on the file extension.
-   */
-  
   return null;
 }
+
 /**
  * Extract URL from content
  * Used for identifying potential iframe or image sources
@@ -419,7 +439,7 @@ function extractIframeContent(content) {
  */
 function extractUrl(content) {
   // First check for URLs in anchor tags
-  const anchorMatch = content.match(new RegExp('<a[^>]*href=["\'](\\S*)["\'][^>]*>(.*?)</a>', 'i'));
+  const anchorMatch = content.match(/<a[^>]*href=["'](\\S*)["\'][^>]*>(.*?)<\/a>/i);
   if (anchorMatch && anchorMatch[1] && anchorMatch[1].startsWith('http')) {
     const url = anchorMatch[1];
     // Determine if this is an image URL or an iframe URL based on extension
@@ -437,7 +457,7 @@ function extractUrl(content) {
   }
   
   // Then check for raw URLs
-  const urlMatches = content.match(new RegExp('(https?://[^\\s"\'<>]+)', 'gi'));
+  const urlMatches = content.match(/(https?:\/\/[^\\s"'<>]+)/gi);
   if (urlMatches && urlMatches.length > 0) {
     const url = urlMatches[0]; // Use the first URL found
     // Determine if this is an image URL or an iframe URL based on extension
@@ -465,14 +485,21 @@ function extractUrl(content) {
  * @returns {string|null} The extracted icon name or null if not found
  */
 function extractIconName(className) {
-  const iconClassMatch = className.match(new RegExp('icon-([a-zA-Z0-9_-]+)'));
+  if (!className) return null;
+  
+  const iconClassMatch = className.match(/icon-([a-zA-Z0-9_-]+)/);
   if (iconClassMatch && iconClassMatch[1]) {
     return iconClassMatch[1];
   }
   return null;
 }
 
-
+/**
+ * Organize image sequence illustrations by type and deduplicate
+ * 
+ * @param {Array} illustrations - Array of illustration objects
+ * @returns {Array} Organized and deduplicated array of illustrations
+ */
 function organizeImageSequence(illustrations) {
   if (!illustrations || !Array.isArray(illustrations)) return illustrations;
   
@@ -542,7 +569,12 @@ function organizeImageSequence(illustrations) {
   return orderedIllustrations;
 }
 
-
+/**
+ * Create HTML for an image sequence
+ * 
+ * @param {Array} illustrations - Array of illustration objects
+ * @returns {string} HTML string for the image sequence
+ */
 function createImageSequenceHTML(illustrations) {
   if (!illustrations || !Array.isArray(illustrations) || illustrations.length === 0) {
     return '';
@@ -598,6 +630,9 @@ function createImageSequenceHTML(illustrations) {
   return html;
 }
 
+/**
+ * Add CSS styles for image sequences
+ */
 function addImageSequenceStyles() {
   const style = document.createElement('style');
   style.textContent = `
@@ -623,20 +658,500 @@ function addImageSequenceStyles() {
       border-radius: 0 0 4px 0;
       z-index: 5;
     }
+    
+    .sequence-image {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block !important;
+      visibility: hidden;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+    }
+
+    .sequence-image.active {
+      visibility: visible !important;
+    }
   `;
   document.head.appendChild(style);
 }
 
 /**
- * Parse illustration from a cell
- * Supports multiple content types: images, SVGs, iframes
- * FIXED: Properly handles illustration detection without double-counting
+ * Scan for all iframe and URL patterns in HTML content
  *
- * @param {Element} cell - Cell element containing illustration content
- * @returns {Object|null} Structured illustration data or null if no illustration found
+ * @param {string} html - HTML content to scan
+ * @param {Array} illustrationElements - Collection of illustration elements
+ * @param {Set} processedContent - Set of processed content identifiers
  */
+function scanForPatterns(html, illustrationElements, processedContent) {
+  // Pattern 1: Simple "iframe URL" pattern
+  const iframeUrlRegex = /iframe\s+(https?:\/\/[^\s"'<>]+)/gi;
+  let match;
+  
+  while ((match = iframeUrlRegex.exec(html)) !== null) {
+    const url = match[1];
+    const position = match.index;
+    const identifier = `iframe-simple-${url}`;
+    
+    if (!processedContent.has(identifier)) {
+      processedContent.add(identifier);
+      
+      illustrationElements.push({
+        type: 'iframe',
+        position: position,
+        data: {
+          type: 'iframe',
+          src: url,
+          content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+        }
+      });
+      
+      console.log(`[ParseIllustration] Found simple iframe pattern: ${url}`);
+    }
+  }
+  
+  // Pattern 2: "iframe <a href...>" pattern
+  const iframeAnchorRegex = /iframe\s+<a[^>]*href=["']([^"']+)["'][^>]*>/gi;
+  
+  while ((match = iframeAnchorRegex.exec(html)) !== null) {
+    const url = match[1];
+    const position = match.index;
+    const identifier = `iframe-anchor-${url}`;
+    
+    if (!processedContent.has(identifier)) {
+      processedContent.add(identifier);
+      
+      illustrationElements.push({
+        type: 'iframe',
+        position: position,
+        data: {
+          type: 'iframe',
+          src: url,
+          content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+        }
+      });
+      
+      console.log(`[ParseIllustration] Found iframe anchor pattern: ${url}`);
+    }
+  }
+  
+  // Pattern 3: "iframe" followed by an <a> tag (not directly connected)
+  const iframePos = [];
+  const simpleRegex = /\biframe\b(?!\s+(?:https?:\/\/|<a))/gi;
+  
+  while ((match = simpleRegex.exec(html)) !== null) {
+    iframePos.push(match.index);
+  }
+  
+  // For each standalone "iframe", look for the next <a> tag
+  iframePos.forEach(pos => {
+    // Look for an <a> tag within the next 100 characters
+    const nextChunk = html.substring(pos, pos + 100);
+    const anchorMatch = /<a[^>]*href=["']([^"']+)["'][^>]*>/i.exec(nextChunk);
+    
+    if (anchorMatch) {
+      const url = anchorMatch[1];
+      const identifier = `iframe-followed-by-a-${url}`;
+      
+      if (!processedContent.has(identifier)) {
+        processedContent.add(identifier);
+        
+        illustrationElements.push({
+          type: 'iframe',
+          position: pos,
+          data: {
+            type: 'iframe',
+            src: url,
+            content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+          }
+        });
+        
+        console.log(`[ParseIllustration] Found iframe followed by anchor: ${url}`);
+      }
+    }
+  });
+  
+  // Pattern 4: Standard iframe tags
+  const stdIframeRegex = /<iframe[^>]*src=["']([^"']+)["'][^>]*>/gi;
+  
+  while ((match = stdIframeRegex.exec(html)) !== null) {
+    const url = match[1];
+    const position = match.index;
+    const identifier = `iframe-tag-${url}`;
+    
+    if (!processedContent.has(identifier)) {
+      processedContent.add(identifier);
+      
+      illustrationElements.push({
+        type: 'iframe',
+        position: position,
+        data: {
+          type: 'iframe',
+          src: url,
+          content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+        }
+      });
+      
+      console.log(`[ParseIllustration] Found standard iframe tag: ${url}`);
+    }
+  }
+  
+  // Pattern 5: Raw URLs in text
+  // First remove tags to avoid matching URLs in attributes
+  const textContent = html.replace(/<[^>]*>/g, ' ');
+  
+  // Match URLs not preceded by "iframe" or within attributes
+  const urlRegex = /(?<!\biframe\s+)(https?:\/\/[^\s"'<>]+)/gi;
+  
+  while ((match = urlRegex.exec(textContent)) !== null) {
+    const url = match[1];
+    const position = match.index + 1000000; // Place after other content
+    
+    // Determine if it's an image or iframe URL
+    if (isImageUrl(url)) {
+      const identifier = `raw-image-url-${url}`;
+      
+      if (!processedContent.has(identifier)) {
+        processedContent.add(identifier);
+        
+        illustrationElements.push({
+          type: 'image',
+          position: position,
+          data: {
+            type: 'image',
+            content: url,
+            alt: 'Image'
+          }
+        });
+        
+        console.log(`[ParseIllustration] Found raw image URL: ${url}`);
+      }
+    } else {
+      const identifier = `raw-iframe-url-${url}`;
+      
+      if (!processedContent.has(identifier)) {
+        processedContent.add(identifier);
+        
+        illustrationElements.push({
+          type: 'iframe',
+          position: position,
+          data: {
+            type: 'iframe',
+            src: url,
+            content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+          }
+        });
+        
+        console.log(`[ParseIllustration] Found raw iframe URL: ${url}`);
+      }
+    }
+  }
+}
+
 /**
- * Parse illustration from a cell - FINAL VERSION
+ * Process all elements by type to find illustrations
+ *
+ * @param {Element} container - Container element to process
+ * @param {Array} illustrationElements - Collection of illustration elements
+ * @param {Set} processedContent - Set of processed content identifiers
+ * @param {string} cellHTML - Original cell HTML for position calculation
+ */
+function processElementsByType(container, illustrationElements, processedContent, cellHTML) {
+  // Create a flattened list of all elements with their depth and parent info
+  const allElements = [];
+  
+  // Walk the DOM tree and collect all elements with their depth
+  function walkDOM(element, depth, parent) {
+    // Skip text nodes, comments, etc.
+    if (element.nodeType !== Node.ELEMENT_NODE) return;
+    
+    allElements.push({
+      element: element,
+      depth: depth,
+      parent: parent
+    });
+    
+    // Process children
+    Array.from(element.childNodes).forEach(child => {
+      walkDOM(child, depth + 1, element);
+    });
+  }
+  
+  // Start walking from the container
+  walkDOM(container, 0, null);
+  
+  // Process elements by type
+  processElementsOfType(allElements, 'span', 'icon', cellHTML, processIconSpan, illustrationElements, processedContent);
+  processElementsOfType(allElements, 'img', null, cellHTML, processImgElement, illustrationElements, processedContent);
+  processElementsOfType(allElements, 'picture', null, cellHTML, processPictureElement, illustrationElements, processedContent);
+  processElementsOfType(allElements, 'svg', null, cellHTML, processSvgElement, illustrationElements, processedContent);
+  processElementsOfType(allElements, 'a', null, cellHTML, processAnchorElement, illustrationElements, processedContent);
+}
+
+/**
+ * Process elements of a specific type
+ *
+ * @param {Array} elements - All elements collection
+ * @param {string} tagName - Tag name to filter for
+ * @param {string|null} className - Class name to filter for (optional)
+ * @param {string} cellHTML - Original HTML for position calculation
+ * @param {Function} processorFn - Function to process each matching element
+ * @param {Array} illustrationElements - Collection of illustration elements
+ * @param {Set} processedContent - Set of processed content identifiers
+ */
+function processElementsOfType(elements, tagName, className, cellHTML, processorFn, illustrationElements, processedContent) {
+  // Filter elements by tag name and optional class name
+  const matchingElements = elements.filter(item => {
+    if (item.element.tagName.toLowerCase() !== tagName.toLowerCase()) {
+      return false;
+    }
+    
+    if (className && !item.element.classList.contains(className)) {
+      return false;
+    }
+    
+    return true;
+  });
+  
+  // Process each matching element
+  matchingElements.forEach(item => {
+    // Create a temporary container to get the outerHTML
+    const temp = document.createElement('div');
+    temp.appendChild(item.element.cloneNode(true));
+    
+    // Estimate the position in the original HTML
+    let position;
+    try {
+      const elementHTML = temp.innerHTML;
+      position = cellHTML.indexOf(elementHTML);
+      
+      // If we couldn't find the exact HTML, use a position based on depth
+      if (position === -1) {
+        position = 100000 + (item.depth * 1000);
+      }
+    } catch (error) {
+      // Fallback position based on depth
+      position = 100000 + (item.depth * 1000);
+    }
+    
+    // Call the processor function
+    processorFn(item.element, position, illustrationElements, processedContent);
+  });
+}
+
+/**
+ * Process an icon span element
+ *
+ * @param {Element} element - Icon span element
+ * @param {number} position - Position in the original HTML
+ * @param {Array} illustrationElements - Collection of illustration elements
+ * @param {Set} processedContent - Set of processed content identifiers
+ */
+function processIconSpan(element, position, illustrationElements, processedContent) {
+  // Extract the icon name from the class
+  const iconName = extractIconName(element.className);
+  
+  if (!iconName) return;
+  
+  // Create a unique identifier
+  const identifier = `icon-${iconName}`;
+  
+  // Only process if not already processed
+  if (!processedContent.has(identifier)) {
+    processedContent.add(identifier);
+    
+    illustrationElements.push({
+      type: 'icon',
+      position: position,
+      data: {
+        type: 'icon',
+        iconName: iconName,
+        content: `/icons/${iconName}.svg`,
+        alt: `${iconName} Illustration`
+      }
+    });
+    
+    console.log(`[ParseIllustration] Processed icon: ${iconName}`);
+  }
+}
+
+/**
+ * Process an img element
+ *
+ * @param {Element} element - Img element
+ * @param {number} position - Position in the original HTML
+ * @param {Array} illustrationElements - Collection of illustration elements
+ * @param {Set} processedContent - Set of processed content identifiers
+ */
+function processImgElement(element, position, illustrationElements, processedContent) {
+  const src = element.getAttribute('src');
+  if (!src) return;
+  
+  // Create a unique identifier
+  const identifier = `image-${src}`;
+  
+  // Only process if not already processed
+  if (!processedContent.has(identifier)) {
+    processedContent.add(identifier);
+    
+    illustrationElements.push({
+      type: 'image',
+      position: position,
+      data: {
+        type: 'image',
+        content: src,
+        alt: element.getAttribute('alt') || ''
+      }
+    });
+    
+    console.log(`[ParseIllustration] Processed image: ${src}`);
+  }
+}
+
+/**
+ * Process a picture element
+ *
+ * @param {Element} element - Picture element
+ * @param {number} position - Position in the original HTML
+ * @param {Array} illustrationElements - Collection of illustration elements
+ * @param {Set} processedContent - Set of processed content identifiers
+ */
+function processPictureElement(element, position, illustrationElements, processedContent) {
+  // Create a temporary container to get the outerHTML
+  const temp = document.createElement('div');
+  temp.appendChild(element.cloneNode(true));
+  const pictureHTML = temp.innerHTML;
+  
+  // Create a unique identifier using a hash of the HTML
+  const identifier = `picture-${simpleHash(pictureHTML)}`;
+  
+  // Only process if not already processed
+  if (!processedContent.has(identifier)) {
+    processedContent.add(identifier);
+    
+    illustrationElements.push({
+      type: 'picture',
+      position: position,
+      data: {
+        type: 'picture',
+        content: pictureHTML
+      }
+    });
+    
+    console.log(`[ParseIllustration] Processed picture element`);
+  }
+}
+
+/**
+ * Process an SVG element
+ *
+ * @param {Element} element - SVG element
+ * @param {number} position - Position in the original HTML
+ * @param {Array} illustrationElements - Collection of illustration elements
+ * @param {Set} processedContent - Set of processed content identifiers
+ */
+function processSvgElement(element, position, illustrationElements, processedContent) {
+  // Create a temporary container to get the outerHTML
+  const temp = document.createElement('div');
+  temp.appendChild(element.cloneNode(true));
+  const svgHTML = temp.innerHTML;
+  
+  // Create a unique identifier using a hash of the HTML
+  const identifier = `svg-${simpleHash(svgHTML)}`;
+  
+  // Only process if not already processed
+  if (!processedContent.has(identifier)) {
+    processedContent.add(identifier);
+    
+    illustrationElements.push({
+      type: 'svg',
+      position: position,
+      data: {
+        type: 'svg',
+        content: svgHTML
+      }
+    });
+    
+    console.log(`[ParseIllustration] Processed SVG element`);
+  }
+}
+
+/**
+ * Process an anchor element - CRITICAL for URL-derived images
+ *
+ * @param {Element} element - Anchor element
+ * @param {number} position - Position in the original HTML
+ * @param {Array} illustrationElements - Collection of illustration elements
+ * @param {Set} processedContent - Set of processed content identifiers
+ */
+function processAnchorElement(element, position, illustrationElements, processedContent) {
+  const href = element.getAttribute('href');
+  if (!href) return;
+  
+  // Skip if this anchor is part of an iframe pattern
+  // Check if the parent or previous element contains "iframe"
+  const parentText = element.parentElement?.textContent || '';
+  if (parentText.includes('iframe')) {
+    // This might be part of an iframe pattern, check if it was already processed
+    const iframeIdentifier = `iframe-anchor-${href}`;
+    const iframeFollowedIdentifier = `iframe-followed-by-a-${href}`;
+    
+    if (processedContent.has(iframeIdentifier) || processedContent.has(iframeFollowedIdentifier)) {
+      // This was already processed as part of an iframe pattern
+      return;
+    }
+  }
+  
+  // Determine if this is an image URL or a general URL
+  if (isImageUrl(href)) {
+    // This is an image URL
+    const identifier = `image-url-${href}`;
+    
+    if (!processedContent.has(identifier)) {
+      processedContent.add(identifier);
+      
+      illustrationElements.push({
+        type: 'image',
+        position: position,
+        data: {
+          type: 'image',
+          content: href,
+          alt: element.textContent || 'Image'
+        }
+      });
+      
+      console.log(`[ParseIllustration] Processed image URL from anchor: ${href}`);
+    }
+  } else {
+    // This is a general URL - treat as iframe
+    const identifier = `iframe-url-${href}`;
+    
+    if (!processedContent.has(identifier)) {
+      processedContent.add(identifier);
+      
+      illustrationElements.push({
+        type: 'iframe',
+        position: position,
+        data: {
+          type: 'iframe',
+          src: href,
+          content: `<iframe src="${href}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+        }
+      });
+      
+      console.log(`[ParseIllustration] Processed iframe URL from anchor: ${href}`);
+    }
+  }
+}
+
+/**
+ * Parse illustration from a cell
  * Handles all content types and patterns including iframe followed by anchor
  *
  * @param {Element} cell - Cell element containing illustration content
@@ -688,7 +1203,6 @@ function parseIllustration(cell) {
 
   return null;
 }
-
 /**
  * Build slides in the container
  * Creates and structures slide elements with their content
@@ -703,6 +1217,7 @@ function buildSlides(slides, container) {
   if (DPS_CONFIG.DEBUG_INFO.enabled) {
     DPS_CONFIG.DEBUG_INFO.slides = [];
   }
+  
   const totalSlides = slides.length;
 
   slides.forEach((slide, index) => {
@@ -715,7 +1230,7 @@ function buildSlides(slides, container) {
     }
 
     if (slide.type === 'qanda') {
-      // Keep original Q&A slide handling
+      // Special Q&A slide handling
       slideElement.innerHTML = `
         <div class="slide-content">
           <h2 class="slide-title">${slide.title}</h2>
@@ -736,7 +1251,7 @@ function buildSlides(slides, container) {
       `;
     } else {
       // Use enhanced slide content for regular slides
-      slideElement.innerHTML = enhancedCreateSlideContent(slide);
+      slideElement.innerHTML = createSlideContent(slide);
     }
 
     // Log slide discovery with timestamp
@@ -752,7 +1267,6 @@ function buildSlides(slides, container) {
     
     container.appendChild(slideElement);
   });
-
 }
 
 /**
@@ -810,44 +1324,10 @@ function createSlideContent(slide) {
     slideContent += '<div class="illustration">';
     
     if (slide.illustration.type === 'images') {
-      slideContent += '<div class="image-sequence">';
-      
-      // Properly handle multiple images in a sequence
-      slide.illustration.content.forEach((item, index) => {
-        const isActive = index === 0 ? 'active' : '';
-        
-        if (item.type === 'iframe') {
-          slideContent += `<div class="iframe-container sequence-image ${isActive}" style="width: 100%; height: 100%;">
-              ${item.content}
-            </div>`;
-        } else if (item.type === 'picture') {
-          slideContent += `<div class="sequence-image ${isActive}">
-              ${item.content}
-            </div>`;
-        } else if (item.type === 'svg') {
-          slideContent += `<div class="sequence-image ${isActive}">
-              ${item.content}
-            </div>`;
-        } else if (item.type === 'icon') {
-          // Convert icon to image tag with correct path
-          slideContent += `<img
-              src="${item.content}"
-              alt="${item.alt}"
-              class="sequence-image icon-image ${isActive}"
-              data-icon-name="${item.iconName}">`;
-        } else if (item.type === 'image') {
-          slideContent += `<img
-              src="${item.content}"
-              alt="${item.alt || ''}"
-              class="sequence-image ${isActive}">`;
-        } else {
-          slideContent += `<div class="sequence-image text-container ${isActive}">
-              ${item.content}
-            </div>`;
-        }
-      });
-      
-      slideContent += '</div>';
+      // Use the enhanced image sequence function
+      const organizedIllustrations = organizeImageSequence(slide.illustration.content);
+      const enhancedSequence = createImageSequenceHTML(organizedIllustrations);
+      slideContent += enhancedSequence;
     } else if (slide.illustration.type === 'iframe') {
       slideContent += `<div class="iframe-container" style="width: 100%; height: 100%;">
           ${slide.illustration.content}
@@ -867,117 +1347,10 @@ function createSlideContent(slide) {
   
   return slideContent;
 }
-// Store reference to the original function
-const originalCreateSlideContent = createSlideContent;
-
-// Create an enhanced version
-function enhancedCreateSlideContent(slide) {
-  // Get the basic slide content
-  let slideContent = originalCreateSlideContent(slide);
-  
-  // If the slide has an illustration with multiple images, enhance it
-  if (slide.illustration && slide.illustration.type === 'images' && 
-      slide.illustration.content && slide.illustration.content.length > 1) {
-    
-    // Find the image sequence in the generated content
-    const sequenceMatch = slideContent.match(/<div class="image-sequence">[\s\S]*?<\/div>/);
-    if (sequenceMatch) {
-      // Organize the illustrations by type
-      const organizedIllustrations = organizeImageSequence(slide.illustration.content);
-      
-      // Create improved HTML for the image sequence
-      const enhancedSequence = createImageSequenceHTML(organizedIllustrations);
-      
-      // Replace the original sequence with our enhanced version
-      slideContent = slideContent.replace(sequenceMatch[0], enhancedSequence);
-    }
-  }
-  
-  return slideContent;
-}
 
 /**
- * Set up presentation controls
- * Handles slide navigation, timer, and presenter notes functionality
- *
- * @param {Element} slidesContainer - Container for all slides
- * @param {Element} presenterNotesContainer - Container for presenter notes
- * @param {number} timerDuration - Duration in seconds
- * @param {Object} config - Presentation configuration
- */
-function setupControls(slidesContainer, presenterNotesContainer, timerDuration, config) {
-  // Fix: Remove console.time calls that were causing issues
-  let isNavigating = false; // Flag to prevent rapid consecutive navigations
-
-  /**
-   * Add the following CSS to the document to ensure proper image sequence behavior
-   */
-  function addImageSequenceCSS() {
-    const styleElement = document.createElement('style');
-    styleElement.textContent = `
-      .sequence-image {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
-        display: block !important;
-        visibility: hidden;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        margin: auto;
-      }
-
-      .sequence-image.active {
-        visibility: visible !important;
-      }
-      
-      /* Better slide transitions */
-      .slide {
-        transition: opacity 0.3s ease;
-      }
-      
-      /* Ensure illustration container has proper positioning */
-      .illustration {
-        position: relative;
-        min-height: 200px;
-      }
-      
-      .image-sequence {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        min-height: 200px;
-      }
-    `;
-    document.head.appendChild(styleElement);
-  }
-
-  // Add CSS for image sequences
-  addImageSequenceCSS();
-
-  /**
-   * Initialize image sequences for a slide
-   * Properly sets up all images with consistent visibility states
-   *
-   * @param {Element} slide - The slide element containing image sequences
-   */
-  /**
- * Initialize image sequences for a slide
- * Properly sets up all images with consistent visibility states
- *
- * @param {Element} slide - The slide element containing image sequences
- */
-/**
- * Initialize image sequences for a slide with improved reliability
- *
- * @param {Element} slide - The slide element containing image sequences
- */
-f/**
- * Initialize image sequence for a slide with robust state management
+ * Initialize image sequence for a slide
+ * Properly initializes image sequence in a slide for consistent visibility
  * 
  * @param {Element} slide - The slide element containing image sequences
  */
@@ -996,559 +1369,9 @@ function initializeImageSequence(slide) {
     return;
   }
   
-  /**
-   * Scan for all iframe and URL patterns in HTML content
-   *
-   * @param {string} html - HTML content to scan
-   * @param {Array} illustrationElements - Collection of illustration elements
-   * @param {Set} processedContent - Set of processed content identifiers
-   */
-  function scanForPatterns(html, illustrationElements, processedContent) {
-    // Pattern 1: Simple "iframe URL" pattern
-    scanForSimpleIframePattern(html, illustrationElements, processedContent);
-    
-    // Pattern 2: "iframe <a href...>" pattern
-    scanForIframeAnchorPattern(html, illustrationElements, processedContent);
-    
-    // Pattern 3: NEW - "iframe" followed by an <a> tag on the same line
-    scanForIframeFollowedByAnchorPattern(html, illustrationElements, processedContent);
-    
-    // Pattern 4: Standard iframe tags
-    scanForStandardIframeTags(html, illustrationElements, processedContent);
-    
-    // Pattern 5: Raw URLs in text
-    scanForRawURLs(html, illustrationElements, processedContent);
-  }
-  
-  /**
-   * Scan for the simple "iframe URL" pattern
-   */
-  function scanForSimpleIframePattern(html, illustrationElements, processedContent) {
-    const regex = /iframe\s+(https?:\/\/[^\s"'<>]+)/gi;
-    let match;
-    
-    while ((match = regex.exec(html)) !== null) {
-      const url = match[1];
-      const position = match.index;
-      const identifier = `iframe-simple-${url}`;
-      
-      if (!processedContent.has(identifier)) {
-        processedContent.add(identifier);
-        
-        illustrationElements.push({
-          type: 'iframe',
-          position: position,
-          data: {
-            type: 'iframe',
-            src: url,
-            content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-          }
-        });
-        
-        console.log(`[ParseIllustration] Found simple iframe pattern: ${url}`);
-      }
-    }
-  }
-  
-  /**
-   * Scan for the "iframe <a href...>" pattern
-   */
-  function scanForIframeAnchorPattern(html, illustrationElements, processedContent) {
-    const regex = /iframe\s+<a[^>]*href=["']([^"']+)["'][^>]*>/gi;
-    let match;
-    
-    while ((match = regex.exec(html)) !== null) {
-      const url = match[1];
-      const position = match.index;
-      const identifier = `iframe-anchor-${url}`;
-      
-      if (!processedContent.has(identifier)) {
-        processedContent.add(identifier);
-        
-        illustrationElements.push({
-          type: 'iframe',
-          position: position,
-          data: {
-            type: 'iframe',
-            src: url,
-            content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-          }
-        });
-        
-        console.log(`[ParseIllustration] Found iframe anchor pattern: ${url}`);
-      }
-    }
-  }
-  
-  /**
-   * Scan for "iframe" followed by an <a> tag (not directly connected)
-   */
-  function scanForIframeFollowedByAnchorPattern(html, illustrationElements, processedContent) {
-    // Look for "iframe" followed by an <a> tag within a reasonable distance
-    // This handles cases like:
-    // - "iframe <a href=..."
-    // - "iframe\n<a href=..."
-    // - "iframe </p><p><a href=..."
-    
-    // First find all occurrences of "iframe" that aren't part of the other patterns
-    const iframePos = [];
-    const simpleRegex = /\biframe\b(?!\s+(?:https?:\/\/|<a))/gi;
-    let match;
-    
-    while ((match = simpleRegex.exec(html)) !== null) {
-      iframePos.push(match.index);
-    }
-    
-    // For each standalone "iframe", look for the next <a> tag
-    iframePos.forEach(pos => {
-      // Look for an <a> tag within the next 100 characters
-      const nextChunk = html.substring(pos, pos + 100);
-      const anchorMatch = /<a[^>]*href=["']([^"']+)["'][^>]*>/i.exec(nextChunk);
-      
-      if (anchorMatch) {
-        const url = anchorMatch[1];
-        const identifier = `iframe-followed-by-a-${url}`;
-        
-        if (!processedContent.has(identifier)) {
-          processedContent.add(identifier);
-          
-          illustrationElements.push({
-            type: 'iframe',
-            position: pos,
-            data: {
-              type: 'iframe',
-              src: url,
-              content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-            }
-          });
-          
-          console.log(`[ParseIllustration] Found iframe followed by anchor: ${url}`);
-        }
-      }
-    });
-  }
-  
-  /**
-   * Scan for standard iframe tags
-   */
-  function scanForStandardIframeTags(html, illustrationElements, processedContent) {
-    const regex = /<iframe[^>]*src=["']([^"']+)["'][^>]*>/gi;
-    let match;
-    
-    while ((match = regex.exec(html)) !== null) {
-      const url = match[1];
-      const position = match.index;
-      const identifier = `iframe-tag-${url}`;
-      
-      if (!processedContent.has(identifier)) {
-        processedContent.add(identifier);
-        
-        illustrationElements.push({
-          type: 'iframe',
-          position: position,
-          data: {
-            type: 'iframe',
-            src: url,
-            content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-          }
-        });
-        
-        console.log(`[ParseIllustration] Found standard iframe tag: ${url}`);
-      }
-    }
-  }
-  
-  /**
-   * Scan for raw URLs in text
-   */
-  function scanForRawURLs(html, illustrationElements, processedContent) {
-    // First remove tags to avoid matching URLs in attributes
-    const textContent = html.replace(/<[^>]*>/g, ' ');
-    
-    // Match URLs not preceded by "iframe" or within attributes
-    const regex = /(?<!\biframe\s+)(https?:\/\/[^\s"'<>]+)/gi;
-    let match;
-    
-    while ((match = regex.exec(textContent)) !== null) {
-      const url = match[1];
-      const position = match.index + 1000000; // Place after other content
-      
-      // Determine if it's an image or iframe URL
-      if (isImageUrl(url)) {
-        const identifier = `raw-image-url-${url}`;
-        
-        if (!processedContent.has(identifier)) {
-          processedContent.add(identifier);
-          
-          illustrationElements.push({
-            type: 'image',
-            position: position,
-            data: {
-              type: 'image',
-              content: url,
-              alt: 'Image'
-            }
-          });
-          
-          console.log(`[ParseIllustration] Found raw image URL: ${url}`);
-        }
-      } else {
-        const identifier = `raw-iframe-url-${url}`;
-        
-        if (!processedContent.has(identifier)) {
-          processedContent.add(identifier);
-          
-          illustrationElements.push({
-            type: 'iframe',
-            position: position,
-            data: {
-              type: 'iframe',
-              src: url,
-              content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-            }
-          });
-          
-          console.log(`[ParseIllustration] Found raw iframe URL: ${url}`);
-        }
-      }
-    }
-  }
-  
-  /**
-   * Process all elements by type to find illustrations
-   *
-   * @param {Element} container - Container element to process
-   * @param {Array} illustrationElements - Collection of illustration elements
-   * @param {Set} processedContent - Set of processed content identifiers
-   * @param {string} cellHTML - Original cell HTML for position calculation
-   */
-  function processElementsByType(container, illustrationElements, processedContent, cellHTML) {
-    // Create a flattened list of all elements with their depth and parent info
-    const allElements = [];
-    
-    // Walk the DOM tree and collect all elements with their depth
-    function walkDOM(element, depth, parent) {
-      // Skip text nodes, comments, etc.
-      if (element.nodeType !== Node.ELEMENT_NODE) return;
-      
-      allElements.push({
-        element: element,
-        depth: depth,
-        parent: parent
-      });
-      
-      // Process children
-      Array.from(element.childNodes).forEach(child => {
-        walkDOM(child, depth + 1, element);
-      });
-    }
-    
-    // Start walking from the container
-    walkDOM(container, 0, null);
-    
-    // First process icon spans - these have highest priority
-    processElementsOfType(allElements, 'span', 'icon', cellHTML, (element, position) => {
-      processIconSpan(element, illustrationElements, processedContent, position);
-    });
-    
-    // Process images
-    processElementsOfType(allElements, 'img', null, cellHTML, (element, position) => {
-      processImgElement(element, illustrationElements, processedContent, position);
-    });
-    
-    // Process picture elements
-    processElementsOfType(allElements, 'picture', null, cellHTML, (element, position) => {
-      processPictureElement(element, illustrationElements, processedContent, position);
-    });
-    
-    // Process SVG elements
-    processElementsOfType(allElements, 'svg', null, cellHTML, (element, position) => {
-      processSvgElement(element, illustrationElements, processedContent, position);
-    });
-    
-    // Process anchor elements - CRITICAL for URL-derived images
-    processElementsOfType(allElements, 'a', null, cellHTML, (element, position) => {
-      processAnchorElement(element, illustrationElements, processedContent, position);
-    });
-  }
-  
-  /**
-   * Process elements of a specific type
-   *
-   * @param {Array} elements - All elements collection
-   * @param {string} tagName - Tag name to filter for
-   * @param {string|null} className - Class name to filter for (optional)
-   * @param {string} cellHTML - Original HTML for position calculation
-   * @param {Function} processorFn - Function to process each matching element
-   */
-  function processElementsOfType(elements, tagName, className, cellHTML, processorFn) {
-    // Filter elements by tag name and optional class name
-    const matchingElements = elements.filter(item => {
-      if (item.element.tagName.toLowerCase() !== tagName.toLowerCase()) {
-        return false;
-      }
-      
-      if (className && !item.element.classList.contains(className)) {
-        return false;
-      }
-      
-      return true;
-    });
-    
-    // Process each matching element
-    matchingElements.forEach(item => {
-      // Create a temporary container to get the outerHTML
-      const temp = document.createElement('div');
-      temp.appendChild(item.element.cloneNode(true));
-      
-      // Estimate the position in the original HTML
-      let position;
-      try {
-        const elementHTML = temp.innerHTML;
-        position = cellHTML.indexOf(elementHTML);
-        
-        // If we couldn't find the exact HTML, use a position based on depth
-        if (position === -1) {
-          position = 100000 + (item.depth * 1000);
-        }
-      } catch (error) {
-        // Fallback position based on depth
-        position = 100000 + (item.depth * 1000);
-      }
-      
-      // Call the processor function
-      processorFn(item.element, position);
-    });
-  }
-  
-  /**
-   * Process an icon span element
-   *
-   * @param {Element} element - Icon span element
-   * @param {Array} illustrationElements - Collection of illustration elements
-   * @param {Set} processedContent - Set of processed content identifiers
-   * @param {number} position - Position in the original HTML
-   */
-  function processIconSpan(element, illustrationElements, processedContent, position) {
-    // Extract the icon name from the class
-    const iconName = extractIconName(element.className);
-    
-    if (!iconName) return;
-    
-    // Create a unique identifier
-    const identifier = `icon-${iconName}`;
-    
-    // Only process if not already processed
-    if (!processedContent.has(identifier)) {
-      processedContent.add(identifier);
-      
-      illustrationElements.push({
-        type: 'icon',
-        position: position,
-        data: {
-          type: 'icon',
-          iconName: iconName,
-          content: `/icons/${iconName}.svg`,
-          alt: `${iconName} Illustration`
-        }
-      });
-      
-      console.log(`[ParseIllustration] Processed icon: ${iconName}`);
-    }
-  }
-  
-  /**
-   * Process an img element
-   *
-   * @param {Element} element - Img element
-   * @param {Array} illustrationElements - Collection of illustration elements
-   * @param {Set} processedContent - Set of processed content identifiers
-   * @param {number} position - Position in the original HTML
-   */
-  function processImgElement(element, illustrationElements, processedContent, position) {
-    const src = element.getAttribute('src');
-    if (!src) return;
-    
-    // Create a unique identifier
-    const identifier = `image-${src}`;
-    
-    // Only process if not already processed
-    if (!processedContent.has(identifier)) {
-      processedContent.add(identifier);
-      
-      illustrationElements.push({
-        type: 'image',
-        position: position,
-        data: {
-          type: 'image',
-          content: src,
-          alt: element.getAttribute('alt') || ''
-        }
-      });
-      
-      console.log(`[ParseIllustration] Processed image: ${src}`);
-    }
-  }
-  
-  /**
-   * Process a picture element
-   *
-   * @param {Element} element - Picture element
-   * @param {Array} illustrationElements - Collection of illustration elements
-   * @param {Set} processedContent - Set of processed content identifiers
-   * @param {number} position - Position in the original HTML
-   */
-  function processPictureElement(element, illustrationElements, processedContent, position) {
-    // Create a temporary container to get the outerHTML
-    const temp = document.createElement('div');
-    temp.appendChild(element.cloneNode(true));
-    const pictureHTML = temp.innerHTML;
-    
-    // Create a unique identifier using a hash of the HTML
-    const identifier = `picture-${simpleHash(pictureHTML)}`;
-    
-    // Only process if not already processed
-    if (!processedContent.has(identifier)) {
-      processedContent.add(identifier);
-      
-      illustrationElements.push({
-        type: 'picture',
-        position: position,
-        data: {
-          type: 'picture',
-          content: pictureHTML
-        }
-      });
-      
-      console.log(`[ParseIllustration] Processed picture element`);
-    }
-  }
-  
-  /**
-   * Process an SVG element
-   *
-   * @param {Element} element - SVG element
-   * @param {Array} illustrationElements - Collection of illustration elements
-   * @param {Set} processedContent - Set of processed content identifiers
-   * @param {number} position - Position in the original HTML
-   */
-  function processSvgElement(element, illustrationElements, processedContent, position) {
-    // Create a temporary container to get the outerHTML
-    const temp = document.createElement('div');
-    temp.appendChild(element.cloneNode(true));
-    const svgHTML = temp.innerHTML;
-    
-    // Create a unique identifier using a hash of the HTML
-    const identifier = `svg-${simpleHash(svgHTML)}`;
-    
-    // Only process if not already processed
-    if (!processedContent.has(identifier)) {
-      processedContent.add(identifier);
-      
-      illustrationElements.push({
-        type: 'svg',
-        position: position,
-        data: {
-          type: 'svg',
-          content: svgHTML
-        }
-      });
-      
-      console.log(`[ParseIllustration] Processed SVG element`);
-    }
-  }
-  
-  /**
-   * Process an anchor element - CRITICAL for URL-derived images
-   *
-   * @param {Element} element - Anchor element
-   * @param {Array} illustrationElements - Collection of illustration elements
-   * @param {Set} processedContent - Set of processed content identifiers
-   * @param {number} position - Position in the original HTML
-   */
-  function processAnchorElement(element, illustrationElements, processedContent, position) {
-    const href = element.getAttribute('href');
-    if (!href) return;
-    
-    // Skip if this anchor is part of an iframe pattern
-    // Check if the parent or previous element contains "iframe"
-    const parentText = element.parentElement?.textContent || '';
-    if (parentText.includes('iframe')) {
-      // This might be part of an iframe pattern, check if it was already processed
-      const iframeIdentifier = `iframe-anchor-${href}`;
-      const iframeFollowedIdentifier = `iframe-followed-by-a-${href}`;
-      
-      if (processedContent.has(iframeIdentifier) || processedContent.has(iframeFollowedIdentifier)) {
-        // This was already processed as part of an iframe pattern
-        return;
-      }
-    }
-    
-    // Determine if this is an image URL or a general URL
-    if (isImageUrl(href)) {
-      // This is an image URL
-      const identifier = `image-url-${href}`;
-      
-      if (!processedContent.has(identifier)) {
-        processedContent.add(identifier);
-        
-        illustrationElements.push({
-          type: 'image',
-          position: position,
-          data: {
-            type: 'image',
-            content: href,
-            alt: element.textContent || 'Image'
-          }
-        });
-        
-        console.log(`[ParseIllustration] Processed image URL from anchor: ${href}`);
-      }
-    } else {
-      // This is a general URL - treat as iframe
-      const identifier = `iframe-url-${href}`;
-      
-      if (!processedContent.has(identifier)) {
-        processedContent.add(identifier);
-        
-        illustrationElements.push({
-          type: 'iframe',
-          position: position,
-          data: {
-            type: 'iframe',
-            src: href,
-            content: `<iframe src="${href}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-          }
-        });
-        
-        console.log(`[ParseIllustration] Processed iframe URL from anchor: ${href}`);
-      }
-    }
-  }
-  
-  /**
-   * Generate a simple hash from a string
-   * Used for creating unique identifiers from HTML content
-   *
-   * @param {string} str - String to hash
-   * @returns {string} Simple hash of the string
-   */
-  function simpleHash(str) {
-    let hash = 0;
-    if (str.length === 0) return hash.toString();
-    
-    for (let i = 0; i < str.length; i++) {
-      const char = str.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
-      hash = hash & hash; // Convert to 32bit integer
-    }
-    
-    return Math.abs(hash).toString(16);
-  }
-  
   console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Found ${images.length} images in sequence`);
   
-  // CRITICAL: Reset ALL images with both class and style properties
+  // Reset ALL images with both class and style properties
   // This ensures a consistent state across all browsers and prevents conflicts
   images.forEach((img, index) => {
     // Always keep display block, but hide with visibility
@@ -1562,12 +1385,11 @@ function initializeImageSequence(slide) {
     console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Reset image ${index}`);
   });
   
-  // CRITICAL: Activate ONLY the first image with both class and style
+  // Activate ONLY the first image with both class and style
   images[0].classList.add('active');
   images[0].style.visibility = 'visible';
   
   // Force a small delay to ensure DOM updates are processed
-  // This can help avoid race conditions in some browsers
   setTimeout(() => {
     // Double-check that our state is consistent
     const activeImages = imageSequence.querySelectorAll('.sequence-image.active');
@@ -1593,82 +1415,130 @@ function initializeImageSequence(slide) {
   
   console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Activated first image`);
 }
-  const slides = slidesContainer.querySelectorAll('.slide');
-  const notesContent = presenterNotesContainer.querySelector('.presenter-notes-content');
+
+/**
+ * Create a flat navigation array from slides and their sequences
+ * This builds a linear progression of navigation points for seamless navigation
+ * 
+ * @returns {Array} Array of navigation points
+ */
+function createFlatNavigationArray() {
+  console.log("[NavFix] Creating flat navigation array");
+  const flatNavigation = [];
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  
+  // Process each slide
+  slides.forEach((slide, slideIndex) => {
+    console.log(`[NavFix] Processing slide ${slideIndex}: "${slide.querySelector('.slide-title')?.textContent || 'Untitled'}"`);
+    
+    // Add the slide itself as a navigation point
+    flatNavigation.push({
+      type: 'slide',
+      slideIndex: slideIndex,
+      sequenceIndex: null,
+      element: slide,
+      id: `slide-${slideIndex}`
+    });
+    
+    // Process image sequences if present
+    const imageSequence = slide.querySelector('.image-sequence');
+    if (imageSequence) {
+      const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
+      console.log(`[NavFix] Found sequence with ${images.length} images in slide ${slideIndex}`);
+      
+      // Only add additional nav points if there's more than one image
+      if (images.length > 1) {
+        // Skip the first image (index 0) since it's shown with the slide
+        for (let i = 1; i < images.length; i++) {
+          flatNavigation.push({
+            type: 'sequence',
+            slideIndex: slideIndex,
+            sequenceIndex: i,
+            element: images[i],
+            id: `slide-${slideIndex}-seq-${i}`
+          });
+          console.log(`[NavFix] Added navigation point for slide ${slideIndex}, sequence ${i}`);
+        }
+      } else {
+        console.log(`[NavFix] Single image sequence - not adding navigation points`);
+      }
+    }
+  });
+  
+  console.log(`[NavFix] Created navigation structure with ${flatNavigation.length} points`);
+  return flatNavigation;
+}
+
+/**
+ * Update navigation buttons state
+ * Disables buttons when at first/last slide
+ */
+function updateNavButtons() {
   const prevButton = document.querySelector('.prev-slide');
   const nextButton = document.querySelector('.next-slide');
-
-  window.currentSlideIndex = 0;
-  window.timerInterval = null;
-  window.remainingTime = timerDuration;
-  window.hasStartedTimer = false;
-
-  /* Update navigation buttons state
-   * Disables buttons when at first/last slide
-   */
-  function updateNavButtons() {
-    if (prevButton) {
-      prevButton.disabled = currentSlideIndex === 0;
-    }
-    if (nextButton) {
-      nextButton.disabled = currentSlideIndex === slides.length - 1;
-    }
+  const totalNavPoints = flatNavigation.length;
+  
+  if (prevButton) {
+    prevButton.disabled = currentNavIndex === 0;
   }
-
-  /* Update presenter notes
-   * Shows notes for current slide
-   */
-  function updatePresenterNotes(slideIndex, forceNormalMode = false, isPresenterToggle = false) {
-    const currentSlide = slides[slideIndex];
-    const slideData = currentSlide.dataset.presenterNotes || '';
-    const presenterNotes = document.querySelector('.presenter-notes');
-    
-    // Always use normal mode content when forceNormalMode is true
-    if (forceNormalMode) {
-      // Normal mode - just show the notes
-      notesContent.innerHTML = slideData;
-      return; // Exit early to ensure we don't run the other logic
-    }
-    
-    // Only show enhanced content for presenter mode (icon click), not for 'p' key (enlarged)
-    if (presenterNotes.classList.contains('presenter-mode') && isPresenterToggle) {
-      // Get the current slide content
-      const slideTitle = currentSlide.querySelector('.slide-title')?.textContent || '';
-      let bulletPointsHTML = '';
-      
-      // Get bullet points
-      const bulletList = currentSlide.querySelector('.bullet-list');
-      if (bulletList) {
-        bulletPointsHTML = bulletList.outerHTML;
-      }
-      
-      // Combine everything with an HR separator
-      notesContent.innerHTML = `
-        <h3>${slideTitle}</h3>
-        ${bulletPointsHTML}
-        <hr style="margin: 15px 0; border: 0; border-top: 1px solid #ccc;">
-        ${slideData}
-      `;
-    } else {
-      // Normal mode - just show the notes
-      notesContent.innerHTML = slideData;
-    }
+  if (nextButton) {
+    nextButton.disabled = currentNavIndex === totalNavPoints - 1;
   }
+}
 
-  /**
-   * Show a specific slide and properly initialize image sequences
-   *
-   * @param {number} index - Index of the slide to show
-   */
 /**
- * Show a specific slide and properly initialize image sequences
- *
+ * Update presenter notes
+ * Shows notes for current slide
+ */
+function updatePresenterNotes(slideIndex, forceNormalMode = false, isPresenterToggle = false) {
+  const slides = document.querySelectorAll('.slide');
+  const currentSlide = slides[slideIndex];
+  const slideData = currentSlide.dataset.presenterNotes || '';
+  const presenterNotes = document.querySelector('.presenter-notes');
+  const notesContent = presenterNotes.querySelector('.presenter-notes-content');
+  
+  // Always use normal mode content when forceNormalMode is true
+  if (forceNormalMode) {
+    // Normal mode - just show the notes
+    notesContent.innerHTML = slideData;
+    return; // Exit early to ensure we don't run the other logic
+  }
+  
+  // Only show enhanced content for presenter mode (icon click), not for 'p' key (enlarged)
+  if (presenterNotes.classList.contains('presenter-mode') && isPresenterToggle) {
+    // Get the current slide content
+    const slideTitle = currentSlide.querySelector('.slide-title')?.textContent || '';
+    let bulletPointsHTML = '';
+    
+    // Get bullet points
+    const bulletList = currentSlide.querySelector('.bullet-list');
+    if (bulletList) {
+      bulletPointsHTML = bulletList.outerHTML;
+    }
+    
+    // Combine everything with an HR separator
+    notesContent.innerHTML = `
+      <h3>${slideTitle}</h3>
+      ${bulletPointsHTML}
+      <hr style="margin: 15px 0; border: 0; border-top: 1px solid #ccc;">
+      ${slideData}
+    `;
+  } else {
+    // Normal mode - just show the notes
+    notesContent.innerHTML = slideData;
+  }
+}
+
+/**
+ * Show a specific slide and initialize it properly
+ * 
  * @param {number} index - Index of the slide to show
  */
 function showSlide(index) {
   console.log(`[Slide][${performance.now().toFixed(2)}ms] Showing slide ${index}`);
   
   // First hide all slides
+  const slides = document.querySelectorAll('.slide');
   slides.forEach((slide, i) => {
     slide.style.display = 'none';
     slide.classList.remove('active');
@@ -1695,7 +1565,7 @@ function showSlide(index) {
     console.log(`[Slide][${performance.now().toFixed(2)}ms] Slide ${index} not found`);
   }
   
-  window.currentSlideIndex = index;
+  currentSlideIndex = index;
   
   // Start timer if moving past first slide
   if (index > 0 && !hasStartedTimer) {
@@ -1704,52 +1574,18 @@ function showSlide(index) {
   }
 }
 
-  /* Add click handlers for navigation buttons
-   * Provides visual controls for slide progression
-   */
-  if (prevButton) {
-    prevButton.addEventListener('click', () => {
-      // First try to handle image sequence navigation, just like arrow keys
-      const sequenceHandled = handleImageSequenceNavigation('prev');
-      
-      // If no sequence to navigate or at the beginning of sequence, go to previous slide
-      if (!sequenceHandled && currentSlideIndex > 0) {
-        showSlide(currentSlideIndex - 1);
-      }
-    });
-  }
-
-  if (nextButton) {
-    nextButton.addEventListener('click', () => {
-      // eslint-disable-next-line no-console
-      console.log(`[DEBUG][${performance.now().toFixed(2)}ms] Next button clicked`);
-      
-      // First try to handle image sequence navigation, just like arrow keys
-      const sequenceHandled = handleImageSequenceNavigation('next');
-      
-      // eslint-disable-next-line no-console
-      console.log(`[DEBUG][${performance.now().toFixed(2)}ms] Next button: sequenceHandled = ${sequenceHandled}`);
-      
-      // If no sequence to navigate or at the end of sequence, go to next slide
-      if (!sequenceHandled && currentSlideIndex < slides.length - 1) {
-        // eslint-disable-next-line no-console
-        console.log(`[DEBUG][${performance.now().toFixed(2)}ms] Next button: moving to next slide (${currentSlideIndex + 1})`);
-        showSlide(currentSlideIndex + 1);
-      }
-    });
-  }
-
- /**
- * Handle image sequence navigation with robust error handling and state tracking
- *
+/**
+ * Handle image sequence navigation
+ * 
  * @param {string} direction - Direction to navigate ('prev' or 'next')
- * @returns {boolean} - True if navigation was handled within a sequence, false if we should move to next/prev slide
+ * @returns {boolean} - True if navigation was handled within a sequence
  */
 function handleImageSequenceNavigation(direction) {
   // Debug logging
   console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Handling ${direction} navigation`);
    
   // Get the current slide
+  const slides = document.querySelectorAll('.slide');
   const currentSlide = slides[currentSlideIndex];
   if (!currentSlide) {
     console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] No current slide found`);
@@ -1770,7 +1606,6 @@ function handleImageSequenceNavigation(direction) {
   console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Found ${images.length} images in sequence`);
   
   // Single image case - don't handle sequence navigation
-  // but still show label (handled in createImageSequenceHTML)
   if (images.length <= 1) {
     console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Only one image - not handling as sequence navigation`);
     return false;
@@ -1832,1644 +1667,850 @@ function handleImageSequenceNavigation(direction) {
     img.style.display = 'block';
   });
   
-  // Make the target image active - using both class and style
-  images[nextIndex].classList.add('active');
-  images[nextIndex].style.visibility = 'visible';
-  
-  // Add a verification step to ensure the change took effect
-  setTimeout(() => {
-    const activeImages = imageSequence.querySelectorAll('.sequence-image.active');
-    if (activeImages.length !== 1) {
-      console.warn(`[ImageSequence] State inconsistency detected after navigation. Found ${activeImages.length} active images.`);
-      
-      // Force correction
-      images.forEach((img, idx) => {
-        const shouldBeActive = idx === nextIndex;
-        img.classList.toggle('active', shouldBeActive);
-        img.style.visibility = shouldBeActive ? 'visible' : 'hidden';
-      });
-    }
-  }, 0);
-  
-  return true;
-}
-
-  /* Timer functionality
-   * Handles countdown and warning system
-   */
-
-  function updateTimer() {
-    if (window.remainingTime > 0) {
-      window.remainingTime--;
-      document.querySelector('.timer').textContent = formatTime(window.remainingTime);
-
-      /* Flash warning when 2 minutes remain
-       * Provides visual cue for time management
-       */
-      if (remainingTime === 120) {
-        flashTimeWarning();
-      }
-    } else {
-      clearInterval(timerInterval);
-      document.querySelector('.timer').textContent = 'Time Up!';
-      document.querySelector('.timer').style.color = '#e74c3c';
-    }
-  }
-
-  function startTimer() {
-    if (!window.timerInterval) {
-      window.timerInterval = setInterval(updateTimer, 1000);
-    }
-  }
-
-  function stopTimer() {
-    if (window.timerInterval) {
-      clearInterval(window.timerInterval);
-      window.timerInterval = null;
-    }
-  }
-
-  function toggleTimer() {
-    if (window.timerInterval) {
-      stopTimer();
-    } else {
-      startTimer();
-    }
-  }
-
-  /* Visual warning system for timer
-   * Flashes red three times when time is running low
-   */
-  function flashTimeWarning() {
-    const container = document.querySelector('.dps-container');
-    let flashCount = 0;
-
-    function singleFlash() {
-      container.style.backgroundColor = '#e74c3c';
-
-      setTimeout(() => {
-        container.style.backgroundColor = '';
-        flashCount++;
-
-        if (flashCount < 3) {
-          setTimeout(singleFlash, 300);
-        }
-      }, 300);
-    }
-
-    singleFlash();
-  }
-  
-  // Add styles for image sequences
-  const sequenceStyles = document.createElement('style');
-  sequenceStyles.textContent = `
-    .sequence-image {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      display: block !important;
-      /* Use visibility for show/hide, not display */
-      transition: visibility 0ms;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      margin: auto;
-    }
-
-    .sequence-image.active {
-      visibility: visible !important;
-    }
-  `;
-  document.head.appendChild(sequenceStyles);
-  // Make presenter notes visible at startup
-  presenterNotesContainer.classList.remove('hidden');
-  config.PRESENTER_NOTES_VISIBLE = true;
-
-/// ultra-compact styling for presenter notes
-
-  const styleElement = document.createElement('style');
-  styleElement.textContent = `
-  /* Fix for paragraph spacing in presenter notes */
-  .presenter-notes-content {
-    line-height: 1;
-  }
-  
-  .presenter-notes-content p {
-    margin: 0;
-    padding: 0;
-    line-height: 1.1;
-  }
-  
-  /* Add minimal spacing between paragraphs */
-  .presenter-notes-content p + p {
-    margin-top: 0.25em;
-  }
-  
-  /* Ensure lists have proper spacing too */
-  .presenter-notes-content ul,
-  .presenter-notes-content ol {
-    margin: 0.25em 0;
-    padding-left: 1.2em;
-  }
-
-  .presenter-notes-content li {
-    margin: 0;
-    padding: 0;
-    line-height: 1.1;
-  }
-`;
-  document.head.appendChild(styleElement);
-
-
-  let isPresenterMode = false;
-  let isExpandedMode = false;
-  let isResizing = false;
-  let startY, startHeight;
-
-  function setupResizeHandler() {
-    const grip = document.querySelector('.resize-grip');
-    const notes = document.querySelector('.presenter-notes');
-  
-    grip.addEventListener('mousedown', (e) => {
-      isResizing = true;
-      startY = e.clientY;
-      startHeight = parseInt(document.defaultView.getComputedStyle(notes).height, 10);
-      e.preventDefault();
-    });
-
-    document.addEventListener('mousemove', (e) => {
-      if (!isResizing) return;
-      
-      const height = startHeight + (startY - e.clientY);
-      notes.style.height = `${Math.max(200, Math.min(window.innerHeight - 60, height))}px`;
-    });
-
-    document.addEventListener('mouseup', () => {
-      isResizing = false;
-    });
-}
-  function togglePresenterMode() {
-    isPresenterMode = !isPresenterMode;
-    const header = document.querySelector('.dps-header');
-    const footer = document.querySelector('.dps-footer');
-    const slides = document.querySelectorAll('.slide');
-    const currentSlide = slides[currentSlideIndex];
-    const presenterNotes = document.querySelector('.presenter-notes');
-    const presenterButton = document.querySelector('.presenter-toggle');
-    const notesContent = presenterNotes.querySelector('.presenter-notes-content');
-  
-    if (isPresenterMode) {
-      // Hide header and slides but keep footer
-      header.style.display = 'none';
-      slides.forEach(slide => slide.style.display = 'none');
-      currentSlide.style.display = 'none';
-      
-      // Highlight presenter button
-      presenterButton.classList.add('active');
-    
-      // Show notes in full screen
-      presenterNotes.classList.remove('hidden');
-      presenterNotes.classList.add('presenter-mode');
-    
-      if (isExpandedMode) {
-        // Expanded view (2/3 of screen) - stay pinned to left
-        presenterNotes.style.width = '66%';
-        presenterNotes.style.left = '20px'; // Keep pinned to left
-        presenterNotes.style.height = 'calc(100vh - 60px)';
-        presenterNotes.style.position = 'fixed';
-        presenterNotes.style.top = '0';
-        presenterNotes.style.zIndex = '1000';
-        presenterNotes.style.backgroundColor = 'white';
-        presenterNotes.style.padding = '20px';
-        presenterNotes.style.overflow = 'auto';
-        presenterNotes.style.transform = 'none'; // Override the CSS transform
-        notesContent.style.transform = 'none';
-      } else {
-        // Normal view - stay pinned to left
-        presenterNotes.style.width = '50%'; // Reduced from 100% to stay on left side
-        presenterNotes.style.left = '20px'; // Keep pinned to left
-        presenterNotes.style.height = 'calc(100vh - 60px)';
-        presenterNotes.style.position = 'fixed';
-        presenterNotes.style.top = '0';
-        presenterNotes.style.zIndex = '1000';
-        presenterNotes.style.backgroundColor = 'white';
-        presenterNotes.style.padding = '20px';
-        presenterNotes.style.overflow = 'auto';
-        
-        // Update presenter notes content to show only notes
-        updatePresenterNotes(currentSlideIndex, true, true); // Force normal mode, isPresenterToggle=true
-      }
-    
-      // Update presenter notes content to include title and bullet points
-      updatePresenterNotes(currentSlideIndex, false, true); // Pass isPresenterToggle=true
-    } else {
-      // Restore normal view
-      header.style.display = '';
-      slides.forEach(slide => slide.style.display = '');
-      currentSlide.style.display = 'block';
-      
-      // Remove button highlight
-      presenterButton.classList.remove('active');
-    
-      presenterNotes.classList.remove('presenter-mode');
-      presenterNotes.style.width = '31.25vw'; // Original width from CSS
-      presenterNotes.style.left = '20px'; // Keep pinned to left
-      presenterNotes.style.height = '25vh'; // Original height from CSS
-      presenterNotes.style.position = 'fixed';
-      presenterNotes.style.top = '';
-      presenterNotes.style.bottom = '60px'; // Position at bottom as in CSS
-      presenterNotes.style.zIndex = '1000';
-      presenterNotes.style.backgroundColor = '';
-      presenterNotes.style.padding = '';
-      presenterNotes.style.overflow = 'auto';
-  }
-}
-
-  function toggleExpandedMode() {
-    isExpandedMode = !isExpandedMode;
-    const presenterNotes = document.querySelector('.presenter-notes');
-    const notesContent = presenterNotes.querySelector('.presenter-notes-content');
-  
-    if (isExpandedMode) {
-      // Switch to expanded view - stay pinned to left and grow to the right
-      presenterNotes.style.width = '66%';
-      presenterNotes.style.left = '20px'; // Keep pinned to left
-    } else {
-      // Switch back to normal view
-      presenterNotes.style.width = '31.25vw'; // Original width from CSS
-      presenterNotes.style.left = '20px'; // Keep pinned to left
-  }
-}
-
-// Add click handler for presenter button
-  const presenterButton = document.querySelector('.presenter-toggle');
-  if (presenterButton) {
-    presenterButton.addEventListener('click', togglePresenterMode);
-  }
-
-/* Add keyboard navigation
- * Supports slide progression, timer control, and presenter notes
- */
-  document.addEventListener('keydown', (event) => {
-    // Ignore repeated keydown events from key being held down
-    if (event.repeat) {
-      event.preventDefault();
-      return;
-    }
-  
-    // Use a variable to track if we handled the event
-    let handled = false;
-  
-    if (event.key === 'Escape') {
-      const navBar = document.querySelector('.dps-navigation');
-      if (navBar) {
-        navBar.style.display = navBar.style.display === 'none' ? 'flex' : 'none';
-      }
-      handled = true;
-    } else if (event.key === 'p' || event.key === 'P') {
-      const presenterNotes = document.querySelector('.presenter-notes');
-      const notesContent = presenterNotes.querySelector('.presenter-notes-content');
-      if (presenterNotes.classList.contains('enlarged')) {
-        // Return to normal size
-        presenterNotes.classList.remove('enlarged');
-        presenterNotes.style.width = '31.25vw'; // Original width from CSS
-        presenterNotes.style.height = '25vh'; // Original height from CSS
-        presenterNotes.style.left = '20px'; // Keep pinned to left
-        presenterNotes.style.zIndex = '';
-        
-        // Update presenter notes content to show only notes
-        updatePresenterNotes(currentSlideIndex, true); // Force normal mode
-      } else {
-        // Enlarge while staying pinned to left
-        presenterNotes.classList.remove('hidden');
-        presenterNotes.classList.add('enlarged');
-        presenterNotes.style.width = '50vw'; // Grow to the right
-        presenterNotes.style.height = '50vh';
-        presenterNotes.style.left = '20px'; // Keep pinned to left
-        presenterNotes.style.zIndex = '1000';
-        config.PRESENTER_NOTES_VISIBLE = true;
-        
-        // For 'p' key, just show the notes without title and bullets
-        updatePresenterNotes(currentSlideIndex, false, false); // Pass isPresenterToggle=false
-      }
-      handled = true;
-    }
-  /* Toggle presenter notes with + and - keys
-   * Provides quick access to presenter guidance
-   */
-    else if (event.key === '+' || event.key === '=') {
-      presenterNotesContainer.classList.remove('hidden');
-      config.PRESENTER_NOTES_VISIBLE = true;
-      event.preventDefault();
-      handled = true;
-    }
-    else if (event.key === '-' || event.key === '_') {
-      presenterNotesContainer.classList.add('hidden');
-      config.PRESENTER_NOTES_VISIBLE = false;
-      event.preventDefault();
-      handled = true;
-    }
-  /* Handle navigation controls
-   * Supports slide progression and image sequences
-   */
-    else if (event.key === 'ArrowLeft') {
-      event.preventDefault();
-      // eslint-disable-next-line no-console
-      console.log(`[DEBUG][${performance.now().toFixed(2)}ms] ArrowLeft key pressed`);
-      
-      // First try to handle image sequence navigation
-      const sequenceHandled = handleImageSequenceNavigation('prev');
-      
-      // eslint-disable-next-line no-console
-      console.log(`[DEBUG][${performance.now().toFixed(2)}ms] ArrowLeft: sequenceHandled = ${sequenceHandled}`);
-      
-      if (!sequenceHandled && currentSlideIndex > 0) {
-        // eslint-disable-next-line no-console
-        console.log(`[DEBUG][${performance.now().toFixed(2)}ms] ArrowLeft: moving to previous slide (${currentSlideIndex - 1})`);
-        showSlide(currentSlideIndex - 1);
-      }
-      handled = true;
-    }
-    else if (event.key === 'ArrowRight') {
-      event.preventDefault();
-      // eslint-disable-next-line no-console
-      console.log(`[DEBUG][${performance.now().toFixed(2)}ms] ArrowRight key pressed`);
-      
-      // First try to handle image sequence navigation
-      const sequenceHandled = handleImageSequenceNavigation('next');
-      
-      // eslint-disable-next-line no-console
-      console.log(`[DEBUG][${performance.now().toFixed(2)}ms] ArrowRight: sequenceHandled = ${sequenceHandled}`);
-      
-      if (!sequenceHandled && currentSlideIndex < slides.length - 1) {
-        // eslint-disable-next-line no-console
-        console.log(`[DEBUG][${performance.now().toFixed(2)}ms] ArrowRight: moving to next slide (${currentSlideIndex + 1})`);
-        showSlide(currentSlideIndex + 1);
-      }
-      handled = true;
-    }
-    else if (event.key === ' ' && hasStartedTimer) {
-      event.preventDefault();
-      toggleTimer();
-      handled = true;
-    }
-    // Removed duplicate 'p' key handler as it's already handled above
-    // R key handling removed as requested
-  });
-
-  // Show first slide on initial load
-  showSlide(0);
-  // Setup resize handler
-  setupResizeHandler();
+ // Make the target image active - using both class and style
+ images[nextIndex].classList.add('active');
+ images[nextIndex].style.visibility = 'visible';
+ 
+ // Add a verification step to ensure the change took effect
+ setTimeout(() => {
+   const activeImages = imageSequence.querySelectorAll('.sequence-image.active');
+   if (activeImages.length !== 1) {
+     console.warn(`[ImageSequence] State inconsistency detected after navigation. Found ${activeImages.length} active images.`);
+     
+     // Force correction
+     images.forEach((img, idx) => {
+       const shouldBeActive = idx === nextIndex;
+       img.classList.toggle('active', shouldBeActive);
+       img.style.visibility = shouldBeActive ? 'visible' : 'hidden';
+     });
+   }
+ }, 0);
+ 
+ return true;
 }
 
 /**
- * Toggle the timer on/off
- */
-function toggleTimer() {
-  if (window.timerInterval) {
-    clearInterval(window.timerInterval);
-    window.timerInterval = null;
-  } else {
-    window.timerInterval = setInterval(updateTimer, 1000);
-  }
-}
-
-/**
- * Toggle presenter mode
- */
-function togglePresenterMode() {
-  const isPresenterMode = document.querySelector('.presenter-notes').classList.contains('presenter-mode');
-  const header = document.querySelector('.dps-header');
-  const footer = document.querySelector('.dps-footer');
-  const slides = document.querySelectorAll('.slide');
-  const currentSlide = slides[currentSlideIndex];
-  const presenterNotes = document.querySelector('.presenter-notes');
-  const presenterButton = document.querySelector('.presenter-toggle');
-  const notesContent = presenterNotes.querySelector('.presenter-notes-content');
-
-  if (!isPresenterMode) {
-    // Hide header and slides but keep footer
-    header.style.display = 'none';
-    slides.forEach(slide => slide.style.display = 'none');
-    currentSlide.style.display = 'none';
-    
-    // Highlight presenter button
-    presenterButton.classList.add('active');
-  
-    // Show notes in full screen
-    presenterNotes.classList.remove('hidden');
-    presenterNotes.classList.add('presenter-mode');
-  
-    // Normal view - stay pinned to left
-    presenterNotes.style.width = '50%'; // Reduced from 100% to stay on left side
-    presenterNotes.style.left = '20px'; // Keep pinned to left
-    presenterNotes.style.height = 'calc(100vh - 60px)';
-    presenterNotes.style.position = 'fixed';
-    presenterNotes.style.top = '0';
-    presenterNotes.style.zIndex = '1000';
-    presenterNotes.style.backgroundColor = 'white';
-    presenterNotes.style.padding = '20px';
-    presenterNotes.style.overflow = 'auto';
-    
-    // Update presenter notes content to include title and bullet points
-    updatePresenterNotes(currentSlideIndex, false, true); // Pass isPresenterToggle=true
-  } else {
-    // Restore normal view
-    header.style.display = '';
-    slides.forEach(slide => slide.style.display = '');
-    currentSlide.style.display = 'block';
-    
-    // Remove button highlight
-    presenterButton.classList.remove('active');
-  
-    presenterNotes.classList.remove('presenter-mode');
-    presenterNotes.style.width = '31.25vw'; // Original width from CSS
-    presenterNotes.style.left = '20px'; // Keep pinned to left
-    presenterNotes.style.height = '25vh'; // Original height from CSS
-    presenterNotes.style.position = 'fixed';
-    presenterNotes.style.top = '';
-    presenterNotes.style.bottom = '60px'; // Position at bottom as in CSS
-    presenterNotes.style.zIndex = '1000';
-    presenterNotes.style.backgroundColor = '';
-    presenterNotes.style.padding = '';
-    presenterNotes.style.overflow = 'auto';
-  }
-}
-
-/**
- * Setup resize handler for presenter notes
- */
-function setupResizeHandler() {
-  const grip = document.querySelector('.resize-grip');
-  const notes = document.querySelector('.presenter-notes');
-
-  if (!grip || !notes) return;
-
-  grip.addEventListener('mousedown', (e) => {
-    const isResizing = true;
-    const startY = e.clientY;
-    const startHeight = parseInt(document.defaultView.getComputedStyle(notes).height, 10);
-    e.preventDefault();
-
-    const moveHandler = (moveEvent) => {
-      if (!isResizing) return;
-      
-      const height = startHeight + (startY - moveEvent.clientY);
-      notes.style.height = `${Math.max(200, Math.min(window.innerHeight - 60, height))}px`;
-    };
-
-    const upHandler = () => {
-      document.removeEventListener('mousemove', moveHandler);
-      document.removeEventListener('mouseup', upHandler);
-    };
-
-    document.addEventListener('mousemove', moveHandler);
-    document.addEventListener('mouseup', upHandler);
-  });
-}
-
-// Global variables needed for seamless navigation
-let currentSlideIndex = 0;
-let timerInterval = null;
-let remainingTime = 0;
-let hasStartedTimer = false;
-
-/**
- * Update navigation buttons state
- * Disables buttons when at first/last slide
- */
-function updateNavButtons(slideIndex) {
-  const prevButton = document.querySelector('.prev-slide');
-  const nextButton = document.querySelector('.next-slide');
-  const slides = document.querySelectorAll('.slide');
-  
-  if (prevButton) {
-    prevButton.disabled = slideIndex === 0;
-  }
-  if (nextButton) {
-    nextButton.disabled = slideIndex === slides.length - 1;
-  }
-}
-
-/**
- * Update presenter notes
- * Shows notes for current slide
- */
-function updatePresenterNotes(slideIndex, forceNormalMode = false, isPresenterToggle = false) {
-  const slides = document.querySelectorAll('.slide');
-  const currentSlide = slides[slideIndex];
-  const slideData = currentSlide.dataset.presenterNotes || '';
-  const presenterNotes = document.querySelector('.presenter-notes');
-  const notesContent = presenterNotes.querySelector('.presenter-notes-content');
-  
-  // Always use normal mode content when forceNormalMode is true
-  if (forceNormalMode) {
-    // Normal mode - just show the notes
-    notesContent.innerHTML = slideData;
-    return; // Exit early to ensure we don't run the other logic
-  }
-  
-  // Only show enhanced content for presenter mode (icon click), not for 'p' key (enlarged)
-  if (presenterNotes.classList.contains('presenter-mode') && isPresenterToggle) {
-    // Get the current slide content
-    const slideTitle = currentSlide.querySelector('.slide-title')?.textContent || '';
-    let bulletPointsHTML = '';
-    
-    // Get bullet points
-    const bulletList = currentSlide.querySelector('.bullet-list');
-    if (bulletList) {
-      bulletPointsHTML = bulletList.outerHTML;
-    }
-    
-    // Combine everything with an HR separator
-    notesContent.innerHTML = `
-      <h3>${slideTitle}</h3>
-      ${bulletPointsHTML}
-      <hr style="margin: 15px 0; border: 0; border-top: 1px solid #ccc;">
-      ${slideData}
-    `;
-  } else {
-    // Normal mode - just show the notes
-    notesContent.innerHTML = slideData;
-  }
-}
-
-/**
- * Start the presentation timer
- */
-function startTimer() {
-  if (!window.timerInterval) {
-    window.timerInterval = setInterval(updateTimer, 1000);
-  }
-}
-
-/**
- * Update the timer display
- */
-function updateTimer() {
-  if (window.remainingTime > 0) {
-    window.remainingTime--;
-    document.querySelector('.timer').textContent = formatTime(window.remainingTime);
-
-    /* Flash warning when 2 minutes remain
-     * Provides visual cue for time management
-     */
-    if (remainingTime === 120) {
-      flashTimeWarning();
-    }
-  } else {
-    clearInterval(timerInterval);
-    document.querySelector('.timer').textContent = 'Time Up!';
-    document.querySelector('.timer').style.color = '#e74c3c';
-  }
-}
-
-/**
- * Visual warning system for timer
- * Flashes red three times when time is running low
- */
-function flashTimeWarning() {
-  const container = document.querySelector('.dps-container');
-  let flashCount = 0;
-
-  function singleFlash() {
-    container.style.backgroundColor = '#e74c3c';
-
-    setTimeout(() => {
-      container.style.backgroundColor = '';
-      flashCount++;
-
-      if (flashCount < 3) {
-        setTimeout(singleFlash, 300);
-      }
-    }, 300);
-  }
-
-  singleFlash();
-}
-
-/**
- * Completely revised navigation approach for seamless progression
- * This implementation flattens the navigation hierarchy so users can progress
- * through all content (slides and image sequences) with single button presses
- */
-
-// Create a flat navigation structure for seamless navigation
-// This function builds an array of all navigation points (slides and sequence items)
-// that can be traversed linearly with next/previous operations
-
-// Current position in the flat navigation
-let currentNavIndex = 0;
-let flatNavigation = [];
-
-/**
- * Initialize the seamless navigation system
- */
-function initializeSeamlessNavigation() {
-  // Create flat navigation array
-  flatNavigation = createFlatNavigationArray();
-  
-  // Start at the first item
-  currentNavIndex = 0;
-  
-  console.log(`[SeamlessNav] Initialized with ${flatNavigation.length} total navigation points`);
-}
-
-/**
- * Navigate forward one step in the seamless navigation
- */
-function navigateForward() {
-  if (currentNavIndex < flatNavigation.length - 1) {
-    currentNavIndex++;
-    applyCurrentNavigation();
-    return true;
-  }
-  return false;
-}
-
-/**
- * Navigate backward one step in the seamless navigation
- */
-function navigateBackward() {
-  if (currentNavIndex > 0) {
-    currentNavIndex--;
-    applyCurrentNavigation();
-    return true;
-  }
-  return false;
-}
-
-/**
- * Apply the current navigation state
- */
+* Apply the current navigation state
+* Shows the correct slide and/or sequence item based on currentNavIndex
+*/
 function applyCurrentNavigation() {
-  const navItem = flatNavigation[currentNavIndex];
-  
-  console.log(`[SeamlessNav] Navigating to item ${currentNavIndex}: type=${navItem.type}, slide=${navItem.slideIndex}, sequence=${navItem.sequenceIndex}`);
-  
-  if (navItem.type === 'slide') {
-    // Show this slide, hide all others
-    const slides = Array.from(document.querySelectorAll('.slide'));
-    slides.forEach((slide, index) => {
-      if (index === navItem.slideIndex) {
-        slide.style.display = 'block';
-        slide.classList.add('active');
-        
-        // Initialize any image sequence in this slide
-        initializeImageSequence(slide);
-        
-        // Update presenter notes and navigation
-        const presenterNotes = document.querySelector('.presenter-notes');
-        const isInPresenterMode = presenterNotes.classList.contains('presenter-mode');
-        updatePresenterNotes(navItem.slideIndex, false, isInPresenterMode);
-        updateNavButtons(navItem.slideIndex);
-      } else {
-        slide.style.display = 'none';
-        slide.classList.remove('active');
-      }
-    });
-    
-    // Start timer if moving past first slide
-    if (navItem.slideIndex > 0 && !hasStartedTimer) {
-      startTimer();
-      hasStartedTimer = true;
-    }
-  } else if (navItem.type === 'sequence') {
-    // It's a sequence item, show this specific image
-    const slide = flatNavigation.find(item => item.type === 'slide' && item.slideIndex === navItem.slideIndex).element;
-    const imageSequence = slide.querySelector('.image-sequence');
-    const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
-    
-    // Hide all images first
-    images.forEach(img => {
-      img.classList.remove('active');
-      img.style.visibility = 'hidden';
-    });
-    
-    // Show just the target image
-    const targetImage = images[navItem.sequenceIndex];
-    targetImage.classList.add('active');
-    targetImage.style.visibility = 'visible';
-  }
+ if (!flatNavigation || currentNavIndex >= flatNavigation.length) {
+   console.error(`[NavFix] Cannot apply navigation - invalid indices`);
+   return false;
+ }
+ 
+ const navItem = flatNavigation[currentNavIndex];
+ console.log(`[NavFix] Applying navigation item ${currentNavIndex}: type=${navItem.type}, slide=${navItem.slideIndex}, seq=${navItem.sequenceIndex}`);
+ 
+ if (navItem.type === 'slide') {
+   // Show this slide, hide all others
+   const slides = Array.from(document.querySelectorAll('.slide'));
+   slides.forEach((slide, index) => {
+     const isCurrentSlide = index === navItem.slideIndex;
+     slide.style.display = isCurrentSlide ? 'block' : 'none';
+     slide.classList.toggle('active', isCurrentSlide);
+     
+     if (isCurrentSlide) {
+       // Initialize any image sequence in this slide
+       initializeImageSequence(slide);
+       
+       // Update presenter notes and navigation UI
+       updatePresenterNotes(navItem.slideIndex);
+       updateNavButtons();
+       
+       // Update currentSlideIndex to stay in sync
+       currentSlideIndex = navItem.slideIndex;
+       console.log(`[NavFix] Updated currentSlideIndex to ${navItem.slideIndex}`);
+     }
+   });
+   
+   // Start timer if moving past first slide
+   if (navItem.slideIndex > 0 && !hasStartedTimer) {
+     startTimer();
+     hasStartedTimer = true;
+   }
+   
+   return true;
+ } 
+ else if (navItem.type === 'sequence') {
+   // First make sure the correct slide is shown
+   if (currentSlideIndex !== navItem.slideIndex) {
+     const slides = Array.from(document.querySelectorAll('.slide'));
+     slides.forEach((slide, index) => {
+       slide.style.display = index === navItem.slideIndex ? 'block' : 'none';
+       slide.classList.toggle('active', index === navItem.slideIndex);
+     });
+     
+     currentSlideIndex = navItem.slideIndex;
+     console.log(`[NavFix] Updated currentSlideIndex to ${navItem.slideIndex} for sequence`);
+   }
+   
+   // Then handle the sequence navigation
+   const slide = document.querySelectorAll('.slide')[navItem.slideIndex];
+   const imageSequence = slide?.querySelector('.image-sequence');
+   if (!imageSequence) {
+     console.error(`[NavFix] Cannot find image sequence for slide ${navItem.slideIndex}`);
+     return false;
+   }
+   
+   const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
+   if (navItem.sequenceIndex >= images.length) {
+     console.error(`[NavFix] Invalid sequence index ${navItem.sequenceIndex} (max: ${images.length-1})`);
+     return false;
+   }
+   
+   // Reset all images with both visibility and class
+   images.forEach((img, idx) => {
+     img.classList.remove('active');
+     img.style.visibility = 'hidden';
+     img.style.display = 'block';
+   });
+   
+   // Activate the target image with both visibility and class
+   const targetImage = images[navItem.sequenceIndex];
+   targetImage.classList.add('active');
+   targetImage.style.visibility = 'visible';
+   
+   console.log(`[NavFix] Activated image ${navItem.sequenceIndex} in sequence`);
+   
+   return true;
+ }
+ 
+ return false;
 }
 
 /**
- * Initialize image sequence for a slide
- */
-function initializeImageSequence(slide) {
-  const imageSequence = slide.querySelector('.image-sequence');
-  if (!imageSequence) return;
-  
-  const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
-  if (images.length === 0) return;
-  
-  // Reset all images
-  images.forEach(img => {
-    img.classList.remove('active');
-    img.style.visibility = 'hidden';
-    img.style.display = 'block';
-  });
-  
-  // Show only the first image
-  images[0].classList.add('active');
-  images[0].style.visibility = 'visible';
+* Navigate forward in the presentation
+* Handles both slides and image sequences for seamless navigation
+*/
+function navigateForward() {
+ if (!flatNavigation || !flatNavigation.length) {
+   console.error("[NavFix] Cannot navigate - flatNavigation not initialized");
+   return false;
+ }
+ 
+ if (currentNavIndex < flatNavigation.length - 1) {
+   currentNavIndex++;
+   console.log(`[NavFix] Navigating forward to item ${currentNavIndex}`);
+   return applyCurrentNavigation();
+ }
+ 
+ console.log("[NavFix] Already at last navigation point");
+ return false;
 }
 
-// Replace event handlers with our seamless navigation
-function setupSeamlessControls() {
-  const prevButton = document.querySelector('.prev-slide');
-  const nextButton = document.querySelector('.next-slide');
-  const presenterButton = document.querySelector('.presenter-toggle');
-  
-  // Set up presenter mode toggle
-  if (presenterButton) {
-    presenterButton.addEventListener('click', togglePresenterMode);
-  }
-  
-  if (prevButton) {
-    prevButton.addEventListener('click', () => {
-      navigateBackward();
-    });
-  }
-  
-  if (nextButton) {
-    nextButton.addEventListener('click', () => {
-      navigateForward();
-    });
-  }
-  
-  // Force fullscreen mode immediately
-  document.body.classList.add('dps-fullscreen');
-  window.scrollTo(0, 0);
-  
-  // Setup resize handler for presenter notes
-  setupResizeHandler();
-  
-  // Handle keyboard navigation
-  document.addEventListener('keydown', (event) => {
-    // Ignore repeated keydown events from key being held down
-    if (event.repeat) {
-      event.preventDefault();
-      return;
-    }
-    
-    if (event.key === 'ArrowLeft') {
-      event.preventDefault();
-      navigateBackward();
-    }
-    else if (event.key === 'ArrowRight') {
-      event.preventDefault();
-      navigateForward();
-    }
-    else if (event.key === 'Escape') {
-      const navBar = document.querySelector('.dps-navigation');
-      if (navBar) {
-        navBar.style.display = navBar.style.display === 'none' ? 'flex' : 'none';
-      }
-    }
-    else if (event.key === '+' || event.key === '=') {
-      const presenterNotes = document.querySelector('.presenter-notes');
-      presenterNotes.classList.remove('hidden');
-    }
-    else if (event.key === '-' || event.key === '_') {
-      const presenterNotes = document.querySelector('.presenter-notes');
-      presenterNotes.classList.add('hidden');
-    }
-    else if (event.key === ' ' && hasStartedTimer) {
-      event.preventDefault();
-      toggleTimer();
-    }
-    // Keep other existing keyboard handlers
-  });
-  
-  // Initialize navigation
-  initializeSeamlessNavigation();
-  applyCurrentNavigation();
+/**
+* Navigate backward in the presentation
+* Handles both slides and image sequences for seamless navigation
+*/
+function navigateBackward() {
+ if (!flatNavigation || !flatNavigation.length) {
+   console.error("[NavFix] Cannot navigate - flatNavigation not initialized");
+   return false;
+ }
+ 
+ if (currentNavIndex > 0) {
+   currentNavIndex--;
+   console.log(`[NavFix] Navigating backward to item ${currentNavIndex}`);
+   return applyCurrentNavigation();
+ }
+ 
+ console.log("[NavFix] Already at first navigation point");
+ return false;
 }
 
-// Add a style block for proper image sequence styling
+/**
+* Setup the navigation system with keyboard and button handlers
+*/
+function setupNavigationSystem() {
+ console.log("[Navigation] Setting up navigation system");
+ 
+ // Initialize flat navigation
+ flatNavigation = createFlatNavigationArray();
+ currentNavIndex = 0;
+ 
+ // Set up navigation buttons
+ const prevButton = document.querySelector('.prev-slide');
+ if (prevButton) {
+   prevButton.addEventListener('click', () => {
+     navigateBackward();
+   });
+ }
+ 
+ const nextButton = document.querySelector('.next-slide');
+ if (nextButton) {
+   nextButton.addEventListener('click', () => {
+     navigateForward();
+   });
+ }
+ 
+ // Set up keyboard handlers
+ document.addEventListener('keydown', (event) => {
+   // Ignore repeated keydown events from key being held down
+   if (event.repeat) {
+     event.preventDefault();
+     return;
+   }
+   
+   if (event.key === 'ArrowLeft') {
+     event.preventDefault();
+     navigateBackward();
+   }
+   else if (event.key === 'ArrowRight') {
+     event.preventDefault();
+     navigateForward();
+   }
+   else if (event.key === 'Escape') {
+     const navBar = document.querySelector('.dps-navigation');
+     if (navBar) {
+       navBar.style.display = navBar.style.display === 'none' ? 'flex' : 'none';
+     }
+   }
+   else if (event.key === 'p' || event.key === 'P') {
+     togglePresenterMode();
+   }
+   else if (event.key === '+' || event.key === '=') {
+     showPresenterNotes();
+   }
+   else if (event.key === '-' || event.key === '_') {
+     hidePresenterNotes();
+   }
+   else if (event.key === ' ' && hasStartedTimer) {
+     event.preventDefault();
+     toggleTimer();
+   }
+ });
+ 
+ // Apply initial navigation
+ applyCurrentNavigation();
+ 
+ console.log("[Navigation] Navigation system setup complete");
+}
+
+/**
+* Toggle presenter mode on/off
+*/
+function togglePresenterMode() {
+ const presenterNotes = document.querySelector('.presenter-notes');
+ const isPresenterMode = presenterNotes.classList.contains('presenter-mode');
+ const header = document.querySelector('.dps-header');
+ const footer = document.querySelector('.dps-footer');
+ const slides = document.querySelectorAll('.slide');
+ const currentSlide = slides[currentSlideIndex];
+ const presenterButton = document.querySelector('.presenter-toggle');
+ const notesContent = presenterNotes.querySelector('.presenter-notes-content');
+
+ if (!isPresenterMode) {
+   // Hide header and slides but keep footer
+   header.style.display = 'none';
+   slides.forEach(slide => slide.style.display = 'none');
+   currentSlide.style.display = 'none';
+   
+   // Highlight presenter button
+   presenterButton.classList.add('active');
+ 
+   // Show notes in full screen
+   presenterNotes.classList.remove('hidden');
+   presenterNotes.classList.add('presenter-mode');
+ 
+   // Normal view - stay pinned to left
+   presenterNotes.style.width = '50%'; // Reduced from 100% to stay on left side
+   presenterNotes.style.left = '20px'; // Keep pinned to left
+   presenterNotes.style.height = 'calc(100vh - 60px)';
+   presenterNotes.style.position = 'fixed';
+   presenterNotes.style.top = '0';
+   presenterNotes.style.zIndex = '1000';
+   presenterNotes.style.backgroundColor = 'white';
+   presenterNotes.style.padding = '20px';
+   presenterNotes.style.overflow = 'auto';
+   
+   // Update presenter notes content to include title and bullet points
+   updatePresenterNotes(currentSlideIndex, false, true); // Pass isPresenterToggle=true
+ } else {
+   // Restore normal view
+   header.style.display = '';
+   slides.forEach(slide => slide.style.display = '');
+   currentSlide.style.display = 'block';
+   
+   // Remove button highlight
+   presenterButton.classList.remove('active');
+ 
+   presenterNotes.classList.remove('presenter-mode');
+   presenterNotes.style.width = '31.25vw'; // Original width from CSS
+   presenterNotes.style.left = '20px'; // Keep pinned to left
+   presenterNotes.style.height = '25vh'; // Original height from CSS
+   presenterNotes.style.position = 'fixed';
+   presenterNotes.style.top = '';
+   presenterNotes.style.bottom = '60px'; // Position at bottom as in CSS
+   presenterNotes.style.zIndex = '1000';
+   presenterNotes.style.backgroundColor = '';
+   presenterNotes.style.padding = '';
+   presenterNotes.style.overflow = 'auto';
+ }
+}
+
+/**
+* Show presenter notes
+*/
+function showPresenterNotes() {
+ const presenterNotes = document.querySelector('.presenter-notes');
+ presenterNotes.classList.remove('hidden');
+ DPS_CONFIG.PRESENTER_NOTES_VISIBLE = true;
+}
+
+/**
+* Hide presenter notes
+*/
+function hidePresenterNotes() {
+ const presenterNotes = document.querySelector('.presenter-notes');
+ presenterNotes.classList.add('hidden');
+ DPS_CONFIG.PRESENTER_NOTES_VISIBLE = false;
+}
+
+/**
+* Start the presentation timer
+*/
+function startTimer() {
+ if (!timerInterval) {
+   timerInterval = setInterval(updateTimer, 1000);
+ }
+}
+
+/**
+* Toggle the timer on/off
+*/
+function toggleTimer() {
+ if (timerInterval) {
+   clearInterval(timerInterval);
+   timerInterval = null;
+ } else {
+   timerInterval = setInterval(updateTimer, 1000);
+ }
+}
+
+/**
+* Update the timer display
+*/
+function updateTimer() {
+ if (remainingTime > 0) {
+   remainingTime--;
+   document.querySelector('.timer').textContent = formatTime(remainingTime);
+
+   /* Flash warning when 2 minutes remain
+    * Provides visual cue for time management
+    */
+   if (remainingTime === 120) {
+     flashTimeWarning();
+   }
+ } else {
+   clearInterval(timerInterval);
+   document.querySelector('.timer').textContent = 'Time Up!';
+   document.querySelector('.timer').style.color = '#e74c3c';
+ }
+}
+
+/**
+* Visual warning system for timer
+* Flashes red three times when time is running low
+*/
+function flashTimeWarning() {
+ const container = document.querySelector('.dps-container');
+ let flashCount = 0;
+
+ function singleFlash() {
+   container.style.backgroundColor = '#e74c3c';
+
+   setTimeout(() => {
+     container.style.backgroundColor = '';
+     flashCount++;
+
+     if (flashCount < 3) {
+       setTimeout(singleFlash, 300);
+     }
+   }, 300);
+ }
+
+ singleFlash();
+}
+
+/**
+* Add CSS styles for seamless navigation
+*/
 function addSeamlessNavigationStyles() {
-  const styleElement = document.createElement('style');
-  styleElement.textContent = `
-    .sequence-image {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      display: block !important;
-      visibility: hidden;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      margin: auto;
-    }
+ const styleElement = document.createElement('style');
+ styleElement.textContent = `
+   .sequence-image {
+     position: absolute;
+     width: 100%;
+     height: 100%;
+     max-width: 100%;
+     max-height: 100%;
+     object-fit: contain;
+     display: block !important;
+     visibility: hidden;
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+     margin: auto;
+   }
 
-    .sequence-image.active {
-      visibility: visible !important;
-    }
-    
-    /* Better slide transitions */
-    .slide {
-      transition: opacity 0.3s ease;
-    }
-    
-    /* Ensure illustration container has proper positioning */
-    .illustration {
-      position: relative;
-      min-height: 200px;
-    }
-    
-    .image-sequence {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      min-height: 200px;
-    }
-  `;
-  document.head.appendChild(styleElement);
+   .sequence-image.active {
+     visibility: visible !important;
+   }
+   
+   /* Better slide transitions */
+   .slide {
+     transition: opacity 0.3s ease;
+   }
+   
+   /* Ensure illustration container has proper positioning */
+   .illustration {
+     position: relative;
+     min-height: 200px;
+   }
+   
+   .image-sequence {
+     position: relative;
+     width: 100%;
+     height: 100%;
+     min-height: 200px;
+   }
+   
+   /* Presenter notes styles */
+   .presenter-notes {
+     line-height: 1;
+   }
+   
+   .presenter-notes-content {
+     line-height: 1;
+   }
+   
+   .presenter-notes-content p {
+     margin: 0;
+     padding: 0;
+     line-height: 1.1;
+   }
+   
+   /* Add minimal spacing between paragraphs */
+   .presenter-notes-content p + p {
+     margin-top: 0.25em;
+   }
+   
+   /* Ensure lists have proper spacing too */
+   .presenter-notes-content ul,
+   .presenter-notes-content ol {
+     margin: 0.25em 0;
+     padding-left: 1.2em;
+   }
+ 
+   .presenter-notes-content li {
+     margin: 0;
+     padding: 0;
+     line-height: 1.1;
+   }
+ `;
+ document.head.appendChild(styleElement);
 }
 
 /**
- * Set up the System Info button functionality
- * Creates a button that copies debug information to clipboard when clicked
- */
+* Set up the resize handler for presenter notes
+*/
+function setupResizeHandler() {
+ const grip = document.querySelector('.resize-grip');
+ const notes = document.querySelector('.presenter-notes');
+
+ if (!grip || !notes) return;
+
+ grip.addEventListener('mousedown', (e) => {
+   let isResizing = true;
+   const startY = e.clientY;
+   const startHeight = parseInt(document.defaultView.getComputedStyle(notes).height, 10);
+   e.preventDefault();
+
+   const moveHandler = (moveEvent) => {
+     if (!isResizing) return;
+     
+     const height = startHeight + (startY - moveEvent.clientY);
+     notes.style.height = `${Math.max(200, Math.min(window.innerHeight - 60, height))}px`;
+   };
+
+   const upHandler = () => {
+     isResizing = false;
+     document.removeEventListener('mousemove', moveHandler);
+     document.removeEventListener('mouseup', upHandler);
+   };
+
+   document.addEventListener('mousemove', moveHandler);
+   document.addEventListener('mouseup', upHandler);
+ });
+}
+
+/**
+* Set up the System Info button functionality
+* Creates a button that copies debug information to clipboard when clicked
+*/
 function setupSystemInfoButton() {
-  const systemInfoButton = document.querySelector('.system-info-button');
-  
-  if (!systemInfoButton) return;
-  
-  systemInfoButton.addEventListener('click', () => {
-    // Log the button click event
-    if (DPS_CONFIG.DEBUG_INFO.enabled) {
-      DPS_CONFIG.DEBUG_INFO.events.push({
-        type: 'system_info_button_clicked',
-        timestamp: new Date().toISOString()
-      });
-    }
-    
-    // Generate debug information
-    const debugInfo = generateDebugInfo();
-    
-    // Copy to clipboard
-    copyToClipboard(debugInfo);
-    
-    // Show feedback to user
-    showCopyFeedback(systemInfoButton);
-  });
-  
-  // Add styles for the system info button
-  addSystemInfoStyles();
+ const systemInfoButton = document.querySelector('.system-info-button');
+ 
+ if (!systemInfoButton) return;
+ 
+ systemInfoButton.addEventListener('click', () => {
+   // Log the button click event
+   if (DPS_CONFIG.DEBUG_INFO.enabled) {
+     DPS_CONFIG.DEBUG_INFO.events.push({
+       type: 'system_info_button_clicked',
+       timestamp: new Date().toISOString()
+     });
+   }
+   
+   // Generate debug information
+   const debugInfo = generateDebugInfo();
+   
+   // Copy to clipboard
+   copyToClipboard(debugInfo);
+   
+   // Show feedback to user
+   showCopyFeedback(systemInfoButton);
+ });
+ 
+ // Add styles for the system info button
+ addSystemInfoStyles();
 }
 
 /**
- * Generate debug information as a JSON string
- * @returns {string} Formatted JSON string with debug information
- */
+* Generate debug information as a JSON string
+* @returns {string} Formatted JSON string with debug information
+*/
 function generateDebugInfo() {
-  // Create a comprehensive debug object
-  const debugObject = {
-    timestamp: new Date().toISOString(),
-    slides: DPS_CONFIG.DEBUG_INFO.slides,
-    illustrations: DPS_CONFIG.DEBUG_INFO.illustrations,
-    events: DPS_CONFIG.DEBUG_INFO.events,
-    navigationState: {
-      currentSlideIndex,
-      currentNavIndex,
-      totalSlides: document.querySelectorAll('.slide').length,
-      totalNavPoints: flatNavigation.length
-    },
-    timerState: {
-      remainingTime: window.remainingTime,
-      hasStartedTimer: window.hasStartedTimer,
-      isTimerRunning: !!window.timerInterval
-    },
-    presenterState: {
-      isPresenterMode: document.querySelector('.presenter-notes')?.classList.contains('presenter-mode') || false,
-      isNotesVisible: !document.querySelector('.presenter-notes')?.classList.contains('hidden')
-    }
-  };
-  
-  // Format as pretty JSON with 2-space indentation
-  return JSON.stringify(debugObject, null, 2);
+ // Create a comprehensive debug object
+ const debugObject = {
+   timestamp: new Date().toISOString(),
+   slides: DPS_CONFIG.DEBUG_INFO.slides,
+   illustrations: DPS_CONFIG.DEBUG_INFO.illustrations,
+   events: DPS_CONFIG.DEBUG_INFO.events,
+   navigationState: {
+     currentSlideIndex,
+     currentNavIndex,
+     totalSlides: document.querySelectorAll('.slide').length,
+     totalNavPoints: flatNavigation ? flatNavigation.length : 0
+   },
+   timerState: {
+     remainingTime,
+     hasStartedTimer,
+     isTimerRunning: !!timerInterval
+   },
+   presenterState: {
+     isPresenterMode: document.querySelector('.presenter-notes')?.classList.contains('presenter-mode') || false,
+     isNotesVisible: !document.querySelector('.presenter-notes')?.classList.contains('hidden')
+   }
+ };
+ 
+ // Format as pretty JSON with 2-space indentation
+ return JSON.stringify(debugObject, null, 2);
 }
 
 /**
- * Copy text to clipboard
- * @param {string} text - Text to copy to clipboard
- */
+* Copy text to clipboard
+* @param {string} text - Text to copy to clipboard
+*/
 function copyToClipboard(text) {
-  // Create a temporary textarea element
-  const textarea = document.createElement('textarea');
-  textarea.value = text;
-  textarea.setAttribute('readonly', '');
-  textarea.style.position = 'absolute';
-  textarea.style.left = '-9999px';
-  document.body.appendChild(textarea);
-  
-  // Select and copy the text
-  textarea.select();
-  document.execCommand('copy');
-  
-  // Clean up
-  document.body.removeChild(textarea);
-  
-  // Log the copy event
-  if (DPS_CONFIG.DEBUG_INFO.enabled) {
-    DPS_CONFIG.DEBUG_INFO.events.push({
-      type: 'debug_info_copied',
-      timestamp: new Date().toISOString(),
-      contentLength: text.length
-    });
-  }
+ // Create a temporary textarea element
+ const textarea = document.createElement('textarea');
+ textarea.value = text;
+ textarea.setAttribute('readonly', '');
+ textarea.style.position = 'absolute';
+ textarea.style.left = '-9999px';
+ document.body.appendChild(textarea);
+ 
+ // Select and copy the text
+ textarea.select();
+ document.execCommand('copy');
+ 
+ // Clean up
+ document.body.removeChild(textarea);
+ 
+ // Log the copy event
+ if (DPS_CONFIG.DEBUG_INFO.enabled) {
+   DPS_CONFIG.DEBUG_INFO.events.push({
+     type: 'debug_info_copied',
+     timestamp: new Date().toISOString(),
+     contentLength: text.length
+   });
+ }
 }
 
 /**
- * Show feedback to the user that the copy was successful
- * @param {Element} button - The button element that was clicked
- */
+* Show feedback to the user that the copy was successful
+* @param {Element} button - The button element that was clicked
+*/
 function showCopyFeedback(button) {
-  // Create a tooltip element
-  const tooltip = document.createElement('div');
-  tooltip.className = 'copy-tooltip';
-  tooltip.textContent = 'System Info Copied!';
-  
-  // Position the tooltip
-  const buttonRect = button.getBoundingClientRect();
-  tooltip.style.position = 'absolute';
-  tooltip.style.top = `${buttonRect.top - 30}px`;
-  tooltip.style.left = `${buttonRect.left + (buttonRect.width / 2) - 60}px`;
-  
-  // Add the tooltip to the document
-  document.body.appendChild(tooltip);
-  
-  // Remove the tooltip after a delay
-  setTimeout(() => {
-    tooltip.classList.add('fade-out');
-    setTimeout(() => {
-      document.body.removeChild(tooltip);
-    }, 300);
-  }, 2000);
+ // Create a tooltip element
+ const tooltip = document.createElement('div');
+ tooltip.className = 'copy-tooltip';
+ tooltip.textContent = 'System Info Copied!';
+ 
+ // Position the tooltip
+ const buttonRect = button.getBoundingClientRect();
+ tooltip.style.position = 'absolute';
+ tooltip.style.top = `${buttonRect.top - 30}px`;
+ tooltip.style.left = `${buttonRect.left + (buttonRect.width / 2) - 60}px`;
+ 
+ // Add the tooltip to the document
+ document.body.appendChild(tooltip);
+ 
+ // Remove the tooltip after a delay
+ setTimeout(() => {
+   tooltip.classList.add('fade-out');
+   setTimeout(() => {
+     document.body.removeChild(tooltip);
+   }, 300);
+ }, 2000);
 }
 
 /**
- * Add styles for the system info button and tooltip
- */
+* Add styles for the system info button and tooltip
+*/
 function addSystemInfoStyles() {
-  const style = document.createElement('style');
-  style.textContent = `
-    .footer-buttons {
-      display: flex;
-      align-items: center;
-    }
-    
-    .system-info-button {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 5px;
-      margin-left: 10px;
-      border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background-color 0.3s;
-    }
-    
-    .system-info-button:hover {
-      background-color: rgba(255, 255, 255, 0.2);
-    }
-    
-    .system-info-button svg {
-      width: 24px;
-      height: 24px;
-      fill: white;
-    }
-    
-    .copy-tooltip {
-      background-color: rgba(0, 0, 0, 0.8);
-      color: white;
-      padding: 5px 10px;
-      border-radius: 4px;
-      font-size: 14px;
-      z-index: 1000;
-      transition: opacity 0.3s;
-    }
-    
-    .copy-tooltip.fade-out {
-      opacity: 0;
-    }
-  `;
-  document.head.appendChild(style);
+ const style = document.createElement('style');
+ style.textContent = `
+   .footer-buttons {
+     display: flex;
+     align-items: center;
+   }
+   
+   .system-info-button {
+     background: none;
+     border: none;
+     cursor: pointer;
+     padding: 5px;
+     margin-left: 10px;
+     border-radius: 50%;
+     width: 36px;
+     height: 36px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     transition: background-color 0.3s;
+   }
+   
+   .system-info-button:hover {
+     background-color: rgba(255, 255, 255, 0.2);
+   }
+   
+   .system-info-button svg {
+     width: 24px;
+     height: 24px;
+     fill: white;
+   }
+   
+   .copy-tooltip {
+     background-color: rgba(0, 0, 0, 0.8);
+     color: white;
+     padding: 5px 10px;
+     border-radius: 4px;
+     font-size: 14px;
+     z-index: 1000;
+     transition: opacity 0.3s;
+   }
+   
+   .copy-tooltip.fade-out {
+     opacity: 0;
+   }
+ `;
+ document.head.appendChild(style);
 }
 
 /**
- * DPS State Tracker - A focused tool to identify state inconsistencies
- * Add this to your DPS.js file to track state changes and identify issues
- */
-
-// State tracking variables
+* State tracking variables
+*/
 let stateSnapshots = [];
 const MAX_SNAPSHOTS = 20;
 
 /**
- * Take a snapshot of the current DPS state
- * @param {string} trigger - What triggered this snapshot
- */
+* Take a snapshot of the current DPS state
+* @param {string} trigger - What triggered this snapshot
+* @returns {Object} The current state snapshot
+*/
 function takeStateSnapshot(trigger) {
-  // Get the current slide
-  const currentSlide = document.querySelectorAll('.slide')[currentSlideIndex];
-  
-  // Check for image sequence
-  const imageSequence = currentSlide ? currentSlide.querySelector('.image-sequence') : null;
-  const sequenceImages = imageSequence ? Array.from(imageSequence.querySelectorAll('.sequence-image')) : [];
-  
-  // Analyze active states
-  const activeImages = sequenceImages.filter(img => img.classList.contains('active'));
-  const visibleImages = sequenceImages.filter(img => img.style.visibility === 'visible');
-  
-  // State inconsistency detection
-  const activeCount = activeImages.length;
-  const visibleCount = visibleImages.length;
-  const hasInconsistentState = activeCount !== visibleCount || activeCount > 1;
-  
-  // Create the snapshot
-  const snapshot = {
-    timestamp: new Date().toISOString(),
-    performanceTime: performance.now(),
-    trigger: trigger,
-    
-    navigation: {
-      currentSlideIndex: currentSlideIndex,
-      currentNavIndex: currentNavIndex,
-      totalNavPoints: flatNavigation ? flatNavigation.length : 'unknown',
-      currentNavType: flatNavigation && currentNavIndex < flatNavigation.length ? 
-                     flatNavigation[currentNavIndex].type : 'unknown'
-    },
-    
-    sequence: {
-      exists: !!imageSequence,
-      totalImages: sequenceImages.length,
-      activeCount: activeCount,
-      visibleCount: visibleCount,
-      hasInconsistentState: hasInconsistentState,
-      
-      // Which images are active/visible
-      activeIndices: activeImages.map(img => sequenceImages.indexOf(img)),
-      visibleIndices: visibleImages.map(img => sequenceImages.indexOf(img)),
-      
-      // Details of active images
-      activeDetails: activeImages.map(img => ({
-        index: sequenceImages.indexOf(img),
-        type: getImageType(img),
-        visibility: img.style.visibility,
-        display: img.style.display
-      }))
-    }
-  };
-  
-  // Add to snapshots history, maintaining max length
-  stateSnapshots.push(snapshot);
-  if (stateSnapshots.length > MAX_SNAPSHOTS) {
-    stateSnapshots.shift();
-  }
-  
-  // Log to console if there's an inconsistency
-  if (hasInconsistentState) {
-    console.warn(`[DPS State] Inconsistent state detected (${trigger}):`, 
-                 `active=${activeCount}, visible=${visibleCount}`);
-  }
-  
-  return snapshot;
+ // Get the current slide
+ const slides = document.querySelectorAll('.slide');
+ const currentSlide = slides[currentSlideIndex];
+ 
+ // Check for image sequence
+ const imageSequence = currentSlide ? currentSlide.querySelector('.image-sequence') : null;
+ const sequenceImages = imageSequence ? Array.from(imageSequence.querySelectorAll('.sequence-image')) : [];
+ 
+ // Analyze active states
+ const activeImages = sequenceImages.filter(img => img.classList.contains('active'));
+ const visibleImages = sequenceImages.filter(img => img.style.visibility === 'visible');
+ 
+ // State inconsistency detection
+ const activeCount = activeImages.length;
+ const visibleCount = visibleImages.length;
+ const hasInconsistentState = activeCount !== visibleCount || activeCount > 1;
+ 
+ // Create the snapshot
+ const snapshot = {
+   timestamp: new Date().toISOString(),
+   performanceTime: performance.now(),
+   trigger: trigger,
+   
+   navigation: {
+     currentSlideIndex: currentSlideIndex,
+     currentNavIndex: currentNavIndex,
+     totalNavPoints: flatNavigation ? flatNavigation.length : 'unknown',
+     currentNavType: flatNavigation && currentNavIndex < flatNavigation.length ? 
+                   flatNavigation[currentNavIndex].type : 'unknown'
+   },
+   
+   sequence: {
+     exists: !!imageSequence,
+     totalImages: sequenceImages.length,
+     activeCount: activeCount,
+     visibleCount: visibleCount,
+     hasInconsistentState: hasInconsistentState
+   }
+ };
+ 
+ // Add to snapshots history, maintaining max length
+ stateSnapshots.push(snapshot);
+ if (stateSnapshots.length > MAX_SNAPSHOTS) {
+   stateSnapshots.shift();
+ }
+ 
+ // Log to console if there's an inconsistency
+ if (hasInconsistentState) {
+   console.warn(`[DPS State] Inconsistent state detected (${trigger}):`, 
+               `active=${activeCount}, visible=${visibleCount}`);
+ }
+ 
+ return snapshot;
 }
 
 /**
- * Get type information for an image element
- * @param {Element} img - The image element to analyze
- * @returns {string} Image type descriptor
- */
-function getImageType(img) {
-  if (!img) return 'unknown';
-  
-  if (img.tagName === 'IFRAME' || img.classList.contains('iframe-container')) {
-    return 'iframe';
-  } else if (img.tagName === 'IMG') {
-    if (img.dataset.iconName) {
-      return `icon:${img.dataset.iconName}`;
-    }
-    return 'image';
-  } else if (img.classList.contains('text-container')) {
-    return 'text';
-  } else if (img.tagName === 'DIV' && img.innerHTML.includes('<svg')) {
-    return 'svg';
-  }
-  
-  return img.tagName.toLowerCase();
-}
-
-/**
- * Get the full DPS state report as JSON
- * @returns {string} JSON string with full state report
- */
+* Get the full DPS state report as JSON
+* @returns {string} JSON string with full state report
+*/
 function getDPSStateReport() {
-  // Add one final snapshot of current state
-  takeStateSnapshot('report_requested');
-  
-  const report = {
-    timestamp: new Date().toISOString(),
-    currentState: stateSnapshots[stateSnapshots.length - 1],
-    history: stateSnapshots,
-    
-    // Slide details
-    slides: Array.from(document.querySelectorAll('.slide')).map((slide, index) => {
-      const imageSequence = slide.querySelector('.image-sequence');
-      return {
-        index: index,
-        title: slide.querySelector('.slide-title')?.textContent || `Slide ${index}`,
-        display: slide.style.display,
-        isActive: index === currentSlideIndex,
-        hasSequence: !!imageSequence,
-        sequenceImageCount: imageSequence ? 
-                          imageSequence.querySelectorAll('.sequence-image').length : 0
-      };
-    }),
-    
-    // Navigation analysis
-    navigationStructure: flatNavigation ? 
-      flatNavigation.map((item, index) => ({
-        index: index,
-        type: item.type,
-        slideIndex: item.slideIndex,
-        sequenceIndex: item.sequenceIndex,
-        isCurrent: index === currentNavIndex
-      })) : 'Not available'
-  };
-  
-  return JSON.stringify(report, null, 2);
+ // Add one final snapshot of current state
+ takeStateSnapshot('report_requested');
+ 
+ const report = {
+   timestamp: new Date().toISOString(),
+   currentState: stateSnapshots[stateSnapshots.length - 1],
+   history: stateSnapshots,
+   
+   // Slide details
+   slides: Array.from(document.querySelectorAll('.slide')).map((slide, index) => {
+     const imageSequence = slide.querySelector('.image-sequence');
+     return {
+       index: index,
+       title: slide.querySelector('.slide-title')?.textContent || `Slide ${index}`,
+       display: slide.style.display,
+       isActive: index === currentSlideIndex,
+       hasSequence: !!imageSequence,
+       sequenceImageCount: imageSequence ? 
+                         imageSequence.querySelectorAll('.sequence-image').length : 0
+     };
+   }),
+   
+   // Navigation analysis
+   navigationStructure: flatNavigation ? 
+     flatNavigation.map((item, index) => ({
+       index: index,
+       type: item.type,
+       slideIndex: item.slideIndex,
+       sequenceIndex: item.sequenceIndex,
+       isCurrent: index === currentNavIndex
+     })) : 'Not available'
+ };
+ 
+ return JSON.stringify(report, null, 2);
 }
 
 /**
- * Apply fixes to ensure consistent state
- * Call this if you detect inconsistencies
- */
+* Fix the DPS state to ensure consistency
+* @returns {boolean} True if the fix was applied
+*/
 function fixDPSState() {
-  // Get current slide
-  const currentSlide = document.querySelectorAll('.slide')[currentSlideIndex];
-  if (!currentSlide) return;
-  
-  // Find image sequence
-  const imageSequence = currentSlide.querySelector('.image-sequence');
-  if (!imageSequence) return;
-  
-  // Get all images
-  const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
-  if (images.length === 0) return;
-  
-  console.log('[DPS Fix] Applying state fixes to slide', currentSlideIndex);
-  
-  // Find active image index (use first active or default to 0)
-  const activeIndex = images.findIndex(img => img.classList.contains('active'));
-  const targetIndex = activeIndex >= 0 ? activeIndex : 0;
-  
-  // Reset all images to consistent state
-  images.forEach((img, idx) => {
-    // Remove active class
-    img.classList.remove('active');
-    // Set visibility to hidden
-    img.style.visibility = 'hidden';
-    // Ensure display is block
-    img.style.display = 'block';
-  });
-  
-  // Set the target image as active
-  if (images[targetIndex]) {
-    images[targetIndex].classList.add('active');
-    images[targetIndex].style.visibility = 'visible';
-  }
-  
-  // Update navigation indices if needed
-  if (flatNavigation) {
-    // Find the corresponding nav item for this slide+sequence
-    const navIndex = flatNavigation.findIndex(item => 
-      item.type === 'sequence' && 
-      item.slideIndex === currentSlideIndex && 
-      item.sequenceIndex === targetIndex
-    );
-    
-    if (navIndex >= 0) {
-      currentNavIndex = navIndex;
-      console.log('[DPS Fix] Updated currentNavIndex to', navIndex);
-    }
-  }
-  
-  // Take a snapshot after fixing
-  takeStateSnapshot('after_fix');
-  
-  return true;
+ // Get current slide
+ const currentSlide = document.querySelectorAll('.slide')[currentSlideIndex];
+ if (!currentSlide) return false;
+ 
+ // Find image sequence
+ const imageSequence = currentSlide.querySelector('.image-sequence');
+ if (!imageSequence) return false;
+ 
+ // Get all images
+ const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
+ if (images.length === 0) return false;
+ 
+ console.log('[DPS Fix] Applying state fixes to slide', currentSlideIndex);
+ 
+ // Find active image index (use first active or default to 0)
+ const activeIndex = images.findIndex(img => img.classList.contains('active'));
+ const targetIndex = activeIndex >= 0 ? activeIndex : 0;
+ 
+ // Reset all images to consistent state
+ images.forEach((img) => {
+   // Remove active class
+   img.classList.remove('active');
+   // Set visibility to hidden
+   img.style.visibility = 'hidden';
+   // Ensure display is block
+   img.style.display = 'block';
+ });
+ 
+ // Set the target image as active
+ if (images[targetIndex]) {
+   images[targetIndex].classList.add('active');
+   images[targetIndex].style.visibility = 'visible';
+ }
+ 
+ // Update navigation indices if needed
+ if (flatNavigation) {
+   // Find the corresponding nav item for this slide+sequence
+   const navIndex = flatNavigation.findIndex(item => 
+     item.type === 'sequence' && 
+     item.slideIndex === currentSlideIndex && 
+     item.sequenceIndex === targetIndex
+   );
+   
+   if (navIndex >= 0) {
+     currentNavIndex = navIndex;
+     console.log('[DPS Fix] Updated currentNavIndex to', navIndex);
+   }
+ }
+ 
+ // Take a snapshot after fixing
+ takeStateSnapshot('after_fix');
+ 
+ return true;
 }
 
 /**
- * Initialize the state tracker by wrapping key functions
- */
+* Initialize the state tracker
+*/
 function initStateTracker() {
-  console.log('[DPS State Tracker] Initializing...');
-  
-  // Patch navigation functions to track state changes
-  const origNavigateForward = window.navigateForward;
-  window.navigateForward = function() {
-    takeStateSnapshot('before_navigate_forward');
-    const result = origNavigateForward.apply(this, arguments);
-    takeStateSnapshot('after_navigate_forward');
-    return result;
-  };
-  
-  const origNavigateBackward = window.navigateBackward;
-  window.navigateBackward = function() {
-    takeStateSnapshot('before_navigate_backward');
-    const result = origNavigateBackward.apply(this, arguments);
-    takeStateSnapshot('after_navigate_backward');
-    return result;
-  };
-  
-  // Patch sequence navigation
-  const origHandleImageSequenceNavigation = window.handleImageSequenceNavigation;
-  if (origHandleImageSequenceNavigation) {
-    window.handleImageSequenceNavigation = function(direction) {
-      takeStateSnapshot('before_sequence_nav_' + direction);
-      const result = origHandleImageSequenceNavigation.apply(this, arguments);
-      takeStateSnapshot('after_sequence_nav_' + direction);
-      return result;
-    };
-  }
-  
-  // Patch applyCurrentNavigation
-  const origApplyCurrentNavigation = window.applyCurrentNavigation;
-  if (origApplyCurrentNavigation) {
-    window.applyCurrentNavigation = function() {
-      takeStateSnapshot('before_apply_navigation');
-      const result = origApplyCurrentNavigation.apply(this, arguments);
-      takeStateSnapshot('after_apply_navigation');
-      return result;
-    };
-  }
-  
-  // Add keyboard handler to trigger fix
-  document.addEventListener('keydown', function(event) {
-    // Ctrl+Alt+F to fix DPS state
-    if (event.ctrlKey && event.altKey && event.key === 'f') {
-      console.log('[DPS State Tracker] Manual fix triggered');
-      fixDPSState();
-    }
-  });
-  
-  // Enhance system info button
-  enhanceSystemInfoButton();
-  
-  // Take initial snapshot
-  takeStateSnapshot('initialization');
-  
-  console.log('[DPS State Tracker] Initialized successfully.');
+ console.log('[DPS State Tracker] Initializing...');
+ 
+ // Take initial snapshot
+ takeStateSnapshot('initialization');
+ 
+ // Add keyboard handler to trigger fix
+ document.addEventListener('keydown', function(event) {
+   // Ctrl+Alt+F to fix DPS state
+   if (event.ctrlKey && event.altKey && event.key === 'f') {
+     console.log('[DPS State Tracker] Manual fix triggered');
+     fixDPSState();
+   }
+ });
+ 
+ console.log('[DPS State Tracker] Initialized successfully.');
 }
 
-/**
- * Enhance system info button to include state tracking data
- */
-function enhanceSystemInfoButton() {
-  const systemInfoButton = document.querySelector('.system-info-button');
-  if (!systemInfoButton) return;
-  
-  // Replace click handler
-  systemInfoButton.addEventListener('click', function() {
-    // Generate state report
-    const stateReport = getDPSStateReport();
-    
-    // Copy to clipboard
-    const textarea = document.createElement('textarea');
-    textarea.value = stateReport;
-    textarea.setAttribute('readonly', '');
-    textarea.style.position = 'absolute';
-    textarea.style.left = '-9999px';
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textarea);
-    
-    // Show feedback
-    const tooltip = document.createElement('div');
-    tooltip.className = 'copy-tooltip';
-    tooltip.textContent = 'Enhanced DPS State Report Copied!';
-    tooltip.style.position = 'absolute';
-    const buttonRect = systemInfoButton.getBoundingClientRect();
-    tooltip.style.top = `${buttonRect.top - 30}px`;
-    tooltip.style.left = `${buttonRect.left + (buttonRect.width / 2) - 100}px`;
-    tooltip.style.width = '200px';
-    tooltip.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-    tooltip.style.color = 'white';
-    tooltip.style.padding = '5px 10px';
-    tooltip.style.borderRadius = '4px';
-    tooltip.style.fontSize = '14px';
-    tooltip.style.zIndex = '1000';
-    document.body.appendChild(tooltip);
-    
-    setTimeout(() => {
-      tooltip.style.opacity = '0';
-      setTimeout(() => {
-        document.body.removeChild(tooltip);
-      }, 300);
-    }, 2000);
-  });
-}
-
-// Exported functions for global use
+// Expose essential functions to the window object for global access
 window.takeStateSnapshot = takeStateSnapshot;
 window.getDPSStateReport = getDPSStateReport;
 window.fixDPSState = fixDPSState;
-window.initStateTracker = initStateTracker;
-
-
-/**
- * DPS Navigation System Fix
- * Resolves navigation index inconsistencies by implementing a more robust
- * navigation structure and synchronization mechanism.
- */
-
-/**
- * Create a properly indexed flat navigation array
- * This function creates a navigation structure that properly accounts for
- * all slides and their sequences.
- * 
- * @returns {Array} Properly structured navigation points array
- */
-function createFlatNavigationArray() {
-  console.log("[NavFix] Creating flat navigation array");
-  const flatNavigation = [];
-  const slides = Array.from(document.querySelectorAll('.slide'));
-  
-  // Process each slide
-  slides.forEach((slide, slideIndex) => {
-    console.log(`[NavFix] Processing slide ${slideIndex}: "${slide.querySelector('.slide-title')?.textContent || 'Untitled'}"`);
-    
-    // Add the slide itself as a navigation point
-    flatNavigation.push({
-      type: 'slide',
-      slideIndex: slideIndex,
-      sequenceIndex: null,
-      element: slide,
-      id: `slide-${slideIndex}`
-    });
-    
-    // Process image sequences if present
-    const imageSequence = slide.querySelector('.image-sequence');
-    if (imageSequence) {
-      const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
-      console.log(`[NavFix] Found sequence with ${images.length} images in slide ${slideIndex}`);
-      
-      // Only add additional nav points if there's more than one image
-      if (images.length > 1) {
-        // Skip the first image (index 0) since it's shown with the slide
-        for (let i = 1; i < images.length; i++) {
-          flatNavigation.push({
-            type: 'sequence',
-            slideIndex: slideIndex,
-            sequenceIndex: i,
-            element: images[i],
-            id: `slide-${slideIndex}-seq-${i}`
-          });
-          console.log(`[NavFix] Added navigation point for slide ${slideIndex}, sequence ${i}`);
-        }
-      } else {
-        console.log(`[NavFix] Single image sequence - not adding navigation points`);
-      }
-    }
-  });
-  
-  // Log the full navigation structure
-  console.log(`[NavFix] Created navigation structure with ${flatNavigation.length} points`);
-  flatNavigation.forEach((point, index) => {
-    console.log(`[NavFix] Nav point ${index}: ${point.type}, slide=${point.slideIndex}, seq=${point.sequenceIndex}`);
-  });
-  
-  return flatNavigation;
-}
-
-/**
- * Synchronize navigation indices
- * Ensures currentNavIndex correctly reflects currentSlideIndex
- */
-function synchronizeNavigationIndices() {
-  if (!window.flatNavigation || !window.flatNavigation.length) {
-    console.error("[NavFix] Cannot synchronize - flatNavigation not initialized");
-    return;
-  }
-  
-  const currentSlide = window.currentSlideIndex || 0;
-  
-  // Find the navigation point that corresponds to the current slide
-  const matchingNavIndex = window.flatNavigation.findIndex(item => 
-    item.type === 'slide' && item.slideIndex === currentSlide
-  );
-  
-  if (matchingNavIndex >= 0) {
-    console.log(`[NavFix] Synchronizing navigation: Setting currentNavIndex to ${matchingNavIndex} (was ${window.currentNavIndex})`);
-    window.currentNavIndex = matchingNavIndex;
-  } else {
-    console.error(`[NavFix] Failed to find matching nav point for slide ${currentSlide}`);
-  }
-}
-
-/**
- * Apply navigation with verification
- * More robust version of applyCurrentNavigation that verifies the state
- * after applying changes and includes additional error handling
- */
-function applyNavigationWithVerification() {
-  if (!window.flatNavigation || window.currentNavIndex >= window.flatNavigation.length) {
-    console.error(`[NavFix] Cannot apply navigation - invalid indices`);
-    return false;
-  }
-  
-  const navItem = window.flatNavigation[window.currentNavIndex];
-  console.log(`[NavFix] Applying navigation item ${window.currentNavIndex}: type=${navItem.type}, slide=${navItem.slideIndex}, seq=${navItem.sequenceIndex}`);
-  
-  if (navItem.type === 'slide') {
-    // Show this slide, hide all others
-    const slides = Array.from(document.querySelectorAll('.slide'));
-    slides.forEach((slide, index) => {
-      const isCurrentSlide = index === navItem.slideIndex;
-      slide.style.display = isCurrentSlide ? 'block' : 'none';
-      slide.classList.toggle('active', isCurrentSlide);
-      
-      if (isCurrentSlide) {
-        // Initialize any image sequence in this slide
-        initializeImageSequence(slide);
-        
-        // Update presenter notes and navigation UI
-        updatePresenterNotes(navItem.slideIndex);
-        updateNavButtons(navItem.slideIndex);
-        
-        // Update currentSlideIndex to stay in sync
-        window.currentSlideIndex = navItem.slideIndex;
-        console.log(`[NavFix] Updated currentSlideIndex to ${navItem.slideIndex}`);
-      }
-    });
-    
-    // Start timer if moving past first slide
-    if (navItem.slideIndex > 0 && !window.hasStartedTimer) {
-      startTimer();
-      window.hasStartedTimer = true;
-    }
-    
-    return true;
-  } 
-  else if (navItem.type === 'sequence') {
-    // First make sure the correct slide is shown
-    if (window.currentSlideIndex !== navItem.slideIndex) {
-      const slides = Array.from(document.querySelectorAll('.slide'));
-      slides.forEach((slide, index) => {
-        slide.style.display = index === navItem.slideIndex ? 'block' : 'none';
-        slide.classList.toggle('active', index === navItem.slideIndex);
-      });
-      
-      window.currentSlideIndex = navItem.slideIndex;
-      console.log(`[NavFix] Updated currentSlideIndex to ${navItem.slideIndex} for sequence`);
-    }
-    
-    // Then handle the sequence navigation
-    const slide = document.querySelectorAll('.slide')[navItem.slideIndex];
-    const imageSequence = slide?.querySelector('.image-sequence');
-    if (!imageSequence) {
-      console.error(`[NavFix] Cannot find image sequence for slide ${navItem.slideIndex}`);
-      return false;
-    }
-    
-    const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
-    if (navItem.sequenceIndex >= images.length) {
-      console.error(`[NavFix] Invalid sequence index ${navItem.sequenceIndex} (max: ${images.length-1})`);
-      return false;
-    }
-    
-    // Reset all images with both visibility and class
-    images.forEach((img, idx) => {
-      img.classList.remove('active');
-      img.style.visibility = 'hidden';
-      img.style.display = 'block';
-    });
-    
-    // Activate the target image with both visibility and class
-    const targetImage = images[navItem.sequenceIndex];
-    targetImage.classList.add('active');
-    targetImage.style.visibility = 'visible';
-    
-    console.log(`[NavFix] Activated image ${navItem.sequenceIndex} in sequence`);
-    
-    return true;
-  }
-  
-  return false;
-}
-
-/**
- * Navigate forward with verification
- * Enhanced navigation function that checks state consistency
- */
-function navigateForwardWithVerification() {
-  if (!window.flatNavigation || !window.flatNavigation.length) {
-    console.error("[NavFix] Cannot navigate - flatNavigation not initialized");
-    return false;
-  }
-  
-  if (window.currentNavIndex < window.flatNavigation.length - 1) {
-    window.currentNavIndex++;
-    console.log(`[NavFix] Navigating forward to item ${window.currentNavIndex}`);
-    return applyNavigationWithVerification();
-  }
-  
-  console.log("[NavFix] Already at last navigation point");
-  return false;
-}
-
-/**
- * Navigate backward with verification
- * Enhanced navigation function that checks state consistency
- */
-function navigateBackwardWithVerification() {
-  if (!window.flatNavigation || !window.flatNavigation.length) {
-    console.error("[NavFix] Cannot navigate - flatNavigation not initialized");
-    return false;
-  }
-  
-  if (window.currentNavIndex > 0) {
-    window.currentNavIndex--;
-    console.log(`[NavFix] Navigating backward to item ${window.currentNavIndex}`);
-    return applyNavigationWithVerification();
-  }
-  
-  console.log("[NavFix] Already at first navigation point");
-  return false;
-}
-
-/**
- * Reset and reinitialize navigation system
- * Call this if you detect navigation problems
- */
-function resetNavigationSystem() {
-  console.log("[NavFix] Resetting navigation system");
-  
-  // Create a new navigation structure
-  window.flatNavigation = createFlatNavigationArray();
-  
-  // Force synchronization
-  synchronizeNavigationIndices();
-  
-  // Apply current navigation
-  applyNavigationWithVerification();
-  
-  console.log("[NavFix] Navigation system reset complete");
-  return true;
-}
-
-/**
- * Initialize the navigation fix system
- * Call this to set up the enhanced navigation
- */
-function initNavigationFix() {
-  console.log("[NavFix] Initializing navigation fix system");
-  
-  // Back up original functions
-  window._originalNavigateForward = window.navigateForward;
-  window._originalNavigateBackward = window.navigateBackward;
-  window._originalApplyCurrentNavigation = window.applyCurrentNavigation;
-  
-  // Replace with our enhanced versions
-  window.navigateForward = navigateForwardWithVerification;
-  window.navigateBackward = navigateBackwardWithVerification;
-  window.applyCurrentNavigation = applyNavigationWithVerification;
-  
-  // Set up emergency keyboard shortcut for navigation reset
-  document.addEventListener('keydown', function(event) {
-    // Ctrl+Alt+R to reset navigation
-    if (event.ctrlKey && event.altKey && event.key === 'r') {
-      console.log("[NavFix] Navigation reset triggered by keyboard shortcut");
-      resetNavigationSystem();
-    }
-  });
-  
-  // Perform initial reset
-  setTimeout(resetNavigationSystem, 500);
-  
-  console.log("[NavFix] Navigation fix system initialized");
-}
-
-// Expose functions for global use
-window.initNavigationFix = initNavigationFix;
-window.resetNavigationSystem = resetNavigationSystem;
-window.synchronizeNavigationIndices = synchronizeNavigationIndices;
