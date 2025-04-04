@@ -20,10 +20,18 @@ function groupAndSortPosts(posts, acceptList = []) {
   const seriesMap = new Map();
 
   posts.forEach(post => {
-    const postPath = post.path.toLowerCase();
     // Only filter if acceptList is not empty
-    if (acceptList.length > 0 && !acceptList.some(term => postPath.includes(term))) {
-      return;
+    if (acceptList.length > 0) {
+      const matches = acceptList.some(term => {
+        // If term is lowercase (contains 'guide'), do case-insensitive comparison
+        if (term === term.toLowerCase() && term.includes('guide')) {
+          return post.path.toLowerCase().includes(term);
+        }
+        // Otherwise do case-sensitive comparison
+        return post.path.includes(term);
+      });
+      
+      if (!matches) return;
     }
 
     const { name, part, basePath } = extractSeriesInfo(post.title, post.path);
@@ -61,7 +69,11 @@ function getConfig(block) {
   if (rows.length > 0) {
     const firstRow = rows.shift();
     config.acceptList = [...firstRow.children]
-      .map(cell => cell.textContent.trim().toLowerCase())
+      .map(cell => {
+        const text = cell.textContent.trim();
+        // Only convert to lowercase if it contains the word 'guide' (case insensitive)
+        return text.toLowerCase().includes('guide') ? text.toLowerCase() : text;
+      })
       .filter(text => text !== '');
   }
 

@@ -10,6 +10,8 @@ To use the Blogroll block, add it to your page with the following structure:
 |----------|
 | [filter terms] |
 
+Filter terms are case sensitive by default, except for terms containing the word "guide" (which remain case insensitive for compatibility with older pages).
+
 For a compact version, add the 'compact' class:
 
 | Blogroll (compact) |
@@ -50,6 +52,7 @@ The block uses CSS variables for easy customization:
 
 - The block fetches blog post data from '/query-index.json'.
 - Posts are grouped by series and sorted within each series.
+- Filter terms are case sensitive by default, except for terms containing the word "guide" (which remain case insensitive for backward compatibility).
 - In compact mode, an icon is displayed that opens a side panel when clicked.
 - The compact panel includes a "Show All Posts" toggle.
 - Each blog post entry now has a thin border for improved visual separation.
@@ -66,6 +69,7 @@ The block uses CSS variables for easy customization:
 
 ## Recent Changes
 
+- Added case sensitivity for filter terms, while maintaining case insensitivity for terms containing "guide" for backward compatibility.
 - Added a thin border around each blog post entry for improved visual separation.
 - Implemented the `blogroll-entry` class for consistent styling across full and compact modes.
 - Enhanced the README with more detailed styling information and recent changes.
