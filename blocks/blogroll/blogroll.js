@@ -124,10 +124,12 @@ function getConfig(block) {
       const text = cell.textContent.trim();
       if (text === '') return;
       
-      // Check for path={{value}} format
-      const pathMatch = text.match(/^path=\{\{(.+?)\}\}$/);
+      // Check for path=value format
+      const pathMatch = text.match(/^path=(\S+)$/);
       if (pathMatch) {
+        // Get the path value
         const pathValue = pathMatch[1];
+        console.log('Found path filter:', pathValue);
         console.log('Found path filter:', pathValue);
         
         // Special case: path=* means "this subdirectory only"

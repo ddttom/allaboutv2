@@ -12,28 +12,30 @@ To use the Blogroll block, add it to your page with the following structure:
 
 Filter terms are case sensitive by default, except for terms containing the word "guide" (which remain case insensitive for compatibility with older pages).
 
-You can also use the special format `path={{value}}` to filter posts by a specific path. The filtering is partial, meaning it will match any part of the path (not just exact matches). If no posts are found matching the path, the system will automatically try to match the value against post titles instead.
+You can also use the format `path=value` to filter posts by a specific path. The filtering is partial, meaning it will match any part of the path (not just exact matches). If no posts are found matching the path, the system will automatically try to match the value against post titles instead.
 
-Special case: Using `path={{*}}` will filter posts to only show those in the current subdirectory.
+Special case: Using `path=*` will filter posts to only show those in the current subdirectory.
 
 ### Examples:
 
 | Blogroll |
 |----------|
-| path={{/blogs/tech}} |
+| path=/blogs/tech |
 
 This will show only posts with "/blogs/tech" in their path. If none are found, it will show posts with "blogs/tech" in their titles.
 
 | Blogroll |
 |----------|
-| path={{/tutorials}} |
+| path=/tutorials |
 
 | Blogroll |
 |----------|
-| path={{*}} |
+| path=* |
 | guide |
 
 This will show posts with "/tutorials" in their path (or title if no path matches), as well as any posts containing "guide" (case-insensitive).
+
+This will show only posts in the current subdirectory.
 
 For a compact version, add the 'compact' class:
 
@@ -76,13 +78,13 @@ The block uses CSS variables for easy customization:
 - The block fetches blog post data from '/query-index.json'.
 - Posts are grouped by series and sorted within each series.
 - Filter terms are case sensitive by default, except for terms containing the word "guide" (which remain case insensitive for backward compatibility).
-- Special path filtering using `path={{value}}` format allows filtering by path, with fallback to title filtering if no matches are found.
+- Special path filtering using `path=value` format allows filtering by path, with fallback to title filtering if no matches are found.
   - Path filters take precedence over regular filter terms
   - Multiple path filters can be used together (posts matching any of them will be shown)
   - Path filtering is case-sensitive
   - Path filtering is partial (matches any part of the path, not just exact matches)
-  - For example, `path={{blogs/ddt/d}}` would match `/blogs/ddt/developer-guide-part-1`
-  - Special case: `path={{*}}` will filter posts to only show those in the current subdirectory
+  - For example, `path=blogs/ddt/d` would match `/blogs/ddt/developer-guide-part-1`
+  - Special case: `path=*` will filter posts to only show those in the current subdirectory
 - In compact mode, an icon is displayed that opens a side panel when clicked.
 - The compact panel includes a "Show All Posts" toggle.
 - Each blog post entry now has a thin border for improved visual separation.
@@ -99,8 +101,8 @@ The block uses CSS variables for easy customization:
 
 ## Recent Changes
 
-- Added path-specific filtering with the `path={{value}}` format, with automatic fallback to title filtering if no matches are found.
-- Added special case `path={{*}}` to filter posts to only show those in the current subdirectory.
+- Added path-specific filtering with `path=value` format, with automatic fallback to title filtering if no matches are found.
+- Added special case `path=*` to filter posts to only show those in the current subdirectory.
 - Added case sensitivity for filter terms, while maintaining case insensitivity for terms containing "guide" for backward compatibility.
 - Added a thin border around each blog post entry for improved visual separation.
 - Implemented the `blogroll-entry` class for consistent styling across full and compact modes.
