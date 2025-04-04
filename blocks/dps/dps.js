@@ -301,192 +301,146 @@ function parseIllustration(cell) {
     };
   }
 }
-
 /**
- * Extract individual illustration items from content
- * Handles icons, images, iframes and other content
- * @param {string} content - HTML content
- * @param {Element} cell - Original cell element (for element extraction)
- * @returns {Array} Array of illustration items
+ * Extract individual illustration items from content, ensuring uniqueness.
+ * Handles icons, images, iframes and other content.
+ * @param {string} content - HTML content of the cell
+ * @param {Element} cell - Original cell element
+ * @returns {Array} Array of unique illustration items
  */
 function extractIllustrationItems(content, cell) {
   const items = [];
-  
-  // Extract items by type
-  
-  // 1. Check for simple "iframe URL" format
+  const processedIdentifiers = new Set(); // Use a Set to track unique identifiers (URLs, icon names)
+
+  if (!cell) return items; // Return empty array if cell is null
+
+  // Helper function to add item if unique
+  const addUniqueItem = (item, identifier) => {
+    if (identifier && !processedIdentifiers.has(identifier)) {
+      processedIdentifiers.add(identifier);
+      items.push(item);
+    }
+  };
+
+  // --- Extraction Order ---
+  // Prioritize specific elements first (picture, iframe, svg, img, span)
+  // Then check for patterns like 'iframe URL' and links
+
+  // 1. Process picture elements
+  cell.querySelectorAll('picture').forEach(picture => {
+    const img = picture.querySelector('img');
+    const identifier = img ? img.getAttribute('src') : picture.innerHTML.substring(0, 100); // Use img src if available
+    addUniqueItem({
+      type: 'picture',
+      content: picture.outerHTML
+    }, identifier);
+  });
+
+  // 2. Process standard iframe elements
+  cell.querySelectorAll('iframe').forEach(iframe => {
+    const identifier = iframe.getAttribute('src');
+    addUniqueItem({
+      type: 'iframe',
+      url: identifier,
+      content: iframe.outerHTML
+    }, identifier);
+  });
+
+  // 3. Process SVG elements
+  cell.querySelectorAll('svg').forEach(svg => {
+    // Generate a simple identifier for SVG based on its content
+    const identifier = 'svg:' + svg.innerHTML.substring(0, 100);
+    addUniqueItem({
+      type: 'svg',
+      content: svg.outerHTML
+    }, identifier);
+  });
+
+  // 4. Process direct images (excluding those inside already processed pictures)
+  cell.querySelectorAll('img').forEach(img => {
+    if (!img.closest('picture')) { // Ensure it's not inside a <picture> we already processed
+      const identifier = img.getAttribute('src');
+      addUniqueItem({
+        type: 'image',
+        content: identifier,
+        alt: img.getAttribute('alt') || ''
+      }, identifier);
+    }
+  });
+
+  // 5. Process icon spans
+  cell.querySelectorAll('span.icon').forEach(span => {
+    const iconClass = Array.from(span.classList).find(cls => cls.startsWith('icon-'));
+    if (iconClass) {
+      const iconName = iconClass.replace('icon-', '');
+      const identifier = `/icons/${iconName}.svg`; // Use the expected SVG path as identifier
+      addUniqueItem({
+        type: 'icon',
+        iconName: iconName,
+        content: identifier, // Store the path
+        alt: `${iconName} Illustration`
+      }, identifier);
+    }
+  });
+
+  // --- Pattern/Link Based Extraction (Lower Priority) ---
+
+  // 6. Check for simple "iframe URL" pattern (using the raw content string)
   const iframeMatches = content.match(/iframe\s+(https?:\/\/[^\s"'<>]+)/gi);
   if (iframeMatches) {
     iframeMatches.forEach(match => {
-      const url = match.replace(/^iframe\s+/i, '').trim();
-      items.push({
+      const identifier = match.replace(/^iframe\s+/i, '').trim();
+      addUniqueItem({
         type: 'iframe',
-        url: url,
-        content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-      });
+        url: identifier,
+        content: `<iframe src="${identifier}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+      }, identifier);
     });
   }
-  
-  // 2. Check for "iframe <a href...>" format
+
+  // 7. Check for "iframe <a href...>" pattern (using the raw content string)
   const iframeLinks = content.match(/iframe\s+<a[^>]*href=["']([^"']+)["'][^>]*>/gi);
   if (iframeLinks) {
     const linkRegex = /<a[^>]*href=["']([^"']+)["'][^>]*>/i;
     iframeLinks.forEach(match => {
       const linkMatch = match.match(linkRegex);
       if (linkMatch && linkMatch[1]) {
-        const url = linkMatch[1];
-        items.push({
+        const identifier = linkMatch[1];
+         addUniqueItem({
           type: 'iframe',
-          url: url,
-          content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-        });
+          url: identifier,
+          content: `<iframe src="${identifier}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+        }, identifier);
       }
     });
   }
-  
-  // 3. Check for standard iframe elements
-  const iframeElements = cell.querySelectorAll('iframe');
-  iframeElements.forEach(iframe => {
-    const src = iframe.getAttribute('src');
-    if (src) {
-      // Check if this URL has already been processed
-      const isDuplicate = items.some(item => 
-        item.type === 'iframe' && (item.url === src || item.content.includes(src))
-      );
-      
-      if (!isDuplicate) {
-        items.push({
-          type: 'iframe',
-          url: src,
-          content: iframe.outerHTML
-        });
-      }
-    }
-  });
-  
-  // 4. Process icon spans
-  const iconSpans = cell.querySelectorAll('span.icon');
-  iconSpans.forEach(span => {
-    const classes = Array.from(span.classList);
-    const iconClass = classes.find(cls => cls.startsWith('icon-'));
-    
-    if (iconClass) {
-      const iconName = iconClass.replace('icon-', '');
-      items.push({
-        type: 'icon',
-        iconName: iconName,
-        content: `/icons/${iconName}.svg`,
-        alt: `${iconName} Illustration`
-      });
-    }
-  });
-  
-  // 5. Process direct images
-  const directImages = cell.querySelectorAll('img:not(.sequence-image):not(.icon-image)');
-  directImages.forEach(img => {
-    const src = img.getAttribute('src');
-    if (src) {
-      items.push({
-        type: 'image',
-        content: src,
-        alt: img.getAttribute('alt') || ''
-      });
-    }
-  });
-  
-  // 6. Process picture elements
-  const pictureElements = cell.querySelectorAll('picture');
-  pictureElements.forEach(picture => {
-    // Skip if this picture is inside an already processed element
-    const isNested = Array.from(items).some(item => 
-      item.content && item.content.includes(picture.outerHTML)
-    );
-    
-    if (!isNested) {
-      items.push({
-        type: 'picture',
-        content: picture.outerHTML
-      });
-    }
-  });
-  
-  // 7. Process SVG elements
-  const svgElements = cell.querySelectorAll('svg');
-  svgElements.forEach(svg => {
-    // Skip if this SVG is inside an already processed element
-    const isNested = Array.from(items).some(item => 
-      item.content && item.content.includes(svg.outerHTML)
-    );
-    
-    if (!isNested) {
-      items.push({
-        type: 'svg',
-        content: svg.outerHTML
-      });
-    }
-  });
-  
-  // 8. Process anchor links to images
-  const anchorLinks = cell.querySelectorAll('a[href]');
-  anchorLinks.forEach(anchor => {
-    const href = anchor.getAttribute('href');
-    if (href && isImageUrl(href)) {
-      // Check if this URL has already been processed
-      const isDuplicate = items.some(item => 
-        (item.type === 'image' && item.content === href) || 
-        (item.content && item.content.includes(href))
-      );
-      
-      if (!isDuplicate) {
-        items.push({
+
+  // 8. Process anchor links (check if they point to images or should be treated as iframes)
+  cell.querySelectorAll('a[href]').forEach(anchor => {
+    const identifier = anchor.getAttribute('href');
+    if (identifier) {
+      if (isImageUrl(identifier)) {
+        // It's a link to an image
+         addUniqueItem({
           type: 'image',
-          content: href,
+          content: identifier,
           alt: anchor.textContent || ''
-        });
-      }
-    } else if (href && !items.some(item => item.url === href)) {
-      // Process as iframe if not image and not already processed
-      const isDuplicate = items.some(item => 
-        (item.type === 'iframe' && item.url === href) || 
-        (item.content && item.content.includes(href))
-      );
-      
-      if (!isDuplicate && href.match(/^https?:\/\//)) {
-        items.push({
+        }, identifier);
+      } else if (identifier.match(/^https?:\/\//)) {
+        // Treat other http(s) links as potential iframes if not already added
+         addUniqueItem({
           type: 'iframe',
-          url: href,
-          content: `<iframe src="${href}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-        });
+          url: identifier,
+          content: `<iframe src="${identifier}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+        }, identifier);
       }
     }
   });
-  
-  // Remove duplicates based on content
-  const uniqueItems = [];
-  const processedUrls = new Set();
-  
-  items.forEach(item => {
-    let identifier;
-    
-    if (item.url) {
-      identifier = item.url;
-    } else if (item.iconName) {
-      identifier = `icon-${item.iconName}`;
-    } else if (typeof item.content === 'string') {
-      identifier = item.content.substring(0, 100);
-    } else {
-      identifier = JSON.stringify(item).substring(0, 100);
-    }
-    
-    if (!processedUrls.has(identifier)) {
-      processedUrls.add(identifier);
-      uniqueItems.push(item);
-    }
-  });
-  
-  return uniqueItems;
+
+  return items; // Return the uniquely identified items
 }
 
+ 
 /**
  * Determines if a URL is an image based on its file extension
  * @param {string} url - URL to check
@@ -1142,6 +1096,11 @@ function setupResizeHandler() {
     }
   });
 }
+
+
+
+
+
 /**
  * Add CSS styles for the presentation
  * This function adds all necessary styles for the DPS block
