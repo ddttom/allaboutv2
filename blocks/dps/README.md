@@ -47,30 +47,7 @@ A powerful presentation system that transforms structured content into an intera
 - Navigation operates at the container level for improved reliability
 - Each sequence item is contained in its own `.sequence-item-container`
 - Containers maintain proper state for all child elements during navigation
-- Consistent labels for all content types in sequences
-- Clear position indicators show navigation progress
 
-## Visual Navigation Labels
-
-The navigation system provides a better user experience when a slide contains multiple illustrations by adding visual cues:
-
-### Visual Labels for Navigation
-When a slide has illustration items, the navigation adds clear labels showing:
-
-- The type of content (Icon, Iframe, Image, etc.)
-- The current position and total count (e.g., "1/3", "2/3", "3/3", or "1/1" for single items)
-
-This helps users understand:
-- What type of content they're viewing
-- How many total items are in the sequence
-- Which position they're currently at
-
-### Consistent Interface
-The labels appear in a small, semi-transparent black box in the top-left corner of each illustration. This provides:
-
-- Consistent placement across all slides
-- Minimal visual interference with the actual content
-- Clear visibility against any background
 
 ### Icon Support
 The fourth column supports icon spans with specific class names:
@@ -90,7 +67,6 @@ The DPS block handles various content types in any order:
 - Icons, images, iframes, and SVGs in any combination
 - Preserves the exact order from your original document
 - Proper navigation between all content types
-- Clear labeling for each content type
 
 ### iframe Support
 The fourth column supports embedded iframes with flexible URL handling:
@@ -277,7 +253,6 @@ The DPS Block has been completely redesigned with several significant improvemen
 2. **Reliable Illustration Handling**:
    - Simplified approach to finding and processing illustrations
    - Used direct element querying instead of complex pattern matching
-   - Added clear type labeling for all content
 
 3. **Better Sequence Navigation**:
    - Restructured sequence containers to eliminate visibility issues
@@ -298,3 +273,8 @@ The DPS Block has been completely redesigned with several significant improvemen
    - CSS is now embedded in the JS file for better consistency
    - Simplified styling with better organization
    - Improved print mode for handouts
+
+7. **Removed Sequence Item Labels**:
+   - Eliminated the visual overlay that displayed item type and position
+   - Cleaner visual presentation without distracting labels
+   - Maintained all sequence navigation functionality

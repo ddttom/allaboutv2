@@ -584,8 +584,6 @@ function createSequenceHTML(items) {
     // Create container for this item
     html += `<div class="sequence-item-container ${isActive ? 'active' : ''}" data-sequence-id="${index}">`;
     
-    // Add label showing position in sequence
-    html += `<div class="sequence-item-label">${typeLabel} ${index + 1}/${items.length}</div>`;
     
     // Add content based on type
     if (item.type === 'iframe') {
@@ -1529,17 +1527,6 @@ function addStyles() {
       display: block;
     }
 
-    .sequence-item-label {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background-color: rgba(0, 0, 0, 0.6);
-      color: white;
-      padding: 4px 8px;
-      font-size: 12px;
-      border-radius: 4px;
-      z-index: 5;
-    }
 
     .sequence-image {
       position: relative;
