@@ -1146,6 +1146,10 @@ function addStyles() {
       top: 0;
       left: 0;
     }
+    /* hide the H1 outside the DPS block */
+    body.dps-fullscreen main .section.dps-container > .default-content-wrapper {
+      display: none;
+}
 
     body.dps-fullscreen main {
       padding: 0 !important;
