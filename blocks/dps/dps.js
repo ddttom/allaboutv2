@@ -302,15 +302,16 @@ function parseIllustration(cell) {
   }
 }
 /**
- * Extract individual illustration items from content, ensuring uniqueness.
- * Handles icons, images, iframes and other content.
- * @param {string} content - HTML content of the cell
+ * Extract individual illustration items from content, ensuring uniqueness
+ * AND preserving the original DOM order of the first occurrence of each unique item.
+ * Handles icons, images, iframes, SVGs, pictures, and links.
+ * @param {string} content - HTML content of the cell (less used now, prefer cell iteration)
  * @param {Element} cell - Original cell element
- * @returns {Array} Array of unique illustration items
+ * @returns {Array} Array of unique illustration items in their original order
  */
 function extractIllustrationItems(content, cell) {
   const items = [];
-  const processedIdentifiers = new Set(); // Use a Set to track unique identifiers (URLs, icon names)
+  const processedIdentifiers = new Set(); // Use a Set to track unique identifiers
 
   if (!cell) return items; // Return empty array if cell is null
 
@@ -319,137 +320,130 @@ function extractIllustrationItems(content, cell) {
     if (identifier && !processedIdentifiers.has(identifier)) {
       processedIdentifiers.add(identifier);
       items.push(item);
+      return true; // Indicate item was added
     }
+    return false; // Indicate item was a duplicate
   };
 
-  // --- Extraction Order ---
-  // Prioritize specific elements first (picture, iframe, svg, img, span)
-  // Then check for patterns like 'iframe URL' and links
+  // --- Iterate through elements in DOM order ---
+  // Query all potential illustration elements within the cell
+  // This selector aims to capture relevant elements while respecting DOM order
+  const potentialElements = cell.querySelectorAll('picture, iframe, svg, img, span.icon, a[href], p');
 
-  // 1. Process picture elements
-  cell.querySelectorAll('picture').forEach(picture => {
-    const img = picture.querySelector('img');
-    const identifier = img ? img.getAttribute('src') : picture.innerHTML.substring(0, 100); // Use img src if available
-    addUniqueItem({
-      type: 'picture',
-      content: picture.outerHTML
-    }, identifier);
-  });
+  potentialElements.forEach(el => {
+    let item = null;
+    let identifier = null;
+    let added = false;
 
-  // 2. Process standard iframe elements
-  cell.querySelectorAll('iframe').forEach(iframe => {
-    const identifier = iframe.getAttribute('src');
-    addUniqueItem({
-      type: 'iframe',
-      url: identifier,
-      content: iframe.outerHTML
-    }, identifier);
-  });
+    // Skip if element is nested inside another already processed element (like img in picture)
+    if (processedIdentifiers.has(el.closest('picture')?.querySelector('img')?.getAttribute('src')) && el.tagName === 'IMG') return;
+    if (processedIdentifiers.has(el.closest('iframe')?.getAttribute('src')) && el.tagName !== 'IFRAME') return; // Avoid processing content within an already added iframe
 
-  // 3. Process SVG elements
-  cell.querySelectorAll('svg').forEach(svg => {
-    // Generate a simple identifier for SVG based on its content
-    const identifier = 'svg:' + svg.innerHTML.substring(0, 100);
-    addUniqueItem({
-      type: 'svg',
-      content: svg.outerHTML
-    }, identifier);
-  });
 
-  // 4. Process direct images (excluding those inside already processed pictures)
-  cell.querySelectorAll('img').forEach(img => {
-    if (!img.closest('picture')) { // Ensure it's not inside a <picture> we already processed
-      const identifier = img.getAttribute('src');
-      addUniqueItem({
-        type: 'image',
-        content: identifier,
-        alt: img.getAttribute('alt') || ''
-      }, identifier);
+    // Determine element type and identifier
+    if (el.tagName === 'PICTURE') {
+        const img = el.querySelector('img');
+        identifier = img ? img.getAttribute('src') : el.innerHTML.substring(0, 100);
+        if (identifier){ // Ensure picture has content before adding
+             item = { type: 'picture', content: el.outerHTML };
+             added = addUniqueItem(item, identifier);
+        }
+    } else if (el.tagName === 'IFRAME') {
+        identifier = el.getAttribute('src');
+        if (identifier){
+            item = { type: 'iframe', url: identifier, content: el.outerHTML };
+            added = addUniqueItem(item, identifier);
+        }
+    } else if (el.tagName === 'SVG') {
+        identifier = 'svg:' + el.innerHTML.substring(0, 100);
+        item = { type: 'svg', content: el.outerHTML };
+        added = addUniqueItem(item, identifier);
+    } else if (el.tagName === 'IMG') {
+        // Only process if not inside a picture (already handled)
+        if (!el.closest('picture')) {
+            identifier = el.getAttribute('src');
+            if (identifier){
+                item = { type: 'image', content: identifier, alt: el.getAttribute('alt') || '' };
+                added = addUniqueItem(item, identifier);
+            }
+        }
+    } else if (el.tagName === 'SPAN' && el.classList.contains('icon')) {
+        const iconClass = Array.from(el.classList).find(cls => cls.startsWith('icon-'));
+        if (iconClass) {
+            const iconName = iconClass.replace('icon-', '');
+            identifier = `/icons/${iconName}.svg`;
+            item = { type: 'icon', iconName: iconName, content: identifier, alt: `${iconName} Illustration` };
+            added = addUniqueItem(item, identifier);
+        }
+    } else if (el.tagName === 'A' && el.hasAttribute('href')) {
+        identifier = el.getAttribute('href');
+        if (isImageUrl(identifier)) {
+            item = { type: 'image', content: identifier, alt: el.textContent || '' };
+            added = addUniqueItem(item, identifier);
+        } else if (identifier.match(/^https?:\/\//)) {
+            // Treat other http(s) links as potential iframes
+            item = { type: 'iframe', url: identifier, content: `<iframe src="${identifier}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>` };
+            added = addUniqueItem(item, identifier);
+        }
+    } else if (el.tagName === 'P') {
+        // Check paragraph content specifically for "iframe URL" patterns
+        // This handles cases where the pattern isn't wrapped in other elements
+        const textContent = el.textContent || '';
+        const iframeMatch = textContent.trim().match(/^iframe\s+(https?:\/\/[^\s"'<>]+)$/i);
+        if (iframeMatch) {
+            identifier = iframeMatch[1];
+            item = { type: 'iframe', url: identifier, content: `<iframe src="${identifier}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>` };
+            added = addUniqueItem(item, identifier);
+        }
+         // Also check for plain image URLs in paragraphs
+         else if (isImageUrl(textContent.trim())) {
+             identifier = textContent.trim();
+             item = { type: 'image', content: identifier, alt: '' };
+             added = addUniqueItem(item, identifier);
+         }
     }
+
+    // Potentially log if an item wasn't added due to duplication (for debugging)
+    // if (item && !added) {
+    //   console.log('Skipped duplicate item:', identifier);
+    // }
   });
 
-  // 5. Process icon spans
-  cell.querySelectorAll('span.icon').forEach(span => {
-    const iconClass = Array.from(span.classList).find(cls => cls.startsWith('icon-'));
-    if (iconClass) {
-      const iconName = iconClass.replace('icon-', '');
-      const identifier = `/icons/${iconName}.svg`; // Use the expected SVG path as identifier
-      addUniqueItem({
-        type: 'icon',
-        iconName: iconName,
-        content: identifier, // Store the path
-        alt: `${iconName} Illustration`
-      }, identifier);
-    }
-  });
 
-  // --- Pattern/Link Based Extraction (Lower Priority) ---
+  // Final check for basic 'iframe URL' or plain image URL if nothing else was found
+  // This catches cases where the URL is the *only* thing in the cell
+  if (items.length === 0 && content) {
+       const trimmedContent = content.trim();
+       const iframeMatch = trimmedContent.match(/^iframe\s+(https?:\/\/[^\s"'<>]+)$/i);
+       const imageMatch = isImageUrl(trimmedContent);
 
-  // 6. Check for simple "iframe URL" pattern (using the raw content string)
-  const iframeMatches = content.match(/iframe\s+(https?:\/\/[^\s"'<>]+)/gi);
-  if (iframeMatches) {
-    iframeMatches.forEach(match => {
-      const identifier = match.replace(/^iframe\s+/i, '').trim();
-      addUniqueItem({
-        type: 'iframe',
-        url: identifier,
-        content: `<iframe src="${identifier}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-      }, identifier);
-    });
+       if (iframeMatch) {
+           const identifier = iframeMatch[1];
+            addUniqueItem({
+             type: 'iframe',
+             url: identifier,
+             content: `<iframe src="${identifier}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+           }, identifier);
+       } else if (imageMatch) {
+            const identifier = trimmedContent;
+             addUniqueItem({
+                 type: 'image',
+                 content: identifier,
+                 alt: ''
+           }, identifier);
+       }
   }
 
-  // 7. Check for "iframe <a href...>" pattern (using the raw content string)
-  const iframeLinks = content.match(/iframe\s+<a[^>]*href=["']([^"']+)["'][^>]*>/gi);
-  if (iframeLinks) {
-    const linkRegex = /<a[^>]*href=["']([^"']+)["'][^>]*>/i;
-    iframeLinks.forEach(match => {
-      const linkMatch = match.match(linkRegex);
-      if (linkMatch && linkMatch[1]) {
-        const identifier = linkMatch[1];
-         addUniqueItem({
-          type: 'iframe',
-          url: identifier,
-          content: `<iframe src="${identifier}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-        }, identifier);
-      }
-    });
-  }
 
-  // 8. Process anchor links (check if they point to images or should be treated as iframes)
-  cell.querySelectorAll('a[href]').forEach(anchor => {
-    const identifier = anchor.getAttribute('href');
-    if (identifier) {
-      if (isImageUrl(identifier)) {
-        // It's a link to an image
-         addUniqueItem({
-          type: 'image',
-          content: identifier,
-          alt: anchor.textContent || ''
-        }, identifier);
-      } else if (identifier.match(/^https?:\/\//)) {
-        // Treat other http(s) links as potential iframes if not already added
-         addUniqueItem({
-          type: 'iframe',
-          url: identifier,
-          content: `<iframe src="${identifier}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-        }, identifier);
-      }
-    }
-  });
-
-  return items; // Return the uniquely identified items
+  return items; // Return the uniquely identified items in DOM order
 }
 
- 
-/**
- * Determines if a URL is an image based on its file extension
- * @param {string} url - URL to check
- * @returns {boolean} True if the URL appears to be an image
- */
+// Ensure the isImageUrl helper function exists (it was already in your dps.js)
 function isImageUrl(url) {
-  return url.match(/\.(jpg|jpeg|png|gif|svg|webp|bmp|ico|tiff)($|\?)/i) !== null;
+  if (!url) return false;
+  // Added optional query/fragment check
+  return url.match(/\.(jpg|jpeg|png|gif|svg|webp|bmp|ico|tiff)($|\?|#)/i) !== null;
 }
-
 /**
  * Build all slides in the presentation container
  * @param {Array} slides - Array of slide data
