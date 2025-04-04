@@ -16,6 +16,7 @@ A powerful presentation system that transforms structured content into an intera
 - Flexible iframe support with smart URL handling
 - Improved icon handling with SVG support
 - Simplified iframe format for easier authoring
+- Automatic Q&A slide with interactive link support
 
 ## Content Structure
 | Title | Subtitle | Timer (minutes) | Content | Presenter Notes |
@@ -240,6 +241,24 @@ For images, you can simply paste the URL directly.
 - Firefox
 - Safari
 - Edge
+
+## Q&A Slide
+The DPS block automatically adds a "Questions & Answers" slide at the end of every presentation. This slide features:
+
+- A prominent "Q&A" title
+- A subtitle that can include a clickable link
+- A circular question mark icon
+- A "Thank You" message
+
+### Interactive Link in Subtitle
+The subtitle text supports an interactive link feature:
+
+- If the subtitle contains a hyphen (" - "), the text after the last hyphen will be converted into a clickable link
+- Example: "Your feedback and questions are valuable - Contact us"
+  - "Your feedback and questions are valuable" appears as normal text
+  - "Contact us" appears as a blue, clickable link
+
+This feature is useful for adding contact information, references, or calls to action at the end of your presentation without requiring any HTML knowledge.
 
 ## Recent Improvements
 

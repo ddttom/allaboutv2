@@ -462,12 +462,23 @@ function buildSlides(slides, container) {
     }
 
     if (slide.type === 'qanda') {
+      // Process subtitle to find the last hyphen and create a link
+      let subtitleContent = slide.subtitle;
+      const lastHyphenIndex = subtitleContent.lastIndexOf(' - ');
+      
+      let formattedSubtitle = subtitleContent;
+      if (lastHyphenIndex !== -1) {
+        const beforeHyphen = subtitleContent.substring(0, lastHyphenIndex);
+        const afterHyphen = subtitleContent.substring(lastHyphenIndex + 3); // +3 to skip " - "
+        formattedSubtitle = `${beforeHyphen} - <a href="#" class="qanda-link">${afterHyphen}</a>`;
+      }
+      
       // Special Q&A slide handling
       slideElement.innerHTML = `
         <div class="slide-content">
           <h2 class="slide-title">${slide.title}</h2>
           <div class="slide-content-text">
-            <p class="slide-subtitle">${slide.subtitle}</p>
+            <p class="slide-subtitle">${formattedSubtitle}</p>
           </div>
           <div class="illustration qanda-content">
             <div class="qanda-circle">
@@ -1647,6 +1658,19 @@ function addStyles() {
       .presenter-notes {
         display: none;
       }
+    }
+    
+    /* Q&A slide link styling */
+    .qanda-link {
+      color: #3498db;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease, text-decoration 0.2s ease;
+    }
+    
+    .qanda-link:hover {
+      color: #2980b9;
+      text-decoration: underline;
     }
   `;
   
