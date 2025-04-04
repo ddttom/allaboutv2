@@ -36,11 +36,36 @@
             color: #7f8c8d;
             font-size: 14px;
         }
+        
+        .lottery-splash {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            z-index: 10;
+            transition: opacity 0.5s ease;
+        }
+        
+        .lottery-splash h1 {
+            font-size: 48px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
     </style>
 </head>
 <body>
-    <div class="container" id="animationContainer">
-        <h1 style="text-align: center;">Tombola Animation Presentation</h1>
+    <!-- Initial lottery splash screen -->
+    <div class="lottery-splash" id="lotterySplash">
+        <h1>Lottery</h1>
+    </div>
+    
+    <div class="container" id="animationContainer" style="display: none;">
+        <h1 style="text-align: center;">Choosing the next word</h1>
         
         <div id="svgContainer">
             <svg viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -129,6 +154,7 @@
         const FINAL_STATE = 3;
         
         // Animation timing (in ms)
+        const SPLASH_DURATION = 3000;  // 3 second delay before showing SVG
         const PHASE_1_START = 1000;  // Initial state duration before animation starts
         const PHASE_1_DURATION = 1000;  // Time for tickets to move into tombola
         const PHASE_2_START = PHASE_1_START + PHASE_1_DURATION + 2000;  // 2 second pause before the next phase
@@ -147,6 +173,7 @@
         const handle = document.getElementById('handle');
         const container = document.getElementById('animationContainer');
         const clickMessage = document.getElementById('clickMessage');
+        const lotterySplash = document.getElementById('lotterySplash');
         
         // Animation variables
         let isAnimationComplete = false;
@@ -166,8 +193,19 @@
                 }
             });
             
-            // Start animation immediately on load
-            runAnimation();
+            // Show SVG container after splash screen
+            setTimeout(() => {
+                lotterySplash.style.opacity = '0';
+                container.style.display = 'block';
+                
+                // Remove splash screen from DOM after fade out
+                setTimeout(() => {
+                    lotterySplash.style.display = 'none';
+                }, 500);
+                
+                // Start animation
+                runAnimation();
+            }, SPLASH_DURATION);
         }
         
         // Run full animation sequence
