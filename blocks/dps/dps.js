@@ -87,7 +87,6 @@ export default async function decorate(block) {
   const footer = createFooter(presentationData.timerDuration);
 
   // Assemble the presentation container
-  presentationContainer.appendChild(header);
   presentationContainer.appendChild(slidesContainer);
   presentationContainer.appendChild(presenterNotesContainer);
   presentationContainer.appendChild(footer);
