@@ -16,13 +16,40 @@ function extractSeriesInfo(title, path) {
 }
 
 // Function to group and sort blog posts
-function groupAndSortPosts(posts, acceptList = []) {
+function groupAndSortPosts(posts, config) {
+  const { acceptList = [], pathFilters = [] } = config || {};
   const seriesMap = new Map();
+  let filteredPosts = [...posts];
+  let usedPathFilter = false;
+  let usedTitleFilter = false;
 
-  posts.forEach(post => {
-    // Only filter if acceptList is not empty
-    if (acceptList.length > 0) {
-      const matches = acceptList.some(term => {
+  // First try path filtering if pathFilters are provided
+  if (pathFilters.length > 0) {
+    const pathFilteredPosts = posts.filter(post =>
+      pathFilters.some(pathFilter => post.path.includes(pathFilter))
+    );
+    
+    // If we found posts with path filtering, use those
+    if (pathFilteredPosts.length > 0) {
+      filteredPosts = pathFilteredPosts;
+      usedPathFilter = true;
+    } else {
+      // If no posts found with path filtering, try filtering by title instead
+      const titleFilteredPosts = posts.filter(post =>
+        pathFilters.some(pathFilter => post.title.includes(pathFilter))
+      );
+      
+      if (titleFilteredPosts.length > 0) {
+        filteredPosts = titleFilteredPosts;
+        usedTitleFilter = true;
+      }
+    }
+  }
+
+  // Apply regular acceptList filtering if we didn't use path/title filtering
+  if (!usedPathFilter && !usedTitleFilter && acceptList.length > 0) {
+    filteredPosts = filteredPosts.filter(post => {
+      return acceptList.some(term => {
         // If term is lowercase (contains 'guide'), do case-insensitive comparison
         if (term === term.toLowerCase() && term.includes('guide')) {
           return post.path.toLowerCase().includes(term);
@@ -30,10 +57,11 @@ function groupAndSortPosts(posts, acceptList = []) {
         // Otherwise do case-sensitive comparison
         return post.path.includes(term);
       });
-      
-      if (!matches) return;
-    }
+    });
+  }
 
+  // Group the filtered posts
+  filteredPosts.forEach(post => {
     const { name, part, basePath } = extractSeriesInfo(post.title, post.path);
     const key = `${basePath}/${name}`;
     if (!seriesMap.has(key)) {
@@ -62,23 +90,48 @@ function groupAndSortPosts(posts, acceptList = []) {
 function getConfig(block) {
   const config = {
     acceptList: [],
+    pathFilters: [],
     isCompact: block.classList.contains('compact'),
   };
   
   const rows = [...block.children];
   if (rows.length > 0) {
     const firstRow = rows.shift();
-    config.acceptList = [...firstRow.children]
-      .map(cell => {
-        const text = cell.textContent.trim();
+    
+    [...firstRow.children].forEach(cell => {
+      const text = cell.textContent.trim();
+      if (text === '') return;
+      
+      // Check for path={{value}} format
+      const pathMatch = text.match(/^path=\{\{(.+?)\}\}$/);
+      if (pathMatch) {
+        const pathValue = pathMatch[1];
+        
+        // Special case: path=* means "this subdirectory only"
+        if (pathValue === '*') {
+          const currentPath = window.location.pathname;
+          // Get the current directory path (remove the last part if it's not ending with /)
+          let currentDir = currentPath;
+          if (!currentPath.endsWith('/')) {
+            currentDir = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+          }
+          // Store the current directory as a path filter
+          config.pathFilters.push(currentDir);
+        } else {
+          // Store regular path filters
+          config.pathFilters.push(pathValue);
+        }
+      } else {
+        // Process regular filter terms
         // Only convert to lowercase if it contains the word 'guide' (case insensitive)
-        return text.toLowerCase().includes('guide') ? text.toLowerCase() : text;
-      })
-      .filter(text => text !== '');
+        const processedText = text.toLowerCase().includes('guide') ? text.toLowerCase() : text;
+        config.acceptList.push(processedText);
+      }
+    });
   }
 
-  // If acceptList is empty and it's compact mode, set default path
-  if (config.acceptList.length === 0 && config.isCompact) {
+  // If both acceptList and pathFilters are empty and it's compact mode, set default path
+  if (config.acceptList.length === 0 && config.pathFilters.length === 0 && config.isCompact) {
     const currentPath = window.location.pathname.toLowerCase();
     const pathParts = currentPath.split('/');
     const lastPart = pathParts[pathParts.length - 1].replace(/-part-\d+$/, '');
@@ -135,7 +188,7 @@ function createCompactBlogrollPanel(groupedPosts, originalPosts, config) {
       showAllButton.textContent = 'Show All Posts';
     } else {
       // Show all posts
-      const allPosts = groupAndSortPosts(originalPosts, []);
+      const allPosts = groupAndSortPosts(originalPosts, { acceptList: [], pathFilters: [] });
       updatePanelContent(blogrollContent, allPosts);
       showAllButton.textContent = 'Show Filtered Posts';
     }
@@ -200,7 +253,7 @@ export default async function decorate(block) {
     const blogPosts = json.data;
     console.log('Fetched blog posts:', blogPosts);
 
-    const groupedPosts = groupAndSortPosts(blogPosts, config.acceptList);
+    const groupedPosts = groupAndSortPosts(blogPosts, config);
     console.log('Grouped posts:', groupedPosts);
 
     // Clear loading message
