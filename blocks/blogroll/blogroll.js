@@ -25,9 +25,20 @@ function groupAndSortPosts(posts, config) {
 
   // First try path filtering if pathFilters are provided
   if (pathFilters.length > 0) {
-    const pathFilteredPosts = posts.filter(post =>
-      pathFilters.some(pathFilter => post.path.includes(pathFilter))
-    );
+    console.log('Applying path filters:', pathFilters);
+    
+    const pathFilteredPosts = posts.filter(post => {
+      const matches = pathFilters.some(pathFilter => {
+        const match = post.path.includes(pathFilter);
+        if (match) {
+          console.log(`Path match found: "${pathFilter}" in "${post.path}"`);
+        }
+        return match;
+      });
+      return matches;
+    });
+    
+    console.log(`Found ${pathFilteredPosts.length} posts matching path filters`);
     
     // If we found posts with path filtering, use those
     if (pathFilteredPosts.length > 0) {
@@ -35,9 +46,20 @@ function groupAndSortPosts(posts, config) {
       usedPathFilter = true;
     } else {
       // If no posts found with path filtering, try filtering by title instead
-      const titleFilteredPosts = posts.filter(post =>
-        pathFilters.some(pathFilter => post.title.includes(pathFilter))
-      );
+      console.log('No path matches found, trying title filtering');
+      
+      const titleFilteredPosts = posts.filter(post => {
+        const matches = pathFilters.some(pathFilter => {
+          const match = post.title.includes(pathFilter);
+          if (match) {
+            console.log(`Title match found: "${pathFilter}" in "${post.title}"`);
+          }
+          return match;
+        });
+        return matches;
+      });
+      
+      console.log(`Found ${titleFilteredPosts.length} posts matching title filters`);
       
       if (titleFilteredPosts.length > 0) {
         filteredPosts = titleFilteredPosts;
@@ -106,15 +128,20 @@ function getConfig(block) {
       const pathMatch = text.match(/^path=\{\{(.+?)\}\}$/);
       if (pathMatch) {
         const pathValue = pathMatch[1];
+        console.log('Found path filter:', pathValue);
         
         // Special case: path=* means "this subdirectory only"
         if (pathValue === '*') {
           const currentPath = window.location.pathname;
+          console.log('Current pathname:', currentPath);
+          
           // Get the current directory path (remove the last part if it's not ending with /)
           let currentDir = currentPath;
           if (!currentPath.endsWith('/')) {
             currentDir = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
           }
+          console.log('Current directory for path=*:', currentDir);
+          
           // Store the current directory as a path filter
           config.pathFilters.push(currentDir);
         } else {
@@ -240,6 +267,8 @@ export default async function decorate(block) {
   console.log('Decorating blogroll block:', block);
   const config = getConfig(block);
   console.log('Blogroll config:', config);
+  console.log('Path filters:', config.pathFilters);
+  console.log('Accept list:', config.acceptList);
   
   // Add loading state
   block.textContent = 'Loading blog posts...';
