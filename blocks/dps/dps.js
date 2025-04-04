@@ -1,339 +1,590 @@
-/**
- * Dynamic Presentation System (DPS) Block
- * Transforms structured content from Google Docs tables into an interactive presentation
- * with features like image sequences, presenter notes, and timer controls.
- *
- * Key Features:
- * - Full-screen presentation mode with automatic viewport handling
- * - Keyboard-based navigation with support for image sequences
- * - Presenter notes with toggle functionality
- * - Timer with visual warning system
- * - Responsive design with print optimization
- * - Flexible iframe and image content support
- */
-
-/**
- * Formats seconds into MM:SS display format for the presentation timer
- * This utility function is critical for the timer display and must remain
- * at module scope since it's used in both the initial footer template
- * and the timer update logic.
- * Format time in minutes:seconds
- * @param {number} seconds - Total seconds to format
- * @returns {string} Formatted time string (MM:SS)
- */
-function formatTime(seconds) {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
-  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-}
-
-/* Configuration object for presentation settings
- * - Timer duration defaults to 25 minutes
- * - Slide transitions use 300ms for smooth animation
- * - Presenter notes start hidden by default
- * - Debug info tracking enabled by default
- */
-const DPS_CONFIG = {
-  TIMER_DURATION: 25 * 60,
-  SLIDE_TRANSITION_MS: 300,
-  PRESENTER_NOTES_VISIBLE: true,
-  DEBUG_INFO: {
-    enabled: true,
-    slides: [],
-    illustrations: [],
-    events: []
-  }
-};
-
-// Global navigation state variables
-let currentSlideIndex = 0;
-let currentNavIndex = 0;
-let flatNavigation = [];
-let timerInterval = null;
-let remainingTime = 0;
-let hasStartedTimer = false;
-
-/**
- * Main entry point for the DPS block
- * @param {Element} block - The block element to decorate
- */
-export default function decorate(block) {
-  // Add dps-block class to the container for proper styling isolation
-  block.classList.add('dps-block');
-  
-  // Add CSS for image sequences
-  addImageSequenceStyles();
-
-  /* Force full viewport mode by removing existing page elements
-   * This ensures the presentation takes up the entire screen without interference
-   * from other page elements
-   */
-  const existingHeader = document.querySelector('header');
-  const existingFooter = document.querySelector('footer');
-  const existingMain = document.querySelector('main');
-  
-  if (existingHeader) existingHeader.style.display = 'none';
-  if (existingFooter) existingFooter.style.display = 'none';
-  if (existingMain) {
-    existingMain.style.padding = '0';
-    existingMain.style.margin = '0';
-    existingMain.style.width = '100%';
-    existingMain.style.maxWidth = '100%';
-  }
-
-  // Extract rows from the block (each row was a table row in the Google Doc)
-  const rows = Array.from(block.children);
-
-  /* Validate minimum content requirements
-   * Need at least configuration row and one slide row
-   */
-  if (rows.length < 2) {
-    block.innerHTML =
-      '<div class="dps-error">Error: DPS block requires at least a configuration row and one slide row.</div>';
-    return;
-  }
-
-  // Extract presentation data from the rows
-  const presentationData = parseRows(rows);
-
-  /* Create the main presentation container
-   * This will hold all presentation elements in a structured layout
-   */
-  const presentationContainer = document.createElement('div');
-  presentationContainer.className = 'dps-container';
-
-  /* Create header section with title and subtitle
-   */
-  const header = document.createElement('div');
-  header.className = 'dps-header';
-  header.innerHTML = `
-    <div class="header-content">
-      <h1 id="presentation-title">${presentationData.title}</h1>
-      <p id="presentation-subtitle">${presentationData.subtitle || ''}</p>
-    </div>
-  `;
-
-  /* Create slides container
-   * This will hold all slides and handle their display/hide logic
-   */
-  const slidesContainer = document.createElement('div');
-  slidesContainer.className = 'slides-container';
-  slidesContainer.id = 'slides-container';
-
-  /* Create presenter notes container
-   * Initially hidden, can be toggled with keyboard shortcuts
-   */
-  const presenterNotesContainer = document.createElement('div');
-  presenterNotesContainer.className = 'presenter-notes hidden';
-  presenterNotesContainer.innerHTML = `
-    <div class="presenter-notes-title">
-      <span>Presenter Notes (-)hide (+)show</span>
-      <div class="resize-grip">↕</div>
-    </div>
-    <div class="presenter-notes-content"></div>
-  `;
-  
-  /* Create footer section with navigation and timer
-   * Navigation arrows provide visual controls for slide progression
-   * Timer shows remaining presentation time
-   * System Info button provides debug information
-   */
-  const footer = document.createElement('div');
-  footer.className = 'dps-footer';
-  footer.innerHTML = `
-    <div class="footer-content">
-      <div class="nav-arrows">
-        <button class="nav-arrow prev-slide" aria-label="Previous slide">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
-          </svg>
-        </button>
-        <button class="nav-arrow next-slide" aria-label="Next slide">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-          </svg>
-        </button>
-      </div>
-      <div class="timer">${formatTime(
-        presentationData.timerDuration * 60 || DPS_CONFIG.TIMER_DURATION
-      )}</div>
-      <div class="footer-buttons">
-        <button class="presenter-toggle" aria-label="Toggle presenter view">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
-          </svg>
-        </button>
-        <button class="system-info-button" aria-label="Copy system info">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-  `;
-
-  // Append all elements to the presentation container
-  presentationContainer.appendChild(header);
-  presentationContainer.appendChild(slidesContainer);
-  presentationContainer.appendChild(presenterNotesContainer);
-  presentationContainer.appendChild(footer);
-
-  // Replace the block content with our presentation
-  block.textContent = '';
-  block.appendChild(presentationContainer);
-
-  // Build slides from the parsed content
-  buildSlides(presentationData.slides, slidesContainer);
-  
-  // Add styles for better navigation and presentation
-  addSeamlessNavigationStyles();
-  
-  // Initialize the timer duration
-  window.remainingTime = presentationData.timerDuration * 60 || DPS_CONFIG.TIMER_DURATION;
-  
-  // Set up the state tracker (for debugging)
-  initStateTracker();
-  
-  // Set up the system info button
-  setupSystemInfoButton();
-  
-  // Set up navigation system
-  setupNavigationSystem();
-
-  // Initialize the resize handler for presenter notes
-  setupResizeHandler();
-
-  // Set up the presenter toggle button event handler
-  setupPresenterToggle();
-  
-  // Force fullscreen mode immediately
-  document.body.classList.add('dps-fullscreen');
-  window.scrollTo(0, 0);
-}
-
-/**
- * Parse rows from the block to extract presentation data
- * 
- * Expected row structure:
- * Row 1: Configuration (title, subtitle, timer duration)
- * Row 2+: Slides (title, intro text, bullet points, illustration, presenter notes)
- * 
- * @param {Array} rows - Array of row elements from the block
- * @returns {Object} Structured presentation data
- */
-function parseRows(rows) {
-  /* Extract configuration from first row
-   * Contains title, subtitle, and timer duration
-   */
-  const configRow = rows[0].querySelector('div');
-  const title = configRow.textContent.trim();
-  const subtitle = rows[0].querySelector('div:nth-child(2)')?.textContent.trim() || '';
-  const timerDuration = parseInt(rows[0].querySelector('div:nth-child(3)')?.textContent.trim() || '25', 10);
-
-  // Process remaining rows as slides
-  const slides = [];
-  
-  /* Process each slide row
-   * Extracts and structures content for each slide
-   */
-  for (let i = 1; i < rows.length; i++) {
-    const row = rows[i];
-    const cells = Array.from(row.children);
-    
-    /* Extract slide data from cells
-     * Each cell contains specific content type
-     */
-    const slideTitle = cells[0]?.textContent.trim() || `Slide ${i}`;
-    const introText = cells[1]?.textContent.trim() || '';
-    
-    /* Process bullet points from the third cell
-     * Supports both bullet points and plain text
-     */
-    const bulletPointsCell = cells[2];
-    const bulletPoints = [];
-    
-    if (bulletPointsCell) {
-      /* Process bullet points and plain text
-       * Splits content by line breaks and identifies content type
-       */
-      const bulletContent = bulletPointsCell.innerHTML;
-      const bulletItems = bulletContent.split('<br>');
-      
-      bulletItems.forEach(item => {
-        const trimmedItem = item.trim();
-        if (trimmedItem) {
-          /* Identify content type:
-           * - Plain text: No bullet markers
-           * - HTML: Contains HTML tags
-           * - Bullet points: Contains bullet markers
-           */
-          const isPlainText = !trimmedItem.includes('•') && !trimmedItem.includes('<li>');
-          const isHTML = trimmedItem.includes('<') && trimmedItem.includes('>');
-          
-          bulletPoints.push({
-            text: trimmedItem,
-            isPlainText,
-            isHTML
-          });
+{
+  "timestamp": "2025-04-04T09:37:36.747Z",
+  "slides": [
+    {
+      "index": 0,
+      "title": "Introduction",
+      "type": "standard",
+      "hasIllustration": true,
+      "timestamp": "2025-04-04T09:34:46.411Z"
+    },
+    {
+      "index": 1,
+      "title": "What is AI?",
+      "type": "standard",
+      "hasIllustration": true,
+      "timestamp": "2025-04-04T09:34:46.413Z"
+    },
+    {
+      "index": 2,
+      "title": "Understanding Large Language Models (LLMs) in AI",
+      "type": "standard",
+      "hasIllustration": true,
+      "timestamp": "2025-04-04T09:34:46.413Z"
+    },
+    {
+      "index": 3,
+      "title": "The Problem of AI Hallucinations",
+      "type": "standard",
+      "hasIllustration": true,
+      "timestamp": "2025-04-04T09:34:46.414Z"
+    },
+    {
+      "index": 4,
+      "title": "The Enormous Corpus Behind AI",
+      "type": "standard",
+      "hasIllustration": true,
+      "timestamp": "2025-04-04T09:34:46.415Z"
+    },
+    {
+      "index": 5,
+      "title": "Building the Dictionary: Tokens and Embeddings",
+      "type": "standard",
+      "hasIllustration": true,
+      "timestamp": "2025-04-04T09:34:46.415Z"
+    },
+    {
+      "index": 6,
+      "title": "Token Embedding: A Closer Look",
+      "type": "standard",
+      "hasIllustration": true,
+      "timestamp": "2025-04-04T09:34:46.416Z"
+    },
+    {
+      "index": 7,
+      "title": "A Practical Example: Tokenising a Sentence",
+      "type": "standard",
+      "hasIllustration": true,
+      "timestamp": "2025-04-04T09:34:46.416Z"
+    },
+    {
+      "index": 8,
+      "title": "How AI Generates Text",
+      "type": "standard",
+      "hasIllustration": true,
+      "timestamp": "2025-04-04T09:34:46.417Z"
+    },
+    {
+      "index": 9,
+      "title": "From Raw Corpus (Body of Text) to Training: How AI Learns",
+      "type": "standard",
+      "hasIllustration": true,
+      "timestamp": "2025-04-04T09:34:46.418Z"
+    },
+    {
+      "index": 10,
+      "title": "The Journey to a Question-Answering System",
+      "type": "standard",
+      "hasIllustration": true,
+      "timestamp": "2025-04-04T09:34:46.419Z"
+    },
+    {
+      "index": 11,
+      "title": "Why Alignment is Never Perfect",
+      "type": "standard",
+      "hasIllustration": true,
+      "timestamp": "2025-04-04T09:34:46.419Z"
+    },
+    {
+      "index": 12,
+      "title": "Why these Methods Lead to Errors",
+      "type": "standard",
+      "hasIllustration": true,
+      "timestamp": "2025-04-04T09:34:46.420Z"
+    },
+    {
+      "index": 13,
+      "title": "AI Image Processing Example",
+      "type": "standard",
+      "hasIllustration": true,
+      "timestamp": "2025-04-04T09:34:46.421Z"
+    },
+    {
+      "index": 14,
+      "title": "Final Words",
+      "type": "standard",
+      "hasIllustration": true,
+      "timestamp": "2025-04-04T09:34:46.422Z"
+    },
+    {
+      "index": 15,
+      "title": "Questions & Answers",
+      "type": "qanda",
+      "hasIllustration": false,
+      "timestamp": "2025-04-04T09:34:46.422Z"
+    }
+  ],
+  "illustrations": [
+    {
+      "slideTitle": "Introduction",
+      "slideIndex": 1,
+      "type": "images",
+      "timestamp": "2025-04-04T09:34:46.397Z",
+      "content": "1 items"
+    },
+    {
+      "slideTitle": "What is AI?",
+      "slideIndex": 2,
+      "type": "images",
+      "timestamp": "2025-04-04T09:34:46.399Z",
+      "content": "4 items"
+    },
+    {
+      "slideTitle": "Understanding Large Language Models (LLMs) in AI",
+      "slideIndex": 3,
+      "type": "images",
+      "timestamp": "2025-04-04T09:34:46.400Z",
+      "content": "2 items"
+    },
+    {
+      "slideTitle": "The Problem of AI Hallucinations",
+      "slideIndex": 4,
+      "type": "images",
+      "timestamp": "2025-04-04T09:34:46.400Z",
+      "content": "2 items"
+    },
+    {
+      "slideTitle": "The Enormous Corpus Behind AI",
+      "slideIndex": 5,
+      "type": "images",
+      "timestamp": "2025-04-04T09:34:46.401Z",
+      "content": "2 items"
+    },
+    {
+      "slideTitle": "Building the Dictionary: Tokens and Embeddings",
+      "slideIndex": 6,
+      "type": "images",
+      "timestamp": "2025-04-04T09:34:46.402Z",
+      "content": "2 items"
+    },
+    {
+      "slideTitle": "Token Embedding: A Closer Look",
+      "slideIndex": 7,
+      "type": "images",
+      "timestamp": "2025-04-04T09:34:46.402Z",
+      "content": "4 items"
+    },
+    {
+      "slideTitle": "A Practical Example: Tokenising a Sentence",
+      "slideIndex": 8,
+      "type": "images",
+      "timestamp": "2025-04-04T09:34:46.403Z",
+      "content": "2 items"
+    },
+    {
+      "slideTitle": "How AI Generates Text",
+      "slideIndex": 9,
+      "type": "images",
+      "timestamp": "2025-04-04T09:34:46.404Z",
+      "content": "2 items"
+    },
+    {
+      "slideTitle": "From Raw Corpus (Body of Text) to Training: How AI Learns",
+      "slideIndex": 10,
+      "type": "images",
+      "timestamp": "2025-04-04T09:34:46.406Z",
+      "content": "10 items"
+    },
+    {
+      "slideTitle": "The Journey to a Question-Answering System",
+      "slideIndex": 11,
+      "type": "images",
+      "timestamp": "2025-04-04T09:34:46.406Z",
+      "content": "2 items"
+    },
+    {
+      "slideTitle": "Why Alignment is Never Perfect",
+      "slideIndex": 12,
+      "type": "images",
+      "timestamp": "2025-04-04T09:34:46.407Z",
+      "content": "2 items"
+    },
+    {
+      "slideTitle": "Why these Methods Lead to Errors",
+      "slideIndex": 13,
+      "type": "images",
+      "timestamp": "2025-04-04T09:34:46.408Z",
+      "content": "3 items"
+    },
+    {
+      "slideTitle": "AI Image Processing Example",
+      "slideIndex": 14,
+      "type": "images",
+      "timestamp": "2025-04-04T09:34:46.408Z",
+      "content": "2 items"
+    },
+    {
+      "slideTitle": "Final Words",
+      "slideIndex": 15,
+      "type": "images",
+      "timestamp": "2025-04-04T09:34:46.409Z",
+      "content": "2 items"
+    }
+  ],
+  "events": [
+    {
+      "type": "system_info_button_clicked",
+      "timestamp": "2025-04-04T09:37:36.746Z"
+    }
+  ],
+  "navigationState": {
+    "currentSlideIndex": 13,
+    "currentNavIndex": 39,
+    "totalSlides": 16,
+    "totalNavPoints": 43
+  },
+  "timerState": {
+    "remainingTime": 0,
+    "hasStartedTimer": true,
+    "isTimerRunning": true
+  },
+  "presenterState": {
+    "isPresenterMode": false,
+    "isNotesVisible": false
+  },
+  "currentIllustration": {},
+  "hashDebug": {
+    "currentSlideContentHash": "2f329f9b",
+    "imageSequenceHash": "93cf26a",
+    "contentHashes": [
+      {
+        "index": 0,
+        "elementType": "DIV",
+        "classes": [
+          "sequence-item-container"
+        ],
+        "contentHash": "1639d912",
+        "shortContent": "<div class=\"sequence-item-container\" data-sequence-id=\"0\" data-content-hash=\"4b8b136c\"><div class=\"s",
+        "contentLength": 334
+      },
+      {
+        "index": 1,
+        "elementType": "IMG",
+        "classes": [
+          "sequence-image"
+        ],
+        "contentHash": "7cbd5b94",
+        "shortContent": "<img src=\"https://allabout.network/blogs/media_167c92e53d349e0436335141172985ec64642876d.png?width=7",
+        "contentLength": 193
+      },
+      {
+        "index": 2,
+        "elementType": "DIV",
+        "classes": [
+          "sequence-item-container",
+          "active"
+        ],
+        "contentHash": "78e8f6f7",
+        "shortContent": "<div class=\"sequence-item-container active\" data-sequence-id=\"1\" data-content-hash=\"4d2e7869\"><div c",
+        "contentLength": 911
+      },
+      {
+        "index": 3,
+        "elementType": "DIV",
+        "classes": [
+          "sequence-image",
+          "active"
+        ],
+        "contentHash": "1560354a",
+        "shortContent": "<div class=\"sequence-image active\" style=\"visibility: visible; display: block;\">          <picture>",
+        "contentLength": 761
+      },
+      {
+        "index": 4,
+        "elementType": "PICTURE",
+        "classes": [],
+        "contentHash": "7e0e4e98",
+        "shortContent": "<picture><source media=\"(min-width: 600px)\" type=\"image/webp\" srcset=\"https://allabout.network/blogs",
+        "contentLength": 655
+      },
+      {
+        "index": 5,
+        "elementType": "IMG",
+        "classes": [],
+        "contentHash": "56b3b7ac",
+        "shortContent": "<img loading=\"lazy\" alt=\"\" src=\"https://allabout.network/blogs/media_167c92e53d349e0436335141172985e",
+        "contentLength": 163
+      }
+    ],
+    "illustrationHashes": {
+      "illustrationType": "sequence",
+      "contentHash": "93cf26a",
+      "elementDetails": [
+        {
+          "index": 0,
+          "labelText": "Image 1/2",
+          "isActive": false,
+          "itemHash": "659ad1cb",
+          "imageType": "IMG",
+          "imageClasses": [
+            "sequence-image"
+          ],
+          "imageHTML": "<img src=\"https://allabout.network/blogs/media_167c92e53d349e0436335141172985ec64642876d.png?width=7",
+          "imageContentHash": "64d400c2"
+        },
+        {
+          "index": 1,
+          "labelText": "Picture 2/2",
+          "isActive": true,
+          "itemHash": "7dfd680d",
+          "imageType": "DIV",
+          "imageClasses": [
+            "sequence-image",
+            "active"
+          ],
+          "imageHTML": "<div class=\"sequence-image active\" style=\"visibility: visible; display: block;\">\n          <picture>",
+          "imageContentHash": "4e1e8ab8"
         }
-      });
+      ]
+    },
+    "hashCollisions": {
+      "totalElementsHashed": 4,
+      "uniqueHashes": 4,
+      "collisions": []
     }
-    
-    /* Process illustration from the fourth cell
-     * Supports images, SVGs, and iframes
-     */
-    const illustrationCell = cells[3];
-    const illustration = parseIllustration(illustrationCell);
-    
-    // Log illustration discovery with timestamp
-    if (illustration && DPS_CONFIG.DEBUG_INFO.enabled) {
-      DPS_CONFIG.DEBUG_INFO.illustrations.push({
-        slideTitle: slideTitle,
-        slideIndex: i,
-        type: illustration.type,
-        timestamp: new Date().toISOString(),
-        content: illustration.type === 'images' ?
-          `${illustration.content.length} items` :
-          'single item'
-      });
+  },
+  "navigationHistory": [
+    {
+      "timestamp": "2025-04-04T09:34:46.422Z",
+      "performanceTime": 4865.0999999940395,
+      "trigger": "initialization",
+      "navigation": {
+        "currentSlideIndex": 0,
+        "currentNavIndex": 0,
+        "totalNavPoints": 0,
+        "currentNavType": "unknown"
+      },
+      "sequence": {
+        "exists": true,
+        "totalImages": 1,
+        "activeCount": 1,
+        "visibleCount": 1,
+        "hasInconsistentState": false
+      }
     }
-    
-    /* Process presenter notes from the fifth cell
-     * Supports HTML formatting for better organization
-     */
-    const presenterNotes = cells[4]?.innerHTML.trim() || '';
-    
-    // Add slide to the collection
-    slides.push({
-      title: slideTitle,
-      introText,
-      bulletPoints,
-      illustration,
-      presenterNotes
+  ]
+}
+/**
+ * Parse an illustration cell into a structured object
+ * This is a simplified approach compared to the original code
+ * @param {Element} cell - The illustration cell
+ * @returns {Object|null} - Parsed illustration object or null
+ */
+function parseIllustration(cell) {
+  if (!cell || !cell.innerHTML.trim()) {
+    return null;
+  }
+  
+  // Simplified content extraction
+  const content = cell.innerHTML.trim();
+  
+  // Extract individual illustration items
+  const items = extractIllustrationItems(content, cell);
+  
+  if (items.length === 0) {
+    return null;
+  }
+  
+  // If we found illustration items, return them
+  if (items.length === 1) {
+    // Single illustration
+    return items[0];
+  } else {
+    // Multiple illustrations - sequence
+    return {
+      type: 'sequence',
+      items: items
+    };
+  }
+}
+
+/**
+ * Extract individual illustration items from content
+ * Handles icons, images, iframes and other content
+ * @param {string} content - HTML content
+ * @param {Element} cell - Original cell element (for element extraction)
+ * @returns {Array} Array of illustration items
+ */
+function extractIllustrationItems(content, cell) {
+  const items = [];
+  
+  // Extract items by type
+  
+  // 1. Check for simple "iframe URL" format
+  const iframeMatches = content.match(/iframe\s+(https?:\/\/[^\s"'<>]+)/gi);
+  if (iframeMatches) {
+    iframeMatches.forEach(match => {
+      const url = match.replace(/^iframe\s+/i, '').trim();
+      items.push({
+        type: 'iframe',
+        url: url,
+        content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+      });
     });
   }
   
-  /* Add a Q&A slide at the end
-   * Provides a dedicated space for audience interaction
-   */
-  slides.push({
-    type: 'qanda',
-    title: 'Questions & Answers',
-    subtitle: 'Your feedback and questions are valuable',
-    thankYouText: 'Thank You For Your Attention'
+  // 2. Check for "iframe <a href...>" format
+  const iframeLinks = content.match(/iframe\s+<a[^>]*href=["']([^"']+)["'][^>]*>/gi);
+  if (iframeLinks) {
+    const linkRegex = /<a[^>]*href=["']([^"']+)["'][^>]*>/i;
+    iframeLinks.forEach(match => {
+      const linkMatch = match.match(linkRegex);
+      if (linkMatch && linkMatch[1]) {
+        const url = linkMatch[1];
+        items.push({
+          type: 'iframe',
+          url: url,
+          content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+        });
+      }
+    });
+  }
+  
+  // 3. Check for standard iframe elements
+  const iframeElements = cell.querySelectorAll('iframe');
+  iframeElements.forEach(iframe => {
+    const src = iframe.getAttribute('src');
+    if (src) {
+      // Check if this URL has already been processed
+      const isDuplicate = items.some(item => 
+        item.type === 'iframe' && (item.url === src || item.content.includes(src))
+      );
+      
+      if (!isDuplicate) {
+        items.push({
+          type: 'iframe',
+          url: src,
+          content: iframe.outerHTML
+        });
+      }
+    }
   });
   
-  return {
-    title,
-    subtitle,
-    timerDuration,
-    slides
-  };
+  // 4. Process icon spans
+  const iconSpans = cell.querySelectorAll('span.icon');
+  iconSpans.forEach(span => {
+    const classes = Array.from(span.classList);
+    const iconClass = classes.find(cls => cls.startsWith('icon-'));
+    
+    if (iconClass) {
+      const iconName = iconClass.replace('icon-', '');
+      items.push({
+        type: 'icon',
+        iconName: iconName,
+        content: `/icons/${iconName}.svg`,
+        alt: `${iconName} Illustration`
+      });
+    }
+  });
+  
+  // 5. Process direct images
+  const directImages = cell.querySelectorAll('img:not(.sequence-image):not(.icon-image)');
+  directImages.forEach(img => {
+    const src = img.getAttribute('src');
+    if (src) {
+      items.push({
+        type: 'image',
+        content: src,
+        alt: img.getAttribute('alt') || ''
+      });
+    }
+  });
+  
+  // 6. Process picture elements
+  const pictureElements = cell.querySelectorAll('picture');
+  pictureElements.forEach(picture => {
+    // Skip if this picture is inside an already processed element
+    const isNested = Array.from(items).some(item => 
+      item.content && item.content.includes(picture.outerHTML)
+    );
+    
+    if (!isNested) {
+      items.push({
+        type: 'picture',
+        content: picture.outerHTML
+      });
+    }
+  });
+  
+  // 7. Process SVG elements
+  const svgElements = cell.querySelectorAll('svg');
+  svgElements.forEach(svg => {
+    // Skip if this SVG is inside an already processed element
+    const isNested = Array.from(items).some(item => 
+      item.content && item.content.includes(svg.outerHTML)
+    );
+    
+    if (!isNested) {
+      items.push({
+        type: 'svg',
+        content: svg.outerHTML
+      });
+    }
+  });
+  
+  // 8. Process anchor links to images
+  const anchorLinks = cell.querySelectorAll('a[href]');
+  anchorLinks.forEach(anchor => {
+    const href = anchor.getAttribute('href');
+    if (href && isImageUrl(href)) {
+      // Check if this URL has already been processed
+      const isDuplicate = items.some(item => 
+        (item.type === 'image' && item.content === href) || 
+        (item.content && item.content.includes(href))
+      );
+      
+      if (!isDuplicate) {
+        items.push({
+          type: 'image',
+          content: href,
+          alt: anchor.textContent || ''
+        });
+      }
+    } else if (href && !items.some(item => item.url === href)) {
+      // Process as iframe if not image and not already processed
+      const isDuplicate = items.some(item => 
+        (item.type === 'iframe' && item.url === href) || 
+        (item.content && item.content.includes(href))
+      );
+      
+      if (!isDuplicate && href.match(/^https?:\/\//)) {
+        items.push({
+          type: 'iframe',
+          url: href,
+          content: `<iframe src="${href}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
+        });
+      }
+    }
+  });
+  
+  // Remove duplicates based on content
+  const uniqueItems = [];
+  const processedUrls = new Set();
+  
+  items.forEach(item => {
+    let identifier;
+    
+    if (item.url) {
+      identifier = item.url;
+    } else if (item.iconName) {
+      identifier = `icon-${item.iconName}`;
+    } else if (typeof item.content === 'string') {
+      identifier = item.content.substring(0, 100);
+    } else {
+      identifier = JSON.stringify(item).substring(0, 100);
+    }
+    
+    if (!processedUrls.has(identifier)) {
+      processedUrls.add(identifier);
+      uniqueItems.push(item);
+    }
+  });
+  
+  return uniqueItems;
 }
 
 /**
  * Determines if a URL is an image based on its file extension
- * 
  * @param {string} url - URL to check
  * @returns {boolean} True if the URL appears to be an image
  */
@@ -342,980 +593,13 @@ function isImageUrl(url) {
 }
 
 /**
- * Generate a simple hash from a string
- * Used for creating unique identifiers from HTML content
- *
- * @param {string} str - String to hash
- * @returns {string} Simple hash of the string
- */
-function simpleHash(str) {
-  let hash = 0;
-  if (str.length === 0) return hash.toString();
-  
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash; // Convert to 32bit integer
-  }
-  
-  return Math.abs(hash).toString(16);
-}
-
-/**
- * Extract iframe content from a string
- * Supports multiple URL formats and HTML encodings
- * MODIFIED: Added support for iframe followed by anchor tags
- * 
- * @param {string} content - String containing iframe content
- * @returns {Object|null} Structured iframe data or null if no iframe found
- */
-function extractIframeContent(content) {
-  /* Check for iframe tag in various formats
-   * Supports standard iframe tags, URL-only content, and HTML encoded content
-   */
-  const iframeMatch = content.match(/<iframe[^>]*src=["'](\\S*)["\'][^>]*>/i) ||
-                     content.match(/<iframe[^>]*>([^<]*)<\/iframe>/i) ||
-                     content.match(/<iframe\\s+([^>]*)>/i);
-  
-  if (iframeMatch) {
-    /* Extract src from iframe tag
-     * Handles various URL formats and encodings
-     */
-    let src = '';
-    if (iframeMatch[1]) {
-      if (iframeMatch[1].includes('src=')) {
-        const srcMatch = iframeMatch[1].match(/src=["'](\\S*)["']/i);
-        if (srcMatch && srcMatch[1]) {
-          src = srcMatch[1];
-        }
-      } else if (iframeMatch[1].startsWith('http')) {
-        src = iframeMatch[1];
-      } else if (iframeMatch[1].includes('http')) {
-        const urlMatch = iframeMatch[1].match(/(https?:\/\/[^\\s"'<>]+)/i);
-        if (urlMatch) {
-          src = urlMatch[0];
-        }
-      }
-    }
-    
-    if (src) {
-      return {
-        type: 'iframe',
-        src,
-        content: `<iframe src="${src}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-      };
-    }
-  }
-  
-  /* Check for simplified "iframe url" format
-   * Makes it easier for authors to add iframes
-   * This handles both standalone "iframe URL" and "iframe URL" within other content
-   */
-  const simpleIframeMatch = content.match(/iframe\\s+(https?:\/\/[^\\s"'<>]+)/i);
-  if (simpleIframeMatch && simpleIframeMatch[1]) {
-    return {
-      type: 'iframe',
-      src: simpleIframeMatch[1],
-      content: `<iframe src="${simpleIframeMatch[1]}\" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-    };
-  }
-  
-  /* Check for iframe followed by anchor tag
-   * This handles the format: iframe <a href="https://example.com">link text</a>
-   */
-  const iframeAnchorMatch = content.match(/iframe\\s+<a[^>]*href=["\']([^"\']+)["\'][^>]*>.*?<\/a>/i);
-  if (iframeAnchorMatch && iframeAnchorMatch[1]) {
-    const src = iframeAnchorMatch[1];
-    return {
-      type: 'iframe',
-      src,
-      content: `<iframe src="${src}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-    };
-  }
-  
-  return null;
-}
-
-/**
- * Extract URL from content
- * Used for identifying potential iframe or image sources
- * 
- * @param {string} content - String containing potential URL
- * @returns {Object|null} URL object with type and URL or null if no URL found
- */
-function extractUrl(content) {
-  // First check for URLs in anchor tags
-  const anchorMatch = content.match(/<a[^>]*href=["'](\\S*)["\'][^>]*>(.*?)<\/a>/i);
-  if (anchorMatch && anchorMatch[1] && anchorMatch[1].startsWith('http')) {
-    const url = anchorMatch[1];
-    // Determine if this is an image URL or an iframe URL based on extension
-    if (isImageUrl(url)) {
-      return {
-        type: 'image',
-        url
-      };
-    } else {
-      return {
-        type: 'iframe',
-        url
-      };
-    }
-  }
-  
-  // Then check for raw URLs
-  const urlMatches = content.match(/(https?:\/\/[^\\s"'<>]+)/gi);
-  if (urlMatches && urlMatches.length > 0) {
-    const url = urlMatches[0]; // Use the first URL found
-    // Determine if this is an image URL or an iframe URL based on extension
-    if (isImageUrl(url)) {
-      return {
-        type: 'image',
-        url
-      };
-    } else {
-      return {
-        type: 'iframe',
-        url
-      };
-    }
-  }
-  
-  return null;
-}
-
-/**
- * Extract icon name from class
- * Gets the specific icon name from the icon-* class
- * 
- * @param {string} className - Class string containing icon-name
- * @returns {string|null} The extracted icon name or null if not found
- */
-function extractIconName(className) {
-  if (!className) return null;
-  
-  const iconClassMatch = className.match(/icon-([a-zA-Z0-9_-]+)/);
-  if (iconClassMatch && iconClassMatch[1]) {
-    return iconClassMatch[1];
-  }
-  return null;
-}
-/**
- * Organize image sequence illustrations by type and deduplicate
- * Improved to ensure more reliable deduplication
- * 
- * @param {Array} illustrations - Array of illustration objects
- * @returns {Array} Organized and deduplicated array of illustrations
- */
-function organizeImageSequence(illustrations) {
-  if (!illustrations || !Array.isArray(illustrations)) return illustrations;
-  
-  // Debug log
-  console.log(`[OrganizeSequence] Processing ${illustrations.length} illustrations`);
-  
-  // Create a map to track unique items by their content hash
-  const uniqueItems = new Map();
-  
-  illustrations.forEach((item, originalIndex) => {
-    // Create a unique identifier based on type and content
-    let identifier;
-    if (item.iconName) {
-      identifier = `icon-${item.iconName}`;
-    } else if (item.src) {
-      identifier = `src-${item.src}`;
-    } else if (item.content && typeof item.content === 'string') {
-      // For strings, use a hash of the truncated content
-      identifier = `${item.type}-${simpleHash(item.content.substring(0, 100))}`;
-    } else if (item.content) {
-      // For objects or arrays, use a hash of the stringified content
-      identifier = `${item.type}-${simpleHash(JSON.stringify(item.content).substring(0, 100))}`;
-    } else {
-      // Fallback to a hash of the entire item
-      identifier = `${item.type}-${simpleHash(JSON.stringify(item))}`;
-    }
-    
-    // Generate a hash for logging
-    const itemHash = simpleHash(identifier);
-    
-    // Only add if we haven't seen this item before
-    if (!uniqueItems.has(identifier)) {
-      uniqueItems.set(identifier, {
-        item,
-        hash: itemHash,
-        position: item.position || originalIndex // Preserve original position
-      });
-      console.log(`[OrganizeSequence] Added unique item: ${item.type}${item.iconName ? ' - ' + item.iconName : ''} (hash: ${itemHash}, position: ${item.position || originalIndex})`);
-    } else {
-      console.log(`[OrganizeSequence] Skipped duplicate: ${item.type}${item.iconName ? ' - ' + item.iconName : ''} (hash: ${itemHash})`);
-    }
-  });
-  
-  // Extract the unique items and sort by original position
-  const uniqueIllustrations = Array.from(uniqueItems.values())
-    .sort((a, b) => a.position - b.position)
-    .map(entry => entry.item);
-  
-  console.log(`[OrganizeSequence] Returning ${uniqueIllustrations.length} unique illustrations from ${illustrations.length} input items`);
-  
-  return uniqueIllustrations;
-}
-
-/**
- * Create HTML for an image sequence
- * Fixed to prevent duplicate containers and ensure consistent state
- * 
- * @param {Array} illustrations - Array of illustration objects
- * @returns {string} HTML string for the image sequence
- */
-function createImageSequenceHTML(illustrations) {
-  if (!illustrations || !Array.isArray(illustrations) || illustrations.length === 0) {
-    return '';
-  }
-  
-  // Use a Set to track unique identifiers and prevent duplicates
-  const processedContent = new Set();
-  let html = '<div class="image-sequence">';
-  
-  // Debug output
-  console.log(`[CreateSequenceHTML] Creating HTML for ${illustrations.length} illustrations`);
-  
-  // Add each item to the sequence with appropriate styling
-  illustrations.forEach((item, index) => {
-    // Create a unique identifier for this item to prevent duplicates
-    let identifier;
-    if (item.iconName) {
-      identifier = `icon-${item.iconName}`;
-    } else if (item.src) {
-      identifier = `src-${item.src}`;
-    } else if (item.content) {
-      // Use a truncated version of content for ID if it's a string
-      const contentId = typeof item.content === 'string' ? 
-        item.content.substring(0, 50) : 
-        JSON.stringify(item).substring(0, 50);
-      identifier = `content-${contentId}`;
-    } else {
-      // Fallback to stringified object
-      identifier = JSON.stringify(item).substring(0, 100);
-    }
-    
-    // Generate a consistent hash for content identification
-    const contentHash = simpleHash(identifier);
-    
-    // Skip if this item has already been processed (prevents duplicates)
-    if (processedContent.has(identifier)) {
-      console.log(`[CreateSequenceHTML] Skipping duplicate item ${index}: ${identifier} (hash: ${contentHash})`);
-      return;
-    }
-    
-    // Add to processed set
-    processedContent.add(identifier);
-    
-    const isActive = index === 0 ? 'active' : '';
-    const typeLabel = item.type.charAt(0).toUpperCase() + item.type.slice(1);
-    
-    // Create container with label and unique id
-    html += `<div class="sequence-item-container ${isActive}" data-sequence-id="${index}" data-content-hash="${contentHash}">`;
-    
-    // Always add label to show position in overall sequence
-    html += `<div class="sequence-item-label">${typeLabel} ${index + 1}/${illustrations.length}</div>`;
-    
-    // Add the content based on type with consistent styling
-    if (item.type === 'iframe') {
-      html += `<div class="iframe-container sequence-image ${isActive}" style="width: 100%; height: 100%; visibility: ${isActive ? 'visible' : 'hidden'};">
-          ${item.content}
-        </div>`;
-    } else if (item.type === 'picture') {
-      html += `<div class="sequence-image ${isActive}" style="visibility: ${isActive ? 'visible' : 'hidden'};">
-          ${item.content}
-        </div>`;
-    } else if (item.type === 'svg') {
-      html += `<div class="sequence-image ${isActive}" style="visibility: ${isActive ? 'visible' : 'hidden'};">
-          ${item.content}
-        </div>`;
-    } else if (item.type === 'icon') {
-      html += `<img
-          src="${item.content}"
-          alt="${item.alt}"
-          class="sequence-image icon-image ${isActive}"
-          data-icon-name="${item.iconName}"
-          style="visibility: ${isActive ? 'visible' : 'hidden'};">`;
-    } else if (item.type === 'image') {
-      html += `<img
-          src="${item.content}"
-          alt="${item.alt || ''}"
-          class="sequence-image ${isActive}"
-          style="visibility: ${isActive ? 'visible' : 'hidden'};">`;
-    } else {
-      html += `<div class="sequence-image text-container ${isActive}" style="visibility: ${isActive ? 'visible' : 'hidden'};">
-          ${item.content}
-        </div>`;
-    }
-    
-    html += '</div>'; // Close sequence-item-container
-    
-    console.log(`[CreateSequenceHTML] Added ${typeLabel} item ${index+1}/${illustrations.length} with hash ${contentHash}`);
-  });
-  
-  html += '</div>'; // Close image-sequence
-  return html;
-}
-
-
-/**
- * Add CSS styles for image sequences
- */
-function addImageSequenceStyles() {
-  const style = document.createElement('style');
-  style.textContent = `
-    .sequence-item-container {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      visibility: hidden;
-    }
-    
-    .sequence-item-container.active {
-      visibility: visible;
-    }
-    
-    .sequence-item-label {
-      position: absolute;
-      top: 0;
-      left: 0;
-      background-color: rgba(0, 0, 0, 0.6);
-      color: white;
-      padding: 2px 6px;
-      font-size: 12px;
-      border-radius: 0 0 4px 0;
-      z-index: 5;
-    }
-    
-    .sequence-image {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      display: block !important;
-      visibility: hidden;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      margin: auto;
-    }
-
-    .sequence-image.active {
-      visibility: visible !important;
-    }
-  `;
-  document.head.appendChild(style);
-}
-
-/**
- * Scan for all iframe and URL patterns in HTML content
- *
- * @param {string} html - HTML content to scan
- * @param {Array} illustrationElements - Collection of illustration elements
- * @param {Set} processedContent - Set of processed content identifiers
- */
-function scanForPatterns(html, illustrationElements, processedContent) {
-  // Pattern 1: Simple "iframe URL" pattern
-  const iframeUrlRegex = /iframe\s+(https?:\/\/[^\s"'<>]+)/gi;
-  let match;
-  
-  while ((match = iframeUrlRegex.exec(html)) !== null) {
-    const url = match[1];
-    const position = match.index;
-    const identifier = `iframe-simple-${url}`;
-    
-    if (!processedContent.has(identifier)) {
-      processedContent.add(identifier);
-      
-      illustrationElements.push({
-        type: 'iframe',
-        position: position,
-        data: {
-          type: 'iframe',
-          src: url,
-          content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-        }
-      });
-      
-      console.log(`[ParseIllustration] Found simple iframe pattern: ${url}`);
-    } else {
-      console.log(`[ParseIllustration] Skipping duplicate iframe pattern: ${url}`);
-    }
-  }
-  // Pattern 2: "iframe <a href...>" pattern
-  const iframeAnchorRegex = /iframe\s+<a[^>]*href=["']([^"']+)["'][^>]*>/gi;
-  
-  while ((match = iframeAnchorRegex.exec(html)) !== null) {
-    const url = match[1];
-    const position = match.index;
-    const identifier = `iframe-anchor-${url}`;
-    
-    if (!processedContent.has(identifier)) {
-      processedContent.add(identifier);
-      
-      illustrationElements.push({
-        type: 'iframe',
-        position: position,
-        data: {
-          type: 'iframe',
-          src: url,
-          content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-        }
-      });
-      
-      console.log(`[ParseIllustration] Found iframe anchor pattern: ${url}`);
-    }
-  }
-  
-  // Pattern 3: "iframe" followed by an <a> tag (not directly connected)
-  const iframePos = [];
-  const simpleRegex = /\biframe\b(?!\s+(?:https?:\/\/|<a))/gi;
-  
-  while ((match = simpleRegex.exec(html)) !== null) {
-    iframePos.push(match.index);
-  }
-  
-  // For each standalone "iframe", look for the next <a> tag
-  iframePos.forEach(pos => {
-    // Look for an <a> tag within the next 100 characters
-    const nextChunk = html.substring(pos, pos + 100);
-    const anchorMatch = /<a[^>]*href=["']([^"']+)["'][^>]*>/i.exec(nextChunk);
-    
-    if (anchorMatch) {
-      const url = anchorMatch[1];
-      const identifier = `iframe-followed-by-a-${url}`;
-      
-      if (!processedContent.has(identifier)) {
-        processedContent.add(identifier);
-        
-        illustrationElements.push({
-          type: 'iframe',
-          position: pos,
-          data: {
-            type: 'iframe',
-            src: url,
-            content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-          }
-        });
-        
-        console.log(`[ParseIllustration] Found iframe followed by anchor: ${url}`);
-      }
-    }
-  });
-  
-  // Pattern 4: Standard iframe tags
-  const stdIframeRegex = /<iframe[^>]*src=["']([^"']+)["'][^>]*>/gi;
-  
-  while ((match = stdIframeRegex.exec(html)) !== null) {
-    const url = match[1];
-    const position = match.index;
-    const identifier = `iframe-tag-${url}`;
-    
-    if (!processedContent.has(identifier)) {
-      processedContent.add(identifier);
-      
-      illustrationElements.push({
-        type: 'iframe',
-        position: position,
-        data: {
-          type: 'iframe',
-          src: url,
-          content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-        }
-      });
-      
-      console.log(`[ParseIllustration] Found standard iframe tag: ${url}`);
-    }
-  }
-  
-  // Pattern 5: Raw URLs in text
-  // First remove tags to avoid matching URLs in attributes
-  const textContent = html.replace(/<[^>]*>/g, ' ');
-  
-  // Match URLs not preceded by "iframe" or within attributes
-  const urlRegex = /(?<!\biframe\s+)(https?:\/\/[^\s"'<>]+)/gi;
-  
-  while ((match = urlRegex.exec(textContent)) !== null) {
-    const url = match[1];
-    const position = match.index + 1000000; // Place after other content
-    
-    // Determine if it's an image or iframe URL
-    if (isImageUrl(url)) {
-      const identifier = `raw-image-url-${url}`;
-      
-      if (!processedContent.has(identifier)) {
-        processedContent.add(identifier);
-        
-        illustrationElements.push({
-          type: 'image',
-          position: position,
-          data: {
-            type: 'image',
-            content: url,
-            alt: 'Image'
-          }
-        });
-        
-        console.log(`[ParseIllustration] Found raw image URL: ${url}`);
-      }
-    } else {
-      const identifier = `raw-iframe-url-${url}`;
-      
-      if (!processedContent.has(identifier)) {
-        processedContent.add(identifier);
-        
-        illustrationElements.push({
-          type: 'iframe',
-          position: position,
-          data: {
-            type: 'iframe',
-            src: url,
-            content: `<iframe src="${url}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-          }
-        });
-        
-        console.log(`[ParseIllustration] Found raw iframe URL: ${url}`);
-      }
-    }
-  }
-}
-
-/**
- * Process all elements by type to find illustrations
- *
- * @param {Element} container - Container element to process
- * @param {Array} illustrationElements - Collection of illustration elements
- * @param {Set} processedContent - Set of processed content identifiers
- * @param {string} cellHTML - Original cell HTML for position calculation
- */
-function processElementsByType(container, illustrationElements, processedContent, cellHTML) {
-  // Create a flattened list of all elements with their depth and parent info
-  const allElements = [];
-  
-  // Walk the DOM tree and collect all elements with their depth
-  function walkDOM(element, depth, parent) {
-    // Skip text nodes, comments, etc.
-    if (element.nodeType !== Node.ELEMENT_NODE) return;
-    
-    allElements.push({
-      element: element,
-      depth: depth,
-      parent: parent
-    });
-    
-    // Process children
-    Array.from(element.childNodes).forEach(child => {
-      walkDOM(child, depth + 1, element);
-    });
-  }
-  
-  // Start walking from the container
-  walkDOM(container, 0, null);
-  
-  // Process elements by type
-  processElementsOfType(allElements, 'span', 'icon', cellHTML, processIconSpan, illustrationElements, processedContent);
-  processElementsOfType(allElements, 'img', null, cellHTML, processImgElement, illustrationElements, processedContent);
-  processElementsOfType(allElements, 'picture', null, cellHTML, processPictureElement, illustrationElements, processedContent);
-  processElementsOfType(allElements, 'svg', null, cellHTML, processSvgElement, illustrationElements, processedContent);
-  processElementsOfType(allElements, 'a', null, cellHTML, processAnchorElement, illustrationElements, processedContent);
-  
-  // Log processed items
-  if (illustrationElements.length > 0) {
-    console.log(`[ProcessElements] Processed ${illustrationElements.length} illustrations`);
-  }
-}
-
-/**
- * Process elements of a specific type
- *
- * @param {Array} elements - All elements collection
- * @param {string} tagName - Tag name to filter for
- * @param {string|null} className - Class name to filter for (optional)
- * @param {string} cellHTML - Original HTML for position calculation
- * @param {Function} processorFn - Function to process each matching element
- * @param {Array} illustrationElements - Collection of illustration elements
- * @param {Set} processedContent - Set of processed content identifiers
- */
-function processElementsOfType(elements, tagName, className, cellHTML, processorFn, illustrationElements, processedContent) {
-  // Filter elements by tag name and optional class name
-  const matchingElements = elements.filter(item => {
-    if (item.element.tagName.toLowerCase() !== tagName.toLowerCase()) {
-      return false;
-    }
-    
-    if (className && !item.element.classList.contains(className)) {
-      return false;
-    }
-    
-    return true;
-  });
-  
-  // Log found elements
-  console.log(`[ProcessElements] Found ${matchingElements.length} ${tagName} elements${className ? ' with class ' + className : ''}`);
-  
-  // Process each matching element
-  matchingElements.forEach(item => {
-    // Create a temporary container to get the outerHTML
-    const temp = document.createElement('div');
-    temp.appendChild(item.element.cloneNode(true));
-    
-    // Estimate the position in the original HTML
-    let position;
-    try {
-      const elementHTML = temp.innerHTML;
-      position = cellHTML.indexOf(elementHTML);
-      
-      // If we couldn't find the exact HTML, use a position based on depth
-      if (position === -1) {
-        position = 100000 + (item.depth * 1000);
-      }
-    } catch (error) {
-      // Fallback position based on depth
-      position = 100000 + (item.depth * 1000);
-    }
-    
-    // Call the processor function
-    processorFn(item.element, position, illustrationElements, processedContent);
-    
-    // After processing, mark this element as processed
-    if (item.element.parentNode) {
-      // Mark processed by adding a data attribute
-      item.element.setAttribute('data-processed', 'true');
-    }
-  });
-}
-
-/**
- * Process an icon span element
- *
- * @param {Element} element - Icon span element
- * @param {number} position - Position in the original HTML
- * @param {Array} illustrationElements - Collection of illustration elements
- * @param {Set} processedContent - Set of processed content identifiers
- */
-function processIconSpan(element, position, illustrationElements, processedContent) {
-  // Extract the icon name from the class
-  const iconName = extractIconName(element.className);
-  
-  if (!iconName) return;
-  
-  // Create a unique identifier
-  const identifier = `icon-${iconName}`;
-  
-  // Only process if not already processed
-  if (!processedContent.has(identifier)) {
-    processedContent.add(identifier);
-    
-    illustrationElements.push({
-      type: 'icon',
-      position: position,
-      data: {
-        type: 'icon',
-        iconName: iconName,
-        content: `/icons/${iconName}.svg`,
-        alt: `${iconName} Illustration`
-      }
-    });
-    
-    console.log(`[ParseIllustration] Processed icon: ${iconName}`);
-  } else {
-    console.log(`[ParseIllustration] Skipped duplicate icon: ${iconName}`);
-  }
-}
-
-/**
- * Process an img element
- *
- * @param {Element} element - Img element
- * @param {number} position - Position in the original HTML
- * @param {Array} illustrationElements - Collection of illustration elements
- * @param {Set} processedContent - Set of processed content identifiers
- */
-function processImgElement(element, position, illustrationElements, processedContent) {
-  const src = element.getAttribute('src');
-  if (!src) return;
-  
-  // Create a unique identifier
-  const identifier = `image-${src}`;
-  
-  // Only process if not already processed
-  if (!processedContent.has(identifier)) {
-    processedContent.add(identifier);
-    
-    illustrationElements.push({
-      type: 'image',
-      position: position,
-      data: {
-        type: 'image',
-        content: src,
-        alt: element.getAttribute('alt') || ''
-      }
-    });
-    
-    console.log(`[ParseIllustration] Processed image: ${src}`);
-  }
-}
-
-/**
- * Process a picture element
- *
- * @param {Element} element - Picture element
- * @param {number} position - Position in the original HTML
- * @param {Array} illustrationElements - Collection of illustration elements
- * @param {Set} processedContent - Set of processed content identifiers
- */
-function processPictureElement(element, position, illustrationElements, processedContent) {
-  // Create a temporary container to get the outerHTML
-  const temp = document.createElement('div');
-  temp.appendChild(element.cloneNode(true));
-  const pictureHTML = temp.innerHTML;
-  
-  // Create a unique identifier using a hash of the HTML
-  const identifier = `picture-${simpleHash(pictureHTML)}`;
-  
-  // Only process if not already processed
-  if (!processedContent.has(identifier)) {
-    processedContent.add(identifier);
-    
-    illustrationElements.push({
-      type: 'picture',
-      position: position,
-      data: {
-        type: 'picture',
-        content: pictureHTML
-      }
-    });
-    
-    console.log(`[ParseIllustration] Processed picture element`);
-  }
-}
-
-/**
- * Process an SVG element
- *
- * @param {Element} element - SVG element
- * @param {number} position - Position in the original HTML
- * @param {Array} illustrationElements - Collection of illustration elements
- * @param {Set} processedContent - Set of processed content identifiers
- */
-function processSvgElement(element, position, illustrationElements, processedContent) {
-  // Create a temporary container to get the outerHTML
-  const temp = document.createElement('div');
-  temp.appendChild(element.cloneNode(true));
-  const svgHTML = temp.innerHTML;
-  
-  // Create a unique identifier using a hash of the HTML
-  const identifier = `svg-${simpleHash(svgHTML)}`;
-  
-  // Only process if not already processed
-  if (!processedContent.has(identifier)) {
-    processedContent.add(identifier);
-    
-    illustrationElements.push({
-      type: 'svg',
-      position: position,
-      data: {
-        type: 'svg',
-        content: svgHTML
-      }
-    });
-    
-    console.log(`[ParseIllustration] Processed SVG element`);
-  }
-}
-
-/**
- * Process an anchor element - CRITICAL for URL-derived images
- *
- * @param {Element} element - Anchor element
- * @param {number} position - Position in the original HTML
- * @param {Array} illustrationElements - Collection of illustration elements
- * @param {Set} processedContent - Set of processed content identifiers
- */
-function processAnchorElement(element, position, illustrationElements, processedContent) {
-  const href = element.getAttribute('href');
-  if (!href) return;
-  
-  // Skip if this anchor is part of an iframe pattern
-  // Check if the parent or previous element contains "iframe"
-  const parentText = element.parentElement?.textContent || '';
-  if (parentText.includes('iframe')) {
-    // This might be part of an iframe pattern, check if it was already processed
-    const iframeIdentifier = `iframe-anchor-${href}`;
-    const iframeFollowedIdentifier = `iframe-followed-by-a-${href}`;
-    
-    if (processedContent.has(iframeIdentifier) || processedContent.has(iframeFollowedIdentifier)) {
-      // This was already processed as part of an iframe pattern
-      return;
-    }
-  }
-  
-  // Determine if this is an image URL or a general URL
-  if (isImageUrl(href)) {
-    // This is an image URL
-    const identifier = `image-url-${href}`;
-    
-    if (!processedContent.has(identifier)) {
-      processedContent.add(identifier);
-      
-      illustrationElements.push({
-        type: 'image',
-        position: position,
-        data: {
-          type: 'image',
-          content: href,
-          alt: element.textContent || 'Image'
-        }
-      });
-      
-      console.log(`[ParseIllustration] Processed image URL from anchor: ${href}`);
-    }
-  } else {
-    // This is a general URL - treat as iframe
-    const identifier = `iframe-url-${href}`;
-    
-    if (!processedContent.has(identifier)) {
-      processedContent.add(identifier);
-      
-      illustrationElements.push({
-        type: 'iframe',
-        position: position,
-        data: {
-          type: 'iframe',
-          src: href,
-          content: `<iframe src="${href}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-        }
-      });
-      
-      console.log(`[ParseIllustration] Processed iframe URL from anchor: ${href}`);
-    }
-  }
-}
-
-/**
- * Parse illustration from a cell
- * Handles all content types and patterns including iframe followed by anchor
- *
- * @param {Element} cell - Cell element containing illustration content
- * @returns {Object|null} Structured illustration data or null if no illustration found
- */
-function parseIllustration(cell) {
-  if (!cell) return null;
-  
-  // Create a collection for all illustration elements with their positions
-  const illustrationElements = [];
-  
-  // Use a Set to track processed content and prevent duplicates
-  const processedContent = new Set();
-  
-  // Get the raw HTML content for pattern matching and position tracking
-  const cellHTML = cell.innerHTML;
-  
-  console.log(`[ParseIllustration] Processing cell with HTML length ${cellHTML.length}`);
-  
-  // STEP 1: First scan for specific patterns in the HTML
-  scanForPatterns(cellHTML, illustrationElements, processedContent);
-  
-  // STEP 2: Process all DOM elements systematically
-  processElementsByType(cell, illustrationElements, processedContent, cellHTML);
-  
-  // Sort by position to maintain the original order
-  illustrationElements.sort((a, b) => a.position - b.position);
-  
-  // Extract the illustration data
-  const illustrations = illustrationElements.map(item => item.data);
-  
-  // Return illustrations if found, null otherwise
-  if (illustrations.length > 0) {
-    console.log(`[ParseIllustration] Found ${illustrations.length} total illustrations (processed ${processedContent.size} unique items)`);
-    
-    // Log each illustration to help with debugging
-    illustrations.forEach((item, index) => {
-      const identifier = item.iconName || item.src ||
-                      (typeof item.content === 'string' && item.content.length < 50 ?
-                       item.content : 'complex content');
-      console.log(`[ParseIllustration] Item ${index}: type=${item.type}, identifier=${identifier}`);
-    });
-    
-    return {
-      type: 'images',
-      content: illustrations
-    };
-  }
-
-  return null;
-  function parseIllustration(cell) {
-    if (!cell) return null;
-    
-    // Create a collection for all illustration elements with their positions
-    const illustrationElements = [];
-    
-    // Use a Set to track processed content and prevent duplicates
-    const processedContent = new Set();
-    
-    // Get the raw HTML content for pattern matching and position tracking
-    const cellHTML = cell.innerHTML;
-    
-    console.log(`[ParseIllustration] Processing cell with HTML length ${cellHTML.length}`);
-    
-    // Create a working copy of the cell for manipulation
-    const workingCell = cell.cloneNode(true);
-    
-    // STEP 1: First scan for specific patterns in the HTML
-    scanForPatterns(cellHTML, illustrationElements, processedContent);
-    
-    // STEP 2: Process all DOM elements systematically
-    processElementsByType(workingCell, illustrationElements, processedContent, cellHTML);
-    
-    // Sort by position to maintain the original order
-    illustrationElements.sort((a, b) => a.position - b.position);
-    
-    // Extract the illustration data
-    const illustrations = illustrationElements.map(item => item.data);
-    
-    // Return illustrations if found, null otherwise
-    if (illustrations.length > 0) {
-      console.log(`[ParseIllustration] Found ${illustrations.length} total illustrations (processed ${processedContent.size} unique items)`);
-      
-      // Enhanced logging for debugging
-      illustrations.forEach((item, index) => {
-        const identifier = item.iconName || item.src ||
-                        (typeof item.content === 'string' && item.content.length < 50 ?
-                         item.content : 'complex content');
-        console.log(`[ParseIllustration] Item ${index}: type=${item.type}, identifier=${identifier}`);
-      });
-      
-      return {
-        type: 'images',
-        content: illustrations
-      };
-    }
-  
-    return null;
-  }
-}
-/**
- * Build slides in the container
- * Creates and structures slide elements with their content
- * 
- * @param {Array} slides - Array of slide data objects
- * @param {Element} container - Container element for slides
+ * Build all slides in the presentation container
+ * @param {Array} slides - Array of slide data
+ * @param {Element} container - Container for slides
  */
 function buildSlides(slides, container) {
   container.innerHTML = '';
   
-  // Clear previous slide debug info
-  if (DPS_CONFIG.DEBUG_INFO.enabled) {
-    DPS_CONFIG.DEBUG_INFO.slides = [];
-  }
-  
-  const totalSlides = slides.length;
-
   slides.forEach((slide, index) => {
     const slideElement = document.createElement('div');
     slideElement.id = `slide-${index}`;
@@ -1346,19 +630,8 @@ function buildSlides(slides, container) {
         </div>
       `;
     } else {
-      // Use enhanced slide content for regular slides
+      // Regular slide
       slideElement.innerHTML = createSlideContent(slide);
-    }
-
-    // Log slide discovery with timestamp
-    if (DPS_CONFIG.DEBUG_INFO.enabled) {
-      DPS_CONFIG.DEBUG_INFO.slides.push({
-        index,
-        title: slide.title,
-        type: slide.type || 'standard',
-        hasIllustration: !!slide.illustration,
-        timestamp: new Date().toISOString()
-      });
     }
     
     container.appendChild(slideElement);
@@ -1366,26 +639,26 @@ function buildSlides(slides, container) {
 }
 
 /**
- * Create slide content with proper image sequence support
- * 
+ * Create HTML content for a slide
  * @param {Object} slide - Slide data
- * @returns {string} HTML content for the slide
+ * @returns {string} HTML content
  */
 function createSlideContent(slide) {
   let slideContent = `<div class="slide-content">
     <h2 class="slide-title">${slide.title}</h2>
     <div class="slide-content-text">`;
 
-  /* Add content text or bullet points */
+  // Add intro text if available
   if (slide.introText) {
     slideContent += `<p style="font-size: 18px; margin-bottom: 20px;">${slide.introText}</p>`;
   }
 
+  // Add bullet points if available
   if (slide.bulletPoints && slide.bulletPoints.length > 0) {
     slideContent += '<ul class="bullet-list">';
     slide.bulletPoints.forEach((point) => {
       if (point.isPlainText) {
-        /* Handle plain text or HTML content */
+        // Handle plain text or HTML content
         if (point.isHTML) {
           if (point.text === '<br>') {
             slideContent += '<br>';
@@ -1396,18 +669,8 @@ function createSlideContent(slide) {
           slideContent += `<li class="plain-text">${point.text}</li>`;
         }
       } else {
-        /* Handle bullet points */
-        slideContent += `<li>${point.text}`;
-
-        if (point.subPoints && point.subPoints.length > 0) {
-          slideContent += '<ul class="sub-bullet-list">';
-          point.subPoints.forEach((subPoint) => {
-            slideContent += `<li>${subPoint}</li>`;
-          });
-          slideContent += '</ul>';
-        }
-
-        slideContent += '</li>';
+        // Handle bullet points
+        slideContent += `<li>${point.text}</li>`;
       }
     });
     slideContent += '</ul>';
@@ -1415,25 +678,30 @@ function createSlideContent(slide) {
 
   slideContent += '</div>'; // Close slide-content-text
 
-  /* Add illustration if provided */
+  // Add illustration if provided
   if (slide.illustration) {
     slideContent += '<div class="illustration">';
     
-    if (slide.illustration.type === 'images') {
-      // Use the enhanced image sequence function
-      const organizedIllustrations = organizeImageSequence(slide.illustration.content);
-      const enhancedSequence = createImageSequenceHTML(organizedIllustrations);
-      slideContent += enhancedSequence;
+    if (slide.illustration.type === 'sequence') {
+      // Handle sequence of illustrations
+      slideContent += createSequenceHTML(slide.illustration.items);
     } else if (slide.illustration.type === 'iframe') {
-      slideContent += `<div class="iframe-container" style="width: 100%; height: 100%;">
+      // Handle iframe
+      slideContent += `<div class="iframe-container">
           ${slide.illustration.content}
         </div>`;
     } else if (slide.illustration.type === 'svg') {
+      // Handle SVG
       slideContent += slide.illustration.content;
     } else if (slide.illustration.type === 'picture') {
+      // Handle picture
       slideContent += slide.illustration.content;
+    } else if (slide.illustration.type === 'icon') {
+      // Handle icon
+      slideContent += `<img src="${slide.illustration.content}" alt="${slide.illustration.alt}" class="icon-image">`;
     } else {
-      slideContent += `<img src="${slide.illustration.content}" alt="${slide.title} illustration">`;
+      // Handle regular image
+      slideContent += `<img src="${slide.illustration.content}" alt="${slide.illustration.alt || slide.title} illustration">`;
     }
     
     slideContent += '</div>'; // Close illustration
@@ -1445,213 +713,117 @@ function createSlideContent(slide) {
 }
 
 /**
- * Verify that the sequence is in a consistent state
- * Detects and corrects inconsistencies
- * 
- * @param {Element} imageSequence - The image sequence container
+ * Create HTML for a sequence of illustrations
+ * @param {Array} items - Array of illustration items
+ * @returns {string} HTML content for the sequence
  */
-function verifySequenceState(imageSequence) {
-  if (!imageSequence) return;
+function createSequenceHTML(items) {
+  if (!items || items.length === 0) {
+    return '';
+  }
   
-  // Count active containers and images
-  const containers = Array.from(imageSequence.querySelectorAll('.sequence-item-container'));
-  const activeContainers = containers.filter(container => container.classList.contains('active'));
+  let html = '<div class="image-sequence">';
   
-  let activeImages = [];
-  let visibleImages = [];
-  
-  containers.forEach(container => {
-    const images = Array.from(container.querySelectorAll('.sequence-image'));
-    activeImages = activeImages.concat(images.filter(img => img.classList.contains('active')));
-    visibleImages = visibleImages.concat(images.filter(img => img.style.visibility === 'visible'));
-  });
-  
-  console.log(`[VerifySequence] Found ${activeContainers.length} active containers, ${activeImages.length} active images, ${visibleImages.length} visible images`);
-  
-  // Detect inconsistencies - should have exactly one active container and its images active/visible
-  if (activeContainers.length !== 1 || activeImages.length === 0 || activeImages.length !== visibleImages.length) {
-    console.warn(`[VerifySequence] Inconsistent state detected: ${activeContainers.length} active containers, ${activeImages.length} active images, ${visibleImages.length} visible images`);
+  // Process each illustration item
+  items.forEach((item, index) => {
+    const isActive = index === 0;
+    const typeLabel = item.type.charAt(0).toUpperCase() + item.type.slice(1);
     
-    // Check for containers with same hash
-    const hashes = containers.map(container => container.getAttribute('data-content-hash') || 'unknown');
-    const uniqueHashes = new Set(hashes);
+    // Create container for this item
+    html += `<div class="sequence-item-container ${isActive ? 'active' : ''}" data-sequence-id="${index}">`;
     
-    if (uniqueHashes.size < containers.length) {
-      console.warn(`[VerifySequence] Potential duplicate content detected: ${containers.length} containers but only ${uniqueHashes.size} unique hashes`);
+    // Add label showing position in sequence
+    html += `<div class="sequence-item-label">${typeLabel} ${index + 1}/${items.length}</div>`;
+    
+    // Add content based on type
+    if (item.type === 'iframe') {
+      html += `<div class="sequence-image iframe-container ${isActive ? 'active' : ''}">${item.content}</div>`;
+    } else if (item.type === 'picture') {
+      html += `<div class="sequence-image ${isActive ? 'active' : ''}">${item.content}</div>`;
+    } else if (item.type === 'svg') {
+      html += `<div class="sequence-image ${isActive ? 'active' : ''}">${item.content}</div>`;
+    } else if (item.type === 'icon') {
+      html += `<img src="${item.content}" alt="${item.alt}" class="sequence-image icon-image ${isActive ? 'active' : ''}">`;
+    } else {
+      html += `<img src="${item.content}" alt="${item.alt || ''}" class="sequence-image ${isActive ? 'active' : ''}">`;
     }
     
-    // Force correction - reset everything and activate only the first container
-    containers.forEach((container, index) => {
-      const shouldBeActive = index === 0;
-      container.classList.toggle('active', shouldBeActive);
-      
-      const images = Array.from(container.querySelectorAll('.sequence-image'));
-      images.forEach(img => {
-        img.classList.toggle('active', shouldBeActive);
-        img.style.visibility = shouldBeActive ? 'visible' : 'hidden';
-      });
-    });
-    
-    console.log('[VerifySequence] State corrected - reset and activated first container only');
-  }
+    html += '</div>'; // Close sequence-item-container
+  });
+  
+  html += '</div>'; // Close image-sequence
+  return html;
 }
 /**
- * Initialize image sequence for a slide
- * Improved to ensure consistent state and prevent duplicates
- * 
- * @param {Element} slide - The slide element containing image sequences
+ * Show a specific slide and update UI
+ * @param {number} index - Slide index to show
  */
-function initializeImageSequence(slide) {
-  console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Initializing image sequence`);
+function showSlide(index) {
+  // Get all slides
+  const slides = document.querySelectorAll('.slide');
   
-  const imageSequence = slide.querySelector('.image-sequence');
-  if (!imageSequence) {
-    console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] No image sequence found`);
-    return;
+  // Validate index
+  if (index < 0) {
+    index = 0;
+  } else if (index >= slides.length) {
+    index = slides.length - 1;
   }
   
-  // Find all sequence containers
-  const containers = Array.from(imageSequence.querySelectorAll('.sequence-item-container'));
-  if (containers.length === 0) {
-    console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] No container items found in sequence`);
-    return;
+  // Hide all slides
+  slides.forEach(slide => {
+    slide.style.display = 'none';
+    slide.classList.remove('active');
+  });
+  
+  // Show the target slide
+  if (slides[index]) {
+    const slide = slides[index];
+    slide.style.display = 'block';
+    slide.classList.add('active');
+    
+    // Reset sequence index when changing slides
+    currentSequenceIndex = 0;
+    
+    // Update presenter notes
+    updatePresenterNotes(index);
+    
+    // Update navigation buttons
+    updateNavButtons(index, slides.length);
   }
   
-  // Log found containers with their hash values
-  console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Found ${containers.length} containers in sequence`);
-  containers.forEach((container, i) => {
-    const hash = container.getAttribute('data-content-hash') || 'unknown';
-    console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Container ${i}: hash=${hash}, active=${container.classList.contains('active')}`);
-  });
+  // Update current slide index
+  currentSlideIndex = index;
   
-  // Check for duplicate hashes
-  const hashCounts = {};
-  containers.forEach(container => {
-    const hash = container.getAttribute('data-content-hash');
-    if (hash) {
-      hashCounts[hash] = (hashCounts[hash] || 0) + 1;
-    }
-  });
-  
-  const duplicateHashes = Object.entries(hashCounts)
-    .filter(([hash, count]) => count > 1)
-    .map(([hash, count]) => ({ hash, count }));
-  
-  if (duplicateHashes.length > 0) {
-    console.warn(`[ImageSequence][${performance.now().toFixed(2)}ms] WARNING: Found ${duplicateHashes.length} duplicate content hashes`);
-    duplicateHashes.forEach(dupe => {
-      console.warn(`[ImageSequence] Hash ${dupe.hash} appears ${dupe.count} times`);
-    });
+  // Start timer if moving past first slide
+  if (index > 0 && !hasStartedTimer) {
+    startTimer();
+    hasStartedTimer = true;
   }
-  
-  // Reset ALL containers and their content - this ensures clean state
-  containers.forEach((container, index) => {
-    // Set container state
-    container.classList.remove('active');
-    
-    // Find and reset all sequence images within this container
-    const sequenceImages = container.querySelectorAll('.sequence-image');
-    sequenceImages.forEach(img => {
-      // Always keep display block, but hide with visibility
-      img.style.display = 'block';
-      img.style.visibility = 'hidden';
-      img.classList.remove('active');
-    });
-    
-    console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Reset container ${index} and its content`);
-  });
-  
-  // Activate ONLY the first container and its content
-  if (containers[0]) {
-    containers[0].classList.add('active');
-    
-    // Activate all sequence images in this container
-    const sequenceImages = containers[0].querySelectorAll('.sequence-image');
-    sequenceImages.forEach(img => {
-      img.classList.add('active');
-      img.style.visibility = 'visible';
-    });
-    
-    console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Activated first container and its content`);
-  }
-  
-  // Verify the sequence is in a consistent state
-  verifySequenceState(imageSequence);
-}
- 
-/**
- * Create a flat navigation array from slides and their sequences
- * This builds a linear progression of navigation points for seamless navigation
- * 
- * @returns {Array} Array of navigation points
- */
-function createFlatNavigationArray() {
-  console.log("[NavFix] Creating flat navigation array");
-  const flatNavigation = [];
-  const slides = Array.from(document.querySelectorAll('.slide'));
-  
-  // Process each slide
-  slides.forEach((slide, slideIndex) => {
-    console.log(`[NavFix] Processing slide ${slideIndex}: "${slide.querySelector('.slide-title')?.textContent || 'Untitled'}"`);
-    
-    // Add the slide itself as a navigation point
-    flatNavigation.push({
-      type: 'slide',
-      slideIndex: slideIndex,
-      sequenceIndex: null,
-      element: slide,
-      id: `slide-${slideIndex}`
-    });
-    
-    // Process image sequences if present
-    const imageSequence = slide.querySelector('.image-sequence');
-    if (imageSequence) {
-      const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
-      console.log(`[NavFix] Found sequence with ${images.length} images in slide ${slideIndex}`);
-      
-      // Only add additional nav points if there's more than one image
-      if (images.length > 1) {
-        // Skip the first image (index 0) since it's shown with the slide
-        for (let i = 1; i < images.length; i++) {
-          flatNavigation.push({
-            type: 'sequence',
-            slideIndex: slideIndex,
-            sequenceIndex: i,
-            element: images[i],
-            id: `slide-${slideIndex}-seq-${i}`
-          });
-          console.log(`[NavFix] Added navigation point for slide ${slideIndex}, sequence ${i}`);
-        }
-      } else {
-        console.log(`[NavFix] Single image sequence - not adding navigation points`);
-      }
-    }
-  });
-  
-  console.log(`[NavFix] Created navigation structure with ${flatNavigation.length} points`);
-  return flatNavigation;
 }
 
 /**
- * Update navigation buttons state
- * Disables buttons when at first/last slide
+ * Update the navigation buttons based on current position
+ * @param {number} currentIndex - Current slide index
+ * @param {number} totalSlides - Total number of slides
  */
-function updateNavButtons() {
+function updateNavButtons(currentIndex, totalSlides) {
   const prevButton = document.querySelector('.prev-slide');
   const nextButton = document.querySelector('.next-slide');
-  const totalNavPoints = flatNavigation.length;
   
   if (prevButton) {
-    prevButton.disabled = currentNavIndex === 0;
+    prevButton.disabled = currentIndex === 0;
   }
+  
   if (nextButton) {
-    nextButton.disabled = currentNavIndex === totalNavPoints - 1;
+    nextButton.disabled = currentIndex === totalSlides - 1;
   }
 }
 
 /**
- * Update presenter notes
- * Shows notes for current slide
+ * Update presenter notes for the current slide
+ * @param {number} slideIndex - Index of the current slide
+ * @param {boolean} forceNormalMode - Force normal mode display
+ * @param {boolean} isPresenterToggle - Whether this is coming from presenter toggle
  */
 function updatePresenterNotes(slideIndex, forceNormalMode = false, isPresenterToggle = false) {
   const slides = document.querySelectorAll('.slide');
@@ -1662,9 +834,8 @@ function updatePresenterNotes(slideIndex, forceNormalMode = false, isPresenterTo
   
   // Always use normal mode content when forceNormalMode is true
   if (forceNormalMode) {
-    // Normal mode - just show the notes
     notesContent.innerHTML = slideData;
-    return; // Exit early to ensure we don't run the other logic
+    return;
   }
   
   // Only show enhanced content for presenter mode (icon click), not for 'p' key (enlarged)
@@ -1693,411 +864,268 @@ function updatePresenterNotes(slideIndex, forceNormalMode = false, isPresenterTo
 }
 
 /**
- * Show a specific slide and initialize it properly
- * 
- * @param {number} index - Index of the slide to show
+ * Handle navigation in image sequences
+ * @param {string} direction - Direction of navigation ('prev' or 'next')
+ * @returns {boolean} Whether the navigation was handled by a sequence
  */
-function showSlide(index) {
-  console.log(`[Slide][${performance.now().toFixed(2)}ms] Showing slide ${index}`);
-  
-  // First hide all slides
-  const slides = document.querySelectorAll('.slide');
-  slides.forEach((slide, i) => {
-    slide.style.display = 'none';
-    slide.classList.remove('active');
-    console.log(`[Slide][${performance.now().toFixed(2)}ms] Hide slide ${i}`);
-  });
-  
-  // Show the target slide
-  if (slides[index]) {
-    const slide = slides[index];
-    slide.style.display = 'block';
-    slide.classList.add('active');
-    
-    console.log(`[Slide][${performance.now().toFixed(2)}ms] Displaying slide ${index}`);
-    
-    // Initialize any image sequence in this slide
-    initializeImageSequence(slide);
-    
-    // Update presenter notes and navigation
-    const presenterNotes = document.querySelector('.presenter-notes');
-    const isInPresenterMode = presenterNotes.classList.contains('presenter-mode');
-    updatePresenterNotes(index, false, isInPresenterMode);
-    updateNavButtons();
-  } else {
-    console.log(`[Slide][${performance.now().toFixed(2)}ms] Slide ${index} not found`);
-  }
-  
-  currentSlideIndex = index;
-  
-  // Start timer if moving past first slide
-  if (index > 0 && !hasStartedTimer) {
-    startTimer();
-    hasStartedTimer = true;
-  }
-}
-
-/**
- * Handle image sequence navigation
- * Improved to ensure consistent state management
- * 
- * @param {string} direction - Direction to navigate ('prev' or 'next')
- * @returns {boolean} - True if navigation was handled within a sequence
- */
-function handleImageSequenceNavigation(direction) {
-  // Debug logging
-  console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Handling ${direction} navigation`);
-   
+function handleSequenceNavigation(direction) {
   // Get the current slide
-  const slides = document.querySelectorAll('.slide');
-  const currentSlide = slides[currentSlideIndex];
-  if (!currentSlide) {
-    console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] No current slide found`);
-    return false;
-  }
-   
-  // Check if this slide has an image sequence
-  const imageSequence = currentSlide.querySelector('.image-sequence');
-  if (!imageSequence) {
-    console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] No image sequence found in slide`);
-    return false;
-  }
-   
-  // Get all containers in the sequence - we navigate by container
-  const containers = Array.from(imageSequence.querySelectorAll('.sequence-item-container'));
+  const slide = document.querySelector(`.slide.active`);
+  if (!slide) return false;
   
-  // Log the number of containers found
-  console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Found ${containers.length} containers in sequence`);
+  // Get the image sequence in this slide
+  const sequence = slide.querySelector('.image-sequence');
+  if (!sequence) return false;
   
-  // Check for duplicate containers
-  const hashMap = {};
-  containers.forEach((container, idx) => {
-    const hash = container.getAttribute('data-content-hash') || 'unknown';
-    hashMap[hash] = (hashMap[hash] || 0) + 1;
-  });
+  // Get all sequence items
+  const items = Array.from(sequence.querySelectorAll('.sequence-item-container'));
+  if (items.length <= 1) return false;
   
-  const duplicates = Object.entries(hashMap).filter(([hash, count]) => count > 1);
-  if (duplicates.length > 0) {
-    console.warn(`[ImageSequence] WARNING: Found duplicate containers with same content hash`);
-    duplicates.forEach(([hash, count]) => {
-      console.warn(`[ImageSequence] Hash ${hash} appears ${count} times`);
-    });
-  }
+  // Calculate the next index
+  let nextIndex = currentSequenceIndex;
   
-  // Single container case - don't handle sequence navigation
-  if (containers.length <= 1) {
-    console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Only one container - not handling as sequence navigation`);
-    return false;
-  }
-  
-  // Find which container is currently active
-  let activeIndex = -1;
-  containers.forEach((container, idx) => {
-    if (container.classList.contains('active')) {
-      activeIndex = idx;
-    }
-  });
-  
-  console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Current activeIndex is ${activeIndex}`);
-  
-  // If no active container found, activate the first one
-  if (activeIndex === -1) {
-    console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] No active container found, activating first container`);
-    
-    // Reset all containers and their content
-    containers.forEach(container => {
-      container.classList.remove('active');
-      
-      const images = container.querySelectorAll('.sequence-image');
-      images.forEach(img => {
-        img.classList.remove('active');
-        img.style.visibility = 'hidden';
-      });
-    });
-    
-    // Make the first container active and its content visible
-    containers[0].classList.add('active');
-    const firstImages = containers[0].querySelectorAll('.sequence-image');
-    firstImages.forEach(img => {
-      img.classList.add('active');
-      img.style.visibility = 'visible';
-    });
-    
-    return true;
-  }
-  
-  // Calculate the next index based on direction
-  let nextIndex;
   if (direction === 'next') {
-    nextIndex = activeIndex + 1;
-    // If at the end of the sequence, signal to move to next slide
-    if (nextIndex >= containers.length) {
-      console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] At end of sequence, returning false to move to next slide`);
-      return false;
+    nextIndex++;
+    if (nextIndex >= items.length) {
+      return false; // Move to next slide
     }
-  } else { // 'prev'
-    nextIndex = activeIndex - 1;
-    // If at the beginning of the sequence, signal to move to previous slide
+  } else {
+    nextIndex--;
     if (nextIndex < 0) {
-      console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] At beginning of sequence, returning false to move to prev slide`);
-      return false;
+      return false; // Move to previous slide
     }
   }
   
-  console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Moving to container index ${nextIndex}`);
+  // Update the sequence
+  updateSequence(items, nextIndex);
   
-  // Reset all containers and their content
-  containers.forEach(container => {
-    container.classList.remove('active');
-    
-    const images = container.querySelectorAll('.sequence-image');
-    images.forEach(img => {
-      img.classList.remove('active');
-      img.style.visibility = 'hidden';
-    });
-  });
+  // Update the current sequence index
+  currentSequenceIndex = nextIndex;
   
-  // Make the target container active and its content visible
-  containers[nextIndex].classList.add('active');
-  const targetImages = containers[nextIndex].querySelectorAll('.sequence-image');
-  targetImages.forEach(img => {
-    img.classList.add('active');
-    img.style.visibility = 'visible';
-  });
- 
-  // Verify the state after navigation to catch any inconsistencies
-  setTimeout(() => {
-    verifySequenceState(imageSequence);
-  }, 0);
- 
   return true;
 }
+
 /**
- * Apply the current navigation state
- * Improved to maintain consistent state between container and image elements
- * 
- * @returns {boolean} True if navigation was applied successfully
+ * Update the sequence to show the specified item
+ * @param {Array} items - Array of sequence items
+ * @param {number} activeIndex - Index of the item to activate
  */
-function applyCurrentNavigation() {
-  if (!flatNavigation || currentNavIndex >= flatNavigation.length) {
-    console.error(`[NavFix] Cannot apply navigation - invalid indices`);
-    return false;
-  }
-  
-  const navItem = flatNavigation[currentNavIndex];
-  console.log(`[NavFix] Applying navigation item ${currentNavIndex}: type=${navItem.type}, slide=${navItem.slideIndex}, seq=${navItem.sequenceIndex}`);
-  
-  if (navItem.type === 'slide') {
-    // Show this slide, hide all others
-    const slides = Array.from(document.querySelectorAll('.slide'));
-    slides.forEach((slide, index) => {
-      const isCurrentSlide = index === navItem.slideIndex;
-      slide.style.display = isCurrentSlide ? 'block' : 'none';
-      slide.classList.toggle('active', isCurrentSlide);
-      
-      if (isCurrentSlide) {
-        // Initialize any image sequence in this slide
-        initializeImageSequence(slide);
-        
-        // Update presenter notes and navigation UI
-        updatePresenterNotes(navItem.slideIndex);
-        updateNavButtons();
-        
-        // Update currentSlideIndex to stay in sync
-        currentSlideIndex = navItem.slideIndex;
-        console.log(`[NavFix] Updated currentSlideIndex to ${navItem.slideIndex}`);
-      }
+function updateSequence(items, activeIndex) {
+  // Hide all items
+  items.forEach(item => {
+    item.classList.remove('active');
+    
+    // Hide all images in this item
+    const images = item.querySelectorAll('.sequence-image');
+    images.forEach(img => {
+      img.classList.remove('active');
     });
+  });
+  
+  // Show the active item
+  if (items[activeIndex]) {
+    items[activeIndex].classList.add('active');
     
-    // Start timer if moving past first slide
-    if (navItem.slideIndex > 0 && !hasStartedTimer) {
-      startTimer();
-      hasStartedTimer = true;
-    }
-    
-    return true;
-  } 
-  else if (navItem.type === 'sequence') {
-    // First make sure the correct slide is shown
-    if (currentSlideIndex !== navItem.slideIndex) {
-      const slides = Array.from(document.querySelectorAll('.slide'));
-      slides.forEach((slide, index) => {
-        slide.style.display = index === navItem.slideIndex ? 'block' : 'none';
-        slide.classList.toggle('active', index === navItem.slideIndex);
-      });
-      
-      currentSlideIndex = navItem.slideIndex;
-      console.log(`[NavFix] Updated currentSlideIndex to ${navItem.slideIndex} for sequence`);
-    }
-    
-    // Then handle the sequence navigation
-    const slide = document.querySelectorAll('.slide')[navItem.slideIndex];
-    const imageSequence = slide?.querySelector('.image-sequence');
-    if (!imageSequence) {
-      console.error(`[NavFix] Cannot find image sequence for slide ${navItem.slideIndex}`);
-      return false;
-    }
-    
-    // Getting containers instead of images - we navigate by container now
-    const containers = Array.from(imageSequence.querySelectorAll('.sequence-item-container'));
-    if (navItem.sequenceIndex >= containers.length) {
-      console.error(`[NavFix] Invalid sequence index ${navItem.sequenceIndex} (max: ${containers.length-1})`);
-      return false;
-    }
-    
-    // Reset all containers and their content
-    containers.forEach(container => {
-      container.classList.remove('active');
-      
-      const images = container.querySelectorAll('.sequence-image');
-      images.forEach(img => {
-        img.classList.remove('active');
-        img.style.visibility = 'hidden';
-      });
-    });
-    
-    // Activate the target container and its content
-    const targetContainer = containers[navItem.sequenceIndex];
-    targetContainer.classList.add('active');
-    
-    const targetImages = targetContainer.querySelectorAll('.sequence-image');
-    targetImages.forEach(img => {
+    // Show all images in this item
+    const images = items[activeIndex].querySelectorAll('.sequence-image');
+    images.forEach(img => {
       img.classList.add('active');
-      img.style.visibility = 'visible';
     });
-    
-    console.log(`[NavFix] Activated container ${navItem.sequenceIndex} in sequence`);
-    
-    // Verify the state after navigation
-    setTimeout(() => {
-      verifySequenceState(imageSequence);
-    }, 0);
-    
-    return true;
+  }
+}
+
+/**
+ * Set up the navigation system
+ */
+function setupNavigationSystem() {
+  // Set up navigation buttons
+  const prevButton = document.querySelector('.prev-slide');
+  if (prevButton) {
+    prevButton.addEventListener('click', () => {
+      // Check if we're navigating within a sequence
+      if (currentSequenceIndex > 0) {
+        if (handleSequenceNavigation('prev')) {
+          return;
+        }
+      }
+      
+      // Otherwise navigate to previous slide
+      showSlide(currentSlideIndex - 1);
+    });
   }
   
-  return false;
+  const nextButton = document.querySelector('.next-slide');
+  if (nextButton) {
+    nextButton.addEventListener('click', () => {
+      // Check if we're navigating within a sequence
+      const slide = document.querySelector(`.slide.active`);
+      if (slide) {
+        const sequence = slide.querySelector('.image-sequence');
+        if (sequence) {
+          const items = Array.from(sequence.querySelectorAll('.sequence-item-container'));
+          if (currentSequenceIndex < items.length - 1) {
+            if (handleSequenceNavigation('next')) {
+              return;
+            }
+          }
+        }
+      }
+      
+      // Otherwise navigate to next slide
+      showSlide(currentSlideIndex + 1);
+    });
+  }
+  
+  // Set up keyboard navigation
+  document.addEventListener('keydown', (event) => {
+    // Ignore repeated keydown events from key being held down
+    if (event.repeat) {
+      event.preventDefault();
+      return;
+    }
+    
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      // Check if we're navigating within a sequence
+      if (currentSequenceIndex > 0) {
+        if (handleSequenceNavigation('prev')) {
+          return;
+        }
+      }
+      
+      // Otherwise navigate to previous slide
+      showSlide(currentSlideIndex - 1);
+    }
+    else if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      // Check if we're navigating within a sequence
+      const slide = document.querySelector(`.slide.active`);
+      if (slide) {
+        const sequence = slide.querySelector('.image-sequence');
+        if (sequence) {
+          const items = Array.from(sequence.querySelectorAll('.sequence-item-container'));
+          if (currentSequenceIndex < items.length - 1) {
+            if (handleSequenceNavigation('next')) {
+              return;
+            }
+          }
+        }
+      }
+      
+      // Otherwise navigate to next slide
+      showSlide(currentSlideIndex + 1);
+    }
+    else if (event.key === 'Escape') {
+      const navBar = document.querySelector('.dps-navigation');
+      if (navBar) {
+        navBar.style.display = navBar.style.display === 'none' ? 'flex' : 'none';
+      }
+    }
+    else if (event.key === 'p' || event.key === 'P') {
+      togglePresenterMode();
+    }
+    else if (event.key === '+' || event.key === '=') {
+      showPresenterNotes();
+    }
+    else if (event.key === '-' || event.key === '_') {
+      hidePresenterNotes();
+    }
+    else if (event.key === ' ' && hasStartedTimer) {
+      event.preventDefault();
+      toggleTimer();
+    }
+  });
 }
 
 /**
-* Navigate forward in the presentation
-* Handles both slides and image sequences for seamless navigation
-*/
-function navigateForward() {
- if (!flatNavigation || !flatNavigation.length) {
-   console.error("[NavFix] Cannot navigate - flatNavigation not initialized");
-   return false;
- }
- 
- if (currentNavIndex < flatNavigation.length - 1) {
-   currentNavIndex++;
-   console.log(`[NavFix] Navigating forward to item ${currentNavIndex}`);
-   return applyCurrentNavigation();
- }
- 
- console.log("[NavFix] Already at last navigation point");
- return false;
+ * Show presenter notes
+ */
+function showPresenterNotes() {
+  const presenterNotes = document.querySelector('.presenter-notes');
+  presenterNotes.classList.remove('hidden');
+  DPS_CONFIG.PRESENTER_NOTES_VISIBLE = true;
 }
 
 /**
-* Navigate backward in the presentation
-* Handles both slides and image sequences for seamless navigation
-*/
-function navigateBackward() {
- if (!flatNavigation || !flatNavigation.length) {
-   console.error("[NavFix] Cannot navigate - flatNavigation not initialized");
-   return false;
- }
- 
- if (currentNavIndex > 0) {
-   currentNavIndex--;
-   console.log(`[NavFix] Navigating backward to item ${currentNavIndex}`);
-   return applyCurrentNavigation();
- }
- 
- console.log("[NavFix] Already at first navigation point");
- return false;
+ * Hide presenter notes
+ */
+function hidePresenterNotes() {
+  const presenterNotes = document.querySelector('.presenter-notes');
+  presenterNotes.classList.add('hidden');
+  DPS_CONFIG.PRESENTER_NOTES_VISIBLE = false;
 }
 
 /**
-* Setup the navigation system with keyboard and button handlers
-*/
-function setupNavigationSystem() {
- console.log("[Navigation] Setting up navigation system");
- 
- // Initialize flat navigation
- flatNavigation = createFlatNavigationArray();
- currentNavIndex = 0;
- 
- // Set up navigation buttons
- const prevButton = document.querySelector('.prev-slide');
- if (prevButton) {
-   prevButton.addEventListener('click', () => {
-     navigateBackward();
-   });
- }
- 
- const nextButton = document.querySelector('.next-slide');
- if (nextButton) {
-   nextButton.addEventListener('click', () => {
-     navigateForward();
-   });
- }
- 
- // Set up keyboard handlers
- document.addEventListener('keydown', (event) => {
-   // Ignore repeated keydown events from key being held down
-   if (event.repeat) {
-     event.preventDefault();
-     return;
-   }
-   
-   if (event.key === 'ArrowLeft') {
-     event.preventDefault();
-     navigateBackward();
-   }
-   else if (event.key === 'ArrowRight') {
-     event.preventDefault();
-     navigateForward();
-   }
-   else if (event.key === 'Escape') {
-     const navBar = document.querySelector('.dps-navigation');
-     if (navBar) {
-       navBar.style.display = navBar.style.display === 'none' ? 'flex' : 'none';
-     }
-   }
-   else if (event.key === 'p' || event.key === 'P') {
-     togglePresenterMode();
-   }
-   else if (event.key === '+' || event.key === '=') {
-     showPresenterNotes();
-   }
-   else if (event.key === '-' || event.key === '_') {
-     hidePresenterNotes();
-   }
-   else if (event.key === ' ' && hasStartedTimer) {
-     event.preventDefault();
-     toggleTimer();
-   }
- });
- 
- // Apply initial navigation
- applyCurrentNavigation();
- 
- console.log("[Navigation] Navigation system setup complete");
+ * Start the presentation timer
+ */
+function startTimer() {
+  if (!timerInterval) {
+    timerInterval = setInterval(updateTimer, 1000);
+  }
+}
+
+/**
+ * Toggle the timer on/off
+ */
+function toggleTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  } else {
+    timerInterval = setInterval(updateTimer, 1000);
+  }
+}
+
+/**
+ * Update the timer display
+ */
+function updateTimer() {
+  if (remainingTime > 0) {
+    remainingTime--;
+    document.querySelector('.timer').textContent = formatTime(remainingTime);
+
+    // Flash warning when 2 minutes remain
+    if (remainingTime === 120) {
+      flashTimeWarning();
+    }
+  } else {
+    clearInterval(timerInterval);
+    document.querySelector('.timer').textContent = 'Time Up!';
+    document.querySelector('.timer').style.color = '#e74c3c';
+  }
+}
+
+/**
+ * Visual warning system for timer
+ * Flashes red three times when time is running low
+ */
+function flashTimeWarning() {
+  const container = document.querySelector('.dps-wrapper');
+  let flashCount = 0;
+
+  function singleFlash() {
+    container.style.backgroundColor = '#e74c3c';
+
+    setTimeout(() => {
+      container.style.backgroundColor = '';
+      flashCount++;
+
+      if (flashCount < 3) {
+        setTimeout(singleFlash, 300);
+      }
+    }, 300);
+  }
+
+  singleFlash();
 }
 
 /**
  * Toggle presenter mode on/off
  */
 function togglePresenterMode() {
-  console.log('[PresenterToggle] Toggle presenter mode function called');
   const presenterNotes = document.querySelector('.presenter-notes');
   
-  if (!presenterNotes) {
-    console.error('[PresenterToggle] Presenter notes container not found');
-    return;
-  }
+  if (!presenterNotes) return;
   
   const isPresenterMode = presenterNotes.classList.contains('presenter-mode');
   const header = document.querySelector('.dps-header');
@@ -2105,8 +1133,6 @@ function togglePresenterMode() {
   const slides = document.querySelectorAll('.slide');
   const currentSlide = slides[currentSlideIndex];
   const presenterButton = document.querySelector('.presenter-toggle');
-  
-  console.log('[PresenterToggle] Current state:', isPresenterMode ? 'presenter mode' : 'normal mode');
   
   if (!isPresenterMode) {
     // First make presenter notes visible by removing 'hidden' class if present
@@ -2138,8 +1164,6 @@ function togglePresenterMode() {
     
     // Update presenter notes content to include title and bullet points
     updatePresenterNotes(currentSlideIndex, false, true); // Pass isPresenterToggle=true
-    
-    console.log('[PresenterToggle] Switched to presenter mode');
   } else {
     // Restore normal view
     if (header) header.style.display = '';
@@ -2165,870 +1189,611 @@ function togglePresenterMode() {
     
     // Update presenter notes with standard content
     updatePresenterNotes(currentSlideIndex);
-    
-    console.log('[PresenterToggle] Switched back to normal mode');
   }
 }
-/**
-* Show presenter notes
-*/
-function showPresenterNotes() {
- const presenterNotes = document.querySelector('.presenter-notes');
- presenterNotes.classList.remove('hidden');
- DPS_CONFIG.PRESENTER_NOTES_VISIBLE = true;
-}
 
 /**
-* Hide presenter notes
-*/
-function hidePresenterNotes() {
- const presenterNotes = document.querySelector('.presenter-notes');
- presenterNotes.classList.add('hidden');
- DPS_CONFIG.PRESENTER_NOTES_VISIBLE = false;
-}
-
-/**
-* Start the presentation timer
-*/
-function startTimer() {
- if (!timerInterval) {
-   timerInterval = setInterval(updateTimer, 1000);
- }
-}
-
-/**
-* Toggle the timer on/off
-*/
-function toggleTimer() {
- if (timerInterval) {
-   clearInterval(timerInterval);
-   timerInterval = null;
- } else {
-   timerInterval = setInterval(updateTimer, 1000);
- }
-}
-
-/**
-* Update the timer display
-*/
-function updateTimer() {
- if (remainingTime > 0) {
-   remainingTime--;
-   document.querySelector('.timer').textContent = formatTime(remainingTime);
-
-   /* Flash warning when 2 minutes remain
-    * Provides visual cue for time management
-    */
-   if (remainingTime === 120) {
-     flashTimeWarning();
-   }
- } else {
-   clearInterval(timerInterval);
-   document.querySelector('.timer').textContent = 'Time Up!';
-   document.querySelector('.timer').style.color = '#e74c3c';
- }
-}
-
-/**
-* Visual warning system for timer
-* Flashes red three times when time is running low
-*/
-function flashTimeWarning() {
- const container = document.querySelector('.dps-container');
- let flashCount = 0;
-
- function singleFlash() {
-   container.style.backgroundColor = '#e74c3c';
-
-   setTimeout(() => {
-     container.style.backgroundColor = '';
-     flashCount++;
-
-     if (flashCount < 3) {
-       setTimeout(singleFlash, 300);
-     }
-   }, 300);
- }
-
- singleFlash();
-}
-
-/**
-* Add CSS styles for seamless navigation
-*/
-function addSeamlessNavigationStyles() {
- const styleElement = document.createElement('style');
- styleElement.textContent = `
-   .sequence-image {
-     position: absolute;
-     width: 100%;
-     height: 100%;
-     max-width: 100%;
-     max-height: 100%;
-     object-fit: contain;
-     display: block !important;
-     visibility: hidden;
-     top: 0;
-     left: 0;
-     right: 0;
-     bottom: 0;
-     margin: auto;
-   }
-
-   .sequence-image.active {
-     visibility: visible !important;
-   }
-   
-   /* Better slide transitions */
-   .slide {
-     transition: opacity 0.3s ease;
-   }
-   
-   /* Ensure illustration container has proper positioning */
-   .illustration {
-     position: relative;
-     min-height: 200px;
-   }
-   
-   .image-sequence {
-     position: relative;
-     width: 100%;
-     height: 100%;
-     min-height: 200px;
-   }
-   
-   /* Presenter notes styles */
-   .presenter-notes {
-     line-height: 1;
-   }
-   
-   .presenter-notes-content {
-     line-height: 1;
-   }
-   
-   .presenter-notes-content p {
-     margin: 0;
-     padding: 0;
-     line-height: 1.1;
-   }
-   
-   /* Add minimal spacing between paragraphs */
-   .presenter-notes-content p + p {
-     margin-top: 0.25em;
-   }
-   
-   /* Ensure lists have proper spacing too */
-   .presenter-notes-content ul,
-   .presenter-notes-content ol {
-     margin: 0.25em 0;
-     padding-left: 1.2em;
-   }
- 
-   .presenter-notes-content li {
-     margin: 0;
-     padding: 0;
-     line-height: 1.1;
-   }
- `;
- document.head.appendChild(styleElement);
-}
-
-/**
-* Set up the resize handler for presenter notes
-*/
+ * Set up the resize handler for presenter notes
+ */
 function setupResizeHandler() {
- const grip = document.querySelector('.resize-grip');
- const notes = document.querySelector('.presenter-notes');
+  const notes = document.querySelector('.presenter-notes');
+  const title = notes?.querySelector('.presenter-notes-title');
 
- if (!grip || !notes) return;
+  if (!notes || !title) return;
 
- grip.addEventListener('mousedown', (e) => {
-   let isResizing = true;
-   const startY = e.clientY;
-   const startHeight = parseInt(document.defaultView.getComputedStyle(notes).height, 10);
-   e.preventDefault();
+  let isResizing = false;
+  let startY = 0;
+  let startHeight = 0;
 
-   const moveHandler = (moveEvent) => {
-     if (!isResizing) return;
-     
-     const height = startHeight + (startY - moveEvent.clientY);
-     notes.style.height = `${Math.max(200, Math.min(window.innerHeight - 60, height))}px`;
-   };
-
-   const upHandler = () => {
-     isResizing = false;
-     document.removeEventListener('mousemove', moveHandler);
-     document.removeEventListener('mouseup', upHandler);
-   };
-
-   document.addEventListener('mousemove', moveHandler);
-   document.addEventListener('mouseup', upHandler);
- });
-}
-
-
-/**
- * Setup the presenter toggle button
- * This connects the button click event to the togglePresenterMode function
- */
-function setupPresenterToggle() {
-  const presenterToggleButton = document.querySelector('.presenter-toggle');
-  if (presenterToggleButton) {
-    console.log('[PresenterToggle] Setting up presenter toggle button');
-    presenterToggleButton.addEventListener('click', function() {
-      console.log('[PresenterToggle] Button clicked');
-      togglePresenterMode();
-    });
-  } else {
-    console.error('[PresenterToggle] Presenter toggle button not found');
-  }
-}
-
-
-/**
-* Set up the System Info button functionality
-* Creates a button that copies debug information to clipboard when clicked
-*/
-function setupSystemInfoButton() {
- const systemInfoButton = document.querySelector('.system-info-button');
- 
- if (!systemInfoButton) return;
- 
- systemInfoButton.addEventListener('click', () => {
-   // Log the button click event
-   if (DPS_CONFIG.DEBUG_INFO.enabled) {
-     DPS_CONFIG.DEBUG_INFO.events.push({
-       type: 'system_info_button_clicked',
-       timestamp: new Date().toISOString()
-     });
-   }
-   
-   // Generate debug information
-   const debugInfo = generateDebugInfo();
-   
-   // Copy to clipboard
-   copyToClipboard(debugInfo);
-   
-   // Show feedback to user
-   showCopyFeedback(systemInfoButton);
- });
- 
- // Add styles for the system info button
- addSystemInfoStyles();
-}
-
-/**
-* Generate debug information as a JSON string
-* @returns {string} Formatted JSON string with debug information
-*/
-function generateDebugInfo() {
-  // Get the current slide for detailed analysis
-  const currentSlide = document.querySelectorAll('.slide')[currentSlideIndex];
-  const imageSequence = currentSlide ? currentSlide.querySelector('.image-sequence') : null;
-  
-  // Capture hash information for current content
-  const hashDebugInfo = {
-    currentSlideContentHash: currentSlide ? simpleHash(currentSlide.innerHTML.substring(0, 200)) : null,
-    imageSequenceHash: imageSequence ? simpleHash(imageSequence.innerHTML.substring(0, 200)) : null,
-    contentHashes: collectContentHashes(currentSlide),
-    illustrationHashes: collectIllustrationHashes(currentSlide),
-    hashCollisions: detectHashCollisions(currentSlide)
-  };
-  
-  // Detailed analysis of illustrations in the current slide
-  const illustrationDetails = {
-    // ... (existing code)
-  };
-  
-  // Create the comprehensive debug object with the additional details
-  const debugObject = {
-    timestamp: new Date().toISOString(),
-    slides: DPS_CONFIG.DEBUG_INFO.slides,
-    illustrations: DPS_CONFIG.DEBUG_INFO.illustrations,
-    events: DPS_CONFIG.DEBUG_INFO.events,
-    navigationState: {
-      currentSlideIndex,
-      currentNavIndex,
-      totalSlides: document.querySelectorAll('.slide').length,
-      totalNavPoints: flatNavigation ? flatNavigation.length : 0
-    },
-    timerState: {
-      remainingTime,
-      hasStartedTimer,
-      isTimerRunning: !!timerInterval
-    },
-    presenterState: {
-      isPresenterMode: document.querySelector('.presenter-notes')?.classList.contains('presenter-mode') || false,
-      isNotesVisible: !document.querySelector('.presenter-notes')?.classList.contains('hidden')
-    },
-    // Add the detailed illustration analysis
-    currentIllustration: illustrationDetails,
-    // Add hash debugging information
-    hashDebug: hashDebugInfo,
-    // Navigation history
-    navigationHistory: stateSnapshots.slice(-5) // Get last 5 navigation events
-  };
-  
-  // Format as pretty JSON with 2-space indentation
-  return JSON.stringify(debugObject, null, 2);
-}
-
-/**
- * Collect content hash information for elements in a container
- * @param {Element} container - The container element
- * @returns {Array} Array of element hashes with details
- */
-function collectContentHashes(container) {
-  if (!container) return [];
-  
-  const elements = Array.from(container.querySelectorAll('.sequence-image, .sequence-item-container, picture, img, iframe'));
-  
-  return elements.map((element, index) => {
-    // Create temporary container to get HTML
-    const tempContainer = document.createElement('div');
-    tempContainer.appendChild(element.cloneNode(true));
-    const elementHTML = tempContainer.innerHTML;
+  title.addEventListener('mousedown', (e) => {
+    isResizing = true;
+    startY = e.clientY;
+    startHeight = parseInt(window.getComputedStyle(notes).height, 10);
+    e.preventDefault();
     
-    // Generate hash for the element
-    const contentHash = simpleHash(elementHTML);
-    const shortContent = elementHTML.substring(0, 100).replace(/\n/g, '');
+    document.body.style.userSelect = 'none'; // Prevent text selection during resize
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!isResizing) return;
     
-    return {
-      index,
-      elementType: element.tagName,
-      classes: Array.from(element.classList),
-      contentHash,
-      shortContent,
-      contentLength: elementHTML.length
-    };
+    const delta = startY - e.clientY;
+    notes.style.height = `${Math.max(100, Math.min(window.innerHeight - 100, startHeight + delta))}px`;
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (isResizing) {
+      isResizing = false;
+      document.body.style.userSelect = ''; // Restore text selection
+    }
   });
 }
-
 /**
- * Collect hash information specifically for illustrations
- * @param {Element} container - The container element 
- * @returns {Object} Hash information for illustrations
+ * Add CSS styles for the presentation
+ * This function adds all necessary styles for the DPS block
  */
-function collectIllustrationHashes(container) {
-  if (!container) return null;
-  
-  // Find the illustration container
-  const illustration = container.querySelector('.illustration');
-  if (!illustration) return null;
-  
-  // Process different illustration types
-  const imageSequence = illustration.querySelector('.image-sequence');
-  const iframeContainer = illustration.querySelector('.iframe-container');
-  const svgElement = illustration.querySelector('svg');
-  const pictureElement = illustration.querySelector('picture');
-  const imgElement = illustration.querySelector('img:not(.sequence-image)'); // Direct image
-  
-  const result = {
-    illustrationType: null,
-    contentHash: null,
-    elementDetails: null
-  };
-  
-  if (imageSequence) {
-    result.illustrationType = 'sequence';
-    result.contentHash = simpleHash(imageSequence.innerHTML.substring(0, 200));
-    
-    // Get detailed info on sequence items
-    const sequenceItems = Array.from(imageSequence.querySelectorAll('.sequence-item-container'));
-    result.elementDetails = sequenceItems.map((item, index) => {
-      const label = item.querySelector('.sequence-item-label');
-      const image = item.querySelector('.sequence-image');
-      const imageHTML = image ? (image.outerHTML || '').substring(0, 100) : 'No image';
+function addStyles() {
+  const style = document.createElement('style');
+  style.textContent = `
+    /* Override section padding for DPS block */
+    main .section {
+      padding: 0 !important;
+      margin: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+
+    main .section > div {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    main .section > div > .dps {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    /* Comprehensive reset for DPS block */
+    .dps * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Reset styles */
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    /* Force full viewport mode */
+    body.dps-fullscreen {
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+
+    body.dps-fullscreen main {
+      padding: 0 !important;
+      margin: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+
+    body.dps-fullscreen main .section {
+      padding: 0 !important;
+      margin: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+
+    body.dps-fullscreen main .section > div {
+      padding: 0 !important;
+      margin: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+
+    /* Block wrapper styling - primary styling container */
+    .dps-wrapper {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background-color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      box-shadow: none;
+      position: relative;
+    }
+
+    /* Error display */
+    .dps-error {
+      padding: 20px;
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      border-radius: 4px;
+      margin: 10px 0;
+    }
+
+    /* Inner content wrapper for consistent margins */
+    .header-content,
+    .slide-content,
+    .footer-content {
+      width: 100%;
+      padding: 0 10px;
+      max-width: 100%;
+    }
+
+    /* Header styling */
+    .dps-header {
+      width: 100%;
+      padding: 10px 0;
+      background-color: #2c3e50;
+      color: white;
+      text-align: center;
+    }
+
+    .dps-header h1 {
+      font-size: 24px;
+    }
+
+    .dps-header p {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    /* Content area */
+    .slides-container {
+      flex: 1;
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+      background-color: #fff;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Slide styling */
+    .slide {
+      width: 100%;
+      max-width: 100%;
+      flex: 1;
+      display: none;
+      padding: 0;
+      min-height: 0;
+    }
+
+    .slide.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Slide content layout */
+    .slide-content {
+      display: grid;
+      grid-template-areas: 
+          "title title"
+          "text illustration";
+      grid-template-columns: 40% 60%;
+      grid-template-rows: auto 1fr;
+      gap: 20px;
+      padding: 20px;
+      padding-bottom: 80px;
+      height: calc(100vh - 120px);
+      min-height: 0;
+    }
+
+    /* Slide title */
+    .slide-title {
+      grid-area: title;
+      font-size: 28px;
+      color: #2c3e50;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #3498db;
+      width: 100%;
+    }
+
+    /* First line styling */
+    .slide-content-text > p:first-child {
+      font-size: 24px !important;
+      font-weight: bold;
+      margin-bottom: 30px !important;
+      color: #2c3e50;
+      line-height: 1.3;
+    }
+
+    /* Text content area */
+    .slide-content-text {
+      grid-area: text;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+
+    /* Illustration area */
+    .illustration {
+      grid-area: illustration;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      height: calc(100vh - 200px);
+      position: relative;
+    }
+
+    .illustration img {
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    /* iframe container styling */
+    .iframe-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* iframe styling */
+    .iframe-container iframe {
+      width: 100%;
+      height: 100%;
+      max-height: calc(100vh - 200px);
+      object-fit: contain;
+      background-color: #fff;
+      border: none;
+      box-shadow: none;
+      aspect-ratio: 16/9;
+    }
+
+    /* Handle forced-colors mode */
+    @media (forced-colors: active) {
+      .iframe-container {
+        border: 1px solid CanvasText;
+      }
       
-      return {
-        index,
-        labelText: label ? label.textContent : 'No label',
-        isActive: item.classList.contains('active'),
-        itemHash: simpleHash(item.innerHTML),
-        imageType: image ? image.tagName : 'None',
-        imageClasses: image ? Array.from(image.classList) : [],
-        imageHTML: imageHTML,
-        imageContentHash: image ? simpleHash(imageHTML) : null
-      };
-    });
-  } else if (iframeContainer) {
-    result.illustrationType = 'iframe';
-    const iframe = iframeContainer.querySelector('iframe');
-    result.contentHash = iframe ? simpleHash(iframe.outerHTML) : simpleHash(iframeContainer.innerHTML);
-    result.elementDetails = {
-      src: iframe ? iframe.getAttribute('src') : 'No iframe found',
-      containerHTML: iframeContainer.outerHTML.substring(0, 100)
-    };
-  } else if (svgElement) {
-    result.illustrationType = 'svg';
-    result.contentHash = simpleHash(svgElement.outerHTML.substring(0, 200));
-    result.elementDetails = {
-      viewBox: svgElement.getAttribute('viewBox'),
-      svgHTML: svgElement.outerHTML.substring(0, 100)
-    };
-  } else if (pictureElement) {
-    result.illustrationType = 'picture';
-    result.contentHash = simpleHash(pictureElement.outerHTML.substring(0, 200));
-    result.elementDetails = {
-      sources: Array.from(pictureElement.querySelectorAll('source')).length,
-      pictureHTML: pictureElement.outerHTML.substring(0, 100)
-    };
-  } else if (imgElement) {
-    result.illustrationType = 'image';
-    result.contentHash = simpleHash(imgElement.outerHTML);
-    result.elementDetails = {
-      src: imgElement.getAttribute('src'),
-      alt: imgElement.getAttribute('alt'),
-      imgHTML: imgElement.outerHTML.substring(0, 100)
-    };
-  }
-  
-  return result;
-}
-
-/**
- * Detect potential hash collisions in content identification
- * @param {Element} container - The container to analyze
- * @returns {Object} Information about potential hash collisions
- */
-function detectHashCollisions(container) {
-  if (!container) return null;
-  
-  // Get elements that would typically be hashed for content identification
-  const elements = Array.from(container.querySelectorAll('img, svg, picture, iframe, .sequence-image'));
-  
-  // Map of hashes to elements to detect collisions
-  const hashMap = {};
-  const collisions = [];
-  
-  elements.forEach((element, index) => {
-    // Create temporary container to get HTML
-    const tempContainer = document.createElement('div');
-    tempContainer.appendChild(element.cloneNode(true));
-    const elementHTML = tempContainer.innerHTML;
-    
-    // Generate content hash
-    const contentHash = simpleHash(elementHTML);
-    
-    // Check for collisions
-    if (hashMap[contentHash]) {
-      // Potential collision found
-      collisions.push({
-        hash: contentHash,
-        elements: [
-          {
-            index: hashMap[contentHash].index,
-            type: hashMap[contentHash].element.tagName,
-            classes: Array.from(hashMap[contentHash].element.classList),
-            shortContent: hashMap[contentHash].html.substring(0, 50)
-          },
-          {
-            index,
-            type: element.tagName,
-            classes: Array.from(element.classList),
-            shortContent: elementHTML.substring(0, 50)
-          }
-        ],
-        // Compute similarity to determine if this is a true collision
-        similarity: calculateSimilarity(hashMap[contentHash].html, elementHTML)
-      });
-    } else {
-      // Store this hash
-      hashMap[contentHash] = {
-        index,
-        element,
-        html: elementHTML
-      };
+      .iframe-container iframe {
+        border: 1px solid CanvasText;
+      }
     }
-  });
-  
-  return {
-    totalElementsHashed: elements.length,
-    uniqueHashes: Object.keys(hashMap).length,
-    collisions
-  };
-}
 
-/**
- * Calculate similarity between two HTML strings
- * @param {string} html1 - First HTML string
- * @param {string} html2 - Second HTML string
- * @returns {number} Similarity score (0-1)
- */
-function calculateSimilarity(html1, html2) {
-  if (!html1 || !html2) return 0;
-  
-  // Very simple similarity check - compare string lengths
-  const lengthDiff = Math.abs(html1.length - html2.length);
-  const maxLength = Math.max(html1.length, html2.length);
-  
-  // If lengths are very different, they're probably different content
-  if (lengthDiff > maxLength * 0.5) return 0;
-  
-  // For strings of similar length, check character-by-character
-  let sameChars = 0;
-  const minLength = Math.min(html1.length, html2.length);
-  
-  for (let i = 0; i < minLength; i++) {
-    if (html1[i] === html2[i]) {
-      sameChars++;
+    /* Bullet lists */
+    .bullet-list {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
     }
-  }
-  
-  return sameChars / maxLength;
-}
 
-/**
- * Detect potential style conflicts in the current slide
- * @param {Element} slide - The current slide element
- * @returns {Object} Analysis of style conflicts
- */
-function detectStyleConflicts(slide) {
-  if (!slide) return null;
-  
-  // Check for duplicate IDs
-  const allElements = Array.from(slide.querySelectorAll('*'));
-  const idCounts = {};
-  
-  allElements.forEach(element => {
-    const id = element.id;
-    if (id) {
-      idCounts[id] = (idCounts[id] || 0) + 1;
+    .bullet-list li {
+      position: relative;
+      padding-left: 25px;
+      font-size: 20px;
+      line-height: 1.4;
+      margin-bottom: 10px;
     }
-  });
-  
-  const duplicateIds = Object.entries(idCounts)
-    .filter(([id, count]) => count > 1)
-    .map(([id, count]) => ({ id, count }));
-  
-  // Check for z-index issues
-  const elementsWithZIndex = Array.from(slide.querySelectorAll('*'))
-    .filter(el => {
-      const computedStyle = window.getComputedStyle(el);
-      return computedStyle.getPropertyValue('z-index') !== 'auto';
-    })
-    .map(el => ({
-      element: el.tagName + (el.classList.length ? '.' + Array.from(el.classList).join('.') : ''),
-      zIndex: window.getComputedStyle(el).getPropertyValue('z-index')
-    }));
-  
-  // Check for position conflicts
-  const positionAbsolute = slide.querySelectorAll('*[style*="position: absolute"]').length;
-  const visibility = {
-    hidden: slide.querySelectorAll('*[style*="visibility: hidden"]').length,
-    visible: slide.querySelectorAll('*[style*="visibility: visible"]').length
-  };
-  
-  return {
-    duplicateIds,
-    elementsWithZIndex,
-    positionStyles: {
-      absolute: positionAbsolute,
-      visibility
+
+    .bullet-list li:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 10px;
+      height: 10px;
+      background-color: #3498db;
+      border-radius: 50%;
     }
-  };
-}
-/**
-* Copy text to clipboard
-* @param {string} text - Text to copy to clipboard
-*/
-function copyToClipboard(text) {
- // Create a temporary textarea element
- const textarea = document.createElement('textarea');
- textarea.value = text;
- textarea.setAttribute('readonly', '');
- textarea.style.position = 'absolute';
- textarea.style.left = '-9999px';
- document.body.appendChild(textarea);
- 
- // Select and copy the text
- textarea.select();
- document.execCommand('copy');
- 
- // Clean up
- document.body.removeChild(textarea);
- 
- // Log the copy event
- if (DPS_CONFIG.DEBUG_INFO.enabled) {
-   DPS_CONFIG.DEBUG_INFO.events.push({
-     type: 'debug_info_copied',
-     timestamp: new Date().toISOString(),
-     contentLength: text.length
-   });
- }
-}
 
-/**
-* Show feedback to the user that the copy was successful
-* @param {Element} button - The button element that was clicked
-*/
-function showCopyFeedback(button) {
- // Create a tooltip element
- const tooltip = document.createElement('div');
- tooltip.className = 'copy-tooltip';
- tooltip.textContent = 'System Info Copied!';
- 
- // Position the tooltip
- const buttonRect = button.getBoundingClientRect();
- tooltip.style.position = 'absolute';
- tooltip.style.top = `${buttonRect.top - 30}px`;
- tooltip.style.left = `${buttonRect.left + (buttonRect.width / 2) - 60}px`;
- 
- // Add the tooltip to the document
- document.body.appendChild(tooltip);
- 
- // Remove the tooltip after a delay
- setTimeout(() => {
-   tooltip.classList.add('fade-out');
-   setTimeout(() => {
-     document.body.removeChild(tooltip);
-   }, 300);
- }, 2000);
-}
+    /* Plain text items in bullet list */
+    .bullet-list li.plain-text {
+      padding-left: 0;
+      list-style: none;
+      white-space: pre-line;
+      line-height: 1.4;
+      margin-bottom: 10px;
+    }
 
-/**
-* Add styles for the system info button and tooltip
-*/
-function addSystemInfoStyles() {
- const style = document.createElement('style');
- style.textContent = `
-   .footer-buttons {
-     display: flex;
-     align-items: center;
-   }
-   
-   .system-info-button {
-     background: none;
-     border: none;
-     cursor: pointer;
-     padding: 5px;
-     margin-left: 10px;
-     border-radius: 50%;
-     width: 36px;
-     height: 36px;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     transition: background-color 0.3s;
-   }
-   
-   .system-info-button:hover {
-     background-color: rgba(255, 255, 255, 0.2);
-   }
-   
-   .system-info-button svg {
-     width: 24px;
-     height: 24px;
-     fill: white;
-   }
-   
-   .copy-tooltip {
-     background-color: rgba(0, 0, 0, 0.8);
-     color: white;
-     padding: 5px 10px;
-     border-radius: 4px;
-     font-size: 14px;
-     z-index: 1000;
-     transition: opacity 0.3s;
-   }
-   
-   .copy-tooltip.fade-out {
-     opacity: 0;
-   }
- `;
- document.head.appendChild(style);
-}
+    .bullet-list li.plain-text:before {
+      display: none;
+    }
 
-/**
-* State tracking variables
-*/
-let stateSnapshots = [];
-const MAX_SNAPSHOTS = 20;
+    /* Footer styling */
+    .dps-footer {
+      width: 100%;
+      padding: 10px 0;
+      background-color: #ecf0f1;
+      border-top: 1px solid #ddd;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+    }
 
-/**
-* Take a snapshot of the current DPS state
-* @param {string} trigger - What triggered this snapshot
-* @returns {Object} The current state snapshot
-*/
-function takeStateSnapshot(trigger) {
- // Get the current slide
- const slides = document.querySelectorAll('.slide');
- const currentSlide = slides[currentSlideIndex];
- 
- // Check for image sequence
- const imageSequence = currentSlide ? currentSlide.querySelector('.image-sequence') : null;
- const sequenceImages = imageSequence ? Array.from(imageSequence.querySelectorAll('.sequence-image')) : [];
- 
- // Analyze active states
- const activeImages = sequenceImages.filter(img => img.classList.contains('active'));
- const visibleImages = sequenceImages.filter(img => img.style.visibility === 'visible');
- 
- // State inconsistency detection
- const activeCount = activeImages.length;
- const visibleCount = visibleImages.length;
- const hasInconsistentState = activeCount !== visibleCount || activeCount > 1;
- 
- // Create the snapshot
- const snapshot = {
-   timestamp: new Date().toISOString(),
-   performanceTime: performance.now(),
-   trigger: trigger,
-   
-   navigation: {
-     currentSlideIndex: currentSlideIndex,
-     currentNavIndex: currentNavIndex,
-     totalNavPoints: flatNavigation ? flatNavigation.length : 'unknown',
-     currentNavType: flatNavigation && currentNavIndex < flatNavigation.length ? 
-                   flatNavigation[currentNavIndex].type : 'unknown'
-   },
-   
-   sequence: {
-     exists: !!imageSequence,
-     totalImages: sequenceImages.length,
-     activeCount: activeCount,
-     visibleCount: visibleCount,
-     hasInconsistentState: hasInconsistentState
-   }
- };
- 
- // Add to snapshots history, maintaining max length
- stateSnapshots.push(snapshot);
- if (stateSnapshots.length > MAX_SNAPSHOTS) {
-   stateSnapshots.shift();
- }
- 
- // Log to console if there's an inconsistency
- if (hasInconsistentState) {
-   console.warn(`[DPS State] Inconsistent state detected (${trigger}):`, 
-               `active=${activeCount}, visible=${visibleCount}`);
- }
- 
- return snapshot;
-}
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
 
-/**
-* Get the full DPS state report as JSON
-* @returns {string} JSON string with full state report
-*/
-function getDPSStateReport() {
- // Add one final snapshot of current state
- takeStateSnapshot('report_requested');
- 
- const report = {
-   timestamp: new Date().toISOString(),
-   currentState: stateSnapshots[stateSnapshots.length - 1],
-   history: stateSnapshots,
-   
-   // Slide details
-   slides: Array.from(document.querySelectorAll('.slide')).map((slide, index) => {
-     const imageSequence = slide.querySelector('.image-sequence');
-     return {
-       index: index,
-       title: slide.querySelector('.slide-title')?.textContent || `Slide ${index}`,
-       display: slide.style.display,
-       isActive: index === currentSlideIndex,
-       hasSequence: !!imageSequence,
-       sequenceImageCount: imageSequence ? 
-                         imageSequence.querySelectorAll('.sequence-image').length : 0
-     };
-   }),
-   
-   // Navigation analysis
-   navigationStructure: flatNavigation ? 
-     flatNavigation.map((item, index) => ({
-       index: index,
-       type: item.type,
-       slideIndex: item.slideIndex,
-       sequenceIndex: item.sequenceIndex,
-       isCurrent: index === currentNavIndex
-     })) : 'Not available'
- };
- 
- return JSON.stringify(report, null, 2);
-}
+    /* Navigation arrows */
+    .nav-arrows {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
 
-/**
-* Fix the DPS state to ensure consistency
-* @returns {boolean} True if the fix was applied
-*/
-function fixDPSState() {
- // Get current slide
- const currentSlide = document.querySelectorAll('.slide')[currentSlideIndex];
- if (!currentSlide) return false;
- 
- // Find image sequence
- const imageSequence = currentSlide.querySelector('.image-sequence');
- if (!imageSequence) return false;
- 
- // Get all images
- const images = Array.from(imageSequence.querySelectorAll('.sequence-image'));
- if (images.length === 0) return false;
- 
- console.log('[DPS Fix] Applying state fixes to slide', currentSlideIndex);
- 
- // Find active image index (use first active or default to 0)
- const activeIndex = images.findIndex(img => img.classList.contains('active'));
- const targetIndex = activeIndex >= 0 ? activeIndex : 0;
- 
- // Reset all images to consistent state
- images.forEach((img) => {
-   // Remove active class
-   img.classList.remove('active');
-   // Set visibility to hidden
-   img.style.visibility = 'hidden';
-   // Ensure display is block
-   img.style.display = 'block';
- });
- 
- // Set the target image as active
- if (images[targetIndex]) {
-   images[targetIndex].classList.add('active');
-   images[targetIndex].style.visibility = 'visible';
- }
- 
- // Update navigation indices if needed
- if (flatNavigation) {
-   // Find the corresponding nav item for this slide+sequence
-   const navIndex = flatNavigation.findIndex(item => 
-     item.type === 'sequence' && 
-     item.slideIndex === currentSlideIndex && 
-     item.sequenceIndex === targetIndex
-   );
-   
-   if (navIndex >= 0) {
-     currentNavIndex = navIndex;
-     console.log('[DPS Fix] Updated currentNavIndex to', navIndex);
-   }
- }
- 
- // Take a snapshot after fixing
- takeStateSnapshot('after_fix');
- 
- return true;
-}
+    .nav-arrow {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.3s ease;
+    }
 
-/**
-* Initialize the state tracker
-*/
-function initStateTracker() {
- console.log('[DPS State Tracker] Initializing...');
- 
- // Take initial snapshot
- takeStateSnapshot('initialization');
- 
- // Add keyboard handler to trigger fix
- document.addEventListener('keydown', function(event) {
-   // Ctrl+Alt+F to fix DPS state
-   if (event.ctrlKey && event.altKey && event.key === 'f') {
-     console.log('[DPS State Tracker] Manual fix triggered');
-     fixDPSState();
-   }
- });
- 
- console.log('[DPS State Tracker] Initialized successfully.');
+    .nav-arrow:hover {
+      opacity: 0.8;
+    }
+
+    .nav-arrow svg {
+      width: 24px;
+      height: 24px;
+      fill: #2c3e50;
+    }
+
+    .nav-arrow:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    /* Timer styling */
+    .timer {
+      font-weight: bold;
+      font-size: 16px;
+      color: #2c3e50;
+    }
+
+    /* Q&A slide */
+    .qanda-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      height: 100%;
+    }
+
+    .qanda-circle {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background-color: #3498db;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      margin: 0 auto;
+    }
+
+    .thank-you-text {
+      font-size: 24px;
+      color: #2c3e50;
+      text-align: center;
+      font-weight: 500;
+      margin-top: 20px;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .header-content,
+      .slide-content,
+      .footer-content {
+        width: 90%;
+      }
+
+      .bullet-list li {
+        font-size: 16px;
+      }
+
+      .qanda-circle {
+        width: 180px;
+        height: 180px;
+      }
+
+      .slide-content {
+        grid-template-areas: 
+          "title"
+          "text"
+          "illustration";
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto 1fr;
+      }
+
+      .thank-you-text {
+        font-size: 20px;
+      }
+    }
+
+    /* Image sequence styling */
+    .image-sequence {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+    }
+
+    .sequence-item-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
+
+    .sequence-item-container.active {
+      display: block;
+    }
+
+    .sequence-item-label {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 4px 8px;
+      font-size: 12px;
+      border-radius: 4px;
+      z-index: 5;
+    }
+
+    .sequence-image {
+      position: relative;
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      margin: 0 auto;
+      display: block;
+    }
+
+    .sequence-image.iframe-container {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Presenter notes styling */
+    .presenter-notes {
+      position: fixed;
+      bottom: 60px;
+      left: 20px;
+      width: 31.25vw;
+      height: 25vh;
+      background-color: rgba(236, 240, 241, 0.95);
+      color: #2c3e50;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      overflow-y: auto;
+      font-size: 14px;
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    .presenter-notes.hidden {
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+    }
+
+    .presenter-notes-title {
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid rgba(44, 62, 80, 0.3);
+      color: #2c3e50;
+      cursor: ns-resize;
+    }
+
+    .presenter-notes-content {
+      line-height: 1.4;
+      color: #2c3e50;
+    }
+
+    .presenter-notes.presenter-mode .presenter-notes-content {
+      font-size: 18px;
+    }
+
+    /* Presenter toggle button styles */
+    .presenter-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      margin-left: 10px;
+      color: #2c3e50;
+      transition: all 0.2s ease;
+    }
+
+    .presenter-toggle svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
+
+    .presenter-toggle:hover {
+      color: #3498db;
+    }
+
+    .presenter-toggle.active {
+      color: #3498db;
+      background-color: rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+    }
+
+    /* Print styles for handouts */
+    @media print {
+      .dps-wrapper {
+        height: auto;
+        box-shadow: none;
+      }
+
+      .dps-header,
+      .dps-footer {
+        display: none;
+      }
+
+      .slides-container {
+        overflow: visible;
+      }
+
+      .slide {
+        display: block !important;
+        page-break-after: always;
+        min-height: 90vh;
+      }
+
+      .slide:last-child {
+        page-break-after: avoid;
+      }
+      
+      .presenter-notes {
+        display: none;
+      }
+    }
+  `;
+  
+  document.head.appendChild(style);
 }
 
-// Expose essential functions to the window object for global access
-window.takeStateSnapshot = takeStateSnapshot;
-window.getDPSStateReport = getDPSStateReport;
-window.fixDPSState = fixDPSState;
+// Call addStyles when this file is loaded
+addStyles();
