@@ -14,186 +14,215 @@ function extractSeriesInfo(title, path) {
     basePath
   };
 }
-
-// Function to group and sort blog posts
+// Function to group and sort blog posts based on configuration
 function groupAndSortPosts(posts, config) {
-  const { acceptList = [], pathFilters = [] } = config || {};
-  console.log('groupAndSortPosts - acceptList:', acceptList);
-  console.log('groupAndSortPosts - pathFilters:', pathFilters);
-  console.log('groupAndSortPosts - posts length:', posts.length);
-  
-  const seriesMap = new Map();
-  let filteredPosts = [...posts];
-  console.log('Initial filteredPosts length:', filteredPosts.length);
-  let usedPathFilter = false;
-  let usedTitleFilter = false;
+  // Destructure configuration, providing default empty arrays if undefined
+  const { acceptList = [], pathFilters = [], currentDirFilter = null } = config || {};
+  console.log('groupAndSortPosts - config:', config);
+  console.log('groupAndSortPosts - initial posts length:', posts.length);
 
-  // First try path filtering if pathFilters are provided
-  if (pathFilters.length > 0) {
-    console.log('Applying path filters:', pathFilters);
-    
-    const pathFilteredPosts = posts.filter(post => {
-      const matches = pathFilters.some(pathFilter => {
-        const match = post.path.includes(pathFilter);
-        if (match) {
-          console.log(`Path match found: "${pathFilter}" in "${post.path}"`);
-        }
-        return match;
-      });
-      return matches;
+  let filteredPosts = [...posts]; // Start with all posts
+  let usedPathFilter = false; // Flag to track if path=* or path= filters were applied
+  let usedTitleFilter = false; // Flag to track if title fallback filter was applied
+
+  // *** Priority 1: Handle currentDirFilter (path=*) if it exists ***
+  if (currentDirFilter) {
+    console.log('Applying current directory filter (path=*):', currentDirFilter);
+    filteredPosts = posts.filter(post => {
+      // Check if post.path is a string and starts with the current directory path
+      const match = typeof post.path === 'string' && post.path.startsWith(currentDirFilter);
+      if (match) {
+        console.log(`Current directory match found: "${currentDirFilter}" starts path "${post.path}"`);
+      }
+      return match;
     });
-    
+    console.log(`Found ${filteredPosts.length} posts matching current directory filter`);
+    usedPathFilter = true; // Mark that a path-based filter was used
+
+    // If no posts were found with this specific filter, the result is empty for path=*
+    if (filteredPosts.length === 0) {
+      console.log('No matches found using current directory filter (path=*).');
+      // We don't attempt title fallback for path=*
+    }
+  }
+  // *** Priority 2: Handle regular pathFilters only if path=* wasn't used ***
+  else if (pathFilters.length > 0) {
+    console.log('Applying regular path filters:', pathFilters);
+
+    // Attempt to filter by path first
+    const pathFilteredPosts = posts.filter(post => {
+      // Check if post.path is a string and includes any of the pathFilters
+      return pathFilters.some(pathFilter => typeof post.path === 'string' && post.path.includes(pathFilter));
+    });
+
     console.log(`Found ${pathFilteredPosts.length} posts matching path filters`);
-    
-    // If we found posts with path filtering, use those
+
     if (pathFilteredPosts.length > 0) {
       filteredPosts = pathFilteredPosts;
-      usedPathFilter = true;
+      usedPathFilter = true; // Mark that a path-based filter was used
     } else {
-      // If no posts found with path filtering, try filtering by title instead
-      console.log('No path matches found, trying title filtering');
-      
+      // If no path matches, attempt to filter by title as a fallback
+      console.log('No path matches found for path filters, trying title filtering');
       const titleFilteredPosts = posts.filter(post => {
-        const matches = pathFilters.some(pathFilter => {
-          const match = post.title.includes(pathFilter);
-          if (match) {
-            console.log(`Title match found: "${pathFilter}" in "${post.title}"`);
-          }
-          return match;
-        });
-        return matches;
+        // Check if post.title is a string and includes any of the pathFilters
+        return pathFilters.some(pathFilter => typeof post.title === 'string' && post.title.includes(pathFilter));
       });
-      
+
       console.log(`Found ${titleFilteredPosts.length} posts matching title filters`);
-      
+
       if (titleFilteredPosts.length > 0) {
         filteredPosts = titleFilteredPosts;
-        usedTitleFilter = true;
+        usedTitleFilter = true; // Mark that title fallback filter was used
       } else {
-        // If no matches found in either path or title, return empty array
-        console.log('No matches found in either path or title, returning empty array');
+        // If neither path nor title matched, the result is empty for these filters
+        console.log('No matches found in either path or title using path filters.');
         filteredPosts = [];
-        console.log('After setting to empty, filteredPosts length:', filteredPosts.length);
       }
     }
   }
 
-  // Apply regular acceptList filtering if we didn't use path/title filtering
+  // *** Priority 3: Apply regular acceptList filtering only if NO path or title filters were successfully applied ***
   if (!usedPathFilter && !usedTitleFilter && acceptList.length > 0) {
-    console.log('Applying regular acceptList filtering');
+    console.log('Applying regular acceptList filtering:', acceptList);
     filteredPosts = filteredPosts.filter(post => {
       return acceptList.some(term => {
-        // If term is lowercase (contains 'guide'), do case-insensitive comparison
+        // Case-insensitive check for terms containing 'guide' (backward compatibility)
         if (term === term.toLowerCase() && term.includes('guide')) {
-          return post.path.toLowerCase().includes(term);
+          // Check if post.path is a string before calling toLowerCase()
+          return typeof post.path === 'string' && post.path.toLowerCase().includes(term);
         }
-        // Otherwise do case-sensitive comparison
-        return post.path.includes(term);
+        // Case-sensitive check otherwise
+        // Check if post.path is a string before calling includes()
+        return typeof post.path === 'string' && post.path.includes(term);
       });
     });
+    console.log(`Found ${filteredPosts.length} posts after acceptList filtering.`);
   }
 
-  console.log('Before grouping, filteredPosts length:', filteredPosts.length);
-  
-  // Group the filtered posts
+  // If after all filtering attempts, filteredPosts is empty, return immediately.
+  if (filteredPosts.length === 0) {
+    console.log('Returning empty array because filteredPosts is empty after all filtering attempts');
+    return []; // Return an empty array directly
+  }
+
+  // *** Grouping and Sorting Logic (only runs if filteredPosts is not empty) ***
+  console.log('Grouping and sorting filtered posts. Count:', filteredPosts.length);
+  const seriesMap = new Map();
+
+  // Group the remaining filtered posts
   filteredPosts.forEach(post => {
-    const { name, part, basePath } = extractSeriesInfo(post.title, post.path);
-    const key = `${basePath}/${name}`;
+    // Ensure title and path are strings before processing
+    const title = typeof post.title === 'string' ? post.title : '';
+    const path = typeof post.path === 'string' ? post.path : '';
+    const { name, part, basePath } = extractSeriesInfo(title, path);
+    const key = `${basePath}/${name}`; // Use base path and extracted name as the key
     if (!seriesMap.has(key)) {
       seriesMap.set(key, []);
     }
+    // Add the post (with its extracted part number) to the corresponding series
     seriesMap.get(key).push({ ...post, part });
   });
 
   // Sort posts within each series
-  seriesMap.forEach(posts => {
-    posts.sort((a, b) => {
+  seriesMap.forEach((postsInSeries) => {
+    postsInSeries.sort((a, b) => {
+      // Sort by part number if both posts have one
       if (a.part !== null && b.part !== null) {
         return a.part - b.part;
       }
-      return a.title.localeCompare(b.title);
+      // Otherwise, sort alphabetically by title
+      // Ensure titles are strings before comparing
+      const titleA = typeof a.title === 'string' ? a.title : '';
+      const titleB = typeof b.title === 'string' ? b.title : '';
+      return titleA.localeCompare(titleB);
     });
   });
 
   console.log('After grouping, seriesMap size:', seriesMap.size);
-  
-  // If filteredPosts is empty, return an empty array regardless of what's in seriesMap
-  if (filteredPosts.length === 0) {
-    console.log('Returning empty array because filteredPosts is empty');
-    console.log('filteredPosts:', filteredPosts);
-    console.log('seriesMap size:', seriesMap.size);
-    console.log('seriesMap keys:', Array.from(seriesMap.keys()));
-    return [];
-  }
 
-  // Convert map to array and sort by number of posts (descending)
+  // Convert map to array of [seriesName, postsArray] entries
+  // Sort the series themselves based on the number of posts (descending)
   return Array.from(seriesMap.entries())
-    .sort((a, b) => b[1].length - a[1].length)
-    .map(([key, posts]) => [posts[0].title.split(' - ')[0], posts]);
+    .sort((a, b) => b[1].length - a[1].length) // Sort series by number of posts descending
+    .map(([key, postsInSeries]) => {
+        // Extract a representative series name (e.g., from the first post's title before " - Part")
+        // Ensure the first post and its title exist
+        const firstPostTitle = postsInSeries[0] && typeof postsInSeries[0].title === 'string' ? postsInSeries[0].title : '';
+        const seriesName = firstPostTitle.includes(' - Part') ? firstPostTitle.split(' - Part')[0] : firstPostTitle;
+        return [seriesName, postsInSeries];
+    }); // Return array of [seriesName, sortedPostsArray]
 }
-
 // Configuration function
 function getConfig(block) {
+  // Initialize the config object
   const config = {
     acceptList: [],
     pathFilters: [],
+    currentDirFilter: null, // Added to specifically handle path=*
     isCompact: block.classList.contains('compact'),
   };
-  
+
+  // Get rows from the block configuration in the document
   const rows = [...block.children];
   if (rows.length > 0) {
-    const firstRow = rows.shift();
-    
+    // Process the first row which contains the filter terms
+    const firstRow = rows.shift(); // Removes the first row (header) if it exists, assumes filters are in subsequent rows. Check if this is the intended logic or if filters are in the *first* data row. If filters are in the first row, just use rows[0].
+
+    // Iterate over cells in the filter row
     [...firstRow.children].forEach(cell => {
       const text = cell.textContent.trim();
-      if (text === '') return;
-      
+      if (text === '') return; // Skip empty cells
+
       // Check for path=value format
       const pathMatch = text.match(/^path=(\S+)$/);
       if (pathMatch) {
-        // Get the path value
+        // Get the path value from the match
         const pathValue = pathMatch[1];
         console.log('Found path filter:', pathValue);
-        
+
         // Special case: path=* means "this subdirectory only"
         if (pathValue === '*') {
           const currentPath = window.location.pathname;
           console.log('Current pathname:', currentPath);
-          
-          // Get the current directory path (remove the last part if it's not ending with /)
+
+          // Get the current directory path (ensure it ends with /)
           let currentDir = currentPath;
           if (!currentPath.endsWith('/')) {
             currentDir = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
           }
           console.log('Current directory for path=*:', currentDir);
-          
-          // Store the current directory as a path filter
-          config.pathFilters.push(currentDir);
+
+          // *** MODIFICATION: Store the current directory filter separately ***
+          config.currentDirFilter = currentDir;
         } else {
           // Store regular path filters
           config.pathFilters.push(pathValue);
         }
       } else {
-        // Process regular filter terms
-        // Only convert to lowercase if it contains the word 'guide' (case insensitive)
+        // Process regular filter terms (non-path filters)
+        // Only convert to lowercase if it contains 'guide' (case insensitive for backward compatibility)
         const processedText = text.toLowerCase().includes('guide') ? text.toLowerCase() : text;
         config.acceptList.push(processedText);
       }
     });
   }
 
-  // If both acceptList and pathFilters are empty and it's compact mode, set default path
-  if (config.acceptList.length === 0 && config.pathFilters.length === 0 && config.isCompact) {
+  // Default filter for compact mode if no other filters are specified
+  // If both acceptList and pathFilters are empty AND currentDirFilter is not set AND it's compact mode, set default path
+  if (config.acceptList.length === 0 && config.pathFilters.length === 0 && !config.currentDirFilter && config.isCompact) {
     const currentPath = window.location.pathname.toLowerCase();
     const pathParts = currentPath.split('/');
+    // Remove potential part number suffix (e.g., -part-1) from the page name
     const lastPart = pathParts[pathParts.length - 1].replace(/-part-\d+$/, '');
     const folderPath = pathParts.slice(0, -1).join('/');
+    // Add the inferred folder/page path to the acceptList for default filtering
     config.acceptList.push(folderPath + '/' + lastPart);
+    console.log('Compact mode default filter applied:', config.acceptList);
   }
 
+  // Return the final configuration object
   return config;
 }
-
 // Function to create the compact blogroll panel
 function createCompactBlogrollPanel(groupedPosts, originalPosts, config) {
   const panel = document.createElement('div');
