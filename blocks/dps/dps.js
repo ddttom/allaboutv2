@@ -480,7 +480,7 @@ function buildSlides(slides, container) {
       
       // If we have a URL from the presentation subtitle, create a link
       if (slide.subtitleUrl) {
-        linkHtml = ` - <a href="${slide.subtitleUrl}" class="qanda-link" target="_blank">Contact Us</a>`;
+        linkHtml = ` - <a href="${slide.subtitleUrl}" class="qanda-link" target="_blank">Read more about the topic at ${slide.subtitleUrl}</a>`;
       }
       
       // Special Q&A slide handling

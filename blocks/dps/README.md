@@ -255,9 +255,10 @@ The Q&A slide can display a "Contact Us" link that comes from the presentation s
 
 - If the presentation subtitle (in the first row) contains a hyphen (" - ") followed by a URL, that URL will be used as a link in the Q&A slide
 - Example: If your presentation subtitle is "Company Overview - https://example.com/contact"
-  - The Q&A slide will show "Your feedback and questions are valuable - Contact Us"
-  - "Contact Us" will be a clickable link to "https://example.com/contact"
+  - The Q&A slide will show "Your feedback and questions are valuable - Read more about the topic at https://example.com/contact"
+  - The full text "Read more about the topic at https://example.com/contact" will be a clickable link
   - The link opens in a new tab
+  - This ensures the URL is visible even in printed handouts where links can't be clicked
 
 This feature makes it easy to add contact information or references to your presentation without requiring HTML knowledge.
 
