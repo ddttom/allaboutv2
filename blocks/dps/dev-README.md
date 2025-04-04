@@ -6,7 +6,7 @@ A powerful presentation system that transforms structured content into an intera
 - Full-screen presentation mode
 - Keyboard-based navigation
 - Multiple images per slide with arrow key navigation
-- Image sequence support
+- Image sequence support with visual labels
 - Full viewport height image support
 - Presenter notes with toggle functionality
 - Dedicated presenter mode for tablet viewing
@@ -14,7 +14,7 @@ A powerful presentation system that transforms structured content into an intera
 - Responsive design
 - Print-friendly handout mode
 - Flexible iframe support with smart URL handling
-- Improved icon handling with SVG support
+- Icon handling with SVG support
 - Simplified iframe format for easier authoring
 - System Info button for debugging and diagnostics
 
@@ -28,6 +28,8 @@ A powerful presentation system that transforms structured content into an intera
 | | | | iframes | Additional notes |
 
 ## Navigation
+
+### Keyboard Controls
 - **Arrow Keys**: Navigate between slides and within image sequences
 - **Space**: Toggle timer pause/play
 - **Escape**: Toggle navigation bar
@@ -46,44 +48,20 @@ A powerful presentation system that transforms structured content into an intera
 - Robust state verification prevents UI inconsistencies during rapid navigation
 - Sequence navigation works with mixed content types (icons, iframes, images, SVGs)
 
-### Container-Based Navigation System (New)
-- Navigation now operates at the container level rather than individual image level
+### Container-Based Navigation System
+- Navigation operates at the container level rather than individual image level
 - Each sequence item is contained in its own `.sequence-item-container`
 - Containers maintain proper state for all child elements during navigation
 - Eliminates doubled labels and inconsistent layouts during transitions
 - State verification ensures consistent visibility between classes and style properties
 - Sequence navigation works with mixed content types (icons, iframes, images, SVGs)
-### Recent Improvements
 
-The DPS Block has been updated with several significant improvements:
+## Visual Navigation Labels
 
-#### Navigation and Display
-- **Fixed duplicate images issue**: Resolved a bug that caused duplicate images to appear in sequences
-- **Improved navigation**: Enhanced the way users navigate through image sequences with better boundary handling
-- **Better sequence labels**: Added clearer position labels for all content types, including single images
-- **Smoother transitions**: Improved transitions between different content types with consistent visibility control
-- **Enhanced single-image handling**: Better support for slides with just one image, now showing "1/1" labels
-- **More reliable sequence order**: Ensures content appears in the exact order as authored
-- **Fixed layout issues**: Eliminated doubled labels and inconsistent layouts during transitions
+The navigation system provides a better user experience when a slide contains multiple illustrations (like icons, images, and iframes) by adding visual cues and organization to the content.
 
-#### Content Handling
-- **Universal deduplication**: Improved system to prevent duplicate content of any type
-- **Better iframe handling**: Enhanced support for iframe URLs in text content
-- **Anchor element handling**: Properly processes links as either images or iframes based on URL
-- **Multiple icon support**: Added support for multiple icon spans within a single paragraph
-
-#### New Features
-- **New iframe format**: Added support for `iframe <a href="URL">Link text</a>` format
-- **System Info button**: Added button to copy debug information to clipboard
-- **State recovery**: Added verification steps to detect and recover from inconsistent states
-
-These improvements provide a more consistent and reliable presentation experience without requiring any changes to your existing content.
-
-### Enhanced Navigation for Image Sequences
-The enhanced navigation provides a better user experience when a slide contains multiple illustrations (like icons, images, and iframes) by adding visual cues and organization to the content. Here's what it does:
-
-#### 1. Visual Labels for Navigation
-When a slide has illustration items (including single items), the enhanced navigation adds clear labels to each item showing:
+### Visual Labels for Navigation
+When a slide has illustration items (including single items), the navigation adds clear labels to each item showing:
 
 - The type of content (Icon, Iframe, Image, etc.)
 - The current position and total count (e.g., "1/3", "2/3", "3/3", or "1/1" for single items)
@@ -95,41 +73,21 @@ This helps users understand:
 - Which position they're currently at in the sequence
 - That a single item is still part of the navigation system (shown as "1/1")
 
-#### 2. Consistent Interface
+### Consistent Interface
 The labels appear in a small, semi-transparent black box in the top-left corner of each illustration. This provides:
 
 - Consistent placement across all slides
 - Minimal visual interference with the actual content
 - Clear visibility against any background
 
-#### 3. Implementation Details
-The enhanced navigation works by:
-
-- Keeping the exact same order of content as in your original HTML
-- Adding a container around each item in the sequence
-- Injecting label elements with position information
-- Applying CSS styling to ensure proper display
-
-#### 4. Benefits
-- Reduces confusion: Users understand when they're navigating through multiple items
-- Improves orientation: The "x/y" format helps users know how far they've progressed
-- Maintains content integrity: All your original content remains in its intended order
-
-#### 5. Container-Based Structure
-The sequence now uses a reliable container-based structure where:
-- Each item lives in its own container with consistent styling
-- Navigation transitions move between containers rather than individual images
-- Active states are properly synchronized between containers and their contents
-- This prevents UI inconsistencies especially with complex content like nested iframes
-- Solves the "double iframe" issue: Makes it clear when a user has navigated from an icon to an iframe
-#### 5. Visual Example
-Without enhanced navigation, a user might see this sequence with no indication of what's happening:
+### Visual Example
+Without visual labels, a user might see this sequence with no indication of what's happening:
 
 [Icon appears]
 [Press right arrow]
 [Iframe appears] - User might wonder "Why did the content change?"
 
-With enhanced navigation, they would instead see:
+With visual labels, they would instead see:
 
 [Icon appears with label "Icon 1/2"]
 [Press right arrow]
@@ -137,9 +95,8 @@ With enhanced navigation, they would instead see:
 
 Even for single items, the label provides context:
 [Single icon appears with label "Icon 1/1"] - Clearly indicates this is a standalone item
-[Iframe appears with label "Iframe 2/2"] - Clear indication of navigation progress
 
-This approach maintains the exact same content and ordering while providing better visual feedback to the user about the navigation process.
+## Content Types
 
 ### Icon Support
 The fourth column supports icon spans with specific class names:
@@ -167,7 +124,7 @@ Will be converted to:
 Icons are treated as sequence items and can be navigated through with arrow keys alongside other content types. The system properly maintains display state for all content types during navigation.
 
 ### Mixed Content Support
-The DPS block now properly handles mixed content in any order:
+The DPS block handles mixed content in any order:
 - Icons followed by pictures
 - Pictures followed by icons
 - Multiple icons in sequence
@@ -216,7 +173,7 @@ https://example.com/embed
 <p>&#x3C;iframe https://example.com/embed</p>
 ```
 
-8. **NEW: iframe with anchor tag pattern:**
+8. iframe with anchor tag pattern:
 ```
 iframe <a href="https://example.com/embed">Link text</a>
 ```
@@ -254,116 +211,6 @@ The system intelligently handles HTML entities in iframe definitions:
 - Font size increases by 50% when enlarged for better readability
 - When using 'P' key, only the notes are shown (no title or bullet points)
 - When using the note icon, the notes are shown with slide title and bullet points
-
-## Styling
-- Modern, clean design
-- Responsive layout
-- Consistent typography
-- Smooth transitions
-- Print-optimized handouts
-
-## Performance
-- Optimized image loading
-- Efficient DOM updates
-- Smooth animations
-- Minimal dependencies
-- Smart iframe URL handling
-
-## Browser Compatibility
-- Chrome (recommended)
-- Firefox
-- Safari
-- Edge
-
-## Authoring Guidelines
-1. Start with a configuration row containing title, subtitle, and timer duration
-2. Each subsequent row represents a slide
-3. Use the fourth column for images, icons, or illustrations
-4. Add presenter notes in the fifth column
-5. Multiple items in the fourth column will create an image sequence
-6. Use HTML formatting in presenter notes for better organization
-7. For iframes, simply type "iframe" followed by the URL (e.g., `iframe https://example.com/embed`)
-8. For icon spans, use the format `<span class="icon icon-name"></span>` - they will be automatically converted to SVG images
-
-## Mixed Content Support
-
-The DPS block handles various content types in image sequences:
-
-1. **Multiple content types**: Combine images, icons, iframes, and SVGs in any order
-2. **Smooth navigation**: Use left/right arrow keys to navigate through all items
-3. **Consistent experience**: All content types maintain proper styling and transitions
-4. **Preserved order**: Content appears in the exact order you created it
-5. **Smart handling**: The system intelligently processes different content formats
-
-### What's New
-
-- **Better iframe handling**: Improved support for iframe URLs in text content
-- **Enhanced anchor handling**: Links to images or embedded content work more reliably
-- **New iframe format**: Support for `iframe <a href="URL">Link text</a>` format
-- **Smoother transitions**: Better transitions between different content types
-
-## Icon Processing Details
-
-### Icon Detection
-The system detects icon spans using multiple techniques:
-1. **Regex pattern matching**: Identifies spans with icon classes directly in HTML
-2. **Class name analysis**: Extracts specific icon name from class strings
-3. **Element traversal**: Finds nested icon spans within other elements
-4. **Multiple icon processing**: Handles multiple icon spans within a single paragraph
-
-### Icon Usage
-When using icons in your presentations:
-
-1. **Simple Format**: Use `<span class="icon icon-name"></span>` in your document
-2. **Automatic Conversion**: The system converts this to an SVG image from the `/icons/` directory
-3. **Position Labels**: Icons show clear labels with their position in the sequence (e.g., "Icon 1/3")
-4. **Multiple Icons**: You can include multiple icons in a single paragraph
-5. **Mixed Content**: Icons work seamlessly with images, iframes, and other content types
-
-For example, this icon span:
-```html
-<span class="icon icon-explode"></span>
-```
-
-Will be automatically converted to:
-```html
-<img src="/icons/explode.svg" alt="explode Illustration" class="sequence-image icon-image" data-icon-name="explode">
-```
-
-### Important Notes
-- Make sure the SVG file exists in the `/icons/` directory
-- The icon name must match the SVG filename (without the .svg extension)
-- Icons are treated as sequence items and can be navigated with arrow keys
-- Each icon appears exactly once in the sequence, even if referenced multiple times
-
-## iframe Simplified Format
-
-### How It Works
-The simplified iframe format makes it much easier for content authors to add embedded content:
-
-1. Authors simply type `iframe` followed by a URL in the fourth column
-2. The system detects this format and extracts the URL
-3. A proper iframe element is created with appropriate attributes
-4. The iframe is added to the sequence maintaining the correct order
-
-### Benefits for Content Authors
-1. **Simplicity**: No need to remember HTML tag syntax
-2. **Readability**: Easier to read and edit in the document
-3. **Consistency**: Ensures all iframes have the same attributes
-4. **Reliability**: Reduces chances of invalid HTML syntax
-5. **Efficiency**: Faster to type than full iframe tags
-
-### Example Usage
-
-In the document's fourth column:
-```
-iframe https://example.com/embed
-```
-
-Will be converted to:
-```html
-<iframe src="https://example.com/embed" loading="lazy" title="Embedded Content" allowfullscreen></iframe>
-```
 
 ## Image Handling
 
@@ -428,65 +275,36 @@ The fourth column supports various image formats and sources:
 7. Test images across different screen sizes
 8. For icon spans, ensure the icon SVG exists in the /icons/ directory
 
-## Notes
-- Presenter notes support HTML formatting for better organization
-- Can be enlarged to 50% width with 'P' key for better visibility while staying pinned to the left
-- Presenter notes always stay pinned to the left of the viewport and grow to the right when enlarged
-- Font size increases by 50% when enlarged for better readability
-- 'P' key shows only the notes content for focused reading
-- Note icon shows enhanced content with slide title and bullet points for comprehensive view
-- Images maintain aspect ratio while using available space
-- Timer starts automatically after first slide
-- Print mode excludes presenter notes and navigation elements
-- iframes are contained within a styled container for better presentation
-- Icons are automatically converted to image references
-- The system handles various content types in any order
-- Multiple content types can be combined in a sequence
-- For iframes, use the simplified "iframe URL" format for easiest authoring
-- Image sequence navigation uses an enhanced state management system to prevent display issues
-- Navigation lock prevents rapid consecutive clicks from causing state conflicts
-- Content order is preserved based on original DOM position
-- iframes are prioritized over icons when both exist in the same content
-- All content types (images, icons, iframes, SVGs) are deduplicated using unique identifiers
-- Duplicate content is intelligently filtered while preserving order
-- Images maintain aspect ratio while using available space
-- Timer starts automatically after first slide
-- Print mode excludes presenter notes and navigation elements
-- iframes are contained within a styled container for better presentation
-- Icons are automatically converted to image references
-- The system handles various content types in any order
-- Multiple content types can be combined in a sequence
-- For iframes, use the simplified "iframe URL" format for easiest authoring
-- Image sequence navigation uses an enhanced state management system to prevent display issues
-- Navigation lock prevents rapid consecutive clicks from causing state conflicts
-- Content order is preserved based on original DOM position
-- iframes are prioritized over icons when both exist in the same content
-- All content types (images, icons, iframes, SVGs) are deduplicated using unique identifiers
-- Duplicate content is intelligently filtered while preserving order
+## Technical Details
 
-## Implementation
+### Styling
+- Modern, clean design
+- Responsive layout
+- Consistent typography
+- Smooth transitions
+- Print-optimized handouts
 
-### Files
+### Performance
+- Optimized image loading
+- Efficient DOM updates
+- Smooth animations
+- Minimal dependencies
+- Smart iframe URL handling
 
+### Browser Compatibility
+- Chrome (recommended)
+- Firefox
+- Safari
+- Edge
+
+### Implementation Files
 - `dps.js` - JavaScript implementation
 - `dps.css` - CSS styling
 - `README.md` - Documentation (this file)
 
-### Content Structure
+## Authoring Guidelines
 
-Content authors should structure their content as follows:
-
-```
-| DPS                |                       |            |                         |                     |
-| ------------------ | --------------------- | ---------- | ----------------------- | ------------------- |
-| Presentation Title | Presentation Subtitle | 25 (timer) |                         |                     |
-| ------------------ | --------------------- | ---------- | ----------------------- | ------------------- |
-| Slide 1 Title      | Slide 1 Introduction  | Bullets    | Image(s) or Icon(s)     | Presenter Notes 1   |
-| ------------------ | --------------------- | ---------- | ----------------------- | ------------------- |
-| Slide 2 Title      | Slide 2 Introduction  | Bullets    | iframe youtube.com/xyz  | Presenter Notes 2   |
-```
-
-#### Column Definitions
+### Column Definitions
 
 1. **First column**: Slide titles
 2. **Second column**: Slide introduction text or subtitle
@@ -515,33 +333,9 @@ Content authors should structure their content as follows:
    - Appears in bottom left quarter of viewport
    - Automatically updates when changing slides
    - 'P' key shows only notes content
-   - Note icon shows notes with slide title and bullet points1. **First column**: Slide titles
-2. **Second column**: Slide introduction text or subtitle
-3. **Third column**: Bullet points and plain text
-   - Use document list formatting for bullet points
-   - Plain text will be displayed without bullets
-   - Line breaks in plain text are preserved
-   - HTML formatting (like `<code>` and `<strong>`) is supported
-4. **Fourth column**: Images, icons, SVG, or iframes for illustrations
-   - Can contain multiple items that will be shown in sequence
-   - Images use full viewport height while maintaining aspect ratio
-   - Icons use the format `<span class="icon icon-name"></span>`
-   - iframes use the format `iframe URL` (simplified format)
-   - Navigate between images using arrow keys
-   - When reaching the last item, right arrow advances to next slide
-   - When on first item, left arrow goes to previous slide
-   - Items can be in any order (icons, images, iframes)
-   - All items maintain their sequence order for navigation
-5. **Fifth column**: Presenter notes
-   - Private notes visible only to the presenter
-   - Toggle visibility with + and - keys
-   - Notes state (hidden/visible) persists across slides
-   - Appears in bottom left quarter of viewport
-   - Automatically updates when changing slides
-   - 'P' key shows only notes content
    - Note icon shows notes with slide title and bullet points
 
-## Usage Guide for Authors
+### Usage Guide for Authors
 
 1. Create a table in your Google Doc
 2. First cell must contain "DPS"
@@ -561,8 +355,20 @@ Content authors should structure their content as follows:
 6. For iframes, use the format `iframe URL`
    - Simply type the word "iframe" followed by a space and then the URL
    - This is the easiest way to add embedded content to your slides
-   - **NEW: You can also use `iframe <a href="URL">Link text</a>` format**
-   - **IMPROVED: The system now better handles iframe URLs in text content**
+   - You can also use `iframe <a href="URL">Link text</a>` format
+   - The system handles iframe URLs in text content
+
+### Content Structure Example
+
+```
+| DPS                |                       |            |                         |                     |
+| ------------------ | --------------------- | ---------- | ----------------------- | ------------------- |
+| Presentation Title | Presentation Subtitle | 25 (timer) |                         |                     |
+| ------------------ | --------------------- | ---------- | ----------------------- | ------------------- |
+| Slide 1 Title      | Slide 1 Introduction  | Bullets    | Image(s) or Icon(s)     | Presenter Notes 1   |
+| ------------------ | --------------------- | ---------- | ----------------------- | ------------------- |
+| Slide 2 Title      | Slide 2 Introduction  | Bullets    | iframe youtube.com/xyz  | Presenter Notes 2   |
+```
 
 ## Author-Friendly Formats
 
@@ -574,7 +380,7 @@ iframe https://example.com/embed
 ```
 Just type "iframe" followed by the URL - no HTML tags needed!
 
-You can also use the new anchor tag pattern:
+You can also use the anchor tag pattern:
 ```
 iframe <a href="https://example.com/embed">Link text</a>
 ```
@@ -585,13 +391,12 @@ This combines the simplified iframe keyword with Franklin's link format for bett
 <span class="icon icon-methods"></span>
 ```
 Use a simple span with the correct classes to reference SVG icons.
-### Franklin Icons
 
+### Franklin Icons
 ```bash
 :methods: 
 ```
 The Franklin icon system is a simple way to add icons to your slides.
-
 
 ### Plain URLs
 ```
@@ -708,6 +513,6 @@ If you encounter any issues with your presentations:
 - In rare cases where navigation becomes inconsistent, use Ctrl+Alt+F to reset the presentation state
 
 ### Compatibility
-- All recent improvements are fully compatible with existing content
-- No changes to your documents are needed to benefit from the improvements
+- All features are fully compatible with existing content
+- No changes to your documents are needed to benefit from all features
 - Existing presentations will automatically use the enhanced navigation and sequence handling

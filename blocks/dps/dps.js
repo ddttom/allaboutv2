@@ -512,11 +512,10 @@ function organizeImageSequence(illustrations) {
   // Debug log
   console.log(`[OrganizeSequence] Processing ${illustrations.length} illustrations`);
   
-  // Deduplicate items - remove any duplicate references to the same content
-  const uniqueIllustrations = [];
-  const seen = new Set();
+  // Create a map to track unique items by their content hash
+  const uniqueItems = new Map();
   
-  illustrations.forEach(item => {
+  illustrations.forEach((item, originalIndex) => {
     // Create a unique identifier based on type and content
     let identifier;
     if (item.iconName) {
@@ -534,45 +533,30 @@ function organizeImageSequence(illustrations) {
       identifier = `${item.type}-${simpleHash(JSON.stringify(item))}`;
     }
     
+    // Generate a hash for logging
+    const itemHash = simpleHash(identifier);
+    
     // Only add if we haven't seen this item before
-    if (!seen.has(identifier)) {
-      seen.add(identifier);
-      uniqueIllustrations.push(item);
-      console.log(`[OrganizeSequence] Added unique item: ${item.type}${item.iconName ? ' - ' + item.iconName : ''}`);
+    if (!uniqueItems.has(identifier)) {
+      uniqueItems.set(identifier, {
+        item,
+        hash: itemHash,
+        position: item.position || originalIndex // Preserve original position
+      });
+      console.log(`[OrganizeSequence] Added unique item: ${item.type}${item.iconName ? ' - ' + item.iconName : ''} (hash: ${itemHash}, position: ${item.position || originalIndex})`);
     } else {
-      console.log(`[OrganizeSequence] Skipped duplicate: ${item.type}${item.iconName ? ' - ' + item.iconName : ''}`);
+      console.log(`[OrganizeSequence] Skipped duplicate: ${item.type}${item.iconName ? ' - ' + item.iconName : ''} (hash: ${itemHash})`);
     }
   });
   
-  // Group items by type
-  const groups = {};
-  uniqueIllustrations.forEach(item => {
-    if (!groups[item.type]) {
-      groups[item.type] = [];
-    }
-    groups[item.type].push(item);
-  });
+  // Extract the unique items and sort by original position
+  const uniqueIllustrations = Array.from(uniqueItems.values())
+    .sort((a, b) => a.position - b.position)
+    .map(entry => entry.item);
   
-  // Define display order preference
-  const orderPreference = ['icon', 'svg', 'image', 'picture', 'iframe'];
+  console.log(`[OrganizeSequence] Returning ${uniqueIllustrations.length} unique illustrations from ${illustrations.length} input items`);
   
-  // Create a new array with items ordered by group
-  const orderedIllustrations = [];
-  orderPreference.forEach(type => {
-    if (groups[type]) {
-      orderedIllustrations.push(...groups[type]);
-    }
-  });
-  
-  // Add any remaining types not in our preference list
-  Object.keys(groups).forEach(type => {
-    if (!orderPreference.includes(type)) {
-      orderedIllustrations.push(...groups[type]);
-    }
-  });
-  
-  console.log(`[OrganizeSequence] Returning ${orderedIllustrations.length} unique illustrations`);
-  return orderedIllustrations;
+  return uniqueIllustrations;
 }
 
 /**
@@ -590,6 +574,9 @@ function createImageSequenceHTML(illustrations) {
   // Use a Set to track unique identifiers and prevent duplicates
   const processedContent = new Set();
   let html = '<div class="image-sequence">';
+  
+  // Debug output
+  console.log(`[CreateSequenceHTML] Creating HTML for ${illustrations.length} illustrations`);
   
   // Add each item to the sequence with appropriate styling
   illustrations.forEach((item, index) => {
@@ -610,9 +597,12 @@ function createImageSequenceHTML(illustrations) {
       identifier = JSON.stringify(item).substring(0, 100);
     }
     
+    // Generate a consistent hash for content identification
+    const contentHash = simpleHash(identifier);
+    
     // Skip if this item has already been processed (prevents duplicates)
     if (processedContent.has(identifier)) {
-      console.log(`[CreateSequenceHTML] Skipping duplicate item ${index}: ${identifier}`);
+      console.log(`[CreateSequenceHTML] Skipping duplicate item ${index}: ${identifier} (hash: ${contentHash})`);
       return;
     }
     
@@ -623,7 +613,7 @@ function createImageSequenceHTML(illustrations) {
     const typeLabel = item.type.charAt(0).toUpperCase() + item.type.slice(1);
     
     // Create container with label and unique id
-    html += `<div class="sequence-item-container ${isActive}" data-sequence-id="${index}">`;
+    html += `<div class="sequence-item-container ${isActive}" data-sequence-id="${index}" data-content-hash="${contentHash}">`;
     
     // Always add label to show position in overall sequence
     html += `<div class="sequence-item-label">${typeLabel} ${index + 1}/${illustrations.length}</div>`;
@@ -662,12 +652,13 @@ function createImageSequenceHTML(illustrations) {
     
     html += '</div>'; // Close sequence-item-container
     
-    console.log(`[CreateSequenceHTML] Added ${typeLabel} item ${index+1}/${illustrations.length}`);
+    console.log(`[CreateSequenceHTML] Added ${typeLabel} item ${index+1}/${illustrations.length} with hash ${contentHash}`);
   });
   
   html += '</div>'; // Close image-sequence
   return html;
 }
+
 
 /**
  * Add CSS styles for image sequences
@@ -752,9 +743,10 @@ function scanForPatterns(html, illustrationElements, processedContent) {
       });
       
       console.log(`[ParseIllustration] Found simple iframe pattern: ${url}`);
+    } else {
+      console.log(`[ParseIllustration] Skipping duplicate iframe pattern: ${url}`);
     }
   }
-  
   // Pattern 2: "iframe <a href...>" pattern
   const iframeAnchorRegex = /iframe\s+<a[^>]*href=["']([^"']+)["'][^>]*>/gi;
   
@@ -931,6 +923,11 @@ function processElementsByType(container, illustrationElements, processedContent
   processElementsOfType(allElements, 'picture', null, cellHTML, processPictureElement, illustrationElements, processedContent);
   processElementsOfType(allElements, 'svg', null, cellHTML, processSvgElement, illustrationElements, processedContent);
   processElementsOfType(allElements, 'a', null, cellHTML, processAnchorElement, illustrationElements, processedContent);
+  
+  // Log processed items
+  if (illustrationElements.length > 0) {
+    console.log(`[ProcessElements] Processed ${illustrationElements.length} illustrations`);
+  }
 }
 
 /**
@@ -958,6 +955,9 @@ function processElementsOfType(elements, tagName, className, cellHTML, processor
     return true;
   });
   
+  // Log found elements
+  console.log(`[ProcessElements] Found ${matchingElements.length} ${tagName} elements${className ? ' with class ' + className : ''}`);
+  
   // Process each matching element
   matchingElements.forEach(item => {
     // Create a temporary container to get the outerHTML
@@ -981,6 +981,12 @@ function processElementsOfType(elements, tagName, className, cellHTML, processor
     
     // Call the processor function
     processorFn(item.element, position, illustrationElements, processedContent);
+    
+    // After processing, mark this element as processed
+    if (item.element.parentNode) {
+      // Mark processed by adding a data attribute
+      item.element.setAttribute('data-processed', 'true');
+    }
   });
 }
 
@@ -1017,6 +1023,8 @@ function processIconSpan(element, position, illustrationElements, processedConte
     });
     
     console.log(`[ParseIllustration] Processed icon: ${iconName}`);
+  } else {
+    console.log(`[ParseIllustration] Skipped duplicate icon: ${iconName}`);
   }
 }
 
@@ -1241,6 +1249,55 @@ function parseIllustration(cell) {
   }
 
   return null;
+  function parseIllustration(cell) {
+    if (!cell) return null;
+    
+    // Create a collection for all illustration elements with their positions
+    const illustrationElements = [];
+    
+    // Use a Set to track processed content and prevent duplicates
+    const processedContent = new Set();
+    
+    // Get the raw HTML content for pattern matching and position tracking
+    const cellHTML = cell.innerHTML;
+    
+    console.log(`[ParseIllustration] Processing cell with HTML length ${cellHTML.length}`);
+    
+    // Create a working copy of the cell for manipulation
+    const workingCell = cell.cloneNode(true);
+    
+    // STEP 1: First scan for specific patterns in the HTML
+    scanForPatterns(cellHTML, illustrationElements, processedContent);
+    
+    // STEP 2: Process all DOM elements systematically
+    processElementsByType(workingCell, illustrationElements, processedContent, cellHTML);
+    
+    // Sort by position to maintain the original order
+    illustrationElements.sort((a, b) => a.position - b.position);
+    
+    // Extract the illustration data
+    const illustrations = illustrationElements.map(item => item.data);
+    
+    // Return illustrations if found, null otherwise
+    if (illustrations.length > 0) {
+      console.log(`[ParseIllustration] Found ${illustrations.length} total illustrations (processed ${processedContent.size} unique items)`);
+      
+      // Enhanced logging for debugging
+      illustrations.forEach((item, index) => {
+        const identifier = item.iconName || item.src ||
+                        (typeof item.content === 'string' && item.content.length < 50 ?
+                         item.content : 'complex content');
+        console.log(`[ParseIllustration] Item ${index}: type=${item.type}, identifier=${identifier}`);
+      });
+      
+      return {
+        type: 'images',
+        content: illustrations
+      };
+    }
+  
+    return null;
+  }
 }
 /**
  * Build slides in the container
@@ -1415,6 +1472,14 @@ function verifySequenceState(imageSequence) {
   if (activeContainers.length !== 1 || activeImages.length === 0 || activeImages.length !== visibleImages.length) {
     console.warn(`[VerifySequence] Inconsistent state detected: ${activeContainers.length} active containers, ${activeImages.length} active images, ${visibleImages.length} visible images`);
     
+    // Check for containers with same hash
+    const hashes = containers.map(container => container.getAttribute('data-content-hash') || 'unknown');
+    const uniqueHashes = new Set(hashes);
+    
+    if (uniqueHashes.size < containers.length) {
+      console.warn(`[VerifySequence] Potential duplicate content detected: ${containers.length} containers but only ${uniqueHashes.size} unique hashes`);
+    }
+    
     // Force correction - reset everything and activate only the first container
     containers.forEach((container, index) => {
       const shouldBeActive = index === 0;
@@ -1430,7 +1495,6 @@ function verifySequenceState(imageSequence) {
     console.log('[VerifySequence] State corrected - reset and activated first container only');
   }
 }
-
 /**
  * Initialize image sequence for a slide
  * Improved to ensure consistent state and prevent duplicates
@@ -1446,14 +1510,39 @@ function initializeImageSequence(slide) {
     return;
   }
   
-  // First handle the containers
+  // Find all sequence containers
   const containers = Array.from(imageSequence.querySelectorAll('.sequence-item-container'));
   if (containers.length === 0) {
     console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] No container items found in sequence`);
     return;
   }
   
+  // Log found containers with their hash values
   console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Found ${containers.length} containers in sequence`);
+  containers.forEach((container, i) => {
+    const hash = container.getAttribute('data-content-hash') || 'unknown';
+    console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Container ${i}: hash=${hash}, active=${container.classList.contains('active')}`);
+  });
+  
+  // Check for duplicate hashes
+  const hashCounts = {};
+  containers.forEach(container => {
+    const hash = container.getAttribute('data-content-hash');
+    if (hash) {
+      hashCounts[hash] = (hashCounts[hash] || 0) + 1;
+    }
+  });
+  
+  const duplicateHashes = Object.entries(hashCounts)
+    .filter(([hash, count]) => count > 1)
+    .map(([hash, count]) => ({ hash, count }));
+  
+  if (duplicateHashes.length > 0) {
+    console.warn(`[ImageSequence][${performance.now().toFixed(2)}ms] WARNING: Found ${duplicateHashes.length} duplicate content hashes`);
+    duplicateHashes.forEach(dupe => {
+      console.warn(`[ImageSequence] Hash ${dupe.hash} appears ${dupe.count} times`);
+    });
+  }
   
   // Reset ALL containers and their content - this ensures clean state
   containers.forEach((container, index) => {
@@ -1489,7 +1578,6 @@ function initializeImageSequence(slide) {
   // Verify the sequence is in a consistent state
   verifySequenceState(imageSequence);
 }
-
  
 /**
  * Create a flat navigation array from slides and their sequences
@@ -1680,6 +1768,21 @@ function handleImageSequenceNavigation(direction) {
   
   // Log the number of containers found
   console.log(`[ImageSequence][${performance.now().toFixed(2)}ms] Found ${containers.length} containers in sequence`);
+  
+  // Check for duplicate containers
+  const hashMap = {};
+  containers.forEach((container, idx) => {
+    const hash = container.getAttribute('data-content-hash') || 'unknown';
+    hashMap[hash] = (hashMap[hash] || 0) + 1;
+  });
+  
+  const duplicates = Object.entries(hashMap).filter(([hash, count]) => count > 1);
+  if (duplicates.length > 0) {
+    console.warn(`[ImageSequence] WARNING: Found duplicate containers with same content hash`);
+    duplicates.forEach(([hash, count]) => {
+      console.warn(`[ImageSequence] Hash ${hash} appears ${count} times`);
+    });
+  }
   
   // Single container case - don't handle sequence navigation
   if (containers.length <= 1) {
