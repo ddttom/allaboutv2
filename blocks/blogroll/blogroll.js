@@ -18,8 +18,13 @@ function extractSeriesInfo(title, path) {
 // Function to group and sort blog posts
 function groupAndSortPosts(posts, config) {
   const { acceptList = [], pathFilters = [] } = config || {};
+  console.log('groupAndSortPosts - acceptList:', acceptList);
+  console.log('groupAndSortPosts - pathFilters:', pathFilters);
+  console.log('groupAndSortPosts - posts length:', posts.length);
+  
   const seriesMap = new Map();
   let filteredPosts = [...posts];
+  console.log('Initial filteredPosts length:', filteredPosts.length);
   let usedPathFilter = false;
   let usedTitleFilter = false;
 
@@ -64,12 +69,18 @@ function groupAndSortPosts(posts, config) {
       if (titleFilteredPosts.length > 0) {
         filteredPosts = titleFilteredPosts;
         usedTitleFilter = true;
+      } else {
+        // If no matches found in either path or title, return empty array
+        console.log('No matches found in either path or title, returning empty array');
+        filteredPosts = [];
+        console.log('After setting to empty, filteredPosts length:', filteredPosts.length);
       }
     }
   }
 
   // Apply regular acceptList filtering if we didn't use path/title filtering
   if (!usedPathFilter && !usedTitleFilter && acceptList.length > 0) {
+    console.log('Applying regular acceptList filtering');
     filteredPosts = filteredPosts.filter(post => {
       return acceptList.some(term => {
         // If term is lowercase (contains 'guide'), do case-insensitive comparison
@@ -82,6 +93,8 @@ function groupAndSortPosts(posts, config) {
     });
   }
 
+  console.log('Before grouping, filteredPosts length:', filteredPosts.length);
+  
   // Group the filtered posts
   filteredPosts.forEach(post => {
     const { name, part, basePath } = extractSeriesInfo(post.title, post.path);
@@ -101,6 +114,17 @@ function groupAndSortPosts(posts, config) {
       return a.title.localeCompare(b.title);
     });
   });
+
+  console.log('After grouping, seriesMap size:', seriesMap.size);
+  
+  // If filteredPosts is empty, return an empty array regardless of what's in seriesMap
+  if (filteredPosts.length === 0) {
+    console.log('Returning empty array because filteredPosts is empty');
+    console.log('filteredPosts:', filteredPosts);
+    console.log('seriesMap size:', seriesMap.size);
+    console.log('seriesMap keys:', Array.from(seriesMap.keys()));
+    return [];
+  }
 
   // Convert map to array and sort by number of posts (descending)
   return Array.from(seriesMap.entries())
@@ -129,7 +153,6 @@ function getConfig(block) {
       if (pathMatch) {
         // Get the path value
         const pathValue = pathMatch[1];
-        console.log('Found path filter:', pathValue);
         console.log('Found path filter:', pathValue);
         
         // Special case: path=* means "this subdirectory only"
@@ -196,6 +219,11 @@ function createCompactBlogrollPanel(groupedPosts, originalPosts, config) {
   const blogrollContent = document.createElement('div');
   blogrollContent.className = 'blogroll-panel-content';
 
+  console.log('In createCompactBlogrollPanel, groupedPosts:', groupedPosts);
+  console.log('In createCompactBlogrollPanel, groupedPosts type:', typeof groupedPosts);
+  console.log('In createCompactBlogrollPanel, groupedPosts length:', groupedPosts.length);
+  console.log('In createCompactBlogrollPanel, is array?', Array.isArray(groupedPosts));
+  
   updatePanelContent(blogrollContent, groupedPosts);
 
   // Add "Show All" button at the bottom of the panel
@@ -229,9 +257,22 @@ function createCompactBlogrollPanel(groupedPosts, originalPosts, config) {
 
   return panel;
 }
-
 function updatePanelContent(container, groupedPosts) {
   container.innerHTML = ''; // Clear existing content
+  
+  console.log('In updatePanelContent, groupedPosts:', groupedPosts);
+  console.log('In updatePanelContent, groupedPosts type:', typeof groupedPosts);
+  console.log('In updatePanelContent, groupedPosts length:', groupedPosts.length);
+  console.log('In updatePanelContent, is array?', Array.isArray(groupedPosts));
+  
+  // If groupedPosts is not an array or is empty, show a message
+  if (!Array.isArray(groupedPosts) || groupedPosts.length === 0) {
+    const noPostsMessage = document.createElement('p');
+    noPostsMessage.textContent = 'No blog posts found.';
+    container.appendChild(noPostsMessage);
+    return;
+  }
+  
   
   groupedPosts.forEach(([seriesName, posts]) => {
     const seriesContainer = document.createElement('div');
@@ -286,6 +327,9 @@ export default async function decorate(block) {
 
     const groupedPosts = groupAndSortPosts(blogPosts, config);
     console.log('Grouped posts:', groupedPosts);
+    console.log('Grouped posts type:', typeof groupedPosts);
+    console.log('Grouped posts length:', groupedPosts.length);
+    console.log('Is array?', Array.isArray(groupedPosts));
 
     // Clear loading message
     block.textContent = '';
@@ -295,8 +339,10 @@ export default async function decorate(block) {
       const blogrollContainer = document.createElement('div');
       blogrollContainer.className = 'blogroll-container';
 
-      if (groupedPosts.length === 0) {
-        console.log('No posts to display');
+      // Ensure groupedPosts is an array
+      if (!Array.isArray(groupedPosts) || groupedPosts.length === 0) {
+        console.log('No posts to display or groupedPosts is not an array');
+        console.log('groupedPosts:', groupedPosts);
         const noPostsMessage = document.createElement('p');
         noPostsMessage.textContent = 'No blog posts found.';
         blogrollContainer.appendChild(noPostsMessage);
