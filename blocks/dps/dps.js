@@ -199,6 +199,17 @@ function parseRows(rows) {
   const title = configRow.textContent.trim();
   const subtitle = rows[0].querySelector('div:nth-child(2)')?.textContent.trim() || '';
   const timerDuration = parseInt(rows[0].querySelector('div:nth-child(3)')?.textContent.trim() || '25', 10);
+  
+  // Extract URL from subtitle if present (for use in Q&A slide)
+  let subtitleUrl = '';
+  const lastHyphenIndex = subtitle.lastIndexOf(' - ');
+  if (lastHyphenIndex !== -1) {
+    const textAfterHyphen = subtitle.substring(lastHyphenIndex + 3); // +3 to skip " - "
+    // Check if the text after hyphen looks like a URL
+    if (textAfterHyphen.match(/^https?:\/\//i)) {
+      subtitleUrl = textAfterHyphen;
+    }
+  }
 
   // Process remaining rows as slides
   const slides = [];
@@ -257,7 +268,8 @@ function parseRows(rows) {
     type: 'qanda',
     title: 'Questions & Answers',
     subtitle: 'Your feedback and questions are valuable',
-    thankYouText: 'Thank You For Your Attention'
+    thankYouText: 'Thank You For Your Attention',
+    subtitleUrl: subtitleUrl // Add the extracted URL from presentation subtitle
   });
   
   return {
@@ -462,15 +474,13 @@ function buildSlides(slides, container) {
     }
 
     if (slide.type === 'qanda') {
-      // Process subtitle to find the last hyphen and create a link
+      // Use the URL from the presentation subtitle if available
       let subtitleContent = slide.subtitle;
-      const lastHyphenIndex = subtitleContent.lastIndexOf(' - ');
+      let linkHtml = '';
       
-      let formattedSubtitle = subtitleContent;
-      if (lastHyphenIndex !== -1) {
-        const beforeHyphen = subtitleContent.substring(0, lastHyphenIndex);
-        const afterHyphen = subtitleContent.substring(lastHyphenIndex + 3); // +3 to skip " - "
-        formattedSubtitle = `${beforeHyphen} - <a href="#" class="qanda-link">${afterHyphen}</a>`;
+      // If we have a URL from the presentation subtitle, create a link
+      if (slide.subtitleUrl) {
+        linkHtml = ` - <a href="${slide.subtitleUrl}" class="qanda-link" target="_blank">Contact Us</a>`;
       }
       
       // Special Q&A slide handling
@@ -478,7 +488,7 @@ function buildSlides(slides, container) {
         <div class="slide-content">
           <h2 class="slide-title">${slide.title}</h2>
           <div class="slide-content-text">
-            <p class="slide-subtitle">${formattedSubtitle}</p>
+            <p class="slide-subtitle">${subtitleContent}${linkHtml}</p>
           </div>
           <div class="illustration qanda-content">
             <div class="qanda-circle">

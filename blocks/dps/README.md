@@ -246,19 +246,20 @@ For images, you can simply paste the URL directly.
 The DPS block automatically adds a "Questions & Answers" slide at the end of every presentation. This slide features:
 
 - A prominent "Q&A" title
-- A subtitle that can include a clickable link
+- A subtitle with an optional contact link
 - A circular question mark icon
 - A "Thank You" message
 
-### Interactive Link in Subtitle
-The subtitle text supports an interactive link feature:
+### Interactive Link from Presentation Subtitle
+The Q&A slide can display a "Contact Us" link that comes from the presentation subtitle:
 
-- If the subtitle contains a hyphen (" - "), the text after the last hyphen will be converted into a clickable link
-- Example: "Your feedback and questions are valuable - Contact us"
-  - "Your feedback and questions are valuable" appears as normal text
-  - "Contact us" appears as a blue, clickable link
+- If the presentation subtitle (in the first row) contains a hyphen (" - ") followed by a URL, that URL will be used as a link in the Q&A slide
+- Example: If your presentation subtitle is "Company Overview - https://example.com/contact"
+  - The Q&A slide will show "Your feedback and questions are valuable - Contact Us"
+  - "Contact Us" will be a clickable link to "https://example.com/contact"
+  - The link opens in a new tab
 
-This feature is useful for adding contact information, references, or calls to action at the end of your presentation without requiring any HTML knowledge.
+This feature makes it easy to add contact information or references to your presentation without requiring HTML knowledge.
 
 ## Recent Improvements
 
