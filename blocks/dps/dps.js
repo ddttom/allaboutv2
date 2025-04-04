@@ -1,369 +1,273 @@
-{
-  "timestamp": "2025-04-04T09:37:36.747Z",
-  "slides": [
-    {
-      "index": 0,
-      "title": "Introduction",
-      "type": "standard",
-      "hasIllustration": true,
-      "timestamp": "2025-04-04T09:34:46.411Z"
-    },
-    {
-      "index": 1,
-      "title": "What is AI?",
-      "type": "standard",
-      "hasIllustration": true,
-      "timestamp": "2025-04-04T09:34:46.413Z"
-    },
-    {
-      "index": 2,
-      "title": "Understanding Large Language Models (LLMs) in AI",
-      "type": "standard",
-      "hasIllustration": true,
-      "timestamp": "2025-04-04T09:34:46.413Z"
-    },
-    {
-      "index": 3,
-      "title": "The Problem of AI Hallucinations",
-      "type": "standard",
-      "hasIllustration": true,
-      "timestamp": "2025-04-04T09:34:46.414Z"
-    },
-    {
-      "index": 4,
-      "title": "The Enormous Corpus Behind AI",
-      "type": "standard",
-      "hasIllustration": true,
-      "timestamp": "2025-04-04T09:34:46.415Z"
-    },
-    {
-      "index": 5,
-      "title": "Building the Dictionary: Tokens and Embeddings",
-      "type": "standard",
-      "hasIllustration": true,
-      "timestamp": "2025-04-04T09:34:46.415Z"
-    },
-    {
-      "index": 6,
-      "title": "Token Embedding: A Closer Look",
-      "type": "standard",
-      "hasIllustration": true,
-      "timestamp": "2025-04-04T09:34:46.416Z"
-    },
-    {
-      "index": 7,
-      "title": "A Practical Example: Tokenising a Sentence",
-      "type": "standard",
-      "hasIllustration": true,
-      "timestamp": "2025-04-04T09:34:46.416Z"
-    },
-    {
-      "index": 8,
-      "title": "How AI Generates Text",
-      "type": "standard",
-      "hasIllustration": true,
-      "timestamp": "2025-04-04T09:34:46.417Z"
-    },
-    {
-      "index": 9,
-      "title": "From Raw Corpus (Body of Text) to Training: How AI Learns",
-      "type": "standard",
-      "hasIllustration": true,
-      "timestamp": "2025-04-04T09:34:46.418Z"
-    },
-    {
-      "index": 10,
-      "title": "The Journey to a Question-Answering System",
-      "type": "standard",
-      "hasIllustration": true,
-      "timestamp": "2025-04-04T09:34:46.419Z"
-    },
-    {
-      "index": 11,
-      "title": "Why Alignment is Never Perfect",
-      "type": "standard",
-      "hasIllustration": true,
-      "timestamp": "2025-04-04T09:34:46.419Z"
-    },
-    {
-      "index": 12,
-      "title": "Why these Methods Lead to Errors",
-      "type": "standard",
-      "hasIllustration": true,
-      "timestamp": "2025-04-04T09:34:46.420Z"
-    },
-    {
-      "index": 13,
-      "title": "AI Image Processing Example",
-      "type": "standard",
-      "hasIllustration": true,
-      "timestamp": "2025-04-04T09:34:46.421Z"
-    },
-    {
-      "index": 14,
-      "title": "Final Words",
-      "type": "standard",
-      "hasIllustration": true,
-      "timestamp": "2025-04-04T09:34:46.422Z"
-    },
-    {
-      "index": 15,
-      "title": "Questions & Answers",
-      "type": "qanda",
-      "hasIllustration": false,
-      "timestamp": "2025-04-04T09:34:46.422Z"
-    }
-  ],
-  "illustrations": [
-    {
-      "slideTitle": "Introduction",
-      "slideIndex": 1,
-      "type": "images",
-      "timestamp": "2025-04-04T09:34:46.397Z",
-      "content": "1 items"
-    },
-    {
-      "slideTitle": "What is AI?",
-      "slideIndex": 2,
-      "type": "images",
-      "timestamp": "2025-04-04T09:34:46.399Z",
-      "content": "4 items"
-    },
-    {
-      "slideTitle": "Understanding Large Language Models (LLMs) in AI",
-      "slideIndex": 3,
-      "type": "images",
-      "timestamp": "2025-04-04T09:34:46.400Z",
-      "content": "2 items"
-    },
-    {
-      "slideTitle": "The Problem of AI Hallucinations",
-      "slideIndex": 4,
-      "type": "images",
-      "timestamp": "2025-04-04T09:34:46.400Z",
-      "content": "2 items"
-    },
-    {
-      "slideTitle": "The Enormous Corpus Behind AI",
-      "slideIndex": 5,
-      "type": "images",
-      "timestamp": "2025-04-04T09:34:46.401Z",
-      "content": "2 items"
-    },
-    {
-      "slideTitle": "Building the Dictionary: Tokens and Embeddings",
-      "slideIndex": 6,
-      "type": "images",
-      "timestamp": "2025-04-04T09:34:46.402Z",
-      "content": "2 items"
-    },
-    {
-      "slideTitle": "Token Embedding: A Closer Look",
-      "slideIndex": 7,
-      "type": "images",
-      "timestamp": "2025-04-04T09:34:46.402Z",
-      "content": "4 items"
-    },
-    {
-      "slideTitle": "A Practical Example: Tokenising a Sentence",
-      "slideIndex": 8,
-      "type": "images",
-      "timestamp": "2025-04-04T09:34:46.403Z",
-      "content": "2 items"
-    },
-    {
-      "slideTitle": "How AI Generates Text",
-      "slideIndex": 9,
-      "type": "images",
-      "timestamp": "2025-04-04T09:34:46.404Z",
-      "content": "2 items"
-    },
-    {
-      "slideTitle": "From Raw Corpus (Body of Text) to Training: How AI Learns",
-      "slideIndex": 10,
-      "type": "images",
-      "timestamp": "2025-04-04T09:34:46.406Z",
-      "content": "10 items"
-    },
-    {
-      "slideTitle": "The Journey to a Question-Answering System",
-      "slideIndex": 11,
-      "type": "images",
-      "timestamp": "2025-04-04T09:34:46.406Z",
-      "content": "2 items"
-    },
-    {
-      "slideTitle": "Why Alignment is Never Perfect",
-      "slideIndex": 12,
-      "type": "images",
-      "timestamp": "2025-04-04T09:34:46.407Z",
-      "content": "2 items"
-    },
-    {
-      "slideTitle": "Why these Methods Lead to Errors",
-      "slideIndex": 13,
-      "type": "images",
-      "timestamp": "2025-04-04T09:34:46.408Z",
-      "content": "3 items"
-    },
-    {
-      "slideTitle": "AI Image Processing Example",
-      "slideIndex": 14,
-      "type": "images",
-      "timestamp": "2025-04-04T09:34:46.408Z",
-      "content": "2 items"
-    },
-    {
-      "slideTitle": "Final Words",
-      "slideIndex": 15,
-      "type": "images",
-      "timestamp": "2025-04-04T09:34:46.409Z",
-      "content": "2 items"
-    }
-  ],
-  "events": [
-    {
-      "type": "system_info_button_clicked",
-      "timestamp": "2025-04-04T09:37:36.746Z"
-    }
-  ],
-  "navigationState": {
-    "currentSlideIndex": 13,
-    "currentNavIndex": 39,
-    "totalSlides": 16,
-    "totalNavPoints": 43
-  },
-  "timerState": {
-    "remainingTime": 0,
-    "hasStartedTimer": true,
-    "isTimerRunning": true
-  },
-  "presenterState": {
-    "isPresenterMode": false,
-    "isNotesVisible": false
-  },
-  "currentIllustration": {},
-  "hashDebug": {
-    "currentSlideContentHash": "2f329f9b",
-    "imageSequenceHash": "93cf26a",
-    "contentHashes": [
-      {
-        "index": 0,
-        "elementType": "DIV",
-        "classes": [
-          "sequence-item-container"
-        ],
-        "contentHash": "1639d912",
-        "shortContent": "<div class=\"sequence-item-container\" data-sequence-id=\"0\" data-content-hash=\"4b8b136c\"><div class=\"s",
-        "contentLength": 334
-      },
-      {
-        "index": 1,
-        "elementType": "IMG",
-        "classes": [
-          "sequence-image"
-        ],
-        "contentHash": "7cbd5b94",
-        "shortContent": "<img src=\"https://allabout.network/blogs/media_167c92e53d349e0436335141172985ec64642876d.png?width=7",
-        "contentLength": 193
-      },
-      {
-        "index": 2,
-        "elementType": "DIV",
-        "classes": [
-          "sequence-item-container",
-          "active"
-        ],
-        "contentHash": "78e8f6f7",
-        "shortContent": "<div class=\"sequence-item-container active\" data-sequence-id=\"1\" data-content-hash=\"4d2e7869\"><div c",
-        "contentLength": 911
-      },
-      {
-        "index": 3,
-        "elementType": "DIV",
-        "classes": [
-          "sequence-image",
-          "active"
-        ],
-        "contentHash": "1560354a",
-        "shortContent": "<div class=\"sequence-image active\" style=\"visibility: visible; display: block;\">          <picture>",
-        "contentLength": 761
-      },
-      {
-        "index": 4,
-        "elementType": "PICTURE",
-        "classes": [],
-        "contentHash": "7e0e4e98",
-        "shortContent": "<picture><source media=\"(min-width: 600px)\" type=\"image/webp\" srcset=\"https://allabout.network/blogs",
-        "contentLength": 655
-      },
-      {
-        "index": 5,
-        "elementType": "IMG",
-        "classes": [],
-        "contentHash": "56b3b7ac",
-        "shortContent": "<img loading=\"lazy\" alt=\"\" src=\"https://allabout.network/blogs/media_167c92e53d349e0436335141172985e",
-        "contentLength": 163
-      }
-    ],
-    "illustrationHashes": {
-      "illustrationType": "sequence",
-      "contentHash": "93cf26a",
-      "elementDetails": [
-        {
-          "index": 0,
-          "labelText": "Image 1/2",
-          "isActive": false,
-          "itemHash": "659ad1cb",
-          "imageType": "IMG",
-          "imageClasses": [
-            "sequence-image"
-          ],
-          "imageHTML": "<img src=\"https://allabout.network/blogs/media_167c92e53d349e0436335141172985ec64642876d.png?width=7",
-          "imageContentHash": "64d400c2"
-        },
-        {
-          "index": 1,
-          "labelText": "Picture 2/2",
-          "isActive": true,
-          "itemHash": "7dfd680d",
-          "imageType": "DIV",
-          "imageClasses": [
-            "sequence-image",
-            "active"
-          ],
-          "imageHTML": "<div class=\"sequence-image active\" style=\"visibility: visible; display: block;\">\n          <picture>",
-          "imageContentHash": "4e1e8ab8"
-        }
-      ]
-    },
-    "hashCollisions": {
-      "totalElementsHashed": 4,
-      "uniqueHashes": 4,
-      "collisions": []
-    }
-  },
-  "navigationHistory": [
-    {
-      "timestamp": "2025-04-04T09:34:46.422Z",
-      "performanceTime": 4865.0999999940395,
-      "trigger": "initialization",
-      "navigation": {
-        "currentSlideIndex": 0,
-        "currentNavIndex": 0,
-        "totalNavPoints": 0,
-        "currentNavType": "unknown"
-      },
-      "sequence": {
-        "exists": true,
-        "totalImages": 1,
-        "activeCount": 1,
-        "visibleCount": 1,
-        "hasInconsistentState": false
-      }
-    }
-  ]
+/**
+ * Digital Presentation System (DPS) Block
+ * A block for creating and displaying interactive presentations
+ */
+
+// Configuration object for the DPS block
+const DPS_CONFIG = {
+  // Default timer duration in seconds (30 minutes)
+  DEFAULT_TIMER_DURATION: 1800,
+  // Flag to track if presenter notes are visible
+  PRESENTER_NOTES_VISIBLE: false,
+  // Error messages
+  ERROR_MESSAGES: {
+    LOAD_FAILURE: 'Failed to load presentation data',
+    INVALID_DATA: 'Invalid presentation data format'
+  }
+};
+
+// Global state variables
+let currentSlideIndex = 0;
+let currentSequenceIndex = 0;
+let timerInterval = null;
+let remainingTime = DPS_CONFIG.DEFAULT_TIMER_DURATION;
+let hasStartedTimer = false;
+
+/**
+ * Formats seconds into MM:SS display format for the presentation timer
+ * @param {number} seconds - Total seconds to format
+ * @returns {string} Formatted time string (MM:SS)
+ */
+function formatTime(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
 }
+
+/**
+ * Main decorate function for the DPS block
+ * @param {Element} block - The block element to decorate
+ */
+export default async function decorate(block) {
+  // Add dps-block class to the container
+  block.classList.add('dps-block');
+  
+  // Force full viewport mode by removing existing page elements
+  const existingHeader = document.querySelector('header');
+  const existingFooter = document.querySelector('footer');
+  const existingMain = document.querySelector('main');
+  
+  if (existingHeader) existingHeader.style.display = 'none';
+  if (existingFooter) existingFooter.style.display = 'none';
+  if (existingMain) {
+    existingMain.style.padding = '0';
+    existingMain.style.margin = '0';
+    existingMain.style.width = '100%';
+    existingMain.style.maxWidth = '100%';
+  }
+
+  // Extract rows from the block (each row was a table row in the Google Doc)
+  const rows = Array.from(block.children);
+
+  // Validate minimum content requirements
+  if (rows.length < 2) {
+    block.innerHTML = '<div class="dps-error">Error: DPS block requires at least a configuration row and one slide row.</div>';
+    return;
+  }
+
+  // Parse the presentation data from rows
+  const presentationData = parseRows(rows);
+  
+  // Create presentation container
+  const presentationContainer = document.createElement('div');
+  presentationContainer.className = 'dps-wrapper';
+
+  // Create header with title and subtitle
+  const header = createHeader(presentationData.title, presentationData.subtitle);
+  
+  // Create slides container
+  const slidesContainer = document.createElement('div');
+  slidesContainer.className = 'slides-container';
+  slidesContainer.id = 'slides-container';
+
+  // Create presenter notes container
+  const presenterNotesContainer = createPresenterNotesContainer();
+  
+  // Create footer with navigation and timer
+  const footer = createFooter(presentationData.timerDuration);
+
+  // Assemble the presentation container
+  presentationContainer.appendChild(header);
+  presentationContainer.appendChild(slidesContainer);
+  presentationContainer.appendChild(presenterNotesContainer);
+  presentationContainer.appendChild(footer);
+
+  // Replace the block content with our presentation
+  block.textContent = '';
+  block.appendChild(presentationContainer);
+
+  // Build slides from the parsed content
+  buildSlides(presentationData.slides, slidesContainer);
+  
+  // Set up the navigation system
+  setupNavigationSystem();
+  
+  // Initialize the timer duration
+  remainingTime = presentationData.timerDuration * 60 || DPS_CONFIG.DEFAULT_TIMER_DURATION;
+  
+  // Set up the presenter toggle button
+  setupPresenterToggle();
+  
+  // Setup resize handler for presenter notes
+  setupResizeHandler();
+  
+  // Force fullscreen mode immediately
+  document.body.classList.add('dps-fullscreen');
+  window.scrollTo(0, 0);
+  
+  // Show the first slide
+  showSlide(0);
+}
+
+/**
+ * Create header element with title and subtitle
+ * @param {string} title - Presentation title
+ * @param {string} subtitle - Presentation subtitle
+ * @returns {Element} Header element
+ */
+function createHeader(title, subtitle) {
+  const header = document.createElement('div');
+  header.className = 'dps-header';
+  header.innerHTML = `
+    <div class="header-content">
+      <h1 id="presentation-title">${title}</h1>
+      <p id="presentation-subtitle">${subtitle || ''}</p>
+    </div>
+  `;
+  return header;
+}
+
+/**
+ * Create presenter notes container
+ * @returns {Element} Presenter notes container element
+ */
+function createPresenterNotesContainer() {
+  const container = document.createElement('div');
+  container.className = 'presenter-notes hidden';
+  container.innerHTML = `
+    <div class="presenter-notes-title">
+      <span>Presenter Notes (-)hide (+)show</span>
+    </div>
+    <div class="presenter-notes-content"></div>
+  `;
+  return container;
+}
+
+/**
+ * Create footer with navigation and timer
+ * @param {number} timerDuration - Timer duration in minutes
+ * @returns {Element} Footer element
+ */
+function createFooter(timerDuration) {
+  const footer = document.createElement('div');
+  footer.className = 'dps-footer';
+  footer.innerHTML = `
+    <div class="footer-content">
+      <div class="nav-arrows">
+        <button class="nav-arrow prev-slide" aria-label="Previous slide">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+          </svg>
+        </button>
+        <button class="nav-arrow next-slide" aria-label="Next slide">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="timer">${formatTime(timerDuration * 60 || DPS_CONFIG.DEFAULT_TIMER_DURATION)}</div>
+      <div class="footer-buttons">
+        <button class="presenter-toggle" aria-label="Toggle presenter view">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  `;
+  return footer;
+}
+
+/**
+ * Parse rows from the block to extract presentation data
+ * @param {Array} rows - Array of row elements from the block
+ * @returns {Object} Structured presentation data
+ */
+function parseRows(rows) {
+  // Extract configuration from first row
+  const configRow = rows[0].querySelector('div');
+  const title = configRow.textContent.trim();
+  const subtitle = rows[0].querySelector('div:nth-child(2)')?.textContent.trim() || '';
+  const timerDuration = parseInt(rows[0].querySelector('div:nth-child(3)')?.textContent.trim() || '25', 10);
+
+  // Process remaining rows as slides
+  const slides = [];
+  
+  // Process each slide row
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i];
+    const cells = Array.from(row.children);
+    
+    const slideTitle = cells[0]?.textContent.trim() || `Slide ${i}`;
+    const introText = cells[1]?.textContent.trim() || '';
+    
+    // Process bullet points from the third cell
+    const bulletPointsCell = cells[2];
+    const bulletPoints = [];
+    
+    if (bulletPointsCell) {
+      const bulletContent = bulletPointsCell.innerHTML;
+      // Split by list items and paragraphs
+      const matches = bulletContent.match(/<li[^>]*>.*?<\/li>|<p[^>]*>.*?<\/p>|[^<>]+/gi) || [];
+      
+      matches.forEach(item => {
+        const trimmedItem = item.trim();
+        if (trimmedItem) {
+          const isPlainText = !trimmedItem.includes('<li');
+          const isHTML = trimmedItem.includes('<') && trimmedItem.includes('>');
+          
+          bulletPoints.push({
+            text: trimmedItem,
+            isPlainText,
+            isHTML
+          });
+        }
+      });
+    }
+    
+    // Process illustration from the fourth cell
+    const illustrationCell = cells[3];
+    const illustration = parseIllustration(illustrationCell);
+    
+    // Process presenter notes from the fifth cell
+    const presenterNotes = cells[4]?.innerHTML.trim() || '';
+    
+    // Add slide to the collection
+    slides.push({
+      title: slideTitle,
+      introText,
+      bulletPoints,
+      illustration,
+      presenterNotes
+    });
+  }
+  
+  // Add a Q&A slide at the end
+  slides.push({
+    type: 'qanda',
+    title: 'Questions & Answers',
+    subtitle: 'Your feedback and questions are valuable',
+    thankYouText: 'Thank You For Your Attention'
+  });
+  
+  return {
+    title,
+    subtitle,
+    timerDuration,
+    slides
+  };
+}
+
 /**
  * Parse an illustration cell into a structured object
  * This is a simplified approach compared to the original code
@@ -1035,6 +939,16 @@ function setupNavigationSystem() {
       toggleTimer();
     }
   });
+}
+
+/**
+ * Set up the presenter toggle button
+ */
+function setupPresenterToggle() {
+  const presenterToggleButton = document.querySelector('.presenter-toggle');
+  if (presenterToggleButton) {
+    presenterToggleButton.addEventListener('click', togglePresenterMode);
+  }
 }
 
 /**
