@@ -4,26 +4,7 @@
 
     <!-- TOP ROW -->
 
-    <!-- First cluster: man, woman, king, queen -->
-    <!-- Connection lines first -->
-    <line x1="80" y1="100" x2="180" y2="50" stroke="orange" stroke-width="3" />
-    <line x1="80" y1="150" x2="80" y2="100" stroke="red" stroke-width="3" />
-    <line x1="80" y1="150" x2="180" y2="150" stroke="orange" stroke-width="3" />
-    <line x1="180" y1="50" x2="180" y2="150" stroke="red" stroke-width="3" />
-
-    <!-- Boxes on top of lines -->
-    <rect x="50" y="75" width="60" height="40" fill="white" stroke="#aabbcc" stroke-width="2" />
-    <text x="80" y="100" font-family="Arial" font-size="14" text-anchor="middle">man</text>
-
-    <rect x="50" y="135" width="60" height="40" fill="white" stroke="#aabbcc" stroke-width="2" />
-    <text x="80" y="160" font-family="Arial" font-size="14" text-anchor="middle">woman</text>
-
-    <rect x="150" y="25" width="60" height="40" fill="white" stroke="#aabbcc" stroke-width="2" />
-    <text x="180" y="50" font-family="Arial" font-size="14" text-anchor="middle">king</text>
-
-    <rect x="150" y="135" width="60" height="40" fill="white" stroke="#aabbcc" stroke-width="2" />
-    <text x="180" y="160" font-family="Arial" font-size="14" text-anchor="middle">queen</text>
-
+    
     <!-- Second cluster: grapes, cherries, purple, red -->
     <!-- Connection lines first -->
     <line x1="320" y1="75" x2="420" y2="50" stroke="red" stroke-width="3" />
@@ -65,26 +46,6 @@
     <text x="660" y="160" font-family="Arial" font-size="14" text-anchor="middle">hear</text>
 
     <!-- BOTTOM ROW -->
-
-    <!-- First cluster: plant, bird, seed, egg -->
-    <!-- Connection lines first -->
-    <line x1="80" y1="250" x2="180" y2="250" stroke="red" stroke-width="3" />
-    <line x1="80" y1="250" x2="80" y2="325" stroke="orange" stroke-width="3" />
-    <line x1="80" y1="325" x2="180" y2="325" stroke="red" stroke-width="3" />
-    <line x1="180" y1="250" x2="180" y2="325" stroke="orange" stroke-width="3" />
-
-    <!-- Boxes on top of lines -->
-    <rect x="50" y="230" width="60" height="40" fill="white" stroke="#aabbcc" stroke-width="2" />
-    <text x="80" y="255" font-family="Arial" font-size="14" text-anchor="middle">plant</text>
-
-    <rect x="50" y="305" width="60" height="40" fill="white" stroke="#aabbcc" stroke-width="2" />
-    <text x="80" y="330" font-family="Arial" font-size="14" text-anchor="middle">bird</text>
-
-    <rect x="150" y="230" width="60" height="40" fill="white" stroke="#aabbcc" stroke-width="2" />
-    <text x="180" y="255" font-family="Arial" font-size="14" text-anchor="middle">seed</text>
-
-    <rect x="150" y="305" width="60" height="40" fill="white" stroke="#aabbcc" stroke-width="2" />
-    <text x="180" y="330" font-family="Arial" font-size="14" text-anchor="middle">egg</text>
 
     <!-- Second cluster: child, adult, cat, kitten -->
     <!-- Connection lines first -->
