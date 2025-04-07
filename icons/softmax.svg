@@ -18,35 +18,34 @@
 
     <!-- Title and context showing where in a sentence we are -->
     <text x="400" y="50" font-family="Arial" font-size="24" text-anchor="middle" font-weight="bold">Softmax
-        in Language Models: From Logits to Words</text>
+        in Language Models:</text>
 
     <!-- Input context: The incomplete sentence we're trying to complete -->
     <rect x="40" y="80" width="720" height="40" fill="#e8f4f8" rx="5" ry="5" stroke="#2E5984"
         stroke-width="1" />
-    <text x="400" y="105" font-family="Arial" font-size="18" text-anchor="middle">"The weather today
-        is ____"</text>
+    <text x="400" y="105" font-family="Arial" font-size="18" text-anchor="middle">"Travel today
+        will be  ____"</text>
 
     <!-- Step 1: Raw logit scores from the model's output layer -->
     <!-- These are the unnormalized scores for each possible next token -->
     <rect x="50" y="150" width="160" height="320" fill="#e0e0e0" rx="10" ry="10" />
-    <text x="130" y="140" font-family="Arial" font-size="16" text-anchor="middle" font-weight="bold">Raw
-        Logit Scores</text>
+    <text x="130" y="140" font-family="Arial" font-size="16" text-anchor="middle" font-weight="bold">Raw Scores</text>
 
     <!-- Individual token scores with blue background -->
     <rect x="60" y="170" width="140" height="40" fill="#6495ED" rx="5" ry="5" />
-    <text x="70" y="195" font-family="Arial" font-size="16" text-anchor="start" fill="white">"hot"</text>
+    <text x="70" y="195" font-family="Arial" font-size="16" text-anchor="start" fill="white">"long"</text>
     <text x="190" y="195" font-family="Arial" font-size="16" text-anchor="end" fill="white">2.0</text>
 
     <rect x="60" y="220" width="140" height="40" fill="#6495ED" rx="5" ry="5" />
-    <text x="70" y="245" font-family="Arial" font-size="16" text-anchor="start" fill="white">"cold"</text>
+    <text x="70" y="245" font-family="Arial" font-size="16" text-anchor="start" fill="white">"short"</text>
     <text x="190" y="245" font-family="Arial" font-size="16" text-anchor="end" fill="white">1.5</text>
 
     <rect x="60" y="270" width="140" height="40" fill="#6495ED" rx="5" ry="5" />
-    <text x="70" y="295" font-family="Arial" font-size="16" text-anchor="start" fill="white">"nice"</text>
+    <text x="70" y="295" font-family="Arial" font-size="16" text-anchor="start" fill="white">"busy"</text>
     <text x="190" y="295" font-family="Arial" font-size="16" text-anchor="end" fill="white">1.0</text>
 
     <rect x="60" y="320" width="140" height="40" fill="#6495ED" rx="5" ry="5" />
-    <text x="70" y="345" font-family="Arial" font-size="16" text-anchor="start" fill="white">"very"</text>
+    <text x="70" y="345" font-family="Arial" font-size="16" text-anchor="start" fill="white">"exhausting"</text>
     <text x="190" y="345" font-family="Arial" font-size="16" text-anchor="end" fill="white">0.8</text>
 
     <rect x="60" y="370" width="140" height="40" fill="#6495ED" rx="5" ry="5" />
@@ -65,19 +64,19 @@
 
     <!-- Exponential values for each token -->
     <rect x="300" y="170" width="140" height="40" fill="#4682B4" rx="5" ry="5" />
-    <text x="310" y="195" font-family="Arial" font-size="16" text-anchor="start" fill="white">"hot"</text>
+    <text x="310" y="195" font-family="Arial" font-size="16" text-anchor="start" fill="white">"long"</text>
     <text x="430" y="195" font-family="Arial" font-size="16" text-anchor="end" fill="white">7.39</text>
 
     <rect x="300" y="220" width="140" height="40" fill="#4682B4" rx="5" ry="5" />
-    <text x="310" y="245" font-family="Arial" font-size="16" text-anchor="start" fill="white">"cold"</text>
+    <text x="310" y="245" font-family="Arial" font-size="16" text-anchor="start" fill="white">"short"</text>
     <text x="430" y="245" font-family="Arial" font-size="16" text-anchor="end" fill="white">4.48</text>
 
     <rect x="300" y="270" width="140" height="40" fill="#4682B4" rx="5" ry="5" />
-    <text x="310" y="295" font-family="Arial" font-size="16" text-anchor="start" fill="white">"nice"</text>
+    <text x="310" y="295" font-family="Arial" font-size="16" text-anchor="start" fill="white">"busy"</text>
     <text x="430" y="295" font-family="Arial" font-size="16" text-anchor="end" fill="white">2.72</text>
 
     <rect x="300" y="320" width="140" height="40" fill="#4682B4" rx="5" ry="5" />
-    <text x="310" y="345" font-family="Arial" font-size="16" text-anchor="start" fill="white">"very"</text>
+    <text x="310" y="345" font-family="Arial" font-size="16" text-anchor="start" fill="white">"exhausting"</text>
     <text x="430" y="345" font-family="Arial" font-size="16" text-anchor="end" fill="white">2.23</text>
 
     <rect x="300" y="370" width="140" height="40" fill="#4682B4" rx="5" ry="5" />
@@ -127,19 +126,19 @@
 
     <!-- Probability values for each token -->
     <rect x="540" y="170" width="210" height="40" fill="#1A365D" rx="5" ry="5" />
-    <text x="550" y="195" font-family="Arial" font-size="16" text-anchor="start" fill="white">"hot"</text>
+    <text x="550" y="195" font-family="Arial" font-size="16" text-anchor="start" fill="white">"long"</text>
     <text x="740" y="195" font-family="Arial" font-size="16" text-anchor="end" fill="white">0.403 (40.3%)</text>
 
     <rect x="540" y="220" width="210" height="40" fill="#1A365D" rx="5" ry="5" />
-    <text x="550" y="245" font-family="Arial" font-size="16" text-anchor="start" fill="white">"cold"</text>
+    <text x="550" y="245" font-family="Arial" font-size="16" text-anchor="start" fill="white">"short"</text>
     <text x="740" y="245" font-family="Arial" font-size="16" text-anchor="end" fill="white">0.244 (24.4%)</text>
 
     <rect x="540" y="270" width="210" height="40" fill="#1A365D" rx="5" ry="5" />
-    <text x="550" y="295" font-family="Arial" font-size="16" text-anchor="start" fill="white">"nice"</text>
+    <text x="550" y="295" font-family="Arial" font-size="16" text-anchor="start" fill="white">"busy"</text>
     <text x="740" y="295" font-family="Arial" font-size="16" text-anchor="end" fill="white">0.148 (14.8%)</text>
 
     <rect x="540" y="320" width="210" height="40" fill="#1A365D" rx="5" ry="5" />
-    <text x="550" y="345" font-family="Arial" font-size="16" text-anchor="start" fill="white">"very"</text>
+    <text x="550" y="345" font-family="Arial" font-size="16" text-anchor="start" fill="white">"exhausting"</text>
     <text x="740" y="345" font-family="Arial" font-size="16" text-anchor="end" fill="white">0.121 (12.1%)</text>
 
     <rect x="540" y="370" width="210" height="40" fill="#1A365D" rx="5" ry="5" />
@@ -177,7 +176,7 @@
     <!-- Token selection strategies -->
     <rect x="540" y="515" width="210" height="80" fill="#f8f9fa" rx="5" ry="5" stroke="#1A365D" stroke-width="1" />
     <text x="645" y="535" font-family="Arial" font-size="14" text-anchor="middle">Select from distribution:</text>
-    <text x="645" y="555" font-family="Arial" font-size="14" text-anchor="middle">• Greedy (always "hot")</text>
+    <text x="645" y="555" font-family="Arial" font-size="14" text-anchor="middle">• Greedy (always "long")</text>
     <text x="645" y="575" font-family="Arial" font-size="14" text-anchor="middle">• Sampling (weighted random)</text>
 
     <!-- Final output showing the selected token in context -->
@@ -189,8 +188,8 @@
         marker-end="url(#arrowhead)" />
 
     <!-- Final formula showing both selection methods and their outcomes -->
-    <text x="260" y="700" font-family="Arial" font-size="16" text-anchor="start" font-style="italic">greedy = argmax(softmax(z)) = "hot"</text>
-    <text x="260" y="725" font-family="Arial" font-size="16" text-anchor="start" font-style="italic">sampling = random_choice(top_k(softmax(z), 10)) = "nice"</text>
+    <text x="260" y="700" font-family="Arial" font-size="16" text-anchor="start" font-style="italic">greedy = argmax(softmax(z)) = "long"</text>
+    <text x="260" y="725" font-family="Arial" font-size="16" text-anchor="start" font-style="italic">sampling = random_choice(top_k(softmax(z), 10)) = "busy"</text>
 
     <!-- Visual elements for connections -->
     <defs>

@@ -4,9 +4,12 @@
     <rect width="800" height="600" fill="#f8f9fa" />
 
     <!-- Title: Main heading explaining what BERT is -->
+
+    <!-- BERT: Bidirectional Encoder Representations from Transformers -->
     <text x="400" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold"
         text-anchor="middle" fill="#333">
-        BERT: Bidirectional Encoder Representations from Transformers
+         It gets a bit more complicated during training
+
     </text>
 
     <!-- Input Processing: Shows how BERT handles masked input -->

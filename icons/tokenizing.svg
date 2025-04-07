@@ -22,8 +22,7 @@
     <rect x="50" y="110" width="300" height="30" rx="5" fill="#90CAF9" stroke="#3498db"
         stroke-width="1" />
     <text x="200" y="130" text-anchor="middle" fill="#34495e" font-size="10">[5, 12, 47, 48, 105,
-        203, 12, 31, 89,
-        12, 56]</text>
+        203, 12, 31, 89, 12, 56, 0]</text>
 
     <!-- Arrows -->
     <path d="M200 140 L200 150" stroke="#3498db" stroke-width="1" marker-end="url(#arrow)" />

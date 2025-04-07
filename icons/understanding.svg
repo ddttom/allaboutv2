@@ -25,7 +25,7 @@
     <text x="170" y="110" font-size="12" fill="#34495e">3.14159?</text>
     <!-- Input arrow -->
     <path d="M200 20 L200 45" stroke="#3498db" stroke-width="2" marker-end="url(#arrowMarker)" />
-    <text x="200" y="15" text-anchor="middle" fill="#34495e" font-size="10">INPUT QUERY</text>
+    <text x="200" y="15" text-anchor="middle" fill="black" font-size="20">TELL ME ABOUT .......</text>
     <!-- New arrows connecting the cloud to TRUE and FALSE -->
     <path d="M170 115 L120 140" stroke="#34495e" stroke-width="2"
         marker-end="url(#arrowMarker)" />
