@@ -1077,7 +1077,7 @@ function togglePresenterMode() {
 }
 
 /**
- * Set up the resize and drag handler for presenter notes
+ * Set up the resize handler for presenter notes
  */
 function setupResizeHandler() {
   const notes = document.querySelector('.presenter-notes');
@@ -1086,69 +1086,28 @@ function setupResizeHandler() {
   if (!notes || !title) return;
 
   let isResizing = false;
-  let isDragging = false;
   let startY = 0;
-  let startX = 0;
   let startHeight = 0;
-  let startTop = 0;
-  let startLeft = 0;
 
   title.addEventListener('mousedown', (e) => {
-    // Check if we're clicking on the drag icon or near it
-    const dragIcon = title.querySelector('.drag-icon');
-    const iconRect = dragIcon?.getBoundingClientRect();
-    const isNearIcon = iconRect &&
-      Math.abs(e.clientX - (iconRect.left + iconRect.width/2)) < 20 &&
-      Math.abs(e.clientY - (iconRect.top + iconRect.height/2)) < 20;
-
-    if (isNearIcon) {
-      // Start dragging
-      isDragging = true;
-      isResizing = false;
-      startX = e.clientX;
-      startY = e.clientY;
-
-      // Get current position
-      const rect = notes.getBoundingClientRect();
-      startTop = rect.top;
-      startLeft = rect.left;
-    } else {
-      // Start resizing
-      isResizing = true;
-      isDragging = false;
-      startY = e.clientY;
-      startHeight = parseInt(window.getComputedStyle(notes).height, 10);
-    }
-
+    isResizing = true;
+    startY = e.clientY;
+    startHeight = parseInt(window.getComputedStyle(notes).height, 10);
     e.preventDefault();
-    document.body.style.userSelect = 'none'; // Prevent text selection during resize/drag
+
+    document.body.style.userSelect = 'none'; // Prevent text selection during resize
   });
 
   document.addEventListener('mousemove', (e) => {
-    if (isResizing) {
-      // Handle resizing
-      const delta = startY - e.clientY;
-      notes.style.height = `${Math.max(100, Math.min(window.innerHeight - 100, startHeight + delta))}px`;
-    } else if (isDragging) {
-      // Handle dragging
-      const deltaX = e.clientX - startX;
-      const deltaY = e.clientY - startY;
+    if (!isResizing) return;
 
-      // Calculate new position, keeping within viewport bounds
-      const newTop = Math.max(0, Math.min(window.innerHeight - 100, startTop + deltaY));
-      const newLeft = Math.max(0, Math.min(window.innerWidth - 200, startLeft + deltaX));
-
-      // Apply new position
-      notes.style.top = `${newTop}px`;
-      notes.style.left = `${newLeft}px`;
-      notes.style.bottom = 'auto'; // Override bottom positioning when dragging
-    }
+    const delta = startY - e.clientY;
+    notes.style.height = `${Math.max(100, Math.min(window.innerHeight - 100, startHeight + delta))}px`;
   });
 
   document.addEventListener('mouseup', () => {
-    if (isResizing || isDragging) {
+    if (isResizing) {
       isResizing = false;
-      isDragging = false;
       document.body.style.userSelect = ''; // Restore text selection
     }
   });
@@ -1629,9 +1588,6 @@ function addStyles() {
       overflow-y: auto;
       font-size: 14px;
       transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-      /* Add properties for smooth dragging */
-      user-select: none;
-      touch-action: none;
     }
 
     .presenter-notes.hidden {
@@ -1647,7 +1603,7 @@ function addStyles() {
       padding-bottom: 5px;
       border-bottom: 1px solid rgba(44, 62, 80, 0.3);
       color: #2c3e50;
-      cursor: move;
+      cursor: ns-resize;
       display: flex;
       align-items: center;
       gap: 8px;
