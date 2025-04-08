@@ -1093,8 +1093,15 @@ function setupResizeHandler() {
     isResizing = true;
     startY = e.clientY;
     startHeight = parseInt(window.getComputedStyle(notes).height, 10);
-    e.preventDefault();
 
+    // Ensure position is fixed and position is set
+    notes.style.position = 'fixed';
+    if (!notes.classList.contains('presenter-mode')) {
+      notes.style.bottom = '60px';
+      notes.style.left = '20px';
+    }
+
+    e.preventDefault();
     document.body.style.userSelect = 'none'; // Prevent text selection during resize
   });
 
@@ -1102,7 +1109,15 @@ function setupResizeHandler() {
     if (!isResizing) return;
 
     const delta = startY - e.clientY;
-    notes.style.height = `${Math.max(100, Math.min(window.innerHeight - 100, startHeight + delta))}px`;
+    const newHeight = Math.max(100, Math.min(window.innerHeight - 100, startHeight + delta));
+    notes.style.height = `${newHeight}px`;
+
+    // Ensure we're not changing position, only height
+    if (!notes.classList.contains('presenter-mode')) {
+      notes.style.bottom = '60px';
+      notes.style.top = '';
+      notes.style.left = '20px';
+    }
   });
 
   document.addEventListener('mouseup', () => {
