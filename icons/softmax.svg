@@ -181,7 +181,7 @@
 
     <!-- Final output showing the selected token in context -->
     <rect x="40" y="630" width="720" height="100" fill="#e8f4f8" rx="5" ry="5" stroke="#1A365D" stroke-width="2" />
-    <text x="400" y="655" font-family="Arial" font-size="18" text-anchor="middle">"The weather today is"</text>
+    <text x="400" y="655" font-family="Arial" font-size="18" text-anchor="middle">"Travel today will be"</text>
 
     <!-- Arrow to final text -->
     <path d="M 645 595 L 645 620" stroke="#333" stroke-width="2" fill="none"
