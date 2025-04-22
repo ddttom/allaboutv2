@@ -501,7 +501,8 @@ function buildSlides(slides, container) {
                 <text x="100" y="130" text-anchor="middle" fill="white" font-size="18" font-weight="bold">QUESTIONS</text>
               </svg>
             </div>
-            <p class="thank-you-text">${slide.thankYouText || 'Thank You'}</p>
+            <img src="https://allabout.network/blogs/ddt/ai/media_1582dcf64bd88baaae50e4914d73113a6b692cb62.png?width=2000&format=webply&optimize=medium" alt="My Link">
+            <p class="thank-you-text">${slide.thankYouText || "Thank You"}</p>
           </div>
         </div>
       `;
