@@ -274,7 +274,7 @@ function parseRows(rows) {
     title: "Questions & Answers",
     subtitle: "Your feedback and questions are valuable",
     thankYouText:
-      `<img src = "${qrCodeImgUrl}" alt="QR Code for ${subtitleUrl}"> <br>Thank You For Your Attention`,
+      `<img src = "${qrCodeUrl}" alt="QR Code for ${subtitleUrl}"> <br>Thank You For Your Attention`,
     subtitleUrl: subtitleUrl, // Add the extracted URL from presentation subtitle
   });
 
