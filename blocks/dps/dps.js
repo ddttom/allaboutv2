@@ -266,13 +266,15 @@ function parseRows(rows) {
     });
   }
 
+  const qrCodeUrl = generateQRCode(subtitleUrl);
+  
   // Add a Q&A slide at the end
   slides.push({
     type: "qanda",
     title: "Questions & Answers",
     subtitle: "Your feedback and questions are valuable",
     thankYouText:
-      "<img src = 'https://allabout.network/blogs/ddt/ai/media_1582dcf64bd88baaae50e4914d73113a6b692cb62.png?width=2000&format=webply&optimize=medium'> <br>Thank You For Your Attention",
+      `<img src = "${qrCodeImgUrl}" alt="QR Code for ${subtitleUrl}"> <br>Thank You For Your Attention`,
     subtitleUrl: subtitleUrl, // Add the extracted URL from presentation subtitle
   });
 
@@ -1129,7 +1131,55 @@ function setupResizeHandler() {
   });
 }
 
+/**
+ * Generates a Google Chart API URL for creating a QR code
+ * @param {string} url - The URL to encode in the QR code
+ * @param {Object} options - Optional styling parameters
+ * @param {number} options.size - Size of the QR code in pixels (default: 250)
+ * @param {string} options.errorCorrectionLevel - Error correction level: 'L' (7%), 'M' (15%), 'Q' (25%), or 'H' (30%) (default: 'L')
+ * @param {number} options.margin - Margin around the QR code, 0-10 (default: 4)
+ * @param {string} options.color - Foreground color in hex format without # (default: '000000')
+ * @param {string} options.backgroundColor - Background color in hex format without # (default: 'FFFFFF')
+ * @returns {string} - The complete Google Chart API URL for the QR code image
+ */
+function generateQRCode(url, options = {}) {
+  // Default options
+  const defaults = {
+    size: 250,
+    errorCorrectionLevel: 'L',
+    margin: 4,
+    color: '000000',
+    backgroundColor: 'FFFFFF'
+  };
+  
+  // Merge provided options with defaults
+  const settings = { ...defaults, ...options };
+  
+  // Encode the URL properly for use in a query parameter
+  const encodedUrl = encodeURIComponent(url);
+  
+  // Construct the Google Chart API URL for QR code with styling
+  const googleChartApiUrl = 
+    `https://chart.googleapis.com/chart?` +
+    `cht=qr&` +
+    `chs=${settings.size}x${settings.size}&` +
+    `chl=${encodedUrl}&` +
+    `choe=UTF-8&` +
+    `chld=${settings.errorCorrectionLevel}|${settings.margin}&` +
+    `chco=${settings.color}&` +
+    `chf=bg,s,${settings.backgroundColor}`;
+    
+  return googleChartApiUrl;
+}
 
+// Example usage:
+// const qrCodeUrl = generateQRCode("https://example.com", {
+//   size: 300,
+//   errorCorrectionLevel: 'M',
+//   margin: 2,
+//   color: '4285F4',
+//   backgroundColor: 'F8F9FA'
+// });
 
 
 
