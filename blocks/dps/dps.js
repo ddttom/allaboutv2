@@ -272,7 +272,7 @@ function parseRows(rows) {
     title: "Questions & Answers",
     subtitle: "Your feedback and questions are valuable",
     thankYouText:
-      "<img src = 'https://allabout.network/blogs/ddt/ai/media_1582dcf64bd88baaae50e4914d73113a6b692cb62.png?width=2000&format=webply&optimize=medium'> Thank You For Your Attention",
+      "<img src = 'https://allabout.network/blogs/ddt/ai/media_1582dcf64bd88baaae50e4914d73113a6b692cb62.png?width=2000&format=webply&optimize=medium'> <br>Thank You For Your Attention",
     subtitleUrl: subtitleUrl, // Add the extracted URL from presentation subtitle
   });
 
