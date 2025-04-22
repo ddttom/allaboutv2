@@ -502,7 +502,7 @@ function buildSlides(slides, container) {
               </svg>
             </div>
             <img src="https://allabout.network/blogs/ddt/ai/media_1582dcf64bd88baaae50e4914d73113a6b692cb62.png?width=2000&format=webply&optimize=medium" alt="My Link">
-            <p class="thank-you-text">${slide.thankYouText || "Thank You"}</p>
+            <p class="thank-you-text">${slide.thankYouText || "Thank You."}</p>
           </div>
         </div>
       `;
