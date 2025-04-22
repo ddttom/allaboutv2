@@ -501,7 +501,7 @@ function buildSlides(slides, container) {
                 <text x="100" y="95" text-anchor="middle" fill="white" font-size="70" font-weight="bold">?</text>
                 <text x="100" y="130" text-anchor="middle" fill="white" font-size="18" font-weight="bold">QUESTIONS</text>
               </svg>
-            </div>
+            </div><br>
             <p class="thank-you-text">${slide.thankYouText || "Thank You."}</p>
           </div>
         </div>
