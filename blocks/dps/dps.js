@@ -117,6 +117,7 @@ export default async function decorate(block) {
 
   // Show the first slide
   showSlide(0);
+  showPresenterNotes();
 }
 
 /**
@@ -1748,4 +1749,3 @@ function addStyles() {
 
 // Call addStyles when this file is loaded
 addStyles();
-showPresenterNotes();
