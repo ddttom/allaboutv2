@@ -11,9 +11,9 @@ const DPS_CONFIG = {
   PRESENTER_NOTES_VISIBLE: false,
   // Error messages
   ERROR_MESSAGES: {
-    LOAD_FAILURE: 'Failed to load presentation data',
-    INVALID_DATA: 'Invalid presentation data format'
-  }
+    LOAD_FAILURE: "Failed to load presentation data",
+    INVALID_DATA: "Invalid presentation data format",
+  },
 };
 
 // Global state variables
@@ -31,7 +31,7 @@ let hasStartedTimer = false;
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;
-  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
 }
 
 /**
@@ -40,20 +40,20 @@ function formatTime(seconds) {
  */
 export default async function decorate(block) {
   // Add dps-block class to the container
-  block.classList.add('dps-block');
+  block.classList.add("dps-block");
 
   // Force full viewport mode by removing existing page elements
-  const existingHeader = document.querySelector('header');
-  const existingFooter = document.querySelector('footer');
-  const existingMain = document.querySelector('main');
+  const existingHeader = document.querySelector("header");
+  const existingFooter = document.querySelector("footer");
+  const existingMain = document.querySelector("main");
 
-  if (existingHeader) existingHeader.style.display = 'none';
-  if (existingFooter) existingFooter.style.display = 'none';
+  if (existingHeader) existingHeader.style.display = "none";
+  if (existingFooter) existingFooter.style.display = "none";
   if (existingMain) {
-    existingMain.style.padding = '0';
-    existingMain.style.margin = '0';
-    existingMain.style.width = '100%';
-    existingMain.style.maxWidth = '100%';
+    existingMain.style.padding = "0";
+    existingMain.style.margin = "0";
+    existingMain.style.width = "100%";
+    existingMain.style.maxWidth = "100%";
   }
 
   // Extract rows from the block (each row was a table row in the Google Doc)
@@ -61,7 +61,8 @@ export default async function decorate(block) {
 
   // Validate minimum content requirements
   if (rows.length < 2) {
-    block.innerHTML = '<div class="dps-error">Error: DPS block requires at least a configuration row and one slide row.</div>';
+    block.innerHTML =
+      '<div class="dps-error">Error: DPS block requires at least a configuration row and one slide row.</div>';
     return;
   }
 
@@ -69,16 +70,19 @@ export default async function decorate(block) {
   const presentationData = parseRows(rows);
 
   // Create presentation container
-  const presentationContainer = document.createElement('div');
-  presentationContainer.className = 'dps-wrapper';
+  const presentationContainer = document.createElement("div");
+  presentationContainer.className = "dps-wrapper";
 
   // Create header with title and subtitle
-  const header = createHeader(presentationData.title, presentationData.subtitle);
+  const header = createHeader(
+    presentationData.title,
+    presentationData.subtitle
+  );
 
   // Create slides container
-  const slidesContainer = document.createElement('div');
-  slidesContainer.className = 'slides-container';
-  slidesContainer.id = 'slides-container';
+  const slidesContainer = document.createElement("div");
+  slidesContainer.className = "slides-container";
+  slidesContainer.id = "slides-container";
 
   // Create presenter notes container
   const presenterNotesContainer = createPresenterNotesContainer();
@@ -93,7 +97,7 @@ export default async function decorate(block) {
   presentationContainer.appendChild(footer);
 
   // Replace the block content with our presentation
-  block.textContent = '';
+  block.textContent = "";
   block.appendChild(presentationContainer);
 
   // Build slides from the parsed content
@@ -103,7 +107,8 @@ export default async function decorate(block) {
   setupNavigationSystem();
 
   // Initialize the timer duration
-  remainingTime = presentationData.timerDuration * 60 || DPS_CONFIG.DEFAULT_TIMER_DURATION;
+  remainingTime =
+    presentationData.timerDuration * 60 || DPS_CONFIG.DEFAULT_TIMER_DURATION;
 
   // Set up the presenter toggle button
   setupPresenterToggle();
@@ -111,15 +116,17 @@ export default async function decorate(block) {
   // Setup resize handler for presenter notes
   setupResizeHandler();
 
+  // Setup mobile handling
+  setupMobileHandling();
+
   // Force fullscreen mode immediately
-  document.body.classList.add('dps-fullscreen');
+  document.body.classList.add("dps-fullscreen");
   window.scrollTo(0, 0);
 
   // Show the first slide
   showSlide(0);
   showPresenterNotes();
 }
-
 /**
  * Create header element with title and subtitle
  * @param {string} title - Presentation title
@@ -160,21 +167,6 @@ function createPresenterNotesContainer() {
   return container;
 }
 
-/**
- * Set up the presenter toggle button
- */
-function setupPresenterToggle() {
-  const presenterToggleButton = document.querySelector('.presenter-toggle');
-  if (presenterToggleButton) {
-    presenterToggleButton.addEventListener('click', togglePresenterMode);
-  }
-  
-  // Add click handler for the close icon
-  const closeIcon = document.querySelector('.presenter-notes .close-icon');
-  if (closeIcon) {
-    closeIcon.addEventListener('click', hidePresenterNotes);
-  }
-}
 /**
  * Create footer with navigation and timer
  * @param {number} timerDuration - Timer duration in minutes
@@ -338,6 +330,7 @@ function parseIllustration(cell) {
     };
   }
 }
+
 /**
  * Extract individual illustration items from content, ensuring uniqueness
  * AND preserving the original DOM order of the first occurrence of each unique item.
@@ -439,13 +432,7 @@ function extractIllustrationItems(content, cell) {
              added = addUniqueItem(item, identifier);
          }
     }
-
-    // Potentially log if an item wasn't added due to duplication (for debugging)
-    // if (item && !added) {
-    //   console.log('Skipped duplicate item:', identifier);
-    // }
   });
-
 
   // Final check for basic 'iframe URL' or plain image URL if nothing else was found
   // This catches cases where the URL is the *only* thing in the cell
@@ -471,7 +458,6 @@ function extractIllustrationItems(content, cell) {
        }
   }
 
-
   return items; // Return the uniquely identified items in DOM order
 }
 
@@ -481,6 +467,7 @@ function isImageUrl(url) {
   // Added optional query/fragment check
   return url.match(/\.(jpg|jpeg|png|gif|svg|webp|bmp|ico|tiff)($|\?|#)/i) !== null;
 }
+
 /**
  * Build all slides in the presentation container
  * @param {Array} slides - Array of slide data
@@ -630,7 +617,6 @@ function createSequenceHTML(items) {
     // Create container for this item
     html += `<div class="sequence-item-container ${isActive ? 'active' : ''}" data-sequence-id="${index}">`;
 
-
     // Add content based on type
     if (item.type === 'iframe') {
       html += `<div class="sequence-image iframe-container ${isActive ? 'active' : ''}">${item.content}</div>`;
@@ -650,6 +636,7 @@ function createSequenceHTML(items) {
   html += '</div>'; // Close image-sequence
   return html;
 }
+
 /**
  * Show a specific slide and update UI
  * @param {number} index - Slide index to show
@@ -941,6 +928,12 @@ function setupPresenterToggle() {
   if (presenterToggleButton) {
     presenterToggleButton.addEventListener('click', togglePresenterMode);
   }
+  
+  // Add click handler for the close icon
+  const closeIcon = document.querySelector('.presenter-notes .close-icon');
+  if (closeIcon) {
+    closeIcon.addEventListener('click', hidePresenterNotes);
+  }
 }
 
 /**
@@ -960,7 +953,6 @@ function hidePresenterNotes() {
   presenterNotes.classList.add('hidden');
   DPS_CONFIG.PRESENTER_NOTES_VISIBLE = false;
 }
-
 /**
  * Start the presentation timer
  */
@@ -1150,6 +1142,100 @@ function setupResizeHandler() {
   });
 }
 
+/**
+ * Set up touch handling for mobile devices
+ */
+function setupMobileHandling() {
+  const slidesContainer = document.getElementById('slides-container');
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  // Detect if device is likely a mobile/touch device
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  
+  if (isTouchDevice) {
+    // Add mobile class to body for CSS targeting
+    document.body.classList.add('mobile-device');
+    
+    // Setup swipe detection for slide navigation
+    if (slidesContainer) {
+      slidesContainer.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+      
+      slidesContainer.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+      }, { passive: true });
+    }
+    
+    // Make presenter notes more mobile-friendly by default
+    adjustPresenterNotesForMobile();
+  }
+}
+
+/**
+ * Handle swipe gestures for mobile navigation
+ */
+function handleSwipe() {
+  const swipeThreshold = 50; // Minimum swipe distance in pixels
+  
+  if (touchEndX - touchStartX > swipeThreshold) {
+    // Swipe right - go to previous slide
+    if (currentSequenceIndex > 0) {
+      if (handleSequenceNavigation('prev')) {
+        return;
+      }
+    }
+    showSlide(currentSlideIndex - 1);
+  } else if (touchStartX - touchEndX > swipeThreshold) {
+    // Swipe left - go to next slide
+    const slide = document.querySelector('.slide.active');
+    if (slide) {
+      const sequence = slide.querySelector('.image-sequence');
+      if (sequence) {
+        const items = Array.from(sequence.querySelectorAll('.sequence-item-container'));
+        if (currentSequenceIndex < items.length - 1) {
+          if (handleSequenceNavigation('next')) {
+            return;
+          }
+        }
+      }
+    }
+    showSlide(currentSlideIndex + 1);
+  }
+}
+
+/**
+ * Adjust presenter notes for mobile screens
+ */
+function adjustPresenterNotesForMobile() {
+  const presenterNotes = document.querySelector('.presenter-notes');
+  if (!presenterNotes) return;
+  
+  // Make presenter notes initially hidden on mobile
+  presenterNotes.classList.add('hidden');
+  
+  // Add a floating button to show/hide presenter notes
+  const notesToggleButton = document.createElement('button');
+  notesToggleButton.className = 'mobile-notes-toggle';
+  notesToggleButton.innerHTML = `
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 17h18v-2H3v2zm0-4h18v-2H3v2zm0-4h18V7H3v2zm0-4h18V3H3v2z"/>
+    </svg>
+  `;
+  document.body.appendChild(notesToggleButton);
+  
+  // Add click handler for the mobile notes button
+  notesToggleButton.addEventListener('click', () => {
+    if (presenterNotes.classList.contains('hidden')) {
+      showPresenterNotes();
+    } else {
+      hidePresenterNotes();
+    }
+  });
+}
+
 function generateQRCode(url, options = {}) {
   // Default options
   const defaults = {
@@ -1179,8 +1265,6 @@ function generateQRCode(url, options = {}) {
 
   return qrServerUrl;
 }
- 
-
 /**
  * Add CSS styles for the presentation
  * This function adds all necessary styles for the DPS block
@@ -1238,7 +1322,7 @@ function addStyles() {
     /* hide the H1 outside the DPS block */
     body.dps-fullscreen main .section.dps-container > .default-content-wrapper {
       display: none;
-}
+    }
 
     body.dps-fullscreen main {
       padding: 0 !important;
@@ -1564,37 +1648,6 @@ function addStyles() {
       margin-top: 20px;
     }
 
-    /* Responsive design */
-    @media (max-width: 768px) {
-      .header-content,
-      .slide-content,
-      .footer-content {
-        width: 90%;
-      }
-
-      .bullet-list li {
-        font-size: 16px;
-      }
-
-      .qanda-circle {
-        width: 180px;
-        height: 180px;
-      }
-
-      .slide-content {
-        grid-template-areas:
-          "title"
-          "text"
-          "illustration";
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto 1fr;
-      }
-
-      .thank-you-text {
-        font-size: 20px;
-      }
-    }
-
     /* Image sequence styling */
     .image-sequence {
       position: relative;
@@ -1619,7 +1672,6 @@ function addStyles() {
       display: block;
     }
 
-
     .sequence-image {
       position: relative;
       max-width: 100%;
@@ -1636,70 +1688,71 @@ function addStyles() {
       height: 100%;
     }
 
-   /* Presenter notes styling */
-.presenter-notes {
-  position: fixed;
-  bottom: 60px;
-  left: 20px;
-  width: 31.25vw;
-  height: 25vh;
-  background-color: rgba(236, 240, 241, 0.95);
-  color: #2c3e50;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  overflow-y: auto;
-  font-size: 14px;
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
+    /* Presenter notes styling */
+    .presenter-notes {
+      position: fixed;
+      bottom: 60px;
+      left: 20px;
+      width: 31.25vw;
+      height: 25vh;
+      background-color: rgba(236, 240, 241, 0.95);
+      color: #2c3e50;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      overflow-y: auto;
+      font-size: 14px;
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
 
-.presenter-notes.hidden {
-  opacity: 0;
-  transform: translateY(20px);
-  pointer-events: none;
-}
+    .presenter-notes.hidden {
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+    }
 
-.presenter-notes-title {
-  font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  padding-bottom: 5px;
-  border-bottom: 1px solid rgba(44, 62, 80, 0.3);
-  color: #2c3e50;
-  cursor: ns-resize;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+    .presenter-notes-title {
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid rgba(44, 62, 80, 0.3);
+      color: #2c3e50;
+      cursor: ns-resize;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-.presenter-notes-title .drag-icon {
-  width: 16px;
-  height: 16px;
-  fill: #2c3e50;
-  opacity: 0.7;
-  flex-shrink: 0;
-}
+    .presenter-notes-title .drag-icon {
+      width: 16px;
+      height: 16px;
+      fill: #2c3e50;
+      opacity: 0.7;
+      flex-shrink: 0;
+    }
 
-.presenter-notes-title .close-icon {
-  width: 24px;
-  height: 24px;
-  fill: #2c3e50;
-  opacity: 0.7;
-  cursor: pointer;
-  margin-left: auto; /* Push to the right side */
-  flex-shrink: 0;
-  transition: opacity 0.2s ease;
-}
+    .presenter-notes-title .close-icon {
+      width: 24px;
+      height: 24px;
+      fill: #2c3e50;
+      opacity: 0.7;
+      cursor: pointer;
+      margin-left: auto; /* Push to the right side */
+      flex-shrink: 0;
+      transition: opacity 0.2s ease;
+    }
 
-.presenter-notes-title .close-icon:hover {
-  opacity: 1;
-}
+    .presenter-notes-title .close-icon:hover {
+      opacity: 1;
+    }
 
-.presenter-notes-content {
-  line-height: 1.4;
-  color: #2c3e50;
-}
+    .presenter-notes-content {
+      line-height: 1.4;
+      color: #2c3e50;
+    }
+
     .presenter-notes.presenter-mode .presenter-notes-content {
       font-size: 18px;
     }
@@ -1729,6 +1782,43 @@ function addStyles() {
       color: #3498db;
       background-color: rgba(0, 0, 0, 0.1);
       border-radius: 4px;
+    }
+
+    /* Mobile notes toggle button */
+    .mobile-notes-toggle {
+      position: fixed;
+      bottom: 70px;
+      right: 10px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      display: none; /* Hidden by default, shown only on mobile */
+      align-items: center;
+      justify-content: center;
+      z-index: 1001;
+      padding: 0;
+      cursor: pointer;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .mobile-notes-toggle svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
+
+    .mobile-notes-toggle:active {
+      transform: scale(0.95);
+      background-color: #2980b9;
+    }
+
+    /* Only show on mobile devices */
+    .mobile-device .mobile-notes-toggle {
+      display: flex;
     }
 
     /* Print styles for handouts */
@@ -1774,10 +1864,167 @@ function addStyles() {
       color: #2980b9;
       text-decoration: underline;
     }
+
+    /* Smaller mobile devices (under 480px) */
+    @media (max-width: 480px) {
+      /* Make header more compact */
+      .dps-header h1 {
+        font-size: 18px;
+      }
+      
+      .dps-header p {
+        font-size: 12px;
+      }
+      
+      /* Adjust slide content */
+      .slide-content {
+        padding: 10px;
+        padding-bottom: 60px;
+        grid-template-areas:
+          "title"
+          "text"
+          "illustration";
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto 1fr;
+        gap: 10px;
+      }
+      
+      /* Make slide title smaller */
+      .slide-title {
+        font-size: 20px;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+      }
+      
+      /* Make bullet points more compact */
+      .bullet-list li {
+        font-size: 14px;
+        padding-left: 20px;
+        margin-bottom: 8px;
+      }
+      
+      /* Make nav arrows larger for easier tapping */
+      .nav-arrow svg {
+        width: 32px;
+        height: 32px;
+      }
+      
+      /* Optimize presenter notes for mobile */
+      .presenter-notes {
+        width: 90vw;
+        left: 5vw;
+        height: 30vh;
+      }
+    }
+
+    /* Additional media query for presenter mode on mobile */
+    @media (max-width: 768px) {
+      .presenter-notes.presenter-mode {
+        width: 90%;
+        left: 5%;
+        height: calc(100vh - 60px);
+      }
+      
+      .presenter-notes.presenter-mode .presenter-notes-content {
+        font-size: 16px;
+      }
+      
+      /* Make QR code more visible on mobile */
+      .qanda-content img {
+        max-width: 80%;
+        height: auto;
+      }
+    }
+
+    /* Add touch-friendly tap targets */
+    @media (hover: none) and (pointer: coarse) {
+      .nav-arrow, 
+      .presenter-toggle,
+      .presenter-notes-title .close-icon {
+        min-height: 44px;
+        min-width: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      /* Add better visual feedback for touch */
+      .nav-arrow:active,
+      .presenter-toggle:active,
+      .presenter-notes-title .close-icon:active {
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+      }
+    }
+
+    /* Add specific styling for mobile portrait mode */
+    @media (max-width: 480px) and (orientation: portrait) {
+      .slide-content {
+        grid-template-areas:
+          "title"
+          "text"
+          "illustration";
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto 1fr;
+      }
+      
+      /* Reduce size of illustration area on portrait mobile */
+      .illustration {
+        height: 40vh;
+        margin-bottom: 20px;
+      }
+    }
+
+    /* Add specific styling for mobile landscape mode */
+    @media (max-height: 480px) and (orientation: landscape) {
+      .slide-content {
+        grid-template-areas:
+          "title title"
+          "text illustration";
+        grid-template-columns: 40% 60%;
+        padding-bottom: 50px;
+      }
+      
+      .dps-header {
+        padding: 5px 0;
+      }
+      
+      .dps-header h1 {
+        font-size: 16px;
+        margin: 0;
+      }
+      
+      .dps-footer {
+        padding: 5px 0;
+      }
+      
+      /* Adjust illustration size for landscape */
+      .illustration {
+        height: calc(100vh - 130px);
+      }
+      
+      /* Make bullet points smaller in landscape */
+      .bullet-list li {
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+    }
+
+    /* Fix for iPad and other tablets */
+    @media (min-width: 768px) and (max-width: 1024px) {
+      .slide-content {
+        grid-template-columns: 45% 55%;
+      }
+      
+      .presenter-notes {
+        width: 50vw;
+      }
+    }
   `;
 
   document.head.appendChild(style);
 }
+
 
 // Call addStyles when this file is loaded
 addStyles();
