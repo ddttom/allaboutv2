@@ -151,12 +151,30 @@ function createPresenterNotesContainer() {
         <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
       </svg>
       <span>Presenter Notes (-)hide (+)show</span>
+      <svg class="close-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7 10l5 5 5-5z"/>
+      </svg>
     </div>
     <div class="presenter-notes-content"></div>
   `;
   return container;
 }
 
+/**
+ * Set up the presenter toggle button
+ */
+function setupPresenterToggle() {
+  const presenterToggleButton = document.querySelector('.presenter-toggle');
+  if (presenterToggleButton) {
+    presenterToggleButton.addEventListener('click', togglePresenterMode);
+  }
+  
+  // Add click handler for the close icon
+  const closeIcon = document.querySelector('.presenter-notes .close-icon');
+  if (closeIcon) {
+    closeIcon.addEventListener('click', hidePresenterNotes);
+  }
+}
 /**
  * Create footer with navigation and timer
  * @param {number} timerDuration - Timer duration in minutes
@@ -1618,56 +1636,70 @@ function addStyles() {
       height: 100%;
     }
 
-    /* Presenter notes styling */
-    .presenter-notes {
-      position: fixed;
-      bottom: 60px;
-      left: 20px;
-      width: 31.25vw;
-      height: 25vh;
-      background-color: rgba(236, 240, 241, 0.95);
-      color: #2c3e50;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      z-index: 1000;
-      overflow-y: auto;
-      font-size: 14px;
-      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-    }
+   /* Presenter notes styling */
+.presenter-notes {
+  position: fixed;
+  bottom: 60px;
+  left: 20px;
+  width: 31.25vw;
+  height: 25vh;
+  background-color: rgba(236, 240, 241, 0.95);
+  color: #2c3e50;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  overflow-y: auto;
+  font-size: 14px;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
 
-    .presenter-notes.hidden {
-      opacity: 0;
-      transform: translateY(20px);
-      pointer-events: none;
-    }
+.presenter-notes.hidden {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+}
 
-    .presenter-notes-title {
-      font-size: 14px;
-      font-weight: bold;
-      margin-bottom: 10px;
-      padding-bottom: 5px;
-      border-bottom: 1px solid rgba(44, 62, 80, 0.3);
-      color: #2c3e50;
-      cursor: ns-resize;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+.presenter-notes-title {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(44, 62, 80, 0.3);
+  color: #2c3e50;
+  cursor: ns-resize;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-    .presenter-notes-title .drag-icon {
-      width: 16px;
-      height: 16px;
-      fill: #2c3e50;
-      opacity: 0.7;
-      flex-shrink: 0;
-    }
+.presenter-notes-title .drag-icon {
+  width: 16px;
+  height: 16px;
+  fill: #2c3e50;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
 
-    .presenter-notes-content {
-      line-height: 1.4;
-      color: #2c3e50;
-    }
+.presenter-notes-title .close-icon {
+  width: 24px;
+  height: 24px;
+  fill: #2c3e50;
+  opacity: 0.7;
+  cursor: pointer;
+  margin-left: auto; /* Push to the right side */
+  flex-shrink: 0;
+  transition: opacity 0.2s ease;
+}
 
+.presenter-notes-title .close-icon:hover {
+  opacity: 1;
+}
+
+.presenter-notes-content {
+  line-height: 1.4;
+  color: #2c3e50;
+}
     .presenter-notes.presenter-mode .presenter-notes-content {
       font-size: 18px;
     }
