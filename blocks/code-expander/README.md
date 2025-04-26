@@ -12,6 +12,7 @@ The Code Expander block enhances all `<pre><code>` elements on a page with synta
 - Keyboard navigation support
 - Accessibility features including ARIA attributes and keyboard controls
 - Info tooltip with usage instructions
+- "Text" variation to display all code as plain text without syntax highlighting
 
 ## Usage
 
@@ -100,4 +101,17 @@ The Code Expander block:
 
 ## Variations
 
-The block doesn't currently have variations, but you can customize its appearance using CSS variables.
+### Text Variation
+
+Add the `text` class to the code-expander block to force all code blocks to be displayed as plain text:
+
+| code-expander text |
+| ------------------ |
+
+This variation:
+- Skips language detection
+- Displays all code as plain text with a "TEXT" label
+- Disables syntax highlighting
+- Useful for displaying content that should not be colorized or when you want to override automatic language detection
+
+You can also customize the block's appearance using CSS variables.

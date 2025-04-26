@@ -45,6 +45,9 @@ const CODE_EXPANDER_CONFIG = {
 };
 
 export default async function decorate(block) {
+  // Check if the block has a "text" class and set forceText accordingly
+  const forceText = block.classList.contains('text');
+  
   // Find all code elements in the document
   const codeElements = document.querySelectorAll('pre code');
   
@@ -481,11 +484,13 @@ export default async function decorate(block) {
    * Creates a code expander wrapper for a code element
    * @param {HTMLElement} codeElement - The code element to process
    * @param {number} index - The index of the code element
+   * @param {boolean} forceText - Whether to force the language to be "text"
    * @returns {HTMLElement} - The created wrapper element
    */
-  function createCodeExpanderWrapper(codeElement, index) {
+  function createCodeExpanderWrapper(codeElement, index, forceText) {
     const code = codeElement.textContent;
-    const language = detectLanguage(code);  
+    // If forceText is true, set language to "text" without detection
+    const language = forceText ? 'text' : detectLanguage(code);  
     const lines = code.split('\n');
     const isLongDocument = lines.length > CODE_EXPANDER_CONFIG.LONG_DOCUMENT_THRESHOLD;
     
@@ -752,7 +757,7 @@ export default async function decorate(block) {
       return;
     }
     
-    const wrapper = createCodeExpanderWrapper(codeElement, index);
+    const wrapper = createCodeExpanderWrapper(codeElement, index, forceText);
     
     // Get the parent pre element
     const preElement = codeElement.parentNode;
