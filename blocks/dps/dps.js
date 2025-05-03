@@ -506,7 +506,7 @@ function buildSlides(slides, container) {
             <div class="qanda-circle">
               <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" width="200" height="200">
                 <circle cx="100" cy="100" r="90" fill="#3498db" stroke="white" stroke-width="4" />
-                <text x="100" y="95" text-anchor="middle" fill="white" font-size="70" font-weight="bold">Close</text>
+                <text x="100" y="85" text-anchor="middle" fill="white" font-size="50" font-weight="bold">Close</text>
               </svg>
             </div><br>
             <p class="thank-you-text">${slide.thankYouText || "Thank You."}</p>
