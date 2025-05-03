@@ -262,7 +262,7 @@ function parseRows(rows) {
 
     // Process illustration from the fourth cell
     const illustrationCell = cells[3];
-    const illustration = parseIllustration(illustrationCell);
+    const illustration = '';  //parseIllustration(illustrationCell);
 
     // Process presenter notes from the fifth cell
     const presenterNotes = cells[4]?.innerHTML.trim() || '';
@@ -282,7 +282,7 @@ function parseRows(rows) {
   // Add a Q&A slide at the end
   slides.push({
     type: "qanda",
-    title: "Questions & Answers",
+    title: "Close",
     subtitle: "Your feedback and questions are valuable",
     thankYouText:
       `<img src = "${qrCodeUrl}" alt="QR Code for ${subtitleUrl}"><br> <strong>${subtitleUrl}</strong><br>Thank You For Your Attention`,
