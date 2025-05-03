@@ -262,7 +262,7 @@ function parseRows(rows) {
 
     // Process illustration from the fourth cell
     const illustrationCell = cells[3];
-    const illustration = '';  //parseIllustration(illustrationCell);
+    const illustration = parseIllustration(illustrationCell);
 
     // Process presenter notes from the fifth cell
     const presenterNotes = cells[4]?.innerHTML.trim() || '';
