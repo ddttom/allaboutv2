@@ -492,7 +492,7 @@ function buildSlides(slides, container) {
 
       // If we have a URL from the presentation subtitle, create a link
       if (slide.subtitleUrl) {
-        linkHtml = ` - <a href="${slide.subtitleUrl}" class="qanda-link" target="_blank">Read more about the topic at ${slide.subtitleUrl}</a>`;
+        linkHtml = `<br> <a href="${slide.subtitleUrl}" class="qanda-link" target="_blank">Read more about the topic at ${slide.subtitleUrl}</a>`;
       }
 
       // Special Q&A slide handling
@@ -506,8 +506,8 @@ function buildSlides(slides, container) {
             <div class="qanda-circle">
               <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" width="200" height="200">
                 <circle cx="100" cy="100" r="90" fill="#3498db" stroke="white" stroke-width="4" />
-                <text x="100" y="95" text-anchor="middle" fill="white" font-size="70" font-weight="bold">?</text>
-                <text x="100" y="130" text-anchor="middle" fill="white" font-size="18" font-weight="bold">QUESTIONS</text>
+                <text x="100" y="95" text-anchor="middle" fill="white" font-size="70" font-weight="bold"></text>
+                <text x="100" y="130" text-anchor="middle" fill="white" font-size="18" font-weight="bold">Close</text>
               </svg>
             </div><br>
             <p class="thank-you-text">${slide.thankYouText || "Thank You."}</p>
