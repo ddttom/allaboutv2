@@ -30,7 +30,7 @@
       <text x="-110" y="0" text-anchor="middle" fill="white" font-size="20" font-weight="bold">DOMAIN</text>
       <text x="110" y="0" text-anchor="middle" fill="white" font-size="20" font-weight="bold">DOMAIN</text>
       
-      <text x="0" y="-100" text-anchor="middle" fill="white" font-size="20" font-weight="bold">ORGANIZATION</text>
+      <text x="0" y="-100" text-anchor="middle" fill="white" font-size="20" font-weight="bold">ORG</text>
       
       <!-- Connecting lines -->
       <line x1="-180" y1="60" x2="-140" y2="40" stroke="#333" stroke-width="2" stroke-dasharray="5 3" opacity="0.6"/>
