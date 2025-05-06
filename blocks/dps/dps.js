@@ -1482,6 +1482,21 @@ function addStyles() {
       object-fit: contain;
     }
 
+    /* Picture element in illustration - fit full height */
+    .illustration picture {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .illustration picture img {
+      height: 100%;
+      width: auto;
+      max-width: none;
+      object-fit: contain;
+    }
+
     /* iframe container styling */
     .iframe-container {
       width: 100%;
