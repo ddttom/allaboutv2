@@ -17,10 +17,7 @@
     <text x="0" y="0" font-family="Arial, sans-serif" font-size="24" text-anchor="middle" fill="white" font-weight="bold">Agentic</text>
     <text x="0" y="30" font-family="Arial, sans-serif" font-size="24" text-anchor="middle" fill="white" font-weight="bold">AI</text>
     
-    <!-- Warning text -->
-    <text x="0" y="-20" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#ff6b6b">Diminishing</text>
-    <text x="0" y="-40" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#ff6b6b">Oversight</text>
-  </g>
+    </g>
   
   <!-- Action nodes around center -->
   <g>
@@ -117,7 +114,7 @@
       <rect x="-125" y="-40" width="250" height="80" rx="10" ry="10" fill="#ebfbee" stroke="#40c057" stroke-width="2"/>
       
       <text x="0" y="-15" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#333" font-weight="bold">Control Required</text>
-      <text x="0" y="10" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#555">Guardrails &</text>
+      <text x="0" y="10" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#555">Guardrails and</text>
       <text x="0" y="30" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#555">Governance</text>
       
       <!-- Control symbols -->
@@ -138,7 +135,7 @@
   <g transform="translate(400, 550)">
     <rect x="-350" y="-30" width="700" height="60" rx="10" ry="10" fill="#f1f3f5" stroke="#868e96" stroke-width="2"/>
     
-    <text x="0" y="5" font-family="Arial, sans-serif" font-size="18" text-anchor="middle" fill="#333" font-weight="bold">Business Systems & Infrastructure</text>
+    <text x="0" y="5" font-family="Arial, sans-serif" font-size="18" text-anchor="middle" fill="#333" font-weight="bold">Business Systems and Infrastructure</text>
     
     <!-- Connection lines from components to business systems -->
     <line x1="-215" y1="-60" x2="-215" y2="-30" stroke="#868e96" stroke-width="1.5" stroke-dasharray="4,2"/>
