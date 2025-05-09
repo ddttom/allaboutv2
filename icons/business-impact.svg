@@ -8,10 +8,6 @@
   
   <!-- Main graphic - Balance scale with AI and Business -->
   <g transform="translate(400, 300)">
-    <!-- Scale base -->
-    <rect x="-250" y="150" width="500" height="20" rx="5" ry="5" fill="#aab8c2"/>
-    <rect x="-10" y="50" width="20" height="120" rx="5" ry="5" fill="#aab8c2"/>
-    
     <!-- Scale arms - changed from thick black to thinner gray -->
     <line x1="-200" y1="0" x2="200" y2="0" stroke="#6c757d" stroke-width="4"/>
     
