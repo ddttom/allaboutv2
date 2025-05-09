@@ -11,8 +11,7 @@ This is a utility block that doesn't require specific content structure in EDS D
 ### Example Table Structure
 
 | Remove-Icon-Styles |
-| ------------------ |
-|                    |
+
 
 ## Purpose
 
