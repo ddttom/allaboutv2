@@ -56,6 +56,8 @@
 
 .faq-search-container {
   position: relative;
+  width: 100%;
+  margin-bottom: 1rem;
 }
 
 .faq-search-icon {
@@ -86,6 +88,8 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  width: 100%;
+  margin-bottom: 1rem;
 }
 
 .faq-category-filter {
@@ -96,11 +100,26 @@
   font-size: 1rem;
   background-color: white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  width: auto;
+  min-width: 150px;
 }
 
 .faq-category-filter:focus {
   outline: none;
   border-color: var(--link-color, #0066cc);
+}
+
+/* Fix for search and filter layout */
+.block.dfs > div:first-child {
+  display: flex;
+  flex-direction: column;
+}
+
+.block.dfs input[type="text"],
+.block.dfs select {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
 }
 
 /* Category sections */
@@ -346,10 +365,75 @@
   border-width: 0;
 }
 
-/* Don't hide the search and filter controls */
+/* Fix for search and filter layout */
+.block.dfs {
+  position: relative;
+}
+
+/* Search box styling */
+.block.dfs input[type="text"] {
+  width: calc(100% - 200px);
+  display: inline-block;
+  margin-right: 10px;
+}
+
+/* Filter by styling */
+.block.dfs select {
+  width: 180px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Filter by label */
+.block.dfs label {
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+/* Mobile layout fixes */
+@media (max-width: 767px) {
+  .block.dfs input[type="text"],
+  .block.dfs select {
+    width: 100%;
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .block.dfs label {
+    display: block;
+    margin-bottom: 5px;
+  }
+}
+
+/* Ensure the search and filter controls are visible */
 .faq-search-container,
 .faq-filter-container,
 .faq-search,
 .faq-category-filter {
   display: block !important;
+}
+
+/* Highlight the search term in the expanded FAQ */
+.faq-question-text mark,
+.faq-short-answer mark,
+.faq-detailed-answer mark {
+  background-color: #ffeb3b;
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* Grey question bar styling */
+.faq-item .faq-question {
+  background-color: #777;
+  color: white;
+  border-radius: 4px 4px 0 0;
+}
+
+.faq-item.faq-open .faq-question {
+  border-radius: 4px 4px 0 0;
+}
+
+.faq-item .faq-content {
+  border-radius: 0 0 4px 4px;
 }
