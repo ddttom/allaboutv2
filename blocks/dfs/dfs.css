@@ -5,18 +5,12 @@
  * animations, responsive layouts, and interactive elements.
  */
 
-/* Target both the documented structure and the actual implementation */
-.markdown-faq-wrapper,
+/* Base container styling */
 .block.dfs {
   max-width: 1000px;
   margin: 2rem auto;
   font-family: var(--body-font-family, sans-serif);
   color: var(--text-color, #333);
-}
-
-.markdown-faq,
-.block.dfs > div {
-  width: 100%;
 }
 
 /* Header styling */
@@ -350,4 +344,29 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+/* Hide the original table structure before JavaScript transforms it */
+.dfs > div > div {
+  display: none;
+}
+
+/* But show the transformed structure */
+.dfs .faq-header,
+.dfs .faq-controls,
+.dfs .faq-container,
+.dfs .faq-category-section,
+.dfs .faq-item,
+.dfs .faq-question,
+.dfs .faq-content,
+.dfs .faq-empty-message {
+  display: block;
+}
+
+.dfs .faq-content {
+  display: none; /* Initially hidden until expanded */
+}
+
+.dfs .faq-item.faq-open .faq-content {
+  display: block;
 }
