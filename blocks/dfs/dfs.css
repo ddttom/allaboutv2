@@ -346,27 +346,10 @@
   border-width: 0;
 }
 
-/* Hide the original table structure before JavaScript transforms it */
-.dfs > div > div {
-  display: none;
-}
-
-/* But show the transformed structure */
-.dfs .faq-header,
-.dfs .faq-controls,
-.dfs .faq-container,
-.dfs .faq-category-section,
-.dfs .faq-item,
-.dfs .faq-question,
-.dfs .faq-content,
-.dfs .faq-empty-message {
-  display: block;
-}
-
-.dfs .faq-content {
-  display: none; /* Initially hidden until expanded */
-}
-
-.dfs .faq-item.faq-open .faq-content {
-  display: block;
+/* Don't hide the search and filter controls */
+.faq-search-container,
+.faq-filter-container,
+.faq-search,
+.faq-category-filter {
+  display: block !important;
 }
