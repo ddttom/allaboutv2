@@ -498,7 +498,7 @@ export default function decorate(block) {
       }
     };
     
-    // Toggle FAQ visibility
+    // Toggle FAQ visibility with smooth animation
     function toggleFaqItem(question) {
       const faqItem = question.closest('.faq-item');
       const content = faqItem.querySelector('.faq-content');
@@ -506,13 +506,19 @@ export default function decorate(block) {
       
       const isExpanded = question.getAttribute('aria-expanded') === 'true';
       
-      // Toggle display
+      // Toggle display with animation
       if (!isExpanded) {
+        // Show content
         content.style.display = 'block';
         icon.style.transform = 'rotate(180deg)';
         faqItem.classList.add('faq-open');
         question.setAttribute('aria-expanded', 'true');
+        
+        // Announce to screen readers
+        const liveRegion = document.getElementById('faq-live-region') || document.createElement('div');
+        liveRegion.textContent = 'FAQ expanded';
       } else {
+        // Hide content
         content.style.display = 'none';
         icon.style.transform = 'rotate(0)';
         faqItem.classList.remove('faq-open');
