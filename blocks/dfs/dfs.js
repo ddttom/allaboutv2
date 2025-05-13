@@ -338,7 +338,7 @@ export default function decorate(block) {
       contentPanel.setAttribute('id', contentId);
       contentPanel.setAttribute('role', 'region');
       contentPanel.setAttribute('aria-labelledby', faqId);
-      contentPanel.style.display = 'none';
+      contentPanel.style.display = 'none'; // Initially hidden
       
       // Add short answer if available
       if (faq.shortAnswer) {
@@ -498,7 +498,7 @@ export default function decorate(block) {
       }
     };
     
-    // Toggle FAQ visibility with smooth animation
+    // Toggle FAQ visibility with display:block and display:none
     function toggleFaqItem(question) {
       const faqItem = question.closest('.faq-item');
       const content = faqItem.querySelector('.faq-content');
@@ -506,10 +506,10 @@ export default function decorate(block) {
       
       const isExpanded = question.getAttribute('aria-expanded') === 'true';
       
-      // Toggle display with animation
       if (!isExpanded) {
-        // Show content
+        // Show content with display:block
         content.style.display = 'block';
+        // Rotate icon with CSS transform
         icon.style.transform = 'rotate(180deg)';
         faqItem.classList.add('faq-open');
         question.setAttribute('aria-expanded', 'true');
@@ -518,8 +518,9 @@ export default function decorate(block) {
         const liveRegion = document.getElementById('faq-live-region') || document.createElement('div');
         liveRegion.textContent = 'FAQ expanded';
       } else {
-        // Hide content
+        // Hide content with display:none
         content.style.display = 'none';
+        // Reset icon rotation
         icon.style.transform = 'rotate(0)';
         faqItem.classList.remove('faq-open');
         question.setAttribute('aria-expanded', 'false');

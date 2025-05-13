@@ -35,6 +35,7 @@ You can include an optional metadata table at the end of your document with info
 ## Features
 
 - **Interactive Q&A**: Expandable/collapsible question/answer sections with solid grey headers
+- **Simple Display Toggle**: Uses display:block and display:none for showing/hiding content
 - **Search Functionality**: Real-time filtering as users type across all content
 - **Search Term Highlighting**: Visual highlighting of matched search terms
 - **Category Filtering**: Filter by main category
@@ -88,6 +89,16 @@ The block transforms the raw table structure into an interactive FAQ component w
   <div class="faq-empty-message">No FAQs match your search criteria.</div>
 </div>
 ```
+
+## Implementation Details
+
+The FAQ component uses a simple and efficient approach for showing and hiding content:
+
+- **JavaScript Toggle**: Content visibility is controlled using `style.display = 'block'` and `style.display = 'none'`
+- **Initial State**: All FAQ content panels are initially hidden with `style.display = 'none'`
+- **Toggle Behavior**: Clicking a question toggles its content panel between visible and hidden states
+- **CSS Support**: Specific styling is applied to visible content through attribute selectors
+- **Accessibility**: ARIA attributes are updated to reflect the current state (expanded/collapsed)
 
 ## Configuration Options
 
