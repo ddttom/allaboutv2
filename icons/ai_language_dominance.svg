@@ -22,7 +22,7 @@
   
   <!-- Title -->
   <text x="400" y="40" text-anchor="middle" fill="#2c3e50" font-family="Arial, sans-serif" font-size="28" font-weight="bold">AI Language Hierarchy</text>
-  <text x="400" y="65" text-anchor="middle" fill="#7f8c8d" font-family="Arial, sans-serif" font-size="16">English-First Development & Training</text>
+  <text x="400" y="65" text-anchor="middle" fill="#7f8c8d" font-family="Arial, sans-serif" font-size="16">English-First Development and Training</text>
   
   <!-- Tier 1: English Dominance -->
   <rect x="170" y="100" width="450" height="80" rx="10" fill="url(#englishGrad)" filter="url(#shadow)"/>
@@ -42,19 +42,19 @@
   <!-- Tier 2: Major Languages -->
   <rect x="100" y="220" width="150" height="60" rx="8" fill="url(#germanGrad)" filter="url(#shadow)"/>
   <text x="175" y="245" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="16" font-weight="bold">German</text>
-  <text x="175" y="263" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="11">Standard • <6% Data</text>
+  <text x="175" y="263" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="11">Standard &lt; 6% Data</text>
   
   <rect x="270" y="220" width="120" height="60" rx="8" fill="url(#otherGrad)" filter="url(#shadow)"/>
   <text x="330" y="245" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="16" font-weight="bold">中文</text>
-  <text x="330" y="263" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="11"><6% Data</text>
+  <text x="330" y="263" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="11">&lt; 6% Data</text>
   
   <rect x="410" y="220" width="120" height="60" rx="8" fill="url(#otherGrad)" filter="url(#shadow)"/>
   <text x="470" y="245" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Español</text>
-  <text x="470" y="263" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="11"><6% Data</text>
+  <text x="470" y="263" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="11">&lt;6% Data</text>
   
   <rect x="550" y="220" width="120" height="60" rx="8" fill="url(#otherGrad)" filter="url(#shadow)"/>
   <text x="610" y="245" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Français</text>
-  <text x="610" y="263" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="11"><6% Data</text>
+  <text x="610" y="263" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="11">&lt; 6% Data</text>
   
   <!-- Tier 3: German Variants -->
   <rect x="50" y="320" width="100" height="50" rx="6" fill="#f8c471" stroke="#f39c12" stroke-width="2"/>
@@ -79,9 +79,9 @@
   
   <rect x="50" y="520" width="330" height="20" fill="#e74c3c"/>
   <rect x="380" y="520" width="45" height="20" fill="#f39c12"/>
-  <rect x="425" y="520" width="40" height="20" fill="#95a5a6"/>
-  <rect x="465" y="520" width="35" height="20" fill="#95a5a6"/>
-  <rect x="500" y="520" width="30" height="20" fill="#95a5a6"/>
+  <rect x="425" y="520" width="40" height="20" fill="#f39c12" />
+  <rect x="465" y="520" width="35" height="20" fill="#f39c12"/>
+  <rect x="500" y="520" width="30" height="20" fill="#f39c12"/>
   <rect x="530" y="520" width="220" height="20" fill="#ecf0f1" stroke="#bdc3c7"/>
   
   <text x="215" y="555" text-anchor="middle" fill="#e74c3c" font-family="Arial, sans-serif" font-size="12" font-weight="bold">English (44%)</text>
@@ -90,14 +90,14 @@
   <text x="482" y="555" text-anchor="middle" fill="#7f8c8d" font-family="Arial, sans-serif" font-size="11">Es</text>
   <text x="515" y="555" text-anchor="middle" fill="#7f8c8d" font-family="Arial, sans-serif" font-size="11">Fr</text>
   <text x="640" y="555" text-anchor="middle" fill="#bdc3c7" font-family="Arial, sans-serif" font-size="11">All Others Combined</text>
-  
+
   <!-- Arrow marker definition -->
   <defs>
     <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
       <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c"/>
     </marker>
   </defs>
-  
+
   <!-- Status indicators -->
   <circle cx="130" cy="200" r="8" fill="#e74c3c"/>
   <text x="150" y="205" fill="#2c3e50" font-family="Arial, sans-serif" font-size="12">First-class support</text>
