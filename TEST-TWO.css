@@ -64,6 +64,15 @@ body {
   hyphens: auto;
 }
 
+/* Apply paragraph indentation to heading level 1 */
+h1.docx-p-heading1 {
+  
+  
+  
+  
+  
+}
+
 .docx-p-heading2 {
   font-family: "Cambria", sans-serif;
   font-size: 13pt;
@@ -84,6 +93,15 @@ body {
   word-wrap: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
+}
+
+/* Apply paragraph indentation to heading level 2 */
+h2.docx-p-heading2 {
+  
+  
+  
+  
+  
 }
 
 .docx-p-heading3 {
@@ -108,6 +126,15 @@ body {
   hyphens: auto;
 }
 
+/* Apply paragraph indentation to heading level 3 */
+h3.docx-p-heading3 {
+  
+  
+  
+  
+  
+}
+
 .docx-p-heading4 {
   font-family: "Cambria", sans-serif;
   
@@ -128,6 +155,15 @@ body {
   word-wrap: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
+}
+
+/* Apply paragraph indentation to heading level 4 */
+h4.docx-p-heading4 {
+  
+  
+  
+  
+  
 }
 
 .docx-p-listparagraph {
