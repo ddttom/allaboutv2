@@ -71,6 +71,10 @@ h1.docx-p-heading1 {
   
   
   
+  /* Word-like heading behavior with proper text wrapping */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .docx-p-heading2 {
@@ -102,6 +106,10 @@ h2.docx-p-heading2 {
   
   
   
+  /* Word-like heading behavior with proper text wrapping */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .docx-p-heading3 {
@@ -133,6 +141,10 @@ h3.docx-p-heading3 {
   
   
   
+  /* Word-like heading behavior with proper text wrapping */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .docx-p-heading4 {
@@ -164,6 +176,10 @@ h4.docx-p-heading4 {
   
   
   
+  /* Word-like heading behavior with proper text wrapping */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .docx-p-listparagraph {
@@ -1082,6 +1098,73 @@ h4.docx-p-heading4 {
 
 /* Table Styles */
 
+/* Default Table Styles */
+.docx-table-default {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+  font-size: inherit;
+  background-color: transparent;
+}
+
+.docx-table-default th,
+.docx-table-default td {
+  padding: 8pt 12pt;
+  text-align: left;
+  vertical-align: top;
+  border: 1pt solid #d0d0d0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.docx-table-default th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+  border-bottom: 2pt solid #d0d0d0;
+}
+
+.docx-table-default tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.docx-table-default tbody tr:hover {
+  background-color: #e9ecef;
+}
+
+/* Table caption styling */
+.docx-table-default caption {
+  caption-side: top;
+  padding: 8pt 0;
+  font-weight: bold;
+  text-align: left;
+  color: #495057;
+}
+
+/* Responsive Table Wrapper */
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 1em 0;
+}
+
+.table-responsive > table {
+  margin-bottom: 0;
+}
+
+/* Ensure tables don't break layout on small screens */
+@media (max-width: 768px) {
+  .table-responsive {
+    font-size: 0.875em;
+  }
+  
+  .docx-table-default th,
+  .docx-table-default td {
+    padding: 6pt 8pt;
+  }
+}
+
 .docx-t-tablenormal {
   border-collapse: separate; /* Handle cell spacing */
   border-spacing: 0;
@@ -1139,28 +1222,31 @@ h4.docx-p-heading4 {
   color: #000000;
 }
 
-/* Structure TOC entries as a flex container with proper alignment */
+/* Structure TOC entries with hanging indent and proper page number alignment */
 .docx-toc-entry {
-  display: flex !important;
-  flex-wrap: nowrap !important;
-  align-items: baseline !important;
+  display: block !important;
   width: 100% !important;
   max-width: 100%; /* Prevent overflow */
   margin-bottom: 0.5em !important;
   line-height: 1.4 !important;
   position: relative !important;
-  overflow: hidden !important;
+  overflow: visible !important;
   page-break-inside: avoid; /* Keep entries together on page breaks */
+  /* Hanging indent for TOC entries */
+  text-indent: -1.5em !important;
+  padding-left: 1.5em !important;
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
+  hyphens: auto !important;
 }
 
-/* TOC text part - flex-grow: 0 to prevent it from expanding */
+/* TOC text part - inline with proper wrapping */
 .docx-toc-text {
-  flex: 0 0 auto !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  padding-right: 0.5em !important;
-  max-width: 80% !important;
+  display: inline !important;
+  white-space: normal !important;
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
+  hyphens: auto !important;
 }
 
 /* For clickable TOC entries */
@@ -1169,57 +1255,29 @@ h4.docx-p-heading4 {
   color: inherit !important;
 }
 
-/* TOC dots - flex-grow: 1 to fill available space with dots */
+/* TOC dots and page numbers are hidden */
 .docx-toc-dots {
-  flex: 1 1 auto !important;
-  position: relative !important;
-  height: 1.2em !important;
-  margin: 0 0.5em !important;
-  overflow: hidden !important;
+  display: none !important;
 }
 
-/* Create dots using background image with proper spacing based on leaderStyle */
-.docx-toc-dots::after {
-  content: "";
-  position: absolute;
-  bottom: 0.5em; /* Position closer to text baseline */
-  left: 0;
-  right: 0;
-  height: 1px; /* Use 1px for consistent rendering */
-  background-image: radial-gradient(circle, currentColor 1px, transparent 1.5px);
-  background-position: bottom;
-  background-size: 6px 1px; /* Fixed size for consistency */
-  background-repeat: repeat-x;
-}
-
-/* TOC page number - flex-grow: 0 to maintain size and right-align */
+/* TOC page number - hidden */
 .docx-toc-pagenum {
-  flex: 0 0 auto !important;
-  text-align: right !important;
-  white-space: nowrap !important;
-  font-variant-numeric: tabular-nums !important;
+  display: none !important;
 }
 
-/* Print-specific styles for TOC */
-@media print {
-  .docx-toc-dots::after {
-    background-image: radial-gradient(circle, black 1px, transparent 1.5px);
-  }
-}
 
-/* Force TOC entry paragraphs to use flex */
+
+/* Force TOC entry paragraphs to use block layout with hanging indent */
 p.docx-toc-entry {
-  display: flex !important;
+  display: block !important;
   margin: 0.5em 0 !important; /* Override paragraph margins */
+  text-indent: -1.5em !important;
+  padding-left: 1.5em !important;
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
 }
 
-/* Browser Compatibility */
-@supports not (background-image: radial-gradient(circle, currentColor 1px, transparent 1.5px)) {
-  .docx-toc-dots::after {
-    background-image: none;
-    border-bottom: 1px dotted currentColor;
-  }
-}
+
 
 /* Special handling for TOC entries without explicit TOC styles */
 .docx-toc-entry:not([class*="docx-toc-level-"]) {
@@ -1230,30 +1288,35 @@ p.docx-toc-entry {
   margin-bottom: 0.5em;
 }
 
-/* Force all TOC entries to use flex layout for consistent alignment */
+/* Force all TOC entries to use block layout */
 p.docx-toc-entry {
-  display: flex !important;
+  display: block !important;
 }
 
-/* Ensure all TOC entries have dots and page numbers aligned consistently */
+/* Ensure all TOC entries use block layout with hanging indent */
 .docx-toc p, .docx-toc-entry {
-  display: flex !important;
-  flex-wrap: nowrap !important;
-  align-items: baseline !important;
+  display: block !important;
   width: 100% !important;
   margin-bottom: 0.5em !important;
   line-height: 1.4 !important;
   position: relative !important;
-  overflow: hidden !important;
+  overflow: visible !important;
+  text-indent: -1.5em !important;
+  padding-left: 1.5em !important;
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
+  hyphens: auto !important;
 }
 
-/* Special handling for TOC entries with numbering - adjust ::before positioning for flex layout */
+/* Special handling for TOC entries with numbering - adjust ::before positioning for hanging indent */
 .docx-toc-entry[data-abstract-num][data-num-level]::before {
-  position: relative !important;
-  left: 0 !important;
+  position: static !important;
+  left: auto !important;
   margin-right: 0.5em !important;
   width: auto !important;
   display: inline !important;
+  /* Ensure numbering doesn't interfere with hanging indent */
+  text-indent: 0 !important;
 }
 
 /* DOCX Numbering Styles */
@@ -1291,7 +1354,7 @@ nav[data-abstract-num="0"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-0-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -1339,7 +1402,7 @@ nav[data-abstract-num="0"] {
   position: relative;
   margin-left: 5.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-0-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -1387,7 +1450,7 @@ nav[data-abstract-num="0"] {
   position: relative;
   margin-left: 7.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-0-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -1435,7 +1498,7 @@ nav[data-abstract-num="0"] {
   position: relative;
   margin-left: 9pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-0-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -1483,7 +1546,7 @@ nav[data-abstract-num="0"] {
   position: relative;
   margin-left: 10.8pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-0-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -1531,7 +1594,7 @@ nav[data-abstract-num="0"] {
   position: relative;
   margin-left: 12.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-0-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -1579,7 +1642,7 @@ nav[data-abstract-num="0"] {
   position: relative;
   margin-left: 14.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-0-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -1627,7 +1690,7 @@ nav[data-abstract-num="0"] {
   position: relative;
   margin-left: 16.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-0-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -1675,7 +1738,7 @@ nav[data-abstract-num="0"] {
   position: relative;
   margin-left: 18pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-0-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -1731,7 +1794,7 @@ nav[data-abstract-num="1"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-1-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -1779,7 +1842,7 @@ nav[data-abstract-num="1"] {
   position: relative;
   margin-left: 5.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-1-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -1827,7 +1890,7 @@ nav[data-abstract-num="1"] {
   position: relative;
   margin-left: 7.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-1-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -1875,7 +1938,7 @@ nav[data-abstract-num="1"] {
   position: relative;
   margin-left: 9pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-1-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -1923,7 +1986,7 @@ nav[data-abstract-num="1"] {
   position: relative;
   margin-left: 10.8pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-1-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -1971,7 +2034,7 @@ nav[data-abstract-num="1"] {
   position: relative;
   margin-left: 12.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-1-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -2019,7 +2082,7 @@ nav[data-abstract-num="1"] {
   position: relative;
   margin-left: 14.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-1-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -2067,7 +2130,7 @@ nav[data-abstract-num="1"] {
   position: relative;
   margin-left: 16.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-1-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -2115,7 +2178,7 @@ nav[data-abstract-num="1"] {
   position: relative;
   margin-left: 18pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-1-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -2171,7 +2234,7 @@ nav[data-abstract-num="2"] {
   position: relative;
   margin-left: 1.8pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-2-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -2219,7 +2282,7 @@ nav[data-abstract-num="2"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-2-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -2267,7 +2330,7 @@ nav[data-abstract-num="2"] {
   position: relative;
   margin-left: 5.4pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-2-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -2315,7 +2378,7 @@ nav[data-abstract-num="2"] {
   position: relative;
   margin-left: 7.2pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-2-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -2363,7 +2426,7 @@ nav[data-abstract-num="2"] {
   position: relative;
   margin-left: 9pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-2-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -2411,7 +2474,7 @@ nav[data-abstract-num="2"] {
   position: relative;
   margin-left: 10.8pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-2-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -2459,7 +2522,7 @@ nav[data-abstract-num="2"] {
   position: relative;
   margin-left: 12.6pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-2-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -2507,7 +2570,7 @@ nav[data-abstract-num="2"] {
   position: relative;
   margin-left: 14.4pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-2-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -2555,7 +2618,7 @@ nav[data-abstract-num="2"] {
   position: relative;
   margin-left: 16.2pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-2-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -2611,7 +2674,7 @@ nav[data-abstract-num="3"] {
   position: relative;
   margin-left: 2.7pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-3-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -2659,7 +2722,7 @@ nav[data-abstract-num="3"] {
   position: relative;
   margin-left: 4.5pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-3-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -2707,7 +2770,7 @@ nav[data-abstract-num="3"] {
   position: relative;
   margin-left: 6.3pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-3-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -2755,7 +2818,7 @@ nav[data-abstract-num="3"] {
   position: relative;
   margin-left: 8.1pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-3-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -2803,7 +2866,7 @@ nav[data-abstract-num="3"] {
   position: relative;
   margin-left: 9.9pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-3-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -2851,7 +2914,7 @@ nav[data-abstract-num="3"] {
   position: relative;
   margin-left: 11.7pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-3-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -2899,7 +2962,7 @@ nav[data-abstract-num="3"] {
   position: relative;
   margin-left: 13.5pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-3-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -2947,7 +3010,7 @@ nav[data-abstract-num="3"] {
   position: relative;
   margin-left: 15.3pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-3-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -2995,7 +3058,7 @@ nav[data-abstract-num="3"] {
   position: relative;
   margin-left: 17.1pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-3-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -3051,7 +3114,7 @@ nav[data-abstract-num="4"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-4-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -3099,7 +3162,7 @@ nav[data-abstract-num="4"] {
   position: relative;
   margin-left: 5.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-4-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -3147,7 +3210,7 @@ nav[data-abstract-num="4"] {
   position: relative;
   margin-left: 7.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-4-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -3195,7 +3258,7 @@ nav[data-abstract-num="4"] {
   position: relative;
   margin-left: 9pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-4-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -3243,7 +3306,7 @@ nav[data-abstract-num="4"] {
   position: relative;
   margin-left: 10.8pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-4-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -3291,7 +3354,7 @@ nav[data-abstract-num="4"] {
   position: relative;
   margin-left: 12.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-4-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -3339,7 +3402,7 @@ nav[data-abstract-num="4"] {
   position: relative;
   margin-left: 14.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-4-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -3387,7 +3450,7 @@ nav[data-abstract-num="4"] {
   position: relative;
   margin-left: 16.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-4-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -3435,7 +3498,7 @@ nav[data-abstract-num="4"] {
   position: relative;
   margin-left: 18pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-4-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -3491,7 +3554,7 @@ nav[data-abstract-num="5"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-5-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -3539,7 +3602,7 @@ nav[data-abstract-num="5"] {
   position: relative;
   margin-left: 5.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-5-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -3587,7 +3650,7 @@ nav[data-abstract-num="5"] {
   position: relative;
   margin-left: 7.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-5-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -3635,7 +3698,7 @@ nav[data-abstract-num="5"] {
   position: relative;
   margin-left: 9pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-5-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -3683,7 +3746,7 @@ nav[data-abstract-num="5"] {
   position: relative;
   margin-left: 10.8pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-5-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -3731,7 +3794,7 @@ nav[data-abstract-num="5"] {
   position: relative;
   margin-left: 12.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-5-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -3779,7 +3842,7 @@ nav[data-abstract-num="5"] {
   position: relative;
   margin-left: 14.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-5-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -3827,7 +3890,7 @@ nav[data-abstract-num="5"] {
   position: relative;
   margin-left: 16.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-5-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -3875,7 +3938,7 @@ nav[data-abstract-num="5"] {
   position: relative;
   margin-left: 18pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-5-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -3931,7 +3994,7 @@ nav[data-abstract-num="6"] {
   position: relative;
   margin-left: 4.05pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-6-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -3979,7 +4042,7 @@ nav[data-abstract-num="6"] {
   position: relative;
   margin-left: 5.85pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-6-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -4027,7 +4090,7 @@ nav[data-abstract-num="6"] {
   position: relative;
   margin-left: 7.65pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-6-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -4075,7 +4138,7 @@ nav[data-abstract-num="6"] {
   position: relative;
   margin-left: 9.45pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-6-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -4123,7 +4186,7 @@ nav[data-abstract-num="6"] {
   position: relative;
   margin-left: 11.25pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-6-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -4171,7 +4234,7 @@ nav[data-abstract-num="6"] {
   position: relative;
   margin-left: 13.05pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-6-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -4219,7 +4282,7 @@ nav[data-abstract-num="6"] {
   position: relative;
   margin-left: 14.85pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-6-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -4267,7 +4330,7 @@ nav[data-abstract-num="6"] {
   position: relative;
   margin-left: 16.65pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-6-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -4315,7 +4378,7 @@ nav[data-abstract-num="6"] {
   position: relative;
   margin-left: 18.45pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-6-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -4371,7 +4434,7 @@ nav[data-abstract-num="7"] {
   position: relative;
   margin-left: 2.7pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-7-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -4419,7 +4482,7 @@ nav[data-abstract-num="7"] {
   position: relative;
   margin-left: 4.5pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-7-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -4467,7 +4530,7 @@ nav[data-abstract-num="7"] {
   position: relative;
   margin-left: 6.3pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-7-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -4515,7 +4578,7 @@ nav[data-abstract-num="7"] {
   position: relative;
   margin-left: 8.1pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-7-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -4563,7 +4626,7 @@ nav[data-abstract-num="7"] {
   position: relative;
   margin-left: 9.9pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-7-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -4611,7 +4674,7 @@ nav[data-abstract-num="7"] {
   position: relative;
   margin-left: 11.7pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-7-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -4659,7 +4722,7 @@ nav[data-abstract-num="7"] {
   position: relative;
   margin-left: 13.5pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-7-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -4707,7 +4770,7 @@ nav[data-abstract-num="7"] {
   position: relative;
   margin-left: 15.3pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-7-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -4755,7 +4818,7 @@ nav[data-abstract-num="7"] {
   position: relative;
   margin-left: 17.1pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-7-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -4811,7 +4874,7 @@ nav[data-abstract-num="8"] {
   position: relative;
   margin-left: 1.95pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-8-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -4859,7 +4922,7 @@ nav[data-abstract-num="8"] {
   position: relative;
   margin-left: 3.75pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-8-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -4907,7 +4970,7 @@ nav[data-abstract-num="8"] {
   position: relative;
   margin-left: 5.55pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-8-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -4955,7 +5018,7 @@ nav[data-abstract-num="8"] {
   position: relative;
   margin-left: 7.35pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-8-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -5003,7 +5066,7 @@ nav[data-abstract-num="8"] {
   position: relative;
   margin-left: 9.15pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-8-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -5051,7 +5114,7 @@ nav[data-abstract-num="8"] {
   position: relative;
   margin-left: 10.95pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-8-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -5099,7 +5162,7 @@ nav[data-abstract-num="8"] {
   position: relative;
   margin-left: 12.75pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-8-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -5147,7 +5210,7 @@ nav[data-abstract-num="8"] {
   position: relative;
   margin-left: 14.55pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-8-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -5195,7 +5258,7 @@ nav[data-abstract-num="8"] {
   position: relative;
   margin-left: 16.35pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-8-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -5251,7 +5314,7 @@ nav[data-abstract-num="9"] {
   position: relative;
   margin-left: 4.5pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-9-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -5299,7 +5362,7 @@ nav[data-abstract-num="9"] {
   position: relative;
   margin-left: 6.3pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-9-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -5347,7 +5410,7 @@ nav[data-abstract-num="9"] {
   position: relative;
   margin-left: 8.1pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-9-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -5395,7 +5458,7 @@ nav[data-abstract-num="9"] {
   position: relative;
   margin-left: 9.9pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-9-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -5443,7 +5506,7 @@ nav[data-abstract-num="9"] {
   position: relative;
   margin-left: 11.7pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-9-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -5491,7 +5554,7 @@ nav[data-abstract-num="9"] {
   position: relative;
   margin-left: 13.5pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-9-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -5539,7 +5602,7 @@ nav[data-abstract-num="9"] {
   position: relative;
   margin-left: 15.3pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-9-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -5587,7 +5650,7 @@ nav[data-abstract-num="9"] {
   position: relative;
   margin-left: 17.1pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-9-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -5635,7 +5698,7 @@ nav[data-abstract-num="9"] {
   position: relative;
   margin-left: 18.9pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-9-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -5691,7 +5754,7 @@ nav[data-abstract-num="10"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-10-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -5739,7 +5802,7 @@ nav[data-abstract-num="10"] {
   position: relative;
   margin-left: 5.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-10-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -5787,7 +5850,7 @@ nav[data-abstract-num="10"] {
   position: relative;
   margin-left: 7.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-10-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -5835,7 +5898,7 @@ nav[data-abstract-num="10"] {
   position: relative;
   margin-left: 9pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-10-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -5883,7 +5946,7 @@ nav[data-abstract-num="10"] {
   position: relative;
   margin-left: 10.8pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-10-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -5931,7 +5994,7 @@ nav[data-abstract-num="10"] {
   position: relative;
   margin-left: 12.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-10-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -5979,7 +6042,7 @@ nav[data-abstract-num="10"] {
   position: relative;
   margin-left: 14.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-10-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -6027,7 +6090,7 @@ nav[data-abstract-num="10"] {
   position: relative;
   margin-left: 16.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-10-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -6075,7 +6138,7 @@ nav[data-abstract-num="10"] {
   position: relative;
   margin-left: 18pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-10-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -6131,7 +6194,7 @@ nav[data-abstract-num="11"] {
   position: relative;
   margin-left: 1.8pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-11-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -6179,7 +6242,7 @@ nav[data-abstract-num="11"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-11-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -6227,7 +6290,7 @@ nav[data-abstract-num="11"] {
   position: relative;
   margin-left: 5.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-11-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -6275,7 +6338,7 @@ nav[data-abstract-num="11"] {
   position: relative;
   margin-left: 7.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-11-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -6323,7 +6386,7 @@ nav[data-abstract-num="11"] {
   position: relative;
   margin-left: 9pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-11-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -6371,7 +6434,7 @@ nav[data-abstract-num="11"] {
   position: relative;
   margin-left: 10.8pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-11-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -6419,7 +6482,7 @@ nav[data-abstract-num="11"] {
   position: relative;
   margin-left: 12.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-11-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -6467,7 +6530,7 @@ nav[data-abstract-num="11"] {
   position: relative;
   margin-left: 14.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-11-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -6515,7 +6578,7 @@ nav[data-abstract-num="11"] {
   position: relative;
   margin-left: 16.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-11-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -6571,7 +6634,7 @@ nav[data-abstract-num="12"] {
   position: relative;
   margin-left: 1.8pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-12-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -6619,7 +6682,7 @@ nav[data-abstract-num="12"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-12-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -6667,7 +6730,7 @@ nav[data-abstract-num="12"] {
   position: relative;
   margin-left: 5.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-12-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -6715,7 +6778,7 @@ nav[data-abstract-num="12"] {
   position: relative;
   margin-left: 7.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-12-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -6763,7 +6826,7 @@ nav[data-abstract-num="12"] {
   position: relative;
   margin-left: 9pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-12-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -6811,7 +6874,7 @@ nav[data-abstract-num="12"] {
   position: relative;
   margin-left: 10.8pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-12-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -6859,7 +6922,7 @@ nav[data-abstract-num="12"] {
   position: relative;
   margin-left: 12.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-12-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -6907,7 +6970,7 @@ nav[data-abstract-num="12"] {
   position: relative;
   margin-left: 14.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-12-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -6955,7 +7018,7 @@ nav[data-abstract-num="12"] {
   position: relative;
   margin-left: 16.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-12-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -7011,7 +7074,7 @@ nav[data-abstract-num="13"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-13-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -7059,7 +7122,7 @@ nav[data-abstract-num="13"] {
   position: relative;
   margin-left: 5.4pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-13-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -7107,7 +7170,7 @@ nav[data-abstract-num="13"] {
   position: relative;
   margin-left: 7.2pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-13-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -7155,7 +7218,7 @@ nav[data-abstract-num="13"] {
   position: relative;
   margin-left: 9pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-13-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -7203,7 +7266,7 @@ nav[data-abstract-num="13"] {
   position: relative;
   margin-left: 10.8pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-13-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -7251,7 +7314,7 @@ nav[data-abstract-num="13"] {
   position: relative;
   margin-left: 12.6pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-13-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -7299,7 +7362,7 @@ nav[data-abstract-num="13"] {
   position: relative;
   margin-left: 14.4pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-13-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -7347,7 +7410,7 @@ nav[data-abstract-num="13"] {
   position: relative;
   margin-left: 16.2pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-13-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -7395,7 +7458,7 @@ nav[data-abstract-num="13"] {
   position: relative;
   margin-left: 18pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-13-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -7451,7 +7514,7 @@ nav[data-abstract-num="14"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-14-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -7499,7 +7562,7 @@ nav[data-abstract-num="14"] {
   position: relative;
   margin-left: 5.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-14-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -7547,7 +7610,7 @@ nav[data-abstract-num="14"] {
   position: relative;
   margin-left: 7.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-14-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -7595,7 +7658,7 @@ nav[data-abstract-num="14"] {
   position: relative;
   margin-left: 9pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-14-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -7643,7 +7706,7 @@ nav[data-abstract-num="14"] {
   position: relative;
   margin-left: 10.8pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-14-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -7691,7 +7754,7 @@ nav[data-abstract-num="14"] {
   position: relative;
   margin-left: 12.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-14-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -7739,7 +7802,7 @@ nav[data-abstract-num="14"] {
   position: relative;
   margin-left: 14.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-14-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -7787,7 +7850,7 @@ nav[data-abstract-num="14"] {
   position: relative;
   margin-left: 16.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-14-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -7835,7 +7898,7 @@ nav[data-abstract-num="14"] {
   position: relative;
   margin-left: 18pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-14-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -7891,7 +7954,7 @@ nav[data-abstract-num="15"] {
   position: relative;
   margin-left: 2.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-15-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -7939,7 +8002,7 @@ nav[data-abstract-num="15"] {
   position: relative;
   margin-left: 4.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-15-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -7987,7 +8050,7 @@ nav[data-abstract-num="15"] {
   position: relative;
   margin-left: 6.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-15-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -8035,7 +8098,7 @@ nav[data-abstract-num="15"] {
   position: relative;
   margin-left: 8pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-15-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -8083,7 +8146,7 @@ nav[data-abstract-num="15"] {
   position: relative;
   margin-left: 9.8pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-15-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -8131,7 +8194,7 @@ nav[data-abstract-num="15"] {
   position: relative;
   margin-left: 11.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-15-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -8179,7 +8242,7 @@ nav[data-abstract-num="15"] {
   position: relative;
   margin-left: 13.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-15-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -8227,7 +8290,7 @@ nav[data-abstract-num="15"] {
   position: relative;
   margin-left: 15.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-15-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -8275,7 +8338,7 @@ nav[data-abstract-num="15"] {
   position: relative;
   margin-left: 17pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-15-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -8331,7 +8394,7 @@ nav[data-abstract-num="16"] {
   position: relative;
   margin-left: 2.7pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-16-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -8379,7 +8442,7 @@ nav[data-abstract-num="16"] {
   position: relative;
   margin-left: 4.5pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-16-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -8427,7 +8490,7 @@ nav[data-abstract-num="16"] {
   position: relative;
   margin-left: 6.3pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-16-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -8475,7 +8538,7 @@ nav[data-abstract-num="16"] {
   position: relative;
   margin-left: 8.1pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-16-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -8523,7 +8586,7 @@ nav[data-abstract-num="16"] {
   position: relative;
   margin-left: 9.9pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-16-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -8571,7 +8634,7 @@ nav[data-abstract-num="16"] {
   position: relative;
   margin-left: 11.7pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-16-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -8619,7 +8682,7 @@ nav[data-abstract-num="16"] {
   position: relative;
   margin-left: 13.5pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-16-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -8667,7 +8730,7 @@ nav[data-abstract-num="16"] {
   position: relative;
   margin-left: 15.3pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-16-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -8715,7 +8778,7 @@ nav[data-abstract-num="16"] {
   position: relative;
   margin-left: 17.1pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-16-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -8771,7 +8834,7 @@ nav[data-abstract-num="17"] {
   position: relative;
   margin-left: 2.7pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-17-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -8819,7 +8882,7 @@ nav[data-abstract-num="17"] {
   position: relative;
   margin-left: 4.5pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-17-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -8867,7 +8930,7 @@ nav[data-abstract-num="17"] {
   position: relative;
   margin-left: 6.3pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-17-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -8915,7 +8978,7 @@ nav[data-abstract-num="17"] {
   position: relative;
   margin-left: 8.1pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-17-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -8963,7 +9026,7 @@ nav[data-abstract-num="17"] {
   position: relative;
   margin-left: 9.9pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-17-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -9011,7 +9074,7 @@ nav[data-abstract-num="17"] {
   position: relative;
   margin-left: 11.7pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-17-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -9059,7 +9122,7 @@ nav[data-abstract-num="17"] {
   position: relative;
   margin-left: 13.5pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-17-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -9107,7 +9170,7 @@ nav[data-abstract-num="17"] {
   position: relative;
   margin-left: 15.3pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-17-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -9155,7 +9218,7 @@ nav[data-abstract-num="17"] {
   position: relative;
   margin-left: 17.1pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-17-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -9211,7 +9274,7 @@ nav[data-abstract-num="18"] {
   position: relative;
   margin-left: 5.85pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-18-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -9259,7 +9322,7 @@ nav[data-abstract-num="18"] {
   position: relative;
   margin-left: 7.65pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-18-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -9307,7 +9370,7 @@ nav[data-abstract-num="18"] {
   position: relative;
   margin-left: 9.45pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-18-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -9355,7 +9418,7 @@ nav[data-abstract-num="18"] {
   position: relative;
   margin-left: 11.25pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-18-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -9403,7 +9466,7 @@ nav[data-abstract-num="18"] {
   position: relative;
   margin-left: 13.05pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-18-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -9451,7 +9514,7 @@ nav[data-abstract-num="18"] {
   position: relative;
   margin-left: 14.85pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-18-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -9499,7 +9562,7 @@ nav[data-abstract-num="18"] {
   position: relative;
   margin-left: 16.65pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-18-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -9547,7 +9610,7 @@ nav[data-abstract-num="18"] {
   position: relative;
   margin-left: 18.45pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-18-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -9595,7 +9658,7 @@ nav[data-abstract-num="18"] {
   position: relative;
   margin-left: 20.25pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-18-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -9651,7 +9714,7 @@ nav[data-abstract-num="19"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-19-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -9699,7 +9762,7 @@ nav[data-abstract-num="19"] {
   position: relative;
   margin-left: 5.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-19-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -9747,7 +9810,7 @@ nav[data-abstract-num="19"] {
   position: relative;
   margin-left: 7.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-19-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -9795,7 +9858,7 @@ nav[data-abstract-num="19"] {
   position: relative;
   margin-left: 9pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-19-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -9843,7 +9906,7 @@ nav[data-abstract-num="19"] {
   position: relative;
   margin-left: 10.8pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-19-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -9891,7 +9954,7 @@ nav[data-abstract-num="19"] {
   position: relative;
   margin-left: 12.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-19-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -9939,7 +10002,7 @@ nav[data-abstract-num="19"] {
   position: relative;
   margin-left: 14.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-19-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -9987,7 +10050,7 @@ nav[data-abstract-num="19"] {
   position: relative;
   margin-left: 16.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-19-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -10035,7 +10098,7 @@ nav[data-abstract-num="19"] {
   position: relative;
   margin-left: 18pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-19-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -10091,7 +10154,7 @@ nav[data-abstract-num="20"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-20-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -10139,7 +10202,7 @@ nav[data-abstract-num="20"] {
   position: relative;
   margin-left: 5.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-20-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -10187,7 +10250,7 @@ nav[data-abstract-num="20"] {
   position: relative;
   margin-left: 7.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-20-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -10235,7 +10298,7 @@ nav[data-abstract-num="20"] {
   position: relative;
   margin-left: 9pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-20-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -10283,7 +10346,7 @@ nav[data-abstract-num="20"] {
   position: relative;
   margin-left: 10.8pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-20-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -10331,7 +10394,7 @@ nav[data-abstract-num="20"] {
   position: relative;
   margin-left: 12.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-20-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -10379,7 +10442,7 @@ nav[data-abstract-num="20"] {
   position: relative;
   margin-left: 14.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-20-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -10427,7 +10490,7 @@ nav[data-abstract-num="20"] {
   position: relative;
   margin-left: 16.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-20-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -10475,7 +10538,7 @@ nav[data-abstract-num="20"] {
   position: relative;
   margin-left: 18pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-20-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -10531,7 +10594,7 @@ nav[data-abstract-num="21"] {
   position: relative;
   margin-left: 1.8pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-21-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -10579,7 +10642,7 @@ nav[data-abstract-num="21"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-21-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -10627,7 +10690,7 @@ nav[data-abstract-num="21"] {
   position: relative;
   margin-left: 5.4pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-21-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -10675,7 +10738,7 @@ nav[data-abstract-num="21"] {
   position: relative;
   margin-left: 7.2pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-21-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -10723,7 +10786,7 @@ nav[data-abstract-num="21"] {
   position: relative;
   margin-left: 9pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-21-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -10771,7 +10834,7 @@ nav[data-abstract-num="21"] {
   position: relative;
   margin-left: 10.8pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-21-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -10819,7 +10882,7 @@ nav[data-abstract-num="21"] {
   position: relative;
   margin-left: 12.6pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-21-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -10867,7 +10930,7 @@ nav[data-abstract-num="21"] {
   position: relative;
   margin-left: 14.4pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-21-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -10915,7 +10978,7 @@ nav[data-abstract-num="21"] {
   position: relative;
   margin-left: 16.2pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-21-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -10971,7 +11034,7 @@ nav[data-abstract-num="22"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-22-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -11019,7 +11082,7 @@ nav[data-abstract-num="22"] {
   position: relative;
   margin-left: 5.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-22-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -11067,7 +11130,7 @@ nav[data-abstract-num="22"] {
   position: relative;
   margin-left: 7.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-22-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -11115,7 +11178,7 @@ nav[data-abstract-num="22"] {
   position: relative;
   margin-left: 9pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-22-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -11163,7 +11226,7 @@ nav[data-abstract-num="22"] {
   position: relative;
   margin-left: 10.8pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-22-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -11211,7 +11274,7 @@ nav[data-abstract-num="22"] {
   position: relative;
   margin-left: 12.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-22-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -11259,7 +11322,7 @@ nav[data-abstract-num="22"] {
   position: relative;
   margin-left: 14.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-22-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -11307,7 +11370,7 @@ nav[data-abstract-num="22"] {
   position: relative;
   margin-left: 16.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-22-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -11355,7 +11418,7 @@ nav[data-abstract-num="22"] {
   position: relative;
   margin-left: 18pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-22-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -11411,7 +11474,7 @@ nav[data-abstract-num="23"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-23-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -11459,7 +11522,7 @@ nav[data-abstract-num="23"] {
   position: relative;
   margin-left: 5.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-23-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -11507,7 +11570,7 @@ nav[data-abstract-num="23"] {
   position: relative;
   margin-left: 7.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-23-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -11555,7 +11618,7 @@ nav[data-abstract-num="23"] {
   position: relative;
   margin-left: 9pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-23-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -11603,7 +11666,7 @@ nav[data-abstract-num="23"] {
   position: relative;
   margin-left: 10.8pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-23-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -11651,7 +11714,7 @@ nav[data-abstract-num="23"] {
   position: relative;
   margin-left: 12.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-23-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -11699,7 +11762,7 @@ nav[data-abstract-num="23"] {
   position: relative;
   margin-left: 14.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-23-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -11747,7 +11810,7 @@ nav[data-abstract-num="23"] {
   position: relative;
   margin-left: 16.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-23-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -11795,7 +11858,7 @@ nav[data-abstract-num="23"] {
   position: relative;
   margin-left: 18pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-23-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -11851,7 +11914,7 @@ nav[data-abstract-num="24"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-24-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -11899,7 +11962,7 @@ nav[data-abstract-num="24"] {
   position: relative;
   margin-left: 5.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-24-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -11947,7 +12010,7 @@ nav[data-abstract-num="24"] {
   position: relative;
   margin-left: 7.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-24-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -11995,7 +12058,7 @@ nav[data-abstract-num="24"] {
   position: relative;
   margin-left: 9pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-24-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -12043,7 +12106,7 @@ nav[data-abstract-num="24"] {
   position: relative;
   margin-left: 10.8pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-24-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -12091,7 +12154,7 @@ nav[data-abstract-num="24"] {
   position: relative;
   margin-left: 12.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-24-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -12139,7 +12202,7 @@ nav[data-abstract-num="24"] {
   position: relative;
   margin-left: 14.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-24-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -12187,7 +12250,7 @@ nav[data-abstract-num="24"] {
   position: relative;
   margin-left: 16.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-24-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -12235,7 +12298,7 @@ nav[data-abstract-num="24"] {
   position: relative;
   margin-left: 18pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-24-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -12291,7 +12354,7 @@ nav[data-abstract-num="25"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-25-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -12339,7 +12402,7 @@ nav[data-abstract-num="25"] {
   position: relative;
   margin-left: 4.5pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-25-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -12387,7 +12450,7 @@ nav[data-abstract-num="25"] {
   position: relative;
   margin-left: 6.3pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-25-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -12435,7 +12498,7 @@ nav[data-abstract-num="25"] {
   position: relative;
   margin-left: 8.1pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-25-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -12483,7 +12546,7 @@ nav[data-abstract-num="25"] {
   position: relative;
   margin-left: 9.9pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-25-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -12531,7 +12594,7 @@ nav[data-abstract-num="25"] {
   position: relative;
   margin-left: 11.7pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-25-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -12579,7 +12642,7 @@ nav[data-abstract-num="25"] {
   position: relative;
   margin-left: 13.5pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-25-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -12627,7 +12690,7 @@ nav[data-abstract-num="25"] {
   position: relative;
   margin-left: 15.3pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-25-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -12675,7 +12738,7 @@ nav[data-abstract-num="25"] {
   position: relative;
   margin-left: 17.1pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-25-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -12731,7 +12794,7 @@ nav[data-abstract-num="26"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-26-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -12779,7 +12842,7 @@ nav[data-abstract-num="26"] {
   position: relative;
   margin-left: 5.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-26-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -12827,7 +12890,7 @@ nav[data-abstract-num="26"] {
   position: relative;
   margin-left: 7.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-26-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -12875,7 +12938,7 @@ nav[data-abstract-num="26"] {
   position: relative;
   margin-left: 9pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-26-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -12923,7 +12986,7 @@ nav[data-abstract-num="26"] {
   position: relative;
   margin-left: 10.8pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-26-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -12971,7 +13034,7 @@ nav[data-abstract-num="26"] {
   position: relative;
   margin-left: 12.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-26-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -13019,7 +13082,7 @@ nav[data-abstract-num="26"] {
   position: relative;
   margin-left: 14.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-26-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -13067,7 +13130,7 @@ nav[data-abstract-num="26"] {
   position: relative;
   margin-left: 16.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-26-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -13115,7 +13178,7 @@ nav[data-abstract-num="26"] {
   position: relative;
   margin-left: 18pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-26-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -13171,7 +13234,7 @@ nav[data-abstract-num="27"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-27-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -13219,7 +13282,7 @@ nav[data-abstract-num="27"] {
   position: relative;
   margin-left: 5.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-27-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -13267,7 +13330,7 @@ nav[data-abstract-num="27"] {
   position: relative;
   margin-left: 7.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-27-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -13315,7 +13378,7 @@ nav[data-abstract-num="27"] {
   position: relative;
   margin-left: 9pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-27-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -13363,7 +13426,7 @@ nav[data-abstract-num="27"] {
   position: relative;
   margin-left: 10.8pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-27-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -13411,7 +13474,7 @@ nav[data-abstract-num="27"] {
   position: relative;
   margin-left: 12.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-27-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -13459,7 +13522,7 @@ nav[data-abstract-num="27"] {
   position: relative;
   margin-left: 14.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-27-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -13507,7 +13570,7 @@ nav[data-abstract-num="27"] {
   position: relative;
   margin-left: 16.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-27-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -13555,7 +13618,7 @@ nav[data-abstract-num="27"] {
   position: relative;
   margin-left: 18pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-27-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -13611,7 +13674,7 @@ nav[data-abstract-num="28"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-28-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -13659,7 +13722,7 @@ nav[data-abstract-num="28"] {
   position: relative;
   margin-left: 5.4pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-28-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -13707,7 +13770,7 @@ nav[data-abstract-num="28"] {
   position: relative;
   margin-left: 7.2pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-28-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -13755,7 +13818,7 @@ nav[data-abstract-num="28"] {
   position: relative;
   margin-left: 9pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-28-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -13803,7 +13866,7 @@ nav[data-abstract-num="28"] {
   position: relative;
   margin-left: 10.8pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-28-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -13851,7 +13914,7 @@ nav[data-abstract-num="28"] {
   position: relative;
   margin-left: 12.6pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-28-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -13899,7 +13962,7 @@ nav[data-abstract-num="28"] {
   position: relative;
   margin-left: 14.4pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-28-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -13947,7 +14010,7 @@ nav[data-abstract-num="28"] {
   position: relative;
   margin-left: 16.2pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-28-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -13995,7 +14058,7 @@ nav[data-abstract-num="28"] {
   position: relative;
   margin-left: 18pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-28-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -14051,7 +14114,7 @@ nav[data-abstract-num="29"] {
   position: relative;
   margin-left: 1.8pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-29-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -14099,7 +14162,7 @@ nav[data-abstract-num="29"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-29-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -14147,7 +14210,7 @@ nav[data-abstract-num="29"] {
   position: relative;
   margin-left: 5.4pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-29-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -14195,7 +14258,7 @@ nav[data-abstract-num="29"] {
   position: relative;
   margin-left: 7.2pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-29-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -14243,7 +14306,7 @@ nav[data-abstract-num="29"] {
   position: relative;
   margin-left: 9pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-29-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -14291,7 +14354,7 @@ nav[data-abstract-num="29"] {
   position: relative;
   margin-left: 10.8pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-29-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -14339,7 +14402,7 @@ nav[data-abstract-num="29"] {
   position: relative;
   margin-left: 12.6pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-29-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -14387,7 +14450,7 @@ nav[data-abstract-num="29"] {
   position: relative;
   margin-left: 14.4pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-29-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -14435,7 +14498,7 @@ nav[data-abstract-num="29"] {
   position: relative;
   margin-left: 16.2pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-29-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -14491,7 +14554,7 @@ nav[data-abstract-num="30"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-30-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -14539,7 +14602,7 @@ nav[data-abstract-num="30"] {
   position: relative;
   margin-left: 5.4pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-30-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -14587,7 +14650,7 @@ nav[data-abstract-num="30"] {
   position: relative;
   margin-left: 7.2pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-30-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -14635,7 +14698,7 @@ nav[data-abstract-num="30"] {
   position: relative;
   margin-left: 9pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-30-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -14683,7 +14746,7 @@ nav[data-abstract-num="30"] {
   position: relative;
   margin-left: 10.8pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-30-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -14731,7 +14794,7 @@ nav[data-abstract-num="30"] {
   position: relative;
   margin-left: 12.6pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-30-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -14779,7 +14842,7 @@ nav[data-abstract-num="30"] {
   position: relative;
   margin-left: 14.4pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-30-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -14827,7 +14890,7 @@ nav[data-abstract-num="30"] {
   position: relative;
   margin-left: 16.2pt;
   padding-left: 36pt;
-  text-indent: 0pt;
+  text-indent: -36pt;
   counter-increment: docx-counter-30-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -14875,7 +14938,7 @@ nav[data-abstract-num="30"] {
   position: relative;
   margin-left: 18pt;
   padding-left: 48pt;
-  text-indent: 0pt;
+  text-indent: -48pt;
   counter-increment: docx-counter-30-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -14931,7 +14994,7 @@ nav[data-abstract-num="31"] {
   position: relative;
   margin-left: 2.7pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-31-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -14979,7 +15042,7 @@ nav[data-abstract-num="31"] {
   position: relative;
   margin-left: 4.5pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-31-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -15027,7 +15090,7 @@ nav[data-abstract-num="31"] {
   position: relative;
   margin-left: 6.3pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-31-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -15075,7 +15138,7 @@ nav[data-abstract-num="31"] {
   position: relative;
   margin-left: 8.1pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-31-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -15123,7 +15186,7 @@ nav[data-abstract-num="31"] {
   position: relative;
   margin-left: 9.9pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-31-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -15171,7 +15234,7 @@ nav[data-abstract-num="31"] {
   position: relative;
   margin-left: 11.7pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-31-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -15219,7 +15282,7 @@ nav[data-abstract-num="31"] {
   position: relative;
   margin-left: 13.5pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-31-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -15267,7 +15330,7 @@ nav[data-abstract-num="31"] {
   position: relative;
   margin-left: 15.3pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-31-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -15315,7 +15378,7 @@ nav[data-abstract-num="31"] {
   position: relative;
   margin-left: 17.1pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-31-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -15371,7 +15434,7 @@ nav[data-abstract-num="32"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-32-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -15419,7 +15482,7 @@ nav[data-abstract-num="32"] {
   position: relative;
   margin-left: 5.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-32-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -15467,7 +15530,7 @@ nav[data-abstract-num="32"] {
   position: relative;
   margin-left: 7.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-32-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -15515,7 +15578,7 @@ nav[data-abstract-num="32"] {
   position: relative;
   margin-left: 9pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-32-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -15563,7 +15626,7 @@ nav[data-abstract-num="32"] {
   position: relative;
   margin-left: 10.8pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-32-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -15611,7 +15674,7 @@ nav[data-abstract-num="32"] {
   position: relative;
   margin-left: 12.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-32-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -15659,7 +15722,7 @@ nav[data-abstract-num="32"] {
   position: relative;
   margin-left: 14.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-32-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -15707,7 +15770,7 @@ nav[data-abstract-num="32"] {
   position: relative;
   margin-left: 16.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-32-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -15755,7 +15818,7 @@ nav[data-abstract-num="32"] {
   position: relative;
   margin-left: 18pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-32-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -15811,7 +15874,7 @@ nav[data-abstract-num="33"] {
   position: relative;
   margin-left: 2.7pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-33-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -15859,7 +15922,7 @@ nav[data-abstract-num="33"] {
   position: relative;
   margin-left: 4.5pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-33-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -15907,7 +15970,7 @@ nav[data-abstract-num="33"] {
   position: relative;
   margin-left: 6.3pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-33-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -15955,7 +16018,7 @@ nav[data-abstract-num="33"] {
   position: relative;
   margin-left: 8.1pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-33-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -16003,7 +16066,7 @@ nav[data-abstract-num="33"] {
   position: relative;
   margin-left: 9.9pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-33-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -16051,7 +16114,7 @@ nav[data-abstract-num="33"] {
   position: relative;
   margin-left: 11.7pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-33-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -16099,7 +16162,7 @@ nav[data-abstract-num="33"] {
   position: relative;
   margin-left: 13.5pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-33-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -16147,7 +16210,7 @@ nav[data-abstract-num="33"] {
   position: relative;
   margin-left: 15.3pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-33-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -16195,7 +16258,7 @@ nav[data-abstract-num="33"] {
   position: relative;
   margin-left: 17.1pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-33-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -16251,7 +16314,7 @@ nav[data-abstract-num="34"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-34-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -16299,7 +16362,7 @@ nav[data-abstract-num="34"] {
   position: relative;
   margin-left: 5.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-34-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -16347,7 +16410,7 @@ nav[data-abstract-num="34"] {
   position: relative;
   margin-left: 7.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-34-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -16395,7 +16458,7 @@ nav[data-abstract-num="34"] {
   position: relative;
   margin-left: 9pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-34-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -16443,7 +16506,7 @@ nav[data-abstract-num="34"] {
   position: relative;
   margin-left: 10.8pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-34-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -16491,7 +16554,7 @@ nav[data-abstract-num="34"] {
   position: relative;
   margin-left: 12.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-34-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -16539,7 +16602,7 @@ nav[data-abstract-num="34"] {
   position: relative;
   margin-left: 14.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-34-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -16587,7 +16650,7 @@ nav[data-abstract-num="34"] {
   position: relative;
   margin-left: 16.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-34-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -16635,7 +16698,7 @@ nav[data-abstract-num="34"] {
   position: relative;
   margin-left: 18pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-34-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -16691,7 +16754,7 @@ nav[data-abstract-num="35"] {
   position: relative;
   margin-left: 1.95pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-35-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -16739,7 +16802,7 @@ nav[data-abstract-num="35"] {
   position: relative;
   margin-left: 3.75pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-35-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -16787,7 +16850,7 @@ nav[data-abstract-num="35"] {
   position: relative;
   margin-left: 5.55pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-35-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -16835,7 +16898,7 @@ nav[data-abstract-num="35"] {
   position: relative;
   margin-left: 7.35pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-35-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -16883,7 +16946,7 @@ nav[data-abstract-num="35"] {
   position: relative;
   margin-left: 9.15pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-35-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -16931,7 +16994,7 @@ nav[data-abstract-num="35"] {
   position: relative;
   margin-left: 10.95pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-35-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -16979,7 +17042,7 @@ nav[data-abstract-num="35"] {
   position: relative;
   margin-left: 12.75pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-35-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -17027,7 +17090,7 @@ nav[data-abstract-num="35"] {
   position: relative;
   margin-left: 14.55pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-35-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -17075,7 +17138,7 @@ nav[data-abstract-num="35"] {
   position: relative;
   margin-left: 16.35pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-35-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -17131,7 +17194,7 @@ nav[data-abstract-num="36"] {
   position: relative;
   margin-left: 1.8pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-36-0;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -17179,7 +17242,7 @@ nav[data-abstract-num="36"] {
   position: relative;
   margin-left: 3.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-36-1;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -17227,7 +17290,7 @@ nav[data-abstract-num="36"] {
   position: relative;
   margin-left: 5.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-36-2;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -17275,7 +17338,7 @@ nav[data-abstract-num="36"] {
   position: relative;
   margin-left: 7.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-36-3;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -17323,7 +17386,7 @@ nav[data-abstract-num="36"] {
   position: relative;
   margin-left: 9pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-36-4;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -17371,7 +17434,7 @@ nav[data-abstract-num="36"] {
   position: relative;
   margin-left: 10.8pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-36-5;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -17419,7 +17482,7 @@ nav[data-abstract-num="36"] {
   position: relative;
   margin-left: 12.6pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-36-6;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -17467,7 +17530,7 @@ nav[data-abstract-num="36"] {
   position: relative;
   margin-left: 14.4pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-36-7;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -17515,7 +17578,7 @@ nav[data-abstract-num="36"] {
   position: relative;
   margin-left: 16.2pt;
   padding-left: 18pt;
-  text-indent: 0pt;
+  text-indent: -18pt;
   counter-increment: docx-counter-36-8;
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -17789,6 +17852,24 @@ h6 {
   display: block;
   margin: 0.5em auto;
 }
+
+.docx-header-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0.5em auto;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-radius: 2px;
+}
+
+/* Header images in paragraphs with text */
+.docx-header-paragraph .docx-header-image {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 0.5em;
+}</search>
+</search_and_replace>
 
 /* Print-specific header styles */
 @media print {
