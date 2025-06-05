@@ -6,7 +6,7 @@ export default function decorate(block) {
   
     // Load Vue.js bundle
     const script = document.createElement('script');
-    script.src = '/static/js/main-def456.js'; // Your built JS file
+    script.src = '/assets/index-UbQ-77Ai.js'; // Your built JS file
     script.type = 'module';
     document.head.appendChild(script);
     
@@ -14,7 +14,7 @@ export default function decorate(block) {
   
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/static/css/style-abc123.css'; // Your built CSS file
+    link.href = '/assets/index-DMC9YjsP.css'; // Your built CSS file
     document.head.appendChild(link);
   }
   
