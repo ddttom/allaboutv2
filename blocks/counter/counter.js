@@ -122,8 +122,9 @@ customElements.define('counter-element', CounterElement);
  */
 export default function decorate(block) {
   try {
-    // Get initial value from block content
-    const initialValue = block.textContent.trim();
+    // Get initial value from the first cell of the table
+    const cells = block.querySelectorAll('div');
+    const initialValue = cells[0]?.textContent.trim();
     const counter = document.createElement('counter-element');
     
     if (initialValue) {
