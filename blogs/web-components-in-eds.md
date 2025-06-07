@@ -95,6 +95,166 @@ Performance matters too. Shadow DOM provides style isolation, but you still need
 
 Accessibility isn't optional. Include ARIA attributes throughout your components, support keyboard navigation from the start, and maintain proper contrast ratios. Your documentation should be equally thorough - write README files that include usage examples and explain customisation options clearly.
 
+## Troubleshooting Web Components in EDS
+
+When working with web components in EDS, you might encounter several common issues. Here's how to handle them:
+
+### Resource Loading Issues
+
+1. **Failed Resource Loads**
+   - Check the browser's network tab for failed requests
+   - Verify CDN URLs are accessible and correct
+   - Ensure proper async/await usage in resource loading
+   - Check for CORS issues when loading external resources
+
+2. **Component Initialization Problems**
+   - Verify custom element registration timing
+   - Check for duplicate element definitions
+   - Ensure proper module loading order
+   - Verify shadow root attachment
+
+### Shadow DOM and Styling
+
+1. **Style Encapsulation**
+   - Check for unintended style leakage
+   - Verify CSS custom properties are properly defined
+   - Ensure proper scoping of styles
+   - Test style inheritance and overrides
+
+2. **Event Handling**
+   - Verify event bubbling through shadow boundaries
+   - Check event listener cleanup
+   - Ensure proper event delegation
+   - Test custom event propagation
+
+### Component Communication
+
+1. **Event-Based Communication**
+   - Verify custom event creation and handling
+   - Check event detail object structure
+   - Ensure proper event cleanup
+   - Test cross-component communication
+
+2. **Attribute and Property Changes**
+   - Verify attribute change callbacks
+   - Check property reflection
+   - Ensure proper type conversion
+   - Test attribute/property synchronization
+
+## Browser Compatibility
+
+Web components are supported in all modern browsers, but it's important to understand the support landscape:
+
+### Native Support
+
+- Chrome: 54+ (2016)
+- Firefox: 63+ (2018)
+- Safari: 10.1+ (2016)
+- Edge: 79+ (2020)
+
+### Polyfill Strategy
+
+For older browsers, consider implementing:
+
+1. **Core Polyfills**
+   - Custom Elements polyfill
+   - Shadow DOM polyfill
+   - HTML Templates polyfill
+
+2. **Progressive Enhancement**
+   - Provide fallback content
+   - Implement feature detection
+   - Use graceful degradation
+
+3. **Build Considerations**
+   - Include polyfills only when needed
+   - Use modern JavaScript features carefully
+   - Consider bundle size impact
+
+## Performance Optimization
+
+Optimizing web components in EDS requires attention to several key areas:
+
+### Loading Strategy
+
+1. **Resource Management**
+   - Implement lazy loading for non-critical components
+   - Use dynamic imports for code splitting
+   - Optimize initial bundle size
+   - Consider preloading critical resources
+
+2. **Rendering Performance**
+   - Minimize DOM operations
+   - Use efficient event delegation
+   - Implement proper cleanup
+   - Avoid unnecessary re-renders
+
+3. **Memory Management**
+   - Properly dispose of event listeners
+   - Clean up shadow DOM when components are removed
+   - Monitor memory usage
+   - Implement proper component lifecycle
+
+### Optimization Techniques
+
+1. **Code Optimization**
+   - Use efficient DOM manipulation
+   - Implement proper caching
+   - Minimize style recalculations
+   - Optimize event handling
+
+2. **Resource Optimization**
+   - Compress and optimize images
+   - Minimize CSS and JavaScript
+   - Use efficient loading patterns
+   - Implement proper caching strategies
+
+## Testing Web Components
+
+A comprehensive testing strategy is essential for reliable web components:
+
+### Unit Testing
+
+1. **Component Testing**
+   - Test component initialization
+   - Verify attribute handling
+   - Check property changes
+   - Test event handling
+
+2. **Shadow DOM Testing**
+   - Verify shadow root attachment
+   - Test style encapsulation
+   - Check slot content
+   - Verify shadow DOM manipulation
+
+### Integration Testing
+
+1. **EDS Integration**
+   - Test block decoration
+   - Verify resource loading
+   - Check EDS-specific features
+   - Test component lifecycle
+
+2. **Cross-Component Testing**
+   - Verify component communication
+   - Test event propagation
+   - Check style isolation
+   - Verify accessibility
+
+### Accessibility Testing
+
+1. **ARIA Testing**
+   - Verify ARIA attributes
+   - Test screen reader compatibility
+   - Check keyboard navigation
+   - Verify focus management
+
+2. **Compliance Testing**
+   - Test WCAG compliance
+   - Verify color contrast
+   - Check responsive behavior
+   - Test with assistive technologies
+
 ## Real-World Benefits
 
 Using web components in EDS blocks brings tangible advantages to your development process. Isolated components are easier to maintain because they have clear boundaries and fewer unexpected interactions. The separation of concerns means you can work on individual components without worrying about breaking other parts of your site.
@@ -118,8 +278,8 @@ The key is starting small, following standards, and building gradually. Each com
 | metadata        |                                                                 |
 | :-------------- | :-------------------------------------------------------------- |
 | title           | Using Web Components in Adobe Edge Delivery Services Blocks     |
-| description     | Learn how to use web components to create powerful, reusable blocks in Adobe Edge Delivery Services |
+| description     | A comprehensive guide to implementing web components in EDS blocks, including best practices, testing strategies, performance optimization, and troubleshooting |
 | json-ld         | article                                                         |
-| image           |                                                                 |
+| image           | https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png |
 | author          | Tom Cranstoun                                                   |
-| longdescription | A practical guide to implementing web components in Adobe Edge Delivery Services blocks, including best practices, real-world examples, and implementation tips. |
+| longdescription | An in-depth guide to implementing web components in Adobe Edge Delivery Services blocks. Covers best practices, testing strategies, performance optimization, troubleshooting, and browser compatibility. Includes detailed sections on component lifecycle, accessibility, and real-world implementation examples. Provides practical solutions for common issues and comprehensive testing approaches. |
