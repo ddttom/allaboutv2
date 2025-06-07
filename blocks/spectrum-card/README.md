@@ -78,6 +78,30 @@ The card uses Spectrum's design system with the following characteristics:
 - @spectrum-web-components/button (v1.6.0)
 - @spectrum-web-components/icons-workflow (v1.6.0)
 
+## External Components
+
+This block loads several external [Adobe Spectrum Web Components](https://opensource.adobe.com/spectrum-web-components/) from the CDN. Each is responsible for a specific part of the UI or theming:
+
+| Component         | Package/Source                        | Purpose/Role in Block                |
+|-------------------|---------------------------------------|--------------------------------------|
+| sp-theme.js       | @spectrum-web-components/theme        | Theme context (color/scale)          |
+| scale-medium.js   | @spectrum-web-components/theme        | Medium sizing                        |
+| theme-light.js    | @spectrum-web-components/theme        | Light color palette                  |
+| sp-card.js        | @spectrum-web-components/card         | Card UI element                      |
+| sp-button.js      | @spectrum-web-components/button       | Button UI element                    |
+| icons/Info.js     | @spectrum-web-components/icons-workflow| Info icon (optional)                 |
+
+**Details:**
+
+- **sp-theme.js**: Provides the `<sp-theme>` element, which sets the color scheme and scale for all Spectrum components inside it.
+- **scale-medium.js**: Loads the "medium" sizing scale for consistent padding, font size, etc.
+- **theme-light.js**: Loads the "light" color palette for all Spectrum components.
+- **sp-card.js**: Registers the `<sp-card>` custom element, used for the main card container.
+- **sp-button.js**: Registers the `<sp-button>` custom element, used for the action button in the card.
+- **icons/Info.js**: Registers the Info icon as a web component (not currently used in the UI, but available for use).
+
+All components are loaded from the [jsDelivr CDN](https://cdn.jsdelivr.net/) at version 1.6.0.
+
 ## Accessibility
 
 - Proper semantic HTML structure
