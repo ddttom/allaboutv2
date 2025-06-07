@@ -1,6 +1,7 @@
 import { loadCSS, loadScript } from '../../scripts/aem.js';
+
 const SPECTRUM_CONFIG = {
-  VERSION: '0.30.0',
+  VERSION: '1.6.0',
   CDN_BASE: 'https://cdn.jsdelivr.net/npm/@spectrum-web-components',
   THEME: 'spectrum',
   COLOR: 'light',
@@ -10,11 +11,13 @@ const SPECTRUM_CONFIG = {
 export default async function decorate(block) {
   try {
     // Load Spectrum Web Components theme
-    await loadCSS(`${SPECTRUM_CONFIG.CDN_BASE}/theme@${SPECTRUM_CONFIG.VERSION}/theme-light.css`);
+    await loadCSS(`${SPECTRUM_CONFIG.CDN_BASE}/theme@${SPECTRUM_CONFIG.VERSION}/src/theme-light.css.js`);
     // Load required Spectrum components
     await Promise.all([
-loadScript(`${SPECTRUM_CONFIG.CDN_BASE}/theme@${SPECTRUM_CONFIG.VERSION}/theme-light.js`, { type: 'module' }),      loadScript(`${SPECTRUM_CONFIG.CDN_BASE}/card@${SPECTRUM_CONFIG.VERSION}/sp-card.js`, { type: 'module' }),   loadScript(`${SPECTRUM_CONFIG.CDN_BASE}/button@${SPECTRUM_CONFIG.VERSION}/sp-button.js`, { type: 'module' }),
-loadScript(`${SPECTRUM_CONFIG.CDN_BASE}/icons-workflow@${SPECTRUM_CONFIG.VERSION}/icons/Info.js`, { type: 'module' })
+      loadScript(`${SPECTRUM_CONFIG.CDN_BASE}/theme@${SPECTRUM_CONFIG.VERSION}/theme-light.js`, { type: 'module' }),
+      loadScript(`${SPECTRUM_CONFIG.CDN_BASE}/card@${SPECTRUM_CONFIG.VERSION}/sp-card.js`, { type: 'module' }),
+      loadScript(`${SPECTRUM_CONFIG.CDN_BASE}/button@${SPECTRUM_CONFIG.VERSION}/sp-button.js`, { type: 'module' }),
+      loadScript(`${SPECTRUM_CONFIG.CDN_BASE}/icons-workflow@${SPECTRUM_CONFIG.VERSION}/icons/Info.js`, { type: 'module' })
     ]);
     
     // Extract content from the block table
