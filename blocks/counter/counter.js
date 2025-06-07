@@ -122,13 +122,26 @@ customElements.define('counter-element', CounterElement);
  */
 export default function decorate(block) {
   try {
+    // Debug logging to see block structure
+    // eslint-disable-next-line no-console
+    console.log('Block content:', block.innerHTML);
+    // eslint-disable-next-line no-console
+    console.log('Block children:', block.children);
+    
     // Get initial value from the first cell of the table
-    const cells = block.querySelectorAll('div');
+    const cells = Array.from(block.children);
+    // eslint-disable-next-line no-console
+    console.log('Cells found:', cells.length);
+    // eslint-disable-next-line no-console
+    console.log('First cell content:', cells[0]?.textContent);
+    
     const initialValue = cells[0]?.textContent.trim();
     const counter = document.createElement('counter-element');
     
     if (initialValue) {
       const parsedValue = parseInt(initialValue, 10);
+      // eslint-disable-next-line no-console
+      console.log('Parsed value:', parsedValue);
       if (Number.isNaN(parsedValue)) {
         throw new Error(COUNTER_CONFIG.ERROR_MESSAGES.INVALID_INITIAL);
       }
