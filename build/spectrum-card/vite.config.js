@@ -5,7 +5,7 @@ export default defineConfig({
     lib: {
       entry: 'spectrum-card.js',
       name: 'SpectrumCard',
-      fileName: 'spectrum-card',
+      fileName: () => 'spectrum-card.js',
       formats: ['es'],
     },
     outDir: 'dist',

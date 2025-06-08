@@ -4,7 +4,7 @@
   "description": "Build setup for Spectrum Card block using Vite.",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && cp dist/spectrum-card.js ../../blocks/spectrum-card/spectrum-card.js"
+    "build": "vite build && mkdir -p ../../blocks/spectrum-card && cp dist/spectrum-card.js ../../blocks/spectrum-card/spectrum-card.js && touch ../../blocks/spectrum-card/spectrum-card.css"
   },
   "dependencies": {
     "@spectrum-web-components/button": "^1.6.0",
