@@ -17,4 +17,4 @@ export default defineConfig({
     },
     emptyOutDir: true,
   },
-}); 
+});
