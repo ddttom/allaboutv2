@@ -176,6 +176,95 @@ This will create a card with:
 - Description: "Discover the power of modern web components with Adobe's Spectrum design system."
 - Button: "Get Started"
 
+## Build & Usage
+
+### 1. Install dependencies
+
+In the `build/spectrum-card` directory, run:
+
+    npm install
+
+### 2. Build the bundle
+
+    npm run build
+
+This will output a browser-ready `dist/spectrum-card.js` file.
+
+### 3. Use in Franklin/EDS
+
+- Copy `dist/spectrum-card.js` to your `/scripts/` directory or a CDN location.
+- In your Franklin project, load the script in your page or block:
+
+    <script type="module" src="/scripts/spectrum-card.js"></script>
+
+- The block will now work with Spectrum Web Components in the browser.
+
+**Note:** This build step is required because Spectrum Web Components use bare module imports that browsers cannot resolve directly from CDN.
+
+## Example: Minimal EDS-Ready spectrum-card.js
+
+Below is a minimal, EDS/Franklin-ready `spectrum-card.js` entry file for Vite. This file imports the required Spectrum Web Components, defines the `decorate` function for Franklin, and ensures the theme is set up correctly:
+
+`// spectrum-card.js (for Vite build)`  
+`import '@spectrum-web-components/theme/sp-theme.js';`
+`import '@spectrum-web-components/theme/scale-medium.js';`
+`import '@spectrum-web-components/theme/theme-light.js';`
+`import '@spectrum-web-components/card/sp-card.js';`
+`import '@spectrum-web-components/button/sp-button.js';`
+`import '@spectrum-web-components/icons-workflow/icons/Info.js';`
+
+`export default function decorate(block) {`
+`  const rows = Array.from(block.children);`
+`  const title = rows[0]?.textContent.trim() || 'Card Title';`
+`  const description = rows[1]?.textContent.trim() || 'Card description';`
+`  const buttonText = rows[2]?.textContent.trim() || 'Action';`
+
+`  block.textContent = '';`
+
+`  let themeElement = document.querySelector('sp-theme');`
+`  if (!themeElement) {`
+`    themeElement = document.createElement('sp-theme');`
+`    themeElement.setAttribute('color', 'light');`
+`    themeElement.setAttribute('scale', 'medium');`
+`    document.body.insertBefore(themeElement, document.body.firstChild);`
+`  }`
+
+`  const card = document.createElement('sp-card');`
+`  card.setAttribute('heading', title);`
+`  card.setAttribute('variant', 'quiet');`
+`  card.style.maxWidth = '400px';`
+
+`  const descriptionDiv = document.createElement('div');`
+`  descriptionDiv.setAttribute('slot', 'description');`
+`  descriptionDiv.textContent = description;`
+
+`  const footerDiv = document.createElement('div');`
+`  footerDiv.setAttribute('slot', 'footer');`
+
+`  const button = document.createElement('sp-button');`
+`  button.setAttribute('treatment', 'accent');`
+`  button.setAttribute('size', 'm');`
+`  button.textContent = buttonText;`
+
+`  button.addEventListener('click', () => {`
+`    // eslint-disable-next-line no-console`
+`    console.log('Card action clicked');`
+`  });`
+
+`  footerDiv.appendChild(button);`
+`  card.appendChild(descriptionDiv);`
+`  card.appendChild(footerDiv);`
+`  block.appendChild(card);`
+`}`
+
+**How it works:**
+- Imports all required Spectrum Web Components (these will be bundled by Vite).
+- Exports a `decorate` function for Franklin/EDS to call.
+- Ensures a single `<sp-theme>` is present on the page.
+- Builds the card using DOM APIs for security and clarity.
+
+After building with Vite, the output in `dist/spectrum-card.js` will be browser-ready and can be loaded as a module in your Franklin/EDS project.
+
 ## Metadata
 
 | metadata        |                                                                                |
@@ -186,3 +275,47 @@ This will create a card with:
 | image           |                                                                                |
 | author          | Tom Cranstoun                                                                  |
 | longdescription | Comprehensive documentation for the Spectrum Card block, including usage, configuration, and best practices for implementation in Adobe Edge Delivery Services projects. | 
+
+# Spectrum Card Build Instructions
+
+This folder contains the build setup for the Spectrum Card block using Vite. The build process bundles the Spectrum Web Components and outputs a browser-ready file for use in Adobe Edge Delivery Services (EDS/Franklin).
+
+## Build Steps
+
+1. **Install dependencies**
+
+   In this directory, run:
+   ```sh
+   npm install
+   ```
+
+2. **Build and Auto-Copy**
+
+   Run:
+   ```sh
+   npm run build
+   ```
+   This will:
+   - Build the bundle using Vite
+   - **Automatically copy the output (`dist/spectrum-card.js`) to the EDS blocks folder as `../../blocks/spectrum-card/spectrum-card.js`**
+
+   **You do NOT need to copy the file manually.**
+
+3. **Usage in EDS/Franklin**
+
+   - Author your content using the `spectrum-card` block table in your document (Google Doc, Word, or Markdown):
+
+     | spectrum-card |
+     | ------------- |
+     | Card Title    |
+     | Card description text goes here |
+     | Action Button |
+
+   - Publish your document/page.
+   - EDS/Franklin will automatically load `/blocks/spectrum-card/spectrum-card.js` and run its `decorate` function for the block.
+
+## Notes
+
+- You do **not** need to manually add `<script>` tags to your HTML. EDS/Franklin handles block JS loading based on block names and file structure.
+- If you update the block code, always re-run `npm run build` to ensure the latest version is copied to the EDS blocks folder.
+- You can further automate or customize the build/copy process in `package.json` as needed.

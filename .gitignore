@@ -13,3 +13,4 @@ bifrost.json
 promptloc/
 
 .codegpt
+node_modules
