@@ -2156,29 +2156,29 @@ function fo(s) {
   try {
     const c = Array.from(s.children);
     console.debug("[spectrum-card] extracted rows", c.map(($) => $.textContent));
-    const a = ((e = c[0]) == null ? void 0 : e.textContent.trim()) || B.DEFAULT_TITLE, n = ((t = c[1]) == null ? void 0 : t.textContent.trim()) || B.DEFAULT_DESCRIPTION, i = ((o = c[2]) == null ? void 0 : o.textContent.trim()) || B.DEFAULT_BUTTON_TEXT, u = (r = c[3]) == null ? void 0 : r.textContent.trim();
+    const a = (e = c[0]) == null ? void 0 : e.textContent.trim(), n = ((t = c[1]) == null ? void 0 : t.textContent.trim()) || B.DEFAULT_TITLE, i = ((o = c[2]) == null ? void 0 : o.textContent.trim()) || B.DEFAULT_DESCRIPTION, u = ((r = c[3]) == null ? void 0 : r.textContent.trim()) || B.DEFAULT_BUTTON_TEXT;
     console.debug("[spectrum-card] content", {
-      title: a,
-      description: n,
-      buttonText: i,
-      imageUrl: u
+      imageUrl: a,
+      title: n,
+      description: i,
+      buttonText: u
     }), s.textContent = "", console.debug("[spectrum-card] block cleared");
     const p = document.createElement("sp-card");
-    if (p.setAttribute("heading", a), p.setAttribute("variant", B.CARD_VARIANT), p.style.maxWidth = B.MAX_WIDTH, u) {
+    if (p.setAttribute("heading", n), p.setAttribute("variant", B.CARD_VARIANT), p.style.maxWidth = B.MAX_WIDTH, a) {
       const $ = document.createElement("img");
-      $.setAttribute("slot", "preview"), $.src = u, $.alt = a, $.style.width = "100%", $.style.height = "auto", p.appendChild($), console.debug("[spectrum-card] image added", u);
+      $.setAttribute("slot", "preview"), $.src = a, $.alt = n, $.style.width = "100%", $.style.height = "auto", p.appendChild($), console.debug("[spectrum-card] image added", a);
     }
     const d = document.createElement("div");
-    d.setAttribute("slot", "description"), d.textContent = n;
+    d.setAttribute("slot", "description"), d.textContent = i;
     const h = document.createElement("div");
     h.setAttribute("slot", "footer"), h.style.display = "flex", h.style.justifyContent = "flex-end";
     const y = document.createElement("sp-button");
-    y.setAttribute("treatment", B.BUTTON_TREATMENT), y.setAttribute("size", B.BUTTON_SIZE), y.textContent = i;
+    y.setAttribute("treatment", B.BUTTON_TREATMENT), y.setAttribute("size", B.BUTTON_SIZE), y.textContent = u;
     const P = document.createElement("sp-icon-arrow-right");
     P.setAttribute("slot", "icon"), y.appendChild(P), y.addEventListener("click", () => {
       console.log("Card action clicked:", {
-        title: a,
-        description: n
+        title: n,
+        description: i
       });
     }), h.appendChild(y), p.appendChild(d), p.appendChild(h), s.appendChild(p), console.debug("[spectrum-card] card appended to block");
   } catch (c) {

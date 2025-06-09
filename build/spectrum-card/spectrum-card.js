@@ -24,12 +24,16 @@ export default function decorate(block) {
   console.debug('[spectrum-card] decorate called', block);
 
   try {
-    const rows = Array.from(block.children);
+    let rows = Array.from(block.children);
     // Debug: log extracted rows
     // eslint-disable-next-line no-console
-    console.debug('[spectrum-card] extracted rows', rows.map((r) => r.textContent));
+    console.debug('[spectrum-card] extracted rows', rows);
 
-    const imageUrl = rows[0]?.textContent.trim();
+    // Expect first row to be a <div> containing a <picture>
+    let imagePicture = null;
+    if (rows[0] && rows[0].querySelector && rows[0].querySelector('picture')) {
+      imagePicture = rows[0].querySelector('picture');
+    }
     const title = rows[1]?.textContent.trim() || SPECTRUM_CARD_CONFIG.DEFAULT_TITLE;
     const description = rows[2]?.textContent.trim() || SPECTRUM_CARD_CONFIG.DEFAULT_DESCRIPTION;
     const buttonText = rows[3]?.textContent.trim() || SPECTRUM_CARD_CONFIG.DEFAULT_BUTTON_TEXT;
@@ -37,7 +41,7 @@ export default function decorate(block) {
     // Debug: log extracted content
     // eslint-disable-next-line no-console
     console.debug('[spectrum-card] content', {
-      imageUrl,
+      imagePicture,
       title,
       description,
       buttonText,
@@ -53,17 +57,14 @@ export default function decorate(block) {
     card.setAttribute('variant', SPECTRUM_CARD_CONFIG.CARD_VARIANT);
     card.style.maxWidth = SPECTRUM_CARD_CONFIG.MAX_WIDTH;
 
-    if (imageUrl) {
-      const img = document.createElement('img');
-      img.setAttribute('slot', 'preview');
-      img.src = imageUrl;
-      img.alt = title;
-      img.style.width = '100%';
-      img.style.height = 'auto';
-      card.appendChild(img);
+    if (imagePicture) {
+      // Clone the <picture> node and set slot="preview"
+      const pictureClone = imagePicture.cloneNode(true);
+      pictureClone.setAttribute('slot', 'preview');
+      card.appendChild(pictureClone);
       // Debug: log image added
       // eslint-disable-next-line no-console
-      console.debug('[spectrum-card] image added', imageUrl);
+      console.debug('[spectrum-card] picture element added');
     }
 
     const descriptionDiv = document.createElement('div');
