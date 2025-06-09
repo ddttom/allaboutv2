@@ -1,6 +1,6 @@
 # Spectrum Card Block
 
-A modern, accessible card component built using Adobe's Spectrum Web Components. This block provides a consistent, branded card interface that follows Adobe's design system guidelines, now with image support.
+A modern, accessible card component built using Adobe's Spectrum Web Components. This block provides a consistent, branded card interface that follows Adobe's design system guidelines, now with image support (image URL in the first row).
 
 ## Features
 
@@ -8,7 +8,7 @@ A modern, accessible card component built using Adobe's Spectrum Web Components.
 - Built using Adobe's Spectrum Web Components
 - Accessible by default with proper ARIA attributes
 - Supports light theme (Spectrum design system)
-- Customizable title, description, image, and action button
+- Customizable image, title, description, and action button
 - Interactive button with click handling
 - Consistent styling with Adobe's design system
 - Image slot for richer cards
@@ -17,10 +17,10 @@ A modern, accessible card component built using Adobe's Spectrum Web Components.
 
 | spectrum-card |
 | ------------- |
+| https://example.com/image.png |
 | Card Title    |
 | Card description text goes here |
 | Action Button |
-| https://example.com/image.png |
 
 ## Configuration
 
@@ -31,11 +31,11 @@ The block uses Spectrum's design tokens through CSS variables:
 - `--spectrum-global-color-blue-600`: Accent color for button
 
 ### Content Structure
-The block expects a table with up to four rows:
-1. First row: Card title (required)
-2. Second row: Card description (required)
-3. Third row: Button text (required)
-4. Fourth row: Image URL (optional, but recommended for best appearance)
+The block expects a table with four rows:
+1. First row: Image URL (required for best appearance)
+2. Second row: Card title (required)
+3. Third row: Card description (required)
+4. Fourth row: Button text (required)
 
 ## Authoring
 
@@ -43,20 +43,20 @@ To create a Spectrum Card in your document:
 
 1. Create a table with the block name in the first cell
 2. Add your content in the following rows:
+   - Image URL (required)
    - Title (required)
    - Description (required)
    - Button text (required)
-   - Image URL (optional)
 3. The block will automatically style and structure the content
 
 Example in Google Docs:
 ```
 | spectrum-card |
 | ------------- |
+| https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png |
 | Welcome Card  |
 | This is a sample card description that explains the card's purpose. |
 | Learn More    |
-| https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png |
 ```
 
 ## Styling
@@ -147,20 +147,18 @@ Tested and supported in:
 
 ## Example
 
-Here's a complete example of how to use the block:
-
 | spectrum-card |
 | ------------- |
+| https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png |
 | Welcome to Our Platform |
 | Discover the power of modern web components with Adobe's Spectrum design system. |
 | Get Started |
-| https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png |
 
 This will create a card with:
+- Image: (shown in the card preview)
 - Title: "Welcome to Our Platform"
 - Description: "Discover the power of modern web components with Adobe's Spectrum design system."
 - Button: "Get Started"
-- Image: (shown in the card preview)
 
 ## Build & Usage
 
@@ -206,10 +204,10 @@ const SPECTRUM_CARD_CONFIG = {
 
 export default function decorate(block) {
   const rows = Array.from(block.children);
-  const title = rows[0]?.textContent.trim() || SPECTRUM_CARD_CONFIG.DEFAULT_TITLE;
-  const description = rows[1]?.textContent.trim() || SPECTRUM_CARD_CONFIG.DEFAULT_DESCRIPTION;
-  const buttonText = rows[2]?.textContent.trim() || SPECTRUM_CARD_CONFIG.DEFAULT_BUTTON_TEXT;
-  const imageUrl = rows[3]?.textContent.trim();
+  const imageUrl = rows[0]?.textContent.trim();
+  const title = rows[1]?.textContent.trim() || SPECTRUM_CARD_CONFIG.DEFAULT_TITLE;
+  const description = rows[2]?.textContent.trim() || SPECTRUM_CARD_CONFIG.DEFAULT_DESCRIPTION;
+  const buttonText = rows[3]?.textContent.trim() || SPECTRUM_CARD_CONFIG.DEFAULT_BUTTON_TEXT;
 
   block.textContent = '';
 
@@ -246,7 +244,10 @@ export default function decorate(block) {
   button.appendChild(icon);
   button.addEventListener('click', () => {
     // eslint-disable-next-line no-console
-    console.log('Card action clicked:', { title, description });
+    console.log('Card action clicked:', {
+      title,
+      description,
+    });
   });
   footerDiv.appendChild(button);
   card.appendChild(descriptionDiv);
@@ -297,10 +298,10 @@ This folder contains the build setup for the Spectrum Card block using Vite. The
 
      | spectrum-card |
      | ------------- |
+     | https://example.com/image.png |
      | Card Title    |
      | Card description text goes here |
      | Action Button |
-     | https://example.com/image.png |
 
    - Publish your document/page.
    - EDS/Franklin will automatically load `/blocks/spectrum-card/spectrum-card.js` and run its `decorate` function for the block.

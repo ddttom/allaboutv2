@@ -10,7 +10,7 @@ Spectrum Web Components follow Adobe's design system and are built on web standa
 - Keyboard and screen reader support
 - Easy integration with EDS's block-based architecture
 
-## Building a Spectrum Card Block (with Image Support)
+## Building a Spectrum Card Block (Image First)
 
 A typical build structure:
 
@@ -21,9 +21,9 @@ A typical build structure:
 ├── package.json
 ├── vite.config.js
 
-### spectrum-card.js
+### spectrum-card.js (latest version)
 
-`// spectrum-card.js`
+```js
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/theme-light.js';
 import '@spectrum-web-components/theme/scale-medium.js';
@@ -43,10 +43,10 @@ const SPECTRUM_CARD_CONFIG = {
 
 export default function decorate(block) {
   const rows = Array.from(block.children);
-  const title = rows[0]?.textContent.trim() || SPECTRUM_CARD_CONFIG.DEFAULT_TITLE;
-  const description = rows[1]?.textContent.trim() || SPECTRUM_CARD_CONFIG.DEFAULT_DESCRIPTION;
-  const buttonText = rows[2]?.textContent.trim() || SPECTRUM_CARD_CONFIG.DEFAULT_BUTTON_TEXT;
-  const imageUrl = rows[3]?.textContent.trim();
+  const imageUrl = rows[0]?.textContent.trim();
+  const title = rows[1]?.textContent.trim() || SPECTRUM_CARD_CONFIG.DEFAULT_TITLE;
+  const description = rows[2]?.textContent.trim() || SPECTRUM_CARD_CONFIG.DEFAULT_DESCRIPTION;
+  const buttonText = rows[3]?.textContent.trim() || SPECTRUM_CARD_CONFIG.DEFAULT_BUTTON_TEXT;
 
   block.textContent = '';
 
@@ -83,50 +83,70 @@ export default function decorate(block) {
   button.appendChild(icon);
   button.addEventListener('click', () => {
     // eslint-disable-next-line no-console
-    console.log('Card action clicked:', { title, description });
+    console.log('Card action clicked:', {
+      title,
+      description,
+    });
   });
   footerDiv.appendChild(button);
   card.appendChild(descriptionDiv);
   card.appendChild(footerDiv);
   block.appendChild(card);
 }
+```
+
+### Authoring Pattern (Image First)
+
+| spectrum-card |
+| ------------- |
+| https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png |
+| Welcome Card  |
+| This is a sample card description that explains the card's purpose. |
+| Learn More    |
+
+- **Row 1:** Image URL (required)
+- **Row 2:** Title (required)
+- **Row 3:** Description (required)
+- **Row 4:** Button text (required)
 
 ### Local Testing with test.html
 
 To test your block locally (outside EDS), use this pattern:
 
-`<!DOCTYPE html>`
-`<html>`
-`<head>`
-  `<title>Spectrum Card Test</title>`
-  `<script type="module">`
-    `import '@spectrum-web-components/theme/theme-light.js';`
-    `import '@spectrum-web-components/theme/scale-medium.js';`
-    `import '@spectrum-web-components/theme/sp-theme.js';`
-  `</script>`
-  `<style>`
-    `body { background: #f5f5f5; font-family: var(--spectrum-sans-font-family-stack); }`
-    `.test-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; padding: 20px; }`
-  `</style>`
-`</head>`
-`<body>`
-  `<sp-theme color="light" scale="medium" system="spectrum">`
-    `<div class="test-container">`
-      `<div class="spectrum-card block">`
-        `<div>Basic Card</div>`
-        `<div>This is a basic card with minimal content</div>`
-        `<div>Click Me</div>`
-        `<div>https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png</div>`
-      `</div>`
-      `<!-- More cards ... -->`
-    `</div>`
-  `</sp-theme>`
-  `<script type="module">`
-    `import decorate from './spectrum-card.js';`
-    `document.querySelectorAll('.spectrum-card.block').forEach(decorate);`
-  `</script>`
-`</body>`
-`</html>`
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Spectrum Card Test</title>
+  <script type="module">
+    import '@spectrum-web-components/theme/theme-light.js';
+    import '@spectrum-web-components/theme/scale-medium.js';
+    import '@spectrum-web-components/theme/sp-theme.js';
+  </script>
+  <style>
+    body { background: #f5f5f5; font-family: var(--spectrum-sans-font-family-stack); }
+    .test-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; padding: 20px; }
+  </style>
+</head>
+<body>
+  <sp-theme color="light" scale="medium" system="spectrum">
+    <div class="test-container">
+      <div class="spectrum-card block">
+        <div>https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png</div>
+        <div>Basic Card</div>
+        <div>This is a basic card with minimal content</div>
+        <div>Click Me</div>
+      </div>
+      <!-- More cards ... -->
+    </div>
+  </sp-theme>
+  <script type="module">
+    import decorate from './spectrum-card.js';
+    document.querySelectorAll('.spectrum-card.block').forEach(decorate);
+  </script>
+</body>
+</html>
+```
 
 This approach lets you see the real Spectrum card rendering and interactivity before deploying to EDS.
 

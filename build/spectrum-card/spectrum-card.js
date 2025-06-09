@@ -29,18 +29,18 @@ export default function decorate(block) {
     // eslint-disable-next-line no-console
     console.debug('[spectrum-card] extracted rows', rows.map((r) => r.textContent));
 
-    const title = rows[0]?.textContent.trim() || SPECTRUM_CARD_CONFIG.DEFAULT_TITLE;
-    const description = rows[1]?.textContent.trim() || SPECTRUM_CARD_CONFIG.DEFAULT_DESCRIPTION;
-    const buttonText = rows[2]?.textContent.trim() || SPECTRUM_CARD_CONFIG.DEFAULT_BUTTON_TEXT;
-    const imageUrl = rows[3]?.textContent.trim();
+    const imageUrl = rows[0]?.textContent.trim();
+    const title = rows[1]?.textContent.trim() || SPECTRUM_CARD_CONFIG.DEFAULT_TITLE;
+    const description = rows[2]?.textContent.trim() || SPECTRUM_CARD_CONFIG.DEFAULT_DESCRIPTION;
+    const buttonText = rows[3]?.textContent.trim() || SPECTRUM_CARD_CONFIG.DEFAULT_BUTTON_TEXT;
 
     // Debug: log extracted content
     // eslint-disable-next-line no-console
     console.debug('[spectrum-card] content', {
+      imageUrl,
       title,
       description,
       buttonText,
-      imageUrl,
     });
 
     block.textContent = '';
