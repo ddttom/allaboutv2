@@ -10,7 +10,7 @@ Spectrum Web Components follow Adobe's design system and are built on web standa
 - Keyboard and screen reader support
 - Easy integration with EDS's block-based architecture
 
-## Building a Spectrum Card Block (Image First)
+## Building a Spectrum Card Block
 
 A typical build structure:
 
@@ -21,7 +21,7 @@ A typical build structure:
 ├── package.json
 ├── vite.config.js
 
-### spectrum-card.js (latest version)
+### spectrum-card.js
 
 ```js
 import '@spectrum-web-components/theme/sp-theme.js';
@@ -95,7 +95,7 @@ export default function decorate(block) {
 }
 ```
 
-### Authoring Pattern (Image First)
+### Authoring Pattern
 
 | spectrum-card |
 | ------------- |

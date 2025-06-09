@@ -242,7 +242,6 @@ export default function decorate(block) {
     card.appendChild(descDiv);
     card.appendChild(footer);
     block.appendChild(card);
-
     // eslint-disable-next-line no-console
     console.debug('[spectrum-card] card appended to block');
   } catch (error) {

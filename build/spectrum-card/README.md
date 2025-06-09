@@ -6,11 +6,13 @@ A responsive card component built using Adobe Spectrum Web Components, providing
 - Responsive image handling with WebP/PNG/JPEG support
 - Adobe Spectrum design system integration
 - Accessible markup and keyboard navigation
-- Responsive grid layout
+- Responsive grid layout (auto-applied in all environments)
 - Support for varying content lengths
 - Special character handling
 - Lazy loading of images
 - **Footer and action button always visible with the 'standard' card variant**
+- **Theme context is always ensured via `<sp-theme>` for consistent styling**
+- **All layout and card CSS is injected from JS (no external CSS required)**
 
 ## Usage
 | Spectrum Card |
@@ -49,7 +51,7 @@ The block uses Adobe Spectrum CSS variables for theming:
 - Responsive design works across devices
 
 ## Dependencies
-- Adobe Spectrum Web Components
+- Adobe Spectrum Web Components (imported in JS)
   - @spectrum-web-components/theme
   - @spectrum-web-components/card
   - @spectrum-web-components/button
@@ -69,8 +71,9 @@ When creating content in Google Docs or Microsoft Word:
 The block uses Adobe Spectrum's design system for consistent styling:
 - Light theme by default
 - Medium scale for optimal readability
-- Responsive grid layout
+- Responsive grid layout (auto-applied)
 - Card-based design with proper spacing
+- **All CSS is injected from JS; no external CSS file is needed**
 
 ## Behavior
 - Images load lazily for better performance
@@ -83,15 +86,18 @@ Common issues and solutions:
 1. **Action button not visible:**
    - Ensure the card variant is set to `standard`. The `quiet` variant does not display the footer slot.
    - Verify Spectrum Web Components are properly imported.
-2. Images not loading
+2. **Cards not styled or grid not applied:**
+   - Ensure the JS is loaded and running; all CSS and grid layout are injected from JS.
+   - Theme context is auto-injected via `<sp-theme>` if missing.
+3. Images not loading
    - Verify image URLs are correct
    - Check image format support
    - Ensure proper DAM permissions
-3. Layout issues
+4. Layout issues
    - Check container width
    - Verify grid container settings
    - Ensure proper spacing variables
-4. Theme not applying
+5. Theme not applying
    - Verify Spectrum dependencies are loaded
    - Check theme and scale imports
    - Ensure proper class names
