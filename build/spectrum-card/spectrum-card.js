@@ -11,6 +11,14 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-arrow-right.js';
 
 // Inject Spectrum Card CSS into the document head (only once)
 const SPECTRUM_CARD_CSS = `
+.spectrum-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
 .spectrum-card {
   --card-padding: 1rem;
   --card-border-radius: 4px;
@@ -102,9 +110,38 @@ const CONFIG = {
  */
 export default function decorate(block) {
   injectSpectrumCardCSS();
-  // eslint-disable-next-line no-console
-  console.debug('[spectrum-card] decorate called', block);
 
+  // Ensure all .spectrum-card.block elements are wrapped in a .spectrum-card-grid for consistent layout
+  const section = block.closest('.section') || block.parentElement;
+  let grid = section.querySelector('.spectrum-card-grid');
+  if (!grid) {
+    grid = document.createElement('div');
+    grid.className = 'spectrum-card-grid';
+    // Move all .spectrum-card.block siblings into the grid
+    const cards = Array.from(section.querySelectorAll('.spectrum-card.block'));
+    cards.forEach((card) => {
+      grid.appendChild(card);
+    });
+    // Insert the grid at the position of the first card
+    const hasCards = cards.length > 0;
+    let hasParent = false;
+    if (hasCards) {
+      hasParent = !!cards[0].parentElement;
+    }
+    const gridIsNotParent = hasCards && hasParent && cards[0].parentElement !== grid;
+    if (gridIsNotParent) {
+      const firstCard = cards[0];
+      const parent = firstCard.parentElement;
+      parent.insertBefore(grid, firstCard);
+    } else if (!grid.parentElement) {
+      section.appendChild(grid);
+    }
+  } else if (!block.parentElement.classList.contains('spectrum-card-grid')) {
+    // If the block is not already in the grid, move it
+    grid.appendChild(block);
+  }
+
+  // --- Card rendering logic ---
   try {
     // Get all rows from the block
     const rows = Array.from(block.children);
