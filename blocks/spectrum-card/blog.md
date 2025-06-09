@@ -29,5 +29,8 @@ The Spectrum Card block is a modern, responsive card component for Franklin/EDS 
 - **Cards not styled or grid not applied?** Ensure the JS is loaded and running; all CSS and grid layout are injected from JS. Theme context is auto-injected via `<sp-theme>` if missing.
 - Check that all Spectrum Web Components are properly imported and available in your build.
 
+## Developer Notes
+- The implementation includes debug logging (console.debug) to aid development and troubleshooting. These logs can be removed or silenced for production deployments.
+
 ## Summary
 The Spectrum Card block is a robust, accessible, and visually consistent solution for card-based layouts in Franklin/EDS projects. With the latest updates, it now guarantees consistent styling and layout in all environments, with no need for external CSS files. 

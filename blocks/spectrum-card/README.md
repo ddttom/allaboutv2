@@ -128,4 +128,7 @@ The block supports different content types:
 - Use appropriate image formats (WebP with fallbacks)
 - Keep descriptions concise
 - Monitor lazy loading behavior
-- Test grid performance with many cards 
+- Test grid performance with many cards
+
+## Developer Notes
+- The implementation includes debug logging (console.debug) to aid development and troubleshooting. These logs can be removed or silenced for production deployments. 
