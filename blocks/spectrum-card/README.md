@@ -110,3 +110,16 @@ Common issues and solutions:
 - Keep descriptions concise
 - Monitor lazy loading behavior
 - Test grid performance with many cards
+
+## Variations
+The block supports different content types:
+- Basic cards with minimal content
+- Cards with long descriptions
+- Cards with special characters
+
+## Performance Considerations
+- Optimize images before uploading to DAM
+- Use appropriate image formats (WebP with fallbacks)
+- Keep descriptions concise
+- Monitor lazy loading behavior
+- Test grid performance with many cards 
