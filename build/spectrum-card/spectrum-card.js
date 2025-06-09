@@ -9,6 +9,21 @@ import '@spectrum-web-components/card/sp-card.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-arrow-right.js';
 
+// Ensure the page is wrapped in <sp-theme> for consistent Spectrum styling
+function ensureThemeContext() {
+  if (!document.querySelector('sp-theme')) {
+    const theme = document.createElement('sp-theme');
+    theme.setAttribute('color', 'light');
+    theme.setAttribute('scale', 'medium');
+    theme.setAttribute('system', 'spectrum');
+    // Move all body children into the theme
+    while (document.body.firstChild) {
+      theme.appendChild(document.body.firstChild);
+    }
+    document.body.appendChild(theme);
+  }
+}
+
 // Inject Spectrum Card CSS into the document head (only once)
 const SPECTRUM_CARD_CSS = `
 .spectrum-card-grid {
@@ -109,35 +124,44 @@ const CONFIG = {
  * @param {HTMLElement} block - The block element to decorate
  */
 export default function decorate(block) {
+  ensureThemeContext();
   injectSpectrumCardCSS();
 
   // Ensure all .spectrum-card.block elements are wrapped in a .spectrum-card-grid for consistent layout
   const section = block.closest('.section') || block.parentElement;
   let grid = section.querySelector('.spectrum-card-grid');
+  const cards = Array.from(section.querySelectorAll('.spectrum-card.block'));
+  const hasCards = cards.length > 0;
+  let hasParent = false;
+  if (hasCards) {
+    hasParent = !!cards[0].parentElement;
+  }
+  let gridIsNotParent = false;
+  if (hasCards && hasParent) {
+    gridIsNotParent = cards[0].parentElement !== grid;
+  }
   if (!grid) {
     grid = document.createElement('div');
     grid.className = 'spectrum-card-grid';
-    // Move all .spectrum-card.block siblings into the grid
-    const cards = Array.from(section.querySelectorAll('.spectrum-card.block'));
     cards.forEach((card) => {
       grid.appendChild(card);
     });
-    // Insert the grid at the position of the first card
-    const hasCards = cards.length > 0;
-    let hasParent = false;
-    if (hasCards) {
-      hasParent = !!cards[0].parentElement;
-    }
-    const gridIsNotParent = hasCards && hasParent && cards[0].parentElement !== grid;
-    if (gridIsNotParent) {
+    if (!grid.parentElement) {
+      section.appendChild(grid);
+    } else if (
+      hasCards
+      && hasParent
+      && cards[0].parentElement !== grid
+      && grid !== section
+    ) {
+      // Only insertBefore if grid is not already the parent and not already in the section
       const firstCard = cards[0];
       const parent = firstCard.parentElement;
-      parent.insertBefore(grid, firstCard);
-    } else if (!grid.parentElement) {
-      section.appendChild(grid);
+      if (parent !== grid && parent !== null && grid !== parent) {
+        parent.insertBefore(grid, firstCard);
+      }
     }
-  } else if (!block.parentElement.classList.contains('spectrum-card-grid')) {
-    // If the block is not already in the grid, move it
+  } else if (gridIsNotParent) {
     grid.appendChild(block);
   }
 
