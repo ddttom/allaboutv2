@@ -21,7 +21,7 @@ A typical build structure:
 ├── package.json
 ├── vite.config.js
 
-### spectrum-card.js (latest version)
+### spectrum-card.js
 
 `// spectrum-card.js`
 import '@spectrum-web-components/theme/sp-theme.js';
@@ -132,7 +132,7 @@ This approach lets you see the real Spectrum card rendering and interactivity be
 
 **Note:** Always set `system="spectrum"` on `<sp-theme>` to avoid console warnings and ensure explicit theme delivery.
 
-### Vite Config (unchanged)
+### Vite Config
 
 `import { defineConfig } from 'vite';`
 `export default defineConfig({`
