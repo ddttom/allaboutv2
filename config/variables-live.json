@@ -9,7 +9,7 @@
       },
       {
         "Item": "$system:enabletracking$",
-        "Value": "y"
+        "Value": "n"
       },
       {
         "Item": "$system:enableslowtracking$",
