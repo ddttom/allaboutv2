@@ -16,6 +16,6 @@ export default function decorate(block) {
 
   const link = document.createElement('link');
   link.rel = 'stylesheet';
-  link.href = '/static/css/slide-builder-main.css'; // Your built CSS file
+  link.href = '/static/css/slide-builder-main.css';
   document.head.appendChild(link);
 }
