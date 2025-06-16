@@ -4,6 +4,23 @@
 
 This document explains the minimal Node.js development server (`server.js`) designed for testing and developing EDS (Edge Delivery Services) components locally. The server provides local file serving with automatic fallback to a remote proxy, making it ideal for testing blocks and components in isolation.
 
+## Dependencies
+
+The development server has **zero external dependencies** and uses only Node.js built-in modules:
+
+- **`http`** - Creates the HTTP server
+- **`fs/promises`** - File system operations (readFile, access)
+- **`path`** - Path manipulation utilities (join, extname, dirname)
+- **`url`** - URL utilities (fileURLToPath)
+- **`fetch`** - HTTP requests for proxy functionality (built-in Node.js 18+)
+
+### Requirements
+
+- **Node.js 18+** (for built-in fetch support)
+- **No npm packages required** - completely self-contained
+
+This zero-dependency approach aligns with the project's philosophy of minimal tooling and maximum performance.
+
 ## Quick Start
 
 ```bash
