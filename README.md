@@ -104,6 +104,7 @@ Each block should include:
 ## Documentation
 
 - [Development Server Guide](docs/Server-README.md) - Comprehensive server documentation
+- [Block Debugging Guide](docs/debug.md) - Step-by-step debugging guide for AI assistants
 - [EDS Development Guide](docs/eds.txt) - Complete EDS development reference
 - [EDS Best Practices](docs/eds-appendix.txt) - Advanced patterns and techniques
 
