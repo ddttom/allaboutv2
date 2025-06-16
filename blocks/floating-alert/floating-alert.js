@@ -36,6 +36,8 @@ function dismissAlert(overlay) {
   if (modal) {
     modal.classList.add('floating-alert--dismissing');
   }
+  // Remove keyboard event listener
+  overlay.removeEventListener('keydown', overlay._keyHandler);
   setTimeout(() => {
     if (modal) {
       const sparkles = modal.querySelectorAll('.floating-alert-sparkle');
@@ -49,9 +51,9 @@ function dismissAlert(overlay) {
 }
 
 // Handle keyboard navigation
-function handleKeyboard(event, modal) {
+function handleKeyboard(event, modal, overlay) {
   if (event.key === 'Escape') {
-    dismissAlert(modal);
+    dismissAlert(overlay);
   } else if (event.key === 'Tab') {
     // Ensure focus stays within modal
     const focusableElements = modal.querySelectorAll(
@@ -72,7 +74,6 @@ function handleKeyboard(event, modal) {
 
 // Main decorate function
 export default async function decorate(block) {
-  // Check if alert was previously dismissed
   if (localStorage.getItem(FLOATING_ALERT_CONFIG.STORAGE_KEY) === 'true') {
     return;
   }
@@ -86,6 +87,7 @@ export default async function decorate(block) {
   modal.className = 'floating-alert';
   modal.setAttribute('role', 'alert');
   modal.setAttribute('aria-live', 'polite');
+  modal.tabIndex = 0; // Make modal focusable for accessibility
 
   // Create content wrapper
   const contentWrapper = document.createElement('div');
@@ -101,6 +103,7 @@ export default async function decorate(block) {
   closeButton.className = 'floating-alert-close';
   closeButton.setAttribute('aria-label', 'Dismiss alert');
   closeButton.innerHTML = '×';
+  closeButton.type = 'button';
   closeButton.addEventListener('click', () => dismissAlert(overlay));
 
   // Add elements to modal
@@ -116,8 +119,14 @@ export default async function decorate(block) {
   // Add sparkle effect and store interval id for cleanup
   modal._sparkleIntervalId = addSparkleEffect(modal);
 
-  // Add keyboard event listener
-  modal.addEventListener('keydown', (event) => handleKeyboard(event, modal));
+  // Keyboard event handler
+  overlay._keyHandler = function (event) {
+    handleKeyboard(event, modal, overlay);
+  };
+  overlay.addEventListener('keydown', overlay._keyHandler);
+
+  // Focus modal for keyboard events
+  modal.focus();
 
   // Add click outside listener (on overlay)
   overlay.addEventListener('click', (event) => {
@@ -125,7 +134,4 @@ export default async function decorate(block) {
       dismissAlert(overlay);
     }
   });
-
-  // Focus the close button for keyboard navigation
-  closeButton.focus();
 }
