@@ -36,8 +36,11 @@ function dismissAlert(overlay) {
   if (modal) {
     modal.classList.add('floating-alert--dismissing');
   }
-  // Remove keyboard event listener
-  overlay.removeEventListener('keydown', overlay._keyHandler);
+  // Remove keyboard event listener from document
+  if (overlay._keyHandler) {
+    document.removeEventListener('keydown', overlay._keyHandler);
+    overlay._keyHandler = null;
+  }
   setTimeout(() => {
     if (modal) {
       const sparkles = modal.querySelectorAll('.floating-alert-sparkle');
@@ -119,18 +122,19 @@ export default async function decorate(block) {
   // Add sparkle effect and store interval id for cleanup
   modal._sparkleIntervalId = addSparkleEffect(modal);
 
-  // Keyboard event handler
+  // Keyboard event handler - attach to document for proper ESC key handling
   overlay._keyHandler = function (event) {
     handleKeyboard(event, modal, overlay);
   };
-  overlay.addEventListener('keydown', overlay._keyHandler);
+  document.addEventListener('keydown', overlay._keyHandler);
 
   // Focus modal for keyboard events
   modal.focus();
 
   // Add click outside listener (on overlay)
   overlay.addEventListener('click', (event) => {
-    if (event.target === overlay) {
+    // Check if click is on overlay itself or outside the modal
+    if (event.target === overlay || !modal.contains(event.target)) {
       dismissAlert(overlay);
     }
   });
