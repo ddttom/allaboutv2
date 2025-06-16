@@ -57,7 +57,7 @@ async function serveLocalFile(filePath, res) {
   }
 }
 
-// Proxy request to alabout.network
+// Proxy request to config's proxy host
 async function proxyRequest(url, res) {
   try {
     const proxyUrl = `${PROXY_HOST}${url}`;

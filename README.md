@@ -82,6 +82,7 @@ Each block should include:
 - `blockname.js` - Core functionality
 - `blockname.css` - Block-specific styles
 - `README.md` - Documentation and usage examples
+- 'EXAMPLE.md' - a markdown example, ready to paste into Gdocs
 - `test.html` - Development test file
 
 ### CSS Best Practices
@@ -108,7 +109,7 @@ Each block should include:
 
 ## Security and Performance
 
-- No build process required
+- No build process required, if components need build use a separate repo - see https://github.com/ddttom/spectrum-with-eds
 - Zero dependencies for core functionality
 - Optimized for Core Web Vitals
 - Security through proper application hardening
@@ -122,11 +123,11 @@ When contributing to this project:
 2. Maintain the focus on simplicity and performance
 3. Document all new blocks and components
 4. Test thoroughly using the development server
-5. Ensure code passes linting requirements
+5. Test thoroughly on EDS
+6. Ensure code passes linting requirements
 
 ## Notes
 
 - Do not use placeholders in markdown documents
-- Tests are only added when specifically requested
 - All code should be production-ready and well-documented
 - Focus on solving real problems with simple, effective solutions
