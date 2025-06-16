@@ -17,18 +17,31 @@ function createSparkle() {
 
 // Add sparkle animation
 function addSparkleEffect(container) {
-  setInterval(() => {
+  // Store interval id for later cleanup
+  const intervalId = setInterval(() => {
     const sparkle = createSparkle();
     container.appendChild(sparkle);
     setTimeout(() => sparkle.remove(), FLOATING_ALERT_CONFIG.SPARKLE_DURATION);
   }, FLOATING_ALERT_CONFIG.SPARKLE_INTERVAL);
+  return intervalId;
 }
 
 // Dismiss the alert
 function dismissAlert(modal) {
+  // Remove sparkle interval if set
+  if (modal._sparkleIntervalId) {
+    clearInterval(modal._sparkleIntervalId);
+    modal._sparkleIntervalId = null;
+  }
   modal.classList.add('floating-alert--dismissing');
   setTimeout(() => {
-    modal.remove();
+    // Remove all sparkles if any remain
+    const sparkles = modal.querySelectorAll('.floating-alert-sparkle');
+    sparkles.forEach((el) => el.remove());
+    // Remove modal from DOM
+    if (modal.parentNode) {
+      modal.parentNode.removeChild(modal);
+    }
     localStorage.setItem(FLOATING_ALERT_CONFIG.STORAGE_KEY, 'true');
   }, FLOATING_ALERT_CONFIG.ANIMATION_DURATION);
 }
@@ -91,8 +104,8 @@ export default async function decorate(block) {
   // Add to document
   document.body.appendChild(modal);
 
-  // Add sparkle effect
-  addSparkleEffect(modal);
+  // Add sparkle effect and store interval id for cleanup
+  modal._sparkleIntervalId = addSparkleEffect(modal);
 
   // Add keyboard event listener
   modal.addEventListener('keydown', (event) => handleKeyboard(event, modal));
