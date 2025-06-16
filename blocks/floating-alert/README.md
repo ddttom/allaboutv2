@@ -49,14 +49,15 @@ The block can be customized using CSS variables:
 
 ## Behavior
 
-1. The alert appears immediately when the page loads
+1. The alert appears immediately when the page loads as a modal overlay
 2. It can be dismissed by:
-   - Clicking the X button
-   - Clicking outside the modal
+   - Clicking the X button in the top-right corner
+   - Clicking outside the modal (on the overlay background)
    - Pressing the Escape key
-3. Once dismissed, it won't appear again until the page is refreshed
-4. The original content remains visible below the alert
-5. Links within the alert are fully functional
+3. Once dismissed, the modal content is restored to the original block location in the document
+4. The dismissal state is saved in localStorage - the modal won't appear again until localStorage is cleared
+5. Links within the alert are fully functional and clickable
+6. Complete DOM cleanup occurs when dismissed (no leftover elements)
 
 ## Performance
 
@@ -73,22 +74,38 @@ The block can be customized using CSS variables:
 - Supports backdrop-filter with fallback
 - Responsive design for all screen sizes
 
+## Recent Fixes & Improvements
+
+**Version 2.0 Updates:**
+- ✅ Fixed event listener issues - ESC key and click-outside now work properly
+- ✅ Resolved DOM cleanup problems - no leftover elements after dismissal
+- ✅ Improved content restoration - modal content is properly returned to the document when dismissed
+- ✅ Enhanced CSS structure - removed duplicate rules and fixed positioning conflicts
+- ✅ Better overlay styling - semi-transparent background for improved click detection
+- ✅ Optimized event handling - proper cleanup prevents memory leaks
+
 ## Troubleshooting
 
 1. If the alert doesn't appear:
-   - Check if it was previously dismissed (clear localStorage)
+   - Check if it was previously dismissed (clear localStorage with key 'floating-alert-dismissed')
    - Verify the block is properly placed in the document
    - Check browser console for errors
 
-2. If animations are not smooth:
+2. If dismissal methods don't work:
+   - Ensure no other scripts are interfering with event propagation
+   - Check that the modal overlay has the correct background styling
+   - Verify keyboard events are not being blocked by other elements
+
+3. If animations are not smooth:
    - Ensure the browser supports CSS transforms
    - Check for conflicting CSS
    - Verify no heavy scripts are running
 
-3. If accessibility features aren't working:
+4. If accessibility features aren't working:
    - Verify proper ARIA attributes
    - Test with screen readers
-   - Check keyboard navigation
+   - Check keyboard navigation</search>
+</search_and_replace>
 
 ## Authoring
 
@@ -110,12 +127,14 @@ When creating content in Google Docs or Microsoft Word:
 
 ## Performance Considerations
 
-- The alert uses minimal resources
-- Animations are hardware-accelerated
-- Sparkle effect is optimized for performance
+- The alert uses minimal resources with optimized DOM operations
+- Animations are hardware-accelerated using CSS transforms
+- Sparkle effect is optimized for performance with proper cleanup
 - No external dependencies to load
-- Efficient event handling
-- Minimal DOM operations
+- Efficient event handling with proper listener cleanup to prevent memory leaks
+- Complete DOM cleanup when dismissed - no leftover elements
+- Event listeners attached to document for better performance (ESC key handling)
+- Minimal CSS with no duplicate rules or conflicts
 
 ## Browser Support
 

@@ -27,7 +27,7 @@ function addSparkleEffect(container) {
 }
 
 // Dismiss the alert
-function dismissAlert(overlay) {
+function dismissAlert(overlay, originalBlock) {
   const modal = overlay.querySelector('.floating-alert');
   if (modal && modal._sparkleIntervalId) {
     clearInterval(modal._sparkleIntervalId);
@@ -45,6 +45,15 @@ function dismissAlert(overlay) {
     if (modal) {
       const sparkles = modal.querySelectorAll('.floating-alert-sparkle');
       sparkles.forEach((el) => el.remove());
+      
+      // Return the content back to the original block
+      const contentWrapper = modal.querySelector('.floating-alert-content');
+      if (contentWrapper && originalBlock) {
+        // Move all content back to the original block
+        while (contentWrapper.firstChild) {
+          originalBlock.appendChild(contentWrapper.firstChild);
+        }
+      }
     }
     if (overlay.parentNode) {
       overlay.parentNode.removeChild(overlay);
@@ -54,9 +63,9 @@ function dismissAlert(overlay) {
 }
 
 // Handle keyboard navigation
-function handleKeyboard(event, modal, overlay) {
+function handleKeyboard(event, modal, overlay, originalBlock) {
   if (event.key === 'Escape') {
-    dismissAlert(overlay);
+    dismissAlert(overlay, originalBlock);
   } else if (event.key === 'Tab') {
     // Ensure focus stays within modal
     const focusableElements = modal.querySelectorAll(
@@ -107,7 +116,7 @@ export default async function decorate(block) {
   closeButton.setAttribute('aria-label', 'Dismiss alert');
   closeButton.innerHTML = '×';
   closeButton.type = 'button';
-  closeButton.addEventListener('click', () => dismissAlert(overlay));
+  closeButton.addEventListener('click', () => dismissAlert(overlay, block));
 
   // Add elements to modal
   modal.appendChild(contentWrapper);
@@ -124,7 +133,7 @@ export default async function decorate(block) {
 
   // Keyboard event handler - attach to document for proper ESC key handling
   overlay._keyHandler = function (event) {
-    handleKeyboard(event, modal, overlay);
+    handleKeyboard(event, modal, overlay, block);
   };
   document.addEventListener('keydown', overlay._keyHandler);
 
@@ -135,7 +144,7 @@ export default async function decorate(block) {
   overlay.addEventListener('click', (event) => {
     // Check if click is on overlay itself or outside the modal
     if (event.target === overlay || !modal.contains(event.target)) {
-      dismissAlert(overlay);
+      dismissAlert(overlay, block);
     }
   });
 }
