@@ -1,0 +1,144 @@
+/* Floating Alert Block Configuration */
+.floating-alert {
+  --alert-bg-color: rgba(255, 165, 0, 0.15);
+  --alert-border-color: rgba(255, 165, 0, 0.3);
+  --alert-text-color: #333;
+  --alert-shadow-color: rgba(0, 0, 0, 0.1);
+  --alert-sparkle-color: rgba(255, 255, 255, 0.8);
+  --alert-transition-duration: 0.3s;
+  --alert-border-radius: 12px;
+  --alert-max-width: 600px;
+  --alert-padding: 1.5rem;
+  --alert-backdrop-blur: 10px;
+}
+
+/* Base Modal Styles */
+.floating-alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background: var(--alert-bg-color);
+  -webkit-backdrop-filter: blur(var(--alert-backdrop-blur));
+  backdrop-filter: blur(var(--alert-backdrop-blur));
+  border: 1px solid var(--alert-border-color);
+  border-radius: var(--alert-border-radius);
+  box-shadow: 0 8px 32px var(--alert-shadow-color);
+  padding: var(--alert-padding);
+  max-width: var(--alert-max-width);
+  width: 90%;
+  color: var(--alert-text-color);
+  opacity: 0;
+  animation: floating-alert-fade-in var(--alert-transition-duration) forwards;
+  overflow: hidden;
+}
+
+/* Content Styles */
+.floating-alert-content {
+  position: relative;
+  z-index: 1;
+}
+
+.floating-alert-content a {
+  color: var(--alert-text-color);
+  text-decoration: underline;
+  transition: opacity 0.2s ease;
+}
+
+.floating-alert-content a:hover {
+  opacity: 0.8;
+}
+
+/* Close Button Styles */
+.floating-alert-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  color: var(--alert-text-color);
+  font-size: 1.5rem;
+  line-height: 1;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+  z-index: 2;
+}
+
+.floating-alert-close:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.floating-alert-close:focus {
+  outline: 2px solid var(--alert-text-color);
+  outline-offset: 2px;
+}
+
+/* Sparkle Effect */
+.floating-alert-sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--alert-sparkle-color);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: floating-alert-sparkle 1s ease-out forwards;
+}
+
+/* Animations */
+@keyframes floating-alert-fade-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes floating-alert-fade-out {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -48%);
+  }
+}
+
+@keyframes floating-alert-sparkle {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* Dismissing State */
+.floating-alert--dismissing {
+  animation: floating-alert-fade-out var(--alert-transition-duration) forwards;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 480px) {
+  .floating-alert {
+    --alert-padding: 1rem;
+    --alert-max-width: 90%;
+  }
+}
+
+/* Focus Styles for Accessibility */
+.floating-alert:focus-within {
+  outline: 2px solid var(--alert-text-color);
+  outline-offset: 2px;
+} 
