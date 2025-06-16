@@ -27,20 +27,22 @@ function addSparkleEffect(container) {
 }
 
 // Dismiss the alert
-function dismissAlert(modal) {
-  // Remove sparkle interval if set
-  if (modal._sparkleIntervalId) {
+function dismissAlert(overlay) {
+  const modal = overlay.querySelector('.floating-alert');
+  if (modal && modal._sparkleIntervalId) {
     clearInterval(modal._sparkleIntervalId);
     modal._sparkleIntervalId = null;
   }
-  modal.classList.add('floating-alert--dismissing');
+  if (modal) {
+    modal.classList.add('floating-alert--dismissing');
+  }
   setTimeout(() => {
-    // Remove all sparkles if any remain
-    const sparkles = modal.querySelectorAll('.floating-alert-sparkle');
-    sparkles.forEach((el) => el.remove());
-    // Remove modal from DOM
-    if (modal.parentNode) {
-      modal.parentNode.removeChild(modal);
+    if (modal) {
+      const sparkles = modal.querySelectorAll('.floating-alert-sparkle');
+      sparkles.forEach((el) => el.remove());
+    }
+    if (overlay.parentNode) {
+      overlay.parentNode.removeChild(overlay);
     }
     localStorage.setItem(FLOATING_ALERT_CONFIG.STORAGE_KEY, 'true');
   }, FLOATING_ALERT_CONFIG.ANIMATION_DURATION);
@@ -75,6 +77,10 @@ export default async function decorate(block) {
     return;
   }
 
+  // Create overlay
+  const overlay = document.createElement('div');
+  overlay.className = 'floating-alert-overlay';
+
   // Create modal container
   const modal = document.createElement('div');
   modal.className = 'floating-alert';
@@ -95,14 +101,17 @@ export default async function decorate(block) {
   closeButton.className = 'floating-alert-close';
   closeButton.setAttribute('aria-label', 'Dismiss alert');
   closeButton.innerHTML = '×';
-  closeButton.addEventListener('click', () => dismissAlert(modal));
+  closeButton.addEventListener('click', () => dismissAlert(overlay));
 
   // Add elements to modal
   modal.appendChild(contentWrapper);
   modal.appendChild(closeButton);
 
-  // Add to document
-  document.body.appendChild(modal);
+  // Add modal to overlay
+  overlay.appendChild(modal);
+
+  // Add overlay to document
+  document.body.appendChild(overlay);
 
   // Add sparkle effect and store interval id for cleanup
   modal._sparkleIntervalId = addSparkleEffect(modal);
@@ -110,10 +119,10 @@ export default async function decorate(block) {
   // Add keyboard event listener
   modal.addEventListener('keydown', (event) => handleKeyboard(event, modal));
 
-  // Add click outside listener
-  modal.addEventListener('click', (event) => {
-    if (event.target === modal) {
-      dismissAlert(modal);
+  // Add click outside listener (on overlay)
+  overlay.addEventListener('click', (event) => {
+    if (event.target === overlay) {
+      dismissAlert(overlay);
     }
   });
 

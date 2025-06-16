@@ -32,12 +32,15 @@
   opacity: 0;
   animation: floating-alert-fade-in var(--alert-transition-duration) forwards;
   overflow: hidden;
+  position: relative;
 }
 
 /* Content Styles */
 .floating-alert-content {
   position: relative;
   z-index: 1;
+  padding-top: 2.5rem;
+  padding-right: 2.5rem;
 }
 
 .floating-alert-content a {
@@ -141,4 +144,23 @@
 .floating-alert:focus-within {
   outline: 2px solid var(--alert-text-color);
   outline-offset: 2px;
+}
+
+/* Overlay Styles */
+.floating-alert-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: transparent;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Modal should be above overlay */
+.floating-alert {
+  z-index: 1000;
 } 
