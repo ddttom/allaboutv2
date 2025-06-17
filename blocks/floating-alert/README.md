@@ -5,6 +5,7 @@ A modern, accessible floating alert block that displays important messages in a 
 ## Features
 
 - Immediate appearance on page load with smooth animations
+- **Automatic heading processing** - extracts headings (h1-h6) as alert titles with horizontal rule separator
 - Glassmorphic styling with sparkle effects
 - Responsive design that works on all screen sizes
 - Full keyboard navigation support
@@ -17,9 +18,17 @@ A modern, accessible floating alert block that displays important messages in a 
 
 ## Usage
 
+### Basic Alert (without heading)
 | Floating Alert |
 | -------------- |
 | Your important message here. You can include [links](https://example.com) in the text. |
+
+### Alert with Heading (recommended)
+| Floating Alert |
+| -------------- |
+| ## Important Notice<br>Your important message here. You can include [links](https://example.com) in the text. |
+
+**Note:** When you include a heading (h1-h6) in your content, it will automatically be extracted as the alert title and displayed prominently at the top, followed by a horizontal rule separator, then the remaining content.
 
 ## Configuration
 
@@ -76,13 +85,13 @@ The block can be customized using CSS variables:
 
 ## Recent Fixes & Improvements
 
-**Version 2.0 Updates:**
-- ✅ Fixed event listener issues - ESC key and click-outside now work properly
-- ✅ Resolved DOM cleanup problems - no leftover elements after dismissal
-- ✅ Improved content restoration - modal content is properly returned to the document when dismissed
-- ✅ Enhanced CSS structure - removed duplicate rules and fixed positioning conflicts
-- ✅ Better overlay styling - semi-transparent background for improved click detection
-- ✅ Optimized event handling - proper cleanup prevents memory leaks
+**Version 1.3 Updates:**
+- ✅ **Added heading processing** - automatically extracts headings (h1-h6) as alert titles
+- ✅ **Enhanced visual hierarchy** - headings displayed prominently with horizontal rule separator
+- ✅ **Improved content structure** - maintains both original content and formatted alert display
+- ✅ **Fixed EDS compatibility** - proper content extraction from nested block structure
+- ✅ **Enhanced debugging** - comprehensive logging for troubleshooting
+- ✅ **Better HR styling** - visible horizontal rule separator with improved contrast
 
 ## Troubleshooting
 
@@ -112,10 +121,16 @@ The block can be customized using CSS variables:
 When creating content in Google Docs or Microsoft Word:
 
 1. Use a single table with one cell
-2. Include your message in the cell
-3. Add links using standard markdown syntax
-4. Keep the message concise and clear
-5. Use proper heading hierarchy if needed
+2. **Optional:** Start with a heading (Heading 1-6) for the alert title
+3. Include your message content below the heading
+4. Add links using standard markdown syntax
+5. Keep the message concise and clear
+
+**Heading Processing:**
+- If you include a heading (h1-h6), it will be automatically extracted as the alert title
+- The heading will appear prominently at the top of the modal
+- A horizontal rule will separate the heading from the content
+- The remaining content will appear below the separator
 
 ## Suggestions
 

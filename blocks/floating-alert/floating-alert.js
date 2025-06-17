@@ -1,4 +1,4 @@
-// version 1.2 - Fixed EDS block structure handling
+// version 1.3 - Added heading processing with horizontal rule separator
 
 // Configuration for the floating alert block
 const FLOATING_ALERT_CONFIG = {
@@ -89,6 +89,53 @@ function dismissAlert(overlay, originalBlock) {
   }, FLOATING_ALERT_CONFIG.ANIMATION_DURATION);
 }
 
+// Process content and handle headings with proper formatting
+function processContentWithHeadings(contentSource) {
+  const container = document.createElement('div');
+  const headings = contentSource.querySelectorAll('h1, h2, h3, h4, h5, h6');
+  
+  if (headings.length > 0) {
+    // Extract the first heading as the alert title
+    const firstHeading = headings[0];
+    const headingText = firstHeading.textContent.trim();
+    
+    console.log('Floating Alert: Found heading:', headingText);
+    
+    // Create title element
+    const titleElement = document.createElement('h2');
+    titleElement.className = 'floating-alert-title';
+    titleElement.textContent = headingText;
+    container.appendChild(titleElement);
+    
+    // Add horizontal rule
+    const hr = document.createElement('hr');
+    hr.className = 'floating-alert-separator';
+    console.log('Floating Alert: Created HR element:', hr);
+    container.appendChild(hr);
+    console.log('Floating Alert: HR element added to container');
+    
+    // Clone all content and remove the first heading from the clone
+    const contentClone = contentSource.cloneNode(true);
+    const headingInClone = contentClone.querySelector('h1, h2, h3, h4, h5, h6');
+    if (headingInClone) {
+      headingInClone.remove();
+    }
+    
+    // Move remaining content
+    while (contentClone.firstChild) {
+      container.appendChild(contentClone.firstChild);
+    }
+  } else {
+    // No headings found, move content as-is
+    console.log('Floating Alert: No headings found, processing content normally');
+    while (contentSource.firstChild) {
+      container.appendChild(contentSource.firstChild);
+    }
+  }
+  
+  return container;
+}
+
 // Handle keyboard navigation
 function handleKeyboard(event, modal, overlay, originalBlock) {
   if (event.key === 'Escape') {
@@ -148,11 +195,11 @@ export default async function decorate(block) {
   const firstDiv = block.querySelector('div');
   if (firstDiv) {
     const secondDiv = firstDiv.querySelector('div');
-    if (secondDiv && secondDiv.children.length > 0) {
+    if (secondDiv && (secondDiv.children.length > 0 || secondDiv.textContent.trim())) {
       // Use the second level div as content source if it has content
       contentSource = secondDiv;
       console.log('Floating Alert: Using nested div as content source');
-    } else if (firstDiv.children.length > 0) {
+    } else if (firstDiv.children.length > 0 || firstDiv.textContent.trim()) {
       // Use the first level div as content source
       contentSource = firstDiv;
       console.log('Floating Alert: Using first div as content source');
@@ -162,12 +209,11 @@ export default async function decorate(block) {
   console.log('Floating Alert: Content source selected:', contentSource);
   console.log('Floating Alert: Content source innerHTML:', contentSource.innerHTML);
 
-  // Move content from the identified source to modal
-  while (contentSource.firstChild) {
-    contentWrapper.appendChild(contentSource.firstChild);
-  }
+  // Process content and handle headings
+  const processedContent = processContentWithHeadings(contentSource);
+  contentWrapper.appendChild(processedContent);
   
-  console.log('Floating Alert: Content moved to wrapper:', contentWrapper.innerHTML);
+  console.log('Floating Alert: Content processed and moved to wrapper:', contentWrapper.innerHTML);
 
   // Create close button
   const closeButton = document.createElement('button');
@@ -214,6 +260,20 @@ export default async function decorate(block) {
   });
   console.log('Floating Alert: Click outside listener added');
   console.log('Floating Alert: Modal setup complete - should be visible now');
+  
+  // Additional debugging - check if modal is visible
+  setTimeout(() => {
+    const overlayInDOM = document.querySelector('.floating-alert-overlay');
+    const modalInDOM = document.querySelector('.floating-alert');
+    console.log('Floating Alert: Overlay in DOM:', overlayInDOM);
+    console.log('Floating Alert: Modal in DOM:', modalInDOM);
+    if (modalInDOM) {
+      const computedStyle = window.getComputedStyle(modalInDOM);
+      console.log('Floating Alert: Modal opacity:', computedStyle.opacity);
+      console.log('Floating Alert: Modal display:', computedStyle.display);
+      console.log('Floating Alert: Modal visibility:', computedStyle.visibility);
+    }
+  }, 100);
 }
 
 // Utility function for debugging - can be called from browser console
@@ -227,13 +287,24 @@ window.floatingAlertDebug = {
     console.log('Floating Alert: Dismissed status:', dismissed);
     return dismissed;
   },
+  checkDOM: () => {
+    const blocks = document.querySelectorAll('.floating-alert.block');
+    const overlays = document.querySelectorAll('.floating-alert-overlay');
+    const modals = document.querySelectorAll('.floating-alert');
+    console.log('Floating Alert: Blocks found:', blocks.length, blocks);
+    console.log('Floating Alert: Overlays found:', overlays.length, overlays);
+    console.log('Floating Alert: Modals found:', modals.length, modals);
+    if (blocks.length > 0) {
+      console.log('Floating Alert: First block content:', blocks[0].innerHTML);
+    }
+  },
   forceShow: () => {
     localStorage.removeItem(FLOATING_ALERT_CONFIG.STORAGE_KEY);
     const blocks = document.querySelectorAll('.floating-alert.block');
     if (blocks.length > 0) {
       console.log('Floating Alert: Found', blocks.length, 'floating-alert blocks, re-decorating...');
       blocks.forEach(block => {
-        // Clear the block content and re-run decorate
+        // Clear existing overlays
         const existingOverlay = document.querySelector('.floating-alert-overlay');
         if (existingOverlay) {
           existingOverlay.remove();
