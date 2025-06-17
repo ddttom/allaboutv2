@@ -1,3 +1,5 @@
+// version 1.1
+
 // Configuration for the floating alert block
 const FLOATING_ALERT_CONFIG = {
   STORAGE_KEY: 'floating-alert-dismissed',
