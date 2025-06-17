@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Floating Alert Test</title>
+    <title>Floating Alert Test - EDS Structure</title>
     <link rel="stylesheet" href="floating-alert.css">
     <style>
         body {
@@ -35,12 +35,14 @@
 </head>
 <body>
     <div class="test-content">
-        <h1>Floating Alert Test Page</h1>
-        <p>This page tests the floating alert modal functionality.</p>
+        <h1>Floating Alert Test Page - EDS Structure</h1>
+        <p>This page tests the floating alert modal functionality using the same block structure as EDS (Edge Delivery Services).</p>
         
-        <div class="floating-alert-block">
+        <div class="floating-alert block" data-block-name="floating-alert" data-block-status="initialized">
             <div>
-                <div>🎉 Welcome to our website! Please take a moment to review our <a href="#privacy">updated privacy policy</a>. This is a test of the floating alert modal with multiple lines of content to ensure it displays properly.</div>
+                <div>
+                    <p>🎉 Welcome to our website! Please take a moment to review our <a href="#privacy">updated privacy policy</a>. This is a test of the floating alert modal with multiple lines of content to ensure it displays properly.</p>
+                </div>
             </div>
         </div>
 
@@ -73,7 +75,7 @@
         
         // Initialize the floating alert
         document.addEventListener('DOMContentLoaded', () => {
-            const block = document.querySelector('.floating-alert-block');
+            const block = document.querySelector('.floating-alert.block');
             if (block) {
                 decorate(block);
             }

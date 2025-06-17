@@ -20,7 +20,7 @@ This project is built using Adobe Edge Delivery Services (EDS) with a focus on s
 
 ### Development Server
 
-Start the development server for testing blocks and components:
+Start the development server designed to improve AI assistant workflows when testing blocks and components:
 
 ```bash
 npm run debug
@@ -28,9 +28,10 @@ npm run debug
 
 The server will start on `http://localhost:3000` and provide:
 - Local file serving with automatic proxy fallback to `https://allabout.network`
-- Support for testing EDS blocks in isolation
-- Comprehensive MIME type support
+- Support for testing EDS blocks in isolation with immediate feedback
+- Comprehensive MIME type support and clear error reporting
 - CORS headers for cross-origin requests
+- Enhanced logging to help AI assistants understand request flow and debug issues
 
 ### Testing Blocks
 
@@ -43,6 +44,8 @@ blocks/your-block/
 ├── README.md
 └── test.html
 ```
+
+**Important**: Test files must use the exact same block structure as EDS to ensure compatibility between local testing and production deployment. Use `.block-name.block` class structure with proper data attributes.
 
 Access your tests at: `http://localhost:3000/blocks/your-block/test.html`
 
@@ -105,8 +108,9 @@ Each block should include:
 
 - [Development Server Guide](docs/Server-README.md) - Comprehensive server documentation
 - [Block Debugging Guide](docs/debug.md) - Step-by-step debugging guide for AI assistants
-- [EDS Development Guide](docs/eds.txt) - Complete EDS development reference
-- [EDS Best Practices](docs/eds-appendix.txt) - Advanced patterns and techniques
+- [Fast EDS Development Tutorial](docs/blog.md) - Complete tutorial with real-world examples
+- [EDS Development Guide](docs/eds.md) - Complete EDS development reference
+- [EDS Best Practices](docs/eds-appendix.md) - Advanced patterns and techniques
 
 ## Security and Performance
 

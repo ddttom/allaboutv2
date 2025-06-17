@@ -1,10 +1,10 @@
 # Block Debugging Guide for AI Assistants
 
-This guide provides step-by-step instructions for AI assistants to debug and test EDS (Edge Delivery Services) blocks using the local development server.
+This guide provides step-by-step instructions for AI assistants to debug and test EDS (Edge Delivery Services) blocks using the local development server designed to improve AI assistant workflows.
 
 ## Overview
 
-The project includes a local development server (`server.js`) that enables testing blocks in isolation while maintaining EDS compatibility. This guide explains how to create test files and debug blocks effectively.
+The project includes a local development server (`server.js`) that significantly improves AI assistant effectiveness by enabling testing blocks in isolation while maintaining EDS compatibility. This guide explains how to create test files and debug blocks efficiently.
 
 ## Prerequisites
 
@@ -32,15 +32,17 @@ The project includes a local development server (`server.js`) that enables testi
 
 ## EDS Block Structure
 
-EDS blocks follow a specific structure that must be replicated in test files:
+EDS blocks follow a specific structure that must be replicated exactly in test files:
 
 ```
 blocks/block-name/
 ├── block-name.js          # Block JavaScript (ES module)
 ├── block-name.css         # Block styles
 ├── README.md              # Documentation
-└── test.html              # Test file (create this)
+└── test.html              # Test file (MUST replicate EDS structure)
 ```
+
+**CRITICAL**: Test files must use the exact same block structure as EDS. The purpose of test files is to replicate the EDS environment locally - there is no alternative structure.
 
 ## Creating test.html Files
 
@@ -76,10 +78,12 @@ blocks/block-name/
     <div class="test-container">
         <h1>Block Name Test</h1>
         
-        <!-- EDS Block Structure -->
-        <div class="block-name-block">
+        <!-- EDS Block Structure (Exact Replication) -->
+        <div class="block-name block" data-block-name="block-name" data-block-status="initialized">
             <div>
-                <div>Your test content here</div>
+                <div>
+                    <p>Your test content here</p>
+                </div>
             </div>
         </div>
         
@@ -94,7 +98,7 @@ blocks/block-name/
         import decorate from './block-name.js';
         
         document.addEventListener('DOMContentLoaded', () => {
-            const block = document.querySelector('.block-name-block');
+            const block = document.querySelector('.block-name.block');
             if (block) {
                 decorate(block);
             }
@@ -104,12 +108,13 @@ blocks/block-name/
 </html>
 ```
 
-### EDS Block Naming Convention
+### EDS Block Structure Requirements
 
-**Critical:** Block CSS classes must follow EDS naming:
-- Block container: `.block-name-block`
-- Block wrapper: `.block-name-wrapper` (if used)
-- Block elements: `.block-name-element`
+**CRITICAL:** Block structure must exactly replicate EDS processing:
+- Block container: `.block-name.block` with `data-block-name="block-name"` and `data-block-status="initialized"`
+- Content wrapper: Nested `<div><div>content</div></div>` structure
+- Content elements: Use semantic HTML (`<p>`, `<h2>`, `<a>`, etc.)
+- JavaScript selector: Target `.block-name.block` (not `.block-name-block`)
 
 ### Content Structure
 
@@ -117,38 +122,58 @@ EDS blocks expect specific HTML structure. Common patterns:
 
 #### Simple Content Block
 ```html
-<div class="my-block-block">
+<div class="my-block block" data-block-name="my-block" data-block-status="initialized">
     <div>
-        <div>Single piece of content</div>
+        <div>
+            <p>Single piece of content</p>
+        </div>
     </div>
 </div>
 ```
 
 #### Multi-Column Block
 ```html
-<div class="my-block-block">
+<div class="my-block block" data-block-name="my-block" data-block-status="initialized">
     <div>
-        <div>Column 1 content</div>
-        <div>Column 2 content</div>
-        <div>Column 3 content</div>
+        <div>
+            <p>Column 1 content</p>
+        </div>
+        <div>
+            <p>Column 2 content</p>
+        </div>
+        <div>
+            <p>Column 3 content</p>
+        </div>
     </div>
 </div>
 ```
 
 #### Table-Based Block
 ```html
-<div class="my-block-block">
+<div class="my-block block" data-block-name="my-block" data-block-status="initialized">
     <div>
-        <div>Header 1</div>
-        <div>Header 2</div>
+        <div>
+            <p>Header 1</p>
+        </div>
+        <div>
+            <p>Header 2</p>
+        </div>
     </div>
     <div>
-        <div>Row 1, Col 1</div>
-        <div>Row 1, Col 2</div>
+        <div>
+            <p>Row 1, Col 1</p>
+        </div>
+        <div>
+            <p>Row 1, Col 2</p>
+        </div>
     </div>
     <div>
-        <div>Row 2, Col 1</div>
-        <div>Row 2, Col 2</div>
+        <div>
+            <p>Row 2, Col 1</p>
+        </div>
+        <div>
+            <p>Row 2, Col 2</p>
+        </div>
     </div>
 </div>
 ```
@@ -218,19 +243,27 @@ Common debugging steps:
 ### Testing with Multiple Instances
 
 ```html
-<div class="my-block-block">
-    <div><div>Instance 1 content</div></div>
+<div class="my-block block" data-block-name="my-block" data-block-status="initialized">
+    <div>
+        <div>
+            <p>Instance 1 content</p>
+        </div>
+    </div>
 </div>
 
-<div class="my-block-block">
-    <div><div>Instance 2 content</div></div>
+<div class="my-block block" data-block-name="my-block" data-block-status="initialized">
+    <div>
+        <div>
+            <p>Instance 2 content</p>
+        </div>
+    </div>
 </div>
 
 <script type="module">
     import decorate from './my-block.js';
     
     document.addEventListener('DOMContentLoaded', () => {
-        const blocks = document.querySelectorAll('.my-block-block');
+        const blocks = document.querySelectorAll('.my-block.block');
         blocks.forEach(block => decorate(block));
     });
 </script>
@@ -244,8 +277,12 @@ Common debugging steps:
     <button onclick="removeContent()">Remove Content</button>
 </div>
 
-<div class="my-block-block" id="test-block">
-    <div><div>Initial content</div></div>
+<div class="my-block block" data-block-name="my-block" data-block-status="initialized" id="test-block">
+    <div>
+        <div>
+            <p>Initial content</p>
+        </div>
+    </div>
 </div>
 
 <script type="module">
@@ -388,32 +425,40 @@ Here's a complete example for a hypothetical "card" block:
         
         <div class="test-section">
             <h2>Single Card</h2>
-            <div class="card-block">
+            <div class="card block" data-block-name="card" data-block-status="initialized">
                 <div>
-                    <div>Card Title</div>
-                    <div>Card description text goes here.</div>
-                    <div><a href="#test">Learn More</a></div>
+                    <div>
+                        <h3>Card Title</h3>
+                        <p>Card description text goes here.</p>
+                        <p><a href="#test">Learn More</a></p>
+                    </div>
                 </div>
             </div>
         </div>
         
         <div class="test-section">
             <h2>Multiple Cards</h2>
-            <div class="card-block">
+            <div class="card block" data-block-name="card" data-block-status="initialized">
                 <div>
-                    <div>Card 1 Title</div>
-                    <div>First card description.</div>
-                    <div><a href="#test1">Link 1</a></div>
+                    <div>
+                        <h3>Card 1 Title</h3>
+                        <p>First card description.</p>
+                        <p><a href="#test1">Link 1</a></p>
+                    </div>
                 </div>
                 <div>
-                    <div>Card 2 Title</div>
-                    <div>Second card description.</div>
-                    <div><a href="#test2">Link 2</a></div>
+                    <div>
+                        <h3>Card 2 Title</h3>
+                        <p>Second card description.</p>
+                        <p><a href="#test2">Link 2</a></p>
+                    </div>
                 </div>
                 <div>
-                    <div>Card 3 Title</div>
-                    <div>Third card description.</div>
-                    <div><a href="#test3">Link 3</a></div>
+                    <div>
+                        <h3>Card 3 Title</h3>
+                        <p>Third card description.</p>
+                        <p><a href="#test3">Link 3</a></p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -428,7 +473,7 @@ Here's a complete example for a hypothetical "card" block:
         import decorate from './card.js';
         
         document.addEventListener('DOMContentLoaded', () => {
-            const blocks = document.querySelectorAll('.card-block');
+            const blocks = document.querySelectorAll('.card.block');
             blocks.forEach(block => decorate(block));
         });
         
@@ -477,4 +522,4 @@ npm run debug
 - Verify proxy URL in server configuration
 - Review network logs in browser dev tools
 
-This guide provides comprehensive instructions for AI assistants to effectively debug and test EDS blocks using the local development server. Follow these patterns for consistent, reliable testing workflows.
+This guide provides comprehensive instructions for AI assistants to effectively debug and test EDS blocks using the local development server designed to improve AI assistant workflows. The server's local-first approach with proxy fallback enables AI assistants to work more efficiently by providing immediate feedback, clear error reporting, and consistent testing patterns. Follow these established patterns for reliable, efficient EDS development that leverages the server's AI assistant-focused design.

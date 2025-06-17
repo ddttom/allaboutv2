@@ -1,4 +1,4 @@
-// version 1.1
+// version 1.2 - Fixed EDS block structure handling
 
 // Configuration for the floating alert block
 const FLOATING_ALERT_CONFIG = {
@@ -30,6 +30,7 @@ function addSparkleEffect(container) {
 
 // Dismiss the alert
 function dismissAlert(overlay, originalBlock) {
+  console.log('Floating Alert: Dismissing alert');
   const modal = overlay.querySelector('.floating-alert');
   if (modal && modal._sparkleIntervalId) {
     clearInterval(modal._sparkleIntervalId);
@@ -48,12 +49,35 @@ function dismissAlert(overlay, originalBlock) {
       const sparkles = modal.querySelectorAll('.floating-alert-sparkle');
       sparkles.forEach((el) => el.remove());
       
-      // Return the content back to the original block
+      // Return the content back to the original block structure
       const contentWrapper = modal.querySelector('.floating-alert-content');
       if (contentWrapper && originalBlock) {
-        // Move all content back to the original block
+        console.log('Floating Alert: Restoring content to original block');
+        
+        // Find or recreate the EDS block structure for content restoration
+        let contentTarget = originalBlock;
+        
+        // Check if we need to recreate the nested div structure
+        const firstDiv = originalBlock.querySelector('div');
+        if (firstDiv) {
+          const secondDiv = firstDiv.querySelector('div');
+          if (secondDiv) {
+            contentTarget = secondDiv;
+          } else {
+            contentTarget = firstDiv;
+          }
+        } else {
+          // Create the nested div structure if it doesn't exist
+          const newFirstDiv = document.createElement('div');
+          const newSecondDiv = document.createElement('div');
+          newFirstDiv.appendChild(newSecondDiv);
+          originalBlock.appendChild(newFirstDiv);
+          contentTarget = newSecondDiv;
+        }
+        
+        // Move all content back to the target
         while (contentWrapper.firstChild) {
-          originalBlock.appendChild(contentWrapper.firstChild);
+          contentTarget.appendChild(contentWrapper.firstChild);
         }
       }
     }
@@ -61,6 +85,7 @@ function dismissAlert(overlay, originalBlock) {
       overlay.parentNode.removeChild(overlay);
     }
     localStorage.setItem(FLOATING_ALERT_CONFIG.STORAGE_KEY, 'true');
+    console.log('Floating Alert: Alert dismissed and stored in localStorage');
   }, FLOATING_ALERT_CONFIG.ANIMATION_DURATION);
 }
 
@@ -88,7 +113,12 @@ function handleKeyboard(event, modal, overlay, originalBlock) {
 
 // Main decorate function
 export default async function decorate(block) {
+  // Add debug logging
+  console.log('Floating Alert: decorate function called', block);
+  console.log('Floating Alert: localStorage check:', localStorage.getItem(FLOATING_ALERT_CONFIG.STORAGE_KEY));
+  
   if (localStorage.getItem(FLOATING_ALERT_CONFIG.STORAGE_KEY) === 'true') {
+    console.log('Floating Alert: Already dismissed, returning early');
     return;
   }
 
@@ -107,10 +137,37 @@ export default async function decorate(block) {
   const contentWrapper = document.createElement('div');
   contentWrapper.className = 'floating-alert-content';
 
-  // Move block content to modal
-  while (block.firstChild) {
-    contentWrapper.appendChild(block.firstChild);
+  // Extract content from EDS block structure
+  // EDS creates nested divs, so we need to find the actual content
+  console.log('Floating Alert: Block structure before extraction:', block.innerHTML);
+  
+  // Find the deepest content container - EDS typically nests content in div > div structure
+  let contentSource = block;
+  
+  // Navigate through EDS wrapper divs to find actual content
+  const firstDiv = block.querySelector('div');
+  if (firstDiv) {
+    const secondDiv = firstDiv.querySelector('div');
+    if (secondDiv && secondDiv.children.length > 0) {
+      // Use the second level div as content source if it has content
+      contentSource = secondDiv;
+      console.log('Floating Alert: Using nested div as content source');
+    } else if (firstDiv.children.length > 0) {
+      // Use the first level div as content source
+      contentSource = firstDiv;
+      console.log('Floating Alert: Using first div as content source');
+    }
   }
+  
+  console.log('Floating Alert: Content source selected:', contentSource);
+  console.log('Floating Alert: Content source innerHTML:', contentSource.innerHTML);
+
+  // Move content from the identified source to modal
+  while (contentSource.firstChild) {
+    contentWrapper.appendChild(contentSource.firstChild);
+  }
+  
+  console.log('Floating Alert: Content moved to wrapper:', contentWrapper.innerHTML);
 
   // Create close button
   const closeButton = document.createElement('button');
@@ -129,18 +186,24 @@ export default async function decorate(block) {
 
   // Add overlay to document
   document.body.appendChild(overlay);
+  console.log('Floating Alert: Overlay added to document body');
+  console.log('Floating Alert: Modal element:', modal);
+  console.log('Floating Alert: Final modal content:', contentWrapper.innerHTML);
 
   // Add sparkle effect and store interval id for cleanup
   modal._sparkleIntervalId = addSparkleEffect(modal);
+  console.log('Floating Alert: Sparkle effect added');
 
   // Keyboard event handler - attach to document for proper ESC key handling
   overlay._keyHandler = function (event) {
     handleKeyboard(event, modal, overlay, block);
   };
   document.addEventListener('keydown', overlay._keyHandler);
+  console.log('Floating Alert: Keyboard event handler attached');
 
   // Focus modal for keyboard events
   modal.focus();
+  console.log('Floating Alert: Modal focused');
 
   // Add click outside listener (on overlay)
   overlay.addEventListener('click', (event) => {
@@ -149,4 +212,39 @@ export default async function decorate(block) {
       dismissAlert(overlay, block);
     }
   });
+  console.log('Floating Alert: Click outside listener added');
+  console.log('Floating Alert: Modal setup complete - should be visible now');
 }
+
+// Utility function for debugging - can be called from browser console
+window.floatingAlertDebug = {
+  reset: () => {
+    localStorage.removeItem(FLOATING_ALERT_CONFIG.STORAGE_KEY);
+    console.log('Floating Alert: localStorage cleared - refresh page to see modal again');
+  },
+  checkStatus: () => {
+    const dismissed = localStorage.getItem(FLOATING_ALERT_CONFIG.STORAGE_KEY);
+    console.log('Floating Alert: Dismissed status:', dismissed);
+    return dismissed;
+  },
+  forceShow: () => {
+    localStorage.removeItem(FLOATING_ALERT_CONFIG.STORAGE_KEY);
+    const blocks = document.querySelectorAll('.floating-alert.block');
+    if (blocks.length > 0) {
+      console.log('Floating Alert: Found', blocks.length, 'floating-alert blocks, re-decorating...');
+      blocks.forEach(block => {
+        // Clear the block content and re-run decorate
+        const existingOverlay = document.querySelector('.floating-alert-overlay');
+        if (existingOverlay) {
+          existingOverlay.remove();
+        }
+        // Re-import and run the decorate function
+        import('./floating-alert.js').then(module => {
+          module.default(block);
+        });
+      });
+    } else {
+      console.log('Floating Alert: No floating-alert blocks found on page');
+    }
+  }
+};
