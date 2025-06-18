@@ -1,211 +1,159 @@
-<svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- Gradients -->
-    <linearGradient id="problemGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:0.2" />
-      <stop offset="100%" style="stop-color:#ff4757;stop-opacity:0.3" />
+    <!-- Gradient for modern look -->
+    <linearGradient id="aiGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B35;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F7931E;stop-opacity:1" />
     </linearGradient>
     
-    <linearGradient id="solutionGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#4834d4;stop-opacity:0.9" />
-      <stop offset="100%" style="stop-color:#686de0;stop-opacity:0.9" />
+    <!-- Glass effect gradient -->
+    <linearGradient id="glassGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0.05" />
     </linearGradient>
     
-    <linearGradient id="successGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#00d2d3;stop-opacity:0.2" />
-      <stop offset="100%" style="stop-color:#22a6b3;stop-opacity:0.3" />
-    </linearGradient>
-    
-    <!-- Glow effect -->
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+    <!-- Shadow filter -->
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="0" dy="2" result="offsetblur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.1"/>
+      <feComposite in2="offsetblur" operator="in"/>
       <feMerge>
-        <feMergeNode in="coloredBlur"/>
+        <feMergeNode/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
-    </filter>
-    
-    <!-- Shadow -->
-    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
-      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.2"/>
     </filter>
   </defs>
   
   <!-- Background -->
-  <rect width="1200" height="600" fill="#f8f9fa"/>
+  <rect width="800" height="400" fill="#f8f9fa"/>
   
   <!-- Title -->
-  <text x="600" y="40" font-family="Arial, sans-serif" font-size="28" font-weight="bold" text-anchor="middle" fill="#2c3e50">
-    EDS Development: From Chaos to Clarity
+  <text x="400" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#333">
+    EDS Development: Traditional vs AI-Assisted
   </text>
   
-  <!-- Problem Section (Left) -->
-  <g transform="translate(50, 80)">
-    <!-- Background -->
-    <rect x="0" y="0" width="350" height="450" rx="10" fill="url(#problemGrad)" filter="url(#shadow)"/>
-    
-    <!-- Title -->
-    <text x="175" y="35" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#e74c3c">
+  <!-- Dividing line -->
+  <line x1="400" y1="60" x2="400" y2="380" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <!-- LEFT SIDE: Traditional Workflow -->
+  <g id="traditional">
+    <text x="200" y="80" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="600" fill="#666">
       Traditional Workflow
     </text>
     
-    <!-- Systems -->
-    <!-- Git Branch -->
-    <g transform="translate(40, 70)">
-      <rect x="0" y="0" width="120" height="60" rx="5" fill="#fff" stroke="#e74c3c" stroke-width="2"/>
-      <path d="M20 30 L40 30 M40 30 L40 20 M40 30 L40 40" stroke="#e74c3c" stroke-width="2" fill="none"/>
-      <text x="60" y="35" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">Git Branch</text>
-    </g>
-    
     <!-- Google Docs -->
-    <g transform="translate(190, 70)">
-      <rect x="0" y="0" width="120" height="60" rx="5" fill="#fff" stroke="#e74c3c" stroke-width="2"/>
-      <rect x="15" y="15" width="90" height="30" fill="none" stroke="#4285f4" stroke-width="1.5"/>
-      <line x1="25" y1="25" x2="95" y2="25" stroke="#4285f4" stroke-width="1"/>
-      <line x1="25" y1="35" x2="95" y2="35" stroke="#4285f4" stroke-width="1"/>
-      <text x="60" y="55" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">Google Docs</text>
-    </g>
-    
-    <!-- Code Editor -->
-    <g transform="translate(40, 150)">
-      <rect x="0" y="0" width="120" height="60" rx="5" fill="#fff" stroke="#e74c3c" stroke-width="2"/>
-      <text x="10" y="25" font-family="monospace" font-size="12" fill="#333">&lt;code&gt;</text>
-      <text x="10" y="40" font-family="monospace" font-size="12" fill="#333">  //...</text>
-      <text x="10" y="55" font-family="monospace" font-size="12" fill="#333">&lt;/code&gt;</text>
+    <g transform="translate(100, 110)">
+      <rect x="0" y="0" width="80" height="60" rx="8" fill="#4285F4" filter="url(#shadow)"/>
+      <rect x="0" y="0" width="80" height="60" rx="8" fill="url(#glassGradient)"/>
+      <text x="40" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">
+        Google<tspan x="40" dy="14">Docs</tspan>
+      </text>
     </g>
     
     <!-- SharePoint -->
-    <g transform="translate(190, 150)">
-      <rect x="0" y="0" width="120" height="60" rx="5" fill="#fff" stroke="#e74c3c" stroke-width="2"/>
-      <rect x="15" y="15" width="30" height="30" fill="#0078d4"/>
-      <rect x="50" y="15" width="25" height="30" fill="#40e0d0"/>
-      <rect x="80" y="15" width="25" height="30" fill="#00bcf2"/>
-      <text x="60" y="55" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">SharePoint</text>
+    <g transform="translate(220, 110)">
+      <rect x="0" y="0" width="80" height="60" rx="8" fill="#036C70" filter="url(#shadow)"/>
+      <rect x="0" y="0" width="80" height="60" rx="8" fill="url(#glassGradient)"/>
+      <text x="40" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">
+        Share<tspan x="40" dy="14">Point</tspan>
+      </text>
+    </g>
+    
+    <!-- Git Branches -->
+    <g transform="translate(100, 190)">
+      <rect x="0" y="0" width="80" height="60" rx="8" fill="#F05032" filter="url(#shadow)"/>
+      <rect x="0" y="0" width="80" height="60" rx="8" fill="url(#glassGradient)"/>
+      <text x="40" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">
+        Git<tspan x="40" dy="14">Branches</tspan>
+      </text>
+    </g>
+    
+    <!-- Code Editor -->
+    <g transform="translate(220, 190)">
+      <rect x="0" y="0" width="80" height="60" rx="8" fill="#007ACC" filter="url(#shadow)"/>
+      <rect x="0" y="0" width="80" height="60" rx="8" fill="url(#glassGradient)"/>
+      <text x="40" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">
+        Code<tspan x="40" dy="14">Editor</tspan>
+      </text>
     </g>
     
     <!-- Confused AI -->
-    <g transform="translate(125, 250)">
-      <circle cx="50" cy="50" r="45" fill="#fff" stroke="#e74c3c" stroke-width="3"/>
-      <text x="50" y="40" font-family="Arial, sans-serif" font-size="24" text-anchor="middle" fill="#333">AI</text>
-      <text x="50" y="60" font-family="Arial, sans-serif" font-size="36" text-anchor="middle" fill="#e74c3c">?</text>
+    <g transform="translate(160, 280)">
+      <circle cx="40" cy="40" r="35" fill="#e0e0e0" filter="url(#shadow)"/>
+      <text x="40" y="45" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#666">AI</text>
+      <text x="40" y="62" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#666">?</text>
     </g>
     
     <!-- Confusion lines -->
-    <path d="M125 270 L95 190 M225 270 L190 190 M125 270 L160 190 M225 270 L250 190" 
-          stroke="#e74c3c" stroke-width="2" stroke-dasharray="5,5" opacity="0.5" fill="none"/>
-    
-    <!-- Problem text -->
-    <text x="175" y="380" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#666">
-      AI can't coordinate between
-    </text>
-    <text x="175" y="400" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#666">
-      disconnected systems
-    </text>
-    <text x="175" y="420" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#e74c3c">
-      ❌ No Context = No Help
-    </text>
+    <path d="M 140 250 Q 160 270 160 280" stroke="#e0e0e0" stroke-width="2" fill="none"/>
+    <path d="M 260 250 Q 240 270 240 280" stroke="#e0e0e0" stroke-width="2" fill="none"/>
+    <path d="M 140 170 Q 160 150 180 170" stroke="#e0e0e0" stroke-width="2" fill="none"/>
+    <path d="M 260 170 Q 240 150 220 170" stroke="#e0e0e0" stroke-width="2" fill="none"/>
   </g>
   
-  <!-- Arrow -->
-  <g transform="translate(420, 280)">
-    <path d="M0 0 L60 0 L50 -10 M60 0 L50 10" stroke="#4834d4" stroke-width="4" fill="none" filter="url(#glow)"/>
-  </g>
-  
-  <!-- Solution Section (Center) -->
-  <g transform="translate(500, 200)">
-    <!-- Server box -->
-    <rect x="0" y="0" width="200" height="200" rx="10" fill="url(#solutionGrad)" filter="url(#shadow)"/>
-    
-    <!-- Server icon -->
-    <g transform="translate(50, 40)">
-      <rect x="0" y="0" width="100" height="80" rx="5" fill="#fff" opacity="0.9"/>
-      <circle cx="20" cy="20" r="5" fill="#4834d4"/>
-      <circle cx="50" cy="20" r="5" fill="#22a6b3"/>
-      <circle cx="80" cy="20" r="5" fill="#00d2d3"/>
-      <rect x="10" y="40" width="80" height="5" rx="2" fill="#4834d4"/>
-      <rect x="10" y="50" width="80" height="5" rx="2" fill="#4834d4"/>
-      <rect x="10" y="60" width="80" height="5" rx="2" fill="#4834d4"/>
-    </g>
-    
-    <!-- Server text -->
-    <text x="100" y="140" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#fff">
-      Local Dev Server
-    </text>
-    <text x="100" y="165" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#fff">
-      Unifies Everything
-    </text>
-  </g>
-  
-  <!-- Arrow -->
-  <g transform="translate(720, 280)">
-    <path d="M0 0 L60 0 L50 -10 M60 0 L50 10" stroke="#00d2d3" stroke-width="4" fill="none" filter="url(#glow)"/>
-  </g>
-  
-  <!-- Success Section (Right) -->
-  <g transform="translate(800, 80)">
-    <!-- Background -->
-    <rect x="0" y="0" width="350" height="450" rx="10" fill="url(#successGrad)" filter="url(#shadow)"/>
-    
-    <!-- Title -->
-    <text x="175" y="35" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#00a8cc">
-      Unified Development
+  <!-- RIGHT SIDE: AI-Assisted Local Development -->
+  <g id="ai-assisted">
+    <text x="600" y="80" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="600" fill="#333">
+      AI-Assisted Local Development
     </text>
     
-    <!-- Single unified system -->
-    <g transform="translate(75, 70)">
-      <rect x="0" y="0" width="200" height="120" rx="10" fill="#fff" stroke="#00d2d3" stroke-width="3"/>
-      
-      <!-- Icons inside representing all systems -->
-      <g transform="translate(10, 15)">
-        <!-- Code icon -->
-        <text x="0" y="15" font-family="monospace" font-size="14" fill="#4834d4">&lt;/&gt;</text>
-        <!-- Doc icon -->
-        <rect x="50" y="0" width="30" height="20" fill="none" stroke="#4285f4" stroke-width="1.5"/>
-        <line x1="55" y1="7" x2="75" y2="7" stroke="#4285f4" stroke-width="1"/>
-        <line x1="55" y1="13" x2="75" y2="13" stroke="#4285f4" stroke-width="1"/>
-        <!-- Git icon -->
-        <path d="M120 10 L130 10 M130 10 L130 5 M130 10 L130 15" stroke="#f05032" stroke-width="2" fill="none"/>
-        <!-- SharePoint icon -->
-        <rect x="160" y="0" width="20" height="20" fill="#0078d4"/>
-      </g>
-      
-      <text x="100" y="60" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">
-        Everything in One Place
+    <!-- Central Local Server -->
+    <g transform="translate(520, 140)">
+      <rect x="0" y="0" width="160" height="100" rx="12" fill="url(#aiGradient)" filter="url(#shadow)"/>
+      <rect x="0" y="0" width="160" height="100" rx="12" fill="url(#glassGradient)"/>
+      <text x="80" y="45" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="600" fill="white">
+        Local Dev Server
       </text>
-      <text x="100" y="80" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#666">
-        Local Files + Proxy
-      </text>
-      <text x="100" y="100" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#666">
-        Instant Feedback
+      <text x="80" y="65" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">
+        Unified Environment
       </text>
     </g>
     
-    <!-- Happy AI -->
-    <g transform="translate(125, 220)">
-      <circle cx="50" cy="50" r="45" fill="#fff" stroke="#00d2d3" stroke-width="3" filter="url(#glow)"/>
-      <text x="50" y="40" font-family="Arial, sans-serif" font-size="24" text-anchor="middle" fill="#333">AI</text>
+    <!-- AI Assistant (Happy) -->
+    <g transform="translate(560, 280)">
+      <circle cx="40" cy="40" r="35" fill="#4CAF50" filter="url(#shadow)"/>
+      <circle cx="40" cy="40" r="35" fill="url(#glassGradient)"/>
+      <text x="40" y="48" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="600" fill="white">AI</text>
+      
       <!-- Smile -->
-      <path d="M30 55 Q50 70 70 55" stroke="#00d2d3" stroke-width="3" fill="none"/>
-      <!-- Sparkles around AI -->
-      <text x="10" y="20" font-family="Arial, sans-serif" font-size="20" fill="#ffd700">✨</text>
-      <text x="80" y="25" font-family="Arial, sans-serif" font-size="16" fill="#ffd700">✨</text>
-      <text x="85" y="80" font-family="Arial, sans-serif" font-size="18" fill="#ffd700">✨</text>
+      <path d="M 25 50 Q 40 60 55 50" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/>
     </g>
     
-    <!-- Benefits -->
-    <g transform="translate(50, 340)">
-      <text x="0" y="0" font-family="Arial, sans-serif" font-size="14" fill="#00a8cc">✓ AI sees full context</text>
-      <text x="0" y="25" font-family="Arial, sans-serif" font-size="14" fill="#00a8cc">✓ Instant testing & feedback</text>
-      <text x="0" y="50" font-family="Arial, sans-serif" font-size="14" fill="#00a8cc">✓ Real-time assistance</text>
+    <!-- Connection lines -->
+    <path d="M 600 240 L 600 280" stroke="#4CAF50" stroke-width="3" opacity="0.6"/>
+    
+    <!-- Features around the server -->
+    <g transform="translate(450, 120)">
+      <rect x="0" y="0" width="60" height="30" rx="15" fill="#2196F3" opacity="0.8"/>
+      <text x="30" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Instant</text>
     </g>
     
-    <text x="175" y="440" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#00a8cc">
-      ✅ Full Context = Real Help
-    </text>
+    <g transform="translate(690, 120)">
+      <rect x="0" y="0" width="60" height="30" rx="15" fill="#9C27B0" opacity="0.8"/>
+      <text x="30" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Debug</text>
+    </g>
+    
+    <g transform="translate(450, 250)">
+      <rect x="0" y="0" width="60" height="30" rx="15" fill="#FF5722" opacity="0.8"/>
+      <text x="30" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Proxy</text>
+    </g>
+    
+    <g transform="translate(690, 250)">
+      <rect x="0" y="0" width="60" height="30" rx="15" fill="#795548" opacity="0.8"/>
+      <text x="30" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Local</text>
+    </g>
+    
+    <!-- Speed indicator -->
+    <g transform="translate(520, 100)">
+      <path d="M 0 0 L 20 0 L 15 -5 M 20 0 L 15 5" stroke="#4CAF50" stroke-width="2" fill="none"/>
+      <path d="M 25 0 L 45 0 L 40 -5 M 45 0 L 40 5" stroke="#4CAF50" stroke-width="2" fill="none"/>
+      <path d="M 50 0 L 70 0 L 65 -5 M 70 0 L 65 5" stroke="#4CAF50" stroke-width="2" fill="none"/>
+    </g>
   </g>
   
   <!-- Bottom tagline -->
-  <text x="600" y="570" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#666" font-style="italic">
-    One server to bridge them all - making AI-assisted EDS development possible
+  <text x="400" y="385" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#666" font-style="italic">
+    From fragmented chaos to unified clarity
   </text>
 </svg>
