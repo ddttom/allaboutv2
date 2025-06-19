@@ -2,7 +2,15 @@
 
 The `decorate` function takes a `block` parameter and performs the following steps:
 
-First of all it checks for the class 'hide-author', if not found it performs the task below]
+## Image Link Processing
+
+1. **Image Link Detection**: The function first checks if the first cell of the bio block contains a link to an image file.
+
+2. **Image Link Conversion**: If a link pointing to an image file (.jpg, .jpeg, .png, .gif, .webp, .svg) is found, it automatically converts the link into an actual `<img>` element, using the link's text content as the image's `alt` attribute.
+
+## Author Name Processing
+
+If the bio block doesn't have the class 'hide-author', it performs the following author name extraction:
 
 1. It searches for an `<img>` element within an element that has the class `.bio.block`.
 
@@ -14,8 +22,15 @@ First of all it checks for the class 'hide-author', if not found it performs the
 
 5. Finally, the function locates the element with the class `.bio.block` and appends the newly created `<strong>` element containing the author name as the last child of the `.bio.block` element.
 
-In essence, this part is responsible for extracting the author name from either the `alt` attribute of an image or the `content` attribute of a `<meta>` tag, and then adding the author name as a `<strong>` element to the end of the element with the class `.bio.block`; if not hidden.
+## Mobile Responsiveness
+
+The bio block includes responsive CSS that:
+- Adjusts image sizes for different screen sizes (80px desktop, 60px tablet, 50px mobile)
+- Changes layout to vertical stack on mobile devices (≤768px)
+- Centers content and adjusts spacing for optimal mobile viewing
+
+## Expression Processing
 
 The wrapper is added to the expressions resolver; it obeys the expression {{expand,$NAMESPACE:VARIABLE$})
 
-It is assumed that the $system:enableprofilevariables$ has been set to 'y' and there are meaning profile variables
+It is assumed that the $system:enableprofilevariables$ has been set to 'y' and there are meaningful profile variables

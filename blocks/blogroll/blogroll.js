@@ -18,8 +18,8 @@ function extractSeriesInfo(title, path) {
 function groupAndSortPosts(posts, config) {
   // Destructure configuration, providing default empty arrays if undefined
   const { acceptList = [], pathFilters = [], currentDirFilter = null } = config || {};
-  console.log('groupAndSortPosts - config:', config);
-  console.log('groupAndSortPosts - initial posts length:', posts.length);
+  // console.log('groupAndSortPosts - config:', config);
+  //console.log('groupAndSortPosts - initial posts length:', posts.length);
 
   let filteredPosts = [...posts]; // Start with all posts
   let usedPathFilter = false; // Flag to track if path=* or path= filters were applied
@@ -27,27 +27,27 @@ function groupAndSortPosts(posts, config) {
 
   // *** Priority 1: Handle currentDirFilter (path=*) if it exists ***
   if (currentDirFilter) {
-    console.log('Applying current directory filter (path=*):', currentDirFilter);
+    // console.log('Applying current directory filter (path=*):', currentDirFilter);
     filteredPosts = posts.filter(post => {
       // Check if post.path is a string and starts with the current directory path
       const match = typeof post.path === 'string' && post.path.startsWith(currentDirFilter);
       if (match) {
-        console.log(`Current directory match found: "${currentDirFilter}" starts path "${post.path}"`);
+      //   console.log(`Current directory match found: "${currentDirFilter}" starts path "${post.path}"`);
       }
       return match;
     });
-    console.log(`Found ${filteredPosts.length} posts matching current directory filter`);
+    // console.log(`Found ${filteredPosts.length} posts matching current directory filter`);
     usedPathFilter = true; // Mark that a path-based filter was used
 
     // If no posts were found with this specific filter, the result is empty for path=*
     if (filteredPosts.length === 0) {
-      console.log('No matches found using current directory filter (path=*).');
+     // console.log('No matches found using current directory filter (path=*).');
       // We don't attempt title fallback for path=*
     }
   }
   // *** Priority 2: Handle regular pathFilters only if path=* wasn't used ***
   else if (pathFilters.length > 0) {
-    console.log('Applying regular path filters:', pathFilters);
+   // console.log('Applying regular path filters:', pathFilters);
 
     // Attempt to filter by path first
     const pathFilteredPosts = posts.filter(post => {
@@ -55,27 +55,27 @@ function groupAndSortPosts(posts, config) {
       return pathFilters.some(pathFilter => typeof post.path === 'string' && post.path.includes(pathFilter));
     });
 
-    console.log(`Found ${pathFilteredPosts.length} posts matching path filters`);
+    //console.log(`Found ${pathFilteredPosts.length} posts matching path filters`);
 
     if (pathFilteredPosts.length > 0) {
       filteredPosts = pathFilteredPosts;
       usedPathFilter = true; // Mark that a path-based filter was used
     } else {
       // If no path matches, attempt to filter by title as a fallback
-      console.log('No path matches found for path filters, trying title filtering');
+     // console.log('No path matches found for path filters, trying title filtering');
       const titleFilteredPosts = posts.filter(post => {
         // Check if post.title is a string and includes any of the pathFilters
         return pathFilters.some(pathFilter => typeof post.title === 'string' && post.title.includes(pathFilter));
       });
 
-      console.log(`Found ${titleFilteredPosts.length} posts matching title filters`);
+      // console.log(`Found ${titleFilteredPosts.length} posts matching title filters`);
 
       if (titleFilteredPosts.length > 0) {
         filteredPosts = titleFilteredPosts;
         usedTitleFilter = true; // Mark that title fallback filter was used
       } else {
         // If neither path nor title matched, the result is empty for these filters
-        console.log('No matches found in either path or title using path filters.');
+       //  console.log('No matches found in either path or title using path filters.');
         filteredPosts = [];
       }
     }
@@ -101,12 +101,12 @@ function groupAndSortPosts(posts, config) {
 
   // If after all filtering attempts, filteredPosts is empty, return immediately.
   if (filteredPosts.length === 0) {
-    console.log('Returning empty array because filteredPosts is empty after all filtering attempts');
+   //  console.log('Returning empty array because filteredPosts is empty after all filtering attempts');
     return []; // Return an empty array directly
   }
 
   // *** Grouping and Sorting Logic (only runs if filteredPosts is not empty) ***
-  console.log('Grouping and sorting filtered posts. Count:', filteredPosts.length);
+ // console.log('Grouping and sorting filtered posts. Count:', filteredPosts.length);
   const seriesMap = new Map();
 
   // Group the remaining filtered posts
@@ -138,7 +138,7 @@ function groupAndSortPosts(posts, config) {
     });
   });
 
-  console.log('After grouping, seriesMap size:', seriesMap.size);
+  // console.log('After grouping, seriesMap size:', seriesMap.size);
 
   // Convert map to array of [seriesName, postsArray] entries
   // Sort the series themselves based on the number of posts (descending)
@@ -217,7 +217,7 @@ function getConfig(block) {
     const folderPath = pathParts.slice(0, -1).join('/');
     // Add the inferred folder/page path to the acceptList for default filtering
     config.acceptList.push(folderPath + '/' + lastPart);
-    console.log('Compact mode default filter applied:', config.acceptList);
+   // console.log('Compact mode default filter applied:', config.acceptList);
   }
 
   // Return the final configuration object
@@ -248,10 +248,10 @@ function createCompactBlogrollPanel(groupedPosts, originalPosts, config) {
   const blogrollContent = document.createElement('div');
   blogrollContent.className = 'blogroll-panel-content';
 
-  console.log('In createCompactBlogrollPanel, groupedPosts:', groupedPosts);
-  console.log('In createCompactBlogrollPanel, groupedPosts type:', typeof groupedPosts);
-  console.log('In createCompactBlogrollPanel, groupedPosts length:', groupedPosts.length);
-  console.log('In createCompactBlogrollPanel, is array?', Array.isArray(groupedPosts));
+  //console.log('In createCompactBlogrollPanel, groupedPosts:', groupedPosts);
+  //console.log('In createCompactBlogrollPanel, groupedPosts type:', typeof groupedPosts);
+  //console.log('In createCompactBlogrollPanel, groupedPosts length:', groupedPosts.length);
+  //console.log('In createCompactBlogrollPanel, is array?', Array.isArray(groupedPosts));
   
   updatePanelContent(blogrollContent, groupedPosts);
 
@@ -289,10 +289,10 @@ function createCompactBlogrollPanel(groupedPosts, originalPosts, config) {
 function updatePanelContent(container, groupedPosts) {
   container.innerHTML = ''; // Clear existing content
   
-  console.log('In updatePanelContent, groupedPosts:', groupedPosts);
-  console.log('In updatePanelContent, groupedPosts type:', typeof groupedPosts);
-  console.log('In updatePanelContent, groupedPosts length:', groupedPosts.length);
-  console.log('In updatePanelContent, is array?', Array.isArray(groupedPosts));
+  //console.log('In updatePanelContent, groupedPosts:', groupedPosts);
+  //console.log('In updatePanelContent, groupedPosts type:', typeof groupedPosts);
+  //console.log('In updatePanelContent, groupedPosts length:', groupedPosts.length);
+  //console.log('In updatePanelContent, is array?', Array.isArray(groupedPosts));
   
   // If groupedPosts is not an array or is empty, show a message
   if (!Array.isArray(groupedPosts) || groupedPosts.length === 0) {
@@ -338,9 +338,9 @@ function updatePanelContent(container, groupedPosts) {
 export default async function decorate(block) {
   console.log('Decorating blogroll block:', block);
   const config = getConfig(block);
-  console.log('Blogroll config:', config);
-  console.log('Path filters:', config.pathFilters);
-  console.log('Accept list:', config.acceptList);
+  //console.log('Blogroll config:', config);
+  //console.log('Path filters:', config.pathFilters);
+  //console.log('Accept list:', config.acceptList);
   
   // Add loading state
   block.textContent = 'Loading blog posts...';
@@ -352,13 +352,13 @@ export default async function decorate(block) {
     }
     const json = await response.json();
     const blogPosts = json.data;
-    console.log('Fetched blog posts:', blogPosts);
+    // console.log('Fetched blog posts:', blogPosts);
 
     const groupedPosts = groupAndSortPosts(blogPosts, config);
-    console.log('Grouped posts:', groupedPosts);
-    console.log('Grouped posts type:', typeof groupedPosts);
-    console.log('Grouped posts length:', groupedPosts.length);
-    console.log('Is array?', Array.isArray(groupedPosts));
+    // console.log('Grouped posts:', groupedPosts);
+    // console.log('Grouped posts type:', typeof groupedPosts);
+    // console.log('Grouped posts length:', groupedPosts.length);
+    // console.log('Is array?', Array.isArray(groupedPosts));
 
     // Clear loading message
     block.textContent = '';
@@ -370,8 +370,8 @@ export default async function decorate(block) {
 
       // Ensure groupedPosts is an array
       if (!Array.isArray(groupedPosts) || groupedPosts.length === 0) {
-        console.log('No posts to display or groupedPosts is not an array');
-        console.log('groupedPosts:', groupedPosts);
+        // console.log('No posts to display or groupedPosts is not an array');
+        // console.log('groupedPosts:', groupedPosts);
         const noPostsMessage = document.createElement('p');
         noPostsMessage.textContent = 'No blog posts found.';
         blogrollContainer.appendChild(noPostsMessage);
@@ -419,7 +419,7 @@ export default async function decorate(block) {
 
     // If compact mode is enabled, add the icon and panel
     if (config.isCompact) {
-      console.log('Creating compact blogroll');
+      // console.log('Creating compact blogroll');
       // Create compact blogroll icon container
       const iconContainer = document.createElement('div');
       iconContainer.className = 'blogroll-icon-container';
@@ -477,5 +477,5 @@ export default async function decorate(block) {
     block.textContent = 'Failed to load blog posts. Please try again later.';
   }
 
-  console.log('Blogroll decoration completed');
+  // console.log('Blogroll decoration completed');
 }

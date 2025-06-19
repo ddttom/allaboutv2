@@ -6,6 +6,30 @@ import { renderExpressions } from '/plusplus/plugins/expressions/src/expressions
 export default function decorate(block) {
   const bioElement = document.querySelector('.bio');
 
+  // Check if the first cell contains a link to an image and replace it with the actual image
+  const firstCell = block.querySelector('div > div:first-child');
+  if (firstCell) {
+    const link = firstCell.querySelector('a');
+    if (link && link.href) {
+      // Check if the link points to an image file
+      const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
+      const isImageLink = imageExtensions.some(ext => 
+        link.href.toLowerCase().includes(ext)
+      );
+      
+      if (isImageLink) {
+        // Create an img element to replace the link
+        const img = document.createElement('img');
+        img.src = link.href;
+        img.alt = link.textContent || 'Bio image';
+        
+        // Replace the link with the image
+        firstCell.innerHTML = '';
+        firstCell.appendChild(img);
+      }
+    }
+  }
+
   if (!bioElement.classList.contains('hide-author')) {
     // Find the <img> element within the .bio.block
     const imgElement = document.querySelector('.bio.block img');
