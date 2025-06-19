@@ -77,6 +77,7 @@ The block uses CSS variables for easy customization:
 
 - The block fetches blog post data from '/query-index.json'.
 - Posts are grouped by series and sorted within each series.
+- **Default Fallback**: When no configuration cell is present or detected, the component automatically applies `path=*` behavior, filtering posts to show only those in the current subdirectory.
 - Filter terms are case sensitive by default, except for terms containing the word "guide" (which remain case insensitive for backward compatibility).
 - Special path filtering using `path=value` format allows filtering by path, with fallback to title filtering if no matches are found.
   - Path filters take precedence over regular filter terms
@@ -101,6 +102,7 @@ The block uses CSS variables for easy customization:
 
 ## Recent Changes
 
+- **Added automatic fallback mechanism**: When no configuration cell is present or detected, the component now automatically applies `path=*` behavior as the default, ensuring proper functionality with wildcard path matching.
 - Added path-specific filtering with `path=value` format, with automatic fallback to title filtering if no matches are found.
 - Added special case `path=*` to filter posts to only show those in the current subdirectory.
 - Added case sensitivity for filter terms, while maintaining case insensitivity for terms containing "guide" for backward compatibility.

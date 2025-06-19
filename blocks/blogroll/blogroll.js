@@ -178,19 +178,19 @@ function getConfig(block) {
       if (pathMatch) {
         // Get the path value from the match
         const pathValue = pathMatch[1];
-        console.log('Found path filter:', pathValue);
+        // console.log('Found path filter:', pathValue);
 
         // Special case: path=* means "this subdirectory only"
         if (pathValue === '*') {
           const currentPath = window.location.pathname;
-          console.log('Current pathname:', currentPath);
+          // console.log('Current pathname:', currentPath);
 
           // Get the current directory path (ensure it ends with /)
           let currentDir = currentPath;
           if (!currentPath.endsWith('/')) {
             currentDir = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
           }
-          console.log('Current directory for path=*:', currentDir);
+          // console.log('Current directory for path=*:', currentDir);
 
           // *** MODIFICATION: Store the current directory filter separately ***
           config.currentDirFilter = currentDir;
@@ -205,6 +205,24 @@ function getConfig(block) {
         config.acceptList.push(processedText);
       }
     });
+  }
+
+  // Fallback mechanism: Set default path=* when no configuration is present
+  // If all filter arrays are empty and no currentDirFilter is set, apply path=* as default
+  if (config.acceptList.length === 0 && config.pathFilters.length === 0 && !config.currentDirFilter) {
+    const currentPath = window.location.pathname;
+    // console.log('No configuration detected, applying default path=* behavior');
+    // console.log('Current pathname for default fallback:', currentPath);
+
+    // Get the current directory path (ensure it ends with /)
+    let currentDir = currentPath;
+    if (!currentPath.endsWith('/')) {
+      currentDir = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+    }
+    // console.log('Current directory for default path=*:', currentDir);
+
+    // Set the current directory filter (equivalent to path=*)
+    config.currentDirFilter = currentDir;
   }
 
   // Default filter for compact mode if no other filters are specified
@@ -336,7 +354,7 @@ function updatePanelContent(container, groupedPosts) {
 }
 
 export default async function decorate(block) {
-  console.log('Decorating blogroll block:', block);
+  // console.log('Decorating blogroll block:', block);
   const config = getConfig(block);
   //console.log('Blogroll config:', config);
   //console.log('Path filters:', config.pathFilters);
@@ -414,7 +432,7 @@ export default async function decorate(block) {
 
       // Append the blogroll container to the block
       block.appendChild(blogrollContainer);
-      console.log('Blogroll content added to block:', blogrollContainer);
+      // console.log('Blogroll content added to block:', blogrollContainer);
     }
 
     // If compact mode is enabled, add the icon and panel
