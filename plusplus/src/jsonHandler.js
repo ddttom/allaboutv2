@@ -31,11 +31,36 @@ export function extractJsonLd(parsedJson) {
   return parsedJson;
 }
 
+function determineReferenceDate() {
+  const publicationSelectors = [
+    'meta[name="publication-date"]',
+    'meta[property="article:published_time"]', 
+    'meta[name="date"]',
+    'meta[property="article:published"]',
+    'meta[name="dc.date"]',
+    'meta[name="dc-date"]'
+  ];
+  
+  for (const selector of publicationSelectors) {
+    const metaTag = document.querySelector(selector);
+    if (metaTag) {
+      const dateValue = metaTag.getAttribute('content');
+      if (dateValue) {
+        const parsedDate = convertToISODate(dateValue);
+        if (parsedDate !== dateValue) {
+          return new Date(parsedDate);
+        }
+      }
+    }
+  }
+  return null;
+}
+
 export async function createJSON() {
   window.cmsplus.debug("createJSON");
   const dc = {};
   const co = {};
-  const currentDate = new Date();
+  const referenceDate = determineReferenceDate() || new Date();
   const metaTags = document.querySelectorAll("meta");
   metaTags.forEach((metaTag) => {
     let key = metaTag.getAttribute("name") || metaTag.getAttribute("property");
@@ -46,7 +71,13 @@ export async function createJSON() {
     }
 
     if (key.startsWith("dc-")) {
-      dc[key.replace("dc-", "dc:").replaceAll(" ", "")] = value;
+      const dcKey = key.replace("dc-", "dc:").replaceAll(" ", "");
+      // For DC date fields, ensure they use the reference date context
+      if (dcKey.includes("date") && !value) {
+        dc[dcKey] = referenceDate.toISOString();
+      } else {
+        dc[dcKey] = value;
+      }
     }
     if (key.startsWith("co-")) {
       co[key.replace("co-", "co:").replaceAll(" ", "")] = value;
@@ -161,16 +192,16 @@ export async function createJSON() {
   }
 
   futureDate = new Date(
-    currentDate.getTime() + futurePeriod * 24 * 60 * 60 * 1000
+    referenceDate.getTime() + futurePeriod * 24 * 60 * 60 * 1000
   );
   // Convert the future date to an ISO string and assign it to the review datetime.
   co["co:reviewdatetime"] = futureDate.toISOString();
 
   if (!co["co:startdatetime"]) {
-    co["co:startdatetime"] = currentDate.toISOString();
+    co["co:startdatetime"] = referenceDate.toISOString();
   }
   if (!co["co:publisheddatetime"]) {
-    co["co:publisheddatetime"] = currentDate.toISOString();
+    co["co:publisheddatetime"] = referenceDate.toISOString();
   }
   if (!co["co:expirydatetime"]) {
     const futurePeriodString = window.siteConfig["$co:defaultexpiryperiod"];
@@ -180,7 +211,7 @@ export async function createJSON() {
       window.siteConfig["$co:defaultexpiryperiod"] = futurePeriod;
     }
     futureDate = new Date(
-      currentDate.getTime() + futurePeriod * 24 * 60 * 60 * 1000
+      referenceDate.getTime() + futurePeriod * 24 * 60 * 60 * 1000
     );
     co["co:expirydatetime"] = futureDate.toISOString();
   }

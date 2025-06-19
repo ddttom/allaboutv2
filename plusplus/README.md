@@ -36,8 +36,50 @@ Smart algorithms to:
 - Adds 'target blank' to every external link on the page
 - Adds 'current class' to any link to the current page
 - adds callback chain registration for a callback after 3 seconds and after page load
+- **Enhanced Date Management**: Intelligently detects publication dates from meta tags and uses them as reference points for Content Operations (CO) and Dublin Core (DC) date calculations
 
 The final plusplus environment also requires configuration see <https://github.com/Digital-Domain-Technologies-Ltd/plusplusconfiguration>
+
+## Enhanced Date Management System
+
+PlusPlus includes an intelligent date management system that automatically detects publication dates from meta tags and uses them as reference points for all content lifecycle calculations.
+
+### Publication Date Detection
+
+The system searches for publication dates in the following priority order:
+- `meta[name="publication-date"]`
+- `meta[property="article:published_time"]`
+- `meta[name="date"]`
+- `meta[property="article:published"]`
+- `meta[name="dc.date"]`
+- `meta[name="dc-date"]`
+
+### Supported Date Formats
+
+The date parsing system supports a wide variety of date formats including:
+- **ISO 8601**: `2025-06-26T10:30:00Z`
+- **Slash formats**: `26/jun/2025`, `26/06/2025`
+- **Space formats**: `26 jun 2025`, `26 June 2025`
+- **Hyphen formats**: `26-jun-2025`, `26-06-2025`
+- **Month-first**: `jun 26 2025`, `June 26, 2025`
+- **With time**: `26 jun 2025 2:30 PM`
+
+The system automatically converts all recognized formats to ISO 8601 standard for consistent processing.
+
+### Date Calculation Benefits
+
+When a publication date is found:
+- **Content Operations (CO) dates** are calculated from the publication date instead of current date
+- **Dublin Core (DC) dates** use the publication date as context for empty date fields
+- **Review dates** are calculated as publication date + 300 days (configurable)
+- **Expiry dates** are calculated as publication date + 365 days (configurable)
+- **Start/Published timestamps** default to the publication date when not specified
+
+### Backward Compatibility
+
+- Falls back to current date behavior when no publication date is found
+- No configuration changes required - works automatically
+- All existing functionality preserved</search>
 
 ## Installation
 
