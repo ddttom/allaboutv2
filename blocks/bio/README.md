@@ -2,15 +2,17 @@
 
 The `decorate` function takes a `block` parameter and performs the following steps:
 
-## Image Link Processing
+## Processing Logic
 
-1. **Image Link Detection**: The function first checks if the first cell of the bio block contains a link to an image file.
+If the bio block doesn't have the class 'hide-author', the function performs both image link processing and author name extraction:
+
+### Image Link Processing
+
+1. **Image Link Detection**: The function checks if the first cell of the bio block contains a link to an image file.
 
 2. **Image Link Conversion**: If a link pointing to an image file (.jpg, .jpeg, .png, .gif, .webp, .svg) is found, it automatically converts the link into an actual `<img>` element, using the link's text content as the image's `alt` attribute.
 
-## Author Name Processing
-
-If the bio block doesn't have the class 'hide-author', it performs the following author name extraction:
+### Author Name Processing
 
 1. It searches for an `<img>` element within an element that has the class `.bio.block`.
 
