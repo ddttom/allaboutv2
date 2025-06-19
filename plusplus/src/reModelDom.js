@@ -24,7 +24,25 @@ export function removeMeta() {
     'theme',
     'template',
     'footer',
-
+    'linkedin',
+    'author',
+    'robots',
+    'canonical',
+    'prerender',
+    'preload',
+    'preconnect',
+    'prefetch',
+    'prerender',
+    'publication-date',
+    'publication-name',
+    'publication-url',
+    'publication-logo',
+    'publication-logo-url',
+    'publication-logo-width',
+    'publication-logo-height',
+    'publication-logo-alt',
+    'publication-logo-title',
+    'publication-logo-description',
   ];
   const elements = document.querySelectorAll('meta[name]');
 
