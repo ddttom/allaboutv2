@@ -262,8 +262,8 @@ T.elementStyles = [], T.shadowRootOptions = { mode: "open" }, T[R("elementProper
  */
 const V = globalThis, st = V.trustedTypes, Lt = st ? st.createPolicy("lit-html", { createHTML: (e) => e }) : void 0, qt = "$lit$", $ = `lit$${Math.random().toFixed(9).slice(2)}$`, Wt = "?" + $, $e = `<${Wt}>`, S = document, q = () => S.createComment(""), W = (e) => e === null || typeof e != "object" && typeof e != "function", yt = Array.isArray, ke = (e) => yt(e) || typeof e?.[Symbol.iterator] == "function", ct = `[ 	
 \f\r]`, N = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, Tt = /-->/g, Mt = />/g, C = RegExp(`>|${ct}(?:([^\\s"'>=/]+)(${ct}*=${ct}*(?:[^ 	
-\f\r"'\`<>=]|("|')|))|$)`, "g"), Pt = /'/g, It = /"/g, Zt = /^(?:script|style|textarea|title)$/i, Ce = (e) => (t, ...o) => ({ _$litType$: e, strings: t, values: o }), G = Ce(1), z = Symbol.for("lit-noChange"), f = Symbol.for("lit-nothing"), Ot = /* @__PURE__ */ new WeakMap(), A = S.createTreeWalker(S, 129);
-function Gt(e, t) {
+\f\r"'\`<>=]|("|')|))|$)`, "g"), Pt = /'/g, It = /"/g, Gt = /^(?:script|style|textarea|title)$/i, Ce = (e) => (t, ...o) => ({ _$litType$: e, strings: t, values: o }), Z = Ce(1), z = Symbol.for("lit-noChange"), f = Symbol.for("lit-nothing"), Ot = /* @__PURE__ */ new WeakMap(), A = S.createTreeWalker(S, 129);
+function Zt(e, t) {
   if (!yt(e) || !e.hasOwnProperty("raw")) throw Error("invalid template strings array");
   return Lt !== void 0 ? Lt.createHTML(t) : t;
 }
@@ -271,42 +271,42 @@ const Ee = (e, t) => {
   const o = e.length - 1, r = [];
   let s, l = t === 2 ? "<svg>" : t === 3 ? "<math>" : "", a = N;
   for (let i = 0; i < o; i++) {
-    const c = e[i];
-    let u, m, h = -1, v = 0;
-    for (; v < c.length && (a.lastIndex = v, m = a.exec(c), m !== null); ) v = a.lastIndex, a === N ? m[1] === "!--" ? a = Tt : m[1] !== void 0 ? a = Mt : m[2] !== void 0 ? (Zt.test(m[2]) && (s = RegExp("</" + m[2], "g")), a = C) : m[3] !== void 0 && (a = C) : a === C ? m[0] === ">" ? (a = s ?? N, h = -1) : m[1] === void 0 ? h = -2 : (h = a.lastIndex - m[2].length, u = m[1], a = m[3] === void 0 ? C : m[3] === '"' ? It : Pt) : a === It || a === Pt ? a = C : a === Tt || a === Mt ? a = N : (a = C, s = void 0);
+    const n = e[i];
+    let d, m, h = -1, v = 0;
+    for (; v < n.length && (a.lastIndex = v, m = a.exec(n), m !== null); ) v = a.lastIndex, a === N ? m[1] === "!--" ? a = Tt : m[1] !== void 0 ? a = Mt : m[2] !== void 0 ? (Gt.test(m[2]) && (s = RegExp("</" + m[2], "g")), a = C) : m[3] !== void 0 && (a = C) : a === C ? m[0] === ">" ? (a = s ?? N, h = -1) : m[1] === void 0 ? h = -2 : (h = a.lastIndex - m[2].length, d = m[1], a = m[3] === void 0 ? C : m[3] === '"' ? It : Pt) : a === It || a === Pt ? a = C : a === Tt || a === Mt ? a = N : (a = C, s = void 0);
     const b = a === C && e[i + 1].startsWith("/>") ? " " : "";
-    l += a === N ? c + $e : h >= 0 ? (r.push(u), c.slice(0, h) + qt + c.slice(h) + $ + b) : c + $ + (h === -2 ? i : b);
+    l += a === N ? n + $e : h >= 0 ? (r.push(d), n.slice(0, h) + qt + n.slice(h) + $ + b) : n + $ + (h === -2 ? i : b);
   }
-  return [Gt(e, l + (e[o] || "<?>") + (t === 2 ? "</svg>" : t === 3 ? "</math>" : "")), r];
+  return [Zt(e, l + (e[o] || "<?>") + (t === 2 ? "</svg>" : t === 3 ? "</math>" : "")), r];
 };
-class Z {
+class G {
   constructor({ strings: t, _$litType$: o }, r) {
     let s;
     this.parts = [];
     let l = 0, a = 0;
-    const i = t.length - 1, c = this.parts, [u, m] = Ee(t, o);
-    if (this.el = Z.createElement(u, r), A.currentNode = this.el.content, o === 2 || o === 3) {
+    const i = t.length - 1, n = this.parts, [d, m] = Ee(t, o);
+    if (this.el = G.createElement(d, r), A.currentNode = this.el.content, o === 2 || o === 3) {
       const h = this.el.content.firstChild;
       h.replaceWith(...h.childNodes);
     }
-    for (; (s = A.nextNode()) !== null && c.length < i; ) {
+    for (; (s = A.nextNode()) !== null && n.length < i; ) {
       if (s.nodeType === 1) {
         if (s.hasAttributes()) for (const h of s.getAttributeNames()) if (h.endsWith(qt)) {
           const v = m[a++], b = s.getAttribute(h).split($), y = /([.?@])?(.*)/.exec(v);
-          c.push({ type: 1, index: l, name: y[2], strings: b, ctor: y[1] === "." ? Se : y[1] === "?" ? ze : y[1] === "@" ? Le : at }), s.removeAttribute(h);
-        } else h.startsWith($) && (c.push({ type: 6, index: l }), s.removeAttribute(h));
-        if (Zt.test(s.tagName)) {
+          n.push({ type: 1, index: l, name: y[2], strings: b, ctor: y[1] === "." ? Se : y[1] === "?" ? ze : y[1] === "@" ? Le : at }), s.removeAttribute(h);
+        } else h.startsWith($) && (n.push({ type: 6, index: l }), s.removeAttribute(h));
+        if (Gt.test(s.tagName)) {
           const h = s.textContent.split($), v = h.length - 1;
           if (v > 0) {
             s.textContent = st ? st.emptyScript : "";
-            for (let b = 0; b < v; b++) s.append(h[b], q()), A.nextNode(), c.push({ type: 2, index: ++l });
+            for (let b = 0; b < v; b++) s.append(h[b], q()), A.nextNode(), n.push({ type: 2, index: ++l });
             s.append(h[v], q());
           }
         }
-      } else if (s.nodeType === 8) if (s.data === Wt) c.push({ type: 2, index: l });
+      } else if (s.nodeType === 8) if (s.data === Wt) n.push({ type: 2, index: l });
       else {
         let h = -1;
-        for (; (h = s.data.indexOf($, h + 1)) !== -1; ) c.push({ type: 7, index: l }), h += $.length - 1;
+        for (; (h = s.data.indexOf($, h + 1)) !== -1; ) n.push({ type: 7, index: l }), h += $.length - 1;
       }
       l++;
     }
@@ -335,13 +335,13 @@ class Ae {
   u(t) {
     const { el: { content: o }, parts: r } = this._$AD, s = (t?.creationScope ?? S).importNode(o, !0);
     A.currentNode = s;
-    let l = A.nextNode(), a = 0, i = 0, c = r[0];
-    for (; c !== void 0; ) {
-      if (a === c.index) {
-        let u;
-        c.type === 2 ? u = new Y(l, l.nextSibling, this, t) : c.type === 1 ? u = new c.ctor(l, c.name, c.strings, this, t) : c.type === 6 && (u = new Te(l, this, t)), this._$AV.push(u), c = r[++i];
+    let l = A.nextNode(), a = 0, i = 0, n = r[0];
+    for (; n !== void 0; ) {
+      if (a === n.index) {
+        let d;
+        n.type === 2 ? d = new Y(l, l.nextSibling, this, t) : n.type === 1 ? d = new n.ctor(l, n.name, n.strings, this, t) : n.type === 6 && (d = new Te(l, this, t)), this._$AV.push(d), n = r[++i];
       }
-      a !== c?.index && (l = A.nextNode(), a++);
+      a !== n?.index && (l = A.nextNode(), a++);
     }
     return A.currentNode = S, s;
   }
@@ -381,7 +381,7 @@ class Y {
     this._$AH !== f && W(this._$AH) ? this._$AA.nextSibling.data = t : this.T(S.createTextNode(t)), this._$AH = t;
   }
   $(t) {
-    const { values: o, _$litType$: r } = t, s = typeof r == "number" ? this._$AC(t) : (r.el === void 0 && (r.el = Z.createElement(Gt(r.h, r.h[0]), this.options)), r);
+    const { values: o, _$litType$: r } = t, s = typeof r == "number" ? this._$AC(t) : (r.el === void 0 && (r.el = G.createElement(Zt(r.h, r.h[0]), this.options)), r);
     if (this._$AH?._$AD === s) this._$AH.p(o);
     else {
       const l = new Ae(s, this), a = l.u(this.options);
@@ -390,7 +390,7 @@ class Y {
   }
   _$AC(t) {
     let o = Ot.get(t.strings);
-    return o === void 0 && Ot.set(t.strings, o = new Z(t)), o;
+    return o === void 0 && Ot.set(t.strings, o = new G(t)), o;
   }
   k(t) {
     yt(this._$AH) || (this._$AH = [], this._$AR());
@@ -425,8 +425,8 @@ class at {
     if (l === void 0) t = P(this, t, o, 0), a = !W(t) || t !== this._$AH && t !== z, a && (this._$AH = t);
     else {
       const i = t;
-      let c, u;
-      for (t = l[0], c = 0; c < l.length - 1; c++) u = P(this, i[r + c], o, c), u === z && (u = this._$AH[c]), a || (a = !W(u) || u !== this._$AH[c]), u === f ? t = f : t !== f && (t += (u ?? "") + l[c + 1]), this._$AH[c] = u;
+      let n, d;
+      for (t = l[0], n = 0; n < l.length - 1; n++) d = P(this, i[r + n], o, n), d === z && (d = this._$AH[n]), a || (a = !W(d) || d !== this._$AH[n]), d === f ? t = f : t !== f && (t += (d ?? "") + l[n + 1]), this._$AH[n] = d;
     }
     a && !s && this.j(t);
   }
@@ -475,7 +475,7 @@ class Te {
   }
 }
 const Me = V.litHtmlPolyfillSupport;
-Me?.(Z, Y), (V.litHtmlVersions ?? (V.litHtmlVersions = [])).push("3.3.0");
+Me?.(G, Y), (V.litHtmlVersions ?? (V.litHtmlVersions = [])).push("3.3.0");
 const Pe = (e, t, o) => {
   const r = o?.renderBefore ?? t;
   let s = r._$litPart$;
@@ -639,7 +639,7 @@ var Oe = L`
     for (var o of Nt(t))
       De.call(t, o) && Bt(e, o, t[o]);
   return e;
-}, Jt = (e, t) => Ne(e, He(t)), n = (e, t, o, r) => {
+}, Jt = (e, t) => Ne(e, He(t)), c = (e, t, o, r) => {
   for (var s = r > 1 ? void 0 : r ? Be(t, o) : t, l = e.length - 1, a; l >= 0; l--)
     (a = e[l]) && (s = (r ? a(t, o, s) : a(s)) || s);
   return r && s && Qt(t, o, s), s;
@@ -655,8 +655,8 @@ const je = { attribute: !0, type: String, converter: rt, reflect: !1, hasChanged
   if (l === void 0 && globalThis.litPropertyMetadata.set(s, l = /* @__PURE__ */ new Map()), r === "setter" && ((e = Object.create(e)).wrapped = !0), l.set(o.name, e), r === "accessor") {
     const { name: a } = o;
     return { set(i) {
-      const c = t.get.call(this);
-      t.set.call(this, i), this.requestUpdate(a, c, e);
+      const n = t.get.call(this);
+      t.set.call(this, i), this.requestUpdate(a, n, e);
     }, init(i) {
       return i !== void 0 && this.C(a, void 0, e, i), i;
     } };
@@ -664,13 +664,13 @@ const je = { attribute: !0, type: String, converter: rt, reflect: !1, hasChanged
   if (r === "setter") {
     const { name: a } = o;
     return function(i) {
-      const c = this[a];
-      t.call(this, i), this.requestUpdate(a, c, e);
+      const n = this[a];
+      t.call(this, i), this.requestUpdate(a, n, e);
     };
   }
   throw Error("Unsupported decorator location: " + r);
 };
-function d(e) {
+function u(e) {
   return (t, o) => typeof o == "object" ? qe(e, t, o) : ((r, s, l) => {
     const a = s.hasOwnProperty(l);
     return s.constructor.createProperty(l, r), a ? Object.getOwnPropertyDescriptor(s, l) : void 0;
@@ -682,7 +682,7 @@ function d(e) {
  * SPDX-License-Identifier: BSD-3-Clause
  */
 function it(e) {
-  return d({ ...e, state: !0, attribute: !1 });
+  return u({ ...e, state: !0, attribute: !1 });
 }
 /**
  * @license
@@ -751,18 +751,18 @@ var et, x = class extends j {
 et = /* @__PURE__ */ new WeakMap();
 x.version = "2.20.1";
 x.dependencies = {};
-n([
-  d()
+c([
+  u()
 ], x.prototype, "dir", 2);
-n([
-  d()
+c([
+  u()
 ], x.prototype, "lang", 2);
 /**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const Ze = { ATTRIBUTE: 1 }, Ge = (e) => (...t) => ({ _$litDirective$: e, values: t });
+const Ge = { ATTRIBUTE: 1 }, Ze = (e) => (...t) => ({ _$litDirective$: e, values: t });
 let Ye = class {
   constructor(t) {
   }
@@ -784,9 +784,9 @@ let Ye = class {
  * Copyright 2018 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const nt = Ge(class extends Ye {
+const nt = Ze(class extends Ye {
   constructor(e) {
-    if (super(e), e.type !== Ze.ATTRIBUTE || e.name !== "class" || e.strings?.length > 2) throw Error("`classMap()` can only be used in the `class` attribute and must be the only part in the attribute.");
+    if (super(e), e.type !== Ge.ATTRIBUTE || e.name !== "class" || e.strings?.length > 2) throw Error("`classMap()` can only be used in the `class` attribute and must be the only part in the attribute.");
   }
   render(e) {
     return " " + Object.keys(e).filter((t) => e[t]).join(" ") + " ";
@@ -811,7 +811,7 @@ var ee = class extends x {
     super(...arguments), this.hasSlotController = new Yt(this, "footer", "header", "image");
   }
   render() {
-    return G`
+    return Z`
       <div
         part="base"
         class=${nt({
@@ -928,8 +928,8 @@ let Xe = class {
   }
   getTranslationData(t) {
     var o, r;
-    const s = new Intl.Locale(t.replace(/_/g, "-")), l = s?.language.toLowerCase(), a = (r = (o = s?.region) === null || o === void 0 ? void 0 : o.toLowerCase()) !== null && r !== void 0 ? r : "", i = M.get(`${l}-${a}`), c = M.get(l);
-    return { locale: s, language: l, region: a, primary: i, secondary: c };
+    const s = new Intl.Locale(t.replace(/_/g, "-")), l = s?.language.toLowerCase(), a = (r = (o = s?.region) === null || o === void 0 ? void 0 : o.toLowerCase()) !== null && r !== void 0 ? r : "", i = M.get(`${l}-${a}`), n = M.get(l);
+    return { locale: s, language: l, region: a, primary: i, secondary: n };
   }
   exists(t, o) {
     var r;
@@ -995,7 +995,7 @@ var _t = class extends x {
     super(...arguments), this.localize = new ae(this);
   }
   render() {
-    return G`
+    return Z`
       <svg part="base" class="spinner" role="progressbar" aria-label=${this.localize.term("loading")}>
         <circle class="spinner__track"></circle>
         <circle class="spinner__indicator"></circle>
@@ -1919,10 +1919,10 @@ function kt(e, t) {
   return (r, s) => {
     const { update: l } = r, a = Array.isArray(e) ? e : [e];
     r.update = function(i) {
-      a.forEach((c) => {
-        const u = c;
-        if (i.has(u)) {
-          const m = i.get(u), h = this[u];
+      a.forEach((n) => {
+        const d = n;
+        if (i.has(d)) {
+          const m = i.get(d), h = this[d];
           m !== h && (!o.waitUntilFirstUpdate || this.hasUpdated) && this[s](m, h);
         }
       }), l.call(this, i);
@@ -1944,7 +1944,7 @@ var D = Symbol(), K = Symbol(), ut, ht = /* @__PURE__ */ new Map(), _ = class ex
     var o;
     let r;
     if (t?.spriteSheet)
-      return this.svg = G`<svg part="svg">
+      return this.svg = Z`<svg part="svg">
         <use part="use" href="${e}"></use>
       </svg>`, this.svg;
     try {
@@ -2021,25 +2021,25 @@ var D = Symbol(), K = Symbol(), ut, ht = /* @__PURE__ */ new Map(), _ = class ex
   }
 };
 _.styles = [O, co];
-n([
+c([
   it()
 ], _.prototype, "svg", 2);
-n([
-  d({ reflect: !0 })
+c([
+  u({ reflect: !0 })
 ], _.prototype, "name", 2);
-n([
-  d()
+c([
+  u()
 ], _.prototype, "src", 2);
-n([
-  d()
+c([
+  u()
 ], _.prototype, "label", 2);
-n([
-  d({ reflect: !0 })
+c([
+  u({ reflect: !0 })
 ], _.prototype, "library", 2);
-n([
+c([
   kt("label")
 ], _.prototype, "handleLabelChange", 1);
-n([
+c([
   kt(["name", "src", "library"])
 ], _.prototype, "setIcon", 1);
 /**
@@ -2057,17 +2057,17 @@ const ie = Symbol.for(""), ho = (e) => {
   const r = o.length;
   let s, l;
   const a = [], i = [];
-  let c, u = 0, m = !1;
-  for (; u < r; ) {
-    for (c = t[u]; u < r && (l = o[u], (s = ho(l)) !== void 0); ) c += s + t[++u], m = !0;
-    u !== r && i.push(l), a.push(c), u++;
+  let n, d = 0, m = !1;
+  for (; d < r; ) {
+    for (n = t[d]; d < r && (l = o[d], (s = ho(l)) !== void 0); ) n += s + t[++d], m = !0;
+    d !== r && i.push(l), a.push(n), d++;
   }
-  if (u === r && a.push(t[r]), m) {
+  if (d === r && a.push(t[r]), m) {
     const h = a.join("$$lit$$");
     (t = Rt.get(h)) === void 0 && (a.raw = a, Rt.set(h, t = a)), o = i;
   }
   return e(t, ...o);
-}, ot = po(G);
+}, ot = po(Z);
 /**
  * @license
  * Copyright 2018 Google LLC
@@ -2201,82 +2201,82 @@ p.dependencies = {
   "sl-icon": _,
   "sl-spinner": _t
 };
-n([
+c([
   te(".button")
 ], p.prototype, "button", 2);
-n([
+c([
   it()
 ], p.prototype, "hasFocus", 2);
-n([
+c([
   it()
 ], p.prototype, "invalid", 2);
-n([
-  d()
+c([
+  u()
 ], p.prototype, "title", 2);
-n([
-  d({ reflect: !0 })
+c([
+  u({ reflect: !0 })
 ], p.prototype, "variant", 2);
-n([
-  d({ reflect: !0 })
+c([
+  u({ reflect: !0 })
 ], p.prototype, "size", 2);
-n([
-  d({ type: Boolean, reflect: !0 })
+c([
+  u({ type: Boolean, reflect: !0 })
 ], p.prototype, "caret", 2);
-n([
-  d({ type: Boolean, reflect: !0 })
+c([
+  u({ type: Boolean, reflect: !0 })
 ], p.prototype, "disabled", 2);
-n([
-  d({ type: Boolean, reflect: !0 })
+c([
+  u({ type: Boolean, reflect: !0 })
 ], p.prototype, "loading", 2);
-n([
-  d({ type: Boolean, reflect: !0 })
+c([
+  u({ type: Boolean, reflect: !0 })
 ], p.prototype, "outline", 2);
-n([
-  d({ type: Boolean, reflect: !0 })
+c([
+  u({ type: Boolean, reflect: !0 })
 ], p.prototype, "pill", 2);
-n([
-  d({ type: Boolean, reflect: !0 })
+c([
+  u({ type: Boolean, reflect: !0 })
 ], p.prototype, "circle", 2);
-n([
-  d()
+c([
+  u()
 ], p.prototype, "type", 2);
-n([
-  d()
+c([
+  u()
 ], p.prototype, "name", 2);
-n([
-  d()
+c([
+  u()
 ], p.prototype, "value", 2);
-n([
-  d()
+c([
+  u()
 ], p.prototype, "href", 2);
-n([
-  d()
+c([
+  u()
 ], p.prototype, "target", 2);
-n([
-  d()
+c([
+  u()
 ], p.prototype, "rel", 2);
-n([
-  d()
+c([
+  u()
 ], p.prototype, "download", 2);
-n([
-  d()
+c([
+  u()
 ], p.prototype, "form", 2);
-n([
-  d({ attribute: "formaction" })
+c([
+  u({ attribute: "formaction" })
 ], p.prototype, "formAction", 2);
-n([
-  d({ attribute: "formenctype" })
+c([
+  u({ attribute: "formenctype" })
 ], p.prototype, "formEnctype", 2);
-n([
-  d({ attribute: "formmethod" })
+c([
+  u({ attribute: "formmethod" })
 ], p.prototype, "formMethod", 2);
-n([
-  d({ attribute: "formnovalidate", type: Boolean })
+c([
+  u({ attribute: "formnovalidate", type: Boolean })
 ], p.prototype, "formNoValidate", 2);
-n([
-  d({ attribute: "formtarget" })
+c([
+  u({ attribute: "formtarget" })
 ], p.prototype, "formTarget", 2);
-n([
+c([
   kt("disabled", { waitUntilFirstUpdate: !0 })
 ], p.prototype, "handleDisabledChange", 1);
 p.define("sl-button");
@@ -2374,7 +2374,7 @@ var mo = L`
     super(...arguments), this.variant = "primary", this.pill = !1, this.pulse = !1;
   }
   render() {
-    return G`
+    return Z`
       <span
         part="base"
         class=${nt({
@@ -2395,14 +2395,14 @@ var mo = L`
   }
 };
 X.styles = [O, mo];
-n([
-  d({ reflect: !0 })
+c([
+  u({ reflect: !0 })
 ], X.prototype, "variant", 2);
-n([
-  d({ type: Boolean, reflect: !0 })
+c([
+  u({ type: Boolean, reflect: !0 })
 ], X.prototype, "pill", 2);
-n([
-  d({ type: Boolean, reflect: !0 })
+c([
+  u({ type: Boolean, reflect: !0 })
 ], X.prototype, "pulse", 2);
 X.define("sl-badge");
 var bo = L`
@@ -2514,39 +2514,39 @@ var bo = L`
 };
 w.styles = [O, bo];
 w.dependencies = { "sl-icon": _ };
-n([
+c([
   te(".icon-button")
 ], w.prototype, "button", 2);
-n([
+c([
   it()
 ], w.prototype, "hasFocus", 2);
-n([
-  d()
+c([
+  u()
 ], w.prototype, "name", 2);
-n([
-  d()
+c([
+  u()
 ], w.prototype, "library", 2);
-n([
-  d()
+c([
+  u()
 ], w.prototype, "src", 2);
-n([
-  d()
+c([
+  u()
 ], w.prototype, "href", 2);
-n([
-  d()
+c([
+  u()
 ], w.prototype, "target", 2);
-n([
-  d()
+c([
+  u()
 ], w.prototype, "download", 2);
-n([
-  d()
+c([
+  u()
 ], w.prototype, "label", 2);
-n([
-  d({ type: Boolean, reflect: !0 })
+c([
+  u({ type: Boolean, reflect: !0 })
 ], w.prototype, "disabled", 2);
 w.define("sl-icon-button");
 _t.define("sl-spinner");
-const go = ':root,:host,.sl-theme-light{color-scheme:light;--sl-color-gray-50: hsl(0 0% 97.5%);--sl-color-gray-100: hsl(240 4.8% 95.9%);--sl-color-gray-200: hsl(240 5.9% 90%);--sl-color-gray-300: hsl(240 4.9% 83.9%);--sl-color-gray-400: hsl(240 5% 64.9%);--sl-color-gray-500: hsl(240 3.8% 46.1%);--sl-color-gray-600: hsl(240 5.2% 33.9%);--sl-color-gray-700: hsl(240 5.3% 26.1%);--sl-color-gray-800: hsl(240 3.7% 15.9%);--sl-color-gray-900: hsl(240 5.9% 10%);--sl-color-gray-950: hsl(240 7.3% 8%);--sl-color-red-50: hsl(0 85.7% 97.3%);--sl-color-red-100: hsl(0 93.3% 94.1%);--sl-color-red-200: hsl(0 96.3% 89.4%);--sl-color-red-300: hsl(0 93.5% 81.8%);--sl-color-red-400: hsl(0 90.6% 70.8%);--sl-color-red-500: hsl(0 84.2% 60.2%);--sl-color-red-600: hsl(0 72.2% 50.6%);--sl-color-red-700: hsl(0 73.7% 41.8%);--sl-color-red-800: hsl(0 70% 35.3%);--sl-color-red-900: hsl(0 62.8% 30.6%);--sl-color-red-950: hsl(0 60% 19.6%);--sl-color-orange-50: hsl(33.3 100% 96.5%);--sl-color-orange-100: hsl(34.3 100% 91.8%);--sl-color-orange-200: hsl(32.1 97.7% 83.1%);--sl-color-orange-300: hsl(30.7 97.2% 72.4%);--sl-color-orange-400: hsl(27 96% 61%);--sl-color-orange-500: hsl(24.6 95% 53.1%);--sl-color-orange-600: hsl(20.5 90.2% 48.2%);--sl-color-orange-700: hsl(17.5 88.3% 40.4%);--sl-color-orange-800: hsl(15 79.1% 33.7%);--sl-color-orange-900: hsl(15.3 74.6% 27.8%);--sl-color-orange-950: hsl(15.2 69.1% 19%);--sl-color-amber-50: hsl(48 100% 96.1%);--sl-color-amber-100: hsl(48 96.5% 88.8%);--sl-color-amber-200: hsl(48 96.6% 76.7%);--sl-color-amber-300: hsl(45.9 96.7% 64.5%);--sl-color-amber-400: hsl(43.3 96.4% 56.3%);--sl-color-amber-500: hsl(37.7 92.1% 50.2%);--sl-color-amber-600: hsl(32.1 94.6% 43.7%);--sl-color-amber-700: hsl(26 90.5% 37.1%);--sl-color-amber-800: hsl(22.7 82.5% 31.4%);--sl-color-amber-900: hsl(21.7 77.8% 26.5%);--sl-color-amber-950: hsl(22.9 74.1% 16.7%);--sl-color-yellow-50: hsl(54.5 91.7% 95.3%);--sl-color-yellow-100: hsl(54.9 96.7% 88%);--sl-color-yellow-200: hsl(52.8 98.3% 76.9%);--sl-color-yellow-300: hsl(50.4 97.8% 63.5%);--sl-color-yellow-400: hsl(47.9 95.8% 53.1%);--sl-color-yellow-500: hsl(45.4 93.4% 47.5%);--sl-color-yellow-600: hsl(40.6 96.1% 40.4%);--sl-color-yellow-700: hsl(35.5 91.7% 32.9%);--sl-color-yellow-800: hsl(31.8 81% 28.8%);--sl-color-yellow-900: hsl(28.4 72.5% 25.7%);--sl-color-yellow-950: hsl(33.1 69% 13.9%);--sl-color-lime-50: hsl(78.3 92% 95.1%);--sl-color-lime-100: hsl(79.6 89.1% 89.2%);--sl-color-lime-200: hsl(80.9 88.5% 79.6%);--sl-color-lime-300: hsl(82 84.5% 67.1%);--sl-color-lime-400: hsl(82.7 78% 55.5%);--sl-color-lime-500: hsl(83.7 80.5% 44.3%);--sl-color-lime-600: hsl(84.8 85.2% 34.5%);--sl-color-lime-700: hsl(85.9 78.4% 27.3%);--sl-color-lime-800: hsl(86.3 69% 22.7%);--sl-color-lime-900: hsl(87.6 61.2% 20.2%);--sl-color-lime-950: hsl(86.5 60.6% 13.9%);--sl-color-green-50: hsl(138.5 76.5% 96.7%);--sl-color-green-100: hsl(140.6 84.2% 92.5%);--sl-color-green-200: hsl(141 78.9% 85.1%);--sl-color-green-300: hsl(141.7 76.6% 73.1%);--sl-color-green-400: hsl(141.9 69.2% 58%);--sl-color-green-500: hsl(142.1 70.6% 45.3%);--sl-color-green-600: hsl(142.1 76.2% 36.3%);--sl-color-green-700: hsl(142.4 71.8% 29.2%);--sl-color-green-800: hsl(142.8 64.2% 24.1%);--sl-color-green-900: hsl(143.8 61.2% 20.2%);--sl-color-green-950: hsl(144.3 60.7% 12%);--sl-color-emerald-50: hsl(151.8 81% 95.9%);--sl-color-emerald-100: hsl(149.3 80.4% 90%);--sl-color-emerald-200: hsl(152.4 76% 80.4%);--sl-color-emerald-300: hsl(156.2 71.6% 66.9%);--sl-color-emerald-400: hsl(158.1 64.4% 51.6%);--sl-color-emerald-500: hsl(160.1 84.1% 39.4%);--sl-color-emerald-600: hsl(161.4 93.5% 30.4%);--sl-color-emerald-700: hsl(162.9 93.5% 24.3%);--sl-color-emerald-800: hsl(163.1 88.1% 19.8%);--sl-color-emerald-900: hsl(164.2 85.7% 16.5%);--sl-color-emerald-950: hsl(164.3 87.5% 9.4%);--sl-color-teal-50: hsl(166.2 76.5% 96.7%);--sl-color-teal-100: hsl(167.2 85.5% 89.2%);--sl-color-teal-200: hsl(168.4 83.8% 78.2%);--sl-color-teal-300: hsl(170.6 76.9% 64.3%);--sl-color-teal-400: hsl(172.5 66% 50.4%);--sl-color-teal-500: hsl(173.4 80.4% 40%);--sl-color-teal-600: hsl(174.7 83.9% 31.6%);--sl-color-teal-700: hsl(175.3 77.4% 26.1%);--sl-color-teal-800: hsl(176.1 69.4% 21.8%);--sl-color-teal-900: hsl(175.9 60.8% 19%);--sl-color-teal-950: hsl(176.5 58.6% 11.4%);--sl-color-cyan-50: hsl(183.2 100% 96.3%);--sl-color-cyan-100: hsl(185.1 95.9% 90.4%);--sl-color-cyan-200: hsl(186.2 93.5% 81.8%);--sl-color-cyan-300: hsl(187 92.4% 69%);--sl-color-cyan-400: hsl(187.9 85.7% 53.3%);--sl-color-cyan-500: hsl(188.7 94.5% 42.7%);--sl-color-cyan-600: hsl(191.6 91.4% 36.5%);--sl-color-cyan-700: hsl(192.9 82.3% 31%);--sl-color-cyan-800: hsl(194.4 69.6% 27.1%);--sl-color-cyan-900: hsl(196.4 63.6% 23.7%);--sl-color-cyan-950: hsl(196.8 61% 16.1%);--sl-color-sky-50: hsl(204 100% 97.1%);--sl-color-sky-100: hsl(204 93.8% 93.7%);--sl-color-sky-200: hsl(200.6 94.4% 86.1%);--sl-color-sky-300: hsl(199.4 95.5% 73.9%);--sl-color-sky-400: hsl(198.4 93.2% 59.6%);--sl-color-sky-500: hsl(198.6 88.7% 48.4%);--sl-color-sky-600: hsl(200.4 98% 39.4%);--sl-color-sky-700: hsl(201.3 96.3% 32.2%);--sl-color-sky-800: hsl(201 90% 27.5%);--sl-color-sky-900: hsl(202 80.3% 23.9%);--sl-color-sky-950: hsl(202.3 73.8% 16.5%);--sl-color-blue-50: hsl(213.8 100% 96.9%);--sl-color-blue-100: hsl(214.3 94.6% 92.7%);--sl-color-blue-200: hsl(213.3 96.9% 87.3%);--sl-color-blue-300: hsl(211.7 96.4% 78.4%);--sl-color-blue-400: hsl(213.1 93.9% 67.8%);--sl-color-blue-500: hsl(217.2 91.2% 59.8%);--sl-color-blue-600: hsl(221.2 83.2% 53.3%);--sl-color-blue-700: hsl(224.3 76.3% 48%);--sl-color-blue-800: hsl(225.9 70.7% 40.2%);--sl-color-blue-900: hsl(224.4 64.3% 32.9%);--sl-color-blue-950: hsl(226.2 55.3% 18.4%);--sl-color-indigo-50: hsl(225.9 100% 96.7%);--sl-color-indigo-100: hsl(226.5 100% 93.9%);--sl-color-indigo-200: hsl(228 96.5% 88.8%);--sl-color-indigo-300: hsl(229.7 93.5% 81.8%);--sl-color-indigo-400: hsl(234.5 89.5% 73.9%);--sl-color-indigo-500: hsl(238.7 83.5% 66.7%);--sl-color-indigo-600: hsl(243.4 75.4% 58.6%);--sl-color-indigo-700: hsl(244.5 57.9% 50.6%);--sl-color-indigo-800: hsl(243.7 54.5% 41.4%);--sl-color-indigo-900: hsl(242.2 47.4% 34.3%);--sl-color-indigo-950: hsl(243.5 43.6% 22.9%);--sl-color-violet-50: hsl(250 100% 97.6%);--sl-color-violet-100: hsl(251.4 91.3% 95.5%);--sl-color-violet-200: hsl(250.5 95.2% 91.8%);--sl-color-violet-300: hsl(252.5 94.7% 85.1%);--sl-color-violet-400: hsl(255.1 91.7% 76.3%);--sl-color-violet-500: hsl(258.3 89.5% 66.3%);--sl-color-violet-600: hsl(262.1 83.3% 57.8%);--sl-color-violet-700: hsl(263.4 70% 50.4%);--sl-color-violet-800: hsl(263.4 69.3% 42.2%);--sl-color-violet-900: hsl(263.5 67.4% 34.9%);--sl-color-violet-950: hsl(265.1 61.5% 21.4%);--sl-color-purple-50: hsl(270 100% 98%);--sl-color-purple-100: hsl(268.7 100% 95.5%);--sl-color-purple-200: hsl(268.6 100% 91.8%);--sl-color-purple-300: hsl(269.2 97.4% 85.1%);--sl-color-purple-400: hsl(270 95.2% 75.3%);--sl-color-purple-500: hsl(270.7 91% 65.1%);--sl-color-purple-600: hsl(271.5 81.3% 55.9%);--sl-color-purple-700: hsl(272.1 71.7% 47.1%);--sl-color-purple-800: hsl(272.9 67.2% 39.4%);--sl-color-purple-900: hsl(273.6 65.6% 32%);--sl-color-purple-950: hsl(276 59.5% 16.5%);--sl-color-fuchsia-50: hsl(289.1 100% 97.8%);--sl-color-fuchsia-100: hsl(287 100% 95.5%);--sl-color-fuchsia-200: hsl(288.3 95.8% 90.6%);--sl-color-fuchsia-300: hsl(291.1 93.1% 82.9%);--sl-color-fuchsia-400: hsl(292 91.4% 72.5%);--sl-color-fuchsia-500: hsl(292.2 84.1% 60.6%);--sl-color-fuchsia-600: hsl(293.4 69.5% 48.8%);--sl-color-fuchsia-700: hsl(294.7 72.4% 39.8%);--sl-color-fuchsia-800: hsl(295.4 70.2% 32.9%);--sl-color-fuchsia-900: hsl(296.7 63.6% 28%);--sl-color-fuchsia-950: hsl(297.1 56.8% 14.5%);--sl-color-pink-50: hsl(327.3 73.3% 97.1%);--sl-color-pink-100: hsl(325.7 77.8% 94.7%);--sl-color-pink-200: hsl(325.9 84.6% 89.8%);--sl-color-pink-300: hsl(327.4 87.1% 81.8%);--sl-color-pink-400: hsl(328.6 85.5% 70.2%);--sl-color-pink-500: hsl(330.4 81.2% 60.4%);--sl-color-pink-600: hsl(333.3 71.4% 50.6%);--sl-color-pink-700: hsl(335.1 77.6% 42%);--sl-color-pink-800: hsl(335.8 74.4% 35.3%);--sl-color-pink-900: hsl(335.9 69% 30.4%);--sl-color-pink-950: hsl(336.2 65.4% 15.9%);--sl-color-rose-50: hsl(355.7 100% 97.3%);--sl-color-rose-100: hsl(355.6 100% 94.7%);--sl-color-rose-200: hsl(352.7 96.1% 90%);--sl-color-rose-300: hsl(352.6 95.7% 81.8%);--sl-color-rose-400: hsl(351.3 94.5% 71.4%);--sl-color-rose-500: hsl(349.7 89.2% 60.2%);--sl-color-rose-600: hsl(346.8 77.2% 49.8%);--sl-color-rose-700: hsl(345.3 82.7% 40.8%);--sl-color-rose-800: hsl(343.4 79.7% 34.7%);--sl-color-rose-900: hsl(341.5 75.5% 30.4%);--sl-color-rose-950: hsl(341.3 70.1% 17.1%);--sl-color-primary-50: var(--sl-color-sky-50);--sl-color-primary-100: var(--sl-color-sky-100);--sl-color-primary-200: var(--sl-color-sky-200);--sl-color-primary-300: var(--sl-color-sky-300);--sl-color-primary-400: var(--sl-color-sky-400);--sl-color-primary-500: var(--sl-color-sky-500);--sl-color-primary-600: var(--sl-color-sky-600);--sl-color-primary-700: var(--sl-color-sky-700);--sl-color-primary-800: var(--sl-color-sky-800);--sl-color-primary-900: var(--sl-color-sky-900);--sl-color-primary-950: var(--sl-color-sky-950);--sl-color-success-50: var(--sl-color-green-50);--sl-color-success-100: var(--sl-color-green-100);--sl-color-success-200: var(--sl-color-green-200);--sl-color-success-300: var(--sl-color-green-300);--sl-color-success-400: var(--sl-color-green-400);--sl-color-success-500: var(--sl-color-green-500);--sl-color-success-600: var(--sl-color-green-600);--sl-color-success-700: var(--sl-color-green-700);--sl-color-success-800: var(--sl-color-green-800);--sl-color-success-900: var(--sl-color-green-900);--sl-color-success-950: var(--sl-color-green-950);--sl-color-warning-50: var(--sl-color-amber-50);--sl-color-warning-100: var(--sl-color-amber-100);--sl-color-warning-200: var(--sl-color-amber-200);--sl-color-warning-300: var(--sl-color-amber-300);--sl-color-warning-400: var(--sl-color-amber-400);--sl-color-warning-500: var(--sl-color-amber-500);--sl-color-warning-600: var(--sl-color-amber-600);--sl-color-warning-700: var(--sl-color-amber-700);--sl-color-warning-800: var(--sl-color-amber-800);--sl-color-warning-900: var(--sl-color-amber-900);--sl-color-warning-950: var(--sl-color-amber-950);--sl-color-danger-50: var(--sl-color-red-50);--sl-color-danger-100: var(--sl-color-red-100);--sl-color-danger-200: var(--sl-color-red-200);--sl-color-danger-300: var(--sl-color-red-300);--sl-color-danger-400: var(--sl-color-red-400);--sl-color-danger-500: var(--sl-color-red-500);--sl-color-danger-600: var(--sl-color-red-600);--sl-color-danger-700: var(--sl-color-red-700);--sl-color-danger-800: var(--sl-color-red-800);--sl-color-danger-900: var(--sl-color-red-900);--sl-color-danger-950: var(--sl-color-red-950);--sl-color-neutral-50: var(--sl-color-gray-50);--sl-color-neutral-100: var(--sl-color-gray-100);--sl-color-neutral-200: var(--sl-color-gray-200);--sl-color-neutral-300: var(--sl-color-gray-300);--sl-color-neutral-400: var(--sl-color-gray-400);--sl-color-neutral-500: var(--sl-color-gray-500);--sl-color-neutral-600: var(--sl-color-gray-600);--sl-color-neutral-700: var(--sl-color-gray-700);--sl-color-neutral-800: var(--sl-color-gray-800);--sl-color-neutral-900: var(--sl-color-gray-900);--sl-color-neutral-950: var(--sl-color-gray-950);--sl-color-neutral-0: hsl(0, 0%, 100%);--sl-color-neutral-1000: hsl(0, 0%, 0%);--sl-border-radius-small: .1875rem;--sl-border-radius-medium: .25rem;--sl-border-radius-large: .5rem;--sl-border-radius-x-large: 1rem;--sl-border-radius-circle: 50%;--sl-border-radius-pill: 9999px;--sl-shadow-x-small: 0 1px 2px hsl(240 3.8% 46.1% / 6%);--sl-shadow-small: 0 1px 2px hsl(240 3.8% 46.1% / 12%);--sl-shadow-medium: 0 2px 4px hsl(240 3.8% 46.1% / 12%);--sl-shadow-large: 0 2px 8px hsl(240 3.8% 46.1% / 12%);--sl-shadow-x-large: 0 4px 16px hsl(240 3.8% 46.1% / 12%);--sl-spacing-3x-small: .125rem;--sl-spacing-2x-small: .25rem;--sl-spacing-x-small: .5rem;--sl-spacing-small: .75rem;--sl-spacing-medium: 1rem;--sl-spacing-large: 1.25rem;--sl-spacing-x-large: 1.75rem;--sl-spacing-2x-large: 2.25rem;--sl-spacing-3x-large: 3rem;--sl-spacing-4x-large: 4.5rem;--sl-transition-x-slow: 1s;--sl-transition-slow: .5s;--sl-transition-medium: .25s;--sl-transition-fast: .15s;--sl-transition-x-fast: 50ms;--sl-font-mono: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;--sl-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";--sl-font-serif: Georgia, "Times New Roman", serif;--sl-font-size-2x-small: .625rem;--sl-font-size-x-small: .75rem;--sl-font-size-small: .875rem;--sl-font-size-medium: 1rem;--sl-font-size-large: 1.25rem;--sl-font-size-x-large: 1.5rem;--sl-font-size-2x-large: 2.25rem;--sl-font-size-3x-large: 3rem;--sl-font-size-4x-large: 4.5rem;--sl-font-weight-light: 300;--sl-font-weight-normal: 400;--sl-font-weight-semibold: 500;--sl-font-weight-bold: 700;--sl-letter-spacing-denser: -.03em;--sl-letter-spacing-dense: -.015em;--sl-letter-spacing-normal: normal;--sl-letter-spacing-loose: .075em;--sl-letter-spacing-looser: .15em;--sl-line-height-denser: 1;--sl-line-height-dense: 1.4;--sl-line-height-normal: 1.8;--sl-line-height-loose: 2.2;--sl-line-height-looser: 2.6;--sl-focus-ring-color: var(--sl-color-primary-600);--sl-focus-ring-style: solid;--sl-focus-ring-width: 3px;--sl-focus-ring: var(--sl-focus-ring-style) var(--sl-focus-ring-width) var(--sl-focus-ring-color);--sl-focus-ring-offset: 1px;--sl-button-font-size-small: var(--sl-font-size-x-small);--sl-button-font-size-medium: var(--sl-font-size-small);--sl-button-font-size-large: var(--sl-font-size-medium);--sl-input-height-small: 1.875rem;--sl-input-height-medium: 2.5rem;--sl-input-height-large: 3.125rem;--sl-input-background-color: var(--sl-color-neutral-0);--sl-input-background-color-hover: var(--sl-input-background-color);--sl-input-background-color-focus: var(--sl-input-background-color);--sl-input-background-color-disabled: var(--sl-color-neutral-100);--sl-input-border-color: var(--sl-color-neutral-300);--sl-input-border-color-hover: var(--sl-color-neutral-400);--sl-input-border-color-focus: var(--sl-color-primary-500);--sl-input-border-color-disabled: var(--sl-color-neutral-300);--sl-input-border-width: 1px;--sl-input-required-content: "*";--sl-input-required-content-offset: -2px;--sl-input-required-content-color: var(--sl-input-label-color);--sl-input-border-radius-small: var(--sl-border-radius-medium);--sl-input-border-radius-medium: var(--sl-border-radius-medium);--sl-input-border-radius-large: var(--sl-border-radius-medium);--sl-input-font-family: var(--sl-font-sans);--sl-input-font-weight: var(--sl-font-weight-normal);--sl-input-font-size-small: var(--sl-font-size-small);--sl-input-font-size-medium: var(--sl-font-size-medium);--sl-input-font-size-large: var(--sl-font-size-large);--sl-input-letter-spacing: var(--sl-letter-spacing-normal);--sl-input-color: var(--sl-color-neutral-700);--sl-input-color-hover: var(--sl-color-neutral-700);--sl-input-color-focus: var(--sl-color-neutral-700);--sl-input-color-disabled: var(--sl-color-neutral-900);--sl-input-icon-color: var(--sl-color-neutral-500);--sl-input-icon-color-hover: var(--sl-color-neutral-600);--sl-input-icon-color-focus: var(--sl-color-neutral-600);--sl-input-placeholder-color: var(--sl-color-neutral-500);--sl-input-placeholder-color-disabled: var(--sl-color-neutral-600);--sl-input-spacing-small: var(--sl-spacing-small);--sl-input-spacing-medium: var(--sl-spacing-medium);--sl-input-spacing-large: var(--sl-spacing-large);--sl-input-focus-ring-color: hsl(198.6 88.7% 48.4% / 40%);--sl-input-focus-ring-offset: 0;--sl-input-filled-background-color: var(--sl-color-neutral-100);--sl-input-filled-background-color-hover: var(--sl-color-neutral-100);--sl-input-filled-background-color-focus: var(--sl-color-neutral-100);--sl-input-filled-background-color-disabled: var(--sl-color-neutral-100);--sl-input-filled-color: var(--sl-color-neutral-800);--sl-input-filled-color-hover: var(--sl-color-neutral-800);--sl-input-filled-color-focus: var(--sl-color-neutral-700);--sl-input-filled-color-disabled: var(--sl-color-neutral-800);--sl-input-label-font-size-small: var(--sl-font-size-small);--sl-input-label-font-size-medium: var(--sl-font-size-medium);--sl-input-label-font-size-large: var(--sl-font-size-large);--sl-input-label-color: inherit;--sl-input-help-text-font-size-small: var(--sl-font-size-x-small);--sl-input-help-text-font-size-medium: var(--sl-font-size-small);--sl-input-help-text-font-size-large: var(--sl-font-size-medium);--sl-input-help-text-color: var(--sl-color-neutral-500);--sl-toggle-size-small: .875rem;--sl-toggle-size-medium: 1.125rem;--sl-toggle-size-large: 1.375rem;--sl-overlay-background-color: hsl(240 3.8% 46.1% / 33%);--sl-panel-background-color: var(--sl-color-neutral-0);--sl-panel-border-color: var(--sl-color-neutral-200);--sl-panel-border-width: 1px;--sl-tooltip-border-radius: var(--sl-border-radius-medium);--sl-tooltip-background-color: var(--sl-color-neutral-800);--sl-tooltip-color: var(--sl-color-neutral-0);--sl-tooltip-font-family: var(--sl-font-sans);--sl-tooltip-font-weight: var(--sl-font-weight-normal);--sl-tooltip-font-size: var(--sl-font-size-small);--sl-tooltip-line-height: var(--sl-line-height-dense);--sl-tooltip-padding: var(--sl-spacing-2x-small) var(--sl-spacing-x-small);--sl-tooltip-arrow-size: 6px;--sl-z-index-drawer: 700;--sl-z-index-dialog: 800;--sl-z-index-dropdown: 900;--sl-z-index-toast: 950;--sl-z-index-tooltip: 1000}@supports (scrollbar-gutter: stable){.sl-scroll-lock{scrollbar-gutter:var(--sl-scroll-lock-gutter)!important}.sl-scroll-lock body{overflow:hidden!important}}@supports not (scrollbar-gutter: stable){.sl-scroll-lock body{padding-right:var(--sl-scroll-lock-size)!important;overflow:hidden!important}}.sl-toast-stack{position:fixed;top:0;inset-inline-end:0;z-index:var(--sl-z-index-toast);width:28rem;max-width:100%;max-height:100%;overflow:auto}.sl-toast-stack sl-alert{margin:var(--sl-spacing-medium)}.sl-toast-stack sl-alert::part(base){box-shadow:var(--sl-shadow-large)}', fo = '.shoelace-card-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;padding:1rem;max-width:1200px;margin:0 auto}.shoelace-card-item{position:relative;max-width:400px;margin:0 auto;transition:transform .2s ease,box-shadow .2s ease}.shoelace-card-item:hover{transform:translateY(-2px);box-shadow:0 4px 12px #00000026}.shoelace-card-badge{position:absolute;top:1rem;left:1rem;z-index:10;--sl-color-primary-600: #0265DC;--sl-color-primary-500: #0265DC;font-weight:700;font-size:.875rem;min-width:2rem;height:2rem;display:flex;align-items:center;justify-content:center}.shoelace-card-content{padding:.5rem 0;line-height:1.5}.shoelace-card-content strong{font-size:1.125rem;color:var(--sl-color-neutral-900)}.shoelace-card-footer{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0}.shoelace-card-footer sl-button{--sl-color-primary-600: #0265DC;--sl-color-primary-500: #0265DC}.shoelace-card-empty{text-align:center;padding:2rem;color:var(--sl-color-neutral-500);font-style:italic}.shoelace-card-fallback{text-align:center;padding:2rem;color:var(--sl-color-neutral-600)}.shoelace-card-modal{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:1000;background-size:cover;background-position:center;background-repeat:no-repeat;display:flex;align-items:center;justify-content:center;animation:modalFadeIn .3s ease-out}@keyframes modalFadeIn{0%{opacity:0}to{opacity:1}}.shoelace-card-modal-overlay{position:relative;width:90%;max-width:800px;max-height:90vh;background:#ffffff1a;-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-radius:1rem;border:1px solid rgba(255,255,255,.2);padding:1rem;overflow-y:auto;box-shadow:0 8px 32px #0000004d,inset 0 1px #fff3;animation:modalSlideIn .3s ease-out}@keyframes modalSlideIn{0%{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}.shoelace-card-modal-close{position:absolute;top:1rem;right:1rem;background:#fff3!important;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:.5rem!important;border:1px solid rgba(255,255,255,.3)!important;color:#fff!important;font-size:.875rem;font-weight:600;z-index:2147483647;width:2.5rem;height:2rem;transition:all .2s ease;display:flex;align-items:center;justify-content:center}.shoelace-card-modal-close:hover{background:#ffffff4d!important;transform:scale(1.05)}.shoelace-card-modal-close:focus{outline:2px solid rgba(255,255,255,.5);outline-offset:2px}.shoelace-card-modal-content{color:#fff;text-shadow:0 2px 4px rgba(0,0,0,.5)}.shoelace-card-modal-text{font-size:1.1rem;line-height:1.6;background:linear-gradient(135deg,#0006,#0003);padding:1rem;border-radius:.5rem;-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);border:1px solid rgba(255,255,255,.1);box-shadow:inset 0 1px #ffffff1a}.shoelace-card-modal-text h1,.shoelace-card-modal-text h2,.shoelace-card-modal-text h3{color:#fff;margin-top:0;margin-bottom:.5rem;text-shadow:0 2px 4px rgba(0,0,0,.7)}.shoelace-card-modal-text h1{font-size:2.5rem;font-weight:700;margin-bottom:.5rem;background:linear-gradient(135deg,#fff,#e0e0e0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.shoelace-card-modal-text p{margin-bottom:1rem;color:#ffffffe6}.shoelace-card-modal-text img{max-width:100%;height:auto;border-radius:.5rem;box-shadow:0 4px 12px #0000004d;margin:1rem 0}.shoelace-card-modal-loading{display:flex;justify-content:center;align-items:center;height:200px;font-size:2rem}.shoelace-card-modal-loading sl-spinner{--indicator-color: white;--track-color: rgba(255, 255, 255, .2);font-size:3rem}@media (max-width: 768px){.shoelace-card-container{grid-template-columns:1fr;gap:1rem;padding:.5rem}.shoelace-card-modal-overlay{width:95%;padding:.75rem;max-height:95vh}.shoelace-card-modal-text{font-size:1rem;padding:.75rem}.shoelace-card-modal-text h1{font-size:2rem}.shoelace-card-modal-close{top:.5rem;right:.5rem;width:2.5rem;height:2.5rem;font-size:1.25rem}}@media (max-width: 480px){.shoelace-card-container{padding:.25rem}.shoelace-card-modal-overlay{width:98%;padding:.5rem}.shoelace-card-modal-text{padding:.5rem}.shoelace-card-modal-text h1{font-size:1.75rem}}@media (prefers-contrast: high){.shoelace-card-badge{--sl-color-primary-600: #000;--sl-color-primary-500: #000;color:#fff;border:2px solid white}.shoelace-card-modal-overlay{background:#000000e6;border:2px solid white}.shoelace-card-modal-close{background:#000c!important;border:2px solid white!important}.shoelace-card-modal-text{background:#000c;border:1px solid white}}@media (prefers-reduced-motion: reduce){.shoelace-card-item{transition:none}.shoelace-card-item:hover{transform:none}.shoelace-card-modal,.shoelace-card-modal-overlay{animation:none}.shoelace-card-modal-close{transition:none}.shoelace-card-modal-close:hover{transform:none}}.shoelace-card-item:focus-within{outline:2px solid var(--sl-color-primary-600);outline-offset:2px}sl-button:focus{outline:2px solid var(--sl-color-primary-600);outline-offset:2px}@media print{.shoelace-card-modal{display:none}.shoelace-card-container{display:block}.shoelace-card-item{break-inside:avoid;margin-bottom:1rem}}@media (prefers-color-scheme: dark){.shoelace-card-modal-text h1{background:linear-gradient(135deg,#fff,#ccc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}}.shoelace-card-block{position:relative;z-index:1}.shoelace-card-block.loading{opacity:.7;pointer-events:none;position:relative;min-height:200px}.shoelace-card-block.loading:after{content:"";position:absolute;top:50%;left:50%;width:2rem;height:2rem;margin:-1rem 0 0 -1rem;border:2px solid var(--sl-color-neutral-300);border-top-color:var(--sl-color-primary-600);border-radius:50%;animation:spin 1s linear infinite;z-index:10}.shoelace-card-container{opacity:0;transform:translateY(10px);transition:opacity .4s ease-out,transform .4s ease-out}.shoelace-card-container.loaded{opacity:1;transform:translateY(0)}.shoelace-card-item{opacity:0;transform:translateY(20px);transition:opacity .3s ease-out,transform .3s ease-out}.shoelace-card-container.loaded .shoelace-card-item{opacity:1;transform:translateY(0)}.shoelace-card-container.loaded .shoelace-card-item:nth-child(1){transition-delay:.1s}.shoelace-card-container.loaded .shoelace-card-item:nth-child(2){transition-delay:.2s}.shoelace-card-container.loaded .shoelace-card-item:nth-child(3){transition-delay:.3s}.shoelace-card-container.loaded .shoelace-card-item:nth-child(4){transition-delay:.4s}.shoelace-card-container.loaded .shoelace-card-item:nth-child(5){transition-delay:.5s}.shoelace-card-container.loaded .shoelace-card-item:nth-child(n+6){transition-delay:.6s}@keyframes spin{to{transform:rotate(360deg)}}', Ct = {
+const go = ':root,:host,.sl-theme-light{color-scheme:light;--sl-color-gray-50: hsl(0 0% 97.5%);--sl-color-gray-100: hsl(240 4.8% 95.9%);--sl-color-gray-200: hsl(240 5.9% 90%);--sl-color-gray-300: hsl(240 4.9% 83.9%);--sl-color-gray-400: hsl(240 5% 64.9%);--sl-color-gray-500: hsl(240 3.8% 46.1%);--sl-color-gray-600: hsl(240 5.2% 33.9%);--sl-color-gray-700: hsl(240 5.3% 26.1%);--sl-color-gray-800: hsl(240 3.7% 15.9%);--sl-color-gray-900: hsl(240 5.9% 10%);--sl-color-gray-950: hsl(240 7.3% 8%);--sl-color-red-50: hsl(0 85.7% 97.3%);--sl-color-red-100: hsl(0 93.3% 94.1%);--sl-color-red-200: hsl(0 96.3% 89.4%);--sl-color-red-300: hsl(0 93.5% 81.8%);--sl-color-red-400: hsl(0 90.6% 70.8%);--sl-color-red-500: hsl(0 84.2% 60.2%);--sl-color-red-600: hsl(0 72.2% 50.6%);--sl-color-red-700: hsl(0 73.7% 41.8%);--sl-color-red-800: hsl(0 70% 35.3%);--sl-color-red-900: hsl(0 62.8% 30.6%);--sl-color-red-950: hsl(0 60% 19.6%);--sl-color-orange-50: hsl(33.3 100% 96.5%);--sl-color-orange-100: hsl(34.3 100% 91.8%);--sl-color-orange-200: hsl(32.1 97.7% 83.1%);--sl-color-orange-300: hsl(30.7 97.2% 72.4%);--sl-color-orange-400: hsl(27 96% 61%);--sl-color-orange-500: hsl(24.6 95% 53.1%);--sl-color-orange-600: hsl(20.5 90.2% 48.2%);--sl-color-orange-700: hsl(17.5 88.3% 40.4%);--sl-color-orange-800: hsl(15 79.1% 33.7%);--sl-color-orange-900: hsl(15.3 74.6% 27.8%);--sl-color-orange-950: hsl(15.2 69.1% 19%);--sl-color-amber-50: hsl(48 100% 96.1%);--sl-color-amber-100: hsl(48 96.5% 88.8%);--sl-color-amber-200: hsl(48 96.6% 76.7%);--sl-color-amber-300: hsl(45.9 96.7% 64.5%);--sl-color-amber-400: hsl(43.3 96.4% 56.3%);--sl-color-amber-500: hsl(37.7 92.1% 50.2%);--sl-color-amber-600: hsl(32.1 94.6% 43.7%);--sl-color-amber-700: hsl(26 90.5% 37.1%);--sl-color-amber-800: hsl(22.7 82.5% 31.4%);--sl-color-amber-900: hsl(21.7 77.8% 26.5%);--sl-color-amber-950: hsl(22.9 74.1% 16.7%);--sl-color-yellow-50: hsl(54.5 91.7% 95.3%);--sl-color-yellow-100: hsl(54.9 96.7% 88%);--sl-color-yellow-200: hsl(52.8 98.3% 76.9%);--sl-color-yellow-300: hsl(50.4 97.8% 63.5%);--sl-color-yellow-400: hsl(47.9 95.8% 53.1%);--sl-color-yellow-500: hsl(45.4 93.4% 47.5%);--sl-color-yellow-600: hsl(40.6 96.1% 40.4%);--sl-color-yellow-700: hsl(35.5 91.7% 32.9%);--sl-color-yellow-800: hsl(31.8 81% 28.8%);--sl-color-yellow-900: hsl(28.4 72.5% 25.7%);--sl-color-yellow-950: hsl(33.1 69% 13.9%);--sl-color-lime-50: hsl(78.3 92% 95.1%);--sl-color-lime-100: hsl(79.6 89.1% 89.2%);--sl-color-lime-200: hsl(80.9 88.5% 79.6%);--sl-color-lime-300: hsl(82 84.5% 67.1%);--sl-color-lime-400: hsl(82.7 78% 55.5%);--sl-color-lime-500: hsl(83.7 80.5% 44.3%);--sl-color-lime-600: hsl(84.8 85.2% 34.5%);--sl-color-lime-700: hsl(85.9 78.4% 27.3%);--sl-color-lime-800: hsl(86.3 69% 22.7%);--sl-color-lime-900: hsl(87.6 61.2% 20.2%);--sl-color-lime-950: hsl(86.5 60.6% 13.9%);--sl-color-green-50: hsl(138.5 76.5% 96.7%);--sl-color-green-100: hsl(140.6 84.2% 92.5%);--sl-color-green-200: hsl(141 78.9% 85.1%);--sl-color-green-300: hsl(141.7 76.6% 73.1%);--sl-color-green-400: hsl(141.9 69.2% 58%);--sl-color-green-500: hsl(142.1 70.6% 45.3%);--sl-color-green-600: hsl(142.1 76.2% 36.3%);--sl-color-green-700: hsl(142.4 71.8% 29.2%);--sl-color-green-800: hsl(142.8 64.2% 24.1%);--sl-color-green-900: hsl(143.8 61.2% 20.2%);--sl-color-green-950: hsl(144.3 60.7% 12%);--sl-color-emerald-50: hsl(151.8 81% 95.9%);--sl-color-emerald-100: hsl(149.3 80.4% 90%);--sl-color-emerald-200: hsl(152.4 76% 80.4%);--sl-color-emerald-300: hsl(156.2 71.6% 66.9%);--sl-color-emerald-400: hsl(158.1 64.4% 51.6%);--sl-color-emerald-500: hsl(160.1 84.1% 39.4%);--sl-color-emerald-600: hsl(161.4 93.5% 30.4%);--sl-color-emerald-700: hsl(162.9 93.5% 24.3%);--sl-color-emerald-800: hsl(163.1 88.1% 19.8%);--sl-color-emerald-900: hsl(164.2 85.7% 16.5%);--sl-color-emerald-950: hsl(164.3 87.5% 9.4%);--sl-color-teal-50: hsl(166.2 76.5% 96.7%);--sl-color-teal-100: hsl(167.2 85.5% 89.2%);--sl-color-teal-200: hsl(168.4 83.8% 78.2%);--sl-color-teal-300: hsl(170.6 76.9% 64.3%);--sl-color-teal-400: hsl(172.5 66% 50.4%);--sl-color-teal-500: hsl(173.4 80.4% 40%);--sl-color-teal-600: hsl(174.7 83.9% 31.6%);--sl-color-teal-700: hsl(175.3 77.4% 26.1%);--sl-color-teal-800: hsl(176.1 69.4% 21.8%);--sl-color-teal-900: hsl(175.9 60.8% 19%);--sl-color-teal-950: hsl(176.5 58.6% 11.4%);--sl-color-cyan-50: hsl(183.2 100% 96.3%);--sl-color-cyan-100: hsl(185.1 95.9% 90.4%);--sl-color-cyan-200: hsl(186.2 93.5% 81.8%);--sl-color-cyan-300: hsl(187 92.4% 69%);--sl-color-cyan-400: hsl(187.9 85.7% 53.3%);--sl-color-cyan-500: hsl(188.7 94.5% 42.7%);--sl-color-cyan-600: hsl(191.6 91.4% 36.5%);--sl-color-cyan-700: hsl(192.9 82.3% 31%);--sl-color-cyan-800: hsl(194.4 69.6% 27.1%);--sl-color-cyan-900: hsl(196.4 63.6% 23.7%);--sl-color-cyan-950: hsl(196.8 61% 16.1%);--sl-color-sky-50: hsl(204 100% 97.1%);--sl-color-sky-100: hsl(204 93.8% 93.7%);--sl-color-sky-200: hsl(200.6 94.4% 86.1%);--sl-color-sky-300: hsl(199.4 95.5% 73.9%);--sl-color-sky-400: hsl(198.4 93.2% 59.6%);--sl-color-sky-500: hsl(198.6 88.7% 48.4%);--sl-color-sky-600: hsl(200.4 98% 39.4%);--sl-color-sky-700: hsl(201.3 96.3% 32.2%);--sl-color-sky-800: hsl(201 90% 27.5%);--sl-color-sky-900: hsl(202 80.3% 23.9%);--sl-color-sky-950: hsl(202.3 73.8% 16.5%);--sl-color-blue-50: hsl(213.8 100% 96.9%);--sl-color-blue-100: hsl(214.3 94.6% 92.7%);--sl-color-blue-200: hsl(213.3 96.9% 87.3%);--sl-color-blue-300: hsl(211.7 96.4% 78.4%);--sl-color-blue-400: hsl(213.1 93.9% 67.8%);--sl-color-blue-500: hsl(217.2 91.2% 59.8%);--sl-color-blue-600: hsl(221.2 83.2% 53.3%);--sl-color-blue-700: hsl(224.3 76.3% 48%);--sl-color-blue-800: hsl(225.9 70.7% 40.2%);--sl-color-blue-900: hsl(224.4 64.3% 32.9%);--sl-color-blue-950: hsl(226.2 55.3% 18.4%);--sl-color-indigo-50: hsl(225.9 100% 96.7%);--sl-color-indigo-100: hsl(226.5 100% 93.9%);--sl-color-indigo-200: hsl(228 96.5% 88.8%);--sl-color-indigo-300: hsl(229.7 93.5% 81.8%);--sl-color-indigo-400: hsl(234.5 89.5% 73.9%);--sl-color-indigo-500: hsl(238.7 83.5% 66.7%);--sl-color-indigo-600: hsl(243.4 75.4% 58.6%);--sl-color-indigo-700: hsl(244.5 57.9% 50.6%);--sl-color-indigo-800: hsl(243.7 54.5% 41.4%);--sl-color-indigo-900: hsl(242.2 47.4% 34.3%);--sl-color-indigo-950: hsl(243.5 43.6% 22.9%);--sl-color-violet-50: hsl(250 100% 97.6%);--sl-color-violet-100: hsl(251.4 91.3% 95.5%);--sl-color-violet-200: hsl(250.5 95.2% 91.8%);--sl-color-violet-300: hsl(252.5 94.7% 85.1%);--sl-color-violet-400: hsl(255.1 91.7% 76.3%);--sl-color-violet-500: hsl(258.3 89.5% 66.3%);--sl-color-violet-600: hsl(262.1 83.3% 57.8%);--sl-color-violet-700: hsl(263.4 70% 50.4%);--sl-color-violet-800: hsl(263.4 69.3% 42.2%);--sl-color-violet-900: hsl(263.5 67.4% 34.9%);--sl-color-violet-950: hsl(265.1 61.5% 21.4%);--sl-color-purple-50: hsl(270 100% 98%);--sl-color-purple-100: hsl(268.7 100% 95.5%);--sl-color-purple-200: hsl(268.6 100% 91.8%);--sl-color-purple-300: hsl(269.2 97.4% 85.1%);--sl-color-purple-400: hsl(270 95.2% 75.3%);--sl-color-purple-500: hsl(270.7 91% 65.1%);--sl-color-purple-600: hsl(271.5 81.3% 55.9%);--sl-color-purple-700: hsl(272.1 71.7% 47.1%);--sl-color-purple-800: hsl(272.9 67.2% 39.4%);--sl-color-purple-900: hsl(273.6 65.6% 32%);--sl-color-purple-950: hsl(276 59.5% 16.5%);--sl-color-fuchsia-50: hsl(289.1 100% 97.8%);--sl-color-fuchsia-100: hsl(287 100% 95.5%);--sl-color-fuchsia-200: hsl(288.3 95.8% 90.6%);--sl-color-fuchsia-300: hsl(291.1 93.1% 82.9%);--sl-color-fuchsia-400: hsl(292 91.4% 72.5%);--sl-color-fuchsia-500: hsl(292.2 84.1% 60.6%);--sl-color-fuchsia-600: hsl(293.4 69.5% 48.8%);--sl-color-fuchsia-700: hsl(294.7 72.4% 39.8%);--sl-color-fuchsia-800: hsl(295.4 70.2% 32.9%);--sl-color-fuchsia-900: hsl(296.7 63.6% 28%);--sl-color-fuchsia-950: hsl(297.1 56.8% 14.5%);--sl-color-pink-50: hsl(327.3 73.3% 97.1%);--sl-color-pink-100: hsl(325.7 77.8% 94.7%);--sl-color-pink-200: hsl(325.9 84.6% 89.8%);--sl-color-pink-300: hsl(327.4 87.1% 81.8%);--sl-color-pink-400: hsl(328.6 85.5% 70.2%);--sl-color-pink-500: hsl(330.4 81.2% 60.4%);--sl-color-pink-600: hsl(333.3 71.4% 50.6%);--sl-color-pink-700: hsl(335.1 77.6% 42%);--sl-color-pink-800: hsl(335.8 74.4% 35.3%);--sl-color-pink-900: hsl(335.9 69% 30.4%);--sl-color-pink-950: hsl(336.2 65.4% 15.9%);--sl-color-rose-50: hsl(355.7 100% 97.3%);--sl-color-rose-100: hsl(355.6 100% 94.7%);--sl-color-rose-200: hsl(352.7 96.1% 90%);--sl-color-rose-300: hsl(352.6 95.7% 81.8%);--sl-color-rose-400: hsl(351.3 94.5% 71.4%);--sl-color-rose-500: hsl(349.7 89.2% 60.2%);--sl-color-rose-600: hsl(346.8 77.2% 49.8%);--sl-color-rose-700: hsl(345.3 82.7% 40.8%);--sl-color-rose-800: hsl(343.4 79.7% 34.7%);--sl-color-rose-900: hsl(341.5 75.5% 30.4%);--sl-color-rose-950: hsl(341.3 70.1% 17.1%);--sl-color-primary-50: var(--sl-color-sky-50);--sl-color-primary-100: var(--sl-color-sky-100);--sl-color-primary-200: var(--sl-color-sky-200);--sl-color-primary-300: var(--sl-color-sky-300);--sl-color-primary-400: var(--sl-color-sky-400);--sl-color-primary-500: var(--sl-color-sky-500);--sl-color-primary-600: var(--sl-color-sky-600);--sl-color-primary-700: var(--sl-color-sky-700);--sl-color-primary-800: var(--sl-color-sky-800);--sl-color-primary-900: var(--sl-color-sky-900);--sl-color-primary-950: var(--sl-color-sky-950);--sl-color-success-50: var(--sl-color-green-50);--sl-color-success-100: var(--sl-color-green-100);--sl-color-success-200: var(--sl-color-green-200);--sl-color-success-300: var(--sl-color-green-300);--sl-color-success-400: var(--sl-color-green-400);--sl-color-success-500: var(--sl-color-green-500);--sl-color-success-600: var(--sl-color-green-600);--sl-color-success-700: var(--sl-color-green-700);--sl-color-success-800: var(--sl-color-green-800);--sl-color-success-900: var(--sl-color-green-900);--sl-color-success-950: var(--sl-color-green-950);--sl-color-warning-50: var(--sl-color-amber-50);--sl-color-warning-100: var(--sl-color-amber-100);--sl-color-warning-200: var(--sl-color-amber-200);--sl-color-warning-300: var(--sl-color-amber-300);--sl-color-warning-400: var(--sl-color-amber-400);--sl-color-warning-500: var(--sl-color-amber-500);--sl-color-warning-600: var(--sl-color-amber-600);--sl-color-warning-700: var(--sl-color-amber-700);--sl-color-warning-800: var(--sl-color-amber-800);--sl-color-warning-900: var(--sl-color-amber-900);--sl-color-warning-950: var(--sl-color-amber-950);--sl-color-danger-50: var(--sl-color-red-50);--sl-color-danger-100: var(--sl-color-red-100);--sl-color-danger-200: var(--sl-color-red-200);--sl-color-danger-300: var(--sl-color-red-300);--sl-color-danger-400: var(--sl-color-red-400);--sl-color-danger-500: var(--sl-color-red-500);--sl-color-danger-600: var(--sl-color-red-600);--sl-color-danger-700: var(--sl-color-red-700);--sl-color-danger-800: var(--sl-color-red-800);--sl-color-danger-900: var(--sl-color-red-900);--sl-color-danger-950: var(--sl-color-red-950);--sl-color-neutral-50: var(--sl-color-gray-50);--sl-color-neutral-100: var(--sl-color-gray-100);--sl-color-neutral-200: var(--sl-color-gray-200);--sl-color-neutral-300: var(--sl-color-gray-300);--sl-color-neutral-400: var(--sl-color-gray-400);--sl-color-neutral-500: var(--sl-color-gray-500);--sl-color-neutral-600: var(--sl-color-gray-600);--sl-color-neutral-700: var(--sl-color-gray-700);--sl-color-neutral-800: var(--sl-color-gray-800);--sl-color-neutral-900: var(--sl-color-gray-900);--sl-color-neutral-950: var(--sl-color-gray-950);--sl-color-neutral-0: hsl(0, 0%, 100%);--sl-color-neutral-1000: hsl(0, 0%, 0%);--sl-border-radius-small: .1875rem;--sl-border-radius-medium: .25rem;--sl-border-radius-large: .5rem;--sl-border-radius-x-large: 1rem;--sl-border-radius-circle: 50%;--sl-border-radius-pill: 9999px;--sl-shadow-x-small: 0 1px 2px hsl(240 3.8% 46.1% / 6%);--sl-shadow-small: 0 1px 2px hsl(240 3.8% 46.1% / 12%);--sl-shadow-medium: 0 2px 4px hsl(240 3.8% 46.1% / 12%);--sl-shadow-large: 0 2px 8px hsl(240 3.8% 46.1% / 12%);--sl-shadow-x-large: 0 4px 16px hsl(240 3.8% 46.1% / 12%);--sl-spacing-3x-small: .125rem;--sl-spacing-2x-small: .25rem;--sl-spacing-x-small: .5rem;--sl-spacing-small: .75rem;--sl-spacing-medium: 1rem;--sl-spacing-large: 1.25rem;--sl-spacing-x-large: 1.75rem;--sl-spacing-2x-large: 2.25rem;--sl-spacing-3x-large: 3rem;--sl-spacing-4x-large: 4.5rem;--sl-transition-x-slow: 1s;--sl-transition-slow: .5s;--sl-transition-medium: .25s;--sl-transition-fast: .15s;--sl-transition-x-fast: 50ms;--sl-font-mono: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;--sl-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";--sl-font-serif: Georgia, "Times New Roman", serif;--sl-font-size-2x-small: .625rem;--sl-font-size-x-small: .75rem;--sl-font-size-small: .875rem;--sl-font-size-medium: 1rem;--sl-font-size-large: 1.25rem;--sl-font-size-x-large: 1.5rem;--sl-font-size-2x-large: 2.25rem;--sl-font-size-3x-large: 3rem;--sl-font-size-4x-large: 4.5rem;--sl-font-weight-light: 300;--sl-font-weight-normal: 400;--sl-font-weight-semibold: 500;--sl-font-weight-bold: 700;--sl-letter-spacing-denser: -.03em;--sl-letter-spacing-dense: -.015em;--sl-letter-spacing-normal: normal;--sl-letter-spacing-loose: .075em;--sl-letter-spacing-looser: .15em;--sl-line-height-denser: 1;--sl-line-height-dense: 1.4;--sl-line-height-normal: 1.8;--sl-line-height-loose: 2.2;--sl-line-height-looser: 2.6;--sl-focus-ring-color: var(--sl-color-primary-600);--sl-focus-ring-style: solid;--sl-focus-ring-width: 3px;--sl-focus-ring: var(--sl-focus-ring-style) var(--sl-focus-ring-width) var(--sl-focus-ring-color);--sl-focus-ring-offset: 1px;--sl-button-font-size-small: var(--sl-font-size-x-small);--sl-button-font-size-medium: var(--sl-font-size-small);--sl-button-font-size-large: var(--sl-font-size-medium);--sl-input-height-small: 1.875rem;--sl-input-height-medium: 2.5rem;--sl-input-height-large: 3.125rem;--sl-input-background-color: var(--sl-color-neutral-0);--sl-input-background-color-hover: var(--sl-input-background-color);--sl-input-background-color-focus: var(--sl-input-background-color);--sl-input-background-color-disabled: var(--sl-color-neutral-100);--sl-input-border-color: var(--sl-color-neutral-300);--sl-input-border-color-hover: var(--sl-color-neutral-400);--sl-input-border-color-focus: var(--sl-color-primary-500);--sl-input-border-color-disabled: var(--sl-color-neutral-300);--sl-input-border-width: 1px;--sl-input-required-content: "*";--sl-input-required-content-offset: -2px;--sl-input-required-content-color: var(--sl-input-label-color);--sl-input-border-radius-small: var(--sl-border-radius-medium);--sl-input-border-radius-medium: var(--sl-border-radius-medium);--sl-input-border-radius-large: var(--sl-border-radius-medium);--sl-input-font-family: var(--sl-font-sans);--sl-input-font-weight: var(--sl-font-weight-normal);--sl-input-font-size-small: var(--sl-font-size-small);--sl-input-font-size-medium: var(--sl-font-size-medium);--sl-input-font-size-large: var(--sl-font-size-large);--sl-input-letter-spacing: var(--sl-letter-spacing-normal);--sl-input-color: var(--sl-color-neutral-700);--sl-input-color-hover: var(--sl-color-neutral-700);--sl-input-color-focus: var(--sl-color-neutral-700);--sl-input-color-disabled: var(--sl-color-neutral-900);--sl-input-icon-color: var(--sl-color-neutral-500);--sl-input-icon-color-hover: var(--sl-color-neutral-600);--sl-input-icon-color-focus: var(--sl-color-neutral-600);--sl-input-placeholder-color: var(--sl-color-neutral-500);--sl-input-placeholder-color-disabled: var(--sl-color-neutral-600);--sl-input-spacing-small: var(--sl-spacing-small);--sl-input-spacing-medium: var(--sl-spacing-medium);--sl-input-spacing-large: var(--sl-spacing-large);--sl-input-focus-ring-color: hsl(198.6 88.7% 48.4% / 40%);--sl-input-focus-ring-offset: 0;--sl-input-filled-background-color: var(--sl-color-neutral-100);--sl-input-filled-background-color-hover: var(--sl-color-neutral-100);--sl-input-filled-background-color-focus: var(--sl-color-neutral-100);--sl-input-filled-background-color-disabled: var(--sl-color-neutral-100);--sl-input-filled-color: var(--sl-color-neutral-800);--sl-input-filled-color-hover: var(--sl-color-neutral-800);--sl-input-filled-color-focus: var(--sl-color-neutral-700);--sl-input-filled-color-disabled: var(--sl-color-neutral-800);--sl-input-label-font-size-small: var(--sl-font-size-small);--sl-input-label-font-size-medium: var(--sl-font-size-medium);--sl-input-label-font-size-large: var(--sl-font-size-large);--sl-input-label-color: inherit;--sl-input-help-text-font-size-small: var(--sl-font-size-x-small);--sl-input-help-text-font-size-medium: var(--sl-font-size-small);--sl-input-help-text-font-size-large: var(--sl-font-size-medium);--sl-input-help-text-color: var(--sl-color-neutral-500);--sl-toggle-size-small: .875rem;--sl-toggle-size-medium: 1.125rem;--sl-toggle-size-large: 1.375rem;--sl-overlay-background-color: hsl(240 3.8% 46.1% / 33%);--sl-panel-background-color: var(--sl-color-neutral-0);--sl-panel-border-color: var(--sl-color-neutral-200);--sl-panel-border-width: 1px;--sl-tooltip-border-radius: var(--sl-border-radius-medium);--sl-tooltip-background-color: var(--sl-color-neutral-800);--sl-tooltip-color: var(--sl-color-neutral-0);--sl-tooltip-font-family: var(--sl-font-sans);--sl-tooltip-font-weight: var(--sl-font-weight-normal);--sl-tooltip-font-size: var(--sl-font-size-small);--sl-tooltip-line-height: var(--sl-line-height-dense);--sl-tooltip-padding: var(--sl-spacing-2x-small) var(--sl-spacing-x-small);--sl-tooltip-arrow-size: 6px;--sl-z-index-drawer: 700;--sl-z-index-dialog: 800;--sl-z-index-dropdown: 900;--sl-z-index-toast: 950;--sl-z-index-tooltip: 1000}@supports (scrollbar-gutter: stable){.sl-scroll-lock{scrollbar-gutter:var(--sl-scroll-lock-gutter)!important}.sl-scroll-lock body{overflow:hidden!important}}@supports not (scrollbar-gutter: stable){.sl-scroll-lock body{padding-right:var(--sl-scroll-lock-size)!important;overflow:hidden!important}}.sl-toast-stack{position:fixed;top:0;inset-inline-end:0;z-index:var(--sl-z-index-toast);width:28rem;max-width:100%;max-height:100%;overflow:auto}.sl-toast-stack sl-alert{margin:var(--sl-spacing-medium)}.sl-toast-stack sl-alert::part(base){box-shadow:var(--sl-shadow-large)}', fo = '.shoelace-card-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;padding:1rem;max-width:1200px;margin:0 auto;opacity:1!important;transition:none!important}.shoelace-card-item{position:relative;max-width:400px;margin:0 auto;transition:transform .2s ease,box-shadow .2s ease;opacity:1!important}.shoelace-card-item:hover{transform:translateY(-2px);box-shadow:0 4px 12px #00000026}.shoelace-card-badge{position:absolute;top:1rem;left:1rem;z-index:10;--sl-color-primary-600: #0265DC;--sl-color-primary-500: #0265DC;font-weight:700;font-size:.875rem;min-width:2rem;height:2rem;display:flex;align-items:center;justify-content:center}.shoelace-card-content{padding:.5rem 0;line-height:1.5}.shoelace-card-content strong{font-size:1.125rem;color:var(--sl-color-neutral-900)}.shoelace-card-footer{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0}.shoelace-card-footer sl-button{--sl-color-primary-600: #0265DC;--sl-color-primary-500: #0265DC}.shoelace-card-empty{text-align:center;padding:2rem;color:var(--sl-color-neutral-500);font-style:italic}.shoelace-card-fallback{text-align:center;padding:2rem;color:var(--sl-color-neutral-600)}.shoelace-card-modal{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:1000;background-size:cover;background-position:center;background-repeat:no-repeat;display:flex;align-items:center;justify-content:center;animation:modalFadeIn .3s ease-out}@keyframes modalFadeIn{0%{opacity:0}to{opacity:1}}.shoelace-card-modal-overlay{position:relative;width:90%;max-width:800px;max-height:90vh;background:#ffffff1a;-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-radius:1rem;border:1px solid rgba(255,255,255,.2);padding:1rem;overflow-y:auto;box-shadow:0 8px 32px #0000004d,inset 0 1px #fff3;animation:modalSlideIn .3s ease-out}@keyframes modalSlideIn{0%{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}.shoelace-card-modal-close{position:absolute;top:1rem;right:1rem;background:#fff3!important;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:.5rem!important;border:1px solid rgba(255,255,255,.3)!important;color:#fff!important;font-size:.875rem;font-weight:600;z-index:2147483647;width:2.5rem;height:2rem;transition:all .2s ease;display:flex;align-items:center;justify-content:center}.shoelace-card-modal-close:hover{background:#ffffff4d!important;transform:scale(1.05)}.shoelace-card-modal-close:focus{outline:2px solid rgba(255,255,255,.5);outline-offset:2px}.shoelace-card-modal-content{color:#fff;text-shadow:0 2px 4px rgba(0,0,0,.5)}.shoelace-card-modal-text{font-size:1.1rem;line-height:1.6;background:linear-gradient(135deg,#0006,#0003);padding:1rem;border-radius:.5rem;-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);border:1px solid rgba(255,255,255,.1);box-shadow:inset 0 1px #ffffff1a}.shoelace-card-modal-text h1,.shoelace-card-modal-text h2,.shoelace-card-modal-text h3{color:#fff;margin-top:0;margin-bottom:.5rem;text-shadow:0 2px 4px rgba(0,0,0,.7)}.shoelace-card-modal-text h1{font-size:2.5rem;font-weight:700;margin-bottom:.5rem;background:linear-gradient(135deg,#fff,#e0e0e0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.shoelace-card-modal-text p{margin-bottom:1rem;color:#ffffffe6}.shoelace-card-modal-text img{max-width:100%;height:auto;border-radius:.5rem;box-shadow:0 4px 12px #0000004d;margin:1rem 0}.shoelace-card-modal-loading{display:flex;justify-content:center;align-items:center;height:200px;font-size:2rem}.shoelace-card-modal-loading sl-spinner{--indicator-color: white;--track-color: rgba(255, 255, 255, .2);font-size:3rem}@media (max-width: 768px){.shoelace-card-container{grid-template-columns:1fr;gap:1rem;padding:.5rem}.shoelace-card-modal-overlay{width:95%;padding:.75rem;max-height:95vh}.shoelace-card-modal-text{font-size:1rem;padding:.75rem}.shoelace-card-modal-text h1{font-size:2rem}.shoelace-card-modal-close{top:.5rem;right:.5rem;width:2.5rem;height:2.5rem;font-size:1.25rem}}@media (max-width: 480px){.shoelace-card-container{padding:.25rem}.shoelace-card-modal-overlay{width:98%;padding:.5rem}.shoelace-card-modal-text{padding:.5rem}.shoelace-card-modal-text h1{font-size:1.75rem}}@media (prefers-contrast: high){.shoelace-card-badge{--sl-color-primary-600: #000;--sl-color-primary-500: #000;color:#fff;border:2px solid white}.shoelace-card-modal-overlay{background:#000000e6;border:2px solid white}.shoelace-card-modal-close{background:#000c!important;border:2px solid white!important}.shoelace-card-modal-text{background:#000c;border:1px solid white}}@media (prefers-reduced-motion: reduce){.shoelace-card-item{transition:none}.shoelace-card-item:hover{transform:none}.shoelace-card-modal,.shoelace-card-modal-overlay{animation:none}.shoelace-card-modal-close{transition:none}.shoelace-card-modal-close:hover{transform:none}}.shoelace-card-item:focus-within{outline:2px solid var(--sl-color-primary-600);outline-offset:2px}sl-button:focus{outline:2px solid var(--sl-color-primary-600);outline-offset:2px}@media print{.shoelace-card-modal{display:none}.shoelace-card-container{display:block}.shoelace-card-item{break-inside:avoid;margin-bottom:1rem}}@media (prefers-color-scheme: dark){.shoelace-card-modal-text h1{background:linear-gradient(135deg,#fff,#ccc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}}.shoelace-card-block{position:relative;z-index:1}.shoelace-card-block.loading{opacity:1!important;pointer-events:none;position:relative;min-height:auto!important}.shoelace-card-block.loading:after{content:"";position:absolute;top:50%;left:50%;width:2rem;height:2rem;margin:-1rem 0 0 -1rem;border:2px solid var(--sl-color-neutral-300);border-top-color:var(--sl-color-primary-600);border-radius:50%;animation:spin 1s linear infinite;z-index:10}.shoelace-card-container.loaded,.shoelace-card-container.loaded .shoelace-card-item{opacity:1!important;transform:translateY(0)!important}@keyframes spin{to{transform:rotate(360deg)}}', Ct = {
   QUERY_INDEX_PATH: "/slides/query-index.json",
   BADGE_COLOR: "primary",
   DEFAULT_BUTTON_TEXT: "Learn More"
@@ -2570,17 +2570,15 @@ async function yo(e) {
     if (!t.ok)
       throw new Error(`Failed to fetch card data: ${t.status}`);
     return (await t.json()).data || [];
-  } catch {
-    return [];
+  } catch (t) {
+    return console.error("[shoelace-card] Fetch error:", t), [];
   }
 }
 async function wo(e) {
   try {
     const t = `${e}.plain.html`, o = new AbortController(), r = setTimeout(() => {
-      o.abort(), `${t}`;
-    }, 1e4);
-    `${t}`;
-    const s = await fetch(t, {
+      o.abort();
+    }, 1e4), s = await fetch(t, {
       mode: "cors",
       headers: { Accept: "text/html" },
       signal: o.signal
@@ -2588,31 +2586,32 @@ async function wo(e) {
     if (clearTimeout(r), !s.ok)
       throw new Error(`HTTP ${s.status}: ${s.statusText}`);
     let l = await s.text();
-    return l.length, l = l.replace(/src="\.\/media\//g, 'src="/media/'), l = l.replace(/src="media\//g, 'src="/media/'), l = l.replace(/src="\.\.\/media\//g, 'src="/media/'), l;
+    return l = l.replace(/src="\.\/media\//g, 'src="/media/'), l = l.replace(/src="media\//g, 'src="/media/'), l = l.replace(/src="\.\.\/media\//g, 'src="/media/'), l;
   } catch (t) {
-    throw t;
+    throw console.error("[shoelace-card] Plain HTML fetch error:", t), t;
   }
 }
 async function xo(e, t = 5e3) {
-  return new Promise((o, r) => {
+  return console.log(`[shoelace-card] Starting preload for: ${e}`), new Promise((o, r) => {
     const s = new Image(), l = setTimeout(() => {
-      r(new Error(`Image load timeout: ${e}`));
+      console.warn(`[shoelace-card] Image load TIMEOUT after ${t}ms: ${e}`), r(new Error(`Image load timeout: ${e}`));
     }, t);
     s.onload = () => {
-      clearTimeout(l), o(s);
+      clearTimeout(l), console.log(`[shoelace-card] Image loaded successfully: ${e}`), o(s);
     }, s.onerror = () => {
-      clearTimeout(l), r(new Error(`Image load failed: ${e}`));
-    }, s.src = e;
+      clearTimeout(l), console.error(`[shoelace-card] Image load ERROR: ${e}`), r(new Error(`Image load failed: ${e}`));
+    }, console.log(`[shoelace-card] Setting img.src for: ${e}`), s.src = e;
   });
 }
 async function _o(e, t = 5e3) {
-  const o = e.map((l) => l.image).filter(Boolean);
+  const o = e.map((a) => a.image).filter(Boolean);
   if (o.length === 0)
     return [];
+  console.log(`[shoelace-card] Preloading ${o.length} images...`);
   const r = o.map(
-    (l) => xo(l, t).catch((a) => null)
-  ), s = await Promise.all(r);
-  return s.filter(Boolean).length, s;
+    (a) => xo(a, t).catch((i) => (console.warn(`[shoelace-card] Failed to preload image: ${a}`, i), null))
+  ), s = await Promise.all(r), l = s.filter(Boolean).length;
+  return console.log(`[shoelace-card] Preloaded ${l}/${o.length} images successfully`), s;
 }
 function $o(e) {
   const t = document.createElement("sl-badge");
@@ -2675,7 +2674,7 @@ function ue(e) {
 }
 function I(e) {
   try {
-    e._delegationHandler && (document.removeEventListener("click", e._delegationHandler), void 0), e._keyHandler && (document.removeEventListener("keydown", e._keyHandler, { capture: !0 }), document.removeEventListener("keyup", e._keyHandler, { capture: !0 }), e.removeEventListener("keydown", e._keyHandler, { capture: !0 }), e.removeEventListener("keyup", e._keyHandler, { capture: !0 }), void 0), e._emergencyHandler && (e.removeEventListener("click", e._emergencyHandler), void 0), e.parentNode && (e.parentNode.removeChild(e), void 0);
+    e._delegationHandler && document.removeEventListener("click", e._delegationHandler), e._keyHandler && (document.removeEventListener("keydown", e._keyHandler, { capture: !0 }), document.removeEventListener("keyup", e._keyHandler, { capture: !0 }), e.removeEventListener("keydown", e._keyHandler, { capture: !0 }), e.removeEventListener("keyup", e._keyHandler, { capture: !0 })), e._emergencyHandler && e.removeEventListener("click", e._emergencyHandler), e.parentNode && e.parentNode.removeChild(e);
   } catch {
     try {
       e.remove();
@@ -2700,15 +2699,14 @@ function Vt(e, t) {
     return !1;
   try {
     const r = (s) => {
-      `${t}`, s.preventDefault(), s.stopPropagation(), I(e);
+      s.preventDefault(), s.stopPropagation(), I(e);
     };
     return o.addEventListener("click", r, { capture: !0 }), o.addEventListener("mouseup", r, { capture: !0 }), o.addEventListener("touchend", r, { capture: !0 }), "PointerEvent" in window && o.addEventListener("pointerup", r, { capture: !0 }), o.addEventListener("mousedown", () => {
       o.style.transform = "scale(0.95)";
     }), o.addEventListener("mouseup", () => {
       o.style.transform = "scale(1)";
     }), o.addEventListener("mouseover", () => {
-      `${t}`;
-    }, { once: !0 }), `${t}`, !0;
+    }, { once: !0 }), !0;
   } catch {
     return !1;
   }
@@ -2723,14 +2721,14 @@ function Ft(e) {
   document.addEventListener("click", o), e._delegationHandler = o;
 }
 function Lo(e) {
-  let t = Vt(e, "immediate");
+  let t = Vt(e);
   t || setTimeout(() => {
-    t = Vt(e, "delayed"), t || Ft(e);
+    t = Vt(e), t || Ft(e);
   }, 100), Ft(e);
 }
 function To(e) {
   const t = (o) => {
-    `${o.key}${o.code}`, (o.key === "Escape" || o.code === "Escape" || o.keyCode === 27) && (o.preventDefault(), o.stopPropagation(), I(e), document.removeEventListener("keydown", t), document.removeEventListener("keyup", t));
+    (o.key === "Escape" || o.code === "Escape" || o.keyCode === 27) && (o.preventDefault(), o.stopPropagation(), I(e), document.removeEventListener("keydown", t), document.removeEventListener("keyup", t));
   };
   document.addEventListener("keydown", t, { capture: !0 }), document.addEventListener("keyup", t, { capture: !0 }), e.addEventListener("keydown", t, { capture: !0 }), e.addEventListener("keyup", t, { capture: !0 }), e._keyHandler = t;
 }
@@ -2828,11 +2826,9 @@ async function Io(e, t) {
     `;
   }, 8e3);
   try {
-    e.querySelector(".shoelace-card-modal-loading") || void 0;
-    const a = await wo(t);
-    if (clearTimeout(s), r) {
+    const l = e.querySelector(".shoelace-card-modal-loading"), a = await wo(t);
+    if (clearTimeout(s), r)
       return;
-    }
     if (a) {
       const i = document.createElement("div");
       i.className = "shoelace-card-modal-text", i.style.cssText = `
@@ -2880,8 +2876,8 @@ async function Io(e, t) {
             border: 1px solid rgba(255, 255, 255, 0.3) !important;
           `);
       });
-      const u = i.querySelector("h1"), m = u ? u.textContent : "Content";
-      u && u.remove();
+      const d = i.querySelector("h1"), m = d ? d.textContent : "Content";
+      d && d.remove();
       const h = document.createElement("div");
       h.className = "shoelace-card-modal-header", h.style.cssText = `
         display: flex !important;
@@ -2985,12 +2981,14 @@ async function Oo(e, t) {
   l.className = "shoelace-card-modal-loading", s.appendChild(l), r.appendChild(s), o.appendChild(r), document.body.appendChild(o), await he(o), zo(o).closeButton, Lo(o), To(o), Mo(o), setTimeout(() => {
     try {
       const i = o.querySelector(".shoelace-card-modal-close");
-      i && (i.focus(), void 0);
-    } catch {
+      i && i.focus();
+    } catch (i) {
+      debugLog("Focus error (non-critical):", i);
     }
   }, 150), await Io(s, e);
 }
 function No(e, t) {
+  console.log("[shoelace-card] Using progressive loading fallback");
   const o = de();
   t.forEach((r, s) => {
     const l = ce(r, s + 1);
@@ -3004,16 +3002,50 @@ async function Bo(e, t) {
   }
   e.classList.add("loading");
   try {
-    await _o(t);
+    console.log("[shoelace-card] Preloading images..."), await _o(t), console.log("[shoelace-card] All images preloaded");
     const o = de(), r = document.createDocumentFragment();
-    t.forEach((s, l) => {
-      const a = ce(s, l + 1);
-      r.appendChild(a);
-    }), o.appendChild(r), e.innerHTML = "", e.appendChild(o), e.classList.remove("loading"), requestAnimationFrame(() => {
+    t.forEach((l, a) => {
+      const i = ce(l, a + 1);
+      r.appendChild(i);
+    }), o.appendChild(r), e.innerHTML = "", e.appendChild(o), e.classList.remove("loading"), console.group("[DEBUG-COMPONENT] Shoelace Component Status"), console.log("[DEBUG-COMPONENT] Custom elements defined:", {
+      "sl-card": !!customElements.get("sl-card"),
+      "sl-button": !!customElements.get("sl-button"),
+      "sl-icon": !!customElements.get("sl-icon")
+    });
+    const s = o.querySelectorAll("sl-card");
+    console.log("[DEBUG-COMPONENT] sl-card elements found:", s.length), s.forEach((l, a) => {
+      console.log(`[DEBUG-COMPONENT] sl-card ${a}:`, {
+        tagName: l.tagName,
+        shadowRoot: !!l.shadowRoot,
+        innerHTML: l.innerHTML.substring(0, 100) + "...",
+        computedDisplay: window.getComputedStyle(l).display,
+        computedVisibility: window.getComputedStyle(l).visibility,
+        offsetWidth: l.offsetWidth,
+        offsetHeight: l.offsetHeight
+      });
+    }), console.groupEnd(), requestAnimationFrame(() => {
+      const l = window.getComputedStyle(o).opacity;
       o.classList.add("loaded");
+      const a = window.getComputedStyle(o).opacity;
+      setTimeout(() => {
+        if (window.getComputedStyle(o).opacity !== "1") {
+          const n = `
+            .shoelace-card-container.loaded {
+              opacity: 1 !important;
+              transform: translateY(0) !important;
+              transition: none !important;
+            }
+            .shoelace-card-container.loaded .shoelace-card-item {
+              opacity: 1 !important;
+              transform: translateY(0) !important;
+            }
+          `, d = document.createElement("style");
+          d.id = "shoelace-card-visibility-fix", d.textContent = n, document.head.appendChild(d);
+        }
+      }, 500);
     }), ue(e);
-  } catch {
-    No(e, t);
+  } catch (o) {
+    console.error("[shoelace-card] Image preloading failed:", o), No(e, t);
   }
 }
 function Ho(e) {
@@ -3032,8 +3064,10 @@ async function Uo() {
 async function qo(e) {
   try {
     ne(), await Uo();
-    const t = vo(e), o = await yo(t);
-    e.innerHTML = "", e.classList.add("shoelace-card-block"), await Bo(e, o);
+    const t = vo(e), o = await yo(t), r = e.getAttribute("data-block-status"), s = e.getAttribute("data-block-name");
+    e.innerHTML = "", e.classList.add("shoelace-card-block"), r && e.setAttribute("data-block-status", r), s && e.setAttribute("data-block-name", s), document.body.classList.contains("appear") || document.body.classList.add("appear");
+    const l = e.closest(".section");
+    l && l.style.display === "none" && (l.style.display = null, l.dataset.sectionStatus = "loaded"), await Bo(e, o);
   } catch {
     Ho(e);
   }
