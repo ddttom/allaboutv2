@@ -190,19 +190,19 @@
     <rect x="60" y="620" width="120" height="40" rx="20" fill="url(#basicGradient)" filter="url(#shadow)"/>
     <text x="120" y="645" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Phase 1</text>
     
-    <polygon points="190,640 210,630 210,650" fill="#28a745"/>
+    <polygon points="210,640 190,630 190,650" fill="#28a745"/>
     
     <rect x="220" y="620" width="120" height="40" rx="20" fill="url(#advancedGradient)" filter="url(#shadow)"/>
     <text x="280" y="645" text-anchor="middle" fill="#1a1a1a" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Phase 2</text>
     
-    <polygon points="350,640 370,630 370,650" fill="#ffc107"/>
+    <polygon points="370,640 350,630 350,650" fill="#ffc107"/>
     
     <rect x="380" y="620" width="120" height="40" rx="20" fill="url(#professionalGradient)" filter="url(#shadow)"/>
     <text x="440" y="645" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Phase 3</text>
     
     <!-- Timeline -->
-    <text x="520" y="635" fill="#ffffff" font-family="Arial, sans-serif" font-size="12">Start here →</text>
-    <text x="520" y="650" fill="#ffffff" font-family="Arial, sans-serif" font-size="12">Build expertise →</text>
+    <text x="520" y="635" fill="#ffffff" font-family="Arial, sans-serif" font-size="12">Start Phase 1</text>
+    <text x="520" y="650" fill="#ffffff" font-family="Arial, sans-serif" font-size="12">Build expertise</text>
   </g>
 
   <!-- Key Insight Box -->
