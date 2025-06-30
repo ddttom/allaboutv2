@@ -743,7 +743,7 @@ This icon system exemplifies EDS's philosophy of adapting to how authors natural
 \
 Never apply styling to elements with -container suffix in their class names (e.g. blockname-container, section-container). All styling should be applied to either the -wrapper or the block class itself.  This rule is crucial because in EDS:
 
-Container elements (.blockname-container) are structural elements that should never receive styling  Wrapper elements (.blockname-wrapper) are the appropriate place for layout and positioning styles. Block elements (.blockname) are for block-specific styling
+Container elements (.block-name-container) are structural elements that should never receive styling  Wrapper elements (.block-name-wrapper) are the appropriate place for layout and positioning styles. Block elements (.block-name) are for block-specific styling
 
 In our current CSS file.
 
@@ -784,23 +784,23 @@ export default function decorate(block) {
 CSS for blocks should be isolated to prevent affecting other elements:
 
 ```
-.blockname {
+.block-name.block {
   /* Block-specific styles */
 }
 
 /* Don't style the container directly */
-.blockname-container {
+.block-name-container {
   /* AVOID putting styles here */
 }
 
 /* Handle variations through class combinations */
-.blockname.variation {
+.block-name.block.variation {
   /* Variation-specific styles */
 }
 /* Ensure responsiveness */
 
 @media (min-width: 768px) {
-  .blockname {
+  .block-name.block {
     /* Desktop styles */
   }
 }
@@ -1305,9 +1305,9 @@ When developing blocks in EDS, remember that block-specific CSS is injected only
 - **Block Isolation**: Every CSS selector in a block's CSS should only apply to that block
 - **Structure with Flexbox/Grid**: Modern CSS layout techniques create responsive designs
 - **Mobile-First Approach**: Base styles for mobile, then add media queries for larger screens
-- **Consistent Class Naming**: Follow patterns like .blockname-element-state
+- **Consistent Class Naming**: Follow patterns like .block-name-element-state
 - **Use CSS Variables**: Leverage custom properties for consistent theming
-- **Never Style Container**: Don't apply styles directly to .blockname-container
+- **Never Style Container**: Don't apply styles directly to .block-name-container
 - **Support Variations**: Handle block variations through class combinations
 - **Ensure Responsiveness**: Include responsive design for different screen sizes
 
