@@ -51,7 +51,6 @@ async function serveLocalFile(filePath, res) {
     res.end(content);
     return true;
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error(`Error serving local file ${filePath}:`, error.message);
     return false;
   }
@@ -80,9 +79,7 @@ async function proxyRequest(url, res) {
     console.log('Proxy response headers:', Object.fromEntries(response.headers.entries()));
 
     if (!response.ok) {
-      // eslint-disable-next-line no-console
       console.error(`Proxy request failed: ${response.status} ${response.statusText}`);
-      // eslint-disable-next-line no-console
       console.error(`Failed URL: ${proxyUrl}`);
       throw new Error(`Proxy request failed: ${response.status} ${response.statusText}`);
     }
@@ -125,9 +122,7 @@ async function proxyRequest(url, res) {
     console.log(`✅ Successfully proxied: ${url}`);
     return true;
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error(`❌ Error proxying request for ${url}:`, error.message);
-    // eslint-disable-next-line no-console
     console.error('Full error:', error);
     return false;
   }
@@ -135,11 +130,23 @@ async function proxyRequest(url, res) {
 
 // Main request handler
 async function handleRequest(req, res) {
-  const url = req.url === '/' ? '/aem.html' : req.url;
+  const url = req.url === '/' ? '/server.html' : req.url;
   const filePath = join(__dirname, url.startsWith('/') ? url.slice(1) : url);
 
   // eslint-disable-next-line no-console
   console.log(`Request: ${req.method} ${url}`);
+
+  // Handle Chrome DevTools specific requests gracefully
+  if (url.includes('/.well-known/appspecific/') || 
+      url.includes('/chrome-devtools/') ||
+      url.includes('/__vscode_') ||
+      url.includes('/favicon.ico')) {
+    // Return 204 No Content for DevTools requests to avoid proxy errors
+    console.log(`🔧 Skipping DevTools/system request: ${url}`);
+    res.writeHead(204, { 'Content-Type': 'text/plain' });
+    res.end();
+    return;
+  }
 
   // Try to serve local file first
   if (await fileExists(filePath)) {
@@ -183,7 +190,9 @@ server.listen(PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`🔗 Proxying missing files to: ${PROXY_HOST}`);
   // eslint-disable-next-line no-console
-  console.log(`📄 Main page: http://localhost:${PORT}/aem.html`);
+  console.log(`📄 Main page: http://localhost:${PORT}/server.html`);
+  // eslint-disable-next-line no-console
+  console.log(`🔧 DevTools requests will be handled gracefully`);
 });
 
 // Graceful shutdown
