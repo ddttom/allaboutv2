@@ -1,0 +1,178 @@
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="humanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2c3e50;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#34495e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="aiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3498db;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#2980b9;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="trapGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#95a5a6;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#7f8c8d;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="800" fill="#f8f9fa"/>
+  
+  <!-- Title -->
+  <text x="600" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#2c3e50">
+    Software Architecture Evolution: From Human-Centric to AI-Collaborative
+  </text>
+  
+  <!-- Human-Optimized Section -->
+  <g transform="translate(50, 80)">
+    <rect x="0" y="0" width="300" height="400" rx="10" fill="url(#humanGrad)" filter="url(#shadow)"/>
+    <text x="150" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">
+      Human-Optimized
+    </text>
+    
+    <!-- Deep Nesting Representation -->
+    <rect x="20" y="50" width="260" height="40" rx="5" fill="rgba(255,255,255,0.3)" stroke="white" stroke-width="1"/>
+    <text x="30" y="75" font-family="Arial, sans-serif" font-size="12" fill="white">src/</text>
+    
+    <rect x="40" y="100" width="220" height="30" rx="3" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1"/>
+    <text x="50" y="120" font-family="Arial, sans-serif" font-size="11" fill="white">components/</text>
+    
+    <rect x="60" y="140" width="180" height="25" rx="3" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1"/>
+    <text x="70" y="157" font-family="Arial, sans-serif" font-size="10" fill="white">shared/</text>
+    
+    <rect x="80" y="175" width="140" height="20" rx="3" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1"/>
+    <text x="90" y="188" font-family="Arial, sans-serif" font-size="9" fill="white">utils/</text>
+    
+    <!-- Problems list -->
+    <text x="30" y="220" font-family="Arial, sans-serif" font-size="12" fill="white" font-weight="bold">Challenges for AI:</text>
+    <text x="30" y="240" font-family="Arial, sans-serif" font-size="11" fill="white">• Deep nesting confusion</text>
+    <text x="30" y="255" font-family="Arial, sans-serif" font-size="11" fill="white">• Semantic blindness</text>
+    <text x="30" y="270" font-family="Arial, sans-serif" font-size="11" fill="white">• Build process opacity</text>
+    <text x="30" y="285" font-family="Arial, sans-serif" font-size="11" fill="white">• Context window limits</text>
+    <text x="30" y="300" font-family="Arial, sans-serif" font-size="11" fill="white">• Fragmented tools</text>
+    
+    <!-- AI Confusion Icon -->
+    <circle cx="250" cy="350" r="20" fill="rgba(255,255,255,0.3)"/>
+    <text x="250" y="360" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="white">🤖</text>
+    <text x="250" y="385" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="white">Confused AI</text>
+  </g>
+  
+  <!-- The Runtime Debugging Trap -->
+  <g transform="translate(400, 80)">
+    <rect x="0" y="0" width="400" height="180" rx="10" fill="url(#trapGrad)" filter="url(#shadow)"/>
+    <text x="200" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2c3e50">
+      The Runtime Debugging Trap
+    </text>
+    
+    <!-- Source to Runtime Flow -->
+    <rect x="20" y="50" width="100" height="30" rx="5" fill="rgba(255,255,255,0.9)" stroke="#2c3e50" stroke-width="1"/>
+    <text x="70" y="70" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#2c3e50">Source Code</text>
+    
+    <!-- Transform Arrow -->
+    <path d="M 130 65 L 170 65" stroke="#2c3e50" stroke-width="3" marker-end="url(#arrowhead)"/>
+    <text x="150" y="55" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#2c3e50">Build</text>
+    
+    <rect x="180" y="50" width="100" height="30" rx="5" fill="rgba(255,255,255,0.9)" stroke="#2c3e50" stroke-width="1"/>
+    <text x="230" y="70" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#2c3e50">Runtime Code</text>
+    
+    <!-- Transform Arrow -->
+    <path d="M 290 65 L 330 65" stroke="#2c3e50" stroke-width="3" marker-end="url(#arrowhead)"/>
+    <text x="310" y="55" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#2c3e50">Deploy</text>
+    
+    <rect x="340" y="50" width="40" height="30" rx="5" fill="rgba(255,255,255,0.9)" stroke="#2c3e50" stroke-width="1"/>
+    <text x="360" y="70" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#2c3e50">Bug!</text>
+    
+    <!-- AI Debug Path (Wrong) -->
+    <path d="M 360 85 Q 300 120 230 100" stroke="#e74c3c" stroke-width="3" stroke-dasharray="5,5" fill="none"/>
+    <text x="300" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#e74c3c">AI debugs here (WRONG)</text>
+    
+    <!-- Correct Debug Path -->
+    <path d="M 360 85 Q 150 120 70 100" stroke="#27ae60" stroke-width="3" fill="none"/>
+    <text x="200" y="155" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#27ae60">Should debug here (CORRECT)</text>
+  </g>
+  
+  <!-- AI-Friendly Section -->
+  <g transform="translate(850, 80)">
+    <rect x="0" y="0" width="300" height="400" rx="10" fill="url(#aiGrad)" filter="url(#shadow)"/>
+    <text x="150" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">
+      AI-Collaborative
+    </text>
+    
+    <!-- Semantic Structure -->
+    <rect x="20" y="50" width="260" height="30" rx="5" fill="rgba(255,255,255,0.3)" stroke="white" stroke-width="1"/>
+    <text x="30" y="70" font-family="Arial, sans-serif" font-size="12" fill="white">user-authentication/</text>
+    
+    <rect x="20" y="90" width="260" height="30" rx="5" fill="rgba(255,255,255,0.3)" stroke="white" stroke-width="1"/>
+    <text x="30" y="110" font-family="Arial, sans-serif" font-size="12" fill="white">content-delivery/</text>
+    
+    <rect x="20" y="130" width="260" height="30" rx="5" fill="rgba(255,255,255,0.3)" stroke="white" stroke-width="1"/>
+    <text x="30" y="150" font-family="Arial, sans-serif" font-size="12" fill="white">docs/for-ai/</text>
+    
+    <!-- AI-Friendly Features -->
+    <text x="30" y="180" font-family="Arial, sans-serif" font-size="12" fill="white" font-weight="bold">AI-Friendly Patterns:</text>
+    <text x="30" y="200" font-family="Arial, sans-serif" font-size="11" fill="white">✓ Semantic naming</text>
+    <text x="30" y="215" font-family="Arial, sans-serif" font-size="11" fill="white">✓ Flat hierarchies</text>
+    <text x="30" y="230" font-family="Arial, sans-serif" font-size="11" fill="white">✓ Transparent builds</text>
+    <text x="30" y="245" font-family="Arial, sans-serif" font-size="11" fill="white">✓ Clear boundaries</text>
+    <text x="30" y="260" font-family="Arial, sans-serif" font-size="11" fill="white">✓ Debug documentation</text>
+    
+    <!-- docs/for-ai structure -->
+    <rect x="40" y="275" width="220" height="80" rx="5" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1"/>
+    <text x="50" y="295" font-family="Arial, sans-serif" font-size="10" fill="white">docs/for-ai/</text>
+    <text x="60" y="310" font-family="Arial, sans-serif" font-size="9" fill="white">├── debug.md</text>
+    <text x="60" y="323" font-family="Arial, sans-serif" font-size="9" fill="white">├── architecture.md</text>
+    <text x="60" y="336" font-family="Arial, sans-serif" font-size="9" fill="white">└── boundaries.yml</text>
+    
+    <!-- Happy AI Icon -->
+    <circle cx="250" cy="370" r="20" fill="rgba(255,255,255,0.3)"/>
+    <text x="250" y="380" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="white">🤖</text>
+    <text x="250" y="395" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="white">Helpful AI</text>
+  </g>
+  
+  <!-- Transformation Arrow -->
+  <g transform="translate(400, 300)">
+    <rect x="0" y="0" width="400" height="180" rx="10" fill="rgba(52, 73, 94, 0.1)" stroke="#34495e" stroke-width="2" stroke-dasharray="10,5"/>
+    <text x="200" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2c3e50">
+      Solution: Explicit AI Guidance
+    </text>
+    
+    <!-- Key Patterns -->
+    <text x="20" y="60" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50" font-weight="bold">Implementation Patterns:</text>
+    
+    <rect x="20" y="70" width="170" height="25" rx="3" fill="#bdc3c7" stroke="#7f8c8d" stroke-width="1"/>
+    <text x="25" y="87" font-family="Arial, sans-serif" font-size="10" fill="#2c3e50">🚫 core/ - Never modify</text>
+    
+    <rect x="210" y="70" width="170" height="25" rx="3" fill="#d6eaf8" stroke="#3498db" stroke-width="1"/>
+    <text x="215" y="87" font-family="Arial, sans-serif" font-size="10" fill="#2c3e50">✅ application/ - Safe zone</text>
+    
+    <rect x="20" y="105" width="360" height="25" rx="3" fill="#ecf0f1" stroke="#95a5a6" stroke-width="1"/>
+    <text x="25" y="122" font-family="Arial, sans-serif" font-size="10" fill="#2c3e50">📋 debug.md - Runtime transformation mapping</text>
+    
+    <rect x="20" y="140" width="360" height="25" rx="3" fill="#eaf2f8" stroke="#3498db" stroke-width="1"/>
+    <text x="25" y="157" font-family="Arial, sans-serif" font-size="10" fill="#2c3e50">🔍 Touch points for distributed debugging</text>
+  </g>
+  
+  <!-- Arrow definitions -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50"/>
+    </marker>
+  </defs>
+  
+  <!-- Main transformation arrow -->
+  <path d="M 380 250 Q 600 200 820 250" stroke="#2c3e50" stroke-width="4" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="600" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#2c3e50" font-weight="bold">
+    Architectural Evolution
+  </text>
+  
+  <!-- Bottom insight -->
+  <rect x="200" y="720" width="800" height="60" rx="10" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="2"/>
+  <text x="600" y="745" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">
+    Key Insight: AI debugs what it can see, not what it should modify
+  </text>
+  <text x="600" y="765" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#7f8c8d">
+    Design systems where AI naturally finds the right files to modify, not just where problems manifest
+  </text>
+</svg>
