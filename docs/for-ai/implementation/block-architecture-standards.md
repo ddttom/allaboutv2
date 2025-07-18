@@ -1,6 +1,46 @@
 # EDS Block Architecture Standards Guide
 
-> **📋 Style Guide**: For CSS naming conventions and standards, see the [CSS Naming Convention Style Guide](../style-guide.md)
+## Quick Start by Experience Level
+
+### 🚀 New to EDS Block Development
+**If you're new to EDS**, start with these beginner-friendly sections:
+1. **[Executive Summary](#executive-summary)** - Overview of the two development approaches (5 min read)
+2. **[Pattern Selection Criteria](#pattern-selection-criteria)** - Choose between Simple vs Complex approaches (10 min read)
+3. **[EDS-Native Pattern (Simple Components)](#eds-native-pattern-simple-components)** - Start here for your first component
+4. **[Common Standards](#common-standards-both-patterns)** - Essential standards that apply to all components
+
+**Recommended Learning Path**: Read the Executive Summary → Choose your pattern → Follow the pattern-specific implementation guide → Apply common standards
+
+### 💻 Experienced Developer
+**If you have development experience but are new to EDS**:
+1. **[Architecture Overview](#architecture-overview)** - Understand the decision-making process
+2. **[Pattern Selection Criteria](#pattern-selection-criteria)** - Quick pattern selection guide
+3. **[JavaScript Architecture Standards](#2-javascript-architecture-standards)** - Core implementation patterns
+4. **[Performance Standards](#5-performance-standards)** - Advanced optimization techniques
+
+### 🏗️ Architect/Technical Lead
+**If you're establishing team standards**:
+1. **[AI-Assisted Development Philosophy](#ai-assisted-development-philosophy)** - Strategic development approach
+2. **[Multi-Component Assembly Architecture](#multi-component-assembly-architecture)** - Complex system design
+3. **[Implementation Timeline](#implementation-timeline)** - Project planning framework
+4. **[Quality Assurance Checklist](#quality-assurance-checklist)** - Team standards and processes
+
+## Document Navigation Guide
+
+**This comprehensive guide (1,982 lines) covers everything from basic component creation to advanced architectural patterns. Use these navigation strategies:**
+
+- **Quick Reference**: Jump directly to specific sections using the Table of Contents
+- **Progressive Learning**: Follow the experience-level paths above for structured learning
+- **Problem-Solving**: Use Ctrl+F to search for specific topics or error messages
+- **Cross-References**: Follow the "See Also" and "Next Steps" sections for related documentation
+
+> **📋 Style Guide**: For CSS naming conventions and standards, see the [CSS Naming Convention Style Guide](../guidelines/style-guide.md)
+
+> **📚 Related Documentation**: 
+> - [`eds.md`](../eds.md) - Complete EDS development guide and foundational concepts
+> - [`design-philosophy-guide.md`](design-philosophy-guide.md) - Framework for choosing development approaches
+> - [`build-blocks-clarification.md`](build-blocks-clarification.md) - Dual-directory architecture explanation
+> - [`getting-started-guide.md`](../getting-started-guide.md) - Quick reference for progressive learning paths
 
 > **🏗️ Architecture Distinction**: This document covers **two distinct development approaches**:
 > - **Simple Blocks** (outside `/build/` directories): Follow EDS core philosophy of simple JavaScript, no dependencies, no build steps
@@ -8,11 +48,68 @@
 > 
 > The choice between approaches depends on component complexity and requirements.
 
-## Executive Summary
+## Table of Contents
+
+### Core Architecture
+- [Executive Summary](#executive-summary)
+- [AI-Assisted Development Philosophy](#ai-assisted-development-philosophy)
+- [Architecture Overview](#architecture-overview)
+
+### File Structure & Naming
+- [HTML File Naming Conventions](#html-file-naming-conventions)
+  - [Development vs Testing Files](#development-vs-testing-files)
+  - [File Structure Example](#file-structure-example)
+  - [Development Workflow](#development-workflow)
+  - [Best Practices](#best-practices)
+
+### Pattern Selection
+- [Pattern Selection Criteria](#pattern-selection-criteria)
+  - [EDS-Native Pattern (Simple Components)](#eds-native-pattern-simple-components)
+  - [External-Library-Enhanced Pattern (Complex Components)](#external-library-enhanced-pattern-complex-components)
+  - [Multi-Component Assembly Architecture](#multi-component-assembly-architecture)
+  - [Build & Deploy Commands](#build--deploy-commands)
+
+### Implementation Standards
+- [Common Standards (Both Patterns)](#common-standards-both-patterns)
+  - [File Structure](#1-file-structure)
+  - [JavaScript Architecture Standards](#2-javascript-architecture-standards)
+  - [Error Handling Standards](#3-error-handling-standards)
+  - [Accessibility Standards](#4-accessibility-standards)
+  - [Performance Standards](#5-performance-standards)
+
+### Pattern-Specific Implementation
+- [Pattern-Specific Implementation](#pattern-specific-implementation)
+  - [EDS-Native Pattern Implementation](#eds-native-pattern-implementation)
+  - [External-Library-Enhanced Pattern Implementation](#external-library-enhanced-pattern-implementation)
+
+### Styling & Design
+- [CSS Standards](#css-standards)
+  - [CSS Architecture](#1-css-architecture)
+  - [Performance CSS Standards](#2-performance-css-standards)
+
+### Quality Assurance
+- [Testing Standards](#testing-standards)
+  - [Manual Testing Checklist](#1-manual-testing-checklist)
+  - [Automated Testing (Optional)](#2-automated-testing-optional)
+- [Documentation Standards](#documentation-standards)
+  - [README.md Template](#1-readmemd-template)
+  - [example.md Template](#2-examplemd-template)
+
+### Project Management
+- [Implementation Timeline](#implementation-timeline)
+- [Quality Assurance Checklist](#quality-assurance-checklist)
+- [Generic Debugging and Instrumentation Standards](#generic-debugging-and-instrumentation-standards)
+
+### Reference
+- [Conclusion](#conclusion)
+- [See Also](#see-also)
+- [Next Steps](#next-steps)
+
+## Executive Summary {#executive-summary}
 
 This document establishes two complementary architectural patterns for EDS block development, ensuring consistency while providing flexibility based on component complexity. Both patterns share common standards for error handling, accessibility, and performance.
 
-### AI-Assisted Development Philosophy
+### AI-Assisted Development Philosophy {#ai-assisted-development-philosophy}
 
 This architecture embraces **local-first development that enables meaningful AI assistance**. Traditional EDS development workflows create barriers for AI assistance by fragmenting work across multiple systems (Google Docs, SharePoint, code repositories). Our approach implements a **local-first, proxy-fallback development server** that:
 
@@ -23,32 +120,43 @@ This architecture embraces **local-first development that enables meaningful AI 
 
 The development server checks if requested files exist locally first. If they do, it serves that file. If not, it fetches from your production server and passes it through. This simple but powerful pattern enables individual block development without juggling multiple systems while still accessing real EDS resources.
 
-## Architecture Overview
+## Architecture Overview {#architecture-overview}
 
-```mermaid
-graph TD
-    A[New Component] --> B{Complexity Assessment}
-    
-    B --> C[EDS-Native Pattern<br/>Simple Components]
-    B --> D[External-Library-Enhanced Pattern<br/>Complex Components]
-    
-    C --> E[Common Standards Layer]
-    D --> E
-    
-    E --> F[Error Handling]
-    E --> G[Accessibility]
-    E --> H[Performance]
-    E --> I[Testing]
-    
-    F --> J[Implementation]
-    G --> J
-    H --> J
-    I --> J
-```
+**Architecture Decision Flow:**
 
-## HTML File Naming Conventions
+When developing a new component, the architecture follows this structured decision-making process:
 
-### Development vs Testing Files
+1. **Initial Assessment Phase**
+   - Start with a new component requirement
+   - Proceed to complexity assessment to determine the appropriate development approach
+
+2. **Complexity Assessment Decision Point**
+   - Evaluate component requirements, functionality, and complexity
+   - This assessment determines which of two architectural patterns to follow:
+
+3. **Pattern Selection**
+   - **EDS-Native Pattern (Simple Components)**: Selected for straightforward components with minimal dependencies, simple state management, and custom styling needs (see [Raw EDS Blocks Guide](raw-eds-blocks-guide.md) for implementation details)
+   - **External-Library-Enhanced Pattern (Complex Components)**: Selected for sophisticated components requiring advanced UI elements, complex state management, rich interactions, or external library integration (see [Complex EDS Blocks Guide](complex-eds-blocks-guide.md) for implementation details)
+
+4. **Common Standards Integration**
+   - Both patterns converge into a unified Common Standards Layer
+   - This layer ensures consistency across all components regardless of their complexity
+   - All components must implement the same foundational standards
+
+5. **Standards Implementation Requirements**
+   - **Error Handling**: Comprehensive error management, graceful degradation, and user-friendly error states
+   - **Accessibility**: WCAG compliance, keyboard navigation, screen reader support, and inclusive design
+   - **Performance**: Optimized loading, efficient rendering, and responsive behavior
+   - **Testing**: Validation procedures, quality assurance, and compatibility verification
+
+6. **Final Implementation Phase**
+   - All four standards areas (Error Handling, Accessibility, Performance, Testing) feed into the final implementation
+   - The implementation must satisfy requirements from all standards areas before completion
+   - This ensures every component meets quality, accessibility, and performance benchmarks regardless of its architectural pattern
+
+## HTML File Naming Conventions {#html-file-naming-conventions}
+
+### Development vs Testing Files {#development-vs-testing-files}
 
 The project uses two distinct HTML file naming patterns for different purposes, addressing the needs of different development tools and testing environments:
 
@@ -68,7 +176,7 @@ The project uses two distinct HTML file naming patterns for different purposes, 
 - **Environment**: EDS testing environment
 - **Flexibility**: Allows multiple test scenarios (test.html, test-advanced.html, test-error.html)
 
-### File Structure Example
+### File Structure Example {#file-structure-example}
 
 ```bash
 /build/shoelace-card/           # Development environment
@@ -92,7 +200,7 @@ The project uses two distinct HTML file naming patterns for different purposes, 
 4. **Multiple Test Scenarios**: EDS can have multiple test files without interfering with development auto-loading
 5. **Deployment Clarity**: Build outputs go to different locations with appropriate naming for each environment
 
-### Development Workflow
+### Development Workflow {#development-workflow}
 
 ```bash
 # 1. Development (auto-loads index.html)
@@ -107,7 +215,7 @@ npm run debug  # Start EDS server
 # Navigate to: localhost:3000/blocks/component-name/test.html
 ```
 
-### Best Practices
+### Best Practices {#best-practices}
 
 - **Never rename `index.html`** in build directories - breaks tool integration
 - **Always use `test.html`** for EDS testing - maintains consistency
@@ -117,9 +225,9 @@ npm run debug  # Start EDS server
 
 This naming convention ensures smooth integration with both modern development tools and the EDS testing environment while maintaining clear separation of concerns.
 
-## Pattern Selection Criteria
+## Pattern Selection Criteria {#pattern-selection-criteria}
 
-### EDS-Native Pattern (Simple Components)
+### EDS-Native Pattern (Simple Components) {#eds-native-pattern-simple-components}
 
 **Use When:**
 
@@ -142,7 +250,7 @@ This naming convention ensures smooth integration with both modern development t
 
 **Examples:** floating-alert, banners, simple cards, content blocks, text components
 
-### External-Library-Enhanced Pattern (Complex Components)
+### External-Library-Enhanced Pattern (Complex Components) {#external-library-enhanced-pattern-complex-components}
 
 **Use When:**
 
@@ -194,7 +302,7 @@ This naming convention ensures smooth integration with both modern development t
 
 **Examples:** advanced card components, data tables, complex forms, dashboards, interactive modals, media galleries
 
-### Multi-Component Assembly Architecture
+### Multi-Component Assembly Architecture {#multi-component-assembly-architecture}
 
 The External-Library-Enhanced pattern demonstrates sophisticated **multi-component assembly** where multiple external library components are coordinated to create rich user interfaces:
 
@@ -270,7 +378,7 @@ class ComponentState {
 }
 ```
 
-### Build & Deploy Commands
+### Build & Deploy Commands {#build--deploy-commands}
 
 ```bash
 # Development server with hot reload
@@ -291,9 +399,9 @@ npm run test
 - **npm run deploy**: Runs build + copies files to `../../blocks/{component-name}/`
 - **npm run test**: Runs deploy + provides testing instructions
 
-## Common Standards (Both Patterns)
+## Common Standards (Both Patterns) {#common-standards-both-patterns}
 
-### 1. File Structure
+### 1. File Structure {#1-file-structure}
 
 ```bash
 /blocks/{component-name}/
@@ -305,7 +413,7 @@ npm run test
 └── {component-name}.test.js     # Unit tests (optional)
 ```
 
-### 2. JavaScript Architecture Standards
+### 2. JavaScript Architecture Standards {#2-javascript-architecture-standards}
 
 #### Configuration Constants Pattern
 
@@ -372,7 +480,7 @@ export default async function decorate(block) {
 }
 ```
 
-### 3. Error Handling Standards
+### 3. Error Handling Standards {#3-error-handling-standards}
 
 #### Standard Error Handling Pattern
 
@@ -418,7 +526,7 @@ async function fetchWithRetry(url, options = {}, maxRetries = 3) {
 }
 ```
 
-### 4. Accessibility Standards
+### 4. Accessibility Standards {#4-accessibility-standards}
 
 #### Required Accessibility Implementation
 
@@ -485,7 +593,7 @@ function setupAriaAttributes(container) {
 }
 ```
 
-### 5. Performance Standards
+### 5. Performance Standards {#5-performance-standards}
 
 #### FOUC Elimination and Advanced Performance Optimization
 
@@ -680,9 +788,9 @@ async function generateComponents(block, componentData) {
 **✅ Memory Efficient**: Uses DocumentFragment for optimal DOM manipulation  
 **✅ Accessibility Maintained**: Proper loading states and alt text throughout
 
-## Pattern-Specific Implementation
+## Pattern-Specific Implementation {#pattern-specific-implementation}
 
-### EDS-Native Pattern Implementation
+### EDS-Native Pattern Implementation {#eds-native-pattern-implementation}
 
 #### HTML Structure
 
@@ -768,7 +876,7 @@ function extractContent(block) {
 </html>
 ```
 
-### External-Library-Enhanced Pattern Implementation
+### External-Library-Enhanced Pattern Implementation {#external-library-enhanced-pattern-implementation}
 
 #### External Library HTML Structure
 
@@ -1052,9 +1160,9 @@ async function loadOverlayContent(overlayContent, contentPath) {
 </html>
 ```
 
-## CSS Standards
+## CSS Standards {#css-standards}
 
-### 1. CSS Architecture
+### 1. CSS Architecture {#1-css-architecture}
 
 #### CSS Custom Properties (Variables)
 
@@ -1166,7 +1274,7 @@ async function loadOverlayContent(overlayContent, contentPath) {
 }
 ```
 
-### 2. Performance CSS Standards
+### 2. Performance CSS Standards {#2-performance-css-standards}
 
 #### Critical CSS Patterns
 
@@ -1207,9 +1315,9 @@ async function loadOverlayContent(overlayContent, contentPath) {
 }
 ```
 
-## Testing Standards
+## Testing Standards {#testing-standards}
 
-### 1. Manual Testing Checklist
+### 1. Manual Testing Checklist {#1-manual-testing-checklist}
 
 #### Functionality Testing
 
@@ -1243,7 +1351,7 @@ async function loadOverlayContent(overlayContent, contentPath) {
 - [ ] Touch interactions work on mobile
 - [ ] Text remains readable at all sizes
 
-### 2. Automated Testing (Optional)
+### 2. Automated Testing (Optional) {#2-automated-testing-optional}
 
 #### Unit Test Template
 
@@ -1287,9 +1395,9 @@ describe('Component Name', () => {
 });
 ```
 
-## Documentation Standards
+## Documentation Standards {#documentation-standards}
 
-### 1. README.md Template
+### 1. README.md Template {#1-readmemd-template}
 
 ```markdown
 # Component Name
@@ -1419,7 +1527,7 @@ You can also customize behavior through data attributes:
 - Initial release
 ```
 
-### 2. example.md Template
+### 2. example.md Template {#2-examplemd-template}
 
 ```markdown
 # Component Name Examples
@@ -1490,7 +1598,7 @@ Button: Contact Us | mailto:contact@example.com
 ```
 ```
 
-## Implementation Timeline
+## Implementation Timeline {#implementation-timeline}
 
 ### Phase 1: Planning (1-2 days)
 - [ ] Analyze requirements and complexity
@@ -1526,7 +1634,7 @@ Button: Contact Us | mailto:contact@example.com
 - [ ] Deploy to production
 - [ ] Monitor for issues
 
-## Quality Assurance Checklist
+## Quality Assurance Checklist {#quality-assurance-checklist}
 
 ### Code Quality
 - [ ] Code follows project conventions
@@ -1563,7 +1671,7 @@ Button: Contact Us | mailto:contact@example.com
 - [ ] API documentation is current
 - [ ] Troubleshooting guide is helpful
 
-## Generic Debugging and Instrumentation Standards
+## Generic Debugging and Instrumentation Standards {#generic-debugging-and-instrumentation-standards}
 
 ### Component Debugging Patterns
 
@@ -1845,7 +1953,7 @@ if (DEBUG_MODE) {
 - [ ] **Recovery Testing**: Graceful degradation implemented
 - [ ] **Documentation**: Debug procedures documented
 
-## Conclusion
+## Conclusion {#conclusion}
 
 This architecture standards guide provides a comprehensive framework for developing consistent, accessible, and performant EDS blocks. By following these patterns and standards, teams can:
 
@@ -1866,3 +1974,44 @@ The dual-pattern approach (EDS-Native and External-Library-Enhanced) provides fl
 5. **Optimize for AI**: Local-first development enables meaningful AI assistance throughout the process
 
 By implementing these standards, development teams can create robust, accessible, and maintainable EDS blocks that provide excellent user experiences across all devices and use cases.
+
+---
+
+## See Also {#see-also}
+
+### Architecture and Design
+- [`eds.md`](eds.md) - Complete EDS development guide with foundational concepts and transformation pipeline
+- [`design-philosophy-guide.md`](design-philosophy-guide.md) - Framework for choosing between simple and complex approaches
+- [`build-blocks-clarification.md`](build-blocks-clarification.md) - Detailed explanation of dual-directory architecture (/build/ vs /blocks/)
+- [`eds-architecture-standards.md`](eds-architecture-standards.md) - EDS-native development standards focusing on simplicity
+
+### Implementation Guides
+- [`raw-eds-blocks-guide.md`](raw-eds-blocks-guide.md) - Simple, EDS-native component development patterns
+- [`complex-eds-blocks-guide.md`](complex-eds-blocks-guide.md) - Build-enhanced approach for sophisticated components
+- [`build-component-template.md`](build-component-template.md) - Template and scaffolding for advanced components
+
+### Testing and Debugging
+- [`eds-native-testing-standards.md`](eds-native-testing-standards.md) - Testing standards for EDS-Native pattern components
+- [`debug.md`](debug.md) - Debugging policies and troubleshooting procedures
+- [`eds-architecture-and-testing-guide.md`](eds-architecture-and-testing-guide.md) - Advanced debugging strategies
+
+### Development Environment
+- [`server-README.md`](server-README.md) - Development server setup and local testing workflows
+
+## Next Steps {#next-steps}
+
+### For New Developers
+1. **Start with foundations** → Read [`eds.md`](eds.md) for comprehensive EDS understanding
+2. **Choose your approach** → Use [`design-philosophy-guide.md`](design-philosophy-guide.md) to select simple vs complex patterns
+3. **Set up environment** → Follow [`server-README.md`](server-README.md) for local development setup
+4. **Begin implementation** → Choose [`raw-eds-blocks-guide.md`](raw-eds-blocks-guide.md) or [`complex-eds-blocks-guide.md`](complex-eds-blocks-guide.md)
+
+### For Experienced Developers
+1. **Review architecture decisions** → Study [`build-blocks-clarification.md`](build-blocks-clarification.md) for dual-directory patterns
+2. **Implement testing** → Follow [`eds-native-testing-standards.md`](eds-native-testing-standards.md) for quality assurance
+3. **Handle issues** → Use [`debug.md`](debug.md) for troubleshooting workflows
+
+### For Architects and Technical Leads
+1. **Establish standards** → Implement the patterns defined in this document across your team
+2. **Plan component strategy** → Use [`design-philosophy-guide.md`](design-philosophy-guide.md) for architectural decisions
+3. **Set up advanced debugging** → Review [`eds-architecture-and-testing-guide.md`](eds-architecture-and-testing-guide.md) for comprehensive analysis tools

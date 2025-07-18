@@ -1,551 +1,344 @@
-# Development Server Documentation
+# EDS Development Server Guide
+
+*Related: [EDS Overview](eds.md) | [Debug Guide](debug.md) | [EDS Architecture and Testing Guide](eds-architecture-and-testing-guide.md)*
 
 ## Overview
 
-This document explains the minimal Node.js development server (`server.js`) designed to improve AI assistant workflows when testing and developing EDS (Edge Delivery Services) components locally. The server provides local file serving with automatic fallback to a remote proxy, making it ideal for AI assistants to test blocks and components in isolation with immediate feedback and clear error reporting.
+This guide covers the development server setup and configuration for EDS (Edge Delivery Services) block development and testing. The server provides a local development environment with proxy capabilities for seamless integration with external EDS resources.
 
-## Dependencies
-
-The development server has **zero external dependencies** and uses only Node.js built-in modules:
-
-- **`http`** - Creates the HTTP server
-- **`fs/promises`** - File system operations (readFile, access)
-- **`path`** - Path manipulation utilities (join, extname, dirname)
-- **`url`** - URL utilities (fileURLToPath)
-- **`fetch`** - HTTP requests for proxy functionality (built-in Node.js 18+)
-
-### Requirements
-
-- **Node.js 18+** (for built-in fetch support)
-- **No npm packages required** - completely self-contained
-
-This zero-dependency approach aligns with the project's philosophy of minimal tooling and maximum performance.
+*See also: [EDS Native Testing Standards](eds-native-testing-standards.md) for testing approaches | [Design Philosophy Guide](design-philosophy-guide.md) for minimal tooling principles*
 
 ## Quick Start
 
+### Starting the Development Server
+
 ```bash
+# Standard development server
+node server.js
+
+# Alternative using npm script
 npm run debug
 ```
 
-The server will start on `http://localhost:3000` and serve files from the project root directory.
+The server will start on `http://localhost:3000` by default.
+
+### Server Configuration
+
+The development server uses the following configuration:
+
+- **Port**: 3000 (configurable via PORT environment variable)
+- **Proxy Target**: `https://allabout.network` (configurable via PROXY_HOST)
+- **Local Files**: Served from project root directory
+- **Fallback**: Missing files proxied to external server
 
 ## Server Architecture
 
-### Core Functionality
+### Local-First, Proxy-Fallback Pattern
 
-The server implements a **local-first, proxy-fallback** architecture:
+The development server implements a sophisticated local-first architecture:
 
-1. **Local File Priority**: Always attempts to serve files from the local filesystem first
-2. **Proxy Fallback**: If a file doesn't exist locally, proxies the request to `https://allabout.network`
-3. **MIME Type Detection**: Automatically detects and serves appropriate content types
-4. **CORS Support**: Includes proper CORS headers for cross-origin requests
+1. **Local File Priority**: Files in the project directory are served first
+2. **Proxy Fallback**: Missing files are automatically proxied from external server
+3. **MIME Type Handling**: Proper content types for all file formats
+4. **Error Handling**: Graceful degradation when resources are unavailable
 
-### File Structure
+*See also: [Raw EDS Blocks Guide](raw-eds-blocks-guide.md) for simple components | [Complex EDS Blocks Guide](complex-eds-blocks-guide.md) for advanced components*
+
+### File Serving Logic
+
+```javascript
+// Simplified server logic
+if (localFileExists(requestPath)) {
+  serveLocalFile(requestPath);
+} else {
+  proxyToExternalServer(requestPath);
+}
+```
+
+This pattern enables:
+- **Rapid Development**: Edit local files and see changes immediately
+- **External Resource Access**: Seamless integration with remote EDS assets
+- **Flexible Testing**: Test components with both local and remote dependencies
+
+## Development Workflow
+
+### Standard Development Process
+
+1. **Start Server**: `node server.js`
+2. **Edit Files**: Modify blocks, styles, or scripts locally
+3. **Test Changes**: Refresh browser to see updates
+4. **Debug Issues**: Use browser dev tools and server logs
+
+### File Organization
+
+The server serves files from the project root with this structure:
 
 ```
-project-root/
-├── server.js              # Main server file
-├── package.json           # Contains "debug" script
-└── blocks/                # Your EDS blocks
-    └── block-name/
-        ├── test.html       # Test files for blocks
-        ├── block-name.js   # Block JavaScript
-        └── block-name.css  # Block styles
+/
+├── blocks/                  # EDS blocks (components)
+├── styles/                  # Global styles and fonts
+├── scripts/                 # Core EDS scripts
+├── docs/                    # Documentation
+├── server.js               # Development server
+└── *.html                  # Test pages
 ```
 
-## Configuration
+### Testing Workflow
 
-### Environment Variables
+**Important**: The EDS development server uses `test.html` files, not `index.html`. This is an intentional architectural decision, not an inconsistency.
 
-- `PORT`: Server port (default: 3000)
+```bash
+# Access test files at:
+http://localhost:3000/blocks/[component]/test.html
+
+# Example:
+http://localhost:3000/blocks/floating-alert/test.html
+```
+
+## Server Features
+
+### Automatic MIME Type Detection
+
+The server automatically sets correct MIME types for:
+
+- **JavaScript**: `text/javascript`
+- **CSS**: `text/css`
+- **HTML**: `text/html`
+- **Images**: `image/jpeg`, `image/png`, `image/webp`, etc.
+- **Fonts**: `font/woff2`, `font/woff`, etc.
+- **JSON**: `application/json`
 
 ### Proxy Configuration
 
-The server is configured to proxy missing files to:
-```javascript
-const PROXY_HOST = 'https://allabout.network';
+The server proxies missing files to `https://allabout.network` by default. This can be configured:
+
+```bash
+# Set custom proxy target
+PROXY_HOST=https://your-eds-site.com node server.js
+
+# Set custom port
+PORT=8080 node server.js
 ```
 
-This allows you to test local components while still accessing remote assets and content.
+### CORS Support
 
-## Supported File Types
+The server includes CORS headers for cross-origin requests:
 
-The server includes comprehensive MIME type support:
-
-| Extension | MIME Type |
-|-----------|-----------|
-| `.html` | `text/html` |
-| `.js` | `application/javascript` |
-| `.css` | `text/css` |
-| `.json` | `application/json` |
-| `.png`, `.jpg`, `.jpeg` | Image types |
-| `.svg` | `image/svg+xml` |
-| `.woff`, `.woff2`, `.ttf` | Font types |
-
-## Usage Examples
-
-### Testing Block Components
-
-1. **Create a test file** in your block directory:
-   ```
-   blocks/my-block/test.html
-   ```
-
-2. **Start the server**:
-   ```bash
-   npm run debug
-   ```
-
-3. **Access your test**:
-   ```
-   http://localhost:3000/blocks/my-block/test.html
-   ```
-
-### Example Test File Structure
-
-**CRITICAL**: Test files must use the exact same block structure as EDS. The purpose of test files is to replicate the EDS environment locally - there is no alternative structure. Any deviation will cause inconsistent behavior between test and production.
-
-#### Required EDS Block Structure (Exact Replication)
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Block Test - EDS Structure</title>
-    <link rel="stylesheet" href="my-block.css">
-</head>
-<body>
-    <!-- EDS Block Structure: Use .block class with data attributes -->
-    <div class="my-block block" data-block-name="my-block" data-block-status="initialized">
-        <div>
-            <div>
-                <p>Test content for my block</p>
-            </div>
-        </div>
-    </div>
-
-    <script type="module">
-        import decorate from './my-block.js';
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            // Select using EDS structure: .block-name.block
-            const block = document.querySelector('.my-block.block');
-            if (block) {
-                decorate(block);
-            }
-        });
-    </script>
-</body>
-</html>
-```
-
-#### Critical Requirement: Identical EDS Structure
-
-**The test structure MUST be identical to the EDS structure.** The purpose of test files is to replicate the exact EDS environment locally.
-
-| Element | Required EDS Structure | Purpose |
-|---------|----------------------|---------|
-| **Block Container** | `<div class="block-name block" data-block-name="block-name" data-block-status="initialized">` | Exact replica of EDS block processing |
-| **Content Wrapper** | Nested `<div><div><p>content</p></div></div>` | Matches EDS content structure exactly |
-| **JavaScript Selector** | `.block-name.block` | Targets the same elements as EDS |
-| **Content Elements** | Semantic HTML (`<p>`, `<h2>`, etc.) | Identical to EDS content processing |
-
-**There is no "basic HTML" alternative** - test files must use EDS structure to ensure compatibility.
-
-## Server Behavior
-
-### Local File Serving
-
-When a request comes in:
-
-1. **Path Resolution**: Converts URL to local file path
-2. **File Existence Check**: Uses `fs.access()` to check if file exists
-3. **Content Serving**: Reads and serves file with appropriate headers
-4. **Error Handling**: Gracefully handles file read errors
-
-### Proxy Behavior
-
-When local file doesn't exist:
-
-1. **Proxy Request**: Makes HTTP request to `https://allabout.network`
-2. **Content Type Detection**: Preserves original content type
-3. **Binary/Text Handling**: Appropriately handles different content types
-4. **Error Handling**: Returns 404 if both local and proxy fail
-
-### Request Flow
-
-```
-Request → Local File Check → Serve Local File
-    ↓ (if not found)
-Proxy Request → Remote Server → Serve Proxied Content
-    ↓ (if proxy fails)
-Return 404 Error Page
-```
-
-## Logging and Debugging
-
-The server provides comprehensive logging:
-
-```
-🚀 Server running at http://localhost:3000
-📁 Serving files from: /path/to/project
-🔗 Proxying missing files to: https://allabout.network
-📄 Main page: http://localhost:3000/aem.html
-
-Request: GET /blocks/my-block/test.html
-Serving local file: /path/to/project/blocks/my-block/test.html
-
-Request: GET /missing-file.json
-Local file not found, attempting proxy for: /missing-file.json
-Proxying request to: https://allabout.network/missing-file.json
-✅ Successfully proxied: /missing-file.json
-```
-
-## Error Handling
-
-### Local File Errors
-
-- **File Not Found**: Automatically falls back to proxy
-- **Read Errors**: Logs error and attempts proxy fallback
-- **Permission Errors**: Gracefully handled with error logging
-
-### Proxy Errors
-
-- **Network Errors**: Returns 404 with helpful error page
-- **DNS Resolution**: Handles domain resolution failures
-- **HTTP Errors**: Logs detailed error information
-
-### 404 Error Page
-
-When both local and proxy fail, returns a helpful error page:
-
-```html
-<!DOCTYPE html>
-<html>
-  <head><title>404 Not Found</title></head>
-  <body>
-    <h1>404 Not Found</h1>
-    <p>The requested resource <code>/path</code> was not found locally 
-    or on the proxy server.</p>
-    <p>Attempted proxy URL: <code>https://allabout.network/path</code></p>
-  </body>
-</html>
-```
-
-## Performance Considerations
-
-### Caching Headers
-
-All responses include:
-```javascript
-'Cache-Control': 'no-cache'
-```
-
-This ensures you always see the latest changes during development.
-
-### CORS Headers
-
-Proxy responses include comprehensive CORS headers:
 ```javascript
 'Access-Control-Allow-Origin': '*'
 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS'
 'Access-Control-Allow-Headers': 'Content-Type, Authorization'
 ```
 
-## Security Notes
+## Debugging and Troubleshooting
 
-### Development Only
+### Server Logs
 
-This server is designed for **development use only**:
+The server provides detailed logging:
 
-- No authentication or authorization
-- Permissive CORS headers
-- No rate limiting
-- Detailed error logging
-
-**Do not use in production environments.**
-
-### Safe Defaults
-
-- Only serves files from project directory
-- No directory traversal vulnerabilities
-- Proper MIME type detection
-- Graceful error handling
-
-## Troubleshooting
+```
+🚀 Server running at http://localhost:3000
+📁 Serving files from: /path/to/project
+🔗 Proxying missing files to: https://allabout.network
+📄 Main page: http://localhost:3000/server.html
+```
 
 ### Common Issues
 
-**Server won't start:**
-```bash
-# Check if port is in use
-lsof -i :3000
+**File Not Found (404)**
+- Check file path and spelling
+- Verify file exists in project directory
+- Check proxy server availability
 
-# Kill existing process
-pkill -f "node server.js"
+**MIME Type Issues**
+- Server automatically detects most types
+- Add custom MIME types if needed
+- Check browser console for warnings
 
-# Restart server
-npm run debug
+**Proxy Failures**
+- Verify internet connection
+- Check proxy target server status
+- Review server logs for error details
+
+### Performance Monitoring
+
+The server logs resource loading:
+
+```
+📄 Serving local: /styles/styles.css
+🔗 Proxying: /blocks/header/header.js (5,677 characters)
+❌ Failed proxy: /fonts/missing-font.woff2 (404)
 ```
 
-**Files not loading:**
-- Check file paths are relative to project root
-- Verify file permissions
-- Check server logs for detailed error messages
+## Advanced Configuration
 
-**Proxy not working:**
-- Verify internet connection
-- Check proxy URL configuration
-- Review network logs in browser dev tools
+### Custom Server Setup
 
-**Block not working in EDS but works locally:**
-- Verify test.html uses EDS block structure (`.block-name.block` with data attributes)
-- Check JavaScript selector targets `.block-name.block` not `.block-name-block`
-- Ensure content is wrapped in nested `<div><div>content</div></div>` structure
-- Use semantic HTML elements (`<p>`, `<h2>`, etc.) for content
-- Add debug logging to block JavaScript to trace execution
+For advanced use cases, you can modify `server.js`:
 
-**Modal/overlay blocks not appearing:**
-- Check browser console for JavaScript errors
-- Verify localStorage isn't preventing display (clear with `localStorage.clear()`)
-- Ensure CSS is loading correctly
-- Check that block content extraction logic handles EDS nested structure
+```javascript
+// Custom configuration
+const config = {
+  port: process.env.PORT || 3000,
+  proxyHost: process.env.PROXY_HOST || 'https://allabout.network',
+  staticDir: process.cwd(),
+  enableLogging: true
+};
+```
 
-### Debug Mode
+### Environment Variables
 
-The server runs with comprehensive logging enabled. Monitor the terminal output to understand request flow and identify issues.
+Supported environment variables:
+
+- `PORT`: Server port (default: 3000)
+- `PROXY_HOST`: Proxy target URL
+- `NODE_ENV`: Environment mode (development/production)
+
+### SSL/HTTPS Support
+
+For HTTPS development:
+
+```bash
+# Generate self-signed certificate
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
+
+# Modify server.js to use HTTPS
+const https = require('https');
+const fs = require('fs');
+
+const options = {
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
+};
+
+https.createServer(options, app).listen(3000);
+```
 
 ## Integration with EDS
 
-### Block Testing Workflow
+### Block Development
 
-1. **Create Block Structure**:
-   ```
-   blocks/my-block/
-   ├── my-block.js
-   ├── my-block.css
-   ├── README.md
-   └── test.html
-   ```
+The server integrates seamlessly with EDS block development:
 
-2. **Start Development Server**:
-   ```bash
-   npm run debug
-   ```
+1. **CSS Loading**: EDS automatically loads block CSS files
+2. **JavaScript Modules**: ES modules work without build processes
+3. **Asset Proxying**: External assets load transparently
+4. **Hot Reload**: Changes appear immediately on refresh
 
-3. **Test Block**:
-   - Navigate to `http://localhost:3000/blocks/my-block/test.html`
-   - Make changes to JS/CSS files
-   - Refresh browser to see changes
+### Testing Integration
 
-4. **Proxy Integration**:
-   - Missing assets automatically load from remote server
-   - Test with real content and dependencies
+The server supports comprehensive testing:
 
-### EDS-Specific Features
-
-- **Automatic Block Loading**: Test files can import block JavaScript modules
-- **CSS Loading**: Block stylesheets load automatically
-- **Asset Proxying**: Missing icons, fonts, and images load from remote server
-- **Query Index Access**: Can test with real query-index.json data
-
-### Real-World Example: Floating Alert Block
-
-The floating-alert block demonstrates the importance of using correct EDS structure in test files:
-
-#### Correct EDS Structure (test.html):
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Floating Alert Test - EDS Structure</title>
-    <link rel="stylesheet" href="floating-alert.css">
-</head>
-<body>
-    <div class="floating-alert block" data-block-name="floating-alert" data-block-status="initialized">
-        <div>
-            <div>
-                <p>🎉 Welcome! Please review our <a href="#privacy">updated privacy policy</a>.</p>
-            </div>
-        </div>
-    </div>
-
-    <script type="module">
-        import decorate from './floating-alert.js';
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            const block = document.querySelector('.floating-alert.block');
-            if (block) {
-                decorate(block);
-            }
-        });
-    </script>
-</body>
-</html>
-```
-
-#### Why This Structure Matters:
-
-1. **Content Extraction**: Block JavaScript expects nested `<div><div><p>content</p></div></div>` structure
-2. **CSS Targeting**: Styles target `.floating-alert.block` not `.floating-alert-block`
-3. **Data Attributes**: EDS adds `data-block-name` and `data-block-status` attributes
-4. **Semantic HTML**: Content uses proper HTML elements (`<p>`, `<a>`) not plain text
-
-#### Critical: Only One Correct Structure
-
-**There is only one correct way to structure test files - they must exactly replicate EDS structure.**
-
-```html
-<!-- ❌ WRONG: Any structure that differs from EDS -->
-<div class="floating-alert-block">
-    Welcome! Please review our updated privacy policy.
-</div>
-
-<!-- ❌ WRONG: Missing data attributes -->
-<div class="floating-alert block">
-    <div><div>Content</div></div>
-</div>
-
-<!-- ❌ WRONG: Missing nested wrapper divs -->
-<div class="floating-alert block" data-block-name="floating-alert" data-block-status="initialized">
-    <p>Content</p>
-</div>
-
-<!-- ✅ CORRECT: Exact EDS structure replication -->
-<div class="floating-alert block" data-block-name="floating-alert" data-block-status="initialized">
-    <div>
-        <div>
-            <p>Welcome! Please review our <a href="#privacy">updated privacy policy</a>.</p>
-        </div>
-    </div>
-</div>
-```
-
-**The test structure must be identical to EDS structure.** Any deviation will cause blocks to behave differently between test and production environments, defeating the purpose of local testing.
+- **Unit Tests**: Individual block testing
+- **Integration Tests**: Multi-block scenarios
+- **Performance Tests**: Load time and memory usage
+- **Accessibility Tests**: WCAG compliance validation
 
 ## Best Practices
 
-### Creating EDS-Compatible Test Files
-
-**Critical**: Always use EDS block structure in test files to ensure compatibility between local testing and production deployment.
-
-#### Step-by-Step Test File Creation
-
-1. **Create the HTML Structure**:
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Block Name Test - EDS Structure</title>
-    <link rel="stylesheet" href="block-name.css">
-</head>
-<body>
-    <!-- EDS Block Structure Template -->
-    <div class="block-name block" data-block-name="block-name" data-block-status="initialized">
-        <div>
-            <div>
-                <!-- Your block content here using semantic HTML -->
-                <p>Your content goes here</p>
-            </div>
-        </div>
-    </div>
-
-    <script type="module">
-        import decorate from './block-name.js';
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            const block = document.querySelector('.block-name.block');
-            if (block) {
-                decorate(block);
-            }
-        });
-    </script>
-</body>
-</html>
-```
-
-2. **Block Structure Requirements**:
-   - **Container**: `<div class="block-name block" data-block-name="block-name" data-block-status="initialized">`
-   - **Nested Wrappers**: Always use `<div><div>content</div></div>` structure
-   - **Semantic Content**: Use proper HTML elements (`<p>`, `<h2>`, `<a>`, etc.)
-   - **JavaScript Selector**: Target `.block-name.block` (not `.block-name-block`)
-
-3. **Common Block Content Patterns**:
-
-```html
-<!-- Simple text block -->
-<div class="text block" data-block-name="text" data-block-status="initialized">
-    <div>
-        <div>
-            <p>This is a paragraph of text content.</p>
-        </div>
-    </div>
-</div>
-
-<!-- Block with links -->
-<div class="alert block" data-block-name="alert" data-block-status="initialized">
-    <div>
-        <div>
-            <p>Important notice! Please read our <a href="#policy">updated policy</a>.</p>
-        </div>
-    </div>
-</div>
-
-<!-- Block with multiple content elements -->
-<div class="card block" data-block-name="card" data-block-status="initialized">
-    <div>
-        <div>
-            <h2>Card Title</h2>
-            <p>Card description text.</p>
-            <p><a href="#link">Learn more</a></p>
-        </div>
-    </div>
-</div>
-```
-
-#### Test File Organization Template
-
-```html
-<!-- Include block-specific styles -->
-<link rel="stylesheet" href="block-name.css">
-
-<!-- Create EDS-compatible block structure -->
-<div class="block-name block" data-block-name="block-name" data-block-status="initialized">
-    <div>
-        <div>
-            <!-- Block content using semantic HTML -->
-        </div>
-    </div>
-</div>
-
-<!-- Import and initialize block with EDS selector -->
-<script type="module">
-  import decorate from './block-name.js';
-  document.addEventListener('DOMContentLoaded', () => {
-    const block = document.querySelector('.block-name.block');
-    if (block) {
-      decorate(block);
-    }
-  });
-</script>
-```
-
 ### Development Workflow
 
-1. **Start with test.html**: Create isolated test environment
-2. **Develop incrementally**: Make small changes and test frequently
-3. **Use browser dev tools**: Monitor network requests and console output
-4. **Test responsive design**: Use browser responsive mode
-5. **Validate accessibility**: Test with screen readers and keyboard navigation
+1. **Start Clean**: Always start server fresh for testing
+2. **Check Logs**: Monitor server output for issues
+3. **Test Incrementally**: Test changes frequently
+4. **Use Browser DevTools**: Leverage debugging capabilities
+5. **Validate Structure**: Ensure proper EDS block structure
 
-## Conclusion
+### Performance Optimization
 
-This development server provides a lightweight, efficient environment specifically designed to improve AI assistant workflows when testing EDS blocks and components. Its local-first approach with proxy fallback ensures AI assistants can develop in isolation while still accessing remote dependencies when needed.
+1. **Minimize Proxy Requests**: Keep frequently used files local
+2. **Optimize Images**: Use appropriate formats and sizes
+3. **Cache Static Assets**: Leverage browser caching
+4. **Monitor Network**: Watch for unnecessary requests
 
-The server's simplicity aligns with EDS principles of minimal tooling and maximum performance, while its clear logging and immediate feedback mechanisms make it an ideal development companion for AI assistants building high-quality, performant web components. The comprehensive error reporting and consistent patterns enable AI assistants to work more effectively and produce reliable results.
+### Security Considerations
+
+1. **Development Only**: Never use in production
+2. **Local Network**: Restrict access to development network
+3. **Sensitive Data**: Avoid committing credentials
+4. **HTTPS**: Use HTTPS for sensitive development
+
+---
+
+## See Also
+
+### Core Development & Testing
+- **[EDS Overview](eds.md)** - Complete introduction to Edge Delivery Services architecture and core concepts
+- **[Debug Guide](debug.md)** - Complete debugging policy and approval requirements for development troubleshooting
+- **[EDS Architecture and Testing Guide](eds-architecture-and-testing-guide.md)** - Advanced testing workflows and file replacement strategies
+- **[EDS Native Testing Standards](eds-native-testing-standards.md)** - Testing standards specifically for EDS-native pattern components
+
+### Block Development & Architecture
+- **[Raw EDS Blocks Guide](raw-eds-blocks-guide.md)** - Step-by-step guide for creating simple EDS blocks using vanilla JavaScript
+- **[Complex EDS Blocks Guide](complex-eds-blocks-guide.md)** - Advanced block development with build tools and external dependencies
+- **[Block Architecture Standards](block-architecture-standards.md)** - Comprehensive standards for EDS block development and architectural patterns
+- **[EDS Architecture Standards](eds-architecture-standards.md)** - Architectural patterns and standards for EDS-native block development
+
+### Development Philosophy & Patterns
+- **[Design Philosophy Guide](design-philosophy-guide.md)** - Understanding the philosophical principles behind EDS architecture decisions
+- **[Build Blocks Clarification](build-blocks-clarification.md)** - Understanding the dual-directory architecture and development workflows
+- **[Build Component Template](build-component-template.md)** - Template for advanced build components with external dependencies
+- **[JavaScript Patterns](javascript-patterns.md)** - Reusable JavaScript patterns for EDS block development
+
+### Advanced Topics & Tools
+- **[Instrumentation Guide](instrumentation-how-it-works.md)** - Advanced instrumentation techniques and performance monitoring
+- **[Investigation](investigation.md)** - Advanced investigation techniques and analysis methods
+- **[Performance Optimization](performance-optimization.md)** - Techniques for optimizing EDS block performance and loading
+- **[Browser Compatibility](browser-compatibility.md)** - Ensuring cross-browser compatibility for EDS implementations
+
+### Reference & Documentation
+- **[EDS Appendix](eds-appendix.md)** - Comprehensive development reference guide with patterns and best practices
+- **[Error Handling Patterns](error-handling-patterns.md)** - Comprehensive error handling strategies for EDS blocks
+- **[Project Structure](project-structure.md)** - Understanding the overall EDS project organization and file conventions
+- **[Build Tools Configuration](build-tools-configuration.md)** - Advanced build tool setup and configuration
+
+## Next Steps
+
+### For Frontend Developers & Component Authors
+1. **Master the development workflow** using the local-first, proxy-fallback server architecture for efficient EDS block development
+2. **Learn the file organization patterns** and understand how the server serves local files while proxying external resources
+3. **Implement proper testing procedures** using the server's test.html file convention and debugging capabilities
+4. **Optimize development efficiency** by leveraging the server's automatic MIME type detection and hot reload capabilities
+5. **Create comprehensive test scenarios** that work with both local and proxied resources
+
+### For DevOps & Build Engineers
+1. **Understand the server architecture** and how it supports both simple and complex EDS development workflows
+2. **Configure development environments** that leverage the proxy capabilities for seamless integration with external EDS resources
+3. **Set up automated testing pipelines** that can use the development server for comprehensive component validation
+4. **Implement monitoring and logging** that captures the server's resource loading patterns and performance metrics
+5. **Create deployment procedures** that transition from development server testing to production EDS environments
+
+### For QA Engineers & Test Specialists
+1. **Learn the testing workflow** using the development server's test.html convention and proxy capabilities
+2. **Understand the debugging features** including server logs, CORS support, and error handling for comprehensive testing
+3. **Create test scenarios** that validate both local component functionality and external resource integration
+4. **Implement performance testing** that leverages the server's monitoring capabilities to track resource loading
+5. **Establish testing standards** that ensure components work correctly in both development and production environments
+
+### For Team Leads & Project Managers
+1. **Understand the development workflow** and how the server architecture supports efficient EDS block development
+2. **Plan development timelines** that account for the server setup, testing procedures, and debugging workflows
+3. **Establish development standards** that leverage the server's capabilities for consistent team productivity
+4. **Monitor development velocity** and track how the server architecture impacts team efficiency and delivery timelines
+5. **Create governance processes** for server configuration, proxy settings, and development environment management
+
+### For System Administrators & Infrastructure Teams
+1. **Understand the server requirements** including Node.js dependencies, port configuration, and proxy setup
+2. **Configure development infrastructure** that supports the local-first, proxy-fallback architecture across team environments
+3. **Set up monitoring** for development server performance, proxy availability, and resource loading patterns
+4. **Implement security policies** for development server access, proxy configuration, and local file serving
+5. **Create maintenance procedures** for server updates, proxy configuration changes, and development environment consistency
+
+### For Security & Compliance Teams
+1. **Review the server architecture** to ensure it meets security requirements for development environments
+2. **Assess the proxy configuration** and ensure external resource access complies with organizational security policies
+3. **Establish approval processes** for proxy targets, development server access, and local file serving policies
+4. **Monitor security implications** of the CORS configuration and cross-origin resource access
+5. **Create security guidelines** for development server usage, proxy configuration, and local development practices
+
+### For AI Assistants & Automation
+1. **Master the development server setup** and understand how to configure and use it for EDS block development and testing
+2. **Learn the proxy architecture** and how it enables seamless integration between local development and external EDS resources
+3. **Understand the testing workflow** including the test.html convention and debugging capabilities for comprehensive component validation
+4. **Implement automated workflows** that can leverage the development server for testing, validation, and development assistance
+5. **Create comprehensive documentation** that helps users understand and effectively use the development server for EDS projects
