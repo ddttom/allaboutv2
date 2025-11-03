@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <!-- Gradient for steam effect -->
+    <linearGradient id="steamGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#e0e0e0;stop-opacity:0" />
+      <stop offset="100%" style="stop-color:#d0d0d0;stop-opacity:0.6" />
+    </linearGradient>
+    
+    <!-- Gradient for metal effect -->
+    <linearGradient id="metalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#808080" />
+      <stop offset="50%" style="stop-color:#c0c0c0" />
+      <stop offset="100%" style="stop-color:#606060" />
+    </linearGradient>
+    
+    <!-- Neural network gradient -->
+    <radialGradient id="nodeGrad">
+      <stop offset="0%" style="stop-color:#4a9eff" />
+      <stop offset="100%" style="stop-color:#1e6fc7" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f5f5f5"/>
+  
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#333">
+    From Governor to AI: The Evolution of Self-Regulation
+  </text>
+  
+  <!-- Victorian Era Side (Left) -->
+  <g id="victorian-side">
+    <!-- Label -->
+    <text x="200" y="80" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#666">
+      1788: Mechanical Intelligence
+    </text>
+    
+    <!-- Steam Engine Base -->
+    <rect x="120" y="420" width="160" height="80" fill="#404040" stroke="#202020" stroke-width="2"/>
+    <rect x="140" y="400" width="120" height="20" fill="#505050"/>
+    
+    <!-- Flyball Governor -->
+    <g id="governor" transform="translate(200, 250)">
+      <!-- Central shaft -->
+      <line x1="0" y1="-100" x2="0" y2="150" stroke="#606060" stroke-width="8"/>
+      
+      <!-- Rotating collar -->
+      <rect x="-15" y="-20" width="30" height="15" fill="url(#metalGrad)" stroke="#404040"/>
+      
+      <!-- Arms -->
+      <line x1="0" y1="-20" x2="-40" y2="-60" stroke="#606060" stroke-width="4"/>
+      <line x1="0" y1="-20" x2="40" y2="-60" stroke="#606060" stroke-width="4"/>
+      
+      <!-- Flyballs -->
+      <circle cx="-40" cy="-60" r="15" fill="url(#metalGrad)" stroke="#404040" stroke-width="2"/>
+      <circle cx="40" cy="-60" r="15" fill="url(#metalGrad)" stroke="#404040" stroke-width="2"/>
+      
+      <!-- Linkage arms -->
+      <line x1="-40" y1="-60" x2="0" y2="-80" stroke="#606060" stroke-width="3"/>
+      <line x1="40" y1="-60" x2="0" y2="-80" stroke="#606060" stroke-width="3"/>
+      
+      <!-- Sliding collar -->
+      <rect x="-10" y="-85" width="20" height="10" fill="url(#metalGrad)" stroke="#404040"/>
+      
+      <!-- Throttle linkage -->
+      <line x1="0" y1="-80" x2="60" y2="-80" stroke="#606060" stroke-width="3"/>
+      <line x1="60" y1="-80" x2="60" y2="-40" stroke="#606060" stroke-width="3"/>
+      
+      <!-- Throttle valve representation -->
+      <rect x="55" y="-45" width="10" height="30" fill="url(#metalGrad)" stroke="#404040" rx="2"/>
+    </g>
+    
+    <!-- Steam effects -->
+    <path d="M 140 400 Q 145 380 140 360" fill="none" stroke="url(#steamGrad)" stroke-width="20" opacity="0.5"/>
+    <path d="M 200 400 Q 205 380 200 360" fill="none" stroke="url(#steamGrad)" stroke-width="20" opacity="0.5"/>
+    <path d="M 260 400 Q 265 380 260 360" fill="none" stroke="url(#steamGrad)" stroke-width="20" opacity="0.5"/>
+    
+    <!-- Labels -->
+    <text x="100" y="180" font-family="Arial, sans-serif" font-size="14" fill="#666">Weights</text>
+    <text x="280" y="170" font-family="Arial, sans-serif" font-size="14" fill="#666">Throttle</text>
+    <text x="200" y="520" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#666">Steam Engine</text>
+  </g>
+  
+  <!-- Modern Era Side (Right) -->
+  <g id="modern-side">
+    <!-- Label -->
+    <text x="600" y="80" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#666">
+      2024: Artificial Intelligence
+    </text>
+    
+    <!-- Neural Network -->
+    <g id="neural-net" transform="translate(600, 300)">
+      <!-- Input layer -->
+      <circle cx="-80" cy="-60" r="12" fill="url(#nodeGrad)"/>
+      <circle cx="-80" cy="-20" r="12" fill="url(#nodeGrad)"/>
+      <circle cx="-80" cy="20" r="12" fill="url(#nodeGrad)"/>
+      <circle cx="-80" cy="60" r="12" fill="url(#nodeGrad)"/>
+      
+      <!-- Hidden layer 1 -->
+      <circle cx="-20" cy="-40" r="12" fill="url(#nodeGrad)"/>
+      <circle cx="-20" cy="0" r="12" fill="url(#nodeGrad)"/>
+      <circle cx="-20" cy="40" r="12" fill="url(#nodeGrad)"/>
+      
+      <!-- Hidden layer 2 -->
+      <circle cx="40" cy="-40" r="12" fill="url(#nodeGrad)"/>
+      <circle cx="40" cy="0" r="12" fill="url(#nodeGrad)"/>
+      <circle cx="40" cy="40" r="12" fill="url(#nodeGrad)"/>
+      
+      <!-- Output layer -->
+      <circle cx="100" cy="-20" r="12" fill="url(#nodeGrad)"/>
+      <circle cx="100" cy="20" r="12" fill="url(#nodeGrad)"/>
+      
+      <!-- Connections (showing only some for clarity) -->
+      <g stroke="#4a9eff" stroke-width="1.5" opacity="0.3">
+        <!-- Input to hidden 1 -->
+        <line x1="-68" y1="-60" x2="-32" y2="-40"/>
+        <line x1="-68" y1="-60" x2="-32" y2="0"/>
+        <line x1="-68" y1="-20" x2="-32" y2="-40"/>
+        <line x1="-68" y1="-20" x2="-32" y2="0"/>
+        <line x1="-68" y1="-20" x2="-32" y2="40"/>
+        <line x1="-68" y1="20" x2="-32" y2="0"/>
+        <line x1="-68" y1="20" x2="-32" y2="40"/>
+        <line x1="-68" y1="60" x2="-32" y2="40"/>
+        
+        <!-- Hidden 1 to hidden 2 -->
+        <line x1="-8" y1="-40" x2="28" y2="-40"/>
+        <line x1="-8" y1="-40" x2="28" y2="0"/>
+        <line x1="-8" y1="0" x2="28" y2="-40"/>
+        <line x1="-8" y1="0" x2="28" y2="0"/>
+        <line x1="-8" y1="0" x2="28" y2="40"/>
+        <line x1="-8" y1="40" x2="28" y2="0"/>
+        <line x1="-8" y1="40" x2="28" y2="40"/>
+        
+        <!-- Hidden 2 to output -->
+        <line x1="52" y1="-40" x2="88" y2="-20"/>
+        <line x1="52" y1="-40" x2="88" y2="20"/>
+        <line x1="52" y1="0" x2="88" y2="-20"/>
+        <line x1="52" y1="0" x2="88" y2="20"/>
+        <line x1="52" y1="40" x2="88" y2="20"/>
+      </g>
+      
+      <!-- Weight labels -->
+      <text x="-50" y="-80" font-family="Arial Narrow, sans-serif" font-size="11" fill="#4a9eff">w₁</text>
+      <text x="-50" y="-30" font-family="Arial Narrow, sans-serif" font-size="11" fill="#4a9eff">w₂</text>
+      <text x="10" y="-60" font-family="Arial Narrow, sans-serif" font-size="11" fill="#4a9eff">w₃</text>
+      <text x="70" y="-30" font-family="Arial Narrow, sans-serif" font-size="11" fill="#4a9eff">w₄</text>
+    </g>
+    
+    <!-- Labels -->
+    <text x="470" y="250" font-family="Arial, sans-serif" font-size="14" fill="#666">Input</text>
+    <text x="600" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#666">Parameters</text>
+    <text x="730" y="300" font-family="Arial, sans-serif" font-size="14" fill="#666">Output</text>
+  </g>
+  
+  <!-- Connection Arrow -->
+  <g id="evolution-arrow">
+    <defs>
+      <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+        <polygon points="0 0, 10 3.5, 0 7" fill="#999"/>
+      </marker>
+    </defs>
+    <path d="M 320 300 Q 400 280 480 300" fill="none" stroke="#999" stroke-width="3" stroke-dasharray="5,5" marker-end="url(#arrowhead)"/>
+    <text x="400" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#666" font-style="italic">
+      Conceptual Evolution
+    </text>
+  </g>
+  
+  <!-- Key Concepts -->
+  <g id="concepts">
+    <rect x="250" y="520" width="300" height="70" fill="none" stroke="#ccc" stroke-width="2" rx="5"/>
+    <text x="400" y="540" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#333">
+      Shared Principles
+    </text>
+    <text x="260" y="560" font-family="Arial, sans-serif" font-size="13" fill="#666">
+      • Self-regulation through feedback
+    </text>
+    <text x="260" y="575" font-family="Arial, sans-serif" font-size="13" fill="#666">
+      • Adjustable parameters control behaviour
+    </text>
+    <text x="260" y="590" font-family="Arial, sans-serif" font-size="13" fill="#666">
+      • Iterative tuning for optimal performance
+    </text>
+  </g>
+</svg>
