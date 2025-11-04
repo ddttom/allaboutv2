@@ -1,4 +1,4 @@
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright # pyright: ignore[reportMissingImports]
 
 # Example: Capturing console logs during browser automation
 
@@ -32,4 +32,4 @@ with open('/mnt/user-data/outputs/console.log', 'w') as f:
     f.write('\n'.join(console_logs))
 
 print(f"\nCaptured {len(console_logs)} console messages")
-print(f"Logs saved to: /mnt/user-data/outputs/console.log")
+print(f"Logs saved to: /mnt/user-data/outputs/console.log")  # noqa: F541
