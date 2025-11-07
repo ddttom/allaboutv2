@@ -9,7 +9,7 @@ You are testing an EDS block. Follow these steps:
 
 2. Check if the block exists:
    - Look in blocks/{block-name}/
-   - Look in build/{block-name}/
+   - Look in build/{block-name}.js/
 
 3. **Invoke the testing-blocks skill** to run comprehensive tests including:
    - Unit tests (if they exist)

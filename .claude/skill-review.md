@@ -39,7 +39,7 @@ Currently, the `.claude/skills/` directory contains **workflow orchestrators** t
 ✅ **Prerequisites and validation** - Checks before proceeding
 ✅ **Integration patterns** - How skills work together
 
-### What Skills Currently DON'T Have
+### What Skills Currently DON'T Have, but are present in docs/for-ai
 
 ❌ **Implementation knowledge** - How to actually write EDS code
 ❌ **Architecture standards** - Pattern selection criteria and standards

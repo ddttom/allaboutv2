@@ -4,7 +4,7 @@ description: Deploy a block from build/ directory to blocks/ directory
 
 You are deploying a build-enhanced block to production.
 
-**Context**: Build-enhanced blocks are developed in `/build/{block-name}/` and deployed to `/blocks/{block-name}/`.
+**Context**: Build-enhanced blocks are developed in `/build/{block-name}.js/` and deployed to `/blocks/{block-name}/`.
 
 Steps:
 
@@ -12,7 +12,7 @@ Steps:
    "Which block would you like to deploy?"
 
 2. Verify the block exists in build/ directory:
-   - Check build/{block-name}/ exists
+   - Check build/{block-name}.js/ exists
    - Check for package.json and vite.config.js
 
 3. Run the build process:

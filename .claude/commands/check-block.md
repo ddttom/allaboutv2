@@ -11,7 +11,7 @@ Steps:
 
 2. **Locate the block**:
    - Check blocks/{block-name}/ (production version)
-   - Check build/{block-name}/ (development version if exists)
+   - Check build/{block-name}.js/ (development version if exists)
 
 3. **Read and analyze**:
    - {block-name}.js - JavaScript implementation
