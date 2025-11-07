@@ -5,7 +5,10 @@
       "Bash(git add:*)",
       "Bash(git log:*)",
       "Bash(git commit:*)",
-      "Bash(git push)"
+      "Bash(git push)",
+      "Bash(npm run lint:js:*)",
+      "Bash(npm run lint:css:*)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []
