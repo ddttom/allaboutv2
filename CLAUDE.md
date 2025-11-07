@@ -21,14 +21,14 @@
 - `npm run lint` - Run all linting
 
 ### Slash Commands (Claude Code)
-- `/new-block <name>` - Create new EDS block with Content Driven Development
-- `/start-cdd` - Start Content Driven Development process
-- `/test-block <name>` - Run comprehensive tests for a block
-- `/deploy-block <name>` - Deploy build-enhanced block to production
-- `/lint-all` - Run all linting checks
-- `/check-block <name>` - Architecture review and improvement suggestions
-- `/check-security` - Run security validation
-- `/review-docs` - Navigate EDS documentation
+- `/new-block <name>` - Create a new EDS block following Content Driven Development process
+- `/start-cdd` - Start Content Driven Development process for creating or modifying blocks
+- `/test-block <name>` - Run tests for a specific EDS block
+- `/deploy-block <name>` - Deploy a block from build/ directory to blocks/ directory
+- `/lint-all` - Run all linting checks (JavaScript and CSS) across the project
+- `/check-block <name>` - Analyze a block and provide architecture review and improvement suggestions
+- `/check-security` - Run security checklist validation based on EDS security guidelines
+- `/review-docs` - Review and understand the EDS documentation structure in docs/for-AI
 
 See `.claude/README.md` for complete slash command reference.
 

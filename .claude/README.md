@@ -117,15 +117,15 @@ These skills are available but not EDS-specific:
 
 | Command | Purpose | Example |
 |---------|---------|---------|
-| `/new-block` | Create new block with CDD | `/new-block hero` |
-| `/start-cdd` | Begin Content Driven Development | `/start-cdd` |
-| `/test-block` | Run tests for a block | `/test-block hero` |
-| `/deploy-block` | Deploy build→blocks | `/deploy-block hero` |
-| `/find-block-content` | Find pages using block | `/find-block-content hero` |
-| `/lint-all` | Run all linting | `/lint-all` |
-| `/check-block` | Architecture review | `/check-block hero` |
-| `/check-security` | Security validation | `/check-security` |
-| `/review-docs` | Navigate documentation | `/review-docs` |
+| `/new-block` | Create a new EDS block following Content Driven Development process | `/new-block hero` |
+| `/start-cdd` | Start Content Driven Development process for creating or modifying blocks | `/start-cdd` |
+| `/test-block` | Run tests for a specific EDS block | `/test-block hero` |
+| `/deploy-block` | Deploy a block from build/ directory to blocks/ directory | `/deploy-block hero` |
+| `/find-block-content` | Find pages in the site that use a specific block | `/find-block-content hero` |
+| `/lint-all` | Run all linting checks (JavaScript and CSS) across the project | `/lint-all` |
+| `/check-block` | Analyze a block and provide architecture review and improvement suggestions | `/check-block hero` |
+| `/check-security` | Run security checklist validation based on EDS security guidelines | `/check-security` |
+| `/review-docs` | Review and understand the EDS documentation structure in docs/for-AI | `/review-docs` |
 
 ## Documentation
 
