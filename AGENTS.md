@@ -76,7 +76,7 @@ You can inspect the contents of any page with `curl http://localhost:3000/path/t
 
 Blocks are the re-usable building blocks of AEM. Blocks add styling and functionality to content. Each block has an initial content structure it expects, and transforms the html in the block using DOM APIs to render a final structure. 
 
-The initial content sturcture is important because it impacts how the author will create the content and how you will write your code to decorate it. In some sense, you can think of this structure as the contract for your block between the author and the developer. You should decide on this initial structure before writing any code, and be careful when making changes to code that makes assumptions about that structure as it could break existing pages.
+The initial content structure is important because it impacts how the author will create the content and how you will write your code to decorate it. In some sense, you can think of this structure as the contract for your block between the author and the developer. You should decide on this initial structure before writing any code, and be careful when making changes to code that makes assumptions about that structure as it could break existing pages.
 
 The block javascript should export a default function which is called to perform the block decoration:
 
@@ -266,3 +266,131 @@ Skills will be added to `.claude/skills/` as needed for this project. Check the 
 
 **For ALL development work involving blocks, core scripts, or functionality, you MUST start with the content-driven-development skill.** It will orchestrate other skills as needed throughout the development workflow.
 <!-- upskill:skills:end -->
+
+<skills_system priority="1">
+
+## Available Skills
+
+<!-- SKILLS_TABLE_START -->
+<usage>
+When users ask you to perform tasks, check if any of the available skills below can help complete the task more effectively. Skills provide specialized capabilities and domain knowledge.
+
+How to use skills:
+- Invoke: Bash("openskills read <skill-name>")
+- The skill content will load with detailed instructions on how to complete the task
+- Base directory provided in output for resolving bundled resources (references/, scripts/, assets/)
+
+Usage notes:
+- Only use skills listed in <available_skills> below
+- Do not invoke a skill that is already loaded in your context
+- Each skill invocation is stateless
+</usage>
+
+<available_skills>
+
+<skill>
+<name>algorithmic-art</name>
+<description>Creating algorithmic art using p5.js with seeded randomness and interactive parameter exploration. Use this when users request creating art using code, generative art, algorithmic art, flow fields, or particle systems. Create original algorithmic art rather than copying existing artists' work to avoid copyright violations.</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>artifacts-builder</name>
+<description>Suite of tools for creating elaborate, multi-component claude.ai HTML artifacts using modern frontend web technologies (React, Tailwind CSS, shadcn/ui). Use for complex artifacts requiring state management, routing, or shadcn/ui components - not for simple single-file HTML/JSX artifacts.</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>block-collection-and-party</name>
+<description>The Block Collection and Block Party are repositories for existing AEM blocks, build tools, code snippets, integration patterns, plugins, and more. Use this skill anytime you are developing something and want to find a reference to use as a starting point.</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>brand-guidelines</name>
+<description>Applies Anthropic's official brand colors and typography to any sort of artifact that may benefit from having Anthropic's look-and-feel. Use it when brand colors or style guidelines, visual formatting, or company design standards apply.</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>building-blocks</name>
+<description>Guide for creating new AEM Edge Delivery blocks or modifying existing blocks. Use this skill whenever you are creating a new block from scratch or making significant changes to existing blocks that involve JavaScript decoration, CSS styling, or content model changes.</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>canvas-design</name>
+<description>Create beautiful visual art in .png and .pdf documents using design philosophy. You should use this skill when the user asks to create a poster, piece of art, design, or other static piece. Create original visual designs, never copying existing artists' work to avoid copyright violations.</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>content-driven-development</name>
+<description>Apply a Content Driven Development process to AEM Edge Delivery Services development. Use for all development tasks, including building new blocks, modifying existing blocks, making changes to core decoration functionality, etc.</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>content-modeling</name>
+<description>Create effective content models for your blocks that are easy for authors to work with. Use this skill anytime you are building new blocks, making changes to existing blocks that modify the initial structure authors work with.</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>docs-search</name>
+<description>Searches the aem.live documentation for information on features of the platform. Use this skill when you need more information about a feature, want guidance on how to implement a feature, and using existing tools you have to search the web isn't turning up relevant results.</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>internal-comms</name>
+<description>A set of resources to help me write all kinds of internal communications, using the formats that my company likes to use. Claude should use this skill whenever asked to write some sort of internal communications (status reports, leadership updates, 3P updates, company newsletters, FAQs, incident reports, project updates, etc.).</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>mcp-builder</name>
+<description>Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK).</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>skill-creator</name>
+<description>Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Claude's capabilities with specialized knowledge, workflows, or tool integrations.</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>slack-gif-creator</name>
+<description>Toolkit for creating animated GIFs optimized for Slack, with validators for size constraints and composable animation primitives. This skill applies when users request animated GIFs or emoji animations for Slack from descriptions like "make me a GIF for Slack of X doing Y".</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>template-skill</name>
+<description>Replace with description of the skill and when Claude should use it.</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>testing-blocks</name>
+<description>Guide for testing code changes in AEM Edge Delivery projects including blocks, scripts, and styles. Use this skill after making code changes and before opening a pull request to validate functionality. Covers unit testing for utilities and logic, browser testing with Playwright/Puppeteer, linting, performance validation, and guidance on which tests to maintain vs use as throwaway validation.</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>theme-factory</name>
+<description>Toolkit for styling artifacts with a theme. These artifacts can be slides, docs, reportings, HTML landing pages, etc. There are 10 pre-set themes with colors/fonts that you can apply to any artifact that has been creating, or can generate a new theme on-the-fly.</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>webapp-testing</name>
+<description>Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs.</description>
+<location>project</location>
+</skill>
+
+</available_skills>
+<!-- SKILLS_TABLE_END -->
+
+</skills_system>
