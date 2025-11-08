@@ -1,0 +1,170 @@
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="800" fill="#1e1e1e"/>
+  
+  <!-- VS Code Window -->
+  <g id="vscode-window">
+    <!-- Window frame -->
+    <rect x="50" y="50" width="1100" height="700" rx="8" fill="#2d2d30" stroke="#3e3e42" stroke-width="2"/>
+    
+    <!-- Title bar -->
+    <rect x="50" y="50" width="1100" height="35" rx="8" fill="#323233"/>
+    <circle cx="70" cy="67.5" r="6" fill="#ff5f56"/>
+    <circle cx="90" cy="67.5" r="6" fill="#ffbd2e"/>
+    <circle cx="110" cy="67.5" r="6" fill="#27c93f"/>
+    <text x="140" y="73" font-family="Arial, sans-serif" font-size="14" fill="#cccccc">test.ipynb - Visual Studio Code</text>
+    
+    <!-- Sidebar -->
+    <rect x="50" y="85" width="60" height="665" fill="#252526"/>
+    
+    <!-- File icon in sidebar -->
+    <path d="M 70 110 L 70 140 L 90 140 L 90 115 L 85 110 Z" fill="#519aba" opacity="0.8"/>
+    <path d="M 85 110 L 85 115 L 90 115 Z" fill="#7dcbf5" opacity="0.8"/>
+  </g>
+  
+  <!-- Main content area -->
+  <g id="notebook-content">
+    <!-- Cell 1 - Setup -->
+    <g id="cell-1">
+      <rect x="140" y="110" width="980" height="120" rx="4" fill="#1e1e1e" stroke="#3e3e42" stroke-width="1"/>
+      <text x="160" y="135" font-family="Monaco, monospace" font-size="12" fill="#4ec9b0">const</text>
+      <text x="205" y="135" font-family="Monaco, monospace" font-size="12" fill="#9cdcfe">{ JSDOM }</text>
+      <text x="285" y="135" font-family="Monaco, monospace" font-size="12" fill="#d4d4d4">=</text>
+      <text x="300" y="135" font-family="Monaco, monospace" font-size="12" fill="#4ec9b0">require</text>
+      <text x="360" y="135" font-family="Monaco, monospace" font-size="12" fill="#ce9178">('jsdom')</text>
+      
+      <text x="160" y="155" font-family="Monaco, monospace" font-size="12" fill="#4ec9b0">const</text>
+      <text x="205" y="155" font-family="Monaco, monospace" font-size="12" fill="#9cdcfe">dom</text>
+      <text x="235" y="155" font-family="Monaco, monospace" font-size="12" fill="#d4d4d4">= new</text>
+      <text x="280" y="155" font-family="Monaco, monospace" font-size="12" fill="#4ec9b0">JSDOM</text>
+      <text x="330" y="155" font-family="Monaco, monospace" font-size="12" fill="#ce9178">('&lt;!DOCTYPE html&gt;...')</text>
+      
+      <text x="160" y="180" font-family="Monaco, monospace" font-size="12" fill="#9cdcfe">global</text>
+      <text x="215" y="180" font-family="Monaco, monospace" font-size="12" fill="#d4d4d4">.document =</text>
+      <text x="320" y="180" font-family="Monaco, monospace" font-size="12" fill="#9cdcfe">dom</text>
+      <text x="350" y="180" font-family="Monaco, monospace" font-size="12" fill="#d4d4d4">.window.document</text>
+      
+      <text x="160" y="205" font-family="Monaco, monospace" font-size="11" fill="#6a9955">// Setup complete! Ready to test blocks</text>
+      
+      <!-- Run indicator -->
+      <circle cx="155" cy="125" r="4" fill="#4ec9b0"/>
+      <text x="165" y="129" font-family="Arial, sans-serif" font-size="10" fill="#4ec9b0">[1]</text>
+    </g>
+    
+    <!-- Cell 2 - Test Block -->
+    <g id="cell-2">
+      <rect x="140" y="250" width="980" height="100" rx="4" fill="#1e1e1e" stroke="#3e3e42" stroke-width="1"/>
+      <text x="160" y="275" font-family="Monaco, monospace" font-size="12" fill="#4ec9b0">const</text>
+      <text x="205" y="275" font-family="Monaco, monospace" font-size="12" fill="#9cdcfe">block</text>
+      <text x="250" y="275" font-family="Monaco, monospace" font-size="12" fill="#d4d4d4">=</text>
+      <text x="265" y="275" font-family="Monaco, monospace" font-size="12" fill="#4ec9b0">await</text>
+      <text x="310" y="275" font-family="Monaco, monospace" font-size="12" fill="#dcdcaa">testBlock</text>
+      <text x="395" y="275" font-family="Monaco, monospace" font-size="12" fill="#d4d4d4">(</text>
+      <text x="160" y="295" font-family="Monaco, monospace" font-size="12" fill="#ce9178">'accordion'</text>
+      <text x="245" y="295" font-family="Monaco, monospace" font-size="12" fill="#d4d4d4">,</text>
+      <text x="160" y="315" font-family="Monaco, monospace" font-size="12" fill="#ce9178">'&lt;div&gt;...&lt;/div&gt;'</text>
+      <text x="160" y="335" font-family="Monaco, monospace" font-size="12" fill="#d4d4d4">)</text>
+      
+      <!-- Run indicator -->
+      <circle cx="155" cy="265" r="4" fill="#4ec9b0"/>
+      <text x="165" y="269" font-family="Arial, sans-serif" font-size="10" fill="#4ec9b0">[2]</text>
+    </g>
+    
+    <!-- Output area -->
+    <g id="output">
+      <rect x="140" y="370" width="980" height="100" rx="4" fill="#0e0e0e" stroke="#3e3e42" stroke-width="1"/>
+      <text x="160" y="395" font-family="Monaco, monospace" font-size="11" fill="#4ec9b0">✓</text>
+      <text x="175" y="395" font-family="Monaco, monospace" font-size="11" fill="#cccccc">Loaded styles for accordion</text>
+      <text x="160" y="415" font-family="Monaco, monospace" font-size="11" fill="#cccccc">Before: &lt;div&gt;...&lt;/div&gt;</text>
+      <text x="160" y="435" font-family="Monaco, monospace" font-size="11" fill="#cccccc">After: &lt;details&gt;...&lt;/details&gt;</text>
+      <text x="160" y="455" font-family="Monaco, monospace" font-size="11" fill="#4ec9b0">✓</text>
+      <text x="175" y="455" font-family="Monaco, monospace" font-size="11" fill="#cccccc">Transformation complete!</text>
+    </g>
+  </g>
+  
+  <!-- Transformation arrow -->
+  <g id="transformation-arrow">
+    <defs>
+      <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+        <polygon points="0 0, 10 3, 0 6" fill="#4ec9b0"/>
+      </marker>
+    </defs>
+    <path d="M 600 360 Q 700 390 600 420" stroke="#4ec9b0" stroke-width="3" fill="none" marker-end="url(#arrowhead)" opacity="0.6"/>
+  </g>
+  
+  <!-- Speed indicators - lightning bolts -->
+  <g id="speed-icon-1" opacity="0.7">
+    <path d="M 950 280 L 930 300 L 940 300 L 925 320 L 950 300 L 940 300 Z" fill="#ffbd2e"/>
+  </g>
+  <g id="speed-icon-2" opacity="0.7">
+    <path d="M 990 400 L 970 420 L 980 420 L 965 440 L 990 420 L 980 420 Z" fill="#ffbd2e"/>
+  </g>
+  
+  <!-- Preview window indicator -->
+  <g id="preview-window">
+    <rect x="140" y="500" width="450" height="220" rx="4" fill="#ffffff" stroke="#3e3e42" stroke-width="2"/>
+    <!-- Browser chrome -->
+    <rect x="140" y="500" width="450" height="30" rx="4" fill="#e5e5e5"/>
+    <circle cx="160" cy="515" r="5" fill="#ff5f56"/>
+    <circle cx="178" cy="515" r="5" fill="#ffbd2e"/>
+    <circle cx="196" cy="515" r="5" fill="#27c93f"/>
+    <text x="220" y="520" font-family="Arial, sans-serif" font-size="11" fill="#666">accordion-preview.html</text>
+    
+    <!-- Preview content -->
+    <rect x="160" y="550" width="410" height="40" rx="2" fill="#f5f5f5" stroke="#ddd" stroke-width="1"/>
+    <text x="170" y="572" font-family="Arial, sans-serif" font-size="13" fill="#333" font-weight="bold">What is EDS?</text>
+    <path d="M 550 570 L 555 565 L 560 570" stroke="#666" stroke-width="2" fill="none"/>
+    
+    <rect x="160" y="600" width="410" height="40" rx="2" fill="#f5f5f5" stroke="#ddd" stroke-width="1"/>
+    <text x="170" y="622" font-family="Arial, sans-serif" font-size="13" fill="#333" font-weight="bold">How do blocks work?</text>
+    <path d="M 550 620 L 555 615 L 560 620" stroke="#666" stroke-width="2" fill="none"/>
+    
+    <rect x="160" y="650" width="410" height="40" rx="2" fill="#f5f5f5" stroke="#ddd" stroke-width="1"/>
+    <text x="170" y="672" font-family="Arial, sans-serif" font-size="13" fill="#333" font-weight="bold">Why use notebooks?</text>
+    <path d="M 550 670 L 555 665 L 560 670" stroke="#666" stroke-width="2" fill="none"/>
+  </g>
+  
+  <!-- CSS Live Reload indicator -->
+  <g id="css-live-reload">
+    <rect x="640" y="500" width="450" height="220" rx="4" fill="#1e1e1e" stroke="#4ec9b0" stroke-width="2"/>
+    <text x="660" y="530" font-family="Arial, sans-serif" font-size="16" fill="#4ec9b0" font-weight="bold">Live CSS Reload</text>
+    
+    <!-- File icon -->
+    <rect x="660" y="550" width="100" height="130" rx="4" fill="#252526" stroke="#3e3e42" stroke-width="1"/>
+    <text x="680" y="575" font-family="Monaco, monospace" font-size="10" fill="#9cdcfe">accordion</text>
+    <text x="680" y="595" font-family="Monaco, monospace" font-size="10" fill="#d4d4d4">.css</text>
+    
+    <!-- Arrow -->
+    <path d="M 770 615 L 820 615" stroke="#4ec9b0" stroke-width="3" marker-end="url(#arrowhead)"/>
+    
+    <!-- Browser icon -->
+    <rect x="835" y="550" width="100" height="130" rx="4" fill="#ffffff" stroke="#3e3e42" stroke-width="1"/>
+    <rect x="835" y="550" width="100" height="20" rx="4" fill="#e5e5e5"/>
+    <circle cx="850" cy="560" r="3" fill="#ff5f56"/>
+    <circle cx="862" cy="560" r="3" fill="#ffbd2e"/>
+    <circle cx="874" cy="560" r="3" fill="#27c93f"/>
+    
+    <!-- Styled content -->
+    <rect x="850" y="585" width="70" height="15" rx="2" fill="#4ec9b0" opacity="0.3"/>
+    <rect x="850" y="608" width="70" height="15" rx="2" fill="#4ec9b0" opacity="0.3"/>
+    <rect x="850" y="631" width="70" height="15" rx="2" fill="#4ec9b0" opacity="0.3"/>
+    
+    <text x="660" y="710" font-family="Arial, sans-serif" font-size="12" fill="#cccccc">Edit → Refresh → Done!</text>
+  </g>
+  
+  <!-- Workflow labels -->
+  <g id="labels">
+    <text x="320" y="245" font-family="Arial, sans-serif" font-size="14" fill="#ffbd2e" font-weight="bold">1. Write Test</text>
+    <text x="320" y="490" font-family="Arial, sans-serif" font-size="14" fill="#ffbd2e" font-weight="bold">2. See Results</text>
+    <text x="780" y="490" font-family="Arial, sans-serif" font-size="14" fill="#ffbd2e" font-weight="bold">3. Instant Preview</text>
+  </g>
+  
+  <!-- Title -->
+  <g id="title-box">
+    <rect x="300" y="15" width="600" height="30" rx="4" fill="#323233"/>
+    <text x="600" y="36" font-family="Arial, sans-serif" font-size="18" fill="#4ec9b0" font-weight="bold" text-anchor="middle">Testing EDS Blocks with Jupyter in VS Code</text>
+  </g>
+  
+  <!-- Subtitle -->
+  <text x="600" y="770" font-family="Arial, sans-serif" font-size="14" fill="#888" text-anchor="middle">No servers • No waiting • Just instant feedback</text>
+</svg>
