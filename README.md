@@ -95,9 +95,12 @@ Auto-activating skills provide inline guidance for:
 - **eds-block-development** - Complete block development patterns (decorate function, DOM manipulation, error handling)
 - **eds-block-testing** - Test file creation and testing workflows
 - **eds-performance-debugging** - Performance optimization and debugging techniques
+- **jupyter-notebook-testing** - Interactive block testing with Jupyter notebooks, jsdom, and JSLab kernel
 - **skill-developer** - Managing Claude Code skills
 
 All skills are tailored specifically for EDS vanilla JavaScript development.
+
+See [`.claude/skills/`](.claude/skills/) for complete skill documentation.
 
 ### Agents
 Specialized agents for complex tasks:

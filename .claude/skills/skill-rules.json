@@ -25,70 +25,6 @@
                 ]
             }
         },
-        "frontend-dev-guidelines": {
-            "type": "guardrail",
-            "enforcement": "block",
-            "priority": "high",
-            "description": "React/TypeScript best practices including MUI v7 compatibility",
-            "promptTriggers": {
-                "keywords": [
-                    "component",
-                    "react component",
-                    "UI",
-                    "interface",
-                    "page",
-                    "modal",
-                    "dialog",
-                    "form",
-                    "MUI",
-                    "Material-UI",
-                    "Grid",
-                    "styling",
-                    "frontend",
-                    "React"
-                ],
-                "intentPatterns": [
-                    "(create|add|make|build|update|modify|edit).*?(component|UI|page|modal|dialog|form)",
-                    "(how to|best practice).*?(component|react|MUI)",
-                    "(style|design|layout).*?(component|UI)"
-                ]
-            },
-            "fileTriggers": {
-                "pathPatterns": [
-                    "THIS_PROJECT_DOES_NOT_USE_REACT/**/*.tsx",
-                    "frontend/src/**/*.tsx",
-                    "frontend/src/**/*.ts",
-                    "client/src/**/*.tsx",
-                    "client/src/**/*.ts"
-                ],
-                "pathExclusions": [
-                    "**/*.test.tsx",
-                    "**/*.test.ts",
-                    "**/*.spec.tsx",
-                    "**/*.spec.ts",
-                    "**/*.styles.ts",
-                    "**/vite.config.ts",
-                    "**/tsconfig.json"
-                ],
-                "contentPatterns": [
-                    "from '@mui/material';",
-                    "import.*Grid.*from.*@mui",
-                    "<Grid ",
-                    "Grid2",
-                    "Unstable_Grid",
-                    "makeStyles",
-                    "@material-ui/core"
-                ]
-            },
-            "blockMessage": "⚠️ BLOCKED - Frontend Best Practices Required\n\n📋 REQUIRED ACTION:\n1. Use Skill tool: 'frontend-dev-guidelines'\n2. Review MUI v7 patterns (Grid uses size={{}} prop, NOT xs/sm props)\n3. Check React/TypeScript best practices\n4. Use proper styling patterns\n5. Then retry this edit\n\nReason: Enforce MUI v7 compatibility and React best practices\nFile: {file_path}\n\n💡 TIP: Add '// @skip-validation' comment to skip future checks",
-            "skipConditions": {
-                "sessionSkillUsed": true,
-                "fileMarkers": [
-                    "@skip-validation"
-                ],
-                "envOverride": "SKIP_FRONTEND_GUIDELINES"
-            }
-        },
         "eds-block-development": {
             "type": "domain",
             "enforcement": "suggest",
@@ -194,6 +130,65 @@
                     "console\\.error",
                     "try \\{",
                     "catch \\(error\\)"
+                ]
+            }
+        },
+        "jupyter-notebook-testing": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "Creating and managing Jupyter notebooks for testing EDS blocks with jsdom and JSLab. Use when creating notebooks, testing blocks with ipynb files, using jslab kernel, generating HTML previews, working with testBlock or saveBlockHTML functions, or setting up interactive block testing environments.",
+            "promptTriggers": {
+                "keywords": [
+                    "jupyter",
+                    "notebook",
+                    "ipynb",
+                    "jslab",
+                    "jsdom",
+                    "testBlock",
+                    "saveBlockHTML",
+                    "loadBlockStyles",
+                    "interactive testing",
+                    "notebook testing",
+                    "create notebook",
+                    "test notebook",
+                    "notebook setup",
+                    "kernel",
+                    "tslab",
+                    "virtual DOM",
+                    "HTML preview",
+                    "CSS linking",
+                    "live reload"
+                ],
+                "intentPatterns": [
+                    "(create|add|make|build|setup).*?notebook",
+                    "(test|debug|run).*?notebook",
+                    "(jupyter|ipynb).*?(test|setup|create|use)",
+                    "notebook.*?(block|testing|preview)",
+                    "(how to|how do I).*?test.*?block.*?notebook",
+                    "(generate|create|save).*?(HTML|preview).*?block",
+                    "testBlock|saveBlockHTML|loadBlockStyles",
+                    "jslab.*?(kernel|install|setup)",
+                    "jsdom.*?(setup|environment|virtual DOM)"
+                ]
+            },
+            "fileTriggers": {
+                "pathPatterns": [
+                    "**/*.ipynb",
+                    "test.ipynb",
+                    "**/test-*.ipynb",
+                    "ipynb-tests/**/*"
+                ],
+                "contentPatterns": [
+                    "require\\('jsdom'\\)",
+                    "from 'jsdom'",
+                    "testBlock\\(",
+                    "saveBlockHTML\\(",
+                    "loadBlockStyles\\(",
+                    "JSDOM\\(",
+                    "jslab",
+                    "global\\.document",
+                    "global\\.window"
                 ]
             }
         }
