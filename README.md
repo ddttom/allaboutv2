@@ -70,6 +70,44 @@ Access your tests at: `http://localhost:3000/blocks/your-block/test.html`
 - `npm run lint:js` - Run ESLint on JavaScript files
 - `npm run lint:css` - Run Stylelint on CSS files
 
+## Claude Code Integration
+
+This project includes a complete Claude Code configuration for AI-assisted development:
+
+### Slash Commands
+- `/new-block <name>` - Create a new EDS block following Content Driven Development
+- `/test-block <name>` - Run tests for a specific block
+- `/check-block <name>` - Review block architecture and suggest improvements
+- `/deploy-block <name>` - Deploy a block from build/ to blocks/
+- `/lint-all` - Run all linting checks
+- `/check-security` - Run security checklist validation
+- `/start-cdd` - Start Content Driven Development process
+- `/review-docs` - Review EDS documentation structure
+
+See [`.claude/README.md`](.claude/README.md) for complete command reference.
+
+### Skills
+Auto-activating skills provide inline guidance for:
+- **building-blocks** - Creating and modifying EDS blocks
+- **content-driven-development** - CDD workflow patterns
+- **content-modeling** - Author-friendly content structures
+- **testing-blocks** - Block testing strategies
+- **eds-block-development** - Complete block development patterns (decorate function, DOM manipulation, error handling)
+- **eds-block-testing** - Test file creation and testing workflows
+- **eds-performance-debugging** - Performance optimization and debugging techniques
+- **skill-developer** - Managing Claude Code skills
+
+All skills are tailored specifically for EDS vanilla JavaScript development.
+
+### Agents
+Specialized agents for complex tasks:
+- **code-architecture-reviewer** - Review code for best practices
+- **documentation-architect** - Create comprehensive documentation
+- **refactor-planner** - Plan code refactoring strategies
+- **web-research-specialist** - Research technical issues
+
+See [`.claude/agents/README.md`](.claude/agents/README.md) for details.
+
 ## Development Guidelines
 
 ### Code Organization
