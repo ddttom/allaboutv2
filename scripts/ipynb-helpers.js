@@ -462,7 +462,8 @@ export function createIframePreview(blockName, blockHTML, baseOrigin = null) {
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: system-ui, -apple-system, sans-serif;
-      padding: 60px 20px 20px 20px;
+      padding: 0;
+      margin: 0;
       min-height: 100vh;
     }
     .preview-header {
@@ -478,6 +479,7 @@ export function createIframePreview(blockName, blockHTML, baseOrigin = null) {
       border-bottom: 1px solid #3e3e3e;
       box-shadow: 0 2px 8px rgba(0,0,0,0.3);
       z-index: 1000;
+      height: 48px;
     }
     .preview-title {
       font-size: 14px;
@@ -503,6 +505,7 @@ export function createIframePreview(blockName, blockHTML, baseOrigin = null) {
     main {
       max-width: 1200px;
       margin: 0 auto;
+      padding: 68px 20px 20px 20px;
     }
   </style>
 </head>

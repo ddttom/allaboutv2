@@ -202,7 +202,8 @@ EDS blocks expect specific DOM patterns where they can iterate over `block.child
 
 **Solution:**
 - Block must be **direct child of `<main>`** with no intermediary wrappers
-- Fixed position header doesn't interfere (not in document flow)
+- Fixed position header (height: 48px) with main padding (68px top) prevents overlap
+- Header doesn't interfere (not in document flow)
 - See [Raw EDS Blocks Guide](../../docs/for-ai/implementation/raw-eds-blocks-guide.md) for detailed patterns
 
 ### Markdown Parser (Enhanced)

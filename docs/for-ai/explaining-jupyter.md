@@ -320,8 +320,8 @@ EDS blocks expect specific DOM structures. Many blocks (like accordion, tabs, ca
 If preview shows **colored boxes** instead of proper styled elements, even though decoration runs successfully, the cause is **wrapper divs** between `<main>` and the block element.
 
 **The preview uses a clean structure:**
-- **Fixed position header** (doesn't affect layout flow)
-- **`<main>` as semantic container**
+- **Fixed position header** (height: 48px, z-index: 1000, doesn't affect layout flow)
+- **`<main>` with top padding** (68px to clear fixed header without overlap)
 - **Block as direct child with no intermediary wrappers** ← CRITICAL
 
 **Never do this (BROKEN):**

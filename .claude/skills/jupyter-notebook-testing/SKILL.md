@@ -255,6 +255,10 @@ EDS blocks iterate over `block.children` directly. Extra wrappers break child se
 
 **Solution:** Install JSLab (`npm install -g jslab`), select "jslab" kernel in VS Code, reload notebook.
 
+### Header Overlaps Block Content
+
+**Symptom:** Fixed header covers top of block content in preview. **Cause:** Insufficient padding. **Fix:** Ensure `<main>` has top padding (68px) to clear fixed header (48px height + 20px gap).
+
 ## When to Use Notebooks
 
 **✅ Use For:** Quick validation, content experimentation, debugging, prototyping, documentation, `showPreview()` testing, HTML generation
