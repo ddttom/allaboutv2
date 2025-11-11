@@ -671,39 +671,37 @@ Create `ipynb-tests/test-your-block.ipynb` in VS Code:
 // SETUP: One-line initialization! (works in both JSLab and Browser)
 // ============================================================================
 
-(async () => {
+return (async () => {
   const isNode = typeof process !== 'undefined' && process.versions?.node;
   const helpersPath = isNode ? './scripts/ipynb-helpers.js' : '/scripts/ipynb-helpers.js';
   const { initialize } = await import(helpersPath);
-  return await initialize();
+  await initialize();
+
+  // Return simple success message
+  const context = isNode ? 'Node.js' : 'Browser';
+  return `✅ Environment (${context}) setup`;
 })();
 ```
 
 **Benefits of New First Code Cell:**
-- **96% smaller** - Reduced from original ~220 lines to just 9 lines!
+- **96% smaller** - Reduced from original ~220 lines to just 13 lines!
 - **One function call** - `initialize()` does everything automatically
-- **Ultra simple** - Easiest possible setup
+- **Ultra simple** - Easiest possible setup with clean output
 - **Context-aware** - Automatically detects and adapts to Node.js or browser
-- **Informative messages** - Displays context (Node.js/Browser) and detailed setup status with emojis
+- **Clean messages** - Simple success message shows context without verbosity
 - **Sets global flags** - `isNode` and `isBrowser` available in all subsequent cells
 - **Sets unified API** - `doc`, `testBlockFn`, `showPreview` available everywhere
-- **Success confirmation** - Returns "✅ Setup complete! Ready to test EDS blocks."
+- **Success confirmation** - Returns `✅ Environment (Node.js) setup` or `✅ Environment (Browser) setup`
 - **Maintainable** - All logic in external module
 
 **Example Output:**
 ```
-========================================
-🔧 JUPYTER NOTEBOOK INITIALIZATION
-========================================
-📍 Context: Node.js (JSLab)
+✅ Environment (Node.js) setup
+```
 
-⚙️  Setting up Node.js environment...
-✓ jsdom virtual DOM initialized
-✓ Helper functions loaded from scripts/ipynb-helpers.js
-✓ Unified API registered (doc, testBlockFn, showPreview)
-
-✅ SUCCESS! Environment ready for EDS block testing
-========================================
+Or in browser:
+```
+✅ Environment (Browser) setup
 ```
 
 **Global Environment Flags:**

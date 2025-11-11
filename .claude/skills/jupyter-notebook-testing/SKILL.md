@@ -70,22 +70,26 @@ cp test.ipynb my-block-tests.ipynb
 
 ```javascript
 // First code cell: One-line initialization (works in both JSLab and Browser)
-(async () => {
+return (async () => {
   const isNode = typeof process !== 'undefined' && process.versions?.node;
   const helpersPath = isNode ? './scripts/ipynb-helpers.js' : '/scripts/ipynb-helpers.js';
   const { initialize } = await import(helpersPath);
-  return await initialize();
+  await initialize();
+
+  // Return simple success message
+  const context = isNode ? 'Node.js' : 'Browser';
+  return `✅ Environment (${context}) setup`;
 })();
 ```
 
 **Benefits:**
-- **96% smaller**: 9 lines vs 220 lines
+- **96% smaller**: 13 lines vs 220 lines
 - **One function call**: `initialize()` does everything
 - **Context-aware**: Automatically detects Node.js or browser
-- **Informative**: Displays context and setup status with emojis (🔧📍⚙️✓✅)
+- **Clean output**: Simple success message without verbosity
 - **Sets global flags**: `isNode`, `isBrowser` available in all cells
 - **Sets unified API**: `doc`, `testBlockFn`, `showPreview` available everywhere
-- **Success confirmation**: Returns "✅ Setup complete! Ready to test EDS blocks."
+- **Success confirmation**: Returns `✅ Environment (Node.js) setup` or `✅ Environment (Browser) setup`
 - **Maintainable**: All logic in external module
 
 ### 3. Test Your Block
