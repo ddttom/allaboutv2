@@ -62,14 +62,14 @@ cp test.ipynb my-block-tests.ipynb
 **Option B: Create from scratch**
 - VS Code: Command Palette → "Jupyter: Create New Blank Notebook"
 - Select "jslab" kernel
-- Copy Cell 1 from `test.ipynb`
+- Copy the first code cell from `test.ipynb`
 
 ### 2. Run Setup Cell (Always First)
 
 **NEW: Ultra-Simple One-Line Initialization!**
 
 ```javascript
-// Cell 1: One-line initialization (works in both JSLab and Browser)
+// First code cell: One-line initialization (works in both JSLab and Browser)
 (async () => {
   const isNode = typeof process !== 'undefined' && process.versions?.node;
   const helpersPath = isNode ? './scripts/ipynb-helpers.js' : '/scripts/ipynb-helpers.js';
@@ -269,11 +269,11 @@ EDS blocks iterate over `block.children` directly. Extra wrappers break child se
 
 ## Best Practices
 
-1. **Always use `initialize()` in Cell 1** (see Quick Start above)
+1. **Always use `initialize()` in the first code cell** (see Quick Start above)
 2. **Use unified API** - `doc`, `testBlockFn`, `showPreview` (no ternaries!)
 3. **Wrap async in IIFE** (browser): `(async () => { await testBlockFn(...); })()`
 4. **Test visual output** - Always use `showPreview()` for verification
-5. **Structure notebooks** - Cell 1: Setup | Cells 2-N: Tests | Cell N+1: Previews
+5. **Structure notebooks** - First code cell: Setup | Next cells: Tests | Final cells: Previews
 
 ## Integration with ipynb-viewer Block
 
@@ -287,7 +287,7 @@ The **ipynb-viewer** EDS block executes notebooks in browser:
 
 **Features:** Interactive execution (async/await support), automatic initialization check, console capture, markdown rendering (tables, code blocks, lists), error handling
 
-**Key Points:** Cell 1 auto-detects environment | Automatic warning if Cell 1 skipped | Browser uses native APIs | Same unified API works everywhere
+**Key Points:** First code cell auto-detects environment | Automatic warning if first code cell skipped | Browser uses native APIs | Same unified API works everywhere
 
 ## Reference Files
 

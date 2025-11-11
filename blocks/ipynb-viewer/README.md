@@ -74,18 +74,18 @@ The block supports standard Jupyter notebook JSON format with **enhanced markdow
 
 ### Run Button
 Each code cell has a "Run" button that:
-1. **Checks initialization** - Verifies Cell 1 has been run (shows warning if not)
+1. **Checks initialization** - Verifies the first code cell has been run (shows warning if not)
 2. Executes the JavaScript code (with async/await support)
 3. Captures console.log() and console.error() output
 4. Displays the return value
 5. Shows visual indicators for success/error states
 
 **Automatic Initialization Check:**
-- If you try to run any cell besides Cell 1 without first running Cell 1, you'll see a warning
-- The warning explains that Cell 1 must be run first to set up the environment
+- If you try to run any code cell without first running the first code cell, you'll see a warning
+- The warning explains that the first JavaScript cell must be run first to set up the environment
 - This prevents confusing errors about undefined functions (`testBlockFn`, `showPreview`, etc.)
 
-**Note:** Always run Cell 1 first! It will display context information (Node.js or Browser) and success status.
+**Note:** Always run the first code cell first! It will display context information (Node.js or Browser) and success status.
 
 ### Live Preview with Popup Window (NEW)
 When using `showPreview()` or `openIframePreview()` in code cells:

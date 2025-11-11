@@ -6,7 +6,7 @@
 
 This document explains the Jupyter notebook implementation for **interactive testing of EDS blocks using JavaScript**. This is NOT Python-based testing—it uses JavaScript with jsdom for virtual DOM manipulation and the JSLab kernel for running JavaScript code in Jupyter notebooks.
 
-**CURRENT STATE**: The test.ipynb notebook features **ultra-simple one-line initialization** (96% smaller Cell 1), **context-aware execution** (Node.js and browser), **unified API** (`doc`, `testBlockFn`, `showPreview`), and **popup window previews** with `<base>` tag for proper CSS/JS loading.
+**CURRENT STATE**: The test.ipynb notebook features **ultra-simple one-line initialization** (96% smaller first code cell), **context-aware execution** (Node.js and browser), **unified API** (`doc`, `testBlockFn`, `showPreview`), and **popup window previews** with `<base>` tag for proper CSS/JS loading.
 
 ## What This Is
 
@@ -429,10 +429,10 @@ global.window = dom.window;
 Custom utility functions that adapt to the execution environment.
 
 **NEW: External Helper Module**
-Helper functions are now defined in [scripts/ipynb-helpers.js](../../scripts/ipynb-helpers.js) and loaded dynamically in Cell 1. This keeps the notebook clean and makes the helpers reusable across multiple notebooks.
+Helper functions are now defined in [scripts/ipynb-helpers.js](../../scripts/ipynb-helpers.js) and loaded dynamically in the first code cell. This keeps the notebook clean and makes the helpers reusable across multiple notebooks.
 
 **Benefits:**
-- **55% reduction in Cell 1 size** - From ~220 lines to ~45 lines
+- **55% reduction in first code cell size** - From ~220 lines to ~45 lines
 - Cleaner notebook experience
 - Easier to maintain and update
 - Reusable across multiple notebooks
@@ -665,7 +665,7 @@ npm install jsdom --save-dev
 
 Create `ipynb-tests/test-your-block.ipynb` in VS Code:
 
-**Cell 1: One-Line Initialization (NEW - ULTRA SIMPLE!)**
+**First Code Cell: One-Line Initialization (NEW - ULTRA SIMPLE!)**
 ```javascript
 // ============================================================================
 // SETUP: One-line initialization! (works in both JSLab and Browser)
@@ -679,7 +679,7 @@ Create `ipynb-tests/test-your-block.ipynb` in VS Code:
 })();
 ```
 
-**Benefits of New Cell 1:**
+**Benefits of New First Code Cell:**
 - **96% smaller** - Reduced from original ~220 lines to just 9 lines!
 - **One function call** - `initialize()` does everything automatically
 - **Ultra simple** - Easiest possible setup
@@ -708,7 +708,7 @@ Create `ipynb-tests/test-your-block.ipynb` in VS Code:
 
 **Global Environment Flags:**
 
-Cell 1 sets global environment flags that are available in ALL subsequent cells:
+The first code cell sets global environment flags that are available in ALL subsequent cells:
 
 **Node.js (JSLab):**
 ```javascript
@@ -911,11 +911,11 @@ The **ipynb-viewer** EDS block allows you to display and execute Jupyter noteboo
 - **Parse .ipynb files**: Loads and displays Jupyter notebook JSON format
 - **Markdown rendering**: Converts markdown cells to formatted HTML with tables, code blocks, lists
 - **Interactive execution**: Run JavaScript code cells with a click (async/await support)
-- **Automatic initialization check**: Warns if Cell 1 hasn't been run first
+- **Automatic initialization check**: Warns if the first code cell hasn't been run first
 - **Console capture**: Shows console.log() and console.error() output
 - **Result display**: Shows return values from code execution
 - **Error handling**: Catches and displays errors with styling
-- **Sequential execution**: Encourages running Cell 1 first for proper setup
+- **Sequential execution**: Encourages running the first code cell first for proper setup
 
 ### Usage in EDS
 
@@ -930,15 +930,15 @@ Add the block to your Google Doc:
 ### What Gets Executed
 
 When users click "Run" on a code cell:
-- **Initialization check** runs first (skipped for Cell 1)
-- If not Cell 1 and not initialized, shows warning to run Cell 1 first
+- **Initialization check** runs first (skipped for first code cell)
+- If not the first code cell and not initialized, shows warning to run the first code cell first
 - Code executes in the browser using `AsyncFunction` constructor (supports await)
 - Console methods are captured during execution
 - Results display inline below the cell
 - Errors are caught and shown in red
 - Successful execution turns the cell border green
 
-**Important:** Always run Cell 1 first! It sets up the environment (`doc`, `testBlockFn`, `showPreview`).
+**Important:** Always run the first code cell first! It sets up the environment (`doc`, `testBlockFn`, `showPreview`).
 
 ### Use Cases
 
@@ -1035,7 +1035,7 @@ When users click "Run" on a code cell:
    code test.ipynb  # Opens in VS Code with Jupyter extension
    ```
 
-3. **Run Cell 1** to initialize the environment
+3. **Run the first code cell** to initialize the environment
 
 4. **Test a block:**
    ```javascript
@@ -1056,9 +1056,10 @@ When users click "Run" on a code cell:
    | /notebooks/test.ipynb |
    ```
 
-2. **Important: Skip Cell 1 in browser!**
-   - Cell 1 is only for Node.js/JSLab setup (requires `require()`)
-   - In browser, Cell 1 will show helpful messages and skip gracefully
+2. **Important: Run the first code cell in browser!**
+   - The first code cell works in both Node.js/JSLab AND browser
+   - It automatically detects the environment and sets up accordingly
+   - In browser, it will show helpful messages and confirm successful setup
    - Start executing from Cell 2 onwards
    - All other cells work perfectly in browser
 
@@ -1104,7 +1105,7 @@ if (isNode) {
 ### 2. Structure Your Notebooks
 
 ```
-Cell 1: Setup (jsdom, helpers)
+First code cell: Setup (jsdom, helpers)
 Cell 2: Helper functions
 Cell 3-N: Test cases (one per cell)
 Cell N+1: Generate previews
