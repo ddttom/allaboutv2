@@ -79,10 +79,24 @@ export async function initialize() {
   const isNode = typeof process !== 'undefined' && process.versions && process.versions.node;
   const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
 
+  // Build message array for notebook output
+  const messages = [];
+  const contextName = isNode ? 'Node.js (JSLab)' : 'Browser (ipynb-viewer)';
+
+  // Header
+  messages.push('========================================');
+  messages.push('🔧 JUPYTER NOTEBOOK INITIALIZATION');
+  messages.push('========================================');
+  messages.push(`📍 Context: ${contextName}`);
+  messages.push(`⚡ Activating ${contextName} context...`);
+  messages.push('');
+
+  // Log to console (for browser console visibility)
   console.log('\n========================================');
   console.log('🔧 JUPYTER NOTEBOOK INITIALIZATION');
   console.log('========================================');
-  console.log('📍 Context:', isNode ? 'Node.js (JSLab)' : 'Browser (ipynb-viewer)');
+  console.log('📍 Context:', contextName);
+  console.log('⚡ Activating', contextName, 'context...');
   console.log('');
 
   if (isNode) {
@@ -96,6 +110,11 @@ export async function initialize() {
     global.saveBlockHTML = saveBlockHTML;
     global.createIframePreview = createIframePreview;
 
+    // Add progress messages
+    messages.push('✓ jsdom virtual DOM initialized');
+    messages.push('✓ Helper functions loaded from scripts/ipynb-helpers.js');
+    messages.push('✓ Unified API registered (doc, testBlockFn, showPreview)');
+
     console.log('✓ jsdom virtual DOM initialized');
     console.log('✓ Helper functions loaded from scripts/ipynb-helpers.js');
     console.log('✓ Unified API registered (doc, testBlockFn, showPreview)');
@@ -103,16 +122,29 @@ export async function initialize() {
     console.log('⚙️  Setting up browser environment...');
     // Browser setup - call setup directly
     setupBrowserEnvironment();
+
+    // Add progress messages
+    messages.push('✓ Native browser APIs initialized');
+    messages.push('✓ Helper functions registered (window.testBlock, window.openIframePreview)');
+    messages.push('✓ Unified API registered (doc, testBlockFn, showPreview)');
+
     console.log('✓ Native browser APIs initialized');
     console.log('✓ Helper functions registered (window.testBlock, window.openIframePreview)');
     console.log('✓ Unified API registered (doc, testBlockFn, showPreview)');
   }
 
+  // Success message
+  messages.push('');
+  messages.push(`✅ SUCCESS! ${contextName} context ready`);
+  messages.push('✅ Environment ready for EDS block testing');
+  messages.push('========================================');
+
   console.log('');
   console.log('✅ SUCCESS! Environment ready for EDS block testing');
   console.log('========================================\n');
 
-  return '✅ Setup complete! Ready to test EDS blocks.';
+  // Return formatted message for notebook output
+  return messages.join('\n');
 }
 
 /**
