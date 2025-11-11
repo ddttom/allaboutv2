@@ -172,38 +172,47 @@ All helper functions are in **scripts/ipynb-helpers.js**, loaded by the first co
 
 **One function does everything:** Detects environment, sets global flags (`isNode`, `isBrowser`), and registers unified API.
 
-### Unified API
+### Unified API - Simple Usage
 
-After running the first code cell, these globals are available in all cells:
+After running the first code cell, these globals work in **both environments**:
 
 ```javascript
-doc              // Document (no ternary needed!)
-testBlockFn      // Test block function
-showPreview      // Preview (Node: saves files, Browser: opens popup)
-createPreviewFn  // Create iframe preview HTML
-isNode           // Environment flag
-isBrowser        // Environment flag
+// Create DOM elements
+const div = doc.createElement('div');
+
+// Test block decoration
+const block = await testBlockFn('accordion', '<div>content</div>');
+
+// Show visual preview (automatically adapts!)
+await showPreview('accordion', '<div>content</div>');
 ```
 
-### testBlockFn(blockName, innerHTML)
+**Available Globals:**
 
-Tests block decoration:
+| Function | Purpose | Node.js Behavior | Browser Behavior |
+|----------|---------|------------------|------------------|
+| `doc` | Document object | jsdom virtual DOM | Native browser DOM |
+| `testBlockFn()` | Test block decoration | Uses jsdom | Uses native DOM |
+| `showPreview()` | Visual preview | Saves files to `ipynb-tests/` | Opens popup window |
+| `createPreviewFn()` | Create preview HTML | Returns HTML string | Returns HTML string |
+| `isNode` | Environment flag | `true` | `false` |
+| `isBrowser` | Environment flag | `false` | `true` |
 
+**Old Way (verbose, still works):**
 ```javascript
+const doc = isNode ? global.document : document;
+const testBlockFn = isNode ? global.testBlock : window.testBlock;
+```
+
+**New Way (simple, recommended):**
+```javascript
+// Just use the globals directly - they work everywhere!
 const block = await testBlockFn('accordion', content);
 ```
 
-### showPreview(blockName, innerHTML)
+### Node.js Only Functions
 
-Opens visual preview (adapts automatically):
-- **Node.js**: Saves HTML files to `ipynb-tests/`
-- **Browser**: Opens popup with blob URL + base tag
-
-```javascript
-await showPreview('accordion', content);
-```
-
-### saveBlockHTML(blockName, innerHTML, filename, options) - Node.js Only
+**saveBlockHTML(blockName, innerHTML, filename, options)**
 
 Saves HTML files (creates both preview and live-preview):
 
