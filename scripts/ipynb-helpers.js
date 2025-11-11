@@ -217,176 +217,25 @@ export function setupBrowserEnvironment() {
     return createIframePreview(blockName, blockHTML);
   };
 
-  // Open overlay preview on current page
-  window.openOverlayPreview = async function(blockName, blockHTML) {
-    console.log('📦 Creating overlay preview for:', blockName);
+  // Open iframe preview in new window
+  window.openIframePreview = function(blockName, blockHTML) {
+    console.log('📦 Creating preview for:', blockName);
     console.log('📄 Block HTML length:', blockHTML?.length || 0);
+    console.log('📄 Block HTML preview:', blockHTML?.substring(0, 200));
 
-    // Create overlay container
-    const overlay = document.createElement('div');
-    overlay.className = 'block-preview-overlay';
-    overlay.innerHTML = `
-      <div class="preview-overlay-backdrop"></div>
-      <div class="preview-overlay-content">
-        <div class="preview-overlay-header">
-          <div class="preview-overlay-title">
-            <span class="preview-status-indicator">🔴</span>
-            LIVE PREVIEW: <strong>${blockName}</strong> Block
-          </div>
-          <div class="preview-overlay-controls">
-            <button class="preview-btn preview-btn-close" onclick="this.closest('.block-preview-overlay').remove()">
-              ✕ Close
-            </button>
-          </div>
-        </div>
-        <div class="preview-overlay-body">
-          <div class="preview-block-container">
-            <div class="${blockName} block" data-block-name="${blockName}" data-block-status="initialized">
-              ${blockHTML}
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
+    // Pass the current origin to create preview with proper URLs
+    const currentOrigin = window.location.origin;
+    console.log('🌐 Current origin:', currentOrigin);
 
-    // Add styles if not already present
-    if (!document.getElementById('block-preview-styles')) {
-      const style = document.createElement('style');
-      style.id = 'block-preview-styles';
-      style.textContent = `
-        .block-preview-overlay {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          z-index: 10000;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .preview-overlay-backdrop {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: rgba(0, 0, 0, 0.8);
-          backdrop-filter: blur(4px);
-        }
-        .preview-overlay-content {
-          position: relative;
-          width: 90%;
-          max-width: 1200px;
-          max-height: 90vh;
-          background: #1e1e1e;
-          border-radius: 8px;
-          overflow: hidden;
-          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-          display: flex;
-          flex-direction: column;
-        }
-        .preview-overlay-header {
-          background: #2d2d2d;
-          padding: 16px 24px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          border-bottom: 1px solid #3e3e3e;
-        }
-        .preview-overlay-title {
-          font-size: 14px;
-          font-weight: 500;
-          color: #cccccc;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-        .preview-overlay-title strong {
-          color: #4fc3f7;
-        }
-        .preview-status-indicator {
-          animation: pulse 2s ease-in-out infinite;
-        }
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.5; }
-        }
-        .preview-overlay-controls {
-          display: flex;
-          gap: 8px;
-        }
-        .preview-btn {
-          padding: 8px 16px;
-          border: none;
-          border-radius: 4px;
-          font-size: 12px;
-          font-weight: 500;
-          cursor: pointer;
-          transition: all 0.2s;
-        }
-        .preview-btn-close {
-          background: #f44336;
-          color: white;
-        }
-        .preview-btn-close:hover {
-          background: #d32f2f;
-        }
-        .preview-overlay-body {
-          flex: 1;
-          overflow: auto;
-          background: #f5f5f5;
-          padding: 40px;
-        }
-        .preview-block-container {
-          max-width: 1000px;
-          margin: 0 auto;
-          background: white;
-          padding: 40px;
-          border-radius: 8px;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-      `;
-      document.head.appendChild(style);
-    }
+    const previewHTML = createIframePreview(blockName, blockHTML, currentOrigin);
+    console.log('✓ Preview HTML generated, length:', previewHTML.length);
 
-    // Add to DOM
-    document.body.appendChild(overlay);
-
-    // Close on backdrop click
-    overlay.querySelector('.preview-overlay-backdrop').addEventListener('click', () => {
-      overlay.remove();
-    });
-
-    // Close on ESC key
-    const escHandler = (e) => {
-      if (e.key === 'Escape') {
-        overlay.remove();
-        document.removeEventListener('keydown', escHandler);
-      }
-    };
-    document.addEventListener('keydown', escHandler);
-
-    // Decorate the block
-    try {
-      const blockElement = overlay.querySelector(`.${blockName}.block`);
-      console.log('🎨 Decorating block in overlay...');
-
-      const module = await import(`/blocks/${blockName}/${blockName}.js`);
-      if (module.default) {
-        await module.default(blockElement);
-        console.log('✓ Block decorated successfully');
-      }
-    } catch (error) {
-      console.error('Failed to decorate block:', error);
-    }
-
-    console.log('✓ Overlay preview opened');
-    return overlay;
+    const blob = new Blob([previewHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const win = window.open(url, '_blank', 'width=1200,height=800');
+    console.log('✓ Opened iframe preview in new window');
+    return win;
   };
-
-  // Keep old function name for backwards compatibility but use overlay
-  window.openIframePreview = window.openOverlayPreview;
 
   // NOW set up unified API - after all functions are defined
   window.doc = document;

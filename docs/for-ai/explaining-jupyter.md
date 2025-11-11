@@ -6,7 +6,7 @@
 
 This document explains the Jupyter notebook implementation for **interactive testing of EDS blocks using JavaScript**. This is NOT Python-based testing—it uses JavaScript with jsdom for virtual DOM manipulation and the JSLab kernel for running JavaScript code in Jupyter notebooks.
 
-**NEW**: The test.ipynb notebook is now **context-aware** and works in both Node.js (JSLab) and browser environments, with built-in **live preview** functionality featuring an interactive iframe wrapper with controls.
+**NEW**: The test.ipynb notebook is now **context-aware** and works in both Node.js (JSLab) and browser environments, with built-in **live preview** functionality using a **modal overlay system** that eliminates all CSS and JavaScript loading issues.
 
 ## What This Is
 
@@ -16,10 +16,10 @@ This document explains the Jupyter notebook implementation for **interactive tes
 - **jsdom** (Virtual DOM for simulating browser environment)
 - **VS Code** (Notebook editing with Jupyter extension)
 - **Context-aware execution** (automatically detects Node.js vs browser)
-- **Live preview** (interactive iframe wrapper with refresh/close controls)
+- **Modal overlay preview** (in-page preview with backdrop blur and full styling)
 - **ipynb-viewer block** (execute notebooks interactively in the browser)
 
-This allows you to test EDS blocks interactively without running a full browser or development server, AND share executable notebooks for end-user interaction.
+This allows you to test EDS blocks interactively without running a full browser or development server, AND share executable notebooks for end-user interaction. The modal overlay system provides seamless block previews with proper CSS and JavaScript execution.
 
 ---
 
@@ -241,60 +241,63 @@ const previewHTML = window.createIframePreview('blockname', '<div>block html</di
 // Use for custom display or download
 ```
 
-### Block JavaScript Execution (NEW)
+### Live Preview System with Overlay (NEW)
 
-**Live previews now automatically execute block JavaScript with proper styling!**
+**Live previews now use a modal overlay for seamless block testing!**
 
-When you create a live preview, the system:
+Instead of opening a separate window with blob URLs, the preview system now displays blocks in a **modal overlay** on the current page. This eliminates all CSS and JavaScript loading issues.
 
-1. **Fetches CSS content** from your site:
-   - Downloads `/styles/styles.css`
-   - Downloads `/blocks/blockname/blockname.css`
-   - Embeds both inline in the preview HTML
+**How it works:**
 
-2. **Creates proper block structure** with EDS classes and data attributes:
+1. **Creates modal overlay** on current page:
+   ```javascript
+   const overlay = document.createElement('div');
+   overlay.className = 'block-preview-overlay';
+   // Styled with dark theme, backdrop blur, and controls
+   ```
+
+2. **Inserts block with proper structure**:
    ```html
    <div class="blockname block" data-block-name="blockname" data-block-status="initialized">
-     <!-- your block content -->
+     <!-- your undecorated block content -->
    </div>
    ```
 
-3. **Dynamically detects origin** for module loading:
-   - Uses parent page's origin (e.g., `https://main--allaboutv2--ddttom.aem.page`)
-   - Falls back to `window.opener.location.origin` if needed
-   - Works from both localhost and hosted environments
-
-4. **Executes block decoration** automatically:
-   - Dynamically imports `/blocks/blockname/blockname.js` from detected origin
+3. **Automatically decorates the block**:
+   - Dynamically imports `/blocks/blockname/blockname.js`
    - Executes the block's default export (decoration function)
-   - Runs after DOM is ready
-   - Full error handling with console logging
+   - Runs in the same page context with full CSS/JS access
+   - No origin or module loading issues
 
-**Why Blob URLs require special handling:**
-- Blob URLs have a `null` origin and can't load external resources
-- CSS is fetched from parent page and embedded inline
-- JavaScript modules load from detected parent origin
-- This makes previews fully self-contained and portable
+**Key Benefits:**
+- ✅ **Same origin** - No blob URL or cross-origin issues
+- ✅ **Natural CSS loading** - Uses existing page styles automatically
+- ✅ **Perfect JavaScript execution** - All modules load normally
+- ✅ **Better UX** - Modal overlay instead of popup window
+- ✅ **Backdrop blur** - Modern look with blurred background
+- ✅ **Easy dismissal** - Click backdrop, press ESC, or click close button
 
-**What this means:**
-- Accordion blocks are fully interactive with proper styling
-- Carousel blocks actually cycle through slides with animations
-- Any block behavior works in the preview
-- No manual decoration required
-- Works from both development and production environments
+**Features:**
+- Dark themed header with live indicator (pulsing red dot)
+- Scrollable content area with white container
+- Close button and keyboard shortcuts
+- Auto-cleanup of event listeners
+- Z-index isolation from page content
 
 **Example:**
 ```javascript
-// This creates a fully interactive, styled accordion preview
+// This creates a fully interactive overlay preview
 await showPreview('accordion', accordionContent);
-// The preview will have:
-// - Proper accordion styling from accordion.css
-// - Clickable accordion sections with <details> elements
+// The overlay appears with:
+// - Full accordion styling from accordion.css
+// - Interactive <details> elements
 // - Base styles from styles.css
+// - Backdrop blur effect
+// - Press ESC or click backdrop to close
 ```
 
 **Double-Decoration Prevention:**
-The `showPreview()` function passes **undecorated HTML** to the iframe to avoid double-decoration issues. The iframe receives raw content and decorates it once, ensuring proper block behavior.
+The `showPreview()` function passes **undecorated HTML** to the overlay. The overlay decorates it once after mounting, ensuring proper block behavior without double-processing.
 
 ---
 

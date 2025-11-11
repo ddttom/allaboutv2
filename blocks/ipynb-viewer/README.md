@@ -82,13 +82,22 @@ The header includes a "Run All" button that:
 - Executes all code cells in order
 - Useful for notebooks with dependencies between cells
 
-### Live Preview Integration (NEW)
-When using `showPreview()` or `openIframePreview()` in code cells:
-- **Automatic CSS loading**: Fetches and embeds styles.css and block-specific CSS inline
-- **Origin detection**: Automatically detects parent page origin for module loading
-- **Blob URL handling**: Embeds all resources inline to work around blob:// origin restrictions
-- **Full interactivity**: Block JavaScript executes properly with correct styling
+### Live Preview with Modal Overlay (NEW)
+When using `showPreview()` or `openOverlayPreview()` in code cells:
+- **Modal overlay**: Displays preview in a modal on the current page (no popup windows)
+- **Same origin**: Runs in page context - CSS and JavaScript load naturally
+- **Backdrop blur**: Modern dark theme with blurred background
+- **Full interactivity**: Block JavaScript executes with complete styling support
 - **No double-decoration**: Passes undecorated HTML to avoid processing blocks twice
+- **Easy dismissal**: Click backdrop, press ESC, or use close button
+- **Auto-cleanup**: Removes event listeners when closed
+
+**Why overlay instead of popup?**
+- No blob URL origin issues
+- CSS loads from existing page context
+- JavaScript modules import normally
+- Better user experience
+- No popup blockers
 
 ## Example Notebook Structure
 
@@ -124,46 +133,53 @@ When using `showPreview()` or `openIframePreview()` in code cells:
 - Results are displayed in an output area below each cell
 - Errors are caught and displayed with red styling
 
-### Live Preview System (NEW)
+### Overlay Preview System (NEW)
 
 **How it works:**
 
-1. **CSS Fetching and Embedding**:
+1. **Creates DOM overlay**:
    ```javascript
-   // Fetches CSS from parent page origin
-   const stylesResponse = await fetch(`${currentOrigin}/styles/styles.css`);
-   const stylesCSS = await stylesResponse.text();
-
-   const blockResponse = await fetch(`${currentOrigin}/blocks/${blockName}/${blockName}.css`);
-   const blockCSS = await blockResponse.text();
+   const overlay = document.createElement('div');
+   overlay.className = 'block-preview-overlay';
+   // Adds backdrop, header, content container
+   document.body.appendChild(overlay);
    ```
 
-2. **Inline CSS Injection**:
-   ```html
-   <style>
-   /* styles.css */
-   [embedded CSS content]
-
-   /* blockname.css */
-   [embedded CSS content]
-   </style>
-   ```
-
-3. **Origin Detection for Module Loading**:
+2. **Injects block HTML**:
    ```javascript
-   // Priority: 1) Passed origin, 2) Opener origin, 3) Current origin
-   let baseUrl = '${baseOrigin}'; // Passed from parent
-
-   // Import block JavaScript from detected origin
-   const module = await import(`${baseUrl}/blocks/${blockName}/${blockName}.js`);
+   const blockContainer = overlay.querySelector('.preview-block-container');
+   blockContainer.innerHTML = `
+     <div class="${blockName} block" data-block-name="${blockName}">
+       ${blockHTML}  // Undecorated content
+     </div>
+   `;
    ```
 
-**Why this approach?**
-- Blob URLs (`blob://...`) have a `null` origin
-- Can't load external CSS or JavaScript from blob URLs
-- Embedding CSS inline makes previews self-contained
-- Passing origin allows JavaScript module imports to work
-- Results in fully functional, styled block previews
+3. **Decorates in place**:
+   ```javascript
+   const blockElement = overlay.querySelector(`.${blockName}.block`);
+   const module = await import(`/blocks/${blockName}/${blockName}.js`);
+   await module.default(blockElement);
+   ```
+
+4. **Adds interaction handlers**:
+   ```javascript
+   // Close on backdrop click
+   backdrop.addEventListener('click', () => overlay.remove());
+
+   // Close on ESC key
+   document.addEventListener('keydown', (e) => {
+     if (e.key === 'Escape') overlay.remove();
+   });
+   ```
+
+**Why overlay instead of popup/iframe?**
+- **Same origin**: Runs in page context, no cross-origin issues
+- **Natural CSS loading**: Existing page styles apply automatically
+- **JavaScript modules work**: No blob URL or module resolution issues
+- **Better UX**: Modal overlay vs popup window
+- **No blockers**: Popup blockers don't affect overlays
+- **Cleaner**: Auto-cleanup of listeners and DOM elements
 
 ### Markdown Parser (Enhanced)
 
