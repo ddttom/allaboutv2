@@ -219,9 +219,17 @@ export function setupBrowserEnvironment() {
 
   // Open iframe preview in new window
   window.openIframePreview = function(blockName, blockHTML) {
+    console.log('📦 Creating preview for:', blockName);
+    console.log('📄 Block HTML length:', blockHTML?.length || 0);
+    console.log('📄 Block HTML preview:', blockHTML?.substring(0, 200));
+
     // Pass the current origin as a query parameter so blob URL can use it
     const currentOrigin = window.location.origin;
+    console.log('🌐 Current origin:', currentOrigin);
+
     const previewHTML = createIframePreview(blockName, blockHTML, currentOrigin);
+    console.log('✓ Preview HTML generated, length:', previewHTML.length);
+
     const blob = new Blob([previewHTML], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
     const win = window.open(url, '_blank', 'width=1200,height=800');
@@ -434,13 +442,17 @@ export async function saveBlockHTML(blockName, innerHTML = '', filename = null, 
  * @returns {string} Iframe preview HTML
  */
 export function createIframePreview(blockName, blockHTML, baseOrigin = null) {
+  // Generate absolute URLs for CSS files if baseOrigin is provided
+  const stylesUrl = baseOrigin ? `${baseOrigin}/styles/styles.css` : '/styles/styles.css';
+  const blockCssUrl = baseOrigin ? `${baseOrigin}/blocks/${blockName}/${blockName}.css` : `/blocks/${blockName}/${blockName}.css`;
+
   return `<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <title>Live Preview - ${blockName}</title>
-  <link rel="stylesheet" href="/styles/styles.css">
-  <link rel="stylesheet" href="/blocks/${blockName}/${blockName}.css">
+  <link rel="stylesheet" href="${stylesUrl}">
+  <link rel="stylesheet" href="${blockCssUrl}">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: system-ui, -apple-system, sans-serif; background: #1e1e1e; color: #fff; overflow: hidden; }
@@ -494,11 +506,17 @@ export function createIframePreview(blockName, blockHTML, baseOrigin = null) {
     // Load and execute the block decoration
     async function decorateBlock() {
       try {
+        console.log('🔍 Starting block decoration...');
+        console.log('Document body:', document.body.innerHTML.substring(0, 200));
+
         const blockElement = document.querySelector('.${blockName}.block');
         if (!blockElement) {
-          console.warn('Block element not found');
+          console.error('❌ Block element not found');
+          console.log('Available elements:', document.querySelectorAll('div'));
           return;
         }
+
+        console.log('✓ Block element found:', blockElement);
 
         // Determine the base URL
         // Priority: 1) Passed origin (for blob URLs), 2) Opener's origin, 3) Current origin
