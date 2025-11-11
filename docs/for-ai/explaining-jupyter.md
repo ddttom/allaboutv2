@@ -684,9 +684,27 @@ Create `ipynb-tests/test-your-block.ipynb` in VS Code:
 - **One function call** - `initialize()` does everything automatically
 - **Ultra simple** - Easiest possible setup
 - **Context-aware** - Automatically detects and adapts to Node.js or browser
+- **Informative messages** - Displays context (Node.js/Browser) and detailed setup status with emojis
 - **Sets global flags** - `isNode` and `isBrowser` available in all subsequent cells
 - **Sets unified API** - `doc`, `testBlockFn`, `showPreview` available everywhere
+- **Success confirmation** - Returns "✅ Setup complete! Ready to test EDS blocks."
 - **Maintainable** - All logic in external module
+
+**Example Output:**
+```
+========================================
+🔧 JUPYTER NOTEBOOK INITIALIZATION
+========================================
+📍 Context: Node.js (JSLab)
+
+⚙️  Setting up Node.js environment...
+✓ jsdom virtual DOM initialized
+✓ Helper functions loaded from scripts/ipynb-helpers.js
+✓ Unified API registered (doc, testBlockFn, showPreview)
+
+✅ SUCCESS! Environment ready for EDS block testing
+========================================
+```
 
 **Global Environment Flags:**
 
@@ -891,12 +909,13 @@ The **ipynb-viewer** EDS block allows you to display and execute Jupyter noteboo
 ### Features
 
 - **Parse .ipynb files**: Loads and displays Jupyter notebook JSON format
-- **Markdown rendering**: Converts markdown cells to formatted HTML
-- **Interactive execution**: Run JavaScript code cells with a click
+- **Markdown rendering**: Converts markdown cells to formatted HTML with tables, code blocks, lists
+- **Interactive execution**: Run JavaScript code cells with a click (async/await support)
+- **Automatic initialization check**: Warns if Cell 1 hasn't been run first
 - **Console capture**: Shows console.log() and console.error() output
 - **Result display**: Shows return values from code execution
 - **Error handling**: Catches and displays errors with styling
-- **Run All**: Execute all code cells in sequence
+- **Sequential execution**: Encourages running Cell 1 first for proper setup
 
 ### Usage in EDS
 
@@ -911,11 +930,15 @@ Add the block to your Google Doc:
 ### What Gets Executed
 
 When users click "Run" on a code cell:
-- Code executes in the browser using `Function()` constructor
+- **Initialization check** runs first (skipped for Cell 1)
+- If not Cell 1 and not initialized, shows warning to run Cell 1 first
+- Code executes in the browser using `AsyncFunction` constructor (supports await)
 - Console methods are captured during execution
 - Results display inline below the cell
 - Errors are caught and shown in red
 - Successful execution turns the cell border green
+
+**Important:** Always run Cell 1 first! It sets up the environment (`doc`, `testBlockFn`, `showPreview`).
 
 ### Use Cases
 

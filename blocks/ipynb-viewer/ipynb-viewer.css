@@ -26,26 +26,6 @@
   font-family: var(--heading-font-family, inherit);
 }
 
-.ipynb-run-all-button {
-  padding: 0.5rem 1rem;
-  background: var(--primary-color, #007bff);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 600;
-  transition: background 0.3s ease;
-}
-
-.ipynb-run-all-button:hover {
-  background: var(--primary-hover-color, #0056b3);
-}
-
-.ipynb-run-all-button:active {
-  transform: scale(0.98);
-}
-
 /* Cells Container */
 .ipynb-cells-container {
   display: flex;
@@ -339,16 +319,14 @@
 }
 
 /* Accessibility */
-.ipynb-run-button:focus,
-.ipynb-run-all-button:focus {
+.ipynb-run-button:focus {
   outline: 2px solid var(--focus-color, #007bff);
   outline-offset: 2px;
 }
 
 /* Print Styles */
 @media print {
-  .ipynb-run-button,
-  .ipynb-run-all-button {
+  .ipynb-run-button {
     display: none;
   }
 

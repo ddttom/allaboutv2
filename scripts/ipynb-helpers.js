@@ -79,9 +79,14 @@ export async function initialize() {
   const isNode = typeof process !== 'undefined' && process.versions && process.versions.node;
   const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
 
-  console.log('Environment:', isNode ? 'Node.js (JSLab)' : 'Browser');
+  console.log('\n========================================');
+  console.log('🔧 JUPYTER NOTEBOOK INITIALIZATION');
+  console.log('========================================');
+  console.log('📍 Context:', isNode ? 'Node.js (JSLab)' : 'Browser (ipynb-viewer)');
+  console.log('');
 
   if (isNode) {
+    console.log('⚙️  Setting up Node.js environment...');
     // Node.js setup - call setup directly since we're already in the module
     await setupNodeEnvironment();
 
@@ -91,17 +96,23 @@ export async function initialize() {
     global.saveBlockHTML = saveBlockHTML;
     global.createIframePreview = createIframePreview;
 
-    console.log('✓ Loaded helper functions from scripts/ipynb-helpers.js');
+    console.log('✓ jsdom virtual DOM initialized');
+    console.log('✓ Helper functions loaded from scripts/ipynb-helpers.js');
+    console.log('✓ Unified API registered (doc, testBlockFn, showPreview)');
   } else if (isBrowser) {
+    console.log('⚙️  Setting up browser environment...');
     // Browser setup - call setup directly
     setupBrowserEnvironment();
+    console.log('✓ Native browser APIs initialized');
+    console.log('✓ Helper functions registered (window.testBlock, window.openIframePreview)');
+    console.log('✓ Unified API registered (doc, testBlockFn, showPreview)');
   }
 
-  console.log('\n========================================');
-  console.log('Setup complete! Ready to test EDS blocks');
+  console.log('');
+  console.log('✅ SUCCESS! Environment ready for EDS block testing');
   console.log('========================================\n');
 
-  return 'Setup complete!';
+  return '✅ Setup complete! Ready to test EDS blocks.';
 }
 
 /**

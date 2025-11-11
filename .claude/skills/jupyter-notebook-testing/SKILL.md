@@ -82,8 +82,10 @@ cp test.ipynb my-block-tests.ipynb
 - **96% smaller**: 9 lines vs 220 lines
 - **One function call**: `initialize()` does everything
 - **Context-aware**: Automatically detects Node.js or browser
+- **Informative**: Displays context and setup status with emojis (🔧📍⚙️✓✅)
 - **Sets global flags**: `isNode`, `isBrowser` available in all cells
 - **Sets unified API**: `doc`, `testBlockFn`, `showPreview` available everywhere
+- **Success confirmation**: Returns "✅ Setup complete! Ready to test EDS blocks."
 - **Maintainable**: All logic in external module
 
 ### 3. Test Your Block
@@ -283,9 +285,9 @@ The **ipynb-viewer** EDS block executes notebooks in browser:
 | /path/to/notebook.ipynb |
 ```
 
-**Features:** Interactive execution, console capture, markdown rendering (tables, code blocks, lists), run all, error handling
+**Features:** Interactive execution (async/await support), automatic initialization check, console capture, markdown rendering (tables, code blocks, lists), error handling
 
-**Key Points:** Cell 1 auto-detects environment | Browser uses native APIs | Same unified API works everywhere
+**Key Points:** Cell 1 auto-detects environment | Automatic warning if Cell 1 skipped | Browser uses native APIs | Same unified API works everywhere
 
 ## Reference Files
 

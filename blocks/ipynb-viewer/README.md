@@ -5,9 +5,11 @@ Display and execute Jupyter notebook (.ipynb) files directly in your EDS site wi
 ## Features
 
 - **Parse and Display Notebooks**: Renders both markdown and code cells from .ipynb files
-- **Interactive Execution**: Run JavaScript code cells with a click
+- **Interactive Execution**: Run JavaScript code cells individually with a click (async/await support)
+- **Automatic Initialization Check**: Warns users if they skip Cell 1 (prevents undefined function errors)
+- **Context Detection**: Cell 1 initialization displays environment (Node.js/Browser) and setup status
 - **Output Display**: Shows console logs, results, and errors inline
-- **Run All**: Execute all code cells in sequence
+- **Sequential Execution**: Run cells in order, starting with Cell 1 (initialization)
 - **Responsive Design**: Mobile-friendly layout
 - **Syntax Highlighting**: Clear code formatting with monospace fonts
 - **Error Handling**: Graceful error messages and visual indicators
@@ -72,15 +74,18 @@ The block supports standard Jupyter notebook JSON format with **enhanced markdow
 
 ### Run Button
 Each code cell has a "Run" button that:
-1. Executes the JavaScript code
-2. Captures console.log() and console.error() output
-3. Displays the return value
-4. Shows visual indicators for success/error states
+1. **Checks initialization** - Verifies Cell 1 has been run (shows warning if not)
+2. Executes the JavaScript code (with async/await support)
+3. Captures console.log() and console.error() output
+4. Displays the return value
+5. Shows visual indicators for success/error states
 
-### Run All Button
-The header includes a "Run All" button that:
-- Executes all code cells in order
-- Useful for notebooks with dependencies between cells
+**Automatic Initialization Check:**
+- If you try to run any cell besides Cell 1 without first running Cell 1, you'll see a warning
+- The warning explains that Cell 1 must be run first to set up the environment
+- This prevents confusing errors about undefined functions (`testBlockFn`, `showPreview`, etc.)
+
+**Note:** Always run Cell 1 first! It will display context information (Node.js or Browser) and success status.
 
 ### Live Preview with Popup Window (NEW)
 When using `showPreview()` or `openIframePreview()` in code cells:

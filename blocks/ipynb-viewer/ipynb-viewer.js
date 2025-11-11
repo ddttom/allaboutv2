@@ -211,16 +211,50 @@ function createCodeCell(cell, index) {
 }
 
 /**
+ * Check if initialization has occurred and show warning if not
+ * @returns {boolean} True if initialized, false otherwise
+ */
+function checkInitialization() {
+  // Check if unified API globals exist
+  const isInitialized = typeof window.doc !== 'undefined'
+    && typeof window.testBlockFn !== 'undefined'
+    && typeof window.showPreview !== 'undefined';
+
+  return isInitialized;
+}
+
+/**
  * Execute JavaScript code in a cell
  * @param {HTMLElement} cellDiv - Cell element
  */
-function executeCodeCell(cellDiv) {
+async function executeCodeCell(cellDiv) {
   const code = cellDiv.dataset.code;
   const output = cellDiv.querySelector('.ipynb-cell-output');
+  const cellIndex = cellDiv.dataset.cellIndex;
 
   // Clear previous output
   output.innerHTML = '';
   output.style.display = 'block';
+
+  // Check if this is NOT Cell 1 (index 0) and initialization hasn't happened
+  if (cellIndex !== '0' && !checkInitialization()) {
+    const warningDiv = document.createElement('div');
+    warningDiv.className = 'ipynb-output-error';
+    warningDiv.style.background = '#fff3cd';
+    warningDiv.style.color = '#856404';
+    warningDiv.style.borderLeft = '4px solid #ffc107';
+    warningDiv.innerHTML = `
+      <strong>⚠️ Warning: Environment not initialized</strong><br>
+      <br>
+      Please run <strong>Cell 1</strong> first to initialize the environment.<br>
+      <br>
+      Cell 1 sets up the testing environment (jsdom, helpers, unified API).<br>
+      Without it, functions like <code>testBlockFn()</code> and <code>showPreview()</code> will not be available.
+    `;
+    output.appendChild(warningDiv);
+    cellDiv.classList.add('ipynb-cell-error');
+    return;
+  }
 
   // Create console capture
   const logs = [];
@@ -238,9 +272,10 @@ function executeCodeCell(cellDiv) {
   };
 
   try {
-    // Execute code
+    // Execute code (with async support)
     // eslint-disable-next-line no-new-func
-    const result = new Function(code)();
+    const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
+    const result = await new AsyncFunction(code)();
 
     // Restore console
     console.log = originalConsoleLog;
@@ -354,13 +389,7 @@ export default async function decorate(block) {
     title.className = 'ipynb-viewer-title';
     title.textContent = notebook.metadata?.title || 'Jupyter Notebook';
 
-    const runAllButton = document.createElement('button');
-    runAllButton.className = 'ipynb-run-all-button';
-    runAllButton.textContent = 'Run All';
-    runAllButton.setAttribute('aria-label', 'Run all code cells');
-
     header.appendChild(title);
-    header.appendChild(runAllButton);
 
     // Create cells container
     const cellsContainer = document.createElement('div');
@@ -389,14 +418,6 @@ export default async function decorate(block) {
       if (cellElement) {
         cellsContainer.appendChild(cellElement);
       }
-    });
-
-    // Add run all functionality
-    runAllButton.addEventListener('click', () => {
-      const codeCells = cellsContainer.querySelectorAll('.ipynb-code-cell');
-      codeCells.forEach(cell => {
-        executeCodeCell(cell);
-      });
     });
 
     // Assemble and append
