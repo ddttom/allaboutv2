@@ -49,6 +49,8 @@ blocks/your-block/
 
 Access your tests at: `http://localhost:3000/blocks/your-block/test.html`
 
+**Interactive Testing with Jupyter Notebooks**: You can also test blocks interactively using Jupyter notebooks with JavaScript (jsdom + JSLab kernel). See [Jupyter Notebook Testing Guide](docs/for-ai/explaining-jupyter.md) for details on this alternative testing approach.
+
 ## Project Structure
 
 ```
@@ -147,11 +149,19 @@ Each block should include:
 
 ## Documentation
 
+### Core Documentation
 - [Development Server Guide](docs/Server-README.md) - Comprehensive server documentation
 - [Block Debugging Guide](docs/debug.md) - Step-by-step debugging guide for AI assistants
 - [Fast EDS Development Tutorial](docs/blog.md) - Complete tutorial with real-world examples
 - [EDS Development Guide](docs/eds.md) - Complete EDS development reference
 - [EDS Best Practices](docs/eds-appendix.md) - Advanced patterns and techniques
+
+### Testing Documentation
+- [Jupyter Notebook Testing Guide](docs/for-ai/explaining-jupyter.md) - Interactive block testing with JavaScript, jsdom, and JSLab kernel
+- [EDS Native Testing Standards](docs/for-ai/testing/eds-native-testing-standards.md) - Traditional test.html testing patterns
+
+### For AI Assistants
+- [Complete AI Documentation Index](docs/for-ai/index.md) - Navigation hub for all 26 EDS development guides
 
 ## Security and Performance
 
