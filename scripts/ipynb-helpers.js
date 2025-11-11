@@ -498,8 +498,23 @@ export function createIframePreview(blockName, blockHTML) {
           return;
         }
 
+        // Determine the base URL - use opener's origin if opened from ipynb-viewer, otherwise current origin
+        let baseUrl = window.location.origin;
+        if (window.opener && window.opener.location) {
+          try {
+            baseUrl = window.opener.location.origin;
+            console.log('Using parent page origin:', baseUrl);
+          } catch (e) {
+            // Cross-origin access blocked, use current origin
+            console.log('Using current origin:', baseUrl);
+          }
+        }
+
         // Import and execute the block's decoration function
-        const module = await import('/blocks/${blockName}/${blockName}.js');
+        const moduleUrl = \`\${baseUrl}/blocks/${blockName}/${blockName}.js\`;
+        console.log('Loading block module from:', moduleUrl);
+
+        const module = await import(moduleUrl);
         if (module.default) {
           await module.default(blockElement);
           console.log('✓ Block decorated successfully');
@@ -508,6 +523,7 @@ export function createIframePreview(blockName, blockHTML) {
         }
       } catch (error) {
         console.error('Failed to decorate block:', error);
+        console.error('Module URL attempted:', error.message);
       }
     }
 
