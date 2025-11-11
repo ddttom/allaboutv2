@@ -1,41 +1,53 @@
 ---
 name: jupyter-notebook-testing
-description: Create and manage Jupyter notebooks for testing Adobe Edge Delivery Services (EDS) blocks interactively using JavaScript with jsdom and JSLab kernel. Covers notebook creation, testBlock function, saveBlockHTML for styled previews, helper functions, content structure patterns, development workflow with live CSS reload, troubleshooting, and installation. Use when creating notebooks, testing blocks with ipynb files, using jslab kernel, generating HTML previews, or working with interactive block testing.
+description: Create and manage Jupyter notebooks for testing Adobe Edge Delivery Services (EDS) blocks interactively using JavaScript with jsdom and JSLab kernel. Context-aware execution (Node.js and browser), ultra-simple one-line initialization, unified API (doc, testBlockFn, showPreview), popup window previews with base tag, minimal DOM structure requirements, ipynb-viewer block integration. Use when creating notebooks, testing blocks with ipynb files, using jslab kernel, generating HTML previews, showPreview popup windows, or working with interactive block testing.
 ---
 
 # Jupyter Notebook Testing for EDS Blocks
 
-Interactive testing environment for EDS blocks using Jupyter notebooks with JavaScript (JSLab) and jsdom.
+Interactive testing environment for EDS blocks using Jupyter notebooks with **context-aware execution** (Node.js and Browser).
 
 ## When to Use This Skill
 
 Use this skill when:
 - Creating new Jupyter notebooks (`.ipynb` files) for EDS block testing
-- Editing existing notebooks to add test cases
-- Setting up interactive testing environments for blocks
-- Generating test content or visual previews
-- Debugging block behavior with different content structures
-- Using `testBlock()`, `saveBlockHTML()`, or other helper functions
-- Working with jslab kernel or jsdom virtual DOM
-- Documenting block usage with executable examples
+- Setting up one-line initialization with `initialize()` function
+- Using unified API (`doc`, `testBlockFn`, `showPreview`) in notebooks
+- Testing blocks in both JSLab (Node.js) and browser (ipynb-viewer) environments
+- Generating popup window previews with `showPreview()`
+- Debugging blocks with different content structures
+- Creating executable documentation for blocks
+- Working with minimal DOM structure requirements
+- Troubleshooting preview styling or decoration issues
 
 ## Overview
 
-Test EDS blocks rapidly with Jupyter notebooks using JSLab (JavaScript kernel) and jsdom (virtual DOM). Get instant feedback without servers, deployments, or browser refreshes.
+Test EDS blocks rapidly with Jupyter notebooks using **context-aware execution**:
+
+- **JSLab (Node.js)**: Full testing environment with jsdom virtual DOM and file generation
+- **Browser (ipynb-viewer)**: End-user executable notebooks with native APIs
+- **One-line setup**: Ultra-simple `initialize()` function (96% smaller Cell 1)
+- **Unified API**: Same functions work in both environments (`doc`, `testBlockFn`, `showPreview`)
+- **Popup previews**: Visual previews with blob URL + base tag for proper CSS/JS loading
+- **Minimal DOM**: Critical EDS-compatible structure (block as direct child of `<main>`)
 
 ### Key Benefits
 
-- **Instant Feedback**: Test blocks immediately without build steps
-- **Content Experimentation**: Try different content structures in seconds
-- **Visual Previews**: Generate styled HTML files with live CSS reload
-- **VS Code Integration**: Work in your editor without context switching
-- **Documentation**: Create executable examples for blocks
+- **Context-aware**: Same notebook works in Node.js AND browser
+- **Ultra-simple setup**: One-line initialization (9 lines vs 220 lines)
+- **Unified API**: No ternary operators needed (`doc`, `testBlockFn`, `showPreview`)
+- **Instant feedback**: Test blocks immediately without build steps
+- **Visual previews**: Popup windows with full styling via base tag
+- **Clean DOM structure**: Block is direct child of main, no wrapper interference
+- **EDS-compatible**: Follows EDS block decoration patterns
 
 ### Technology Stack
 
-- **tslab**: Modern JavaScript kernel for Jupyter (no native dependencies)
-- **jsdom**: JavaScript implementation of DOM APIs
+- **jslab**: JavaScript kernel for Jupyter (Node.js execution)
+- **jsdom**: JavaScript implementation of DOM APIs (Node.js virtual DOM)
+- **ipynb-viewer**: EDS block for executing notebooks in browser
 - **VS Code Jupyter extension**: Notebook editing in your IDE
+- **scripts/ipynb-helpers.js**: External helper module with all functions
 
 ## Quick Start
 
@@ -50,373 +62,255 @@ cp test.ipynb my-block-tests.ipynb
 **Option B: Create from scratch**
 - VS Code: Command Palette → "Jupyter: Create New Blank Notebook"
 - Select "jslab" kernel
-- Copy setup cell from `test.ipynb`
+- Copy Cell 1 from `test.ipynb`
 
 ### 2. Run Setup Cell (Always First)
 
-```javascript
-// Cell 1: Setup - MUST RUN FIRST
-const { JSDOM } = require('jsdom');
-const dom = new JSDOM('<!DOCTYPE html><html><head></head><body></body></html>', {
-  url: 'http://localhost',
-  pretendToBeVisual: true
-});
-
-// Expose globals
-global.document = dom.window.document;
-global.window = dom.window;
-global.HTMLElement = dom.window.HTMLElement;
-global.Element = dom.window.Element;
-global.Node = dom.window.Node;
-global.customElements = dom.window.customElements;
-global.CustomEvent = dom.window.CustomEvent;
-global.Event = dom.window.Event;
-
-// Helper functions (testBlock, saveBlockHTML, loadBlockStyles)
-// ... (copy full setup from test.ipynb)
-```
-
-### 3. Test Your Block
+**NEW: Ultra-Simple One-Line Initialization!**
 
 ```javascript
-// Cell 2: Simple test
-const block = await testBlock('myblock');
-block.outerHTML
-```
-
-```javascript
-// Cell 3: Test with content
-const content = `
-  <div>
-    <div>Test content</div>
-  </div>
-`;
-const block = await testBlock('myblock', content);
-console.log('Children:', block.children.length);
-```
-
-```javascript
-// Cell 4: Generate styled preview
-await saveBlockHTML('myblock', content);
-// Open ipynb-tests/myblock-preview.html in browser
-```
-
-## Helper Functions
-
-### testBlock(blockName, innerHTML?)
-
-Tests a block and returns the decorated DOM element.
-
-**Parameters:**
-- `blockName` (string): Block name matching folder name
-- `innerHTML` (string, optional): HTML content to test with
-
-**Returns:** Decorated block as DOM element
-
-**Example:**
-```javascript
-const block = await testBlock('accordion', '<div>content</div>');
-console.log(block.outerHTML);
-```
-
-### saveBlockHTML(blockName, innerHTML?, filename?)
-
-Generates a styled HTML preview file in `ipynb-tests/` directory.
-
-**Parameters:**
-- `blockName` (string): Block name
-- `innerHTML` (string, optional): HTML content
-- `filename` (string, optional): Custom filename (defaults to `blockname-preview.html`)
-
-**Returns:** Path to saved file
-
-**Key Feature:** Links to actual CSS files instead of embedding them, enabling live reload workflow.
-
-**Example:**
-```javascript
-// Saves to ipynb-tests/accordion-preview.html
-await saveBlockHTML('accordion', content);
-
-// Custom filename
-await saveBlockHTML('accordion', content, 'my-test.html');
-```
-
-### loadBlockStyles(blockName)
-
-Loads CSS for a block into the virtual DOM.
-
-**Parameters:**
-- `blockName` (string): Block name
-
-**Returns:** CSS content string or null
-
-**Note:** Usually called automatically by `testBlock()` and `saveBlockHTML()`.
-
-## Notebook Structure
-
-Recommended cell organization:
-
-1. **Title & Introduction** (Markdown)
-   - Explain what's being tested
-   - Add important warnings or notes
-
-2. **Setup Cell** (Code, always first)
-   - Initialize jsdom environment
-   - Define helper functions
-   - Create output directory
-   - Must run before any other cells
-
-3. **Simple Tests** (Code + Markdown)
-   - Start with basic examples
-   - Test blocks without complex content
-
-4. **Content Structure Tests** (Code + Markdown)
-   - Test blocks with various content structures
-   - Test edge cases
-   - One block per section
-
-5. **Visual Output** (Code)
-   - Generate HTML files for browser viewing
-   - Test interactive features
-
-6. **Reference Section** (Markdown)
-   - Quick reminders of helper functions
-   - Useful code snippets
-
-## Development Workflow
-
-### Typical Session
-
-```bash
-# 1. Edit block code
-code blocks/myblock/myblock.js
-
-# 2. Test in notebook (VS Code)
-# Open test.ipynb and run test cell
-
-# 3. See styled version
-# Run saveBlockHTML() cell
-# Open ipynb-tests/myblock-preview.html
-
-# 4. Tweak CSS
-# Edit blocks/myblock/myblock.css
-# Just refresh browser (CSS is linked!)
-
-# 5. Adjust JavaScript
-# Edit blocks/myblock/myblock.js
-# Rerun notebook cell (Shift+Enter)
-
-# 6. Commit when ready
-git add blocks/myblock/
-git commit -m "Add myblock"
-```
-
-## CSS Linking Strategy
-
-The implementation links to actual CSS files instead of embedding them:
-
-```html
-<!-- Global EDS Styles -->
-<link rel="stylesheet" href="../styles/styles.css">
-<link rel="stylesheet" href="../styles/fonts.css">
-<link rel="stylesheet" href="../styles/lazy-styles.css">
-
-<!-- Block-specific styles -->
-<link rel="stylesheet" href="../blocks/accordion/accordion.css">
+// Cell 1: One-line initialization (works in both JSLab and Browser)
+(async () => {
+  const isNode = typeof process !== 'undefined' && process.versions?.node;
+  const helpersPath = isNode ? './scripts/ipynb-helpers.js' : '/scripts/ipynb-helpers.js';
+  const { initialize } = await import(helpersPath);
+  return await initialize();
+})();
 ```
 
 **Benefits:**
-- Edit CSS, refresh browser - no regeneration needed
-- Small file sizes (~2KB vs ~100KB)
-- Matches production EDS structure
-- Browser caching works
-- Easy debugging
+- **96% smaller**: 9 lines vs 220 lines
+- **One function call**: `initialize()` does everything
+- **Context-aware**: Automatically detects Node.js or browser
+- **Sets global flags**: `isNode`, `isBrowser` available in all cells
+- **Sets unified API**: `doc`, `testBlockFn`, `showPreview` available everywhere
+- **Maintainable**: All logic in external module
 
-## Project Structure
+### 3. Test Your Block
 
-```
-your-project/
-├── test.ipynb                    # Main testing notebook
-├── ipynb-tests/                  # Generated HTML previews
-│   ├── accordion-preview.html    # Links to ../styles/*.css
-│   ├── tabs-preview.html         # Links to ../blocks/*/*.css
-│   └── myblock-preview.html
-├── styles/                       # Global EDS styles
-│   ├── styles.css                # Core styles (linked in previews)
-│   ├── fonts.css                 # Font declarations (linked)
-│   └── lazy-styles.css           # Lazy styles (linked)
-├── blocks/                       # Your EDS blocks
-│   ├── accordion/
-│   │   ├── accordion.js
-│   │   └── accordion.css         # Linked from preview HTML
-│   └── myblock/
-│       ├── myblock.js
-│       └── myblock.css
-└── package.json                  # Dependencies (jsdom)
-```
-
-## Limitations
-
-### What Doesn't Work
-
-- **Interactive features in notebook output**: Button clicks, form submissions won't work in raw notebook output (use `saveBlockHTML()` to test in browser)
-- **Web Components**: Limited support in jsdom (stick with vanilla EDS blocks)
-- **Advanced browser APIs**: If jsdom doesn't support it, neither does this environment
-- **Styling in notebook**: Raw HTML only in notebook output (use `saveBlockHTML()` for styled previews)
-
-### Workarounds
-
-- Save HTML files and test in real browser for interactive features
-- Check `customElements` availability before testing Web Component blocks
-- Use browser for animation testing and cross-browser issues
-
-## Best Practices
-
-### Writing Good Tests
+**Using Unified API (No Ternary Operators!):**
 
 ```javascript
-// ✅ Good: Clear explanation and expectations
-// Testing accordion with 3 Q&A pairs
-// Expected: Should create 3 <details> elements
-const content = `
-  <div>
-    <div>What is EDS?</div>
-    <div>Edge Delivery Services...</div>
-  </div>
-  <div>
-    <div>How does it work?</div>
-    <div>It transforms content...</div>
-  </div>
-  <div>
-    <div>Why test in notebooks?</div>
-    <div>Instant feedback...</div>
-  </div>
-`;
-
-const block = await testBlock('accordion', content);
-console.log('Created sections:', block.querySelectorAll('details').length);
-
-// ❌ Bad: No context, cryptic variable names
-const x = '<div><div>Q</div><div>A</div></div>';
-await testBlock('accordion', x);
+// Cell 2: Simple test (works in both environments!)
+(async () => {
+  const block = await testBlockFn('accordion', `
+    <div>
+      <div>Question 1</div>
+      <div>Answer 1</div>
+    </div>
+  `);
+  console.log('✓ Block created');
+  return block.outerHTML;
+})();
 ```
 
-### Organizing Notebooks
+### 4. Generate Visual Preview
 
-- Use descriptive filenames: `form-validation-tests.ipynb`, not `test2.ipynb`
-- Start with clear Markdown introduction
-- Explain what each test does and why
-- Keep one block per section
-- Mix Markdown and Code cells for readability
-
-### Error Handling
+**Using Unified showPreview (Adapts to Environment!):**
 
 ```javascript
-try {
-  const block = await testBlock('myblock', content);
-  console.log('✓ Success:', block.outerHTML.substring(0, 100));
-} catch (error) {
-  console.error('✗ Failed:', error.message);
-  console.log('This block may need a real browser for testing');
-}
+// Cell 3: Visual preview (one function, both environments!)
+(async () => {
+  const content = `
+    <div>
+      <div>Question 1</div>
+      <div>Answer 1</div>
+    </div>
+  `;
+
+  // Node.js: Saves files to ipynb-tests/
+  // Browser: Opens popup window with blob URL
+  return await showPreview('accordion', content);
+})();
 ```
+
+## Context-Aware Execution
+
+The notebook supports **dual execution modes**:
+
+### Node.js Mode (JSLab)
+
+**Purpose:** Development and block testing
+
+**Features:**
+- Full jsdom virtual DOM
+- Block decoration testing
+- HTML file generation (`saveBlockHTML()`)
+- Live preview creation
+- Helper functions: `global.testBlock()`, `global.saveBlockHTML()`
+
+**When to use:**
+- Developing and testing EDS blocks
+- Generating HTML previews
+- Interactive experimentation
+- Debugging block logic
+
+### Browser Mode (ipynb-viewer)
+
+**Purpose:** End-user interaction and presentations
+
+**Features:**
+- Native browser APIs
+- Direct JavaScript execution
+- Console output display
+- No file system access
+- Helper function: `window.testBlock()`
+
+**When to use:**
+- Sharing executable demos
+- Interactive tutorials
+- Client presentations
+- Live coding examples
+
+## Helper Functions
+
+All helper functions are in **scripts/ipynb-helpers.js**, loaded by Cell 1's `initialize()`.
+
+### initialize() - Master Setup (NEW)
+
+**One function does everything:** Detects environment, sets global flags (`isNode`, `isBrowser`), and registers unified API.
+
+### Unified API
+
+After Cell 1, these globals are available in all cells:
+
+```javascript
+doc              // Document (no ternary needed!)
+testBlockFn      // Test block function
+showPreview      // Preview (Node: saves files, Browser: opens popup)
+createPreviewFn  // Create iframe preview HTML
+isNode           // Environment flag
+isBrowser        // Environment flag
+```
+
+### testBlockFn(blockName, innerHTML)
+
+Tests block decoration:
+
+```javascript
+const block = await testBlockFn('accordion', content);
+```
+
+### showPreview(blockName, innerHTML)
+
+Opens visual preview (adapts automatically):
+- **Node.js**: Saves HTML files to `ipynb-tests/`
+- **Browser**: Opens popup with blob URL + base tag
+
+```javascript
+await showPreview('accordion', content);
+```
+
+### saveBlockHTML(blockName, innerHTML, filename, options) - Node.js Only
+
+Saves HTML files (creates both preview and live-preview):
+
+```javascript
+await global.saveBlockHTML('accordion', content);
+```
+
+## Popup Preview System (NEW)
+
+Live previews use popup windows with `<base>` tag to solve blob URL resource loading issues.
+
+### How It Works
+
+1. **Base tag resolves paths**: `<base href="https://your-origin/">` makes `styles/styles.css` → `https://your-origin/styles/styles.css`
+2. **Minimal DOM** (EDS-compatible): Block is direct child of `<main>`, no wrapper divs
+3. **Auto-decoration**: Dynamically imports and executes block JavaScript
+
+### Key Benefits
+
+✅ Base tag solves blob URL issues | ✅ Clean DOM (no wrappers) | ✅ EDS-compatible | ✅ Full styling | ✅ Fixed header controls
+
+## DOM Structure Requirements (CRITICAL)
+
+### Minimal Structure
+
+Block must be direct child of `<main>` (no wrapper divs):
+
+```html
+<main>
+  <div class="blockname block"><!-- content rows --></div>
+</main>
+```
+
+### Why This Matters
+
+EDS blocks iterate over `block.children` directly. Extra wrappers break child selection → incorrect output.
+
+**Never:** Add wrapper divs between `<main>` and block | Nest controls in content area | Use relative positioning for headers
+
+## Troubleshooting
+
+### Preview Shows Colored Boxes (Decoration Runs But Looks Wrong)
+
+**Cause:** Wrapper divs between `<main>` and block. **Check DevTools Elements tab** for extra wrappers. **Fix:** Remove wrappers—block must be direct child of `<main>`.
+
+### Preview Shows Empty/Blank Content
+
+**Causes:** CSS not loading (incorrect base tag), JS module errors, decoration errors. **Check DevTools Console + Network tab** for 404s and errors. **Fix:** Verify origin detection.
+
+### Kernel Not Found
+
+**Solution:** Install JSLab (`npm install -g jslab`), select "jslab" kernel in VS Code, reload notebook.
 
 ## When to Use Notebooks
 
-### ✅ Use Notebooks For
+**✅ Use For:** Quick validation, content experimentation, debugging, prototyping, documentation, `showPreview()` testing, HTML generation
 
-- Quick validation before committing
-- Trying different content structures
-- Debugging edge cases
-- Exploring block transformation behavior
-- Creating documentation examples
-- Rapid prototyping
-- Testing blocks in isolation
+**❌ Don't Use For:** Complex interactions, cross-browser testing, full integration, Web Components, performance profiling
 
-### ❌ Don't Use For
+## Best Practices
 
-- Complex interactive features (test in real browser)
-- Animation testing (browser is better)
-- Cross-browser issues (need real browsers)
-- Full integration testing (use real site)
-- Web Components with complex lifecycle (jsdom limitations)
+1. **Always use `initialize()` in Cell 1** (see Quick Start above)
+2. **Use unified API** - `doc`, `testBlockFn`, `showPreview` (no ternaries!)
+3. **Wrap async in IIFE** (browser): `(async () => { await testBlockFn(...); })()`
+4. **Test visual output** - Always use `showPreview()` for verification
+5. **Structure notebooks** - Cell 1: Setup | Cells 2-N: Tests | Cell N+1: Previews
 
-## Integration with Development Workflow
+## Integration with ipynb-viewer Block
 
-Notebooks complement but don't replace traditional development:
+The **ipynb-viewer** EDS block executes notebooks in browser:
 
-1. **Design**: Plan block structure and content model
-2. **Prototype**: Quick tests in notebook for basic functionality
-3. **Implement**: Write actual block code
-4. **Test in notebook**: Verify core transformation logic
-5. **Test in browser**: Check styling and interactivity
-6. **Integration test**: Test on real site
-7. **Commit**: Version control everything
+```
+| IPynb Viewer |
+|--------------|
+| /path/to/notebook.ipynb |
+```
+
+**Features:** Interactive execution, console capture, markdown rendering (tables, code blocks, lists), run all, error handling
+
+**Key Points:** Cell 1 auto-detects environment | Browser uses native APIs | Same unified API works everywhere
 
 ## Reference Files
 
 For detailed information, see:
 
-- **[INSTALLATION.md](INSTALLATION.md)** - Complete setup guide with one-time installation steps for tslab, Jupyter, jsdom, and VS Code extension
-- **[EXAMPLES.md](EXAMPLES.md)** - Content structure patterns and complete testing examples for accordion, tabs, cards, hero, and other blocks
-- **[ADVANCED_TECHNIQUES.md](ADVANCED_TECHNIQUES.md)** - Performance testing, snapshot testing, batch testing, validation patterns, and advanced workflows
-- **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)** - Solutions for kernel issues, module errors, path problems, styling issues, and platform-specific gotchas
+- **[INSTALLATION.md](INSTALLATION.md)** - Setup guide with jslab, Jupyter, jsdom installation
+- **[EXAMPLES.md](EXAMPLES.md)** - Content structure patterns and complete examples
+- **[ADVANCED_TECHNIQUES.md](ADVANCED_TECHNIQUES.md)** - Performance testing, batch testing, validation
+- **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)** - Solutions for kernel issues, module errors, styling issues
 
-## Quick Reference
+## Related Documentation
 
-### Create Notebook Template
-
-```markdown
-# [Block Name] Testing
-
-This notebook tests the [block name] block with various content structures.
-
-**Run Cell 1 first** to initialize the environment.
-
-## What's Tested
-- Feature 1
-- Feature 2
-- Edge cases
-```
-
-### Common Commands
-
-```javascript
-// Basic test
-const block = await testBlock('blockname');
-
-// Test with content
-const block = await testBlock('blockname', htmlContent);
-
-// Generate preview
-await saveBlockHTML('blockname', htmlContent);
-
-// Custom preview name
-await saveBlockHTML('blockname', htmlContent, 'custom-name.html');
-```
-
-### Keyboard Shortcuts (VS Code)
-
-- **Shift+Enter**: Run cell and move to next
-- **Cmd/Ctrl+Enter**: Run cell and stay
-- **A**: Insert cell above
-- **B**: Insert cell below
-- **DD**: Delete cell
-- **M**: Change to Markdown
-- **Y**: Change to Code
+- **[docs/for-ai/explaining-jupyter.md](../../docs/for-ai/explaining-jupyter.md)** - Comprehensive Jupyter notebook documentation
+- **[blocks/ipynb-viewer/README.md](../../blocks/ipynb-viewer/README.md)** - ipynb-viewer block documentation
+- **[scripts/ipynb-helpers.js](../../scripts/ipynb-helpers.js)** - Helper functions implementation
+- **[test.ipynb](../../test.ipynb)** - Reference notebook with examples
 
 ## Summary
 
 Jupyter notebooks with JSLab provide a powerful, interactive testing environment for EDS blocks that:
 
-- Eliminates server and build overhead
-- Provides instant feedback on block behavior
-- Generates styled previews with live CSS reload
-- Integrates seamlessly with VS Code
-- Documents block usage with executable examples
-- Accelerates the development feedback loop
-
-The key innovations are the CSS linking strategy (enabling live reload), proper EDS structure in generated files, developer-friendly helper functions, and complete VS Code integration.
+- **Ultra-simple setup**: One-line `initialize()` function (96% smaller)
+- **Context-aware execution**: Same notebook works in Node.js AND browser
+- **Unified API**: No ternary operators (`doc`, `testBlockFn`, `showPreview`)
+- **Popup previews**: Visual feedback with blob URL + base tag
+- **Minimal DOM structure**: EDS-compatible (block as direct child of main)
+- **ipynb-viewer integration**: End-user executable notebooks
+- **Instant feedback**: No server or build overhead
+- **VS Code integration**: Seamless development experience
 
 Use this skill whenever you need to rapidly test, debug, or document EDS blocks without the ceremony of full development environments.
 

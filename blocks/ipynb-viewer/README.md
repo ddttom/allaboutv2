@@ -149,14 +149,26 @@ When using `showPreview()` or `openIframePreview()` in code cells:
    </head>`;
    ```
 
-2. **Creates blob URL and opens window**:
+2. **Minimal DOM structure** (EDS-compatible):
+   ```html
+   <body>
+     <div class="preview-header">...</div>  <!-- Fixed position -->
+     <main>
+       <div class="blockname block">
+         <!-- block content as direct children -->
+       </div>
+     </main>
+   </body>
+   ```
+
+3. **Creates blob URL and opens window**:
    ```javascript
    const blob = new Blob([html], { type: 'text/html' });
    const url = URL.createObjectURL(blob);
    window.open(url, '_blank', 'width=1200,height=800');
    ```
 
-3. **Decorates after load**:
+4. **Decorates after load**:
    ```javascript
    // In the popup window
    const blockElement = document.querySelector(`.${blockName}.block`);
@@ -171,6 +183,27 @@ When using `showPreview()` or `openIframePreview()` in code cells:
 - `styles/styles.css` → `https://origin/styles/styles.css`
 - JavaScript modules import using origin detection
 - Result: Fully styled and functional blocks
+
+**Why minimal DOM structure is critical:**
+
+EDS blocks expect specific DOM patterns where they can iterate over `block.children` directly to find content rows. Many blocks (accordion, tabs, cards) use patterns like:
+
+```javascript
+[...block.children].forEach((row) => {
+  // Process each content row
+});
+```
+
+**Problems with wrapper divs:**
+- Extra `<div>` wrappers between `<main>` and block break child selection
+- Blocks can't find their content rows (they find wrapper divs instead)
+- Decoration runs successfully but produces incorrect output
+- Visual symptom: Block shows as **colored boxes** instead of proper styled elements
+
+**Solution:**
+- Block must be **direct child of `<main>`** with no intermediary wrappers
+- Fixed position header doesn't interfere (not in document flow)
+- See [Raw EDS Blocks Guide](../../docs/for-ai/implementation/raw-eds-blocks-guide.md) for detailed patterns
 
 ### Markdown Parser (Enhanced)
 

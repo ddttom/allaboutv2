@@ -6,7 +6,7 @@
 
 This document explains the Jupyter notebook implementation for **interactive testing of EDS blocks using JavaScript**. This is NOT Python-based testing—it uses JavaScript with jsdom for virtual DOM manipulation and the JSLab kernel for running JavaScript code in Jupyter notebooks.
 
-**NEW**: The test.ipynb notebook is now **context-aware** and works in both Node.js (JSLab) and browser environments, with built-in **live preview** functionality using **popup windows with `<base>` tag** for proper CSS and JavaScript loading.
+**CURRENT STATE**: The test.ipynb notebook features **ultra-simple one-line initialization** (96% smaller Cell 1), **context-aware execution** (Node.js and browser), **unified API** (`doc`, `testBlockFn`, `showPreview`), and **popup window previews** with `<base>` tag for proper CSS/JS loading.
 
 ## What This Is
 
@@ -15,11 +15,14 @@ This document explains the Jupyter notebook implementation for **interactive tes
 - **JSLab kernel** (JavaScript execution in Jupyter)
 - **jsdom** (Virtual DOM for simulating browser environment)
 - **VS Code** (Notebook editing with Jupyter extension)
+- **Ultra-simple initialization** (one-line `initialize()` function, 96% smaller)
 - **Context-aware execution** (automatically detects Node.js vs browser)
+- **Unified API** (`doc`, `testBlockFn`, `showPreview` - no ternary operators needed)
 - **Popup window preview** (isolated preview with full styling via `<base>` tag)
+- **Minimal DOM structure** (block as direct child of `<main>`, no wrappers)
 - **ipynb-viewer block** (execute notebooks interactively in the browser)
 
-This allows you to test EDS blocks interactively without running a full browser or development server, AND share executable notebooks for end-user interaction. The popup preview system uses the `<base>` tag to properly load CSS and JavaScript from blob URLs.
+This allows you to test EDS blocks interactively without running a full browser or development server, AND share executable notebooks for end-user interaction. The popup preview system uses the `<base>` tag to properly load CSS and JavaScript from blob URLs, and the minimal DOM structure ensures proper EDS block decoration.
 
 ---
 
@@ -260,14 +263,20 @@ The preview system opens blocks in a new window using blob URLs, with a `<base>`
    </head>
    ```
 
-2. **Inserts block with proper structure**:
+2. **Minimal DOM structure** (no wrapper interference):
    ```html
-   <div class="accordion block" data-block-name="accordion" data-block-status="initialized">
-     <!-- your undecorated block content -->
-   </div>
+   <body>
+     <div class="preview-header">...</div>  <!-- Fixed position -->
+     <main>
+       <div class="accordion block" data-block-name="accordion">
+         <!-- undecorated block content as direct children -->
+       </div>
+     </main>
+   </body>
    ```
 
 3. **Automatically decorates the block**:
+   - Block is direct child of `<main>` - no wrapper interference
    - Dynamically imports `/blocks/blockname/blockname.js` using detected origin
    - Executes the block's default export (decoration function)
    - Runs after DOM is ready with full error handling
@@ -275,15 +284,16 @@ The preview system opens blocks in a new window using blob URLs, with a `<base>`
 
 **Key Benefits:**
 - ✅ **Base tag solves blob URL issues** - CSS/JS load from correct origin
-- ✅ **Isolated window** - Doesn't interfere with parent page
+- ✅ **Clean DOM structure** - Block is direct child of main, no wrappers
+- ✅ **EDS-compatible structure** - Follows EDS block decoration patterns
 - ✅ **Full styling** - All CSS loads properly via base href
 - ✅ **Perfect JavaScript execution** - Module imports work correctly
-- ✅ **Popup controls** - Refresh and close buttons, ESC key support
+- ✅ **Fixed header controls** - Don't interfere with block structure
 - ✅ **Origin detection** - Automatically uses parent page's origin
 
 **Features:**
-- Dark themed header with live indicator (pulsing red dot)
-- Scrollable content area with white container
+- Fixed position dark header with live indicator (pulsing red dot)
+- Clean main content area with no wrapper divs
 - Refresh and close buttons
 - ESC key to close
 - Separate window isolation
@@ -301,6 +311,40 @@ await showPreview('accordion', accordionContent);
 
 **How base tag solves blob URL issues:**
 Blob URLs (`blob://...`) have a null origin and can't load external resources. The `<base href="https://your-origin/">` tag tells the browser to resolve all relative URLs against the parent page's origin, so `styles/styles.css` becomes `https://your-origin/styles/styles.css`.
+
+**Why minimal DOM structure matters (CRITICAL):**
+
+EDS blocks expect specific DOM structures. Many blocks (like accordion, tabs, cards) look for content rows as direct children of the block element using `block.children`. Extra wrapper divs break the child selection logic.
+
+**Common Issue:**
+If preview shows **colored boxes** instead of proper styled elements, even though decoration runs successfully, the cause is **wrapper divs** between `<main>` and the block element.
+
+**The preview uses a clean structure:**
+- **Fixed position header** (doesn't affect layout flow)
+- **`<main>` as semantic container**
+- **Block as direct child with no intermediary wrappers** ← CRITICAL
+
+**Never do this (BROKEN):**
+```html
+<main>
+  <div class="preview-wrapper">        <!-- ❌ Extra wrapper -->
+    <div class="preview-content">      <!-- ❌ Extra wrapper -->
+      <div class="accordion block">
+        <!-- content -->
+      </div>
+    </div>
+  </div>
+</main>
+```
+
+**Always do this (WORKS):**
+```html
+<main>
+  <div class="accordion block">
+    <!-- content rows as direct children -->
+  </div>
+</main>
+```
 
 **Double-Decoration Prevention:**
 The `showPreview()` function passes **undecorated HTML** to the popup. The popup decorates it once after the DOM loads, ensuring proper block behavior without double-processing.
