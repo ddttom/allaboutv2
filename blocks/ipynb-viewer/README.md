@@ -34,13 +34,32 @@ Add the block to your page with a link to your notebook file:
 
 ## Notebook Structure Support
 
-The block supports standard Jupyter notebook JSON format:
+The block supports standard Jupyter notebook JSON format with **enhanced markdown rendering**:
 
-### Markdown Cells
-- Headers (H1, H2, H3)
-- Bold and italic text
-- Inline code
-- Links
+### Markdown Cells (Enhanced)
+
+**Code Blocks (NEW):**
+- Triple backtick code blocks with optional language specification
+- Proper syntax highlighting and formatting
+- Example: \`\`\`javascript\n...\n\`\`\`
+
+**Tables (NEW):**
+- Full markdown table support with headers
+- Alternating row colors for readability
+- Responsive table styling
+- Example: `| Header 1 | Header 2 |`
+
+**Lists (NEW):**
+- Unordered lists with `-` or `*`
+- Ordered lists with `1.`, `2.`, etc.
+- Proper indentation and spacing
+
+**Inline Formatting:**
+- Headers (H1, H2, H3) with `#`, `##`, `###`
+- **Bold** text with `**text**`
+- *Italic* text with `*text*`
+- `Inline code` with backticks
+- [Links](url) with `[text](url)`
 - Line breaks
 
 ### Code Cells
@@ -97,6 +116,28 @@ The header includes a "Run All" button that:
 - Results are displayed in an output area below each cell
 - Errors are caught and displayed with red styling
 
+### Markdown Parser (Enhanced)
+
+The block includes a comprehensive markdown parser that supports:
+
+**Processing Order:**
+1. Code blocks (extracted first with placeholders)
+2. Tables (multi-line processing with header detection)
+3. Headers (H1, H2, H3)
+4. Bold and italic text
+5. Inline code
+6. Links
+7. Lists (unordered and ordered)
+8. Code block restoration
+9. Line break conversion
+
+**Key Features:**
+- **Code block protection**: Prevents markdown processing inside code blocks
+- **Table parsing**: Supports markdown tables with `|` delimiters and header rows
+- **List handling**: Properly closes and nests `<ul>` and `<ol>` tags
+- **HTML escaping**: Safely escapes `<` and `>` in code blocks
+- **Language tagging**: Preserves language hints from code fences
+
 ### Security Considerations
 - Code execution happens in the user's browser context
 - Be cautious with untrusted notebook files
@@ -114,7 +155,6 @@ The header includes a "Run All" button that:
 - Only JavaScript code cells are executable
 - Python or other language cells are displayed but not executed
 - No persistent state between page reloads
-- Limited markdown parsing (basic formatting only)
 
 ## Styling
 

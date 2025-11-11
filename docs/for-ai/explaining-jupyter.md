@@ -241,6 +241,76 @@ const previewHTML = window.createIframePreview('blockname', '<div>block html</di
 // Use for custom display or download
 ```
 
+### Block JavaScript Execution (NEW)
+
+**Live previews now automatically execute block JavaScript!**
+
+When you create a live preview, the preview HTML includes:
+
+1. **Proper block structure** with EDS classes and data attributes:
+   ```html
+   <div class="blockname block" data-block-name="blockname" data-block-status="initialized">
+     <!-- your block content -->
+   </div>
+   ```
+
+2. **Automatic block decoration** via module script:
+   - Dynamically imports `/blocks/blockname/blockname.js`
+   - Executes the block's default export (decoration function)
+   - Runs after DOM is ready
+   - Error handling with console logging
+
+**What this means:**
+- Accordion blocks are actually interactive
+- Carousel blocks actually cycle through slides
+- Any block behavior works in the preview
+- No manual decoration required
+
+**Example:**
+```javascript
+// This creates a fully interactive accordion preview
+await showPreview('accordion', accordionContent);
+// The preview will have clickable accordion sections!
+```
+
+---
+
+## Enhanced Markdown Rendering (NEW)
+
+The **ipynb-viewer block** now supports comprehensive markdown rendering when viewing notebooks in the browser:
+
+### Supported Markdown Features
+
+**Code Blocks (NEW):**
+```javascript
+// Triple backtick code blocks now render properly
+const example = 'with syntax highlighting';
+```
+
+**Tables (NEW):**
+| Feature | JSLab | Browser |
+|---------|-------|---------|
+| DOM Creation | ✅ jsdom | ✅ Native |
+
+**Lists (NEW):**
+- Unordered lists with `-` or `*`
+- Ordered lists with `1.`
+- Proper nesting and spacing
+
+**Inline Formatting:**
+- **Bold** text with `**text**`
+- *Italic* text with `*text*`
+- `Inline code` with backticks
+- [Links](url) with `[text](url)`
+
+**Headers:**
+- `#` H1
+- `##` H2
+- `###` H3
+
+**Why this matters:**
+The Quick Reference sections in test.ipynb now display beautifully in the browser with properly formatted code examples, tables, and lists!
+
 ---
 
 ## Key Technologies
