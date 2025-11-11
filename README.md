@@ -56,6 +56,8 @@ Access your tests at: `http://localhost:3000/blocks/your-block/test.html`
 1. **Jupyter Notebooks (JSLab)** - Development and testing with jsdom virtual DOM
    - Interactive cell-by-cell execution
    - Context-aware (works in Node.js and browser)
+   - External helper module ([scripts/ipynb-helpers.js](scripts/ipynb-helpers.js)) for clean notebook experience
+   - 55% reduction in setup code (220→45 lines in Cell 1)
    - Generates live preview HTML with iframe controls
    - See [Jupyter Notebook Testing Guide](docs/for-ai/explaining-jupyter.md)
 

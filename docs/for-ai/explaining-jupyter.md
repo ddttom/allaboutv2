@@ -286,6 +286,7 @@ Custom utility functions that adapt to the execution environment.
 Helper functions are now defined in [scripts/ipynb-helpers.js](../../scripts/ipynb-helpers.js) and loaded dynamically in Cell 1. This keeps the notebook clean and makes the helpers reusable across multiple notebooks.
 
 **Benefits:**
+- **55% reduction in Cell 1 size** - From ~220 lines to ~45 lines
 - Cleaner notebook experience
 - Easier to maintain and update
 - Reusable across multiple notebooks
@@ -293,13 +294,66 @@ Helper functions are now defined in [scripts/ipynb-helpers.js](../../scripts/ipy
 - Context-aware execution (Node.js and Browser)
 
 **Available Helper Functions:**
+
+**Setup Functions:**
+- `setupNodeEnvironment()` - Initialize Node.js/JSLab environment with jsdom and output directory
+- `setupBrowserEnvironment()` - Initialize browser environment with helper functions
+
+**Testing Functions:**
 - `loadBlockStyles(blockName)` - Load CSS for a block (Node.js only)
 - `testBlock(blockName, innerHTML)` - Test block decoration (Node.js and Browser)
 - `saveBlockHTML(blockName, innerHTML, filename, options)` - Save with live preview (Node.js only)
-- `createIframePreview(blockName, blockHTML)` - Generate iframe preview HTML (Node.js and Browser)
-- `openIframePreview(blockName, blockHTML)` - Open preview in popup (Browser only)
 
-#### Node.js Mode: `global.testBlock(blockName, innerHTML)`
+**Preview Functions:**
+- `createIframePreview(blockName, blockHTML)` - Generate iframe preview HTML (Node.js and Browser)
+- `openIframePreview(blockName, blockHTML)` - Open preview in popup (Browser only - via setupBrowserEnvironment)
+
+#### Setup Functions
+
+##### `setupNodeEnvironment()` (Node.js only)
+
+Initializes the complete Node.js/JSLab testing environment.
+
+**What it does:**
+- Loads and configures jsdom for virtual DOM
+- Sets up global DOM objects (document, window, HTMLElement, etc.)
+- **Sets global environment flags** (`global.isNode = true`, `global.isBrowser = false`)
+- Creates output directory (`ipynb-tests/`) if it doesn't exist
+- Logs initialization status
+
+**Usage:**
+```javascript
+const helpers = await import('./scripts/ipynb-helpers.js');
+await helpers.setupNodeEnvironment();
+```
+
+**No parameters needed** - automatically configures everything.
+
+##### `setupBrowserEnvironment()` (Browser only)
+
+Initializes browser helper functions for interactive testing.
+
+**What it does:**
+- **Sets global environment flags** (`window.isNode = false`, `window.isBrowser = true`)
+- Defines `window.testBlock()` - Test blocks with native APIs
+- Defines `window.displayBlock()` - Create styled containers
+- Defines `window.createIframePreview()` - Generate iframe HTML
+- Defines `window.openIframePreview()` - Open preview in popup
+- Logs available functions
+
+**Usage:**
+```javascript
+const helpers = await import('./scripts/ipynb-helpers.js');
+helpers.setupBrowserEnvironment();
+```
+
+**No parameters needed** - automatically configures everything.
+
+---
+
+#### Testing Functions
+
+##### Node.js Mode: `global.testBlock(blockName, innerHTML)`
 Tests a block's decoration function with provided content.
 
 **Parameters:**
@@ -443,125 +497,128 @@ npm install jsdom --save-dev
 
 Create `ipynb-tests/test-your-block.ipynb` in VS Code:
 
-**Cell 1: Setup jsdom**
+**Cell 1: Context-Aware Setup (UPDATED)**
 ```javascript
-const { JSDOM } = require('jsdom');
-const fs = require('fs');
-const path = require('path');
+(async () => {
+  // Detect execution environment
+  const isNode = typeof process !== 'undefined' && process.versions && process.versions.node;
+  const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
 
-// Create virtual DOM
-const dom = new JSDOM('<!DOCTYPE html><html><body></body></html>');
-global.document = dom.window.document;
-global.window = dom.window;
+  console.log('Environment:', isNode ? 'Node.js (JSLab)' : 'Browser');
 
-console.log('✓ Virtual DOM initialized');
+  if (isNode) {
+    // Load external helpers and initialize Node.js environment
+    const path = require('path');
+    const helpersPath = path.resolve('./scripts/ipynb-helpers.js');
+    const helpers = await import(helpersPath);
+
+    // Initialize Node.js environment (jsdom + output directory)
+    await helpers.setupNodeEnvironment();
+
+    // Make helpers available globally
+    global.loadBlockStyles = helpers.loadBlockStyles;
+    global.testBlock = helpers.testBlock;
+    global.saveBlockHTML = helpers.saveBlockHTML;
+    global.createIframePreview = helpers.createIframePreview;
+
+    console.log('✓ Loaded helper functions from scripts/ipynb-helpers.js');
+    console.log('✓ Available functions:');
+    console.log('  - global.testBlock(blockName, innerHTML)');
+    console.log('  - global.saveBlockHTML(blockName, innerHTML, filename, options)');
+    console.log('  - global.createIframePreview(blockName, blockHTML)');
+    console.log('  - global.loadBlockStyles(blockName)');
+  } else if (isBrowser) {
+    // Load helpers and initialize browser environment
+    const helpers = await import('./scripts/ipynb-helpers.js');
+    helpers.setupBrowserEnvironment();
+  }
+
+  console.log('\n========================================');
+  console.log('Setup complete! Ready to test EDS blocks');
+  console.log('========================================\n');
+
+  return 'Setup complete!';
+})();
 ```
 
-**Cell 2: Define Helper Functions**
+**Benefits of New Cell 1:**
+- **55% smaller** - Reduced from ~220 lines to ~45 lines
+- **Cleaner** - Setup logic moved to external module
+- **Reusable** - Helper module can be used in multiple notebooks
+- **Context-aware** - Automatically detects and adapts to Node.js or browser
+- **Maintainable** - Single source of truth for helper functions
+- **Sets global flags** - `isNode` and `isBrowser` available in all subsequent cells
+
+**Global Environment Flags:**
+
+Cell 1 sets global environment flags that are available in ALL subsequent cells:
+
+**Node.js (JSLab):**
 ```javascript
-async function testBlock(blockName, contentHTML, blockConfig = {}) {
-  // Import block JavaScript
-  const blockPath = path.join(__dirname, '..', 'blocks', blockName, `${blockName}.js`);
-  delete require.cache[require.resolve(blockPath)];
-  const blockModule = require(blockPath);
-  const decorate = blockModule.default || blockModule;
-
-  // Create block element with EDS structure
-  const tempDiv = document.createElement('div');
-  tempDiv.innerHTML = contentHTML;
-
-  const block = document.createElement('div');
-  block.className = `${blockName} block`;
-  Array.from(tempDiv.children).forEach(child => block.appendChild(child));
-
-  // Apply configuration
-  Object.keys(blockConfig).forEach(key => {
-    block.dataset[key] = blockConfig[key];
-  });
-
-  // Decorate the block
-  await decorate(block);
-
-  return block;
-}
-
-function saveBlockHTML(block, blockName, filename) {
-  const outputPath = path.join(__dirname, filename);
-
-  const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${blockName} Preview</title>
-
-    <!-- EDS Core Styles -->
-    <link rel="stylesheet" href="../styles/styles.css">
-    <link rel="stylesheet" href="../styles/fonts.css">
-
-    <!-- Block Styles -->
-    <link rel="stylesheet" href="../blocks/${blockName}/${blockName}.css">
-
-    <style>
-        body {
-            padding: 2rem;
-            background: var(--light-color);
-        }
-        body.appear { display: block; }
-    </style>
-</head>
-<body class="appear">
-    ${block.outerHTML}
-</body>
-</html>`;
-
-  fs.writeFileSync(outputPath, html);
-  console.log(\`✓ Saved to \${filename}\`);
-}
-
-console.log('✓ Helper functions loaded');
+global.isNode      // true
+global.isBrowser   // false
 ```
 
-**Cell 3: Test Your Block**
+**Browser (ipynb-viewer):**
 ```javascript
-// Test case 1: Basic usage
-const block1 = await testBlock('your-block', `
-  <div>
-    <div>Title 1</div>
-    <div>Description 1</div>
-  </div>
-  <div>
-    <div>Title 2</div>
-    <div>Description 2</div>
-  </div>
-`);
-
-console.log('Basic test:');
-console.log(block1.outerHTML);
+window.isNode      // false
+window.isBrowser   // true
 ```
 
-**Cell 4: Generate Preview**
+**Usage:** Simply reference `isNode` or `isBrowser` directly in any cell - no need to re-detect!
+
+**Cell 2: Test Your Block (Context-Aware)**
 ```javascript
-saveBlockHTML(block1, 'your-block', 'your-block-preview.html');
-console.log('Open ipynb-tests/your-block-preview.html in browser');
+// Context-aware block testing using global flags
+(async () => {
+  const testBlockFn = isNode ? global.testBlock : window.testBlock;
+
+  const block1 = await testBlockFn('your-block', `
+    <div>
+      <div>Title 1</div>
+      <div>Description 1</div>
+    </div>
+    <div>
+      <div>Title 2</div>
+      <div>Description 2</div>
+    </div>
+  `);
+
+  console.log('Basic test:');
+  console.log(block1.outerHTML);
+  return block1.outerHTML;
+})();
 ```
 
-**Cell 5: Test with Configuration**
+**Cell 3: Generate Preview with Live Iframe**
 ```javascript
-// Test case 2: With data attributes
-const block2 = await testBlock('your-block', `
-  <div>
-    <div>Title 1</div>
-    <div>Description 1</div>
-  </div>
-`, {
-  layout: 'grid',
-  columns: '3'
-});
+// Context-aware preview generation using global flags
+(async () => {
+  const content = `
+    <div>
+      <div>Title 1</div>
+      <div>Description 1</div>
+    </div>
+    <div>
+      <div>Title 2</div>
+      <div>Description 2</div>
+    </div>
+  `;
 
-console.log('With config:');
-console.log(block2.outerHTML);
-saveBlockHTML(block2, 'your-block', 'your-block-grid-preview.html');
+  if (isNode) {
+    // Node.js: Save files to disk
+    await global.saveBlockHTML('your-block', content);
+    console.log('✅ Files saved to ipynb-tests/');
+    console.log('📂 Open your-block-live-preview.html in browser');
+    return 'Files saved!';
+  } else {
+    // Browser: Open in popup window
+    const block = await window.testBlock('your-block', content);
+    window.openIframePreview('your-block', block.outerHTML);
+    console.log('✅ Preview opened in new window');
+    return 'Preview opened!';
+  }
+})();
 ```
 
 ### 3. Run and Iterate

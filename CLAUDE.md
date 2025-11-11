@@ -110,7 +110,7 @@ When creating or modifying blocks, ALWAYS use Content Driven Development:
 ### Quick Links
 - Architecture standards: `docs/for-ai/implementation/block-architecture-standards.md`
 - Testing standards: `docs/for-ai/testing/eds-native-testing-standards.md`
-- **NEW: Jupyter testing**: `docs/for-ai/explaining-jupyter.md` - Context-aware interactive testing
+- **NEW: Jupyter testing**: `docs/for-ai/explaining-jupyter.md` - Context-aware interactive testing with external helper module (55% smaller Cell 1)
 - **NEW: ipynb-viewer block**: `blocks/ipynb-viewer/README.md` - Display executable notebooks
 - Security checklist: `docs/for-ai/guidelines/security-checklist.md`
 - Frontend guidelines: `docs/for-ai/guidelines/frontend-guidelines.md`

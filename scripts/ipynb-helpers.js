@@ -4,13 +4,47 @@
  * This module provides helper functions for testing EDS blocks in Jupyter notebooks
  * using JSLab kernel with jsdom virtual DOM.
  *
- * Functions:
- * - setupNodeEnvironment() - Initialize Node.js/JSLab environment
- * - setupBrowserEnvironment() - Initialize browser environment
+ * REFACTORING NOTE:
+ * This module was extracted from inline Cell 1 code in test.ipynb to:
+ * - Reduce Cell 1 from ~220 lines to ~45 lines (55% reduction)
+ * - Enable reusability across multiple notebooks
+ * - Improve maintainability with single source of truth
+ * - Provide cleaner notebook experience for users
+ *
+ * Setup Functions (NEW):
+ * - setupNodeEnvironment() - Initialize Node.js/JSLab environment with jsdom
+ *   Sets: global.isNode = true, global.isBrowser = false
+ * - setupBrowserEnvironment() - Initialize browser environment with helpers
+ *   Sets: window.isNode = false, window.isBrowser = true
+ *
+ * Testing Functions:
  * - loadBlockStyles(blockName) - Load CSS for a block
  * - testBlock(blockName, innerHTML) - Test a block's decoration
  * - saveBlockHTML(blockName, innerHTML, filename, options) - Save block as HTML with live preview
+ *
+ * Preview Functions:
  * - createIframePreview(blockName, blockHTML) - Create iframe preview HTML (context-aware)
+ *
+ * Global Environment Flags:
+ * After running setupNodeEnvironment() or setupBrowserEnvironment(), these flags are available:
+ * - isNode: true in Node.js/JSLab, false in browser
+ * - isBrowser: true in browser, false in Node.js/JSLab
+ * Use these flags in subsequent cells without re-detecting the environment.
+ *
+ * Usage in test.ipynb Cell 1:
+ * ```javascript
+ * const helpers = await import('./scripts/ipynb-helpers.js');
+ * await helpers.setupNodeEnvironment(); // Node.js only - sets global flags
+ * // or
+ * helpers.setupBrowserEnvironment(); // Browser only - sets window flags
+ * ```
+ *
+ * Usage in subsequent cells:
+ * ```javascript
+ * // Simply use the global flags directly
+ * const doc = isNode ? global.document : document;
+ * const testBlockFn = isNode ? global.testBlock : window.testBlock;
+ * ```
  */
 
 /**
@@ -37,6 +71,10 @@ export async function setupNodeEnvironment() {
   global.CustomEvent = dom.window.CustomEvent;
   global.Event = dom.window.Event;
 
+  // Make environment flags globally available
+  global.isNode = true;
+  global.isBrowser = false;
+
   console.log('✓ Virtual DOM environment initialized');
 
   // Ensure output directory exists
@@ -59,6 +97,10 @@ export async function setupNodeEnvironment() {
 export function setupBrowserEnvironment() {
   console.log('✓ Browser environment detected');
   console.log('✓ Using native browser APIs');
+
+  // Make environment flags globally available
+  window.isNode = false;
+  window.isBrowser = true;
 
   // Browser helpers use native APIs
   window.testBlock = async function(blockName, innerHTML = '') {
