@@ -166,7 +166,7 @@ The notebook supports **dual execution modes**:
 
 ## Helper Functions
 
-All helper functions are in **scripts/ipynb-helpers.js**, loaded by Cell 1's `initialize()`.
+All helper functions are in **scripts/ipynb-helpers.js**, loaded by the first code cell's `initialize()`.
 
 ### initialize() - Master Setup (NEW)
 
@@ -174,7 +174,7 @@ All helper functions are in **scripts/ipynb-helpers.js**, loaded by Cell 1's `in
 
 ### Unified API
 
-After Cell 1, these globals are available in all cells:
+After running the first code cell, these globals are available in all cells:
 
 ```javascript
 doc              // Document (no ternary needed!)

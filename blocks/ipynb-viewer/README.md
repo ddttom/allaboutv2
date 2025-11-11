@@ -6,10 +6,10 @@ Display and execute Jupyter notebook (.ipynb) files directly in your EDS site wi
 
 - **Parse and Display Notebooks**: Renders both markdown and code cells from .ipynb files
 - **Interactive Execution**: Run JavaScript code cells individually with a click (async/await support)
-- **Automatic Initialization Check**: Warns users if they skip Cell 1 (prevents undefined function errors)
-- **Context Detection**: Cell 1 initialization displays environment (Node.js/Browser) and setup status
+- **Automatic Initialization Check**: Warns users if they skip the first code cell (prevents undefined function errors)
+- **Context Detection**: First code cell initialization displays environment (Node.js/Browser) and setup status
 - **Output Display**: Shows console logs, results, and errors inline
-- **Sequential Execution**: Run cells in order, starting with Cell 1 (initialization)
+- **Sequential Execution**: Run cells in order, starting with the first code cell (initialization)
 - **Responsive Design**: Mobile-friendly layout
 - **Syntax Highlighting**: Clear code formatting with monospace fonts
 - **Error Handling**: Graceful error messages and visual indicators
