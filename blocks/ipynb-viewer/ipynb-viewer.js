@@ -277,7 +277,8 @@ async function executeCodeCell(cellDiv) {
     // Execute code (with async support)
     // eslint-disable-next-line no-new-func
     const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
-    const result = await new AsyncFunction(code)();
+    const func = new AsyncFunction(code);
+    const result = await func();
 
     // Restore console
     console.log = originalConsoleLog;
@@ -292,6 +293,10 @@ async function executeCodeCell(cellDiv) {
       ).join(' ');
       output.appendChild(logDiv);
     });
+
+    // Debug: log result type and value
+    console.log('[DEBUG] Result type:', typeof result);
+    console.log('[DEBUG] Result value:', result);
 
     // Display result if not undefined
     if (result !== undefined) {
@@ -310,6 +315,9 @@ async function executeCodeCell(cellDiv) {
 
       resultDiv.textContent = resultString;
       output.appendChild(resultDiv);
+      console.log('[DEBUG] Result div appended to output');
+    } else {
+      console.log('[DEBUG] Result is undefined, not displaying');
     }
 
     // Show success indicator
