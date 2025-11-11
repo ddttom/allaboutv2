@@ -231,21 +231,39 @@ export function setupBrowserEnvironment() {
     let stylesCSS = '';
     let blockCSS = '';
 
+    console.log('🎨 Fetching CSS from:', currentOrigin);
+
     try {
-      const stylesResponse = await fetch(`${currentOrigin}/styles/styles.css`);
-      stylesCSS = await stylesResponse.text();
-      console.log('✓ Loaded styles.css');
+      const stylesUrl = `${currentOrigin}/styles/styles.css`;
+      console.log('Fetching:', stylesUrl);
+      const stylesResponse = await fetch(stylesUrl);
+      console.log('Styles response status:', stylesResponse.status);
+      if (stylesResponse.ok) {
+        stylesCSS = await stylesResponse.text();
+        console.log('✓ Loaded styles.css, length:', stylesCSS.length);
+      } else {
+        console.warn('❌ Failed to load styles.css, status:', stylesResponse.status);
+      }
     } catch (e) {
-      console.warn('Could not load styles.css:', e.message);
+      console.error('❌ Could not load styles.css:', e.message);
     }
 
     try {
-      const blockResponse = await fetch(`${currentOrigin}/blocks/${blockName}/${blockName}.css`);
-      blockCSS = await blockResponse.text();
-      console.log('✓ Loaded block CSS');
+      const blockUrl = `${currentOrigin}/blocks/${blockName}/${blockName}.css`;
+      console.log('Fetching:', blockUrl);
+      const blockResponse = await fetch(blockUrl);
+      console.log('Block CSS response status:', blockResponse.status);
+      if (blockResponse.ok) {
+        blockCSS = await blockResponse.text();
+        console.log('✓ Loaded block CSS, length:', blockCSS.length);
+      } else {
+        console.warn('❌ Failed to load block CSS, status:', blockResponse.status);
+      }
     } catch (e) {
-      console.warn('Could not load block CSS:', e.message);
+      console.error('❌ Could not load block CSS:', e.message);
     }
+
+    console.log('📊 Total CSS loaded:', stylesCSS.length + blockCSS.length, 'characters');
 
     const previewHTML = createIframePreview(blockName, blockHTML, currentOrigin, stylesCSS, blockCSS);
     console.log('✓ Preview HTML generated, length:', previewHTML.length);

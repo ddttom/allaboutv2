@@ -243,35 +243,58 @@ const previewHTML = window.createIframePreview('blockname', '<div>block html</di
 
 ### Block JavaScript Execution (NEW)
 
-**Live previews now automatically execute block JavaScript!**
+**Live previews now automatically execute block JavaScript with proper styling!**
 
-When you create a live preview, the preview HTML includes:
+When you create a live preview, the system:
 
-1. **Proper block structure** with EDS classes and data attributes:
+1. **Fetches CSS content** from your site:
+   - Downloads `/styles/styles.css`
+   - Downloads `/blocks/blockname/blockname.css`
+   - Embeds both inline in the preview HTML
+
+2. **Creates proper block structure** with EDS classes and data attributes:
    ```html
    <div class="blockname block" data-block-name="blockname" data-block-status="initialized">
      <!-- your block content -->
    </div>
    ```
 
-2. **Automatic block decoration** via module script:
-   - Dynamically imports `/blocks/blockname/blockname.js`
+3. **Dynamically detects origin** for module loading:
+   - Uses parent page's origin (e.g., `https://main--allaboutv2--ddttom.aem.page`)
+   - Falls back to `window.opener.location.origin` if needed
+   - Works from both localhost and hosted environments
+
+4. **Executes block decoration** automatically:
+   - Dynamically imports `/blocks/blockname/blockname.js` from detected origin
    - Executes the block's default export (decoration function)
    - Runs after DOM is ready
-   - Error handling with console logging
+   - Full error handling with console logging
+
+**Why Blob URLs require special handling:**
+- Blob URLs have a `null` origin and can't load external resources
+- CSS is fetched from parent page and embedded inline
+- JavaScript modules load from detected parent origin
+- This makes previews fully self-contained and portable
 
 **What this means:**
-- Accordion blocks are actually interactive
-- Carousel blocks actually cycle through slides
+- Accordion blocks are fully interactive with proper styling
+- Carousel blocks actually cycle through slides with animations
 - Any block behavior works in the preview
 - No manual decoration required
+- Works from both development and production environments
 
 **Example:**
 ```javascript
-// This creates a fully interactive accordion preview
+// This creates a fully interactive, styled accordion preview
 await showPreview('accordion', accordionContent);
-// The preview will have clickable accordion sections!
+// The preview will have:
+// - Proper accordion styling from accordion.css
+// - Clickable accordion sections with <details> elements
+// - Base styles from styles.css
 ```
+
+**Double-Decoration Prevention:**
+The `showPreview()` function passes **undecorated HTML** to the iframe to avoid double-decoration issues. The iframe receives raw content and decorates it once, ensuring proper block behavior.
 
 ---
 

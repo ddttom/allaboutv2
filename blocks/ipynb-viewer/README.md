@@ -82,6 +82,14 @@ The header includes a "Run All" button that:
 - Executes all code cells in order
 - Useful for notebooks with dependencies between cells
 
+### Live Preview Integration (NEW)
+When using `showPreview()` or `openIframePreview()` in code cells:
+- **Automatic CSS loading**: Fetches and embeds styles.css and block-specific CSS inline
+- **Origin detection**: Automatically detects parent page origin for module loading
+- **Blob URL handling**: Embeds all resources inline to work around blob:// origin restrictions
+- **Full interactivity**: Block JavaScript executes properly with correct styling
+- **No double-decoration**: Passes undecorated HTML to avoid processing blocks twice
+
 ## Example Notebook Structure
 
 ```json
@@ -115,6 +123,47 @@ The header includes a "Run All" button that:
 - Console methods are temporarily captured during execution
 - Results are displayed in an output area below each cell
 - Errors are caught and displayed with red styling
+
+### Live Preview System (NEW)
+
+**How it works:**
+
+1. **CSS Fetching and Embedding**:
+   ```javascript
+   // Fetches CSS from parent page origin
+   const stylesResponse = await fetch(`${currentOrigin}/styles/styles.css`);
+   const stylesCSS = await stylesResponse.text();
+
+   const blockResponse = await fetch(`${currentOrigin}/blocks/${blockName}/${blockName}.css`);
+   const blockCSS = await blockResponse.text();
+   ```
+
+2. **Inline CSS Injection**:
+   ```html
+   <style>
+   /* styles.css */
+   [embedded CSS content]
+
+   /* blockname.css */
+   [embedded CSS content]
+   </style>
+   ```
+
+3. **Origin Detection for Module Loading**:
+   ```javascript
+   // Priority: 1) Passed origin, 2) Opener origin, 3) Current origin
+   let baseUrl = '${baseOrigin}'; // Passed from parent
+
+   // Import block JavaScript from detected origin
+   const module = await import(`${baseUrl}/blocks/${blockName}/${blockName}.js`);
+   ```
+
+**Why this approach?**
+- Blob URLs (`blob://...`) have a `null` origin
+- Can't load external CSS or JavaScript from blob URLs
+- Embedding CSS inline makes previews self-contained
+- Passing origin allows JavaScript module imports to work
+- Results in fully functional, styled block previews
 
 ### Markdown Parser (Enhanced)
 
