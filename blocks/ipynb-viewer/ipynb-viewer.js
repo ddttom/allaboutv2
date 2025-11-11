@@ -294,10 +294,6 @@ async function executeCodeCell(cellDiv) {
       output.appendChild(logDiv);
     });
 
-    // Debug: log result type and value
-    console.log('[DEBUG] Result type:', typeof result);
-    console.log('[DEBUG] Result value:', result);
-
     // Display result if not undefined
     if (result !== undefined) {
       const resultDiv = document.createElement('div');
@@ -315,9 +311,6 @@ async function executeCodeCell(cellDiv) {
 
       resultDiv.textContent = resultString;
       output.appendChild(resultDiv);
-      console.log('[DEBUG] Result div appended to output');
-    } else {
-      console.log('[DEBUG] Result is undefined, not displaying');
     }
 
     // Show success indicator
