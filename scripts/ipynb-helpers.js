@@ -437,6 +437,8 @@ export function createIframePreview(blockName, blockHTML) {
 <head>
   <meta charset="UTF-8">
   <title>Live Preview - ${blockName}</title>
+  <link rel="stylesheet" href="/styles/styles.css">
+  <link rel="stylesheet" href="/blocks/${blockName}/${blockName}.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: system-ui, -apple-system, sans-serif; background: #1e1e1e; color: #fff; overflow: hidden; }
@@ -455,7 +457,7 @@ export function createIframePreview(blockName, blockHTML) {
     .status { font-size: 11px; color: #888; padding: 0 8px; }
   </style>
 </head>
-<body>
+<body class="appear">
   <div class="preview-wrapper">
     <div class="preview-header">
       <div class="preview-title">🔴 LIVE PREVIEW: <strong>${blockName}</strong> Block</div>
