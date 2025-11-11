@@ -218,16 +218,36 @@ export function setupBrowserEnvironment() {
   };
 
   // Open iframe preview in new window
-  window.openIframePreview = function(blockName, blockHTML) {
+  window.openIframePreview = async function(blockName, blockHTML) {
     console.log('📦 Creating preview for:', blockName);
     console.log('📄 Block HTML length:', blockHTML?.length || 0);
     console.log('📄 Block HTML preview:', blockHTML?.substring(0, 200));
 
-    // Pass the current origin as a query parameter so blob URL can use it
+    // Pass the current origin to create preview with proper URLs
     const currentOrigin = window.location.origin;
     console.log('🌐 Current origin:', currentOrigin);
 
-    const previewHTML = createIframePreview(blockName, blockHTML, currentOrigin);
+    // Fetch CSS content to embed inline
+    let stylesCSS = '';
+    let blockCSS = '';
+
+    try {
+      const stylesResponse = await fetch(`${currentOrigin}/styles/styles.css`);
+      stylesCSS = await stylesResponse.text();
+      console.log('✓ Loaded styles.css');
+    } catch (e) {
+      console.warn('Could not load styles.css:', e.message);
+    }
+
+    try {
+      const blockResponse = await fetch(`${currentOrigin}/blocks/${blockName}/${blockName}.css`);
+      blockCSS = await blockResponse.text();
+      console.log('✓ Loaded block CSS');
+    } catch (e) {
+      console.warn('Could not load block CSS:', e.message);
+    }
+
+    const previewHTML = createIframePreview(blockName, blockHTML, currentOrigin, stylesCSS, blockCSS);
     console.log('✓ Preview HTML generated, length:', previewHTML.length);
 
     const blob = new Blob([previewHTML], { type: 'text/html' });
@@ -449,18 +469,25 @@ export async function saveBlockHTML(blockName, innerHTML = '', filename = null, 
  * @param {string} blockHTML - HTML content of the block
  * @returns {string} Iframe preview HTML
  */
-export function createIframePreview(blockName, blockHTML, baseOrigin = null) {
-  // Generate absolute URLs for CSS files if baseOrigin is provided
-  const stylesUrl = baseOrigin ? `${baseOrigin}/styles/styles.css` : '/styles/styles.css';
-  const blockCssUrl = baseOrigin ? `${baseOrigin}/blocks/${blockName}/${blockName}.css` : `/blocks/${blockName}/${blockName}.css`;
+export function createIframePreview(blockName, blockHTML, baseOrigin = null, stylesCSS = '', blockCSS = '') {
+  // If CSS content is provided, embed it inline; otherwise use link tags
+  const cssIncludes = (stylesCSS || blockCSS)
+    ? `<style>
+/* styles.css */
+${stylesCSS}
+
+/* ${blockName}.css */
+${blockCSS}
+</style>`
+    : `<link rel="stylesheet" href="${baseOrigin ? `${baseOrigin}/styles/styles.css` : '/styles/styles.css'}">
+  <link rel="stylesheet" href="${baseOrigin ? `${baseOrigin}/blocks/${blockName}/${blockName}.css` : `/blocks/${blockName}/${blockName}.css`}">`;
 
   return `<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <title>Live Preview - ${blockName}</title>
-  <link rel="stylesheet" href="${stylesUrl}">
-  <link rel="stylesheet" href="${blockCssUrl}">
+  ${cssIncludes}
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: system-ui, -apple-system, sans-serif; background: #1e1e1e; color: #fff; overflow: hidden; }
