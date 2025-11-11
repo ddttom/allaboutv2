@@ -12,6 +12,7 @@
  * - Provide cleaner notebook experience for users
  *
  * Setup Functions (NEW):
+ * - initialize() - Master initialization (detects environment, does everything!) **RECOMMENDED**
  * - setupNodeEnvironment() - Initialize Node.js/JSLab environment with jsdom
  *   Sets: global.isNode = true, global.isBrowser = false
  * - setupBrowserEnvironment() - Initialize browser environment with helpers
@@ -25,13 +26,29 @@
  * Preview Functions:
  * - createIframePreview(blockName, blockHTML) - Create iframe preview HTML (context-aware)
  *
- * Global Environment Flags:
- * After running setupNodeEnvironment() or setupBrowserEnvironment(), these flags are available:
+ * Global Environment Flags & Unified API:
+ * After running setupNodeEnvironment() or setupBrowserEnvironment(), these are available:
+ *
+ * Environment Flags:
  * - isNode: true in Node.js/JSLab, false in browser
  * - isBrowser: true in browser, false in Node.js/JSLab
- * Use these flags in subsequent cells without re-detecting the environment.
  *
- * Usage in test.ipynb Cell 1:
+ * Unified API (works identically in both Node.js and browser):
+ * - doc: Reference to document object
+ * - testBlockFn: Reference to testBlock function
+ * - showPreview(blockName, content): Create/open preview (saves files in Node, opens popup in browser)
+ * - createPreviewFn: Reference to createIframePreview function
+ *
+ * Usage in test.ipynb Cell 1 (NEW - Super Simple!):
+ * ```javascript
+ * // Just call initialize() - it does everything!
+ * const isNode = typeof process !== 'undefined' && process.versions?.node;
+ * const helpersPath = isNode ? './scripts/ipynb-helpers.js' : '/scripts/ipynb-helpers.js';
+ * const { initialize } = await import(helpersPath);
+ * await initialize();
+ * ```
+ *
+ * OLD Usage (still works):
  * ```javascript
  * const helpers = await import('./scripts/ipynb-helpers.js');
  * await helpers.setupNodeEnvironment(); // Node.js only - sets global flags
@@ -39,13 +56,53 @@
  * helpers.setupBrowserEnvironment(); // Browser only - sets window flags
  * ```
  *
- * Usage in subsequent cells:
+ * Usage in subsequent cells (NEW - Simplified):
  * ```javascript
- * // Simply use the global flags directly
+ * // OLD WAY (still works):
  * const doc = isNode ? global.document : document;
  * const testBlockFn = isNode ? global.testBlock : window.testBlock;
+ *
+ * // NEW WAY (simpler - no ternary operators needed!):
+ * const block = await testBlockFn('blockname', '<div>content</div>');
+ * await showPreview('blockname', '<div>content</div>');
+ * const div = doc.createElement('div');
  * ```
  */
+
+/**
+ * Master initialization function - detects environment and sets up everything
+ * This is the simplest way to initialize - just call this one function!
+ * @returns {Promise<string>} Setup completion message
+ */
+export async function initialize() {
+  // Detect execution environment
+  const isNode = typeof process !== 'undefined' && process.versions && process.versions.node;
+  const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
+
+  console.log('Environment:', isNode ? 'Node.js (JSLab)' : 'Browser');
+
+  if (isNode) {
+    // Node.js setup - call setup directly since we're already in the module
+    await setupNodeEnvironment();
+
+    // Make additional helpers available globally
+    global.loadBlockStyles = loadBlockStyles;
+    global.testBlock = testBlock;
+    global.saveBlockHTML = saveBlockHTML;
+    global.createIframePreview = createIframePreview;
+
+    console.log('✓ Loaded helper functions from scripts/ipynb-helpers.js');
+  } else if (isBrowser) {
+    // Browser setup - call setup directly
+    setupBrowserEnvironment();
+  }
+
+  console.log('\n========================================');
+  console.log('Setup complete! Ready to test EDS blocks');
+  console.log('========================================\n');
+
+  return 'Setup complete!';
+}
 
 /**
  * Setup Node.js/JSLab environment with jsdom and helpers
@@ -75,6 +132,26 @@ export async function setupNodeEnvironment() {
   global.isNode = true;
   global.isBrowser = false;
 
+  // Add context-aware helper getters
+  global.getDoc = () => global.document;
+  global.getTestBlockFn = () => global.testBlock;
+
+  // Context-aware unified API (works the same in both environments)
+  global.doc = global.document;
+  global.testBlockFn = global.testBlock;
+  global.saveBlockFn = global.saveBlockHTML;
+  global.createPreviewFn = global.createIframePreview;
+
+  // Unified preview function (context-aware)
+  global.showPreview = async (blockName, content) => {
+    await global.saveBlockHTML(blockName, content);
+    console.log(`✅ FILES CREATED (Node.js):`);
+    console.log(`📂 ipynb-tests/${blockName}-preview.html - Styled block`);
+    console.log(`📂 ipynb-tests/${blockName}-live-preview.html - Iframe with controls`);
+    console.log(`🎨 Open ${blockName}-live-preview.html in your browser!`);
+    return `Files saved! Open ${blockName}-live-preview.html in your browser`;
+  };
+
   console.log('✓ Virtual DOM environment initialized');
 
   // Ensure output directory exists
@@ -101,6 +178,25 @@ export function setupBrowserEnvironment() {
   // Make environment flags globally available
   window.isNode = false;
   window.isBrowser = true;
+
+  // Add context-aware helper getters
+  window.getDoc = () => document;
+  window.getTestBlockFn = () => window.testBlock;
+
+  // Context-aware unified API (works the same in both environments)
+  window.doc = document;
+  window.testBlockFn = window.testBlock;
+  window.createPreviewFn = window.createIframePreview;
+
+  // Unified preview function (context-aware)
+  window.showPreview = async (blockName, content) => {
+    const block = await window.testBlock(blockName, content);
+    window.openIframePreview(blockName, block.outerHTML);
+    console.log(`✅ PREVIEW OPENED (Browser):`);
+    console.log(`🎨 Iframe preview opened in new window`);
+    console.log(`🖼️  Features: Refresh button, Close button (ESC key)`);
+    return 'Iframe preview opened in new window!';
+  };
 
   // Browser helpers use native APIs
   window.testBlock = async function(blockName, innerHTML = '') {

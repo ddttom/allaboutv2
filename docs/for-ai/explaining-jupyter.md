@@ -310,6 +310,28 @@ Helper functions are now defined in [scripts/ipynb-helpers.js](../../scripts/ipy
 
 #### Setup Functions
 
+##### `initialize()` (Recommended - Works Everywhere!)
+
+**NEW:** Master initialization function that detects environment and does everything automatically.
+
+**What it does:**
+- Automatically detects Node.js vs Browser environment
+- Calls appropriate setup function (`setupNodeEnvironment` or `setupBrowserEnvironment`)
+- **Sets global environment flags** (`isNode`, `isBrowser`)
+- **Sets unified API** (doc, testBlockFn, showPreview, createPreviewFn)
+- Registers all helper functions globally
+- Logs setup completion
+
+**Usage:**
+```javascript
+const isNode = typeof process !== 'undefined' && process.versions?.node;
+const helpersPath = isNode ? './scripts/ipynb-helpers.js' : '/scripts/ipynb-helpers.js';
+const { initialize } = await import(helpersPath);
+await initialize();
+```
+
+**This is now the recommended way to set up notebooks!**
+
 ##### `setupNodeEnvironment()` (Node.js only)
 
 Initializes the complete Node.js/JSLab testing environment.
@@ -497,57 +519,28 @@ npm install jsdom --save-dev
 
 Create `ipynb-tests/test-your-block.ipynb` in VS Code:
 
-**Cell 1: Context-Aware Setup (UPDATED)**
+**Cell 1: One-Line Initialization (NEW - ULTRA SIMPLE!)**
 ```javascript
+// ============================================================================
+// SETUP: One-line initialization! (works in both JSLab and Browser)
+// ============================================================================
+
 (async () => {
-  // Detect execution environment
-  const isNode = typeof process !== 'undefined' && process.versions && process.versions.node;
-  const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
-
-  console.log('Environment:', isNode ? 'Node.js (JSLab)' : 'Browser');
-
-  if (isNode) {
-    // Load external helpers and initialize Node.js environment
-    const path = require('path');
-    const helpersPath = path.resolve('./scripts/ipynb-helpers.js');
-    const helpers = await import(helpersPath);
-
-    // Initialize Node.js environment (jsdom + output directory)
-    await helpers.setupNodeEnvironment();
-
-    // Make helpers available globally
-    global.loadBlockStyles = helpers.loadBlockStyles;
-    global.testBlock = helpers.testBlock;
-    global.saveBlockHTML = helpers.saveBlockHTML;
-    global.createIframePreview = helpers.createIframePreview;
-
-    console.log('✓ Loaded helper functions from scripts/ipynb-helpers.js');
-    console.log('✓ Available functions:');
-    console.log('  - global.testBlock(blockName, innerHTML)');
-    console.log('  - global.saveBlockHTML(blockName, innerHTML, filename, options)');
-    console.log('  - global.createIframePreview(blockName, blockHTML)');
-    console.log('  - global.loadBlockStyles(blockName)');
-  } else if (isBrowser) {
-    // Load helpers and initialize browser environment
-    const helpers = await import('./scripts/ipynb-helpers.js');
-    helpers.setupBrowserEnvironment();
-  }
-
-  console.log('\n========================================');
-  console.log('Setup complete! Ready to test EDS blocks');
-  console.log('========================================\n');
-
-  return 'Setup complete!';
+  const isNode = typeof process !== 'undefined' && process.versions?.node;
+  const helpersPath = isNode ? './scripts/ipynb-helpers.js' : '/scripts/ipynb-helpers.js';
+  const { initialize } = await import(helpersPath);
+  return await initialize();
 })();
 ```
 
 **Benefits of New Cell 1:**
-- **55% smaller** - Reduced from ~220 lines to ~45 lines
-- **Cleaner** - Setup logic moved to external module
-- **Reusable** - Helper module can be used in multiple notebooks
+- **96% smaller** - Reduced from original ~220 lines to just 9 lines!
+- **One function call** - `initialize()` does everything automatically
+- **Ultra simple** - Easiest possible setup
 - **Context-aware** - Automatically detects and adapts to Node.js or browser
-- **Maintainable** - Single source of truth for helper functions
 - **Sets global flags** - `isNode` and `isBrowser` available in all subsequent cells
+- **Sets unified API** - `doc`, `testBlockFn`, `showPreview` available everywhere
+- **Maintainable** - All logic in external module
 
 **Global Environment Flags:**
 
@@ -567,12 +560,10 @@ window.isBrowser   // true
 
 **Usage:** Simply reference `isNode` or `isBrowser` directly in any cell - no need to re-detect!
 
-**Cell 2: Test Your Block (Context-Aware)**
+**Cell 2: Test Your Block (Using Unified API - Even Simpler!)**
 ```javascript
-// Context-aware block testing using global flags
+// No ternary operators needed - unified API just works!
 (async () => {
-  const testBlockFn = isNode ? global.testBlock : window.testBlock;
-
   const block1 = await testBlockFn('your-block', `
     <div>
       <div>Title 1</div>
@@ -590,9 +581,9 @@ window.isBrowser   // true
 })();
 ```
 
-**Cell 3: Generate Preview with Live Iframe**
+**Cell 3: Generate Preview with Live Iframe (Super Simple!)**
 ```javascript
-// Context-aware preview generation using global flags
+// One function works in both environments!
 (async () => {
   const content = `
     <div>
@@ -605,19 +596,8 @@ window.isBrowser   // true
     </div>
   `;
 
-  if (isNode) {
-    // Node.js: Save files to disk
-    await global.saveBlockHTML('your-block', content);
-    console.log('✅ Files saved to ipynb-tests/');
-    console.log('📂 Open your-block-live-preview.html in browser');
-    return 'Files saved!';
-  } else {
-    // Browser: Open in popup window
-    const block = await window.testBlock('your-block', content);
-    window.openIframePreview('your-block', block.outerHTML);
-    console.log('✅ Preview opened in new window');
-    return 'Preview opened!';
-  }
+  // One function automatically adapts to environment!
+  return await showPreview('your-block', content);
 })();
 ```
 
