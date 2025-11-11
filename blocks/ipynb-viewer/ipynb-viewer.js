@@ -4,31 +4,133 @@
  */
 
 /**
- * Parse markdown text to HTML (simple implementation)
+ * Parse markdown text to HTML (enhanced implementation)
  * @param {string} markdown - Markdown text
  * @returns {string} HTML string
  */
 function parseMarkdown(markdown) {
   let html = markdown;
 
-  // Headers
+  // Code blocks (triple backticks) - MUST be processed first before other replacements
+  const codeBlockPlaceholders = [];
+  html = html.replace(/```(\w+)?\n?([\s\S]*?)```/g, (match, lang, code) => {
+    const placeholder = `__CODEBLOCK_${codeBlockPlaceholders.length}__`;
+    codeBlockPlaceholders.push(`<pre><code class="language-${lang || 'plaintext'}">${code.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`);
+    return placeholder;
+  });
+
+  // Tables - must be before line breaks
+  const lines = html.split('\n');
+  const processedLines = [];
+  let inTable = false;
+  let tableRows = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+
+    // Check if line is a table row
+    if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
+      // Skip separator rows (|---|---|)
+      if (/^\|[\s\-:]+\|$/.test(line.trim())) {
+        continue;
+      }
+
+      if (!inTable) {
+        inTable = true;
+        tableRows = [];
+      }
+
+      const cells = line.split('|').filter(cell => cell.trim());
+      const row = '<tr>' + cells.map((cell, idx) => {
+        // First row is header
+        const tag = tableRows.length === 0 ? 'th' : 'td';
+        return `<${tag}>${cell.trim()}</${tag}>`;
+      }).join('') + '</tr>';
+      tableRows.push(row);
+    } else {
+      // Not a table row
+      if (inTable) {
+        // End of table, flush accumulated rows
+        processedLines.push('<table>' + tableRows.join('') + '</table>');
+        tableRows = [];
+        inTable = false;
+      }
+      processedLines.push(line);
+    }
+  }
+
+  // Flush any remaining table
+  if (inTable && tableRows.length > 0) {
+    processedLines.push('<table>' + tableRows.join('') + '</table>');
+  }
+
+  html = processedLines.join('\n');
+
+  // Headers (process in order from most specific to least)
   html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
   html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
   html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
 
-  // Bold
-  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  // Bold (before italic to handle ** before *)
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 
   // Italic
-  html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+  html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
 
-  // Code inline
-  html = html.replace(/`(.*?)`/g, '<code>$1</code>');
+  // Code inline (before links to avoid conflicts)
+  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
 
   // Links
-  html = html.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2">$1</a>');
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
 
-  // Line breaks
+  // Lists - process line by line
+  const linesWithLists = html.split('\n');
+  const processedWithLists = [];
+  let inUl = false;
+  let inOl = false;
+
+  for (const line of linesWithLists) {
+    const ulMatch = line.match(/^[\s]*[-*] (.+)$/);
+    const olMatch = line.match(/^[\s]*\d+\. (.+)$/);
+
+    if (ulMatch) {
+      if (!inUl) {
+        processedWithLists.push('<ul>');
+        inUl = true;
+      }
+      processedWithLists.push(`<li>${ulMatch[1]}</li>`);
+    } else if (olMatch) {
+      if (!inOl) {
+        processedWithLists.push('<ol>');
+        inOl = true;
+      }
+      processedWithLists.push(`<li>${olMatch[1]}</li>`);
+    } else {
+      // Close any open lists
+      if (inUl) {
+        processedWithLists.push('</ul>');
+        inUl = false;
+      }
+      if (inOl) {
+        processedWithLists.push('</ol>');
+        inOl = false;
+      }
+      processedWithLists.push(line);
+    }
+  }
+
+  // Close any remaining open lists
+  if (inUl) processedWithLists.push('</ul>');
+  if (inOl) processedWithLists.push('</ol>');
+
+  html = processedWithLists.join('\n');
+
+  // Restore code blocks
+  codeBlockPlaceholders.forEach((codeBlock, index) => {
+    html = html.replace(`__CODEBLOCK_${index}__`, codeBlock);
+  });
+
+  // Line breaks (convert remaining newlines to <br>)
   html = html.replace(/\n/g, '<br>');
 
   return html;

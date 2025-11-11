@@ -105,6 +105,59 @@
   font-size: 0.9em;
 }
 
+.ipynb-markdown-cell pre {
+  background: var(--code-background, #f8f9fa);
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: 0.5rem 0;
+  border: 1px solid var(--light-color, #e0e0e0);
+}
+
+.ipynb-markdown-cell pre code {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  display: block;
+  white-space: pre;
+}
+
+.ipynb-markdown-cell ul,
+.ipynb-markdown-cell ol {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.ipynb-markdown-cell li {
+  margin: 0.25rem 0;
+  line-height: 1.6;
+}
+
+.ipynb-markdown-cell table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.ipynb-markdown-cell th,
+.ipynb-markdown-cell td {
+  padding: 0.5rem;
+  border: 1px solid var(--light-color, #e0e0e0);
+  text-align: left;
+}
+
+.ipynb-markdown-cell th {
+  background: var(--light-color, #f5f5f5);
+  font-weight: 600;
+}
+
+.ipynb-markdown-cell tr:nth-child(even) {
+  background: rgba(0, 0, 0, 0.02);
+}
+
 .ipynb-markdown-cell a {
   color: var(--primary-color, #007bff);
   text-decoration: none;
