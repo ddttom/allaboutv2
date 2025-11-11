@@ -470,7 +470,9 @@ export function createIframePreview(blockName, blockHTML) {
     <div class="preview-content">
       <div class="preview-container">
         <h2>${blockName} Block Preview</h2>
-        ${blockHTML}
+        <div class="${blockName} block" data-block-name="${blockName}" data-block-status="initialized">
+          ${blockHTML}
+        </div>
       </div>
     </div>
   </div>
@@ -485,6 +487,36 @@ export function createIframePreview(blockName, blockHTML) {
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closePreview();
     });
+  </script>
+  <script type="module">
+    // Load and execute the block decoration
+    async function decorateBlock() {
+      try {
+        const blockElement = document.querySelector('.${blockName}.block');
+        if (!blockElement) {
+          console.warn('Block element not found');
+          return;
+        }
+
+        // Import and execute the block's decoration function
+        const module = await import('/blocks/${blockName}/${blockName}.js');
+        if (module.default) {
+          await module.default(blockElement);
+          console.log('✓ Block decorated successfully');
+        } else {
+          console.warn('No default export found in block module');
+        }
+      } catch (error) {
+        console.error('Failed to decorate block:', error);
+      }
+    }
+
+    // Run decoration after DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', decorateBlock);
+    } else {
+      decorateBlock();
+    }
   </script>
 </body>
 </html>`;
