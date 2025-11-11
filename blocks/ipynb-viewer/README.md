@@ -82,22 +82,22 @@ The header includes a "Run All" button that:
 - Executes all code cells in order
 - Useful for notebooks with dependencies between cells
 
-### Live Preview with Modal Overlay (NEW)
-When using `showPreview()` or `openOverlayPreview()` in code cells:
-- **Modal overlay**: Displays preview in a modal on the current page (no popup windows)
-- **Same origin**: Runs in page context - CSS and JavaScript load naturally
-- **Backdrop blur**: Modern dark theme with blurred background
+### Live Preview with Popup Window (NEW)
+When using `showPreview()` or `openIframePreview()` in code cells:
+- **Popup window**: Opens preview in a new window with isolated context
+- **Base tag solution**: Uses `<base href="origin/">` to resolve CSS/JS from correct origin
+- **Full styling**: All CSS loads properly via base href resolution
 - **Full interactivity**: Block JavaScript executes with complete styling support
 - **No double-decoration**: Passes undecorated HTML to avoid processing blocks twice
-- **Easy dismissal**: Click backdrop, press ESC, or use close button
-- **Auto-cleanup**: Removes event listeners when closed
+- **Easy dismissal**: Press ESC or click close button
+- **Refresh capability**: Reload button to re-render the block
 
-**Why overlay instead of popup?**
-- No blob URL origin issues
-- CSS loads from existing page context
-- JavaScript modules import normally
-- Better user experience
-- No popup blockers
+**How it works:**
+- Blob URLs have null origin and can't load external resources
+- `<base href="https://your-site/">` tells browser where to resolve relative URLs
+- `styles/styles.css` resolves to `https://your-site/styles/styles.css`
+- JavaScript modules import correctly using origin detection
+- Result: Fully functional styled blocks in isolated window
 
 ## Example Notebook Structure
 
@@ -133,53 +133,44 @@ When using `showPreview()` or `openOverlayPreview()` in code cells:
 - Results are displayed in an output area below each cell
 - Errors are caught and displayed with red styling
 
-### Overlay Preview System (NEW)
+### Popup Preview System (NEW)
 
 **How it works:**
 
-1. **Creates DOM overlay**:
+1. **Creates HTML with base tag**:
    ```javascript
-   const overlay = document.createElement('div');
-   overlay.className = 'block-preview-overlay';
-   // Adds backdrop, header, content container
-   document.body.appendChild(overlay);
+   const currentOrigin = window.location.origin;
+   const html = `<!DOCTYPE html>
+   <html>
+   <head>
+     <base href="${currentOrigin}/">
+     <link rel="stylesheet" href="styles/styles.css">
+     <link rel="stylesheet" href="blocks/${blockName}/${blockName}.css">
+   </head>`;
    ```
 
-2. **Injects block HTML**:
+2. **Creates blob URL and opens window**:
    ```javascript
-   const blockContainer = overlay.querySelector('.preview-block-container');
-   blockContainer.innerHTML = `
-     <div class="${blockName} block" data-block-name="${blockName}">
-       ${blockHTML}  // Undecorated content
-     </div>
-   `;
+   const blob = new Blob([html], { type: 'text/html' });
+   const url = URL.createObjectURL(blob);
+   window.open(url, '_blank', 'width=1200,height=800');
    ```
 
-3. **Decorates in place**:
+3. **Decorates after load**:
    ```javascript
-   const blockElement = overlay.querySelector(`.${blockName}.block`);
-   const module = await import(`/blocks/${blockName}/${blockName}.js`);
+   // In the popup window
+   const blockElement = document.querySelector(`.${blockName}.block`);
+   const module = await import(`${baseUrl}/blocks/${blockName}/${blockName}.js`);
    await module.default(blockElement);
    ```
 
-4. **Adds interaction handlers**:
-   ```javascript
-   // Close on backdrop click
-   backdrop.addEventListener('click', () => overlay.remove());
-
-   // Close on ESC key
-   document.addEventListener('keydown', (e) => {
-     if (e.key === 'Escape') overlay.remove();
-   });
-   ```
-
-**Why overlay instead of popup/iframe?**
-- **Same origin**: Runs in page context, no cross-origin issues
-- **Natural CSS loading**: Existing page styles apply automatically
-- **JavaScript modules work**: No blob URL or module resolution issues
-- **Better UX**: Modal overlay vs popup window
-- **No blockers**: Popup blockers don't affect overlays
-- **Cleaner**: Auto-cleanup of listeners and DOM elements
+**How base tag solves blob URL issues:**
+- Blob URLs (`blob://...`) have null origin
+- Can't load CSS/JS with relative paths
+- `<base href="https://origin/">` tells browser where to resolve paths
+- `styles/styles.css` → `https://origin/styles/styles.css`
+- JavaScript modules import using origin detection
+- Result: Fully styled and functional blocks
 
 ### Markdown Parser (Enhanced)
 

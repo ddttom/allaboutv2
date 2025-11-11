@@ -460,41 +460,66 @@ export function createIframePreview(blockName, blockHTML, baseOrigin = null) {
   <link rel="stylesheet" href="blocks/${blockName}/${blockName}.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: system-ui, -apple-system, sans-serif; background: #1e1e1e; color: #fff; overflow: hidden; }
-    .preview-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; }
-    .preview-header { background: #2d2d2d; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #3e3e3e; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
-    .preview-title { font-size: 14px; font-weight: 500; color: #cccccc; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      padding: 60px 20px 20px 20px;
+      min-height: 100vh;
+    }
+    .preview-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #2d2d2d;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #3e3e3e;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+    .preview-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: #cccccc;
+    }
     .preview-title strong { color: #4fc3f7; }
     .preview-controls { display: flex; gap: 8px; align-items: center; }
-    .btn { padding: 6px 12px; border: none; border-radius: 4px; font-size: 12px; cursor: pointer; transition: all 0.2s; font-weight: 500; }
+    .btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
     .btn-refresh { background: #4fc3f7; color: #1e1e1e; }
     .btn-refresh:hover { background: #29b6f6; }
     .btn-close { background: #f44336; color: white; }
     .btn-close:hover { background: #d32f2f; }
-    .preview-content { flex: 1; overflow: auto; background: #f5f5f5; padding: 20px; }
-    .preview-container { max-width: 1200px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
     .status { font-size: 11px; color: #888; padding: 0 8px; }
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
   </style>
 </head>
 <body class="appear">
-  <div class="preview-wrapper">
-    <div class="preview-header">
-      <div class="preview-title">🔴 LIVE PREVIEW: <strong>${blockName}</strong> Block</div>
-      <div class="preview-controls">
-        <span class="status">Interactive Preview</span>
-        <button class="btn btn-refresh" onclick="location.reload()">↻ Refresh</button>
-        <button class="btn btn-close" onclick="closePreview()">✕ Close</button>
-      </div>
-    </div>
-    <div class="preview-content">
-      <div class="preview-container">
-        <h2>${blockName} Block Preview</h2>
-        <div class="${blockName} block" data-block-name="${blockName}" data-block-status="initialized">
-          ${blockHTML}
-        </div>
-      </div>
+  <div class="preview-header">
+    <div class="preview-title">🔴 LIVE PREVIEW: <strong>${blockName}</strong> Block</div>
+    <div class="preview-controls">
+      <span class="status">Interactive Preview</span>
+      <button class="btn btn-refresh" onclick="location.reload()">↻ Refresh</button>
+      <button class="btn btn-close" onclick="closePreview()">✕ Close</button>
     </div>
   </div>
+  <main>
+    <div class="${blockName} block" data-block-name="${blockName}" data-block-status="initialized">
+      ${blockHTML}
+    </div>
+  </main>
   <script>
     function closePreview() {
       if (window.opener) {

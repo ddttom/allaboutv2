@@ -6,7 +6,7 @@
 
 This document explains the Jupyter notebook implementation for **interactive testing of EDS blocks using JavaScript**. This is NOT Python-based testing—it uses JavaScript with jsdom for virtual DOM manipulation and the JSLab kernel for running JavaScript code in Jupyter notebooks.
 
-**NEW**: The test.ipynb notebook is now **context-aware** and works in both Node.js (JSLab) and browser environments, with built-in **live preview** functionality using a **modal overlay system** that eliminates all CSS and JavaScript loading issues.
+**NEW**: The test.ipynb notebook is now **context-aware** and works in both Node.js (JSLab) and browser environments, with built-in **live preview** functionality using **popup windows with `<base>` tag** for proper CSS and JavaScript loading.
 
 ## What This Is
 
@@ -16,10 +16,10 @@ This document explains the Jupyter notebook implementation for **interactive tes
 - **jsdom** (Virtual DOM for simulating browser environment)
 - **VS Code** (Notebook editing with Jupyter extension)
 - **Context-aware execution** (automatically detects Node.js vs browser)
-- **Modal overlay preview** (in-page preview with backdrop blur and full styling)
+- **Popup window preview** (isolated preview with full styling via `<base>` tag)
 - **ipynb-viewer block** (execute notebooks interactively in the browser)
 
-This allows you to test EDS blocks interactively without running a full browser or development server, AND share executable notebooks for end-user interaction. The modal overlay system provides seamless block previews with proper CSS and JavaScript execution.
+This allows you to test EDS blocks interactively without running a full browser or development server, AND share executable notebooks for end-user interaction. The popup preview system uses the `<base>` tag to properly load CSS and JavaScript from blob URLs.
 
 ---
 
@@ -241,63 +241,69 @@ const previewHTML = window.createIframePreview('blockname', '<div>block html</di
 // Use for custom display or download
 ```
 
-### Live Preview System with Overlay (NEW)
+### Live Preview System with Popup Window (NEW)
 
-**Live previews now use a modal overlay for seamless block testing!**
+**Live previews now use popup windows with `<base>` tag for proper resource loading!**
 
-Instead of opening a separate window with blob URLs, the preview system now displays blocks in a **modal overlay** on the current page. This eliminates all CSS and JavaScript loading issues.
+The preview system opens blocks in a new window using blob URLs, with a `<base>` tag that ensures CSS and JavaScript load correctly from the parent page's origin.
 
 **How it works:**
 
-1. **Creates modal overlay** on current page:
-   ```javascript
-   const overlay = document.createElement('div');
-   overlay.className = 'block-preview-overlay';
-   // Styled with dark theme, backdrop blur, and controls
+1. **Creates HTML with base tag**:
+   ```html
+   <!DOCTYPE html>
+   <html>
+   <head>
+     <base href="https://main--allaboutv2--ddttom.aem.page/">
+     <link rel="stylesheet" href="styles/styles.css">
+     <link rel="stylesheet" href="blocks/accordion/accordion.css">
+   </head>
    ```
 
 2. **Inserts block with proper structure**:
    ```html
-   <div class="blockname block" data-block-name="blockname" data-block-status="initialized">
+   <div class="accordion block" data-block-name="accordion" data-block-status="initialized">
      <!-- your undecorated block content -->
    </div>
    ```
 
 3. **Automatically decorates the block**:
-   - Dynamically imports `/blocks/blockname/blockname.js`
+   - Dynamically imports `/blocks/blockname/blockname.js` using detected origin
    - Executes the block's default export (decoration function)
-   - Runs in the same page context with full CSS/JS access
-   - No origin or module loading issues
+   - Runs after DOM is ready with full error handling
+   - CSS loads via `<base>` tag, JavaScript via dynamic import
 
 **Key Benefits:**
-- ✅ **Same origin** - No blob URL or cross-origin issues
-- ✅ **Natural CSS loading** - Uses existing page styles automatically
-- ✅ **Perfect JavaScript execution** - All modules load normally
-- ✅ **Better UX** - Modal overlay instead of popup window
-- ✅ **Backdrop blur** - Modern look with blurred background
-- ✅ **Easy dismissal** - Click backdrop, press ESC, or click close button
+- ✅ **Base tag solves blob URL issues** - CSS/JS load from correct origin
+- ✅ **Isolated window** - Doesn't interfere with parent page
+- ✅ **Full styling** - All CSS loads properly via base href
+- ✅ **Perfect JavaScript execution** - Module imports work correctly
+- ✅ **Popup controls** - Refresh and close buttons, ESC key support
+- ✅ **Origin detection** - Automatically uses parent page's origin
 
 **Features:**
 - Dark themed header with live indicator (pulsing red dot)
 - Scrollable content area with white container
-- Close button and keyboard shortcuts
-- Auto-cleanup of event listeners
-- Z-index isolation from page content
+- Refresh and close buttons
+- ESC key to close
+- Separate window isolation
 
 **Example:**
 ```javascript
-// This creates a fully interactive overlay preview
+// This creates a fully interactive popup preview
 await showPreview('accordion', accordionContent);
-// The overlay appears with:
+// A new window opens with:
 // - Full accordion styling from accordion.css
 // - Interactive <details> elements
 // - Base styles from styles.css
-// - Backdrop blur effect
-// - Press ESC or click backdrop to close
+// - Press ESC or click close button to dismiss
 ```
 
+**How base tag solves blob URL issues:**
+Blob URLs (`blob://...`) have a null origin and can't load external resources. The `<base href="https://your-origin/">` tag tells the browser to resolve all relative URLs against the parent page's origin, so `styles/styles.css` becomes `https://your-origin/styles/styles.css`.
+
 **Double-Decoration Prevention:**
-The `showPreview()` function passes **undecorated HTML** to the overlay. The overlay decorates it once after mounting, ensuring proper block behavior without double-processing.
+The `showPreview()` function passes **undecorated HTML** to the popup. The popup decorates it once after the DOM loads, ensuring proper block behavior without double-processing.
 
 ---
 
