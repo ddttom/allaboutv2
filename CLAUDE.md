@@ -9,7 +9,9 @@
 
 ### Common Workflows
 - **Create new block**: Use `/new-block <name>` command (follows Content Driven Development)
-- **Test a block**: Use `/test-block <name>` command
+- **Test a block**: Use `/test-block <name>` command or open `test.ipynb` in JSLab
+- **Interactive testing**: Use Jupyter notebooks with context-aware execution
+- **Share executable demos**: Use ipynb-viewer block for end-user interaction
 - **Review documentation**: Use `/review-docs` command
 - **Run all linting**: Use `/lint-all` command or `npm run lint`
 
@@ -108,5 +110,34 @@ When creating or modifying blocks, ALWAYS use Content Driven Development:
 ### Quick Links
 - Architecture standards: `docs/for-ai/implementation/block-architecture-standards.md`
 - Testing standards: `docs/for-ai/testing/eds-native-testing-standards.md`
+- **NEW: Jupyter testing**: `docs/for-ai/explaining-jupyter.md` - Context-aware interactive testing
+- **NEW: ipynb-viewer block**: `blocks/ipynb-viewer/README.md` - Display executable notebooks
 - Security checklist: `docs/for-ai/guidelines/security-checklist.md`
 - Frontend guidelines: `docs/for-ai/guidelines/frontend-guidelines.md`
+
+### Testing Approaches
+
+**Multiple testing methods available:**
+
+1. **Traditional test.html** - Browser-based visual testing
+   - Full EDS core integration
+   - Real browser rendering
+   - User interaction testing
+
+2. **Jupyter Notebooks (JSLab)** - Interactive development testing
+   - Context-aware (Node.js and browser modes)
+   - jsdom virtual DOM for block decoration
+   - Live preview HTML generation with iframe controls
+   - Cell-by-cell execution with inline documentation
+   - File: `test.ipynb`
+
+3. **ipynb-viewer Block** - End-user executable notebooks
+   - Display .ipynb files on EDS pages
+   - Interactive JavaScript execution in browser
+   - Perfect for tutorials, demos, documentation
+   - Location: `blocks/ipynb-viewer/`
+
+4. **Automated Tests** - CI/CD integration
+   - Jest/Mocha for regression testing
+   - Coverage reports
+   - Future implementation

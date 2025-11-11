@@ -49,18 +49,48 @@ blocks/your-block/
 
 Access your tests at: `http://localhost:3000/blocks/your-block/test.html`
 
-**Interactive Testing with Jupyter Notebooks**: You can also test blocks interactively using Jupyter notebooks with JavaScript (jsdom + JSLab kernel). See [Jupyter Notebook Testing Guide](docs/for-ai/explaining-jupyter.md) for details on this alternative testing approach.
+### Interactive Testing & Notebooks
+
+**NEW: Multiple Testing Approaches**
+
+1. **Jupyter Notebooks (JSLab)** - Development and testing with jsdom virtual DOM
+   - Interactive cell-by-cell execution
+   - Context-aware (works in Node.js and browser)
+   - Generates live preview HTML with iframe controls
+   - See [Jupyter Notebook Testing Guide](docs/for-ai/explaining-jupyter.md)
+
+2. **ipynb-viewer Block** - Share executable notebooks with end users
+   - Display .ipynb files on your EDS site
+   - Interactive JavaScript code execution in browser
+   - Perfect for tutorials, demos, and documentation
+   - Located at [blocks/ipynb-viewer/](blocks/ipynb-viewer/)
+
+3. **test.html** - Traditional browser testing
+   - Real browser rendering and interactions
+   - Full EDS core integration
+   - Visual feedback with DevTools
 
 ## Project Structure
 
 ```
 ├── blocks/                 # EDS blocks and components
+│   ├── ipynb-viewer/      # NEW: Interactive Jupyter notebook viewer block
+│   └── ...                # Other blocks
+├── notebooks/             # NEW: Shareable .ipynb files for end users
+│   └── example.ipynb      # Example interactive notebook
+├── ipynb-tests/           # NEW: Generated HTML previews from JSLab
 ├── docs/                   # Documentation
+│   ├── for-ai/            # Comprehensive AI-focused development guides
+│   │   ├── explaining-jupyter.md  # NEW: Jupyter notebook testing guide
+│   │   └── ...            # 26+ EDS development guides
 │   ├── Server-README.md    # Development server documentation
 │   ├── eds.txt            # EDS development guide
 │   └── eds-appendix.txt   # EDS best practices
 ├── scripts/               # Core EDS scripts
+│   ├── ipynb-helpers.js   # NEW: Helper functions for Jupyter notebook testing
+│   └── ...                # Other scripts
 ├── styles/                # Global styles
+├── test.ipynb             # NEW: Context-aware testing notebook
 ├── server.js              # Development server
 └── package.json           # Project configuration
 ```
@@ -97,7 +127,7 @@ Auto-activating skills provide inline guidance for:
 - **eds-block-development** - Complete block development patterns (decorate function, DOM manipulation, error handling)
 - **eds-block-testing** - Test file creation and testing workflows
 - **eds-performance-debugging** - Performance optimization and debugging techniques
-- **jupyter-notebook-testing** - Interactive block testing with Jupyter notebooks, jsdom, and JSLab kernel
+- **jupyter-notebook-testing** - NEW: Context-aware interactive testing with Jupyter notebooks, jsdom, JSLab kernel, and live preview generation
 - **skill-developer** - Managing Claude Code skills
 
 All skills are tailored specifically for EDS vanilla JavaScript development.
@@ -128,8 +158,11 @@ Each block should include:
 - `blockname.js` - Core functionality
 - `blockname.css` - Block-specific styles
 - `README.md` - Documentation and usage examples
-- 'EXAMPLE.md' - a markdown example, ready to paste into Gdocs
-- `test.html` - Development test file
+- `EXAMPLE.md` - A markdown example, ready to paste into Google Docs
+- `test.html` - Development test file (traditional browser testing)
+
+**Optional but recommended:**
+- `.ipynb` notebook file for interactive testing and documentation
 
 ### CSS Best Practices
 
@@ -157,8 +190,13 @@ Each block should include:
 - [EDS Best Practices](docs/eds-appendix.md) - Advanced patterns and techniques
 
 ### Testing Documentation
-- [Jupyter Notebook Testing Guide](docs/for-ai/explaining-jupyter.md) - Interactive block testing with JavaScript, jsdom, and JSLab kernel
+- [Jupyter Notebook Testing Guide](docs/for-ai/explaining-jupyter.md) - NEW: Context-aware interactive testing with live preview, includes:
+  - JSLab mode for development with jsdom virtual DOM
+  - Browser mode for end-user interaction via ipynb-viewer block
+  - Live preview HTML generation with iframe controls
+  - Dual execution modes (Node.js and browser)
 - [EDS Native Testing Standards](docs/for-ai/testing/eds-native-testing-standards.md) - Traditional test.html testing patterns
+- [ipynb-viewer Block Documentation](blocks/ipynb-viewer/README.md) - Display and execute notebooks on EDS pages
 
 ### For AI Assistants
 - [Complete AI Documentation Index](docs/for-ai/index.md) - Navigation hub for all 26 EDS development guides
