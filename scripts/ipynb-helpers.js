@@ -244,8 +244,16 @@ export function setupBrowserEnvironment() {
 
   // Unified preview function (context-aware)
   window.showPreview = async (blockName, content) => {
-    const block = await window.testBlock(blockName, content);
-    window.openIframePreview(blockName, block.outerHTML);
+    // Create block element with content but DON'T decorate
+    // Let the iframe decorate it to avoid double-decoration issues
+    const block = document.createElement('div');
+    block.className = blockName;
+    block.innerHTML = content;
+
+    console.log('📦 Created block element (undecorated)');
+    console.log('Content length:', content.length);
+
+    window.openIframePreview(blockName, block.innerHTML);
     console.log(`✅ PREVIEW OPENED (Browser):`);
     console.log(`🎨 Iframe preview opened in new window`);
     console.log(`🖼️  Features: Refresh button, Close button (ESC key)`);
