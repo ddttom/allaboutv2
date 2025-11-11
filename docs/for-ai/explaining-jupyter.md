@@ -28,53 +28,67 @@ This allows you to test EDS blocks interactively without running a full browser 
 ### Core Components
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                       Jupyter Notebook                          │
-│                       (.ipynb file)                             │
-│                     CONTEXT-AWARE                               │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  NODE.JS PATH (JSLab)          │      BROWSER PATH              │
-│  ┌──────────────────────┐      │      ┌──────────────────┐     │
-│  │  JSLab Kernel        │      │      │  ipynb-viewer    │     │
-│  │  (JavaScript in      │      │      │  EDS Block       │     │
-│  │   Node.js)           │      │      │                  │     │
-│  └──────────────────────┘      │      └──────────────────┘     │
-│           ↓                     │             ↓                  │
-│  ┌──────────────────────┐      │      ┌──────────────────┐     │
-│  │  jsdom Virtual DOM   │      │      │  Native Browser  │     │
-│  │  (Simulated)         │      │      │  APIs            │     │
-│  └──────────────────────┘      │      └──────────────────┘     │
-│           ↓                     │             ↓                  │
-│  ┌──────────────────────┐      │      ┌──────────────────┐     │
-│  │  EDS Block JS        │      │      │  JavaScript Code │     │
-│  │  Decoration          │      │      │  Execution       │     │
-│  └──────────────────────┘      │      └──────────────────┘     │
-│           ↓                     │             ↓                  │
-│  ┌──────────────────────┐      │      ┌──────────────────┐     │
-│  │  Helper Functions:   │      │      │  Console Output  │     │
-│  │  - testBlock()       │      │      │  & Results       │     │
-│  │  - saveBlockHTML()   │      │      │                  │     │
-│  │  - loadBlockStyles() │      │      │                  │     │
-│  └──────────────────────┘      │      └──────────────────┘     │
-│           ↓                     │                                │
-│  ┌──────────────────────┐      │                                │
-│  │  TWO OUTPUT FILES:   │      │                                │
-│  │  1. preview.html     │      │                                │
-│  │  2. live-preview.html│ ◄────┼── Opens in browser             │
-│  │     (iframe wrapper) │      │    with controls               │
-│  └──────────────────────┘      │                                │
-│           ↓                     │                                │
-│  ┌──────────────────────┐      │                                │
-│  │  Live Preview UI:    │      │                                │
-│  │  - Dark wrapper      │      │                                │
-│  │  - Refresh button    │      │                                │
-│  │  - Close button      │      │                                │
-│  │  - ESC to dismiss    │      │                                │
-│  │  - Fullscreen iframe │      │                                │
-│  └──────────────────────┘      │                                │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                       Jupyter Notebook                                      │
+│                       (.ipynb file)                                         │
+│                     CONTEXT-AWARE                                           │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  NODE.JS PATH (JSLab)          │      BROWSER PATH (ipynb-viewer)          │
+│  ┌──────────────────────┐      │      ┌──────────────────────────┐         │
+│  │  JSLab Kernel        │      │      │  ipynb-viewer Block      │         │
+│  │  (JavaScript in      │      │      │  (EDS)                   │         │
+│  │   Node.js)           │      │      │                          │         │
+│  └──────────────────────┘      │      └──────────────────────────┘         │
+│           ↓                     │             ↓                             │
+│  ┌──────────────────────┐      │      ┌──────────────────────────┐         │
+│  │  jsdom Virtual DOM   │      │      │  Native Browser APIs     │         │
+│  │  (Simulated)         │      │      │  - document, window      │         │
+│  └──────────────────────┘      │      └──────────────────────────┘         │
+│           ↓                     │             ↓                             │
+│  ┌──────────────────────┐      │      ┌──────────────────────────┐         │
+│  │  External Helpers:   │      │      │  Inline Helpers:         │         │
+│  │  scripts/            │      │      │  - window.testBlock()    │         │
+│  │  ipynb-helpers.js    │      │      │  - window.displayBlock() │         │
+│  │  - testBlock()       │      │      │  - window.               │         │
+│  │  - saveBlockHTML()   │      │      │    createIframePreview() │         │
+│  │  - loadBlockStyles() │      │      │  - window.               │         │
+│  │  - createIframe...() │      │      │    openIframePreview()   │         │
+│  └──────────────────────┘      │      └──────────────────────────┘         │
+│           ↓                     │             ↓                             │
+│  ┌──────────────────────┐      │      ┌──────────────────────────┐         │
+│  │  EDS Block JS        │      │      │  JavaScript Code         │         │
+│  │  Decoration          │      │      │  Execution               │         │
+│  └──────────────────────┘      │      └──────────────────────────┘         │
+│           ↓                     │             ↓                             │
+│  ┌──────────────────────┐      │      ┌──────────────────────────┐         │
+│  │  FILE OUTPUT:        │      │      │  POPUP WINDOW:           │         │
+│  │  1. preview.html     │      │      │  Blob URL                │         │
+│  │  2. live-preview.html│      │      │  (no files)              │         │
+│  │  → ipynb-tests/      │      │      │                          │         │
+│  └──────────────────────┘      │      └──────────────────────────┘         │
+│           ↓                     │             ↓                             │
+│  ┌──────────────────────────────────────────────────────────────┐          │
+│  │              LIVE PREVIEW UI (Both Modes)                    │          │
+│  │  ┌────────────────────────────────────────────────────────┐  │          │
+│  │  │  🔴 LIVE PREVIEW: [blockname] Block                    │  │          │
+│  │  │  [Interactive Preview]  [↻ Refresh]  [✕ Close]        │  │          │
+│  │  └────────────────────────────────────────────────────────┘  │          │
+│  │  ┌────────────────────────────────────────────────────────┐  │          │
+│  │  │                                                        │  │          │
+│  │  │           Block Content (scrollable)                  │  │          │
+│  │  │                                                        │  │          │
+│  │  └────────────────────────────────────────────────────────┘  │          │
+│  │                                                               │          │
+│  │  Features:                                                    │          │
+│  │  - Dark themed professional UI                                │          │
+│  │  - Refresh button (reload content)                            │          │
+│  │  - Close button or ESC key                                    │          │
+│  │  - Fullscreen with scrolling                                  │          │
+│  │  - Status bar showing context                                 │          │
+│  └───────────────────────────────────────────────────────────────┘          │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Why Jupyter Notebooks?
@@ -155,12 +169,16 @@ const doc = isNode ? global.document : document;
 
 ## Live Preview Feature (NEW)
 
-When using `saveBlockHTML()` in Node.js mode, **two files** are automatically created:
+The notebook now supports **visual iframe previews** in both Node.js and Browser environments!
 
-### 1. Preview HTML (`blockname-preview.html`)
+### Node.js Mode (JSLab)
+
+When using `saveBlockHTML()`, **two files** are automatically created:
+
+#### 1. Preview HTML (`blockname-preview.html`)
 The actual styled block content with CSS links.
 
-### 2. Live Preview HTML (`blockname-live-preview.html`)
+#### 2. Live Preview HTML (`blockname-live-preview.html`)
 An interactive iframe wrapper with controls:
 
 **Features:**
@@ -168,7 +186,7 @@ An interactive iframe wrapper with controls:
 - ↻ Refresh button to reload preview
 - ✕ Close button (or press ESC)
 - Status bar showing file location
-- Fullscreen iframe display
+- Fullscreen iframe display with scrolling
 - Keyboard shortcut: ESC to close
 
 **Example:**
@@ -185,6 +203,42 @@ await global.saveBlockHTML('accordion', accordionContent);
 **Disable live preview:**
 ```javascript
 await global.saveBlockHTML('accordion', content, null, { livePreview: false });
+```
+
+### Browser Mode (ipynb-viewer)
+
+When running in a browser, use `openIframePreview()` to create a popup window:
+
+**Example:**
+```javascript
+// Test the block
+const block = await window.testBlock('accordion', accordionContent);
+
+// Open iframe preview in new window
+window.openIframePreview('accordion', block.outerHTML);
+```
+
+**Features:**
+- Same dark themed UI as Node.js version
+- Opens in new popup window (1200x800)
+- Uses Blob URL (no file I/O required)
+- All iframe controls available
+- ESC key to close
+
+### createIframePreview() Function
+
+Both environments support generating the iframe preview HTML:
+
+**Node.js:**
+```javascript
+const previewHTML = global.createIframePreview('blockname', '<div>block html</div>');
+// Use for custom file saving or processing
+```
+
+**Browser:**
+```javascript
+const previewHTML = window.createIframePreview('blockname', '<div>block html</div>');
+// Use for custom display or download
 ```
 
 ---
@@ -236,6 +290,14 @@ Helper functions are now defined in [scripts/ipynb-helpers.js](../../scripts/ipy
 - Easier to maintain and update
 - Reusable across multiple notebooks
 - Better separation of concerns
+- Context-aware execution (Node.js and Browser)
+
+**Available Helper Functions:**
+- `loadBlockStyles(blockName)` - Load CSS for a block (Node.js only)
+- `testBlock(blockName, innerHTML)` - Test block decoration (Node.js and Browser)
+- `saveBlockHTML(blockName, innerHTML, filename, options)` - Save with live preview (Node.js only)
+- `createIframePreview(blockName, blockHTML)` - Generate iframe preview HTML (Node.js and Browser)
+- `openIframePreview(blockName, blockHTML)` - Open preview in popup (Browser only)
 
 #### Node.js Mode: `global.testBlock(blockName, innerHTML)`
 Tests a block's decoration function with provided content.
@@ -1080,23 +1142,28 @@ The Jupyter notebook testing system now provides a **complete testing and intera
 - Same notebook works in Node.js AND browser
 - Automatic environment detection
 - No code duplication
+- External helper module for maintainability
 
-**Live Preview:**
+**Live Preview (NEW - Both Environments):**
 - Professional iframe wrapper with controls
+- Node.js: Saves to files (ipynb-tests/)
+- Browser: Opens in popup window (Blob URL)
 - Instant visual feedback
-- Convenient refresh and close buttons
+- Dark themed UI with refresh/close buttons
+- ESC key support
 
 **End-User Interaction:**
 - Share executable notebooks via ipynb-viewer block
 - Interactive tutorials and demos
 - Real browser execution
+- Same live preview UI available
 
 **Comprehensive Testing:**
-- Logic testing in JSLab
-- Visual testing with live preview
+- Logic testing in JSLab with jsdom
+- Visual testing with live preview (both modes)
 - Browser testing with test.html
 - Interactive testing with ipynb-viewer
-- Automated testing with Jest/Mocha
+- Automated testing with Jest/Mocha (future)
 
 ### Recommended Workflow
 

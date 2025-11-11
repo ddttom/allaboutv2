@@ -5,11 +5,113 @@
  * using JSLab kernel with jsdom virtual DOM.
  *
  * Functions:
+ * - setupNodeEnvironment() - Initialize Node.js/JSLab environment
+ * - setupBrowserEnvironment() - Initialize browser environment
  * - loadBlockStyles(blockName) - Load CSS for a block
  * - testBlock(blockName, innerHTML) - Test a block's decoration
  * - saveBlockHTML(blockName, innerHTML, filename, options) - Save block as HTML with live preview
  * - createIframePreview(blockName, blockHTML) - Create iframe preview HTML (context-aware)
  */
+
+/**
+ * Setup Node.js/JSLab environment with jsdom and helpers
+ * @returns {Promise<void>}
+ */
+export async function setupNodeEnvironment() {
+  // Load jsdom and set up virtual DOM
+  const { JSDOM } = require('jsdom');
+
+  // Create virtual DOM
+  const dom = new JSDOM('<!DOCTYPE html><html><head></head><body></body></html>', {
+    url: 'http://localhost',
+    pretendToBeVisual: true
+  });
+
+  // Make DOM globals available
+  global.document = dom.window.document;
+  global.window = dom.window;
+  global.HTMLElement = dom.window.HTMLElement;
+  global.Element = dom.window.Element;
+  global.Node = dom.window.Node;
+  global.customElements = dom.window.customElements;
+  global.CustomEvent = dom.window.CustomEvent;
+  global.Event = dom.window.Event;
+
+  console.log('✓ Virtual DOM environment initialized');
+
+  // Ensure output directory exists
+  const fs = require('fs');
+  const outputDir = './ipynb-tests';
+  if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir, { recursive: true });
+    console.log(`✓ Created output directory: ${outputDir}`);
+  } else {
+    console.log(`✓ Output directory ready: ${outputDir}`);
+  }
+
+  console.log('✓ Node.js environment ready');
+}
+
+/**
+ * Setup browser environment with helper functions
+ * @returns {void}
+ */
+export function setupBrowserEnvironment() {
+  console.log('✓ Browser environment detected');
+  console.log('✓ Using native browser APIs');
+
+  // Browser helpers use native APIs
+  window.testBlock = async function(blockName, innerHTML = '') {
+    console.log(`Testing: ${blockName}`);
+
+    const block = document.createElement('div');
+    block.className = blockName;
+
+    if (innerHTML) {
+      block.innerHTML = innerHTML;
+    }
+
+    // In browser, we could try to load the block's decorate function
+    try {
+      const module = await import(`/blocks/${blockName}/${blockName}.js`);
+      if (module.default) {
+        await module.default(block);
+        console.log('✓ Block decorated');
+      }
+    } catch (e) {
+      console.log('ℹ Block decoration skipped:', e.message);
+    }
+
+    return block;
+  };
+
+  // Visual helper for browser - creates styled container
+  window.displayBlock = function(block) {
+    const container = document.createElement('div');
+    container.style.cssText = 'margin: 20px 0; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);';
+    container.appendChild(block);
+    return container;
+  };
+
+  // Create iframe preview HTML - browser version
+  window.createIframePreview = function(blockName, blockHTML) {
+    return createIframePreview(blockName, blockHTML);
+  };
+
+  // Open iframe preview in new window
+  window.openIframePreview = function(blockName, blockHTML) {
+    const previewHTML = createIframePreview(blockName, blockHTML);
+    const blob = new Blob([previewHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const win = window.open(url, '_blank', 'width=1200,height=800');
+    console.log('✓ Opened iframe preview in new window');
+    return win;
+  };
+
+  console.log('✓ Browser helpers ready');
+  console.log('✓ Available: window.testBlock(), window.displayBlock()');
+  console.log('✓ Available: window.createIframePreview(), window.openIframePreview()');
+}
 
 /**
  * Load CSS styles for a block into the virtual DOM
