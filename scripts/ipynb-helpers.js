@@ -219,7 +219,9 @@ export function setupBrowserEnvironment() {
 
   // Open iframe preview in new window
   window.openIframePreview = function(blockName, blockHTML) {
-    const previewHTML = createIframePreview(blockName, blockHTML);
+    // Pass the current origin as a query parameter so blob URL can use it
+    const currentOrigin = window.location.origin;
+    const previewHTML = createIframePreview(blockName, blockHTML, currentOrigin);
     const blob = new Blob([previewHTML], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
     const win = window.open(url, '_blank', 'width=1200,height=800');
@@ -431,7 +433,7 @@ export async function saveBlockHTML(blockName, innerHTML = '', filename = null, 
  * @param {string} blockHTML - HTML content of the block
  * @returns {string} Iframe preview HTML
  */
-export function createIframePreview(blockName, blockHTML) {
+export function createIframePreview(blockName, blockHTML, baseOrigin = null) {
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -498,16 +500,23 @@ export function createIframePreview(blockName, blockHTML) {
           return;
         }
 
-        // Determine the base URL - use opener's origin if opened from ipynb-viewer, otherwise current origin
-        let baseUrl = window.location.origin;
-        if (window.opener && window.opener.location) {
+        // Determine the base URL
+        // Priority: 1) Passed origin (for blob URLs), 2) Opener's origin, 3) Current origin
+        let baseUrl = ${baseOrigin ? `'${baseOrigin}'` : 'window.location.origin'};
+
+        // If no origin was passed, try to get it from opener
+        if (!${baseOrigin ? 'false' : 'true'} && window.opener && window.opener.location) {
           try {
             baseUrl = window.opener.location.origin;
             console.log('Using parent page origin:', baseUrl);
           } catch (e) {
             // Cross-origin access blocked, use current origin
-            console.log('Using current origin:', baseUrl);
+            console.log('Cross-origin blocked, using fallback:', baseUrl);
           }
+        } else if (${baseOrigin ? 'true' : 'false'}) {
+          console.log('Using passed origin:', baseUrl);
+        } else {
+          console.log('Using current origin:', baseUrl);
         }
 
         // Import and execute the block's decoration function

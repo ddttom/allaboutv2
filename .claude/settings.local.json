@@ -41,7 +41,8 @@
       "Bash(done)",
       "Bash(if CLAUDE_PROJECT_DIR=/Users/tomcranstoun/Documents/GitHub/allaboutV2 echo '{\"\"\"\"type\"\"\"\":\"\"\"\"UserPromptSubmit\"\"\"\",\"\"\"\"prompt\"\"\"\":\"\"\"\"create block\"\"\"\",\"\"\"\"modifiedFiles\"\"\"\":[]}')",
       "Bash(then echo \"   ✓ skill-activation-prompt hook executable\")",
-      "Bash(else echo \"   ⚠️  Hook needs session context (expected)\")"
+      "Bash(else echo \"   ⚠️  Hook needs session context (expected)\")",
+      "Bash(node:*)"
     ],
     "deny": [],
     "ask": []
