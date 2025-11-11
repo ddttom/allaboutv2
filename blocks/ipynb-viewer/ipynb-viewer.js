@@ -297,9 +297,18 @@ async function executeCodeCell(cellDiv) {
     if (result !== undefined) {
       const resultDiv = document.createElement('div');
       resultDiv.className = 'ipynb-output-result';
-      resultDiv.textContent = typeof result === 'object'
+
+      // Check if result is a multi-line string (contains newlines)
+      const resultString = typeof result === 'object'
         ? JSON.stringify(result, null, 2)
         : String(result);
+
+      if (resultString.includes('\n')) {
+        // Multi-line result: use pre-wrap to preserve formatting
+        resultDiv.style.whiteSpace = 'pre-wrap';
+      }
+
+      resultDiv.textContent = resultString;
       output.appendChild(resultDiv);
     }
 
