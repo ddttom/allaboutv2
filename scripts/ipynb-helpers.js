@@ -179,26 +179,7 @@ export function setupBrowserEnvironment() {
   window.isNode = false;
   window.isBrowser = true;
 
-  // Add context-aware helper getters
-  window.getDoc = () => document;
-  window.getTestBlockFn = () => window.testBlock;
-
-  // Context-aware unified API (works the same in both environments)
-  window.doc = document;
-  window.testBlockFn = window.testBlock;
-  window.createPreviewFn = window.createIframePreview;
-
-  // Unified preview function (context-aware)
-  window.showPreview = async (blockName, content) => {
-    const block = await window.testBlock(blockName, content);
-    window.openIframePreview(blockName, block.outerHTML);
-    console.log(`✅ PREVIEW OPENED (Browser):`);
-    console.log(`🎨 Iframe preview opened in new window`);
-    console.log(`🖼️  Features: Refresh button, Close button (ESC key)`);
-    return 'Iframe preview opened in new window!';
-  };
-
-  // Browser helpers use native APIs
+  // Browser helpers use native APIs - DEFINE FIRST
   window.testBlock = async function(blockName, innerHTML = '') {
     console.log(`Testing: ${blockName}`);
 
@@ -246,9 +227,29 @@ export function setupBrowserEnvironment() {
     return win;
   };
 
+  // NOW set up unified API - after all functions are defined
+  window.doc = document;
+  window.testBlockFn = window.testBlock;
+  window.createPreviewFn = window.createIframePreview;
+
+  // Unified preview function (context-aware)
+  window.showPreview = async (blockName, content) => {
+    const block = await window.testBlock(blockName, content);
+    window.openIframePreview(blockName, block.outerHTML);
+    console.log(`✅ PREVIEW OPENED (Browser):`);
+    console.log(`🎨 Iframe preview opened in new window`);
+    console.log(`🖼️  Features: Refresh button, Close button (ESC key)`);
+    return 'Iframe preview opened in new window!';
+  };
+
+  // Add context-aware helper getters
+  window.getDoc = () => document;
+  window.getTestBlockFn = () => window.testBlock;
+
   console.log('✓ Browser helpers ready');
   console.log('✓ Available: window.testBlock(), window.displayBlock()');
   console.log('✓ Available: window.createIframePreview(), window.openIframePreview()');
+  console.log('✓ Unified API: doc, testBlockFn, showPreview');
 }
 
 /**
