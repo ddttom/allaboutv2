@@ -43,7 +43,8 @@
       "Bash(then echo \"   ✓ skill-activation-prompt hook executable\")",
       "Bash(else echo \"   ⚠️  Hook needs session context (expected)\")",
       "Bash(node:*)",
-      "Skill(skill-developer)"
+      "Skill(skill-developer)",
+      "Bash(mkdir:*)"
     ],
     "deny": [],
     "ask": []
