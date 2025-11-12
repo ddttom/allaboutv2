@@ -1,606 +1,225 @@
 /**
- * IPYNB Helper Functions for JSLab/Node.js Testing
+ * IPYNB Helper Functions for Browser Testing
  *
  * This module provides helper functions for testing EDS blocks in Jupyter notebooks
- * using JSLab kernel with jsdom virtual DOM.
+ * in the browser via the ipynb-viewer block.
  *
- * REFACTORING NOTE:
- * This module was extracted from inline Cell 1 code in test.ipynb to:
- * - Reduce Cell 1 from ~220 lines to ~45 lines (55% reduction)
- * - Enable reusability across multiple notebooks
- * - Improve maintainability with single source of truth
- * - Provide cleaner notebook experience for users
- *
- * Setup Functions (NEW):
- * - initialize() - Master initialization (detects environment, does everything!) **RECOMMENDED**
- * - setupNodeEnvironment() - Initialize Node.js/JSLab environment with jsdom
- *   Sets: global.isNode = true, global.isBrowser = false
- * - setupBrowserEnvironment() - Initialize browser environment with helpers
- *   Sets: window.isNode = false, window.isBrowser = true
+ * Setup Functions:
+ * - initialize() - Initialize browser environment and register helpers on window object
  *
  * Testing Functions:
- * - loadBlockStyles(blockName) - Load CSS for a block
- * - testBlock(blockName, innerHTML) - Test a block's decoration
- * - saveBlockHTML(blockName, innerHTML, filename, options) - Save block as HTML with live preview
+ * - testBlockFn(blockName, innerHTML) - Test a block's decoration (available as window.testBlockFn)
+ * - showPreview(blockName, innerHTML) - Open popup window with styled preview (available as window.showPreview)
  *
- * Preview Functions:
- * - createIframePreview(blockName, blockHTML) - Create iframe preview HTML (context-aware)
+ * Global Functions (Available After initialize()):
+ * After running initialize(), these are available on the window object:
+ * - window.testBlockFn(blockName, content) - Test block decoration
+ * - window.showPreview(blockName, content) - Open popup preview
+ * - window.doc - Reference to document object
  *
- * Global Environment Flags & Unified API:
- * After running setupNodeEnvironment() or setupBrowserEnvironment(), these are available:
- *
- * Environment Flags:
- * - isNode: true in Node.js/JSLab, false in browser
- * - isBrowser: true in browser, false in Node.js/JSLab
- *
- * Unified API (works identically in both Node.js and browser):
- * - doc: Reference to document object
- * - testBlockFn: Reference to testBlock function
- * - showPreview(blockName, content): Create/open preview (saves files in Node, opens popup in browser)
- * - createPreviewFn: Reference to createIframePreview function
- *
- * Usage in test.ipynb Cell 1 (NEW - Super Simple!):
+ * Usage in test.ipynb Cell 1:
  * ```javascript
- * // Just call initialize() - it does everything!
- * const isNode = typeof process !== 'undefined' && process.versions?.node;
- * const helpersPath = isNode ? './scripts/ipynb-helpers.js' : '/scripts/ipynb-helpers.js';
- * const { initialize } = await import(helpersPath);
- * await initialize();
+ * (async () => {
+ *   const { initialize } = await import('/scripts/ipynb-helpers.js');
+ *   await initialize();
+ *   return '✅ Browser environment ready';
+ * })();
  * ```
  *
- * OLD Usage (still works):
+ * Usage in subsequent cells:
  * ```javascript
- * const helpers = await import('./scripts/ipynb-helpers.js');
- * await helpers.setupNodeEnvironment(); // Node.js only - sets global flags
- * // or
- * helpers.setupBrowserEnvironment(); // Browser only - sets window flags
- * ```
- *
- * Usage in subsequent cells (NEW - Simplified):
- * ```javascript
- * // OLD WAY (still works):
- * const doc = isNode ? global.document : document;
- * const testBlockFn = isNode ? global.testBlock : window.testBlock;
- *
- * // NEW WAY (simpler - no ternary operators needed!):
- * const block = await testBlockFn('blockname', '<div>content</div>');
- * await showPreview('blockname', '<div>content</div>');
- * const div = doc.createElement('div');
+ * (async () => {
+ *   const block = await window.testBlockFn('blockname', '<div>content</div>');
+ *   await window.showPreview('blockname', '<div>content</div>');
+ *   const div = window.doc.createElement('div');
+ *   return block.outerHTML;
+ * })();
  * ```
  */
 
 /**
- * Master initialization function - detects environment and sets up everything
- * This is the simplest way to initialize - just call this one function!
- * @returns {Promise<string>} Setup completion message
- */
-export async function initialize() {
-  // Detect execution environment - check for window/document first (more reliable in browser)
-  const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
-  const isNode = !isBrowser && typeof process !== 'undefined' && process.versions && process.versions.node;
-
-  const context = isNode ? 'Node.js' : 'Browser';
-
-  if (isNode) {
-    // Node.js setup - call setup directly since we're already in the module
-    await setupNodeEnvironment();
-
-    // Make additional helpers available globally
-    global.loadBlockStyles = loadBlockStyles;
-    global.testBlock = testBlock;
-    global.saveBlockHTML = saveBlockHTML;
-    global.createIframePreview = createIframePreview;
-  } else if (isBrowser) {
-    // Browser setup - call setup directly
-    setupBrowserEnvironment();
-  }
-
-  console.log(`✅ Environment (${context}) setup`);
-  return `✅ Environment (${context}) setup`;
-}
-
-/**
- * Setup Node.js/JSLab environment with jsdom and helpers
+ * Master initialization function - sets up browser environment
  * @returns {Promise<void>}
  */
-export async function setupNodeEnvironment() {
-  // Load jsdom using dynamic import (works in JSLab)
-  let JSDOM;
-  try {
-    const jsdomModule = await import('jsdom');
-    JSDOM = jsdomModule.JSDOM;
-  } catch (e) {
-    console.error('Failed to load jsdom:', e.message);
-    throw new Error('jsdom is required for Node.js testing. Install with: npm install jsdom');
-  }
-
-  // Create virtual DOM
-  const dom = new JSDOM('<!DOCTYPE html><html><head></head><body></body></html>', {
-    url: 'http://localhost',
-    pretendToBeVisual: true
-  });
-
-  // Make DOM globals available
-  global.document = dom.window.document;
-  global.window = dom.window;
-  global.HTMLElement = dom.window.HTMLElement;
-  global.Element = dom.window.Element;
-  global.Node = dom.window.Node;
-  global.customElements = dom.window.customElements;
-  global.CustomEvent = dom.window.CustomEvent;
-  global.Event = dom.window.Event;
-
-  // Make environment flags globally available
-  global.isNode = true;
-  global.isBrowser = false;
-
-  // Add context-aware helper getters
-  global.getDoc = () => global.document;
-  global.getTestBlockFn = () => global.testBlock;
-
-  // Context-aware unified API (works the same in both environments)
-  global.doc = global.document;
-  global.testBlockFn = global.testBlock;
-  global.saveBlockFn = global.saveBlockHTML;
-  global.createPreviewFn = global.createIframePreview;
-
-  // Unified preview function (context-aware)
-  global.showPreview = async (blockName, content) => {
-    await global.saveBlockHTML(blockName, content);
-    console.log(`✅ FILES CREATED (Node.js):`);
-    console.log(`📂 ipynb-tests/${blockName}-preview.html - Styled block`);
-    console.log(`📂 ipynb-tests/${blockName}-live-preview.html - Iframe with controls`);
-    console.log(`🎨 Open ${blockName}-live-preview.html in your browser!`);
-    return `Files saved! Open ${blockName}-live-preview.html in your browser`;
-  };
-
-  console.log('✓ Virtual DOM environment initialized');
-
-  // Ensure output directory exists using dynamic import
-  const fsModule = await import('fs');
-  const fs = fsModule.default || fsModule;
-  const outputDir = './ipynb-tests';
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
-    console.log(`✓ Created output directory: ${outputDir}`);
-  } else {
-    console.log(`✓ Output directory ready: ${outputDir}`);
-  }
-
-  console.log('✓ Node.js environment ready');
+export async function initialize() {
+  setupBrowserEnvironment();
+  console.log('✅ Browser environment ready');
 }
 
 /**
  * Setup browser environment with helper functions
- * @returns {void}
  */
-export function setupBrowserEnvironment() {
-  console.log('✓ Browser environment detected');
-  console.log('✓ Using native browser APIs');
-
-  // Make environment flags globally available
-  window.isNode = false;
-  window.isBrowser = true;
-
-  // Browser helpers use native APIs - DEFINE FIRST
-  window.testBlock = async function(blockName, innerHTML = '') {
-    console.log(`Testing: ${blockName}`);
-
-    const block = document.createElement('div');
-    block.className = blockName;
-
-    if (innerHTML) {
-      block.innerHTML = innerHTML;
-    }
-
-    // In browser, we could try to load the block's decorate function
-    try {
-      const module = await import(`/blocks/${blockName}/${blockName}.js`);
-      if (module.default) {
-        await module.default(block);
-        console.log('✓ Block decorated');
-      }
-    } catch (e) {
-      console.log('ℹ Block decoration skipped:', e.message);
-    }
-
-    return block;
-  };
-
-  // Visual helper for browser - creates styled container
-  window.displayBlock = function(block) {
-    const container = document.createElement('div');
-    container.style.cssText = 'margin: 20px 0; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);';
-    container.appendChild(block);
-    return container;
-  };
-
-  // Create iframe preview HTML - browser version
-  window.createIframePreview = function(blockName, blockHTML) {
-    return createIframePreview(blockName, blockHTML);
-  };
-
-  // Open iframe preview in new window
-  window.openIframePreview = function(blockName, blockHTML) {
-    console.log('📦 Creating preview for:', blockName);
-    console.log('📄 Block HTML length:', blockHTML?.length || 0);
-    console.log('📄 Block HTML preview:', blockHTML?.substring(0, 200));
-
-    // Pass the current origin to create preview with proper URLs
-    const currentOrigin = window.location.origin;
-    console.log('🌐 Current origin:', currentOrigin);
-
-    const previewHTML = createIframePreview(blockName, blockHTML, currentOrigin);
-    console.log('✓ Preview HTML generated, length:', previewHTML.length);
-
-    const blob = new Blob([previewHTML], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
-    const win = window.open(url, '_blank', 'width=1200,height=800');
-    console.log('✓ Opened iframe preview in new window');
-    return win;
-  };
-
-  // NOW set up unified API - after all functions are defined
+function setupBrowserEnvironment() {
+  // Register document shorthand
   window.doc = document;
-  window.testBlockFn = window.testBlock;
-  window.createPreviewFn = window.createIframePreview;
 
-  // Unified preview function (context-aware)
-  window.showPreview = async (blockName, content) => {
-    // Create block element with content but DON'T decorate
-    // Let the iframe decorate it to avoid double-decoration issues
-    const block = document.createElement('div');
-    block.className = blockName;
-    block.innerHTML = content;
-
-    console.log('📦 Created block element (undecorated)');
-    console.log('Content length:', content.length);
-
-    window.openIframePreview(blockName, block.innerHTML);
-    console.log(`✅ PREVIEW OPENED (Browser):`);
-    console.log(`🎨 Iframe preview opened in new window`);
-    console.log(`🖼️  Features: Refresh button, Close button (ESC key)`);
-    return 'Iframe preview opened in new window!';
-  };
-
-  // Add context-aware helper getters
-  window.getDoc = () => document;
-  window.getTestBlockFn = () => window.testBlock;
-
-  console.log('✓ Browser helpers ready');
-  console.log('✓ Available: window.testBlock(), window.displayBlock()');
-  console.log('✓ Available: window.createIframePreview(), window.openIframePreview()');
-  console.log('✓ Unified API: doc, testBlockFn, showPreview');
+  // Register helper functions
+  window.testBlockFn = testBlock;
+  window.showPreview = showPreview;
 }
 
 /**
- * Load CSS styles for a block into the virtual DOM
- * @param {string} blockName - Name of the block
- * @returns {Promise<string|null>} CSS content or null if not found
- */
-export async function loadBlockStyles(blockName) {
-  const fsModule = await import('fs');
-  const fs = fsModule.promises || fsModule.default.promises;
-  const pathModule = await import('path');
-  const path = pathModule.default || pathModule;
-
-  const cssPath = path.resolve(`./blocks/${blockName}/${blockName}.css`);
-  try {
-    const css = await fs.readFile(cssPath, 'utf-8');
-    const style = global.document.createElement('style');
-    style.textContent = css;
-    global.document.head.appendChild(style);
-    console.log(`✓ Loaded styles for ${blockName}`);
-    return css;
-  } catch (e) {
-    console.log(`ℹ No CSS file found for ${blockName}`);
-    return null;
-  }
-}
-
-/**
- * Test a block's decoration function with provided content
- * @param {string} blockName - Name of the block
- * @param {string} innerHTML - HTML content structure
+ * Test a block's decoration in browser
+ * @param {string} blockName - Name of the block to test
+ * @param {string} [innerHTML=''] - HTML content to place inside the block
  * @returns {Promise<HTMLElement>} The decorated block element
  */
-export async function testBlock(blockName, innerHTML = '') {
-  console.log(`\n=== Testing: ${blockName} ===`);
+async function testBlock(blockName, innerHTML = '') {
+  // Create block element
+  const block = document.createElement('div');
+  block.className = `${blockName} block`;
+  block.innerHTML = innerHTML;
 
   try {
-    const pathModule = await import('path');
-    const path = pathModule.default || pathModule;
-    const modulePath = path.resolve(`./blocks/${blockName}/${blockName}.js`);
-
-    // Import module directly (no cache clearing needed with dynamic import)
-    const module = await import(modulePath);
-    const decorate = module.default;
-
-    await loadBlockStyles(blockName);
-
-    const block = global.document.createElement('div');
-    block.className = blockName;
-
-    if (innerHTML) {
-      block.innerHTML = innerHTML;
+    // Import and run the block's decoration function
+    const module = await import(`/blocks/${blockName}/${blockName}.js`);
+    if (module.default) {
+      await module.default(block);
+    } else {
+      throw new Error(`Block module ${blockName} does not export a default function`);
     }
-
-    console.log('Before:', block.innerHTML || '(empty)');
-    await decorate(block);
-
-    const after = block.innerHTML || '';
-    console.log('After:', after.substring(0, 100) + (after.length > 100 ? '...' : ''));
 
     return block;
   } catch (error) {
-    console.error(`✗ Error testing ${blockName}:`, error.message);
+    console.error(`Error testing block ${blockName}:`, error);
     throw error;
   }
 }
 
 /**
- * Save block as HTML file(s) with optional live preview
+ * Create and open popup window with styled preview
  * @param {string} blockName - Name of the block
- * @param {string} innerHTML - HTML content structure
- * @param {string|null} filename - Optional custom filename
- * @param {Object} options - Configuration options
- * @param {boolean} options.livePreview - Create live preview wrapper (default: true)
- * @returns {Promise<string>} Path to saved preview file
+ * @param {string} [innerHTML=''] - HTML content to place inside the block
+ * @returns {Promise<string>} Success message
  */
-export async function saveBlockHTML(blockName, innerHTML = '', filename = null, options = {}) {
+async function showPreview(blockName, innerHTML = '') {
+  // Decorate the block
   const block = await testBlock(blockName, innerHTML);
 
+  // Get current origin for base tag
+  const currentOrigin = window.location.origin;
+
+  // Create HTML with base tag and minimal DOM structure
   const html = `<!DOCTYPE html>
 <html>
 <head>
+  <base href="${currentOrigin}/">
   <meta charset="UTF-8">
-  <title>${blockName} Block Test</title>
-  <link rel="stylesheet" href="../styles/styles.css">
-  <link rel="stylesheet" href="../blocks/${blockName}/${blockName}.css">
-  <style>
-    body {
-      display: block !important;
-      padding: 20px;
-      background: #f5f5f5;
-    }
-    .preview-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      background: white;
-      padding: 40px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-  </style>
-</head>
-<body class="appear">
-  <div class="preview-container">
-    <h2>${blockName} Block Preview</h2>
-    ${block.outerHTML}
-  </div>
-</body>
-</html>`;
-
-  const fsModule = await import('fs');
-  const fs = fsModule.promises || fsModule.default.promises;
-  const pathModule = await import('path');
-  const path = pathModule.default || pathModule;
-  const outputFile = filename || `${blockName}-preview.html`;
-  const outputPath = path.resolve('./ipynb-tests', outputFile);
-
-  await fs.writeFile(outputPath, html, 'utf-8');
-  console.log(`\n✓ Saved: ipynb-tests/${outputFile}`);
-
-  // Create LIVE PREVIEW with iframe wrapper (default: enabled)
-  if (options.livePreview !== false) {
-    const iframeHTML = `<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Live Preview - ${blockName}</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: system-ui, -apple-system, sans-serif; background: #1e1e1e; color: #fff; overflow: hidden; }
-    .preview-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; }
-    .preview-header { background: #2d2d2d; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #3e3e3e; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
-    .preview-title { font-size: 14px; font-weight: 500; color: #cccccc; }
-    .preview-title strong { color: #4fc3f7; }
-    .preview-controls { display: flex; gap: 8px; align-items: center; }
-    .btn { padding: 6px 12px; border: none; border-radius: 4px; font-size: 12px; cursor: pointer; transition: all 0.2s; font-weight: 500; }
-    .btn-refresh { background: #4fc3f7; color: #1e1e1e; }
-    .btn-refresh:hover { background: #29b6f6; }
-    .btn-close { background: #f44336; color: white; }
-    .btn-close:hover { background: #d32f2f; }
-    .preview-frame { flex: 1; border: none; background: white; }
-    .status { font-size: 11px; color: #888; padding: 0 8px; }
-  </style>
-</head>
-<body>
-  <div class="preview-wrapper">
-    <div class="preview-header">
-      <div class="preview-title">🔴 LIVE PREVIEW: <strong>${blockName}</strong> Block</div>
-      <div class="preview-controls">
-        <span class="status">ipynb-tests/${outputFile}</span>
-        <button class="btn btn-refresh" onclick="refreshPreview()">↻ Refresh</button>
-        <button class="btn btn-close" onclick="window.close()">✕ Close</button>
-      </div>
-    </div>
-    <iframe id="preview-frame" class="preview-frame" src="${outputFile}"></iframe>
-  </div>
-  <script>
-    function refreshPreview() {
-      document.getElementById('preview-frame').src += '';
-    }
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') window.close();
-    });
-  </script>
-</body>
-</html>`;
-
-    const iframeFile = `${blockName}-live-preview.html`;
-    const iframePath = path.resolve('./ipynb-tests', iframeFile);
-    await fs.writeFile(iframePath, iframeHTML, 'utf-8');
-
-    console.log(`✓ Live preview: ipynb-tests/${iframeFile}`);
-    console.log(`  → Open in browser for live preview with controls`);
-    console.log(`  → Press ESC or click Close to dismiss`);
-  }
-
-  return outputPath;
-}
-
-/**
- * Create iframe preview HTML - works in both Node.js and browser
- * @param {string} blockName - Name of the block
- * @param {string} blockHTML - HTML content of the block
- * @returns {string} Iframe preview HTML
- */
-export function createIframePreview(blockName, blockHTML, baseOrigin = null) {
-  return `<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <base href="${baseOrigin || ''}/">
-  <title>Live Preview - ${blockName}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${blockName} Preview</title>
   <link rel="stylesheet" href="styles/styles.css">
   <link rel="stylesheet" href="blocks/${blockName}/${blockName}.css">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: system-ui, -apple-system, sans-serif;
-      padding: 0;
-      margin: 0;
-      min-height: 100vh;
-    }
+    /* Fixed position header - doesn't affect document flow */
     .preview-header {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      background: #2d2d2d;
+      height: 48px;
+      background: #1e1e1e;
+      color: #fff;
       padding: 12px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid #3e3e3e;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
       z-index: 1000;
-      height: 48px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
     .preview-title {
       font-size: 14px;
       font-weight: 500;
-      color: #cccccc;
+      margin: 0;
     }
-    .preview-title strong { color: #4fc3f7; }
-    .preview-controls { display: flex; gap: 8px; align-items: center; }
-    .btn {
+    .preview-controls {
+      display: flex;
+      gap: 8px;
+    }
+    .preview-btn {
+      background: #2d2d2d;
+      border: 1px solid #3e3e3e;
+      color: #fff;
       padding: 6px 12px;
-      border: none;
       border-radius: 4px;
-      font-size: 12px;
       cursor: pointer;
-      transition: all 0.2s;
-      font-weight: 500;
+      font-size: 12px;
+      font-family: inherit;
+      transition: background 0.2s;
     }
-    .btn-refresh { background: #4fc3f7; color: #1e1e1e; }
-    .btn-refresh:hover { background: #29b6f6; }
-    .btn-close { background: #f44336; color: white; }
-    .btn-close:hover { background: #d32f2f; }
-    .status { font-size: 11px; color: #888; padding: 0 8px; }
+    .preview-btn:hover {
+      background: #3e3e3e;
+    }
+    /* Main content area - top padding to clear fixed header */
     main {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 68px 20px 20px 20px;
+      padding-top: 68px; /* 48px header + 20px gap */
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-bottom: 40px;
+    }
+    /* Ensure block is direct child of main - no wrapper divs! */
+    body {
+      margin: 0;
+      min-height: 100vh;
     }
   </style>
 </head>
-<body class="appear">
+<body>
   <div class="preview-header">
-    <div class="preview-title">🔴 LIVE PREVIEW: <strong>${blockName}</strong> Block</div>
+    <div class="preview-title">${blockName} Block Preview</div>
     <div class="preview-controls">
-      <span class="status">Interactive Preview</span>
-      <button class="btn btn-refresh" onclick="location.reload()">↻ Refresh</button>
-      <button class="btn btn-close" onclick="closePreview()">✕ Close</button>
+      <button class="preview-btn" onclick="location.reload()">↻ Refresh</button>
+      <button class="preview-btn" onclick="window.close()">✕ Close</button>
     </div>
   </div>
   <main>
-    <div class="${blockName} block" data-block-name="${blockName}" data-block-status="initialized">
-      ${blockHTML}
-    </div>
+    ${block.outerHTML}
   </main>
-  <script>
-    function closePreview() {
-      if (window.opener) {
-        window.close();
-      } else {
-        history.back();
-      }
-    }
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closePreview();
-    });
-  </script>
   <script type="module">
-    // Load and execute the block decoration
-    async function decorateBlock() {
+    // Decorate the block after page loads
+    const blockElement = document.querySelector('.${blockName}.block');
+    if (blockElement) {
       try {
-        console.log('🔍 Starting block decoration...');
-        console.log('Document body:', document.body.innerHTML.substring(0, 200));
+        // Get base URL from base tag
+        const baseUrl = document.querySelector('base')?.href || window.location.origin;
+        const cleanBaseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
 
-        const blockElement = document.querySelector('.${blockName}.block');
-        if (!blockElement) {
-          console.error('❌ Block element not found');
-          console.log('Available elements:', document.querySelectorAll('div'));
-          return;
-        }
-
-        console.log('✓ Block element found:', blockElement);
-
-        // Determine the base URL
-        // Priority: 1) Passed origin (for blob URLs), 2) Opener's origin, 3) Current origin
-        let baseUrl = ${baseOrigin ? `'${baseOrigin}'` : 'window.location.origin'};
-
-        // If no origin was passed, try to get it from opener
-        if (!${baseOrigin ? 'false' : 'true'} && window.opener && window.opener.location) {
-          try {
-            baseUrl = window.opener.location.origin;
-            console.log('Using parent page origin:', baseUrl);
-          } catch (e) {
-            // Cross-origin access blocked, use current origin
-            console.log('Cross-origin blocked, using fallback:', baseUrl);
-          }
-        } else if (${baseOrigin ? 'true' : 'false'}) {
-          console.log('Using passed origin:', baseUrl);
-        } else {
-          console.log('Using current origin:', baseUrl);
-        }
-
-        // Import and execute the block's decoration function
-        const moduleUrl = \`\${baseUrl}/blocks/${blockName}/${blockName}.js\`;
-        console.log('Loading block module from:', moduleUrl);
-
-        const module = await import(moduleUrl);
+        // Import and decorate
+        const module = await import(\`\${cleanBaseUrl}/blocks/${blockName}/${blockName}.js\`);
         if (module.default) {
-          await module.default(blockElement);
-          console.log('✓ Block decorated successfully');
-        } else {
-          console.warn('No default export found in block module');
+          // Block is already decorated (testBlock did it), but we import to ensure JS loads
+          console.log('✓ Block JavaScript loaded');
         }
       } catch (error) {
-        console.error('Failed to decorate block:', error);
-        console.error('Module URL attempted:', error.message);
+        console.error('Error loading block JavaScript:', error);
       }
     }
 
-    // Run decoration after DOM is ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', decorateBlock);
-    } else {
-      decorateBlock();
-    }
+    // Allow ESC key to close window
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        window.close();
+      }
+    });
   </script>
 </body>
 </html>`;
+
+  // Create blob URL and open popup
+  const blob = new Blob([html], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const popup = window.open(url, '_blank', 'width=1200,height=800,menubar=no,toolbar=no,location=no');
+
+  if (!popup) {
+    console.warn('⚠ Popup blocked! Please allow popups for this site.');
+    return '⚠ Popup blocked - please allow popups and try again';
+  }
+
+  // Clean up blob URL after popup loads
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+  return `✓ Preview window opened for ${blockName}`;
 }
+
+// Export functions for direct import (if needed)
+export { testBlock, showPreview };

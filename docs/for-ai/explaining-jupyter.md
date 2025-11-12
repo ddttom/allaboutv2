@@ -722,11 +722,55 @@ window.isBrowser   // true
 
 **Usage:** Simply reference `isNode` or `isBrowser` directly in any cell - no need to re-detect!
 
-**Cell 2: Test Your Block (Using Unified API - Even Simpler!)**
+### Context-Aware Access Pattern (CRITICAL)
+
+**IMPORTANT:** To access the unified API in subsequent cells, you MUST use the context-aware pattern:
+
 ```javascript
-// No ternary operators needed - unified API just works!
+const g = getGlobal();
+```
+
+**Why this is required:**
+- In JSLab/Node.js: Each cell has its own scope, must access functions via `global.*`
+- In Browser/ipynb-viewer: Each cell has its own scope, must access functions via `window.*`
+- You cannot use bare identifiers like `doc`, `testBlockFn`, `showPreview` directly
+- The `getGlobal()` helper automatically picks the right global object (`window` or `global`)
+
+**Pattern to use in EVERY cell (after Cell 1):**
+
+```javascript
 (async () => {
-  const block1 = await testBlockFn('your-block', `
+  // Step 1: Get context-aware reference (REQUIRED!)
+  const g = getGlobal();
+
+  // Step 2: Use the unified API through g
+  const block = await g.testBlockFn('blockname', '<div>content</div>');
+  await g.showPreview('blockname', '<div>content</div>');
+  const div = g.doc.createElement('div');
+
+  // Step 3: Check environment if needed
+  if (g.isNode) {
+    console.log('Running in Node.js/JSLab');
+  }
+
+  return block.outerHTML;
+})();
+```
+
+**What's available through `g`:**
+- `g.getGlobal()` - Helper function to get global object
+- `g.doc` - Document object (jsdom or native DOM)
+- `g.isNode` - Environment flag (true in Node.js)
+- `g.isBrowser` - Environment flag (true in Browser)
+- `g.testBlockFn()` - Test block decoration
+- `g.showPreview()` - Create/show preview (adapts to environment)
+- `g.createPreviewFn()` - Create iframe preview HTML
+
+**Cell 2: Test Your Block (Using Global G)**
+```javascript
+// Just use G - no setup code needed!
+(async () => {
+  const block1 = await G.testBlockFn('your-block', `
     <div>
       <div>Title 1</div>
       <div>Description 1</div>
@@ -743,9 +787,9 @@ window.isBrowser   // true
 })();
 ```
 
-**Cell 3: Generate Preview with Live Iframe (Super Simple!)**
+**Cell 3: Generate Preview with Live Iframe (Using Global G)**
 ```javascript
-// One function works in both environments!
+// Just use G - one function automatically adapts to environment!
 (async () => {
   const content = `
     <div>
@@ -758,8 +802,7 @@ window.isBrowser   // true
     </div>
   `;
 
-  // One function automatically adapts to environment!
-  return await showPreview('your-block', content);
+  return await G.showPreview('your-block', content);
 })();
 ```
 
@@ -847,8 +890,10 @@ Test block logic without setting up a full environment:
 
 ```javascript
 // Quick test of content extraction
-const block = await testBlockFn('hero', `<div><div>Title</div></div>`);
-console.log('Extracted title:', block.querySelector('h1')?.textContent);
+(async () => {
+  const block = await G.testBlockFn('hero', `<div><div>Title</div></div>`);
+  console.log('Extracted title:', block.querySelector('h1')?.textContent);
+})();
 ```
 
 ### 2. Multiple Scenarios
@@ -857,13 +902,22 @@ Test different configurations in separate cells:
 
 ```javascript
 // Cell 1: Default layout
-const defaultBlock = await testBlockFn('cards', contentHTML);
+(async () => {
+  const defaultBlock = await G.testBlockFn('cards', contentHTML);
+  return defaultBlock.outerHTML;
+})();
 
 // Cell 2: Grid layout
-const gridBlock = await testBlockFn('cards', contentHTML, { layout: 'grid' });
+(async () => {
+  const gridBlock = await G.testBlockFn('cards', contentHTML, { layout: 'grid' });
+  return gridBlock.outerHTML;
+})();
 
 // Cell 3: List layout
-const listBlock = await testBlockFn('cards', contentHTML, { layout: 'list' });
+(async () => {
+  const listBlock = await G.testBlockFn('cards', contentHTML, { layout: 'list' });
+  return listBlock.outerHTML;
+})();
 ```
 
 ### 3. Edge Cases
@@ -872,12 +926,18 @@ Test error handling and edge cases:
 
 ```javascript
 // Empty content
-const emptyBlock = await testBlockFn('hero', '');
-console.log('Empty content handled:', emptyBlock.innerHTML);
+(async () => {
+  const emptyBlock = await G.testBlockFn('hero', '');
+  console.log('Empty content handled:', emptyBlock.innerHTML);
+  return emptyBlock.outerHTML;
+})();
 
 // Invalid structure
-const invalidBlock = await testBlockFn('hero', '<div>Only one cell</div>');
-console.log('Invalid structure handled:', invalidBlock.innerHTML);
+(async () => {
+  const invalidBlock = await G.testBlockFn('hero', '<div>Only one cell</div>');
+  console.log('Invalid structure handled:', invalidBlock.innerHTML);
+  return invalidBlock.outerHTML;
+})();
 ```
 
 ### 4. Documentation
@@ -1079,21 +1139,18 @@ When users click "Run" on a code cell:
 - **Live Preview**: Visual verification of styled blocks
 - **test.html**: Full browser testing with EDS core loaded
 
-### 2. Use Context-Aware Code
+### 2. Use the Global G Object
 
-Write code that works in both environments:
+Write code that works in both environments using the global G object:
 
 ```javascript
-// Detect environment
-const isNode = typeof process !== 'undefined' && process.versions?.node;
-
-// Use appropriate DOM
-const doc = isNode ? global.document : document;
+// No setup code needed - just use G!
+const div = G.doc.createElement('div');
 
 // Conditional features
-if (isNode) {
+if (G.isNode) {
   // JSLab-specific code (file I/O, block testing)
-  await showPreview('myblock', content);
+  await G.showPreview('myblock', content);
 } else {
   // Browser-specific code (pure JavaScript)
   console.log('Result:', 42);
@@ -1126,8 +1183,11 @@ with a configurable number of columns using data attributes.
 Always generate HTML previews for visual checks:
 
 ```javascript
-showPreview(block, 'your-block', 'your-block-test1.html');
-// Open in browser to verify styling
+(async () => {
+  await G.showPreview('your-block', content);
+  // In Node.js: Files saved to ipynb-tests/
+  // In Browser: Opens popup window
+})();
 ```
 
 ### 5. Keep Tests Focused
@@ -1136,11 +1196,24 @@ One test scenario per cell for clarity:
 
 ```javascript
 // ❌ BAD - Multiple tests in one cell
-const block1 = await testBlockFn('hero', content1);
-const block2 = await testBlockFn('hero', content2);
-const block3 = await testBlockFn('hero', content3);
+(async () => {
+  const block1 = await G.testBlockFn('hero', content1);
+  const block2 = await G.testBlockFn('hero', content2);
+  const block3 = await G.testBlockFn('hero', content3);
+})();
 
 // ✅ GOOD - Separate cells for each test
+// Cell 1:
+(async () => {
+  const block1 = await G.testBlockFn('hero', content1);
+  return block1.outerHTML;
+})();
+
+// Cell 2:
+(async () => {
+  const block2 = await G.testBlockFn('hero', content2);
+  return block2.outerHTML;
+})();
 ```
 
 ---

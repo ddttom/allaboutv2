@@ -7,7 +7,7 @@ Display and execute Jupyter notebook (.ipynb) files directly in your EDS site wi
 - **Parse and Display Notebooks**: Renders both markdown and code cells from .ipynb files
 - **Interactive Execution**: Run JavaScript code cells individually with a click (async/await support)
 - **Automatic Initialization Check**: Warns users if they skip the first code cell (prevents undefined function errors)
-- **Context Detection**: First code cell initialization displays environment (Node.js/Browser) and setup status
+- **Browser Execution**: Runs JavaScript code directly in the browser with native APIs
 - **Output Display**: Shows console logs, results, and errors inline
 - **Sequential Execution**: Run cells in order, starting with the first code cell (initialization)
 - **Responsive Design**: Mobile-friendly layout
@@ -85,15 +85,43 @@ Each code cell has a "Run" button that:
 - The warning explains that the first JavaScript cell must be run first to set up the environment
 - This prevents confusing errors about undefined functions (`testBlockFn`, `showPreview`, etc.)
 
-**Note:** Always run the first code cell first! It will display context information (Node.js or Browser) and success status.
+**Note:** Always run the first code cell first! It will display setup status (`✅ Browser environment ready`).
 
-### Live Preview with Popup Window (NEW)
-When using `showPreview()` or `openIframePreview()` in code cells:
-- **Popup window**: Opens preview in a new window with isolated context
+### Helper Functions
+
+After running the first code cell, these functions are available on the `window` object:
+
+```javascript
+// Test a block
+const block = await window.testBlockFn('blockname', '<div>content</div>');
+
+// Show preview in popup window
+await window.showPreview('blockname', '<div>content</div>');
+
+// Access document
+const div = window.doc.createElement('div');
+// Or use document directly
+const div2 = document.createElement('div');
+```
+
+**Example cell structure:**
+```javascript
+(async () => {
+  const content = '<div><div>Title</div><div>Description</div></div>';
+  const block = await window.testBlockFn('accordion', content);
+
+  // Return or display result
+  return block.outerHTML;
+})();
+```
+
+### Live Preview with Popup Window
+
+When using `showPreview()` in code cells:
+- **Popup window**: Opens preview in a new browser window with isolated context
 - **Base tag solution**: Uses `<base href="origin/">` to resolve CSS/JS from correct origin
 - **Full styling**: All CSS loads properly via base href resolution
 - **Full interactivity**: Block JavaScript executes with complete styling support
-- **No double-decoration**: Passes undecorated HTML to avoid processing blocks twice
 - **Easy dismissal**: Press ESC or click close button
 - **Refresh capability**: Reload button to re-render the block
 
@@ -102,7 +130,7 @@ When using `showPreview()` or `openIframePreview()` in code cells:
 - `<base href="https://your-site/">` tells browser where to resolve relative URLs
 - `styles/styles.css` resolves to `https://your-site/styles/styles.css`
 - JavaScript modules import correctly using origin detection
-- Result: Fully functional styled blocks in isolated window
+- Result: Fully functional styled blocks in isolated popup window
 
 ## Example Notebook Structure
 
