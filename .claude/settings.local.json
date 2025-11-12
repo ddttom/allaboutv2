@@ -44,7 +44,9 @@
       "Bash(else echo \"   ⚠️  Hook needs session context (expected)\")",
       "Bash(node:*)",
       "Skill(skill-developer)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Skill(jupyter-notebook-testing)",
+      "Skill(eds-block-testing)"
     ],
     "deny": [],
     "ask": []
