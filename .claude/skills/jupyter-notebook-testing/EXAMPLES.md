@@ -15,30 +15,31 @@ Complete examples and patterns for testing EDS blocks with Jupyter notebooks.
 ### Basic Block Test
 
 ```javascript
-// Simple test without content
-const block = await testBlock('helloworld');
+// Simple test without content - use unified API
+const block = await testBlockFn('helloworld');
 block.outerHTML
 ```
 
 ### Test with Content
 
 ```javascript
-// Test with HTML content
+// Test with HTML content - use unified API
 const content = `
   <div>
     <div>Test content</div>
   </div>
 `;
-const block = await testBlock('accordion', content);
+const block = await testBlockFn('accordion', content);
 block.outerHTML
 ```
 
 ### Generate Visual Preview
 
 ```javascript
-// Save styled HTML file
-await saveBlockHTML('accordion', content);
-// Open ipynb-tests/accordion-preview.html in browser
+// Create visual preview - use unified API
+await showPreview('accordion', content);
+// Node.js: Creates files in ipynb-tests/
+// Browser: Opens popup window
 ```
 
 ## Content Structure Patterns
@@ -61,9 +62,9 @@ const accordionContent = `
   </div>
 `;
 
-const block = await testBlock('accordion', accordionContent);
+const block = await testBlockFn('accordion', accordionContent);
 console.log('Created sections:', block.querySelectorAll('details').length);
-await saveBlockHTML('accordion', accordionContent);
+await showPreview('accordion', accordionContent);
 ```
 
 ### Tabs Block
@@ -97,8 +98,8 @@ const tabsContent = `
   </div>
 `;
 
-const block = await testBlock('tabs', tabsContent);
-await saveBlockHTML('tabs', tabsContent);
+const block = await testBlockFn('tabs', tabsContent);
+await showPreview('tabs', tabsContent);
 ```
 
 ### Cards Block
@@ -146,9 +147,9 @@ const cardsContent = `
   </div>
 `;
 
-const block = await testBlock('cards', cardsContent);
+const block = await testBlockFn('cards', cardsContent);
 console.log('Created cards:', block.querySelectorAll('.card').length);
-await saveBlockHTML('cards', cardsContent);
+await showPreview('cards', cardsContent);
 ```
 
 ### Hero Block
@@ -170,8 +171,8 @@ const heroContent = `
   </div>
 `;
 
-const block = await testBlock('hero', heroContent);
-await saveBlockHTML('hero', heroContent);
+const block = await testBlockFn('hero', heroContent);
+await showPreview('hero', heroContent);
 ```
 
 ### Columns Block
@@ -194,8 +195,8 @@ const columnsContent = `
   </div>
 `;
 
-const block = await testBlock('columns', columnsContent);
-await saveBlockHTML('columns', columnsContent);
+const block = await testBlockFn('columns', columnsContent);
+await showPreview('columns', columnsContent);
 ```
 
 ## Block-Specific Examples
@@ -223,9 +224,9 @@ const formContent = `
   </div>
 `;
 
-const block = await testBlock('form', formContent);
+const block = await testBlockFn('form', formContent);
 console.log('Form fields:', block.querySelectorAll('input, textarea').length);
-await saveBlockHTML('form', formContent, 'form-contact.html');
+await showPreview('form', formContent, 'form-contact.html');
 ```
 
 ### Quote Block
@@ -240,8 +241,8 @@ const quoteContent = `
   </div>
 `;
 
-const block = await testBlock('quote', quoteContent);
-await saveBlockHTML('quote', quoteContent);
+const block = await testBlockFn('quote', quoteContent);
+await showPreview('quote', quoteContent);
 ```
 
 ### Table Block
@@ -276,8 +277,8 @@ const tableContent = `
   </div>
 `;
 
-const block = await testBlock('table', tableContent);
-await saveBlockHTML('table', tableContent);
+const block = await testBlockFn('table', tableContent);
+await showPreview('table', tableContent);
 ```
 
 ## Testing Workflows
@@ -286,21 +287,21 @@ await saveBlockHTML('table', tableContent);
 
 ```javascript
 // 1. Test basic structure
-const block = await testBlock('accordion');
+const block = await testBlockFn('accordion');
 console.log('Basic test:', block.className);
 
 // 2. Test with content
 const content = accordionContent;  // Define your content
-const contentBlock = await testBlock('accordion', content);
+const contentBlock = await testBlockFn('accordion', content);
 console.log('Items:', contentBlock.querySelectorAll('details').length);
 
 // 3. Generate preview
-await saveBlockHTML('accordion', content);
+await showPreview('accordion', content);
 
 // 4. Test variations
-await saveBlockHTML('accordion', emptyContent, 'accordion-empty.html');
-await saveBlockHTML('accordion', singleItem, 'accordion-single.html');
-await saveBlockHTML('accordion', manyItems, 'accordion-many.html');
+await showPreview('accordion', emptyContent, 'accordion-empty.html');
+await showPreview('accordion', singleItem, 'accordion-single.html');
+await showPreview('accordion', manyItems, 'accordion-many.html');
 
 // 5. Verify structure
 const details = contentBlock.querySelectorAll('details');
@@ -314,17 +315,17 @@ details.forEach((detail, i) => {
 ```javascript
 // Empty content
 const empty = '';
-const emptyBlock = await testBlock('accordion', empty);
+const emptyBlock = await testBlockFn('accordion', empty);
 console.log('Empty:', emptyBlock.children.length);
 
 // Single item
 const single = '<div><div>Q</div><div>A</div></div>';
-const singleBlock = await testBlock('accordion', single);
+const singleBlock = await testBlockFn('accordion', single);
 console.log('Single:', singleBlock.querySelectorAll('details').length);
 
 // Malformed content
 const malformed = '<div><div>Q only</div></div>';
-const malformedBlock = await testBlock('accordion', malformed);
+const malformedBlock = await testBlockFn('accordion', malformed);
 console.log('Malformed:', malformedBlock.outerHTML.substring(0, 100));
 
 // Nested HTML
@@ -334,8 +335,8 @@ const nested = `
     <div>Answer with <a href="#">links</a> and <em>emphasis</em></div>
   </div>
 `;
-const nestedBlock = await testBlock('accordion', nested);
-await saveBlockHTML('accordion', nested, 'accordion-nested.html');
+const nestedBlock = await testBlockFn('accordion', nested);
+await showPreview('accordion', nested, 'accordion-nested.html');
 ```
 
 ### Multiple Blocks in Sequence
@@ -346,9 +347,9 @@ const blocks = ['accordion', 'tabs', 'cards', 'hero'];
 
 for (const blockName of blocks) {
   try {
-    const block = await testBlock(blockName);
+    const block = await testBlockFn(blockName);
     console.log(`✓ ${blockName}: ${block.children.length} children`);
-    await saveBlockHTML(blockName, '', `${blockName}-default.html`);
+    await showPreview(blockName, '', `${blockName}-default.html`);
   } catch (error) {
     console.error(`✗ ${blockName}: ${error.message}`);
   }
@@ -380,7 +381,7 @@ const content = `
   </div>
 `;
 
-const block = await testBlock('accordion', content);
+const block = await testBlockFn('accordion', content);
 
 // Verify expectations
 const details = block.querySelectorAll('details');
@@ -392,7 +393,7 @@ details.forEach((detail, i) => {
 });
 
 // Save for visual inspection
-await saveBlockHTML('accordion', content, 'accordion-3-sections.html');
+await showPreview('accordion', content, 'accordion-3-sections.html');
 ```
 
 ### Bad Test (No Context)
@@ -401,7 +402,7 @@ await saveBlockHTML('accordion', content, 'accordion-3-sections.html');
 // ❌ Bad: No context, cryptic variable names, no verification
 
 const x = '<div><div>Q</div><div>A</div></div>';
-const b = await testBlock('accordion', x);
+const b = await testBlockFn('accordion', x);
 b.outerHTML
 ```
 
@@ -432,16 +433,16 @@ const { JSDOM } = require('jsdom');
 ```javascript
 // Cell 2: Test empty accordion
 const empty = '';
-const emptyBlock = await testBlock('accordion', empty);
+const emptyBlock = await testBlockFn('accordion', empty);
 console.log('Empty result:', emptyBlock.children.length, 'children');
 ```
 
 ```javascript
 // Cell 3: Test single item
 const single = '<div><div>Question</div><div>Answer</div></div>';
-const singleBlock = await testBlock('accordion', single);
+const singleBlock = await testBlockFn('accordion', single);
 console.log('Single item:', singleBlock.querySelectorAll('details').length, 'details');
-await saveBlockHTML('accordion', single, 'accordion-single.html');
+await showPreview('accordion', single, 'accordion-single.html');
 ```
 
 ### Error Handling Example
@@ -450,13 +451,13 @@ await saveBlockHTML('accordion', single, 'accordion-single.html');
 // ✅ Good: Handle potential errors
 
 try {
-  const block = await testBlock('myblock', content);
+  const block = await testBlockFn('myblock', content);
   console.log('✓ Success');
   console.log('  Children:', block.children.length);
   console.log('  Classes:', block.className);
   console.log('  Preview:', block.outerHTML.substring(0, 100) + '...');
 
-  await saveBlockHTML('myblock', content);
+  await showPreview('myblock', content);
   console.log('✓ Saved preview to ipynb-tests/myblock-preview.html');
 } catch (error) {
   console.error('✗ Failed:', error.message);
@@ -501,7 +502,7 @@ The accordion block transforms a list of Q&A pairs into HTML `<details>` element
 
 ```javascript
 // 1. Generate initial preview
-await saveBlockHTML('accordion', content, 'accordion-v1.html');
+await showPreview('accordion', content, 'accordion-v1.html');
 
 // 2. Edit CSS file
 // Open blocks/accordion/accordion.css in editor
@@ -545,14 +546,14 @@ const testContent = `
 
 ```javascript
 // Test transformation
-const block = await testBlock('accordion', testContent);
+const block = await testBlockFn('accordion', testContent);
 console.log('✓ Block created');
 console.log('  Details elements:', block.querySelectorAll('details').length);
 ```
 
 ```javascript
 // Generate styled preview
-await saveBlockHTML('accordion', testContent);
+await showPreview('accordion', testContent);
 console.log('✓ Preview saved');
 console.log('→ Open ipynb-tests/accordion-preview.html');
 ```

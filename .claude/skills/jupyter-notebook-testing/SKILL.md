@@ -94,7 +94,7 @@ return (async () => {
 
 ### 3. Test Your Block
 
-**Using Unified API (No Ternary Operators!):**
+**Always Use Unified API:**
 
 ```javascript
 // Cell 2: Simple test (works in both environments!)
@@ -141,9 +141,9 @@ The notebook supports **dual execution modes**:
 **Features:**
 - Full jsdom virtual DOM
 - Block decoration testing
-- HTML file generation (`saveBlockHTML()`)
+- HTML file generation
 - Live preview creation
-- Helper functions: `global.testBlock()`, `global.saveBlockHTML()`
+- Unified API: `testBlockFn`, `showPreview` available globally
 
 **When to use:**
 - Developing and testing EDS blocks
@@ -160,7 +160,7 @@ The notebook supports **dual execution modes**:
 - Direct JavaScript execution
 - Console output display
 - No file system access
-- Helper function: `window.testBlock()`
+- Unified API: `testBlockFn`, `showPreview` available globally
 
 **When to use:**
 - Sharing executable demos
@@ -202,27 +202,17 @@ await showPreview('accordion', '<div>content</div>');
 | `isNode` | Environment flag | `true` | `false` |
 | `isBrowser` | Environment flag | `false` | `true` |
 
-**Old Way (verbose, still works):**
+**Always Use Unified API:**
 ```javascript
-const doc = isNode ? global.document : document;
-const testBlockFn = isNode ? global.testBlock : window.testBlock;
-```
-
-**New Way (simple, recommended):**
-```javascript
-// Just use the globals directly - they work everywhere!
+// No conditionals needed - unified API works everywhere!
 const block = await testBlockFn('accordion', content);
+await showPreview('accordion', content);
+const div = doc.createElement('div');
 ```
 
-### Node.js Only Functions
-
-**saveBlockHTML(blockName, innerHTML, filename, options)**
-
-Saves HTML files (creates both preview and live-preview):
-
-```javascript
-await global.saveBlockHTML('accordion', content);
-```
+The unified API automatically adapts:
+- **Node.js**: `showPreview()` saves files to `ipynb-tests/` directory
+- **Browser**: `showPreview()` opens popup window with blob URL
 
 ## Popup Preview System (NEW)
 

@@ -51,10 +51,10 @@ This allows you to test EDS blocks interactively without running a full browser 
 │           ↓                     │             ↓                             │
 │  ┌──────────────────────┐      │      ┌──────────────────────────┐         │
 │  │  External Helpers:   │      │      │  Inline Helpers:         │         │
-│  │  scripts/            │      │      │  - window.testBlock()    │         │
+│  │  scripts/            │      │      │  - testBlockFn()    │         │
 │  │  ipynb-helpers.js    │      │      │  - window.displayBlock() │         │
 │  │  - testBlock()       │      │      │  - window.               │         │
-│  │  - saveBlockHTML()   │      │      │    createIframePreview() │         │
+│  │  - showPreview()     │      │      │    createIframePreview() │         │
 │  │  - loadBlockStyles() │      │      │  - window.               │         │
 │  │  - createIframe...() │      │      │    openIframePreview()   │         │
 │  └──────────────────────┘      │      └──────────────────────────┘         │
@@ -132,7 +132,7 @@ The test.ipynb notebook now supports **dual execution modes**:
 - Block decoration testing
 - HTML file generation
 - Live preview creation
-- Helper functions: `global.testBlock()`, `global.saveBlockHTML()`, `global.loadBlockStyles()`
+- Unified API: `testBlockFn()`, `showPreview()`, `doc` available globally
 
 **When to use:**
 - Developing and testing EDS blocks
@@ -148,7 +148,7 @@ The test.ipynb notebook now supports **dual execution modes**:
 - Direct JavaScript execution
 - Console output display
 - No file system access
-- Helper function: `window.testBlock()`
+- Helper function: `testBlockFn()`
 
 **When to use:**
 - Sharing executable demos
@@ -176,7 +176,7 @@ The notebook now supports **visual iframe previews** in both Node.js and Browser
 
 ### Node.js Mode (JSLab)
 
-When using `saveBlockHTML()`, **two files** are automatically created:
+When using `showPreview()`, **two files** are automatically created:
 
 #### 1. Preview HTML (`blockname-preview.html`)
 The actual styled block content with CSS links.
@@ -195,7 +195,7 @@ An interactive iframe wrapper with controls:
 **Example:**
 ```javascript
 // In JSLab, this creates BOTH files automatically:
-await global.saveBlockHTML('accordion', accordionContent);
+await showPreview('accordion', accordionContent);
 
 // Output:
 // ✓ Saved: ipynb-tests/accordion-preview.html
@@ -205,7 +205,7 @@ await global.saveBlockHTML('accordion', accordionContent);
 
 **Disable live preview:**
 ```javascript
-await global.saveBlockHTML('accordion', content, null, { livePreview: false });
+await showPreview('accordion', content, null, { livePreview: false });
 ```
 
 ### Browser Mode (ipynb-viewer)
@@ -215,7 +215,7 @@ When running in a browser, use `openIframePreview()` to create a popup window:
 **Example:**
 ```javascript
 // Test the block
-const block = await window.testBlock('accordion', accordionContent);
+const block = await testBlockFn('accordion', accordionContent);
 
 // Open iframe preview in new window
 window.openIframePreview('accordion', block.outerHTML);
@@ -447,8 +447,8 @@ Helper functions are now defined in [scripts/ipynb-helpers.js](../../scripts/ipy
 
 **Testing Functions:**
 - `loadBlockStyles(blockName)` - Load CSS for a block (Node.js only)
-- `testBlock(blockName, innerHTML)` - Test block decoration (Node.js and Browser)
-- `saveBlockHTML(blockName, innerHTML, filename, options)` - Save with live preview (Node.js only)
+- `testBlockFn(blockName, innerHTML)` - Test block decoration (works in both environments)
+- `showPreview(blockName, innerHTML, filename, options)` - Visual preview (adapts to environment)
 
 **Preview Functions:**
 - `createIframePreview(blockName, blockHTML)` - Generate iframe preview HTML (Node.js and Browser)
@@ -503,7 +503,7 @@ Initializes browser helper functions for interactive testing.
 
 **What it does:**
 - **Sets global environment flags** (`window.isNode = false`, `window.isBrowser = true`)
-- Defines `window.testBlock()` - Test blocks with native APIs
+- Defines `testBlockFn()` - Test blocks with native APIs
 - Defines `window.displayBlock()` - Create styled containers
 - Defines `window.createIframePreview()` - Generate iframe HTML
 - Defines `window.openIframePreview()` - Open preview in popup
@@ -521,7 +521,7 @@ helpers.setupBrowserEnvironment();
 
 #### Testing Functions
 
-##### Node.js Mode: `global.testBlock(blockName, innerHTML)`
+##### Unified API: `testBlockFn(blockName, innerHTML)`
 Tests a block's decoration function with provided content.
 
 **Parameters:**
@@ -541,7 +541,7 @@ const block = await global.testBlock('accordion', `
 console.log(block.outerHTML);
 ```
 
-#### Node.js Mode: `global.saveBlockHTML(blockName, innerHTML, filename, options)`
+#### Unified API: `showPreview(blockName, innerHTML, filename, options)`
 Saves the decorated block as styled HTML file(s).
 
 **Parameters:**
@@ -560,10 +560,10 @@ Saves the decorated block as styled HTML file(s).
 **Example:**
 ```javascript
 // Creates both preview and live-preview files
-await global.saveBlockHTML('accordion', accordionContent);
+await showPreview('accordion', accordionContent);
 
 // Disable live preview (only creates preview.html)
-await global.saveBlockHTML('accordion', accordionContent, null, { livePreview: false });
+await showPreview('accordion', accordionContent, null, { livePreview: false });
 ```
 
 #### Node.js Mode: `global.loadBlockStyles(blockName)`
@@ -590,7 +590,7 @@ Creates a block element (does not decorate).
 
 **Example:**
 ```javascript
-const block = await window.testBlock('test', '<div>Content</div>');
+const block = await testBlockFn('test', '<div>Content</div>');
 console.log(block);
 ```
 
@@ -607,7 +607,7 @@ console.log(block);
 
 **Example:**
 ```javascript
-saveBlockHTML(block, 'hero', 'hero-preview.html');
+showPreview(block, 'hero', 'hero-preview.html');
 // Creates ipynb-tests/hero-preview.html with live CSS
 ```
 
@@ -847,7 +847,7 @@ Test block logic without setting up a full environment:
 
 ```javascript
 // Quick test of content extraction
-const block = await testBlock('hero', `<div><div>Title</div></div>`);
+const block = await testBlockFn('hero', `<div><div>Title</div></div>`);
 console.log('Extracted title:', block.querySelector('h1')?.textContent);
 ```
 
@@ -857,13 +857,13 @@ Test different configurations in separate cells:
 
 ```javascript
 // Cell 1: Default layout
-const defaultBlock = await testBlock('cards', contentHTML);
+const defaultBlock = await testBlockFn('cards', contentHTML);
 
 // Cell 2: Grid layout
-const gridBlock = await testBlock('cards', contentHTML, { layout: 'grid' });
+const gridBlock = await testBlockFn('cards', contentHTML, { layout: 'grid' });
 
 // Cell 3: List layout
-const listBlock = await testBlock('cards', contentHTML, { layout: 'list' });
+const listBlock = await testBlockFn('cards', contentHTML, { layout: 'list' });
 ```
 
 ### 3. Edge Cases
@@ -872,11 +872,11 @@ Test error handling and edge cases:
 
 ```javascript
 // Empty content
-const emptyBlock = await testBlock('hero', '');
+const emptyBlock = await testBlockFn('hero', '');
 console.log('Empty content handled:', emptyBlock.innerHTML);
 
 // Invalid structure
-const invalidBlock = await testBlock('hero', '<div>Only one cell</div>');
+const invalidBlock = await testBlockFn('hero', '<div>Only one cell</div>');
 console.log('Invalid structure handled:', invalidBlock.innerHTML);
 ```
 
@@ -894,8 +894,8 @@ It supports both single and double-column layouts.
 ```
 
 ```javascript
-const block = await testBlock('hero', basicContent);
-saveBlockHTML(block, 'hero', 'hero-basic.html');
+const block = await testBlockFn('hero', basicContent);
+showPreview(block, 'hero', 'hero-basic.html');
 ```
 
 ---
@@ -1037,7 +1037,7 @@ When users click "Run" on a code cell:
 
 4. **Test a block:**
    ```javascript
-   await global.saveBlockHTML('accordion', '<div><div>Q</div><div>A</div></div>');
+   await showPreview('accordion', '<div><div>Q</div><div>A</div></div>');
    ```
 
 5. **Open the live preview:**
@@ -1093,7 +1093,7 @@ const doc = isNode ? global.document : document;
 // Conditional features
 if (isNode) {
   // JSLab-specific code (file I/O, block testing)
-  await global.saveBlockHTML('myblock', content);
+  await showPreview('myblock', content);
 } else {
   // Browser-specific code (pure JavaScript)
   console.log('Result:', 42);
@@ -1126,7 +1126,7 @@ with a configurable number of columns using data attributes.
 Always generate HTML previews for visual checks:
 
 ```javascript
-saveBlockHTML(block, 'your-block', 'your-block-test1.html');
+showPreview(block, 'your-block', 'your-block-test1.html');
 // Open in browser to verify styling
 ```
 
@@ -1136,9 +1136,9 @@ One test scenario per cell for clarity:
 
 ```javascript
 // ❌ BAD - Multiple tests in one cell
-const block1 = await testBlock('hero', content1);
-const block2 = await testBlock('hero', content2);
-const block3 = await testBlock('hero', content3);
+const block1 = await testBlockFn('hero', content1);
+const block2 = await testBlockFn('hero', content2);
+const block3 = await testBlockFn('hero', content3);
 
 // ✅ GOOD - Separate cells for each test
 ```
@@ -1372,7 +1372,7 @@ The Jupyter notebook testing system now provides a **complete testing and intera
 
 ### Recommended Workflow
 
-1. **Develop** in JSLab with `testBlock()` and `saveBlockHTML()`
+1. **Develop** in JSLab with `testBlock()` and `showPreview()`
 2. **Preview** with the generated live-preview.html file
 3. **Validate** in browser with test.html
 4. **Share** interactive demos with ipynb-viewer block
