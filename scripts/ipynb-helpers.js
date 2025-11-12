@@ -75,9 +75,9 @@
  * @returns {Promise<string>} Setup completion message
  */
 export async function initialize() {
-  // Detect execution environment
-  const isNode = typeof process !== 'undefined' && process.versions && process.versions.node;
+  // Detect execution environment - check for window/document first (more reliable in browser)
   const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
+  const isNode = !isBrowser && typeof process !== 'undefined' && process.versions && process.versions.node;
 
   const context = isNode ? 'Node.js' : 'Browser';
 
@@ -104,8 +104,15 @@ export async function initialize() {
  * @returns {Promise<void>}
  */
 export async function setupNodeEnvironment() {
-  // Load jsdom and set up virtual DOM
-  const { JSDOM } = require('jsdom');
+  // Load jsdom using dynamic import (works in JSLab)
+  let JSDOM;
+  try {
+    const jsdomModule = await import('jsdom');
+    JSDOM = jsdomModule.JSDOM;
+  } catch (e) {
+    console.error('Failed to load jsdom:', e.message);
+    throw new Error('jsdom is required for Node.js testing. Install with: npm install jsdom');
+  }
 
   // Create virtual DOM
   const dom = new JSDOM('<!DOCTYPE html><html><head></head><body></body></html>', {
@@ -149,8 +156,9 @@ export async function setupNodeEnvironment() {
 
   console.log('✓ Virtual DOM environment initialized');
 
-  // Ensure output directory exists
-  const fs = require('fs');
+  // Ensure output directory exists using dynamic import
+  const fsModule = await import('fs');
+  const fs = fsModule.default || fsModule;
   const outputDir = './ipynb-tests';
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
@@ -271,8 +279,10 @@ export function setupBrowserEnvironment() {
  * @returns {Promise<string|null>} CSS content or null if not found
  */
 export async function loadBlockStyles(blockName) {
-  const fs = await import('fs/promises');
-  const path = await import('path');
+  const fsModule = await import('fs');
+  const fs = fsModule.promises || fsModule.default.promises;
+  const pathModule = await import('path');
+  const path = pathModule.default || pathModule;
 
   const cssPath = path.resolve(`./blocks/${blockName}/${blockName}.css`);
   try {
@@ -298,11 +308,11 @@ export async function testBlock(blockName, innerHTML = '') {
   console.log(`\n=== Testing: ${blockName} ===`);
 
   try {
-    const path = await import('path');
+    const pathModule = await import('path');
+    const path = pathModule.default || pathModule;
     const modulePath = path.resolve(`./blocks/${blockName}/${blockName}.js`);
 
-    // Clear cache to get fresh module
-    delete require.cache[require.resolve(modulePath)];
+    // Import module directly (no cache clearing needed with dynamic import)
     const module = await import(modulePath);
     const decorate = module.default;
 
@@ -371,8 +381,10 @@ export async function saveBlockHTML(blockName, innerHTML = '', filename = null, 
 </body>
 </html>`;
 
-  const fs = await import('fs/promises');
-  const path = await import('path');
+  const fsModule = await import('fs');
+  const fs = fsModule.promises || fsModule.default.promises;
+  const pathModule = await import('path');
+  const path = pathModule.default || pathModule;
   const outputFile = filename || `${blockName}-preview.html`;
   const outputPath = path.resolve('./ipynb-tests', outputFile);
 
