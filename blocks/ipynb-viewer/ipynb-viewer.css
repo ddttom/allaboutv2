@@ -1,5 +1,15 @@
 /* IPynb Viewer Block Styles */
 
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Scroll padding for anchors (offset for fixed headers) */
+html {
+  scroll-padding-top: 100px;
+}
+
 .ipynb-viewer-container {
   max-width: 1200px;
   margin: 2rem auto;
@@ -71,6 +81,21 @@
 
 .ipynb-markdown-cell h2 {
   font-size: 1.5rem;
+  scroll-margin-top: 100px; /* Offset for scroll-to anchor */
+}
+
+/* Highlight effect for targeted anchors */
+.ipynb-markdown-cell h2:target {
+  animation: highlight-flash 2s ease-out;
+}
+
+@keyframes highlight-flash {
+  0% {
+    background-color: rgba(255, 235, 59, 0.4);
+  }
+  100% {
+    background-color: transparent;
+  }
 }
 
 .ipynb-markdown-cell h3 {

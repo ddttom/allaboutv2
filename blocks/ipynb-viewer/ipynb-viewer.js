@@ -67,8 +67,21 @@ function parseMarkdown(markdown) {
   html = processedLines.join('\n');
 
   // Headers (process in order from most specific to least)
+  // Add IDs to h2 headers for "Part X:" sections and special cases
   html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
-  html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+  html = html.replace(/^## (.*$)/gim, (match, text) => {
+    // Check if it's a "Part X:" heading
+    const partMatch = text.match(/Part\s+(\d+):/i);
+    if (partMatch) {
+      const partNum = partMatch[1];
+      return `<h2 id="part-${partNum}">${text}</h2>`;
+    }
+    // Special case: "What is ipynb-viewer?" is Part 1
+    if (text.includes('What is ipynb-viewer?')) {
+      return `<h2 id="part-1">${text}</h2>`;
+    }
+    return `<h2>${text}</h2>`;
+  });
   html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
 
   // Bold (before italic to handle ** before *)
