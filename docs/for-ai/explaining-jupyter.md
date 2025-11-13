@@ -175,6 +175,7 @@ return '✓ Preview overlay opened';
 - Dark themed professional UI
 - Full-screen overlay with backdrop
 - **Responsive preview buttons**: Mobile (375×667), Tablet (768×1024), Desktop (95%×95vh)
+- **Adaptive UI**: Button text abbreviates to M/T/D in mobile view for better fit
 - ✕ Close button (or press ESC, or click backdrop)
 - Scrollable content area
 - No popup blockers to worry about
@@ -234,10 +235,12 @@ The preview system creates an overlay on the current page with the styled block.
   - 📱 Mobile (375px × 667px) - iPhone SE/8 size
   - 📱 Tablet (768px × 1024px) - iPad size
   - 🖥️ Desktop (95% × 95vh) - Full desktop view (default)
+  - **Adaptive button text**: Shows "M", "T", "D" in mobile view for compact fit
 - Close button, ESC key, or click backdrop to close
 - Scrollable content area
 - Previous overlay automatically removed
 - Smooth transitions between viewport sizes
+- Compact header styling in mobile view (reduced padding and font sizes)
 
 **Example:**
 ```javascript
