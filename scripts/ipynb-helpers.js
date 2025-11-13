@@ -75,20 +75,29 @@ export async function showPreview(blockName, innerHTML = '') {
   overlay.className = 'ipynb-preview-overlay';
   overlay.innerHTML = `
     <style>
-      .ipynb-preview-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);z-index:10000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
-      .ipynb-preview-container{background:#fff;border-radius:8px;width:90%;max-width:1200px;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 4px 24px rgba(0,0,0,0.3)}
-      .ipynb-preview-header{background:#1e1e1e;color:#fff;padding:12px 20px;border-radius:8px 8px 0 0;display:flex;justify-content:space-between;align-items:center}
+      .ipynb-preview-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:10000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+      .ipynb-preview-container{background:#fff;border-radius:8px;width:95%;height:95vh;display:flex;flex-direction:column;box-shadow:0 8px 32px rgba(0,0,0,0.4);transition:width .3s ease,height .3s ease}
+      .ipynb-preview-container.mobile{width:375px;height:667px}
+      .ipynb-preview-container.tablet{width:768px;height:1024px}
+      .ipynb-preview-container.desktop{width:95%;height:95vh}
+      .ipynb-preview-header{background:#1e1e1e;color:#fff;padding:12px 20px;border-radius:8px 8px 0 0;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
       .ipynb-preview-title{font-size:14px;font-weight:500;margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
-      .ipynb-preview-controls{display:flex;gap:8px}
-      .ipynb-preview-btn{background:#2d2d2d;border:1px solid #3e3e3e;color:#fff;padding:6px 12px;border-radius:4px;cursor:pointer;font-size:12px;transition:background .2s}
+      .ipynb-preview-controls{display:flex;gap:8px;align-items:center}
+      .ipynb-preview-btn{background:#2d2d2d;border:1px solid #3e3e3e;color:#fff;padding:6px 12px;border-radius:4px;cursor:pointer;font-size:12px;transition:all .2s;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
       .ipynb-preview-btn:hover{background:#3e3e3e}
-      .ipynb-preview-content{overflow:auto;padding:20px;flex:1}
+      .ipynb-preview-btn.active{background:#0066cc;border-color:#0066cc}
+      .ipynb-preview-divider{width:1px;height:20px;background:#3e3e3e;margin:0 4px}
+      .ipynb-preview-content{overflow:auto;padding:20px;flex:1;min-height:0}
     </style>
-    <div class="ipynb-preview-container">
+    <div class="ipynb-preview-container desktop">
       <div class="ipynb-preview-header">
         <div class="ipynb-preview-title">${blockName} Block Preview</div>
         <div class="ipynb-preview-controls">
-          <button class="ipynb-preview-btn" onclick="this.closest('.ipynb-preview-overlay').remove()">✕ Close</button>
+          <button class="ipynb-preview-btn ipynb-view-btn" data-view="mobile">📱 Mobile</button>
+          <button class="ipynb-preview-btn ipynb-view-btn" data-view="tablet">📱 Tablet</button>
+          <button class="ipynb-preview-btn ipynb-view-btn active" data-view="desktop">🖥️ Desktop</button>
+          <div class="ipynb-preview-divider"></div>
+          <button class="ipynb-preview-btn ipynb-close-btn">✕ Close</button>
         </div>
       </div>
       <div class="ipynb-preview-content">
@@ -100,9 +109,45 @@ export async function showPreview(blockName, innerHTML = '') {
   // Add to page
   document.body.appendChild(overlay);
 
+  // Get references
+  const container = overlay.querySelector('.ipynb-preview-container');
+  const viewBtns = overlay.querySelectorAll('.ipynb-view-btn');
+  const closeBtn = overlay.querySelector('.ipynb-close-btn');
+
+  // Handle view switching
+  viewBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const view = btn.dataset.view;
+
+      // Update active state
+      viewBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Update container class
+      container.className = `ipynb-preview-container ${view}`;
+
+      console.log(`✓ Switched to ${view} view`);
+    });
+  });
+
+  // Handle close button
+  closeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    overlay.remove();
+  });
+
   // Close on ESC key or clicking backdrop
-  overlay.addEventListener('keydown', (e) => e.key === 'Escape' && overlay.remove());
-  overlay.addEventListener('click', (e) => e.target === overlay && overlay.remove());
+  overlay.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      overlay.remove();
+    }
+  });
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      overlay.remove();
+    }
+  });
 
   // Focus overlay for keyboard events
   overlay.tabIndex = -1;
