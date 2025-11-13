@@ -93,67 +93,35 @@ Open your EDS page with the ipynb-viewer block:
 - ✅ Markdown cells are formatted
 - ✅ Code cells have "Run" buttons
 
-### Test 2: Run Cell 1
+### Test 2: Test a Block
 
-Click "Run" on the first code cell:
-
-```javascript
-const { initialize } = await import('/scripts/ipynb-helpers.js');
-await initialize();
-return '✅ Browser environment ready';
-```
-
-Expected output:
-```
-✅ Browser environment ready
-```
-
-### Test 3: Test a Block
-
-Run a test cell:
+Run any code cell with an import and test:
 
 ```javascript
-const block = await window.testBlockFn('accordion', '<div><div>Q</div><div>A</div></div>');
+const { testBlock } = await import('/scripts/ipynb-helpers.js');
+const block = await testBlock('accordion', '<div><div>Q</div><div>A</div></div>');
 return block.outerHTML;
 ```
 
 Expected output: Decorated HTML of the accordion block
 
-### Test 4: Generate Preview
+### Test 3: Generate Preview
 
 Run a preview cell:
 
 ```javascript
-await window.showPreview('accordion', '<div><div>Q</div><div>A</div></div>');
-return '✓ Preview window opened';
+const { showPreview } = await import('/scripts/ipynb-helpers.js');
+await showPreview('accordion', '<div><div>Q</div><div>A</div></div>');
+return '✓ Preview overlay opened';
 ```
 
 Expected result:
-- ✅ Popup window opens (1200x800)
+- ✅ Full-screen overlay appears on same page
 - ✅ Styled accordion block visible
-- ✅ Refresh and close buttons work
-- ✅ ESC key closes popup
+- ✅ Close button works
+- ✅ ESC key or backdrop click closes overlay
 
 ## Browser Configuration
-
-### Allow Popups
-
-The `showPreview()` function opens popup windows. You may need to allow popups for your domain:
-
-**Chrome:**
-1. Click the popup blocked icon in address bar
-2. Select "Always allow popups from [your-site]"
-3. Reload page and retry
-
-**Firefox:**
-1. Click Options in the popup blocked notification
-2. Select "Allow popups for [your-site]"
-3. Reload page and retry
-
-**Safari:**
-1. Safari → Preferences → Websites → Pop-up Windows
-2. Find your site and set to "Allow"
-3. Reload page and retry
 
 ### Browser Console
 
@@ -209,40 +177,40 @@ End users can:
 
 ### Helper Functions Not Working
 
-**Problem:** `window.testBlockFn is not defined`
+**Problem:** `testBlock is not defined`
 
 **Solution:**
-- Run Cell 1 first to initialize
+- Import the helpers in each cell: `const { testBlock } = await import('/scripts/ipynb-helpers.js');`
 - Verify scripts/ipynb-helpers.js exists
-- Check import path: `/scripts/ipynb-helpers.js`
+- Check import path is absolute: `/scripts/ipynb-helpers.js`
 - Check browser console for import errors
 
-### Popups Blocked
+### Overlay Not Appearing
 
-**Problem:** `showPreview()` doesn't open window
+**Problem:** `showPreview()` doesn't show overlay
 
 **Solution:**
-- Look for popup blocked indicator in address bar
-- Allow popups for your domain
-- Retry the preview cell
+- Check browser console for JavaScript errors
+- Verify import statement is correct
+- Try a simple test to confirm it works
 
 ### Blocks Not Decorating
 
-**Problem:** Popup shows undecorated HTML
+**Problem:** Overlay shows undecorated HTML
 
 **Solution:**
 - Verify block JavaScript file exists: `blocks/blockname/blockname.js`
 - Check block CSS file exists: `blocks/blockname/blockname.css`
 - Check browser console for 404 errors
-- Verify base tag origin in popup HTML
+- Verify paths are absolute (start with `/`)
 
 ## Next Steps
 
 After setup:
 
-1. ✅ Run Cell 1 to initialize environment
-2. ✅ Test simple blocks with `testBlockFn()`
-3. ✅ Generate popup previews with `showPreview()`
+1. ✅ Import helpers in each cell with direct ES6 imports
+2. ✅ Test simple blocks with `testBlock()`
+3. ✅ Generate overlay previews with `showPreview()`
 4. ✅ Create your own test scenarios
 5. ✅ Share executable notebooks with users
 

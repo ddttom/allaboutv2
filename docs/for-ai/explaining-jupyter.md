@@ -8,10 +8,11 @@ This document explains the Jupyter notebook implementation for **interactive tes
 
 **BROWSER-ONLY EXECUTION**: The test.ipynb notebook runs exclusively in the browser with:
 - **Simple async pattern** - Direct `await` and `return` statements (no IIFE wrappers)
-- **Direct imports** - Each cell imports what it needs independently
+- **Direct imports** - Each cell imports what it needs independently (no initialization required)
 - **Helper functions** - `testBlock()` and `showPreview()` via ES6 imports
 - **Overlay previews** - Full-screen overlay with backdrop (no popup blockers)
 - **Native browser APIs** - Direct use of `document`, `window`, `fetch`
+- **Cell independence** - Run any cell at any time in any order
 
 ## What This Is
 
@@ -20,13 +21,13 @@ This document explains the Jupyter notebook implementation for **interactive tes
 - **Browser execution** via ipynb-viewer block on EDS sites
 - **Native browser APIs** (`document`, `window`, `fetch`)
 - **Simple async pattern** - Write code naturally with `await` and `return`
-- **Simple initialization** - `initialize()` sets up helpers on window object
-- **Helper functions** - `window.testBlockFn()` and `window.showPreview()`
-- **Popup window preview** - Isolated preview with `<base>` tag for CSS/JS
-- **Minimal DOM structure** - Block as direct child of `<main>` (no wrappers)
+- **Direct ES6 imports** - Each cell imports helper functions independently
+- **Helper functions** - `testBlock()` and `showPreview()` from `/scripts/ipynb-helpers.js`
+- **Overlay previews** - Full-screen overlay on same page (no popup blockers)
+- **Cell independence** - Run any cell at any time in any order
 - **Interactive execution** - Run code cells individually with click
 
-Test EDS blocks interactively in the browser and share executable notebooks for end-user interaction. The popup preview system uses `<base>` tag to properly load CSS and JavaScript from blob URLs. Minimal DOM structure ensures proper EDS block decoration.
+Test EDS blocks interactively in the browser and share executable notebooks for end-user interaction. The overlay preview system provides full styling and interactivity without popup blockers.
 
 ---
 
@@ -55,9 +56,8 @@ Test EDS blocks interactively in the browser and share executable notebooks for 
 │  ┌──────────────────────────────────────────────────────────────┐          │
 │  │              Helper Functions:                               │          │
 │  │              scripts/ipynb-helpers.js                        │          │
-│  │              - initialize()                                  │          │
-│  │              - testBlockFn() → window.testBlockFn            │          │
-│  │              - showPreview() → window.showPreview            │          │
+│  │              - testBlock() (direct ES6 import)               │          │
+│  │              - showPreview() (direct ES6 import)             │          │
 │  └──────────────────────────────────────────────────────────────┘          │
 │                              ↓                                              │
 │  ┌──────────────────────────────────────────────────────────────┐          │
@@ -66,15 +66,14 @@ Test EDS blocks interactively in the browser and share executable notebooks for 
 │  └──────────────────────────────────────────────────────────────┘          │
 │                              ↓                                              │
 │  ┌──────────────────────────────────────────────────────────────┐          │
-│  │              POPUP WINDOW                                    │          │
-│  │              Blob URL                                        │          │
-│  │              (no files)                                      │          │
+│  │              OVERLAY PREVIEW                                 │          │
+│  │              (same page - no popup blockers)                 │          │
 │  └──────────────────────────────────────────────────────────────┘          │
 │                              ↓                                              │
 │  ┌──────────────────────────────────────────────────────────────┐          │
 │  │              LIVE PREVIEW UI                                 │          │
 │  │  ┌────────────────────────────────────────────────────────┐  │          │
-│  │  │  [blockname] Block Preview  [↻ Refresh]  [✕ Close]    │  │          │
+│  │  │  [blockname] Block Preview         [✕ Close]           │  │          │
 │  │  └────────────────────────────────────────────────────────┘  │          │
 │  │  ┌────────────────────────────────────────────────────────┐  │          │
 │  │  │                                                        │  │          │
@@ -83,11 +82,11 @@ Test EDS blocks interactively in the browser and share executable notebooks for 
 │  │  └────────────────────────────────────────────────────────┘  │          │
 │  │                                                               │          │
 │  │  Features:                                                    │          │
-│  │  - Dark themed professional UI                                │          │
-│  │  - Refresh button (reload content)                            │          │
-│  │  - Close button or ESC key                                    │          │
-│  │  - Fullscreen with scrolling                                  │          │
-│  │  - Base tag for proper CSS/JS loading                         │          │
+│  │  - Full-screen overlay with backdrop                          │          │
+│  │  - Close button, ESC key, or backdrop click                   │          │
+│  │  - Scrollable content                                         │          │
+│  │  - Direct CSS/JS loading (no blob URL issues)                 │          │
+│  │  - No popup blockers                                          │          │
 │  └───────────────────────────────────────────────────────────────┘          │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘

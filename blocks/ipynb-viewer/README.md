@@ -6,10 +6,11 @@ Display and execute Jupyter notebook (.ipynb) files directly in your EDS site wi
 
 - **Parse and Display Notebooks**: Renders both markdown and code cells from .ipynb files
 - **Interactive Execution**: Run JavaScript code cells individually with a click (async/await support)
-- **Automatic Initialization Check**: Warns users if they skip the first code cell (prevents undefined function errors)
+- **Cell Independence**: Run any cell at any time in any order - no initialization required
 - **Browser Execution**: Runs JavaScript code directly in the browser with native APIs
+- **Direct ES6 Imports**: Each cell imports what it needs independently
 - **Output Display**: Shows console logs, results, and errors inline
-- **Sequential Execution**: Run cells in order, starting with the first code cell (initialization)
+- **Overlay Previews**: Full-screen overlays for visual testing (no popup blockers)
 - **Responsive Design**: Mobile-friendly layout
 - **Syntax Highlighting**: Clear code formatting with monospace fonts
 - **Error Handling**: Graceful error messages and visual indicators
@@ -74,63 +75,64 @@ The block supports standard Jupyter notebook JSON format with **enhanced markdow
 
 ### Run Button
 Each code cell has a "Run" button that:
-1. **Checks initialization** - Verifies the first code cell has been run (shows warning if not)
-2. Executes the JavaScript code (with async/await support)
-3. Captures console.log() and console.error() output
-4. Displays the return value
-5. Shows visual indicators for success/error states
+1. Executes the JavaScript code (with async/await support)
+2. Captures console.log() and console.error() output
+3. Displays the return value
+4. Shows visual indicators for success/error states
 
-**Automatic Initialization Check:**
-- If you try to run any code cell without first running the first code cell, you'll see a warning
-- The warning explains that the first JavaScript cell must be run first to set up the environment
-- This prevents confusing errors about undefined functions (`testBlockFn`, `showPreview`, etc.)
-
-**Note:** Always run the first code cell first! It will display setup status (`✅ Browser environment ready`).
+**Cell Independence:**
+- Run any cell at any time in any order
+- No initialization required
+- Each cell imports what it needs independently
 
 ### Helper Functions
 
-After running the first code cell, these functions are available on the `window` object:
+Import helper functions directly in any cell using ES6 imports:
 
 ```javascript
+// Import what you need
+const { testBlock } = await import('/scripts/ipynb-helpers.js');
+
 // Test a block
-const block = await window.testBlockFn('blockname', '<div>content</div>');
+const block = await testBlock('accordion', '<div>content</div>');
 
-// Show preview in popup window
-await window.showPreview('blockname', '<div>content</div>');
-
-// Access document
-const div = window.doc.createElement('div');
-// Or use document directly
-const div2 = document.createElement('div');
+// Return result to display in output
+return block.outerHTML;
 ```
+
+**Available Helper Functions:**
+- `testBlock(blockName, innerHTML)` - Test block decoration in browser
+- `showPreview(blockName, innerHTML)` - Open overlay preview with full styling
 
 **Example cell structure:**
 ```javascript
+// Import helpers
+const { testBlock, showPreview } = await import('/scripts/ipynb-helpers.js');
 
-  const content = '<div><div>Title</div><div>Description</div></div>';
-  const block = await window.testBlockFn('accordion', content);
+const content = '<div><div>Title</div><div>Description</div></div>';
+const block = await testBlock('accordion', content);
 
-  // Return or display result
-  return block.outerHTML;
+// Show visual preview
+await showPreview('accordion', content);
 
+// Return result to display
+return block.outerHTML;
 ```
 
-### Live Preview with Popup Window
+### Live Preview with Overlay
 
 When using `showPreview()` in code cells:
-- **Popup window**: Opens preview in a new browser window with isolated context
-- **Base tag solution**: Uses `<base href="origin/">` to resolve CSS/JS from correct origin
-- **Full styling**: All CSS loads properly via base href resolution
-- **Full interactivity**: Block JavaScript executes with complete styling support
-- **Easy dismissal**: Press ESC or click close button
-- **Refresh capability**: Reload button to re-render the block
+- **Overlay system**: Opens full-screen overlay on the same page (no popup blockers!)
+- **Full styling**: All CSS loads properly with complete styling support
+- **Full interactivity**: Block JavaScript executes with event handlers working
+- **Easy dismissal**: Press ESC, click backdrop, or click close button
+- **No popup blockers**: Stays on the same page - no new windows
 
 **How it works:**
-- Blob URLs have null origin and can't load external resources
-- `<base href="https://your-site/">` tells browser where to resolve relative URLs
-- `styles/styles.css` resolves to `https://your-site/styles/styles.css`
-- JavaScript modules import correctly using origin detection
-- Result: Fully functional styled blocks in isolated popup window
+- Creates full-screen overlay with semi-transparent backdrop
+- Includes all CSS and JavaScript for proper block rendering
+- Decorates block using native browser APIs
+- Result: Fully functional styled blocks in overlay
 
 ## Example Notebook Structure
 
@@ -161,61 +163,58 @@ When using `showPreview()` in code cells:
 ## Technical Details
 
 ### Code Execution
-- Code runs in the browser using `Function()` constructor
+- Code runs in the browser using `AsyncFunction` constructor for async/await support
 - Console methods are temporarily captured during execution
 - Results are displayed in an output area below each cell
 - Errors are caught and displayed with red styling
+- Each cell runs independently with its own scope
 
-### Popup Preview System (NEW)
+### Overlay Preview System
 
 **How it works:**
 
-1. **Creates HTML with base tag**:
+1. **Creates overlay element**:
    ```javascript
-   const currentOrigin = window.location.origin;
-   const html = `<!DOCTYPE html>
-   <html>
-   <head>
-     <base href="${currentOrigin}/">
-     <link rel="stylesheet" href="styles/styles.css">
-     <link rel="stylesheet" href="blocks/${blockName}/${blockName}.css">
-   </head>`;
+   const overlay = document.createElement('div');
+   overlay.className = 'ipynb-preview-overlay';
+   // Full-screen overlay with inline styles
    ```
 
 2. **Minimal DOM structure** (EDS-compatible):
    ```html
-   <body>
-     <div class="preview-header">...</div>  <!-- Fixed position -->
-     <main>
-       <div class="blockname block">
-         <!-- block content as direct children -->
+   <div class="ipynb-preview-overlay">
+     <div class="ipynb-preview-backdrop"></div>
+     <div class="ipynb-preview-container">
+       <div class="ipynb-preview-header">
+         <button class="ipynb-preview-close">×</button>
        </div>
-     </main>
-   </body>
+       <div class="ipynb-preview-content">
+         <div class="blockname block">
+           <!-- block content as direct children -->
+         </div>
+       </div>
+     </div>
+   </div>
    ```
 
-3. **Creates blob URL and opens window**:
+3. **Appends to document body**:
    ```javascript
-   const blob = new Blob([html], { type: 'text/html' });
-   const url = URL.createObjectURL(blob);
-   window.open(url, '_blank', 'width=1200,height=800');
+   document.body.appendChild(overlay);
    ```
 
-4. **Decorates after load**:
+4. **Decorates block**:
    ```javascript
-   // In the popup window
-   const blockElement = document.querySelector(`.${blockName}.block`);
-   const module = await import(`${baseUrl}/blocks/${blockName}/${blockName}.js`);
-   await module.default(blockElement);
+   const block = overlay.querySelector(`.${blockName}.block`);
+   const module = await import(`/blocks/${blockName}/${blockName}.js`);
+   await module.default(block);
    ```
 
-**How base tag solves blob URL issues:**
-- Blob URLs (`blob://...`) have null origin
-- Can't load CSS/JS with relative paths
-- `<base href="https://origin/">` tells browser where to resolve paths
-- `styles/styles.css` → `https://origin/styles/styles.css`
-- JavaScript modules import using origin detection
-- Result: Fully styled and functional blocks
+**Why overlay is better than popup windows:**
+- No popup blockers
+- Stays on the same page
+- Better UX (ESC or backdrop click to close)
+- Direct CSS access (no blob URL issues)
+- Simpler implementation
 
 **Why minimal DOM structure is critical:**
 
@@ -227,16 +226,10 @@ EDS blocks expect specific DOM patterns where they can iterate over `block.child
 });
 ```
 
-**Problems with wrapper divs:**
-- Extra `<div>` wrappers between `<main>` and block break child selection
-- Blocks can't find their content rows (they find wrapper divs instead)
-- Decoration runs successfully but produces incorrect output
-- Visual symptom: Block shows as **colored boxes** instead of proper styled elements
-
 **Solution:**
-- Block must be **direct child of `<main>`** with no intermediary wrappers
-- Fixed position header (height: 48px) with main padding (68px top) prevents overlap
-- Header doesn't interfere (not in document flow)
+- Block is properly structured within preview content area
+- No extra wrapper divs between content area and block
+- Blocks decorate correctly with full styling
 - See [Raw EDS Blocks Guide](../../docs/for-ai/implementation/raw-eds-blocks-guide.md) for detailed patterns
 
 ### Markdown Parser (Enhanced)

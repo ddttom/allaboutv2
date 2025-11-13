@@ -162,14 +162,12 @@ function createMarkdownCell(cell, index) {
  * Create a code cell element with execution button
  * @param {object} cell - Notebook cell data
  * @param {number} index - Overall cell index
- * @param {number} codeIndex - Code cell index (0-based)
  * @returns {HTMLElement} Cell element
  */
-function createCodeCell(cell, index, codeIndex) {
+function createCodeCell(cell, index) {
   const cellDiv = document.createElement('div');
   cellDiv.className = 'ipynb-cell ipynb-code-cell';
   cellDiv.dataset.cellIndex = index;
-  cellDiv.dataset.codeIndex = codeIndex;
 
   // Cell header with run button
   const header = document.createElement('div');
@@ -213,50 +211,16 @@ function createCodeCell(cell, index, codeIndex) {
 }
 
 /**
- * Check if initialization has occurred and show warning if not
- * @returns {boolean} True if initialized, false otherwise
- */
-function checkInitialization() {
-  // Check if unified API globals exist
-  const isInitialized = typeof window.doc !== 'undefined'
-    && typeof window.testBlockFn !== 'undefined'
-    && typeof window.showPreview !== 'undefined';
-
-  return isInitialized;
-}
-
-/**
  * Execute JavaScript code in a cell
  * @param {HTMLElement} cellDiv - Cell element
  */
 async function executeCodeCell(cellDiv) {
   const code = cellDiv.dataset.code;
   const output = cellDiv.querySelector('.ipynb-cell-output');
-  const codeIndex = cellDiv.dataset.codeIndex;
 
   // Clear previous output
   output.innerHTML = '';
   output.style.display = 'block';
-
-  // Check if this is NOT the first code cell (codeIndex 0) and initialization hasn't happened
-  if (codeIndex !== '0' && !checkInitialization()) {
-    const warningDiv = document.createElement('div');
-    warningDiv.className = 'ipynb-output-error';
-    warningDiv.style.background = '#fff3cd';
-    warningDiv.style.color = '#856404';
-    warningDiv.style.borderLeft = '4px solid #ffc107';
-    warningDiv.innerHTML = `
-      <strong>⚠️ Warning: Environment not initialized</strong><br>
-      <br>
-      Please run the <strong>first code cell</strong> first to initialize the environment.<br>
-      <br>
-      The first JavaScript cell sets up the testing environment (jsdom, helpers, unified API).<br>
-      Without it, functions like <code>testBlockFn()</code> and <code>showPreview()</code> will not be available.
-    `;
-    output.appendChild(warningDiv);
-    cellDiv.classList.add('ipynb-cell-error');
-    return;
-  }
 
   // Create console capture
   const logs = [];
@@ -412,15 +376,13 @@ export default async function decorate(block) {
       throw new Error('Notebook has no cells');
     }
 
-    let codeIndex = 0; // Track code cell index separately
     notebook.cells.forEach((cell, index) => {
       let cellElement;
 
       if (cell.cell_type === 'markdown') {
         cellElement = createMarkdownCell(cell, index);
       } else if (cell.cell_type === 'code') {
-        cellElement = createCodeCell(cell, index, codeIndex);
-        codeIndex++; // Increment code cell counter
+        cellElement = createCodeCell(cell, index);
 
         // Add click handler for run button
         const runButton = cellElement.querySelector('.ipynb-run-button');

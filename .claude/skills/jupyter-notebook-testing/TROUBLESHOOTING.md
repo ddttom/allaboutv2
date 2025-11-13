@@ -4,80 +4,67 @@ Common issues and solutions when testing EDS blocks with Jupyter notebooks in th
 
 ## No Output Displayed
 
-**Problem:** Cell runs successfully (green checkmark) but output cell is empty.
+**Problem:** Cell runs successfully but output cell is empty.
 
 **Cause:** Missing `return` statement.
 
 **Solution:**
 ```javascript
 // ✅ GOOD - Shows output
-const block = await window.testBlockFn('accordion', content);
+const { testBlock } = await import('/scripts/ipynb-helpers.js');
+const block = await testBlock('accordion', content);
 return block.outerHTML;
 
 // ❌ BAD - No output
-const block = await window.testBlockFn('accordion', content);
+const { testBlock } = await import('/scripts/ipynb-helpers.js');
+const block = await testBlock('accordion', content);
 ```
 
 **Always use `return` to display results in the output cell!**
 
 ## Helper Functions Not Defined
 
-**Problem:** `ReferenceError: window.testBlockFn is not defined`
+**Problem:** `ReferenceError: testBlock is not defined`
 
-**Cause:** Cell 1 (initialization cell) not executed.
-
-**Solution:**
-
-1. Always run Cell 1 first when opening the notebook:
-```javascript
-const { initialize } = await import('/scripts/ipynb-helpers.js');
-await initialize();
-return '✅ Browser environment ready';
-```
-
-2. Check that you see the success message: `✅ Browser environment ready`
-
-3. Then run subsequent cells
-
-**Add reminder in notebook:**
-```markdown
-## ⚠️ IMPORTANT
-**Run Cell 1 first** to initialize helper functions!
-```
-
-## Popup Window Blocked
-
-**Problem:** `showPreview()` runs but no window appears.
-
-**Cause:** Browser blocking popups.
+**Cause:** Missing import statement.
 
 **Solution:**
 
-**Chrome:**
-1. Look for popup blocked icon in address bar (usually on the right)
-2. Click it and select "Always allow popups from [your-site]"
-3. Reload page and retry
-
-**Firefox:**
-1. Click Options in the popup blocked notification
-2. Select "Allow popups for [your-site]"
-3. Reload page and retry
-
-**Safari:**
-1. Safari → Preferences → Websites → Pop-up Windows
-2. Find your site and set to "Allow"
-3. Reload page and retry
-
-**Verify:**
+Import the helper functions you need in each cell:
 ```javascript
-await window.showPreview('accordion', '<div><div>Q</div><div>A</div></div>');
-// Should see: ✓ Preview window opened
-// And popup window should appear
+// Import what you need
+const { testBlock, showPreview } = await import('/scripts/ipynb-helpers.js');
+
+// Use the functions
+const block = await testBlock('accordion', content);
+return block.outerHTML;
 ```
+
+**Each cell is independent - import what you need!**
+
+## Overlay Preview Not Appearing
+
+**Problem:** `showPreview()` runs but no overlay appears.
+
+**Cause:** JavaScript error during overlay creation.
+
+**Solution:**
+
+1. Check browser console (F12) for errors
+2. Verify the helper module is loaded correctly
+3. Test with a simple example:
+
+```javascript
+const { showPreview } = await import('/scripts/ipynb-helpers.js');
+await showPreview('accordion', '<div><div>Q</div><div>A</div></div>');
+return '✓ Preview overlay opened';
+```
+
+**Note:** Overlay previews don't have popup blocker issues - they appear on the same page!
 
 ## CSS Not Loading in Preview
 
-**Problem:** Popup preview shows unstyled content (no colors, no formatting).
+**Problem:** Overlay preview shows unstyled content (no colors, no formatting).
 
 **Cause:** Missing CSS file or incorrect path.
 
@@ -89,22 +76,21 @@ ls -la blocks/accordion/accordion.css
 # Should exist with content
 ```
 
-2. **Check browser console in popup:**
-   - Open popup window
+2. **Check browser console:**
    - Press F12 to open DevTools
    - Look for 404 errors for CSS files
 
-3. **Verify base tag origin:**
-   - The popup uses `<base href>` tag to load CSS
-   - Check that origin matches your site URL
+3. **Verify block CSS is linked:**
+   - CSS loads automatically via the overlay system
+   - Check that `blocks/blockname/blockname.css` exists
 
-4. **Try refresh button:**
-   - Click the ↻ Refresh button in popup header
-   - This reloads the preview with fresh CSS
+4. **Close and reopen overlay:**
+   - Press ESC or click backdrop to close
+   - Run the preview cell again
 
 ## Block Not Decorating
 
-**Problem:** Popup shows raw HTML structure, not decorated block.
+**Problem:** Overlay shows raw HTML structure, not decorated block.
 
 **Cause:** Block JavaScript file missing or not executing.
 
@@ -124,8 +110,8 @@ export default function decorate(block) {
 }
 ```
 
-3. **Check browser console in popup:**
-   - Open popup DevTools (F12)
+3. **Check browser console:**
+   - Press F12 to open DevTools
    - Look for import errors or JavaScript errors
 
 4. **Verify module path:**
@@ -143,10 +129,10 @@ export default function decorate(block) {
 1. **Check helper module path:**
 ```javascript
 // ✅ CORRECT - absolute path from site root
-const { initialize } = await import('/scripts/ipynb-helpers.js');
+const { testBlock, showPreview } = await import('/scripts/ipynb-helpers.js');
 
 // ❌ INCORRECT - relative path
-const { initialize } = await import('./scripts/ipynb-helpers.js');
+const { testBlock, showPreview } = await import('./scripts/ipynb-helpers.js');
 ```
 
 2. **Verify file exists:**
@@ -168,12 +154,14 @@ const { initialize } = await import('./scripts/ipynb-helpers.js');
 ```javascript
 // ❌ DON'T DO THIS - unnecessary IIFE wrapper
 return (async () => {
-  const block = await window.testBlockFn('accordion', content);
+  const { testBlock } = await import('/scripts/ipynb-helpers.js');
+  const block = await testBlock('accordion', content);
   return block.outerHTML;
 })();
 
 // ✅ DO THIS - simple and clean
-const block = await window.testBlockFn('accordion', content);
+const { testBlock } = await import('/scripts/ipynb-helpers.js');
+const block = await testBlock('accordion', content);
 return block.outerHTML;
 ```
 
@@ -232,7 +220,8 @@ while (count < 10) {
 2. **Missing return statement:**
 ```javascript
 // Cell may appear stuck if no return
-await window.testBlockFn('accordion', content);
+const { testBlock } = await import('/scripts/ipynb-helpers.js');
+await testBlock('accordion', content);
 // Add: return '✓ Complete';
 ```
 
@@ -256,22 +245,20 @@ await window.testBlockFn('accordion', content);
 
 **Note:** Cell output area shows `return` values, not `console.log()`. Console logs appear in browser DevTools console.
 
-## Popup Window Size Issues
+## Overlay Display Issues
 
-**Problem:** Popup too small or too large.
+**Problem:** Overlay content appears too small or cut off.
 
-**Current behavior:** Popup opens at 1200x800 pixels.
+**Current behavior:** Overlay is full-screen with scrollable content.
 
-**To adjust:** Edit the `showPreview()` function in scripts/ipynb-helpers.js:
-
-```javascript
-// Change window size in showPreview():
-const popup = window.open(url, '_blank', 'width=1600,height=900,...');
-```
+**Solution:**
+- The overlay automatically fills the screen
+- Content is scrollable if it exceeds viewport height
+- Use browser zoom (Cmd/Ctrl +/-) to adjust size if needed
 
 ## Block Content Not Found
 
-**Problem:** `testBlockFn()` runs but block has no content.
+**Problem:** `testBlock()` runs but block has no content.
 
 **Cause:** Empty or incorrect content structure.
 
@@ -293,40 +280,41 @@ const content = '<div>Just one div</div>';
 
 **Verify content structure matches block expectations!**
 
-## ESC Key Not Closing Popup
+## ESC Key Not Closing Overlay
 
-**Problem:** Pressing ESC doesn't close preview popup.
+**Problem:** Pressing ESC doesn't close preview overlay.
 
-**Cause:** Popup window doesn't have focus.
-
-**Solution:**
-
-1. Click inside the popup window first
-2. Then press ESC
-
-**Alternative:** Click the ✕ Close button in popup header.
-
-## Multiple Popups Opening
-
-**Problem:** Running preview cell multiple times opens many popups.
-
-**This is expected behavior.** Each execution opens a new popup.
-
-**To avoid:**
-- Close previous popups before running again
-- Or use the refresh button (↻) in existing popup
-
-## Notebook Cells Out of Order
-
-**Problem:** Ran cells in wrong order, now getting errors.
+**Cause:** Rare keyboard focus issue.
 
 **Solution:**
 
-1. Reload the page
-2. Run Cell 1 first
-3. Run cells sequentially from top to bottom
+1. Click on the overlay backdrop
+2. Or click the ✕ Close button in overlay header
+3. Or press ESC again
 
-**Best practice:** Always run cells from top to bottom in order.
+## Multiple Overlays
+
+**Problem:** Running preview cell multiple times creates multiple overlays.
+
+**This is normal behavior.** The overlay system removes the previous overlay before creating a new one, so you should only see one at a time.
+
+**If you see multiple overlays:**
+- There may be a JavaScript error - check console
+- Refresh the page to reset
+
+## Cell Execution Order
+
+**Problem:** Getting import errors or undefined functions.
+
+**Solution:**
+
+Each cell is independent! Just import what you need in each cell:
+
+```javascript
+const { testBlock } = await import('/scripts/ipynb-helpers.js');
+```
+
+**No need to run cells in any specific order!**
 
 ## Helper Module Changes Not Reflecting
 
@@ -352,7 +340,7 @@ const content = '<div>Just one div</div>';
 
 1. **Browser cache:**
    - Hard refresh page (Cmd+Shift+R)
-   - Use popup refresh button (↻)
+   - Close and reopen overlay
 
 2. **Changes not deployed:**
 ```bash
@@ -364,7 +352,8 @@ git log --oneline -n 5
 3. **Wrong block being tested:**
 ```javascript
 // Make sure block name matches
-await window.showPreview('accordion', content);  // Tests 'accordion' block
+const { showPreview } = await import('/scripts/ipynb-helpers.js');
+await showPreview('accordion', content);  // Tests 'accordion' block
 ```
 
 ## Cross-Origin Issues
@@ -373,18 +362,18 @@ await window.showPreview('accordion', content);  // Tests 'accordion' block
 
 **Cause:** Trying to load resources from different domain.
 
-**Note:** The `<base>` tag in popups solves most CORS issues by resolving all relative URLs to the parent page's origin.
+**Note:** The overlay system doesn't have CORS issues since it's on the same page.
 
 **If you still see CORS errors:**
 - Check that CSS/JS files are on the same domain as the EDS site
-- Verify `<base href>` value in popup matches your site
+- Verify all paths are absolute (start with `/`)
 
 ## Getting Help
 
 If you're still stuck:
 
 1. **Check browser console (F12)** - Most errors show here
-2. **Verify Cell 1 ran** - Look for "✅ Browser environment ready"
+2. **Check import statements** - Must use absolute paths starting with `/`
 3. **Check file paths** - Case-sensitive, must start with `/`
 4. **Try simple example** - Test with helloworld block first
 5. **Reload page** - Fresh start often fixes issues
@@ -393,10 +382,9 @@ If you're still stuck:
 ## Quick Debugging Checklist
 
 ```javascript
-// 1. Verify helper functions loaded
-console.log('testBlockFn available:', typeof window.testBlockFn);
-console.log('showPreview available:', typeof window.showPreview);
-// Should show: 'function'
+// 1. Test import works
+const { testBlock, showPreview } = await import('/scripts/ipynb-helpers.js');
+console.log('Import successful');
 
 // 2. Test basic DOM creation
 const div = document.createElement('div');
@@ -405,7 +393,7 @@ console.log('DOM working:', div.outerHTML);
 // Should show: <div>Test</div>
 
 // 3. Test simple block
-const block = await window.testBlockFn('helloworld', '');
+const block = await testBlock('helloworld', '');
 console.log('Block created:', block.className);
 // Should show: helloworld block
 
@@ -420,17 +408,19 @@ return '✓ All checks passed';
 return (async () => { ... })();
 
 // ❌ DON'T: Forget return statement (no output)
-const block = await window.testBlockFn(...);
+const { testBlock } = await import('/scripts/ipynb-helpers.js');
+const block = await testBlock(...);
 
 // ❌ DON'T: Use relative import paths
 import('../../scripts/helpers.js')
 
-// ✅ DO: Simple async code with return
-const block = await window.testBlockFn('accordion', content);
+// ✅ DO: Import what you need in each cell
+const { testBlock } = await import('/scripts/ipynb-helpers.js');
+const block = await testBlock('accordion', content);
 return block.outerHTML;
 
 // ✅ DO: Use absolute import paths
 import('/scripts/ipynb-helpers.js')
 
-// ✅ DO: Always run Cell 1 first
+// ✅ DO: Run any cell at any time (cell independence!)
 ```
