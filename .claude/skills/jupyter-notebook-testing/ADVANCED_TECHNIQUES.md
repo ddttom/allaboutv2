@@ -7,14 +7,14 @@ Advanced patterns and techniques for testing EDS blocks with Jupyter notebooks i
 Measure block decoration performance:
 
 ```javascript
-return (async () => {
+
   console.time('block-decoration');
   const block = await window.testBlockFn('myblock', content);
   console.timeEnd('block-decoration');
   // Output: block-decoration: 15.234ms
 
   return `Decoration time logged to console`;
-})();
+
 ```
 
 ## Testing Multiple Variations
@@ -22,7 +22,7 @@ return (async () => {
 Test multiple content variations:
 
 ```javascript
-return (async () => {
+
   const variations = [
     '<div><div>Test 1</div><div>Content 1</div></div>',
     '<div><div>Test 2</div><div>Content 2</div></div>',
@@ -41,7 +41,7 @@ return (async () => {
 
   console.log(results.join('\n'));
   return results;
-})();
+
 ```
 
 ## Generating Test Content
@@ -49,7 +49,7 @@ return (async () => {
 Create content programmatically:
 
 ```javascript
-return (async () => {
+
   function generateAccordionContent(numItems) {
     const items = Array.from({ length: numItems }, (_, i) => `
       <div>
@@ -70,7 +70,7 @@ return (async () => {
   // await window.showPreview('accordion', content10); // Uncomment to preview
 
   return `Created ${block3.querySelectorAll('details').length} and ${block10.querySelectorAll('details').length} items`;
-})();
+
 ```
 
 ## Before/After Analysis
@@ -78,7 +78,7 @@ return (async () => {
 Analyze transformation impact:
 
 ```javascript
-return (async () => {
+
   const content = `
     <div>
       <div>Question 1</div>
@@ -104,7 +104,7 @@ return (async () => {
   console.log('Size ratio:', (afterSize / beforeSize).toFixed(2) + 'x');
 
   return `Size: ${beforeSize}b → ${afterSize}b (${(afterSize / beforeSize).toFixed(2)}x)`;
-})();
+
 ```
 
 ## Batch Testing
@@ -112,7 +112,7 @@ return (async () => {
 Test multiple blocks efficiently:
 
 ```javascript
-return (async () => {
+
   const blocks = {
     'accordion': '<div><div>Q</div><div>A</div></div>',
     'cards': '<div><div><img src="test.jpg" alt="Test"></div><div><h3>Title</h3><p>Content</p></div></div>',
@@ -133,7 +133,7 @@ return (async () => {
   }
 
   return results;
-})();
+
 ```
 
 ## Content Validation
@@ -141,7 +141,7 @@ return (async () => {
 Validate block output structure:
 
 ```javascript
-return (async () => {
+
   function validateAccordion(block) {
     const errors = [];
 
@@ -176,7 +176,7 @@ return (async () => {
   console.log(validation.valid ? '✓ Valid' : '✗ Invalid:', validation.errors);
 
   return validation;
-})();
+
 ```
 
 ## Dynamic Content Generation
@@ -184,7 +184,7 @@ return (async () => {
 Generate realistic test content:
 
 ```javascript
-return (async () => {
+
   function generateRealisticAccordion() {
     const faqs = [
       {
@@ -214,7 +214,7 @@ return (async () => {
   await window.showPreview('accordion', realisticContent);
 
   return `Generated ${block.querySelectorAll('details').length} FAQ items`;
-})();
+
 ```
 
 ## Test Data Libraries
@@ -222,7 +222,7 @@ return (async () => {
 Create reusable test data:
 
 ```javascript
-return (async () => {
+
   const TestData = {
     accordion: {
       empty: '',
@@ -256,7 +256,7 @@ return (async () => {
 
   console.log(results.join('\n'));
   return results;
-})();
+
 ```
 
 ## Accessibility Testing
@@ -264,7 +264,7 @@ return (async () => {
 Check for accessibility issues:
 
 ```javascript
-return (async () => {
+
   function checkAccessibility(block) {
     const issues = [];
 
@@ -303,7 +303,7 @@ return (async () => {
   console.log(a11y.accessible ? '✓ Accessible' : '⚠ Issues:', a11y.issues);
 
   return a11y;
-})();
+
 ```
 
 ## Structure Analysis
@@ -311,7 +311,7 @@ return (async () => {
 Analyze block structure:
 
 ```javascript
-return (async () => {
+
   const content = `
     <div>
       <div>Question 1</div>
@@ -347,7 +347,7 @@ return (async () => {
   console.log('Block Analysis:', JSON.stringify(analysis, null, 2));
 
   return analysis;
-})();
+
 ```
 
 ## Sequential Testing with Delays
@@ -355,7 +355,7 @@ return (async () => {
 Test blocks with controlled timing:
 
 ```javascript
-return (async () => {
+
   const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
   const tests = [
@@ -384,7 +384,7 @@ return (async () => {
   console.log(results.join('\n'));
 
   return results;
-})();
+
 ```
 
 ## Snapshot Comparison
@@ -392,7 +392,7 @@ return (async () => {
 Compare outputs:
 
 ```javascript
-return (async () => {
+
   const content = `
     <div>
       <div>Question</div>
@@ -411,12 +411,12 @@ return (async () => {
   console.log('Length:', snapshot.length, 'characters');
 
   return `Snapshot: ${snapshot.length} chars`;
-})();
+
 ```
 
 ```javascript
 // Later, compare with stored snapshot
-return (async () => {
+
   const content = `
     <div>
       <div>Question</div>
@@ -438,7 +438,7 @@ return (async () => {
   }
 
   return { same, currentLength: current.length, storedLength: stored?.length || 0 };
-})();
+
 ```
 
 ## Interactive Debugging
@@ -446,7 +446,7 @@ return (async () => {
 Step-by-step debugging:
 
 ```javascript
-return (async () => {
+
   const content = `
     <div>
       <div>Question</div>
@@ -473,7 +473,7 @@ return (async () => {
   console.log('  Created details:', details.length);
 
   return `✓ Debug complete: ${details.length} details created`;
-})();
+
 ```
 
 ## Performance Metrics Collection
@@ -481,7 +481,7 @@ return (async () => {
 Collect comprehensive metrics:
 
 ```javascript
-return (async () => {
+
   const content = `
     <div>
       <div>Question</div>
@@ -516,7 +516,7 @@ return (async () => {
   console.log('Performance Metrics:', JSON.stringify(metrics, null, 2));
 
   return metrics;
-})();
+
 ```
 
 ## Tips for Advanced Testing
@@ -524,7 +524,7 @@ return (async () => {
 ### Use Console Effectively
 
 ```javascript
-return (async () => {
+
   console.group('Block Testing');
   console.log('Testing accordion block...');
 
@@ -540,13 +540,13 @@ return (async () => {
   console.groupEnd();
 
   return '✓ Check console for detailed output';
-})();
+
 ```
 
 ### Store Results for Later Analysis
 
 ```javascript
-return (async () => {
+
   // Run test and store results
   const content = '<div><div>Q</div><div>A</div></div>';
   const block = await window.testBlockFn('accordion', content);
@@ -566,7 +566,7 @@ return (async () => {
   console.log(`Stored result ${stored.length}`);
 
   return `Stored ${stored.length} results`;
-})();
+
 ```
 
 ```javascript
@@ -580,5 +580,5 @@ return (async () => {
   });
 
   return stored;
-})();
+
 ```

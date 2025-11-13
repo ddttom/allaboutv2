@@ -1,421 +1,436 @@
-# Jupyter Notebook Testing Troubleshooting
+# Jupyter Notebook Testing Troubleshooting - Browser Only
 
-Common issues and solutions when testing EDS blocks with Jupyter notebooks.
+Common issues and solutions when testing EDS blocks with Jupyter notebooks in the browser.
 
-## JSLab Kernel Not Available
+## No Output Displayed
 
-**Problem:** Kernel "jslab" not found when creating or opening notebooks.
+**Problem:** Cell runs successfully (green checkmark) but output cell is empty.
 
-**Solution:**
-```bash
-# Install tslab globally
-npm install -g tslab
-
-# Register with Jupyter
-tslab install --python=python3
-
-# Verify installation
-jupyter kernelspec list  # Should show jslab
-
-# Restart VS Code
-# Command Palette → "Developer: Reload Window"
-```
-
-**Verify:**
-```bash
-# Check if jslab is in the list
-jupyter kernelspec list
-
-# Expected output should include:
-# jslab    /path/to/jupyter/kernels/jslab
-```
-
-## Can't Find Modules
-
-**Problem:** Module not found errors when running notebook cells.
-
-**Cause:** VS Code not opened from project root.
+**Cause:** Missing `return` statement.
 
 **Solution:**
-```bash
-# Close VS Code
-# Open from project root
-cd /path/to/project/
-code .
-
-# Now open the notebook
-```
-
-**Verify workspace:**
 ```javascript
-// Run this in notebook to check working directory
-const path = await import('path');
-console.log('Working directory:', process.cwd());
+// ✅ GOOD - Shows output
+const block = await window.testBlockFn('accordion', content);
+return block.outerHTML;
+
+// ❌ BAD - No output
+const block = await window.testBlockFn('accordion', content);
 ```
 
-## TypeScript Errors About 'document'
+**Always use `return` to display results in the output cell!**
 
-**Problem:** TypeScript warnings about undefined 'document' or 'window'.
+## Helper Functions Not Defined
 
-**Explanation:** This is expected. TypeScript doesn't know about jsdom globals at compile time.
+**Problem:** `ReferenceError: window.testBlockFn is not defined`
 
-**Solution:** Use `global.document` to avoid warnings:
-
-```javascript
-// ✅ Works at runtime, no TypeScript warning
-const div = global.document.createElement('div');
-
-// ❌ Causes TypeScript warning (but works at runtime)
-const div = document.createElement('div');
-```
-
-**Alternative:** Add type assertions for cleaner code:
-```javascript
-// @ts-ignore
-const div = document.createElement('div');
-```
-
-## Module Not Found Errors
-
-**Problem:** `Error: Cannot find module './blocks/myblock/myblock.js'`
-
-**Cause:** Relative paths don't work reliably with dynamic imports in notebooks.
-
-**Solution:** Use `path.resolve()` for absolute paths:
-
-```javascript
-// ✅ Correct - absolute path
-const path = await import('path');
-const modulePath = path.resolve('./blocks/myblock/myblock.js');
-const module = await import(modulePath);
-
-// ❌ Incorrect - relative path
-const module = await import('../blocks/myblock/myblock.js');
-```
-
-**Helper pattern:**
-```javascript
-async function importBlock(blockName) {
-  const path = await import('path');
-  const modulePath = path.resolve(`./blocks/${blockName}/${blockName}.js`);
-  return await import(modulePath);
-}
-
-const accordion = await importBlock('accordion');
-```
-
-## Web Components Not Working
-
-**Problem:** Custom elements or web components not functioning properly.
-
-**Cause:** jsdom has limited Web Components support.
-
-**Solution:** Check availability and use browser testing for complex components:
-
-```javascript
-if (global.customElements) {
-  console.log('✓ Custom elements supported');
-  // Test web component
-} else {
-  console.log('⚠ Custom elements not available');
-  console.log('→ Use saveBlockHTML() and test in browser');
-  await saveBlockHTML('myblock', content);
-}
-```
-
-**Workaround:** Test basic transformation in notebook, test interactivity in browser.
-
-## Styles Not Appearing in Notebook
-
-**Problem:** Block HTML looks unstyled in notebook output.
-
-**Explanation:** This is expected. Notebook output shows raw HTML without CSS.
-
-**Solution:** Use `saveBlockHTML()` to generate styled preview:
-
-```javascript
-// ✅ Generates styled HTML file
-await saveBlockHTML('accordion', content);
-// Open ipynb-tests/accordion-preview.html in browser
-
-// ❌ Notebook output is raw HTML only
-const block = await testBlock('accordion', content);
-block.outerHTML  // No styling in notebook
-```
-
-## Interactive Features Not Working
-
-**Problem:** Buttons, clicks, and interactions don't work in notebook.
-
-**Explanation:** Notebook output is static HTML.
-
-**Solution:** Save to HTML and test in browser:
-
-```javascript
-// Generate interactive preview
-await saveBlockHTML('accordion', content);
-
-// Open in browser to test:
-// - Accordion expand/collapse
-// - Tab switching
-// - Form submissions
-// - Any click handlers
-```
-
-## CSS Changes Not Reflecting
-
-**Problem:** Edited CSS but preview looks the same.
-
-**Cause:** Browser cache or using embedded CSS.
+**Cause:** Cell 1 (initialization cell) not executed.
 
 **Solution:**
 
-1. Verify you're using linked CSS (not embedded):
-```html
-<!-- ✅ Good - linked -->
-<link rel="stylesheet" href="../blocks/accordion/accordion.css">
-
-<!-- ❌ Bad - embedded (no live reload) -->
-<style>/* CSS here */</style>
-```
-
-2. Hard refresh browser:
-- Chrome/Firefox: Cmd+Shift+R (Mac) or Ctrl+Shift+R (Windows)
-- Safari: Cmd+Option+R
-
-3. Check CSS file was saved:
-```bash
-ls -l blocks/accordion/accordion.css
-```
-
-## Notebook Kernel Died
-
-**Problem:** "Kernel died" or "Kernel restarting" error.
-
-**Causes:**
-- Infinite loop in code
-- Memory exhaustion
-- Syntax error in cell
-
-**Solution:**
-
-1. Restart kernel:
-   - VS Code: Click "Restart" in kernel picker
-   - Or: Command Palette → "Jupyter: Restart Kernel"
-
-2. Run cells one at a time to identify problem cell
-
-3. Check for common issues:
+1. Always run Cell 1 first when opening the notebook:
 ```javascript
-// ❌ Infinite loop
-while (true) { }
-
-// ❌ Excessive memory
-const huge = Array(1000000000);
-
-// ✅ Add error handling
-try {
-  const block = await testBlock('myblock', content);
-} catch (error) {
-  console.error('Error:', error.message);
-}
+const { initialize } = await import('/scripts/ipynb-helpers.js');
+await initialize();
+return '✅ Browser environment ready';
 ```
 
-## Setup Cell Must Run First
+2. Check that you see the success message: `✅ Browser environment ready`
 
-**Problem:** `ReferenceError: testBlock is not defined`
-
-**Cause:** Setup cell (Cell 1) not executed.
-
-**Solution:**
-
-1. Always run Cell 1 first when opening notebook
-2. Or run all cells: Command Palette → "Jupyter: Run All Cells"
+3. Then run subsequent cells
 
 **Add reminder in notebook:**
 ```markdown
 ## ⚠️ IMPORTANT
-**Run Cell 1 first** to initialize the environment.
+**Run Cell 1 first** to initialize helper functions!
 ```
 
-## File Permission Errors
+## Popup Window Blocked
 
-**Problem:** `EACCES: permission denied` when saving HTML.
+**Problem:** `showPreview()` runs but no window appears.
 
-**Cause:** No write permissions for `ipynb-tests/` directory.
+**Cause:** Browser blocking popups.
 
 **Solution:**
+
+**Chrome:**
+1. Look for popup blocked icon in address bar (usually on the right)
+2. Click it and select "Always allow popups from [your-site]"
+3. Reload page and retry
+
+**Firefox:**
+1. Click Options in the popup blocked notification
+2. Select "Allow popups for [your-site]"
+3. Reload page and retry
+
+**Safari:**
+1. Safari → Preferences → Websites → Pop-up Windows
+2. Find your site and set to "Allow"
+3. Reload page and retry
+
+**Verify:**
+```javascript
+await window.showPreview('accordion', '<div><div>Q</div><div>A</div></div>');
+// Should see: ✓ Preview window opened
+// And popup window should appear
+```
+
+## CSS Not Loading in Preview
+
+**Problem:** Popup preview shows unstyled content (no colors, no formatting).
+
+**Cause:** Missing CSS file or incorrect path.
+
+**Solutions:**
+
+1. **Verify CSS file exists:**
 ```bash
-# Create directory with correct permissions
-mkdir -p ipynb-tests
-chmod 755 ipynb-tests
-
-# Or run with sudo (not recommended)
-sudo mkdir ipynb-tests
-sudo chown $USER ipynb-tests
+ls -la blocks/accordion/accordion.css
+# Should exist with content
 ```
 
-## Path Issues on Windows
+2. **Check browser console in popup:**
+   - Open popup window
+   - Press F12 to open DevTools
+   - Look for 404 errors for CSS files
 
-**Problem:** Paths not working correctly on Windows.
+3. **Verify base tag origin:**
+   - The popup uses `<base href>` tag to load CSS
+   - Check that origin matches your site URL
 
-**Cause:** Backslash vs forward slash path separators.
+4. **Try refresh button:**
+   - Click the ↻ Refresh button in popup header
+   - This reloads the preview with fresh CSS
 
-**Solution:** Always use forward slashes, `path` module handles it:
+## Block Not Decorating
 
-```javascript
-// ✅ Works cross-platform
-const path = await import('path');
-const modulePath = path.resolve('./blocks/accordion/accordion.js');
+**Problem:** Popup shows raw HTML structure, not decorated block.
 
-// ❌ Windows-specific
-const modulePath = 'blocks\\accordion\\accordion.js';
+**Cause:** Block JavaScript file missing or not executing.
+
+**Solutions:**
+
+1. **Verify block JavaScript exists:**
+```bash
+ls -la blocks/accordion/accordion.js
+# Should exist and export default function
 ```
 
-## Block CSS Not Loading
-
-**Problem:** `loadBlockStyles()` returns null or CSS missing.
-
-**Cause:** CSS file doesn't exist or wrong path.
-
-**Debug:**
+2. **Check block export:**
 ```javascript
-// Check if CSS file exists
-const fs = await import('fs/promises');
-const path = await import('path');
-
-const cssPath = path.resolve('./blocks/accordion/accordion.css');
-try {
-  await fs.access(cssPath);
-  console.log('✓ CSS file exists');
-} catch (error) {
-  console.log('✗ CSS file not found:', cssPath);
+// blocks/accordion/accordion.js should have:
+export default function decorate(block) {
+  // decoration logic
 }
 ```
 
-**Solution:** Ensure CSS file exists and path is correct:
-```bash
-ls -la blocks/accordion/
-# Should show: accordion.css and accordion.js
-```
+3. **Check browser console in popup:**
+   - Open popup DevTools (F12)
+   - Look for import errors or JavaScript errors
 
-## Import Caching Issues
+4. **Verify module path:**
+   - Block JavaScript should be at: `/blocks/blockname/blockname.js`
+   - Case-sensitive on production servers!
 
-**Problem:** Changes to block code not reflecting in tests.
+## Import Errors
 
-**Cause:** Node.js module cache.
+**Problem:** `Failed to load module script` or 404 errors.
 
-**Solution:** Restart kernel to clear cache:
-- VS Code: Command Palette → "Jupyter: Restart Kernel"
-- Then rerun all cells
+**Cause:** Incorrect import path.
 
-**Alternative:** Use dynamic timestamps (not recommended for production):
+**Solutions:**
+
+1. **Check helper module path:**
 ```javascript
-const modulePath = path.resolve('./blocks/accordion/accordion.js');
-const module = await import(`${modulePath}?t=${Date.now()}`);
+// ✅ CORRECT - absolute path from site root
+const { initialize } = await import('/scripts/ipynb-helpers.js');
+
+// ❌ INCORRECT - relative path
+const { initialize } = await import('./scripts/ipynb-helpers.js');
 ```
 
-## jsdom Limitations
+2. **Verify file exists:**
+   - Check `scripts/ipynb-helpers.js` is deployed
+   - Check path is exactly `/scripts/ipynb-helpers.js`
 
-**Things that don't work in jsdom:**
+3. **Check browser console:**
+   - Look for 404 errors
+   - Verify the full URL being loaded
 
-- Canvas API (limited support)
-- WebGL
-- Real browser rendering
-- Some CSS features (grid, flexbox positioning)
-- Video/audio elements
-- Geolocation
-- Real network requests (use mocks)
-- Service Workers
-- Web Workers (limited)
+## Async/Await Errors
 
-**Solution:** Test basic transformation in notebook, test advanced features in real browser.
+**Problem:** `SyntaxError: await is only valid in async functions`
 
-## Performance Issues
+**Cause:** This shouldn't happen! Cells run in async context automatically.
 
-**Problem:** Notebook cells running slowly.
+**If you see this:**
+
+```javascript
+// ❌ DON'T DO THIS - unnecessary IIFE wrapper
+return (async () => {
+  const block = await window.testBlockFn('accordion', content);
+  return block.outerHTML;
+})();
+
+// ✅ DO THIS - simple and clean
+const block = await window.testBlockFn('accordion', content);
+return block.outerHTML;
+```
+
+**Cell code runs in `AsyncFunction` context - just use `await` directly!**
+
+## Notebook Not Displaying
+
+**Problem:** ipynb-viewer block shows error or blank content.
 
 **Causes & Solutions:**
 
-1. **Large HTML output:**
-```javascript
-// ❌ Slow - huge output
-block.outerHTML  // 100KB+ output
-
-// ✅ Fast - show summary
-console.log('Block created with', block.children.length, 'children');
+1. **Invalid .ipynb JSON:**
+```bash
+# Validate JSON syntax
+cat test.ipynb | python -m json.tool
+# Should output formatted JSON without errors
 ```
 
-2. **Many iterations:**
+2. **Wrong file path:**
+```
+# Check block configuration in Google Doc:
+| IPynb Viewer |
+|--------------|
+| /test.ipynb  |  ← Must match actual file path
+```
+
+3. **File not published:**
+   - Ensure test.ipynb is committed to repository
+   - Push changes to Git
+   - Verify file appears on EDS site
+
+4. **Check browser console:**
+   - F12 to open DevTools
+   - Look for fetch errors or JSON parse errors
+
+## Cell Execution Stuck
+
+**Problem:** Cell shows "Running..." but never completes.
+
+**Causes:**
+
+1. **Infinite loop:**
 ```javascript
-// ❌ Slow - sequential
-for (let i = 0; i < 100; i++) {
-  await testBlock('accordion', content);
+// ❌ BAD - hangs forever
+while (true) {
+  // infinite loop
 }
 
-// ✅ Fast - batch or limit
-await testBlock('accordion', content);  // Test once
+// ✅ GOOD - has exit condition
+let count = 0;
+while (count < 10) {
+  count++;
+}
 ```
 
-3. **Memory buildup:**
+2. **Missing return statement:**
 ```javascript
-// ✅ Clear large variables
-let block = await testBlock('accordion', content);
-// ... use block ...
-block = null;  // Clear reference
+// Cell may appear stuck if no return
+await window.testBlockFn('accordion', content);
+// Add: return '✓ Complete';
 ```
 
-## Jupyter Not Found
+**Solution:** Reload the page to reset all cells.
 
-**Problem:** `jupyter: command not found`
+## Console Output Not Showing
+
+**Problem:** `console.log()` output not visible.
+
+**Cause:** Browser console not open.
 
 **Solution:**
-```bash
-# Install Jupyter
-pip3 install jupyter
 
-# Or with conda
-conda install jupyter
+1. Open browser DevTools:
+   - Chrome/Firefox: F12 or Cmd+Option+I (Mac)
+   - Safari: Cmd+Option+C
 
-# Verify
-jupyter --version
+2. Go to Console tab
+
+3. Rerun the cell
+
+**Note:** Cell output area shows `return` values, not `console.log()`. Console logs appear in browser DevTools console.
+
+## Popup Window Size Issues
+
+**Problem:** Popup too small or too large.
+
+**Current behavior:** Popup opens at 1200x800 pixels.
+
+**To adjust:** Edit the `showPreview()` function in scripts/ipynb-helpers.js:
+
+```javascript
+// Change window size in showPreview():
+const popup = window.open(url, '_blank', 'width=1600,height=900,...');
 ```
 
-## TSLab Installation Fails
+## Block Content Not Found
 
-**Problem:** `npm install -g tslab` fails with errors.
+**Problem:** `testBlockFn()` runs but block has no content.
 
-**Common causes:**
+**Cause:** Empty or incorrect content structure.
 
-1. **Permission issues:**
-```bash
-# Use npx instead of global install (recommended)
-npx tslab install
+**Solution:**
 
-# Or fix npm permissions
-npm config set prefix ~/.npm-global
-export PATH=~/.npm-global/bin:$PATH
+```javascript
+// ✅ GOOD - proper EDS table structure
+const content = `
+  <div>
+    <div>Question</div>
+    <div>Answer</div>
+  </div>
+`;
+
+// ❌ BAD - empty or wrong structure
+const content = '';
+const content = '<div>Just one div</div>';
 ```
 
-2. **Node version too old:**
+**Verify content structure matches block expectations!**
+
+## ESC Key Not Closing Popup
+
+**Problem:** Pressing ESC doesn't close preview popup.
+
+**Cause:** Popup window doesn't have focus.
+
+**Solution:**
+
+1. Click inside the popup window first
+2. Then press ESC
+
+**Alternative:** Click the ✕ Close button in popup header.
+
+## Multiple Popups Opening
+
+**Problem:** Running preview cell multiple times opens many popups.
+
+**This is expected behavior.** Each execution opens a new popup.
+
+**To avoid:**
+- Close previous popups before running again
+- Or use the refresh button (↻) in existing popup
+
+## Notebook Cells Out of Order
+
+**Problem:** Ran cells in wrong order, now getting errors.
+
+**Solution:**
+
+1. Reload the page
+2. Run Cell 1 first
+3. Run cells sequentially from top to bottom
+
+**Best practice:** Always run cells from top to bottom in order.
+
+## Helper Module Changes Not Reflecting
+
+**Problem:** Updated scripts/ipynb-helpers.js but changes don't appear.
+
+**Cause:** Browser cache.
+
+**Solution:**
+
+1. Hard refresh the page:
+   - Chrome/Firefox: Cmd+Shift+R (Mac) or Ctrl+Shift+R (Windows)
+   - Safari: Cmd+Option+R
+
+2. Or clear browser cache for the site
+
+3. Reload the page
+
+## Block Changes Not Reflecting
+
+**Problem:** Updated block JavaScript/CSS but preview looks the same.
+
+**Causes & Solutions:**
+
+1. **Browser cache:**
+   - Hard refresh page (Cmd+Shift+R)
+   - Use popup refresh button (↻)
+
+2. **Changes not deployed:**
 ```bash
-# Update Node.js to latest LTS
-node -v  # Should be 18+ or 20+
+# Verify changes committed and pushed
+git status
+git log --oneline -n 5
 ```
 
-3. **Python not found:**
-```bash
-# Install Python 3
-python3 --version  # Should be 3.8+
+3. **Wrong block being tested:**
+```javascript
+// Make sure block name matches
+await window.showPreview('accordion', content);  // Tests 'accordion' block
 ```
+
+## Cross-Origin Issues
+
+**Problem:** Errors about CORS or cross-origin requests.
+
+**Cause:** Trying to load resources from different domain.
+
+**Note:** The `<base>` tag in popups solves most CORS issues by resolving all relative URLs to the parent page's origin.
+
+**If you still see CORS errors:**
+- Check that CSS/JS files are on the same domain as the EDS site
+- Verify `<base href>` value in popup matches your site
 
 ## Getting Help
 
 If you're still stuck:
 
-1. Check working directory: `process.cwd()`
-2. Verify all dependencies: `npm list jsdom`
-3. Test outside notebook first
-4. Check Claude Code logs
-5. Review notebook cell execution order
-6. Try fresh notebook from template
+1. **Check browser console (F12)** - Most errors show here
+2. **Verify Cell 1 ran** - Look for "✅ Browser environment ready"
+3. **Check file paths** - Case-sensitive, must start with `/`
+4. **Try simple example** - Test with helloworld block first
+5. **Reload page** - Fresh start often fixes issues
+6. **Check examples** - See EXAMPLES.md for working patterns
+
+## Quick Debugging Checklist
+
+```javascript
+// 1. Verify helper functions loaded
+console.log('testBlockFn available:', typeof window.testBlockFn);
+console.log('showPreview available:', typeof window.showPreview);
+// Should show: 'function'
+
+// 2. Test basic DOM creation
+const div = document.createElement('div');
+div.textContent = 'Test';
+console.log('DOM working:', div.outerHTML);
+// Should show: <div>Test</div>
+
+// 3. Test simple block
+const block = await window.testBlockFn('helloworld', '');
+console.log('Block created:', block.className);
+// Should show: helloworld block
+
+// 4. Return something to verify cell execution
+return '✓ All checks passed';
+```
+
+## Common Patterns to Avoid
+
+```javascript
+// ❌ DON'T: Use IIFE wrappers (unnecessary)
+return (async () => { ... })();
+
+// ❌ DON'T: Forget return statement (no output)
+const block = await window.testBlockFn(...);
+
+// ❌ DON'T: Use relative import paths
+import('../../scripts/helpers.js')
+
+// ✅ DO: Simple async code with return
+const block = await window.testBlockFn('accordion', content);
+return block.outerHTML;
+
+// ✅ DO: Use absolute import paths
+import('/scripts/ipynb-helpers.js')
+
+// ✅ DO: Always run Cell 1 first
+```

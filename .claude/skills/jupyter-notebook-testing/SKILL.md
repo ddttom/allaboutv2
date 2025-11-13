@@ -76,14 +76,12 @@ Add ipynb-viewer block to your page:
 
 ```javascript
 // First code cell: Initialize browser environment
-return (async () => {
-  const { initialize } = await import('/scripts/ipynb-helpers.js');
-  await initialize();
-  return '✅ Browser environment ready';
-})();
+const { initialize } = await import('/scripts/ipynb-helpers.js');
+await initialize();
+return '✅ Browser environment ready';
 ```
 
-**Important:** The `return` keyword before the async IIFE is required for the result to display in the output cell.
+**Note:** Cell code executes in async context automatically - no IIFE wrapper needed!
 
 **Benefits:**
 - **One function call**: `initialize()` sets up everything
@@ -98,19 +96,17 @@ return (async () => {
 
 ```javascript
 // Cell 2: Test a block
-return (async () => {
-  const block = await window.testBlockFn('accordion', `
-    <div>
-      <div>Question 1</div>
-      <div>Answer 1</div>
-    </div>
-  `);
-  console.log('✓ Block created');
-  return block.outerHTML;
-})();
+const block = await window.testBlockFn('accordion', `
+  <div>
+    <div>Question 1</div>
+    <div>Answer 1</div>
+  </div>
+`);
+console.log('✓ Block created');
+return block.outerHTML;
 ```
 
-**Note:** Always start async code with `return (async () => { ... })();` to display results.
+**Note:** Just write your code naturally with `await` and `return` - it runs in async context.
 
 ### 5. Generate Visual Preview
 
@@ -118,19 +114,17 @@ return (async () => {
 
 ```javascript
 // Cell 3: Visual preview in popup window
-return (async () => {
-  const content = `
-    <div>
-      <div>Question 1</div>
-      <div>Answer 1</div>
-    </div>
-  `;
+const content = `
+  <div>
+    <div>Question 1</div>
+    <div>Answer 1</div>
+  </div>
+`;
 
-  // Opens popup window with blob URL
-  await window.showPreview('accordion', content);
+// Opens popup window with blob URL
+await window.showPreview('accordion', content);
 
-  return '✓ Preview window opened';
-})();
+return '✓ Preview window opened';
 ```
 
 ## Browser Execution
@@ -177,17 +171,15 @@ After running the first code cell, these functions are available:
 **Usage Pattern:**
 
 ```javascript
-// After Cell 1 initialization, always use return with async IIFE
-return (async () => {
-  const block = await window.testBlockFn('accordion', '<div>content</div>');
-  await window.showPreview('accordion', '<div>content</div>');
-  const div = window.doc.createElement('div');
+// After Cell 1 initialization, just write async code naturally
+const block = await window.testBlockFn('accordion', '<div>content</div>');
+await window.showPreview('accordion', '<div>content</div>');
+const div = window.doc.createElement('div');
 
-  // Or use document directly
-  const div2 = document.createElement('div');
+// Or use document directly
+const div2 = document.createElement('div');
 
-  return block.outerHTML; // Return value to display in output
-})();
+return block.outerHTML; // Return value to display in output
 ```
 
 ## Popup Preview System
@@ -249,12 +241,12 @@ EDS blocks iterate over `block.children` directly. Extra wrappers break child se
 ## Best Practices
 
 1. **Always run Cell 1 first** to initialize the environment
-2. **Use return with async IIFE**: `return (async () => { ... })();` to display results
-3. **Use window helpers**: `window.testBlockFn`, `window.showPreview`
-4. **Test visual output**: Always use `showPreview()` for verification
-5. **Allow popups**: Enable popups for your domain to see previews
-6. **Structure notebooks**: Cell 1: Setup | Other cells: Tests and previews
-7. **Return values**: Always return a value from your async function to see output
+2. **Write async code naturally**: Use `await` directly - cells run in async context
+3. **Return values**: Use `return` to display results in output cell
+4. **Use window helpers**: `window.testBlockFn`, `window.showPreview`
+5. **Test visual output**: Always use `showPreview()` for verification
+6. **Allow popups**: Enable popups for your domain to see previews
+7. **Structure notebooks**: Cell 1: Setup | Other cells: Tests and previews
 
 ## Integration with ipynb-viewer Block
 

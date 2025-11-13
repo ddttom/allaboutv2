@@ -16,17 +16,17 @@ Complete examples and patterns for testing EDS blocks with Jupyter notebooks in 
 
 ```javascript
 // Simple test without content
-return (async () => {
+
   const block = await window.testBlockFn('helloworld');
   return block.outerHTML;
-})();
+
 ```
 
 ### Test with Content
 
 ```javascript
 // Test with HTML content
-return (async () => {
+
   const content = `
     <div>
       <div>Test content</div>
@@ -34,14 +34,14 @@ return (async () => {
   `;
   const block = await window.testBlockFn('accordion', content);
   return block.outerHTML;
-})();
+
 ```
 
 ### Generate Visual Preview
 
 ```javascript
 // Create visual preview in popup window
-return (async () => {
+
   const content = `
     <div>
       <div>Test content</div>
@@ -49,7 +49,7 @@ return (async () => {
   `;
   await window.showPreview('accordion', content);
   return '✓ Preview window opened';
-})();
+
 ```
 
 ## Content Structure Patterns
@@ -57,7 +57,7 @@ return (async () => {
 ### Accordion Block
 
 ```javascript
-return (async () => {
+
   const accordionContent = `
     <div>
       <div>What is EDS?</div>
@@ -78,13 +78,13 @@ return (async () => {
   await window.showPreview('accordion', accordionContent);
 
   return `Created ${block.querySelectorAll('details').length} accordion sections`;
-})();
+
 ```
 
 ### Tabs Block
 
 ```javascript
-return (async () => {
+
   const tabsContent = `
     <div>
       <div>Overview</div>
@@ -117,13 +117,13 @@ return (async () => {
   await window.showPreview('tabs', tabsContent);
 
   return '✓ Tabs block tested';
-})();
+
 ```
 
 ### Cards Block
 
 ```javascript
-return (async () => {
+
   const cardsContent = `
     <div>
       <div>
@@ -158,13 +158,13 @@ return (async () => {
   await window.showPreview('cards', cardsContent);
 
   return `Created ${block.querySelectorAll('.card').length} cards`;
-})();
+
 ```
 
 ### Hero Block
 
 ```javascript
-return (async () => {
+
   const heroContent = `
     <div>
       <div>
@@ -185,13 +185,13 @@ return (async () => {
   await window.showPreview('hero', heroContent);
 
   return '✓ Hero block tested';
-})();
+
 ```
 
 ### Columns Block
 
 ```javascript
-return (async () => {
+
   const columnsContent = `
     <div>
       <div>
@@ -213,7 +213,7 @@ return (async () => {
   await window.showPreview('columns', columnsContent);
 
   return '✓ Columns block tested';
-})();
+
 ```
 
 ## Block-Specific Examples
@@ -221,7 +221,7 @@ return (async () => {
 ### Form Block
 
 ```javascript
-return (async () => {
+
   const formContent = `
     <div>
       <div>
@@ -247,13 +247,13 @@ return (async () => {
   await window.showPreview('form', formContent);
 
   return '✓ Form block tested';
-})();
+
 ```
 
 ### Quote Block
 
 ```javascript
-return (async () => {
+
   const quoteContent = `
     <div>
       <div>
@@ -267,7 +267,7 @@ return (async () => {
   await window.showPreview('quote', quoteContent);
 
   return '✓ Quote block tested';
-})();
+
 ```
 
 ## Testing Workflows
@@ -276,16 +276,16 @@ return (async () => {
 
 ```javascript
 // 1. Test basic structure
-return (async () => {
+
   const block = await window.testBlockFn('accordion');
   console.log('Basic test:', block.className);
   return '✓ Basic structure tested';
-})();
+
 ```
 
 ```javascript
 // 2. Test with content
-return (async () => {
+
   const content = `
     <div>
       <div>Question</div>
@@ -295,12 +295,12 @@ return (async () => {
   const block = await window.testBlockFn('accordion', content);
   console.log('Items:', block.querySelectorAll('details').length);
   return `✓ Created ${block.querySelectorAll('details').length} items`;
-})();
+
 ```
 
 ```javascript
 // 3. Generate preview
-return (async () => {
+
   const content = `
     <div>
       <div>Question</div>
@@ -309,34 +309,34 @@ return (async () => {
   `;
   await window.showPreview('accordion', content);
   return '✓ Preview generated';
-})();
+
 ```
 
 ### Edge Case Testing
 
 ```javascript
 // Empty content
-return (async () => {
+
   const empty = '';
   const emptyBlock = await window.testBlockFn('accordion', empty);
   console.log('Empty:', emptyBlock.children.length);
   return `✓ Empty test: ${emptyBlock.children.length} children`;
-})();
+
 ```
 
 ```javascript
 // Single item
-return (async () => {
+
   const single = '<div><div>Q</div><div>A</div></div>';
   const singleBlock = await window.testBlockFn('accordion', single);
   console.log('Single:', singleBlock.querySelectorAll('details').length);
   return `✓ Single item: ${singleBlock.querySelectorAll('details').length} details`;
-})();
+
 ```
 
 ```javascript
 // Nested HTML
-return (async () => {
+
   const nested = `
     <div>
       <div>Question with <strong>bold</strong> text</div>
@@ -346,14 +346,14 @@ return (async () => {
   const nestedBlock = await window.testBlockFn('accordion', nested);
   await window.showPreview('accordion', nested);
   return '✓ Nested HTML tested';
-})();
+
 ```
 
 ### Multiple Blocks in Sequence
 
 ```javascript
 // Test multiple blocks
-return (async () => {
+
   const blocks = ['accordion', 'cards', 'columns', 'hero'];
   const results = [];
 
@@ -368,7 +368,7 @@ return (async () => {
 
   console.log(results.join('\n'));
   return results;
-})();
+
 ```
 
 ## Best Practices Examples
@@ -381,7 +381,7 @@ return (async () => {
 // Testing accordion with 3 Q&A pairs
 // Expected: Should create 3 <details> elements with <summary> headers
 
-return (async () => {
+
   const content = `
     <div>
       <div>What is EDS?</div>
@@ -412,7 +412,7 @@ return (async () => {
   await window.showPreview('accordion', content);
 
   return `✓ Test complete: ${details.length} sections created`;
-})();
+
 ```
 
 ### Error Handling Example
@@ -420,7 +420,7 @@ return (async () => {
 ```javascript
 // ✅ Good: Handle potential errors
 
-return (async () => {
+
   try {
     const content = '<div><div>Test</div></div>';
     const block = await window.testBlockFn('myblock', content);
@@ -436,7 +436,7 @@ return (async () => {
     console.error('✗ Failed:', error.message);
     return `✗ Test failed: ${error.message}`;
   }
-})();
+
 ```
 
 ### Organized Test Pattern
@@ -458,23 +458,23 @@ Testing the accordion block with various content structures and edge cases.
 
 ```javascript
 // Test empty accordion
-return (async () => {
+
   const empty = '';
   const emptyBlock = await window.testBlockFn('accordion', empty);
   console.log('Empty result:', emptyBlock.children.length, 'children');
   return `✓ Empty test: ${emptyBlock.children.length} children`;
-})();
+
 ```
 
 ```javascript
 // Test single item
-return (async () => {
+
   const single = '<div><div>Question</div><div>Answer</div></div>';
   const singleBlock = await window.testBlockFn('accordion', single);
   console.log('Single item:', singleBlock.querySelectorAll('details').length, 'details');
   await window.showPreview('accordion', single);
   return `✓ Single item: ${singleBlock.querySelectorAll('details').length} details`;
-})();
+
 ```
 
 ## Complete Example Notebook Flow
@@ -486,11 +486,11 @@ Testing accordion functionality end-to-end in the browser.
 
 ```javascript
 // Setup (Cell 1)
-return (async () => {
+
   const { initialize } = await import('/scripts/ipynb-helpers.js');
   await initialize();
   return '✅ Browser environment ready';
-})();
+
 ```
 
 ```javascript
@@ -510,21 +510,21 @@ testContent
 
 ```javascript
 // Test transformation
-return (async () => {
+
   const block = await window.testBlockFn('accordion', testContent);
   console.log('✓ Block created');
   console.log('  Details elements:', block.querySelectorAll('details').length);
   return `✓ Created ${block.querySelectorAll('details').length} sections`;
-})();
+
 ```
 
 ```javascript
 // Generate styled preview
-return (async () => {
+
   await window.showPreview('accordion', testContent);
   console.log('✓ Preview opened in popup window');
   return '✓ Preview window opened';
-})();
+
 ```
 
 ```markdown
@@ -544,30 +544,30 @@ return (async () => {
 
 ```javascript
 // ✅ Always wrap async code in IIFE
-return (async () => {
+
   const block = await window.testBlockFn('blockname', content);
   return block.outerHTML;
-})();
+
 ```
 
 ```javascript
 // ✅ Check console for debugging
-return (async () => {
+
   console.log('Starting test...');
   const block = await window.testBlockFn('blockname', content);
   console.log('Block created:', block);
   console.log('Children:', block.children.length);
   return '✓ Check console for details';
-})();
+
 ```
 
 ```javascript
 // ✅ Handle popups
-return (async () => {
+
   await window.showPreview('blockname', content);
   // Note: Browser might block popup - allow popups for your domain
   return '✓ Preview requested (check if popup was blocked)';
-})();
+
 ```
 
 ```javascript

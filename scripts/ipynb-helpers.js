@@ -19,26 +19,21 @@
  *
  * Usage in test.ipynb Cell 1:
  * ```javascript
- * return (async () => {
- *   const { initialize } = await import('/scripts/ipynb-helpers.js');
- *   await initialize();
- *   return '✅ Browser environment ready';
- * })();
+ * const { initialize } = await import('/scripts/ipynb-helpers.js');
+ * await initialize();
+ * return '✅ Browser environment ready';
  * ```
  *
  * Usage in subsequent cells:
  * ```javascript
- * return (async () => {
- *   const block = await window.testBlockFn('blockname', '<div>content</div>');
- *   await window.showPreview('blockname', '<div>content</div>');
- *   const div = window.doc.createElement('div');
- *   return block.outerHTML;
- * })();
+ * const block = await window.testBlockFn('blockname', '<div>content</div>');
+ * await window.showPreview('blockname', '<div>content</div>');
+ * const div = window.doc.createElement('div');
+ * return block.outerHTML;
  * ```
  *
- * **IMPORTANT**: Always use `return` before the async IIFE to ensure the Promise
- * is properly returned and awaited by the ipynb-viewer's executeCodeCell function.
- * Without it, the result will be undefined and won't display in the output cell.
+ * **NOTE**: Cell code executes in async context automatically (via AsyncFunction).
+ * Just write your code naturally with `await` and `return` - no IIFE wrapper needed!
  */
 
 /**

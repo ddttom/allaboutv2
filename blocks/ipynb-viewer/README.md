@@ -106,13 +106,13 @@ const div2 = document.createElement('div');
 
 **Example cell structure:**
 ```javascript
-return (async () => {
+
   const content = '<div><div>Title</div><div>Description</div></div>';
   const block = await window.testBlockFn('accordion', content);
 
   // Return or display result
   return block.outerHTML;
-})();
+
 ```
 
 ### Live Preview with Popup Window
