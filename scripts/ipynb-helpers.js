@@ -1,34 +1,14 @@
 /**
  * IPYNB Helper Functions for Browser Testing
  *
- * This module provides helper functions for testing EDS blocks in Jupyter notebooks
- * in the browser via the ipynb-viewer block.
+ * Simple helper functions for testing EDS blocks in Jupyter notebooks.
+ * Just import and use - no initialization needed!
  *
- * Setup Functions:
- * - initialize() - Initialize browser environment and register helpers on window object
- *
- * Testing Functions:
- * - testBlockFn(blockName, innerHTML) - Test a block's decoration (available as window.testBlockFn)
- * - showPreview(blockName, innerHTML) - Open popup window with styled preview (available as window.showPreview)
- *
- * Global Functions (Available After initialize()):
- * After running initialize(), these are available on the window object:
- * - window.testBlockFn(blockName, content) - Test block decoration
- * - window.showPreview(blockName, content) - Open popup preview
- * - window.doc - Reference to document object
- *
- * Usage in test.ipynb Cell 1:
+ * Usage in any cell:
  * ```javascript
- * const { initialize } = await import('/scripts/ipynb-helpers.js');
- * await initialize();
- * return '✅ Browser environment ready';
- * ```
- *
- * Usage in subsequent cells:
- * ```javascript
- * const block = await window.testBlockFn('blockname', '<div>content</div>');
- * await window.showPreview('blockname', '<div>content</div>');
- * const div = window.doc.createElement('div');
+ * const { testBlock, showPreview } = await import('/scripts/ipynb-helpers.js');
+ * const block = await testBlock('accordion', '<div>content</div>');
+ * await showPreview('accordion', '<div>content</div>');
  * return block.outerHTML;
  * ```
  *
@@ -37,33 +17,12 @@
  */
 
 /**
- * Master initialization function - sets up browser environment
- * @returns {Promise<void>}
- */
-export async function initialize() {
-  setupBrowserEnvironment();
-  console.log('✅ Browser environment ready');
-}
-
-/**
- * Setup browser environment with helper functions
- */
-function setupBrowserEnvironment() {
-  // Register document shorthand
-  window.doc = document;
-
-  // Register helper functions
-  window.testBlockFn = testBlock;
-  window.showPreview = showPreview;
-}
-
-/**
  * Test a block's decoration in browser
  * @param {string} blockName - Name of the block to test
  * @param {string} [innerHTML=''] - HTML content to place inside the block
  * @returns {Promise<HTMLElement>} The decorated block element
  */
-async function testBlock(blockName, innerHTML = '') {
+export async function testBlock(blockName, innerHTML = '') {
   // Create block element
   const block = document.createElement('div');
   block.className = `${blockName} block`;
@@ -86,139 +45,64 @@ async function testBlock(blockName, innerHTML = '') {
 }
 
 /**
- * Create and open popup window with styled preview
+ * Create and show overlay preview with styled block
  * @param {string} blockName - Name of the block
  * @param {string} [innerHTML=''] - HTML content to place inside the block
  * @returns {Promise<string>} Success message
  */
-async function showPreview(blockName, innerHTML = '') {
-  // Decorate the block
-  const block = await testBlock(blockName, innerHTML);
+export async function showPreview(blockName, innerHTML = '') {
+  // Remove existing overlay if present
+  document.querySelector('.ipynb-preview-overlay')?.remove();
 
-  // Get current origin for base tag
-  const currentOrigin = window.location.origin;
-
-  // Create HTML with base tag and minimal DOM structure
-  const html = `<!DOCTYPE html>
-<html>
-<head>
-  <base href="${currentOrigin}/">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${blockName} Preview</title>
-  <link rel="stylesheet" href="styles/styles.css">
-  <link rel="stylesheet" href="blocks/${blockName}/${blockName}.css">
-  <style>
-    /* Fixed position header - doesn't affect document flow */
-    .preview-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 48px;
-      background: #1e1e1e;
-      color: #fff;
-      padding: 12px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      z-index: 1000;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
-    .preview-title {
-      font-size: 14px;
-      font-weight: 500;
-      margin: 0;
-    }
-    .preview-controls {
-      display: flex;
-      gap: 8px;
-    }
-    .preview-btn {
-      background: #2d2d2d;
-      border: 1px solid #3e3e3e;
-      color: #fff;
-      padding: 6px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 12px;
-      font-family: inherit;
-      transition: background 0.2s;
-    }
-    .preview-btn:hover {
-      background: #3e3e3e;
-    }
-    /* Main content area - top padding to clear fixed header */
-    main {
-      padding-top: 68px; /* 48px header + 20px gap */
-      padding-left: 20px;
-      padding-right: 20px;
-      padding-bottom: 40px;
-    }
-    /* Ensure block is direct child of main - no wrapper divs! */
-    body {
-      margin: 0;
-      min-height: 100vh;
-    }
-  </style>
-</head>
-<body>
-  <div class="preview-header">
-    <div class="preview-title">${blockName} Block Preview</div>
-    <div class="preview-controls">
-      <button class="preview-btn" onclick="location.reload()">↻ Refresh</button>
-      <button class="preview-btn" onclick="window.close()">✕ Close</button>
+  // Create overlay container
+  const overlay = document.createElement('div');
+  overlay.className = 'ipynb-preview-overlay';
+  overlay.innerHTML = `
+    <style>
+      .ipynb-preview-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);z-index:10000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+      .ipynb-preview-container{background:#fff;border-radius:8px;width:90%;max-width:1200px;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 4px 24px rgba(0,0,0,0.3)}
+      .ipynb-preview-header{background:#1e1e1e;color:#fff;padding:12px 20px;border-radius:8px 8px 0 0;display:flex;justify-content:space-between;align-items:center}
+      .ipynb-preview-title{font-size:14px;font-weight:500;margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+      .ipynb-preview-controls{display:flex;gap:8px}
+      .ipynb-preview-btn{background:#2d2d2d;border:1px solid #3e3e3e;color:#fff;padding:6px 12px;border-radius:4px;cursor:pointer;font-size:12px;transition:background .2s}
+      .ipynb-preview-btn:hover{background:#3e3e3e}
+      .ipynb-preview-content{overflow:auto;padding:20px;flex:1}
+    </style>
+    <div class="ipynb-preview-container">
+      <div class="ipynb-preview-header">
+        <div class="ipynb-preview-title">${blockName} Block Preview</div>
+        <div class="ipynb-preview-controls">
+          <button class="ipynb-preview-btn" onclick="this.closest('.ipynb-preview-overlay').remove()">✕ Close</button>
+        </div>
+      </div>
+      <div class="ipynb-preview-content">
+        <div class="${blockName} block">${innerHTML}</div>
+      </div>
     </div>
-  </div>
-  <main>
-    ${block.outerHTML}
-  </main>
-  <script type="module">
-    // Decorate the block after page loads
-    const blockElement = document.querySelector('.${blockName}.block');
-    if (blockElement) {
-      try {
-        // Get base URL from base tag
-        const baseUrl = document.querySelector('base')?.href || window.location.origin;
-        const cleanBaseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  `;
 
-        // Import and decorate
-        const module = await import(\`\${cleanBaseUrl}/blocks/${blockName}/${blockName}.js\`);
-        if (module.default) {
-          // Block is already decorated (testBlock did it), but we import to ensure JS loads
-          console.log('✓ Block JavaScript loaded');
-        }
-      } catch (error) {
-        console.error('Error loading block JavaScript:', error);
-      }
+  // Add to page
+  document.body.appendChild(overlay);
+
+  // Close on ESC key or clicking backdrop
+  overlay.addEventListener('keydown', (e) => e.key === 'Escape' && overlay.remove());
+  overlay.addEventListener('click', (e) => e.target === overlay && overlay.remove());
+
+  // Focus overlay for keyboard events
+  overlay.tabIndex = -1;
+  overlay.focus();
+
+  // Decorate the block
+  const block = overlay.querySelector(`.${blockName}.block`);
+  try {
+    const module = await import(`/blocks/${blockName}/${blockName}.js`);
+    if (module.default) {
+      await module.default(block);
+      console.log('✓ Block decorated');
     }
-
-    // Allow ESC key to close window
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        window.close();
-      }
-    });
-  </script>
-</body>
-</html>`;
-
-  // Create blob URL and open popup
-  const blob = new Blob([html], { type: 'text/html' });
-  const url = URL.createObjectURL(blob);
-  const popup = window.open(url, '_blank', 'width=1200,height=800,menubar=no,toolbar=no,location=no');
-
-  if (!popup) {
-    console.warn('⚠ Popup blocked! Please allow popups for this site.');
-    return '⚠ Popup blocked - please allow popups and try again';
+  } catch (error) {
+    console.error('Block decoration error:', error);
   }
 
-  // Clean up blob URL after popup loads
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-
-  return `✓ Preview window opened for ${blockName}`;
+  return `✓ Preview overlay opened for ${blockName}`;
 }
-
-// Export functions for direct import (if needed)
-export { testBlock, showPreview };

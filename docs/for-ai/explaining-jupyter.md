@@ -8,9 +8,9 @@ This document explains the Jupyter notebook implementation for **interactive tes
 
 **BROWSER-ONLY EXECUTION**: The test.ipynb notebook runs exclusively in the browser with:
 - **Simple async pattern** - Direct `await` and `return` statements (no IIFE wrappers)
-- **Simple initialization** - `initialize()` function sets up helpers
-- **Helper functions** - `window.testBlockFn()` and `window.showPreview()` on window object
-- **Popup window previews** - Isolated preview with `<base>` tag for proper CSS/JS loading
+- **Direct imports** - Each cell imports what it needs independently
+- **Helper functions** - `testBlock()` and `showPreview()` via ES6 imports
+- **Overlay previews** - Full-screen overlay with backdrop (no popup blockers)
 - **Native browser APIs** - Direct use of `document`, `window`, `fetch`
 
 ## What This Is
@@ -105,8 +105,9 @@ Test EDS blocks interactively in the browser and share executable notebooks for 
 - Interactive cell-by-cell execution in browser
 - Test multiple scenarios in one file
 - Inline documentation with Markdown
-- Generate styled popup previews instantly
+- Generate styled overlay previews instantly
 - Simple async pattern (no complex wrappers)
+- No initialization required - import what you need
 - Iterative development with immediate feedback
 - Shareable executable notebooks for end users
 - Runs on EDS pages via ipynb-viewer block
@@ -125,8 +126,8 @@ The test.ipynb notebook runs **exclusively in the browser** via the ipynb-viewer
 - Native browser APIs (`document`, `window`, `fetch`)
 - Direct JavaScript execution with async/await support
 - Console output display in cell output
-- Popup window previews with blob URLs and `<base>` tag
-- Helper functions on window object after initialization
+- Overlay previews with backdrop (no popup blockers)
+- Helper functions via direct imports - no initialization needed
 - Simple async pattern - write code naturally
 
 **When to use:**
@@ -136,20 +137,20 @@ The test.ipynb notebook runs **exclusively in the browser** via the ipynb-viewer
 - Client presentations
 - Live coding examples
 
-### Setup (Always Run Cell 1 First!)
+### Setup (No Initialization Required!)
 
-Run Cell 1 to initialize the helper functions on the window object:
+Each cell imports what it needs independently:
 
 ```javascript
-const { initialize } = await import('/scripts/ipynb-helpers.js');
-await initialize();
-return '✅ Browser environment ready';
+const { testBlock, showPreview } = await import('/scripts/ipynb-helpers.js');
+const block = await testBlock('accordion', content);
+await showPreview('accordion', content);
+return block.outerHTML;
 ```
 
-**After initialization, these are available:**
-- `window.testBlockFn(blockName, innerHTML)` - Test block decoration
-- `window.showPreview(blockName, innerHTML)` - Open popup preview
-- `window.doc` - Reference to document object
+**Available helper functions:**
+- `testBlock(blockName, innerHTML)` - Test block decoration
+- `showPreview(blockName, innerHTML)` - Open overlay preview
 
 **Important:** Cell code runs in async context automatically (via `AsyncFunction`). Just write code naturally with `await` and `return` - no IIFE wrapper needed!
 
@@ -157,132 +158,93 @@ return '✅ Browser environment ready';
 
 ## Live Preview Feature
 
-The notebook supports **visual popup previews** in the browser!
+The notebook supports **visual overlay previews** in the browser!
 
-### Popup Window Preview
+### Overlay Preview
 
-When using `window.showPreview()`, a popup window opens with the styled block:
+When using `showPreview()`, an overlay appears with the styled block:
 
 **Example:**
 ```javascript
 // Test and preview a block
-await window.showPreview('accordion', accordionContent);
-return '✓ Preview window opened';
+const { showPreview } = await import('/scripts/ipynb-helpers.js');
+await showPreview('accordion', accordionContent);
+return '✓ Preview overlay opened';
 ```
 
 **Features:**
 - Dark themed professional UI
-- Opens in new popup window (1200x800)
-- Uses Blob URL (no file system access needed)
-- ↻ Refresh button to reload preview
-- ✕ Close button (or press ESC)
-- Fullscreen with scrolling
-- `<base>` tag for proper CSS/JS loading from parent origin
+- Full-screen overlay with backdrop
+- ✕ Close button (or press ESC, or click backdrop)
+- Scrollable content area
+- No popup blockers to worry about
+- Stays on same page
 
-### Live Preview System with Popup Window (NEW)
+### Live Preview System with Overlay (NEW)
 
-**Live previews now use popup windows with `<base>` tag for proper resource loading!**
+**Live previews now use a full-screen overlay - no popup blockers!**
 
-The preview system opens blocks in a new window using blob URLs, with a `<base>` tag that ensures CSS and JavaScript load correctly from the parent page's origin.
+The preview system creates an overlay on the current page with the styled block.
 
 **How it works:**
 
-1. **Creates HTML with base tag**:
-   ```html
-   <!DOCTYPE html>
-   <html>
-   <head>
-     <base href="https://main--allaboutv2--ddttom.aem.page/">
-     <link rel="stylesheet" href="styles/styles.css">
-     <link rel="stylesheet" href="blocks/accordion/accordion.css">
-   </head>
+1. **Creates overlay with inline styles**:
+   ```javascript
+   const overlay = document.createElement('div');
+   overlay.className = 'ipynb-preview-overlay';
+   // Full-screen overlay with backdrop
+   // Semi-transparent black background
+   // Centered container with styled content
    ```
 
 2. **Minimal DOM structure** (no wrapper interference):
    ```html
-   <body>
-     <div class="preview-header">...</div>  <!-- Fixed position -->
-     <main>
-       <div class="accordion block" data-block-name="accordion">
-         <!-- undecorated block content as direct children -->
+   <div class="ipynb-preview-overlay">
+     <div class="ipynb-preview-container">
+       <div class="ipynb-preview-header">
+         <div class="ipynb-preview-title">blockname Block Preview</div>
+         <button>✕ Close</button>
        </div>
-     </main>
-   </body>
+       <div class="ipynb-preview-content">
+         <div class="blockname block">
+           <!-- undecorated block content as direct children -->
+         </div>
+       </div>
+     </div>
+   </div>
    ```
 
 3. **Automatically decorates the block**:
-   - Block is direct child of `<main>` - no wrapper interference
-   - Dynamically imports `/blocks/blockname/blockname.js` using detected origin
+   - Dynamically imports `/blocks/blockname/blockname.js`
    - Executes the block's default export (decoration function)
-   - Runs after DOM is ready with full error handling
-   - CSS loads via `<base>` tag, JavaScript via dynamic import
+   - Full error handling and console logging
 
 **Key Benefits:**
-- ✅ **Base tag solves blob URL issues** - CSS/JS load from correct origin
-- ✅ **Clean DOM structure** - Block is direct child of main, no wrappers
+- ✅ **No popup blockers** - Overlay on same page
+- ✅ **Better UX** - Stays on current page
+- ✅ **Clean DOM structure** - Block decorated properly
 - ✅ **EDS-compatible structure** - Follows EDS block decoration patterns
-- ✅ **Full styling** - All CSS loads properly via base href
+- ✅ **Full styling** - All CSS loads from current page
 - ✅ **Perfect JavaScript execution** - Module imports work correctly
-- ✅ **Fixed header controls** - Don't interfere with block structure
-- ✅ **Origin detection** - Automatically uses parent page's origin
 
 **Features:**
-- Fixed position dark header with live indicator (pulsing red dot)
-- Clean main content area with no wrapper divs
-- Refresh and close buttons
-- ESC key to close
-- Separate window isolation
+- Full-screen overlay with semi-transparent backdrop
+- Dark themed header
+- Close button, ESC key, or click backdrop to close
+- Scrollable content area
+- Previous overlay automatically removed
 
 **Example:**
 ```javascript
-// This creates a fully interactive popup preview
+// This creates a fully interactive overlay preview
+const { showPreview } = await import('/scripts/ipynb-helpers.js');
 await showPreview('accordion', accordionContent);
-// A new window opens with:
+// An overlay appears with:
 // - Full accordion styling from accordion.css
 // - Interactive <details> elements
 // - Base styles from styles.css
-// - Press ESC or click close button to dismiss
+// - Press ESC, click backdrop, or click close button to dismiss
 ```
-
-**How base tag solves blob URL issues:**
-Blob URLs (`blob://...`) have a null origin and can't load external resources. The `<base href="https://your-origin/">` tag tells the browser to resolve all relative URLs against the parent page's origin, so `styles/styles.css` becomes `https://your-origin/styles/styles.css`.
-
-**Why minimal DOM structure matters (CRITICAL):**
-
-EDS blocks expect specific DOM structures. Many blocks (like accordion, tabs, cards) look for content rows as direct children of the block element using `block.children`. Extra wrapper divs break the child selection logic.
-
-**Common Issue:**
-If preview shows **colored boxes** instead of proper styled elements, even though decoration runs successfully, the cause is **wrapper divs** between `<main>` and the block element.
-
-**The preview uses a clean structure:**
-- **Fixed position header** (height: 48px, z-index: 1000, doesn't affect layout flow)
-- **`<main>` with top padding** (68px to clear fixed header without overlap)
-- **Block as direct child with no intermediary wrappers** ← CRITICAL
-
-**Never do this (BROKEN):**
-```html
-<main>
-  <div class="preview-wrapper">        <!-- ❌ Extra wrapper -->
-    <div class="preview-content">      <!-- ❌ Extra wrapper -->
-      <div class="accordion block">
-        <!-- content -->
-      </div>
-    </div>
-  </div>
-</main>
-```
-
-**Always do this (WORKS):**
-```html
-<main>
-  <div class="accordion block">
-    <!-- content rows as direct children -->
-  </div>
-</main>
-```
-
-**Double-Decoration Prevention:**
-The `showPreview()` function passes **undecorated HTML** to the popup. The popup decorates it once after the DOM loads, ensuring proper block behavior without double-processing.
 
 ---
 
@@ -326,31 +288,11 @@ The Quick Reference sections in test.ipynb now display beautifully in the browse
 
 ## Helper Functions
 
-Helper functions are defined in [scripts/ipynb-helpers.js](../../scripts/ipynb-helpers.js) and loaded in Cell 1. This keeps the notebook clean and makes helpers reusable.
-
-### Initialize Function
-
-#### `initialize()`
-
-Master initialization function that sets up the browser environment.
-
-**What it does:**
-- Registers helper functions on window object
-- Sets up `window.testBlockFn()` for testing blocks
-- Sets up `window.showPreview()` for popup previews
-- Sets up `window.doc` as reference to document
-- Logs setup completion
-
-**Usage (Cell 1):**
-```javascript
-const { initialize } = await import('/scripts/ipynb-helpers.js');
-await initialize();
-return '✅ Browser environment ready';
-```
+Helper functions are defined in [scripts/ipynb-helpers.js](../../scripts/ipynb-helpers.js) and imported in each cell as needed. This keeps the notebook clean and makes helpers reusable.
 
 ### Testing Functions
 
-#### `window.testBlockFn(blockName, innerHTML)`
+#### `testBlock(blockName, innerHTML)`
 
 Tests a block's decoration function with provided content in the browser.
 
@@ -362,7 +304,8 @@ Tests a block's decoration function with provided content in the browser.
 
 **Example:**
 ```javascript
-const block = await window.testBlockFn('accordion', `
+const { testBlock } = await import('/scripts/ipynb-helpers.js');
+const block = await testBlock('accordion', `
   <div>
     <div>Question 1</div>
     <div>Answer 1</div>
@@ -372,9 +315,9 @@ console.log(block.outerHTML);
 return block.outerHTML;
 ```
 
-#### `window.showPreview(blockName, innerHTML)`
+#### `showPreview(blockName, innerHTML)`
 
-Opens a popup window with the styled, decorated block.
+Opens an overlay with the styled, decorated block.
 
 **Parameters:**
 - `blockName`: Name of the block
@@ -384,16 +327,17 @@ Opens a popup window with the styled, decorated block.
 
 **Example:**
 ```javascript
-await window.showPreview('accordion', accordionContent);
-return '✓ Preview window opened';
+const { showPreview } = await import('/scripts/ipynb-helpers.js');
+await showPreview('accordion', accordionContent);
+return '✓ Preview overlay opened';
 ```
 
 **What it creates:**
-- Popup window (1200x800) with blob URL
-- Full HTML document with `<base>` tag for CSS/JS loading
-- Fixed header with refresh and close buttons
-- Block as direct child of `<main>` for proper decoration
-- Automatic block decoration on load
+- Full-screen overlay with semi-transparent backdrop
+- Dark themed header with close button
+- Scrollable content area
+- Block decorated with proper CSS/JS
+- Close with ESC, backdrop click, or close button
 
 ---
 
@@ -435,28 +379,14 @@ Open [test.ipynb](../../test.ipynb) on an EDS page using the ipynb-viewer block:
 | /test.ipynb  |
 ```
 
-### 2. Run Cell 1 First!
+### 2. Test Blocks
 
-**Always run the first code cell to initialize:**
-
-```javascript
-const { initialize } = await import('/scripts/ipynb-helpers.js');
-await initialize();
-return '✅ Browser environment ready';
-```
-
-This sets up:
-- `window.testBlockFn()` - Test block decoration
-- `window.showPreview()` - Open popup previews
-- `window.doc` - Reference to document
-
-### 3. Test Blocks
-
-**Simple pattern - write code naturally:**
+**Simple pattern - import what you need:**
 
 ```javascript
 // Test a block
-const block = await window.testBlockFn('accordion', `
+const { testBlock } = await import('/scripts/ipynb-helpers.js');
+const block = await testBlock('accordion', `
   <div>
     <div>Question</div>
     <div>Answer</div>
@@ -466,11 +396,12 @@ console.log(block.outerHTML);
 return block.outerHTML;
 ```
 
-### 4. Generate Previews
+### 3. Generate Previews
 
-**Open popup window with styled preview:**
+**Open overlay with styled preview:**
 
 ```javascript
+const { showPreview } = await import('/scripts/ipynb-helpers.js');
 const content = `
   <div>
     <div>Question</div>
@@ -478,17 +409,17 @@ const content = `
   </div>
 `;
 
-await window.showPreview('accordion', content);
-return '✓ Preview window opened';
+await showPreview('accordion', content);
+return '✓ Preview overlay opened';
 ```
 
-### 5. Iterate
+### 4. Iterate
 
-1. Run cells sequentially (click Run buttons)
+1. Run any cell at any time (no order required)
 2. View output inline in cell output areas
 3. Make changes to block JavaScript/CSS
 4. Re-run cells to test changes
-5. Use popup preview refresh button to see CSS updates
+5. Generate new overlay to see updates
 
 ---
 
@@ -565,7 +496,8 @@ Test block logic interactively:
 
 ```javascript
 // Quick test of content extraction
-const block = await window.testBlockFn('hero', `<div><div>Title</div></div>`);
+const { testBlock } = await import('/scripts/ipynb-helpers.js');
+const block = await testBlock('hero', `<div><div>Title</div></div>`);
 console.log('Extracted title:', block.querySelector('h1')?.textContent);
 return block.outerHTML;
 ```
@@ -576,19 +508,21 @@ Test different configurations in separate cells:
 
 ```javascript
 // Cell 1: Basic accordion
+const { testBlock } = await import('/scripts/ipynb-helpers.js');
 const content1 = `<div><div>Q1</div><div>A1</div></div>`;
-const block1 = await window.testBlockFn('accordion', content1);
+const block1 = await testBlock('accordion', content1);
 return block1.outerHTML;
 ```
 
 ```javascript
 // Cell 2: Multiple items
+const { testBlock } = await import('/scripts/ipynb-helpers.js');
 const content2 = `
   <div><div>Q1</div><div>A1</div></div>
   <div><div>Q2</div><div>A2</div></div>
   <div><div>Q3</div><div>A3</div></div>
 `;
-const block2 = await window.testBlockFn('accordion', content2);
+const block2 = await testBlock('accordion', content2);
 return block2.outerHTML;
 ```
 
@@ -598,14 +532,16 @@ Test error handling and edge cases:
 
 ```javascript
 // Empty content
-const emptyBlock = await window.testBlockFn('hero', '');
+const { testBlock } = await import('/scripts/ipynb-helpers.js');
+const emptyBlock = await testBlock('hero', '');
 console.log('Empty content handled:', emptyBlock.innerHTML);
 return emptyBlock.outerHTML;
 ```
 
 ```javascript
 // Invalid structure
-const invalidBlock = await window.testBlockFn('hero', '<div>Only one cell</div>');
+const { testBlock } = await import('/scripts/ipynb-helpers.js');
+const invalidBlock = await testBlock('hero', '<div>Only one cell</div>');
 console.log('Invalid structure handled:', invalidBlock.innerHTML);
 return invalidBlock.outerHTML;
 ```
@@ -624,9 +560,10 @@ It supports both single and double-column layouts.
 ```
 
 ```javascript
+const { testBlock, showPreview } = await import('/scripts/ipynb-helpers.js');
 const content = `<div><div>Hero Title</div><div>Hero description</div></div>`;
-const block = await window.testBlockFn('hero', content);
-await window.showPreview('hero', content);
+const block = await testBlock('hero', content);
+await showPreview('hero', content);
 return '✓ Hero block tested';
 ```
 
@@ -641,11 +578,11 @@ The **ipynb-viewer** EDS block allows you to display and execute Jupyter noteboo
 - **Parse .ipynb files**: Loads and displays Jupyter notebook JSON format
 - **Markdown rendering**: Converts markdown cells to formatted HTML with tables, code blocks, lists
 - **Interactive execution**: Run JavaScript code cells with a click (async/await support)
-- **Automatic initialization check**: Warns if the first code cell hasn't been run first
+- **No initialization required**: Each cell imports what it needs
 - **Console capture**: Shows console.log() and console.error() output
 - **Result display**: Shows return values from code execution
 - **Error handling**: Catches and displays errors with styling
-- **Sequential execution**: Encourages running the first code cell first for proper setup
+- **Cell independence**: Run any cell at any time in any order
 
 ### Usage in EDS
 
@@ -660,15 +597,14 @@ Add the block to your Google Doc:
 ### What Gets Executed
 
 When users click "Run" on a code cell:
-- **Initialization check** runs first (skipped for first code cell)
-- If not the first code cell and not initialized, shows warning to run the first code cell first
 - Code executes in the browser using `AsyncFunction` constructor (supports await)
+- Each cell can import helper functions independently
 - Console methods are captured during execution
 - Results display inline below the cell
 - Errors are caught and shown in red
 - Successful execution turns the cell border green
 
-**Important:** Always run the first code cell first! It sets up the environment (`doc`, `testBlockFn`, `showPreview`).
+**Important:** Each cell imports what it needs - no initialization required!
 
 ### Use Cases
 
@@ -705,11 +641,10 @@ When users click "Run" on a code cell:
    - No interaction with other blocks on the page
    - **Solution**: Use traditional test.html for full page testing
 
-2. **Limited Browser APIs in Popup**
-   - Popup window has blob URL (null origin)
-   - Some security-restricted APIs may not work
-   - localStorage/sessionStorage limited in popup
-   - **Solution**: Test these features with test.html
+2. **Limited Browser APIs**
+   - Overlay runs in current page context
+   - Has access to same APIs as parent page
+   - Full browser feature support
 
 3. **Automated Testing**
    - No CI/CD integration
@@ -736,10 +671,11 @@ When users click "Run" on a code cell:
    - JavaScript calculations
 
 4. **Visual Previews**
-   - Generate styled popup previews
+   - Generate styled overlay previews
    - Visual verification with real CSS
    - Interactive block testing
    - Instant feedback loop
+   - No popup blockers
 
 5. **Interactive Execution**
    - Run JavaScript code cells
@@ -761,46 +697,39 @@ When users click "Run" on a code cell:
    | /test.ipynb  |
    ```
 
-2. **Run Cell 1 first** to initialize:
+2. **Test a block** (any cell):
    ```javascript
-   const { initialize } = await import('/scripts/ipynb-helpers.js');
-   await initialize();
-   return '✅ Browser environment ready';
-   ```
-   This sets up `window.testBlockFn()` and `window.showPreview()`.
-
-3. **Test a block** (Cell 2+):
-   ```javascript
-   const block = await window.testBlockFn('accordion', '<div><div>Q</div><div>A</div></div>');
+   const { testBlock } = await import('/scripts/ipynb-helpers.js');
+   const block = await testBlock('accordion', '<div><div>Q</div><div>A</div></div>');
    return block.outerHTML;
    ```
 
-4. **Generate preview** (Cell 3+):
+3. **Generate preview** (any cell):
    ```javascript
-   await window.showPreview('accordion', '<div><div>Q</div><div>A</div></div>');
-   return '✓ Preview window opened';
+   const { showPreview } = await import('/scripts/ipynb-helpers.js');
+   await showPreview('accordion', '<div><div>Q</div><div>A</div></div>');
+   return '✓ Preview overlay opened';
    ```
 
-5. **Features:**
+4. **Features:**
    - Read markdown documentation
-   - Click "Run" on code cells
+   - Click "Run" on any code cell
    - See console output and results
-   - Open popup previews with styled blocks
+   - Open overlay previews with styled blocks
    - Execute JavaScript interactively
    - Learn through runnable examples
+   - No initialization required
 
 ---
 
 ## Best Practices
 
-### 1. Always Run Cell 1 First
+### 1. Import What You Need
 
-The first code cell initializes the helper functions. Always run it before any other cells:
+Each cell imports helper functions independently:
 
 ```javascript
-const { initialize } = await import('/scripts/ipynb-helpers.js');
-await initialize();
-return '✅ Browser environment ready';
+const { testBlock, showPreview } = await import('/scripts/ipynb-helpers.js');
 ```
 
 ### 2. Use Simple Async Pattern
@@ -809,15 +738,16 @@ Cell code runs in async context automatically - write code naturally:
 
 ```javascript
 // ✅ GOOD - Simple and clean
-const block = await window.testBlockFn('accordion', content);
-await window.showPreview('accordion', content);
+const { testBlock, showPreview } = await import('/scripts/ipynb-helpers.js');
+const block = await testBlock('accordion', content);
+await showPreview('accordion', content);
 return block.outerHTML;
 ```
 
 ```javascript
 // ❌ BAD - Unnecessary IIFE wrapper (don't do this!)
 return (async () => {
-  const block = await window.testBlockFn('accordion', content);
+  const block = await testBlock('accordion', content);
   return block.outerHTML;
 })();
 ```
@@ -825,11 +755,11 @@ return (async () => {
 ### 3. Structure Your Notebooks
 
 ```
-Cell 1: Setup (initialize helpers)
-Cell 2+: Markdown documentation and test cases
+Cells: Markdown documentation and test cases
   - One test scenario per cell
   - Use markdown cells for explanations
   - Generate previews inline
+  - Import helpers as needed
 ```
 
 ### 4. Add Markdown Documentation
@@ -843,20 +773,20 @@ This tests the block's ability to display items in a grid
 with a configurable number of columns using data attributes.
 ```
 
-### 5. Use Popup Previews for Visual Verification
+### 5. Use Overlay Previews for Visual Verification
 
-Always generate popup previews for visual checks:
+Always generate overlay previews for visual checks:
 
 ```javascript
-await window.showPreview('your-block', content);
-return '✓ Preview window opened';
+const { showPreview } = await import('/scripts/ipynb-helpers.js');
+await showPreview('your-block', content);
+return '✓ Preview overlay opened';
 ```
 
-The popup opens in a new window with:
+The overlay appears with:
 - Full block styling (CSS)
 - Interactive JavaScript
-- Refresh button to reload
-- Close button or ESC key
+- Close button, ESC key, or backdrop click to close
 
 ### 6. Keep Tests Focused
 
@@ -864,21 +794,24 @@ One test scenario per cell for clarity:
 
 ```javascript
 // ❌ BAD - Multiple tests in one cell
-const block1 = await window.testBlockFn('hero', content1);
-const block2 = await window.testBlockFn('hero', content2);
-const block3 = await window.testBlockFn('hero', content3);
+const { testBlock } = await import('/scripts/ipynb-helpers.js');
+const block1 = await testBlock('hero', content1);
+const block2 = await testBlock('hero', content2);
+const block3 = await testBlock('hero', content3);
 ```
 
 ```javascript
 // ✅ GOOD - Separate cells for each test
-// Cell 2:
-const block1 = await window.testBlockFn('hero', content1);
+// Cell 1:
+const { testBlock } = await import('/scripts/ipynb-helpers.js');
+const block1 = await testBlock('hero', content1);
 return block1.outerHTML;
 ```
 
 ```javascript
-// Cell 3:
-const block2 = await window.testBlockFn('hero', content2);
+// Cell 2:
+const { testBlock } = await import('/scripts/ipynb-helpers.js');
+const block2 = await testBlock('hero', content2);
 return block2.outerHTML;
 ```
 
@@ -893,42 +826,45 @@ return block2.outerHTML;
 **Solution:** Make sure you're using `return` to display results:
 ```javascript
 // ✅ GOOD - Shows output
-const block = await window.testBlockFn('accordion', content);
+const { testBlock } = await import('/scripts/ipynb-helpers.js');
+const block = await testBlock('accordion', content);
 return block.outerHTML;
 
 // ❌ BAD - No output
-const block = await window.testBlockFn('accordion', content);
+const { testBlock } = await import('/scripts/ipynb-helpers.js');
+const block = await testBlock('accordion', content);
 ```
 
-### Issue: Helper Functions Not Defined
+### Issue: Helper Functions Not Found
 
-**Error:** `window.testBlockFn is not defined`
+**Error:** Import fails or functions not available
 
-**Solution:** Run Cell 1 first to initialize the environment:
+**Solution:** Check the import path and syntax:
 ```javascript
-const { initialize } = await import('/scripts/ipynb-helpers.js');
-await initialize();
-return '✅ Browser environment ready';
+// ✅ GOOD - Correct import
+const { testBlock, showPreview } = await import('/scripts/ipynb-helpers.js');
+
+// ❌ BAD - Wrong path
+const { testBlock } = await import('./scripts/ipynb-helpers.js');
 ```
 
-### Issue: Popup Window Blocked
+### Issue: Overlay Not Appearing
 
-**Error:** `showPreview()` runs but no window appears
+**Error:** `showPreview()` runs but no overlay appears
 
 **Solution:**
-1. Allow popups for your domain in browser settings
-2. Look for blocked popup indicator in address bar
-3. Click to allow popups and retry
+- Check browser console for JavaScript errors
+- Verify block JavaScript file exists: `blocks/blockname/blockname.js`
+- Check that block CSS file exists: `blocks/blockname/blockname.css`
 
 ### Issue: CSS Not Loading in Preview
 
-**Error:** Popup preview shows unstyled content
+**Error:** Overlay shows unstyled content
 
 **Solution:**
 - Check that block CSS file exists: `blocks/blockname/blockname.css`
 - Check browser console for 404 errors
-- Verify the `<base>` tag is using correct origin
-- Try clicking the refresh button in the popup header
+- Verify CSS loads on the parent page
 
 ---
 
@@ -975,7 +911,7 @@ This provides:
 | **Visual feedback** | ✅ Yes | ✅ Yes (popup) | ❌ No |
 | **Block decoration** | ✅ Yes | ✅ Yes | ✅ Yes |
 | **Browser APIs** | ✅ Full | ✅ Full | ⚠️ Mocked |
-| **Popup previews** | ❌ No | ✅ Yes | ❌ No |
+| **Overlay previews** | ❌ No | ✅ Yes | ❌ No |
 | **CI/CD** | ❌ No | ❌ No | ✅ Yes |
 | **End-user facing** | ❌ No | ✅ Yes | ❌ No |
 
@@ -1004,15 +940,15 @@ This provides:
 - Interactive code execution in browser
 - Multiple scenarios in one file
 - Inline markdown documentation
-- Popup window previews with styling
+- Overlay previews with styling (no popup blockers)
 - Simple async pattern (no complex wrappers)
+- No initialization required
 - Shareable executable notebooks
 - Perfect for end-user tutorials
 
 **Cons:**
 - Block-only testing (no EDS core context)
 - Requires publishing on EDS page
-- Limited popup window capabilities
 - No CI/CD integration
 
 ### Automated Tests (Jest/Mocha)
@@ -1062,11 +998,11 @@ The Jupyter notebook testing system provides **interactive browser-based testing
 - Cell code runs in async context automatically
 - Clean, readable test code
 
-**Popup Window Previews:**
+**Overlay Previews:**
 - Instant visual feedback with styled blocks
-- `<base>` tag for proper CSS/JS loading
-- Refresh and close buttons
-- ESC key support
+- Full-screen overlay with backdrop
+- ESC key, backdrop click, or close button to dismiss
+- No popup blockers to worry about
 - Minimal DOM structure (no wrapper interference)
 
 **Interactive and Shareable:**
@@ -1074,18 +1010,19 @@ The Jupyter notebook testing system provides **interactive browser-based testing
 - Inline markdown documentation
 - Executable by end users on EDS pages
 - Perfect for tutorials and demos
+- No initialization required
 
 **Helper Functions:**
-- `window.testBlockFn()` - Test block decoration
-- `window.showPreview()` - Generate popup previews
-- Simple `initialize()` setup
+- `testBlock()` - Test block decoration
+- `showPreview()` - Generate overlay previews
+- Direct ES6 imports - no setup needed
 
 ### Recommended Workflow
 
-1. **Develop** in browser with `testBlockFn()` and `showPreview()`
-2. **Preview** with popup windows for instant visual feedback
+1. **Develop** in browser with `testBlock()` and `showPreview()`
+2. **Preview** with overlays for instant visual feedback
 3. **Validate** in test.html for full EDS core context
 4. **Share** executable notebooks with end users
 5. **Automate** with Jest/Mocha for CI/CD (future)
 
-This approach gives you **speed, simplicity, visual feedback, and shareability** - all with native browser APIs and no complex setup.
+This approach gives you **speed, simplicity, visual feedback, and shareability** - all with native browser APIs, direct imports, and no initialization required.
