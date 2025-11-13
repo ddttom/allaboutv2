@@ -54,6 +54,22 @@ export async function showPreview(blockName, innerHTML = '') {
   // Remove existing overlay if present
   document.querySelector('.ipynb-preview-overlay')?.remove();
 
+  // Helper function to load CSS if not already loaded
+  const loadCSS = (href) => {
+    if (!document.querySelector(`link[href="${href}"]`)) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = href;
+      document.head.appendChild(link);
+    }
+  };
+
+  // Load base EDS styles if not already loaded
+  loadCSS('/styles/styles.css');
+
+  // Load block-specific CSS if not already loaded
+  loadCSS(`/blocks/${blockName}/${blockName}.css`);
+
   // Create overlay container
   const overlay = document.createElement('div');
   overlay.className = 'ipynb-preview-overlay';
