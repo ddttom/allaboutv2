@@ -76,12 +76,14 @@ Add ipynb-viewer block to your page:
 
 ```javascript
 // First code cell: Initialize browser environment
-(async () => {
+return (async () => {
   const { initialize } = await import('/scripts/ipynb-helpers.js');
   await initialize();
   return '✅ Browser environment ready';
 })();
 ```
+
+**Important:** The `return` keyword before the async IIFE is required for the result to display in the output cell.
 
 **Benefits:**
 - **One function call**: `initialize()` sets up everything
@@ -96,7 +98,7 @@ Add ipynb-viewer block to your page:
 
 ```javascript
 // Cell 2: Test a block
-(async () => {
+return (async () => {
   const block = await window.testBlockFn('accordion', `
     <div>
       <div>Question 1</div>
@@ -108,13 +110,15 @@ Add ipynb-viewer block to your page:
 })();
 ```
 
+**Note:** Always start async code with `return (async () => { ... })();` to display results.
+
 ### 5. Generate Visual Preview
 
 **Opens popup window:**
 
 ```javascript
 // Cell 3: Visual preview in popup window
-(async () => {
+return (async () => {
   const content = `
     <div>
       <div>Question 1</div>
@@ -173,13 +177,17 @@ After running the first code cell, these functions are available:
 **Usage Pattern:**
 
 ```javascript
-// After Cell 1 initialization
-const block = await window.testBlockFn('accordion', '<div>content</div>');
-await window.showPreview('accordion', '<div>content</div>');
-const div = window.doc.createElement('div');
+// After Cell 1 initialization, always use return with async IIFE
+return (async () => {
+  const block = await window.testBlockFn('accordion', '<div>content</div>');
+  await window.showPreview('accordion', '<div>content</div>');
+  const div = window.doc.createElement('div');
 
-// Or use document directly
-const div2 = document.createElement('div');
+  // Or use document directly
+  const div2 = document.createElement('div');
+
+  return block.outerHTML; // Return value to display in output
+})();
 ```
 
 ## Popup Preview System
@@ -241,11 +249,12 @@ EDS blocks iterate over `block.children` directly. Extra wrappers break child se
 ## Best Practices
 
 1. **Always run Cell 1 first** to initialize the environment
-2. **Wrap async code in IIFE**: `(async () => { ... })()`
+2. **Use return with async IIFE**: `return (async () => { ... })();` to display results
 3. **Use window helpers**: `window.testBlockFn`, `window.showPreview`
 4. **Test visual output**: Always use `showPreview()` for verification
 5. **Allow popups**: Enable popups for your domain to see previews
 6. **Structure notebooks**: Cell 1: Setup | Other cells: Tests and previews
+7. **Return values**: Always return a value from your async function to see output
 
 ## Integration with ipynb-viewer Block
 

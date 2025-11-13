@@ -106,7 +106,7 @@ const div2 = document.createElement('div');
 
 **Example cell structure:**
 ```javascript
-(async () => {
+return (async () => {
   const content = '<div><div>Title</div><div>Description</div></div>';
   const block = await window.testBlockFn('accordion', content);
 

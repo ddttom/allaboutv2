@@ -135,7 +135,7 @@ The test.ipynb notebook is designed for **browser execution** via the ipynb-view
 Simply run Cell 1 which calls `initialize()` to set up the helper functions on the window object:
 
 ```javascript
-(async () => {
+return (async () => {
   const { initialize } = await import('/scripts/ipynb-helpers.js');
   await initialize();
   return '✅ Browser environment ready';
@@ -155,7 +155,7 @@ When using `showPreview()`, a popup window opens with the styled block:
 **Example:**
 ```javascript
 // Test and preview a block
-(async () => {
+return (async () => {
   await window.showPreview('accordion', accordionContent);
   return '✓ Preview window opened';
 })();
@@ -665,7 +665,7 @@ const g = getGlobal();
 **Pattern to use in EVERY cell (after Cell 1):**
 
 ```javascript
-(async () => {
+return (async () => {
   // Step 1: Get context-aware reference (REQUIRED!)
   const g = getGlobal();
 
@@ -695,7 +695,7 @@ const g = getGlobal();
 **Cell 2: Test Your Block (Using Global G)**
 ```javascript
 // Just use G - no setup code needed!
-(async () => {
+return (async () => {
   const block1 = await G.testBlockFn('your-block', `
     <div>
       <div>Title 1</div>
@@ -716,7 +716,7 @@ const g = getGlobal();
 **Cell 3: Generate Preview with Live Iframe (Using Global G)**
 ```javascript
 // Just use G - one function automatically adapts to environment!
-(async () => {
+return (async () => {
   const content = `
     <div>
       <div>Title 1</div>
@@ -816,7 +816,7 @@ Test block logic without setting up a full environment:
 
 ```javascript
 // Quick test of content extraction
-(async () => {
+return (async () => {
   const block = await G.testBlockFn('hero', `<div><div>Title</div></div>`);
   console.log('Extracted title:', block.querySelector('h1')?.textContent);
 })();
@@ -828,19 +828,19 @@ Test different configurations in separate cells:
 
 ```javascript
 // Cell 1: Default layout
-(async () => {
+return (async () => {
   const defaultBlock = await G.testBlockFn('cards', contentHTML);
   return defaultBlock.outerHTML;
 })();
 
 // Cell 2: Grid layout
-(async () => {
+return (async () => {
   const gridBlock = await G.testBlockFn('cards', contentHTML, { layout: 'grid' });
   return gridBlock.outerHTML;
 })();
 
 // Cell 3: List layout
-(async () => {
+return (async () => {
   const listBlock = await G.testBlockFn('cards', contentHTML, { layout: 'list' });
   return listBlock.outerHTML;
 })();
@@ -852,14 +852,14 @@ Test error handling and edge cases:
 
 ```javascript
 // Empty content
-(async () => {
+return (async () => {
   const emptyBlock = await G.testBlockFn('hero', '');
   console.log('Empty content handled:', emptyBlock.innerHTML);
   return emptyBlock.outerHTML;
 })();
 
 // Invalid structure
-(async () => {
+return (async () => {
   const invalidBlock = await G.testBlockFn('hero', '<div>Only one cell</div>');
   console.log('Invalid structure handled:', invalidBlock.innerHTML);
   return invalidBlock.outerHTML;
@@ -1109,7 +1109,7 @@ with a configurable number of columns using data attributes.
 Always generate HTML previews for visual checks:
 
 ```javascript
-(async () => {
+return (async () => {
   await G.showPreview('your-block', content);
   // In Node.js: Files saved to ipynb-tests/
   // In Browser: Opens popup window
@@ -1122,7 +1122,7 @@ One test scenario per cell for clarity:
 
 ```javascript
 // ❌ BAD - Multiple tests in one cell
-(async () => {
+return (async () => {
   const block1 = await G.testBlockFn('hero', content1);
   const block2 = await G.testBlockFn('hero', content2);
   const block3 = await G.testBlockFn('hero', content3);
@@ -1130,13 +1130,13 @@ One test scenario per cell for clarity:
 
 // ✅ GOOD - Separate cells for each test
 // Cell 1:
-(async () => {
+return (async () => {
   const block1 = await G.testBlockFn('hero', content1);
   return block1.outerHTML;
 })();
 
 // Cell 2:
-(async () => {
+return (async () => {
   const block2 = await G.testBlockFn('hero', content2);
   return block2.outerHTML;
 })();

@@ -16,7 +16,7 @@ Complete examples and patterns for testing EDS blocks with Jupyter notebooks in 
 
 ```javascript
 // Simple test without content
-(async () => {
+return (async () => {
   const block = await window.testBlockFn('helloworld');
   return block.outerHTML;
 })();
@@ -26,7 +26,7 @@ Complete examples and patterns for testing EDS blocks with Jupyter notebooks in 
 
 ```javascript
 // Test with HTML content
-(async () => {
+return (async () => {
   const content = `
     <div>
       <div>Test content</div>
@@ -41,7 +41,7 @@ Complete examples and patterns for testing EDS blocks with Jupyter notebooks in 
 
 ```javascript
 // Create visual preview in popup window
-(async () => {
+return (async () => {
   const content = `
     <div>
       <div>Test content</div>
@@ -57,7 +57,7 @@ Complete examples and patterns for testing EDS blocks with Jupyter notebooks in 
 ### Accordion Block
 
 ```javascript
-(async () => {
+return (async () => {
   const accordionContent = `
     <div>
       <div>What is EDS?</div>
@@ -84,7 +84,7 @@ Complete examples and patterns for testing EDS blocks with Jupyter notebooks in 
 ### Tabs Block
 
 ```javascript
-(async () => {
+return (async () => {
   const tabsContent = `
     <div>
       <div>Overview</div>
@@ -123,7 +123,7 @@ Complete examples and patterns for testing EDS blocks with Jupyter notebooks in 
 ### Cards Block
 
 ```javascript
-(async () => {
+return (async () => {
   const cardsContent = `
     <div>
       <div>
@@ -164,7 +164,7 @@ Complete examples and patterns for testing EDS blocks with Jupyter notebooks in 
 ### Hero Block
 
 ```javascript
-(async () => {
+return (async () => {
   const heroContent = `
     <div>
       <div>
@@ -191,7 +191,7 @@ Complete examples and patterns for testing EDS blocks with Jupyter notebooks in 
 ### Columns Block
 
 ```javascript
-(async () => {
+return (async () => {
   const columnsContent = `
     <div>
       <div>
@@ -221,7 +221,7 @@ Complete examples and patterns for testing EDS blocks with Jupyter notebooks in 
 ### Form Block
 
 ```javascript
-(async () => {
+return (async () => {
   const formContent = `
     <div>
       <div>
@@ -253,7 +253,7 @@ Complete examples and patterns for testing EDS blocks with Jupyter notebooks in 
 ### Quote Block
 
 ```javascript
-(async () => {
+return (async () => {
   const quoteContent = `
     <div>
       <div>
@@ -276,7 +276,7 @@ Complete examples and patterns for testing EDS blocks with Jupyter notebooks in 
 
 ```javascript
 // 1. Test basic structure
-(async () => {
+return (async () => {
   const block = await window.testBlockFn('accordion');
   console.log('Basic test:', block.className);
   return '✓ Basic structure tested';
@@ -285,7 +285,7 @@ Complete examples and patterns for testing EDS blocks with Jupyter notebooks in 
 
 ```javascript
 // 2. Test with content
-(async () => {
+return (async () => {
   const content = `
     <div>
       <div>Question</div>
@@ -300,7 +300,7 @@ Complete examples and patterns for testing EDS blocks with Jupyter notebooks in 
 
 ```javascript
 // 3. Generate preview
-(async () => {
+return (async () => {
   const content = `
     <div>
       <div>Question</div>
@@ -316,7 +316,7 @@ Complete examples and patterns for testing EDS blocks with Jupyter notebooks in 
 
 ```javascript
 // Empty content
-(async () => {
+return (async () => {
   const empty = '';
   const emptyBlock = await window.testBlockFn('accordion', empty);
   console.log('Empty:', emptyBlock.children.length);
@@ -326,7 +326,7 @@ Complete examples and patterns for testing EDS blocks with Jupyter notebooks in 
 
 ```javascript
 // Single item
-(async () => {
+return (async () => {
   const single = '<div><div>Q</div><div>A</div></div>';
   const singleBlock = await window.testBlockFn('accordion', single);
   console.log('Single:', singleBlock.querySelectorAll('details').length);
@@ -336,7 +336,7 @@ Complete examples and patterns for testing EDS blocks with Jupyter notebooks in 
 
 ```javascript
 // Nested HTML
-(async () => {
+return (async () => {
   const nested = `
     <div>
       <div>Question with <strong>bold</strong> text</div>
@@ -353,7 +353,7 @@ Complete examples and patterns for testing EDS blocks with Jupyter notebooks in 
 
 ```javascript
 // Test multiple blocks
-(async () => {
+return (async () => {
   const blocks = ['accordion', 'cards', 'columns', 'hero'];
   const results = [];
 
@@ -381,7 +381,7 @@ Complete examples and patterns for testing EDS blocks with Jupyter notebooks in 
 // Testing accordion with 3 Q&A pairs
 // Expected: Should create 3 <details> elements with <summary> headers
 
-(async () => {
+return (async () => {
   const content = `
     <div>
       <div>What is EDS?</div>
@@ -420,7 +420,7 @@ Complete examples and patterns for testing EDS blocks with Jupyter notebooks in 
 ```javascript
 // ✅ Good: Handle potential errors
 
-(async () => {
+return (async () => {
   try {
     const content = '<div><div>Test</div></div>';
     const block = await window.testBlockFn('myblock', content);
@@ -458,7 +458,7 @@ Testing the accordion block with various content structures and edge cases.
 
 ```javascript
 // Test empty accordion
-(async () => {
+return (async () => {
   const empty = '';
   const emptyBlock = await window.testBlockFn('accordion', empty);
   console.log('Empty result:', emptyBlock.children.length, 'children');
@@ -468,7 +468,7 @@ Testing the accordion block with various content structures and edge cases.
 
 ```javascript
 // Test single item
-(async () => {
+return (async () => {
   const single = '<div><div>Question</div><div>Answer</div></div>';
   const singleBlock = await window.testBlockFn('accordion', single);
   console.log('Single item:', singleBlock.querySelectorAll('details').length, 'details');
@@ -486,7 +486,7 @@ Testing accordion functionality end-to-end in the browser.
 
 ```javascript
 // Setup (Cell 1)
-(async () => {
+return (async () => {
   const { initialize } = await import('/scripts/ipynb-helpers.js');
   await initialize();
   return '✅ Browser environment ready';
@@ -510,7 +510,7 @@ testContent
 
 ```javascript
 // Test transformation
-(async () => {
+return (async () => {
   const block = await window.testBlockFn('accordion', testContent);
   console.log('✓ Block created');
   console.log('  Details elements:', block.querySelectorAll('details').length);
@@ -520,7 +520,7 @@ testContent
 
 ```javascript
 // Generate styled preview
-(async () => {
+return (async () => {
   await window.showPreview('accordion', testContent);
   console.log('✓ Preview opened in popup window');
   return '✓ Preview window opened';
@@ -544,7 +544,7 @@ testContent
 
 ```javascript
 // ✅ Always wrap async code in IIFE
-(async () => {
+return (async () => {
   const block = await window.testBlockFn('blockname', content);
   return block.outerHTML;
 })();
@@ -552,7 +552,7 @@ testContent
 
 ```javascript
 // ✅ Check console for debugging
-(async () => {
+return (async () => {
   console.log('Starting test...');
   const block = await window.testBlockFn('blockname', content);
   console.log('Block created:', block);
@@ -563,7 +563,7 @@ testContent
 
 ```javascript
 // ✅ Handle popups
-(async () => {
+return (async () => {
   await window.showPreview('blockname', content);
   // Note: Browser might block popup - allow popups for your domain
   return '✓ Preview requested (check if popup was blocked)';

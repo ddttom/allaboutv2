@@ -7,7 +7,7 @@ Advanced patterns and techniques for testing EDS blocks with Jupyter notebooks i
 Measure block decoration performance:
 
 ```javascript
-(async () => {
+return (async () => {
   console.time('block-decoration');
   const block = await window.testBlockFn('myblock', content);
   console.timeEnd('block-decoration');
@@ -22,7 +22,7 @@ Measure block decoration performance:
 Test multiple content variations:
 
 ```javascript
-(async () => {
+return (async () => {
   const variations = [
     '<div><div>Test 1</div><div>Content 1</div></div>',
     '<div><div>Test 2</div><div>Content 2</div></div>',
@@ -49,7 +49,7 @@ Test multiple content variations:
 Create content programmatically:
 
 ```javascript
-(async () => {
+return (async () => {
   function generateAccordionContent(numItems) {
     const items = Array.from({ length: numItems }, (_, i) => `
       <div>
@@ -78,7 +78,7 @@ Create content programmatically:
 Analyze transformation impact:
 
 ```javascript
-(async () => {
+return (async () => {
   const content = `
     <div>
       <div>Question 1</div>
@@ -112,7 +112,7 @@ Analyze transformation impact:
 Test multiple blocks efficiently:
 
 ```javascript
-(async () => {
+return (async () => {
   const blocks = {
     'accordion': '<div><div>Q</div><div>A</div></div>',
     'cards': '<div><div><img src="test.jpg" alt="Test"></div><div><h3>Title</h3><p>Content</p></div></div>',
@@ -141,7 +141,7 @@ Test multiple blocks efficiently:
 Validate block output structure:
 
 ```javascript
-(async () => {
+return (async () => {
   function validateAccordion(block) {
     const errors = [];
 
@@ -184,7 +184,7 @@ Validate block output structure:
 Generate realistic test content:
 
 ```javascript
-(async () => {
+return (async () => {
   function generateRealisticAccordion() {
     const faqs = [
       {
@@ -222,7 +222,7 @@ Generate realistic test content:
 Create reusable test data:
 
 ```javascript
-(async () => {
+return (async () => {
   const TestData = {
     accordion: {
       empty: '',
@@ -264,7 +264,7 @@ Create reusable test data:
 Check for accessibility issues:
 
 ```javascript
-(async () => {
+return (async () => {
   function checkAccessibility(block) {
     const issues = [];
 
@@ -311,7 +311,7 @@ Check for accessibility issues:
 Analyze block structure:
 
 ```javascript
-(async () => {
+return (async () => {
   const content = `
     <div>
       <div>Question 1</div>
@@ -355,7 +355,7 @@ Analyze block structure:
 Test blocks with controlled timing:
 
 ```javascript
-(async () => {
+return (async () => {
   const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
   const tests = [
@@ -392,7 +392,7 @@ Test blocks with controlled timing:
 Compare outputs:
 
 ```javascript
-(async () => {
+return (async () => {
   const content = `
     <div>
       <div>Question</div>
@@ -416,7 +416,7 @@ Compare outputs:
 
 ```javascript
 // Later, compare with stored snapshot
-(async () => {
+return (async () => {
   const content = `
     <div>
       <div>Question</div>
@@ -446,7 +446,7 @@ Compare outputs:
 Step-by-step debugging:
 
 ```javascript
-(async () => {
+return (async () => {
   const content = `
     <div>
       <div>Question</div>
@@ -481,7 +481,7 @@ Step-by-step debugging:
 Collect comprehensive metrics:
 
 ```javascript
-(async () => {
+return (async () => {
   const content = `
     <div>
       <div>Question</div>
@@ -524,7 +524,7 @@ Collect comprehensive metrics:
 ### Use Console Effectively
 
 ```javascript
-(async () => {
+return (async () => {
   console.group('Block Testing');
   console.log('Testing accordion block...');
 
@@ -546,7 +546,7 @@ Collect comprehensive metrics:
 ### Store Results for Later Analysis
 
 ```javascript
-(async () => {
+return (async () => {
   // Run test and store results
   const content = '<div><div>Q</div><div>A</div></div>';
   const block = await window.testBlockFn('accordion', content);
