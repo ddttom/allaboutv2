@@ -167,12 +167,23 @@ Live previews use full-screen overlays - no popup blockers!
 ### How It Works
 
 1. **Creates overlay**: Full-screen overlay with semi-transparent backdrop
-2. **Minimal DOM** (EDS-compatible): Block decorated properly with CSS/JS
-3. **Auto-decoration**: Dynamically imports and executes block JavaScript
+2. **Responsive preview buttons**: Switch between Mobile (375×667), Tablet (768×1024), and Desktop (95%×95vh) views
+3. **Minimal DOM** (EDS-compatible): Block decorated properly with CSS/JS
+4. **Auto-decoration**: Dynamically imports and executes block JavaScript
 
 ### Key Benefits
 
-✅ No popup blockers | ✅ Better UX (stays on page) | ✅ Clean DOM | ✅ EDS-compatible | ✅ Full styling
+✅ No popup blockers | ✅ Responsive testing | ✅ Better UX (stays on page) | ✅ Clean DOM | ✅ EDS-compatible | ✅ Full styling
+
+### Responsive Preview Controls
+
+Test blocks across different device sizes with one click:
+
+- **📱 Mobile** (375px × 667px) - iPhone SE/8 size
+- **📱 Tablet** (768px × 1024px) - iPad size
+- **🖥️ Desktop** (95% × 95vh) - Full desktop view (default)
+
+Switch between views interactively with smooth transitions to test block responsiveness!
 
 ## DOM Structure Requirements
 

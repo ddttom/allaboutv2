@@ -86,18 +86,25 @@ export async function showPreview(blockName, innerHTML = '') {
       .ipynb-preview-btn{background:#2d2d2d;border:1px solid #3e3e3e;color:#fff;padding:6px 12px;border-radius:4px;cursor:pointer;font-size:12px;transition:all .2s;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
       .ipynb-preview-btn:hover{background:#3e3e3e}
       .ipynb-preview-btn.active{background:#0066cc;border-color:#0066cc}
+      .ipynb-preview-btn .btn-text-full{display:inline}
+      .ipynb-preview-btn .btn-text-short{display:none}
       .ipynb-preview-divider{width:1px;height:20px;background:#3e3e3e;margin:0 4px}
       .ipynb-preview-content{overflow:auto;padding:20px;flex:1;min-height:0}
+      .ipynb-preview-container.mobile .ipynb-preview-btn .btn-text-full{display:none}
+      .ipynb-preview-container.mobile .ipynb-preview-btn .btn-text-short{display:inline}
+      .ipynb-preview-container.mobile .ipynb-preview-header{padding:8px 12px}
+      .ipynb-preview-container.mobile .ipynb-preview-btn{padding:4px 8px;font-size:11px}
+      .ipynb-preview-container.mobile .ipynb-preview-title{font-size:12px}
     </style>
     <div class="ipynb-preview-container desktop">
       <div class="ipynb-preview-header">
         <div class="ipynb-preview-title">${blockName} Block Preview</div>
         <div class="ipynb-preview-controls">
-          <button class="ipynb-preview-btn ipynb-view-btn" data-view="mobile">📱 Mobile</button>
-          <button class="ipynb-preview-btn ipynb-view-btn" data-view="tablet">📱 Tablet</button>
-          <button class="ipynb-preview-btn ipynb-view-btn active" data-view="desktop">🖥️ Desktop</button>
+          <button class="ipynb-preview-btn ipynb-view-btn" data-view="mobile"><span class="btn-text-full">📱 Mobile</span><span class="btn-text-short">📱 M</span></button>
+          <button class="ipynb-preview-btn ipynb-view-btn" data-view="tablet"><span class="btn-text-full">📱 Tablet</span><span class="btn-text-short">📱 T</span></button>
+          <button class="ipynb-preview-btn ipynb-view-btn active" data-view="desktop"><span class="btn-text-full">🖥️ Desktop</span><span class="btn-text-short">🖥️ D</span></button>
           <div class="ipynb-preview-divider"></div>
-          <button class="ipynb-preview-btn ipynb-close-btn">✕ Close</button>
+          <button class="ipynb-preview-btn ipynb-close-btn">✕</button>
         </div>
       </div>
       <div class="ipynb-preview-content">

@@ -123,6 +123,7 @@ return block.outerHTML;
 
 When using `showPreview()` in code cells:
 - **Overlay system**: Opens full-screen overlay on the same page (no popup blockers!)
+- **Responsive preview**: Switch between Mobile (375×667), Tablet (768×1024), and Desktop (95%×95vh) views
 - **Full styling**: All CSS loads properly with complete styling support
 - **Full interactivity**: Block JavaScript executes with event handlers working
 - **Easy dismissal**: Press ESC, click backdrop, or click close button
@@ -132,7 +133,15 @@ When using `showPreview()` in code cells:
 - Creates full-screen overlay with semi-transparent backdrop
 - Includes all CSS and JavaScript for proper block rendering
 - Decorates block using native browser APIs
-- Result: Fully functional styled blocks in overlay
+- Interactive viewport switching for testing across device sizes
+- Result: Fully functional styled blocks in overlay with responsive testing
+
+**Responsive Preview Buttons:**
+- 📱 **Mobile** (375px × 667px) - iPhone SE/8 size
+- 📱 **Tablet** (768px × 1024px) - iPad size
+- 🖥️ **Desktop** (95% × 95vh) - Full desktop view (default)
+
+Switch between views with one click to test block responsiveness!
 
 ## Example Notebook Structure
 

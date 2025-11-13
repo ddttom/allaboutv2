@@ -38,7 +38,7 @@ return block.outerHTML;
 ### Generate Visual Preview
 
 ```javascript
-// Create visual preview in overlay
+// Create visual preview in overlay with responsive controls
 const { showPreview } = await import('/scripts/ipynb-helpers.js');
 const content = `
   <div>
@@ -46,8 +46,15 @@ const content = `
   </div>
 `;
 await showPreview('accordion', content);
-return '✓ Preview overlay opened';
+return '✓ Preview overlay opened - try the Mobile/Tablet/Desktop buttons!';
 ```
+
+**Responsive Preview Features:**
+- Click 📱 Mobile button to test in 375×667 viewport (iPhone SE/8)
+- Click 📱 Tablet button to test in 768×1024 viewport (iPad)
+- Click 🖥️ Desktop button for full desktop view (95%×95vh)
+- Smooth transitions between viewport sizes
+- Press ESC, click backdrop, or click ✕ to close
 
 ## Content Structure Patterns
 
@@ -294,7 +301,7 @@ return `✓ Created ${block.querySelectorAll('details').length} items`;
 ```
 
 ```javascript
-// Generate preview
+// Generate preview and test responsive views
 const { showPreview } = await import('/scripts/ipynb-helpers.js');
 const content = `
   <div>
@@ -303,7 +310,42 @@ const content = `
   </div>
 `;
 await showPreview('accordion', content);
-return '✓ Preview generated';
+console.log('✓ Overlay opened');
+console.log('✓ Try clicking Mobile/Tablet/Desktop buttons');
+console.log('✓ Test block responsiveness across different viewport sizes');
+return '✓ Preview generated - test responsive views!';
+```
+
+### Responsive Testing Workflow
+
+```javascript
+// Test block across different viewport sizes
+const { showPreview } = await import('/scripts/ipynb-helpers.js');
+
+const content = `
+  <div>
+    <div>Mobile Optimization</div>
+    <div>Verify layout works on small screens (375px width)</div>
+  </div>
+  <div>
+    <div>Tablet Support</div>
+    <div>Check medium screen layout (768px width)</div>
+  </div>
+  <div>
+    <div>Desktop Experience</div>
+    <div>Test full desktop viewport</div>
+  </div>
+`;
+
+await showPreview('accordion', content);
+
+console.log('Testing workflow:');
+console.log('1. Click 📱 Mobile button - verify 375×667 layout');
+console.log('2. Click 📱 Tablet button - verify 768×1024 layout');
+console.log('3. Click 🖥️ Desktop button - verify full desktop layout');
+console.log('4. Test interactions at each viewport size');
+
+return '✓ Responsive testing workflow ready';
 ```
 
 ### Edge Case Testing
