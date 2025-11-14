@@ -139,7 +139,7 @@ Same as Example 1, but the path is provided as a clickable link in the authoring
 
 ---
 
-## Example 4: Paged Variation (NEW)
+## Example 4: Paged Variation with Full-Screen Overlay (NEW)
 
 ### Google Docs Table
 
@@ -149,28 +149,48 @@ Same as Example 1, but the path is provided as a clickable link in the authoring
 
 ### Result
 
-Displays notebook cells one at a time with navigation controls:
-- Only one cell visible at a time for focused reading
-- Previous/Next buttons for navigation
-- Page indicator showing current position (e.g., "3 / 10")
-- Keyboard navigation using Arrow Left/Right keys
-- Smooth fade transitions between pages
-- Perfect for tutorials, presentations, or step-by-step guides
+Displays a "Start Reading" button that opens a full-screen overlay showing notebook cells one at a time:
+
+**Initial State:**
+- Shows notebook title and "Start Reading" button
+- Cells are hidden until overlay opens
+
+**Overlay Experience:**
+- Full-screen immersive reading mode (90% viewport)
+- Dark backdrop (95% opacity black) for focus
+- Only one cell visible at a time
+- Close button (×) in top-right corner
+- Previous/Next navigation buttons at bottom
+- Page indicator showing position (e.g., "3 / 10")
+- Keyboard shortcuts:
+  - Arrow Left/Right: Navigate pages
+  - Escape: Close overlay
+- No page jumping - overlay stays fixed in viewport
+- Scrollable cell content area
+
+**Perfect for:**
+- Step-by-step tutorials
+- Interactive presentations
+- Guided learning experiences
+- Focus-required content
+- Mobile-friendly reading
 
 ### When to Use Paged Variation
 
-**Use paged mode when:**
-- Creating step-by-step tutorials
+**Use paged overlay mode when:**
+- Creating step-by-step tutorials that require focus
 - Building interactive presentations
 - Guiding users through sequential content
 - Each cell represents a distinct concept or step
-- You want focused, distraction-free reading
+- You want distraction-free, immersive reading
+- Content is consumed linearly (not reference material)
 
 **Use default mode when:**
 - Users need to see all content at once
 - Content is reference documentation
 - Users need to compare cells side-by-side
 - Quick scanning of content is important
+- Users may jump between different sections
 
 ---
 

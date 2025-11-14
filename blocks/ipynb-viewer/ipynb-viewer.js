@@ -330,11 +330,12 @@ async function loadNotebook(notebookPath) {
 }
 
 /**
- * Create pagination controls for paged variation
+ * Create full-screen overlay for paged variation
+ * @param {HTMLElement} container - The notebook container
  * @param {HTMLElement} cellsContainer - Container with cells
- * @returns {object} Pagination controls and state
+ * @returns {object} Overlay controls
  */
-function createPaginationControls(cellsContainer) {
+function createPagedOverlay(container, cellsContainer) {
   const cells = Array.from(cellsContainer.querySelectorAll('.ipynb-cell'));
   const totalPages = cells.length;
 
@@ -344,9 +345,24 @@ function createPaginationControls(cellsContainer) {
     currentPage: 0,
     totalPages,
     cells,
+    isOverlayOpen: false,
   };
 
-  // Create pagination UI
+  // Create overlay structure
+  const overlay = document.createElement('div');
+  overlay.className = 'ipynb-paged-overlay';
+  overlay.style.display = 'none';
+
+  const overlayContent = document.createElement('div');
+  overlayContent.className = 'ipynb-paged-overlay-content';
+
+  // Close button
+  const closeButton = document.createElement('button');
+  closeButton.className = 'ipynb-paged-close';
+  closeButton.innerHTML = '&times;';
+  closeButton.setAttribute('aria-label', 'Close paged view');
+
+  // Pagination controls
   const paginationDiv = document.createElement('div');
   paginationDiv.className = 'ipynb-pagination';
 
@@ -354,35 +370,56 @@ function createPaginationControls(cellsContainer) {
   prevButton.className = 'ipynb-pagination-button ipynb-prev-button';
   prevButton.textContent = 'Previous';
   prevButton.setAttribute('aria-label', 'Previous page');
-  prevButton.disabled = true; // Disabled on first page
 
   const pageIndicator = document.createElement('span');
   pageIndicator.className = 'ipynb-page-indicator';
-  pageIndicator.textContent = `1 / ${totalPages}`;
 
   const nextButton = document.createElement('button');
   nextButton.className = 'ipynb-pagination-button ipynb-next-button';
   nextButton.textContent = 'Next';
   nextButton.setAttribute('aria-label', 'Next page');
-  nextButton.disabled = totalPages <= 1; // Disabled if only one page
 
   paginationDiv.appendChild(prevButton);
   paginationDiv.appendChild(pageIndicator);
   paginationDiv.appendChild(nextButton);
 
+  // Cell content area
+  const cellContentArea = document.createElement('div');
+  cellContentArea.className = 'ipynb-paged-cell-area';
+
+  // Assemble overlay
+  overlayContent.appendChild(closeButton);
+  overlayContent.appendChild(cellContentArea);
+  overlayContent.appendChild(paginationDiv);
+  overlay.appendChild(overlayContent);
+
   // Update page display
   function updatePageDisplay() {
-    cells.forEach((cell, index) => {
-      if (index === paginationState.currentPage) {
-        cell.classList.add('active');
-      } else {
-        cell.classList.remove('active');
-      }
-    });
+    // Clear cell area
+    cellContentArea.innerHTML = '';
 
+    // Clone and append current cell
+    const currentCell = cells[paginationState.currentPage].cloneNode(true);
+    currentCell.classList.add('active');
+    cellContentArea.appendChild(currentCell);
+
+    // Re-attach run button handlers if it's a code cell
+    if (currentCell.classList.contains('ipynb-code-cell')) {
+      const runButton = currentCell.querySelector('.ipynb-run-button');
+      if (runButton) {
+        runButton.addEventListener('click', () => {
+          executeCodeCell(currentCell);
+        });
+      }
+    }
+
+    // Update controls
     pageIndicator.textContent = `${paginationState.currentPage + 1} / ${totalPages}`;
     prevButton.disabled = paginationState.currentPage === 0;
     nextButton.disabled = paginationState.currentPage === totalPages - 1;
+
+    // Scroll to top of overlay
+    overlayContent.scrollTop = 0;
   }
 
   // Navigation handlers
@@ -400,13 +437,31 @@ function createPaginationControls(cellsContainer) {
     }
   }
 
+  // Open overlay
+  function openOverlay() {
+    paginationState.isOverlayOpen = true;
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    updatePageDisplay();
+  }
+
+  // Close overlay
+  function closeOverlay() {
+    paginationState.isOverlayOpen = false;
+    overlay.style.display = 'none';
+    document.body.style.overflow = ''; // Restore scrolling
+  }
+
   // Button event listeners
   prevButton.addEventListener('click', goToPrevPage);
   nextButton.addEventListener('click', goToNextPage);
+  closeButton.addEventListener('click', closeOverlay);
 
   // Keyboard navigation
-  document.addEventListener('keydown', (e) => {
-    // Only handle if the pagination is visible and user isn't typing in an input
+  const keyHandler = (e) => {
+    if (!paginationState.isOverlayOpen) return;
+
+    // Only handle if user isn't typing in an input
     if (!document.activeElement ||
         (document.activeElement.tagName !== 'INPUT' &&
          document.activeElement.tagName !== 'TEXTAREA')) {
@@ -416,18 +471,34 @@ function createPaginationControls(cellsContainer) {
       } else if (e.key === 'ArrowRight') {
         e.preventDefault();
         goToNextPage();
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        closeOverlay();
       }
     }
-  });
+  };
 
-  // Initialize display
-  updatePageDisplay();
+  document.addEventListener('keydown', keyHandler);
+
+  // Append overlay to body
+  document.body.appendChild(overlay);
 
   return {
-    element: paginationDiv,
-    state: paginationState,
-    updatePageDisplay,
+    openOverlay,
+    closeOverlay,
   };
+}
+
+/**
+ * Create start button for paged variation
+ * @returns {HTMLElement} Start button element
+ */
+function createPagedStartButton() {
+  const startButton = document.createElement('button');
+  startButton.className = 'ipynb-paged-start-button';
+  startButton.textContent = 'Start Reading';
+  startButton.setAttribute('aria-label', 'Start paged reading mode');
+  return startButton;
 }
 
 /**
@@ -515,14 +586,27 @@ export default async function decorate(block) {
 
     // Assemble container
     container.appendChild(header);
-    container.appendChild(cellsContainer);
 
-    // Add pagination controls if paged variation
+    // Handle paged variation differently
     if (isPaged) {
-      const pagination = createPaginationControls(cellsContainer);
-      if (pagination) {
-        container.appendChild(pagination.element);
-      }
+      // Hide cells initially in paged mode
+      cellsContainer.style.display = 'none';
+      container.appendChild(cellsContainer);
+
+      // Create start button
+      const startButton = createPagedStartButton();
+      container.appendChild(startButton);
+
+      // Create overlay
+      const overlay = createPagedOverlay(container, cellsContainer);
+
+      // Start button opens overlay
+      startButton.addEventListener('click', () => {
+        overlay.openOverlay();
+      });
+    } else {
+      // Default mode: show all cells
+      container.appendChild(cellsContainer);
     }
 
     block.appendChild(container);

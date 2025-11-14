@@ -38,7 +38,7 @@ Add the block to your page with a link to your notebook file:
 
 ### Paged Variation
 
-Display notebook cells one at a time with Previous/Next navigation:
+Display notebook cells one at a time in a full-screen overlay with Previous/Next navigation:
 
 ```
 | IPynb Viewer (paged) |
@@ -47,14 +47,18 @@ Display notebook cells one at a time with Previous/Next navigation:
 ```
 
 **Features:**
-- Shows one cell at a time for focused reading
-- Previous/Next buttons for navigation
-- Page indicator (e.g., "1 / 10")
-- Keyboard navigation with Arrow Left/Right keys
-- Previous button disabled on first page
-- Next button disabled on last page
-- Smooth fade transitions between pages
-- Mobile-friendly responsive design
+- **Start Reading button** - Click to enter full-screen reading mode
+- **Full-viewport overlay** - Immersive, distraction-free reading experience
+- **One cell at a time** - Focus on current content without page jumping
+- **Previous/Next navigation** - Navigate between cells with buttons
+- **Page indicator** - Shows current position (e.g., "1 / 10")
+- **Close button (×)** - Exit overlay and return to page
+- **Keyboard shortcuts**:
+  - Arrow Left/Right - Navigate between pages
+  - Escape - Close overlay
+- **No page jumping** - Overlay stays fixed in viewport
+- **Responsive design** - Adapts to mobile, tablet, and desktop
+- **Dark backdrop** - Reduces distractions (95% opacity black)
 
 ## Notebook Structure Support
 
@@ -201,7 +205,7 @@ Switch between views with one click to test block responsiveness!
 
 ### Paged Variation Implementation
 
-The paged variation uses CSS-based visibility control and JavaScript navigation:
+The paged variation uses a full-screen overlay approach to eliminate page jumping:
 
 **How it works:**
 
@@ -210,34 +214,55 @@ The paged variation uses CSS-based visibility control and JavaScript navigation:
    const isPaged = block.classList.contains('paged');
    ```
 
-2. **Pagination Controls Creation**:
-   - Creates Previous, Next buttons, and page indicator
-   - Manages pagination state (current page, total pages)
-   - Updates button disabled states based on boundaries
+2. **Start Button**:
+   - Creates "Start Reading" button in the block
+   - Clicking opens the full-screen overlay
+   - Original cells hidden until overlay opens
 
-3. **Cell Visibility**:
-   ```css
-   .ipynb-viewer.paged .ipynb-cell { display: none; }
-   .ipynb-viewer.paged .ipynb-cell.active { display: block; }
+3. **Overlay Structure**:
+   ```html
+   <div class="ipynb-paged-overlay">
+     <div class="ipynb-paged-overlay-content">
+       <button class="ipynb-paged-close">×</button>
+       <div class="ipynb-paged-cell-area">
+         <!-- Current cell cloned here -->
+       </div>
+       <div class="ipynb-pagination">
+         <!-- Previous, Page Indicator, Next -->
+       </div>
+     </div>
+   </div>
    ```
 
-4. **Navigation**:
-   - Button clicks update current page and toggle `.active` class
-   - Keyboard events (Arrow Left/Right) also trigger navigation
-   - Page indicator updates to show "X / Y" format
+4. **Full-Screen CSS**:
+   ```css
+   .ipynb-paged-overlay {
+     position: fixed;
+     top: 0; left: 0;
+     width: 100vw; height: 100vh;
+     background: rgba(0, 0, 0, 0.95);
+     z-index: 10000;
+   }
+   ```
 
-5. **Accessibility**:
-   - ARIA labels on navigation buttons
-   - Proper focus management
-   - Keyboard navigation support
-   - Disabled state handling
+5. **Navigation**:
+   - Clones current cell into overlay content area
+   - Button clicks navigate and re-clone next/previous cell
+   - Scrolls to top on page change (no viewport jumping)
+   - Keyboard events (Arrow Left/Right, Escape)
+
+6. **Close Mechanisms**:
+   - Close button (×) in top-right corner
+   - Escape key
+   - Restores body scroll on close
 
 **Key Features:**
-- One cell visible at a time
-- Smooth fade transitions (0.3s opacity)
-- Responsive button sizing
-- Boundary checking (disable buttons at edges)
-- No page refresh required
+- One cell visible at a time in overlay
+- No page jumping (fixed viewport position)
+- Prevents background scrolling when open
+- Smooth fade-in animation (0.3s)
+- Responsive sizing (90vw × 90vh on desktop)
+- Full-screen on mobile (100vw × 100vh)
 
 ### Overlay Preview System
 
@@ -361,16 +386,23 @@ The block uses CSS custom properties for theming:
 
 ### Paged Variation Styles
 
-The paged variation adds pagination-specific CSS:
+The paged variation adds overlay-specific CSS:
 
 ```css
-.ipynb-pagination: Pagination controls container
+.ipynb-paged-start-button: Start Reading button
+.ipynb-paged-overlay: Full-screen overlay container
+.ipynb-paged-overlay-content: Content area (90vw × 90vh)
+.ipynb-paged-close: Close button (top-right)
+.ipynb-paged-cell-area: Scrollable cell content area
+.ipynb-pagination: Pagination controls (in overlay footer)
 .ipynb-pagination-button: Previous/Next button styles
 .ipynb-page-indicator: Page number display
-.ipynb-cell.active: Visible cell in paged mode
 ```
 
-Pagination controls are responsive with breakpoints at 768px and 480px.
+Overlay is fully responsive with breakpoints at 768px and 480px:
+- **Desktop**: 90vw × 90vh with border radius
+- **Tablet**: 95vw × 95vh
+- **Mobile**: 100vw × 100vh (full screen, no border radius)
 
 ## Accessibility
 
