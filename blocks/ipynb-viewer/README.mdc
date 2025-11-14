@@ -359,7 +359,7 @@ Code blocks (extracted first with placeholders). Tables (multi-line processing w
 
 **Code block protection** prevents markdown processing inside code blocks. 
 **Table parsing** supports markdown tables with `|` delimiters and header rows. 
-**List handling** properly closes and nests `<ul>` and `<ol>` tags. 
+**List handling** properly closes and nests ul and ol tags. 
 **HTML escaping** safely escapes `<` and `>` in code blocks. 
 **Language tagging** preserves language hints from code fences.
 
@@ -478,10 +478,16 @@ Create a `.ipynb` file in JSON format:
 ## Common Issues
 
 ### Notebook Won't Load
-Check file path is correct. Verify JSON structure is valid. Check browser console for fetch errors. Ensure CORS headers allow notebook file access.
+Check file path is correct. 
+Verify JSON structure is valid. 
+Check browser console for fetch errors. 
+Ensure CORS headers allow notebook file access.
 
 ### Code Won't Execute
-Verify code is JavaScript (not Python/other languages). Check for syntax errors in code cells. Look for console errors during execution. Ensure code doesn't rely on Node.js-specific APIs.
+Verify code is JavaScript (not Python/other languages). 
+Check for syntax errors in code cells. 
+Look for console errors during execution. 
+Ensure code doesn't rely on Node.js-specific APIs.
 
 ### Styling Issues
 Check CSS custom properties are defined. 
