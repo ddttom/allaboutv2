@@ -3,7 +3,6 @@
 Display and execute Jupyter notebook (.ipynb) files directly in your EDS site with interactive JavaScript execution capabilities.
 
 ## Features
-
 **Parse and Display Notebooks**: Renders both markdown and code cells from .ipynb files. 
 **Interactive Execution**: Run JavaScript code cells individually with a click (async/await support). 
 **Cell Independence**: Run any cell at any time in any order with no initialization required. 
@@ -19,7 +18,6 @@ Display and execute Jupyter notebook (.ipynb) files directly in your EDS site wi
 ## Usage
 
 ### Basic Usage
-
 Add the block to your page with a link to your notebook file:
 
 ```
@@ -29,7 +27,6 @@ Add the block to your page with a link to your notebook file:
 ```
 
 ### With a Clickable Link
-
 ```
 | IPynb Viewer |
 |--------------|
@@ -37,7 +34,6 @@ Add the block to your page with a link to your notebook file:
 ```
 
 ### Paged Variation
-
 Display notebook cells one at a time in a full-screen overlay with Previous/Next navigation:
 
 ```
@@ -85,16 +81,15 @@ Combine paged mode with a manual button to provide access to documentation:
 Perfect for interactive tutorials where users need to reference documentation while exploring the notebook.
 
 ## Notebook Structure Support
-
 The block supports standard Jupyter notebook JSON format with **enhanced markdown rendering** and **metadata display**.
 
 ### Metadata Fields
-
 The notebook metadata is displayed in the header section:
 
 **Supported Fields:**
-
-`title` is the main notebook title (required, defaults to "Jupyter Notebook"). `author` is the author name (optional). `date` is the publication or creation date (optional).
+`title` is the main notebook title (optional, defaults to "Jupyter Notebook"). 
+`author` is the author name (optional). 
+`date` is the publication or creation date (optional).
 
 **Example metadata in .ipynb file:**
 ```json
@@ -117,7 +112,6 @@ The notebook metadata is displayed in the header section:
 Title appears as large heading (1.8rem, bold, centered). Author appears below title (1rem, italic, gray #666). Date appears below author (0.9rem, light gray #999).
 
 ### Markdown Cells (Enhanced)
-
 **Code Blocks (NEW):**
 
 Triple backtick code blocks with optional language specification. Proper syntax highlighting and formatting. Example: \`\`\`javascript\n...\n\`\`\`
@@ -135,13 +129,11 @@ Unordered lists with `-` or `*`. Ordered lists with `1.`, `2.`, etc. Proper inde
 Headers (H1, H2, H3) with `#`, `##`, `###`. **Bold** text with `**text**`. *Italic* text with `*text*`. `Inline code` with backticks. [Links](url) with `[text](url)`. Line breaks.
 
 ### Code Cells
-
 JavaScript code execution. Console output capture. Result display. Error handling.
 
 ## Interactive Features
 
 ### Run Button
-
 Each code cell has a "Run" button that executes the JavaScript code (with async/await support), captures console.log() and console.error() output, displays the return value, and shows visual indicators for success/error states.
 
 **Cell Independence:**
@@ -149,7 +141,6 @@ Each code cell has a "Run" button that executes the JavaScript code (with async/
 Run any cell at any time in any order. No initialization required. Each cell imports what it needs independently.
 
 ### Helper Functions
-
 Import helper functions directly in any cell using ES6 imports:
 
 ```javascript
@@ -183,7 +174,6 @@ return block.outerHTML;
 ```
 
 ### Live Preview with Overlay
-
 When using `showPreview()` in code cells, the **Overlay system** opens full-screen overlay on the same page (no popup blockers!). **Responsive preview** switches between Mobile (375×667), Tablet (768×1024), and Desktop (95%×95vh) views. **Full styling** loads all CSS properly with complete styling support. **Full interactivity** executes block JavaScript with event handlers working. **Easy dismissal** via ESC, backdrop click, or close button. **No popup blockers** since it stays on the same page with no new windows.
 
 **How it works:**
@@ -225,11 +215,9 @@ Switch between views with one click to test block responsiveness!
 ## Technical Details
 
 ### Code Execution
-
 Code runs in the browser using `AsyncFunction` constructor for async/await support. Console methods are temporarily captured during execution. Results are displayed in an output area below each cell. Errors are caught and displayed with red styling. Each cell runs independently with its own scope.
 
 ### Paged Variation Implementation
-
 The paged variation uses a full-screen overlay approach to eliminate page jumping:
 
 **How it works:**
@@ -304,7 +292,6 @@ Code 1, Code 2, Code 3, Code 4
 ```
 
 ### Overlay Preview System
-
 **How it works:**
 
 **Creates overlay element**:
@@ -344,7 +331,6 @@ Code 1, Code 2, Code 3, Code 4
    ```
 
 **Why overlay is better than popup windows:**
-
 No popup blockers. Stays on the same page. Better UX (ESC or backdrop click to close). Direct CSS access (no blob URL issues). Simpler implementation.
 
 **Why minimal DOM structure is critical:**
@@ -382,15 +368,12 @@ Code blocks (extracted first with placeholders). Tables (multi-line processing w
 Code execution happens in the user's browser context. Be cautious with untrusted notebook files. Code has access to the global scope and DOM. Consider implementing additional sandboxing for public sites.
 
 ### Supported Code
-
 Standard JavaScript (ES6+). Console methods (log, error). DOM manipulation. Async code (with await). Return values.
 
 ### Limitations
-
 Only JavaScript code cells are executable. Python or other language cells are displayed but not executed. No persistent state between page reloads.
 
 ## Styling
-
 The block uses CSS custom properties for theming:
 
 ```css
@@ -407,7 +390,6 @@ The block uses CSS custom properties for theming:
 ```
 
 ### Header Styles
-
 The header section includes CSS classes for metadata display:
 
 ```css
@@ -418,7 +400,6 @@ The header section includes CSS classes for metadata display:
 ```
 
 ### Paged Variation Styles
-
 The paged variation adds overlay-specific CSS:
 
 ```css
@@ -435,19 +416,15 @@ The paged variation adds overlay-specific CSS:
 Overlay is fully responsive with breakpoints at 768px and 480px. **Desktop** uses 90vw × 90vh with border radius. **Tablet** uses 95vw × 95vh. **Mobile** uses 100vw × 100vh (full screen, no border radius).
 
 ## Accessibility
-
 Semantic HTML structure. ARIA labels on interactive buttons. Keyboard navigation support. Focus indicators on buttons. Screen reader friendly.
 
 ## Mobile Support
-
 Responsive layout for all screen sizes. Touch-friendly buttons. Horizontal scrolling for long code. Stacked layout on small screens.
 
 ## Browser Compatibility
-
 Modern browsers with ES6+ support. Fetch API required. CSS custom properties support. No IE11 support.
 
 ## File Structure
-
 ```
 blocks/ipynb-viewer/
 ├── ipynb-viewer.js       # Main block logic
@@ -460,7 +437,6 @@ blocks/ipynb-viewer/
 ## Development
 
 ### Testing Locally
-
 1. Start the development server:
    ```bash
    npm run debug
@@ -472,7 +448,6 @@ blocks/ipynb-viewer/
    ```
 
 ### Creating Test Notebooks
-
 Create a `.ipynb` file in JSON format:
 
 ```json
@@ -494,7 +469,6 @@ Create a `.ipynb` file in JSON format:
 ```
 
 ## Tips
-
 **Test your notebooks** by verifying notebook JSON structure is valid. 
 **Keep code simple** since complex dependencies may not work in browser context. 
 **Use console.log** to help debug execution issues. 
@@ -504,15 +478,12 @@ Create a `.ipynb` file in JSON format:
 ## Common Issues
 
 ### Notebook Won't Load
-
 Check file path is correct. Verify JSON structure is valid. Check browser console for fetch errors. Ensure CORS headers allow notebook file access.
 
 ### Code Won't Execute
-
 Verify code is JavaScript (not Python/other languages). Check for syntax errors in code cells. Look for console errors during execution. Ensure code doesn't rely on Node.js-specific APIs.
 
 ### Styling Issues
-
 Check CSS custom properties are defined. 
 Verify block CSS is loaded. 
 Test with different viewport sizes. 
