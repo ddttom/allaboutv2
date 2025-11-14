@@ -513,6 +513,9 @@ Verify code is JavaScript (not Python/other languages). Check for syntax errors 
 
 ### Styling Issues
 
-Check CSS custom properties are defined. Verify block CSS is loaded. Test with different viewport sizes. Check for CSS conflicts with site styles.
+Check CSS custom properties are defined. 
+Verify block CSS is loaded. 
+Test with different viewport sizes. 
+Check for CSS conflicts with site styles.
 
  
