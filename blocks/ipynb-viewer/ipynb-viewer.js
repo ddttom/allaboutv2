@@ -663,7 +663,7 @@ function createManualOverlay() {
       const markdownText = await response.text();
 
       // Render markdown
-      contentArea.innerHTML = renderMarkdown(markdownText);
+      contentArea.innerHTML = parseMarkdown(markdownText);
 
       // Show overlay
       overlay.style.display = 'flex';
