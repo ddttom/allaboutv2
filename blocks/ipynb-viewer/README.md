@@ -63,7 +63,37 @@ Display notebook cells one at a time in a full-screen overlay with Previous/Next
 
 ## Notebook Structure Support
 
-The block supports standard Jupyter notebook JSON format with **enhanced markdown rendering**:
+The block supports standard Jupyter notebook JSON format with **enhanced markdown rendering** and **metadata display**.
+
+### Metadata Fields
+
+The notebook metadata is displayed in the header section:
+
+**Supported Fields:**
+- `title` - Main notebook title (required, defaults to "Jupyter Notebook")
+- `author` - Author name (optional)
+- `date` - Publication or creation date (optional)
+
+**Example metadata in .ipynb file:**
+```json
+{
+  "metadata": {
+    "title": "My Interactive Tutorial",
+    "author": "Tom Cranstoun",
+    "date": "November 14, 2025",
+    "kernelspec": {
+      "display_name": "JavaScript",
+      "language": "javascript",
+      "name": "jslab"
+    }
+  }
+}
+```
+
+**Display:**
+- Title appears as large heading (1.8rem, bold, centered)
+- Author appears below title (1rem, italic, gray #666)
+- Date appears below author (0.9rem, light gray #999)
 
 ### Markdown Cells (Enhanced)
 
@@ -423,6 +453,17 @@ The block uses CSS custom properties for theming:
 --light-color: Border colors
 --disabled-color: Disabled button background
 --focus-color: Focus outline color
+```
+
+### Header Styles
+
+The header section includes CSS classes for metadata display:
+
+```css
+.ipynb-viewer-header: Header container (centered, padded, bordered)
+.ipynb-viewer-title: Notebook title (1.8rem, bold, #333)
+.ipynb-viewer-author: Author name (1rem, italic, #666)
+.ipynb-viewer-date: Publication date (0.9rem, #999)
 ```
 
 ### Paged Variation Styles

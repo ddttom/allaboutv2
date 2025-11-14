@@ -28,6 +28,50 @@ Same as Example 1, but the path is provided as a clickable link in the authoring
 
 ---
 
+## Example 2b: Notebook with Metadata (NEW)
+
+### Google Docs Table
+
+| IPynb Viewer |
+|--------------|
+| /notebooks/blog.ipynb |
+
+### Notebook Metadata Structure
+
+Add metadata to your .ipynb file to display title, author, and date:
+
+```json
+{
+  "metadata": {
+    "title": "My Interactive Blog Post",
+    "author": "Tom Cranstoun",
+    "date": "November 14, 2025",
+    "kernelspec": {
+      "display_name": "JavaScript",
+      "language": "javascript",
+      "name": "jslab"
+    }
+  }
+}
+```
+
+### Result
+
+Displays the notebook with a formatted header:
+- **Title**: "My Interactive Blog Post" (large, bold, centered)
+- **Author**: "By Tom Cranstoun" (italic, gray)
+- **Date**: "November 14, 2025" (smaller, light gray)
+
+All three fields are centered in the header section above the notebook cells.
+
+**Notes:**
+- `title` field defaults to "Jupyter Notebook" if not provided
+- `author` and `date` are optional and only shown if present
+- Metadata is defined in the .ipynb file, not in the Google Doc
+- The Google Doc only contains the path to the notebook
+
+---
+
 ## Example 3: Sample Notebook Content
 
 ### Create this file: `/notebooks/example.ipynb`
@@ -130,7 +174,9 @@ Same as Example 1, but the path is provided as a clickable link in the authoring
       "name": "javascript",
       "version": "14.0.0"
     },
-    "title": "JavaScript Testing Example"
+    "title": "JavaScript Testing Example",
+    "author": "Tom Cranstoun",
+    "date": "November 14, 2025"
   },
   "nbformat": 4,
   "nbformat_minor": 4
@@ -320,7 +366,9 @@ When instructional markdown is followed by **multiple consecutive code cells**, 
     }
   ],
   "metadata": {
-    "title": "EDS Block Testing"
+    "title": "EDS Block Testing",
+    "author": "Tom Cranstoun",
+    "date": "November 14, 2025"
   }
 }
 ```
@@ -399,7 +447,9 @@ When instructional markdown is followed by **multiple consecutive code cells**, 
     }
   ],
   "metadata": {
-    "title": "Mathematical Calculations"
+    "title": "Mathematical Calculations",
+    "author": "Tom Cranstoun",
+    "date": "November 14, 2025"
   }
 }
 ```
@@ -457,7 +507,9 @@ When instructional markdown is followed by **multiple consecutive code cells**, 
     }
   ],
   "metadata": {
-    "title": "String Manipulation"
+    "title": "String Manipulation",
+    "author": "Tom Cranstoun",
+    "date": "November 14, 2025"
   }
 }
 ```
