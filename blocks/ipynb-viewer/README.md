@@ -253,6 +253,8 @@ The paged variation uses a full-screen overlay approach to eliminate page jumpin
      - Markdown ending with colon (`:`)
      - Contains "below", "following", "try running", "click run"
      - Contains "let's test", "let's try", "example:", "here's how"
+   - **Multi-code-cell grouping**: When instructional markdown is followed by multiple consecutive code cells, up to 3 code cells are grouped together on one page
+   - Spacing: 1.5rem after markdown, 1rem between code cells
    - Page indicator shows logical pages, not raw cell count
 
 6. **Navigation**:
@@ -269,12 +271,39 @@ The paged variation uses a full-screen overlay approach to eliminate page jumpin
 **Key Features:**
 - Smart cell grouping for better context
 - Instruction + code shown together
+- Multiple consecutive code cells (up to 3) grouped with their instruction
 - Logical page navigation
 - No page jumping (fixed viewport position)
 - Prevents background scrolling when open
 - Smooth fade-in animation (0.3s)
 - Responsive sizing (90vw × 90vh on desktop)
 - Full-screen on mobile (100vw × 100vh)
+
+**Grouping Examples:**
+
+*Example 1: Single code cell*
+```
+Markdown: "Let's test an accordion:"
+Code: testBlock('accordion', content)
+→ One page with markdown + 1 code cell
+```
+
+*Example 2: Multiple code cells*
+```
+Markdown: "Try running these cells in any order:"
+Code A: Test accordion
+Code B: Calculate sum
+Code C: Show preview
+→ One page with markdown + 3 code cells (all grouped together)
+```
+
+*Example 3: More than 3 code cells*
+```
+Markdown: "Run these examples:"
+Code 1, Code 2, Code 3, Code 4
+→ One page with markdown + Code 1, 2, 3
+→ Separate page with Code 4
+```
 
 ### Overlay Preview System
 

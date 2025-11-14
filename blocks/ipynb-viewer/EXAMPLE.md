@@ -188,7 +188,7 @@ The paged variation automatically detects when markdown cells reference code cel
   - "let's test", "let's try"
   - "example:", "here's how"
 
-**Example:**
+**Single Code Cell Example:**
 ```markdown
 ## Testing a Block
 
@@ -202,6 +202,41 @@ return block.outerHTML;
 ```
 
 These two cells will be **automatically grouped** and shown together on one page, so the instruction stays with the code!
+
+**Multiple Code Cells Example (NEW):**
+```markdown
+## Try These Examples
+
+Run these cells in any order:
+```
+
+```javascript
+// Cell A: Test accordion
+const { testBlock } = await import('/scripts/ipynb-helpers.js');
+const block = await testBlock('accordion', content);
+return block.outerHTML;
+```
+
+```javascript
+// Cell B: Calculate sum
+const numbers = [1, 2, 3, 4, 5];
+const sum = numbers.reduce((a, b) => a + b, 0);
+return sum;
+```
+
+```javascript
+// Cell C: Show preview
+const { showPreview } = await import('/scripts/ipynb-helpers.js');
+await showPreview('accordion', content);
+return 'Preview opened!';
+```
+
+When instructional markdown is followed by **multiple consecutive code cells**, up to **3 code cells** are grouped together on one page! This keeps related examples together while maintaining good readability.
+
+**Spacing:**
+- 1.5rem after the markdown instruction
+- 1rem between each code cell
+- Clean visual separation for clarity
 
 ### When to Use Paged Variation
 

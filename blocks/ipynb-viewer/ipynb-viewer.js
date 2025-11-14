@@ -367,6 +367,7 @@ function shouldGroupWithNext(cell, nextCell) {
  */
 function createPageGroups(cells) {
   const pages = [];
+  const MAX_CODE_GROUP_SIZE = 3; // Maximum number of consecutive code cells to group
   let i = 0;
 
   while (i < cells.length) {
@@ -375,11 +376,24 @@ function createPageGroups(cells) {
 
     if (shouldGroupWithNext(cell, nextCell)) {
       // Group markdown + code together
+      const groupedCells = [cell, nextCell];
+      let j = i + 2;
+
+      // Check for additional consecutive code cells (up to MAX_CODE_GROUP_SIZE total)
+      while (
+        j < cells.length &&
+        cells[j].classList.contains('ipynb-code-cell') &&
+        groupedCells.filter(c => c.classList.contains('ipynb-code-cell')).length < MAX_CODE_GROUP_SIZE
+      ) {
+        groupedCells.push(cells[j]);
+        j++;
+      }
+
       pages.push({
         type: 'grouped',
-        cells: [cell, nextCell],
+        cells: groupedCells,
       });
-      i += 2; // Skip both cells
+      i = j; // Skip all grouped cells
     } else {
       // Single cell page
       pages.push({
@@ -487,9 +501,18 @@ function createPagedOverlay(container, cellsContainer) {
 
     // Add spacing between grouped cells for better readability
     if (currentPage.type === 'grouped' && currentPage.cells.length > 1) {
-      const cells = cellContentArea.querySelectorAll('.ipynb-cell');
-      if (cells.length > 1) {
-        cells[0].style.marginBottom = '1.5rem';
+      const allCells = cellContentArea.querySelectorAll('.ipynb-cell');
+
+      // Add spacing after markdown cell (first cell if markdown)
+      if (allCells.length > 0 && allCells[0].classList.contains('ipynb-markdown-cell')) {
+        allCells[0].style.marginBottom = '1.5rem';
+      }
+
+      // Add spacing between consecutive code cells
+      for (let i = 1; i < allCells.length - 1; i++) {
+        if (allCells[i].classList.contains('ipynb-code-cell')) {
+          allCells[i].style.marginBottom = '1rem';
+        }
       }
     }
 
@@ -634,6 +657,22 @@ export default async function decorate(block) {
     title.textContent = notebook.metadata?.title || 'Jupyter Notebook';
 
     header.appendChild(title);
+
+    // Add author if available
+    if (notebook.metadata?.author) {
+      const author = document.createElement('div');
+      author.className = 'ipynb-viewer-author';
+      author.textContent = `By ${notebook.metadata.author}`;
+      header.appendChild(author);
+    }
+
+    // Add date if available
+    if (notebook.metadata?.date) {
+      const date = document.createElement('div');
+      date.className = 'ipynb-viewer-date';
+      date.textContent = notebook.metadata.date;
+      header.appendChild(date);
+    }
 
     // Create cells container
     const cellsContainer = document.createElement('div');

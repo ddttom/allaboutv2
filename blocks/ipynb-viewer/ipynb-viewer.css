@@ -21,19 +21,33 @@ html {
 
 /* Header */
 .ipynb-viewer-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
+  padding: 1.5rem;
   border-bottom: 2px solid var(--dark-color, #333);
   margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .ipynb-viewer-title {
-  margin: 0;
-  font-size: 1.5rem;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.8rem;
   color: var(--text-color, #333);
   font-family: var(--heading-font-family, inherit);
+  font-weight: 700;
+}
+
+.ipynb-viewer-author {
+  margin: 0.5rem 0 0.25rem 0;
+  font-size: 1rem;
+  color: var(--text-color, #666);
+  font-family: var(--body-font-family, inherit);
+  font-style: italic;
+}
+
+.ipynb-viewer-date {
+  margin: 0.25rem 0 0 0;
+  font-size: 0.9rem;
+  color: var(--text-color, #999);
+  font-family: var(--body-font-family, inherit);
 }
 
 /* Cells Container */
