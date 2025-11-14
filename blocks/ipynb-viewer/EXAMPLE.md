@@ -185,7 +185,43 @@ All three fields are centered in the header section above the notebook cells.
 
 ---
 
-## Example 4: Paged Variation with Full-Screen Overlay (NEW)
+## Example 4: Paged + Manual Variation (NEW)
+
+### Google Docs Table
+
+| IPynb Viewer (paged, manual) |
+|-------------------------------|
+| /notebooks/blog.ipynb |
+
+### Result
+
+Displays **two buttons** side by side:
+
+**Buttons:**
+1. **Start Reading** - Opens the notebook in full-screen paged mode
+2. **Read the Manual** - Opens README.mdc documentation in a scrollable overlay
+
+**Manual Overlay Features:**
+- Full-screen overlay (90% viewport) with dark backdrop
+- Fetches and displays `/blocks/ipynb-viewer/README.mdc`
+- Beautiful markdown rendering:
+  - Headings with proper hierarchy
+  - Lists (ordered and unordered)
+  - Tables with alternating row colors
+  - Code blocks with syntax highlighting
+  - Inline code with background
+  - Links (clickable)
+- Scrollable content for long documentation
+- Close button (×) in top-right corner
+- Escape key to close
+- Independent from notebook overlay
+
+**Use Case:**
+Perfect for interactive tutorials or demos where users might need to reference the documentation while exploring the notebook.
+
+---
+
+## Example 5: Paged Variation with Full-Screen Overlay
 
 ### Google Docs Table
 

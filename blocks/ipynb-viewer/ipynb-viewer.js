@@ -605,6 +605,112 @@ function createPagedStartButton() {
 }
 
 /**
+ * Create manual button for manual variation
+ * @returns {HTMLElement} Manual button element
+ */
+function createManualButton() {
+  const manualButton = document.createElement('button');
+  manualButton.className = 'ipynb-manual-button';
+  manualButton.textContent = 'Read the Manual';
+  manualButton.setAttribute('aria-label', 'Read the manual');
+  return manualButton;
+}
+
+/**
+ * Create manual overlay for displaying README.mdc content
+ * @returns {Object} Object with openOverlay and closeOverlay functions
+ */
+function createManualOverlay() {
+  // Create overlay container
+  const overlay = document.createElement('div');
+  overlay.className = 'ipynb-manual-overlay';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-label', 'Manual viewer');
+
+  // Create overlay content
+  const overlayContent = document.createElement('div');
+  overlayContent.className = 'ipynb-manual-overlay-content';
+
+  // Create header with close button
+  const overlayHeader = document.createElement('div');
+  overlayHeader.className = 'ipynb-manual-overlay-header';
+
+  const closeButton = document.createElement('button');
+  closeButton.className = 'ipynb-paged-close';
+  closeButton.innerHTML = '&times;';
+  closeButton.setAttribute('aria-label', 'Close manual');
+
+  overlayHeader.appendChild(closeButton);
+  overlayContent.appendChild(overlayHeader);
+
+  // Create content area for manual
+  const contentArea = document.createElement('div');
+  contentArea.className = 'ipynb-manual-content-area';
+  overlayContent.appendChild(contentArea);
+
+  overlay.appendChild(overlayContent);
+
+  // Open/close functions
+  const openOverlay = async () => {
+    // Fetch and display README.mdc
+    try {
+      contentArea.innerHTML = '<div class="ipynb-loading">Loading manual...</div>';
+      const response = await fetch('/blocks/ipynb-viewer/README.mdc');
+      if (!response.ok) {
+        throw new Error(`Failed to load manual: ${response.status}`);
+      }
+      const markdownText = await response.text();
+
+      // Render markdown
+      contentArea.innerHTML = renderMarkdown(markdownText);
+
+      // Show overlay
+      overlay.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      closeButton.focus();
+    } catch (error) {
+      console.error('Failed to load manual:', error);
+      contentArea.innerHTML = `<div class="ipynb-error">Failed to load manual: ${error.message}</div>`;
+      overlay.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+  };
+
+  const closeOverlay = () => {
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
+  };
+
+  // Close button handler
+  closeButton.addEventListener('click', closeOverlay);
+
+  // Close on overlay click (but not content click)
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      closeOverlay();
+    }
+  });
+
+  // Escape key handler
+  const keyHandler = (e) => {
+    if (e.key === 'Escape' && overlay.style.display === 'flex') {
+      closeOverlay();
+    }
+  };
+
+  document.addEventListener('keydown', keyHandler);
+
+  // Append overlay to body
+  document.body.appendChild(overlay);
+
+  return {
+    openOverlay,
+    closeOverlay,
+  };
+}
+
+/**
  * Decorate the ipynb-viewer block
  * @param {HTMLElement} block - Block element
  */
@@ -615,8 +721,9 @@ export default async function decorate(block) {
     loadingMessage: 'Loading notebook...',
   };
 
-  // Detect paged variation
+  // Detect variations
   const isPaged = block.classList.contains('paged');
+  const hasManual = block.classList.contains('manual');
 
   try {
     // Extract notebook path from block content
@@ -712,9 +819,13 @@ export default async function decorate(block) {
       cellsContainer.style.display = 'none';
       container.appendChild(cellsContainer);
 
+      // Create button container for start button (and optional manual button)
+      const buttonContainer = document.createElement('div');
+      buttonContainer.className = 'ipynb-button-container';
+
       // Create start button
       const startButton = createPagedStartButton();
-      container.appendChild(startButton);
+      buttonContainer.appendChild(startButton);
 
       // Create overlay
       const overlay = createPagedOverlay(container, cellsContainer);
@@ -723,6 +834,22 @@ export default async function decorate(block) {
       startButton.addEventListener('click', () => {
         overlay.openOverlay();
       });
+
+      // Add manual button if manual variation is present
+      if (hasManual) {
+        const manualButton = createManualButton();
+        buttonContainer.appendChild(manualButton);
+
+        // Create manual overlay
+        const manualOverlay = createManualOverlay();
+
+        // Manual button opens manual overlay
+        manualButton.addEventListener('click', () => {
+          manualOverlay.openOverlay();
+        });
+      }
+
+      container.appendChild(buttonContainer);
     } else {
       // Default mode: show all cells
       container.appendChild(cellsContainer);

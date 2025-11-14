@@ -61,6 +61,29 @@ Display notebook cells one at a time in a full-screen overlay with Previous/Next
 - **Responsive design** - Adapts to mobile, tablet, and desktop
 - **Dark backdrop** - Reduces distractions (95% opacity black)
 
+### Variation: Paged + Manual (NEW)
+
+Combine paged mode with a manual button to provide access to documentation:
+
+```
+| IPynb Viewer (paged, manual) |
+|-------------------------------|
+| /path/to/notebook.ipynb |
+```
+
+**Features:**
+- **Start Reading button** - Opens the notebook in full-screen paged mode
+- **Read the Manual button** - Opens the block's README.mdc documentation in a scrollable overlay
+- **Both buttons side by side** - Easy access to both notebook and documentation
+- **Separate overlays** - Manual and notebook have independent full-screen displays
+- **Markdown rendering** - README.mdc is beautifully formatted with headings, lists, tables, code blocks
+- **Scrollable content** - Long documentation scrolls smoothly within the overlay
+- **Same close button (×)** - Consistent UI across both overlays
+- **Escape key** - Works for both overlays
+
+**Use Case:**
+Perfect for interactive tutorials where users need to reference documentation while exploring the notebook.
+
 ## Notebook Structure Support
 
 The block supports standard Jupyter notebook JSON format with **enhanced markdown rendering** and **metadata display**.
