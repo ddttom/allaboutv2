@@ -11,6 +11,7 @@ Display and execute Jupyter notebook (.ipynb) files directly in your EDS site wi
 - **Direct ES6 Imports**: Each cell imports what it needs independently
 - **Output Display**: Shows console logs, results, and errors inline
 - **Overlay Previews**: Full-screen overlays for visual testing (no popup blockers)
+- **Paged Variation**: Display cells one at a time with navigation controls (NEW)
 - **Responsive Design**: Mobile-friendly layout
 - **Syntax Highlighting**: Clear code formatting with monospace fonts
 - **Error Handling**: Graceful error messages and visual indicators
@@ -34,6 +35,26 @@ Add the block to your page with a link to your notebook file:
 |--------------|
 | [View Notebook](/path/to/notebook.ipynb) |
 ```
+
+### Paged Variation
+
+Display notebook cells one at a time with Previous/Next navigation:
+
+```
+| IPynb Viewer (paged) |
+|----------------------|
+| /path/to/notebook.ipynb |
+```
+
+**Features:**
+- Shows one cell at a time for focused reading
+- Previous/Next buttons for navigation
+- Page indicator (e.g., "1 / 10")
+- Keyboard navigation with Arrow Left/Right keys
+- Previous button disabled on first page
+- Next button disabled on last page
+- Smooth fade transitions between pages
+- Mobile-friendly responsive design
 
 ## Notebook Structure Support
 
@@ -178,6 +199,46 @@ Switch between views with one click to test block responsiveness!
 - Errors are caught and displayed with red styling
 - Each cell runs independently with its own scope
 
+### Paged Variation Implementation
+
+The paged variation uses CSS-based visibility control and JavaScript navigation:
+
+**How it works:**
+
+1. **Variation Detection**:
+   ```javascript
+   const isPaged = block.classList.contains('paged');
+   ```
+
+2. **Pagination Controls Creation**:
+   - Creates Previous, Next buttons, and page indicator
+   - Manages pagination state (current page, total pages)
+   - Updates button disabled states based on boundaries
+
+3. **Cell Visibility**:
+   ```css
+   .ipynb-viewer.paged .ipynb-cell { display: none; }
+   .ipynb-viewer.paged .ipynb-cell.active { display: block; }
+   ```
+
+4. **Navigation**:
+   - Button clicks update current page and toggle `.active` class
+   - Keyboard events (Arrow Left/Right) also trigger navigation
+   - Page indicator updates to show "X / Y" format
+
+5. **Accessibility**:
+   - ARIA labels on navigation buttons
+   - Proper focus management
+   - Keyboard navigation support
+   - Disabled state handling
+
+**Key Features:**
+- One cell visible at a time
+- Smooth fade transitions (0.3s opacity)
+- Responsive button sizing
+- Boundary checking (disable buttons at edges)
+- No page refresh required
+
 ### Overlay Preview System
 
 **How it works:**
@@ -288,12 +349,28 @@ The block uses CSS custom properties for theming:
 ```css
 --background-color: Background color
 --text-color: Text color
---primary-color: Primary accent (buttons, links)
+--primary-color: Primary accent (buttons, links, pagination)
+--primary-hover-color: Hover state for primary buttons
 --success-color: Success indicators
 --error-color: Error indicators
 --code-background: Code cell background
 --light-color: Border colors
+--disabled-color: Disabled button background
+--focus-color: Focus outline color
 ```
+
+### Paged Variation Styles
+
+The paged variation adds pagination-specific CSS:
+
+```css
+.ipynb-pagination: Pagination controls container
+.ipynb-pagination-button: Previous/Next button styles
+.ipynb-page-indicator: Page number display
+.ipynb-cell.active: Visible cell in paged mode
+```
+
+Pagination controls are responsive with breakpoints at 768px and 480px.
 
 ## Accessibility
 
@@ -407,6 +484,9 @@ Potential improvements for future versions:
 - Persistent cell outputs
 - Export results to file
 - Support for cell metadata (collapsed, hidden)
-- Better markdown parsing (tables, lists)
 - Image output support
 - Rich output display (HTML, SVG)
+- Paged variation enhancements:
+  - Group cells by headers (e.g., one H2 section per page)
+  - Page jump navigation
+  - URL hash support for deep linking to specific pages

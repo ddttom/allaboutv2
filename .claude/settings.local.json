@@ -46,7 +46,11 @@
       "Skill(skill-developer)",
       "Bash(mkdir:*)",
       "Skill(jupyter-notebook-testing)",
-      "Skill(eds-block-testing)"
+      "Skill(eds-block-testing)",
+      "Skill(eds-block-development)",
+      "Bash(npm run debug:*)",
+      "Skill(webapp-testing)",
+      "Bash(playwright install:*)"
     ],
     "deny": [],
     "ask": []

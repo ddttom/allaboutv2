@@ -359,3 +359,104 @@ html {
     break-inside: avoid;
   }
 }
+
+/* Paged Variation Styles */
+.ipynb-viewer.paged .ipynb-cell {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.ipynb-viewer.paged .ipynb-cell.active {
+  display: block;
+  opacity: 1;
+}
+
+/* Pagination Controls */
+.ipynb-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 1rem;
+  margin-top: 1.5rem;
+  border-top: 2px solid var(--light-color, #e0e0e0);
+}
+
+.ipynb-pagination-button {
+  padding: 0.5rem 1.25rem;
+  background: var(--primary-color, #007bff);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  min-width: 100px;
+}
+
+.ipynb-pagination-button:hover:not(:disabled) {
+  background: var(--primary-hover-color, #0056b3);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.ipynb-pagination-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.ipynb-pagination-button:disabled {
+  background: var(--disabled-color, #ccc);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.ipynb-pagination-button:focus {
+  outline: 2px solid var(--focus-color, #007bff);
+  outline-offset: 2px;
+}
+
+.ipynb-page-indicator {
+  font-family: var(--body-font-family, sans-serif);
+  font-size: 0.95rem;
+  color: var(--text-color, #333);
+  font-weight: 500;
+  min-width: 60px;
+  text-align: center;
+}
+
+/* Responsive Pagination */
+@media (max-width: 768px) {
+  .ipynb-pagination {
+    gap: 0.75rem;
+    padding: 1rem 0.5rem;
+  }
+
+  .ipynb-pagination-button {
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    min-width: 80px;
+  }
+
+  .ipynb-page-indicator {
+    font-size: 0.9rem;
+    min-width: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ipynb-pagination {
+    gap: 0.5rem;
+  }
+
+  .ipynb-pagination-button {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+    min-width: 70px;
+  }
+
+  .ipynb-page-indicator {
+    font-size: 0.85rem;
+  }
+}

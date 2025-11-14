@@ -139,7 +139,42 @@ Same as Example 1, but the path is provided as a clickable link in the authoring
 
 ---
 
-## Example 4: EDS Block Testing Notebook
+## Example 4: Paged Variation (NEW)
+
+### Google Docs Table
+
+| IPynb Viewer (paged) |
+|----------------------|
+| /notebooks/tutorial.ipynb |
+
+### Result
+
+Displays notebook cells one at a time with navigation controls:
+- Only one cell visible at a time for focused reading
+- Previous/Next buttons for navigation
+- Page indicator showing current position (e.g., "3 / 10")
+- Keyboard navigation using Arrow Left/Right keys
+- Smooth fade transitions between pages
+- Perfect for tutorials, presentations, or step-by-step guides
+
+### When to Use Paged Variation
+
+**Use paged mode when:**
+- Creating step-by-step tutorials
+- Building interactive presentations
+- Guiding users through sequential content
+- Each cell represents a distinct concept or step
+- You want focused, distraction-free reading
+
+**Use default mode when:**
+- Users need to see all content at once
+- Content is reference documentation
+- Users need to compare cells side-by-side
+- Quick scanning of content is important
+
+---
+
+## Example 5: EDS Block Testing Notebook
 
 ### Create this file: `/notebooks/block-test.ipynb`
 

@@ -330,6 +330,107 @@ async function loadNotebook(notebookPath) {
 }
 
 /**
+ * Create pagination controls for paged variation
+ * @param {HTMLElement} cellsContainer - Container with cells
+ * @returns {object} Pagination controls and state
+ */
+function createPaginationControls(cellsContainer) {
+  const cells = Array.from(cellsContainer.querySelectorAll('.ipynb-cell'));
+  const totalPages = cells.length;
+
+  if (totalPages === 0) return null;
+
+  const paginationState = {
+    currentPage: 0,
+    totalPages,
+    cells,
+  };
+
+  // Create pagination UI
+  const paginationDiv = document.createElement('div');
+  paginationDiv.className = 'ipynb-pagination';
+
+  const prevButton = document.createElement('button');
+  prevButton.className = 'ipynb-pagination-button ipynb-prev-button';
+  prevButton.textContent = 'Previous';
+  prevButton.setAttribute('aria-label', 'Previous page');
+  prevButton.disabled = true; // Disabled on first page
+
+  const pageIndicator = document.createElement('span');
+  pageIndicator.className = 'ipynb-page-indicator';
+  pageIndicator.textContent = `1 / ${totalPages}`;
+
+  const nextButton = document.createElement('button');
+  nextButton.className = 'ipynb-pagination-button ipynb-next-button';
+  nextButton.textContent = 'Next';
+  nextButton.setAttribute('aria-label', 'Next page');
+  nextButton.disabled = totalPages <= 1; // Disabled if only one page
+
+  paginationDiv.appendChild(prevButton);
+  paginationDiv.appendChild(pageIndicator);
+  paginationDiv.appendChild(nextButton);
+
+  // Update page display
+  function updatePageDisplay() {
+    cells.forEach((cell, index) => {
+      if (index === paginationState.currentPage) {
+        cell.classList.add('active');
+      } else {
+        cell.classList.remove('active');
+      }
+    });
+
+    pageIndicator.textContent = `${paginationState.currentPage + 1} / ${totalPages}`;
+    prevButton.disabled = paginationState.currentPage === 0;
+    nextButton.disabled = paginationState.currentPage === totalPages - 1;
+  }
+
+  // Navigation handlers
+  function goToNextPage() {
+    if (paginationState.currentPage < totalPages - 1) {
+      paginationState.currentPage++;
+      updatePageDisplay();
+    }
+  }
+
+  function goToPrevPage() {
+    if (paginationState.currentPage > 0) {
+      paginationState.currentPage--;
+      updatePageDisplay();
+    }
+  }
+
+  // Button event listeners
+  prevButton.addEventListener('click', goToPrevPage);
+  nextButton.addEventListener('click', goToNextPage);
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    // Only handle if the pagination is visible and user isn't typing in an input
+    if (!document.activeElement ||
+        (document.activeElement.tagName !== 'INPUT' &&
+         document.activeElement.tagName !== 'TEXTAREA')) {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        goToPrevPage();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        goToNextPage();
+      }
+    }
+  });
+
+  // Initialize display
+  updatePageDisplay();
+
+  return {
+    element: paginationDiv,
+    state: paginationState,
+    updatePageDisplay,
+  };
+}
+
+/**
  * Decorate the ipynb-viewer block
  * @param {HTMLElement} block - Block element
  */
@@ -339,6 +440,9 @@ export default async function decorate(block) {
     errorMessage: 'Failed to load notebook',
     loadingMessage: 'Loading notebook...',
   };
+
+  // Detect paged variation
+  const isPaged = block.classList.contains('paged');
 
   try {
     // Extract notebook path from block content
@@ -409,9 +513,18 @@ export default async function decorate(block) {
       }
     });
 
-    // Assemble and append
+    // Assemble container
     container.appendChild(header);
     container.appendChild(cellsContainer);
+
+    // Add pagination controls if paged variation
+    if (isPaged) {
+      const pagination = createPaginationControls(cellsContainer);
+      if (pagination) {
+        container.appendChild(pagination.element);
+      }
+    }
+
     block.appendChild(container);
 
   } catch (error) {
