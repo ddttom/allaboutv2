@@ -13,7 +13,7 @@ Display and execute Jupyter notebook (.ipynb) files directly in your EDS site wi
 - **Overlay Previews**: Full-screen overlays for visual testing (no popup blockers)
 - **Paged Variation**: Display cells one at a time with navigation controls (NEW)
 - **Responsive Design**: Mobile-friendly layout
-- **Syntax Highlighting**: Clear code formatting with monospace fonts
+- **Code Layout**: Clear code formatting with monospace fonts
 - **Error Handling**: Graceful error messages and visual indicators
 
 ## Usage
@@ -555,12 +555,6 @@ Create a `.ipynb` file in JSON format:
 }
 ```
 
-## Related Documentation
-
-- [EDS Block Development](../../.claude/skills/eds-block-development/SKILL.md)
-- [Jupyter Notebook Testing](../../docs/for-ai/explaining-jupyter.md)
-- [EDS Native Testing](../../docs/for-ai/testing/eds-native-testing-standards.md)
-
 ## Tips
 
 1. **Test your notebooks**: Verify notebook JSON structure is valid
@@ -588,19 +582,3 @@ Create a `.ipynb` file in JSON format:
 - Verify block CSS is loaded
 - Test with different viewport sizes
 - Check for CSS conflicts with site styles
-
-## Future Enhancements
-
-Potential improvements for future versions:
-
-- Syntax highlighting for code
-- Cell execution order tracking
-- Persistent cell outputs
-- Export results to file
-- Support for cell metadata (collapsed, hidden)
-- Image output support
-- Rich output display (HTML, SVG)
-- Paged variation enhancements:
-  - Group cells by headers (e.g., one H2 section per page)
-  - Page jump navigation
-  - URL hash support for deep linking to specific pages
