@@ -158,10 +158,11 @@ Displays a "Start Reading" button that opens a full-screen overlay showing noteb
 **Overlay Experience:**
 - Full-screen immersive reading mode (90% viewport)
 - Dark backdrop (95% opacity black) for focus
-- Only one cell visible at a time
+- **Smart cell grouping** - Instructions shown with their code
+- One page at a time (may contain multiple grouped cells)
 - Close button (×) in top-right corner
 - Previous/Next navigation buttons at bottom
-- Page indicator showing position (e.g., "3 / 10")
+- Page indicator showing logical pages (e.g., "3 / 8")
 - Keyboard shortcuts:
   - Arrow Left/Right: Navigate pages
   - Escape: Close overlay
@@ -175,6 +176,33 @@ Displays a "Start Reading" button that opens a full-screen overlay showing noteb
 - Focus-required content
 - Mobile-friendly reading
 
+### Smart Cell Grouping (Automatic)
+
+The paged variation automatically detects when markdown cells reference code cells and groups them together:
+
+**Detection Patterns:**
+- Markdown ending with colon (`:`)
+- Contains phrases like:
+  - "below", "following"
+  - "try running", "click run"
+  - "let's test", "let's try"
+  - "example:", "here's how"
+
+**Example:**
+```markdown
+## Testing a Block
+
+Let's test an accordion block:
+```
+
+```javascript
+const { testBlock } = await import('/scripts/ipynb-helpers.js');
+const block = await testBlock('accordion', content);
+return block.outerHTML;
+```
+
+These two cells will be **automatically grouped** and shown together on one page, so the instruction stays with the code!
+
 ### When to Use Paged Variation
 
 **Use paged overlay mode when:**
@@ -184,6 +212,7 @@ Displays a "Start Reading" button that opens a full-screen overlay showing noteb
 - Each cell represents a distinct concept or step
 - You want distraction-free, immersive reading
 - Content is consumed linearly (not reference material)
+- Instructions reference "the cell below" (smart grouping handles this!)
 
 **Use default mode when:**
 - Users need to see all content at once

@@ -330,6 +330,70 @@ async function loadNotebook(notebookPath) {
 }
 
 /**
+ * Check if a markdown cell should be grouped with the next code cell
+ * @param {HTMLElement} cell - Current cell
+ * @param {HTMLElement} nextCell - Next cell
+ * @returns {boolean} True if cells should be grouped
+ */
+function shouldGroupWithNext(cell, nextCell) {
+  if (!cell || !nextCell) return false;
+  if (!cell.classList.contains('ipynb-markdown-cell')) return false;
+  if (!nextCell.classList.contains('ipynb-code-cell')) return false;
+
+  // Get markdown content
+  const content = cell.textContent.trim();
+
+  // Patterns that suggest the markdown is describing the following code
+  const groupingPatterns = [
+    /:\s*$/,                           // Ends with colon
+    /below/i,                          // Contains "below"
+    /following/i,                      // Contains "following"
+    /try running/i,                    // Contains "try running"
+    /click run/i,                      // Contains "click run"
+    /run the cell/i,                   // Contains "run the cell"
+    /let's test/i,                     // Contains "let's test"
+    /let's try/i,                      // Contains "let's try"
+    /example:/i,                       // Contains "example:"
+    /here's how/i,                     // Contains "here's how"
+  ];
+
+  return groupingPatterns.some(pattern => pattern.test(content));
+}
+
+/**
+ * Create page groups from cells for smart pagination
+ * @param {Array<HTMLElement>} cells - Array of cell elements
+ * @returns {Array<Object>} Array of page objects with grouped cells
+ */
+function createPageGroups(cells) {
+  const pages = [];
+  let i = 0;
+
+  while (i < cells.length) {
+    const cell = cells[i];
+    const nextCell = cells[i + 1];
+
+    if (shouldGroupWithNext(cell, nextCell)) {
+      // Group markdown + code together
+      pages.push({
+        type: 'grouped',
+        cells: [cell, nextCell],
+      });
+      i += 2; // Skip both cells
+    } else {
+      // Single cell page
+      pages.push({
+        type: 'single',
+        cells: [cell],
+      });
+      i++;
+    }
+  }
+
+  return pages;
+}
+
+/**
  * Create full-screen overlay for paged variation
  * @param {HTMLElement} container - The notebook container
  * @param {HTMLElement} cellsContainer - Container with cells
@@ -337,14 +401,17 @@ async function loadNotebook(notebookPath) {
  */
 function createPagedOverlay(container, cellsContainer) {
   const cells = Array.from(cellsContainer.querySelectorAll('.ipynb-cell'));
-  const totalPages = cells.length;
 
-  if (totalPages === 0) return null;
+  if (cells.length === 0) return null;
+
+  // Create page groups (smart grouping)
+  const pages = createPageGroups(cells);
+  const totalPages = pages.length;
 
   const paginationState = {
     currentPage: 0,
     totalPages,
-    cells,
+    pages,
     isOverlayOpen: false,
   };
 
@@ -398,18 +465,31 @@ function createPagedOverlay(container, cellsContainer) {
     // Clear cell area
     cellContentArea.innerHTML = '';
 
-    // Clone and append current cell
-    const currentCell = cells[paginationState.currentPage].cloneNode(true);
-    currentCell.classList.add('active');
-    cellContentArea.appendChild(currentCell);
+    // Get current page group
+    const currentPage = pages[paginationState.currentPage];
 
-    // Re-attach run button handlers if it's a code cell
-    if (currentCell.classList.contains('ipynb-code-cell')) {
-      const runButton = currentCell.querySelector('.ipynb-run-button');
-      if (runButton) {
-        runButton.addEventListener('click', () => {
-          executeCodeCell(currentCell);
-        });
+    // Clone and append all cells in this page
+    currentPage.cells.forEach((cell) => {
+      const clonedCell = cell.cloneNode(true);
+      clonedCell.classList.add('active');
+      cellContentArea.appendChild(clonedCell);
+
+      // Re-attach run button handlers if it's a code cell
+      if (clonedCell.classList.contains('ipynb-code-cell')) {
+        const runButton = clonedCell.querySelector('.ipynb-run-button');
+        if (runButton) {
+          runButton.addEventListener('click', () => {
+            executeCodeCell(clonedCell);
+          });
+        }
+      }
+    });
+
+    // Add spacing between grouped cells for better readability
+    if (currentPage.type === 'grouped' && currentPage.cells.length > 1) {
+      const cells = cellContentArea.querySelectorAll('.ipynb-cell');
+      if (cells.length > 1) {
+        cells[0].style.marginBottom = '1.5rem';
       }
     }
 

@@ -49,9 +49,10 @@ Display notebook cells one at a time in a full-screen overlay with Previous/Next
 **Features:**
 - **Start Reading button** - Click to enter full-screen reading mode
 - **Full-viewport overlay** - Immersive, distraction-free reading experience
-- **One cell at a time** - Focus on current content without page jumping
-- **Previous/Next navigation** - Navigate between cells with buttons
-- **Page indicator** - Shows current position (e.g., "1 / 10")
+- **Smart cell grouping** (NEW) - Automatically combines instruction markdown with following code cells
+- **One page at a time** - Focus on current content without page jumping
+- **Previous/Next navigation** - Navigate between logical pages with buttons
+- **Page indicator** - Shows logical page count (e.g., "1 / 8" instead of raw cell count)
 - **Close button (×)** - Exit overlay and return to page
 - **Keyboard shortcuts**:
   - Arrow Left/Right - Navigate between pages
@@ -245,19 +246,30 @@ The paged variation uses a full-screen overlay approach to eliminate page jumpin
    }
    ```
 
-5. **Navigation**:
-   - Clones current cell into overlay content area
-   - Button clicks navigate and re-clone next/previous cell
+5. **Smart Cell Grouping**:
+   - Automatically detects when markdown cells reference code cells
+   - Groups them together on the same "page"
+   - Detection patterns:
+     - Markdown ending with colon (`:`)
+     - Contains "below", "following", "try running", "click run"
+     - Contains "let's test", "let's try", "example:", "here's how"
+   - Page indicator shows logical pages, not raw cell count
+
+6. **Navigation**:
+   - Clones current page (single or grouped cells) into overlay
+   - Button clicks navigate between logical pages
    - Scrolls to top on page change (no viewport jumping)
    - Keyboard events (Arrow Left/Right, Escape)
 
-6. **Close Mechanisms**:
+7. **Close Mechanisms**:
    - Close button (×) in top-right corner
    - Escape key
    - Restores body scroll on close
 
 **Key Features:**
-- One cell visible at a time in overlay
+- Smart cell grouping for better context
+- Instruction + code shown together
+- Logical page navigation
 - No page jumping (fixed viewport position)
 - Prevents background scrolling when open
 - Smooth fade-in animation (0.3s)
