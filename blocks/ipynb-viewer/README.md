@@ -4,7 +4,17 @@ Display and execute Jupyter notebook (.ipynb) files directly in your EDS site wi
 
 ## Features
 
-**Parse and Display Notebooks**: Renders both markdown and code cells from .ipynb files. **Interactive Execution**: Run JavaScript code cells individually with a click (async/await support). **Cell Independence**: Run any cell at any time in any order with no initialization required. **Browser Execution**: Runs JavaScript code directly in the browser with native APIs. **Direct ES6 Imports**: Each cell imports what it needs independently. **Output Display**: Shows console logs, results, and errors inline. **Overlay Previews**: Full-screen overlays for visual testing (no popup blockers). **Paged Variation**: Display cells one at a time with navigation controls (NEW). **Responsive Design**: Mobile-friendly layout. **Syntax Highlighting**: Clear code formatting with monospace fonts. **Error Handling**: Graceful error messages and visual indicators.
+**Parse and Display Notebooks**: Renders both markdown and code cells from .ipynb files. 
+**Interactive Execution**: Run JavaScript code cells individually with a click (async/await support). 
+**Cell Independence**: Run any cell at any time in any order with no initialization required. 
+**Browser Execution**: Runs JavaScript code directly in the browser with native APIs. 
+**Direct ES6 Imports**: Each cell imports what it needs independently. 
+**Output Display**: Shows console logs, results, and errors inline. 
+**Overlay Previews**: Full-screen overlays for visual testing (no popup blockers). 
+**Paged Variation**: Display cells one at a time with navigation controls (NEW). 
+**Responsive Design**: Mobile-friendly layout. 
+**Syntax Highlighting**: Clear code formatting with monospace fonts. 
+**Error Handling**: Graceful error messages and visual indicators.
 
 ## Usage
 
@@ -38,7 +48,17 @@ Display notebook cells one at a time in a full-screen overlay with Previous/Next
 
 **Features:**
 
-**Start Reading button** clicks to enter full-screen reading mode. **Full-viewport overlay** provides an immersive, distraction-free reading experience. **Smart cell grouping** (NEW) automatically combines instruction markdown with following code cells. **One page at a time** lets you focus on current content without page jumping. **Previous/Next navigation** navigates between logical pages with buttons. **Page indicator** shows logical page count (e.g., "1 / 8" instead of raw cell count). **Close button (×)** exits overlay and returns to page. **Keyboard shortcuts**: Arrow Left/Right navigates between pages, Escape closes overlay. **No page jumping** keeps the overlay fixed in viewport. **Responsive design** adapts to mobile, tablet, and desktop. **Dark backdrop** reduces distractions (95% opacity black).
+**Start Reading button** clicks to enter full-screen reading mode. 
+**Full-viewport overlay** provides an immersive, distraction-free reading experience. 
+**Smart cell grouping** (NEW) automatically combines instruction markdown with following code cells. 
+**One page at a time** lets you focus on current content without page jumping. 
+**Previous/Next navigation** navigates between logical pages with buttons. 
+**Page indicator** shows logical page count (e.g., "1 / 8" instead of raw cell count). 
+**Close button (×)** exits overlay and returns to page. 
+**Keyboard shortcuts**: Arrow Left/Right navigates between pages, Escape closes overlay. 
+**No page jumping** keeps the overlay fixed in viewport. 
+**Responsive design** adapts to mobile, tablet, and desktop. 
+**Dark backdrop** reduces distractions (95% opacity black).
 
 ### Variation: Paged + Manual (NEW)
 
@@ -52,7 +72,14 @@ Combine paged mode with a manual button to provide access to documentation:
 
 **Features:**
 
-**Start Reading button** opens the notebook in full-screen paged mode. **Read the Manual button** opens the block's README.mdc documentation in a scrollable overlay. **Both buttons side by side** provide easy access to both notebook and documentation. **Separate overlays** mean manual and notebook have independent full-screen displays. **Markdown rendering** displays README.mdc beautifully formatted with headings, lists, tables, and code blocks. **Scrollable content** allows long documentation to scroll smoothly within the overlay. **Same close button (×)** provides consistent UI across both overlays. **Escape key** works for both overlays.
+**Start Reading button** opens the notebook in full-screen paged mode. 
+**Read the Manual button** opens the block's README.mdc documentation in a scrollable overlay. 
+**Both buttons side by side** provide easy access to both notebook and documentation. 
+**Separate overlays** mean manual and notebook have independent full-screen displays. 
+**Markdown rendering** displays README.mdc beautifully formatted with headings, lists, tables, and code blocks. 
+**Scrollable content** allows long documentation to scroll smoothly within the overlay. 
+**Same close button (×)** provides consistent UI across both overlays. 
+**Escape key** works for both overlays.
 
 **Use Case:**
 Perfect for interactive tutorials where users need to reference documentation while exploring the notebook.
@@ -207,14 +234,14 @@ The paged variation uses a full-screen overlay approach to eliminate page jumpin
 
 **How it works:**
 
-1. **Variation Detection**:
+**Variation Detection**:
    ```javascript
    const isPaged = block.classList.contains('paged');
    ```
 
-2. **Start Button**: Creates "Start Reading" button in the block. Clicking opens the full-screen overlay. Original cells hidden until overlay opens.
+**Start Button**: Creates "Start Reading" button in the block. Clicking opens the full-screen overlay. Original cells hidden until overlay opens.
 
-3. **Overlay Structure**:
+**Overlay Structure**:
    ```html
    <div class="ipynb-paged-overlay">
      <div class="ipynb-paged-overlay-content">
@@ -229,7 +256,7 @@ The paged variation uses a full-screen overlay approach to eliminate page jumpin
    </div>
    ```
 
-4. **Full-Screen CSS**:
+**Full-Screen CSS**:
    ```css
    .ipynb-paged-overlay {
      position: fixed;
@@ -240,11 +267,11 @@ The paged variation uses a full-screen overlay approach to eliminate page jumpin
    }
    ```
 
-5. **Smart Cell Grouping**: Automatically detects when markdown cells reference code cells and groups them together on the same "page". Detection patterns include markdown ending with colon (`:`), contains "below", "following", "try running", "click run", contains "let's test", "let's try", "example:", "here's how". **Multi-code-cell grouping** groups up to 3 consecutive code cells together when instructional markdown is followed by multiple code cells. Spacing uses 1.5rem after markdown, 1.5rem between code cells. Page indicator shows logical pages, not raw cell count.
+**Smart Cell Grouping**: Automatically detects when markdown cells reference code cells and groups them together on the same "page". Detection patterns include markdown ending with colon (`:`), contains "below", "following", "try running", "click run", contains "let's test", "let's try", "example:", "here's how". **Multi-code-cell grouping** groups up to 3 consecutive code cells together when instructional markdown is followed by multiple code cells. Spacing uses 1.5rem after markdown, 1.5rem between code cells. Page indicator shows logical pages, not raw cell count.
 
-6. **Navigation**: Clones current page (single or grouped cells) into overlay. Button clicks navigate between logical pages. Scrolls to top on page change (no viewport jumping). Keyboard events (Arrow Left/Right, Escape).
+**Navigation**: Clones current page (single or grouped cells) into overlay. Button clicks navigate between logical pages. Scrolls to top on page change (no viewport jumping). Keyboard events (Arrow Left/Right, Escape).
 
-7. **Close Mechanisms**: Close button (×) in top-right corner. Escape key. Restores body scroll on close.
+**Close Mechanisms**: Close button (×) in top-right corner. Escape key. Restores body scroll on close.
 
 **Key Features:**
 
@@ -280,14 +307,14 @@ Code 1, Code 2, Code 3, Code 4
 
 **How it works:**
 
-1. **Creates overlay element**:
+**Creates overlay element**:
    ```javascript
    const overlay = document.createElement('div');
    overlay.className = 'ipynb-preview-overlay';
    // Full-screen overlay with inline styles
    ```
 
-2. **Minimal DOM structure** (EDS-compatible):
+**Minimal DOM structure** (EDS-compatible):
    ```html
    <div class="ipynb-preview-overlay">
      <div class="ipynb-preview-backdrop"></div>
@@ -304,12 +331,12 @@ Code 1, Code 2, Code 3, Code 4
    </div>
    ```
 
-3. **Appends to document body**:
+**Appends to document body**:
    ```javascript
    document.body.appendChild(overlay);
    ```
 
-4. **Decorates block**:
+**Decorates block**:
    ```javascript
    const block = overlay.querySelector(`.${blockName}.block`);
    const module = await import(`/blocks/${blockName}/${blockName}.js`);
@@ -344,7 +371,11 @@ Code blocks (extracted first with placeholders). Tables (multi-line processing w
 
 **Key Features:**
 
-**Code block protection** prevents markdown processing inside code blocks. **Table parsing** supports markdown tables with `|` delimiters and header rows. **List handling** properly closes and nests `<ul>` and `<ol>` tags. **HTML escaping** safely escapes `<` and `>` in code blocks. **Language tagging** preserves language hints from code fences.
+**Code block protection** prevents markdown processing inside code blocks. 
+**Table parsing** supports markdown tables with `|` delimiters and header rows. 
+**List handling** properly closes and nests `<ul>` and `<ol>` tags. 
+**HTML escaping** safely escapes `<` and `>` in code blocks. 
+**Language tagging** preserves language hints from code fences.
 
 ### Security Considerations
 
@@ -468,7 +499,11 @@ See [EDS Block Development](../../.claude/skills/eds-block-development/SKILL.md)
 
 ## Tips
 
-**Test your notebooks** by verifying notebook JSON structure is valid. **Keep code simple** since complex dependencies may not work in browser context. **Use console.log** to help debug execution issues. **Mobile testing** checks layout on different screen sizes. **Error handling** wraps risky code in try-catch blocks.
+**Test your notebooks** by verifying notebook JSON structure is valid. 
+**Keep code simple** since complex dependencies may not work in browser context. 
+**Use console.log** to help debug execution issues. 
+**Mobile testing** checks layout on different screen sizes. 
+**Error handling** wraps risky code in try-catch blocks.
 
 ## Common Issues
 
