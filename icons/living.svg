@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f0f9ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e0f2fe;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Shadow filter -->
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="0" dy="2" result="offsetblur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.1"/>
+      <feComposite in2="offsetblur" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Glow effect for Run button -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="800" fill="url(#bgGradient)"/>
+
+  <!-- Title -->
+  <text x="600" y="50" font-family="Arial, sans-serif" font-size="32" font-weight="bold" text-anchor="middle" fill="#1e40af">
+    Living Documentation: Browser-Based Notebooks
+  </text>
+
+  <!-- LEFT SIDE: Traditional Static Docs -->
+  <g id="static-docs" transform="translate(100, 100)">
+    <!-- Container -->
+    <rect x="0" y="0" width="400" height="550" rx="10" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2" filter="url(#shadow)"/>
+    
+    <!-- Header -->
+    <rect x="0" y="0" width="400" height="50" rx="10" fill="#94a3b8"/>
+    <text x="200" y="33" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="white">
+      Traditional Documentation
+    </text>
+    
+    <!-- Static content lines -->
+    <g transform="translate(20, 70)">
+      <!-- Code block (greyed out) -->
+      <rect x="0" y="0" width="360" height="80" rx="5" fill="#e2e8f0"/>
+      <text x="10" y="25" font-family="monospace" font-size="12" fill="#64748b">// Setup required:</text>
+      <text x="10" y="45" font-family="monospace" font-size="12" fill="#64748b">npm install jupyter</text>
+      <text x="10" y="65" font-family="monospace" font-size="12" fill="#64748b">jupyter notebook</text>
+      
+      <!-- Text lines -->
+      <rect x="0" y="100" width="280" height="8" rx="4" fill="#cbd5e1"/>
+      <rect x="0" y="120" width="320" height="8" rx="4" fill="#cbd5e1"/>
+      <rect x="0" y="140" width="250" height="8" rx="4" fill="#cbd5e1"/>
+      
+      <!-- Another code block -->
+      <rect x="0" y="170" width="360" height="60" rx="5" fill="#e2e8f0"/>
+      <text x="10" y="195" font-family="monospace" font-size="12" fill="#64748b">const block = document...</text>
+      <text x="10" y="215" font-family="monospace" font-size="12" fill="#64748b">// Cannot execute here</text>
+      
+      <!-- More text -->
+      <rect x="0" y="250" width="300" height="8" rx="4" fill="#cbd5e1"/>
+      <rect x="0" y="270" width="340" height="8" rx="4" fill="#cbd5e1"/>
+    </g>
+    
+    <!-- Problems indicators -->
+    <g transform="translate(20, 380)">
+      <circle cx="15" cy="15" r="12" fill="#ef4444" opacity="0.8"/>
+      <text x="15" y="20" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">!</text>
+      <text x="35" y="20" font-family="Arial, sans-serif" font-size="14" fill="#64748b">Requires setup</text>
+      
+      <circle cx="15" cy="45" r="12" fill="#ef4444" opacity="0.8"/>
+      <text x="15" y="50" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">!</text>
+      <text x="35" y="50" font-family="Arial, sans-serif" font-size="14" fill="#64748b">Can't verify examples</text>
+      
+      <circle cx="15" cy="75" r="12" fill="#ef4444" opacity="0.8"/>
+      <text x="15" y="80" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">!</text>
+      <text x="35" y="80" font-family="Arial, sans-serif" font-size="14" fill="#64748b">Becomes outdated</text>
+    </g>
+    
+    <!-- Time indicator -->
+    <g transform="translate(150, 500)">
+      <rect x="0" y="0" width="100" height="30" rx="15" fill="#fbbf24" opacity="0.8"/>
+      <text x="50" y="20" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="white">2+ hours</text>
+    </g>
+  </g>
+
+  <!-- CENTER: Transformation Arrow -->
+  <g id="transformation" transform="translate(550, 350)">
+    <!-- Arrow -->
+    <defs>
+      <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+        <polygon points="0 0, 10 3, 0 6" fill="#10b981"/>
+      </marker>
+    </defs>
+    <line x1="0" y1="0" x2="80" y2="0" stroke="#10b981" stroke-width="3" marker-end="url(#arrowhead)"/>
+    
+    <!-- Claude + Skills label -->
+    <rect x="-10" y="-50" width="100" height="30" rx="15" fill="#8b5cf6"/>
+    <text x="40" y="-30" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="white">Claude + Skills</text>
+  </g>
+
+  <!-- RIGHT SIDE: Living Documentation -->
+  <g id="living-docs" transform="translate(700, 100)">
+    <!-- Container -->
+    <rect x="0" y="0" width="400" height="550" rx="10" fill="#ffffff" stroke="#10b981" stroke-width="2" filter="url(#shadow)"/>
+    
+    <!-- Header -->
+    <rect x="0" y="0" width="400" height="50" rx="10" fill="#10b981"/>
+    <text x="200" y="33" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="white">
+      Living Documentation
+    </text>
+    
+    <!-- Interactive content -->
+    <g transform="translate(20, 70)">
+      <!-- Markdown explanation -->
+      <text x="0" y="20" font-family="Arial, sans-serif" font-size="14" fill="#1f2937">
+        Click Run to see the accordion transform:
+      </text>
+      
+      <!-- Code cell with Run button -->
+      <rect x="0" y="35" width="360" height="80" rx="5" fill="#f0fdf4" stroke="#10b981" stroke-width="1"/>
+      <text x="10" y="60" font-family="monospace" font-size="12" fill="#059669">const accordion = testBlock(</text>
+      <text x="10" y="80" font-family="monospace" font-size="12" fill="#059669">  blockElement, 'accordion'</text>
+      <text x="10" y="100" font-family="monospace" font-size="12" fill="#059669">);</text>
+      
+      <!-- Run button -->
+      <rect x="280" y="45" width="70" height="30" rx="15" fill="#10b981" filter="url(#glow)" cursor="pointer"/>
+      <text x="315" y="64" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="white">▶ Run</text>
+      
+      <!-- Output area -->
+      <rect x="0" y="130" width="360" height="100" rx="5" fill="#f0f9ff" stroke="#3b82f6" stroke-width="1" stroke-dasharray="5,5"/>
+      <text x="10" y="155" font-family="Arial, sans-serif" font-size="12" fill="#1e40af">Output:</text>
+      <!-- Accordion representation -->
+      <rect x="10" y="165" width="340" height="25" rx="3" fill="#dbeafe"/>
+      <text x="20" y="182" font-family="Arial, sans-serif" font-size="12" fill="#1e40af">▼ Question 1</text>
+      <rect x="10" y="195" width="340" height="25" rx="3" fill="#dbeafe"/>
+      <text x="20" y="212" font-family="Arial, sans-serif" font-size="12" fill="#1e40af">▶ Question 2</text>
+      
+      <!-- Visual preview indicator -->
+      <rect x="0" y="250" width="360" height="40" rx="5" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+      <text x="180" y="275" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#92400e">
+        Press ESC to close full preview overlay
+      </text>
+    </g>
+    
+    <!-- Benefits indicators -->
+    <g transform="translate(20, 380)">
+      <circle cx="15" cy="15" r="12" fill="#10b981"/>
+      <text x="15" y="20" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">✓</text>
+      <text x="35" y="20" font-family="Arial, sans-serif" font-size="14" fill="#059669">Zero setup required</text>
+      
+      <circle cx="15" cy="45" r="12" fill="#10b981"/>
+      <text x="15" y="50" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">✓</text>
+      <text x="35" y="50" font-family="Arial, sans-serif" font-size="14" fill="#059669">Self-verifying examples</text>
+      
+      <circle cx="15" cy="75" r="12" fill="#10b981"/>
+      <text x="15" y="80" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">✓</text>
+      <text x="35" y="80" font-family="Arial, sans-serif" font-size="14" fill="#059669">Always current</text>
+    </g>
+    
+    <!-- Time indicator -->
+    <g transform="translate(150, 500)">
+      <rect x="0" y="0" width="100" height="30" rx="15" fill="#10b981"/>
+      <text x="50" y="20" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="white">8 minutes</text>
+    </g>
+  </g>
+
+  <!-- Bottom: Audience icons -->
+  <g id="audiences" transform="translate(200, 700)">
+    <text x="400" y="-20" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#1e40af">
+      Serves Every Audience
+    </text>
+    
+    <!-- Developer -->
+    <g transform="translate(0, 0)">
+      <circle cx="50" cy="30" r="25" fill="#3b82f6"/>
+      <text x="50" y="37" font-family="Arial, sans-serif" font-size="20" text-anchor="middle" fill="white">{ }</text>
+      <text x="50" y="70" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#1e40af">Developers</text>
+    </g>
+    
+    <!-- Content Team -->
+    <g transform="translate(200, 0)">
+      <circle cx="50" cy="30" r="25" fill="#8b5cf6"/>
+      <text x="50" y="37" font-family="Arial, sans-serif" font-size="20" text-anchor="middle" fill="white">✎</text>
+      <text x="50" y="70" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#6b21a8">Content Teams</text>
+    </g>
+    
+    <!-- Marketing -->
+    <g transform="translate(400, 0)">
+      <circle cx="50" cy="30" r="25" fill="#ec4899"/>
+      <text x="50" y="37" font-family="Arial, sans-serif" font-size="20" text-anchor="middle" fill="white">📊</text>
+      <text x="50" y="70" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#be185d">Marketing</text>
+    </g>
+    
+    <!-- Sales -->
+    <g transform="translate(600, 0)">
+      <circle cx="50" cy="30" r="25" fill="#f59e0b"/>
+      <text x="50" y="37" font-family="Arial, sans-serif" font-size="20" text-anchor="middle" fill="white">💼</text>
+      <text x="50" y="70" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#92400e">Sales</text>
+    </g>
+    
+    <!-- Clients -->
+    <g transform="translate(800, 0)">
+      <circle cx="50" cy="30" r="25" fill="#10b981"/>
+      <text x="50" y="37" font-family="Arial, sans-serif" font-size="20" text-anchor="middle" fill="white">👤</text>
+      <text x="50" y="70" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#059669">Clients</text>
+    </g>
+  </g>
+</svg>
