@@ -1,31 +1,24 @@
 /**
  * Overlay Block
  * Creates a button that triggers a full-viewport overlay with content
+ *
+ * Structure (from author perspective):
+ * Row 1: "Overlay" (block name - processed by EDS)
+ * Row 2: Button text
+ * Row 3: Overlay content
+ *
+ * Note: EDS processes the header row before the decorate function runs,
+ * so extractedRows[0] contains Row 2 (button text) and extractedRows[1] contains Row 3 (content)
  */
-
-// Debug mode (set to false for production)
-const DEBUG = true;
-
-function debugLog(message, data = null) {
-  if (DEBUG) {
-    if (data) {
-      console.log(`[OVERLAY] ${message}`, data);
-    } else {
-      console.log(`[OVERLAY] ${message}`);
-    }
-  }
-}
 
 // Configuration
 const CONFIG = {
-  animationDuration: 300, // milliseconds
-  backdropColor: 'rgba(0, 0, 0, 0.5)',
-  borderRadius: '16px',
-  maxWidth: '800px',
-  closeButtonLabel: 'Close overlay',
+  animationDuration: 300, // milliseconds - used in JavaScript timeout
+  backdropColor: 'rgba(0, 0, 0, 0.5)', // Documentation only - actual value hardcoded in CSS
+  borderRadius: '16px', // Documentation only - actual value hardcoded in CSS (12px on mobile)
+  maxWidth: '800px', // Documentation only - actual value hardcoded in CSS (100% on mobile)
+  closeButtonLabel: 'Close overlay', // Accessibility label - used in JavaScript
 };
-
-debugLog('Overlay module loaded', CONFIG);
 
 /**
  * Creates the overlay structure
@@ -93,12 +86,10 @@ function showOverlay(overlay, triggerButton) {
   });
 
   // Focus management
-  const modal = overlay.querySelector('.overlay-modal');
   const closeButton = overlay.querySelector('.overlay-close');
   closeButton.focus();
 
   // Store the trigger button for focus return
-  overlay.dataset.triggerButton = 'stored';
   overlay.triggerButtonRef = triggerButton;
 
   // Setup event handlers
@@ -145,15 +136,16 @@ function setupOverlayEventHandlers(overlay) {
     }
   });
 
-  // Keyboard navigation
-  document.addEventListener('keydown', function escapeHandler(event) {
+  // Keyboard navigation - ESC key
+  const escapeHandler = (event) => {
     if (event.key === 'Escape') {
       closeOverlay(overlay);
       document.removeEventListener('keydown', escapeHandler);
     }
-  });
+  };
+  document.addEventListener('keydown', escapeHandler);
 
-  // Tab trapping
+  // Tab trapping - keeps focus within modal
   const focusableElements = modal.querySelectorAll(
     'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
   );
@@ -163,13 +155,13 @@ function setupOverlayEventHandlers(overlay) {
   modal.addEventListener('keydown', (event) => {
     if (event.key === 'Tab') {
       if (event.shiftKey) {
-        // Shift + Tab
+        // Shift + Tab - reverse navigation
         if (document.activeElement === firstFocusable) {
           event.preventDefault();
           lastFocusable.focus();
         }
       } else {
-        // Tab
+        // Tab - forward navigation
         if (document.activeElement === lastFocusable) {
           event.preventDefault();
           firstFocusable.focus();
@@ -180,143 +172,71 @@ function setupOverlayEventHandlers(overlay) {
 }
 
 /**
- * Extracts content from EDS block structure
- * Navigates through EDS wrapper divs to find actual content
- * @param {HTMLElement} block - The block element
- * @returns {Array} Array of row content elements
- */
-function extractBlockContent(block) {
-  debugLog('Extracting block content');
-  debugLog('Block HTML:', block.innerHTML.substring(0, 200));
-  debugLog('Block children count:', block.children.length);
-
-  const rows = Array.from(block.children);
-  const extractedRows = [];
-
-  rows.forEach((row, rowIndex) => {
-    debugLog(`Processing row ${rowIndex + 1}`);
-
-    // Navigate through nested divs to find content
-    const cells = Array.from(row.children);
-    const rowContent = [];
-
-    cells.forEach((cell, cellIndex) => {
-      // For each cell, extract the innermost content
-      let contentSource = cell;
-
-      // Navigate through wrapper divs
-      const firstDiv = cell.querySelector('div');
-      if (firstDiv) {
-        const secondDiv = firstDiv.querySelector('div');
-        if (secondDiv && (secondDiv.children.length > 0 || secondDiv.textContent.trim())) {
-          contentSource = secondDiv;
-          debugLog(`  Row ${rowIndex + 1}, Cell ${cellIndex + 1}: Using second nested div`);
-        } else if (firstDiv.children.length > 0 || firstDiv.textContent.trim()) {
-          contentSource = firstDiv;
-          debugLog(`  Row ${rowIndex + 1}, Cell ${cellIndex + 1}: Using first nested div`);
-        }
-      }
-
-      debugLog(`  Row ${rowIndex + 1}, Cell ${cellIndex + 1} text:`, contentSource.textContent.trim().substring(0, 50));
-      rowContent.push(contentSource);
-    });
-
-    extractedRows.push(rowContent);
-  });
-
-  debugLog('Extraction complete. Total rows:', extractedRows.length);
-  return extractedRows;
-}
-
-/**
  * Decorates the overlay block
  * @param {HTMLElement} block - The block element
+ *
+ * Expected structure (from author perspective):
+ * Row 1: "Overlay" (block name)
+ * Row 2: Button text
+ * Row 3: Overlay content
+ *
+ * Note: EDS extracts only data rows, so:
+ * - extractedRows[0] = Row 2 (button text)
+ * - extractedRows[1] = Row 3 (overlay content)
  */
 export default function decorate(block) {
-  console.group('🎨 OVERLAY BLOCK DECORATION');
-  debugLog('='.repeat(60));
-  debugLog('Starting decoration');
-  debugLog('Block element:', block);
-  debugLog('Block classes:', block.className);
-  debugLog('Block dataset:', block.dataset);
-
   try {
-    // Extract content from EDS structure using standard pattern
-    debugLog('Step 1: Extracting content');
-    const extractedRows = extractBlockContent(block);
+    // Extract rows from block
+    const rows = Array.from(block.children);
 
-    if (extractedRows.length < 2) {
-      throw new Error(`Overlay block requires at least 2 rows (button text and content). Found: ${extractedRows.length}`);
+    if (rows.length < 2) {
+      throw new Error(
+        `Overlay block requires exactly 3 rows: row 1 = "Overlay", row 2 = button text, row 3 = content. Found only ${rows.length} data rows (EDS processes the header row automatically).`,
+      );
     }
 
-    // Row 1: Button text (first cell of first row)
-    debugLog('Step 2: Getting button text');
-    const buttonCell = extractedRows[0][0];
-    const buttonText = buttonCell?.textContent?.trim() || 'Open';
-    debugLog('Button text:', buttonText);
+    // Row 2 (from author perspective): Button text
+    // This is extractedRows[0] because EDS already processed Row 1
+    const buttonRow = rows[0];
+    const buttonCell = buttonRow.querySelector('div');
+    const buttonText = buttonCell?.textContent?.trim() || 'Learn More';
 
-    // Row 2: Overlay content (first cell of second row)
-    debugLog('Step 3: Getting overlay content');
-    const contentCell = extractedRows[1][0];
-    debugLog('Content cell:', contentCell);
+    // Row 3 (from author perspective): Overlay content
+    // This is extractedRows[1] because EDS already processed Row 1
+    const contentRow = rows[1];
+    const contentCell = contentRow.querySelector('div');
 
-    if (!contentCell) {
-      throw new Error('Overlay block requires content in the second row');
+    if (!contentCell || !contentCell.textContent.trim()) {
+      throw new Error(
+        'Overlay block requires content in row 3. The content row appears to be empty.',
+      );
     }
 
     // Clone the content to preserve it
     const overlayContent = contentCell.cloneNode(true);
-    debugLog('Cloned content for overlay');
 
     // Create trigger button
-    debugLog('Step 4: Creating trigger button');
     const triggerButton = document.createElement('button');
     triggerButton.type = 'button';
     triggerButton.className = 'overlay-trigger';
     triggerButton.textContent = buttonText;
     triggerButton.setAttribute('aria-label', `Open overlay: ${buttonText}`);
-    debugLog('Trigger button created:', triggerButton);
-    debugLog('Button text content:', triggerButton.textContent);
-    debugLog('Button class name:', triggerButton.className);
 
     // Button click handler
     triggerButton.addEventListener('click', () => {
-      debugLog('Trigger button clicked!');
       const overlay = createOverlay(buttonText, overlayContent.cloneNode(true));
       showOverlay(overlay, triggerButton);
     });
 
     // Replace block content with trigger button
-    debugLog('Step 5: Replacing block content with button');
-    debugLog('Block innerHTML before replacement:', block.innerHTML.substring(0, 100));
-
     block.textContent = '';
     block.appendChild(triggerButton);
-
-    debugLog('Block innerHTML after replacement:', block.innerHTML);
-    debugLog('Button in DOM:', document.body.contains(triggerButton));
-    debugLog('Button computed styles:', {
-      display: getComputedStyle(triggerButton).display,
-      visibility: getComputedStyle(triggerButton).visibility,
-      background: getComputedStyle(triggerButton).backgroundColor,
-      color: getComputedStyle(triggerButton).color
-    });
-    debugLog('✅ Decoration completed successfully!');
-    debugLog('='.repeat(60));
-
   } catch (error) {
-    console.error('❌ Overlay block decoration failed:', error);
-    console.error('Error stack:', error.stack);
-    debugLog('Error details:', {
-      message: error.message,
-      stack: error.stack,
-      blockHTML: block.innerHTML
-    });
+    console.error('Overlay block decoration failed:', error);
 
-    block.innerHTML = '<p class="error-message" style="padding: 1rem; background: #fee; border: 1px solid #fcc; border-radius: 4px; color: #c00;">Unable to load overlay: ' + error.message + '</p>';
-  } finally {
-    console.groupEnd();
+    // Display user-friendly error message
+    block.innerHTML = `<p class="error-message" style="padding: 1rem; background: #fee; border: 1px solid #fcc; border-radius: 4px; color: #c00;">
+      Unable to load overlay: ${error.message}
+    </p>`;
   }
 }
-
-debugLog('Overlay module ready for export');

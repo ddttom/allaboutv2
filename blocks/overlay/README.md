@@ -34,22 +34,26 @@ The Overlay block allows you to display additional information without navigatin
 
 #### Basic Structure
 
-The Overlay block requires exactly **2 rows**:
+The Overlay block requires exactly **3 rows**:
 
 | Overlay |
 | ------- |
 | **Button Text** |
+| ------- |
 | **Overlay Content** |
 
-**Row 1:** The text that appears on the button (e.g., "Learn More", "View Details", "Contact Us")
+**Row 1:** The block name "Overlay" (this identifies the block to EDS)
 
-**Row 2:** The content that displays inside the overlay when clicked
+**Row 2:** The text that appears on the button (e.g., "Learn More", "View Details", "Contact Us")
+
+**Row 3:** The content that displays inside the overlay when clicked
 
 #### Simple Example
 
 | Overlay |
 | ------- |
 | Learn More |
+| ------- |
 | Welcome to our platform! Discover how we can help you achieve your goals with our comprehensive solutions. |
 
 This creates a "Learn More" button that shows the welcome message in an overlay.
@@ -61,6 +65,7 @@ You can include formatted content, lists, links, and more:
 | Overlay |
 | ------- |
 | View Features |
+| ------- |
 | **Our Amazing Features**<br><br>• Real-time Collaboration<br>• Advanced Analytics<br>• Enterprise Security<br>• 24/7 Support<br><br>[Learn More](https://example.com) |
 
 #### Multiple Overlays
@@ -70,11 +75,13 @@ You can have multiple overlay blocks on the same page - each will work independe
 | Overlay |
 | ------- |
 | About Us |
+| ------- |
 | Founded in 2020, we've been dedicated to providing exceptional service... |
 
 | Overlay |
 | ------- |
 | Contact |
+| ------- |
 | Email: hello@example.com<br>Phone: +1 (555) 123-4567 |
 
 ### Content Best Practices
@@ -96,25 +103,32 @@ The Overlay block is built with accessibility in mind:
 
 - ✅ **Keyboard navigation:** Press ESC to close, Tab to navigate within the overlay
 - ✅ **Screen reader support:** Proper ARIA labels and roles
-- ✅ **Focus management:** Focus moves to the close button when opened, returns to the trigger button when closed
+- ✅ **Focus management:** Focus moves to the close button when opened, returns to the trigger button when closed. If the overlay content contains focusable elements (links, buttons), Tab will navigate through them while the overlay is open.
 - ✅ **Clear close options:** Close button, click outside, or press ESC
 
 ### Styling
 
 The Overlay block uses your site's global styles:
 
-- **Button:** Uses standard button styling (rounded, blue background)
-- **Overlay:** White background, rounded corners, drop shadow
+- **Button:** Inherits global button styles from `styles/styles.css`
+- **Overlay:** White background, rounded corners (16px on desktop, 12px on tablet/mobile, 8px on small mobile), drop shadow
 - **Typography:** Inherits your site's fonts and colors
 - **Responsive:** Automatically adjusts for mobile, tablet, and desktop
 
 ### Technical Details
 
-#### Maximum Width
-The overlay content has a maximum width of 800px for optimal readability.
+#### Maximum Width & Height
+The overlay modal has a maximum width of 800px on desktop for optimal readability. On tablet and mobile devices (768px and below), the width adjusts to 100% with appropriate padding.
+
+**Responsive behavior:**
+- **Desktop:** max-width: 800px, max-height: 80vh
+- **Tablet/Mobile (≤768px):** max-width: 100%, max-height: 90vh
+- **Small Mobile (≤480px):** max-width: 100%, max-height: 95vh
 
 #### Animation Duration
-Fade-in and fade-out animations are 0.3 seconds (300ms).
+- **Overlay fade-in/fade-out:** 0.3 seconds (300ms)
+- **Modal scale transition:** 0.3 seconds (300ms)
+- **Close button rotation:** 0.2 seconds (200ms) on hover/focus
 
 #### Z-Index
 The overlay appears above all other content (z-index: 999).
@@ -140,8 +154,8 @@ blocks/overlay/
 #### decorate(block)
 
 Main decoration function that:
-1. Extracts button text from row 1
-2. Extracts overlay content from row 2
+1. Extracts button text from row 2 (row 1 is the block name "Overlay")
+2. Extracts overlay content from row 3
 3. Creates trigger button
 4. Handles overlay creation and event management
 
@@ -149,13 +163,15 @@ Main decoration function that:
 
 ```javascript
 const CONFIG = {
-  animationDuration: 300,              // Animation timing (ms)
-  backdropColor: 'rgba(0, 0, 0, 0.5)', // Backdrop transparency
-  borderRadius: '16px',                 // Modal corner radius
-  maxWidth: '800px',                    // Maximum modal width
-  closeButtonLabel: 'Close overlay',    // Accessibility label
+  animationDuration: 300,              // Animation timing (ms) - used in JavaScript timeout
+  backdropColor: 'rgba(0, 0, 0, 0.5)', // Documentation only - actual value hardcoded in CSS
+  borderRadius: '16px',                 // Documentation only - actual values in CSS: 16px desktop, 12px tablet, 8px mobile
+  maxWidth: '800px',                    // Documentation only - actual values in CSS: 800px desktop, 100% tablet/mobile
+  closeButtonLabel: 'Close overlay',    // Accessibility label - used in JavaScript
 };
 ```
+
+**Note:** Some CONFIG values are documentation-only references. To change `backdropColor`, `borderRadius`, or `maxWidth`, modify the CSS directly in [overlay.css](overlay.css). The CSS includes responsive values across three breakpoints (desktop, ≤768px, ≤480px).
 
 ### Key Functions
 
@@ -186,6 +202,10 @@ const CONFIG = {
 - `.overlay-container--dismissing` - Fades out the overlay
 - `body.overlay-open` - Prevents body scroll when overlay is active
 
+#### Responsive Breakpoints
+- **≤768px (Tablet/Mobile):** Adjusted padding, border-radius (12px), max-height (90vh)
+- **≤480px (Small Mobile):** Further optimized spacing, border-radius (8px), max-height (95vh)
+
 ### Accessibility Implementation
 
 - **ARIA Roles:** `role="dialog"`, `aria-modal="true"`
@@ -209,9 +229,15 @@ const CONFIG = {
 ### Error Handling
 
 If the block structure is invalid:
-- Logs error to console
-- Displays user-friendly error message
+- Logs detailed error to console for debugging
+- Displays a user-friendly error message in place of the block (visible to authors)
 - Prevents JavaScript errors from breaking the page
+- Example error: "Overlay block requires at least 2 rows with content"
+
+Common validation checks:
+- Verifies minimum 2 content rows exist (button text and overlay content)
+- Ensures content is not empty
+- Validates DOM structure before decoration
 
 ### Browser Support
 
@@ -249,7 +275,7 @@ Test with `blocks/overlay/test.html` or use the examples in `/drafts/overlay-exa
 
 #### Overlay doesn't appear
 - Check browser console for errors
-- Ensure block has 2 rows with content
+- Ensure block has exactly 3 rows: row 1 = "Overlay", row 2 = button text, row 3 = content
 - Verify JavaScript is loading
 
 #### Content is cut off

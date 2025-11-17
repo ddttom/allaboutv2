@@ -63,6 +63,7 @@ Your table should look like this in Google Docs:
 | Overlay |
 | ------- |
 | Learn More |
+| ------- |
 | Welcome to Our Platform<br><br>Discover how our platform can help you achieve your goals. We offer comprehensive solutions designed to streamline your workflow and increase productivity.<br><br>Get started today and see the difference for yourself! |
 
 ## More Examples
@@ -72,6 +73,7 @@ Your table should look like this in Google Docs:
 | Overlay |
 | ------- |
 | View Details |
+| ------- |
 | Our product includes:<br><br>• Real-time Collaboration<br>• Advanced Analytics<br>• Enterprise Security<br>• 24/7 Support |
 
 ### Example 2: Contact Information
@@ -79,6 +81,7 @@ Your table should look like this in Google Docs:
 | Overlay |
 | ------- |
 | Contact Us |
+| ------- |
 | **Get in Touch**<br><br>Email: hello@example.com<br>Phone: +1 (555) 123-4567<br>Hours: Monday - Friday, 9am - 5pm EST<br><br>We typically respond within 24 hours. |
 
 ### Example 3: With Links
@@ -86,6 +89,7 @@ Your table should look like this in Google Docs:
 | Overlay |
 | ------- |
 | Learn More |
+| ------- |
 | **Product Features**<br><br>Our platform offers comprehensive solutions for your business needs.<br><br>[View Pricing](https://example.com/pricing) \| [Request Demo](https://example.com/demo) |
 
 ### Example 4: Terms and Conditions
@@ -93,6 +97,7 @@ Your table should look like this in Google Docs:
 | Overlay |
 | ------- |
 | Read Terms |
+| ------- |
 | **Terms and Conditions**<br><br>By using our services, you agree to the following terms:<br><br>**1. Acceptance of Terms**<br>By accessing and using this service, you accept and agree to be bound by the terms and provision of this agreement.<br><br>**2. Use License**<br>Permission is granted to temporarily download one copy of the materials on our website for personal, non-commercial transitory viewing only. |
 
 ## Formatting Tips
@@ -143,12 +148,14 @@ You can add multiple overlay blocks to the same page. Each will work independent
 | Overlay |
 | ------- |
 | About Us |
+| ------- |
 | Founded in 2020, we've been dedicated to providing exceptional service... |
 
 **Second Overlay:**
 | Overlay |
 | ------- |
 | Our Mission |
+| ------- |
 | Our mission is to empower businesses through technology... |
 
 ## Best Practices

@@ -160,7 +160,7 @@ body.overlay-open {
   font-weight: 600;
 }
 
-/* Responsive adjustments */
+/* Responsive adjustments - Tablet and Mobile (768px and below) */
 @media (max-width: 768px) {
   .overlay-container {
     padding: 0.5rem;
@@ -193,6 +193,7 @@ body.overlay-open {
   }
 }
 
+/* Small mobile (480px and below) */
 @media (max-width: 480px) {
   .overlay-modal {
     max-height: 95vh;
