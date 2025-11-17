@@ -7,6 +7,7 @@
 
     <!-- EDS Core Styles -->
     <link rel="stylesheet" href="/styles/styles.css">
+    <link rel="stylesheet" href="/styles/fonts.css">
     <!-- Block Styles -->
     <link rel="stylesheet" href="overlay.css">
 
@@ -39,29 +40,12 @@
         .overlay {
             margin: 1rem 0;
         }
+
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
     </style>
-
-    <script type="module">
-        import decorate from './overlay.js';
-
-        // Make body visible (required by EDS global styles)
-        document.body.classList.add('appear');
-
-        // Wait for DOM to be ready
-        document.addEventListener('DOMContentLoaded', async () => {
-            // Find all overlay blocks and decorate them
-            const blocks = document.querySelectorAll('.overlay');
-
-            blocks.forEach(block => {
-                try {
-                    decorate(block);
-                    console.log('✅ Overlay block decorated successfully');
-                } catch (error) {
-                    console.error('❌ Failed to decorate overlay block:', error);
-                }
-            });
-        });
-    </script>
 </head>
 <body>
     <h1>Overlay Block - Development Tests</h1>
@@ -311,10 +295,31 @@
         </ul>
     </div>
 
-    <script>
+    <script type="module">
+        import decorate from './overlay.js';
+
         // Console logging for debugging
         console.log('🧪 Overlay Block Test Page Loaded');
         console.log('📊 Total overlay blocks found:', document.querySelectorAll('.overlay').length);
+
+        // Wait for DOM to be fully ready
+        document.addEventListener('DOMContentLoaded', () => {
+            // Decorate all overlay blocks directly (test.html uses static content)
+            const blocks = document.querySelectorAll('.overlay.block');
+
+            blocks.forEach((block) => {
+                try {
+                    decorate(block);
+                    console.log('✅ Overlay block decorated successfully');
+                } catch (error) {
+                    console.error('❌ Failed to decorate overlay block:', error);
+                }
+            });
+
+            // Add body.appear class after blocks are decorated (EDS pattern)
+            document.body.classList.add('appear');
+            console.log('✅ All blocks decorated, body.appear class added');
+        });
 
         // Monitor for errors
         window.addEventListener('error', (e) => {
