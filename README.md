@@ -113,6 +113,7 @@ This project includes a complete Claude Code configuration for AI-assisted devel
 ### Slash Commands
 - `/new-block <name>` - Create a new EDS block following Content Driven Development
 - `/test-block <name>` - Run tests for a specific block
+- `/create-notebook` - Create educational/interactive Jupyter notebooks (tutorials, guides, blogs)
 - `/check-block <name>` - Review block architecture and suggest improvements
 - `/deploy-block <name>` - Deploy a block from build/ to blocks/
 - `/lint-all` - Run all linting checks
@@ -131,7 +132,8 @@ Auto-activating skills provide inline guidance for:
 - **eds-block-development** - Complete block development patterns (decorate function, DOM manipulation, error handling)
 - **eds-block-testing** - Test file creation and testing workflows
 - **eds-performance-debugging** - Performance optimization and debugging techniques
-- **jupyter-notebook-testing** - NEW: Context-aware interactive testing with Jupyter notebooks, jsdom, JSLab kernel, and live preview generation
+- **jupyter-notebook-testing** - Context-aware interactive testing with Jupyter notebooks, jsdom, JSLab kernel, and live preview generation
+- **jupyter-educational-notebook** - NEW: Create educational notebooks, tutorials, guides, and interactive demos as SPAs
 - **skill-developer** - Managing Claude Code skills
 
 All skills are tailored specifically for EDS vanilla JavaScript development.
@@ -193,12 +195,17 @@ Each block should include:
 - [EDS Development Guide](docs/eds.md) - Complete EDS development reference
 - [EDS Best Practices](docs/eds-appendix.md) - Advanced patterns and techniques
 
-### Testing Documentation
-- [Jupyter Notebook Testing Guide](docs/for-ai/explaining-jupyter.md) - NEW: Context-aware interactive testing with live preview, includes:
+### Testing & Documentation
+- [Jupyter Notebook Testing Guide](docs/for-ai/explaining-jupyter.md) - Context-aware interactive testing with live preview, includes:
   - JSLab mode for development with jsdom virtual DOM
   - Browser mode for end-user interaction via ipynb-viewer block
   - Live preview HTML generation with iframe controls
   - Dual execution modes (Node.js and browser)
+- [Educational Notebooks Guide](docs/for-ai/explaining-educational-notebooks.md) - NEW: Create tutorials, guides, and interactive demos as SPAs:
+  - Transform text into engaging interactive content
+  - Progressive learning with demonstrations
+  - Blog posts, tutorials, reference guides, demos
+  - Use `/create-notebook` command for guided creation
 - [EDS Native Testing Standards](docs/for-ai/testing/eds-native-testing-standards.md) - Traditional test.html testing patterns
 - [ipynb-viewer Block Documentation](blocks/ipynb-viewer/README.md) - Display and execute notebooks on EDS pages
 

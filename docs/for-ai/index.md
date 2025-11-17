@@ -14,6 +14,13 @@ This index provides structured access to all documentation within the `docs/for-
   - Common scenarios and quick solutions
   - Progressive learning recommendations
 
+### 📓 Creating Tutorials & Documentation?
+- **[`explaining-educational-notebooks.md`](explaining-educational-notebooks.md)** - **Create interactive tutorials as SPAs**
+  - Transform text into engaging interactive content
+  - Blog posts, tutorials, reference guides, demos
+  - Use `/create-notebook` command for guided creation
+  - Perfect for sharing knowledge and onboarding
+
 ### Essential Starting Points
 - **New to EDS?** → Start with [`getting-started-guide.md`](getting-started-guide.md) then [`eds.md`](eds.md)
 - **Building Components?** → See [Implementation Guides](#-implementation-guides)
@@ -92,6 +99,20 @@ This index provides structured access to all documentation within the `docs/for-
   - Test file structure and EDS integration patterns
   - Accessibility, performance, and cross-browser testing
   - Target: Developers implementing testing for simple components
+
+- **[`explaining-jupyter.md`](explaining-jupyter.md)**
+  - Context-aware interactive testing with Jupyter notebooks
+  - JSLab mode for development with jsdom virtual DOM
+  - Live preview HTML generation with iframe controls
+  - Dual execution modes (Node.js and browser)
+  - Target: Developers using interactive testing workflows
+
+- **[`explaining-educational-notebooks.md`](explaining-educational-notebooks.md)** ⭐ NEW
+  - Create educational Jupyter notebooks as interactive SPAs
+  - Transform text into tutorials, guides, and blog posts
+  - Progressive learning with demonstrations
+  - Use `/create-notebook` command for guided creation
+  - Target: Developers creating tutorials, documentation, and demos
 
 - **[`testing/debug.md`](testing/debug.md)**
   - Debugging policies and standard approaches
@@ -206,12 +227,14 @@ This index provides structured access to all documentation within the `docs/for-
 2. [`implementation/raw-eds-blocks-guide.md`](implementation/raw-eds-blocks-guide.md) - Simple component development
 3. [`../server-README.md`](../server-README.md) - Local development setup
 4. [`guidelines/frontend-guidelines.md`](guidelines/frontend-guidelines.md) - Coding standards
+5. [`explaining-educational-notebooks.md`](explaining-educational-notebooks.md) - Create interactive tutorials and documentation
 
 ### For Experienced Developers
 1. [`implementation/block-architecture-standards.md`](implementation/block-architecture-standards.md) - Architecture patterns
 2. [`implementation/complex-eds-blocks-guide.md`](implementation/complex-eds-blocks-guide.md) - Advanced components
 3. [`testing/eds-native-testing-standards.md`](testing/eds-native-testing-standards.md) - Testing frameworks
-4. [`testing/debug.md`](testing/debug.md) - Debugging workflows
+4. [`explaining-jupyter.md`](explaining-jupyter.md) - Interactive testing with Jupyter
+5. [`testing/debug.md`](testing/debug.md) - Debugging workflows
 
 ### For Architects and Technical Leads
 1. [`implementation/design-philosophy-guide.md`](implementation/design-philosophy-guide.md) - Design decisions
@@ -241,8 +264,13 @@ This index provides structured access to all documentation within the `docs/for-
 
 ### Testing Phase
 - [`testing/eds-native-testing-standards.md`](testing/eds-native-testing-standards.md) - Testing standards
+- [`explaining-jupyter.md`](explaining-jupyter.md) - Interactive testing with notebooks
 - [`testing/debug.md`](testing/debug.md) - Debugging procedures
 - [`testing/instrumentation-how-it-works.md`](testing/instrumentation-how-it-works.md) - Performance analysis
+
+### Documentation Phase
+- [`explaining-educational-notebooks.md`](explaining-educational-notebooks.md) - Create tutorials and interactive guides
+- Use `/create-notebook` command for guided notebook creation
 
 ### Deployment Phase
 - [`guidelines/backend-structure.md`](guidelines/backend-structure.md) - Deployment architecture
@@ -256,8 +284,8 @@ This index provides structured access to all documentation within the `docs/for-
 ### **Implementation Guides** (7 documents)
 Component development patterns, architecture standards, and practical implementation guides
 
-### **Testing & Debugging** (5 documents)
-Testing frameworks, debugging procedures, and performance analysis
+### **Testing & Debugging** (7 documents)
+Testing frameworks, debugging procedures, performance analysis, and interactive testing with Jupyter notebooks
 
 ### **Project Guidelines** (6 documents)
 Project management, requirements, and organizational standards
@@ -288,9 +316,16 @@ Comprehensive references and detailed analysis documents
 
 ### **Testing & Quality**
 - Comprehensive testing strategies
+- Interactive testing with Jupyter notebooks
 - Performance instrumentation
 - Security best practices
 - Code quality standards
+
+### **Documentation & Tutorials**
+- Educational Jupyter notebooks as SPAs
+- Transform text into interactive tutorials
+- Progressive learning with demonstrations
+- Blog posts, guides, and reference documentation
 
 ---
 
@@ -301,7 +336,9 @@ Comprehensive references and detailed analysis documents
 2. Use [`getting-started-guide.md`](getting-started-guide.md) for user journey pathways and progressive learning paths
 3. Read [`eds.md`](eds.md) for comprehensive EDS understanding
 4. Reference [`implementation/block-architecture-standards.md`](implementation/block-architecture-standards.md) for development patterns
-5. Use [`testing/debug.md`](testing/debug.md) for troubleshooting workflows
+5. Use [`explaining-jupyter.md`](explaining-jupyter.md) for interactive testing workflows
+6. Use [`explaining-educational-notebooks.md`](explaining-educational-notebooks.md) for creating tutorials and documentation
+7. Use [`testing/debug.md`](testing/debug.md) for troubleshooting workflows
 
 ### **For Human Developers**
 1. Start with [`getting-started-guide.md`](getting-started-guide.md) for role-based learning paths
@@ -309,6 +346,7 @@ Comprehensive references and detailed analysis documents
 3. Choose implementation guide based on component complexity
 4. Set up local environment using [`../server-README.md`](../server-README.md)
 5. Follow testing standards from [`testing/eds-native-testing-standards.md`](testing/eds-native-testing-standards.md)
+6. Create tutorials and documentation using [`explaining-educational-notebooks.md`](explaining-educational-notebooks.md)
 
 ### **For Project Teams**
 1. Review [`guidelines/prd.md`](guidelines/prd.md) for project scope

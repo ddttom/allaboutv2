@@ -11,6 +11,7 @@
 - **Create new block**: Use `/new-block <name>` command (follows Content Driven Development)
 - **Test a block**: Use `/test-block <name>` command or open `test.ipynb` in JSLab
 - **Interactive testing**: Use Jupyter notebooks with context-aware execution
+- **Create educational notebook**: Use `/create-notebook` for tutorials, guides, and demos
 - **Share executable demos**: Use ipynb-viewer block for end-user interaction
 - **Review documentation**: Use `/review-docs` command
 - **Run all linting**: Use `/lint-all` command or `npm run lint`
@@ -27,6 +28,7 @@
 - `/start-cdd` - Start Content Driven Development process for creating or modifying blocks
 - `/test-block <name>` - Run tests for a specific EDS block
 - `/deploy-block <name>` - Deploy a block from build/ directory to blocks/ directory
+- `/create-notebook` - Create educational/interactive Jupyter notebooks (tutorials, guides, blogs)
 - `/lint-all` - Run all linting checks (JavaScript and CSS) across the project
 - `/check-block <name>` - Analyze a block and provide architecture review and improvement suggestions
 - `/check-security` - Run security checklist validation based on EDS security guidelines
@@ -111,33 +113,45 @@ When creating or modifying blocks, ALWAYS use Content Driven Development:
 - Architecture standards: `docs/for-ai/implementation/block-architecture-standards.md`
 - Testing standards: `docs/for-ai/testing/eds-native-testing-standards.md`
 - **NEW: Jupyter testing**: `docs/for-ai/explaining-jupyter.md` - Context-aware interactive testing with `initialize()` function (96% smaller Cell 1) and unified API
-- **NEW: ipynb-viewer block**: `blocks/ipynb-viewer/README.md` - Display executable notebooks
+- **NEW: Educational notebooks**: `docs/for-ai/explaining-educational-notebooks.md` - Create tutorials, guides, and interactive demos as SPAs
+- **NEW: ipynb-viewer block**: `blocks/ipynb-viewer/README.md` - Display executable notebooks with autorun, paged, and link navigation
 - Security checklist: `docs/for-ai/guidelines/security-checklist.md`
 - Frontend guidelines: `docs/for-ai/guidelines/frontend-guidelines.md`
 
-### Testing Approaches
+### Testing & Documentation Approaches
 
-**Multiple testing methods available:**
+**Multiple approaches available:**
 
 1. **Traditional test.html** - Browser-based visual testing
    - Full EDS core integration
    - Real browser rendering
    - User interaction testing
 
-2. **Jupyter Notebooks (JSLab)** - Interactive development testing
+2. **Jupyter Testing Notebooks (JSLab)** - Interactive development testing
    - Context-aware (Node.js and browser modes)
    - jsdom virtual DOM for block decoration
    - Live preview HTML generation with iframe controls
    - Cell-by-cell execution with inline documentation
    - File: `test.ipynb`
+   - Focus: Testing EDS blocks
 
-3. **ipynb-viewer Block** - End-user executable notebooks
+3. **Educational Jupyter Notebooks** - Interactive tutorials and documentation
+   - Create tutorials, guides, blog posts as SPAs
+   - Transform text into engaging interactive content
+   - Progressive learning with demonstrations
+   - Use `/create-notebook` command
+   - Files: `blog.ipynb`, `tutorial.ipynb`, `guide.ipynb`
+   - Focus: Teaching and explaining concepts
+
+4. **ipynb-viewer Block** - Display notebooks on EDS pages
    - Display .ipynb files on EDS pages
    - Interactive JavaScript execution in browser
-   - Perfect for tutorials, demos, documentation
+   - Multiple display modes: basic, paged, autorun, notebook
+   - Link navigation between pages with hash targets
+   - Perfect for sharing tutorials, demos, documentation
    - Location: `blocks/ipynb-viewer/`
 
-4. **Automated Tests** - CI/CD integration
+5. **Automated Tests** - CI/CD integration
    - Jest/Mocha for regression testing
    - Coverage reports
    - Future implementation

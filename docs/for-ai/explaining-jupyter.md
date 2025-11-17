@@ -591,16 +591,47 @@ The **ipynb-viewer** EDS block allows you to display and execute Jupyter noteboo
 - **Result display**: Shows return values from code execution
 - **Error handling**: Catches and displays errors with styling
 - **Cell independence**: Run any cell at any time in any order
+- **Autorun mode (NEW)**: Automatically execute code cells without Run buttons
+- **Notebook variation (NEW)**: Combined paged, autorun, and manual modes
+- **Link navigation (NEW)**: Navigate between overlay pages using hash targets
 
 ### Usage in EDS
 
 Add the block to your Google Doc:
 
+**Basic mode (default):**
 ```
 | IPynb Viewer |
 |--------------|
 | /notebooks/test.ipynb |
 ```
+
+**Paged mode:**
+```
+| IPynb Viewer (paged) |
+|----------------------|
+| /notebooks/test.ipynb |
+```
+
+**Autorun mode (NEW):**
+```
+| IPynb Viewer (autorun) |
+|------------------------|
+| /notebooks/test.ipynb |
+```
+- Code cells execute automatically when displayed
+- No Run buttons (cleaner interface)
+- Perfect for demonstrations and presentations
+
+**Notebook variation (NEW):**
+```
+| IPynb Viewer (notebook) |
+|--------------------------|
+| /notebooks/test.ipynb |
+```
+- Combines paged overlay + autorun + manual documentation
+- Complete educational experience
+- Perfect for tutorials with reference material
 
 ### What Gets Executed
 

@@ -225,6 +225,16 @@ html {
   transform: scale(0.95);
 }
 
+/* Autorun Mode: Hide run button */
+.ipynb-autorun .ipynb-run-button {
+  display: none;
+}
+
+/* Autorun Mode: Adjust header when no button */
+.ipynb-autorun .ipynb-cell-header {
+  justify-content: flex-start;
+}
+
 .ipynb-code-content {
   background: var(--code-background, #f8f9fa);
   padding: 1rem;

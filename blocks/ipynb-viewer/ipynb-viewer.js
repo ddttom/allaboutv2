@@ -175,12 +175,17 @@ function createMarkdownCell(cell, index) {
  * Create a code cell element with execution button
  * @param {object} cell - Notebook cell data
  * @param {number} index - Overall cell index
+ * @param {boolean} autorun - Whether to hide run button (autorun mode)
  * @returns {HTMLElement} Cell element
  */
-function createCodeCell(cell, index) {
+function createCodeCell(cell, index, autorun = false) {
   const cellDiv = document.createElement('div');
   cellDiv.className = 'ipynb-cell ipynb-code-cell';
   cellDiv.dataset.cellIndex = index;
+
+  if (autorun) {
+    cellDiv.classList.add('ipynb-autorun');
+  }
 
   // Cell header with run button
   const header = document.createElement('div');
@@ -190,13 +195,16 @@ function createCodeCell(cell, index) {
   cellLabel.className = 'ipynb-cell-label';
   cellLabel.textContent = `[${index + 1}]:`;
 
-  const runButton = document.createElement('button');
-  runButton.className = 'ipynb-run-button';
-  runButton.textContent = 'Run';
-  runButton.setAttribute('aria-label', `Run code cell ${index + 1}`);
-
   header.appendChild(cellLabel);
-  header.appendChild(runButton);
+
+  // Only add run button if not in autorun mode
+  if (!autorun) {
+    const runButton = document.createElement('button');
+    runButton.className = 'ipynb-run-button';
+    runButton.textContent = 'Run';
+    runButton.setAttribute('aria-label', `Run code cell ${index + 1}`);
+    header.appendChild(runButton);
+  }
 
   // Code content
   const codeContent = document.createElement('pre');
@@ -208,10 +216,10 @@ function createCodeCell(cell, index) {
 
   codeContent.appendChild(code);
 
-  // Output area (initially hidden)
+  // Output area (initially hidden, unless autorun)
   const output = document.createElement('div');
   output.className = 'ipynb-cell-output';
-  output.style.display = 'none';
+  output.style.display = autorun ? 'block' : 'none';
 
   // Store code for execution
   cellDiv.dataset.code = codeText;
@@ -411,9 +419,10 @@ function createPageGroups(cells) {
  * Create full-screen overlay for paged variation
  * @param {HTMLElement} container - The notebook container
  * @param {HTMLElement} cellsContainer - Container with cells
+ * @param {boolean} autorun - Whether to autorun code cells
  * @returns {object} Overlay controls
  */
-function createPagedOverlay(container, cellsContainer) {
+function createPagedOverlay(container, cellsContainer, autorun = false) {
   const cells = Array.from(cellsContainer.querySelectorAll('.ipynb-cell'));
 
   if (cells.length === 0) return null;
@@ -427,6 +436,7 @@ function createPagedOverlay(container, cellsContainer) {
     totalPages,
     pages,
     isOverlayOpen: false,
+    autorun,
   };
 
   // Create overlay structure
@@ -475,7 +485,7 @@ function createPagedOverlay(container, cellsContainer) {
   overlay.appendChild(overlayContent);
 
   // Update page display
-  function updatePageDisplay() {
+  async function updatePageDisplay() {
     // Clear cell area
     cellContentArea.innerHTML = '';
 
@@ -483,7 +493,7 @@ function createPagedOverlay(container, cellsContainer) {
     const currentPage = pages[paginationState.currentPage];
 
     // Clone and append all cells in this page
-    currentPage.cells.forEach((cell) => {
+    for (const cell of currentPage.cells) {
       const clonedCell = cell.cloneNode(true);
       clonedCell.classList.add('active');
       cellContentArea.appendChild(clonedCell);
@@ -491,12 +501,27 @@ function createPagedOverlay(container, cellsContainer) {
       // Re-attach run button handlers if it's a code cell
       if (clonedCell.classList.contains('ipynb-code-cell')) {
         const runButton = clonedCell.querySelector('.ipynb-run-button');
-        if (runButton) {
+
+        // In autorun mode, automatically execute the cell
+        if (paginationState.autorun) {
+          await executeCodeCell(clonedCell);
+        } else if (runButton) {
+          // Otherwise, attach click handler
           runButton.addEventListener('click', () => {
             executeCodeCell(clonedCell);
           });
         }
       }
+    }
+
+    // Add click handlers to links with hash targets for overlay navigation
+    const links = cellContentArea.querySelectorAll('a[href^="#"]');
+    links.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        navigateToAnchor(target);
+      });
     });
 
     // Add spacing between grouped cells for better readability
@@ -583,12 +608,47 @@ function createPagedOverlay(container, cellsContainer) {
 
   document.addEventListener('keydown', keyHandler);
 
+  // Navigate to an anchor within the overlay
+  function navigateToAnchor(target) {
+    if (!paginationState.isOverlayOpen) return;
+
+    // Find the page that contains an element with the target ID
+    const targetId = target.replace('#', '');
+
+    for (let i = 0; i < pages.length; i++) {
+      const page = pages[i];
+      // Check if any cell in this page contains the target
+      const hasTarget = page.cells.some(cell => {
+        const content = cell.querySelector(`#${targetId}`);
+        return content !== null;
+      });
+
+      if (hasTarget) {
+        // Navigate to this page
+        paginationState.currentPage = i;
+        updatePageDisplay();
+        return;
+      }
+    }
+
+    // If no exact match, try part-X pattern
+    const partMatch = targetId.match(/^part-(\d+)$/);
+    if (partMatch) {
+      const partNum = parseInt(partMatch[1], 10) - 1; // Convert to 0-indexed
+      if (partNum >= 0 && partNum < totalPages) {
+        paginationState.currentPage = partNum;
+        updatePageDisplay();
+      }
+    }
+  }
+
   // Append overlay to body
   document.body.appendChild(overlay);
 
   return {
     openOverlay,
     closeOverlay,
+    navigateToAnchor,
   };
 }
 
@@ -724,6 +784,8 @@ export default async function decorate(block) {
   // Detect variations
   const isPaged = block.classList.contains('paged');
   const hasManual = block.classList.contains('manual');
+  const isAutorun = block.classList.contains('autorun');
+  const isNotebook = block.classList.contains('notebook'); // Combines manual, paged, and autorun
 
   try {
     // Extract notebook path from block content
@@ -790,19 +852,31 @@ export default async function decorate(block) {
       throw new Error('Notebook has no cells');
     }
 
-    notebook.cells.forEach((cell, index) => {
+    // Determine if autorun should be enabled
+    const shouldAutorun = isAutorun || isNotebook;
+
+    notebook.cells.forEach(async (cell, index) => {
       let cellElement;
 
       if (cell.cell_type === 'markdown') {
         cellElement = createMarkdownCell(cell, index);
       } else if (cell.cell_type === 'code') {
-        cellElement = createCodeCell(cell, index);
+        cellElement = createCodeCell(cell, index, shouldAutorun);
 
-        // Add click handler for run button
-        const runButton = cellElement.querySelector('.ipynb-run-button');
-        runButton.addEventListener('click', () => {
-          executeCodeCell(cellElement);
-        });
+        // Add click handler for run button (if not autorun)
+        if (!shouldAutorun) {
+          const runButton = cellElement.querySelector('.ipynb-run-button');
+          if (runButton) {
+            runButton.addEventListener('click', () => {
+              executeCodeCell(cellElement);
+            });
+          }
+        } else {
+          // In autorun mode, execute immediately in default view
+          if (!isPaged && !isNotebook) {
+            await executeCodeCell(cellElement);
+          }
+        }
       }
 
       if (cellElement) {
@@ -813,8 +887,8 @@ export default async function decorate(block) {
     // Assemble container
     container.appendChild(header);
 
-    // Handle paged variation differently
-    if (isPaged) {
+    // Handle paged, autorun, and notebook variations
+    if (isPaged || isNotebook) {
       // Hide cells initially in paged mode
       cellsContainer.style.display = 'none';
       container.appendChild(cellsContainer);
@@ -827,16 +901,16 @@ export default async function decorate(block) {
       const startButton = createPagedStartButton();
       buttonContainer.appendChild(startButton);
 
-      // Create overlay
-      const overlay = createPagedOverlay(container, cellsContainer);
+      // Create overlay with autorun support
+      const overlay = createPagedOverlay(container, cellsContainer, shouldAutorun);
 
       // Start button opens overlay
       startButton.addEventListener('click', () => {
         overlay.openOverlay();
       });
 
-      // Add manual button if manual variation is present
-      if (hasManual) {
+      // Add manual button if manual variation or notebook variation is present
+      if (hasManual || isNotebook) {
         const manualButton = createManualButton();
         buttonContainer.appendChild(manualButton);
 

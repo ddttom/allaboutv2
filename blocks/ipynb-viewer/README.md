@@ -11,9 +11,12 @@ Display and execute Jupyter notebook (.ipynb) files directly in your EDS site wi
 **Direct ES6 Imports**: Each cell imports what it needs independently. 
 **Output Display**: Shows console logs, results, and errors inline. 
 **Overlay Previews**: Full-screen overlays for visual testing (no popup blockers). 
-**Paged Variation**: Display cells one at a time with navigation controls (NEW). 
-**Responsive Design**: Mobile-friendly layout. 
-**Syntax Highlighting**: Clear code formatting with monospace fonts. 
+**Paged Variation**: Display cells one at a time with navigation controls.
+**Autorun Mode**: Automatically execute code cells without Run buttons (NEW).
+**Notebook Variation**: Combined manual, paged, and autorun modes (NEW).
+**Link Navigation**: Navigate between overlays using hash targets (NEW).
+**Responsive Design**: Mobile-friendly layout.
+**Syntax Highlighting**: Clear code formatting with monospace fonts.
 **Error Handling**: Graceful error messages and visual indicators.
 
 ## Usage
@@ -48,17 +51,67 @@ Display notebook cells one at a time in a full-screen overlay with Previous/Next
 
 **Features:**
 
-**Start Reading button** clicks to enter full-screen reading mode. 
-**Full-viewport overlay** provides an immersive, distraction-free reading experience. 
-**Smart cell grouping** (NEW) automatically combines instruction markdown with following code cells. 
-**One page at a time** lets you focus on current content without page jumping. 
-**Previous/Next navigation** navigates between logical pages with buttons. 
-**Page indicator** shows logical page count (e.g., "1 / 8" instead of raw cell count). 
-**Close button (×)** exits overlay and returns to page. 
-**Keyboard shortcuts**: Arrow Left/Right navigates between pages, Escape closes overlay. 
-**No page jumping** keeps the overlay fixed in viewport. 
-**Responsive design** adapts to mobile, tablet, and desktop. 
+**Start Reading button** clicks to enter full-screen reading mode.
+**Full-viewport overlay** provides an immersive, distraction-free reading experience.
+**Smart cell grouping** (NEW) automatically combines instruction markdown with following code cells.
+**One page at a time** lets you focus on current content without page jumping.
+**Previous/Next navigation** navigates between logical pages with buttons.
+**Page indicator** shows logical page count (e.g., "1 / 8" instead of raw cell count).
+**Close button (×)** exits overlay and returns to page.
+**Keyboard shortcuts**: Arrow Left/Right navigates between pages, Escape closes overlay.
+**No page jumping** keeps the overlay fixed in viewport.
+**Responsive design** adapts to mobile, tablet, and desktop.
 **Dark backdrop** reduces distractions (95% opacity black).
+
+### Autorun Variation (NEW)
+
+Automatically execute all code cells without requiring Run button clicks:
+
+```
+| IPynb Viewer (autorun) |
+|------------------------|
+| /path/to/notebook.ipynb |
+```
+
+**Features:**
+
+**Automatic execution** runs code cells immediately when displayed.
+**No Run buttons** provides a cleaner, presentation-focused interface.
+**Output always visible** shows results by default without user action.
+**Perfect for demos** ideal for presentations and live demonstrations.
+**Still interactive** users can re-run cells by refreshing or modifying code.
+**Works in all modes** functions in both default view and paged overlay.
+
+**Use Cases:**
+- Live presentations where code should execute automatically
+- Demonstrations that don't require user interaction
+- Educational content with pre-validated output
+- Progressive examples that build on each other
+
+### Notebook Variation (NEW)
+
+Combines manual, paged, and autorun modes for the complete educational experience:
+
+```
+| IPynb Viewer (notebook) |
+|--------------------------|
+| /path/to/notebook.ipynb |
+```
+
+**Features:**
+
+**Start Reading button** opens paged overlay with automatic code execution.
+**Read the Manual button** provides access to block documentation.
+**Automatic execution** code runs as you navigate pages in overlay.
+**Full integration** combines all features (paging, manual, autorun).
+**Perfect for tutorials** complete learning experience with reference docs.
+**Side-by-side access** switch between notebook and documentation easily.
+
+**Use Cases:**
+- Complete interactive tutorials with documentation
+- Educational courses requiring reference material
+- Complex demonstrations with help documentation
+- Training materials with built-in guides
 
 ### Variation: Paged + Manual (NEW)
 
@@ -182,6 +235,43 @@ await showPreview('accordion', content);
 return block.outerHTML;
 ```
 
+### Link Navigation Between Overlays (NEW)
+
+Navigate between pages in the paged overlay using hash links in markdown:
+
+**How it works:**
+
+Create links with hash targets in markdown cells:
+```markdown
+Jump to [Part 3](#part-3) or see the [Advanced Examples](#advanced-examples)
+```
+
+When clicked in the paged overlay:
+- **Searches all pages** for the target ID
+- **Navigates automatically** to the page containing the target
+- **No page reload** smooth transition within overlay
+- **Works with part-X pattern** `#part-3` navigates to logical page 3
+
+**Use Cases:**
+- **Table of Contents** with clickable navigation
+- **Cross-references** between sections
+- **Progressive learning** with "skip ahead" links
+- **Modular content** allowing non-linear exploration
+
+**Example markdown cell:**
+```markdown
+## Table of Contents
+
+- [Introduction](#part-1)
+- [Core Concepts](#part-2)
+- [Advanced Topics](#part-3)
+- [Conclusion](#part-4)
+
+You can also jump to specific sections:
+- [Error Handling](#error-handling)
+- [Best Practices](#best-practices)
+```
+
 ### Live Preview with Overlay
 
 When using `showPreview()` in code cells, the **Overlay system** opens full-screen overlay on the same page (no popup blockers!). **Responsive preview** switches between Mobile (375×667), Tablet (768×1024), and Desktop (95%×95vh) views. **Full styling** loads all CSS properly with complete styling support. **Full interactivity** executes block JavaScript with event handlers working. **Easy dismissal** via ESC, backdrop click, or close button. **No popup blockers** since it stays on the same page with no new windows.
@@ -227,6 +317,15 @@ Switch between views with one click to test block responsiveness!
 ### Code Execution
 
 Code runs in the browser using `AsyncFunction` constructor for async/await support. Console methods are temporarily captured during execution. Results are displayed in an output area below each cell. Errors are caught and displayed with red styling. Each cell runs independently with its own scope.
+
+**Autorun Mode:**
+
+When `autorun` or `notebook` variations are used:
+- Code cells execute automatically when displayed
+- Run buttons are hidden via CSS (`.ipynb-autorun` class)
+- Output areas are visible by default (`display: block`)
+- In paged mode, cells execute when navigating to each page
+- Uses same async execution context as manual mode
 
 ### Paged Variation Implementation
 
@@ -276,6 +375,54 @@ The paged variation uses a full-screen overlay approach to eliminate page jumpin
 **Key Features:**
 
 Smart cell grouping for better context. Instruction and code shown together. Multiple consecutive code cells (up to 3) grouped with their instruction. Logical page navigation. No page jumping (fixed viewport position). Prevents background scrolling when open. Smooth fade-in animation (0.3s). Responsive sizing (90vw × 90vh on desktop). Full-screen on mobile (100vw × 100vh).
+
+**Link Navigation (NEW):**
+
+Hash links (`<a href="#target">`) in markdown cells enable navigation between pages:
+
+```javascript
+// Add click handlers for hash links
+const links = cellContentArea.querySelectorAll('a[href^="#"]');
+links.forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const target = link.getAttribute('href');
+    navigateToAnchor(target);
+  });
+});
+
+// Navigate to page containing target
+function navigateToAnchor(target) {
+  const targetId = target.replace('#', '');
+
+  // Search pages for target ID
+  for (let i = 0; i < pages.length; i++) {
+    const hasTarget = pages[i].cells.some(cell => {
+      return cell.querySelector(`#${targetId}`) !== null;
+    });
+
+    if (hasTarget) {
+      paginationState.currentPage = i;
+      updatePageDisplay();
+      return;
+    }
+  }
+
+  // Handle part-X pattern (e.g., #part-3 → page 2)
+  const partMatch = targetId.match(/^part-(\\d+)$/);
+  if (partMatch) {
+    const partNum = parseInt(partMatch[1], 10) - 1;
+    paginationState.currentPage = partNum;
+    updatePageDisplay();
+  }
+}
+```
+
+**How it works:**
+1. Intercepts clicks on hash links in overlay
+2. Searches all pages for matching ID attribute
+3. Updates current page and refreshes display
+4. Supports `part-X` pattern for direct page access
 
 **Grouping Examples:**
 
@@ -521,4 +668,20 @@ Check CSS custom properties are defined. Verify block CSS is loaded. Test with d
 
 ## Future Enhancements
 
-Potential improvements for future versions: Syntax highlighting for code. Cell execution order tracking. Persistent cell outputs. Export results to file. Support for cell metadata (collapsed, hidden). Image output support. Rich output display (HTML, SVG). Paged variation enhancements: Group cells by headers (e.g., one H2 section per page). Page jump navigation. URL hash support for deep linking to specific pages.
+Potential improvements for future versions:
+
+**Implemented ✅:**
+- ~~URL hash support for deep linking~~ (DONE - Link navigation implemented)
+- ~~Autorun mode for automatic execution~~ (DONE - Autorun variation implemented)
+- ~~Combined variations~~ (DONE - Notebook variation implemented)
+
+**Planned:**
+- Syntax highlighting for code cells
+- Cell execution order tracking
+- Persistent cell outputs across page reloads
+- Export results to file (JSON, HTML)
+- Support for cell metadata (collapsed, hidden)
+- Image output support (PNG, SVG)
+- Rich output display (HTML, SVG, tables)
+- Group cells by headers (e.g., one H2 section per page)
+- Page jump navigation with dropdown selector

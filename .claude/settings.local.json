@@ -50,7 +50,13 @@
       "Skill(eds-block-development)",
       "Bash(npm run debug:*)",
       "Skill(webapp-testing)",
-      "Bash(playwright install:*)"
+      "Bash(playwright install:*)",
+      "Bash(npx tsx:*)",
+      "Bash(CLAUDE_PROJECT_DIR=/Users/tomcranstoun/Documents/GitHub/allaboutV2 echo:*)",
+      "Bash(CLAUDE_PROJECT_DIR=/Users/tomcranstoun/Documents/GitHub/allaboutV2 node:*)",
+      "SlashCommand(/create-notebook test command)",
+      "SlashCommand(/create-notebook:*)",
+      "Bash(grep:*)"
     ],
     "deny": [],
     "ask": []

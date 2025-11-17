@@ -140,19 +140,16 @@
             "description": "Creating and managing Jupyter notebooks for testing EDS blocks with jsdom and JSLab. Use when creating notebooks, testing blocks with ipynb files, using jslab kernel, generating HTML previews, working with testBlock or saveBlockHTML functions, or setting up interactive block testing environments.",
             "promptTriggers": {
                 "keywords": [
-                    "jupyter",
-                    "notebook",
-                    "ipynb",
+                    "test notebook",
+                    "testing blocks",
                     "jslab",
                     "jsdom",
                     "testBlock",
                     "saveBlockHTML",
                     "loadBlockStyles",
-                    "interactive testing",
-                    "notebook testing",
-                    "create notebook",
-                    "test notebook",
-                    "notebook setup",
+                    "block testing",
+                    "test block",
+                    "debug block",
                     "kernel",
                     "tslab",
                     "virtual DOM",
@@ -161,10 +158,8 @@
                     "live reload"
                 ],
                 "intentPatterns": [
-                    "(create|add|make|build|setup).*?notebook",
-                    "(test|debug|run).*?notebook",
-                    "(jupyter|ipynb).*?(test|setup|create|use)",
-                    "notebook.*?(block|testing|preview)",
+                    "(test|debug|verify).*?block.*?(notebook|ipynb)",
+                    "notebook.*?(block|testing|debug)",
                     "(how to|how do I).*?test.*?block.*?notebook",
                     "(generate|create|save).*?(HTML|preview).*?block",
                     "testBlock|saveBlockHTML|loadBlockStyles",
@@ -174,10 +169,8 @@
             },
             "fileTriggers": {
                 "pathPatterns": [
-                    "**/*.ipynb",
                     "test.ipynb",
-                    "**/test-*.ipynb",
-                    "ipynb-tests/**/*"
+                    "**/test-*.ipynb"
                 ],
                 "contentPatterns": [
                     "require\\('jsdom'\\)",
@@ -189,6 +182,74 @@
                     "jslab",
                     "global\\.document",
                     "global\\.window"
+                ]
+            }
+        },
+        "jupyter-educational-notebook": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "medium",
+            "description": "Creating educational and interactive Jupyter notebooks as SPAs for explaining concepts, teaching topics, creating tutorials, or transforming text into engaging content. NOT for testing EDS blocks.",
+            "promptTriggers": {
+                "keywords": [
+                    "educational notebook",
+                    "interactive notebook",
+                    "tutorial notebook",
+                    "blog notebook",
+                    "SPA notebook",
+                    "explain topic",
+                    "illustrate concept",
+                    "teach interactively",
+                    "create tutorial",
+                    "interactive guide",
+                    "notebook from text",
+                    "transform text",
+                    "engaging content",
+                    "learning notebook",
+                    "demonstration notebook",
+                    "reference notebook",
+                    "documentation notebook",
+                    "ipynb-viewer",
+                    "educational content",
+                    "interactive demo"
+                ],
+                "intentPatterns": [
+                    "(create|make|build|write).*?(tutorial|guide|blog|explanation).*?notebook",
+                    "(transform|convert|turn).*?text.*?(notebook|interactive)",
+                    "notebook.*?(explain|teach|illustrate|demonstrate)",
+                    "(explain|illustrate|teach|demonstrate).*?(topic|concept).*?notebook",
+                    "(interactive|educational).*?(tutorial|guide|demo|blog)",
+                    "(how to|how do I).*(create|write).*?tutorial",
+                    "notebook.*?(end user|client|learner|audience)"
+                ]
+            },
+            "avoidTriggers": {
+                "keywords": [
+                    "test block",
+                    "testing",
+                    "debug",
+                    "jsdom",
+                    "testBlock",
+                    "saveBlockHTML"
+                ],
+                "intentPatterns": [
+                    "(test|debug|verify).*?block"
+                ]
+            },
+            "fileTriggers": {
+                "pathPatterns": [
+                    "**/*-tutorial.ipynb",
+                    "**/*-guide.ipynb",
+                    "**/*-blog.ipynb",
+                    "**/*-demo.ipynb",
+                    "blog.ipynb",
+                    "explain.ipynb",
+                    "tutorial.ipynb",
+                    "guide.ipynb"
+                ],
+                "pathExclusions": [
+                    "test.ipynb",
+                    "**/test-*.ipynb"
                 ]
             }
         }
