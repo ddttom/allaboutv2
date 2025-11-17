@@ -56,7 +56,7 @@
         <h2>Test 1: Simple Text Content</h2>
         <p>Basic overlay with simple text content.</p>
 
-        <div class="overlay block">
+        <div class="overlay">
             <div>
                 <div>Learn More</div>
             </div>
@@ -75,7 +75,7 @@
         <h2>Test 2: Rich Content with Lists</h2>
         <p>Overlay containing formatted lists and bold text.</p>
 
-        <div class="overlay block">
+        <div class="overlay">
             <div>
                 <div>View Features</div>
             </div>
@@ -99,7 +99,7 @@
         <h2>Test 3: Content with Links</h2>
         <p>Overlay with interactive links.</p>
 
-        <div class="overlay block">
+        <div class="overlay">
             <div>
                 <div>View Details</div>
             </div>
@@ -122,7 +122,7 @@
         <h2>Test 4: Long Scrollable Content</h2>
         <p>Overlay with content that exceeds viewport height (tests scrolling).</p>
 
-        <div class="overlay block">
+        <div class="overlay">
             <div>
                 <div>Read Terms</div>
             </div>
@@ -165,7 +165,7 @@
         <p>Multiple overlay blocks working independently.</p>
 
         <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-            <div class="overlay block">
+            <div class="overlay">
                 <div>
                     <div>About Us</div>
                 </div>
@@ -177,7 +177,7 @@
                 </div>
             </div>
 
-            <div class="overlay block">
+            <div class="overlay">
                 <div>
                     <div>Our Mission</div>
                 </div>
@@ -189,7 +189,7 @@
                 </div>
             </div>
 
-            <div class="overlay block">
+            <div class="overlay">
                 <div>
                     <div>Contact</div>
                 </div>
@@ -210,7 +210,7 @@
         <p>Testing different button text lengths.</p>
 
         <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-            <div class="overlay block">
+            <div class="overlay">
                 <div>
                     <div>!</div>
                 </div>
@@ -222,7 +222,7 @@
                 </div>
             </div>
 
-            <div class="overlay block">
+            <div class="overlay">
                 <div>
                     <div>Click Here to Learn More About Our Amazing Platform</div>
                 </div>
@@ -305,10 +305,13 @@
         // Wait for DOM to be fully ready
         document.addEventListener('DOMContentLoaded', () => {
             // Decorate all overlay blocks directly (test.html uses static content)
-            const blocks = document.querySelectorAll('.overlay.block');
+            // Mimic EDS behavior: find by class name, add .block class automatically
+            const blocks = document.querySelectorAll('.overlay');
 
             blocks.forEach((block) => {
                 try {
+                    // Add .block class like EDS decorateBlock() does
+                    block.classList.add('block');
                     decorate(block);
                     console.log('✅ Overlay block decorated successfully');
                 } catch (error) {

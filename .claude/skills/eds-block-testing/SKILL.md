@@ -186,7 +186,7 @@ http://localhost:3000/blocks/your-block/test.html
 ### Basic Two-Column Structure
 
 ```html
-<div class="your-block block">
+<div class="your-block">
     <!-- Row 1 -->
     <div>
         <div>Column 1 Content</div>
@@ -200,7 +200,12 @@ http://localhost:3000/blocks/your-block/test.html
 </div>
 ```
 
-**Important:** This structure matches how EDS creates blocks from Google Docs tables!
+**Important:**
+- This structure matches how EDS creates blocks from Google Docs tables
+- The `.block` class is **automatically added** by EDS's `decorateBlock()` function in production
+- For test files, you can either:
+  - Add `.block` manually: `<div class="your-block block">`
+  - Let your test script add it automatically (recommended - mimics production behavior)
 
 ### With Images
 
