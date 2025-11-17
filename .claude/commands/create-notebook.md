@@ -363,7 +363,7 @@ Use triple backticks in markdown cells for syntax examples that won't execute:
      "metadata": {
        "title": "The Art of Jupyter Notebooks",
        "description": "A meta-tutorial teaching you how to create engaging, educational notebooks by being one itself",
-       "author": "Claude Code",
+       "author": "{{PICK AUTHOR NAME}}",
        "date": "2025-01-17",
        "version": "1.4",
        "category": "tutorial",

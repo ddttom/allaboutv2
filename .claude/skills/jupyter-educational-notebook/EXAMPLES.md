@@ -18,6 +18,31 @@ This file contains complete examples of different notebook types with actual cod
 
 **Based on:** `blog.ipynb` - Interactive blog post about ipynb-viewer
 
+### Metadata Example
+
+```json
+{
+  "metadata": {
+    "title": "Interactive Blog Post: Introducing ipynb-viewer for EDS",
+    "description": "Learn how ipynb-viewer transforms Jupyter notebooks into interactive blog posts",
+    "author": "Your Name",
+    "date": "2025-01-17",
+    "version": "1.0",
+    "category": "blog",
+    "difficulty": "beginner",
+    "duration": "20 minutes",
+    "tags": ["blog", "ipynb-viewer", "EDS", "interactive", "tutorial"],
+    "license": "MIT"
+  }
+}
+```
+
+**Why these fields:**
+- **category: "blog"** → Blue badge showing content type
+- **difficulty: "beginner"** → Orange badge, accessible to all readers
+- **duration: "20 minutes"** → Purple badge, helps readers plan their time
+- **tags** → Searchable keywords, gray pills for categorization
+
 ### Structure Overview (41 cells)
 
 - **Cell 1 (Markdown):** Title, introduction, "what is this?" explanation
@@ -192,6 +217,31 @@ We're passionate about helping businesses leverage the power of Edge Delivery Se
 ## Tutorial Notebook
 
 **Purpose:** Step-by-step learning with exercises and progressive complexity.
+
+### Metadata Example
+
+```json
+{
+  "metadata": {
+    "title": "Tutorial: Building Your First EDS Block",
+    "description": "Hands-on tutorial for creating, testing, and deploying EDS blocks from scratch",
+    "author": "Your Name",
+    "date": "2025-01-17",
+    "version": "1.0",
+    "category": "tutorial",
+    "difficulty": "intermediate",
+    "duration": "45 minutes",
+    "tags": ["tutorial", "EDS", "blocks", "hands-on", "learning"],
+    "license": "MIT"
+  }
+}
+```
+
+**Why these fields:**
+- **category: "tutorial"** → Clearly identifies as step-by-step learning
+- **difficulty: "intermediate"** → Sets expectations for required knowledge
+- **duration: "45 minutes"** → Longer duration reflects hands-on exercises
+- **tags** → Includes "hands-on" and "learning" for educational context
 
 ### Structure Template (20-30 cells)
 
@@ -422,6 +472,31 @@ You've learned how to:
 
 **Purpose:** Deep dive into a single topic with technical details and demonstrations.
 
+### Metadata Example
+
+```json
+{
+  "metadata": {
+    "title": "Understanding Block Decoration in EDS",
+    "description": "A comprehensive deep dive into how EDS blocks transform content into interactive elements",
+    "author": "Your Name",
+    "date": "2025-01-17",
+    "version": "1.0",
+    "category": "concept",
+    "difficulty": "advanced",
+    "duration": "30 minutes",
+    "tags": ["concept", "EDS", "blocks", "decoration", "technical"],
+    "license": "MIT"
+  }
+}
+```
+
+**Why these fields:**
+- **category: "concept"** → Identifies as explanatory/educational content
+- **difficulty: "advanced"** → Indicates technical depth and complexity
+- **duration: "30 minutes"** → Medium duration for focused deep dive
+- **tags** → "technical" signals detailed explanation
+
 ### Structure Template (15-25 cells)
 
 ```markdown
@@ -602,6 +677,31 @@ This is the **power of decoration** - simple content becomes rich, interactive e
 
 **Purpose:** Quick lookup with comprehensive examples for each feature.
 
+### Metadata Example
+
+```json
+{
+  "metadata": {
+    "title": "EDS Helper Functions Reference",
+    "description": "Complete API reference with examples for ipynb-helpers.js functions",
+    "author": "Your Name",
+    "date": "2025-01-17",
+    "version": "1.0",
+    "category": "reference",
+    "difficulty": "intermediate",
+    "duration": "15 minutes",
+    "tags": ["reference", "api", "documentation", "helpers", "EDS"],
+    "license": "MIT"
+  }
+}
+```
+
+**Why these fields:**
+- **category: "reference"** → Clear reference/documentation identifier
+- **difficulty: "intermediate"** → Assumes basic knowledge, provides advanced usage
+- **duration: "15 minutes"** → Quick lookup, not linear reading
+- **tags** → "api" and "documentation" for searchability
+
 ### Structure Template (25-40 cells)
 
 ```markdown
@@ -724,6 +824,31 @@ try {
 ## Interactive Demo Notebook
 
 **Purpose:** Showcase capabilities with minimal explanation, maximum showing.
+
+### Metadata Example
+
+```json
+{
+  "metadata": {
+    "title": "EDS Blocks Interactive Demo",
+    "description": "Quick interactive showcase of EDS block capabilities - just click and explore!",
+    "author": "Your Name",
+    "date": "2025-01-17",
+    "version": "1.0",
+    "category": "demo",
+    "difficulty": "beginner",
+    "duration": "10 minutes",
+    "tags": ["demo", "showcase", "interactive", "blocks", "EDS"],
+    "license": "MIT"
+  }
+}
+```
+
+**Why these fields:**
+- **category: "demo"** → Identifies as quick showcase
+- **difficulty: "beginner"** → No prerequisite knowledge needed
+- **duration: "10 minutes"** → Short, quick exploration
+- **tags** → "showcase" emphasizes visual/interactive nature
 
 ### Structure Template (15-20 cells)
 

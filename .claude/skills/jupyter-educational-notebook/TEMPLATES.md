@@ -19,6 +19,25 @@ Ready-to-use templates for creating educational Jupyter notebooks. Copy and adap
 **Estimated cells:** 30-45
 **Content ratio:** 65% markdown / 35% code
 
+### Metadata (Required)
+
+```json
+{
+  "metadata": {
+    "title": "Your Engaging Blog Title",
+    "description": "One-line summary that hooks readers",
+    "author": "Your Name",
+    "date": "2025-01-17",
+    "version": "1.0",
+    "category": "blog",
+    "difficulty": "beginner",
+    "duration": "20 minutes",
+    "tags": ["blog", "tutorial", "interactive", "javascript"],
+    "license": "MIT"
+  }
+}
+```
+
 ### Cell 1: Header (Markdown)
 
 ```markdown
@@ -213,6 +232,25 @@ return result.[output];
 **Estimated cells:** 20-30
 **Content ratio:** 70% markdown / 30% code
 
+### Metadata (Required)
+
+```json
+{
+  "metadata": {
+    "title": "Tutorial: Master [Your Topic]",
+    "description": "Step-by-step guide to learning [topic] with hands-on exercises",
+    "author": "Your Name",
+    "date": "2025-01-17",
+    "version": "1.0",
+    "category": "tutorial",
+    "difficulty": "intermediate",
+    "duration": "45 minutes",
+    "tags": ["tutorial", "learning", "hands-on", "javascript"],
+    "license": "MIT"
+  }
+}
+```
+
 ### Cell 1: Tutorial Header (Markdown)
 
 ```markdown
@@ -404,6 +442,25 @@ Keep practicing! 🚀
 **Estimated cells:** 15-25
 **Content ratio:** 55% markdown / 45% code
 
+### Metadata (Required)
+
+```json
+{
+  "metadata": {
+    "title": "Understanding [Concept Name]",
+    "description": "A comprehensive deep dive into [concept] and how it works",
+    "author": "Your Name",
+    "date": "2025-01-17",
+    "version": "1.0",
+    "category": "concept",
+    "difficulty": "advanced",
+    "duration": "30 minutes",
+    "tags": ["concept", "deep-dive", "technical", "javascript"],
+    "license": "MIT"
+  }
+}
+```
+
 ### Cell 1: Concept Header (Markdown)
 
 ```markdown
@@ -571,6 +628,25 @@ return [result];
 **Estimated cells:** 25-40
 **Content ratio:** 40% markdown / 60% code
 
+### Metadata (Required)
+
+```json
+{
+  "metadata": {
+    "title": "[API/Library] Reference Guide",
+    "description": "Complete reference documentation with examples and usage patterns",
+    "author": "Your Name",
+    "date": "2025-01-17",
+    "version": "1.0",
+    "category": "reference",
+    "difficulty": "intermediate",
+    "duration": "15 minutes",
+    "tags": ["reference", "documentation", "api", "javascript"],
+    "license": "MIT"
+  }
+}
+```
+
 ### Cell 1: Reference Header (Markdown)
 
 ```markdown
@@ -714,6 +790,25 @@ try {
 
 **Estimated cells:** 15-20
 **Content ratio:** 30% markdown / 70% code
+
+### Metadata (Required)
+
+```json
+{
+  "metadata": {
+    "title": "[Thing] Interactive Demo",
+    "description": "Quick interactive demonstration showcasing [thing] capabilities",
+    "author": "Your Name",
+    "date": "2025-01-17",
+    "version": "1.0",
+    "category": "demo",
+    "difficulty": "beginner",
+    "duration": "10 minutes",
+    "tags": ["demo", "showcase", "interactive", "javascript"],
+    "license": "MIT"
+  }
+}
+```
 
 ### Cell 1: Demo Header (Markdown)
 

@@ -490,15 +490,15 @@ When creating notebooks from existing text content:
 ```json
 {
   "metadata": {
-    "title": "The Art of Jupyter Notebooks",
-    "description": "A meta-tutorial teaching you how to create engaging, educational notebooks by being one itself",
-    "author": "Claude Code",
-    "date": "2025-01-17",
-    "version": "1.4",
-    "category": "tutorial",
-    "difficulty": "intermediate",
-    "duration": "25 minutes",
-    "tags": ["tutorial", "javascript", "notebook", "interactive", "educational"],
+    "title": "{{CHOOSE TITLE}}",
+    "description": "{{CHOOSE A ONE-LINER DESCRIPTION THAT AMPLIFIES THE TITLE}}",
+    "author": "{{PICK AUTHOR NAME}}",
+    "date": "{{PICK FIRST EDIT DATE}}",
+    "version": "{{START AT 1, INCREMENT WITH EVERY EDIT}}",
+    "category": "{{CHOOSE CATEGORY}}",
+    "difficulty": "{{CHOOSE DIFFICULTY}}",
+    "duration": "{{CHOOSE ESTIMATED READING TIME}}",
+    "tags": "{{CHOOSE TAGS AS NECESSARY}}","tutorial", "javascript", "notebook", "interactive", "educational"],
     "license": "MIT"
   }
 }

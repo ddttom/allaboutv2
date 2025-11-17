@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overlay Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+    <!-- Block Styles -->
+    <link rel="stylesheet" href="overlay.css">
+
+    <style>
+        /* Test page specific styles */
+        body {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .test-section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+
+        .test-section h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .test-section p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .overlay {
+            margin: 1rem 0;
+        }
+    </style>
+
+    <script type="module">
+        import decorate from './overlay.js';
+
+        // Wait for DOM to be ready
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Find all overlay blocks and decorate them
+            const blocks = document.querySelectorAll('.overlay');
+
+            blocks.forEach(block => {
+                try {
+                    decorate(block);
+                    console.log('✅ Overlay block decorated successfully');
+                } catch (error) {
+                    console.error('❌ Failed to decorate overlay block:', error);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Overlay Block - Development Tests</h1>
+    <p>This page tests the Overlay block functionality with various content types and scenarios.</p>
+
+    <!-- Test 1: Simple Text -->
+    <div class="test-section">
+        <h2>Test 1: Simple Text Content</h2>
+        <p>Basic overlay with simple text content.</p>
+
+        <div class="overlay block">
+            <div>
+                <div>Learn More</div>
+            </div>
+            <div>
+                <div>
+                    <h3>Welcome to Our Platform</h3>
+                    <p>Discover how our platform can help you achieve your goals. We offer comprehensive solutions designed to streamline your workflow and increase productivity.</p>
+                    <p>Get started today and see the difference for yourself!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test 2: Rich Content with Lists -->
+    <div class="test-section">
+        <h2>Test 2: Rich Content with Lists</h2>
+        <p>Overlay containing formatted lists and bold text.</p>
+
+        <div class="overlay block">
+            <div>
+                <div>View Features</div>
+            </div>
+            <div>
+                <div>
+                    <h3>Product Features</h3>
+                    <p>Our product includes:</p>
+                    <ul>
+                        <li><strong>Real-time Collaboration</strong> - Work together seamlessly</li>
+                        <li><strong>Advanced Analytics</strong> - Make data-driven decisions</li>
+                        <li><strong>Enterprise Security</strong> - Your data is always protected</li>
+                        <li><strong>24/7 Support</strong> - We're here when you need us</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test 3: Content with Links -->
+    <div class="test-section">
+        <h2>Test 3: Content with Links</h2>
+        <p>Overlay with interactive links.</p>
+
+        <div class="overlay block">
+            <div>
+                <div>View Details</div>
+            </div>
+            <div>
+                <div>
+                    <h3>Learn More About Our Services</h3>
+                    <p>Explore our comprehensive range of services designed to help your business grow.</p>
+                    <p>
+                        <a href="https://example.com/pricing">View Pricing</a> |
+                        <a href="https://example.com/demo">Request a Demo</a> |
+                        <a href="https://example.com/contact">Contact Sales</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test 4: Long Scrollable Content -->
+    <div class="test-section">
+        <h2>Test 4: Long Scrollable Content</h2>
+        <p>Overlay with content that exceeds viewport height (tests scrolling).</p>
+
+        <div class="overlay block">
+            <div>
+                <div>Read Terms</div>
+            </div>
+            <div>
+                <div>
+                    <h3>Terms and Conditions</h3>
+                    <p>By using our services, you agree to the following terms:</p>
+
+                    <h4>1. Acceptance of Terms</h4>
+                    <p>By accessing and using this service, you accept and agree to be bound by the terms and provision of this agreement.</p>
+
+                    <h4>2. Use License</h4>
+                    <p>Permission is granted to temporarily download one copy of the materials on our website for personal, non-commercial transitory viewing only.</p>
+
+                    <h4>3. Disclaimer</h4>
+                    <p>The materials on our website are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim and negate all other warranties.</p>
+
+                    <h4>4. Limitations</h4>
+                    <p>In no event shall our company or its suppliers be liable for any damages arising out of the use or inability to use the materials on our website.</p>
+
+                    <h4>5. Privacy Policy</h4>
+                    <p>We respect your privacy and are committed to protecting your personal data. Please review our Privacy Policy for more information.</p>
+
+                    <h4>6. Modifications</h4>
+                    <p>We may revise these terms at any time without notice. By continuing to use this site, you agree to be bound by the current version of these terms.</p>
+
+                    <h4>7. Governing Law</h4>
+                    <p>These terms shall be governed by and construed in accordance with the laws of the jurisdiction in which our company operates.</p>
+
+                    <h4>8. Contact Information</h4>
+                    <p>If you have any questions about these terms, please contact us at legal@example.com.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test 5: Multiple Overlays -->
+    <div class="test-section">
+        <h2>Test 5: Multiple Overlays on Same Page</h2>
+        <p>Multiple overlay blocks working independently.</p>
+
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <div class="overlay block">
+                <div>
+                    <div>About Us</div>
+                </div>
+                <div>
+                    <div>
+                        <h3>Our Story</h3>
+                        <p>Founded in 2020, we've been dedicated to providing exceptional service and innovative solutions to our clients worldwide.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overlay block">
+                <div>
+                    <div>Our Mission</div>
+                </div>
+                <div>
+                    <div>
+                        <h3>What Drives Us</h3>
+                        <p>Our mission is to empower businesses through technology, making complex processes simple and accessible to everyone.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overlay block">
+                <div>
+                    <div>Contact</div>
+                </div>
+                <div>
+                    <div>
+                        <h3>Get in Touch</h3>
+                        <p><strong>Email:</strong> hello@example.com</p>
+                        <p><strong>Phone:</strong> +1 (555) 123-4567</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test 6: Short Button Text -->
+    <div class="test-section">
+        <h2>Test 6: Various Button Text Lengths</h2>
+        <p>Testing different button text lengths.</p>
+
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <div class="overlay block">
+                <div>
+                    <div>!</div>
+                </div>
+                <div>
+                    <div>
+                        <h3>Single Character Button</h3>
+                        <p>This overlay was triggered by a single character button.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overlay block">
+                <div>
+                    <div>Click Here to Learn More About Our Amazing Platform</div>
+                </div>
+                <div>
+                    <div>
+                        <h3>Long Button Text</h3>
+                        <p>This overlay has a very long button text to test text wrapping and styling.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testing Instructions -->
+    <div class="test-section" style="background-color: #e3f2fd;">
+        <h2>🧪 Testing Checklist</h2>
+        <p>Verify the following behaviors:</p>
+
+        <h3>Visual Tests</h3>
+        <ul>
+            <li>✅ Buttons display with proper styling (rounded, blue background)</li>
+            <li>✅ Buttons have proper spacing and padding</li>
+            <li>✅ Overlay appears centered on screen</li>
+            <li>✅ Backdrop is semi-transparent black</li>
+            <li>✅ Close button (X) is visible in top-right corner</li>
+            <li>✅ Header shows button text as title</li>
+        </ul>
+
+        <h3>Interaction Tests</h3>
+        <ul>
+            <li>✅ Clicking button opens overlay with animation</li>
+            <li>✅ Clicking close button (X) closes overlay</li>
+            <li>✅ Clicking outside modal closes overlay</li>
+            <li>✅ Pressing ESC key closes overlay</li>
+            <li>✅ Multiple overlays work independently</li>
+        </ul>
+
+        <h3>Animation Tests</h3>
+        <ul>
+            <li>✅ Overlay fades in smoothly (0.3s)</li>
+            <li>✅ Modal scales up from 0.95 to 1.0</li>
+            <li>✅ Close button rotates on hover</li>
+            <li>✅ Overlay fades out smoothly when closing</li>
+        </ul>
+
+        <h3>Accessibility Tests</h3>
+        <ul>
+            <li>✅ Focus moves to close button when overlay opens</li>
+            <li>✅ Tab key navigates within overlay only</li>
+            <li>✅ Tab cycles from last to first focusable element</li>
+            <li>✅ Shift+Tab navigates backwards</li>
+            <li>✅ Focus returns to trigger button when closed</li>
+            <li>✅ Screen reader announces overlay properly</li>
+        </ul>
+
+        <h3>Scroll Tests</h3>
+        <ul>
+            <li>✅ Body scroll is locked when overlay is open</li>
+            <li>✅ Long content is scrollable within overlay</li>
+            <li>✅ Scrollbar appears for long content</li>
+            <li>✅ Body scroll restores when overlay closes</li>
+        </ul>
+
+        <h3>Responsive Tests</h3>
+        <ul>
+            <li>✅ Desktop: Modal max-width 800px, proper padding</li>
+            <li>✅ Tablet: Modal adjusts to viewport</li>
+            <li>✅ Mobile: Modal uses full width with margins</li>
+            <li>✅ All content remains readable on small screens</li>
+        </ul>
+    </div>
+
+    <script>
+        // Console logging for debugging
+        console.log('🧪 Overlay Block Test Page Loaded');
+        console.log('📊 Total overlay blocks found:', document.querySelectorAll('.overlay').length);
+
+        // Monitor for errors
+        window.addEventListener('error', (e) => {
+            console.error('❌ JavaScript Error:', e.message);
+        });
+    </script>
+</body>
+</html>

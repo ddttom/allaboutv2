@@ -56,7 +56,12 @@
       "Bash(CLAUDE_PROJECT_DIR=/Users/tomcranstoun/Documents/GitHub/allaboutV2 node:*)",
       "SlashCommand(/create-notebook test command)",
       "SlashCommand(/create-notebook:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "SlashCommand(/new-block overlay)",
+      "SlashCommand(/new-block:*)",
+      "Skill(content-driven-development)",
+      "Bash(npm run lint)",
+      "Bash(npx eslint:*)"
     ],
     "deny": [],
     "ask": []
