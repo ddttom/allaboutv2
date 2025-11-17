@@ -643,10 +643,11 @@ The ipynb-viewer block supports multiple display modes:
 All paged modes support **hash link navigation** for non-linear exploration:
 
 ```markdown
-## Table of Contents
-- [Introduction](#part-1)
-- [Core Concepts](#part-2)
-- [Advanced Topics](#part-3)
+## 📋 Table of Contents
+
+- [Part 1: Introduction](#part-1-introduction)
+- [Part 2: Core Concepts](#part-2-core-concepts)
+- [Part 3: Advanced Topics](#part-3-advanced-topics)
 
 See also: [Error Handling](#error-handling) | [Best Practices](#best-practices)
 ```
@@ -654,9 +655,22 @@ See also: [Error Handling](#error-handling) | [Best Practices](#best-practices)
 **How it works:**
 - Click links with `#target` to jump between pages
 - Automatically finds and navigates to the page containing the target
-- Supports `part-X` pattern (e.g., `#part-3` goes to page 3)
+- Hash IDs are auto-generated from h2 headers
 - Smooth transitions without page reload
 - Perfect for creating interactive table of contents and cross-references
+
+**ID Generation Rules:**
+All `## h2` headers automatically get IDs:
+1. Convert to lowercase
+2. Remove special characters (emojis, punctuation)
+3. Replace spaces with hyphens
+4. Remove leading/trailing hyphens
+
+**Examples:**
+- `## 🚀 Getting Started` → `#getting-started`
+- `## Part 1: Introduction` → `#part-1-introduction`
+- `## Resources & Next Steps` → `#resources-next-steps`
+- `## What's New?` → `#whats-new`
 
 Configure the display mode in your block markup.
 

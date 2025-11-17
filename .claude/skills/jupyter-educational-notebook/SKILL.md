@@ -62,11 +62,20 @@ Brief introduction explaining what this notebook covers and who it's for.
 ```markdown
 ## 📋 Table of Contents
 
-[Part 1: Introduction](#part-1-introduction)
-[Part 2: Core Concepts](#part-2-core-concepts)
-[Part 3: Advanced Topics](#part-3-advanced-topics)
-[Resources & Next Steps](#resources)
+- [Part 1: Introduction](#part-1-introduction)
+- [Part 2: Core Concepts](#part-2-core-concepts)
+- [Part 3: Advanced Topics](#part-3-advanced-topics)
+- [Resources & Next Steps](#resources-next-steps)
 ```
+
+**IMPORTANT - Hash Link Format:**
+- Links must match h2 header IDs exactly
+- IDs are auto-generated: lowercase, spaces→hyphens, special chars removed
+- Emojis are removed but don't leave leading hyphens
+- Examples:
+  - `## 🚀 Part 1: Introduction` → `#part-1-introduction`
+  - `## Resources & Next Steps` → `#resources-next-steps`
+  - `## What's New?` → `#whats-new`
 
 #### 3. Part Sections (Markdown + Code)
 ```markdown
@@ -136,9 +145,30 @@ const example = 'This is a syntax example, not executable';
 ```
 
 **Links:**
-- Internal navigation: `[Part 2](#part-2-title)`
+- Internal navigation: `[Part 2](#part-2-title)` - Use for TOC and cross-references
 - External resources: `[Documentation](https://example.com)`
 - Call-to-action links at the end
+
+**Table of Contents Navigation:**
+Hash links in TOC work in paged overlay mode:
+```markdown
+## 📋 Table of Contents
+
+- [Part 1: The Big Picture](#part-1-the-big-picture)
+- [Part 2: Core Concepts](#part-2-core-concepts)
+- [Part 3: Advanced Topics](#part-3-advanced-topics)
+```
+
+**ID Generation Rules:**
+1. Convert h2 text to lowercase
+2. Remove special characters (emojis, punctuation)
+3. Replace spaces with hyphens
+4. Remove leading/trailing hyphens
+5. Examples:
+   - `## 🚀 Getting Started` → `#getting-started`
+   - `## Part 1: Introduction` → `#part-1-introduction`
+   - `## What's New?` → `#whats-new`
+   - `## Resources & Next Steps` → `#resources-next-steps`
 
 **Emphasis:**
 - **Bold** for key terms and important points
@@ -429,19 +459,31 @@ When creating notebooks from existing text content:
 {
   "metadata": {
     "title": "{{GENERATE A GOOD TITLE}}",
-    "author": "{{PICK AUTHOR NAME}}",
     "description": "{{GENERATE A ONE-LINE DESCRIPTION THAT AMPLIFIES THE TITLE}}",
+    "author": "{{PICK AUTHOR NAME}}",
     "date": "{{DATE OF FIRST EDIT}}",
     "version": "{{INCREASING WITH EVERY EDIT}}",
-    "tags": [
-      "tutorial",
-      "javascript",
-      "notebook",
-      "interactive"
-    ]
+    "category": "{{tutorial|reference|demo|concept}}",
+    "difficulty": "{{beginner|intermediate|advanced}}",
+    "duration": "{{ESTIMATED READING TIME}}",
+    "tags": ["tutorial", "javascript", "notebook", "interactive"],
+    "license": "{{MIT|CC BY 4.0|etc}}"
   }
 }
 ```
+
+**Field descriptions:**
+
+- `title` - Main notebook title (required)
+- `description` - One-line summary (required)
+- `author` - Author name (required)
+- `date` - Creation/publication date (required)
+- `version` - Version tracking (required)
+- `category` - Content type: tutorial, reference, demo, concept (optional, displayed as blue badge)
+- `difficulty` - Skill level: beginner, intermediate, advanced (optional, displayed as orange badge)
+- `duration` - Reading time estimate: "15 minutes", "1 hour" (optional, displayed as purple badge)
+- `tags` - Keywords for searchability (optional, displayed as gray tags)
+- `license` - Content license: MIT, CC BY 4.0, etc (optional)
 
 **Example:**
 
@@ -449,16 +491,26 @@ When creating notebooks from existing text content:
 {
   "metadata": {
     "title": "The Art of Jupyter Notebooks",
-    "author": "Claude Code",
     "description": "A meta-tutorial teaching you how to create engaging, educational notebooks by being one itself",
+    "author": "Claude Code",
     "date": "2025-01-17",
-    "version": "1.0",
-    "tags": ["tutorial", "javascript", "notebook", "interactive", "educational"]
+    "version": "1.4",
+    "category": "tutorial",
+    "difficulty": "intermediate",
+    "duration": "25 minutes",
+    "tags": ["tutorial", "javascript", "notebook", "interactive", "educational"],
+    "license": "MIT"
   }
 }
 ```
 
-The ipynb-viewer block displays this metadata professionally in the header.
+The ipynb-viewer block displays this metadata professionally in the header with:
+- Large title and description
+- Author and date information
+- Version number
+- Color-coded badges for category (blue), difficulty (orange), duration (purple)
+- Gray tag pills for keywords
+- License information
 
 ## Display Modes
 

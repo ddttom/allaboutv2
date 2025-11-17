@@ -168,11 +168,23 @@ Let's get started! 🚀
 ```markdown
 ## 📋 Table of Contents
 
-[Part 1: Introduction](#part-1)
-[Part 2: [Topic]](#part-2)
-[Part 3: [Topic]](#part-3)
-[Resources](#resources)
+- [Part 1: Introduction](#part-1-introduction)
+- [Part 2: [Topic]](#part-2-topic)
+- [Part 3: [Topic]](#part-3-topic)
+- [Resources & Next Steps](#resources-next-steps)
 ```
+
+**CRITICAL - Hash Link Format:**
+- TOC links MUST match h2 header IDs exactly
+- IDs are auto-generated from h2 text:
+  1. Lowercase
+  2. Special chars removed (emojis, punctuation)
+  3. Spaces → hyphens
+  4. Leading/trailing hyphens removed
+- Examples:
+  - `## 🚀 Part 1: Introduction` → `#part-1-introduction`
+  - `## Resources & Next Steps` → `#resources-next-steps`
+  - `## What's New?` → `#whats-new`
 
 **Cell 2 (Markdown) - Part 1 Introduction:**
 ```markdown
@@ -327,30 +339,38 @@ Use triple backticks in markdown cells for syntax examples that won't execute:
    {
      "metadata": {
        "title": "{{GENERATE A GOOD TITLE}}",
-       "author": "{{PICK AUTHOR NAME}}",
        "description": "{{GENERATE A ONE-LINE DESCRIPTION THAT AMPLIFIES THE TITLE}}",
+       "author": "{{PICK AUTHOR NAME}}",
        "date": "{{DATE OF FIRST EDIT}}",
        "version": "{{INCREASING WITH EVERY EDIT}}",
-       "tags": [
-         "tutorial",
-         "javascript",
-         "notebook",
-         "interactive"
-       ]
+       "category": "{{tutorial|reference|demo|concept}}",
+       "difficulty": "{{beginner|intermediate|advanced}}",
+       "duration": "{{ESTIMATED READING TIME}}",
+       "tags": ["tutorial", "javascript", "notebook", "interactive"],
+       "license": "MIT"
      }
    }
    ```
+
+   **Field guide:**
+   - **Required**: title, description, author, date, version, tags
+   - **Optional but recommended**: category, difficulty, duration, license
+   - **Display**: Color-coded badges (category=blue, difficulty=orange, duration=purple) and gray tag pills
 
    **Example:**
    ```json
    {
      "metadata": {
        "title": "The Art of Jupyter Notebooks",
-       "author": "Claude Code",
        "description": "A meta-tutorial teaching you how to create engaging, educational notebooks by being one itself",
+       "author": "Claude Code",
        "date": "2025-01-17",
-       "version": "1.0",
-       "tags": ["tutorial", "javascript", "notebook", "interactive", "educational"]
+       "version": "1.4",
+       "category": "tutorial",
+       "difficulty": "intermediate",
+       "duration": "25 minutes",
+       "tags": ["tutorial", "javascript", "notebook", "interactive", "educational"],
+       "license": "MIT"
      }
    }
    ```

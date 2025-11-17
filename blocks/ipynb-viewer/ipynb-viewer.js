@@ -76,6 +76,7 @@ function parseMarkdown(markdown) {
       .replace(/[^\w\s-]/g, '') // Remove special characters except word chars, spaces, hyphens
       .replace(/\s+/g, '-')      // Replace spaces with hyphens
       .replace(/-+/g, '-')       // Replace multiple hyphens with single hyphen
+      .replace(/^-+|-+$/g, '')   // Remove leading and trailing hyphens
       .trim();
 
     return `<h2 id="${id}">${text}</h2>`;
@@ -641,6 +642,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
             .replace(/[^\w\s-]/g, '')
             .replace(/\s+/g, '-')
             .replace(/-+/g, '-')
+            .replace(/^-+|-+$/g, '')
             .trim();
           return generatedId === targetId || h2.id === targetId;
         });
@@ -844,6 +846,14 @@ export default async function decorate(block) {
 
     header.appendChild(title);
 
+    // Add description if available
+    if (notebook.metadata?.description) {
+      const description = document.createElement('div');
+      description.className = 'ipynb-viewer-description';
+      description.textContent = notebook.metadata.description;
+      header.appendChild(description);
+    }
+
     // Add author if available
     if (notebook.metadata?.author) {
       const author = document.createElement('div');
@@ -858,6 +868,70 @@ export default async function decorate(block) {
       date.className = 'ipynb-viewer-date';
       date.textContent = notebook.metadata.date;
       header.appendChild(date);
+    }
+
+    // Add version if available
+    if (notebook.metadata?.version) {
+      const version = document.createElement('div');
+      version.className = 'ipynb-viewer-version';
+      version.textContent = `Version ${notebook.metadata.version}`;
+      header.appendChild(version);
+    }
+
+    // Create metadata row for category, difficulty, duration
+    const metaRow = document.createElement('div');
+    metaRow.className = 'ipynb-viewer-meta-row';
+    let hasMetaRow = false;
+
+    if (notebook.metadata?.category) {
+      const category = document.createElement('span');
+      category.className = 'ipynb-viewer-category';
+      category.textContent = notebook.metadata.category;
+      metaRow.appendChild(category);
+      hasMetaRow = true;
+    }
+
+    if (notebook.metadata?.difficulty) {
+      const difficulty = document.createElement('span');
+      difficulty.className = 'ipynb-viewer-difficulty';
+      difficulty.textContent = notebook.metadata.difficulty;
+      metaRow.appendChild(difficulty);
+      hasMetaRow = true;
+    }
+
+    if (notebook.metadata?.duration) {
+      const duration = document.createElement('span');
+      duration.className = 'ipynb-viewer-duration';
+      duration.textContent = notebook.metadata.duration;
+      metaRow.appendChild(duration);
+      hasMetaRow = true;
+    }
+
+    if (hasMetaRow) {
+      header.appendChild(metaRow);
+    }
+
+    // Add tags if available
+    if (notebook.metadata?.tags && Array.isArray(notebook.metadata.tags) && notebook.metadata.tags.length > 0) {
+      const tagsContainer = document.createElement('div');
+      tagsContainer.className = 'ipynb-viewer-tags';
+
+      notebook.metadata.tags.forEach(tag => {
+        const tagSpan = document.createElement('span');
+        tagSpan.className = 'ipynb-viewer-tag';
+        tagSpan.textContent = tag;
+        tagsContainer.appendChild(tagSpan);
+      });
+
+      header.appendChild(tagsContainer);
+    }
+
+    // Add license if available
+    if (notebook.metadata?.license) {
+      const license = document.createElement('div');
+      license.className = 'ipynb-viewer-license';
+      license.textContent = `License: ${notebook.metadata.license}`;
+      header.appendChild(license);
     }
 
     // Create cells container

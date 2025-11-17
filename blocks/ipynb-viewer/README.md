@@ -147,17 +147,36 @@ The block supports standard Jupyter notebook JSON format with **enhanced markdow
 
 The notebook metadata is displayed in the header section:
 
-**Supported Fields:**
+**Required Fields:**
 
-`title` is the main notebook title (required, defaults to "Jupyter Notebook"). `author` is the author name (optional). `date` is the publication or creation date (optional).
+- `title` - Main notebook title (defaults to "Jupyter Notebook" if not provided)
+
+**Optional Fields:**
+
+- `description` - One-line summary displayed below title
+- `author` - Author name
+- `date` - Publication or creation date
+- `version` - Version number (e.g., "1.0", "1.3")
+- `category` - Content category (e.g., "tutorial", "reference", "demo") - displayed as blue badge
+- `difficulty` - Skill level (e.g., "beginner", "intermediate", "advanced") - displayed as orange badge
+- `duration` - Estimated reading time (e.g., "15 minutes", "1 hour") - displayed as purple badge
+- `tags` - Array of keywords for searchability (e.g., ["tutorial", "javascript", "interactive"]) - displayed as gray tags
+- `license` - Content license (e.g., "MIT", "CC BY 4.0")
 
 **Example metadata in .ipynb file:**
 ```json
 {
   "metadata": {
     "title": "My Interactive Tutorial",
+    "description": "Learn JavaScript fundamentals through interactive examples",
     "author": "Tom Cranstoun",
     "date": "November 14, 2025",
+    "version": "1.0",
+    "category": "tutorial",
+    "difficulty": "intermediate",
+    "duration": "30 minutes",
+    "tags": ["tutorial", "javascript", "interactive", "beginner"],
+    "license": "MIT",
     "kernelspec": {
       "display_name": "JavaScript",
       "language": "javascript",
@@ -167,9 +186,16 @@ The notebook metadata is displayed in the header section:
 }
 ```
 
-**Display:**
+**Display Order:**
 
-Title appears as large heading (1.8rem, bold, centered). Author appears below title (1rem, italic, gray #666). Date appears below author (0.9rem, light gray #999).
+1. Title (1.8rem, bold, centered)
+2. Description (1.1rem, italic, gray #555)
+3. Author (1rem, italic, gray #666)
+4. Date (0.9rem, light gray #999)
+5. Version (0.85rem, gray #888, bold)
+6. Meta row badges (category, difficulty, duration) - color-coded badges
+7. Tags (0.8rem, gray badges)
+8. License (0.8rem, gray #888)
 
 ### Markdown Cells (Enhanced)
 
@@ -276,10 +302,9 @@ Jump to [Part 3](#part-3) or see the [Advanced Examples](#advanced-examples)
 ```
 
 **ID generation rules:**
-- `## 🚀 Getting Started` → `#-getting-started` (emojis removed)
+- `## 🚀 Getting Started` → `#getting-started` (emojis removed, leading hyphen trimmed)
 - `## Part 1: Introduction` → `#part-1-introduction` (lowercase, hyphens)
 - `## What's New?` → `#whats-new` (apostrophe removed, spaces to hyphens)
-```
 
 ### Live Preview with Overlay
 
@@ -569,8 +594,17 @@ The header section includes CSS classes for metadata display:
 ```css
 .ipynb-viewer-header: Header container (centered, padded, bordered)
 .ipynb-viewer-title: Notebook title (1.8rem, bold, #333)
+.ipynb-viewer-description: Description (1.1rem, italic, #555)
 .ipynb-viewer-author: Author name (1rem, italic, #666)
 .ipynb-viewer-date: Publication date (0.9rem, #999)
+.ipynb-viewer-version: Version number (0.85rem, #888, bold)
+.ipynb-viewer-meta-row: Container for badges (flexbox, centered)
+.ipynb-viewer-category: Category badge (blue background, #1565c0)
+.ipynb-viewer-difficulty: Difficulty badge (orange background, #e65100)
+.ipynb-viewer-duration: Duration badge (purple background, #6a1b9a)
+.ipynb-viewer-tags: Tags container (flexbox, centered)
+.ipynb-viewer-tag: Individual tag (gray background, #555)
+.ipynb-viewer-license: License text (0.8rem, #888)
 ```
 
 ### Paged Variation Styles

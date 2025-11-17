@@ -35,6 +35,15 @@ html {
   font-weight: 700;
 }
 
+.ipynb-viewer-description {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  color: var(--text-color, #555);
+  font-family: var(--body-font-family, inherit);
+  font-style: italic;
+  line-height: 1.5;
+}
+
 .ipynb-viewer-author {
   margin: 0.5rem 0 0.25rem 0;
   font-size: 1rem;
@@ -47,6 +56,75 @@ html {
   margin: 0.25rem 0 0 0;
   font-size: 0.9rem;
   color: var(--text-color, #999);
+  font-family: var(--body-font-family, inherit);
+}
+
+.ipynb-viewer-version {
+  margin: 0.25rem 0 0 0;
+  font-size: 0.85rem;
+  color: var(--text-color, #888);
+  font-family: var(--body-font-family, inherit);
+  font-weight: 600;
+}
+
+/* Metadata row for category, difficulty, duration */
+.ipynb-viewer-meta-row {
+  margin: 0.75rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.ipynb-viewer-meta-row span {
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-family: var(--body-font-family, inherit);
+  font-weight: 500;
+}
+
+.ipynb-viewer-category {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.ipynb-viewer-difficulty {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.ipynb-viewer-duration {
+  background-color: #f3e5f5;
+  color: #6a1b9a;
+}
+
+/* Tags */
+.ipynb-viewer-tags {
+  margin: 0.75rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.ipynb-viewer-tag {
+  padding: 0.25rem 0.5rem;
+  background-color: var(--light-color, #e0e0e0);
+  color: var(--text-color, #555);
+  border-radius: 3px;
+  font-size: 0.8rem;
+  font-family: var(--body-font-family, inherit);
+  font-weight: 400;
+}
+
+/* License */
+.ipynb-viewer-license {
+  margin: 0.75rem 0 0 0;
+  font-size: 0.8rem;
+  color: var(--text-color, #888);
   font-family: var(--body-font-family, inherit);
 }
 
