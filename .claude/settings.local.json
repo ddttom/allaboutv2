@@ -61,7 +61,8 @@
       "SlashCommand(/new-block:*)",
       "Skill(content-driven-development)",
       "Bash(npm run lint)",
-      "Bash(npx eslint:*)"
+      "Bash(npx eslint:*)",
+      "Skill(eds-performance-debugging)"
     ],
     "deny": [],
     "ask": []

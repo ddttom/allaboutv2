@@ -44,6 +44,9 @@
     <script type="module">
         import decorate from './overlay.js';
 
+        // Make body visible (required by EDS global styles)
+        document.body.classList.add('appear');
+
         // Wait for DOM to be ready
         document.addEventListener('DOMContentLoaded', async () => {
             // Find all overlay blocks and decorate them

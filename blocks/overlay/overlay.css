@@ -1,15 +1,17 @@
 /* Overlay Block Styles */
 
-/* Trigger button uses global button styles from styles.css */
-.overlay-trigger {
-  /* Inherits from global button styles:
-   * - Rounded pill shape (border-radius: 30px)
-   * - Blue background (var(--link-color))
-   * - White text
-   * - Padding: 5px 30px
-   * - Font weight: 600
-   */
-}
+/*
+ * Trigger button (.overlay-trigger) inherits from global button styles in styles.css:
+ * - Display: inline-block
+ * - Padding: 5px 30px
+ * - Font-weight: 600
+ * - Background: var(--link-color)
+ * - Color: var(--background-color)
+ * - Border-radius: 30px (pill shape)
+ * - Cursor: pointer
+ *
+ * No additional button styles needed - global styles provide everything.
+ */
 
 /* Prevent body scroll when overlay is open */
 body.overlay-open {
