@@ -39,6 +39,57 @@ blocks/your-block/
 
 ---
 
+## Google Docs Table Structure (CRITICAL)
+
+### How EDS Recognizes Blocks
+
+**The first row of a table in Google Docs is the block name that drives everything:**
+
+1. **First row (header row)** = Block name (e.g., "overlay", "cards", "hero")
+   - EDS uses this name to load `/blocks/{name}/{name}.js`
+   - EDS uses this name to load `/blocks/{name}/{name}.css`
+   - This triggers the `decorate()` function
+   - **WITHOUT THIS, YOUR BLOCK WILL NOT LOAD**
+
+2. **Subsequent rows** = Block content (data rows)
+   - Row 2, Row 3, etc. become `block.children[0]`, `block.children[1]`, etc.
+   - Your `decorate()` function processes these rows
+
+### Example: Google Docs Table
+
+```
+| overlay        | ← HEADER ROW (block name) - CRITICAL!
+|----------------|
+| Learn More     | ← Row 2 becomes block.children[0]
+| Welcome! ...   | ← Row 3 becomes block.children[1]
+```
+
+**What EDS does:**
+1. Sees header row "overlay"
+2. Loads `/blocks/overlay/overlay.js`
+3. Loads `/blocks/overlay/overlay.css`
+4. Calls `decorate(blockElement)`
+5. Your code processes rows 2 and 3
+
+### Common Mistake
+
+❌ **WRONG** - No header row:
+```
+| Learn More     |
+| Welcome! ...   |
+```
+Result: Block not recognized, CSS/JS not loaded, no decoration happens
+
+✅ **CORRECT** - Header row with block name:
+```
+| overlay        | ← Must match /blocks/overlay/
+|----------------|
+| Learn More     |
+| Welcome! ...   |
+```
+
+---
+
 ## The Decorate Function Pattern
 
 All EDS blocks export a default `decorate` function that receives the block element:

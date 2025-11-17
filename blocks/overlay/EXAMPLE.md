@@ -2,24 +2,39 @@
 
 This document shows how to create Overlay blocks in Google Docs for use with AEM Edge Delivery Services.
 
+## ⚠️ CRITICAL: The First Row is Not Optional
+
+**The first row (header row) in your table MUST contain the block name "Overlay"**. This is not just a label - it's the mechanism that tells EDS to:
+1. Load `/blocks/overlay/overlay.js`
+2. Load `/blocks/overlay/overlay.css`
+3. Run the decoration function
+
+**Without the correct first row, your overlay block will not work at all.**
+
 ## How to Use in Google Docs
 
 ### Step 1: Create a Table
 
 Insert a table with **1 column** and **3 rows**:
-- Row 1: Block name (header)
+- **Row 1: "Overlay" (header)** ← THIS IS CRITICAL - Must match the block directory name
 - Row 2: Button text
 - Row 3: Overlay content
 
-### Step 2: Add Block Name
+### Step 2: Add Block Name (REQUIRED)
 
-In the **first row**, type:
+In the **first row**, type exactly:
 
 ```
 Overlay
 ```
 
 Make this row a **header row** (Table > Header row).
+
+**Why this matters:**
+- EDS reads the header row to identify which block to load
+- The text "Overlay" tells EDS to look for `/blocks/overlay/`
+- If you misspell it or leave it out, the block won't load
+- The name must match your directory name exactly (case-insensitive, but use proper case)
 
 ### Step 3: Add Button Text
 

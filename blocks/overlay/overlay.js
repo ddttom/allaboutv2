@@ -3,6 +3,19 @@
  * Creates a button that triggers a full-viewport overlay with content
  */
 
+// Debug mode (set to false for production)
+const DEBUG = true;
+
+function debugLog(message, data = null) {
+  if (DEBUG) {
+    if (data) {
+      console.log(`[OVERLAY] ${message}`, data);
+    } else {
+      console.log(`[OVERLAY] ${message}`);
+    }
+  }
+}
+
 // Configuration
 const CONFIG = {
   animationDuration: 300, // milliseconds
@@ -11,6 +24,8 @@ const CONFIG = {
   maxWidth: '800px',
   closeButtonLabel: 'Close overlay',
 };
+
+debugLog('Overlay module loaded', CONFIG);
 
 /**
  * Creates the overlay structure
@@ -171,15 +186,21 @@ function setupOverlayEventHandlers(overlay) {
  * @returns {Array} Array of row content elements
  */
 function extractBlockContent(block) {
+  debugLog('Extracting block content');
+  debugLog('Block HTML:', block.innerHTML.substring(0, 200));
+  debugLog('Block children count:', block.children.length);
+
   const rows = Array.from(block.children);
   const extractedRows = [];
 
-  rows.forEach((row) => {
+  rows.forEach((row, rowIndex) => {
+    debugLog(`Processing row ${rowIndex + 1}`);
+
     // Navigate through nested divs to find content
     const cells = Array.from(row.children);
     const rowContent = [];
 
-    cells.forEach((cell) => {
+    cells.forEach((cell, cellIndex) => {
       // For each cell, extract the innermost content
       let contentSource = cell;
 
@@ -189,17 +210,21 @@ function extractBlockContent(block) {
         const secondDiv = firstDiv.querySelector('div');
         if (secondDiv && (secondDiv.children.length > 0 || secondDiv.textContent.trim())) {
           contentSource = secondDiv;
+          debugLog(`  Row ${rowIndex + 1}, Cell ${cellIndex + 1}: Using second nested div`);
         } else if (firstDiv.children.length > 0 || firstDiv.textContent.trim()) {
           contentSource = firstDiv;
+          debugLog(`  Row ${rowIndex + 1}, Cell ${cellIndex + 1}: Using first nested div`);
         }
       }
 
+      debugLog(`  Row ${rowIndex + 1}, Cell ${cellIndex + 1} text:`, contentSource.textContent.trim().substring(0, 50));
       rowContent.push(contentSource);
     });
 
     extractedRows.push(rowContent);
   });
 
+  debugLog('Extraction complete. Total rows:', extractedRows.length);
   return extractedRows;
 }
 
@@ -208,20 +233,32 @@ function extractBlockContent(block) {
  * @param {HTMLElement} block - The block element
  */
 export default function decorate(block) {
+  console.group('🎨 OVERLAY BLOCK DECORATION');
+  debugLog('='.repeat(60));
+  debugLog('Starting decoration');
+  debugLog('Block element:', block);
+  debugLog('Block classes:', block.className);
+  debugLog('Block dataset:', block.dataset);
+
   try {
     // Extract content from EDS structure using standard pattern
+    debugLog('Step 1: Extracting content');
     const extractedRows = extractBlockContent(block);
 
     if (extractedRows.length < 2) {
-      throw new Error('Overlay block requires at least 2 rows (button text and content)');
+      throw new Error(`Overlay block requires at least 2 rows (button text and content). Found: ${extractedRows.length}`);
     }
 
     // Row 1: Button text (first cell of first row)
+    debugLog('Step 2: Getting button text');
     const buttonCell = extractedRows[0][0];
     const buttonText = buttonCell?.textContent?.trim() || 'Open';
+    debugLog('Button text:', buttonText);
 
     // Row 2: Overlay content (first cell of second row)
+    debugLog('Step 3: Getting overlay content');
     const contentCell = extractedRows[1][0];
+    debugLog('Content cell:', contentCell);
 
     if (!contentCell) {
       throw new Error('Overlay block requires content in the second row');
@@ -229,25 +266,57 @@ export default function decorate(block) {
 
     // Clone the content to preserve it
     const overlayContent = contentCell.cloneNode(true);
+    debugLog('Cloned content for overlay');
 
     // Create trigger button
+    debugLog('Step 4: Creating trigger button');
     const triggerButton = document.createElement('button');
     triggerButton.type = 'button';
     triggerButton.className = 'overlay-trigger';
     triggerButton.textContent = buttonText;
     triggerButton.setAttribute('aria-label', `Open overlay: ${buttonText}`);
+    debugLog('Trigger button created:', triggerButton);
+    debugLog('Button text content:', triggerButton.textContent);
+    debugLog('Button class name:', triggerButton.className);
 
     // Button click handler
     triggerButton.addEventListener('click', () => {
+      debugLog('Trigger button clicked!');
       const overlay = createOverlay(buttonText, overlayContent.cloneNode(true));
       showOverlay(overlay, triggerButton);
     });
 
     // Replace block content with trigger button
+    debugLog('Step 5: Replacing block content with button');
+    debugLog('Block innerHTML before replacement:', block.innerHTML.substring(0, 100));
+
     block.textContent = '';
     block.appendChild(triggerButton);
+
+    debugLog('Block innerHTML after replacement:', block.innerHTML);
+    debugLog('Button in DOM:', document.body.contains(triggerButton));
+    debugLog('Button computed styles:', {
+      display: getComputedStyle(triggerButton).display,
+      visibility: getComputedStyle(triggerButton).visibility,
+      background: getComputedStyle(triggerButton).backgroundColor,
+      color: getComputedStyle(triggerButton).color
+    });
+    debugLog('✅ Decoration completed successfully!');
+    debugLog('='.repeat(60));
+
   } catch (error) {
-    console.error('Overlay block decoration failed:', error);
-    block.innerHTML = '<p class="error-message">Unable to load overlay</p>';
+    console.error('❌ Overlay block decoration failed:', error);
+    console.error('Error stack:', error.stack);
+    debugLog('Error details:', {
+      message: error.message,
+      stack: error.stack,
+      blockHTML: block.innerHTML
+    });
+
+    block.innerHTML = '<p class="error-message" style="padding: 1rem; background: #fee; border: 1px solid #fcc; border-radius: 4px; color: #c00;">Unable to load overlay: ' + error.message + '</p>';
+  } finally {
+    console.groupEnd();
   }
 }
+
+debugLog('Overlay module ready for export');
