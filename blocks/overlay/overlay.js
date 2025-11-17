@@ -29,7 +29,7 @@ const CONFIG = {
 function createOverlay(title, contentElement) {
   // Create overlay container (backdrop)
   const overlayContainer = document.createElement('div');
-  overlayContainer.className = 'overlay-container';
+  overlayContainer.className = 'overlay-backdrop';
   overlayContainer.setAttribute('role', 'dialog');
   overlayContainer.setAttribute('aria-modal', 'true');
   overlayContainer.setAttribute('aria-labelledby', 'overlay-title');
@@ -82,7 +82,7 @@ function showOverlay(overlay, triggerButton) {
 
   // Trigger animation
   requestAnimationFrame(() => {
-    overlay.classList.add('overlay-container--visible');
+    overlay.classList.add('overlay-backdrop--visible');
   });
 
   // Focus management
@@ -102,8 +102,8 @@ function showOverlay(overlay, triggerButton) {
  */
 function closeOverlay(overlay) {
   // Start exit animation
-  overlay.classList.remove('overlay-container--visible');
-  overlay.classList.add('overlay-container--dismissing');
+  overlay.classList.remove('overlay-backdrop--visible');
+  overlay.classList.add('overlay-backdrop--dismissing');
 
   // Wait for animation to complete
   setTimeout(() => {

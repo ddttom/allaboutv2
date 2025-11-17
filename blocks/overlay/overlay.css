@@ -18,8 +18,8 @@ body.overlay-open {
   overflow: hidden;
 }
 
-/* Overlay container (backdrop) */
-.overlay-container {
+/* Overlay backdrop (full-screen overlay) */
+.overlay-backdrop {
   position: fixed;
   top: 0;
   left: 0;
@@ -36,12 +36,12 @@ body.overlay-open {
 }
 
 /* Visible state */
-.overlay-container--visible {
+.overlay-backdrop--visible {
   opacity: 1;
 }
 
 /* Dismissing state */
-.overlay-container--dismissing {
+.overlay-backdrop--dismissing {
   opacity: 0;
 }
 
@@ -61,12 +61,12 @@ body.overlay-open {
 }
 
 /* Modal visible state */
-.overlay-container--visible .overlay-modal {
+.overlay-backdrop--visible .overlay-modal {
   transform: scale(1);
 }
 
 /* Modal dismissing state */
-.overlay-container--dismissing .overlay-modal {
+.overlay-backdrop--dismissing .overlay-modal {
   transform: scale(0.95);
 }
 
@@ -162,7 +162,7 @@ body.overlay-open {
 
 /* Responsive adjustments - Tablet and Mobile (768px and below) */
 @media (max-width: 768px) {
-  .overlay-container {
+  .overlay-backdrop {
     padding: 0.5rem;
   }
 
@@ -248,7 +248,7 @@ body.overlay-open {
   outline: none;
 }
 
-.overlay-container :focus-visible {
+.overlay-backdrop :focus-visible {
   outline: 2px solid var(--link-color);
   outline-offset: 2px;
 }

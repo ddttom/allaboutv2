@@ -345,6 +345,82 @@ export default async function decorate(block) {
 }
 ```
 
+### ⚠️ CRITICAL: Avoid EDS Reserved Class Names
+
+**EDS automatically adds these classes:**
+- `.{blockname}-wrapper` - Added to the block's parent `<div>` wrapper
+- `.{blockname}-container` - Added to the parent `<section>` element
+- `.block` - Added to all block elements
+- `.section` - Added to all section elements
+- `.button-container` - Added to parent elements of buttons
+- `.default-content-wrapper` - Added to default content wrappers
+
+**DO NOT use these class names in your CSS or JavaScript:**
+
+```css
+/* ❌ BAD - Conflicts with EDS automatic naming */
+.overlay-container {
+  position: fixed;  /* Will be applied to the section, breaking layout */
+}
+
+.cards-wrapper {
+  display: grid;  /* Will conflict with EDS's .cards-wrapper on block element */
+}
+
+/* ✅ GOOD - Use different suffixes */
+.overlay-backdrop {
+  position: fixed;  /* Safe - won't conflict */
+}
+
+.cards-grid {
+  display: grid;  /* Safe - different name */
+}
+
+.overlay-modal-container {
+  /* Safe - more specific name */
+}
+```
+
+**Why this matters:**
+- EDS's `decorateBlock()` adds `.{blockname}-wrapper` to block parent divs (line 682)
+- EDS's `decorateBlock()` adds `.{blockname}-container` to parent sections (line 684)
+- EDS's `decorateBlock()` adds `.block` to all block elements (line 677)
+- EDS's `decorateSections()` adds `.section` to all sections (line 503)
+- EDS's `decorateButtons()` adds `.button-container` to button parents (lines 430, 439, 448)
+- If your CSS uses these same class names, styles will be applied to the wrong elements
+- This can cause invisible pages, broken layouts, or unexpected behavior
+
+**Additional conflicts to avoid:**
+```css
+/* ❌ Never style these EDS-generated classes with layout-breaking properties */
+.block {
+  position: fixed;  /* Will break ALL blocks on the page */
+}
+
+.section {
+  display: none;  /* Will hide ALL sections */
+}
+
+.button-container {
+  position: absolute;  /* Will break ALL button layouts */
+}
+```
+
+**Safe naming patterns:**
+- `.{blockname}-backdrop`
+- `.{blockname}-modal`
+- `.{blockname}-content`
+- `.{blockname}-inner`
+- `.{blockname}-grid`
+- `.{blockname}-list`
+- `.{blockname}-panel`
+- `.{blockname}-overlay`
+
+**Reference:** See `scripts/aem.js`:
+- Lines 674-686: `decorateBlock()` - adds wrapper/container classes
+- Lines 489-530: `decorateSections()` - adds section classes
+- Lines 421-453: `decorateButtons()` - adds button-container classes
+
 ### Mobile-First Responsive Design
 
 ```css
@@ -512,17 +588,18 @@ export default function decorate(block) {
 
     <!-- EDS Core Styles -->
     <link rel="stylesheet" href="/styles/styles.css">
+    <!-- Block CSS is loaded automatically by loadBlock() -->
 
-    <script type="module">
-        import { loadBlock } from '/scripts/aem.js';
-
-        // Load and decorate the block
-        const block = document.querySelector('.your-block');
-        await loadBlock(block);
-    </script>
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-    <div class="your-block block">
+    <!-- Note: Only use block name class, .block is added automatically -->
+    <div class="your-block">
         <div>
             <div>Title 1</div>
             <div>Description 1</div>
@@ -532,9 +609,29 @@ export default function decorate(block) {
             <div>Description 2</div>
         </div>
     </div>
+
+    <script type="module">
+        import { loadBlock } from '/scripts/aem.js';
+
+        // Add body.appear class (required to show page)
+        document.body.classList.add('appear');
+
+        // Load and decorate the block
+        const block = document.querySelector('.your-block');
+
+        // Add .block class to mimic EDS production behavior
+        block.classList.add('block');
+
+        await loadBlock(block);
+    </script>
 </body>
 </html>
 ```
+
+**Important:**
+- The `.block` class is added by the script (`block.classList.add('block')`) to mimic EDS production behavior
+- In production, EDS's `decorateBlock()` function automatically adds this class
+- Your HTML only needs the block name class (e.g., `class="your-block"`)
 
 ### Test with Development Server
 
@@ -607,6 +704,30 @@ export default function decorate(block) {
 ---
 
 ## Common Mistakes to Avoid
+
+### ❌ CRITICAL: Don't Use EDS Reserved Class Names
+
+```javascript
+// ❌ BAD - Class name conflicts with EDS automatic naming
+function createOverlay(content) {
+  const backdrop = document.createElement('div');
+  backdrop.className = 'overlay-container'; // EDS adds this to parent section!
+  return backdrop;
+}
+
+// ✅ GOOD - Use different class name
+function createOverlay(content) {
+  const backdrop = document.createElement('div');
+  backdrop.className = 'overlay-backdrop'; // Safe - won't conflict
+  return backdrop;
+}
+```
+
+**Never use these patterns in your code:**
+- `.{blockname}-container` - Reserved by EDS for parent sections
+- `.{blockname}-wrapper` - Reserved by EDS for block elements
+
+**This mistake caused a production bug:** Using `.overlay-container` in CSS with `position: fixed; z-index: 999; opacity: 0;` made entire pages invisible because EDS added `overlay-container` class to the parent section, applying those styles to the wrong element.
 
 ### ❌ Don't Forget to Clear the Block
 
