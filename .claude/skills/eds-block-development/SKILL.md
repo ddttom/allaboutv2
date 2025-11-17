@@ -5,6 +5,29 @@ description: Guide for developing EDS blocks using vanilla JavaScript, Content D
 
 # EDS Block Development Guide
 
+## ⚠️ CRITICAL WARNING: EDS Reserved Class Names
+
+**BEFORE WRITING ANY CODE, READ THIS:**
+
+EDS automatically adds these class names to your blocks:
+- `.{blockname}-container` - Added to parent `<section>` element
+- `.{blockname}-wrapper` - Added to block's parent `<div>` wrapper
+
+**❌ NEVER use these suffixes in your CSS or JavaScript:**
+```css
+/* ❌ PRODUCTION BUG - Will break entire page */
+.overlay-container { position: fixed; opacity: 0; }
+
+/* ✅ SAFE - Use different suffix */
+.overlay-backdrop { position: fixed; opacity: 0; }
+```
+
+**Safe suffixes:** `-backdrop`, `-panel`, `-inner`, `-grid`, `-list`, `-content`, `-dialog`, `-popup`
+
+See [CSS Best Practices](#critical-avoid-eds-reserved-class-names) section below for full details.
+
+---
+
 ## Purpose
 
 Guide developers through creating and modifying Adobe Edge Delivery Services (EDS) blocks following vanilla JavaScript patterns, Content Driven Development principles, and EDS best practices.

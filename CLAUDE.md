@@ -66,6 +66,21 @@ See `.claude/README.md` for complete slash command reference.
   - Test content before implementation
   - Author needs before developer needs
 
+## ⚠️ CRITICAL: EDS Reserved Class Names
+
+**NEVER use these class name patterns in blocks:**
+- `.{blockname}-container` - EDS automatically adds this to parent `<section>` elements
+- `.{blockname}-wrapper` - EDS automatically adds this to block parent `<div>` wrappers
+
+**Why this matters:** Using these patterns causes CSS conflicts that can make entire pages invisible.
+
+**Production bug example:** Using `.overlay-container` with `position: fixed; opacity: 0;` made pages blank because EDS added the class to the section element.
+
+**Safe suffixes to use instead:**
+- `-backdrop`, `-modal`, `-panel`, `-inner`, `-grid`, `-list`, `-content`
+
+**See:** `.claude/skills/eds-block-development/SKILL.md` for complete details and `PROBLEM.md` for the bug report.
+
 ## Development Workflow
 
 ### Content Driven Development (Required)

@@ -190,7 +190,7 @@ const CONFIG = {
 
 #### Key Classes
 - `.overlay-trigger` - The button that opens the overlay
-- `.overlay-container` - Full-viewport backdrop
+- `.overlay-backdrop` - Full-viewport backdrop
 - `.overlay-modal` - The modal window
 - `.overlay-header` - Header section with title
 - `.overlay-title` - Title text (h2)
@@ -198,8 +198,8 @@ const CONFIG = {
 - `.overlay-content` - Scrollable content area
 
 #### State Classes
-- `.overlay-container--visible` - Fades in the overlay
-- `.overlay-container--dismissing` - Fades out the overlay
+- `.overlay-backdrop--visible` - Fades in the overlay
+- `.overlay-backdrop--dismissing` - Fades out the overlay
 - `body.overlay-open` - Prevents body scroll when overlay is active
 
 #### Responsive Breakpoints
@@ -298,7 +298,7 @@ To customize the overlay appearance, modify the CSS variables or override styles
   border-radius: 24px; /* More rounded */
 }
 
-.overlay-container {
+.overlay-backdrop {
   background-color: rgba(0, 0, 0, 0.7); /* Darker backdrop */
 }
 ```
