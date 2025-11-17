@@ -51,6 +51,9 @@ export async function testBlock(blockName, innerHTML = '') {
  * @returns {Promise<string>} Success message
  */
 export async function showPreview(blockName, innerHTML = '') {
+  // Check if we're inside a notebook mode overlay
+  const isInNotebookMode = document.querySelector('.ipynb-paged-overlay[data-notebook-mode="true"]');
+
   // Remove existing overlay if present
   document.querySelector('.ipynb-preview-overlay')?.remove();
 
@@ -81,6 +84,7 @@ export async function showPreview(blockName, innerHTML = '') {
       .ipynb-preview-container.tablet{width:768px;height:1024px}
       .ipynb-preview-container.desktop{width:95%;height:95vh}
       .ipynb-preview-header{background:#1e1e1e;color:#fff;padding:12px 20px;border-radius:8px 8px 0 0;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+      .ipynb-preview-header.hidden{display:none}
       .ipynb-preview-title{font-size:14px;font-weight:500;margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
       .ipynb-preview-controls{display:flex;gap:8px;align-items:center}
       .ipynb-preview-btn{background:#2d2d2d;border:1px solid #3e3e3e;color:#fff;padding:6px 12px;border-radius:4px;cursor:pointer;font-size:12px;transition:all .2s;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
@@ -97,7 +101,7 @@ export async function showPreview(blockName, innerHTML = '') {
       .ipynb-preview-container.mobile .ipynb-preview-title{font-size:12px}
     </style>
     <div class="ipynb-preview-container desktop">
-      <div class="ipynb-preview-header">
+      <div class="ipynb-preview-header${isInNotebookMode ? ' hidden' : ''}">
         <div class="ipynb-preview-title">${blockName} Block Preview</div>
         <div class="ipynb-preview-controls">
           <button class="ipynb-preview-btn ipynb-view-btn" data-view="mobile"><span class="btn-text-full">📱 Mobile</span><span class="btn-text-short">📱 M</span></button>

@@ -147,19 +147,33 @@ const example = 'This is a syntax example, not executable';
 
 ### Code Cell Best Practices
 
-**Demonstration Cells:**
+**Visual Block Demonstrations (RECOMMENDED):**
 ```javascript
-// Show a concept in action
-const fibonacci = (n) => n <= 1 ? n : fibonacci(n-1) + fibonacci(n-2);
-const sequence = Array.from({ length: 10 }, (_, i) => fibonacci(i));
+// Use showPreview() to display beautiful block overlays
+const { showPreview } = await import('/scripts/ipynb-helpers.js');
 
-console.log('Fibonacci sequence:', sequence);
-return sequence;
+// Create content for the block
+const content = '<div><div>Tab 1</div><div>Content 1</div><div>Tab 2</div><div>Content 2</div></div>';
+
+console.log('✨ Displaying interactive tabs...');
+await showPreview('tabs', content);
+
+return '✓ Beautiful visual demonstration';
 ```
+
+**Available blocks for demonstrations:**
+- **accordion** - Collapsible Q&A, comparisons
+- **cards** - Feature showcases, categories
+- **tabs** - Multiple options, variations
+- **grid** - Organized layouts, galleries
+- **table** - Data comparisons, references
+- **hero** - Important messages, highlights
+- **quote** - Inspirational text, key insights
+- **code-expander** - Expandable code examples
 
 **Pure JavaScript Examples:**
 ```javascript
-// No EDS imports needed for general concepts
+// Use for general programming concepts (no visual needed)
 const data = [1, 2, 3, 4, 5];
 const doubled = data.map(x => x * 2);
 
@@ -169,28 +183,45 @@ console.log('Doubled:', doubled);
 return { original: data, doubled };
 ```
 
-**EDS Block Examples (when relevant):**
-```javascript
-// Import helpers only when demonstrating EDS blocks
-const { testBlock, showPreview } = await import('/scripts/ipynb-helpers.js');
-
-const content = '<div><div>Tab 1</div><div>Content 1</div></div>';
-await showPreview('tabs', content);
-```
-
 **Interactive Exploration:**
 ```javascript
-// Let users modify and experiment
-const customizeGreeting = (name = 'World', emoji = '👋') => {
-  return `${emoji} Hello, ${name}!`;
-};
+// Combine interactivity with visual display
+const { showPreview } = await import('/scripts/ipynb-helpers.js');
 
 // Try changing these values!
-const greeting = customizeGreeting('Developer', '🚀');
+const yourName = 'World';
+const emoji = '👋';
+
+const greeting = emoji + ' Hello, ' + yourName + '!';
 console.log(greeting);
+
+const content = '<div><div>' + greeting + '</div><div>Change the variables above and run again!</div></div>';
+await showPreview('hero', content);
 
 return greeting;
 ```
+
+## Choosing the Right Block for Demonstrations
+
+**Match blocks to your content type:**
+
+| Content Type | Best Block | Why |
+|--------------|-----------|-----|
+| Comparisons, Q&A | `accordion` | Collapsible sections show alternatives |
+| Features, categories | `cards` | Visual grid showcases multiple items |
+| Options, variations | `tabs` | Switch between different views |
+| Organized data | `grid` | Clean layout for multiple elements |
+| Data comparisons | `table` | Structured information display |
+| Key messages | `hero` | Bold, attention-grabbing |
+| Inspirational quotes | `quote` | Emphasizes important text |
+| Code examples | `code-expander` | Expandable for long snippets |
+
+**Example use cases:**
+- **Tutorial steps** → tabs (Step 1, Step 2, Step 3)
+- **Before/After** → accordion (expand to see transformation)
+- **Pro tips** → cards (each tip as a card)
+- **Statistics** → table (organized data)
+- **Final message** → hero or quote (inspiration)
 
 ## Progressive Disclosure Pattern
 
@@ -200,26 +231,31 @@ Build complexity gradually:
 - Basic concept with minimal code
 - Clear, concrete example
 - Single idea or principle
+- Use **hero** or **cards** for visual impact
 
 ### Part 2: Core Concepts
 - Expand on the foundation
 - Introduce 2-3 related ideas
 - Show practical applications
+- Use **tabs** or **accordion** for options
 
 ### Part 3: Advanced Topics
 - Complex scenarios
 - Edge cases and gotchas
 - Performance considerations
+- Use **grid** or **table** for organization
 
 ### Part 4: Best Practices
 - Do's and don'ts
 - Common mistakes to avoid
 - Pro tips and optimizations
+- Use **cards** for tips, **table** for comparisons
 
 ### Part 5: Summary & Resources
 - Recap what was learned
 - Next steps and further reading
 - Contact or support information
+- Use **quote** or **hero** for final inspiration
 
 ## Content Ratio Guidelines
 
@@ -385,20 +421,44 @@ When creating notebooks from existing text content:
 
 ## Metadata Best Practices
 
-Include notebook metadata for better presentation:
+**IMPORTANT:** Always include metadata in your notebooks for professional presentation.
+
+**Required metadata structure:**
 
 ```json
 {
   "metadata": {
-    "title": "Understanding React Hooks",
-    "author": "Your Name",
-    "date": "2025-01-15",
-    "description": "An interactive guide to React Hooks with live examples"
+    "title": "{{GENERATE A GOOD TITLE}}",
+    "author": "{{PICK AUTHOR NAME}}",
+    "description": "{{GENERATE A ONE-LINE DESCRIPTION THAT AMPLIFIES THE TITLE}}",
+    "date": "{{DATE OF FIRST EDIT}}",
+    "version": "{{INCREASING WITH EVERY EDIT}}",
+    "tags": [
+      "tutorial",
+      "javascript",
+      "notebook",
+      "interactive"
+    ]
   }
 }
 ```
 
-The ipynb-viewer block displays this metadata professionally.
+**Example:**
+
+```json
+{
+  "metadata": {
+    "title": "The Art of Jupyter Notebooks",
+    "author": "Claude Code",
+    "description": "A meta-tutorial teaching you how to create engaging, educational notebooks by being one itself",
+    "date": "2025-01-17",
+    "version": "1.0",
+    "tags": ["tutorial", "javascript", "notebook", "interactive", "educational"]
+  }
+}
+```
+
+The ipynb-viewer block displays this metadata professionally in the header.
 
 ## Display Modes
 

@@ -139,9 +139,11 @@ When creating or modifying blocks, ALWAYS use Content Driven Development:
    - Create tutorials, guides, blog posts as SPAs
    - Transform text into engaging interactive content
    - Progressive learning with demonstrations
+   - **Visual block demonstrations** using `showPreview()` for beautiful overlays
+   - Available blocks: accordion, cards, tabs, grid, table, hero, quote
    - Use `/create-notebook` command
-   - Files: `blog.ipynb`, `tutorial.ipynb`, `guide.ipynb`
-   - Focus: Teaching and explaining concepts
+   - Files: `education.ipynb`, `docs-navigation.ipynb`, `blog.ipynb`
+   - Focus: Teaching and explaining concepts with visual engagement
 
 4. **ipynb-viewer Block** - Display notebooks on EDS pages
    - Display .ipynb files on EDS pages

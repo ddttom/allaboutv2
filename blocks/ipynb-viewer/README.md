@@ -103,6 +103,8 @@ Combines manual, paged, and autorun modes for the complete educational experienc
 **Start Reading button** opens paged overlay with automatic code execution.
 **Read the Manual button** provides access to block documentation.
 **Automatic execution** code runs as you navigate pages in overlay.
+**No close button in notebook overlay** streamlined reading experience with only Previous/Next navigation.
+**No preview headers** `showPreview()` overlays display without headers in notebook mode for cleaner visuals.
 **Full integration** combines all features (paging, manual, autorun).
 **Perfect for tutorials** complete learning experience with reference docs.
 **Side-by-side access** switch between notebook and documentation easily.
@@ -246,11 +248,13 @@ Create links with hash targets in markdown cells:
 Jump to [Part 3](#part-3) or see the [Advanced Examples](#advanced-examples)
 ```
 
-When clicked in the paged overlay:
+**How it works:**
+- **Automatic ID generation**: All `## h2` headers automatically get IDs
+- **ID format**: Text is converted to lowercase, spaces become hyphens, special chars removed
+- **Example**: `## Part 1: The Big Picture` → `id="part-1-the-big-picture"`
 - **Searches all pages** for the target ID
 - **Navigates automatically** to the page containing the target
 - **No page reload** smooth transition within overlay
-- **Works with part-X pattern** `#part-3` navigates to logical page 3
 
 **Use Cases:**
 - **Table of Contents** with clickable navigation
@@ -260,16 +264,21 @@ When clicked in the paged overlay:
 
 **Example markdown cell:**
 ```markdown
-## Table of Contents
+## 📋 Table of Contents
 
-- [Introduction](#part-1)
-- [Core Concepts](#part-2)
-- [Advanced Topics](#part-3)
-- [Conclusion](#part-4)
+- [Part 1: The Big Picture](#part-1-the-big-picture)
+- [Part 2: Testing Notebooks](#part-2-testing-notebooks)
+- [Part 3: Educational Notebooks](#part-3-educational-notebooks)
+- [Part 4: Display Modes](#part-4-display-modes)
+- [Part 5: Content Patterns](#part-5-content-patterns)
+- [Part 6: Pro Tips](#part-6-pro-tips)
+- [Resources](#resources-next-steps)
+```
 
-You can also jump to specific sections:
-- [Error Handling](#error-handling)
-- [Best Practices](#best-practices)
+**ID generation rules:**
+- `## 🚀 Getting Started` → `#-getting-started` (emojis removed)
+- `## Part 1: Introduction` → `#part-1-introduction` (lowercase, hyphens)
+- `## What's New?` → `#whats-new` (apostrophe removed, spaces to hyphens)
 ```
 
 ### Live Preview with Overlay

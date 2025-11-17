@@ -67,20 +67,18 @@ function parseMarkdown(markdown) {
   html = processedLines.join('\n');
 
   // Headers (process in order from most specific to least)
-  // Add IDs to h2 headers for "Part X:" sections and special cases
+  // Add IDs to h2 headers for navigation
   html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
   html = html.replace(/^## (.*$)/gim, (match, text) => {
-    // Check if it's a "Part X:" heading
-    const partMatch = text.match(/Part\s+(\d+):/i);
-    if (partMatch) {
-      const partNum = partMatch[1];
-      return `<h2 id="part-${partNum}">${text}</h2>`;
-    }
-    // Special case: "What is ipynb-viewer?" is Part 1
-    if (text.includes('What is ipynb-viewer?')) {
-      return `<h2 id="part-1">${text}</h2>`;
-    }
-    return `<h2>${text}</h2>`;
+    // Generate ID from text (lowercase, replace spaces with hyphens, remove special chars)
+    const id = text
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, '') // Remove special characters except word chars, spaces, hyphens
+      .replace(/\s+/g, '-')      // Replace spaces with hyphens
+      .replace(/-+/g, '-')       // Replace multiple hyphens with single hyphen
+      .trim();
+
+    return `<h2 id="${id}">${text}</h2>`;
   });
   html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
 
@@ -420,9 +418,10 @@ function createPageGroups(cells) {
  * @param {HTMLElement} container - The notebook container
  * @param {HTMLElement} cellsContainer - Container with cells
  * @param {boolean} autorun - Whether to autorun code cells
+ * @param {boolean} isNotebookMode - Whether this is notebook mode (hides close button)
  * @returns {object} Overlay controls
  */
-function createPagedOverlay(container, cellsContainer, autorun = false) {
+function createPagedOverlay(container, cellsContainer, autorun = false, isNotebookMode = false) {
   const cells = Array.from(cellsContainer.querySelectorAll('.ipynb-cell'));
 
   if (cells.length === 0) return null;
@@ -444,14 +443,24 @@ function createPagedOverlay(container, cellsContainer, autorun = false) {
   overlay.className = 'ipynb-paged-overlay';
   overlay.style.display = 'none';
 
+  // Mark overlay as notebook mode for helper functions to detect
+  if (isNotebookMode) {
+    overlay.setAttribute('data-notebook-mode', 'true');
+  }
+
   const overlayContent = document.createElement('div');
   overlayContent.className = 'ipynb-paged-overlay-content';
 
-  // Close button
+  // Close button (hidden in notebook mode)
   const closeButton = document.createElement('button');
   closeButton.className = 'ipynb-paged-close';
   closeButton.innerHTML = '&times;';
   closeButton.setAttribute('aria-label', 'Close paged view');
+
+  // Hide close button in notebook mode
+  if (isNotebookMode) {
+    closeButton.style.display = 'none';
+  }
 
   // Pagination controls
   const paginationDiv = document.createElement('div');
@@ -615,12 +624,28 @@ function createPagedOverlay(container, cellsContainer, autorun = false) {
     // Find the page that contains an element with the target ID
     const targetId = target.replace('#', '');
 
+    // Search through all pages to find the one containing the target ID
     for (let i = 0; i < pages.length; i++) {
       const page = pages[i];
-      // Check if any cell in this page contains the target
+
+      // Check if any cell in this page contains the target ID
       const hasTarget = page.cells.some(cell => {
-        const content = cell.querySelector(`#${targetId}`);
-        return content !== null;
+        // Use both querySelector and textContent search for robustness
+        const hasId = cell.querySelector(`#${targetId}`) !== null;
+
+        // Also check if cell contains an h2 that would generate this ID
+        const headers = cell.querySelectorAll('h2');
+        const hasMatchingHeader = Array.from(headers).some(h2 => {
+          const generatedId = h2.textContent
+            .toLowerCase()
+            .replace(/[^\w\s-]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-')
+            .trim();
+          return generatedId === targetId || h2.id === targetId;
+        });
+
+        return hasId || hasMatchingHeader;
       });
 
       if (hasTarget) {
@@ -631,15 +656,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false) {
       }
     }
 
-    // If no exact match, try part-X pattern
-    const partMatch = targetId.match(/^part-(\d+)$/);
-    if (partMatch) {
-      const partNum = parseInt(partMatch[1], 10) - 1; // Convert to 0-indexed
-      if (partNum >= 0 && partNum < totalPages) {
-        paginationState.currentPage = partNum;
-        updatePageDisplay();
-      }
-    }
+    console.log(`Navigation target not found: ${targetId}`);
   }
 
   // Append overlay to body
@@ -901,8 +918,8 @@ export default async function decorate(block) {
       const startButton = createPagedStartButton();
       buttonContainer.appendChild(startButton);
 
-      // Create overlay with autorun support
-      const overlay = createPagedOverlay(container, cellsContainer, shouldAutorun);
+      // Create overlay with autorun support and notebook mode flag
+      const overlay = createPagedOverlay(container, cellsContainer, shouldAutorun, isNotebook);
 
       // Start button opens overlay
       startButton.addEventListener('click', () => {

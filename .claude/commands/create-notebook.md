@@ -223,9 +223,32 @@ What you learned:
 
 Use appropriate code patterns based on what's being demonstrated:
 
+**Visual Block Demonstrations (RECOMMENDED for educational content):**
+```javascript
+// Use showPreview to create beautiful overlay displays
+const { showPreview } = await import('/scripts/ipynb-helpers.js');
+
+const content = '<div><div>[Title/Option 1]</div><div>[Content 1]</div><div>[Title/Option 2]</div><div>[Content 2]</div></div>';
+
+console.log('✨ Displaying visual demonstration...');
+await showPreview('[blockname]', content);
+
+return '✓ Visual preview displayed';
+```
+
+**Available blocks for demonstrations:**
+- `accordion` - Collapsible Q&A, comparisons, before/after
+- `cards` - Feature showcases, pro tips, categories
+- `tabs` - Tutorial steps, multiple options, variations
+- `grid` - Organized layouts, multiple examples
+- `table` - Data comparisons, specifications
+- `hero` - Key messages, important highlights
+- `quote` - Inspirational text, key insights
+- `code-expander` - Expandable code examples
+
 **Pure JavaScript Examples:**
 ```javascript
-// Demonstrating a concept with pure JS
+// Use for general programming concepts
 const data = [1, 2, 3, 4, 5];
 const doubled = data.map(x => x * 2);
 
@@ -233,17 +256,6 @@ console.log('Original:', data);
 console.log('Doubled:', doubled);
 
 return { original: data, doubled };
-```
-
-**EDS Block Testing:**
-```javascript
-// Import helpers when testing blocks
-const { testBlock, showPreview } = await import('/scripts/ipynb-helpers.js');
-
-const content = '<div><div>[Title]</div><div>[Content]</div></div>';
-
-await showPreview('[blockname]', content);
-return '✓ Preview opened';
 ```
 
 **Interactive Exploration:**
@@ -258,16 +270,18 @@ console.log(greeting);
 return greeting;
 ```
 
-**Comparisons:**
+**Combining Interactivity with Visual Display:**
 ```javascript
-// Before vs After comparison
-const before = [old approach code];
-const after = [new approach code];
+const { showPreview } = await import('/scripts/ipynb-helpers.js');
 
-console.log('BEFORE:', before);
-console.log('AFTER:', after);
+// Users can modify these
+const option1 = 'First choice';
+const option2 = 'Second choice';
 
-return 'Check console for comparison';
+const content = '<div><div>Option 1</div><div>' + option1 + '</div><div>Option 2</div><div>' + option2 + '</div></div>';
+
+await showPreview('tabs', content);
+return 'Try modifying the options above!';
 ```
 
 ### Step 7: Markdown Best Practices
@@ -308,13 +322,35 @@ Use triple backticks in markdown cells for syntax examples that won't execute:
 
 1. **Name the file** - Use descriptive name: `topic-tutorial.ipynb` not `test.ipynb`
 2. **Save location** - Root directory or appropriate subfolder
-3. **Add metadata** (optional but recommended):
+3. **Add metadata** (REQUIRED):
    ```json
    {
      "metadata": {
-       "title": "Your Notebook Title",
-       "author": "Your Name",
-       "date": "2025-01-15"
+       "title": "{{GENERATE A GOOD TITLE}}",
+       "author": "{{PICK AUTHOR NAME}}",
+       "description": "{{GENERATE A ONE-LINE DESCRIPTION THAT AMPLIFIES THE TITLE}}",
+       "date": "{{DATE OF FIRST EDIT}}",
+       "version": "{{INCREASING WITH EVERY EDIT}}",
+       "tags": [
+         "tutorial",
+         "javascript",
+         "notebook",
+         "interactive"
+       ]
+     }
+   }
+   ```
+
+   **Example:**
+   ```json
+   {
+     "metadata": {
+       "title": "The Art of Jupyter Notebooks",
+       "author": "Claude Code",
+       "description": "A meta-tutorial teaching you how to create engaging, educational notebooks by being one itself",
+       "date": "2025-01-17",
+       "version": "1.0",
+       "tags": ["tutorial", "javascript", "notebook", "interactive", "educational"]
      }
    }
    ```

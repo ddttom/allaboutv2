@@ -324,14 +324,29 @@ Based on your goal, select:
 
 Transform static content into interactive experiences:
 
-**Strategy 1: Convert examples to runnable code**
+**Strategy 1: Use Visual Block Demonstrations (RECOMMENDED)**
 ```javascript
-// Instead of showing syntax, let them run it!
-const numbers = [1, 2, 3, 4, 5];
-const doubled = numbers.map(x => x * 2);
-console.log('Result:', doubled);
-return doubled;
+// Import showPreview to display beautiful overlays
+const { showPreview } = await import('/scripts/ipynb-helpers.js');
+
+// Create content for the block
+const content = '<div><div>Option 1</div><div>Description of option 1</div><div>Option 2</div><div>Description of option 2</div></div>';
+
+console.log('✨ Showing visual comparison...');
+await showPreview('accordion', content);
+
+return '✓ Beautiful visual demonstration';
 ```
+
+**Available blocks for engagement:**
+- **accordion** - Collapsible comparisons, Q&A
+- **cards** - Feature showcases, categories
+- **tabs** - Multiple options, step-by-step
+- **grid** - Organized layouts
+- **table** - Data comparisons
+- **hero** - Key messages, highlights
+- **quote** - Inspirational text
+- **code-expander** - Expandable code
 
 **Strategy 2: Add "try it yourself" moments**
 ```javascript
@@ -339,18 +354,24 @@ return doubled;
 const yourName = 'World';  // <-- Change this!
 const emoji = '👋';        // <-- Try different emojis!
 
-return `${emoji} Hello, ${yourName}!`;
+const greeting = emoji + ' Hello, ' + yourName + '!';
+console.log(greeting);
+
+return greeting;
 ```
 
-**Strategy 3: Show before/after comparisons**
+**Strategy 3: Combine interactivity with visual display**
 ```javascript
-// See the transformation
-const before = 'traditional approach code';
-const after = 'improved approach code';
+const { showPreview } = await import('/scripts/ipynb-helpers.js');
 
-console.log('BEFORE:', before);
-console.log('AFTER:', after);
-return 'Check console for comparison!';
+// User can modify these
+const title = 'My Project';
+const description = 'Description here';
+
+const content = '<div><div>' + title + '</div><div>' + description + '</div></div>';
+await showPreview('hero', content);
+
+return 'Try changing the title and description!';
 ```
 
 **Strategy 4: Include edge case testing**
@@ -393,25 +414,44 @@ console.log('Fibonacci sequence:', sequence);
 return sequence;
 ```
 
-### EDS Block Demonstrations
+### EDS Block Demonstrations (RECOMMENDED)
 
-Use when showcasing EDS blocks:
+Use blocks to create beautiful visual demonstrations:
 
 ```javascript
-// Import helpers (no initialization needed!)
-const { testBlock, showPreview } = await import('/scripts/ipynb-helpers.js');
+// Import showPreview (no initialization needed!)
+const { showPreview } = await import('/scripts/ipynb-helpers.js');
 
-// Create content
-const content = `
-  <div>
-    <div>Tab 1</div>
-    <div>Content for tab 1</div>
-  </div>
-`;
+// Create content for the block
+const content = '<div><div>Tab 1</div><div>Content for tab 1</div><div>Tab 2</div><div>Content for tab 2</div></div>';
 
-// Show visual preview
+console.log('✨ Displaying interactive tabs...');
 await showPreview('tabs', content);
+
 return '✓ Check the overlay preview!';
+```
+
+**Choosing the right block:**
+
+| Content Type | Best Block | Example Use |
+|--------------|-----------|-------------|
+| Comparisons, Q&A | `accordion` | Before/After, FAQ sections |
+| Features, tips | `cards` | Pro tips, feature showcase |
+| Steps, options | `tabs` | Tutorial steps, variations |
+| Organized data | `grid` | Multiple examples, gallery |
+| Structured data | `table` | Comparison tables, specs |
+| Key messages | `hero` | Important announcements |
+| Quotes, inspiration | `quote` | Final messages, key insights |
+| Long code | `code-expander` | Complete examples |
+
+**Example - Using cards for pro tips:**
+```javascript
+const { showPreview } = await import('/scripts/ipynb-helpers.js');
+
+const content = '<div><div><strong>Tip 1: Start Simple</strong></div><div>Begin with basic examples before adding complexity</div><div><strong>Tip 2: Use Console</strong></div><div>Always log intermediate steps for visibility</div><div><strong>Tip 3: Return Values</strong></div><div>Return meaningful results from each cell</div></div>';
+
+await showPreview('cards', content);
+return '✓ Visual tips displayed';
 ```
 
 ### Interactive Calculations
