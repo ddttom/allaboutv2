@@ -854,7 +854,7 @@ function extractContent(block) {
 <body>
     <div class="test-content">
         <h1>Component Test Page</h1>
-        
+
         <div class="component-name block" data-block-name="component-name" data-block-status="initialized">
             <div>
                 <div>
@@ -866,7 +866,11 @@ function extractContent(block) {
 
     <script type="module">
         import decorate from './component-name.js';
-        
+
+        // CRITICAL: Make body visible (required by EDS global styles)
+        // EDS hides body by default to prevent FOUC - test files must add 'appear' class
+        document.body.classList.add('appear');
+
         document.addEventListener('DOMContentLoaded', () => {
             const blocks = document.querySelectorAll('.component-name.block');
             blocks.forEach(decorate);
@@ -875,6 +879,8 @@ function extractContent(block) {
 </body>
 </html>
 ```
+
+**Important:** The `document.body.classList.add('appear')` line is **required** in test files. EDS global styles (`styles/styles.css`) hide the body by default with `body { display: none; }` to prevent Flash of Unstyled Content (FOUC). The `appear` class makes it visible. In production, EDS automatically adds this class, but test files must add it manually.
 
 ### External-Library-Enhanced Pattern Implementation {#external-library-enhanced-pattern-implementation}
 

@@ -127,6 +127,11 @@ blocks/your-block/
         sampleRUM('top');
         window.addEventListener('load', () => sampleRUM('load'));
 
+        // CRITICAL: Add body.appear class FIRST (before loadBlock)
+        // EDS global styles hide body by default to prevent FOUC
+        // This makes the page visible before blocks load
+        document.body.classList.add('appear');
+
         // Load all blocks on the page
         const blocks = document.querySelectorAll('.block');
 
@@ -138,13 +143,12 @@ blocks/your-block/
                 console.error(`❌ Block failed: ${block.className}`, error);
             }
         }
-
-        // Add body.appear class (EDS pattern)
-        document.body.classList.add('appear');
     </script>
 </body>
 </html>
 ```
+
+**Important:** The `document.body.classList.add('appear')` line is **required** and must be called **before** `loadBlock()`. EDS hides the body by default (`body { display: none; }` in `styles/styles.css`) to prevent Flash of Unstyled Content (FOUC). Adding the `appear` class makes the page visible. In production, EDS adds this automatically, but test files must add it manually.
 
 ---
 
