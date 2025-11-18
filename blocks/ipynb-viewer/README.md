@@ -13,7 +13,7 @@ Display and execute Jupyter notebook (.ipynb) files directly in your EDS site wi
 **Overlay Previews**: Full-screen overlays for visual testing (no popup blockers). 
 **Paged Variation**: Display cells one at a time with navigation controls.
 **Autorun Mode**: Automatically execute code cells without Run buttons (NEW).
-**Notebook Variation**: Combined manual, paged, and autorun modes (NEW).
+**Notebook Variation**: Combined manual and paged modes with visible close button (NEW).
 **Link Navigation**: Navigate between overlays using hash targets (NEW).
 **Responsive Design**: Mobile-friendly layout.
 **Syntax Highlighting**: Clear code formatting with monospace fonts.
@@ -90,7 +90,7 @@ Automatically execute all code cells without requiring Run button clicks:
 
 ### Notebook Variation (NEW)
 
-Combines manual, paged, and autorun modes for the complete educational experience:
+Combines manual and paged modes for the complete educational experience:
 
 ```
 | IPynb Viewer (notebook) |
@@ -100,14 +100,15 @@ Combines manual, paged, and autorun modes for the complete educational experienc
 
 **Features:**
 
-**Start Reading button** opens paged overlay with automatic code execution.
+**Start Reading button** opens paged overlay with manual code execution.
 **Read the Manual button** provides access to block documentation.
-**Automatic execution** code runs as you navigate pages in overlay.
-**No close button in notebook overlay** streamlined reading experience with only Previous/Next navigation.
-**No preview headers** `showPreview()` overlays display without headers in notebook mode for cleaner visuals.
-**Full integration** combines all features (paging, manual, autorun).
+**Manual execution** users click Run buttons to execute code cells (no autorun).
+**Close button visible** (×) button always visible in paged overlay for easy dismissal.
+**Preview headers visible** `showPreview()` overlays display with full controls including close button.
+**Full integration** combines all features (paging, manual execution, documentation).
 **Perfect for tutorials** complete learning experience with reference docs.
 **Side-by-side access** switch between notebook and documentation easily.
+**ESC key support** pressing ESC closes the topmost overlay (paged or preview).
 
 **Use Cases:**
 - Complete interactive tutorials with documentation
@@ -262,6 +263,74 @@ await showPreview('accordion', content);
 // Return result to display
 return block.outerHTML;
 ```
+
+## Understanding the Three Overlay Types
+
+The ipynb-viewer block uses **three distinct overlay systems** for different purposes:
+
+### 1. Paged Overlay (Reading Mode)
+
+**Triggered by:** Clicking the "Start Reading" button
+**Purpose:** Navigate through notebook cells one page at a time
+**Visual Controls:**
+- Close button (×) in top-right
+- **Previous/Next buttons** at the bottom
+- **Page indicator** showing current page (e.g., "3 / 8")
+
+**Keyboard Shortcuts:**
+- `Arrow Left` - Previous page
+- `Arrow Right` - Next page
+- `Escape` - Close the paged overlay
+
+**When visible:** This overlay is active from when you click "Start Reading" until you close it.
+
+---
+
+### 2. Manual Overlay (Documentation)
+
+**Triggered by:** Clicking the "Read the Manual" button
+**Purpose:** Display block documentation and reference material
+**Visual Controls:**
+- Close button (×) in top-right
+- **Scrollable content area** for long documentation
+- No pagination controls (continuous scroll)
+
+**Keyboard Shortcuts:**
+- `Escape` - Close the manual overlay
+
+**When visible:** This overlay appears when you need to reference documentation while working with the notebook.
+
+---
+
+### 3. Preview Overlay (Code Execution Results)
+
+**Triggered by:** Clicking "Run" button in code cells that use `showPreview()`
+**Purpose:** Display visual results of code execution with responsive testing
+**Visual Controls:**
+- Close button (×) in top-right
+- **Responsive view buttons** (📱 Mobile, 📱 Tablet, 🖥️ Desktop)
+- No pagination controls
+
+**Keyboard Shortcuts:**
+- `Escape` - Close the preview overlay (if no other overlays are open)
+
+**When visible:** This overlay appears temporarily when you run code that calls `showPreview()`.
+
+---
+
+### Overlay Hierarchy
+
+When **multiple overlays are open** (e.g., you're in paged mode, have the manual open, and run code with `showPreview()`):
+- The **preview overlay** appears on top of all other overlays
+- Pressing `Escape` closes overlays in this order:
+  1. **Preview overlay** (if open)
+  2. **Manual overlay** (if open)
+  3. **Paged overlay** (if open)
+- Previous/Next buttons continue to work in the paged overlay beneath other overlays
+
+This hierarchy ensures you can test responsive previews and reference documentation while reading through the notebook without losing your place.
+
+---
 
 ### Link Navigation Between Overlays (NEW)
 
@@ -528,6 +597,14 @@ Code 1, Code 2, Code 3, Code 4
 
 No popup blockers. Stays on the same page. Better UX (ESC or backdrop click to close). Direct CSS access (no blob URL issues). Simpler implementation.
 
+**Overlay Controls (NEW):**
+
+**Close button (×)** always visible in top-right corner for all modes (including notebook variation).
+**Responsive view buttons** switch between Mobile, Tablet, and Desktop views.
+**ESC key support** pressing ESC closes the preview overlay (unless a paged/manual overlay is open).
+**Overlay hierarchy** ESC key respects overlay stack - closes paged/manual overlays first, then preview.
+**Click backdrop** clicking outside the preview container closes the overlay.
+
 **Why minimal DOM structure is critical:**
 
 EDS blocks expect specific DOM patterns where they can iterate over `block.children` directly to find content rows. Many blocks (accordion, tabs, cards) use patterns like:
@@ -728,3 +805,32 @@ Potential improvements for future versions:
 - Rich output display (HTML, SVG, tables)
 - Group cells by headers (e.g., one H2 section per page)
 - Page jump navigation with dropdown selector
+
+## Recent Changes
+
+### 2025-01-18 - Notebook Variation & Overlay Improvements
+
+**Notebook Variation Behavior Changes:**
+- ❌ **Removed autorun** - Notebook variation no longer auto-executes code cells on page load
+- ✅ **Added close button** - Close (×) button now visible in paged overlay for notebook variation
+- ✅ **Manual execution** - Users must click "Run" buttons to execute code cells
+- ✅ **Improved UX** - Consistent behavior with better user control
+
+**Preview Overlay Enhancements (`showPreview()`):**
+- ✅ **Always show controls** - Header with close button and responsive view buttons always visible
+- ✅ **Removed notebook-mode hiding** - Preview overlays display consistently in all modes
+- ✅ **ESC key hierarchy** - ESC key respects overlay stack (closes paged/manual overlays before preview)
+- ✅ **Global ESC support** - ESC key works from anywhere on page, not just when overlay has focus
+- ✅ **Proper cleanup** - Event listeners properly removed when overlay closes
+
+**Technical Changes:**
+- `blocks/ipynb-viewer/ipynb-viewer.js` line 946: Removed `isNotebook` from autorun condition
+- `blocks/ipynb-viewer/ipynb-viewer.js` lines 461-462: Removed close button hiding logic
+- `scripts/ipynb-helpers.js` lines 152-167: Added overlay hierarchy detection for ESC key
+- `scripts/ipynb-helpers.js` line 184: Changed ESC handler from overlay to document level
+
+**Migration Guide:**
+If you're using the notebook variation and expecting autorun behavior, you'll need to:
+1. Update your content to instruct users to click Run buttons
+2. Or use the `autorun` variation explicitly if you need automatic execution
+3. Update any documentation referencing hidden close buttons in notebook mode

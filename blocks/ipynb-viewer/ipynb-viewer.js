@@ -586,6 +586,8 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     paginationState.isOverlayOpen = false;
     overlay.style.display = 'none';
     document.body.style.overflow = ''; // Restore scrolling
+    // Remove keyboard event listener to prevent memory leaks
+    document.removeEventListener('keydown', keyHandler);
   }
 
   // Button event listeners
