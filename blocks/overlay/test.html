@@ -236,6 +236,32 @@
         </div>
     </div>
 
+    <!-- Test 7: Notebook Variation -->
+    <div class="test-section">
+        <h2>Test 7: Notebook Variation</h2>
+        <p>Testing the notebook variation - should show trigger button with close button visible (no autorun).</p>
+
+        <div class="overlay notebook">
+            <div>
+                <div>Open Notebook</div>
+            </div>
+            <div>
+                <div>
+                    <h3>Notebook Content</h3>
+                    <p>This is a <strong>notebook variation</strong> of the overlay block.</p>
+                    <p><strong>Expected behavior:</strong></p>
+                    <ul>
+                        <li>✅ Displays "Open Notebook" trigger button (no autorun)</li>
+                        <li>✅ User must click button to open overlay</li>
+                        <li>✅ Close button (×) is visible in top-right corner</li>
+                        <li>✅ Can close via close button, ESC key, or clicking backdrop</li>
+                    </ul>
+                    <p>The notebook variation ensures that the overlay only opens when triggered by user interaction, and the close button remains visible for easy dismissal.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Testing Instructions -->
     <div class="test-section" style="background-color: #e3f2fd;">
         <h2>🧪 Testing Checklist</h2>
@@ -292,6 +318,13 @@
             <li>✅ Tablet: Modal adjusts to viewport</li>
             <li>✅ Mobile: Modal uses full width with margins</li>
             <li>✅ All content remains readable on small screens</li>
+        </ul>
+
+        <h3>Variation Tests (Notebook)</h3>
+        <ul>
+            <li>✅ Notebook variation shows trigger button (no autorun)</li>
+            <li>✅ Close button (×) is visible in overlay</li>
+            <li>✅ Works identically to default overlay behavior</li>
         </ul>
     </div>
 

@@ -47,7 +47,7 @@ function createOverlay(title, contentElement) {
   headerTitle.className = 'overlay-title';
   headerTitle.textContent = title;
 
-  // Create close button
+  // Create close button (always visible for all variations)
   const closeButton = document.createElement('button');
   closeButton.type = 'button';
   closeButton.className = 'overlay-close';
@@ -183,9 +183,16 @@ function setupOverlayEventHandlers(overlay) {
  * Note: EDS extracts only data rows, so:
  * - extractedRows[0] = Row 2 (button text)
  * - extractedRows[1] = Row 3 (overlay content)
+ *
+ * Variations:
+ * - Default: Shows trigger button, clicking opens overlay with close button
+ * - Notebook (.notebook): Same as default - shows trigger button, close button visible
  */
 export default function decorate(block) {
   try {
+    // Detect variations (currently notebook variation behaves same as default)
+    const isNotebookVariation = block.classList.contains('notebook');
+
     // Extract rows from block
     const rows = Array.from(block.children);
 
@@ -215,14 +222,14 @@ export default function decorate(block) {
     // Clone the content to preserve it
     const overlayContent = contentCell.cloneNode(true);
 
-    // Create trigger button
+    // Create trigger button (used for all variations - no autorun behavior)
     const triggerButton = document.createElement('button');
     triggerButton.type = 'button';
     triggerButton.className = 'overlay-trigger';
     triggerButton.textContent = buttonText;
     triggerButton.setAttribute('aria-label', `Open overlay: ${buttonText}`);
 
-    // Button click handler
+    // Button click handler - overlay opens on user interaction only
     triggerButton.addEventListener('click', () => {
       const overlay = createOverlay(buttonText, overlayContent.cloneNode(true));
       showOverlay(overlay, triggerButton);

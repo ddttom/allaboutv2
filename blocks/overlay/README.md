@@ -58,6 +58,30 @@ The Overlay block requires exactly **3 rows**:
 
 This creates a "Learn More" button that shows the welcome message in an overlay.
 
+#### Notebook Variation
+
+The Overlay block supports a "notebook" variation that works identically to the default behavior:
+
+| Overlay (notebook) |
+| ------- |
+| Open Notebook |
+| ------- |
+| This is notebook content with the close button (×) visible in the top right corner. |
+
+**Behavior:**
+- ✅ Displays a trigger button (no autorun)
+- ✅ Close button (×) is visible in the overlay
+- ✅ User must click the button to open the overlay
+- ✅ Can be closed via close button, ESC key, or clicking outside
+
+To use the notebook variation, simply add the class name to your block in Google Docs:
+
+```
+Overlay (notebook)
+```
+
+The notebook variation ensures the close button is always visible and the overlay only opens when the user clicks the trigger button.
+
 #### Rich Content Example
 
 You can include formatted content, lists, links, and more:
@@ -154,10 +178,15 @@ blocks/overlay/
 #### decorate(block)
 
 Main decoration function that:
-1. Extracts button text from row 2 (row 1 is the block name "Overlay")
-2. Extracts overlay content from row 3
-3. Creates trigger button
-4. Handles overlay creation and event management
+1. Detects block variations (e.g., `.notebook` class)
+2. Extracts button text from row 2 (row 1 is the block name "Overlay")
+3. Extracts overlay content from row 3
+4. Creates trigger button (no autorun for any variation)
+5. Handles overlay creation and event management
+
+**Variations:**
+- **Default:** Trigger button opens overlay, close button visible
+- **Notebook (`.notebook`):** Same behavior as default - trigger button, close button visible, no autorun
 
 #### Configuration Object
 
@@ -175,8 +204,8 @@ const CONFIG = {
 
 ### Key Functions
 
-- **createOverlay(title, contentElement)** - Builds the overlay DOM structure
-- **showOverlay(overlay, triggerButton)** - Displays overlay with animation
+- **createOverlay(title, contentElement)** - Builds the overlay DOM structure with close button (always visible)
+- **showOverlay(overlay, triggerButton)** - Displays overlay with animation and sets up event handlers
 - **closeOverlay(overlay)** - Hides overlay with animation and cleans up
 - **setupOverlayEventHandlers(overlay)** - Manages keyboard, click, and focus events
 
