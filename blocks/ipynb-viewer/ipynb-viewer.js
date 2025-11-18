@@ -419,7 +419,7 @@ function createPageGroups(cells) {
  * @param {HTMLElement} container - The notebook container
  * @param {HTMLElement} cellsContainer - Container with cells
  * @param {boolean} autorun - Whether to autorun code cells
- * @param {boolean} isNotebookMode - Whether this is notebook mode (hides close button)
+ * @param {boolean} isNotebookMode - Whether this is notebook mode (close button always visible)
  * @returns {object} Overlay controls
  */
 function createPagedOverlay(container, cellsContainer, autorun = false, isNotebookMode = false) {
@@ -452,16 +452,14 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   const overlayContent = document.createElement('div');
   overlayContent.className = 'ipynb-paged-overlay-content';
 
-  // Close button (hidden in notebook mode)
+  // Close button (always visible, including notebook mode)
   const closeButton = document.createElement('button');
   closeButton.className = 'ipynb-paged-close';
   closeButton.innerHTML = '&times;';
   closeButton.setAttribute('aria-label', 'Close paged view');
 
-  // Hide close button in notebook mode
-  if (isNotebookMode) {
-    closeButton.style.display = 'none';
-  }
+  // Close button is now always visible (notebook mode fix)
+  // Previously hidden in notebook mode, now always shown for better UX
 
   // Pagination controls
   const paginationDiv = document.createElement('div');
@@ -804,7 +802,7 @@ export default async function decorate(block) {
   const isPaged = block.classList.contains('paged');
   const hasManual = block.classList.contains('manual');
   const isAutorun = block.classList.contains('autorun');
-  const isNotebook = block.classList.contains('notebook'); // Combines manual, paged, and autorun
+  const isNotebook = block.classList.contains('notebook'); // Combines manual and paged (no autorun), close button visible
 
   try {
     // Extract notebook path from block content
@@ -944,7 +942,8 @@ export default async function decorate(block) {
     }
 
     // Determine if autorun should be enabled
-    const shouldAutorun = isAutorun || isNotebook;
+    // Notebook mode no longer autoruns - user must manually run cells
+    const shouldAutorun = isAutorun;
 
     notebook.cells.forEach(async (cell, index) => {
       let cellElement;
