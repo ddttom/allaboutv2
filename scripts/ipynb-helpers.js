@@ -147,7 +147,19 @@ export async function showPreview(blockName, innerHTML = '') {
   // ESC key handler attached to document for global capture
   const handleEscape = (e) => {
     if (e.key === 'Escape') {
-      cleanupAndClose();
+      // Check if there's a visible paged overlay (from ipynb-viewer)
+      // If so, let the paged overlay handle the ESC key instead
+      const pagedOverlay = document.querySelector('.ipynb-paged-overlay');
+      const isPagedVisible = pagedOverlay && pagedOverlay.style.display !== 'none';
+
+      // Also check for manual overlay
+      const manualOverlay = document.querySelector('.ipynb-manual-overlay');
+      const isManualVisible = manualOverlay && manualOverlay.style.display !== 'none';
+
+      // Only close preview overlay if no other overlays are handling ESC
+      if (!isPagedVisible && !isManualVisible) {
+        cleanupAndClose();
+      }
     }
   };
 
