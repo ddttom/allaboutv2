@@ -141,24 +141,31 @@ export async function showPreview(blockName, innerHTML = '') {
   // Handle close button
   closeBtn.addEventListener('click', (e) => {
     e.stopPropagation();
-    overlay.remove();
+    cleanupAndClose();
   });
 
-  // Close on ESC key or clicking backdrop
-  overlay.addEventListener('keydown', (e) => {
+  // ESC key handler attached to document for global capture
+  const handleEscape = (e) => {
     if (e.key === 'Escape') {
-      overlay.remove();
+      cleanupAndClose();
     }
-  });
+  };
+
+  // Click backdrop to close
   overlay.addEventListener('click', (e) => {
     if (e.target === overlay) {
-      overlay.remove();
+      cleanupAndClose();
     }
   });
 
-  // Focus overlay for keyboard events
-  overlay.tabIndex = -1;
-  overlay.focus();
+  // Cleanup function to remove overlay and event listener
+  function cleanupAndClose() {
+    document.removeEventListener('keydown', handleEscape);
+    overlay.remove();
+  }
+
+  // Attach ESC handler to document
+  document.addEventListener('keydown', handleEscape);
 
   // Decorate the block
   const block = overlay.querySelector(`.${blockName}.block`);
