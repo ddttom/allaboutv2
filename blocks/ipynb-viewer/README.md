@@ -14,6 +14,7 @@ Display and execute Jupyter notebook (.ipynb) files directly in your EDS site wi
 **Paged Variation**: Display cells one at a time with navigation controls.
 **Autorun Mode**: Automatically execute code cells without Run buttons (NEW).
 **Notebook Variation**: Combined manual and paged modes with visible close button (NEW).
+**Hamburger Menu TOC**: Navigate cells via dropdown menu in notebook mode with visual dividers (NEW).
 **Link Navigation**: Navigate between overlays using hash targets (NEW).
 **Responsive Design**: Mobile-friendly layout.
 **Syntax Highlighting**: Clear code formatting with monospace fonts.
@@ -352,7 +353,8 @@ The ipynb-viewer block uses **three distinct overlay systems** for different pur
 **Visual Controls:**
 - Close button (×) in top-right
 - **Responsive view buttons** (📱 Mobile, 📱 Tablet, 🖥️ Desktop) - *only in non-notebook variations*
-- **Notebook mode:** Only shows close button for a cleaner interface
+- **Notebook mode:** Shows close button and hamburger menu (☰) for table of contents navigation
+- **Hamburger menu (notebook mode only):** Click to show dropdown TOC with all cell headings, visual dividers for transitions
 - No pagination controls
 
 **Keyboard Shortcuts:**
@@ -853,6 +855,30 @@ Potential improvements for future versions:
 - Page jump navigation with dropdown selector
 
 ## Recent Changes
+
+### 2025-01-19 - Hamburger Menu Navigation for Notebook Mode (v5)
+
+**Added Table of Contents Navigation:**
+- ✅ **Hamburger menu button** - Positioned left of close button in notebook mode overlay
+- ✅ **Dropdown TOC** - Lists all cells with headings for quick navigation
+- ✅ **Smart filtering** - Excludes hero cells (title slides) from TOC
+- ✅ **Visual dividers** - Shows horizontal rules where transition cells appear
+- ✅ **Jump navigation** - Click any item to jump directly to that cell/page
+- ✅ **Click-outside to close** - Dropdown closes when clicking elsewhere
+- ✅ **Keyboard accessible** - Full ARIA support with role="menu" and menuitem
+
+**Technical Implementation:**
+- `ipynb-viewer.js`: Added hamburger button creation and TOC extraction logic (lines 477-567)
+- `ipynb-viewer.css`: Added styles for `.ipynb-hamburger-menu`, `.ipynb-toc-dropdown`, `.ipynb-toc-item`, `.ipynb-toc-divider`
+- Detects hero cells by h1 with `font-size: 48px`
+- Detects transition cells by centered text without headings
+- Extracts titles from h1, h2, h3 elements for TOC entries
+
+**Visual Structure:**
+- Hamburger button: Circular, positioned at `top: 1rem; right: 5rem`
+- Dropdown: White background, rounded corners, scrollable up to 400px height
+- Menu items: Full-width buttons with hover effects
+- Dividers: 2px grey horizontal rules with margin
 
 ### 2025-01-19 - Cell Structure Consistency for Overlay Stability (v4)
 

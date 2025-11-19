@@ -496,43 +496,74 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     const tocItems = [];
     cells.forEach((cell, index) => {
       let title = null;
+      let itemType = 'content'; // 'content', 'divider', or 'skip'
 
       // Try to extract title from markdown cells
       if (cell.classList.contains('ipynb-markdown-cell')) {
         const content = cell.querySelector('.ipynb-cell-content');
         if (content) {
-          // Look for headings (h1, h2, h3)
-          const heading = content.querySelector('h1, h2, h3');
-          if (heading) {
-            title = heading.textContent.trim();
+          // Check if this is a transition cell (centered text, no heading)
+          const isTransition = content.textContent.includes('Now that you understand') ||
+                              content.textContent.includes('Individual tasks are important') ||
+                              content.textContent.includes('Understanding workflows helps') ||
+                              (content.querySelector('div[style*="text-align: center"]') && !content.querySelector('h1, h2, h3'));
+
+          // Check if this is a hero cell (large title cell at the beginning)
+          const isHero = content.querySelector('h1[style*="font-size: 48px"]') !== null;
+
+          if (isHero) {
+            itemType = 'skip'; // Don't show hero in TOC at all
+          } else if (isTransition) {
+            itemType = 'divider'; // Show as divider
+          } else {
+            // Look for headings (h1, h2, h3)
+            const heading = content.querySelector('h1, h2, h3');
+            if (heading) {
+              title = heading.textContent.trim();
+              itemType = 'content';
+            }
           }
         }
       }
 
       // For code cells or cells without headings, use cell number
-      if (!title) {
+      if (!title && itemType === 'content') {
         title = `Cell ${index + 1}`;
       }
 
-      tocItems.push({ index, title, pageIndex: Math.floor(index / 1) }); // Each cell is its own page in notebook mode
+      // Add to TOC based on type
+      if (itemType === 'content' && title) {
+        tocItems.push({ index, title, pageIndex: Math.floor(index / 1), type: 'content' });
+      } else if (itemType === 'divider') {
+        tocItems.push({ index, title: null, pageIndex: Math.floor(index / 1), type: 'divider' });
+      }
+      // Skip hero cells entirely
     });
 
     // Create dropdown menu items
     tocItems.forEach((item) => {
-      const menuItem = document.createElement('button');
-      menuItem.className = 'ipynb-toc-item';
-      menuItem.textContent = item.title;
-      menuItem.setAttribute('role', 'menuitem');
-      menuItem.setAttribute('data-page-index', item.pageIndex);
+      if (item.type === 'divider') {
+        // Create a horizontal divider
+        const divider = document.createElement('hr');
+        divider.className = 'ipynb-toc-divider';
+        tocDropdown.appendChild(divider);
+      } else {
+        // Create a clickable menu item
+        const menuItem = document.createElement('button');
+        menuItem.className = 'ipynb-toc-item';
+        menuItem.textContent = item.title;
+        menuItem.setAttribute('role', 'menuitem');
+        menuItem.setAttribute('data-page-index', item.pageIndex);
 
-      menuItem.addEventListener('click', () => {
-        paginationState.currentPage = item.pageIndex;
-        updatePageDisplay();
-        tocDropdown.style.display = 'none';
-        hamburgerButton.setAttribute('aria-expanded', 'false');
-      });
+        menuItem.addEventListener('click', () => {
+          paginationState.currentPage = item.pageIndex;
+          updatePageDisplay();
+          tocDropdown.style.display = 'none';
+          hamburgerButton.setAttribute('aria-expanded', 'false');
+        });
 
-      tocDropdown.appendChild(menuItem);
+        tocDropdown.appendChild(menuItem);
+      }
     });
 
     // Toggle dropdown on hamburger click

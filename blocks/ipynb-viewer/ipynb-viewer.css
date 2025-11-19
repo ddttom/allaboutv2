@@ -639,6 +639,13 @@ html {
   background-color: #e3f2fd;
 }
 
+.ipynb-toc-divider {
+  margin: 0.5rem 1rem;
+  border: none;
+  border-top: 2px solid #e0e0e0;
+  background: none;
+}
+
 /* Cell content area - simple approach with calculated height */
 .ipynb-paged-cell-area {
   position: absolute;

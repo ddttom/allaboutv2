@@ -1,4 +1,4 @@
-Eight Minutes to Living Knowledge
+Living Documentation: When Code Proves Itself
 Creating comprehensive block documentation manually consumes over two hours. With Claude and Adobe's EDS Skills, the same documentation takes eight minutes. Describe what you want - "show content teams how the accordion block transforms their tables" - and Claude generates complete notebooks with plain-English explanations and executable demonstrations. These become documents that serve every audience. Developers test code directly, content teams watch their formatting requirements in action, sales demonstrates capabilities through live transformations, and new hires learn by watching examples run. Documentation can't become outdated when every example executes, every transformation appears visually, and every content structure gets verified by clicking "Run”.
 
 Zero Setup, Pure Browser Execution
@@ -60,6 +60,22 @@ The most powerful feature for non-technical users might be the preview overlay. 
 Click "Run" on a preview cell, and a full-page overlay appears. The block renders with complete styling. Interactive features work - accordions expand, carousels slide. Press ESC to dismiss and continue learning.
 
 Content teams experience their content as end users will see it. Sales teams demonstrate without switching contexts. Developers verify styling without deployment.
+Notebook Mode - The Complete Learning Experience
+The notebook variation combines everything into a comprehensive educational platform. Click "Start Reading" to enter full-screen paged mode where cells display one at a time. Navigate with Previous/Next buttons or keyboard arrows. Access documentation instantly with the "Read the Manual" button. Execute code when you're ready with manual Run buttons.
+
+The breakthrough feature is the hamburger menu navigation. Click the menu icon in notebook mode and a dropdown appears showing every section in your document. Smart filtering excludes title slides while visual dividers mark major transitions between parts. Jump instantly to any section - Part 2, Part 5, specific topics - without clicking through dozens of pages.
+
+This transforms long tutorials into navigable experiences. Content teams jump to relevant sections. Developers skip to technical details. Sales demonstrate specific features on demand. Everyone explores at their own pace with their own path through the knowledge.
+
+The overlay system respects hierarchy. Preview overlays from running code appear on top. The manual overlay sits beneath. The paged notebook overlay forms the base. Press ESC and overlays close in order - preview first, then manual, finally the notebook itself. Previous/Next navigation continues working beneath other overlays. You never lose your place.
+Presentation Mode - Automatic Demonstration
+Sometimes you need documentation that demonstrates automatically. Presentation mode combines paged navigation with automatic code execution. No Run buttons appear. Code executes immediately when each page displays. Results appear without user action.
+
+This mode transforms living documents into live presentations. Sales demonstrates features without clicking Run buttons. Training sessions show transformations automatically. Client demonstrations flow smoothly from concept to working example. Marketing creates video content where code executes on cue.
+
+The autorun variation works everywhere - in default scrolling view where all cells execute on page load, or in paged overlay where each cell executes as you navigate to it. Content appears, code runs, results display. The audience watches transformations happen in real-time.
+
+Combine this with the hamburger menu and you get truly flexible presentations. Jump to any section, watch it execute automatically, navigate to questions, demonstrate specific features. The same document serves both self-paced learning and live presentation without modification.
 Living Documentation Handles Every Scenario
 Edge Cases Everyone Understands
 Living documents make edge cases visible to all. Empty content? Run the cell, see graceful handling. Single item? Run the cell, check if navigation appears. Fifty items? Run the cell, observe performance impact.
@@ -127,7 +143,7 @@ Manual documentation takes two or more hours of writing, testing, formatting, an
 
 The breakthrough goes beyond speed. Claude creates documentation serving everyone, understanding that content teams need visual examples while developers want technical details.
 Key Innovations
-The ipynb-viewer block automatically transforms notebooks into living documents. The import-as-needed pattern means each cell stands alone without initialisation. Browser-native execution provides a real environment, real blocks, and real results. The overlay preview system shows full styling without leaving the page. Multi-audience design means the same document serves all teams. Read-only focus encourages learning from examples rather than experimentation. Claude integration turns natural language into living documentation in minutes.
+The ipynb-viewer block automatically transforms notebooks into living documents. The import-as-needed pattern means each cell stands alone without initialisation. Browser-native execution provides a real environment, real blocks, and real results. The overlay preview system shows full styling without leaving the page. Notebook mode provides comprehensive navigation with hamburger menu, table of contents, and instant section jumping. Presentation mode enables automatic code execution for live demonstrations and training. Smart filtering excludes decorative cells while visual dividers mark transitions. Multi-audience design means the same document serves all teams. Read-only focus encourages learning from examples rather than experimentation. Claude integration turns natural language into living documentation in minutes.
 The Repository
 Find everything at github.com/ddttom/webcomponents-with-eds. Working examples everyone can run. The ipynb-viewer implementation. Helper utilities. Comprehensive documentation.
 Documentation That Lives and Breathes
