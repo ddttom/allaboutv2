@@ -571,8 +571,8 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     prevButton.disabled = paginationState.currentPage === 0;
     nextButton.disabled = paginationState.currentPage === totalPages - 1;
 
-    // Scroll to top of overlay
-    overlayContent.scrollTop = 0;
+    // Scroll to top of cell area (not overlayContent)
+    cellContentArea.scrollTop = 0;
   }
 
   // Navigation handlers
@@ -593,7 +593,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   // Open overlay
   function openOverlay() {
     paginationState.isOverlayOpen = true;
-    overlay.style.display = 'flex';
+    overlay.style.display = 'block';
     document.body.style.overflow = 'hidden'; // Prevent background scrolling
     updatePageDisplay();
   }
