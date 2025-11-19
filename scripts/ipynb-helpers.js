@@ -54,6 +54,10 @@ export async function showPreview(blockName, innerHTML = '') {
   // Remove existing overlay if present
   document.querySelector('.ipynb-preview-overlay')?.remove();
 
+  // Check if we're in notebook mode
+  const pagedOverlay = document.querySelector('.ipynb-paged-overlay[data-notebook-mode="true"]');
+  const isNotebookMode = pagedOverlay !== null;
+
   // Helper function to load CSS if not already loaded
   const loadCSS = (href) => {
     if (!document.querySelector(`link[href="${href}"]`)) {
@@ -73,6 +77,16 @@ export async function showPreview(blockName, innerHTML = '') {
   // Create overlay container
   const overlay = document.createElement('div');
   overlay.className = 'ipynb-preview-overlay';
+
+  // Build controls HTML - in notebook mode, only show close button
+  const controlsHTML = isNotebookMode
+    ? '<button class="ipynb-preview-btn ipynb-close-btn">✕</button>'
+    : `<button class="ipynb-preview-btn ipynb-view-btn" data-view="mobile"><span class="btn-text-full">📱 Mobile</span><span class="btn-text-short">📱 M</span></button>
+          <button class="ipynb-preview-btn ipynb-view-btn" data-view="tablet"><span class="btn-text-full">📱 Tablet</span><span class="btn-text-short">📱 T</span></button>
+          <button class="ipynb-preview-btn ipynb-view-btn active" data-view="desktop"><span class="btn-text-full">🖥️ Desktop</span><span class="btn-text-short">🖥️ D</span></button>
+          <div class="ipynb-preview-divider"></div>
+          <button class="ipynb-preview-btn ipynb-close-btn">✕</button>`;
+
   overlay.innerHTML = `
     <style>
       .ipynb-preview-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:10000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
@@ -100,11 +114,7 @@ export async function showPreview(blockName, innerHTML = '') {
       <div class="ipynb-preview-header">
         <div class="ipynb-preview-title">${blockName} Block Preview</div>
         <div class="ipynb-preview-controls">
-          <button class="ipynb-preview-btn ipynb-view-btn" data-view="mobile"><span class="btn-text-full">📱 Mobile</span><span class="btn-text-short">📱 M</span></button>
-          <button class="ipynb-preview-btn ipynb-view-btn" data-view="tablet"><span class="btn-text-full">📱 Tablet</span><span class="btn-text-short">📱 T</span></button>
-          <button class="ipynb-preview-btn ipynb-view-btn active" data-view="desktop"><span class="btn-text-full">🖥️ Desktop</span><span class="btn-text-short">🖥️ D</span></button>
-          <div class="ipynb-preview-divider"></div>
-          <button class="ipynb-preview-btn ipynb-close-btn">✕</button>
+          ${controlsHTML}
         </div>
       </div>
       <div class="ipynb-preview-content">
@@ -121,22 +131,24 @@ export async function showPreview(blockName, innerHTML = '') {
   const viewBtns = overlay.querySelectorAll('.ipynb-view-btn');
   const closeBtn = overlay.querySelector('.ipynb-close-btn');
 
-  // Handle view switching
-  viewBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const view = btn.dataset.view;
+  // Handle view switching (only if not in notebook mode)
+  if (!isNotebookMode) {
+    viewBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const view = btn.dataset.view;
 
-      // Update active state
-      viewBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+        // Update active state
+        viewBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
 
-      // Update container class
-      container.className = `ipynb-preview-container ${view}`;
+        // Update container class
+        container.className = `ipynb-preview-container ${view}`;
 
-      console.log(`✓ Switched to ${view} view`);
+        console.log(`✓ Switched to ${view} view`);
+      });
     });
-  });
+  }
 
   // Handle close button
   closeBtn.addEventListener('click', (e) => {

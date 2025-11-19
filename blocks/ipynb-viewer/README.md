@@ -308,13 +308,16 @@ The ipynb-viewer block uses **three distinct overlay systems** for different pur
 **Purpose:** Display visual results of code execution with responsive testing
 **Visual Controls:**
 - Close button (×) in top-right
-- **Responsive view buttons** (📱 Mobile, 📱 Tablet, 🖥️ Desktop)
+- **Responsive view buttons** (📱 Mobile, 📱 Tablet, 🖥️ Desktop) - *only in non-notebook variations*
+- **Notebook mode:** Only shows close button for a cleaner interface
 - No pagination controls
 
 **Keyboard Shortcuts:**
 - `Escape` - Close the preview overlay (if no other overlays are open)
 
 **When visible:** This overlay appears temporarily when you run code that calls `showPreview()`.
+
+**Note:** In notebook variation, the preview overlay is simplified to show only the block title and close button, removing the responsive view buttons for a cleaner, distraction-free experience.
 
 ---
 

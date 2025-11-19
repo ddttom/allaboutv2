@@ -2,7 +2,7 @@
 
 ## Summary
 
-Fixed notebook variation behavior for both the `overlay` and `ipynb-viewer` blocks to ensure close buttons are visible and autorun is removed for better user control. Added comprehensive documentation to distinguish between the three overlay types (paged, manual, and preview) and fixed ESC key handling with proper event listener cleanup.
+Fixed notebook variation behavior for both the `overlay` and `ipynb-viewer` blocks to ensure close buttons are visible and autorun is removed for better user control. Added comprehensive documentation to distinguish between the three overlay types (paged, manual, and preview) and fixed ESC key handling with proper event listener cleanup. Simplified preview overlay in notebook mode to show only close button for cleaner interface.
 
 ## Changes by Block
 
@@ -136,6 +136,21 @@ Fixed notebook variation behavior for both the `overlay` and `ipynb-viewer` bloc
 - Documented ESC key behavior for each overlay type
 
 **Result:** Users can now clearly understand the difference between reading mode, documentation, and code execution previews.
+
+#### 3.5 Simplified Preview Overlay in Notebook Mode
+
+**Problem:**
+- Preview overlay showed responsive view buttons (Mobile/Tablet/Desktop) in notebook mode
+- These extra controls were unnecessary and cluttered the interface
+- Users only needed the close button in notebook mode
+
+**Solution:**
+- Added notebook mode detection (lines 58-59)
+- Conditionally build controls HTML - only close button in notebook mode (lines 82-88)
+- Skip view switching event listeners in notebook mode (line 135)
+- Result: Clean, minimal preview overlay with just title and close button
+
+**Result:** Preview overlay in notebook mode shows only the close (×) button, providing a cleaner interface.
 
 ---
 
