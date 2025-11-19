@@ -800,15 +800,28 @@ Navigation links work with CSS hover (fixed in v1.0.2):
 
 ### Fonts Look Inconsistent
 
-**Problem:** Different fonts appear on different slides
+**Problem:** Heading sizes change between slides
 
-**Solution:** Ensure inline styles include explicit font declarations. Only `font-family` inherits automatically - other properties like `font-size` must be specified inline.
+**Solution:** No action needed - fixed in v3 (Jan 2025). The ipynb-viewer now uses `font-size: revert !important` to respect inline styles. Headings with inline styles (e.g., `style="font-size: 26px"`) display at their specified sizes.
+
+**If Still Seeing Issues:** Ensure you're using latest ipynb-viewer CSS and clear browser cache.
 
 ### Overlay Jumps When Navigating
 
-**Problem:** Should no longer occur (fixed v1.0.2)
+**Problem:** Overlay resizes or moves vertically
 
-**Solution:** If you still see jumping, verify you're using latest ipynb-viewer CSS (check for `align-items: flex-start` and `height: 85vh`). Clear browser cache and test again.
+**Solution:** No action needed - fixed in v3 (Jan 2025). The overlay is now:
+- Vertically centered with fixed 85vh height using `!important`
+- Content scrolls inside cell area, overlay never resizes
+- Multiple overlays prevented by automatic cleanup
+
+**If Still Seeing Issues:** Clear browser cache and verify you're on latest version.
+
+### Multiple Overlays or Unpredictable Behavior
+
+**Problem:** Overlay appears duplicated or behaves strangely after page refresh
+
+**Solution:** No action needed - fixed in v3 (Jan 2025). The ipynb-viewer now removes existing overlays before creating new ones, preventing stacking.
 
 ### Navigation Hover Not Working
 
@@ -834,4 +847,10 @@ Navigation links work with CSS hover (fixed in v1.0.2):
 
 **Skill Status**: Complete - Ready for creating beautiful presentation notebooks ✅
 
-**Version**: 1.0.2 (2025-01-19) - Overlay position, height, and hover fixes applied
+**Version**: 1.0.3 (2025-01-19)
+
+**Recent Changes (v3):**
+- Fixed multiple overlays stacking on page re-renders
+- Fixed inconsistent heading font sizes in overlay (respects inline styles)
+- Fixed overlay jumping with locked 85vh height and `!important` flags
+- All fixes automatic - no migration needed

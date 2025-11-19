@@ -440,6 +440,10 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
 
   if (cells.length === 0) return null;
 
+  // Remove any existing overlays to prevent duplicates
+  const existingOverlays = document.querySelectorAll('.ipynb-paged-overlay');
+  existingOverlays.forEach(overlay => overlay.remove());
+
   // Create page groups (smart grouping)
   const pages = createPageGroups(cells);
   const totalPages = pages.length;

@@ -854,39 +854,47 @@ Potential improvements for future versions:
 
 ## Recent Changes
 
-### 2025-01-19 - Presentation Overlay Styling Fixes (Final)
+### 2025-01-19 - Presentation Overlay Stability & Consistency Fixes (v3)
 
-**Fixed Inconsistent Fonts in Paged Overlay:**
-- ✅ **Selective font inheritance** - Only `font-family` inherits, not `font-size`, `margin`, `padding`
-- ✅ **Preserve inline styles** - Changed from `* { inherit !important }` to targeted selectors
-- ✅ **Consistent typography** - Eliminates font changes while respecting cell styling
+**Fixed Multiple Overlays Stacking (Critical):**
+- ✅ **Cleanup on creation** - Remove existing overlays before creating new ones
+- ✅ **No duplicates** - Prevents multiple overlays from stacking on page re-renders
+- ✅ **Stable behavior** - Eliminates unpredictable sizing from overlay multiplication
+- ✅ **Memory efficient** - Old overlays properly removed from DOM
+
+**Fixed Inconsistent Font Sizes in Paged Overlay:**
+- ✅ **Respect inline styles** - Added `font-size: revert !important` for h1/h2/h3 in overlay
+- ✅ **Preserve cell styling** - Inline font-size values (26px, 28px) now display correctly
+- ✅ **Consistent typography** - All slides show same font sizes regardless of heading level
+- ✅ **No CSS override** - Base heading sizes no longer override inline styles in overlay
 
 **Fixed Overlay Jumping Between Slides:**
-- ✅ **Pinned to top** - Changed from `align-items: center` to `align-items: flex-start`
-- ✅ **Fixed position** - Added `padding-top: 5vh` for consistent 5% offset from top
-- ✅ **Locked height** - Set content to exactly 85vh (height, min-height, max-height)
-- ✅ **Zero movement** - Overlay stays perfectly still regardless of content size
+- ✅ **Vertically centered** - Changed back to `align-items: center` for better positioning
+- ✅ **Absolutely locked height** - Used `!important` on all height properties (85vh)
+- ✅ **Fixed flex layout** - Cell area uses `flex: 1 1 0 !important` with explicit constraints
+- ✅ **Scroll containment** - Content scrolls inside cell area, overlay never resizes
+- ✅ **Zero movement** - Overlay maintains exact size regardless of content length
 
 **Fixed Navigation Hover Effects:**
 - ✅ **No inline JavaScript** - Replaced `onmouseover`/`onmouseout` with CSS `:hover`
-- ✅ **Inline styles work** - Added `nav a[style*="transition: background"]:hover` selector
-- ✅ **Consistent hover** - Background changes to #f5f5f5 on hover for all nav links
 - ✅ **Security compliant** - Browsers block inline JavaScript with `innerHTML`
+- ✅ **Consistent hover** - Background changes to #f5f5f5 on hover for all nav links
 
 **Technical Changes:**
-- `blocks/ipynb-viewer/ipynb-viewer.css` lines 499-511: Overlay uses `flex-start` + `padding-top: 5vh`
-- `blocks/ipynb-viewer/ipynb-viewer.css` lines 523-537: Content box fixed at 85vh
-- `blocks/ipynb-viewer/ipynb-viewer.css` lines 594-610: Selective font inheritance (not all properties)
-- `blocks/ipynb-viewer/ipynb-viewer.css` lines 612-619: Nav link hover support
-- `docs-navigation.ipynb` cell-2: TOC uses inline styles + scoped CSS hover
-- `docs/for-ai/templates/ipynb/presentation-template.ipynb` cell-2: Updated TOC pattern
+- `blocks/ipynb-viewer/ipynb-viewer.js` lines 443-445: Remove existing overlays on creation
+- `blocks/ipynb-viewer/ipynb-viewer.css` lines 499-511: Overlay centered with `align-items: center`
+- `blocks/ipynb-viewer/ipynb-viewer.css` lines 532-536: Content box locked at 85vh with `!important`
+- `blocks/ipynb-viewer/ipynb-viewer.css` lines 572-578: Cell area flex properties with `!important`
+- `blocks/ipynb-viewer/ipynb-viewer.css` lines 603-608: Heading font-size uses `revert !important`
+- `blocks/ipynb-viewer/ipynb-viewer.css` line 653: Pagination flex-shrink with `!important`
 
 **Affected Use Cases:**
-- Presentation notebooks with varying content heights
-- Navigation tables of contents with hover effects
-- Any paged variation with inline styled content
+- All presentation notebooks with paged overlay mode
+- Notebooks with varying content heights between slides
+- Pages that re-render or re-decorate the ipynb-viewer block
+- Any paged variation with inline styled headings
 
-**Migration:** No action required - fixes apply automatically. For new presentations, use inline styles on links instead of `<style>` tag classes for maximum compatibility.
+**Migration:** No action required - fixes apply automatically. The overlay is now completely stable with consistent sizing, typography, and no duplicate instances.
 
 ### 2025-01-18 - Notebook Variation & Overlay Improvements
 

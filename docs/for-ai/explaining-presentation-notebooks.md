@@ -989,13 +989,13 @@ Content explanation before the block
 
 ### Inconsistent Fonts in Overlay
 
-**Problem:** Text fonts change between slides or don't match the styled content
+**Problem:** Heading sizes change between slides, making text appear larger or smaller
 
 **Solution:**
-- The ipynb-viewer overlay uses selective font inheritance (fixed in v1.0.2)
-- Only `font-family` inherits, not `font-size`, `margin`, `padding`
-- Inline styles with explicit sizes are preserved
-- If fonts still inconsistent, ensure inline styles include explicit font declarations
+- The ipynb-viewer now respects inline font-size styles in overlay mode (fixed in v3, Jan 2025)
+- Headings with inline styles (e.g., `style="font-size: 26px"`) display at correct sizes
+- Base CSS heading sizes no longer override inline styles
+- No action needed - this is now handled automatically
 
 **Technical Details:**
 ```css
@@ -1003,38 +1003,66 @@ Content explanation before the block
 .ipynb-paged-overlay .ipynb-markdown-cell h1,
 .ipynb-paged-overlay .ipynb-markdown-cell h2,
 .ipynb-paged-overlay .ipynb-markdown-cell h3 {
-  font-family: inherit !important;
-  /* Other properties like font-size NOT inherited */
+  font-size: revert !important;  /* Respects inline styles */
+  font-family: inherit !important;  /* Inherits presentation font */
 }
 ```
+
+**Why:** Base CSS set h1 to 2rem, h2 to 1.5rem, etc. Using `revert` allows inline styles to take precedence.
 
 ### Overlay "Jumping" Between Slides
 
 **Problem:** Overlay resizes or moves vertically when navigating, causing a "jumping" effect
 
 **Solution:**
-- Overlay is now pinned to top with fixed position (fixed in v1.0.2)
-- Uses `align-items: flex-start` + `padding-top: 5vh` to stay at consistent position
-- Content box locked at exactly 85vh (height, min-height, max-height all equal)
-- Content scrolls internally, overlay stays perfectly fixed
+- Overlay is now completely locked in size and position (fixed in v3, Jan 2025)
+- Vertically centered with fixed 85vh height using `!important` on all properties
+- Content scrolls inside cell area, overlay container never resizes
+- Flex layout explicitly constrained to prevent content from affecting size
 - No action needed - this is now handled automatically
 
 **Technical Details:**
 ```css
 /* Applied automatically by ipynb-viewer.css */
 .ipynb-paged-overlay {
-  align-items: flex-start;
-  padding-top: 5vh;
+  align-items: center;  /* Vertically centered */
 }
 
 .ipynb-paged-overlay-content {
-  height: 85vh;
-  min-height: 85vh;
-  max-height: 85vh;
+  height: 85vh !important;
+  min-height: 85vh !important;
+  max-height: 85vh !important;
+  overflow: hidden !important;
+}
+
+.ipynb-paged-cell-area {
+  flex: 1 1 0 !important;
+  overflow-y: auto !important;
+  max-height: 100% !important;
 }
 ```
 
-**Note:** All fixes applied January 2025 - overlay stays perfectly still with consistent typography.
+**Why:** Using `!important` prevents any CSS specificity issues. Content that's too tall scrolls within the cell area.
+
+### Multiple Overlays Appearing
+
+**Problem:** Overlay appears duplicated or behaves unpredictably after page refresh or re-rendering
+
+**Solution:**
+- ipynb-viewer now removes existing overlays before creating new ones (fixed in v3, Jan 2025)
+- Prevents overlay multiplication on page re-renders or block re-decoration
+- No action needed - cleanup is automatic
+
+**Technical Details:**
+```javascript
+// Applied automatically in ipynb-viewer.js
+const existingOverlays = document.querySelectorAll('.ipynb-paged-overlay');
+existingOverlays.forEach(overlay => overlay.remove());
+```
+
+**Why:** Each block decoration created a new overlay without removing old ones, causing stacking and unpredictable behavior.
+
+**Note:** All fixes applied January 2025 (v3) - overlay is now completely stable with consistent sizing, typography, and no duplicate instances.
 
 ## Related Documentation
 
