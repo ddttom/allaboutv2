@@ -53,7 +53,9 @@ return block.outerHTML;
 
 Becomes markdown cell:
 ```markdown
-### Code Example: Testing Accordion
+<div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 32px; margin: 0 0; border-left: 6px solid #0288d1; color: #212121;">
+
+<h3 style="color: #0d47a1; font-size: 26px; font-weight: 700; margin-bottom: 16px;">Code Example: Testing Accordion</h3>
 
 **Original code** (for reference):
 \```javascript
@@ -75,6 +77,8 @@ return block.outerHTML;
   const module = await import('/blocks/accordion/accordion.js');
   await module.default(block);
 </script>
+
+</div>
 ```
 
 ### 3. Use EDS Blocks
@@ -117,7 +121,74 @@ For each block, use this pattern:
 - Bold and italic for emphasis
 - Clear heading hierarchy (# → ## → ###)
 
-### 6. Navigation
+### 6. Visual Consistency Standards
+
+**CRITICAL: All presentations must follow these exact styling standards for consistency.**
+
+**Typography:**
+- All H2 headings: `color: #0d47a1; font-size: 28px; font-weight: 700; margin-bottom: 24px;`
+- All H3 headings: `color: #0d47a1; font-size: 26px; font-weight: 700; margin-bottom: 16px;`
+- All body text: `color: #212121;`
+- **IMPORTANT**: Use HTML headings with explicit styling, NOT markdown syntax (`##`, `###`)
+- Markdown headings render with default grey colors - always use HTML
+
+**Backgrounds:**
+- Standard gradient: `background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);`
+- All content divs MUST include: `color: #212121;` to prevent text fading
+- Margin: `margin: 0 0;` (no vertical gaps that expose dark ipynb-viewer background)
+- Border radius: `border-radius: 12px;`
+- Padding: `padding: 32px;`
+
+**Borders:**
+- Standard border: `border-left: 6px solid #0288d1;`
+
+**Standard Container Pattern:**
+```html
+<div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 32px; margin: 0 0; border-left: 6px solid #0288d1; color: #212121;">
+
+  <h2 style="color: #0d47a1; font-size: 28px; font-weight: 700; margin-bottom: 24px;">🎯 Section Title</h2>
+
+  <p>Body text content here...</p>
+
+</div>
+```
+
+**Block Wrapping Pattern:**
+- All EDS blocks MUST be wrapped INSIDE styled divs, not as siblings
+- Blocks inherit dark background from ipynb-viewer if not properly wrapped
+- Pattern:
+```html
+<div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 32px; margin: 0 0; border-left: 6px solid #0288d1; color: #212121;">
+
+  <h2 style="color: #0d47a1; font-size: 28px; font-weight: 700; margin-bottom: 24px;">Section Title</h2>
+
+  <!-- Optional explanation box -->
+  <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 20px; margin: 0 0 24px 0; border-left: 4px solid #0288d1; color: #212121;">
+    Explanation text about the block demonstration
+  </div>
+
+  <!-- Block INSIDE the container -->
+  <div class="block-name block">
+    <!-- block content -->
+  </div>
+
+  <script type="module">
+    const block = document.querySelector('.block-name.block');
+    const module = await import('/blocks/block-name/block-name.js');
+    await module.default(block);
+  </script>
+
+</div> <!-- Close container AFTER block -->
+```
+
+**Common Mistakes to Avoid:**
+1. ❌ Using markdown headings (`##`, `###`) - they render grey
+2. ❌ Placing blocks as siblings to styled divs - they inherit dark background
+3. ❌ Forgetting `color: #212121;` on gradient divs - text fades
+4. ❌ Using vertical margins (`margin: 32px 0;`) - creates black gaps
+5. ❌ Inconsistent colors across cells
+
+### 7. Navigation
 
 - Add table of contents for presentations with >5 sections
 - Use hash links: `[Section Name](#section-name)`
@@ -128,7 +199,9 @@ For each block, use this pattern:
 ### Accordion Example
 
 ```markdown
-## ❓ Frequently Asked Questions
+<div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 32px; margin: 0 0; border-left: 6px solid #0288d1; color: #212121;">
+
+<h2 style="color: #0d47a1; font-size: 28px; font-weight: 700; margin-bottom: 24px;">❓ Frequently Asked Questions</h2>
 
 <div class="accordion block">
   <div>
@@ -146,12 +219,16 @@ For each block, use this pattern:
   const module = await import('/blocks/accordion/accordion.js');
   await module.default(block);
 </script>
+
+</div>
 ```
 
 ### Cards Example
 
 ```markdown
-## 🚀 Key Features
+<div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 32px; margin: 0 0; border-left: 6px solid #0288d1; color: #212121;">
+
+<h2 style="color: #0d47a1; font-size: 28px; font-weight: 700; margin-bottom: 24px;">🚀 Key Features</h2>
 
 <div class="cards block">
   <div>
@@ -173,12 +250,16 @@ For each block, use this pattern:
   const module = await import('/blocks/cards/cards.js');
   await module.default(block);
 </script>
+
+</div>
 ```
 
 ### Table Example
 
 ```markdown
-## 💰 Pricing Plans
+<div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 32px; margin: 0 0; border-left: 6px solid #0288d1; color: #212121;">
+
+<h2 style="color: #0d47a1; font-size: 28px; font-weight: 700; margin-bottom: 24px;">💰 Pricing Plans</h2>
 
 <div class="table block">
   <div>
@@ -203,6 +284,8 @@ For each block, use this pattern:
   const module = await import('/blocks/table/table.js');
   await module.default(block);
 </script>
+
+</div>
 ```
 
 ## Workflow

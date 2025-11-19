@@ -62,7 +62,8 @@
       "Skill(content-driven-development)",
       "Bash(npm run lint)",
       "Bash(npx eslint:*)",
-      "Skill(eds-performance-debugging)"
+      "Skill(eds-performance-debugging)",
+      "Skill(frontend-dev-guidelines)"
     ],
     "deny": [],
     "ask": []

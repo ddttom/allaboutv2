@@ -126,23 +126,106 @@ return block.outerHTML;
 </script>
 ```
 
-## Design System
+## Visual Consistency Standards
 
-### Color Palette (Material Design-Inspired)
+**CRITICAL: All presentations must follow these exact styling standards for consistency across all cells.**
+
+### Standard Color Palette
 
 ```javascript
 {
-  primary: '#1976d2',      // Material Blue
-  secondary: '#dc004e',    // Material Pink
-  success: '#2e7d32',      // Green
-  warning: '#ed6c02',      // Orange
-  info: '#0288d1',         // Light Blue
-  background: '#f5f5f5',   // Light Gray
-  surface: '#ffffff',      // White
-  text_primary: '#212121', // Dark Gray
-  text_secondary: '#757575' // Medium Gray
+  // PRIMARY COLORS (use these for consistency)
+  heading: '#0d47a1',        // Dark Blue (all headings)
+  text: '#212121',           // Dark Gray (all body text)
+  border: '#0288d1',         // Blue (left borders)
+  gradient_start: '#e3f2fd', // Light Blue (gradient start)
+  gradient_end: '#bbdefb',   // Medium Blue (gradient end)
+
+  // LEGACY/OPTIONAL COLORS (for specific use cases)
+  primary: '#1976d2',        // Material Blue
+  secondary: '#dc004e',      // Material Pink
+  success: '#2e7d32',        // Green
+  warning: '#ed6c02',        // Orange
+  background: '#f5f5f5',     // Light Gray
+  surface: '#ffffff'         // White
 }
 ```
+
+### Typography Standards
+
+**IMPORTANT: Use HTML headings with explicit styling, NOT markdown syntax (`##`, `###`)**
+
+Markdown headings render with default grey colors—always use HTML:
+
+- **All H2 headings**: `color: #0d47a1; font-size: 28px; font-weight: 700; margin-bottom: 24px;`
+- **All H3 headings**: `color: #0d47a1; font-size: 26px; font-weight: 700; margin-bottom: 16px;`
+- **All body text**: `color: #212121;`
+
+### Background Standards
+
+- **Standard gradient**: `background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);`
+- **All content divs MUST include**: `color: #212121;` to prevent text fading
+- **Margin**: `margin: 0 0;` (no vertical gaps that expose dark ipynb-viewer background)
+- **Border radius**: `border-radius: 12px;`
+- **Padding**: `padding: 32px;`
+
+### Border Standards
+
+- **Standard border**: `border-left: 6px solid #0288d1;`
+
+### Standard Container Pattern
+
+All content sections MUST follow this pattern:
+
+```html
+<div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 32px; margin: 0 0; border-left: 6px solid #0288d1; color: #212121;">
+
+  <h2 style="color: #0d47a1; font-size: 28px; font-weight: 700; margin-bottom: 24px;">🎯 Section Title</h2>
+
+  <p>Body text content here...</p>
+
+</div>
+```
+
+### Block Wrapping Pattern
+
+**CRITICAL: All EDS blocks MUST be wrapped INSIDE styled divs, not as siblings.**
+
+Blocks inherit dark background from ipynb-viewer if not properly wrapped:
+
+```html
+<div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 32px; margin: 0 0; border-left: 6px solid #0288d1; color: #212121;">
+
+  <h2 style="color: #0d47a1; font-size: 28px; font-weight: 700; margin-bottom: 24px;">Section Title</h2>
+
+  <!-- Optional explanation box -->
+  <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 20px; margin: 0 0 24px 0; border-left: 4px solid #0288d1; color: #212121;">
+    Explanation text about the block demonstration
+  </div>
+
+  <!-- Block INSIDE the container -->
+  <div class="block-name block">
+    <!-- block content -->
+  </div>
+
+  <script type="module">
+    const block = document.querySelector('.block-name.block');
+    const module = await import('/blocks/block-name/block-name.js');
+    await module.default(block);
+  </script>
+
+</div> <!-- Close container AFTER block -->
+```
+
+### Common Mistakes to Avoid
+
+1. ❌ Using markdown headings (`##`, `###`) - they render grey
+2. ❌ Placing blocks as siblings to styled divs - they inherit dark background
+3. ❌ Forgetting `color: #212121;` on gradient divs - text fades
+4. ❌ Using vertical margins (`margin: 32px 0;`) - creates black gaps
+5. ❌ Inconsistent colors across cells
+
+## Design System (Legacy Patterns)
 
 ### Typography Hierarchy
 
@@ -341,13 +424,11 @@ All blocks from the EDS system work in presentation notebooks:
 ### Accordion for FAQs
 
 ```markdown
-## ❓ Frequently Asked Questions
+<div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 32px; margin: 0 0; border-left: 6px solid #0288d1; color: #212121;">
 
-<div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 24px; margin: 24px 0; border-left: 4px solid #0288d1;">
+<h2 style="color: #0d47a1; font-size: 28px; font-weight: 700; margin-bottom: 24px;">❓ Frequently Asked Questions</h2>
 
-### Common questions about our product
-
----
+<h3 style="color: #0d47a1; font-size: 26px; font-weight: 700; margin-bottom: 16px;">Common questions about our product</h3>
 
 <div class="accordion block">
   <div>
@@ -378,13 +459,11 @@ All blocks from the EDS system work in presentation notebooks:
 ### Cards for Features
 
 ```markdown
-## 🚀 Key Features
+<div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 32px; margin: 0 0; border-left: 6px solid #0288d1; color: #212121;">
 
-<div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 24px; margin: 24px 0; border-left: 4px solid #0288d1;">
+<h2 style="color: #0d47a1; font-size: 28px; font-weight: 700; margin-bottom: 24px;">🚀 Key Features</h2>
 
-### What makes our solution unique
-
----
+<h3 style="color: #0d47a1; font-size: 26px; font-weight: 700; margin-bottom: 16px;">What makes our solution unique</h3>
 
 <div class="cards block">
   <div>
@@ -419,13 +498,11 @@ All blocks from the EDS system work in presentation notebooks:
 ### Tabs for Product Comparison
 
 ```markdown
-## 📋 Product Tiers
+<div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 32px; margin: 0 0; border-left: 6px solid #0288d1; color: #212121;">
 
-<div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 24px; margin: 24px 0; border-left: 4px solid #0288d1;">
+<h2 style="color: #0d47a1; font-size: 28px; font-weight: 700; margin-bottom: 24px;">📋 Product Tiers</h2>
 
-### Compare our pricing tiers
-
----
+<h3 style="color: #0d47a1; font-size: 26px; font-weight: 700; margin-bottom: 16px;">Compare our pricing tiers</h3>
 
 <div class="tabs block">
   <div>
