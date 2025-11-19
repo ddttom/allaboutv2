@@ -505,8 +505,9 @@ html {
   background: rgba(0, 0, 0, 0.95);
   z-index: 10000;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  padding-top: 7.5vh;
   animation: fadeIn 0.3s ease;
 }
 
