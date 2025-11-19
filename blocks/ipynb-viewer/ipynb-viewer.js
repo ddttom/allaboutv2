@@ -709,10 +709,12 @@ function createManualButton() {
 }
 
 /**
- * Create manual overlay for displaying README.mdc content
+ * Create manual overlay for displaying manual content
+ * @param {string} manualPath - Path to the manual file (relative or absolute URL)
+ * @param {string|null} repoUrl - Repository URL for resolving relative paths
  * @returns {Object} Object with openOverlay and closeOverlay functions
  */
-function createManualOverlay() {
+function createManualOverlay(manualPath, repoUrl) {
   // Create overlay container
   const overlay = document.createElement('div');
   overlay.className = 'ipynb-manual-overlay';
@@ -743,12 +745,29 @@ function createManualOverlay() {
 
   overlay.appendChild(overlayContent);
 
+  // Resolve manual path
+  let resolvedPath = manualPath;
+
+  // If path doesn't start with http:// or https://, treat as relative
+  if (!manualPath.startsWith('http://') && !manualPath.startsWith('https://')) {
+    // If it's a plain .md file and we have a repo URL, construct full path
+    if (repoUrl && manualPath.endsWith('.md')) {
+      resolvedPath = `${repoUrl}/blob/main/${manualPath}`;
+    } else if (manualPath.startsWith('/')) {
+      // Absolute path from root
+      resolvedPath = manualPath;
+    } else {
+      // Relative path - make it absolute from root
+      resolvedPath = `/${manualPath}`;
+    }
+  }
+
   // Open/close functions
   const openOverlay = async () => {
-    // Fetch and display README.mdc
+    // Fetch and display manual
     try {
       contentArea.innerHTML = '<div class="ipynb-loading">Loading manual...</div>';
-      const response = await fetch('/blocks/ipynb-viewer/README.mdc');
+      const response = await fetch(resolvedPath);
       if (!response.ok) {
         throw new Error(`Failed to load manual: ${response.status}`);
       }
@@ -1022,13 +1041,16 @@ export default async function decorate(block) {
         overlay.openOverlay();
       });
 
-      // Add manual button if manual variation or notebook variation is present
-      if (hasManual || isNotebook) {
+      // Add manual button if manual variation or notebook variation is present AND manual-path is configured
+      if ((hasManual || isNotebook) && notebook.metadata?.['manual-path']) {
         const manualButton = createManualButton();
         buttonContainer.appendChild(manualButton);
 
-        // Create manual overlay
-        const manualOverlay = createManualOverlay();
+        // Get manual path from metadata
+        const manualPath = notebook.metadata['manual-path'];
+
+        // Create manual overlay with configurable path
+        const manualOverlay = createManualOverlay(manualPath, repoUrl);
 
         // Manual button opens manual overlay
         manualButton.addEventListener('click', () => {

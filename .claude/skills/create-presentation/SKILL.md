@@ -17,6 +17,7 @@ Transform Jupyter notebooks into beautiful presentation-mode experiences using e
 - Creating showcases, tutorials, or product demos
 - Building slide-like experiences with EDS blocks
 - Updating existing notebooks to presentation mode
+- Applying inline HTML styling for beautiful, consistent appearance
 
 ## Key Concepts
 
@@ -39,6 +40,7 @@ Transform Jupyter notebooks into beautiful presentation-mode experiences using e
 2. **Inline scripts in markdown** - Use `<script>` tags within markdown for interactivity
 3. **EDS blocks via HTML** - Embed block HTML directly in markdown
 4. **Conversion of existing code cells** - Transform to informative markdown text
+5. **Inline HTML styling** - Apply consistent design system for beautiful presentation
 
 ## Available EDS Blocks
 
@@ -107,10 +109,27 @@ Every presentation notebook should have:
     "author": "Author Name",
     "date": "2025-01-19",
     "category": "presentation",
-    "repo": "https://github.com/username/repo"
+    "repo": "https://github.com/username/repo",
+    "manual-path": "docs/for-ai/your-documentation.md"
   }
 }
 ```
+
+**Key Fields:**
+
+- **`title`** - Main presentation title (required)
+- **`description`** - One-line summary (optional)
+- **`author`** - Author name (optional)
+- **`date`** - Publication date (optional)
+- **`category`** - Content category, e.g., "presentation" (optional)
+- **`repo`** - Repository URL for linking .md files (optional)
+- **`manual-path`** - Path to documentation for "Read the Manual" button (optional)
+  - **REQUIRED for button:** Button only appears if `manual-path` is provided
+  - With `repo` and plain .md: Creates GitHub link `{repo}/blob/main/{manual-path}`
+  - Absolute path (`/...`): Used as-is
+  - Relative path: Made absolute from root
+  - Full URL: Used as-is
+  - **No default:** If omitted, button will not appear
 
 ### Cell Structure
 
@@ -229,6 +248,112 @@ Brief introduction to the presentation
 ```
 
 See [resources/blocks-reference.md](resources/blocks-reference.md) for all block patterns.
+
+## Inline HTML Styling
+
+### Design System
+
+Apply consistent inline HTML styling to all markdown cells for professional presentation:
+
+**Color Palette:**
+```javascript
+{
+  primary: '#1976d2',      // Material Blue
+  secondary: '#dc004e',    // Material Pink
+  success: '#2e7d32',      // Green
+  warning: '#ed6c02',      // Orange
+  info: '#0288d1',         // Light Blue
+  background: '#f5f5f5',   // Light Gray
+  surface: '#ffffff',      // White
+  text_primary: '#212121', // Dark Gray
+  text_secondary: '#757575' // Medium Gray
+}
+```
+
+### Styling Patterns
+
+**Hero Header:**
+```html
+<div style="background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%); color: white; border-radius: 16px; padding: 48px; text-align: center; margin: 32px 0; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
+<h1 style="font-size: 48px; font-weight: 800; margin: 0 0 16px 0;">
+🗺️ Presentation Title
+</h1>
+<p style="font-size: 20px; margin: 16px 0; opacity: 0.95;">
+Your compelling subtitle or tagline
+</p>
+</div>
+```
+
+**Content Card:**
+```html
+<div style="background: white; border-radius: 12px; padding: 28px; margin: 20px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+<h3 style="color: #1976d2; font-size: 24px; font-weight: 700; margin-bottom: 20px;">Section Title</h3>
+<div style="color: #212121; line-height: 1.8; font-size: 16px;">
+Your content here with proper typography
+</div>
+</div>
+```
+
+**Block Wrapper (for EDS blocks):**
+```html
+<div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 24px; margin: 24px 0; border-left: 4px solid #0288d1;">
+### What this demonstrates
+
+Explanatory text before the EDS block
+
+---
+
+<div class="cards block">
+  <!-- Block HTML here -->
+</div>
+
+<script type="module">
+  <!-- Block initialization -->
+</script>
+</div>
+```
+
+**Interactive Navigation:**
+```html
+<nav aria-label="Presentation navigation">
+  <ul style="list-style: none; padding: 0;">
+    <li style="margin: 12px 0;">
+      <a href="#section" style="color: #1976d2; text-decoration: none; font-size: 18px; font-weight: 500; display: flex; align-items: center; gap: 8px; padding: 12px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='transparent'">
+        <span style="font-size: 20px;">🌍</span>
+        Section Name
+      </a>
+    </li>
+  </ul>
+</nav>
+```
+
+### Typography Guidelines
+
+- **Hero Title**: 48px, font-weight: 800
+- **Section Heading (h2)**: 28-32px, font-weight: 700
+- **Subsection (h3)**: 24px, font-weight: 700
+- **Body Text**: 16-18px, line-height: 1.8
+- **Small Text**: 14px
+- **Code**: Courier New, monospace
+
+### Spacing System
+
+- **Section Margin**: 24-32px
+- **Card Padding**: 24-32px
+- **Content Gap**: 12-16px
+- **Border Radius**: 8-16px (larger for containers, smaller for buttons)
+
+### Interactive Elements
+
+**Hover Effects:**
+- Background transitions on links
+- Color changes on buttons
+- Shadow depth changes on cards
+
+**Best Practices:**
+- Use `onmouseover`/`onmouseout` for hover states
+- Apply `transition` for smooth animations
+- Maintain accessibility with proper contrast ratios
 
 ## Converting Code Cells
 

@@ -290,11 +290,18 @@
                     "presentation mode",
                     "embedded blocks",
                     "inline javascript",
+                    "inline html",
+                    "inline styling",
+                    "inline css",
                     "no executable code",
                     "convert code cells",
                     "markdown only",
                     "client presentation",
-                    "product demo"
+                    "product demo",
+                    "style notebook",
+                    "smarten",
+                    "make look great",
+                    "consistent styling"
                 ],
                 "intentPatterns": [
                     "(create|make|build).*?presentation.*?notebook",

@@ -68,14 +68,16 @@ Combine paged mode with a manual button to provide access to documentation:
 
 **Features:**
 
-**Start Reading button** opens the notebook in full-screen paged mode. 
-**Read the Manual button** opens the block's README.mdc documentation in a scrollable overlay. 
-**Both buttons side by side** provide easy access to both notebook and documentation. 
-**Separate overlays** mean manual and notebook have independent full-screen displays. 
-**Markdown rendering** displays README.mdc beautifully formatted with headings, lists, tables, and code blocks. 
-**Scrollable content** allows long documentation to scroll smoothly within the overlay. 
-**Same close button (×)** provides consistent UI across both overlays. 
+**Start Reading button** opens the notebook in full-screen paged mode.
+**Read the Manual button** opens the manual specified in notebook metadata in a scrollable overlay.
+**Both buttons side by side** provide easy access to both notebook and documentation.
+**Separate overlays** mean manual and notebook have independent full-screen displays.
+**Markdown rendering** displays manual content beautifully formatted with headings, lists, tables, and code blocks.
+**Scrollable content** allows long documentation to scroll smoothly within the overlay.
+**Same close button (×)** provides consistent UI across both overlays.
 **Escape key** works for both overlays.
+
+**Important:** The "Read the Manual" button **only appears** if `manual-path` is provided in the notebook metadata.
 
 **Use Case:**
 Perfect for interactive tutorials where users need to reference documentation while exploring the notebook.
@@ -87,9 +89,19 @@ The block supports standard Jupyter notebook JSON format with **enhanced markdow
 The notebook metadata is displayed in the header section:
 
 **Supported Fields:**
-`title` is the main notebook title (optional, defaults to "Jupyter Notebook"). 
-`author` is the author name (optional). 
+`title` is the main notebook title (optional, defaults to "Jupyter Notebook").
+`author` is the author name (optional).
 `date` is the publication or creation date (optional).
+`repo` is the repository URL for automatically linking .md files (optional).
+`manual-path` is the path to manual/documentation for "Read the Manual" button (REQUIRED for button to appear).
+
+**manual-path Behavior:**
+- **REQUIRED:** Button only appears if `manual-path` is provided in metadata
+- **Plain .md filename with repo:** `docs/guide.md` + repo → `{repo}/blob/main/docs/guide.md`
+- **Absolute path:** `/blocks/ipynb-viewer/README.mdc` → used as-is
+- **Relative path:** `docs/guide.md` (no repo) → `/docs/guide.md`
+- **Full URL:** `https://example.com/manual.md` → used as-is
+- **No default:** If omitted, "Read the Manual" button will not appear
 
 **Example metadata in .ipynb file:**
 ```json
@@ -98,6 +110,8 @@ The notebook metadata is displayed in the header section:
     "title": "My Interactive Tutorial",
     "author": "Tom Cranstoun",
     "date": "November 14, 2025",
+    "repo": "https://github.com/username/repo",
+    "manual-path": "docs/for-ai/explaining-presentation-notebooks.md",
     "kernelspec": {
       "display_name": "JavaScript",
       "language": "javascript",

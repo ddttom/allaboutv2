@@ -128,14 +128,16 @@ Combine paged mode with a manual button to provide access to documentation:
 
 **Features:**
 
-**Start Reading button** opens the notebook in full-screen paged mode. 
-**Read the Manual button** opens the block's README.mdc documentation in a scrollable overlay. 
-**Both buttons side by side** provide easy access to both notebook and documentation. 
-**Separate overlays** mean manual and notebook have independent full-screen displays. 
-**Markdown rendering** displays README.mdc beautifully formatted with headings, lists, tables, and code blocks. 
-**Scrollable content** allows long documentation to scroll smoothly within the overlay. 
-**Same close button (×)** provides consistent UI across both overlays. 
+**Start Reading button** opens the notebook in full-screen paged mode.
+**Read the Manual button** opens the manual specified in notebook metadata in a scrollable overlay.
+**Both buttons side by side** provide easy access to both notebook and documentation.
+**Separate overlays** mean manual and notebook have independent full-screen displays.
+**Markdown rendering** displays manual content beautifully formatted with headings, lists, tables, and code blocks.
+**Scrollable content** allows long documentation to scroll smoothly within the overlay.
+**Same close button (×)** provides consistent UI across both overlays.
 **Escape key** works for both overlays.
+
+**Important:** The "Read the Manual" button **only appears** if `manual-path` is provided in the notebook metadata.
 
 **Use Case:**
 Perfect for interactive tutorials where users need to reference documentation while exploring the notebook.
@@ -167,6 +169,14 @@ The notebook metadata is displayed in the header section:
   - **When provided:** Markdown links to .md files are automatically converted to full repository URLs
   - **When omitted:** Links render as-is (relative paths remain relative)
   - **Important:** Use markdown link syntax `[text](file.md)`, not inline code `` `file.md` ``
+- `manual-path` - Path to the manual/documentation file for the "Read the Manual" button (used with `manual` or `notebook` variations)
+  - **REQUIRED for button to appear:** The "Read the Manual" button only displays if `manual-path` is provided in metadata
+  - **Plain .md filename:** If path doesn't start with `http://` or `https://`, and ends with `.md`, and `repo` is provided, constructs full GitHub URL: `{repo}/blob/main/{manual-path}`
+  - **Absolute path:** Paths starting with `/` are used as-is (e.g., `/blocks/ipynb-viewer/README.mdc`)
+  - **Relative path:** Other paths are made absolute from root (e.g., `docs/guide.md` → `/docs/guide.md`)
+  - **Full URL:** Paths starting with `http://` or `https://` are used as-is
+  - **No default:** If omitted, the "Read the Manual" button will not appear (even with `manual` or `notebook` variations)
+  - **Example:** `"manual-path": "docs/for-ai/explaining-presentation-notebooks.md"` with `repo` set creates link to GitHub
   - Example with repo: `[guide](docs/guide.md)` → `https://github.com/username/repo/blob/main/docs/guide.md`
   - Example without repo: `[guide](docs/guide.md)` → `<a href="docs/guide.md">guide</a>`
   - ❌ Wrong: `` `getting-started.md` `` (inline code, won't convert)
