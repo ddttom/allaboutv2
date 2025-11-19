@@ -570,13 +570,19 @@ html {
   bottom: 80px;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 3rem 2rem 2rem 2rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ipynb-paged-cell-area .ipynb-cell {
   border: none;
   box-shadow: none;
   margin: 0;
+  padding: 2rem;
+  width: 100%;
+  max-width: 1200px;
   /* Ensure consistent font inheritance for all content */
   font-family: inherit;
 }
