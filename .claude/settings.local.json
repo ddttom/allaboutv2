@@ -63,7 +63,8 @@
       "Bash(npm run lint)",
       "Bash(npx eslint:*)",
       "Skill(eds-performance-debugging)",
-      "Skill(frontend-dev-guidelines)"
+      "Skill(frontend-dev-guidelines)",
+      "Skill(create-presentation)"
     ],
     "deny": [],
     "ask": []
