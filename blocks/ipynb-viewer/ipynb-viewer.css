@@ -609,6 +609,15 @@ html {
   font-family: inherit !important;
 }
 
+/* Ensure navigation links with inline styles have working hover */
+.ipynb-paged-overlay nav a[style*="transition: background"] {
+  transition: background 0.2s !important;
+}
+
+.ipynb-paged-overlay nav a[style*="transition: background"]:hover {
+  background: #f5f5f5 !important;
+}
+
 /* Pagination Controls in Overlay */
 .ipynb-paged-overlay .ipynb-pagination {
   display: flex;

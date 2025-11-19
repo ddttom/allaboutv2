@@ -1043,38 +1043,49 @@ Content explanation before the block
 **Problem:** Text fonts change between slides or don't match the styled content
 
 **Solution:**
-- The ipynb-viewer overlay now forces consistent font inheritance (fixed in v1.0.1)
-- All text elements in `.ipynb-paged-overlay` inherit fonts from parent
-- Inline styles with `font-family` in cells will be preserved
+- The ipynb-viewer overlay uses selective font inheritance (fixed in v1.0.2)
+- Only `font-family` inherits, not `font-size`, `margin`, `padding`
+- Inline styles with explicit sizes are preserved
 - If fonts still inconsistent, ensure inline styles include explicit font declarations
 
 **Technical Details:**
 ```css
 /* Applied automatically by ipynb-viewer.css */
-.ipynb-paged-overlay * {
-  font-family: inherit;
+.ipynb-paged-overlay .ipynb-markdown-cell h1,
+.ipynb-paged-overlay .ipynb-markdown-cell h2,
+.ipynb-paged-overlay .ipynb-markdown-cell h3 {
+  font-family: inherit !important;
+  /* Other properties like font-size NOT inherited */
 }
 ```
 
 ### Overlay "Jumping" Between Slides
 
-**Problem:** Overlay resizes vertically when navigating, causing a "jumping" effect
+**Problem:** Overlay resizes or moves vertically when navigating, causing a "jumping" effect
 
 **Solution:**
-- The overlay now maintains fixed 90vh height (fixed in v1.0.1)
-- Content scrolls within the fixed-height cell area
+- Overlay is now pinned to top with fixed position (fixed in v1.0.2)
+- Uses `align-items: flex-start` + `padding-top: 5vh` to stay at consistent position
+- Content box locked at exactly 85vh (height, min-height, max-height all equal)
+- Content scrolls internally, overlay stays perfectly fixed
 - No action needed - this is now handled automatically
 
 **Technical Details:**
 ```css
 /* Applied automatically by ipynb-viewer.css */
+.ipynb-paged-overlay {
+  align-items: flex-start;
+  padding-top: 5vh;
+}
+
 .ipynb-paged-overlay-content {
-  min-height: 90vh;
-  max-height: 90vh;
+  height: 85vh;
+  min-height: 85vh;
+  max-height: 85vh;
 }
 ```
 
-**Note:** These fixes were applied in January 2025 to improve presentation viewing experience.
+**Note:** All fixes applied January 2025 - overlay stays perfectly still with consistent typography.
 
 ## Related Documentation
 

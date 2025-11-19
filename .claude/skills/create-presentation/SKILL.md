@@ -818,19 +818,27 @@ The ipynb-viewer block automatically handles consistent styling for paged presen
 
 ### Font Consistency
 
-All text in the paged overlay inherits fonts consistently (fixed in v1.0.1):
-- Inline `font-family` styles in cells are preserved
-- Markdown cells use consistent typography
-- No font jumping between slides
+All text uses selective font inheritance (fixed in v1.0.2):
+- Only `font-family` inherits, not `font-size`, `margin`, `padding`
+- Inline styles with explicit sizes are preserved
+- No font jumping between slides while respecting cell styling
 
-### Fixed Height
+### Fixed Position & Height
 
-Overlay maintains stable 90vh height (fixed in v1.0.1):
-- No vertical "jumping" when navigating
-- Content scrolls within fixed cell area
-- Smooth, predictable navigation experience
+Overlay stays perfectly still when navigating (fixed in v1.0.2):
+- Pinned at 5vh from top (not vertically centered)
+- Content box locked at exactly 85vh tall
+- Zero movement regardless of content size
+- Content scrolls internally within fixed cell area
 
-**Note:** These fixes apply automatically to all presentations created with this skill. No additional configuration needed.
+### Navigation Hover Effects
+
+Navigation links work with CSS hover (fixed in v1.0.2):
+- Use inline styles on `<a>` elements, not `<style>` tag classes
+- CSS `:hover` selector automatically applies to nav links
+- No inline JavaScript needed (`onmouseover`/`onmouseout` don't work)
+
+**Note:** These fixes apply automatically to all presentations. No additional configuration needed.
 
 ## Troubleshooting
 
@@ -838,13 +846,19 @@ Overlay maintains stable 90vh height (fixed in v1.0.1):
 
 **Problem:** Different fonts appear on different slides
 
-**Solution:** Ensure inline styles include explicit font declarations. The overlay will inherit fonts properly, but inline styles take precedence.
+**Solution:** Ensure inline styles include explicit font declarations. Only `font-family` inherits automatically - other properties like `font-size` must be specified inline.
 
 ### Overlay Jumps When Navigating
 
-**Problem:** Should no longer occur (fixed v1.0.1)
+**Problem:** Should no longer occur (fixed v1.0.2)
 
-**Solution:** If you still see jumping, verify you're using latest ipynb-viewer CSS. Clear browser cache and test again.
+**Solution:** If you still see jumping, verify you're using latest ipynb-viewer CSS (check for `align-items: flex-start` and `height: 85vh`). Clear browser cache and test again.
+
+### Navigation Hover Not Working
+
+**Problem:** TOC links don't change background on hover
+
+**Solution:** Use inline styles on each `<a>` element instead of `<style>` tag classes. The CSS automatically applies hover to `nav a[style*="transition: background"]` selectors.
 
 ## Related Skills
 
@@ -862,4 +876,4 @@ Overlay maintains stable 90vh height (fixed in v1.0.1):
 
 **Skill Status**: Complete - Ready for creating beautiful presentation notebooks ✅
 
-**Version**: 1.0.1 (2025-01-19) - Overlay styling fixes applied
+**Version**: 1.0.2 (2025-01-19) - Overlay position, height, and hover fixes applied

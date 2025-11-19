@@ -854,29 +854,39 @@ Potential improvements for future versions:
 
 ## Recent Changes
 
-### 2025-01-19 - Presentation Overlay Styling Fixes
+### 2025-01-19 - Presentation Overlay Styling Fixes (Final)
 
 **Fixed Inconsistent Fonts in Paged Overlay:**
-- ✅ **Force font inheritance** - All text in `.ipynb-paged-overlay` now inherits fonts consistently
-- ✅ **Override markdown styles** - Added `!important` rules to ensure presentation fonts are used
-- ✅ **Consistent typography** - Eliminates font changes between slides
+- ✅ **Selective font inheritance** - Only `font-family` inherits, not `font-size`, `margin`, `padding`
+- ✅ **Preserve inline styles** - Changed from `* { inherit !important }` to targeted selectors
+- ✅ **Consistent typography** - Eliminates font changes while respecting cell styling
 
-**Fixed Overlay Height Jumping:**
-- ✅ **Fixed overlay height** - Locked overlay to 90vh (min-height and max-height)
-- ✅ **Stable navigation** - Overlay no longer resizes based on content length
-- ✅ **Better scrolling** - Content scrolls within fixed-height cell area
+**Fixed Overlay Jumping Between Slides:**
+- ✅ **Pinned to top** - Changed from `align-items: center` to `align-items: flex-start`
+- ✅ **Fixed position** - Added `padding-top: 5vh` for consistent 5% offset from top
+- ✅ **Locked height** - Set content to exactly 85vh (height, min-height, max-height)
+- ✅ **Zero movement** - Overlay stays perfectly still regardless of content size
+
+**Fixed Navigation Hover Effects:**
+- ✅ **No inline JavaScript** - Replaced `onmouseover`/`onmouseout` with CSS `:hover`
+- ✅ **Inline styles work** - Added `nav a[style*="transition: background"]:hover` selector
+- ✅ **Consistent hover** - Background changes to #f5f5f5 on hover for all nav links
+- ✅ **Security compliant** - Browsers block inline JavaScript with `innerHTML`
 
 **Technical Changes:**
-- `blocks/ipynb-viewer/ipynb-viewer.css` lines 522-536: Added min/max height constraints to `.ipynb-paged-overlay-content`
-- `blocks/ipynb-viewer/ipynb-viewer.css` lines 567-607: Added font inheritance rules and flex layout to `.ipynb-paged-cell-area`
-- `blocks/ipynb-viewer/ipynb-viewer.css` lines 585-607: Added comprehensive font override rules for all overlay elements
+- `blocks/ipynb-viewer/ipynb-viewer.css` lines 499-511: Overlay uses `flex-start` + `padding-top: 5vh`
+- `blocks/ipynb-viewer/ipynb-viewer.css` lines 523-537: Content box fixed at 85vh
+- `blocks/ipynb-viewer/ipynb-viewer.css` lines 594-610: Selective font inheritance (not all properties)
+- `blocks/ipynb-viewer/ipynb-viewer.css` lines 612-619: Nav link hover support
+- `docs-navigation.ipynb` cell-2: TOC uses inline styles + scoped CSS hover
+- `docs/for-ai/templates/ipynb/presentation-template.ipynb` cell-2: Updated TOC pattern
 
 **Affected Use Cases:**
-- Presentation notebooks (`docs-navigation.ipynb`, etc.)
+- Presentation notebooks with varying content heights
+- Navigation tables of contents with hover effects
 - Any paged variation with inline styled content
-- Educational notebooks using paged mode
 
-**Migration:** No action required - fixes apply automatically to all existing presentations
+**Migration:** No action required - fixes apply automatically. For new presentations, use inline styles on links instead of `<style>` tag classes for maximum compatibility.
 
 ### 2025-01-18 - Notebook Variation & Overlay Improvements
 
