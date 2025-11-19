@@ -133,6 +133,10 @@ Every presentation notebook should have:
 
 ### Cell Structure
 
+**Important:** Do NOT automatically include a Table of Contents. The presentation template does not include a TOC by default. Only add navigation if explicitly requested by the user.
+
+**Typical structure:**
+
 **Title Cell (Markdown):**
 ```markdown
 # 🎯 Presentation Title
@@ -451,54 +455,6 @@ Your content here with proper typography
   const module = await import('/blocks/cards/cards.js');
   await module.default(block);
 </script>
-
-</div>
-```
-
-**Table of Contents (Compact Spacing):**
-```html
-<div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 32px; margin: 0 0; border-left: 6px solid #0288d1; color: #212121;">
-
-<h2 style="color: #0d47a1; font-size: 28px; font-weight: 700; margin-bottom: 24px; display: flex; align-items: center; gap: 12px;">
-  <span style="font-size: 32px;">📋</span>
-  Table of Contents
-</h2>
-
-<style>
-.toc-link {
-  color: #212121;
-  text-decoration: none;
-  font-size: 18px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  transition: background 0.2s;
-}
-.toc-link:hover {
-  background: #f5f5f5;
-}
-</style>
-
-<nav aria-label="Presentation navigation">
-  <ul style="list-style: none; padding: 0; margin: 0;">
-    <li style="padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.08);">
-      <a href="#section" class="toc-link">
-        <span style="font-size: 20px;">🌍</span>
-        Section Name
-      </a>
-    </li>
-    <!-- Remove border-bottom from last item -->
-    <li style="padding: 10px 0;">
-      <a href="#conclusion" class="toc-link">
-        <span style="font-size: 20px;">🎯</span>
-        Conclusion
-      </a>
-    </li>
-  </ul>
-</nav>
 
 </div>
 ```
@@ -858,7 +814,9 @@ Navigation links work with CSS hover (fixed in v1.0.2):
 
 **Problem:** TOC links don't change background on hover
 
-**Solution:** Use inline styles on each `<a>` element instead of `<style>` tag classes. The CSS automatically applies hover to `nav a[style*="transition: background"]` selectors.
+**Solution:** Navigation links are automatically styled by ipynb-viewer CSS. Use `nav[aria-label="Presentation navigation"]` wrapper and links will get proper styling automatically.
+
+**Note:** TOC should only be added if explicitly requested. The template does not include one by default.
 
 ## Related Skills
 

@@ -325,58 +325,7 @@ Explanatory text before the block explaining what users will see.
 
 **Result:** Light blue gradient background with left border accent containing EDS block
 
-### Pattern 4: Interactive Navigation
-
-Use for table of contents or section navigation:
-
-```html
-<div style="background: white; border-radius: 12px; padding: 32px; margin: 24px 0; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-top: 4px solid #1976d2;">
-<h2 style="color: #1976d2; font-size: 28px; font-weight: 700; margin-bottom: 24px;">
-📋 Table of Contents
-</h2>
-
-<style>
-.nav-link {
-  color: #1976d2;
-  text-decoration: none;
-  font-size: 18px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px;
-  border-radius: 8px;
-  transition: background 0.2s;
-}
-.nav-link:hover {
-  background: #f5f5f5;
-}
-</style>
-
-<nav aria-label="Presentation navigation">
-  <ul style="list-style: none; padding: 0; margin: 0;">
-    <li style="margin: 12px 0;">
-      <a href="#section-1" class="nav-link">
-        <span style="font-size: 20px;">🌍</span>
-        Section 1 Title
-      </a>
-    </li>
-    <li style="margin: 12px 0;">
-      <a href="#section-2" class="nav-link">
-        <span style="font-size: 20px;">📊</span>
-        Section 2 Title
-      </a>
-    </li>
-  </ul>
-</nav>
-</div>
-```
-
-**Result:** Interactive navigation with CSS hover effects and emoji icons
-
-**Important:** Use CSS `:hover` pseudo-class instead of inline JavaScript (`onmouseover`/`onmouseout`). Browsers block inline JavaScript event handlers for security when content is inserted via `innerHTML`.
-
-### Pattern 5: Highlight Box (Info/Warning/Success)
+### Pattern 4: Highlight Box (Info/Warning/Success)
 
 Use for callouts and important information:
 
