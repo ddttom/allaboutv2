@@ -143,14 +143,16 @@ Fixed notebook variation behavior for both the `overlay` and `ipynb-viewer` bloc
 - Preview overlay showed responsive view buttons (Mobile/Tablet/Desktop) in notebook mode
 - These extra controls were unnecessary and cluttered the interface
 - Users only needed the close button in notebook mode
+- Preview overlay at 95vh height covered pagination buttons underneath
 
 **Solution:**
 - Added notebook mode detection (lines 58-59)
 - Conditionally build controls HTML - only close button in notebook mode (lines 82-88)
 - Skip view switching event listeners in notebook mode (line 135)
-- Result: Clean, minimal preview overlay with just title and close button
+- Reduced preview overlay height from 95vh to 75vh (lines 93, 96)
+- Result: Clean, minimal preview overlay with pagination buttons visible
 
-**Result:** Preview overlay in notebook mode shows only the close (×) button, providing a cleaner interface.
+**Result:** Preview overlay in notebook mode shows only the close (×) button, and pagination buttons remain visible and clickable underneath.
 
 ---
 

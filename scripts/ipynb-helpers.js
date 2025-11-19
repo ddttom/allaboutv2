@@ -90,10 +90,10 @@ export async function showPreview(blockName, innerHTML = '') {
   overlay.innerHTML = `
     <style>
       .ipynb-preview-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:10000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
-      .ipynb-preview-container{background:#fff;border-radius:8px;width:95%;height:95vh;display:flex;flex-direction:column;box-shadow:0 8px 32px rgba(0,0,0,0.4);transition:width .3s ease,height .3s ease}
+      .ipynb-preview-container{background:#fff;border-radius:8px;width:95%;height:75vh;display:flex;flex-direction:column;box-shadow:0 8px 32px rgba(0,0,0,0.4);transition:width .3s ease,height .3s ease}
       .ipynb-preview-container.mobile{width:375px;height:667px}
       .ipynb-preview-container.tablet{width:768px;height:1024px}
-      .ipynb-preview-container.desktop{width:95%;height:95vh}
+      .ipynb-preview-container.desktop{width:95%;height:75vh}
       .ipynb-preview-header{background:#1e1e1e;color:#fff;padding:12px 20px;border-radius:8px 8px 0 0;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
       .ipynb-preview-title{font-size:14px;font-weight:500;margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
       .ipynb-preview-controls{display:flex;gap:8px;align-items:center}

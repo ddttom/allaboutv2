@@ -317,7 +317,7 @@ The ipynb-viewer block uses **three distinct overlay systems** for different pur
 
 **When visible:** This overlay appears temporarily when you run code that calls `showPreview()`.
 
-**Note:** In notebook variation, the preview overlay is simplified to show only the block title and close button, removing the responsive view buttons for a cleaner, distraction-free experience.
+**Note:** In notebook variation, the preview overlay is simplified to show only the block title and close button, removing the responsive view buttons for a cleaner, distraction-free experience. The overlay height is also reduced to 75vh (instead of 95vh) to keep the pagination buttons visible and accessible.
 
 ---
 
