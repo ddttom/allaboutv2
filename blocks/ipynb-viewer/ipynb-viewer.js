@@ -478,6 +478,80 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   // Close button is now always visible (notebook mode fix)
   // Previously hidden in notebook mode, now always shown for better UX
 
+  // Hamburger menu (notebook mode only) - Table of Contents
+  let hamburgerButton, tocDropdown;
+  if (isNotebookMode) {
+    hamburgerButton = document.createElement('button');
+    hamburgerButton.className = 'ipynb-hamburger-menu';
+    hamburgerButton.innerHTML = '&#9776;'; // Hamburger icon
+    hamburgerButton.setAttribute('aria-label', 'Table of Contents');
+    hamburgerButton.setAttribute('aria-expanded', 'false');
+
+    tocDropdown = document.createElement('div');
+    tocDropdown.className = 'ipynb-toc-dropdown';
+    tocDropdown.setAttribute('role', 'menu');
+    tocDropdown.style.display = 'none';
+
+    // Extract cell titles and create menu items
+    const tocItems = [];
+    cells.forEach((cell, index) => {
+      let title = null;
+
+      // Try to extract title from markdown cells
+      if (cell.classList.contains('ipynb-markdown-cell')) {
+        const content = cell.querySelector('.ipynb-cell-content');
+        if (content) {
+          // Look for headings (h1, h2, h3)
+          const heading = content.querySelector('h1, h2, h3');
+          if (heading) {
+            title = heading.textContent.trim();
+          }
+        }
+      }
+
+      // For code cells or cells without headings, use cell number
+      if (!title) {
+        title = `Cell ${index + 1}`;
+      }
+
+      tocItems.push({ index, title, pageIndex: Math.floor(index / 1) }); // Each cell is its own page in notebook mode
+    });
+
+    // Create dropdown menu items
+    tocItems.forEach((item) => {
+      const menuItem = document.createElement('button');
+      menuItem.className = 'ipynb-toc-item';
+      menuItem.textContent = item.title;
+      menuItem.setAttribute('role', 'menuitem');
+      menuItem.setAttribute('data-page-index', item.pageIndex);
+
+      menuItem.addEventListener('click', () => {
+        paginationState.currentPage = item.pageIndex;
+        updatePageDisplay();
+        tocDropdown.style.display = 'none';
+        hamburgerButton.setAttribute('aria-expanded', 'false');
+      });
+
+      tocDropdown.appendChild(menuItem);
+    });
+
+    // Toggle dropdown on hamburger click
+    hamburgerButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = tocDropdown.style.display === 'block';
+      tocDropdown.style.display = isOpen ? 'none' : 'block';
+      hamburgerButton.setAttribute('aria-expanded', !isOpen);
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      if (tocDropdown && !tocDropdown.contains(e.target) && e.target !== hamburgerButton) {
+        tocDropdown.style.display = 'none';
+        hamburgerButton.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
   // Pagination controls
   const paginationDiv = document.createElement('div');
   paginationDiv.className = 'ipynb-pagination';
@@ -505,6 +579,10 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
 
   // Assemble overlay
   overlayContent.appendChild(closeButton);
+  if (isNotebookMode) {
+    overlayContent.appendChild(hamburgerButton);
+    overlayContent.appendChild(tocDropdown);
+  }
   overlayContent.appendChild(cellContentArea);
   overlayContent.appendChild(paginationDiv);
   overlay.appendChild(overlayContent);
