@@ -271,6 +271,71 @@
                     "**/test-*.ipynb"
                 ]
             }
+        },
+        "create-presentation": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "medium",
+            "description": "Creating or updating presentation-mode Jupyter notebooks with embedded HTML/JavaScript in markdown cells using EDS blocks. Converts executable code cells to informative text. For presentations, slides, demos, showcases without user-executable code.",
+            "promptTriggers": {
+                "keywords": [
+                    "presentation",
+                    "create presentation",
+                    "presentation notebook",
+                    "convert to presentation",
+                    "demo notebook",
+                    "showcase",
+                    "slides",
+                    "non-interactive notebook",
+                    "presentation mode",
+                    "embedded blocks",
+                    "inline javascript",
+                    "no executable code",
+                    "convert code cells",
+                    "markdown only",
+                    "client presentation",
+                    "product demo"
+                ],
+                "intentPatterns": [
+                    "(create|make|build).*?presentation.*?notebook",
+                    "(convert|transform|update).*?notebook.*?presentation",
+                    "(convert|remove).*?(executable|runnable).*?code",
+                    "presentation.*?(embedded|inline).*?(blocks|javascript)",
+                    "notebook.*?(client|presentation|demo|showcase)",
+                    "(no|without|prevent).*?(executable|runnable).*?code",
+                    "(embed|inline).*?(blocks|html|javascript).*?markdown"
+                ]
+            },
+            "avoidTriggers": {
+                "keywords": [
+                    "test block",
+                    "jsdom",
+                    "testBlock",
+                    "saveBlockHTML",
+                    "interactive code",
+                    "run code",
+                    "execute javascript"
+                ],
+                "intentPatterns": [
+                    "(test|debug|verify).*?block",
+                    "(run|execute).*?code.*?cell"
+                ]
+            },
+            "fileTriggers": {
+                "pathPatterns": [
+                    "**/*-presentation.ipynb",
+                    "**/*-demo.ipynb",
+                    "**/*-showcase.ipynb",
+                    "**/*-slides.ipynb",
+                    "presentation.ipynb",
+                    "demo.ipynb",
+                    "showcase.ipynb"
+                ],
+                "pathExclusions": [
+                    "test.ipynb",
+                    "**/test-*.ipynb"
+                ]
+            }
         }
     },
     "notes": {
