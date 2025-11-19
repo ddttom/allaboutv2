@@ -273,9 +273,15 @@ See [resources/blocks-reference.md](resources/blocks-reference.md) for all block
 
 ### Typography Standards
 
-- **All H2 headings**: `color: #0d47a1; font-size: 28px; font-weight: 700; margin-bottom: 24px;`
-- **All H3 headings**: `color: #0d47a1; font-size: 26px; font-weight: 700; margin-bottom: 16px;`
-- **All body text**: `color: #212121;`
+- **H1 (Hero Title)**: `font-size: 48px; font-weight: 800`
+- **H2 (Major Sections)**: `color: #0d47a1; font-size: 28px; font-weight: 700; margin-bottom: 24px;`
+  - H2 emoji size: `32px`
+- **H3 (Subsections)**: `color: #0d47a1; font-size: 26px; font-weight: 700; margin-bottom: 20px;`
+  - H3 emoji size: `28px`
+  - Use flexbox pattern: `display: flex; align-items: center; gap: 12px;`
+- **Body text**: `font-size: 16px; line-height: 1.8; color: #212121;`
+- **List item emojis**: `20px`
+- **TOC/Navigation links**: `font-size: 18px; font-weight: 500`
 - **IMPORTANT**: Use HTML headings with explicit styling, NOT markdown syntax (`##`, `###`)
 - Markdown headings render with default grey colors - always use HTML
 
@@ -287,21 +293,57 @@ See [resources/blocks-reference.md](resources/blocks-reference.md) for all block
 - **Border radius**: `border-radius: 12px;`
 - **Padding**: `padding: 32px;`
 
-### Border Standards
+### Border Hierarchy
 
-- **Standard border**: `border-left: 6px solid #0288d1;`
+- **H2 major sections**: `border-left: 6px solid #0288d1;` (thick border for major parts)
+- **H3 subsections**: `border-left: 4px solid #0288d1;` (thinner border for content within sections)
+- **Hero cells**: No border (full-width hero styling)
+- **Transition cells**: `border-left: 4px solid #0288d1;` (matches subsection weight)
 
-### Standard Container Pattern
+### Standard Container Patterns
 
-All content sections MUST follow this pattern:
+**H2 Major Section (with section tag):**
 
 ```html
+<section id="section-name">
+
 <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 32px; margin: 0 0; border-left: 6px solid #0288d1; color: #212121;">
 
   <h2 style="color: #0d47a1; font-size: 28px; font-weight: 700; margin-bottom: 24px;">🎯 Section Title</h2>
 
-  <p>Body text content here...</p>
+  <p style="font-size: 16px; line-height: 1.8;">Body text content here...</p>
 
+</div>
+
+</section>
+```
+
+**H3 Subsection (standalone):**
+
+```html
+<div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 32px; margin: 0 0; border-left: 4px solid #0288d1; color: #212121;">
+
+  <h3 style="color: #0d47a1; font-size: 26px; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 12px;">
+    <span style="font-size: 28px;">✨</span>
+    Subsection Title
+  </h3>
+
+  <p style="font-size: 16px; line-height: 1.8;">Body text content here...</p>
+
+</div>
+```
+
+**Hero Cell (title page):**
+
+```html
+<div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); color: white; border-radius: 16px; padding: 48px; text-align: center; margin: 0 0; box-shadow: 0 8px 20px rgba(0,0,0,0.25); color: #212121;">
+  <h1 style="font-size: 48px; font-weight: 800; margin: 0 0 16px 0; display: flex; align-items: center; justify-content: center; gap: 16px;">
+    <span style="font-size: 56px;">🎯</span>
+    <span>Presentation Title</span>
+  </h1>
+  <p style="font-size: 20px; margin: 16px 0; opacity: 0.95; font-weight: 300;">
+    Compelling subtitle or tagline
+  </p>
 </div>
 ```
 
@@ -413,35 +455,72 @@ Your content here with proper typography
 </div>
 ```
 
-**Interactive Navigation:**
+**Table of Contents (Compact Spacing):**
 ```html
+<div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 32px; margin: 0 0; border-left: 6px solid #0288d1; color: #212121;">
+
+<h2 style="color: #0d47a1; font-size: 28px; font-weight: 700; margin-bottom: 24px; display: flex; align-items: center; gap: 12px;">
+  <span style="font-size: 32px;">📋</span>
+  Table of Contents
+</h2>
+
 <nav aria-label="Presentation navigation">
-  <ul style="list-style: none; padding: 0;">
-    <li style="margin: 12px 0;">
-      <a href="#section" style="color: #1976d2; text-decoration: none; font-size: 18px; font-weight: 500; display: flex; align-items: center; gap: 8px; padding: 12px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='transparent'">
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    <li style="padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.08);">
+      <a href="#section" style="color: #212121; text-decoration: none; font-size: 18px; font-weight: 500; display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='transparent'">
         <span style="font-size: 20px;">🌍</span>
         Section Name
       </a>
     </li>
+    <!-- Remove border-bottom from last item -->
+    <li style="padding: 10px 0;">
+      <a href="#conclusion" style="color: #212121; text-decoration: none; font-size: 18px; font-weight: 500; display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='transparent'">
+        <span style="font-size: 20px;">🎯</span>
+        Conclusion
+      </a>
+    </li>
   </ul>
 </nav>
+
+</div>
 ```
 
-### Typography Guidelines
+**List with Icons (Compact Spacing):**
+```html
+<ul style="list-style: none; padding: 0; margin: 0;">
+  <li style="padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.08); font-size: 16px; display: flex; align-items: center; gap: 12px;">
+    <span style="font-size: 20px;">✅</span>
+    <span>List item text</span>
+  </li>
+  <!-- Remove border-bottom from last item -->
+  <li style="padding: 12px 0; font-size: 16px; display: flex; align-items: center; gap: 12px;">
+    <span style="font-size: 20px;">✅</span>
+    <span>Last list item</span>
+  </li>
+</ul>
+```
 
-- **Hero Title**: 48px, font-weight: 800
-- **Section Heading (h2)**: 28-32px, font-weight: 700
-- **Subsection (h3)**: 24px, font-weight: 700
-- **Body Text**: 16-18px, line-height: 1.8
-- **Small Text**: 14px
+### Typography Scale
+
+- **H1 (Hero Title)**: 48px, font-weight: 800, emoji: 56px
+- **H2 (Major Sections)**: 28px, font-weight: 700, emoji: 32px
+- **H3 (Subsections)**: 26px, font-weight: 700, emoji: 28px
+- **Body Text**: 16px, line-height: 1.8
+- **TOC Links**: 18px, font-weight: 500
+- **List Icons**: 20px (emojis)
 - **Code**: Courier New, monospace
 
 ### Spacing System
 
-- **Section Margin**: 24-32px
-- **Card Padding**: 24-32px
-- **Content Gap**: 12-16px
-- **Border Radius**: 8-16px (larger for containers, smaller for buttons)
+- **Container Padding**: 32px (all content containers)
+- **Hero Padding**: 48px (title cells)
+- **H2 Margin-bottom**: 24px
+- **H3 Margin-bottom**: 20px
+- **Paragraph Margin-bottom**: 16px-24px
+- **List Item Padding**: 12px vertical, with border separators
+- **TOC Item Padding**: 10px vertical, 8px 12px for links
+- **Flexbox Gap**: 12px (heading emoji spacing)
+- **Border Radius**: 12px (standard), 16px (hero cells)
 
 ### Interactive Elements
 
