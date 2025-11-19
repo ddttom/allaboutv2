@@ -618,6 +618,15 @@ html {
   background: #f5f5f5 !important;
 }
 
+/* More specific selectors for TOC links */
+.ipynb-paged-overlay nav[aria-label="Presentation navigation"] a {
+  transition: background 0.2s !important;
+}
+
+.ipynb-paged-overlay nav[aria-label="Presentation navigation"] a:hover {
+  background: #f5f5f5 !important;
+}
+
 /* Pagination Controls in Overlay */
 .ipynb-paged-overlay .ipynb-pagination {
   display: flex;
