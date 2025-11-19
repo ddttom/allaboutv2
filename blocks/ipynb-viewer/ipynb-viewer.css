@@ -525,8 +525,8 @@ html {
   max-width: 1200px;
   background: var(--background-color, #fff);
   border-radius: 12px;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 1fr auto;
   flex-shrink: 0 !important;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   /* Fixed height prevents jumping - content scrolls inside */
@@ -570,13 +570,11 @@ html {
 
 /* Cell content area */
 .ipynb-paged-cell-area {
-  flex: 1 1 0 !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
   padding: 3rem 2rem 2rem 2rem;
-  /* Fixed height to prevent jumping */
+  /* Grid item that fills remaining space */
   min-height: 0 !important;
-  max-height: 100% !important;
   display: flex;
   flex-direction: column;
 }
@@ -658,7 +656,6 @@ html {
   padding: 1.5rem;
   border-top: 2px solid var(--light-color, #e0e0e0);
   background: var(--background-color, #fff);
-  flex-shrink: 0 !important;
   min-height: fit-content;
 }
 
