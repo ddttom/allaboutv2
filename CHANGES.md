@@ -154,21 +154,31 @@ Fixed notebook variation behavior for both the `overlay` and `ipynb-viewer` bloc
 
 **Result:** Preview overlay in notebook mode shows only the close (×) button, and pagination buttons remain visible and clickable underneath.
 
-#### 3.6 Added Repository Metadata Support
+#### 3.6 Added Repository Metadata Support with Automatic .md Linking
 
 **Problem:**
 - Markdown links to .md files in notebooks had no way to reference the repository
 - Links would be relative to the notebook location, not the repository
 - No helper function to access repository URL from code cells
+- Manual link construction was error-prone and verbose
 
 **Solution:**
 - Added `repo` optional metadata field to notebook JSON (e.g., "https://github.com/username/repo")
-- Added `getRepoUrl()` helper function in scripts/ipynb-helpers.js (lines 25-35)
-- Updated ipynb-viewer block to extract and store repo as data-repo attribute (lines 832-835)
+- Added `getRepoUrl()` helper function in scripts/ipynb-helpers.js (lines 20-35)
+- Updated `parseMarkdown()` to accept repoUrl parameter (line 12)
+- Added automatic .md link conversion in parseMarkdown (lines 96-107):
+  - Only converts when `repo` metadata is provided (graceful fallback to relative links)
+  - Detects .md file links in markdown cells
+  - Skips absolute URLs (http://, https://)
+  - Converts to full GitHub blob URLs (`repo/blob/main/path.md`)
+  - Opens converted links in new tab with proper security attributes
+- Updated `createMarkdownCell()` to pass repoUrl (line 169)
+- Updated `createPagedOverlay()` to pass repoUrl (line 438)
+- Updated ipynb-viewer block to extract repo from metadata (lines 832-835, 967-968)
 - Updated both docs-navigation.ipynb and explain.ipynb with repo metadata
-- Documented in README with example
+- Comprehensive documentation in README with examples
 
-**Result:** Notebooks can now reference repository URLs for linking to .md files in markdown cells.
+**Result:** Notebooks automatically convert .md file links to full repository URLs, making documentation references seamless and maintainable.
 
 ---
 

@@ -163,7 +163,13 @@ The notebook metadata is displayed in the header section:
 - `duration` - Estimated reading time (e.g., "15 minutes", "1 hour") - displayed as purple badge
 - `tags` - Array of keywords for searchability (e.g., ["tutorial", "javascript", "interactive"]) - displayed as gray tags
 - `license` - Content license (e.g., "MIT", "CC BY 4.0")
-- `repo` - Repository URL for linking .md files in markdown (e.g., "https://github.com/username/repo") - accessible via `getRepoUrl()` helper
+- `repo` - Repository URL for automatically linking .md files in markdown cells (e.g., "https://github.com/username/repo")
+  - **When provided:** Markdown links to .md files are automatically converted to full repository URLs
+  - **When omitted:** Links render as-is (relative paths remain relative)
+  - Example with repo: `[guide](docs/guide.md)` → `https://github.com/username/repo/blob/main/docs/guide.md`
+  - Example without repo: `[guide](docs/guide.md)` → `<a href="docs/guide.md">guide</a>`
+  - Also accessible in code cells via `getRepoUrl()` helper function (returns `null` if not set)
+  - Converted links open in new tab with `target="_blank"` and `rel="noopener noreferrer"`
 
 **Example metadata in .ipynb file:**
 ```json

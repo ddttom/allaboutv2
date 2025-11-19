@@ -6,9 +6,10 @@
 /**
  * Parse markdown text to HTML (enhanced implementation)
  * @param {string} markdown - Markdown text
+ * @param {string} [repoUrl] - Optional repository URL for converting .md links
  * @returns {string} HTML string
  */
-function parseMarkdown(markdown) {
+function parseMarkdown(markdown, repoUrl = null) {
   let html = markdown;
 
   // Code blocks (triple backticks) - MUST be processed first before other replacements
@@ -92,8 +93,18 @@ function parseMarkdown(markdown) {
   // Code inline (before links to avoid conflicts)
   html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
 
-  // Links
-  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+  // Links - convert .md files to repo URLs if repo is available
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, text, url) => {
+    // Check if it's a .md file and we have a repo URL
+    if (repoUrl && url.endsWith('.md') && !url.startsWith('http://') && !url.startsWith('https://')) {
+      // Remove leading ./ or / from the path
+      const cleanPath = url.replace(/^\.?\//, '');
+      // Build full repo URL (assuming GitHub blob/main pattern)
+      const fullUrl = `${repoUrl}/blob/main/${cleanPath}`;
+      return `<a href="${fullUrl}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+    }
+    return `<a href="${url}">${text}</a>`;
+  });
 
   // Lists - process line by line
   const linesWithLists = html.split('\n');
@@ -152,9 +163,10 @@ function parseMarkdown(markdown) {
  * Create a markdown cell element
  * @param {object} cell - Notebook cell data
  * @param {number} index - Cell index
+ * @param {string} [repoUrl] - Optional repository URL for converting .md links
  * @returns {HTMLElement} Cell element
  */
-function createMarkdownCell(cell, index) {
+function createMarkdownCell(cell, index, repoUrl = null) {
   const cellDiv = document.createElement('div');
   cellDiv.className = 'ipynb-cell ipynb-markdown-cell';
   cellDiv.dataset.cellIndex = index;
@@ -164,7 +176,7 @@ function createMarkdownCell(cell, index) {
 
   // Join source lines and parse markdown
   const markdownText = Array.isArray(cell.source) ? cell.source.join('') : cell.source;
-  content.innerHTML = parseMarkdown(markdownText);
+  content.innerHTML = parseMarkdown(markdownText, repoUrl);
 
   cellDiv.appendChild(content);
   return cellDiv;
@@ -420,9 +432,10 @@ function createPageGroups(cells) {
  * @param {HTMLElement} cellsContainer - Container with cells
  * @param {boolean} autorun - Whether to autorun code cells
  * @param {boolean} isNotebookMode - Whether this is notebook mode (close button always visible)
+ * @param {string} [repoUrl] - Optional repository URL for markdown .md links
  * @returns {object} Overlay controls
  */
-function createPagedOverlay(container, cellsContainer, autorun = false, isNotebookMode = false) {
+function createPagedOverlay(container, cellsContainer, autorun = false, isNotebookMode = false, repoUrl = null) {
   const cells = Array.from(cellsContainer.querySelectorAll('.ipynb-cell'));
 
   if (cells.length === 0) return null;
@@ -952,11 +965,14 @@ export default async function decorate(block) {
     // Notebook mode no longer autoruns - user must manually run cells
     const shouldAutorun = isAutorun;
 
+    // Extract repo URL from metadata for linking .md files
+    const repoUrl = notebook.metadata?.repo || null;
+
     notebook.cells.forEach(async (cell, index) => {
       let cellElement;
 
       if (cell.cell_type === 'markdown') {
-        cellElement = createMarkdownCell(cell, index);
+        cellElement = createMarkdownCell(cell, index, repoUrl);
       } else if (cell.cell_type === 'code') {
         cellElement = createCodeCell(cell, index, shouldAutorun);
 
@@ -999,7 +1015,7 @@ export default async function decorate(block) {
       buttonContainer.appendChild(startButton);
 
       // Create overlay with autorun support and notebook mode flag
-      const overlay = createPagedOverlay(container, cellsContainer, shouldAutorun, isNotebook);
+      const overlay = createPagedOverlay(container, cellsContainer, shouldAutorun, isNotebook, repoUrl);
 
       // Start button opens overlay
       startButton.addEventListener('click', () => {
