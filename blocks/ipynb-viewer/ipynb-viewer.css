@@ -523,7 +523,6 @@ html {
 .ipynb-paged-overlay-content {
   position: relative;
   width: 90vw;
-  height: 90vh;
   max-width: 1200px;
   background: var(--background-color, #fff);
   border-radius: 12px;
@@ -531,9 +530,10 @@ html {
   flex-direction: column;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  /* Prevent content from affecting overlay size */
-  max-height: 90vh;
-  min-height: 90vh;
+  /* Fixed height prevents jumping - content scrolls inside */
+  height: 85vh;
+  max-height: 85vh;
+  min-height: 85vh;
 }
 
 /* Close button */
