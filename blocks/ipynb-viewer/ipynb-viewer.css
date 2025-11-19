@@ -527,6 +527,7 @@ html {
   border-radius: 12px;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0 !important;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   /* Fixed height prevents jumping - content scrolls inside */
   height: 85vh !important;
@@ -708,7 +709,9 @@ html {
 @media (max-width: 768px) {
   .ipynb-paged-overlay-content {
     width: 95vw;
-    height: 95vh;
+    height: 95vh !important;
+    min-height: 95vh !important;
+    max-height: 95vh !important;
   }
 
   .ipynb-paged-cell-area {
@@ -735,7 +738,9 @@ html {
 @media (max-width: 480px) {
   .ipynb-paged-overlay-content {
     width: 100vw;
-    height: 100vh;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
     border-radius: 0;
   }
 
