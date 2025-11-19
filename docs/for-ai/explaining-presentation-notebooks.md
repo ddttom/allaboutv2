@@ -334,16 +334,35 @@ Use for table of contents or section navigation:
 <h2 style="color: #1976d2; font-size: 28px; font-weight: 700; margin-bottom: 24px;">
 📋 Table of Contents
 </h2>
+
+<style>
+.nav-link {
+  color: #1976d2;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+.nav-link:hover {
+  background: #f5f5f5;
+}
+</style>
+
 <nav aria-label="Presentation navigation">
   <ul style="list-style: none; padding: 0; margin: 0;">
     <li style="margin: 12px 0;">
-      <a href="#section-1" style="color: #1976d2; text-decoration: none; font-size: 18px; font-weight: 500; display: flex; align-items: center; gap: 8px; padding: 12px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='transparent'">
+      <a href="#section-1" class="nav-link">
         <span style="font-size: 20px;">🌍</span>
         Section 1 Title
       </a>
     </li>
     <li style="margin: 12px 0;">
-      <a href="#section-2" style="color: #1976d2; text-decoration: none; font-size: 18px; font-weight: 500; display: flex; align-items: center; gap: 8px; padding: 12px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='transparent'">
+      <a href="#section-2" class="nav-link">
         <span style="font-size: 20px;">📊</span>
         Section 2 Title
       </a>
@@ -353,7 +372,9 @@ Use for table of contents or section navigation:
 </div>
 ```
 
-**Result:** Interactive navigation with hover effects and emoji icons
+**Result:** Interactive navigation with CSS hover effects and emoji icons
+
+**Important:** Use CSS `:hover` pseudo-class instead of inline JavaScript (`onmouseover`/`onmouseout`). Browsers block inline JavaScript event handlers for security when content is inserted via `innerHTML`.
 
 ### Pattern 5: Highlight Box (Info/Warning/Success)
 
@@ -991,6 +1012,31 @@ Content explanation before the block
 - Ensure `data-mode="paged"` attribute is set on ipynb-viewer block
 - Check notebook has multiple cells (paged mode needs >1 cell)
 - Verify ipynb-viewer block JavaScript is loading
+
+### Inline JavaScript Not Working
+
+**Problem:** Hover effects with `onmouseover`/`onmouseout` don't work in production
+
+**Solution:**
+- **Never use inline JavaScript event handlers** - They're blocked by browser security
+- **Use CSS `:hover` pseudo-class** - Safe and reliable
+- **Define classes with `<style>` tags** - Reusable and maintainable
+
+**Example:**
+```html
+<!-- ❌ WRONG - Blocked by security -->
+<a href="#section" onmouseover="this.style.background='#f5f5f5'">Link</a>
+
+<!-- ✅ CORRECT - Use CSS :hover -->
+<style>
+.my-link:hover {
+  background: #f5f5f5;
+}
+</style>
+<a href="#section" class="my-link">Link</a>
+```
+
+**Why:** The ipynb-viewer uses `innerHTML` to render markdown cells. Browsers block inline JavaScript event handlers for security when content is inserted this way.
 
 ### Inconsistent Fonts in Overlay
 

@@ -505,8 +505,9 @@ html {
   background: rgba(0, 0, 0, 0.95);
   z-index: 10000;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  padding-top: 5vh;
   animation: fadeIn 0.3s ease;
 }
 
@@ -590,22 +591,21 @@ html {
   font-family: inherit;
 }
 
-/* Override markdown cell fonts to match presentation styling */
-.ipynb-paged-overlay .ipynb-markdown-cell,
-.ipynb-paged-overlay .ipynb-markdown-cell * {
+/* Override markdown cell fonts to match presentation styling - ONLY fonts, not sizes */
+.ipynb-paged-overlay .ipynb-markdown-cell {
   font-family: inherit !important;
 }
 
 .ipynb-paged-overlay .ipynb-markdown-cell h1,
 .ipynb-paged-overlay .ipynb-markdown-cell h2,
-.ipynb-paged-overlay .ipynb-markdown-cell h3 {
-  font-family: inherit !important;
-}
-
+.ipynb-paged-overlay .ipynb-markdown-cell h3,
 .ipynb-paged-overlay .ipynb-markdown-cell p,
 .ipynb-paged-overlay .ipynb-markdown-cell div,
 .ipynb-paged-overlay .ipynb-markdown-cell span,
-.ipynb-paged-overlay .ipynb-markdown-cell li {
+.ipynb-paged-overlay .ipynb-markdown-cell li,
+.ipynb-paged-overlay .ipynb-markdown-cell a,
+.ipynb-paged-overlay .ipynb-markdown-cell strong,
+.ipynb-paged-overlay .ipynb-markdown-cell em {
   font-family: inherit !important;
 }
 

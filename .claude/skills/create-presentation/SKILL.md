@@ -464,17 +464,35 @@ Your content here with proper typography
   Table of Contents
 </h2>
 
+<style>
+.toc-link {
+  color: #212121;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+.toc-link:hover {
+  background: #f5f5f5;
+}
+</style>
+
 <nav aria-label="Presentation navigation">
   <ul style="list-style: none; padding: 0; margin: 0;">
     <li style="padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.08);">
-      <a href="#section" style="color: #212121; text-decoration: none; font-size: 18px; font-weight: 500; display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='transparent'">
+      <a href="#section" class="toc-link">
         <span style="font-size: 20px;">🌍</span>
         Section Name
       </a>
     </li>
     <!-- Remove border-bottom from last item -->
     <li style="padding: 10px 0;">
-      <a href="#conclusion" style="color: #212121; text-decoration: none; font-size: 18px; font-weight: 500; display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='transparent'">
+      <a href="#conclusion" class="toc-link">
         <span style="font-size: 20px;">🎯</span>
         Conclusion
       </a>
@@ -530,9 +548,13 @@ Your content here with proper typography
 - Shadow depth changes on cards
 
 **Best Practices:**
-- Use `onmouseover`/`onmouseout` for hover states
-- Apply `transition` for smooth animations
-- Maintain accessibility with proper contrast ratios
+- ✅ **Use CSS `:hover` pseudo-class** - Inline JavaScript event handlers (`onmouseover`, `onmouseout`) are blocked by browser security
+- ✅ **Use `<style>` tags with classes** - Define reusable classes for hover states
+- ✅ **Apply `transition`** - For smooth animations (e.g., `transition: background 0.2s`)
+- ✅ **Maintain accessibility** - Proper contrast ratios and focus states
+
+**Security Note:**
+Browsers block inline JavaScript event handlers when content is inserted via `innerHTML` (which ipynb-viewer uses). Always use CSS `:hover` instead of `onmouseover`/`onmouseout`.
 
 ## Converting Code Cells
 
