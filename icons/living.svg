@@ -1,27 +1,40 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="hero-title hero-desc">
+  <title id="hero-title">Living Documentation: Multi-Audience, Self-Verifying, Navigable</title>
+  <desc id="hero-desc">Illustration showing living documentation presentation with navigation, multi-audience design, and structured content</desc>
+
   <!-- Background gradient -->
   <defs>
-    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#f0f9ff;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#e0f2fe;stop-opacity:1" />
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
     </linearGradient>
-    
+
+    <linearGradient id="content-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8f4fd;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d6eaf8;stop-opacity:1" />
+    </linearGradient>
+
+    <linearGradient id="card-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f8f9fa;stop-opacity:1" />
+    </linearGradient>
+
     <!-- Shadow filter -->
     <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
-      <feOffset dx="0" dy="2" result="offsetblur"/>
-      <feFlood flood-color="#000000" flood-opacity="0.1"/>
-      <feComposite in2="offsetblur" operator="in"/>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="6"/>
+      <feOffset dx="0" dy="4" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
       <feMerge>
         <feMergeNode/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
 
-    <!-- Glow effect for Run button -->
+    <!-- Soft glow -->
     <filter id="glow">
-      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
       <feMerge>
         <feMergeNode in="coloredBlur"/>
         <feMergeNode in="SourceGraphic"/>
@@ -30,189 +43,215 @@
   </defs>
 
   <!-- Background -->
-  <rect width="1200" height="800" fill="url(#bgGradient)"/>
+  <rect width="1200" height="630" fill="url(#bg-gradient)"/>
 
-  <!-- Title -->
-  <text x="600" y="50" font-family="Arial, sans-serif" font-size="32" font-weight="bold" text-anchor="middle" fill="#1e40af">
-    Living Documentation: Browser-Based Notebooks
-  </text>
-
-  <!-- LEFT SIDE: Traditional Static Docs -->
-  <g id="static-docs" transform="translate(100, 100)">
-    <!-- Container -->
-    <rect x="0" y="0" width="400" height="550" rx="10" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2" filter="url(#shadow)"/>
-    
-    <!-- Header -->
-    <rect x="0" y="0" width="400" height="50" rx="10" fill="#94a3b8"/>
-    <text x="200" y="33" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="white">
-      Traditional Documentation
-    </text>
-    
-    <!-- Static content lines -->
-    <g transform="translate(20, 70)">
-      <!-- Code block (greyed out) -->
-      <rect x="0" y="0" width="360" height="80" rx="5" fill="#e2e8f0"/>
-      <text x="10" y="25" font-family="monospace" font-size="12" fill="#64748b">// Setup required:</text>
-      <text x="10" y="45" font-family="monospace" font-size="12" fill="#64748b">npm install jupyter</text>
-      <text x="10" y="65" font-family="monospace" font-size="12" fill="#64748b">jupyter notebook</text>
-      
-      <!-- Text lines -->
-      <rect x="0" y="100" width="280" height="8" rx="4" fill="#cbd5e1"/>
-      <rect x="0" y="120" width="320" height="8" rx="4" fill="#cbd5e1"/>
-      <rect x="0" y="140" width="250" height="8" rx="4" fill="#cbd5e1"/>
-      
-      <!-- Another code block -->
-      <rect x="0" y="170" width="360" height="60" rx="5" fill="#e2e8f0"/>
-      <text x="10" y="195" font-family="monospace" font-size="12" fill="#64748b">const block = document...</text>
-      <text x="10" y="215" font-family="monospace" font-size="12" fill="#64748b">// Cannot execute here</text>
-      
-      <!-- More text -->
-      <rect x="0" y="250" width="300" height="8" rx="4" fill="#cbd5e1"/>
-      <rect x="0" y="270" width="340" height="8" rx="4" fill="#cbd5e1"/>
-    </g>
-    
-    <!-- Problems indicators -->
-    <g transform="translate(20, 380)">
-      <circle cx="15" cy="15" r="12" fill="#ef4444" opacity="0.8"/>
-      <text x="15" y="20" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">!</text>
-      <text x="35" y="20" font-family="Arial, sans-serif" font-size="14" fill="#64748b">Requires setup</text>
-      
-      <circle cx="15" cy="45" r="12" fill="#ef4444" opacity="0.8"/>
-      <text x="15" y="50" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">!</text>
-      <text x="35" y="50" font-family="Arial, sans-serif" font-size="14" fill="#64748b">Can't verify examples</text>
-      
-      <circle cx="15" cy="75" r="12" fill="#ef4444" opacity="0.8"/>
-      <text x="15" y="80" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">!</text>
-      <text x="35" y="80" font-family="Arial, sans-serif" font-size="14" fill="#64748b">Becomes outdated</text>
-    </g>
-    
-    <!-- Time indicator -->
-    <g transform="translate(150, 500)">
-      <rect x="0" y="0" width="100" height="30" rx="15" fill="#fbbf24" opacity="0.8"/>
-      <text x="50" y="20" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="white">2+ hours</text>
-    </g>
+  <!-- Decorative elements -->
+  <g opacity="0.08" stroke="#ffffff" stroke-width="2" fill="none">
+    <circle cx="120" cy="80" r="40"/>
+    <circle cx="1080" cy="550" r="50"/>
+    <circle cx="180" cy="520" r="30"/>
+    <path d="M 120 80 Q 600 200 1080 550" stroke-dasharray="10,10"/>
   </g>
 
-  <!-- CENTER: Transformation Arrow -->
-  <g id="transformation" transform="translate(550, 350)">
-    <!-- Arrow -->
-    <defs>
-      <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-        <polygon points="0 0, 10 3, 0 6" fill="#10b981"/>
-      </marker>
-    </defs>
-    <line x1="0" y1="0" x2="80" y2="0" stroke="#10b981" stroke-width="3" marker-end="url(#arrowhead)"/>
-    
-    <!-- Claude + Skills label -->
-    <rect x="-10" y="-50" width="100" height="30" rx="15" fill="#8b5cf6"/>
-    <text x="40" y="-30" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="white">Claude + Skills</text>
-  </g>
+  <!-- Main presentation window (center-left) -->
+  <g filter="url(#shadow)">
+    <!-- Outer container with rounded corners -->
+    <rect x="60" y="100" width="520" height="440" rx="16" fill="#2d3748"/>
 
-  <!-- RIGHT SIDE: Living Documentation -->
-  <g id="living-docs" transform="translate(700, 100)">
-    <!-- Container -->
-    <rect x="0" y="0" width="400" height="550" rx="10" fill="#ffffff" stroke="#10b981" stroke-width="2" filter="url(#shadow)"/>
-    
-    <!-- Header -->
-    <rect x="0" y="0" width="400" height="50" rx="10" fill="#10b981"/>
-    <text x="200" y="33" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="white">
-      Living Documentation
-    </text>
-    
-    <!-- Interactive content -->
-    <g transform="translate(20, 70)">
-      <!-- Markdown explanation -->
-      <text x="0" y="20" font-family="Arial, sans-serif" font-size="14" fill="#1f2937">
-        Click Run to see the accordion transform:
-      </text>
-      
-      <!-- Code cell with Run button -->
-      <rect x="0" y="35" width="360" height="80" rx="5" fill="#f0fdf4" stroke="#10b981" stroke-width="1"/>
-      <text x="10" y="60" font-family="monospace" font-size="12" fill="#059669">const accordion = testBlock(</text>
-      <text x="10" y="80" font-family="monospace" font-size="12" fill="#059669">  blockElement, 'accordion'</text>
-      <text x="10" y="100" font-family="monospace" font-size="12" fill="#059669">);</text>
-      
-      <!-- Run button -->
-      <rect x="280" y="45" width="70" height="30" rx="15" fill="#10b981" filter="url(#glow)" cursor="pointer"/>
-      <text x="315" y="64" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="white">▶ Run</text>
-      
-      <!-- Output area -->
-      <rect x="0" y="130" width="360" height="100" rx="5" fill="#f0f9ff" stroke="#3b82f6" stroke-width="1" stroke-dasharray="5,5"/>
-      <text x="10" y="155" font-family="Arial, sans-serif" font-size="12" fill="#1e40af">Output:</text>
-      <!-- Accordion representation -->
-      <rect x="10" y="165" width="340" height="25" rx="3" fill="#dbeafe"/>
-      <text x="20" y="182" font-family="Arial, sans-serif" font-size="12" fill="#1e40af">▼ Question 1</text>
-      <rect x="10" y="195" width="340" height="25" rx="3" fill="#dbeafe"/>
-      <text x="20" y="212" font-family="Arial, sans-serif" font-size="12" fill="#1e40af">▶ Question 2</text>
-      
-      <!-- Visual preview indicator -->
-      <rect x="0" y="250" width="360" height="40" rx="5" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
-      <text x="180" y="275" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#92400e">
-        Press ESC to close full preview overlay
+    <!-- Inner content area -->
+    <rect x="70" y="160" width="500" height="360" rx="12" fill="url(#content-gradient)"/>
+
+    <!-- Header bar with controls -->
+    <g>
+      <!-- Hamburger menu icon (top right) -->
+      <g transform="translate(528, 115)" filter="url(#glow)">
+        <circle cx="12" cy="12" r="20" fill="#ffffff" opacity="0.9"/>
+        <rect x="6" y="7" width="12" height="1.5" rx="0.75" fill="#4a5568"/>
+        <rect x="6" y="11" width="12" height="1.5" rx="0.75" fill="#4a5568"/>
+        <rect x="6" y="15" width="12" height="1.5" rx="0.75" fill="#4a5568"/>
+      </g>
+
+      <!-- Close button -->
+      <g transform="translate(558, 115)">
+        <circle cx="12" cy="12" r="20" fill="#ffffff" opacity="0.9"/>
+        <path d="M 8 8 L 16 16 M 16 8 L 8 16" stroke="#4a5568" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+    </g>
+
+    <!-- Title with icon -->
+    <g transform="translate(100, 195)">
+      <!-- Map icon -->
+      <text x="0" y="0" font-size="32" filter="url(#glow)">🗺️</text>
+
+      <!-- Title text -->
+      <text x="45" y="5" font-family="system-ui, -apple-system, sans-serif" font-size="26" font-weight="700" fill="#1a202c">
+        Documentation Navigator
       </text>
     </g>
-    
-    <!-- Benefits indicators -->
-    <g transform="translate(20, 380)">
-      <circle cx="15" cy="15" r="12" fill="#10b981"/>
-      <text x="15" y="20" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">✓</text>
-      <text x="35" y="20" font-family="Arial, sans-serif" font-size="14" fill="#059669">Zero setup required</text>
-      
-      <circle cx="15" cy="45" r="12" fill="#10b981"/>
-      <text x="15" y="50" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">✓</text>
-      <text x="35" y="50" font-family="Arial, sans-serif" font-size="14" fill="#059669">Self-verifying examples</text>
-      
-      <circle cx="15" cy="75" r="12" fill="#10b981"/>
-      <text x="15" y="80" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">✓</text>
-      <text x="35" y="80" font-family="Arial, sans-serif" font-size="14" fill="#059669">Always current</text>
+
+    <!-- Subtitle -->
+    <text x="100" y="245" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#4a5568" opacity="0.9">
+      <tspan x="100">Lost in documentation? Not anymore! This interactive guide</tspan>
+      <tspan x="100" dy="20">helps you navigate comprehensive documentation like a pro.</tspan>
+    </text>
+
+    <!-- Content sections preview -->
+    <g transform="translate(100, 300)">
+      <!-- Section 1 -->
+      <rect x="0" y="0" width="400" height="40" rx="6" fill="url(#card-gradient)" stroke="#cbd5e0" stroke-width="1"/>
+      <circle cx="15" cy="20" r="6" fill="#4299e1"/>
+      <text x="30" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="500" fill="#2d3748">
+        Getting Started
+      </text>
+      <text x="370" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#718096">
+        →
+      </text>
+
+      <!-- Section 2 -->
+      <rect x="0" y="50" width="400" height="40" rx="6" fill="url(#card-gradient)" stroke="#cbd5e0" stroke-width="1"/>
+      <circle cx="15" cy="70" r="6" fill="#48bb78"/>
+      <text x="30" y="75" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="500" fill="#2d3748">
+        Navigation Strategies
+      </text>
+      <text x="370" y="75" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#718096">
+        →
+      </text>
+
+      <!-- Section 3 -->
+      <rect x="0" y="100" width="400" height="40" rx="6" fill="url(#card-gradient)" stroke="#cbd5e0" stroke-width="1"/>
+      <circle cx="15" cy="120" r="6" fill="#ed8936"/>
+      <text x="30" y="125" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="500" fill="#2d3748">
+        Best Practices
+      </text>
+      <text x="370" y="125" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#718096">
+        →
+      </text>
     </g>
-    
-    <!-- Time indicator -->
-    <g transform="translate(150, 500)">
-      <rect x="0" y="0" width="100" height="30" rx="15" fill="#10b981"/>
-      <text x="50" y="20" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="white">8 minutes</text>
+
+    <!-- Page navigation footer -->
+    <g transform="translate(220, 490)">
+      <!-- Previous button (disabled) -->
+      <rect x="0" y="0" width="85" height="36" rx="8" fill="#e2e8f0" opacity="0.5"/>
+      <text x="20" y="23" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#718096">
+        Previous
+      </text>
+
+      <!-- Page counter -->
+      <text x="105" y="23" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#1a202c">
+        1 / 45
+      </text>
+
+      <!-- Next button -->
+      <rect x="160" y="0" width="70" height="36" rx="8" fill="#3182ce" filter="url(#glow)"/>
+      <text x="185" y="23" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#ffffff">
+        Next
+      </text>
     </g>
   </g>
 
-  <!-- Bottom: Audience icons -->
-  <g id="audiences" transform="translate(200, 700)">
-    <text x="400" y="-20" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#1e40af">
-      Serves Every Audience
+  <!-- Right side content - Multi-Audience Design -->
+  <g transform="translate(650, 120)">
+    <text x="0" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="700" fill="#ffffff">
+      Multi-Audience
     </text>
-    
+    <text x="0" y="35" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="700" fill="#ffffff">
+      Documentation
+    </text>
+
+    <!-- Audience cards -->
     <!-- Developer -->
-    <g transform="translate(0, 0)">
-      <circle cx="50" cy="30" r="25" fill="#3b82f6"/>
-      <text x="50" y="37" font-family="Arial, sans-serif" font-size="20" text-anchor="middle" fill="white">{ }</text>
-      <text x="50" y="70" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#1e40af">Developers</text>
+    <g transform="translate(0, 70)" filter="url(#shadow)">
+      <rect x="0" y="0" width="280" height="60" rx="10" fill="url(#card-gradient)"/>
+      <circle cx="30" cy="30" r="18" fill="#4299e1" opacity="0.15"/>
+      <text x="22" y="38" font-size="20" fill="#4299e1">👨‍💻</text>
+      <text x="60" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#2d3748">
+        Developers
+      </text>
+      <text x="60" y="43" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#718096">
+        Technical implementation details
+      </text>
     </g>
-    
+
     <!-- Content Team -->
-    <g transform="translate(200, 0)">
-      <circle cx="50" cy="30" r="25" fill="#8b5cf6"/>
-      <text x="50" y="37" font-family="Arial, sans-serif" font-size="20" text-anchor="middle" fill="white">✎</text>
-      <text x="50" y="70" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#6b21a8">Content Teams</text>
+    <g transform="translate(0, 145)" filter="url(#shadow)">
+      <rect x="0" y="0" width="280" height="60" rx="10" fill="url(#card-gradient)"/>
+      <circle cx="30" cy="30" r="18" fill="#48bb78" opacity="0.15"/>
+      <text x="22" y="38" font-size="20" fill="#48bb78">✍️</text>
+      <text x="60" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#2d3748">
+        Content Teams
+      </text>
+      <text x="60" y="43" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#718096">
+        Visual examples and guides
+      </text>
     </g>
-    
-    <!-- Marketing -->
-    <g transform="translate(400, 0)">
-      <circle cx="50" cy="30" r="25" fill="#ec4899"/>
-      <text x="50" y="37" font-family="Arial, sans-serif" font-size="20" text-anchor="middle" fill="white">📊</text>
-      <text x="50" y="70" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#be185d">Marketing</text>
-    </g>
-    
+
     <!-- Sales -->
-    <g transform="translate(600, 0)">
-      <circle cx="50" cy="30" r="25" fill="#f59e0b"/>
-      <text x="50" y="37" font-family="Arial, sans-serif" font-size="20" text-anchor="middle" fill="white">💼</text>
-      <text x="50" y="70" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#92400e">Sales</text>
+    <g transform="translate(0, 220)" filter="url(#shadow)">
+      <rect x="0" y="0" width="280" height="60" rx="10" fill="url(#card-gradient)"/>
+      <circle cx="30" cy="30" r="18" fill="#ed8936" opacity="0.15"/>
+      <text x="22" y="38" font-size="20" fill="#ed8936">💼</text>
+      <text x="60" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#2d3748">
+        Sales Teams
+      </text>
+      <text x="60" y="43" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#718096">
+        Professional presentations
+      </text>
     </g>
-    
-    <!-- Clients -->
-    <g transform="translate(800, 0)">
-      <circle cx="50" cy="30" r="25" fill="#10b981"/>
-      <text x="50" y="37" font-family="Arial, sans-serif" font-size="20" text-anchor="middle" fill="white">👤</text>
-      <text x="50" y="70" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#059669">Clients</text>
+
+    <!-- New Hires -->
+    <g transform="translate(0, 295)" filter="url(#shadow)">
+      <rect x="0" y="0" width="280" height="60" rx="10" fill="url(#card-gradient)"/>
+      <circle cx="30" cy="30" r="18" fill="#9f7aea" opacity="0.15"/>
+      <text x="22" y="38" font-size="20" fill="#9f7aea">🎓</text>
+      <text x="60" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#2d3748">
+        New Hires
+      </text>
+      <text x="60" y="43" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#718096">
+        Structured learning paths
+      </text>
     </g>
+  </g>
+
+  <!-- Bottom section - Key features -->
+  <g transform="translate(650, 490)">
+    <text x="0" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" fill="#ffffff" opacity="0.9">
+      Key Features:
+    </text>
+
+    <g transform="translate(0, 20)">
+      <circle cx="6" cy="0" r="4" fill="#68d391"/>
+      <text x="18" y="5" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#ffffff">
+        Zero-setup browser access
+      </text>
+    </g>
+
+    <g transform="translate(0, 42)">
+      <circle cx="6" cy="0" r="4" fill="#68d391"/>
+      <text x="18" y="5" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#ffffff">
+        Navigate by role, task, or workflow
+      </text>
+    </g>
+
+    <g transform="translate(0, 64)">
+      <circle cx="6" cy="0" r="4" fill="#68d391"/>
+      <text x="18" y="5" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#ffffff">
+        Professional presentation mode
+      </text>
+    </g>
+
+    <g transform="translate(0, 86)">
+      <circle cx="6" cy="0" r="4" fill="#68d391"/>
+      <text x="18" y="5" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#ffffff">
+        Self-documenting architecture
+      </text>
+    </g>
+  </g>
+
+  <!-- Subtle connection lines -->
+  <g stroke="#ffffff" stroke-width="2" fill="none" opacity="0.15" stroke-dasharray="6,6">
+    <path d="M 580 280 Q 620 280 650 190"/>
+    <path d="M 580 320 Q 620 320 650 265"/>
+    <path d="M 580 360 Q 620 360 650 340"/>
+    <path d="M 580 400 Q 620 400 650 415"/>
   </g>
 </svg>
