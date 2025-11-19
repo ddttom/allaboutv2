@@ -854,6 +854,30 @@ Potential improvements for future versions:
 
 ## Recent Changes
 
+### 2025-01-19 - Presentation Overlay Styling Fixes
+
+**Fixed Inconsistent Fonts in Paged Overlay:**
+- ✅ **Force font inheritance** - All text in `.ipynb-paged-overlay` now inherits fonts consistently
+- ✅ **Override markdown styles** - Added `!important` rules to ensure presentation fonts are used
+- ✅ **Consistent typography** - Eliminates font changes between slides
+
+**Fixed Overlay Height Jumping:**
+- ✅ **Fixed overlay height** - Locked overlay to 90vh (min-height and max-height)
+- ✅ **Stable navigation** - Overlay no longer resizes based on content length
+- ✅ **Better scrolling** - Content scrolls within fixed-height cell area
+
+**Technical Changes:**
+- `blocks/ipynb-viewer/ipynb-viewer.css` lines 522-536: Added min/max height constraints to `.ipynb-paged-overlay-content`
+- `blocks/ipynb-viewer/ipynb-viewer.css` lines 567-607: Added font inheritance rules and flex layout to `.ipynb-paged-cell-area`
+- `blocks/ipynb-viewer/ipynb-viewer.css` lines 585-607: Added comprehensive font override rules for all overlay elements
+
+**Affected Use Cases:**
+- Presentation notebooks (`docs-navigation.ipynb`, etc.)
+- Any paged variation with inline styled content
+- Educational notebooks using paged mode
+
+**Migration:** No action required - fixes apply automatically to all existing presentations
+
 ### 2025-01-18 - Notebook Variation & Overlay Improvements
 
 **Notebook Variation Behavior Changes:**

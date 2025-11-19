@@ -790,6 +790,40 @@ document.head.appendChild(link);
 </script>
 ```
 
+## Overlay Styling (Auto-Applied)
+
+The ipynb-viewer block automatically handles consistent styling for paged presentations:
+
+### Font Consistency
+
+All text in the paged overlay inherits fonts consistently (fixed in v1.0.1):
+- Inline `font-family` styles in cells are preserved
+- Markdown cells use consistent typography
+- No font jumping between slides
+
+### Fixed Height
+
+Overlay maintains stable 90vh height (fixed in v1.0.1):
+- No vertical "jumping" when navigating
+- Content scrolls within fixed cell area
+- Smooth, predictable navigation experience
+
+**Note:** These fixes apply automatically to all presentations created with this skill. No additional configuration needed.
+
+## Troubleshooting
+
+### Fonts Look Inconsistent
+
+**Problem:** Different fonts appear on different slides
+
+**Solution:** Ensure inline styles include explicit font declarations. The overlay will inherit fonts properly, but inline styles take precedence.
+
+### Overlay Jumps When Navigating
+
+**Problem:** Should no longer occur (fixed v1.0.1)
+
+**Solution:** If you still see jumping, verify you're using latest ipynb-viewer CSS. Clear browser cache and test again.
+
 ## Related Skills
 
 - `jupyter-educational-notebook` - For creating interactive educational content
@@ -805,3 +839,5 @@ document.head.appendChild(link);
 ---
 
 **Skill Status**: Complete - Ready for creating beautiful presentation notebooks ✅
+
+**Version**: 1.0.1 (2025-01-19) - Overlay styling fixes applied

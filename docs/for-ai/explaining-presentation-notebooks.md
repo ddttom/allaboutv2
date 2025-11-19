@@ -992,6 +992,44 @@ Content explanation before the block
 - Check notebook has multiple cells (paged mode needs >1 cell)
 - Verify ipynb-viewer block JavaScript is loading
 
+### Inconsistent Fonts in Overlay
+
+**Problem:** Text fonts change between slides or don't match the styled content
+
+**Solution:**
+- The ipynb-viewer overlay now forces consistent font inheritance (fixed in v1.0.1)
+- All text elements in `.ipynb-paged-overlay` inherit fonts from parent
+- Inline styles with `font-family` in cells will be preserved
+- If fonts still inconsistent, ensure inline styles include explicit font declarations
+
+**Technical Details:**
+```css
+/* Applied automatically by ipynb-viewer.css */
+.ipynb-paged-overlay * {
+  font-family: inherit;
+}
+```
+
+### Overlay "Jumping" Between Slides
+
+**Problem:** Overlay resizes vertically when navigating, causing a "jumping" effect
+
+**Solution:**
+- The overlay now maintains fixed 90vh height (fixed in v1.0.1)
+- Content scrolls within the fixed-height cell area
+- No action needed - this is now handled automatically
+
+**Technical Details:**
+```css
+/* Applied automatically by ipynb-viewer.css */
+.ipynb-paged-overlay-content {
+  min-height: 90vh;
+  max-height: 90vh;
+}
+```
+
+**Note:** These fixes were applied in January 2025 to improve presentation viewing experience.
+
 ## Related Documentation
 
 - **Educational Notebooks:** `docs/for-ai/explaining-educational-notebooks.md` - Interactive, executable notebooks

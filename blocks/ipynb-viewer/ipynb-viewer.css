@@ -530,6 +530,9 @@ html {
   flex-direction: column;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  /* Prevent content from affecting overlay size */
+  max-height: 90vh;
+  min-height: 90vh;
 }
 
 /* Close button */
@@ -568,12 +571,42 @@ html {
   flex: 1;
   overflow-y: auto;
   padding: 3rem 2rem 2rem 2rem;
+  /* Fixed height to prevent jumping */
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .ipynb-paged-cell-area .ipynb-cell {
   border: none;
   box-shadow: none;
   margin: 0;
+  /* Ensure consistent font inheritance for all content */
+  font-family: inherit;
+}
+
+/* Force consistent typography for all text elements in overlay */
+.ipynb-paged-overlay * {
+  font-family: inherit;
+}
+
+/* Override markdown cell fonts to match presentation styling */
+.ipynb-paged-overlay .ipynb-markdown-cell,
+.ipynb-paged-overlay .ipynb-markdown-cell * {
+  font-family: inherit !important;
+}
+
+.ipynb-paged-overlay .ipynb-markdown-cell h1,
+.ipynb-paged-overlay .ipynb-markdown-cell h2,
+.ipynb-paged-overlay .ipynb-markdown-cell h3 {
+  font-family: inherit !important;
+}
+
+.ipynb-paged-overlay .ipynb-markdown-cell p,
+.ipynb-paged-overlay .ipynb-markdown-cell div,
+.ipynb-paged-overlay .ipynb-markdown-cell span,
+.ipynb-paged-overlay .ipynb-markdown-cell li {
+  font-family: inherit !important;
 }
 
 /* Pagination Controls in Overlay */

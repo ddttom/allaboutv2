@@ -64,7 +64,8 @@
       "Bash(npx eslint:*)",
       "Skill(eds-performance-debugging)",
       "Skill(frontend-dev-guidelines)",
-      "Skill(create-presentation)"
+      "Skill(create-presentation)",
+      "Bash(npx stylelint:*)"
     ],
     "deny": [],
     "ask": []
