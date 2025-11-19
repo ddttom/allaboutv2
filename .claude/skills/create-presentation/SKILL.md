@@ -306,11 +306,9 @@ See [resources/blocks-reference.md](resources/blocks-reference.md) for all block
 
 ### Standard Container Patterns
 
-**H2 Major Section (with section tag):**
+**H2 Major Section (NO section tag):**
 
 ```html
-<section id="section-name">
-
 <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 32px; margin: 0 0; border-left: 6px solid #0288d1; color: #212121;">
 
   <h2 style="color: #0d47a1; font-size: 28px; font-weight: 700; margin-bottom: 24px;">🎯 Section Title</h2>
@@ -318,9 +316,9 @@ See [resources/blocks-reference.md](resources/blocks-reference.md) for all block
   <p style="font-size: 16px; line-height: 1.8;">Body text content here...</p>
 
 </div>
-
-</section>
 ```
+
+**IMPORTANT:** Do NOT wrap cells in `<section>` tags - they cause overlay jumping between slides.
 
 **H3 Subsection (standalone):**
 
@@ -384,10 +382,12 @@ Blocks inherit dark background from ipynb-viewer if not properly wrapped:
 ### Common Mistakes to Avoid
 
 1. ❌ Using markdown headings (`##`, `###`) - they render grey
-2. ❌ Placing blocks as siblings to styled divs - they inherit dark background
-3. ❌ Forgetting `color: #212121;` on gradient divs - text fades
-4. ❌ Using vertical margins (`margin: 32px 0;`) - creates black gaps
-5. ❌ Inconsistent colors across cells
+2. ❌ Using `<section>` tags to wrap cells - causes overlay jumping between slides
+3. ❌ Placing blocks as siblings to styled divs - they inherit dark background
+4. ❌ Forgetting `color: #212121;` on gradient divs - text fades
+5. ❌ Using vertical margins (`margin: 32px 0;`) - creates black gaps
+6. ❌ Inconsistent H3 margin-bottom (always use 20px, not 24px)
+7. ❌ Inconsistent colors across cells
 
 ## Inline HTML Styling
 
@@ -808,14 +808,20 @@ Navigation links work with CSS hover (fixed in v1.0.2):
 
 ### Overlay Jumps When Navigating
 
-**Problem:** Overlay resizes or moves vertically
+**Problem:** Overlay resizes or moves vertically between slides
 
-**Solution:** No action needed - fixed in v3 (Jan 2025). The overlay is now:
+**Solution:** Ensure cells follow consistent structure:
+- ✅ **NO `<section>` tags** - These add HTML structure causing height differences
+- ✅ **Consistent H2/H3 margins** - H2: 24px, H3: 20px (not 24px)
+- ✅ **Same border hierarchy** - H2 cells: 6px, H3 cells: 4px
+
+The ipynb-viewer overlay positioning is fixed (v4, Jan 2025):
 - Vertically centered with fixed 85vh height using `!important`
 - Content scrolls inside cell area, overlay never resizes
 - Multiple overlays prevented by automatic cleanup
+- Cell structure consistency prevents content-level jumping
 
-**If Still Seeing Issues:** Clear browser cache and verify you're on latest version.
+**If Still Seeing Issues:** Check that all cells have consistent structure and clear browser cache.
 
 ### Multiple Overlays or Unpredictable Behavior
 
@@ -847,10 +853,11 @@ Navigation links work with CSS hover (fixed in v1.0.2):
 
 **Skill Status**: Complete - Ready for creating beautiful presentation notebooks ✅
 
-**Version**: 1.0.3 (2025-01-19)
+**Version**: 1.0.4 (2025-01-19)
 
-**Recent Changes (v3):**
-- Fixed multiple overlays stacking on page re-renders
-- Fixed inconsistent heading font sizes in overlay (respects inline styles)
-- Fixed overlay jumping with locked 85vh height and `!important` flags
-- All fixes automatic - no migration needed
+**Recent Changes (v4):**
+- Removed `<section>` tags from template (causes overlay jumping)
+- Standardized H3 margin-bottom to 20px (was inconsistent with 24px)
+- Updated documentation to emphasize NO section tags
+- Added border hierarchy guidance (H2: 6px, H3: 4px)
+- All presentation templates updated for consistency

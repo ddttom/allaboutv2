@@ -584,6 +584,18 @@ html {
   margin: 0;
   /* Ensure consistent font inheritance for all content */
   font-family: inherit;
+  /* Fill available height */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Make cell content divs fill available height */
+.ipynb-paged-cell-area .ipynb-cell > div[style*="background"] {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Force consistent typography for all text elements in overlay */

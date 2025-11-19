@@ -169,18 +169,36 @@ Markdown headings render with default grey colors—always use HTML:
 - **Border radius**: `border-radius: 12px;`
 - **Padding**: `padding: 32px;`
 
-### Border Standards
+### Border Hierarchy
 
-- **Standard border**: `border-left: 6px solid #0288d1;`
+- **H2 major sections**: `border-left: 6px solid #0288d1;` (thick border for main sections)
+- **H3 subsections**: `border-left: 4px solid #0288d1;` (thinner border for content)
 
-### Standard Container Pattern
+### Standard Container Patterns
 
-All content sections MUST follow this pattern:
+**H2 Major Section (NO section tag):**
 
 ```html
 <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 32px; margin: 0 0; border-left: 6px solid #0288d1; color: #212121;">
 
   <h2 style="color: #0d47a1; font-size: 28px; font-weight: 700; margin-bottom: 24px;">🎯 Section Title</h2>
+
+  <p>Body text content here...</p>
+
+</div>
+```
+
+**IMPORTANT:** Do NOT wrap cells in `<section>` tags - they cause overlay jumping between slides.
+
+**H3 Subsection:**
+
+```html
+<div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 32px; margin: 0 0; border-left: 4px solid #0288d1; color: #212121;">
+
+  <h3 style="color: #0d47a1; font-size: 26px; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 12px;">
+    <span style="font-size: 28px;">✨</span>
+    Subsection Title
+  </h3>
 
   <p>Body text content here...</p>
 
@@ -220,10 +238,12 @@ Blocks inherit dark background from ipynb-viewer if not properly wrapped:
 ### Common Mistakes to Avoid
 
 1. ❌ Using markdown headings (`##`, `###`) - they render grey
-2. ❌ Placing blocks as siblings to styled divs - they inherit dark background
-3. ❌ Forgetting `color: #212121;` on gradient divs - text fades
-4. ❌ Using vertical margins (`margin: 32px 0;`) - creates black gaps
-5. ❌ Inconsistent colors across cells
+2. ❌ Using `<section>` tags to wrap cells - causes overlay jumping between slides
+3. ❌ Placing blocks as siblings to styled divs - they inherit dark background
+4. ❌ Forgetting `color: #212121;` on gradient divs - text fades
+5. ❌ Using vertical margins (`margin: 32px 0;`) - creates black gaps
+6. ❌ Inconsistent H3 margin-bottom (always use 20px, not 24px)
+7. ❌ Inconsistent colors across cells
 
 ## Design System (Legacy Patterns)
 
