@@ -854,6 +854,33 @@ Potential improvements for future versions:
 
 ## Recent Changes
 
+### 2025-01-19 - Cell Structure Consistency for Overlay Stability (v4)
+
+**Fixed Content-Level Jumping in Paged Overlay:**
+- ✅ **Root cause identified** - `<section>` tags and inconsistent H2/H3 structure caused height differences
+- ✅ **Standardized cell structure** - Removed all semantic HTML wrappers from notebook cells
+- ✅ **Consistent margins** - H2: 24px, H3: 20px (was mixed with 24px)
+- ✅ **Border hierarchy** - H2 major sections: 6px, H3 subsections: 4px
+- ✅ **Documentation updated** - All presentation templates and guides now enforce consistent structure
+
+**Updated Documentation & Templates:**
+- ✅ **presentation-template.ipynb** - Removed `<section>` tags, standardized margins
+- ✅ **docs-navigation.ipynb** - Fixed all 44 cells for identical structure
+- ✅ **create-presentation skill** - Updated with NO section tags guidance
+- ✅ **explaining-presentation-notebooks.md** - Added structure consistency requirements
+
+**Technical Changes:**
+- `docs-navigation.ipynb`: Removed 6 `<section>` tags and H2 headers from "Part X" cells
+- `docs/for-ai/templates/ipynb/presentation-template.ipynb`: Removed `<section>` tags, fixed H3 margins
+- `.claude/commands/create-presentation.md`: Added section tag warning and border hierarchy
+- `.claude/skills/create-presentation/SKILL.md`: Version 1.0.4 with structure standards
+- `docs/for-ai/explaining-presentation-notebooks.md`: Added border hierarchy and common mistakes
+
+**Migration:** Existing notebooks with `<section>` tags or inconsistent margins may show slight visual jumping. For best results:
+1. Remove all `<section id="...">` wrappers from cells
+2. Ensure H3 headings use `margin-bottom: 20px` (not 24px)
+3. Use border hierarchy: H2 cells 6px, H3 cells 4px
+
 ### 2025-01-19 - Presentation Overlay Stability & Consistency Fixes (v3)
 
 **Fixed Multiple Overlays Stacking (Critical):**
