@@ -565,7 +565,7 @@ html {
   outline-offset: 2px;
 }
 
-/* Cell content area */
+/* Cell content area - use flexbox to fill height */
 .ipynb-paged-cell-area {
   position: absolute;
   top: 0;
@@ -575,30 +575,32 @@ html {
   overflow-y: auto;
   overflow-x: hidden;
   padding: 0;
-  display: block;
+  display: flex;
+  flex-direction: column;
 }
 
 .ipynb-paged-cell-area .ipynb-cell {
   border: none;
   box-shadow: none;
   margin: 0 !important;
-  padding: 0;
+  padding: 0 !important;
   /* Ensure consistent font inheritance for all content */
   font-family: inherit;
-  /* Fill available height using absolute positioning */
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  /* Fill all available height */
+  flex: 1 1 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Make ALL direct child divs fill available height */
+/* Make the gradient content divs fill 100% height */
 .ipynb-paged-cell-area .ipynb-cell > div {
-  height: 100% !important;
+  flex: 1 1 100% !important;
+  min-height: 100% !important;
   margin: 0 !important;
   padding: 4rem 2rem 2rem 2rem !important;
   box-sizing: border-box !important;
+  overflow-y: auto;
 }
 
 /* Force consistent typography for all text elements in overlay */
