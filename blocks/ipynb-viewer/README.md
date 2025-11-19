@@ -163,6 +163,7 @@ The notebook metadata is displayed in the header section:
 - `duration` - Estimated reading time (e.g., "15 minutes", "1 hour") - displayed as purple badge
 - `tags` - Array of keywords for searchability (e.g., ["tutorial", "javascript", "interactive"]) - displayed as gray tags
 - `license` - Content license (e.g., "MIT", "CC BY 4.0")
+- `repo` - Repository URL for linking .md files in markdown (e.g., "https://github.com/username/repo") - accessible via `getRepoUrl()` helper
 
 **Example metadata in .ipynb file:**
 ```json
@@ -178,6 +179,7 @@ The notebook metadata is displayed in the header section:
     "duration": "30 minutes",
     "tags": ["tutorial", "javascript", "interactive", "beginner"],
     "license": "MIT",
+    "repo": "https://github.com/username/repo",
     "kernelspec": {
       "display_name": "JavaScript",
       "language": "javascript",

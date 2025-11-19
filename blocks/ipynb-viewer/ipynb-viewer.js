@@ -829,6 +829,11 @@ export default async function decorate(block) {
     // Load notebook
     const notebook = await loadNotebook(notebookPath);
 
+    // Set repo attribute if available in metadata
+    if (notebook.metadata?.repo) {
+      block.setAttribute('data-repo', notebook.metadata.repo);
+    }
+
     // Clear block
     block.textContent = '';
 

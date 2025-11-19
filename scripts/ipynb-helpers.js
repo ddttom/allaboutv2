@@ -6,15 +6,33 @@
  *
  * Usage in any cell:
  * ```javascript
- * const { testBlock, showPreview } = await import('/scripts/ipynb-helpers.js');
+ * const { testBlock, showPreview, getRepoUrl } = await import('/scripts/ipynb-helpers.js');
  * const block = await testBlock('accordion', '<div>content</div>');
  * await showPreview('accordion', '<div>content</div>');
+ * const repo = getRepoUrl(); // Get repo URL from notebook metadata
  * return block.outerHTML;
  * ```
  *
  * **NOTE**: Cell code executes in async context automatically (via AsyncFunction).
  * Just write your code naturally with `await` and `return` - no IIFE wrapper needed!
  */
+
+/**
+ * Get repository URL from notebook metadata
+ * Looks for 'repo' attribute in the ipynb-viewer block's data-* attributes
+ * @returns {string|null} Repository URL or null if not found
+ */
+export function getRepoUrl() {
+  // Find the ipynb-viewer block
+  const ipynbBlock = document.querySelector('.ipynb-viewer.block');
+  if (!ipynbBlock) {
+    return null;
+  }
+
+  // Check for data-repo attribute
+  const repo = ipynbBlock.getAttribute('data-repo');
+  return repo || null;
+}
 
 /**
  * Test a block's decoration in browser

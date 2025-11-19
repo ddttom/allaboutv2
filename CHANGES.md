@@ -2,7 +2,7 @@
 
 ## Summary
 
-Fixed notebook variation behavior for both the `overlay` and `ipynb-viewer` blocks to ensure close buttons are visible and autorun is removed for better user control. Added comprehensive documentation to distinguish between the three overlay types (paged, manual, and preview) and fixed ESC key handling with proper event listener cleanup. Simplified preview overlay in notebook mode to show only close button for cleaner interface.
+Fixed notebook variation behavior for both the `overlay` and `ipynb-viewer` blocks to ensure close buttons are visible and autorun is removed for better user control. Added comprehensive documentation to distinguish between the three overlay types (paged, manual, and preview) and fixed ESC key handling with proper event listener cleanup. Simplified preview overlay in notebook mode to show only close button for cleaner interface. Added repository metadata support for linking .md files in notebooks.
 
 ## Changes by Block
 
@@ -153,6 +153,22 @@ Fixed notebook variation behavior for both the `overlay` and `ipynb-viewer` bloc
 - Result: Clean, minimal preview overlay with pagination buttons visible
 
 **Result:** Preview overlay in notebook mode shows only the close (×) button, and pagination buttons remain visible and clickable underneath.
+
+#### 3.6 Added Repository Metadata Support
+
+**Problem:**
+- Markdown links to .md files in notebooks had no way to reference the repository
+- Links would be relative to the notebook location, not the repository
+- No helper function to access repository URL from code cells
+
+**Solution:**
+- Added `repo` optional metadata field to notebook JSON (e.g., "https://github.com/username/repo")
+- Added `getRepoUrl()` helper function in scripts/ipynb-helpers.js (lines 25-35)
+- Updated ipynb-viewer block to extract and store repo as data-repo attribute (lines 832-835)
+- Updated both docs-navigation.ipynb and explain.ipynb with repo metadata
+- Documented in README with example
+
+**Result:** Notebooks can now reference repository URLs for linking to .md files in markdown cells.
 
 ---
 
