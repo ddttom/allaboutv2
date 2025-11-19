@@ -176,9 +176,13 @@ Fixed notebook variation behavior for both the `overlay` and `ipynb-viewer` bloc
 - Updated `createPagedOverlay()` to pass repoUrl (line 438)
 - Updated ipynb-viewer block to extract repo from metadata (lines 832-835, 967-968)
 - Updated both docs-navigation.ipynb and explain.ipynb with repo metadata
-- Comprehensive documentation in README with examples
+- Converted 42 .md references in docs-navigation.ipynb from inline code to markdown links
+- Added comprehensive documentation with correct/incorrect examples
+- Added "Documentation Links" section to README (lines 230-250)
 
 **Result:** Notebooks automatically convert .md file links to full repository URLs, making documentation references seamless and maintainable.
+
+**Important Note:** Links must use markdown syntax `[text](file.md)`, not inline code `` `file.md` ``. The conversion only works on properly formatted markdown links.
 
 ---
 

@@ -166,8 +166,11 @@ The notebook metadata is displayed in the header section:
 - `repo` - Repository URL for automatically linking .md files in markdown cells (e.g., "https://github.com/username/repo")
   - **When provided:** Markdown links to .md files are automatically converted to full repository URLs
   - **When omitted:** Links render as-is (relative paths remain relative)
+  - **Important:** Use markdown link syntax `[text](file.md)`, not inline code `` `file.md` ``
   - Example with repo: `[guide](docs/guide.md)` → `https://github.com/username/repo/blob/main/docs/guide.md`
   - Example without repo: `[guide](docs/guide.md)` → `<a href="docs/guide.md">guide</a>`
+  - ❌ Wrong: `` `getting-started.md` `` (inline code, won't convert)
+  - ✅ Correct: `[getting-started.md](docs/getting-started.md)` (markdown link, will convert)
   - Also accessible in code cells via `getRepoUrl()` helper function (returns `null` if not set)
   - Converted links open in new tab with `target="_blank"` and `rel="noopener noreferrer"`
 
@@ -223,6 +226,28 @@ Unordered lists with `-` or `*`. Ordered lists with `1.`, `2.`, etc. Proper inde
 **Inline Formatting:**
 
 Headers (H1, H2, H3) with `#`, `##`, `###`. **Bold** text with `**text**`. *Italic* text with `*text*`. `Inline code` with backticks. [Links](url) with `[text](url)`. Line breaks.
+
+**Documentation Links (NEW with repo metadata):**
+
+When `repo` metadata is provided, links to .md files are automatically converted to full GitHub URLs:
+
+```markdown
+✅ Correct syntax (will convert):
+- [Getting Started](docs/getting-started.md)
+- [API Guide](./docs/api.md)
+- See [this guide](/docs/guide.md) for details
+
+❌ Wrong syntax (won't convert):
+- `getting-started.md` (inline code, not a link)
+- Getting Started: getting-started.md (plain text)
+```
+
+**Rules:**
+- Must use markdown link syntax: `[text](file.md)`
+- Only converts relative paths ending in `.md`
+- Absolute URLs (http://, https://) are never converted
+- Leading `./` or `/` are automatically stripped
+- Converted links open in new tab with security attributes
 
 ### Code Cells
 
