@@ -517,23 +517,17 @@ html {
 }
 
 .ipynb-paged-overlay-content {
-  position: absolute;
+  position: fixed;
   top: 7.5vh;
   left: 50%;
   transform: translateX(-50%);
   width: 90vw;
   max-width: 1200px;
+  height: 85vh;
   background: var(--background-color, #fff);
   border-radius: 12px;
-  display: grid;
-  grid-template-rows: 1fr auto;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  /* Fixed height prevents jumping - content scrolls inside */
-  height: 85vh !important;
-  max-height: 85vh !important;
-  min-height: 85vh !important;
-  /* Prevent overflow from affecting size */
-  overflow: hidden !important;
+  overflow: hidden;
 }
 
 /* Close button */
@@ -569,13 +563,14 @@ html {
 
 /* Cell content area */
 .ipynb-paged-cell-area {
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 80px;
+  overflow-y: auto;
+  overflow-x: hidden;
   padding: 3rem 2rem 2rem 2rem;
-  /* Grid item that fills remaining space */
-  min-height: 0 !important;
-  display: flex;
-  flex-direction: column;
 }
 
 .ipynb-paged-cell-area .ipynb-cell {
@@ -584,8 +579,6 @@ html {
   margin: 0;
   /* Ensure consistent font inheritance for all content */
   font-family: inherit;
-  /* Prevent cell from expanding beyond container */
-  flex-shrink: 0;
 }
 
 /* Force consistent typography for all text elements in overlay */
@@ -648,6 +641,11 @@ html {
 
 /* Pagination Controls in Overlay */
 .ipynb-paged-overlay .ipynb-pagination {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -655,7 +653,7 @@ html {
   padding: 1.5rem;
   border-top: 2px solid var(--light-color, #e0e0e0);
   background: var(--background-color, #fff);
-  min-height: fit-content;
+  border-radius: 0 0 12px 12px;
 }
 
 .ipynb-pagination-button {
