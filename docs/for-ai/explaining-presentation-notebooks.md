@@ -151,7 +151,91 @@ Discover our revolutionary new features.
 - [Next Quarter Goals](#)
 ```
 
-### 2. Inline HTML Styling
+### 2. Understanding Link Types in Presentations
+
+The ipynb-viewer block supports two independent link systems, each serving different purposes:
+
+#### Smart Navigation Links (Internal Notebook Navigation)
+
+Smart linking activates for **any link with `(#)` as the href**, not just action cards. The JavaScript automatically finds matching headings in the notebook and resolves the link at runtime.
+
+**How it works:**
+- Link uses `(#)` as placeholder: `[Section Name](#)`
+- JavaScript searches all cells for headings matching the link text
+- Matching is case-insensitive and ignores emojis/special characters
+- Link resolves to `#cell-{index}` automatically
+- No hardcoded cell IDs needed - links adapt if cells are reordered
+
+**Examples:**
+```markdown
+# Navigation Links (anywhere in the notebook)
+[Introduction](#)
+[🌍 Part 1: The Big Picture](#)
+[Back to Top](#)
+
+# Action Cards (same smart linking behavior)
+<!-- action-cards -->
+- [Q3 Results](#)
+- [Team Growth](#)
+- [Next Quarter Goals](#)
+```
+
+**Best practices:**
+- Use descriptive heading text that matches link text
+- Include emojis in headings for visual appeal (they're ignored in matching)
+- Keep link text concise but unique enough to match correctly
+- Works in action cards, regular markdown, or any link element
+
+#### Repository Links (External Documentation)
+
+Links ending in `.md` automatically convert to full GitHub URLs using the notebook's `repo` metadata. This system is completely separate from smart linking.
+
+**How it works:**
+- Link to any `.md` file: `[index.md](docs/for-ai/index.md)`
+- ipynb-viewer reads `repo` from notebook metadata
+- Converts to: `{repo}/blob/main/docs/for-ai/index.md`
+- Opens in new tab with GitHub's markdown viewer
+
+**Setup:**
+```json
+{
+  "metadata": {
+    "repo": "https://github.com/username/repository"
+  }
+}
+```
+
+**Examples:**
+```markdown
+# Repository Links
+[Main Documentation](docs/for-ai/index.md)
+[Getting Started Guide](docs/for-ai/getting-started-guide.md)
+[Block Standards](docs/for-ai/implementation/block-architecture-standards.md)
+```
+
+**When to use repository links:**
+- Link to external documentation files
+- Reference README files
+- Point to comprehensive guides
+- Create "learn more" resources
+
+#### Using Both Link Types Together
+
+Both systems work independently and can be mixed freely:
+
+```markdown
+# 📚 Resources
+
+<!-- action-cards -->
+- [Next Section](#)          <!-- Smart link: finds heading in this notebook -->
+- [Previous Section](#)      <!-- Smart link: finds heading in this notebook -->
+
+## Learn More
+- [Complete Guide](docs/for-ai/index.md)                  <!-- Repo link: opens GitHub -->
+- [Architecture Docs](docs/for-ai/implementation/block-architecture-standards.md)  <!-- Repo link -->
+```
+
+### 3. Inline HTML Styling
 
 Every cell gets beautiful inline styling for consistency:
 

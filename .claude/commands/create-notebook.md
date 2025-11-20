@@ -365,6 +365,74 @@ Master the fundamentals through hands-on learning.
 - No need to specify cell IDs or indices
 - Links adapt automatically if headings change
 
+### Step 6c: Understanding Link Types
+
+The ipynb-viewer block supports two independent link systems:
+
+#### Smart Navigation Links (Internal Navigation)
+
+Smart linking activates for **ANY link with `(#)` as href**, not just action cards.
+
+**Usage:**
+```markdown
+# Regular navigation links
+Continue to [Next Section](#) or [Back to Start](#).
+
+# In tables
+| Topic | Link |
+|-------|------|
+| Basics | [Learn Basics](#) |
+
+# Action cards
+<!-- action-cards -->
+- [Part 1](#)
+- [Part 2](#)
+```
+
+**How it works:**
+- JavaScript searches cells for headings matching link text
+- Case-insensitive, ignores emojis/special characters
+- Resolves to `#cell-{index}` at runtime
+- No hardcoded cell IDs needed
+
+#### Repository Links (External Documentation)
+
+Links ending in `.md` automatically convert to GitHub URLs.
+
+**Setup in notebook metadata:**
+```json
+{
+  "metadata": {
+    "repo": "https://github.com/username/project"
+  }
+}
+```
+
+**Usage:**
+```markdown
+See [Architecture Guide](docs/architecture.md) for details.
+
+Reference [API Docs](docs/api.md)
+```
+
+Converts to: `https://github.com/username/project/blob/main/docs/architecture.md`
+
+#### Using Both Together
+
+Mix both link types freely:
+
+```markdown
+# Tutorial Navigation
+
+<!-- action-cards -->
+- [Next Lesson](#)        <!-- Smart link: internal -->
+- [Previous Lesson](#)    <!-- Smart link: internal -->
+
+## Additional Resources
+- [Full Guide](docs/guide.md)  <!-- Repo link: external -->
+- [API Docs](docs/api.md)      <!-- Repo link: external -->
+```
+
 ### Step 7: Code Cell Patterns
 
 Use appropriate code patterns based on what's being demonstrated:

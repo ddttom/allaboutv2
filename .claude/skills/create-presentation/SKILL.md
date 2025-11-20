@@ -705,6 +705,102 @@ Discover our revolutionary new features.
 - Multi-section flow navigation
 - Quick access menus
 
+### Link Types: Smart Navigation vs Repository Links
+
+The ipynb-viewer block supports two independent link systems for different purposes:
+
+#### Smart Navigation Links (Internal Presentation Navigation)
+
+Smart linking works for **ANY link with `(#)` as the href**, not just action cards. Perfect for presentation flow control.
+
+**Activates when:** Link has `href="#"` (hash placeholder)
+**Works in:** Action cards, inline text, buttons, any link element
+
+**Examples:**
+```markdown
+# Regular presentation navigation
+Proceed to [Next Slide](#) or review [Previous Slide](#).
+
+# In agenda/TOC
+1. [Introduction](#)
+2. [Problem Statement](#)
+3. [Solution Overview](#)
+4. [Demo](#)
+
+# Action cards (same smart linking)
+<!-- action-cards -->
+- [Product Overview](#)
+- [Key Features](#)
+- [Pricing](#)
+```
+
+**How it works:**
+- JavaScript searches all cells for headings matching link text
+- Case-insensitive matching, ignores emojis
+- Resolves to `#cell-{index}` at runtime
+- No hardcoded cell IDs - presentation adapts if slides reorder
+
+**Best for presentations:**
+- Slide-to-slide navigation
+- Table of contents / agenda
+- Call-to-action buttons
+- Section jumps
+
+#### Repository Links (External Resources)
+
+Links ending in `.md` automatically convert to GitHub URLs. Perfect for "learn more" or reference materials.
+
+**Activates when:** Link ends in `.md`
+**Requires:** `repo` field in notebook metadata
+
+**Setup:**
+```json
+{
+  "metadata": {
+    "repo": "https://github.com/username/project"
+  }
+}
+```
+
+**Examples:**
+```markdown
+For technical details, see [Architecture](docs/architecture.md)
+
+Read the [Implementation Guide](docs/guide.md)
+
+Download [User Manual](docs/user-manual.md)
+```
+
+**Best for presentations:**
+- Technical documentation links
+- "Learn more" resources
+- Follow-up materials
+- Supporting documentation
+
+#### Using Both in Presentations
+
+Mix both link types for effective presentations:
+
+```markdown
+# 🎯 Product Demo
+
+<!-- action-cards -->
+- [See Demo](#)           <!-- Smart link: next slide -->
+- [View Features](#)      <!-- Smart link: features slide -->
+- [Pricing](#)            <!-- Smart link: pricing slide -->
+
+## Want More Details?
+- [Technical Specs](docs/specs.md)        <!-- Repo link: external doc -->
+- [User Guide](docs/user-guide.md)        <!-- Repo link: external doc -->
+
+Ready to continue? [Next: Key Features](#)  <!-- Smart link: next slide -->
+```
+
+**Presentation strategy:**
+- **Smart links** keep viewers in the presentation flow (same page)
+- **Repo links** provide optional deep dives (new tab)
+- Clear separation between presentation content and reference materials
+
 ### Content Organization
 
 - Start with title and overview

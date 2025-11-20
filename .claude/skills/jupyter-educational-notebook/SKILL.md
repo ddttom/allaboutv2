@@ -137,6 +137,96 @@ Learn step by step.
 - Multi-section content flow
 - Quick reference sections
 
+### Link Types: Smart Navigation vs Repository Links
+
+The ipynb-viewer block supports two independent link systems:
+
+#### Smart Navigation Links (Internal Navigation)
+
+Smart linking works for **ANY link with `(#)` as the href**, not just action cards. This makes internal navigation resilient to notebook changes.
+
+**Activates when:** Link has `href="#"` (hash placeholder)
+**Works in:** Action cards, regular markdown, inline text, tables, any link element
+
+**Examples:**
+```markdown
+# Regular navigation links
+Continue to [Next Section](#) or go [Back to Start](#).
+
+# In tables
+| Topic | Link |
+|-------|------|
+| Basics | [Learn the Basics](#) |
+| Advanced | [Advanced Topics](#) |
+
+# In lists (not action cards)
+- [Introduction](#)
+- [Getting Started](#)
+- [Advanced Features](#)
+
+# Action cards (same smart linking)
+<!-- action-cards -->
+- [Part 1](#)
+- [Part 2](#)
+```
+
+**Key points:**
+- No hardcoded cell IDs needed
+- Links adapt when cells are reordered
+- Case-insensitive matching
+- Ignores emojis and special characters in headings
+
+#### Repository Links (External Documentation)
+
+Links ending in `.md` automatically convert to GitHub URLs using the notebook's `repo` metadata.
+
+**Activates when:** Link ends in `.md`
+**Requires:** `repo` field in notebook metadata
+
+**Setup:**
+```json
+{
+  "metadata": {
+    "repo": "https://github.com/username/project"
+  }
+}
+```
+
+**Examples:**
+```markdown
+Learn more in [Complete Guide](docs/guide.md)
+
+Reference the [API Documentation](docs/api-reference.md)
+
+See [Architecture Overview](docs/architecture.md) for details
+```
+
+These convert to full GitHub URLs: `https://github.com/username/project/blob/main/docs/guide.md`
+
+**When to use repository links:**
+- Link to comprehensive documentation
+- Reference API docs or technical specs
+- Point to code examples in the repo
+- Provide "deep dive" resources
+
+#### Using Both Together
+
+Both systems work independently and can be mixed:
+
+```markdown
+# 🎓 Tutorial Navigation
+
+<!-- action-cards -->
+- [Next Lesson](#)         <!-- Smart link: internal navigation -->
+- [Previous Lesson](#)     <!-- Smart link: internal navigation -->
+
+## Additional Resources
+- [Architecture Guide](docs/architecture.md)  <!-- Repo link: external -->
+- [API Reference](docs/api.md)               <!-- Repo link: external -->
+
+Continue to the [practice exercises](#) when ready.  <!-- Smart link: internal -->
+```
+
 **Mixing Auto-Wrapping with Custom HTML:**
 You can combine both approaches in the same notebook:
 - Use pure markdown for most cells (auto-wrapped)

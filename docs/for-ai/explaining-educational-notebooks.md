@@ -400,6 +400,113 @@ Learn the fundamentals step by step.
 - Tutorial navigation
 - Multi-part content flow
 
+### Understanding Link Types in Educational Notebooks
+
+Educational notebooks use two independent link systems for different purposes:
+
+#### Smart Navigation Links (Internal Navigation)
+
+Smart linking works for **any link with `(#)` as the href**, not just action cards. This makes internal navigation resilient to notebook changes.
+
+**How it works:**
+- Use `(#)` as href placeholder: `[Topic Name](#)`
+- JavaScript searches all cells for headings matching the link text
+- Matching is case-insensitive and ignores emojis/special characters
+- Link resolves to `#cell-{index}` automatically at runtime
+- No hardcoded cell IDs - links adapt when cells are reordered
+
+**Examples in educational content:**
+```markdown
+# Table of Contents
+- [📖 Introduction](#)
+- [🔧 Setup Guide](#)
+- [💡 Advanced Topics](#)
+- [🎯 Practice Exercises](#)
+
+# In tutorial flow
+Continue to [Next Lesson](#) or go back to [Previous Lesson](#).
+
+# Action cards (same smart linking)
+<!-- action-cards -->
+- [Chapter 1: Basics](#)
+- [Chapter 2: Intermediate](#)
+- [Chapter 3: Advanced](#)
+```
+
+**Best practices for educational content:**
+- Use clear, descriptive heading text that students can understand
+- Include emojis in headings for visual learning (they're ignored in matching)
+- Create natural "next" and "previous" navigation flows
+- Keep link text concise but unique enough to match correctly
+- Works everywhere: action cards, inline text, tables, lists
+
+#### Repository Links (External Resources)
+
+Links ending in `.md` automatically convert to GitHub URLs using the notebook's `repo` metadata. Perfect for linking to comprehensive documentation while keeping the notebook focused.
+
+**How it works:**
+- Link to `.md` files: `[guide.md](docs/guide.md)`
+- ipynb-viewer reads `repo` from notebook metadata
+- Converts to: `{repo}/blob/main/docs/guide.md`
+- Opens in new tab with GitHub's markdown renderer
+
+**Setup in notebook metadata:**
+```json
+{
+  "metadata": {
+    "repo": "https://github.com/username/project"
+  }
+}
+```
+
+**Educational examples:**
+```markdown
+# 📚 Additional Resources
+
+Learn more in these detailed guides:
+- [Complete API Reference](docs/api-reference.md)
+- [Architecture Deep Dive](docs/architecture.md)
+- [Testing Guidelines](docs/testing-guide.md)
+
+For troubleshooting, see [FAQ.md](docs/FAQ.md)
+```
+
+**When to use repository links in educational content:**
+- Link to comprehensive documentation
+- Reference external tutorials
+- Point to API documentation
+- Provide "deep dive" resources
+- Link to code examples in the repo
+
+#### Combining Both Link Types in Tutorials
+
+Both systems work together seamlessly for effective educational content:
+
+```markdown
+# 🎓 Lesson 3: Advanced Concepts
+
+<!-- action-cards -->
+- [Back to Lesson 2](#)       <!-- Smart link: previous lesson -->
+- [Continue to Lesson 4](#)   <!-- Smart link: next lesson -->
+- [Back to Start](#)          <!-- Smart link: intro cell -->
+
+## What You'll Learn
+In this lesson, we'll explore advanced patterns...
+
+## Need More Details?
+- [Architecture Guide](docs/for-ai/implementation/architecture.md)  <!-- Repo link -->
+- [Best Practices](docs/for-ai/guidelines/best-practices.md)       <!-- Repo link -->
+
+## Practice Exercise
+Try implementing what you learned, then [check the solution](#).   <!-- Smart link -->
+```
+
+**Benefits for learners:**
+- **Smart links** keep them in the learning flow (same page, instant navigation)
+- **Repo links** provide optional deep dives (new tab, comprehensive docs)
+- Clear separation between tutorial content and reference material
+- Students can explore at their own pace
+
 **Strategy 2: Add "try it yourself" moments**
 ```javascript
 // Try changing these values!
