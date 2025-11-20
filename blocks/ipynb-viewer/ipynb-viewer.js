@@ -229,8 +229,37 @@ function styleActionCards(contentElement) {
 
     // Fix links at runtime by finding matching headings
     const link = li.querySelector('a');
-    if (link && link.hash) {
+    if (link && link.hash && link.hash !== '#') {
       // Extract the link text to search for matching heading
+      const linkText = link.textContent.trim();
+
+      // Find all headings in the document
+      const allCells = document.querySelectorAll('.ipynb-cell');
+      let targetCell = null;
+
+      allCells.forEach((cell) => {
+        const headings = cell.querySelectorAll('h1, h2, h3, h4, h5, h6');
+        headings.forEach((heading) => {
+          // Check if heading text matches link text (case-insensitive, ignore emojis/special chars)
+          const headingText = heading.textContent.trim().replace(/[^\w\s]/g, '').toLowerCase();
+          const searchText = linkText.replace(/[^\w\s]/g, '').toLowerCase();
+
+          if (headingText.includes(searchText)) {
+            targetCell = cell;
+            // Ensure the cell has a data-cell-index
+            if (!heading.id && cell.dataset.cellIndex) {
+              heading.id = `cell-${cell.dataset.cellIndex}`;
+            }
+          }
+        });
+      });
+
+      // Update the link to point to the found cell
+      if (targetCell && targetCell.dataset.cellIndex) {
+        link.href = `#cell-${targetCell.dataset.cellIndex}`;
+      }
+    } else if (link && link.hash === '#') {
+      // Link has placeholder # - resolve it now
       const linkText = link.textContent.trim();
 
       // Find all headings in the document
@@ -864,6 +893,12 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
 
     // Find the page that contains an element with the target ID
     const targetId = target.replace('#', '');
+
+    // If targetId is empty, don't navigate
+    if (!targetId) {
+      console.warn('Cannot navigate to empty target');
+      return;
+    }
 
     // Search through all pages to find the one containing the target ID
     for (let i = 0; i < pages.length; i++) {

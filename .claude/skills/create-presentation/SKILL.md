@@ -663,10 +663,23 @@ Discover our revolutionary new features.
 
 **How it works:**
 1. Add `<!-- action-cards -->` HTML comment in your markdown cell
-2. Follow with a markdown list of links
-3. Use simple link text that matches heading text in other cells
-4. **Links are automatically resolved at runtime** - JavaScript finds matching headings and updates hrefs
+2. Follow with a markdown list of links using `(#)` as placeholder
+3. Write link text that matches heading text somewhere in your notebook
+4. **Links are automatically resolved at runtime** - JavaScript searches all cells for matching headings and updates hrefs
 5. All cards use consistent blue styling
+
+**Important:** The `<!-- action-cards -->` marker only applies to the **first list** that follows it. Any subsequent lists in the same cell will remain as normal bullet lists.
+
+**Example matching:**
+- `[Overview](#)` finds heading containing "Overview" (like "## Overview" or "### 📊 Overview Section")
+- `[Key Features](#)` finds heading containing "Key Features" (like "## Section 2: Key Features")
+- Link text doesn't need exact match - searches for headings that *contain* your link text
+
+**Best Practices:**
+- ✅ Use specific link text: `[Section 1: Overview](#)` instead of just `[Overview](#)`
+- ✅ Make link text unique to avoid ambiguity
+- ⚠️ If multiple headings match, it picks the **first one found** (in cell order)
+- 💡 Tip: Use section numbers or descriptive prefixes to ensure unique matches
 
 **Features:**
 - ✅ Pure markdown - no HTML required
@@ -676,11 +689,6 @@ Discover our revolutionary new features.
 - ✅ Consistent blue design - professional appearance
 - ✅ Hover effects with animated arrows (→)
 - ✅ Perfect for presentation navigation and agendas
-
-**How smart linking works:**
-- Link text "Overview" automatically finds heading containing "Overview"
-- No need to specify cell IDs or indices
-- Links adapt automatically if headings change or cells move
 
 **When to use action cards in presentations:**
 - Hero cells with section navigation

@@ -374,9 +374,24 @@ Learn the fundamentals step by step.
 - ✅ Perfect for navigation in hero cells
 
 **How it works:**
-- Write link text that matches heading text in other cells
-- JavaScript automatically finds the matching cell and updates href
-- No maintenance needed when cells move or headings change
+1. Add `<!-- action-cards -->` HTML comment in your markdown cell
+2. Follow with a markdown list of links using `(#)` as placeholder
+3. Write link text that matches heading text somewhere in your notebook
+4. JavaScript automatically finds the matching cell and updates href
+5. No maintenance needed when cells move or headings change
+
+**Important:** The `<!-- action-cards -->` marker only applies to the **first list** that follows it. Any subsequent lists in the same cell will remain as normal bullet lists.
+
+**Example matching:**
+- `[Installation](#)` finds heading containing "Installation" (like "## Installation" or "### Installation Guide")
+- `[Basic Concepts](#)` finds heading containing "Basic Concepts" (like "## Part 1: Basic Concepts")
+- Link text doesn't need exact match - searches for headings that *contain* your link text
+
+**Best Practices:**
+- ✅ Use specific link text: `[Part 1: Introduction](#)` instead of just `[Introduction](#)`
+- ✅ Make link text unique to avoid ambiguity
+- ⚠️ If multiple headings match, it picks the **first one found** (in cell order)
+- 💡 Tip: Use part numbers or descriptive prefixes to ensure unique matches
 
 **When to use action cards:**
 - Hero cells with navigation options

@@ -1186,10 +1186,23 @@ In a content cell:
 **How It Works:**
 
 1. Add an HTML comment `<!-- action-cards -->` in your markdown cell
-2. Follow it with a markdown list of links
-3. Use simple link text that matches heading text in other cells
-4. **Links are automatically resolved at runtime** - JavaScript finds matching headings and updates hrefs
+2. Follow it with a markdown list of links using `(#)` as placeholder
+3. Write link text that matches heading text somewhere in your notebook
+4. **Links are automatically resolved at runtime** - JavaScript searches all cells for matching headings and updates hrefs
 5. All cards use consistent blue styling
+
+**Important:** The `<!-- action-cards -->` marker only applies to the **first list** that follows it. Any subsequent lists in the same cell will remain as normal bullet lists.
+
+**Example matching:**
+- `[Getting Started](#)` finds heading containing "Getting Started" (like "## Getting Started" or "### 🚀 Getting Started Guide")
+- `[Best Practices](#)` finds heading containing "Best Practices" (like "## Part 6: Best Practices")
+- Link text doesn't need exact match - searches for headings that *contain* your link text
+
+**Best Practices:**
+- ✅ Use specific link text: `[Part 1: Introduction](#)` instead of just `[Introduction](#)`
+- ✅ Make link text unique to avoid ambiguity
+- ⚠️ If multiple headings match, it picks the **first one found** (in cell order)
+- 💡 Tip: Use part numbers or descriptive prefixes to ensure unique matches
 
 **Features:**
 
