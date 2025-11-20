@@ -75,7 +75,10 @@
       "Bash(open:*)",
       "Bash(ls:*)",
       "Bash(xargs:*)",
-      "Bash(jq:*)"
+      "Bash(jq:*)",
+      "Skill(ipynb-validator)",
+      "SlashCommand(/validate-notebook docs-navigation.ipynb)",
+      "SlashCommand(/validate-notebook:*)"
     ],
     "deny": [],
     "ask": []
