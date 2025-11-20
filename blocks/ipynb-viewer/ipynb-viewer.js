@@ -884,11 +884,41 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     links.forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
+
+        // Re-check href at click time (may have been updated by resolution)
         const target = link.getAttribute('href');
 
         // Only navigate if the link is resolved (not just "#" or empty)
         if (target && target !== '#' && target !== '') {
           navigateToAnchor(target);
+        } else {
+          // Link is unresolved - try to resolve it now
+          const linkText = link.textContent.trim();
+          const allCells = cellsContainer.querySelectorAll('.ipynb-cell');
+          let targetCell = null;
+
+          allCells.forEach((cell) => {
+            if (targetCell) return;
+            const headings = cell.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            headings.forEach((heading) => {
+              const headingText = heading.textContent.trim().replace(/[^\w\s]/g, '').toLowerCase();
+              const searchText = linkText.replace(/[^\w\s]/g, '').toLowerCase();
+
+              if (headingText.includes(searchText)) {
+                targetCell = cell;
+                if (!heading.id && cell.dataset.cellIndex) {
+                  heading.id = `cell-${cell.dataset.cellIndex}`;
+                }
+              }
+            });
+          });
+
+          // If we found a match, update the link and navigate
+          if (targetCell && targetCell.dataset.cellIndex) {
+            const newTarget = `#cell-${targetCell.dataset.cellIndex}`;
+            link.href = newTarget;
+            navigateToAnchor(newTarget);
+          }
         }
       });
     });
