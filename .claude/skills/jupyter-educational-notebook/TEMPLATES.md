@@ -48,11 +48,215 @@ Regular content here...
 
 ## Table of Contents
 
+- [Navigation Template](#navigation-template) - **NEW!** Multi-paradigm documentation navigation
 - [Blog Post Template](#blog-post-template)
 - [Tutorial Template](#tutorial-template)
 - [Concept Explanation Template](#concept-explanation-template)
 - [Reference Guide Template](#reference-guide-template)
 - [Quick Demo Template](#quick-demo-template)
+
+---
+
+## Navigation Template
+
+**Use for:** Complex documentation systems (20+ documents) with multiple audiences
+
+**Estimated cells:** 30-40
+**Content ratio:** 100% markdown (pure navigation, no code)
+
+### When to Use
+
+✅ **Perfect for:**
+- Documenting complex systems (20+ documents)
+- Multiple distinct audiences (4+ roles)
+- Documentation hubs and learning path systems
+- Teaching documentation architecture patterns
+
+❌ **Skip for:**
+- Simple documentation (< 10 documents)
+- Single-audience documentation
+- Linear learning paths
+- Quick reference guides
+
+### Template Location
+
+**File:** `docs/for-ai/templates/ipynb/navigation-template.ipynb`
+
+**Real Example:** `docs-navigation.ipynb` (65 cells navigating 26 documents)
+
+### Key Features
+
+1. **Multi-Paradigm Navigation:**
+   - Role-based: "I'm a Developer/Architect/PM"
+   - Task-based: "I need to build/test X"
+   - Workflow-based: "I'm in the planning/testing phase"
+   - Category-based: "Browse all implementation docs"
+
+2. **Progressive Disclosure:**
+   - Hero cell with main action cards
+   - Table of Contents with time estimates
+   - Emergency navigation for urgent problems
+   - Part summaries with forward momentum
+
+3. **Navigational Aids:**
+   - Progress indicators (🔵🔵🔵⚪⚪⚪)
+   - Reading time estimates per part
+   - Essential bookmarks highlight
+   - Search keywords guide
+   - Icon legend
+   - Troubleshooting section
+
+4. **Living Documentation Principles:**
+   - Self-verification (action cards validate headings)
+   - Multi-audience design (6+ distinct roles)
+   - Multi-modal navigation (4 ways to find info)
+   - Executable truth (validated structure)
+
+### Structure
+
+```
+Cell 1: Hero - Title with main action cards
+Cell 2: TOC - Complete overview with time estimates
+Cell 3: Emergency - Quick fix matrix (problem → solution)
+Cell 4: Essential - The 3 must-read docs highlighted
+Cell 5: Search - Keywords guide for finding info
+Cell 6: Icon Legend - Emoji meanings explained
+
+Part 1: Overview
+- Big picture (documentation ecosystem)
+- Living documentation principles
+- Navigation strategies
+- Summary card with next steps
+
+Part 2: By Role (6 roles)
+- New Developer
+- Experienced Developer
+- Architect/Tech Lead
+- Project Manager
+- Content Creator
+- Each with Required/Recommended/Optional docs
+- Summary card
+
+Part 3: By Task (6 tasks)
+- Building simple components
+- Building complex components
+- Testing components
+- Debugging issues
+- Creating educational content
+- Creating presentations
+- Summary card
+
+Part 4: By Workflow (5 phases)
+- Planning
+- Development
+- Testing
+- Documentation
+- Deployment
+- Summary card
+
+Part 5: By Category (6 categories)
+- Core Navigation
+- Implementation Guides
+- Testing & Debugging
+- Jupyter Notebooks
+- Project Guidelines
+- Reference Materials
+- Summary card
+
+Part 6: Pro Tips (11 tips)
+- Use Navigation Flows
+- Use Relationship Mapping
+- Start with Getting Started
+- EDS.md is Your Bible
+- Know the Dual-Pattern
+- Master Three Notebook Types
+- Use Templates
+- Build Personal Quick Reference
+- Use Slash Commands
+- Follow Decision Trees
+- Leverage AI for Documentation
+- Summary card
+
+Part 7: Universal Patterns
+- Beyond this project
+- Concrete examples (Component Libraries, APIs)
+- How to apply this template
+- 5-step adaptation guide
+
+Final: Troubleshooting & Remember
+- 6 common navigation issues with solutions
+- Living documentation reflection
+```
+
+### Metadata Example
+
+```json
+{
+  "metadata": {
+    "title": "[Your System] Documentation Navigator",
+    "description": "Your documentation GPS for navigating [N] documents across [M] categories",
+    "author": "Your Name",
+    "date": "2025-01-20",
+    "version": "1.0",
+    "category": "navigation",
+    "difficulty": "beginner",
+    "duration": "15-20 minutes",
+    "tags": ["navigation", "documentation", "multi-paradigm", "living-docs"],
+    "license": "MIT"
+  }
+}
+```
+
+### Quick Start
+
+**Copy the template:**
+```bash
+cp docs/for-ai/templates/ipynb/navigation-template.ipynb my-docs-nav.ipynb
+```
+
+**Customize for your system:**
+1. Define your documentation domains and categories
+2. Identify 4-6 distinct user roles
+3. Map 5-8 common tasks
+4. Define your workflow phases (typically 4-6)
+5. Customize parts and action cards
+6. Add role-specific learning paths
+7. Create task-specific quick references
+8. Add pro tips relevant to your system
+
+### Action Cards Pattern
+
+Navigation templates heavily use action cards for smart linking:
+
+```markdown
+# 🗺️ Your Documentation Navigator
+
+Choose your navigation style:
+
+<!-- action-cards -->
+
+- [Navigate by Role](#)
+- [Navigate by Task](#)
+- [Navigate by Workflow](#)
+- [Browse Categories](#)
+```
+
+Action cards automatically resolve to matching headings at runtime - no hardcoded IDs needed!
+
+### Summary Headings (Important!)
+
+**Avoid smart linking conflicts:**
+- ❌ Don't: `### ✅ Part 1 Complete: The Big Picture`
+- ✅ Do: `### ✅ You've Completed Part 1`
+
+Summary headings should be distinct from actual part headings to avoid confusing the smart link resolver.
+
+### See Also
+
+- [docs/for-ai/templates/ipynb/README.md](../../../docs/for-ai/templates/ipynb/README.md) - Complete template catalog
+- [docs/for-ai/document-relationship-mapping.md](../../../docs/for-ai/document-relationship-mapping.md) - Cross-reference strategy
+- [docs/for-ai/navigation-flows.md](../../../docs/for-ai/navigation-flows.md) - Decision trees
+- [docs-navigation.ipynb](../../../../docs-navigation.ipynb) - Real-world example (65 cells, 26 docs)
 
 ---
 
@@ -944,11 +1148,12 @@ Have fun! 🚀
 
 ### Choosing a Template
 
-1. **Blog Post** - When you want to publish engaging content
-2. **Tutorial** - When teaching step-by-step
-3. **Concept Explanation** - When diving deep into one topic
-4. **Reference Guide** - When documenting APIs or features
-5. **Quick Demo** - When showcasing quickly
+1. **Navigation** - Complex documentation systems (20+ docs, multiple audiences)
+2. **Blog Post** - When you want to publish engaging content
+3. **Tutorial** - When teaching step-by-step
+4. **Concept Explanation** - When diving deep into one topic
+5. **Reference Guide** - When documenting APIs or features
+6. **Quick Demo** - When showcasing quickly
 
 ### Customizing Templates
 

@@ -21,7 +21,7 @@ Transform Jupyter notebooks into beautiful presentation-mode experiences using e
 
 ## Key Concepts
 
-### Presentation Mode vs Interactive Mode vs Educational Mode
+### Presentation Mode vs Interactive Mode vs Educational Mode vs Navigation Mode
 
 **Interactive Notebooks** (e.g., test.ipynb):
 - Users can run JavaScript code cells
@@ -41,6 +41,14 @@ Transform Jupyter notebooks into beautiful presentation-mode experiences using e
 - Can use auto-wrapping (notebook mode) OR manual HTML (all modes)
 - For end users, clients, presentations
 - Beautiful visual layouts with EDS blocks
+
+**Navigation Notebooks** (e.g., docs-navigation.ipynb):
+- No executable code cells (pure navigation)
+- 100% markdown with action cards
+- Multi-paradigm navigation (role, task, workflow, category)
+- For complex documentation systems (20+ documents)
+- Progressive disclosure with part summaries
+- See template: `docs/for-ai/templates/ipynb/navigation-template.ipynb`
 
 ### Core Approach
 
@@ -961,6 +969,16 @@ The ipynb-viewer overlay positioning is fixed (v4, Jan 2025):
 - `jupyter-notebook-testing` - For testing EDS blocks
 - `frontend-dev-guidelines` - For styling and best practices
 - `eds-block-development` - For understanding block architecture
+
+## Related Templates
+
+- `presentation-template.ipynb` - Standard presentation template
+- `navigation-template.ipynb` - **NEW!** Multi-paradigm documentation navigation
+  - For complex documentation systems (20+ documents)
+  - Multi-audience design (4+ roles)
+  - Action cards with smart linking
+  - Progress indicators and part summaries
+  - See: `docs/for-ai/templates/ipynb/navigation-template.ipynb`
 
 ## Related Commands
 
