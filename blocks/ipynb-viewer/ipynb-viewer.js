@@ -791,13 +791,55 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       }
     }
 
+    // Re-resolve action card links in the current page
+    const actionCardContainers = cellContentArea.querySelectorAll('.ipynb-action-cards');
+    actionCardContainers.forEach(container => {
+      const items = container.querySelectorAll('li');
+      items.forEach((li) => {
+        const link = li.querySelector('a');
+        if (link && (link.hash === '#' || link.hash === '')) {
+          // Re-resolve the link by finding matching heading
+          const linkText = link.textContent.trim();
+
+          // Search through ALL cells in the notebook (not just current page)
+          const allCells = cellsContainer.querySelectorAll('.ipynb-cell');
+          let targetCell = null;
+
+          allCells.forEach((cell) => {
+            if (targetCell) return; // Already found
+            const headings = cell.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            headings.forEach((heading) => {
+              const headingText = heading.textContent.trim().replace(/[^\w\s]/g, '').toLowerCase();
+              const searchText = linkText.replace(/[^\w\s]/g, '').toLowerCase();
+
+              if (headingText.includes(searchText)) {
+                targetCell = cell;
+                if (!heading.id && cell.dataset.cellIndex) {
+                  heading.id = `cell-${cell.dataset.cellIndex}`;
+                }
+              }
+            });
+          });
+
+          // Update the link
+          if (targetCell && targetCell.dataset.cellIndex) {
+            link.href = `#cell-${targetCell.dataset.cellIndex}`;
+          }
+        }
+      });
+    });
+
     // Add click handlers to links with hash targets for overlay navigation
     const links = cellContentArea.querySelectorAll('a[href^="#"]');
     links.forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const target = link.getAttribute('href');
-        navigateToAnchor(target);
+
+        // Only navigate if the link is resolved (not just "#" or empty)
+        if (target && target !== '#' && target !== '') {
+          navigateToAnchor(target);
+        }
       });
     });
 

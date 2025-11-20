@@ -370,6 +370,12 @@ html {
   transition: transform 0.2s ease;
 }
 
+/* Hide arrow for unresolved links */
+.ipynb-action-card a[href="#"]::after,
+.ipynb-action-card a[href=""]::after {
+  content: '';
+}
+
 .ipynb-action-card:hover a::after {
   transform: translateX(4px);
 }

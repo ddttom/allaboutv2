@@ -1190,6 +1190,9 @@ In a content cell:
 3. Write link text that matches heading text somewhere in your notebook
 4. **Links are automatically resolved at runtime** - JavaScript searches all cells for matching headings and updates hrefs
 5. All cards use consistent blue styling
+6. **Unresolved links** - If a link can't be matched to any heading:
+   - The arrow (→) is hidden, providing visual feedback
+   - Clicking the link does nothing (no navigation, no error)
 
 **Important:** The `<!-- action-cards -->` marker only applies to the **first list** that follows it. Any subsequent lists in the same cell will remain as normal bullet lists.
 
@@ -1214,6 +1217,7 @@ In a content cell:
 - ✅ **Hover effects** - Cards lift up and arrow slides right on hover
 - ✅ **Auto-styled links** - Links become full-width interactive elements
 - ✅ **Right arrows** - Automatically added arrow (→) on the right side
+- ✅ **Unresolved link feedback** - Links that can't be matched show no arrow and do nothing when clicked
 
 **CSS Classes:**
 
