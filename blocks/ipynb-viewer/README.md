@@ -14,9 +14,9 @@ Display and execute Jupyter notebook (.ipynb) files directly in your EDS site wi
 **Paged Variation**: Display cells one at a time with navigation controls.
 **Autorun Mode**: Automatically execute code cells without Run buttons (NEW).
 **Notebook Variation**: Combined manual and paged modes with visible close button (NEW).
-**Hamburger Menu TOC**: Navigate cells via dropdown menu in notebook mode with visual dividers (NEW).
+**Hamburger Menu TOC**: Navigate cells via dropdown menu in notebook mode with visual dividers, smart filtering (NEW).
 **Link Navigation**: Navigate between overlays using hash targets (NEW).
-**Auto-Wrapping**: Pure markdown authoring with automatic styling in notebook mode (NEW).
+**Auto-Wrapping**: Pure markdown authoring with automatic styling in notebook mode - 90% less code (NEW).
 **Responsive Design**: Mobile-friendly layout.
 **Syntax Highlighting**: Clear code formatting with monospace fonts.
 **Error Handling**: Graceful error messages and visual indicators.
@@ -355,7 +355,7 @@ The ipynb-viewer block uses **three distinct overlay systems** for different pur
 - Close button (×) in top-right
 - **Responsive view buttons** (📱 Mobile, 📱 Tablet, 🖥️ Desktop) - *only in non-notebook variations*
 - **Notebook mode:** Shows close button and hamburger menu (☰) for table of contents navigation
-- **Hamburger menu (notebook mode only):** Click to show dropdown TOC with all cell headings, visual dividers for transitions
+- **Hamburger menu (notebook mode only):** Click to show dropdown TOC with cell headings, visual dividers for transitions, smart filtering (skips cells without headings)
 - No pagination controls
 
 **Keyboard Shortcuts:**
@@ -929,6 +929,7 @@ The viewer automatically:
 ✅ **Clean content** - Notebooks are pure markdown, easier to read/edit
 ✅ **Version control friendly** - Smaller diffs, clearer changes
 ✅ **Backward compatible** - Existing HTML-wrapped cells still work
+✅ **Smart TOC integration** - Hamburger menu detects cells via CSS classes, works seamlessly with auto-wrapped content
 
 **More Examples:**
 
@@ -991,6 +992,165 @@ More content here...
 - ✅ Works for both educational AND presentation style notebooks
 
 **Note:** Auto-wrapping only activates in **notebook mode**. In default, paged, or autorun modes, use manual HTML wrappers as shown in the examples above.
+
+### Customizing Auto-Wrap Styles
+
+Developers can customize the appearance of auto-wrapped cells by modifying the CSS classes in `ipynb-viewer.css`. All auto-wrap styling is controlled through four main CSS classes:
+
+**CSS Classes for Auto-Wrapping:**
+
+```css
+/* Hero Cell - First cell with # heading */
+.ipynb-hero-cell {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  padding: 48px 32px;
+  margin: 0 0 32px 0;
+  text-align: center;
+  color: white;
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+}
+
+/* Intro/Content Card - Early cells with ## heading (thick border) */
+.ipynb-content-card {
+  background: white;
+  border-left: 6px solid #1976d2;
+  border-radius: 8px;
+  padding: 24px;
+  margin: 0 0 24px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Content Card Thin - Standard cells with ### heading (thin border) */
+.ipynb-content-card-thin {
+  background: white;
+  border-left: 4px solid #42a5f5;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 0 0 20px 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Transition Card - Short cells without headings */
+.ipynb-transition-card {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 0 0 24px 0;
+  text-align: center;
+  font-style: italic;
+  color: #555;
+}
+```
+
+**How to Customize:**
+
+1. **Locate the CSS file:** `/blocks/ipynb-viewer/ipynb-viewer.css`
+
+2. **Find the class you want to modify:** Search for `.ipynb-hero-cell`, `.ipynb-content-card`, `.ipynb-content-card-thin`, or `.ipynb-transition-card`
+
+3. **Modify the styles:** Change colors, spacing, borders, shadows, etc.
+
+**Example Customizations:**
+
+```css
+/* Example: Change hero cell to solid color instead of gradient */
+.ipynb-hero-cell {
+  background: #1976d2; /* Solid blue instead of gradient */
+  padding: 60px 40px; /* More padding */
+}
+
+/* Example: Use right border instead of left for content cards */
+.ipynb-content-card-thin {
+  border-left: none;
+  border-right: 4px solid #42a5f5;
+}
+
+/* Example: Remove shadows for flat design */
+.ipynb-content-card,
+.ipynb-content-card-thin {
+  box-shadow: none;
+  border: 1px solid #e0e0e0; /* Add subtle border instead */
+}
+
+/* Example: Change transition card styling */
+.ipynb-transition-card {
+  background: #fff3e0; /* Light orange */
+  border-top: 2px dashed #ff9800;
+  border-bottom: 2px dashed #ff9800;
+  font-weight: 600;
+}
+```
+
+**Detection Logic Location:**
+
+The pattern detection that determines which class to apply is in `ipynb-viewer.js`:
+
+```javascript
+// Function: detectCellType(content, index)
+// Lines: ~168-188
+
+// Patterns:
+// - Hero: index === 0 && content.includes('# ')
+// - Intro: index <= 2 && content.includes('## ')
+// - Transition: lines.length <= 3 && no headers
+// - Content: everything else
+```
+
+**Customizing Detection Patterns:**
+
+If you want to change WHEN cells get certain classes, modify the `detectCellType()` function in `ipynb-viewer.js`:
+
+```javascript
+function detectCellType(content, index) {
+  // Example: Make first 5 cells use intro styling instead of 2
+  if (index <= 4 && content.includes('## ')) {
+    return 'intro';
+  }
+
+  // Example: Longer transition cells (5 lines instead of 3)
+  const lines = content.trim().split('\n').filter(line => line.trim());
+  if (lines.length <= 5 && !content.includes('##') && !content.includes('###')) {
+    return 'transition';
+  }
+
+  // ... rest of function
+}
+```
+
+**Important Notes:**
+
+- ✅ Changes apply to ALL notebooks using notebook mode
+- ✅ Styles are centralized - change once, affects all auto-wrapped notebooks
+- ✅ Use CSS variables for easy theming across multiple classes
+- ⚠️ Detection logic changes require JavaScript modification
+- ⚠️ Test changes with multiple notebooks to ensure consistency
+
+**CSS Variables for Theming:**
+
+For easier customization, consider using CSS variables:
+
+```css
+:root {
+  --hero-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --card-border-thick: 6px;
+  --card-border-thin: 4px;
+  --card-border-color: #1976d2;
+  --transition-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.ipynb-hero-cell {
+  background: var(--hero-bg);
+}
+
+.ipynb-content-card {
+  border-left: var(--card-border-thick) solid var(--card-border-color);
+}
+
+.ipynb-content-card-thin {
+  border-left: var(--card-border-thin) solid var(--card-border-color);
+}
+```
 
 ### Header Styles
 
@@ -1244,6 +1404,30 @@ After (pure markdown):
 
 **See:** [docs-navigation.ipynb](../../docs-navigation.ipynb) for complete implementation example
 
+### 2025-01-20 - Auto-Wrapping Pattern Detection Updates (v8)
+
+**Improved TOC Generation for Auto-Wrapped Notebooks:**
+- ✅ **Class-based detection** - TOC now detects hero/transition cells via CSS classes (`.ipynb-hero-cell`, `.ipynb-transition-card`)
+- ✅ **Removed hardcoded text patterns** - No longer relies on specific content like "Now that you understand"
+- ✅ **Cleaner TOC** - Cells without headings are skipped entirely (no more "Cell X" entries)
+- ✅ **Reduced whitespace** - TOC menu now shows only relevant items with proper dividers
+- ✅ **Full auto-wrap compatibility** - Works seamlessly with pure markdown notebooks using auto-wrapping
+
+**Technical Implementation:**
+- `ipynb-viewer.js` (lines 558-586): Updated TOC extraction to use class-based detection
+  - Hero cells: Detected by `.ipynb-hero-cell` wrapper (previously looked for `h1[style*="font-size: 48px"]`)
+  - Transition cells: Detected by `.ipynb-transition-card` wrapper (previously checked hardcoded text)
+  - Cells without headings: Now skipped with `itemType = 'skip'` (previously showed as "Cell X")
+- Removed hardcoded transition text patterns: "Now that you understand", "Individual tasks are important", etc.
+
+**Benefits:**
+- Works with any auto-wrapped notebook regardless of content
+- No maintenance needed when notebook text changes
+- Consistent with auto-wrapping pattern detection in `detectCellType()`
+- Cleaner, more focused table of contents
+
+**Migration:** Notebooks using manual HTML wrappers should convert to pure markdown with auto-wrapping for best results. See "Auto-Wrapping in Notebook Mode" section below.
+
 ### 2025-01-19 - Hamburger Menu Navigation for Notebook Mode (v5)
 
 **Added Table of Contents Navigation:**
@@ -1258,8 +1442,8 @@ After (pure markdown):
 **Technical Implementation:**
 - `ipynb-viewer.js`: Added hamburger button creation and TOC extraction logic (lines 477-567)
 - `ipynb-viewer.css`: Added styles for `.ipynb-hamburger-menu`, `.ipynb-toc-dropdown`, `.ipynb-toc-item`, `.ipynb-toc-divider`
-- Detects hero cells by h1 with `font-size: 48px`
-- Detects transition cells by centered text without headings
+- Detects hero cells by `.ipynb-hero-cell` class (updated in v8 for auto-wrap compatibility)
+- Detects transition cells by `.ipynb-transition-card` class (updated in v8 for auto-wrap compatibility)
 - Extracts titles from h1, h2, h3 elements for TOC entries
 
 **Visual Structure:**
