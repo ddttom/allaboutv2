@@ -31,8 +31,8 @@ function parseMarkdown(markdown, repoUrl = null) {
 
     // Check if line is a table row
     if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
-      // Skip separator rows (|---|---|)
-      if (/^\|[\s\-:]+\|$/.test(line.trim())) {
+      // Skip separator rows (|---|---|) - must include | in character class
+      if (/^\|[\s\-:|]+\|$/.test(line.trim())) {
         continue;
       }
 

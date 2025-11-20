@@ -71,7 +71,10 @@
       "Bash(python inspect_page.py:*)",
       "Bash(python test_notebook_page.py:*)",
       "Bash(python check_console.py:*)",
-      "Bash(python test_live_page.py:*)"
+      "Bash(python test_live_page.py:*)",
+      "Bash(open:*)",
+      "Bash(ls:*)",
+      "Bash(xargs:*)"
     ],
     "deny": [],
     "ask": []
