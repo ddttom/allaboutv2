@@ -114,6 +114,7 @@ export async function showPreview(blockName, innerHTML = '') {
       .ipynb-preview-container.desktop{width:95%;height:75vh}
       .ipynb-preview-header{background:#1e1e1e;color:#fff;padding:12px 20px;border-radius:8px 8px 0 0;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
       .ipynb-preview-title{font-size:14px;font-weight:500;margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+      .ipynb-preview-left-controls{display:flex;gap:8px;align-items:center}
       .ipynb-preview-controls{display:flex;gap:8px;align-items:center}
       .ipynb-preview-btn{background:#2d2d2d;border:1px solid #3e3e3e;color:#fff;padding:6px 12px;border-radius:4px;cursor:pointer;font-size:12px;transition:all .2s;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
       .ipynb-preview-btn:hover{background:#3e3e3e}
@@ -130,6 +131,9 @@ export async function showPreview(blockName, innerHTML = '') {
     </style>
     <div class="ipynb-preview-container desktop">
       <div class="ipynb-preview-header">
+        <div class="ipynb-preview-left-controls">
+          <button class="ipynb-preview-btn ipynb-home-btn" title="Go to cell 0">🏠</button>
+        </div>
         <div class="ipynb-preview-title">${blockName} Block Preview</div>
         <div class="ipynb-preview-controls">
           ${controlsHTML}
@@ -148,6 +152,7 @@ export async function showPreview(blockName, innerHTML = '') {
   const container = overlay.querySelector('.ipynb-preview-container');
   const viewBtns = overlay.querySelectorAll('.ipynb-view-btn');
   const closeBtn = overlay.querySelector('.ipynb-close-btn');
+  const homeBtn = overlay.querySelector('.ipynb-home-btn');
 
   // Handle view switching (only if not in notebook mode)
   if (!isNotebookMode) {
@@ -173,6 +178,26 @@ export async function showPreview(blockName, innerHTML = '') {
     e.stopPropagation();
     cleanupAndClose();
   });
+
+  // Handle home button - navigate to cell 0 if in notebook mode
+  if (homeBtn && isNotebookMode) {
+    homeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      // Find the paged overlay which contains the navigateToAnchor function
+      const pagedOverlay = document.querySelector('.ipynb-paged-overlay');
+      if (pagedOverlay) {
+        // Look for links in the paged overlay's content area that point to cell-0
+        const cellContentArea = pagedOverlay.querySelector('.ipynb-paged-cell-content-area');
+        if (cellContentArea) {
+          const homeLinks = cellContentArea.querySelectorAll('a[href="#cell-0"]');
+          if (homeLinks.length > 0) {
+            // Trigger click on the first home link found
+            homeLinks[0].click();
+          }
+        }
+      }
+    });
+  }
 
   // ESC key handler attached to document for global capture
   const handleEscape = (e) => {
