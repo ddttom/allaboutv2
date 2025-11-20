@@ -359,11 +359,11 @@ html {
   color: var(--ipynb-card-text-dark);
 }
 
-/* Action Cards - styled list of links with emoji indicators */
+/* Action Cards - styled list of links with arrow indicators */
 .ipynb-action-cards {
   list-style: none;
   padding: 0;
-  margin: 16px 0 0 0;
+  margin: 8px 0 0 0;
   display: flex;
   flex-direction: column;
   gap: 12px;
