@@ -343,6 +343,61 @@
                     "**/test-*.ipynb"
                 ]
             }
+        },
+        "ipynb-validator": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "Validate Jupyter notebooks for production readiness. Checks smart links consistency, layout structure, transition cells with action cards, numbered part flow, cell ordering, and overall quality. Use when validating notebooks, checking structure, testing smart links, verifying action cards, or preparing for production.",
+            "promptTriggers": {
+                "keywords": [
+                    "validate notebook",
+                    "check notebook",
+                    "verify notebook",
+                    "notebook validation",
+                    "ipynb validation",
+                    "production ready",
+                    "production readiness",
+                    "smart links",
+                    "check smart links",
+                    "verify smart links",
+                    "broken links",
+                    "action cards",
+                    "transitions",
+                    "transition cells",
+                    "part flow",
+                    "section flow",
+                    "cell ordering",
+                    "notebook structure",
+                    "layout structure",
+                    "notebook quality",
+                    "ready for prod",
+                    "deploy notebook",
+                    "notebook report",
+                    "investigate ipynb",
+                    "analyze notebook",
+                    "check ipynb"
+                ],
+                "intentPatterns": [
+                    "(validate|check|verify|test).*?notebook",
+                    "(validate|check|verify).*?ipynb",
+                    "notebook.*?(valid|production|ready|quality|structure)",
+                    "(check|verify|test).*?(smart link|action card|transition)",
+                    "(investigate|analyze|inspect).*?(notebook|ipynb)",
+                    "production.*?(ready|readiness|deployment).*?notebook",
+                    "(broken|missing|verify).*?link",
+                    "(part|section).*?flow",
+                    "notebook.*?(issue|problem|error)"
+                ]
+            },
+            "fileTriggers": {
+                "pathPatterns": [
+                    "**/*.ipynb"
+                ],
+                "pathExclusions": [
+                    "**/.ipynb_checkpoints/**"
+                ]
+            }
         }
     },
     "notes": {
