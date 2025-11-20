@@ -727,6 +727,198 @@ External resources:
 [GitHub Repository](https://github.com/user/repo)
 ```
 
+## Cell Ordering Best Practices
+
+**CRITICAL:** Proper cell ordering creates smooth learning progression and prevents confusion.
+
+### Correct Structure Pattern for Educational Notebooks
+
+```
+Header Cell (Cell 0)
+  → Title with hook
+  → "What is this?"
+  → Table of Contents
+
+Introduction Section
+  → Learning objectives
+  → Prerequisites
+  → What you'll build
+
+Part 1: Foundation
+  → Concept explanation (markdown)
+  → Code demonstration
+  → "What just happened?" (markdown)
+  → Practice exercise (optional)
+
+Part 2: Building
+  → Next concept (markdown)
+  → Code demonstration
+  → Explanation (markdown)
+  → Practice exercise (optional)
+
+Part 3-N: Progressive Complexity
+  → Continue pattern above
+  → Build on previous concepts
+
+Summary Section
+  → Recap key points
+  → Next steps
+  → Additional resources
+  → Call-to-action
+```
+
+### Common Cell Ordering Mistakes
+
+❌ **WRONG:** Code before explanation
+```markdown
+Cell 5: [CODE] Complex implementation
+Cell 6: [MARKDOWN] What this code does ← Explanation comes too late
+```
+
+✅ **CORRECT:** Explain, then demonstrate
+```markdown
+Cell 5: [MARKDOWN] We'll use map() to transform arrays
+Cell 6: [CODE] const doubled = [1,2,3].map(x => x * 2);
+Cell 7: [MARKDOWN] Notice how map() returns a new array
+```
+
+❌ **WRONG:** Advanced before basics
+```markdown
+Cell 3: [CODE] Advanced async/await patterns
+Cell 10: [CODE] Basic Promise syntax ← Should come first
+```
+
+✅ **CORRECT:** Progressive complexity
+```markdown
+Cell 3: [CODE] Basic Promise syntax
+Cell 5: [CODE] Promise.then() chains
+Cell 8: [CODE] async/await patterns
+```
+
+❌ **WRONG:** Summary in the middle
+```markdown
+Cell 15: Summary of Part 1
+Cell 16: More Part 1 content ← Out of order
+Cell 17: Part 2 starts
+```
+
+✅ **CORRECT:** Summary at end of section
+```markdown
+Cell 15: Last Part 1 content
+Cell 16: Summary of Part 1 ← Proper ending
+Cell 17: Part 2 transition
+Cell 18: Part 2 starts
+```
+
+### Tutorial-Specific Ordering
+
+For step-by-step tutorials:
+
+```
+Setup Section
+  → Installation instructions
+  → Environment setup
+  → Verification
+
+Lesson 1
+  → Concept introduction
+  → Step 1: Basic example
+  → Step 2: Add complexity
+  → Step 3: Complete example
+  → Lesson 1 recap
+
+Lesson 2
+  → Build on Lesson 1
+  → Follow same pattern
+
+Practice Section
+  → Exercises
+  → Solutions (separate cells)
+
+Conclusion
+  → What you've learned
+  → Projects to try
+  → Resources
+```
+
+### Reference Guide Ordering
+
+For API/function documentation:
+
+```
+Introduction
+  → Overview
+  → Quick reference table
+
+Function Group 1
+  → Function 1 description
+  → Function 1 code example
+  → Function 2 description
+  → Function 2 code example
+
+Function Group 2
+  → Continue pattern
+
+Common Patterns
+  → Real-world examples
+  → Best practices
+
+Summary
+  → When to use what
+  → Links to related docs
+```
+
+### Validation Before Publishing
+
+Check learning progression:
+1. ✅ Concepts build logically (simple → complex)
+2. ✅ Each code cell has preceding explanation
+3. ✅ "What just happened?" follows demonstrations
+4. ✅ Exercises come after relevant concepts
+5. ✅ Summary at end of each major section
+6. ✅ No orphaned or out-of-sequence cells
+
+Test the learning flow:
+```python
+# Ask yourself:
+# - Can a beginner follow this order?
+# - Does each cell build on previous knowledge?
+# - Are there any jumps in complexity?
+# - Is the pacing appropriate?
+```
+
+### Navigation Notebooks (Advanced)
+
+For comprehensive multi-part educational systems:
+
+```
+Introduction
+  → Hero with navigation
+  → Overview
+  → How to use this guide
+
+Part 1-N: Main Content
+  → Each part follows educational pattern above
+  → Part summaries after content
+
+Reference Section (END of notebook)
+  → Resources & Quick Reference
+  → Essential Bookmarks
+  → Troubleshooting
+  → Additional Learning
+
+Final Wrap-Up
+  → Congratulations message
+  → What you've accomplished
+  → Next steps
+```
+
+**Key principle:** Keep learners in the flow. Reference materials at the end prevent interruption of the learning journey.
+
+See [docs/for-ai/templates/ipynb/README.md](../templates/ipynb/README.md) for comprehensive cell ordering guidelines and validation checks.
+
+---
+
 ## Display and Deployment
 
 ### Adding to EDS Pages

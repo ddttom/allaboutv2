@@ -186,6 +186,147 @@ This directory contains templates for creating different types of Jupyter notebo
 
 ---
 
+## Cell Ordering Best Practices
+
+**CRITICAL:** Proper cell ordering is essential for navigation notebooks. Following these patterns ensures logical flow and prevents user confusion.
+
+### Correct Structure Pattern
+
+```
+Introduction Section (Cells 0-N)
+  → Hero cell with main navigation
+  → Table of Contents
+  → Emergency navigation
+  → Essential bookmarks
+
+Part 1 Section
+  → Part 1 content cells
+  → Part 1 completion/summary cell
+
+Part 2 Transition Cell (with action cards)
+  → Part 2 start cell
+  → Part 2 content cells
+  → Part 2 completion/summary cell
+
+Part 3 Transition Cell
+  → Part 3 start cell
+  → Part 3 content cells
+  → Part 3 completion/summary cell
+
+...continue for all parts...
+
+Reference Section (End of notebook)
+  → Resources & Quick Reference
+  → Essential Bookmarks
+  → Your Next Steps
+  → Troubleshooting Navigation Issues
+
+Final Wrap-Up
+  → "Remember - Living Documentation" reflection
+  → End/Closing cell
+```
+
+### Common Cell Ordering Mistakes
+
+❌ **WRONG:** Completion cell BEFORE part content
+```
+Part 8 Completion Cell (index 69)
+Part 8 START Cell (index 70)
+Part 8 Content...
+```
+
+✅ **CORRECT:** Completion cell AFTER all part content
+```
+Part 8 START Cell (index 63)
+Part 8 Content Cells (indices 64-71)
+Part 8 Completion Cell (index 72)
+```
+
+❌ **WRONG:** Reference cells BETWEEN parts
+```
+Part 6 Completion
+Resources & Quick Reference ← Interrupts flow
+Essential Bookmarks ← Interrupts flow
+Part 7 Transition
+```
+
+✅ **CORRECT:** Reference cells at END of notebook
+```
+Part 6 Completion
+Part 7 Transition (immediately adjacent)
+Part 7 Content...
+Part 8 Content...
+Part 8 Completion
+Resources & Quick Reference ← At end
+Essential Bookmarks ← At end
+Final Wrap-Up
+```
+
+❌ **WRONG:** Technical detail cells orphaned outside their section
+```
+Part 7 Content
+Code Examples ← Orphaned
+CSS Classes ← Orphaned
+Auto-Wrapping Detection ← Orphaned
+Part 8 START
+```
+
+✅ **CORRECT:** Technical cells within their parent section
+```
+Part 8 START
+Performance Stats
+Code Examples ← Inside Part 8
+CSS Classes ← Inside Part 8
+Auto-Wrapping Detection ← Inside Part 8
+Try It Yourself
+Part 8 Completion
+```
+
+### Validation Checks
+
+Before deploying, verify:
+
+```python
+# Check 1: Parts are adjacent (no gaps)
+part_6_completion_idx + 1 == part_7_transition_idx  # Must be true
+
+# Check 2: Completion after content
+part_8_start_idx < part_8_completion_idx  # Must be true
+
+# Check 3: Reference section at end
+part_8_completion_idx < reference_section_idx < final_wrap_idx  # Must be true
+
+# Check 4: Technical cells within section
+part_8_start_idx < technical_cell_idx < part_8_completion_idx  # Must be true
+```
+
+### Automatic Validation
+
+Use the validation command to check structure:
+
+```bash
+/validate-notebook your-notebook.ipynb
+```
+
+This checks:
+- ✅ Cell ordering and adjacency
+- ✅ Completion cell placement
+- ✅ Reference cell location
+- ✅ Technical cell containment
+- ✅ Part flow and gaps
+
+### Real-World Example
+
+See [docs-navigation.ipynb](../../../../docs-navigation.ipynb) for perfect cell ordering:
+- 75 cells total
+- 8 parts sequentially numbered
+- All completions after content
+- Reference section at end (indices 69-72)
+- No gaps between parts
+- All technical cells within Part 8
+
+---
+
 ## Closing Cell Pattern
 
 **Best Practice:** Every navigation notebook should end with a proper closing cell that:
@@ -427,4 +568,53 @@ Use the jupyter-educational-notebook skill to create a tutorial about [topic]
 
 ---
 
-**Last Updated:** 2025-01-20
+---
+
+## Important Notes
+
+### Cell Ordering in Templates
+
+All templates follow best practices for cell ordering:
+
+✅ **navigation-template.ipynb**
+- 31 cells with proper structure
+- All parts flow sequentially
+- Reference/utility cells at end (before final wrap-up)
+- Follows all validation rules
+
+✅ **educational-template.ipynb**
+- Progressive learning structure
+- Exercises after concepts
+- Summary at end
+
+✅ **presentation-template.ipynb**
+- Visual consistency throughout
+- Logical slide flow
+- Closing slide at end
+
+### Before Using a Template
+
+1. **Copy the template** to your working location
+2. **Customize metadata** (title, description, author, etc.)
+3. **Update placeholder text** with your actual content
+4. **Validate structure** using `/validate-notebook` command
+5. **Test in ipynb-viewer** block to ensure proper rendering
+
+### After Customizing
+
+Run validation to ensure structure integrity:
+
+```bash
+/validate-notebook your-customized-notebook.ipynb
+```
+
+Expected output for proper structure:
+- Overall Score: ≥ 90/100
+- All smart links resolve
+- Cell ordering correct
+- Parts flow sequentially
+- No structural gaps
+
+---
+
+**Last Updated:** 2025-01-20 (Added cell ordering best practices section)

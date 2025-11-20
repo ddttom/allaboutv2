@@ -727,6 +727,114 @@ All blocks from the EDS system work in presentation notebooks:
 </div>
 ```
 
+## Cell Ordering Best Practices
+
+**CRITICAL:** Proper cell ordering ensures smooth navigation and professional presentation flow.
+
+### Correct Structure Pattern
+
+```
+Cell 0: Hero Header
+  → Title with gradient background
+  → Compelling subtitle
+
+Cell 1: Overview/What You'll Learn
+  → Key takeaways
+  → Sets expectations
+
+Cell 2: Table of Contents (optional for < 10 cells)
+  → Navigation links
+
+Cells 3-N: Content Sections
+  → One topic per cell
+  → Consistent styling
+  → Mix of content and EDS blocks
+
+Final Cell: Conclusion/Call to Action
+  → Summary
+  → Next steps
+  → Contact info
+```
+
+### Common Cell Ordering Mistakes
+
+❌ **WRONG:** Multiple topics in one cell
+```markdown
+Cell 3: Features + Pricing + Demo
+<!-- Too much content in one cell -->
+```
+
+✅ **CORRECT:** One topic per cell
+```markdown
+Cell 3: Features (with cards block)
+Cell 4: Pricing (with table block)
+Cell 5: Demo (with video or accordion)
+```
+
+❌ **WRONG:** Conclusion in the middle
+```markdown
+Cell 5: Conclusion
+Cell 6: Additional Features  ← Out of place
+Cell 7: Contact
+```
+
+✅ **CORRECT:** Conclusion at end
+```markdown
+Cell 5: Additional Features
+Cell 6: Advanced Topics
+Cell 7: Conclusion + Call to Action
+```
+
+### Validation Before Deployment
+
+Check presentation flow:
+1. ✅ Hero header is first cell
+2. ✅ One clear topic per cell
+3. ✅ Logical progression (simple → complex)
+4. ✅ Conclusion/CTA is last content cell
+5. ✅ No orphaned or misplaced cells
+
+Test in paged mode:
+```bash
+# Navigate through all cells
+# Verify smooth transitions
+# Check that Previous/Next makes sense
+```
+
+### Navigation Presentations
+
+For multi-section documentation presentations with parts:
+
+```
+Introduction Cells (0-N)
+  → Hero with action cards
+  → Overview
+  → Emergency reference
+
+Part 1 Section
+  → Part 1 content cells
+  → Part 1 summary (optional)
+
+Part 2 Section
+  → Part 2 content cells
+  → Part 2 summary (optional)
+
+Reference Section (End)
+  → Resources
+  → Troubleshooting
+  → Contact
+
+Final Cell
+  → Thank you
+  → Next steps
+```
+
+**Key principle:** Reference materials belong at the END, not between parts.
+
+See [docs/for-ai/templates/ipynb/README.md](../templates/ipynb/README.md) for comprehensive cell ordering guidelines.
+
+---
+
 ## Notebook Structure
 
 ### Required Metadata
