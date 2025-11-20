@@ -559,14 +559,13 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       if (cell.classList.contains('ipynb-markdown-cell')) {
         const content = cell.querySelector('.ipynb-cell-content');
         if (content) {
-          // Check if this is a transition cell (centered text, no heading)
-          const isTransition = content.textContent.includes('Now that you understand') ||
-                              content.textContent.includes('Individual tasks are important') ||
-                              content.textContent.includes('Understanding workflows helps') ||
-                              (content.querySelector('div[style*="text-align: center"]') && !content.querySelector('h1, h2, h3'));
+          // Check if this is a hero cell (auto-wrapped with ipynb-hero-cell class)
+          const heroDiv = content.querySelector('.ipynb-hero-cell');
+          const isHero = heroDiv !== null;
 
-          // Check if this is a hero cell (large title cell at the beginning)
-          const isHero = content.querySelector('h1[style*="font-size: 48px"]') !== null;
+          // Check if this is a transition cell (auto-wrapped with ipynb-transition-card class)
+          const transitionDiv = content.querySelector('.ipynb-transition-card');
+          const isTransition = transitionDiv !== null;
 
           if (isHero) {
             itemType = 'skip'; // Don't show hero in TOC at all
@@ -578,14 +577,12 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
             if (heading) {
               title = heading.textContent.trim();
               itemType = 'content';
+            } else {
+              // Skip cells without headings (don't add them to TOC)
+              itemType = 'skip';
             }
           }
         }
-      }
-
-      // For code cells or cells without headings, use cell number
-      if (!title && itemType === 'content') {
-        title = `Cell ${index + 1}`;
       }
 
       // Add to TOC based on type
