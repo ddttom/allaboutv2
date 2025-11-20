@@ -65,7 +65,13 @@
       "Skill(eds-performance-debugging)",
       "Skill(frontend-dev-guidelines)",
       "Skill(create-presentation)",
-      "Bash(npx stylelint:*)"
+      "Bash(npx stylelint:*)",
+      "Bash(curl:*)",
+      "Bash(python debug_notebook.py:*)",
+      "Bash(python inspect_page.py:*)",
+      "Bash(python test_notebook_page.py:*)",
+      "Bash(python check_console.py:*)",
+      "Bash(python test_live_page.py:*)"
     ],
     "deny": [],
     "ask": []

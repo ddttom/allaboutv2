@@ -148,6 +148,37 @@ function parseMarkdown(markdown, repoUrl = null) {
 
   html = processedWithLists.join('\n');
 
+  // Blockquotes - process line by line (must match raw > character, not &gt;)
+  const linesWithBlockquotes = html.split('\n');
+  const processedWithBlockquotes = [];
+  let inBlockquote = false;
+
+  for (const line of linesWithBlockquotes) {
+    // Match lines starting with > (raw character, before any HTML encoding)
+    const blockquoteMatch = line.match(/^>\s?(.*)$/);
+
+    if (blockquoteMatch) {
+      if (!inBlockquote) {
+        processedWithBlockquotes.push('<blockquote>');
+        inBlockquote = true;
+      }
+      // Add the line content (without the > prefix)
+      processedWithBlockquotes.push(blockquoteMatch[1]);
+    } else {
+      // Close blockquote if we were in one
+      if (inBlockquote) {
+        processedWithBlockquotes.push('</blockquote>');
+        inBlockquote = false;
+      }
+      processedWithBlockquotes.push(line);
+    }
+  }
+
+  // Close any remaining open blockquote
+  if (inBlockquote) processedWithBlockquotes.push('</blockquote>');
+
+  html = processedWithBlockquotes.join('\n');
+
   // Restore code blocks
   codeBlockPlaceholders.forEach((codeBlock, index) => {
     html = html.replace(`__CODEBLOCK_${index}__`, codeBlock);
@@ -624,6 +655,22 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   // Close button is now always visible (notebook mode fix)
   // Previously hidden in notebook mode, now always shown for better UX
 
+  // Home button (notebook mode only) - Navigate to cell 0
+  let homeButton;
+  if (isNotebookMode) {
+    homeButton = document.createElement('button');
+    homeButton.className = 'ipynb-home-button';
+    homeButton.innerHTML = '🏠';
+    homeButton.setAttribute('aria-label', 'Go to first cell');
+    homeButton.setAttribute('title', 'Go to first cell');
+
+    // Add click handler to navigate to first page (which contains cell 0)
+    homeButton.addEventListener('click', () => {
+      paginationState.currentPage = 0;
+      updatePageDisplay();
+    });
+  }
+
   // Hamburger menu (notebook mode only) - Table of Contents
   let hamburgerButton, tocDropdown;
   if (isNotebookMode) {
@@ -752,6 +799,9 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   cellContentArea.className = 'ipynb-paged-cell-area';
 
   // Assemble overlay
+  if (isNotebookMode && homeButton) {
+    overlayContent.appendChild(homeButton);
+  }
   overlayContent.appendChild(closeButton);
   if (isNotebookMode) {
     overlayContent.appendChild(hamburgerButton);
