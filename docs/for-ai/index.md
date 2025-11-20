@@ -20,6 +20,11 @@ This index provides structured access to all documentation within the `docs/for-
   - Blog posts, tutorials, reference guides, demos
   - Use `/create-notebook` command for guided creation
   - Perfect for sharing knowledge and onboarding
+- **[`../NOTEBOOK-VALIDATION.md`](../NOTEBOOK-VALIDATION.md)** - **Validate notebooks for production**
+  - Comprehensive validation tool checking smart links, structure, transitions
+  - Use `/validate-notebook` command for quality checks
+  - Scoring system (88-100 = production ready)
+  - Best practices and common fixes
 
 ### Essential Starting Points
 - **New to EDS?** → Start with [`getting-started-guide.md`](getting-started-guide.md) then [`eds.md`](eds.md)

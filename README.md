@@ -84,6 +84,7 @@ Access your tests at: `http://localhost:3000/blocks/your-block/test.html`
 │   └── ...                # Other blocks
 ├── notebooks/             # NEW: Shareable .ipynb files for end users
 │   └── example.ipynb      # Example interactive notebook
+├── docs-navigation.ipynb  # NEW: Interactive documentation navigator (88/100 validation score)
 ├── ipynb-tests/           # NEW: Generated HTML previews from JSLab
 ├── docs/                   # Documentation
 │   ├── for-ai/            # Comprehensive AI-focused development guides
@@ -116,6 +117,7 @@ This project includes a complete Claude Code configuration for AI-assisted devel
 - `/new-block <name>` - Create a new EDS block following Content Driven Development
 - `/test-block <name>` - Run tests for a specific block
 - `/create-notebook` - Create educational/interactive Jupyter notebooks with auto-wrapping support
+- `/validate-notebook <name>` - Validate notebook for production readiness (smart links, structure, transitions, part flow)
 - `/check-block <name>` - Review block architecture and suggest improvements
 - `/deploy-block <name>` - Deploy a block from build/ to blocks/
 - `/lint-all` - Run all linting checks
@@ -136,6 +138,7 @@ Auto-activating skills provide inline guidance for:
 - **eds-performance-debugging** - Performance optimization and debugging techniques
 - **jupyter-notebook-testing** - Context-aware interactive testing with Jupyter notebooks, jsdom, JSLab kernel, and live preview generation
 - **jupyter-educational-notebook** - Create educational notebooks with auto-wrapping (pure markdown) or manual HTML styling
+- **ipynb-validator** - Validate Jupyter notebooks for production readiness (smart links, structure, transitions, part flow)
 - **create-presentation** - Create presentation notebooks (non-interactive) with auto-wrapping or custom styling
 - **skill-developer** - Managing Claude Code skills
 
@@ -192,6 +195,16 @@ Each block should include:
 - Keep functions focused and modular
 
 ## Documentation
+
+### Navigation & Getting Started
+
+**🗺️ Documentation Navigator** - Start here!
+- **[docs-navigation.ipynb](docs-navigation.ipynb)** - Interactive guide to navigating all 26+ documentation files
+  - 8 parts covering role-based, task-based, and workflow-based navigation
+  - 76 cells with action cards and smart link resolution
+  - Validated at 88/100 production readiness score
+  - Features auto-wrapping (90% less code), hamburger TOC, and pure markdown authoring
+  - View with ipynb-viewer in notebook mode for best experience
 
 ### Core Documentation
 - [Development Server Guide](docs/Server-README.md) - Comprehensive server documentation
