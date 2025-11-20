@@ -17,6 +17,7 @@ Display and execute Jupyter notebook (.ipynb) files directly in your EDS site wi
 **Hamburger Menu TOC**: Navigate cells via dropdown menu in notebook mode with visual dividers, smart filtering (NEW).
 **Link Navigation**: Navigate between overlays using hash targets (NEW).
 **Auto-Wrapping**: Pure markdown authoring with automatic styling in notebook mode - 90% less code (NEW).
+**Action Cards**: Beautiful navigation cards from pure markdown with emoji color indicators (NEW).
 **Responsive Design**: Mobile-friendly layout.
 **Syntax Highlighting**: Clear code formatting with monospace fonts.
 **Error Handling**: Graceful error messages and visual indicators.
@@ -1152,6 +1153,108 @@ For easier customization, consider using CSS variables:
 }
 ```
 
+### Action Cards (NEW)
+
+Action cards provide a beautiful, interactive way to display navigation links in any markdown cell. Use pure markdown with a special HTML comment marker to automatically style a list of links as colored action cards.
+
+**Usage Examples:**
+
+In a hero cell:
+```markdown
+# 🗺️ Documentation Navigator
+
+Lost in documentation? Not anymore! This interactive guide helps you navigate comprehensive documentation like a pro.
+
+<!-- action-cards -->
+
+- 🔵 [Getting Started](#cell-0-intro)
+- 🟢 [Navigation Strategies](#cell-5)
+- 🟠 [Best Practices](#cell-30-pro-tips)
+```
+
+In a content cell:
+```markdown
+### 📚 Quick Links
+
+<!-- action-cards -->
+
+- 🔵 [View Source Code](https://github.com/...)
+- 🟢 [Run Live Demo](#cell-demo)
+- 🟠 [Read API Docs](#cell-api)
+```
+
+**How It Works:**
+
+1. Add an HTML comment `<!-- action-cards -->` in your markdown cell
+2. Follow it with a markdown list of links
+3. Prefix each list item with a colored circle emoji:
+   - 🔵 for blue cards
+   - 🟢 for green cards
+   - 🟠 for orange cards
+4. The viewer automatically transforms the list into styled action cards
+
+**Features:**
+
+- ✅ **Pure markdown** - No manual HTML required
+- ✅ **Works in any cell type** - Hero cells, content cells, intro cells, transition cells
+- ✅ **Colored backgrounds** - Emoji determines card color (blue, green, orange)
+- ✅ **Hover effects** - Cards lift up and arrow slides right on hover
+- ✅ **Auto-styled links** - Links become full-width interactive elements
+- ✅ **Right arrows** - Automatically added arrow (→) on the right side
+- ✅ **In-notebook navigation** - Links work with hash anchors (`#cell-id`)
+
+**CSS Classes:**
+
+Action card styling is controlled by these CSS classes in `ipynb-viewer.css`:
+
+```css
+/* Action Cards Container */
+.ipynb-action-cards {
+  list-style: none;
+  padding: 0;
+  margin: 24px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Individual Action Card */
+.ipynb-action-card {
+  background: white;
+  border-radius: 8px;
+  padding: 16px 20px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Color Variants */
+.ipynb-action-card-blue {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border-left: 4px solid #2196f3;
+}
+
+.ipynb-action-card-green {
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  border-left: 4px solid #4caf50;
+}
+
+.ipynb-action-card-orange {
+  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+  border-left: 4px solid #ff9800;
+}
+```
+
+**Customization:**
+
+You can customize action card appearance by modifying the CSS classes above. Common customizations:
+- Change gradient colors in the background property
+- Adjust border-left color and width
+- Modify padding, gap, and border-radius
+- Customize hover effects (transform, box-shadow)
+- Change arrow style in `.ipynb-action-card a::after`
+
+**Note:** Action cards work in all display modes (default, paged, autorun, notebook), in any cell type (hero, intro, content, transition), and complement the auto-wrapping system perfectly.
+
 ### Header Styles
 
 The header section includes CSS classes for metadata display:
@@ -1403,6 +1506,48 @@ After (pure markdown):
 - Maintainable - change styles in one place
 
 **See:** [docs-navigation.ipynb](../../docs-navigation.ipynb) for complete implementation example
+
+### 2025-01-20 - Action Cards for Pure Markdown Navigation (v9)
+
+**Added Action Card Feature:**
+- ✅ **Pure markdown action cards** - Convert lists to styled navigation cards with HTML comment marker (`<!-- action-cards -->`)
+- ✅ **Emoji color indicators** - Automatically apply blue (🔵), green (🟢), or orange (🟠) styling based on emoji prefix
+- ✅ **Interactive hover effects** - Cards lift up and arrows slide right on hover
+- ✅ **Auto-styled arrows** - Right-pointing arrows (→) automatically added to all action card links
+- ✅ **In-notebook navigation** - Works seamlessly with hash anchor links (`#cell-id`)
+- ✅ **All display modes** - Compatible with default, paged, autorun, and notebook modes
+
+**Technical Implementation:**
+- `ipynb-viewer.js` (lines 238-240): Added action card detection in `createMarkdownCell()` after rendering HTML
+- `ipynb-viewer.js` (lines 210-238): New `styleActionCards()` function detects marker and applies styling
+  - Finds `<!-- action-cards -->` comment in rendered HTML
+  - Locates following `<ul>` element
+  - Adds `.ipynb-action-cards` class to container
+  - Adds `.ipynb-action-card` class to each list item
+  - Detects emoji prefix to apply color variant classes (`.ipynb-action-card-blue`, etc.)
+- `ipynb-viewer.css` (lines 332-389): New CSS classes for action card styling
+  - Container styling with flexbox layout and gap spacing
+  - Card styling with gradients, borders, shadows, and hover effects
+  - Three color variants (blue, green, orange) with matching gradients and border colors
+  - Auto-generated arrows with smooth slide animation on hover
+
+**Benefits:**
+- Write pure markdown, no manual HTML required
+- Beautiful visual navigation without complexity
+- Consistent styling across all notebooks
+- Easy color customization through CSS
+- Gracefully degrades (links work without JavaScript)
+
+**Usage Example:**
+```markdown
+# Hero Title
+
+<!-- action-cards -->
+
+- 🔵 [Getting Started](#cell-1)
+- 🟢 [Features](#cell-5)
+- 🟠 [Advanced Topics](#cell-10)
+```
 
 ### 2025-01-20 - Auto-Wrapping Pattern Detection Updates (v8)
 

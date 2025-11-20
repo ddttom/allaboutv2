@@ -208,6 +208,36 @@ function wrapMarkdownContent(html, cellType) {
 }
 
 /**
+ * Style action cards in a cell content element
+ * Detects <!-- action-cards --> marker and transforms following list into styled cards
+ * @param {HTMLElement} contentElement - Cell content element
+ */
+function styleActionCards(contentElement) {
+  // Find the ul element that follows the action-cards comment
+  const ul = contentElement.querySelector('ul');
+  if (!ul) return;
+
+  // Add container class to the ul
+  ul.classList.add('ipynb-action-cards');
+
+  // Style each list item as an action card
+  const items = ul.querySelectorAll('li');
+  items.forEach((li) => {
+    li.classList.add('ipynb-action-card');
+
+    // Extract emoji to determine color class
+    const text = li.textContent.trim();
+    if (text.startsWith('🔵')) {
+      li.classList.add('ipynb-action-card-blue');
+    } else if (text.startsWith('🟢')) {
+      li.classList.add('ipynb-action-card-green');
+    } else if (text.startsWith('🟠')) {
+      li.classList.add('ipynb-action-card-orange');
+    }
+  });
+}
+
+/**
  * Create a markdown cell element
  * @param {object} cell - Notebook cell data
  * @param {number} index - Cell index
@@ -234,6 +264,11 @@ function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false) {
   }
 
   content.innerHTML = html;
+
+  // Detect and style action cards if marker comment is present
+  if (html.includes('<!-- action-cards -->')) {
+    styleActionCards(content);
+  }
 
   cellDiv.appendChild(content);
   return cellDiv;
