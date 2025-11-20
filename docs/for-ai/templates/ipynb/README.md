@@ -100,6 +100,82 @@ This directory contains templates for creating different types of Jupyter notebo
 
 ---
 
+### 4. [navigation-template.ipynb](navigation-template.ipynb)
+
+**Purpose:** Create comprehensive navigation notebooks for complex documentation systems using multi-paradigm navigation.
+
+**Features:**
+- ✅ Multi-paradigm navigation (role + task + workflow + category)
+- ✅ Progressive disclosure with part summaries
+- ✅ Emergency navigation for urgent problems
+- ✅ Search keywords guide
+- ✅ Action cards for non-linear exploration
+- ✅ Progress indicators and reading time estimates
+- ✅ Icon legend for visual clarity
+- ✅ Troubleshooting section
+- ✅ Universal patterns for applying to other projects
+
+**Use When:**
+- Documenting complex systems (20+ documents)
+- Creating navigation for multiple audiences (4+ roles)
+- Building documentation hubs
+- Creating learning path systems
+- Organizing large documentation sets
+- Teaching documentation architecture patterns
+
+**Structure:**
+- Hero cell with main action cards
+- Table of Contents with time estimates
+- Emergency navigation (quick fixes)
+- Essential bookmarks highlight
+- Search keywords guide
+- Icon legend
+- Part 1: Overview (documentation ecosystem)
+- Part 2: By Role (role-based learning paths)
+- Part 3: By Task (task-based guides)
+- Part 4: By Workflow (development phases)
+- Part 5: By Category (browse all docs)
+- Part 6: Pro Tips (expert navigation strategies)
+- Part 7: Universal Patterns (apply anywhere)
+- Troubleshooting section
+- Final reflection (living documentation principles)
+
+**Navigation Paradigms:**
+1. **Role-Based** - "I'm a [Developer/Architect/PM/etc.]"
+2. **Task-Based** - "I need to build/test/deploy X"
+3. **Workflow-Based** - "I'm in the [planning/development/testing] phase"
+4. **Category-Based** - "Browse all [implementation/testing/guidelines] docs"
+
+**Living Documentation Principles:**
+- Executable truth (validated links and structure)
+- Self-verification (action cards validate headings exist)
+- Multi-audience design (6+ distinct roles)
+- Multi-modal navigation (4 ways to find information)
+
+**When NOT to Use:**
+- Simple documentation (< 10 documents)
+- Single-audience documentation
+- Linear learning paths
+- Quick reference guides
+
+**See Also:**
+- [docs-navigation.ipynb](../../../../docs-navigation.ipynb) - Real-world example (65 cells, 26 docs)
+- [docs/for-ai/document-relationship-mapping.md](../../document-relationship-mapping.md) - Cross-reference strategy
+- [docs/for-ai/navigation-flows.md](../../navigation-flows.md) - Decision trees
+- [docs/for-ai/explaining-educational-notebooks.md](../../explaining-educational-notebooks.md) - Notebook creation guide
+
+**How to Adapt:**
+1. Define your documentation domains and categories
+2. Identify 4-6 distinct user roles
+3. Map 5-8 common tasks
+4. Define your workflow phases (typically 4-6)
+5. Customize parts and action cards
+6. Add role-specific learning paths
+7. Create task-specific quick references
+8. Add pro tips relevant to your system
+
+---
+
 ## Action Cards for Navigation
 
 **NEW:** Create beautiful navigation links using action cards with smart linking:
@@ -168,6 +244,9 @@ cp docs/for-ai/templates/ipynb/presentation-template.ipynb my-presentation.ipynb
 # For educational notebooks
 cp docs/for-ai/templates/ipynb/educational-template.ipynb my-tutorial.ipynb
 
+# For documentation navigation
+cp docs/for-ai/templates/ipynb/navigation-template.ipynb my-docs-nav.ipynb
+
 # For unstyled/testing
 cp docs/for-ai/templates/ipynb/unstyled-template.ipynb my-notebook.ipynb
 ```
@@ -230,15 +309,21 @@ Use the jupyter-educational-notebook skill to create a tutorial about [topic]
 
 ## Template Comparison
 
-| Feature | Presentation | Educational | Unstyled |
-|---------|-------------|-------------|----------|
-| **Custom Styling** | ✅ Full | ❌ None | ❌ None |
-| **Executable Code** | ❌ No | ✅ Yes | ✅ Yes |
-| **EDS Blocks** | ✅ Yes | ⚠️ Optional | ⚠️ Optional |
-| **Visual Consistency** | ✅ Required | ⚠️ Optional | ❌ Not needed |
-| **Exercises** | ❌ No | ✅ Yes | ⚠️ Optional |
-| **Best For** | Demos, showcases | Tutorials, courses | Testing, prototyping |
-| **Audience** | Clients, stakeholders | Learners, students | Developers |
+| Feature | Presentation | Educational | Navigation | Unstyled |
+|---------|-------------|-------------|------------|----------|
+| **Custom Styling** | ✅ Full | ❌ None | ⚠️ Optional | ❌ None |
+| **Executable Code** | ❌ No | ✅ Yes | ❌ No | ✅ Yes |
+| **EDS Blocks** | ✅ Yes | ⚠️ Optional | ⚠️ Optional | ⚠️ Optional |
+| **Visual Consistency** | ✅ Required | ⚠️ Optional | ⚠️ Optional | ❌ Not needed |
+| **Action Cards** | ⚠️ Optional | ⚠️ Optional | ✅ Required | ❌ No |
+| **Multi-Paradigm Nav** | ❌ No | ❌ No | ✅ Yes | ❌ No |
+| **Progress Indicators** | ❌ No | ⚠️ Optional | ✅ Yes | ❌ No |
+| **Part Summaries** | ❌ No | ⚠️ Optional | ✅ Yes | ❌ No |
+| **Exercises** | ❌ No | ✅ Yes | ❌ No | ⚠️ Optional |
+| **Best For** | Demos, showcases | Tutorials, courses | Doc navigation, hubs | Testing, prototyping |
+| **Audience** | Clients, stakeholders | Learners, students | All roles | Developers |
+| **Doc Count** | Any | 1-10 topics | 20+ documents | 1-5 topics |
+| **Complexity** | Medium | Medium | High | Low |
 
 ---
 
