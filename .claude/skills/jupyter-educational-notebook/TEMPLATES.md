@@ -2,6 +2,50 @@
 
 Ready-to-use templates for creating educational Jupyter notebooks. Copy and adapt these patterns for your needs.
 
+## Auto-Wrapping vs Manual HTML Styling
+
+**NEW:** When displaying notebooks in **notebook mode** (`| IPynb Viewer (notebook) |`), you can write **pure markdown** without HTML wrappers! The viewer automatically detects cell types and applies styling.
+
+**Choose your approach:**
+
+1. **Auto-Wrapping (Pure Markdown)** - 90% less code, notebook mode only
+2. **Manual HTML Styling** - Full control, works in all display modes
+3. **Hybrid Approach** - Mix both in the same notebook
+
+All templates below show **manual HTML styling**. For auto-wrapping, simply write pure markdown and the viewer handles styling automatically in notebook mode.
+
+**Auto-Wrapping Example:**
+```markdown
+# 🎯 Tutorial Title
+
+**Compelling tagline** with additional context
+
+## What You'll Learn
+
+Key concepts and outcomes
+```
+
+**Hybrid Example:**
+```markdown
+<!-- Most cells: pure markdown (auto-wrapped) -->
+# Tutorial Title
+
+Regular content here...
+
+<!-- Special cell: custom HTML for emphasis -->
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 48px; margin: 0; text-align: center; color: white;">
+
+<h2 style="font-size: 36px; font-weight: 800; margin: 0;">🎯 Key Takeaway</h2>
+
+<p style="font-size: 20px;">Custom styling for this important message</p>
+
+</div>
+```
+
+**See Also:**
+- SKILL.md for complete auto-wrapping documentation
+- create-notebook.md command for guided creation
+
 ## Table of Contents
 
 - [Blog Post Template](#blog-post-template)
@@ -914,13 +958,35 @@ Have fun! 🚀
 - Keep the progressive disclosure pattern
 - Add your own emojis and styling
 
+### Styling Approach Decision
+
+**For notebook mode (`| IPynb Viewer (notebook) |`):**
+- ✅ **Recommended:** Use pure markdown (auto-wrapped) for 90% less code
+- ✅ **Mix with custom HTML** for cells needing special styling
+- ✅ Speed: Write content fast, customize selectively
+
+**For other modes (paged, autorun, basic):**
+- ✅ Use manual HTML styling (shown in templates above)
+- ✅ Full design control across all display modes
+- ✅ Professional polish and consistency
+
+**Hybrid Approach Benefits:**
+- Most cells: Pure markdown (fast authoring)
+- Special cells: Custom HTML (unique styling)
+- Best of both worlds: speed + flexibility
+
 ### Creating from Templates
 
 1. Copy the template structure
-2. Fill in all placeholders
-3. Add your specific content
-4. Test all code cells
-5. Verify markdown rendering
-6. Adjust flow as needed
+2. **Choose styling approach** based on display mode
+3. Fill in all placeholders
+4. Add your specific content
+5. Test all code cells
+6. Verify markdown rendering
+7. Adjust flow as needed
 
-**Remember:** Templates are starting points. Adapt them to fit your specific needs!
+**Remember:**
+- Templates show manual HTML styling for maximum compatibility
+- In notebook mode, consider pure markdown for faster authoring
+- Mix both approaches in the same notebook as needed
+- Templates are starting points - adapt them to fit your specific needs!

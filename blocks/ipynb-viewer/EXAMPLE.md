@@ -221,6 +221,82 @@ Perfect for interactive tutorials or demos where users might need to reference t
 
 ---
 
+## Example 4b: Notebook with Auto-Wrapping (NEW)
+
+### Google Docs Table
+
+| IPynb Viewer (notebook) |
+|--------------------------|
+| /notebooks/tutorial.ipynb |
+
+### Result
+
+When using the **notebook variation**, you can write **pure markdown** without HTML wrappers! The viewer automatically detects cell types and applies styling.
+
+**Cell Type Detection:**
+- **Hero Cell** - First cell (index 0) with `# ` heading → wrapped with `ipynb-hero-cell`
+- **Intro Cell** - Early cells (index ≤ 2) with `## ` heading → wrapped with `ipynb-content-card` (thick 6px border)
+- **Transition Cell** - Short cells (≤3 lines) without headers → wrapped with `ipynb-transition-card`
+- **Content Cell** - All other cells → wrapped with `ipynb-content-card-thin` (thin 4px border)
+
+**Example Notebook Content:**
+
+```markdown
+# 🎯 Tutorial Title
+
+**Compelling tagline** with additional context about what this tutorial covers.
+
+## What You'll Learn
+
+In this tutorial, you'll learn:
+- Key concept 1
+- Key concept 2
+- Key concept 3
+
+---
+
+Now let's dive into the first topic...
+
+### First Topic Details
+
+Here's the detailed content about the first topic with examples and explanations.
+```
+
+The viewer automatically wraps each cell with appropriate styling!
+
+**Benefits:**
+- ✅ **90% less code** - Write pure markdown, no HTML wrappers
+- ✅ **Automatic styling** - Pattern-based detection handles wrapping
+- ✅ **Clean content** - Easier to read and edit
+- ✅ **Backward compatible** - Existing HTML-wrapped cells still work
+
+**Mixing with Custom HTML:**
+
+You can combine auto-wrapping with custom HTML for special cells:
+
+```markdown
+# Regular Title
+
+This gets auto-wrapped...
+
+## Regular Section
+
+More auto-wrapped content...
+
+<!-- Custom styled cell -->
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 48px; margin: 0; text-align: center; color: white;">
+
+<h2 style="font-size: 36px; font-weight: 800; margin: 0;">Special Highlight</h2>
+
+<p style="font-size: 20px;">Custom gradient for this important message</p>
+
+</div>
+```
+
+This hybrid approach gives you speed (pure markdown) with flexibility (custom HTML) where needed!
+
+---
+
 ## Example 5: Paged Variation with Full-Screen Overlay
 
 ### Google Docs Table

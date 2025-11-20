@@ -55,6 +55,39 @@ Content with **formatting** and [links](url)
 </script>
 ```
 
+### 1a. Auto-Wrapping in Notebook Mode (NEW)
+
+**When using the notebook variation** (`| IPynb Viewer (notebook) |`), you can write **pure markdown** without HTML wrappers! The viewer automatically detects cell types and applies styling:
+
+**Pure Markdown (Auto-Wrapped):**
+```markdown
+# 🎯 Presentation Title
+
+**Compelling tagline** with additional context
+```
+
+Automatically becomes:
+```html
+<div class="ipynb-hero-cell">
+  <h1>🎯 Presentation Title</h1>
+  <p><strong>Compelling tagline</strong> with additional context</p>
+</div>
+```
+
+**Detection Rules:**
+- **Hero Cell**: First cell with `# ` heading → `ipynb-hero-cell`
+- **Intro Cell**: Early cells (index ≤ 2) with `## ` heading → `ipynb-content-card` (thick border)
+- **Transition Cell**: Short cells (≤3 lines) without headers → `ipynb-transition-card`
+- **Content Cell**: All other cells → `ipynb-content-card-thin` (thin border)
+
+**Benefits:**
+- ✅ **90% less code** - Just write markdown
+- ✅ **Cleaner notebooks** - Easier to read and edit
+- ✅ **Version control friendly** - Smaller diffs
+- ✅ **Backward compatible** - HTML wrappers still work
+
+**Note:** Auto-wrapping only works in **notebook mode**. For other modes (paged, autorun), use manual HTML wrappers as shown in the rest of this document.
+
 ### 2. Inline HTML Styling
 
 Every cell gets beautiful inline styling for consistency:
@@ -623,6 +656,7 @@ Every presentation notebook should have proper metadata:
 - Add horizontal rules (`---`) between major sections
 - Use **bold** and *italic* for emphasis
 - Maintain consistent spacing throughout
+- **NEW:** Use pure markdown with auto-wrapping in notebook mode to reduce code by 90%
 
 ❌ **DON'T:**
 - Overcrowd cells with too much content
@@ -693,9 +727,29 @@ Every presentation notebook should have proper metadata:
 The command will:
 1. Create properly structured notebook
 2. Add metadata
-3. Apply inline styling to all cells
+3. Apply inline styling to all cells (or use auto-wrapping in notebook mode)
 4. Set up EDS blocks with proper initialization
 5. Create table of contents with navigation
+
+**NEW: Auto-Wrapping Option**
+
+When creating notebooks for **notebook mode**, you can now use pure markdown without HTML wrappers:
+
+```markdown
+# Your Presentation Title
+
+**Compelling tagline** that grabs attention
+
+---
+
+## What You'll Learn
+
+- Key point 1
+- Key point 2
+- Key point 3
+```
+
+The viewer automatically wraps cells with appropriate styling classes based on content patterns. This reduces authoring work by 90% while maintaining beautiful, consistent styling.
 
 ### Method 2: Using Skill Directly
 
@@ -1084,6 +1138,16 @@ existingOverlays.forEach(overlay => overlay.remove());
 
 **Note:** All fixes applied January 2025 (v3) - overlay is now completely stable with consistent sizing, typography, and no duplicate instances.
 
+## Templates
+
+Ready-to-use notebook templates are available:
+
+- **Auto-Wrapped Template:** `docs/for-ai/templates/ipynb/presentation-template.ipynb` - Pure markdown template for notebook mode (90% less code)
+- **Unstyled Template:** `docs/for-ai/templates/ipynb/unstyled-template.ipynb` - Basic markdown structure
+- **Educational Template:** `docs/for-ai/templates/ipynb/educational-template.ipynb` - Interactive learning template
+
+**Recommendation:** Start with the auto-wrapped template for fastest authoring in notebook mode. Use pure markdown and let auto-wrapping handle styling automatically.
+
 ## Related Documentation
 
 - **Educational Notebooks:** `docs/for-ai/explaining-educational-notebooks.md` - Interactive, executable notebooks
@@ -1115,5 +1179,8 @@ existingOverlays.forEach(overlay => overlay.remove());
 5. **Consistent styling** - Use design system throughout
 6. **Accessible navigation** - Hash links and hover effects
 7. **Mobile-friendly** - Test responsive design
+8. **NEW: Use auto-wrapping** - Write pure markdown in notebook mode (90% less code!)
 
 **Remember:** Presentation notebooks are about **viewing**, not **executing**. Beautiful visuals + embedded interactivity = compelling presentations.
+
+**Pro Tip:** For notebook mode, skip the HTML wrappers entirely and let the auto-wrapping feature handle styling automatically based on your markdown patterns!

@@ -21,16 +21,24 @@ Transform Jupyter notebooks into beautiful presentation-mode experiences using e
 
 ## Key Concepts
 
-### Presentation Mode vs Interactive Mode
+### Presentation Mode vs Interactive Mode vs Educational Mode
 
 **Interactive Notebooks** (e.g., test.ipynb):
 - Users can run JavaScript code cells
 - Code cells have "Run" buttons
 - For developers and testing
 
+**Educational Notebooks** (e.g., tutorial.ipynb):
+- Runnable code cells for learning
+- Can use auto-wrapping in notebook mode (pure markdown)
+- 60% markdown, 40% code
+- For teaching and explaining
+- See `jupyter-educational-notebook` skill
+
 **Presentation Notebooks** (e.g., demo.ipynb):
 - No executable code cells
 - All interactivity via inline scripts in markdown
+- Can use auto-wrapping (notebook mode) OR manual HTML (all modes)
 - For end users, clients, presentations
 - Beautiful visual layouts with EDS blocks
 
@@ -40,7 +48,9 @@ Transform Jupyter notebooks into beautiful presentation-mode experiences using e
 2. **Inline scripts in markdown** - Use `<script>` tags within markdown for interactivity
 3. **EDS blocks via HTML** - Embed block HTML directly in markdown
 4. **Conversion of existing code cells** - Transform to informative markdown text
-5. **Inline HTML styling** - Apply consistent design system for beautiful presentation
+5. **Choose styling approach**:
+   - **Auto-wrapping** (pure markdown) - When displayed in notebook mode
+   - **Manual HTML** (inline styles) - When displayed in other modes or needing custom styling
 
 ## Available EDS Blocks
 
@@ -578,6 +588,62 @@ return block.outerHTML;
 - Use blocks for interactive elements
 - Add horizontal rules (`---`) between major sections
 - Use **bold** and *italic* for emphasis
+
+### Choosing Between Auto-Wrapping and Manual HTML
+
+Both presentation (non-interactive) and educational (interactive) notebooks can use either approach.
+
+**Auto-wrapping (pure markdown):**
+- ✅ 90% less code to write
+- ✅ Fast content creation
+- ✅ Consistent default styling
+- ❌ **ONLY works in notebook mode** (`| IPynb Viewer (notebook) |`)
+- ❌ Limited design control
+
+**Manual HTML styling (inline styles):**
+- ✅ Works in **ALL display modes** (basic, paged, autorun, notebook)
+- ✅ Precise control over visual appearance
+- ✅ Complex layouts with nested blocks
+- ✅ Professional polish
+- ❌ Slower authoring (10x more code)
+
+**Decision matrix:**
+| Factor | Use Auto-Wrapping | Use Manual HTML |
+|--------|------------------|-----------------|
+| **Display mode** | Notebook mode | Any mode (paged, autorun, basic, notebook) |
+| **Priority** | Speed/simplicity | Design control/polish |
+| **Content** | Simple structure | Complex layouts |
+| **Notebook type** | Both presentation & educational | Both presentation & educational |
+
+**Key insight:** "Presentation" refers to non-interactive style (no runnable code), NOT a display mode. Auto-wrapping works for presentation notebooks displayed in notebook mode.
+
+**Mixing Both Approaches:**
+You can combine auto-wrapping with custom HTML in the same notebook for maximum flexibility:
+- Use pure markdown (auto-wrapped) for most cells
+- Add custom HTML wrapper for specific cells needing special styling
+- Example use cases:
+  - Custom gradient for hero sections
+  - Special highlight colors for key messages
+  - Unique layouts for specific sections
+  - Brand-specific color schemes
+
+```markdown
+<!-- Most cells: pure markdown (auto-wrapped) -->
+# Section Title
+
+Regular content here...
+
+<!-- Special cell: custom HTML for emphasis -->
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 48px; margin: 0; text-align: center; color: white;">
+
+<h2 style="font-size: 36px; font-weight: 800; margin: 0;">🎯 Key Takeaway</h2>
+
+<p style="font-size: 20px;">Custom styling for this important message</p>
+
+</div>
+```
+
+This hybrid approach gives you speed (pure markdown) with flexibility (custom HTML) where needed.
 
 ### Content Organization
 

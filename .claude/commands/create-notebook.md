@@ -231,7 +231,71 @@ What you learned:
 - [Link 2](#)
 ```
 
-### Step 6: Code Cell Patterns
+### Step 6: Auto-Wrapping in Notebook Mode (NEW)
+
+**When using notebook variation** (`| IPynb Viewer (notebook) |`), you can write **pure markdown** without HTML wrappers! The viewer automatically detects cell types and applies styling.
+
+**Cell Type Detection:**
+- **Hero Cell** - First cell (index 0) with `# ` heading → `ipynb-hero-cell`
+- **Intro Cell** - Early cells (index ≤ 2) with `## ` heading → `ipynb-content-card` (thick 6px border)
+- **Transition Cell** - Short cells (≤3 lines) without headers → `ipynb-transition-card`
+- **Content Cell** - All other cells → `ipynb-content-card-thin` (thin 4px border)
+
+**Pure Markdown Example:**
+```markdown
+# 🎯 Tutorial Title
+
+**Compelling tagline** with additional context
+
+## What You'll Learn
+
+Key concepts and outcomes
+
+---
+
+This is a transition between sections
+```
+
+Automatically becomes styled with appropriate divs and classes!
+
+**Benefits:**
+- ✅ 90% less code to write
+- ✅ Focus on content, not styling
+- ✅ Consistent visual presentation
+- ✅ Backward compatible with HTML wrappers
+
+**When to use auto-wrapping:**
+- Notebook mode (`| IPynb Viewer (notebook) |`)
+- Simple content structure
+- Fast authoring priority
+- Works for BOTH educational AND presentation style notebooks
+
+**When to use manual HTML:**
+- Other display modes (paged, autorun, basic)
+- Custom styling requirements
+- Complex layouts with nested blocks
+- Works for BOTH educational AND presentation style notebooks
+
+**Mixing both approaches:**
+You can combine auto-wrapping with custom HTML in the same notebook:
+- Most cells use pure markdown (auto-wrapped for speed)
+- Specific cells use custom HTML for special styling
+- Example: Add custom gradient or color to highlight a particular section
+
+```markdown
+<!-- Custom HTML for this specific cell -->
+<div style="background: #f0f9ff; border-left: 6px solid #3b82f6; padding: 32px; margin: 0; border-radius: 12px;">
+
+## Special Highlighted Section
+
+This cell has custom blue styling to draw attention
+
+</div>
+```
+
+**Note:** "Presentation" = non-interactive (no runnable code cells), NOT a display mode. Both educational (interactive code) and presentation (non-interactive) notebooks can use either styling approach.
+
+### Step 7: Code Cell Patterns
 
 Use appropriate code patterns based on what's being demonstrated:
 
@@ -296,7 +360,7 @@ await showPreview('tabs', content);
 return 'Try modifying the options above!';
 ```
 
-### Step 7: Markdown Best Practices
+### Step 8: Markdown Best Practices
 
 **Headers with Emojis:**
 ```markdown
@@ -330,7 +394,7 @@ Use triple backticks in markdown cells for syntax examples that won't execute:
 - End with three backticks
 - These appear formatted but aren't executable
 
-### Step 8: Finalize and Save
+### Step 9: Finalize and Save
 
 1. **Name the file** - Use descriptive name: `topic-tutorial.ipynb` not `test.ipynb`
 2. **Save location** - Root directory or appropriate subfolder
@@ -375,7 +439,7 @@ Use triple backticks in markdown cells for syntax examples that won't execute:
    }
    ```
 
-### Step 9: Provide Usage Instructions
+### Step 10: Provide Usage Instructions
 
 After creating the notebook, tell the user:
 

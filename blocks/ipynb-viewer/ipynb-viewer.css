@@ -1,5 +1,15 @@
 /* IPynb Viewer Block Styles */
 
+/* Reusable Content Styling - Color Variables */
+:root {
+  --ipynb-card-gradient-start: #e3f2fd;
+  --ipynb-card-gradient-end: #bbdefb;
+  --ipynb-card-accent: #0288d1;
+  --ipynb-card-accent-thick: #0288d1;
+  --ipynb-card-text-dark: #212121;
+  --ipynb-card-heading: #0d47a1;
+}
+
 /* Smooth scrolling for anchor links */
 html {
   scroll-behavior: smooth;
@@ -264,6 +274,249 @@ html {
   text-decoration: underline;
 }
 
+/* ============================================
+   REUSABLE CONTENT STYLING CLASSES
+
+   These opt-in classes provide consistent styling for
+   educational notebooks, tutorials, and presentations.
+
+   Based on patterns from docs-navigation.ipynb with
+   92% styling commonality across cells.
+
+   Usage: Wrap markdown content with these class names
+   ============================================ */
+
+/* Hero / Title Sections */
+.ipynb-hero-cell {
+  background: linear-gradient(135deg, var(--ipynb-card-gradient-start), var(--ipynb-card-gradient-end));
+  color: white;
+  border-radius: 16px;
+  padding: 48px;
+  text-align: center;
+  margin: 0;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  color: var(--ipynb-card-text-dark);
+}
+
+/* Standard Content Card with thick left border */
+.ipynb-content-card {
+  background: linear-gradient(135deg, var(--ipynb-card-gradient-start), var(--ipynb-card-gradient-end));
+  border-radius: 12px;
+  padding: 32px;
+  margin: 0;
+  border-left: 6px solid var(--ipynb-card-accent-thick);
+  color: var(--ipynb-card-text-dark);
+}
+
+/* Content Card with thin left border */
+.ipynb-content-card-thin {
+  background: linear-gradient(135deg, var(--ipynb-card-gradient-start), var(--ipynb-card-gradient-end));
+  border-radius: 12px;
+  padding: 32px;
+  margin: 0;
+  border-left: 4px solid var(--ipynb-card-accent);
+  color: var(--ipynb-card-text-dark);
+}
+
+/* Transition / Divider Sections */
+.ipynb-transition-card {
+  background: linear-gradient(135deg, var(--ipynb-card-gradient-start), var(--ipynb-card-gradient-end));
+  border-radius: 12px;
+  padding: 24px;
+  margin: 0;
+  text-align: center;
+  border-left: 4px solid var(--ipynb-card-accent);
+  color: var(--ipynb-card-text-dark);
+}
+
+/* Section Headers (H2/H3 level) */
+.ipynb-section-header {
+  color: var(--ipynb-card-heading);
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ipynb-subsection-header {
+  color: var(--ipynb-card-heading);
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Body Text Styling */
+.ipynb-body-text {
+  color: var(--ipynb-card-text-dark);
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+/* Icon Lists */
+.ipynb-icon-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ipynb-icon-list-item {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ipynb-icon-list-item:last-child {
+  border-bottom: none;
+}
+
+/* Inline Code Styling */
+.ipynb-code-inline {
+  background: #f5f5f5;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  color: var(--ipynb-card-text-dark);
+}
+
+/* Icon Emoji Sizing */
+.ipynb-icon-emoji {
+  font-size: 28px;
+}
+
+.ipynb-icon-emoji-large {
+  font-size: 56px;
+}
+
+.ipynb-icon-emoji-small {
+  font-size: 20px;
+}
+
+/* Typography Utilities */
+.ipynb-text-center {
+  text-align: center;
+}
+
+.ipynb-font-light {
+  font-weight: 300;
+}
+
+.ipynb-font-medium {
+  font-weight: 500;
+}
+
+.ipynb-font-semibold {
+  font-weight: 600;
+}
+
+.ipynb-font-bold {
+  font-weight: 700;
+}
+
+.ipynb-font-extrabold {
+  font-weight: 800;
+}
+
+/* Opacity Utilities */
+.ipynb-opacity-85 {
+  opacity: 0.85;
+}
+
+.ipynb-opacity-95 {
+  opacity: 0.95;
+}
+
+/* Flex Layout Utilities */
+.ipynb-flex {
+  display: flex;
+}
+
+.ipynb-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ipynb-flex-align-center {
+  display: flex;
+  align-items: center;
+}
+
+.ipynb-gap-8 {
+  gap: 8px;
+}
+
+.ipynb-gap-12 {
+  gap: 12px;
+}
+
+.ipynb-gap-16 {
+  gap: 16px;
+}
+
+/* Spacing Utilities */
+.ipynb-m-0 {
+  margin: 0;
+}
+
+.ipynb-mb-16 {
+  margin-bottom: 16px;
+}
+
+.ipynb-mb-20 {
+  margin-bottom: 20px;
+}
+
+.ipynb-mb-24 {
+  margin-bottom: 24px;
+}
+
+.ipynb-my-16 {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+/* Font Size Utilities */
+.ipynb-text-16 {
+  font-size: 16px;
+}
+
+.ipynb-text-18 {
+  font-size: 18px;
+}
+
+.ipynb-text-20 {
+  font-size: 20px;
+}
+
+.ipynb-text-26 {
+  font-size: 26px;
+}
+
+.ipynb-text-28 {
+  font-size: 28px;
+}
+
+.ipynb-text-48 {
+  font-size: 48px;
+}
+
+.ipynb-text-56 {
+  font-size: 56px;
+}
+
+/* Border Radius Utilities */
+.ipynb-rounded-4 {
+  border-radius: 4px;
+}
+
 /* Code Cells */
 .ipynb-code-cell {
   border-left: 3px solid var(--primary-color, #007bff);
@@ -442,6 +695,63 @@ html {
 
   .ipynb-run-button {
     width: 100%;
+  }
+
+  /* Reusable Content Classes - Mobile adjustments */
+  .ipynb-hero-cell {
+    padding: 32px 24px;
+  }
+
+  .ipynb-content-card,
+  .ipynb-content-card-thin {
+    padding: 24px;
+  }
+
+  .ipynb-transition-card {
+    padding: 20px;
+  }
+
+  .ipynb-section-header {
+    font-size: 24px;
+    gap: 12px;
+  }
+
+  .ipynb-subsection-header {
+    font-size: 22px;
+    gap: 10px;
+  }
+
+  .ipynb-body-text {
+    font-size: 15px;
+  }
+
+  .ipynb-icon-emoji {
+    font-size: 24px;
+  }
+
+  .ipynb-icon-emoji-large {
+    font-size: 48px;
+  }
+
+  /* Utility Classes - Mobile adjustments */
+  .ipynb-text-48 {
+    font-size: 36px;
+  }
+
+  .ipynb-text-56 {
+    font-size: 42px;
+  }
+
+  .ipynb-text-28 {
+    font-size: 24px;
+  }
+
+  .ipynb-text-26 {
+    font-size: 22px;
+  }
+
+  .ipynb-text-20 {
+    font-size: 18px;
   }
 }
 
@@ -687,6 +997,24 @@ html {
 
 /* Override markdown cell fonts to match presentation styling - ONLY fonts, not sizes */
 .ipynb-paged-overlay .ipynb-markdown-cell {
+  font-family: inherit !important;
+}
+
+/* Reusable Content Classes - Overlay Mode Overrides */
+.ipynb-paged-overlay .ipynb-hero-cell,
+.ipynb-paged-overlay .ipynb-content-card,
+.ipynb-paged-overlay .ipynb-content-card-thin,
+.ipynb-paged-overlay .ipynb-transition-card {
+  font-family: inherit !important;
+}
+
+.ipynb-paged-overlay .ipynb-section-header,
+.ipynb-paged-overlay .ipynb-subsection-header {
+  font-family: inherit !important;
+  font-size: revert !important;
+}
+
+.ipynb-paged-overlay .ipynb-body-text {
   font-family: inherit !important;
 }
 

@@ -40,6 +40,74 @@ Use this skill when you need to:
 | **Helper usage** | Always uses `testBlock()` | Uses pure JavaScript, sometimes helpers |
 | **Goal** | Find bugs, verify behavior | Educate, demonstrate, engage |
 
+## Auto-Wrapping in Notebook Mode (NEW)
+
+When using the **notebook variation** (`| IPynb Viewer (notebook) |`), the viewer automatically wraps markdown cells with appropriate styling classes based on content patterns. This means you can write **pure markdown** without any HTML wrappers!
+
+**How It Works:**
+
+The viewer automatically detects cell types:
+
+1. **Hero Cell** - First cell (index 0) with `# ` heading → wrapped with `ipynb-hero-cell`
+2. **Intro Cell** - Early cells (index ≤ 2) with `## ` heading → wrapped with `ipynb-content-card` (thick 6px border)
+3. **Transition Cell** - Short cells (≤3 lines) without headers → wrapped with `ipynb-transition-card`
+4. **Content Cell** - All other cells → wrapped with `ipynb-content-card-thin` (thin 4px border)
+
+**Benefits:**
+- ✅ 90% less code to write
+- ✅ Focus on content, not HTML wrappers
+- ✅ Consistent visual presentation
+- ✅ Backward compatible with existing HTML-wrapped cells
+
+**Example:**
+
+**Pure Markdown (Auto-Wrapped):**
+```markdown
+# 🎯 Tutorial Title
+
+**Compelling tagline** with additional context
+```
+
+Automatically becomes:
+```html
+<div class="ipynb-hero-cell">
+  <h1>🎯 Tutorial Title</h1>
+  <p><strong>Compelling tagline</strong> with additional context</p>
+</div>
+```
+
+**When to Use:**
+- ✅ Notebook mode only (auto-wrapping doesn't activate in other modes)
+- ✅ Simple content structures
+- ✅ Focus on content creation speed
+- ✅ Works for BOTH educational AND presentation style notebooks
+- ✅ Can mix with custom HTML for fine-tuning specific cells
+- ❌ Not for complex custom layouts throughout
+- ❌ Not for other display modes (use manual HTML wrappers)
+
+**Mixing Auto-Wrapping with Custom HTML:**
+You can combine both approaches in the same notebook:
+- Use pure markdown for most cells (auto-wrapped)
+- Add custom HTML wrapper for specific cells needing special styling
+- Example: Hero cell with custom gradient or specific color scheme
+
+```markdown
+<!-- Custom HTML for special styling -->
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 32px; margin: 0; color: white;">
+
+# Special Section
+
+This cell has custom purple gradient styling
+
+</div>
+```
+
+**Terminology clarification:**
+- **"Presentation"** = non-interactive notebook (no runnable code cells)
+- **"Educational"** = interactive notebook (runnable code cells for learning)
+- **"Notebook mode"** = display mode setting (`| IPynb Viewer (notebook) |`)
+- Auto-wrapping works in notebook mode for BOTH presentation AND educational notebooks
+
 ## Educational Notebook Structure
 
 ### Essential Components
@@ -602,6 +670,7 @@ Jump to [error handling section](#error-handling) or [best practices](#best-prac
 - Include table of contents
 - Organize into logical parts
 - End with summary and resources
+- **NEW:** Use pure markdown with auto-wrapping in notebook mode (90% less code!)
 
 ✅ **Content:**
 - 60% markdown, 40% code

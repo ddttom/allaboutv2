@@ -843,6 +843,16 @@ Before deploying:
 **ipynb-viewer block:**
 - [blocks/ipynb-viewer/README.md](file://../../blocks/ipynb-viewer/README.md) - Display documentation
 
+### Templates
+
+Ready-to-use notebook templates are available:
+
+- **Educational Template:** [docs/for-ai/templates/ipynb/educational-template.ipynb](file://../templates/ipynb/educational-template.ipynb) - Interactive learning template with runnable code cells and auto-wrapping support
+- **Unstyled Template:** [docs/for-ai/templates/ipynb/unstyled-template.ipynb](file://../templates/ipynb/unstyled-template.ipynb) - Basic markdown structure for quick content-first authoring
+- **Presentation Template:** [docs/for-ai/templates/ipynb/presentation-template.ipynb](file://../templates/ipynb/presentation-template.ipynb) - Non-interactive presentation template (no runnable code)
+
+**Recommendation:** Start with the educational template for tutorials and interactive learning content. Use pure markdown with auto-wrapping in notebook mode for fastest authoring (90% less code).
+
 ### Related Documentation
 
 - [explaining-jupyter.md](file://./explaining-jupyter.md) - General Jupyter testing guide

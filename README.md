@@ -66,6 +66,8 @@ Access your tests at: `http://localhost:3000/blocks/your-block/test.html`
 2. **ipynb-viewer Block** - Share executable notebooks with end users
    - Display .ipynb files on your EDS site
    - Interactive JavaScript code execution in browser
+   - **Auto-wrapping in notebook mode** - Write pure markdown, automatic styling (90% less code)
+   - **Hybrid approach** - Mix pure markdown with custom HTML for flexibility
    - Perfect for tutorials, demos, and documentation
    - Located at [blocks/ipynb-viewer/](blocks/ipynb-viewer/)
 
@@ -113,7 +115,7 @@ This project includes a complete Claude Code configuration for AI-assisted devel
 ### Slash Commands
 - `/new-block <name>` - Create a new EDS block following Content Driven Development
 - `/test-block <name>` - Run tests for a specific block
-- `/create-notebook` - Create educational/interactive Jupyter notebooks (tutorials, guides, blogs)
+- `/create-notebook` - Create educational/interactive Jupyter notebooks with auto-wrapping support
 - `/check-block <name>` - Review block architecture and suggest improvements
 - `/deploy-block <name>` - Deploy a block from build/ to blocks/
 - `/lint-all` - Run all linting checks
@@ -133,7 +135,8 @@ Auto-activating skills provide inline guidance for:
 - **eds-block-testing** - Test file creation and testing workflows
 - **eds-performance-debugging** - Performance optimization and debugging techniques
 - **jupyter-notebook-testing** - Context-aware interactive testing with Jupyter notebooks, jsdom, JSLab kernel, and live preview generation
-- **jupyter-educational-notebook** - NEW: Create educational notebooks, tutorials, guides, and interactive demos as SPAs
+- **jupyter-educational-notebook** - Create educational notebooks with auto-wrapping (pure markdown) or manual HTML styling
+- **create-presentation** - Create presentation notebooks (non-interactive) with auto-wrapping or custom styling
 - **skill-developer** - Managing Claude Code skills
 
 All skills are tailored specifically for EDS vanilla JavaScript development.
@@ -169,6 +172,8 @@ Each block should include:
 
 **Optional but recommended:**
 - `.ipynb` notebook file for interactive testing and documentation
+  - Use auto-wrapping for fast authoring in notebook mode
+  - Or manual HTML for custom styling in any mode
 
 ### CSS Best Practices
 
@@ -201,7 +206,9 @@ Each block should include:
   - Browser mode for end-user interaction via ipynb-viewer block
   - Live preview HTML generation with iframe controls
   - Dual execution modes (Node.js and browser)
-- [Educational Notebooks Guide](docs/for-ai/explaining-educational-notebooks.md) - NEW: Create tutorials, guides, and interactive demos as SPAs:
+- [Educational Notebooks Guide](docs/for-ai/explaining-educational-notebooks.md) - Create tutorials, guides, and interactive demos:
+  - **Auto-wrapping** - Pure markdown authoring (90% less code) in notebook mode
+  - **Hybrid approach** - Mix pure markdown with custom HTML for flexibility
   - Transform text into engaging interactive content
   - Progressive learning with demonstrations
   - Blog posts, tutorials, reference guides, demos

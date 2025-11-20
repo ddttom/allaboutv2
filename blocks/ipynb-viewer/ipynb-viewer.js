@@ -160,13 +160,62 @@ function parseMarkdown(markdown, repoUrl = null) {
 }
 
 /**
+ * Detect cell type based on content patterns
+ * @param {string} content - Cell content
+ * @param {number} index - Cell index
+ * @returns {string} Cell type: 'hero', 'intro', 'transition', or 'content'
+ */
+function detectCellType(content, index) {
+  // Hero cell is the first cell with large heading
+  if (index === 0 && content.includes('# ')) {
+    return 'hero';
+  }
+
+  // Intro cells have thick borders - typically cells with key introductory content
+  // These are usually the first few content cells after hero
+  if (index <= 2 && content.includes('## ')) {
+    return 'intro';
+  }
+
+  // Transition cells are short (1-2 lines) and often centered text
+  const lines = content.trim().split('\n').filter(line => line.trim());
+  if (lines.length <= 3 && !content.includes('##') && !content.includes('###')) {
+    return 'transition';
+  }
+
+  // Default to content card
+  return 'content';
+}
+
+/**
+ * Wrap markdown content with appropriate styling classes
+ * @param {string} html - Parsed HTML content
+ * @param {string} cellType - Cell type
+ * @returns {string} Wrapped HTML
+ */
+function wrapMarkdownContent(html, cellType) {
+  switch (cellType) {
+    case 'hero':
+      return `<div class="ipynb-hero-cell">${html}</div>`;
+    case 'intro':
+      return `<div class="ipynb-content-card">${html}</div>`;
+    case 'transition':
+      return `<div class="ipynb-transition-card">${html}</div>`;
+    case 'content':
+    default:
+      return `<div class="ipynb-content-card-thin">${html}</div>`;
+  }
+}
+
+/**
  * Create a markdown cell element
  * @param {object} cell - Notebook cell data
  * @param {number} index - Cell index
  * @param {string} [repoUrl] - Optional repository URL for converting .md links
+ * @param {boolean} [autoWrap=false] - Whether to auto-wrap with styling classes (notebook mode)
  * @returns {HTMLElement} Cell element
  */
-function createMarkdownCell(cell, index, repoUrl = null) {
+function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false) {
   const cellDiv = document.createElement('div');
   cellDiv.className = 'ipynb-cell ipynb-markdown-cell';
   cellDiv.dataset.cellIndex = index;
@@ -176,7 +225,15 @@ function createMarkdownCell(cell, index, repoUrl = null) {
 
   // Join source lines and parse markdown
   const markdownText = Array.isArray(cell.source) ? cell.source.join('') : cell.source;
-  content.innerHTML = parseMarkdown(markdownText, repoUrl);
+  let html = parseMarkdown(markdownText, repoUrl);
+
+  // Auto-wrap with styling classes if in notebook mode
+  if (autoWrap) {
+    const cellType = detectCellType(markdownText, index);
+    html = wrapMarkdownContent(html, cellType);
+  }
+
+  content.innerHTML = html;
 
   cellDiv.appendChild(content);
   return cellDiv;
@@ -1104,7 +1161,7 @@ export default async function decorate(block) {
       let cellElement;
 
       if (cell.cell_type === 'markdown') {
-        cellElement = createMarkdownCell(cell, index, repoUrl);
+        cellElement = createMarkdownCell(cell, index, repoUrl, isNotebook);
       } else if (cell.cell_type === 'code') {
         cellElement = createCodeCell(cell, index, shouldAutorun);
 

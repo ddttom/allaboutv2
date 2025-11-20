@@ -10,6 +10,12 @@ Create a beautiful, non-interactive presentation notebook using:
 - **Inline JavaScript** in markdown for block initialization
 - **Convert any existing code cells** to informative markdown text
 
+**STYLING APPROACH:** Choose based on display mode:
+1. **Auto-wrapping** (pure markdown) - Use when notebook will be displayed in notebook mode
+2. **Manual HTML styling** (inline styles) - Use when notebook will be displayed in other modes (paged, autorun, basic)
+
+Note: "Presentation" = non-interactive design technique (applies to both styling approaches)
+
 ## User Request
 
 The user wants to create a presentation about: {{prompt}}
@@ -213,6 +219,46 @@ For each block, use this pattern:
 - Add table of contents for presentations with >5 sections
 - Use hash links: `[Section Name](#section-name)`
 - H2 headers automatically get IDs (lowercase, hyphens)
+
+### 8. Choosing Between Auto-Wrapping and Manual HTML
+
+**Auto-wrapping (pure markdown):**
+- ✅ Available when displayed in notebook mode (`| IPynb Viewer (notebook) |`)
+- ✅ 90% less code to write
+- ✅ Fast content creation
+- ✅ Consistent default styling
+- ❌ ONLY works in notebook mode
+- ❌ Limited design control
+
+**Manual HTML styling (inline styles):**
+- ✅ Works in ALL display modes (basic, paged, autorun, notebook)
+- ✅ Full design control and customization
+- ✅ Complex layouts with nested blocks
+- ✅ Professional polish
+- ❌ More verbose (10x more code)
+- ❌ Slower authoring
+
+**Recommendation for presentation notebooks:**
+- If displaying in **notebook mode**: Use auto-wrapping (pure markdown) for speed
+- If displaying in **other modes** (paged, autorun, basic): Use manual HTML for compatibility
+- Both approaches work for "presentation style" (non-interactive) notebooks
+
+**Mixing both approaches:**
+You can combine auto-wrapping with custom HTML in the same notebook:
+- Most cells use pure markdown (auto-wrapped in notebook mode)
+- Specific cells use custom HTML for special styling needs
+- Example: Custom gradient for a key message or highlight section
+
+```markdown
+<!-- Custom HTML for special styling on this cell -->
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 48px; margin: 0; text-align: center; color: white;">
+
+<h2 style="font-size: 36px; font-weight: 800; margin: 0;">Call to Action</h2>
+
+<p style="font-size: 20px; margin: 16px 0;">Custom purple gradient for emphasis</p>
+
+</div>
+```
 
 ## Block Structure Examples
 
