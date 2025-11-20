@@ -106,45 +106,87 @@ function parseMarkdown(markdown, repoUrl = null) {
     return `<a href="${url}">${text}</a>`;
   });
 
-  // Lists - process line by line
+  // Lists - process line by line with nested list support
   const linesWithLists = html.split('\n');
   const processedWithLists = [];
-  let inUl = false;
-  let inOl = false;
+  const listStack = []; // Track nested list state: [{type: 'ol'|'ul', indent: number}]
+  let lastIndent = -1;
 
   for (const line of linesWithLists) {
-    const ulMatch = line.match(/^[\s]*[-*] (.+)$/);
-    const olMatch = line.match(/^[\s]*\d+\. (.+)$/);
+    // Match list items with indentation
+    const ulMatch = line.match(/^(\s*)[-*] (.+)$/);
+    const olMatch = line.match(/^(\s*)\d+\. (.+)$/);
 
-    if (ulMatch) {
-      if (!inUl) {
-        processedWithLists.push('<ul>');
-        inUl = true;
+    if (ulMatch || olMatch) {
+      const isUl = !!ulMatch;
+      const indent = (ulMatch ? ulMatch[1] : olMatch[1]).length;
+      const content = ulMatch ? ulMatch[2] : olMatch[2];
+      const listType = isUl ? 'ul' : 'ol';
+
+      // Handle nesting based on indentation
+      if (indent > lastIndent) {
+        // Starting a new nested list
+        if (listStack.length > 0) {
+          // Close the previous <li> and open nested list inside it
+          const lastItem = processedWithLists[processedWithLists.length - 1];
+          if (lastItem && lastItem.endsWith('</li>')) {
+            // Remove the closing </li> tag
+            processedWithLists[processedWithLists.length - 1] = lastItem.slice(0, -5);
+          }
+        }
+        processedWithLists.push(`<${listType}>`);
+        listStack.push({ type: listType, indent });
+      } else if (indent < lastIndent) {
+        // Closing nested lists
+        while (listStack.length > 0 && listStack[listStack.length - 1].indent > indent) {
+          const closed = listStack.pop();
+          processedWithLists.push(`</${closed.type}>`);
+          // Close the parent <li> that contained the nested list
+          if (listStack.length > 0) {
+            processedWithLists.push('</li>');
+          }
+        }
+
+        // Check if we need to start a new list at this level
+        if (listStack.length === 0 || listStack[listStack.length - 1].type !== listType) {
+          if (listStack.length > 0) {
+            // Close existing list at this level
+            const closed = listStack.pop();
+            processedWithLists.push(`</${closed.type}>`);
+          }
+          processedWithLists.push(`<${listType}>`);
+          listStack.push({ type: listType, indent });
+        }
+      } else if (listStack.length > 0 && listStack[listStack.length - 1].type !== listType) {
+        // Same indent but different list type - close and reopen
+        const closed = listStack.pop();
+        processedWithLists.push(`</${closed.type}>`);
+        processedWithLists.push(`<${listType}>`);
+        listStack.push({ type: listType, indent });
+      } else if (listStack.length === 0) {
+        // First list item
+        processedWithLists.push(`<${listType}>`);
+        listStack.push({ type: listType, indent });
       }
-      processedWithLists.push(`<li>${ulMatch[1]}</li>`);
-    } else if (olMatch) {
-      if (!inOl) {
-        processedWithLists.push('<ol>');
-        inOl = true;
-      }
-      processedWithLists.push(`<li>${olMatch[1]}</li>`);
+
+      processedWithLists.push(`<li>${content}</li>`);
+      lastIndent = indent;
     } else {
-      // Close any open lists
-      if (inUl) {
-        processedWithLists.push('</ul>');
-        inUl = false;
-      }
-      if (inOl) {
-        processedWithLists.push('</ol>');
-        inOl = false;
+      // Non-list line - close all open lists
+      while (listStack.length > 0) {
+        const closed = listStack.pop();
+        processedWithLists.push(`</${closed.type}>`);
       }
       processedWithLists.push(line);
+      lastIndent = -1;
     }
   }
 
   // Close any remaining open lists
-  if (inUl) processedWithLists.push('</ul>');
-  if (inOl) processedWithLists.push('</ol>');
+  while (listStack.length > 0) {
+    const closed = listStack.pop();
+    processedWithLists.push(`</${closed.type}>`);
+  }
 
   html = processedWithLists.join('\n');
 
