@@ -1167,9 +1167,9 @@ Lost in documentation? Not anymore! This interactive guide helps you navigate co
 
 <!-- action-cards -->
 
-- 🔵 [Getting Started](#cell-0-intro)
-- 🟢 [Navigation Strategies](#cell-5)
-- 🟠 [Best Practices](#cell-30-pro-tips)
+- [Getting Started](#)
+- [Navigation Strategies](#)
+- [Best Practices](#)
 ```
 
 In a content cell:
@@ -1178,30 +1178,29 @@ In a content cell:
 
 <!-- action-cards -->
 
-- 🔵 [View Source Code](https://github.com/...)
-- 🟢 [Run Live Demo](#cell-demo)
-- 🟠 [Read API Docs](#cell-api)
+- [View Source Code](https://github.com/...)
+- [Run Live Demo](#)
+- [Read API Docs](#)
 ```
 
 **How It Works:**
 
 1. Add an HTML comment `<!-- action-cards -->` in your markdown cell
 2. Follow it with a markdown list of links
-3. Prefix each list item with a colored circle emoji:
-   - 🔵 for blue cards
-   - 🟢 for green cards
-   - 🟠 for orange cards
-4. The viewer automatically transforms the list into styled action cards
+3. Use simple link text that matches heading text in other cells
+4. **Links are automatically resolved at runtime** - JavaScript finds matching headings and updates hrefs
+5. All cards use consistent blue styling
 
 **Features:**
 
 - ✅ **Pure markdown** - No manual HTML required
 - ✅ **Works in any cell type** - Hero cells, content cells, intro cells, transition cells
-- ✅ **Colored backgrounds** - Emoji determines card color (blue, green, orange)
+- ✅ **Smart link resolution** - Automatically finds matching headings at runtime
+- ✅ **No hardcoded cell IDs** - Just use descriptive link text
+- ✅ **Consistent blue design** - Professional, clean appearance
 - ✅ **Hover effects** - Cards lift up and arrow slides right on hover
 - ✅ **Auto-styled links** - Links become full-width interactive elements
 - ✅ **Right arrows** - Automatically added arrow (→) on the right side
-- ✅ **In-notebook navigation** - Links work with hash anchors (`#cell-id`)
 
 **CSS Classes:**
 
@@ -1227,26 +1226,30 @@ Action card styling is controlled by these CSS classes in `ipynb-viewer.css`:
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Color Variants */
+/* Blue styling for all action cards */
 .ipynb-action-card-blue {
   background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
   border-left: 4px solid #2196f3;
 }
+```
 
-.ipynb-action-card-green {
-  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-  border-left: 4px solid #4caf50;
-}
+**Link Resolution:**
 
-.ipynb-action-card-orange {
-  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
-  border-left: 4px solid #ff9800;
-}
+Action cards use smart link resolution at runtime:
+- Link text is matched against heading text in all cells
+- JavaScript automatically finds the target cell and updates the href
+- No need to hardcode cell IDs or indices
+- Just use descriptive link text that matches your headings
+
+**Example:**
+```markdown
+- [Getting Started](#)  →  Finds cell with heading containing "Getting Started"
+- [Best Practices](#)   →  Finds cell with heading containing "Best Practices"
 ```
 
 **Customization:**
 
-You can customize action card appearance by modifying the CSS classes above. Common customizations:
+You can customize action card appearance by modifying `.ipynb-action-card-blue` in `ipynb-viewer.css`:
 - Change gradient colors in the background property
 - Adjust border-left color and width
 - Modify padding, gap, and border-radius
@@ -1511,31 +1514,34 @@ After (pure markdown):
 
 **Added Action Card Feature:**
 - ✅ **Pure markdown action cards** - Convert lists to styled navigation cards with HTML comment marker (`<!-- action-cards -->`)
-- ✅ **Emoji color indicators** - Automatically apply blue (🔵), green (🟢), or orange (🟠) styling based on emoji prefix
+- ✅ **Smart link resolution** - Automatically finds matching headings at runtime, no hardcoded cell IDs needed
+- ✅ **Consistent blue design** - Professional appearance without emoji clutter
 - ✅ **Interactive hover effects** - Cards lift up and arrows slide right on hover
 - ✅ **Auto-styled arrows** - Right-pointing arrows (→) automatically added to all action card links
-- ✅ **In-notebook navigation** - Works seamlessly with hash anchor links (`#cell-id`)
+- ✅ **In-notebook navigation** - JavaScript resolves links by matching text to headings
 - ✅ **All display modes** - Compatible with default, paged, autorun, and notebook modes
 
 **Technical Implementation:**
-- `ipynb-viewer.js` (lines 238-240): Added action card detection in `createMarkdownCell()` after rendering HTML
-- `ipynb-viewer.js` (lines 210-238): New `styleActionCards()` function detects marker and applies styling
+- `ipynb-viewer.js` (lines 267-271): Added action card detection in `createMarkdownCell()` after rendering HTML
+- `ipynb-viewer.js` (lines 210-263): New `styleActionCards()` function with smart link resolution
   - Finds `<!-- action-cards -->` comment in rendered HTML
   - Locates following `<ul>` element
-  - Adds `.ipynb-action-cards` class to container
-  - Adds `.ipynb-action-card` class to each list item
-  - Detects emoji prefix to apply color variant classes (`.ipynb-action-card-blue`, etc.)
-- `ipynb-viewer.css` (lines 332-389): New CSS classes for action card styling
+  - Adds `.ipynb-action-cards` and `.ipynb-action-card-blue` classes
+  - **Runtime link resolution**: Searches all cells for headings matching link text
+  - Automatically updates href to point to correct cell (`#cell-{index}`)
+  - No hardcoded cell IDs required - just descriptive link text
+- `ipynb-viewer.css` (lines 332-381): New CSS classes for action card styling
   - Container styling with flexbox layout and gap spacing
-  - Card styling with gradients, borders, shadows, and hover effects
-  - Three color variants (blue, green, orange) with matching gradients and border colors
+  - Card styling with blue gradients, borders, shadows, and hover effects
+  - Left-aligned text with `justify-content: flex-start` and `width: 100%`
   - Auto-generated arrows with smooth slide animation on hover
 
 **Benefits:**
 - Write pure markdown, no manual HTML required
+- No fragile hardcoded cell IDs or indices
+- Links automatically adapt to heading changes
 - Beautiful visual navigation without complexity
 - Consistent styling across all notebooks
-- Easy color customization through CSS
 - Gracefully degrades (links work without JavaScript)
 
 **Usage Example:**
@@ -1544,10 +1550,12 @@ After (pure markdown):
 
 <!-- action-cards -->
 
-- 🔵 [Getting Started](#cell-1)
-- 🟢 [Features](#cell-5)
-- 🟠 [Advanced Topics](#cell-10)
+- [Getting Started](#)
+- [Navigation Strategies](#)
+- [Best Practices](#)
 ```
+
+Link text is matched against headings at runtime - no cell IDs needed!
 
 ### 2025-01-20 - Auto-Wrapping Pattern Detection Updates (v8)
 

@@ -100,6 +100,46 @@ This directory contains templates for creating different types of Jupyter notebo
 
 ---
 
+## Action Cards for Navigation
+
+**NEW:** Create beautiful navigation links using action cards with smart linking:
+
+```markdown
+# Getting Started Guide
+
+Learn step by step through these topics.
+
+<!-- action-cards -->
+
+- [Installation](#)
+- [Your First Block](#)
+- [Advanced Topics](#)
+```
+
+**How it works:**
+1. Add `<!-- action-cards -->` HTML comment in your markdown cell
+2. Follow with a markdown list of links
+3. Use simple link text that matches heading text in other cells
+4. **Links are automatically resolved at runtime** - JavaScript finds matching headings and updates hrefs
+5. All cards use consistent blue styling
+
+**Features:**
+- ✅ Pure markdown - no HTML required
+- ✅ Works in any cell type (hero, content, intro, transition)
+- ✅ **Smart link resolution** - No hardcoded cell IDs needed
+- ✅ Automatically finds matching headings at runtime
+- ✅ Consistent blue design - professional appearance
+- ✅ Perfect for hero cells and section navigation
+
+**When to use:**
+- Hero cells with navigation options
+- Section introductions linking to parts
+- Tutorial navigation between chapters
+- Multi-part content flow
+- Quick reference navigation
+
+---
+
 ## How to Use These Templates
 
 ### Option 1: Copy Template Directly

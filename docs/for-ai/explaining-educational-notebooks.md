@@ -348,6 +348,43 @@ return '✓ Beautiful visual demonstration';
 - **quote** - Inspirational text
 - **code-expander** - Expandable code
 
+**Strategy 1b: Use Action Cards for Navigation (NEW)**
+
+Action cards provide beautiful navigation links in any cell using pure markdown:
+
+```markdown
+# Getting Started Guide
+
+Learn the fundamentals step by step.
+
+<!-- action-cards -->
+
+- [Installation](#)
+- [Your First Block](#)
+- [Advanced Topics](#)
+```
+
+**Features:**
+- ✅ Pure markdown - no HTML required
+- ✅ Works in any cell type (hero, content, intro)
+- ✅ **Smart link resolution** - Automatically finds matching headings at runtime
+- ✅ No hardcoded cell IDs needed - just descriptive link text
+- ✅ Consistent blue design - professional appearance
+- ✅ Hover effects and animated arrows
+- ✅ Perfect for navigation in hero cells
+
+**How it works:**
+- Write link text that matches heading text in other cells
+- JavaScript automatically finds the matching cell and updates href
+- No maintenance needed when cells move or headings change
+
+**When to use action cards:**
+- Hero cells with navigation options
+- Section introductions with links
+- Quick reference sections
+- Tutorial navigation
+- Multi-part content flow
+
 **Strategy 2: Add "try it yourself" moments**
 ```javascript
 // Try changing these values!

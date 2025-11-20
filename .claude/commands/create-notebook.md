@@ -295,6 +295,63 @@ This cell has custom blue styling to draw attention
 
 **Note:** "Presentation" = non-interactive (no runnable code cells), NOT a display mode. Both educational (interactive code) and presentation (non-interactive) notebooks can use either styling approach.
 
+### Step 6b: Action Cards for Navigation (NEW)
+
+**When using notebook variation**, create beautiful navigation links with pure markdown using action cards:
+
+```markdown
+# Getting Started Guide
+
+Learn step by step through these topics.
+
+<!-- action-cards -->
+
+- [Installation](#)
+- [Your First Block](#)
+- [Advanced Topics](#)
+```
+
+**How it works:**
+1. Add `<!-- action-cards -->` HTML comment in your markdown cell
+2. Follow with a markdown list of links
+3. Use simple link text that matches heading text in other cells
+4. **Links are automatically resolved at runtime** - JavaScript finds matching headings and updates hrefs
+5. All cards use consistent blue styling
+
+**Features:**
+- ✅ Pure markdown - no HTML required
+- ✅ Works in any cell type (hero, content, intro, transition)
+- ✅ **Smart link resolution** - No hardcoded cell IDs needed
+- ✅ Automatically finds matching headings at runtime
+- ✅ Consistent blue design - professional appearance
+- ✅ Hover effects with animated arrows (→)
+- ✅ Perfect for hero cells and section navigation
+
+**When to use action cards:**
+- Hero cells with navigation options
+- Section introductions linking to parts
+- Tutorial navigation between chapters
+- Multi-part content flow
+- Quick reference navigation
+
+**Example in hero cell:**
+```markdown
+# 🎯 Complete Tutorial Series
+
+Master the fundamentals through hands-on learning.
+
+<!-- action-cards -->
+
+- [Part 1: Basics](#)
+- [Part 2: Advanced](#)
+- [Part 3: Pro Tips](#)
+```
+
+**Link Resolution:**
+- Link text "Part 1: Basics" automatically finds heading containing "Part 1: Basics"
+- No need to specify cell IDs or indices
+- Links adapt automatically if headings change
+
 ### Step 7: Code Cell Patterns
 
 Use appropriate code patterns based on what's being demonstrated:

@@ -645,6 +645,50 @@ Regular content here...
 
 This hybrid approach gives you speed (pure markdown) with flexibility (custom HTML) where needed.
 
+**Action Cards for Navigation (NEW):**
+
+Create beautiful navigation links using pure markdown with action cards:
+
+```markdown
+# 🎯 Product Launch Presentation
+
+Discover our revolutionary new features.
+
+<!-- action-cards -->
+
+- [Overview](#)
+- [Key Features](#)
+- [Pricing](#)
+```
+
+**How it works:**
+1. Add `<!-- action-cards -->` HTML comment in your markdown cell
+2. Follow with a markdown list of links
+3. Use simple link text that matches heading text in other cells
+4. **Links are automatically resolved at runtime** - JavaScript finds matching headings and updates hrefs
+5. All cards use consistent blue styling
+
+**Features:**
+- ✅ Pure markdown - no HTML required
+- ✅ Works in any cell type (hero, content, intro, transition)
+- ✅ **Smart link resolution** - No hardcoded cell IDs needed
+- ✅ Automatically finds matching headings at runtime
+- ✅ Consistent blue design - professional appearance
+- ✅ Hover effects with animated arrows (→)
+- ✅ Perfect for presentation navigation and agendas
+
+**How smart linking works:**
+- Link text "Overview" automatically finds heading containing "Overview"
+- No need to specify cell IDs or indices
+- Links adapt automatically if headings change or cells move
+
+**When to use action cards in presentations:**
+- Hero cells with section navigation
+- Presentation agenda or table of contents
+- Call-to-action sections
+- Multi-section flow navigation
+- Quick access menus
+
 ### Content Organization
 
 - Start with title and overview

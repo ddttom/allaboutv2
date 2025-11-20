@@ -210,6 +210,7 @@ function wrapMarkdownContent(html, cellType) {
 /**
  * Style action cards in a cell content element
  * Detects <!-- action-cards --> marker and transforms following list into styled cards
+ * Also fixes links at runtime by finding matching headings
  * @param {HTMLElement} contentElement - Cell content element
  */
 function styleActionCards(contentElement) {
@@ -220,19 +221,43 @@ function styleActionCards(contentElement) {
   // Add container class to the ul
   ul.classList.add('ipynb-action-cards');
 
-  // Style each list item as an action card
+  // Style each list item as an action card (all blue)
   const items = ul.querySelectorAll('li');
   items.forEach((li) => {
     li.classList.add('ipynb-action-card');
+    li.classList.add('ipynb-action-card-blue');
 
-    // Extract emoji to determine color class
-    const text = li.textContent.trim();
-    if (text.startsWith('🔵')) {
-      li.classList.add('ipynb-action-card-blue');
-    } else if (text.startsWith('🟢')) {
-      li.classList.add('ipynb-action-card-green');
-    } else if (text.startsWith('🟠')) {
-      li.classList.add('ipynb-action-card-orange');
+    // Fix links at runtime by finding matching headings
+    const link = li.querySelector('a');
+    if (link && link.hash) {
+      // Extract the link text to search for matching heading
+      const linkText = link.textContent.trim();
+
+      // Find all headings in the document
+      const allCells = document.querySelectorAll('.ipynb-cell');
+      let targetCell = null;
+
+      allCells.forEach((cell) => {
+        const headings = cell.querySelectorAll('h1, h2, h3, h4, h5, h6');
+        headings.forEach((heading) => {
+          // Check if heading text matches link text (case-insensitive, ignore emojis/special chars)
+          const headingText = heading.textContent.trim().replace(/[^\w\s]/g, '').toLowerCase();
+          const searchText = linkText.replace(/[^\w\s]/g, '').toLowerCase();
+
+          if (headingText.includes(searchText)) {
+            targetCell = cell;
+            // Ensure the cell has a data-cell-index
+            if (!heading.id && cell.dataset.cellIndex) {
+              heading.id = `cell-${cell.dataset.cellIndex}`;
+            }
+          }
+        });
+      });
+
+      // Update the link to point to the found cell
+      if (targetCell && targetCell.dataset.cellIndex) {
+        link.href = `#cell-${targetCell.dataset.cellIndex}`;
+      }
     }
   });
 }

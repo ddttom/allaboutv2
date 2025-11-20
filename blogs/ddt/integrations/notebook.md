@@ -131,6 +131,8 @@ Each mode serves specific scenarios. Paged mode works beautifully for presentati
 
 **Smart TOC Generation**: The hamburger menu navigation uses intelligent filtering—it detects cell types via CSS classes (hero cells, transition cells) rather than hardcoded text patterns. This means the table of contents automatically adapts to any notebook content, skipping cells without headings and showing visual dividers between major sections. The TOC works seamlessly with auto-wrapped markdown, requiring zero manual configuration.
 
+**Action Cards for Navigation**: A pure markdown pattern for creating beautiful navigation cards. Add `<!-- action-cards -->` comment followed by a list with emoji indicators (🔵 blue, 🟢 green, 🟠 orange) and the system automatically transforms them into styled, interactive cards with hover effects. Perfect for hero cells, section navigation, and tutorial flow without writing any HTML.
+
 ## Real-World Impact \- How Living Documentation Changed Everything
 
 ### From Maintenance Burden to Self-Documenting Code

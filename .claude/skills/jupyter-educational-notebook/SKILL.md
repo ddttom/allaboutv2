@@ -85,6 +85,43 @@ Automatically becomes:
 - ❌ Not for complex custom layouts throughout
 - ❌ Not for other display modes (use manual HTML wrappers)
 
+**Action Cards for Navigation (NEW):**
+
+Create beautiful navigation links using pure markdown with action cards:
+
+```markdown
+# Getting Started Guide
+
+Learn step by step.
+
+<!-- action-cards -->
+
+- [Installation](#)
+- [Your First Block](#)
+- [Advanced Topics](#)
+```
+
+**Features:**
+- ✅ Pure markdown - no HTML required
+- ✅ Works in any cell type (hero, content, intro, transition)
+- ✅ **Smart link resolution** - Automatically finds matching headings at runtime
+- ✅ No hardcoded cell IDs needed - just descriptive link text
+- ✅ Consistent blue design - professional appearance
+- ✅ Hover effects with animated arrows
+- ✅ Perfect for navigation in hero cells or section introductions
+
+**How it works:**
+- Write link text that matches heading text in other cells
+- JavaScript automatically finds the matching cell and updates href
+- No maintenance needed when cells move or headings change
+
+**When to use action cards:**
+- Hero cells with navigation options
+- Section introductions with quick links
+- Tutorial navigation between parts
+- Multi-section content flow
+- Quick reference sections
+
 **Mixing Auto-Wrapping with Custom HTML:**
 You can combine both approaches in the same notebook:
 - Use pure markdown for most cells (auto-wrapped)
