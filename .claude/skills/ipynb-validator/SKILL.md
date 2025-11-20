@@ -121,12 +121,30 @@ Contextual text explaining what's next...
 - Summaries appear at end of parts
 - Transition cells precede part starts
 - No orphaned or misplaced cells
+- Reference/utility cells placed appropriately
+- Part X completion immediately before Part X+1 transition
 
 **Common ordering issues:**
 - Summary before content is complete
 - Transition after part start
 - Content cells out of sequence
 - Missing cells in expected flow
+- Reference cells (Resources, Bookmarks, Next Steps) between parts
+- Completion cells appearing before part content
+- Technical detail cells orphaned outside their parent section
+
+**Example of correct flow:**
+```
+Part 6 Completion Cell
+  ↓ immediately adjacent
+Part 7 Transition Cell (with action cards)
+  ↓
+Part 7 Content Cells
+  ↓
+Part 7 Completion Cell
+  ↓ immediately adjacent
+Part 8 Transition Cell
+```
 
 ### 6. Action Cards Quality
 
@@ -251,9 +269,22 @@ Contextual text...
 
 ### Issue 3: Incorrect Cell Order
 
-**Symptom:** Summary appears before content
+**Symptom:** Summary appears before content, or reference cells between parts
 
-**Fix:** Reorder cells so summary comes after all content cells
+**Fix:**
+```python
+# Reorder cells in notebook JSON
+# Example: Move completion cell from index 64 to index 72
+
+cells = notebook['cells']
+completion_cell = cells.pop(64)  # Remove from wrong position
+cells.insert(72, completion_cell)  # Insert at correct position
+```
+
+**Common scenarios:**
+- Completion cell before part content → Move to end of part
+- Reference cells between parts → Move to end of notebook (before final wrap-up)
+- Technical cells outside their section → Move into proper section
 
 ### Issue 4: Missing Action Cards
 
@@ -365,6 +396,30 @@ The validator assigns scores (0-100) in each category:
 ❌ Don't use generic link text like "Click here"
 ❌ Don't hardcode cell IDs like `#cell-5`
 ❌ Don't create circular link references
+
+### For Cell Ordering
+
+✅ Validate cell order with structural checks:
+```python
+# Check adjacency between key sections
+part_completion_idx < part_transition_idx + 1  # Must be adjacent
+part_transition_idx < next_part_start_idx  # Proper sequence
+```
+
+✅ Place reference/utility cells strategically:
+- Resources & Quick Reference → End of notebook
+- Essential Bookmarks → End of notebook
+- Troubleshooting → End of notebook
+- "What's Next" → End of notebook
+
+✅ Keep technical detail cells within their parent section:
+- Code examples belong in "How This Works" section
+- Implementation details stay with their topic
+- Don't orphan detail cells between major parts
+
+❌ Don't place utility cells between parts
+❌ Don't split sections with unrelated content
+❌ Don't place completion cells before content
 
 ### For Transitions
 
