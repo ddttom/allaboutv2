@@ -78,7 +78,8 @@
       "Bash(jq:*)",
       "Skill(ipynb-validator)",
       "SlashCommand(/validate-notebook docs-navigation.ipynb)",
-      "SlashCommand(/validate-notebook:*)"
+      "SlashCommand(/validate-notebook:*)",
+      "Bash(python test_showpreview_fix.py:*)"
     ],
     "deny": [],
     "ask": []

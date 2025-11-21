@@ -72,6 +72,10 @@ export async function showPreview(blockName, innerHTML = '') {
   // Remove existing overlay if present
   document.querySelector('.ipynb-preview-overlay')?.remove();
 
+  // Wait for DOM to be ready before checking for paged overlay
+  // This fixes timing issues where the paged overlay hasn't fully rendered yet
+  await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+
   // Check if we're in notebook mode
   const pagedOverlay = document.querySelector('.ipynb-paged-overlay[data-notebook-mode="true"]');
   const isNotebookMode = pagedOverlay !== null;
@@ -96,6 +100,11 @@ export async function showPreview(blockName, innerHTML = '') {
   const overlay = document.createElement('div');
   overlay.className = 'ipynb-preview-overlay';
 
+  // Set data attribute to indicate notebook mode for z-index adjustment
+  if (isNotebookMode) {
+    overlay.setAttribute('data-notebook-context', 'true');
+  }
+
   // Build controls HTML - in notebook mode, only show close button
   const controlsHTML = isNotebookMode
     ? '<button class="ipynb-preview-btn ipynb-close-btn">✕</button>'
@@ -107,7 +116,7 @@ export async function showPreview(blockName, innerHTML = '') {
 
   overlay.innerHTML = `
     <style>
-      .ipynb-preview-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:10000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+      .ipynb-preview-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:${isNotebookMode ? '99999' : '10000'};display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
       .ipynb-preview-container{background:#fff;border-radius:8px;width:95%;height:75vh;display:flex;flex-direction:column;box-shadow:0 8px 32px rgba(0,0,0,0.4);transition:width .3s ease,height .3s ease}
       .ipynb-preview-container.mobile{width:375px;height:667px}
       .ipynb-preview-container.tablet{width:768px;height:1024px}
@@ -202,19 +211,10 @@ export async function showPreview(blockName, innerHTML = '') {
   // ESC key handler attached to document for global capture
   const handleEscape = (e) => {
     if (e.key === 'Escape') {
-      // Check if there's a visible paged overlay (from ipynb-viewer)
-      // If so, let the paged overlay handle the ESC key instead
-      const pagedOverlay = document.querySelector('.ipynb-paged-overlay');
-      const isPagedVisible = pagedOverlay && pagedOverlay.style.display !== 'none';
-
-      // Also check for manual overlay
-      const manualOverlay = document.querySelector('.ipynb-manual-overlay');
-      const isManualVisible = manualOverlay && manualOverlay.style.display !== 'none';
-
-      // Only close preview overlay if no other overlays are handling ESC
-      if (!isPagedVisible && !isManualVisible) {
-        cleanupAndClose();
-      }
+      // Always close the preview overlay first when ESC is pressed
+      // This fixes the hierarchy issue where preview overlay couldn't close
+      // when opened from within a paged overlay
+      cleanupAndClose();
     }
   };
 
@@ -241,9 +241,23 @@ export async function showPreview(blockName, innerHTML = '') {
     if (module.default) {
       await module.default(block);
       console.log('✓ Block decorated');
+    } else {
+      throw new Error(`Block module ${blockName} does not export a default function`);
     }
   } catch (error) {
-    console.error('Block decoration error:', error);
+    console.error(`❌ Block decoration error for ${blockName}:`, error);
+    // Show user-friendly error message in the preview
+    const contentArea = overlay.querySelector('.ipynb-preview-content');
+    if (contentArea) {
+      contentArea.innerHTML = `
+        <div style="padding: 20px; color: #d32f2f; background: #ffebee; border-radius: 4px; border-left: 4px solid #d32f2f;">
+          <h3 style="margin-top: 0;">❌ Failed to load block: ${blockName}</h3>
+          <p><strong>Error:</strong> ${error.message}</p>
+          <p style="margin-bottom: 0;"><em>Check the console for more details.</em></p>
+        </div>
+      `;
+    }
+    throw error; // Re-throw so caller knows there was an error
   }
 
   return `✓ Preview overlay opened for ${blockName}`;
