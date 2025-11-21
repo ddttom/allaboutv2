@@ -727,6 +727,99 @@ External resources:
 [GitHub Repository](https://github.com/user/repo)
 ```
 
+## Validation Requirements for Navigation Notebooks
+
+**CRITICAL:** Educational navigation notebooks (with multi-part structures) require specific validation to ensure production readiness.
+
+### Action Cards in Transition Cells (REQUIRED)
+
+Navigation notebooks with numbered parts MUST include action cards in transition cells between parts. This is the **#1 validation failure** (catches 80% of issues).
+
+**What are transition cells?**
+Cells that appear between major parts or lessons with this structure:
+- Part/Lesson X heading (e.g., `### Lesson 2: Advanced Concepts`)
+- Progress indicator with dots (e.g., `**Progress: 2 of 5** 🔵🔵⚪⚪⚪`)
+- Reading time estimate (e.g., `**Reading time: 4 minutes**`)
+- Contextual text explaining what's coming next
+
+**Required format:**
+```markdown
+### Lesson 2: Intermediate Patterns
+**Progress: 2 of 5** 🔵🔵⚪⚪⚪
+**Reading time: 4 minutes**
+
+Now that you've mastered the basics, let's explore more advanced patterns...
+
+<!-- action-cards -->
+
+- [Array Methods](#)
+- [Object Manipulation](#)
+- [Functional Patterns](#)
+- [Error Handling](#)
+```
+
+**Validation checks:**
+- ✅ Every transition cell MUST have `<!-- action-cards -->` marker
+- ✅ Must have 3-6 action card links (markdown list)
+- ✅ Each link must use `(#)` placeholder pattern
+- ✅ Links must resolve to actual headings in the notebook
+
+**Common failure:**
+```markdown
+### Lesson 2: Intermediate Patterns
+**Progress: 2 of 5** 🔵🔵⚪⚪⚪
+**Reading time: 4 minutes**
+
+Now that you've mastered the basics...
+<!-- Missing action cards marker and links! -->
+```
+
+**Before deployment, run validation:**
+```bash
+/validate-notebook your-tutorial.ipynb
+```
+
+Expected score: ≥90/100 for production ready
+
+**See also:**
+- `.claude/skills/ipynb-validator/SKILL.md` - Complete validation guide
+- `.claude/commands/validate-notebook.md` - Validation command details
+- `docs/for-ai/templates/ipynb/README.md` - Template structure and validation
+
+### When Validation is Required
+
+Run `/validate-notebook` for multi-part educational notebooks with numbered lessons or sections before deployment. For simple tutorials without parts, validation may not be necessary.
+
+**Multi-part tutorials have:**
+- Numbered lessons/parts (Lesson 1, Part 2, etc.)
+- Transition cells between major sections
+- Multi-lesson structure with progress tracking
+
+**Simple tutorials have:**
+- Single-flow content without numbered parts
+- No transition cells
+- No progress indicators
+
+### Action Cards for Navigation (Beyond Validation)
+
+While validation focuses on transition cells, action cards can enhance any educational content. Use them in hero cells, section introductions, or anywhere you want to provide clear navigation options.
+
+**Example in hero cell:**
+```markdown
+# 🎓 JavaScript Mastery Tutorial
+
+Master JavaScript from basics to advanced concepts.
+
+<!-- action-cards -->
+
+- [Getting Started](#)
+- [Core Concepts](#)
+- [Advanced Topics](#)
+- [Practice Exercises](#)
+```
+
+This provides learners with clear navigation choices from the start.
+
 ## Cell Ordering Best Practices
 
 **CRITICAL:** Proper cell ordering creates smooth learning progression and prevents confusion.

@@ -64,9 +64,18 @@ export async function testBlock(blockName, innerHTML = '') {
 
 /**
  * Create and show overlay preview with styled block
- * @param {string} blockName - Name of the block
+ *
+ * IMPORTANT: This function detects notebook mode and adjusts behavior accordingly:
+ * - In notebook mode (ipynb-viewer paged overlay): uses z-index 99999, shows only close button
+ * - In normal mode: uses z-index 10000, shows mobile/tablet/desktop view buttons
+ *
+ * Fixed 2025-11-21: Enhanced to work properly in notebook mode paged overlays
+ * See: docs/for-ai/fixes/showpreview-notebook-mode-fix.md
+ *
+ * @param {string} blockName - Name of the block (must exist in /blocks/)
  * @param {string} [innerHTML=''] - HTML content to place inside the block
  * @returns {Promise<string>} Success message
+ * @throws {Error} If block module doesn't exist or fails to decorate
  */
 export async function showPreview(blockName, innerHTML = '') {
   // Remove existing overlay if present

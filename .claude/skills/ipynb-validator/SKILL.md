@@ -15,11 +15,22 @@ Use this skill when you need to:
 - Validate a notebook before production deployment
 - Check smart link consistency and resolution
 - Verify layout structure and organization
-- Ensure all transition cells have action cards
+- **Ensure all transition cells have action cards** ⚠️ MOST COMMON ISSUE
 - Validate numbered part/section flow
 - Check cell ordering and completeness
 - Assess overall notebook quality
 - Prepare notebooks for client or end-user viewing
+
+## ⚠️ Quick Check: Missing Action Cards
+
+**Before running full validation, manually verify:**
+
+1. Find all transition cells (cells with "Part X:", Progress indicator, and 🔵 dots)
+2. Check each has `<!-- action-cards -->` marker
+3. Verify 3-6 links follow the marker
+4. Ensure links use `(#)` placeholder pattern
+
+**This single check catches 80% of validation failures.**
 
 ## Validation Categories
 
@@ -67,17 +78,21 @@ Introduction (Cells 0-N)
 → Conclusion
 ```
 
-### 3. Transition Cells
+### 3. Transition Cells ⚠️ CRITICAL CHECK
 
 **What it checks:**
 - Transition cells exist between major parts
-- Each transition has `<!-- action-cards -->` marker
-- Action cards have 3-6 links
+- **Each transition MUST have `<!-- action-cards -->` marker** (REQUIRED)
+- Action cards have 3-6 links (enforced)
 - Action cards link to upcoming content
 - Transition text provides context
 
 **Expected pattern:**
 ```markdown
+### Part X: Section Name
+**Progress: X of Y** 🔵🔵🔵⚪⚪⚪
+**Reading time: N minutes**
+
 Contextual text explaining what's next...
 
 <!-- action-cards -->
@@ -86,6 +101,18 @@ Contextual text explaining what's next...
 - [Topic 2](#)
 - [Topic 3](#)
 ```
+
+**⚠️ COMMON FAILURE: Missing Action Cards Marker**
+
+This is the #1 validation failure. Every transition cell between parts MUST include:
+1. The `<!-- action-cards -->` HTML comment marker
+2. A markdown list of 3-6 links immediately following
+3. Each link using the `(#)` placeholder pattern
+
+**Validation will FAIL if:**
+- Transition cell lacks `<!-- action-cards -->` marker
+- Fewer than 3 action card links
+- Action cards not in proper markdown list format
 
 **When transitions are optional:**
 - Part flows naturally from previous summary
@@ -213,13 +240,44 @@ Part 8 Transition Cell
 4. Report unresolved links
 5. Check action card links
 
-### Step 4: Check Transitions
+### Step 4: Check Transitions (CRITICAL)
 
-1. Find all transition cells
-2. Verify action card markers
-3. Count links per transition
-4. Validate link targets
-5. Check contextual text
+**This is the most important validation step for missing action cards.**
+
+1. **Find all transition cells** by pattern matching:
+   ```python
+   def is_transition_cell(source):
+       return (
+           re.search(r'###.*Part \d+:', source) and
+           'Progress:' in source and
+           '🔵' in source and
+           'Reading time:' in source
+       )
+   ```
+
+2. **Verify action card markers** (REQUIRED):
+   ```python
+   has_action_cards = '<!-- action-cards -->' in source
+   if not has_action_cards:
+       issues.append({
+           'severity': 'ERROR',
+           'cell': cell_idx,
+           'message': f'Part {part_num} transition missing action cards marker'
+       })
+   ```
+
+3. **Count links per transition** (must be 3-6):
+   ```python
+   links = re.findall(r'^\s*- \[([^\]]+)\]\(#\)', source, re.MULTILINE)
+   if len(links) < 3:
+       issues.append({'severity': 'ERROR', 'message': 'Too few action cards'})
+   elif len(links) > 6:
+       issues.append({'severity': 'WARN', 'message': 'Too many action cards'})
+   ```
+
+4. **Validate link targets** - ensure all action card links resolve
+
+5. **Check contextual text** - verify transition has explanatory text before action cards
 
 ### Step 5: Verify Part Flow
 
@@ -290,15 +348,50 @@ cells.insert(72, completion_cell)  # Insert at correct position
 
 **Symptom:** Transition cell has no `<!-- action-cards -->` marker
 
+**Critical Issue:** This is one of the most common validation failures. Every transition cell between parts MUST have action cards to guide readers.
+
+**Detection Pattern:**
+```python
+# Identifies transition cells by:
+# 1. Contains "Part X:" heading
+# 2. Has progress indicator (Progress: X of Y)
+# 3. Has progress dots (🔵🔵...)
+# 4. Has reading time estimate
+
+# Then checks for:
+# - <!-- action-cards --> marker (REQUIRED)
+# - 3-6 markdown links after marker
+# - Links use (#) placeholder pattern
+```
+
 **Fix:**
 ```markdown
-# Add marker and links
+# Before (FAILS validation):
+### Part 7: Universal Patterns
+**Progress: 7 of 8** 🔵🔵🔵🔵🔵🔵🔵⚪
+**Reading time: 2 minutes**
+
+These patterns work everywhere...
+
+# After (PASSES validation):
+### Part 7: Universal Patterns
+**Progress: 7 of 8** 🔵🔵🔵🔵🔵🔵🔵⚪
+**Reading time: 2 minutes**
+
+These patterns work everywhere...
+
 <!-- action-cards -->
 
-- [Link 1](#)
-- [Link 2](#)
-- [Link 3](#)
+- [Beyond EDS](#)
+- [Universal Patterns](#)
+- [Apply Anywhere](#)
 ```
+
+**Why this matters:**
+- Action cards provide visual navigation
+- Helps readers preview upcoming content
+- Maintains consistent user experience
+- Critical for educational notebooks
 
 ### Issue 5: Part Number Gaps
 

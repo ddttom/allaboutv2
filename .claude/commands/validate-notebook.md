@@ -144,9 +144,67 @@ Check for:
 
 ### Step 6: Transition Validation
 
+**Critical Check: Missing Action Cards**
+
+For each transition cell (cells between parts):
+1. Identify transition by pattern: "Part X:" heading with progress indicator
+2. Check for `<!-- action-cards -->` marker
+3. If marker missing: **FAIL** with error message
+4. Count links following marker (must be 3-6)
+5. Validate all action card links resolve
+
+**Detection logic:**
+```python
+def validate_transition_action_cards(cell, cell_idx):
+    source = ''.join(cell.get('source', []))
+
+    # Is this a transition cell?
+    is_transition = (
+        re.search(r'Part \d+:', source) and
+        'Progress:' in source and
+        '🔵' in source
+    )
+
+    if not is_transition:
+        return None  # Not a transition
+
+    # Check for action cards marker
+    has_marker = '<!-- action-cards -->' in source
+
+    if not has_marker:
+        return {
+            'status': 'FAIL',
+            'cell': cell_idx,
+            'issue': 'Missing <!-- action-cards --> marker',
+            'part': extract_part_number(source)
+        }
+
+    # Count action card links
+    links = re.findall(r'- \[([^\]]+)\]\(#\)', source)
+    link_count = len(links)
+
+    if link_count < 3:
+        return {
+            'status': 'WARN',
+            'cell': cell_idx,
+            'issue': f'Only {link_count} action cards (need 3-6)',
+            'part': extract_part_number(source)
+        }
+
+    if link_count > 6:
+        return {
+            'status': 'WARN',
+            'cell': cell_idx,
+            'issue': f'{link_count} action cards (recommended 3-6)',
+            'part': extract_part_number(source)
+        }
+
+    return {'status': 'PASS', 'count': link_count}
+```
+
 Check for:
 - Transition cells between major parts
-- `<!-- action-cards -->` marker present
+- `<!-- action-cards -->` marker present (REQUIRED)
 - 3-6 action card links per transition
 - Action card links resolve correctly
 - Contextual text present
@@ -241,6 +299,8 @@ The validation report includes:
 
 ## Example Output
 
+### Example 1: Passing Validation
+
 ```
 NOTEBOOK VALIDATION REPORT: docs-navigation.ipynb
 ================================================================
@@ -293,6 +353,57 @@ RECOMMENDATIONS:
   • Quality score: 98/100
 ```
 
+### Example 2: Failed Validation (Missing Action Cards)
+
+```
+NOTEBOOK VALIDATION REPORT: docs-navigation.ipynb
+================================================================
+
+SUMMARY:
+  Total Cells: 75
+  Smart Links: 58 (58 valid, 0 broken)
+  Parts: 8 (sequential)
+  Transitions: 7 (2 missing action cards)
+  Overall Score: 72/100 ⚠️ MODERATE ISSUES
+
+SMART LINKS: ✅ PASS
+  ✓ All 58 smart links resolve correctly
+
+STRUCTURE: ✅ PASS
+  ✓ 8 parts with consistent structure
+
+TRANSITIONS: ❌ FAIL
+  ✗ Part 7 transition (cell 45) missing <!-- action-cards --> marker
+  ✗ Part 8 transition (cell 52) missing <!-- action-cards --> marker
+  ✓ 5 other transitions have action cards
+
+PART FLOW: ✅ PASS
+  ✓ Parts numbered 1-8 sequentially
+
+CELL ORDERING: ✅ PASS
+  ✓ All cells in logical sequence
+
+PRODUCTION READINESS: ⚠️ WARN
+  ✓ Metadata complete
+  ⚠ Action card issues prevent production deployment
+
+ISSUES FOUND:
+
+1. ❌ CRITICAL: Cell 45 (Part 7 transition)
+   Missing <!-- action-cards --> marker
+   Fix: Add action cards marker with 3-6 links
+
+2. ❌ CRITICAL: Cell 52 (Part 8 transition)
+   Missing <!-- action-cards --> marker
+   Fix: Add action cards marker with 3-6 links
+
+RECOMMENDATIONS:
+  • Fix missing action cards before deployment
+  • Add <!-- action-cards --> markers to transitions
+  • Ensure each transition has 3-6 navigation links
+  • Re-run validation after fixes
+```
+
 ## Common Issues and Quick Fixes
 
 **Broken Smart Links:**
@@ -317,8 +428,28 @@ Link: [Getting Started Guide](#)
 
 **Missing Action Cards:**
 ```bash
-# Issue: Transition has no <!-- action-cards --> marker
-# Fix: Add marker and 3-6 links
+# Issue: Part 7 transition cell (cell 45) has no <!-- action-cards --> marker
+# Fix: Add marker and 3-6 links to guide readers
+
+# Before (broken):
+### Part 7: Universal Patterns
+**Progress: 7 of 8** 🔵🔵🔵🔵🔵🔵🔵⚪
+**Reading time: 2 minutes**
+
+These patterns work everywhere...
+
+# After (fixed):
+### Part 7: Universal Patterns
+**Progress: 7 of 8** 🔵🔵🔵🔵🔵🔵🔵⚪
+**Reading time: 2 minutes**
+
+These patterns work everywhere...
+
+<!-- action-cards -->
+
+- [Beyond EDS](#)
+- [Universal Patterns](#)
+- [Apply Anywhere](#)
 ```
 
 ## Best Practices

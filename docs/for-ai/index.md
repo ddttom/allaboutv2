@@ -183,6 +183,17 @@ This index provides structured access to all documentation within the `docs/for-
 
 ---
 
+## 🐛 Bug Fixes & Known Issues
+
+### Resolved Issues
+- **[`fixes/showpreview-notebook-mode-fix.md`](fixes/showpreview-notebook-mode-fix.md)**
+  - Fixed `showPreview()` not working in ipynb-viewer notebook mode
+  - Enhanced error handling with user-friendly messages
+  - Improved overlay z-index hierarchy for notebook context
+  - Target: Developers using showPreview() in Jupyter notebooks
+
+---
+
 ## 📋 Project Guidelines
 
 ### Application Architecture

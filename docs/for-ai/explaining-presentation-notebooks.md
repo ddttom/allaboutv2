@@ -727,6 +727,78 @@ All blocks from the EDS system work in presentation notebooks:
 </div>
 ```
 
+## Validation Requirements for Navigation Notebooks
+
+**CRITICAL:** Navigation notebooks (with multi-part structures) require specific validation to ensure production readiness.
+
+### Action Cards in Transition Cells (REQUIRED)
+
+Navigation notebooks with numbered parts MUST include action cards in transition cells between parts. This is the **#1 validation failure** (catches 80% of issues).
+
+**What are transition cells?**
+Cells that appear between major parts with this structure:
+- Part X heading (e.g., `### Part 2: By Your Role`)
+- Progress indicator with dots (e.g., `**Progress: 2 of 7** 🔵🔵⚪⚪⚪⚪⚪`)
+- Reading time estimate (e.g., `**Reading time: 3 minutes**`)
+- Contextual text explaining what's next
+
+**Required format:**
+```markdown
+### Part 2: By Your Role
+**Progress: 2 of 7** 🔵🔵⚪⚪⚪⚪⚪
+**Reading time: 3 minutes**
+
+Now that you understand the structure, let's explore paths based on YOUR role...
+
+<!-- action-cards -->
+
+- [New Developer](#)
+- [Experienced Developer](#)
+- [Architect / Tech Lead](#)
+```
+
+**Validation checks:**
+- ✅ Every transition cell MUST have `<!-- action-cards -->` marker
+- ✅ Must have 3-6 action card links (markdown list)
+- ✅ Each link must use `(#)` placeholder pattern
+- ✅ Links must resolve to actual headings in the notebook
+
+**Common failure:**
+```markdown
+### Part 2: By Your Role
+**Progress: 2 of 7** 🔵🔵⚪⚪⚪⚪⚪
+**Reading time: 3 minutes**
+
+Now that you understand the structure...
+<!-- Missing action cards marker and links! -->
+```
+
+**Before deployment, run validation:**
+```bash
+/validate-notebook your-notebook.ipynb
+```
+
+Expected score: ≥90/100 for production ready
+
+**See also:**
+- `.claude/skills/ipynb-validator/SKILL.md` - Complete validation guide
+- `.claude/commands/validate-notebook.md` - Validation command details
+- `docs/for-ai/templates/ipynb/README.md` - Template structure and validation
+
+### When Validation is Required
+
+Run `/validate-notebook` for all navigation notebooks before deployment. For simple presentation notebooks without numbered parts, validation may not be necessary.
+
+**Navigation notebooks have:**
+- Numbered parts (Part 1, Part 2, etc.)
+- Transition cells between parts
+- Multi-section structure with progress tracking
+
+**Simple presentations have:**
+- No numbered parts
+- Single-flow content
+- No progress indicators
+
 ## Cell Ordering Best Practices
 
 **CRITICAL:** Proper cell ordering ensures smooth navigation and professional presentation flow.

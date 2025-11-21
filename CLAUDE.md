@@ -155,10 +155,12 @@ When creating or modifying blocks, ALWAYS use Content Driven Development:
    - Transform text into engaging interactive content
    - Progressive learning with demonstrations
    - **Visual block demonstrations** using `showPreview()` for beautiful overlays
-   - Available blocks: accordion, cards, tabs, grid, table, hero, quote
+   - Available blocks: accordion, cards, tabs, hero, quote (use existing blocks only)
+   - **Note:** `showPreview()` now works correctly in notebook mode (fixed 2025-11-21)
    - Use `/create-notebook` command
    - Files: `education.ipynb`, `docs-navigation.ipynb`, `blog.ipynb`
    - Focus: Teaching and explaining concepts with visual engagement
+   - See: `docs/for-ai/fixes/showpreview-notebook-mode-fix.md` for details
 
 4. **ipynb-viewer Block** - Display notebooks on EDS pages
    - Display .ipynb files on EDS pages
