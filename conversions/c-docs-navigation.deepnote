@@ -1,0 +1,2316 @@
+metadata:
+  createdAt: 2025-11-21T10:10:28.942Z
+project:
+  id: d4f4d056-ec8e-4f09-ba2a-eabbd1f67ecc
+  integrations: []
+  name: docs-navigation
+  notebooks:
+    - blocks:
+        - blockGroup: 992c393d-0375-4772-a53a-30cd017ebbe1
+          content: >-
+            # 🗺️ Documentation Navigator
+
+
+            Lost in documentation? Not anymore! This interactive guide helps you
+            navigate comprehensive documentation like a pro.
+
+
+            <!-- action-cards -->
+
+
+            - [Two Entry Points](#)
+
+            - [Three Navigation Strategies](#)
+
+            - [Pro Navigator Tips](#)
+          id: 40cc7719-3c48-419f-8f15-5824367a5405
+          metadata: {}
+          sortingKey: "0"
+          type: markdown
+          version: 1
+        - blockGroup: a7b06818-0994-477e-8f60-cdc82ee191b6
+          content: >-
+            ### 📋 Complete Guide Overview
+
+
+            **Reading time: 20-25 minutes** | **55 cells** | **8 parts**
+
+
+            This guide offers multiple ways to navigate:
+
+
+            | Part | Focus | Cells | Time |
+
+            |------|-------|-------|------|
+
+            | 1. [🌍 Part 1: The Big Picture](#) | Why & What | 4 | 3 min |
+
+            | 2. [👥Part 2: By Your Role - New Developer](#) | 6 role-based
+            paths | 7 | 5 min |
+
+            | 3. [🎯Part 3: By Your Task - Building A Simple Component](#) | 6
+            task-based guides | 7 | 4 min |
+
+            | 4. [🔄Part 4: By Workflow - Planning Phase](#) | 5 development
+            phases | 6 | 3 min |
+
+            | 5. [📚Part 5: Document Categories - Core Navigation](#) | Browse
+            all 6 categories | 7 | 3 min |
+
+            | 6. [💡Part 6: Pro Navigator Tips - Tip 1: Use Navigation Flows](#)
+            | 11 expert strategies | 11 | 4 min |
+
+            | 7. [🌍 Part 7: Universal Patterns - Beyond EDS](#) | Apply
+            anywhere | 2 | 2 min |
+
+            | 8. [🔧 Part 8: How This Navigator Works - The Magic Behind](#) |
+            Meta-documentation | 5 | 3 min |
+
+
+            **Quick access:**
+
+            - 🚨 [🚨 Emergency Navigation - I Need Help NOW!](#) - Need help
+            NOW?
+
+            - 🌟 [🌟 The Essential Three - Bookmark These Now](#) - The
+            must-reads
+
+            - 🔍 [🔍 How to Search Within Documentation](#) - Find what you need
+
+            - ⚠️ [⚠️ Troubleshooting Navigation Issues](#) - Common issues
+          id: 96f65b14-6cb7-4638-9cea-6c51576166e0
+          metadata: {}
+          sortingKey: "1"
+          type: markdown
+          version: 1
+        - blockGroup: 4d16ae73-5e46-4acb-9f80-ef2c486b0770
+          content: |-
+            ### 🚨 Emergency Navigation - I Need Help NOW!
+
+            **Skip the learning - jump straight to solutions:**
+
+            | Problem | Immediate Solution |
+            |---------|-------------------|
+            | 🔴 **Build is broken** | → [debug.md](docs/for-ai/testing/debug.md) - Debugging procedures |
+            | 🔴 **Block not rendering** | → [EDS-Architecture-and-Testing-Guide.md](docs/for-ai/testing/EDS-Architecture-and-Testing-Guide.md) |
+            | 🔴 **Deployment failing** | → [backend-structure.md](docs/for-ai/guidelines/backend-structure.md) - Backend setup |
+            | 🔴 **Performance issues** | → [instrumentation-how-it-works.md](docs/for-ai/testing/instrumentation-how-it-works.md) |
+            | 🔴 **Security concerns** | → [security-checklist.md](docs/for-ai/guidelines/security-checklist.md) |
+            | 🔴 **CSS not working** | → [style-guide.md](docs/for-ai/guidelines/style-guide.md) |
+            | 🔴 **Don't know where to start** | → [getting-started-guide.md](docs/for-ai/getting-started-guide.md) |
+
+            **For everything else:** Use the navigation below based on your role, task, or workflow phase.
+          id: 23b18020-32df-4b81-a466-4dacf137cf8c
+          metadata: {}
+          sortingKey: "2"
+          type: markdown
+          version: 1
+        - blockGroup: 46676044-af1c-4842-a881-96e056413770
+          content: >-
+            ### 🌟 The Essential Three - Bookmark These Now
+
+
+            Every role should have these three docs open at all times:
+
+
+            | Doc | Purpose | When to Use |
+
+            |-----|---------|-------------|
+
+            | **[index.md](docs/for-ai/index.md)** | Your home base | Starting
+            point, finding docs |
+
+            | **[eds.md](docs/for-ai/eds.md)** | Your reference bible | Deep
+            technical questions (1,937 lines) |
+
+            | **[navigation-flows.md](docs/for-ai/navigation-flows.md)** | Your
+            decision trees | "Should I use X or Y?" questions |
+
+
+            **Pro tip:** Keep these in browser tabs while working on EDS
+            projects.
+          id: 90a69a7c-510c-454a-8512-e93b60e7b598
+          metadata: {}
+          sortingKey: "3"
+          type: markdown
+          version: 1
+        - blockGroup: 3217f070-5906-4254-9732-83c06e5c3a43
+          content: >-
+            ## 🔍 How to Search Within Documentation
+
+
+            **Looking for block examples?**
+
+            Keywords: `decorate`, `innerHTML`, `block.children`,
+            `block.querySelector`
+
+
+            **Need performance info?**
+
+            Keywords: `Core Web Vitals`, `LCP`, `CLS`, `FID`, `lazy loading`
+
+
+            **Stuck with testing?**
+
+            Keywords: `testBlock`, `jsdom`, `test.html`, `Jupyter`, `debugging`
+
+
+            **Build process questions?**
+
+            Keywords: `Vite`, `build/`, `deploy`, `bundler`, `dependencies`
+
+
+            **Content model help?**
+
+            Keywords: `table structure`, `authoring`, `content-driven`, `CDD`
+
+
+            **Pro tip:** Use your IDE's global search (Cmd/Ctrl+Shift+F) across
+            `docs/for-ai/` directory.
+          id: 0e96361b-531a-438c-986a-40736e97dec2
+          metadata: {}
+          sortingKey: "4"
+          type: markdown
+          version: 1
+        - blockGroup: 6d7ec279-46a9-48a9-aefc-695cce955110
+          content: >-
+            ## 📍 What is This?
+
+
+            The `docs/for-ai` directory contains detailed guides covering every
+            aspect of Adobe Edge Delivery Services development. That's
+            powerful... but overwhelming.
+
+
+            This notebook is your **documentation GPS** - it helps you find
+            exactly what you need, fast.
+          id: e10fe454-dd98-4402-8422-6e25a50c6303
+          metadata: {}
+          sortingKey: "5"
+          type: markdown
+          version: 1
+        - blockGroup: 3c90bcff-2bc1-4cfe-9a1a-05fbfed408e1
+          content: >-
+            ## ⚠️ Why Navigation Matters
+
+
+            **The Documentation Crisis**
+
+            Even excellent documentation fails if people can't find what they
+            need. Three problems plague every documentation system:
+
+
+            1. **Documentation Drift** - Docs become outdated as code evolves
+
+            2. **Single-Audience Focus** - Written for developers, unusable by
+            others
+
+            3. **Maintenance Burden** - Takes hours to create, minutes to become
+            obsolete
+
+
+            When documentation fails, knowledge gets trapped in individual
+            heads. Teams become fragile. Every departure becomes a crisis.
+
+            **Living documentation solves this** through:
+
+            - Executable examples that can't lie
+
+            - Self-verification on every use
+
+            - Multi-audience design serving everyone
+
+
+            This navigator embodies those principles - it's your documentation
+            GPS, actively guiding you to the right information.
+          id: d7207444-f786-4024-b69b-bae4a0335ca1
+          metadata: {}
+          sortingKey: "6"
+          type: markdown
+          version: 1
+        - blockGroup: e830afdd-9919-4fb8-9700-da386b7f1ec9
+          content: |-
+            ### 📚 What You'll Learn
+
+            - 📂 Documentation structure and organization
+            - 🔍 How to find the right doc for your task
+            - 🎓 Role-based learning paths
+            - 🔄 Workflow-based navigation
+            - 💡 Pro navigation strategies
+          id: 4f3948f0-004f-43df-8bb7-f91ecf497026
+          metadata: {}
+          sortingKey: "7"
+          type: markdown
+          version: 1
+        - blockGroup: e07833e5-564d-426f-8276-5cd8365ddd36
+          content: |
+            ## 🌍 Part 1: The Big Picture
+
+            **Progress: 1 of 8** 
+            🔵⚪⚪⚪⚪⚪⚪⚪
+            **Reading time: 3 minutes**
+
+
+
+            <!-- action-cards -->
+
+            - [✨ Living Documentation Principles](#)
+            - [🎯 Two Entry Points](#)
+          id: 3ba29c5d-bac8-4d4c-9051-31594a54aacb
+          metadata: {}
+          sortingKey: "8"
+          type: markdown
+          version: 1
+        - blockGroup: 8948872e-adfe-42dc-80a8-9a69fd0cb543
+          content: >-
+            ### 🌍 The Big Picture
+
+
+            **The Documentation Ecosystem**
+
+
+            Comprehensive documentation organized into logical categories:
+
+
+            | Category | Purpose |
+
+            |----------|----------|
+
+            | Core Navigation | Entry points and cross-references |
+
+            | Implementation | Build components |
+
+            | Testing & Debugging | Verify and fix |
+
+            | Jupyter Notebooks | Interactive dev and education |
+
+            | Project Guidelines | Standards |
+
+            | Reference Materials | Deep dives |
+
+
+            **💡 This Notebook Uses Advanced Features:**
+
+            - ✨ **Action Cards** - Beautiful navigation cards from pure markdown
+
+            - ✨ **Auto-Wrapping** - Pure markdown automatically styled in
+            notebook mode
+
+            - ✨ **Smart Links** - Links automatically find matching headings
+
+            - ✨ **Hamburger TOC** - Quick navigation menu (☰ button in overlay)
+          id: 8ce3349a-f9fe-4cc6-bd29-0378f1a61007
+          metadata: {}
+          sortingKey: "9"
+          type: markdown
+          version: 1
+        - blockGroup: df0cc19e-8653-43d4-ad6d-a2811744c762
+          content: >-
+            ### ✨ Living Documentation Principles
+
+
+            This documentation system (and this navigator!) follows three core
+            principles:
+
+
+            **1. Executable Truth**
+
+            - Jupyter notebooks with runnable code
+
+            - Examples that execute and prove they work
+
+            - When code changes break examples, docs fail visibly
+
+
+            **2. Self-Verification**
+
+            - Documentation tests itself on every use
+
+            - No drift - either works or announces obsolescence
+
+            - The documentation IS the test suite
+
+
+            **3. Multi-Audience & Multi-Modal**
+
+            - Role-based paths (developer, architect, content creator)
+
+            - Task-based routes (build this, test that)
+
+            - Workflow-based organization (planning, dev, testing, deployment)
+
+
+            One documentation system, three ways to navigate, infinite
+            perspectives.
+          id: f19c2f39-2ce9-4243-b64e-835e999a2576
+          metadata: {}
+          sortingKey: a
+          type: markdown
+          version: 1
+        - blockGroup: af5cbede-250d-43a0-8ff0-41a3791d2d1a
+          content: >-
+            ### 🎯 Two Entry Points
+
+            **New to EDS?**
+
+            1. Start →
+            [getting-started-guide.md](docs/for-ai/getting-started-guide.md)
+
+            2. Then → [eds.md](docs/for-ai/eds.md)
+
+
+            **Know what you're doing?**
+
+            - Jump to specific guides
+
+            - Use [navigation-flows.md](docs/for-ai/navigation-flows.md) for
+            decision trees
+
+            - Reference architecture standards
+          id: be23c4a4-fa3a-4421-8108-f37d5c538609
+          metadata: {}
+          sortingKey: b
+          type: markdown
+          version: 1
+        - blockGroup: b915a4b5-eaa9-48e7-a21e-10d3b39fa205
+          content: >-
+            ### 🗺️Three Navigation Strategies
+
+            1. **Role-based** - "I'm a new developer" or "I create content"
+
+            2. **Task-based** - "I need to build X" or "I need to test Y"
+
+            3. **Workflow-based** - "I'm in testing phase" or "I need to
+            document"
+          id: 6636793b-a419-4917-af9f-37901ea4bd05
+          metadata: {}
+          sortingKey: c
+          type: markdown
+          version: 1
+        - blockGroup: f341de1e-1ef4-465c-9e98-1419bac7dc06
+          content: >-
+            ### ✅ You've Completed Part 1
+
+
+            **What you've learned:**
+
+            - 📂 Documentation ecosystem (6 categories)
+
+            - ✨ Living documentation principles (executable truth,
+            self-verification, multi-audience)
+
+            - 🎯 Two entry points (new vs experienced)
+
+            - 🗺️ Three navigation strategies (role, task, workflow)
+
+            - 💡 ipynb-viewer features this notebook uses
+
+
+            **Next steps:**
+
+            - 👤 [By Your Role](#) - Find your learning path
+
+            - 🎯 [By Your Task](#) - Jump to specific goal
+
+            - 🔄 [By Workflow](#) - Follow your development phase
+          id: c2cee68f-f092-4dd0-ba85-bca566596b01
+          metadata: {}
+          sortingKey: d
+          type: markdown
+          version: 1
+        - blockGroup: aa530acc-f21c-4252-b48d-721f9f3892bc
+          content: >-
+            ## Part 2: By Your Role
+
+
+            **Progress: 2 of 8** 
+
+            🔵🔵⚪⚪⚪⚪⚪⚪
+
+            **Reading time: 5 minutes**
+
+            Now that you understand the documentation structure, let's explore
+            navigation based on YOUR role...
+
+            <!-- action-cards -->
+
+            - [New Developer](#)
+
+            - [Experienced Developer](#)
+
+            - [Architect / Tech Lead](#)
+
+            - [Project Manager](#)
+
+            - [Content Creator](#)
+          id: aa77d958-54cb-4297-a873-d02086385baf
+          metadata: {}
+          sortingKey: e
+          type: markdown
+          version: 1
+        - blockGroup: 797b5b3d-1880-4a16-89d6-a9de6f06ab8f
+          content: |-
+            ### New Developer
+            **Required (in order):**
+            1. [getting-started-guide.md](docs/for-ai/getting-started-guide.md) - Orientation
+            2. [eds.md](docs/for-ai/eds.md) - Foundation
+            3. [implementation/raw-eds-blocks-guide.md](docs/for-ai/implementation/raw-eds-blocks-guide.md) - Simple components
+            4. [navigation-flows.md](docs/for-ai/navigation-flows.md) - Decision trees
+            5. [guidelines/frontend-guidelines.md](docs/for-ai/guidelines/frontend-guidelines.md) - Coding standards
+            6. [guidelines/style-guide.md](docs/for-ai/guidelines/style-guide.md) - CSS conventions
+          id: 0eea428e-08cf-4192-81a8-dd6aed7b63ac
+          metadata: {}
+          sortingKey: f
+          type: markdown
+          version: 1
+        - blockGroup: 82dfb612-dbb2-4129-ba72-08841c51b50b
+          content: |-
+            ### Experienced Developer
+            **Required (in order):**
+            1. [implementation/block-architecture-standards.md](docs/for-ai/implementation/block-architecture-standards.md)
+            2. [implementation/complex-eds-blocks-guide.md](docs/for-ai/implementation/complex-eds-blocks-guide.md)
+            3. [testing/eds-native-testing-standards.md](docs/for-ai/testing/eds-native-testing-standards.md)
+            4. [explaining-jupyter.md](docs/for-ai/explaining-jupyter.md) - Interactive testing
+            5. [testing/debug.md](docs/for-ai/testing/debug.md) - Advanced debugging
+          id: 73f97b4b-7e62-4104-84f3-3720704b1123
+          metadata: {}
+          sortingKey: g
+          type: markdown
+          version: 1
+        - blockGroup: 0a7616b4-d4ec-4e40-b2e0-ca0fb5c9d0af
+          content: |-
+            ### Architect / Tech Lead
+            **Required (in order):**
+            1. [implementation/design-philosophy-guide.md](docs/for-ai/implementation/design-philosophy-guide.md)
+            2. [testing/EDS-Architecture-and-Testing-Guide.md](docs/for-ai/testing/EDS-Architecture-and-Testing-Guide.md)
+            3. [eds-webcomponents-review.md](docs/for-ai/eds-webcomponents-review.md)
+            4. [guidelines/backend-structure.md](docs/for-ai/guidelines/backend-structure.md)
+            5. [guidelines/security-checklist.md](docs/for-ai/guidelines/security-checklist.md)
+          id: 697bfbf3-5ea8-48be-b826-34b397c0c8c5
+          metadata: {}
+          sortingKey: h
+          type: markdown
+          version: 1
+        - blockGroup: f1236515-2e09-44c4-8380-3fb7ad6384cb
+          content: |-
+            ### Project Manager
+            **Required (in order):**
+            1. [guidelines/prd.md](docs/for-ai/guidelines/prd.md) - Requirements
+            2. [guidelines/app-flow.md](docs/for-ai/guidelines/app-flow.md) - Workflows
+            3. [guidelines/tech-stack.md](docs/for-ai/guidelines/tech-stack.md) - Technology
+            4. [guidelines/security-checklist.md](docs/for-ai/guidelines/security-checklist.md) - Security
+          id: fac1e0e4-6eda-42ff-9be0-204c5af3dfcb
+          metadata: {}
+          sortingKey: i
+          type: markdown
+          version: 1
+        - blockGroup: 37301fa6-2e0a-4cb9-b4be-b256986231c1
+          content: |-
+            ### Content Creator
+            **Required (in order):**
+            1. [explaining-educational-notebooks.md](docs/for-ai/explaining-educational-notebooks.md) - Interactive tutorials
+            2. [explaining-presentation-notebooks.md](docs/for-ai/explaining-presentation-notebooks.md) - Client demos
+            3. [templates/ipynb/README.md](docs/for-ai/templates/ipynb/README.md) - Notebook templates
+            4. Use `/create-notebook` command for tutorials
+            5. Use `/create-presentation` command for demos
+
+            **Note:** Create engaging SPAs with accordion, cards, tabs, and more!
+          id: 7f43c825-8475-4cbb-b1c5-b0ebd936ed65
+          metadata: {}
+          sortingKey: j
+          type: markdown
+          version: 1
+        - blockGroup: 06617d02-aec1-4496-a82f-362ae528bc1a
+          content: |+
+            ### ✅ You've Completed Part 2
+
+            **What you've learned:**
+            - 👥 6 distinct role-based learning paths
+            - 📚 Essential docs for each role (tailored reading lists)
+            - 🎓 Reading order recommendations
+
+            **Your role clear?**
+            ✓ Great! Bookmark your essential docs and dive in.
+
+            **Still exploring?**
+            - 🎯 [Building A Simple Component](#) - "I need to build/test X"
+            - 🔄 [Planning Phase](#) - "I'm in X phase"
+
+          id: 2582d2f9-120a-4db2-af92-8740a13452cf
+          metadata: {}
+          sortingKey: k
+          type: markdown
+          version: 1
+        - blockGroup: d7706cb7-3a80-463f-9f49-5e451cc39770
+          content: >-
+            ## Part 3: By Your Task
+
+
+            **Progress: 3 of 8** 🔵🔵🔵⚪⚪⚪⚪⚪
+
+            **Reading time: 4 minutes**
+
+
+            Now that you know your role, let's find documentation by specific
+            tasks...
+
+            <!-- action-cards -->
+
+            - [Building A Simple Component](#)
+
+            - [Building A Complex Component](#)
+
+            - [Testing A Component](#)
+
+            - [Debugging Issues](#)
+
+            - [Creating Educational Content](#)
+
+            - [Creating Presentations](#)
+          id: caa7c1c5-14d1-4b94-86f9-2a91657fac15
+          metadata: {}
+          sortingKey: l
+          type: markdown
+          version: 1
+        - blockGroup: ffb9dec7-15e6-481b-9718-326e62bf6cd5
+          content: |-
+            ### 🎯 Building A Simple Component
+
+            **Required:**
+            - [implementation/raw-eds-blocks-guide.md](docs/for-ai/implementation/raw-eds-blocks-guide.md)
+            - [implementation/block-architecture-standards.md](docs/for-ai/implementation/block-architecture-standards.md)
+            - [implementation/eds-architecture-standards.md](docs/for-ai/implementation/eds-architecture-standards.md)
+
+            **Recommended:**
+            - [eds.md](docs/for-ai/eds.md) - Background
+            - [testing/eds-native-testing-standards.md](docs/for-ai/testing/eds-native-testing-standards.md)
+          id: f44de261-9bff-411c-a342-66fc08b54b52
+          metadata: {}
+          sortingKey: m
+          type: markdown
+          version: 1
+        - blockGroup: 43adb9b4-f2f3-4583-af7e-ea13ad8d1c25
+          content: |-
+            ### 🔨Building A Complex Component
+            **Required:**
+            - [implementation/complex-eds-blocks-guide.md](docs/for-ai/implementation/complex-eds-blocks-guide.md)
+            - [implementation/build-component-template.md](docs/for-ai/implementation/build-component-template.md)
+            - [implementation/build-blocks-clarification.md](docs/for-ai/implementation/build-blocks-clarification.md)
+
+            **Pro tip:** Check [design-philosophy-guide.md](docs/for-ai/implementation/design-philosophy-guide.md) first!
+          id: 851b6e77-57af-494b-902e-6237c2247dbc
+          metadata: {}
+          sortingKey: n
+          type: markdown
+          version: 1
+        - blockGroup: f7d6c0e3-5dc6-4369-8add-3d62af48c12d
+          content: >-
+            ### 🧪 Testing A Component
+
+            **Three testing approaches:**
+
+
+            1. **Interactive Testing** (recommended):
+               - [explaining-jupyter.md](docs/for-ai/explaining-jupyter.md) - Browser-only execution
+               - Context-aware with jsdom virtual DOM
+               - Live preview HTML generation
+
+            2. **Standard Testing**:
+               - [testing/eds-native-testing-standards.md](docs/for-ai/testing/eds-native-testing-standards.md)
+               - test.html files for browser rendering
+
+            3. **Debugging**:
+               - [testing/debug.md](docs/for-ai/testing/debug.md)
+               - [testing/instrumentation-how-it-works.md](docs/for-ai/testing/instrumentation-how-it-works.md)
+          id: 1ff87041-f085-47e3-a183-b0c8180594c9
+          metadata: {}
+          sortingKey: o
+          type: markdown
+          version: 1
+        - blockGroup: 7e78c64f-24d5-49d0-87de-9945aa028b77
+          content: |-
+            ### 🐛 Debugging Issues
+            **Start here:**
+            - [testing/debug.md](docs/for-ai/testing/debug.md) - Standard procedures
+            - [testing/EDS-Architecture-and-Testing-Guide.md](docs/for-ai/testing/EDS-Architecture-and-Testing-Guide.md)
+
+            **Performance issues:**
+            - [testing/instrumentation-how-it-works.md](docs/for-ai/testing/instrumentation-how-it-works.md)
+            - [testing/investigation.md](docs/for-ai/testing/investigation.md)
+            - [eds.md](docs/for-ai/eds.md) (Core Web Vitals section)
+          id: 23c81001-e227-404f-b824-bf1c4cccd0ba
+          metadata: {}
+          sortingKey: p
+          type: markdown
+          version: 1
+        - blockGroup: 7c0f5637-1372-478f-a1eb-7247783e7d12
+          content: |-
+            ### 📝 Creating Educational Content
+            **Required:**
+            - [explaining-educational-notebooks.md](docs/for-ai/explaining-educational-notebooks.md) - Transform text into interactive SPAs
+            - [templates/ipynb/README.md](docs/for-ai/templates/ipynb/README.md) - Starter templates
+            - Use `/create-notebook` command
+
+            **Examples:**
+            - This notebook!
+            - `education.ipynb`
+            - `blog.ipynb`
+          id: 2ccff890-8375-4a5d-b71b-12f91f7952b3
+          metadata: {}
+          sortingKey: q
+          type: markdown
+          version: 1
+        - blockGroup: 7bb5e4a8-4cb5-450b-a0cc-dd76de2fd02e
+          content: |-
+            ### 🎤 Creating Presentations
+            **Required:**
+            - [explaining-presentation-notebooks.md](docs/for-ai/explaining-presentation-notebooks.md) - Professional presentations
+            - Use `/create-presentation` command
+            - No executable code - embedded EDS blocks only
+
+            **Perfect for:**
+            - Client demos
+            - Internal showcases
+            - Interactive slides
+          id: 0700ca19-fd11-49cd-a7cd-46812570f7b4
+          metadata: {}
+          sortingKey: r
+          type: markdown
+          version: 1
+        - blockGroup: fc1d89d6-6a80-4493-9a28-a6234295ff11
+          content: |
+            ### ✅ You've Completed Part 3
+
+            **What you've learned:**
+            - 🎯 6 common task categories
+            - 📖 Required docs for each task
+            - 💡 Pro tips for complex tasks (check design philosophy first!)
+
+            **Found what you need?**
+            ✓ Perfect! Head to those docs and start building.
+
+            **Want the big picture?**
+            - 🔄 [By Workflow](#) - Planning → Development → Deployment
+            - 💡 [Pro Navigator Tips](#) - expert tips
+          id: 797dd5d2-06d5-4d3c-a744-8704c819676a
+          metadata: {}
+          sortingKey: s
+          type: markdown
+          version: 1
+        - blockGroup: 518c3470-851b-4f1c-b992-f36a25175628
+          content: >-
+            ### Part 4: By Workflow
+
+
+            Individual tasks are important, but workflows show you the complete
+            development journey...
+
+
+            <!-- action-cards -->
+
+
+            - [Planning Phase](#)
+
+            - [Development Phase](#)
+
+            - [Testing Phase](#)
+
+            - [Documentation Phase](#)
+
+            - [Deployment Phase](#)
+          id: 343e0ec0-3984-40c0-ac22-750aa6b77b35
+          metadata: {}
+          sortingKey: t
+          type: markdown
+          version: 1
+        - blockGroup: 37f47ed6-af27-47c3-bbf1-357daf829875
+          content: |-
+            ### 🔄 Planning Phase
+            **Progress: 4 of 8** 🔵🔵🔵🔵⚪⚪⚪⚪
+            **Reading time: 3 minutes**
+            **Read these:**
+            1. [guidelines/prd.md](docs/for-ai/guidelines/prd.md) - Requirements
+            2. [implementation/design-philosophy-guide.md](docs/for-ai/implementation/design-philosophy-guide.md) - Approach
+            3. [implementation/build-blocks-clarification.md](docs/for-ai/implementation/build-blocks-clarification.md) - Architecture
+            4. [navigation-flows.md](docs/for-ai/navigation-flows.md) - Decision trees
+
+            **Answer:** What? Which approach? Timeline?
+          id: fd308fb0-4251-4c40-98c6-a69908ccc109
+          metadata: {}
+          sortingKey: u
+          type: markdown
+          version: 1
+        - blockGroup: dbb25efd-b76b-4da1-94b1-69e7471d9418
+          content: |-
+            ### Development Phase
+            **Start with:**
+            1. [implementation/block-architecture-standards.md](docs/for-ai/implementation/block-architecture-standards.md)
+            2. [implementation/raw-eds-blocks-guide.md](docs/for-ai/implementation/raw-eds-blocks-guide.md) OR
+               [implementation/complex-eds-blocks-guide.md](docs/for-ai/implementation/complex-eds-blocks-guide.md)
+            3. [guidelines/frontend-guidelines.md](docs/for-ai/guidelines/frontend-guidelines.md) - Standards
+            4. [guidelines/style-guide.md](docs/for-ai/guidelines/style-guide.md) - CSS conventions
+          id: 959e483f-abca-42ac-a3f0-54a27c7743da
+          metadata: {}
+          sortingKey: v
+          type: markdown
+          version: 1
+        - blockGroup: 743a776b-15fa-47fe-9580-2b1dd244a0b0
+          content: |-
+            ### Testing Phase
+            **Essential:**
+            1. [testing/eds-native-testing-standards.md](docs/for-ai/testing/eds-native-testing-standards.md)
+            2. [explaining-jupyter.md](docs/for-ai/explaining-jupyter.md) - Interactive testing
+            3. [testing/debug.md](docs/for-ai/testing/debug.md)
+            4. [testing/instrumentation-how-it-works.md](docs/for-ai/testing/instrumentation-how-it-works.md)
+            5. [testing/investigation.md](docs/for-ai/testing/investigation.md) - Performance reports
+          id: 25d77b7f-761d-46ea-b1eb-38239add5605
+          metadata: {}
+          sortingKey: w
+          type: markdown
+          version: 1
+        - blockGroup: 3c72b330-04a1-4868-927f-1aa6ec41e465
+          content: |-
+            ### Documentation Phase
+            **Use:**
+            1. [explaining-educational-notebooks.md](docs/for-ai/explaining-educational-notebooks.md) - Tutorials
+            2. [explaining-presentation-notebooks.md](docs/for-ai/explaining-presentation-notebooks.md) - Demos
+            3. [templates/ipynb/README.md](docs/for-ai/templates/ipynb/README.md) - Templates
+            4. `/create-notebook` command
+            5. `/create-presentation` command
+            6. This notebook as example!
+          id: cde48971-ab01-457f-a12d-59f8b0ca08cb
+          metadata: {}
+          sortingKey: x
+          type: markdown
+          version: 1
+        - blockGroup: 65e0a887-7937-4c11-9c77-5a0e54415321
+          content: |-
+            ### Deployment Phase
+            **Critical:**
+            1. [guidelines/backend-structure.md](docs/for-ai/guidelines/backend-structure.md)
+            2. [guidelines/security-checklist.md](docs/for-ai/guidelines/security-checklist.md)
+            3. [testing/investigation.md](docs/for-ai/testing/investigation.md)
+          id: fabf7597-d0df-42c0-83ad-3f603adaa151
+          metadata: {}
+          sortingKey: y
+          type: markdown
+          version: 1
+        - blockGroup: 133b9bf7-5133-40e6-b3e8-7cdf39154e45
+          content: >
+            ### ✅ You've Completed Part 4
+
+
+            **What you've learned:**
+
+            - 🔄 5 development phases (Planning → Development → Testing →
+            Documentation → Deployment)
+
+            - 📚 Essential docs for each phase
+
+            - 🎯 Phase-specific focus areas
+
+
+            **Clear on your phase?**
+
+            ✓ Excellent! Follow those docs through your workflow.
+
+
+            **Want more context?**
+
+            - 📂 [📚Part 5: Core Navigation](#) - Systematic overview
+
+            - 💡 [💡 Tip 1: Use Navigation Flows](#) - Navigation strategies
+          id: 6d836c4f-0d72-469a-affe-0c871c021ae1
+          metadata: {}
+          sortingKey: z
+          type: markdown
+          version: 1
+        - blockGroup: d40812c2-87e1-4474-8f3c-225ffb2f1814
+          content: >
+            ### Part 5: Document Categories
+
+
+            **Progress: 5 of 8** 🔵🔵🔵🔵🔵⚪⚪⚪
+
+            **Reading time: 3 minutes**
+
+
+            Understanding workflows. Sometimes you just need to browse by
+            category...
+
+
+
+            <!-- action-cards -->
+
+
+            - [Core Navigation](#)
+
+            - [Implementation Guides](#)
+
+            - [Testing And Debugging](#)
+
+            - [Jupyter Notebooks](#)
+
+            - [Project Guidelines](#)
+
+            - [Reference Materials](#)
+          id: bdba32f8-7162-4a7f-a98c-f1f0f8458855
+          metadata: {}
+          sortingKey: "00"
+          type: markdown
+          version: 1
+        - blockGroup: 9e2877b4-5660-40d6-b226-78065efa9c28
+          content: |-
+            ### 📚Part 5: Core Navigation
+            **Purpose:** Entry points and cross-references
+
+            **All docs:**
+            - [index.md](docs/for-ai/index.md) - Central hub
+            - [getting-started-guide.md](docs/for-ai/getting-started-guide.md) - Role-based paths
+            - [document-relationship-mapping.md](docs/for-ai/document-relationship-mapping.md) - Cross-references
+            - [navigation-flows.md](docs/for-ai/navigation-flows.md) - Decision trees
+          id: afa9320e-2788-4ca6-a641-a9a30cdffe77
+          metadata: {}
+          sortingKey: "01"
+          type: markdown
+          version: 1
+        - blockGroup: bc5a8ecc-9b32-4367-a393-ef1e34875d4a
+          content: |-
+            ### Implementation Guides
+            **Purpose:** How to build components
+
+            **All docs:**
+            - [block-architecture-standards.md](docs/for-ai/implementation/block-architecture-standards.md) - Standards
+            - [raw-eds-blocks-guide.md](docs/for-ai/implementation/raw-eds-blocks-guide.md) - Simple components
+            - [complex-eds-blocks-guide.md](docs/for-ai/implementation/complex-eds-blocks-guide.md) - Advanced components
+            - [build-component-template.md](docs/for-ai/implementation/build-component-template.md) - Scaffolding
+            - [design-philosophy-guide.md](docs/for-ai/implementation/design-philosophy-guide.md) - Decision framework
+            - [eds-architecture-standards.md](docs/for-ai/implementation/eds-architecture-standards.md) - EDS-native development
+            - [build-blocks-clarification.md](docs/for-ai/implementation/build-blocks-clarification.md) - Dual-directory architecture
+          id: e99c585e-254a-4837-8d44-103ffe2f2b42
+          metadata: {}
+          sortingKey: "02"
+          type: markdown
+          version: 1
+        - blockGroup: 43060d6d-f9c0-49af-a7be-9338aaa17cf4
+          content: |-
+            ### Testing And Debugging
+            **Purpose:** Verify, fix, optimize
+
+            **All docs:**
+            - [eds-native-testing-standards.md](docs/for-ai/testing/eds-native-testing-standards.md) - Testing framework
+            - [debug.md](docs/for-ai/testing/debug.md) - Debugging procedures
+            - [EDS-Architecture-and-Testing-Guide.md](docs/for-ai/testing/EDS-Architecture-and-Testing-Guide.md) - Advanced strategies
+            - [instrumentation-how-it-works.md](docs/for-ai/testing/instrumentation-how-it-works.md) - Performance monitoring
+            - [investigation.md](docs/for-ai/testing/investigation.md) - Performance investigation
+          id: a761f1e8-b749-40f9-97f8-fb5de0bff945
+          metadata: {}
+          sortingKey: "03"
+          type: markdown
+          version: 1
+        - blockGroup: 7f6ddb24-4aaf-4d9e-9f1b-25c7476d4395
+          content: |-
+            ### Jupyter Notebooks
+            **Purpose:** Interactive development and education
+
+            **Three specialized types:**
+
+            > **Testing Notebooks** - [explaining-jupyter.md](docs/for-ai/explaining-jupyter.md)
+            > Browser-only execution
+            > jsdom virtual DOM for block decoration
+            > Live preview HTML generation
+            > Context-aware testing
+
+            >**Educational Notebooks** - [explaining-educational-notebooks.md](docs/for-ai/explaining-educational-notebooks.md)
+            >  Create interactive tutorials as SPAs
+            >  Transform text into engaging content
+            >  Progressive learning with demonstrations
+            >  Visual block demonstrations with showPreview()
+
+            > **Presentation Notebooks** - [explaining-presentation-notebooks.md](docs/for-ai/explaining-presentation-notebooks.md)
+            >  Professional presentations (no executable code)
+            >  Embedded EDS blocks in markdown
+            >  Client demos and showcases
+            > Inline JavaScript for block initialization
+
+            **Note:** Each type serves a different purpose - choose based on your goal!
+          id: 0cafdd23-2e60-4bcc-8041-fe54ce19cf6a
+          metadata: {}
+          sortingKey: "04"
+          type: markdown
+          version: 1
+        - blockGroup: 8e6edc7b-e47f-4077-b857-e27daa98c4d4
+          content: |-
+            ### Project Guidelines
+            **Purpose:** Standards and requirements
+
+            **All docs:**
+            - [prd.md](docs/for-ai/guidelines/prd.md) - Product requirements
+            - [tech-stack.md](docs/for-ai/guidelines/tech-stack.md) - Technology stack
+            - [frontend-guidelines.md](docs/for-ai/guidelines/frontend-guidelines.md) - Coding standards
+            - [backend-structure.md](docs/for-ai/guidelines/backend-structure.md) - Backend architecture
+            - [app-flow.md](docs/for-ai/guidelines/app-flow.md) - Application workflows
+            - [security-checklist.md](docs/for-ai/guidelines/security-checklist.md) - Security guidelines
+            - [style-guide.md](docs/for-ai/guidelines/style-guide.md) - CSS naming conventions
+          id: 948a91e5-ab13-47b9-849b-a0f22aa7218f
+          metadata: {}
+          sortingKey: "05"
+          type: markdown
+          version: 1
+        - blockGroup: 9f682c78-fd37-4a56-b82f-3f26afcd5b52
+          content: |-
+            ### Reference Materials
+            **Purpose:** Deep analysis and comprehensive references
+
+            **All docs:**
+            - [eds.md](docs/for-ai/eds.md) - Complete EDS guide
+            - [eds-appendix.md](docs/for-ai/eds-appendix.md) - Supplementary reference
+            - [eds-webcomponents-review.md](docs/for-ai/eds-webcomponents-review.md) - Web components analysis
+            - [templates/ipynb/README.md](docs/for-ai/templates/ipynb/README.md) - Jupyter notebook templates
+          id: 70919659-1c49-4970-9e40-81d22db2017a
+          metadata: {}
+          sortingKey: "06"
+          type: markdown
+          version: 1
+        - blockGroup: ab22dd42-35ad-4c93-b22a-fac60a5ae3de
+          content: |
+            ### ✅ You've Completed Part 5
+
+            **What you've learned:**
+            - 📂 All 6 documentation categories
+            - 📊 Complete catalog (26 docs systematically organized)
+            - 🗺️ Category purposes and contents
+
+            **Found your docs?**
+            ✓ Great! You now know the full landscape.
+
+            **Want expert guidance?**
+            - 💡 [Pro Navigator Tips](#) - 11 navigation tips
+            - 🌍 [Universal Patterns](#) - Apply beyond EDS
+          id: f022c270-22cd-49f1-ac2f-56fdfad4de92
+          metadata: {}
+          sortingKey: "07"
+          type: markdown
+          version: 1
+        - blockGroup: ae512804-b800-49a1-ad0f-14d1e28daec8
+          content: >-
+            ### Part 6: Pro Navigator tips
+
+
+            Master these expert strategies to navigate documentation like a
+            pro...
+
+
+            <!-- action-cards -->
+
+
+            - [Use Navigation Flows](#)
+
+            - [Start with Getting Started](#)
+
+            - [docs/for-ai/eds.md is Your Bible](#)
+
+            - [Know the Dual-Pattern](#)
+
+            - [Master Three Notebook Types](#)
+
+            - [Leverage AI for Documentation](#)
+          id: 636ddd87-105d-4d64-aeb0-f464db1c2b31
+          metadata: {}
+          sortingKey: "08"
+          type: markdown
+          version: 1
+        - blockGroup: a6595a3f-9ace-4fa0-bfed-913d4bfbb203
+          content: |-
+            ### 💡 Tip 1: Use Navigation Flows
+            **Progress: 6 of 8** 🔵🔵🔵🔵🔵🔵⚪⚪
+            **Reading time: 4 minutes**
+            **Document:** [navigation-flows.md](docs/for-ai/navigation-flows.md)
+
+            Text-based decision trees for:
+            - "Should I use Simple or Complex approach?"
+            - "Which testing method should I use?"
+            - "Which Jupyter notebook type do I need?"
+
+            Visual flowcharts guide you to the right docs!
+          id: 1da20754-5e40-411a-bbe7-8c7afb3f2037
+          metadata: {}
+          sortingKey: "09"
+          type: markdown
+          version: 1
+        - blockGroup: 953f8423-b0a8-4775-98be-2f58509620ff
+          content: |-
+            ### Tip 2: Use Relationship Mapping
+            **Document:** [document-relationship-mapping.md](docs/for-ai/document-relationship-mapping.md)
+
+            Shows how all docs connect:
+            - Cross-references between documents
+            - Bidirectional link strategy
+            - User journey pathways
+
+            Perfect for understanding the big picture!
+          id: e0cdb54a-3025-453c-9970-36b4b9241a71
+          metadata: {}
+          sortingKey: 0a
+          type: markdown
+          version: 1
+        - blockGroup: 62b67e26-1658-4ee9-adca-679eddf6de99
+          content: >-
+            ### Tip 3: Start with Getting Started
+
+            **Document:**
+            [getting-started-guide.md](docs/for-ai/getting-started-guide.md)
+
+
+            Your GPS calibration:
+
+            - Role-based learning paths
+
+            - Time estimates for each role
+
+            - Quick reference sections
+
+            - Scenario-based solutions
+
+
+            Even experts benefit from this!
+          id: 5374074d-d6ef-4722-9652-c1c79a8b3ab1
+          metadata: {}
+          sortingKey: 0b
+          type: markdown
+          version: 1
+        - blockGroup: 0159f158-7ff9-4062-b0a2-e1252b6a2fe9
+          content: |-
+            ### Tip 4: docs/for-ai/eds.md is Your Bible
+            **Document:** [eds.md](docs/for-ai/eds.md)
+
+            Comprehensive reference covering:
+            - Document transformation pipeline
+            - Content processing in detail
+            - Block development patterns
+            - Performance optimization
+            - Core Web Vitals
+
+            **Don't read cover-to-cover** - use as reference!
+          id: 5316ae5a-a911-4ed4-8769-feec7e58d5ec
+          metadata: {}
+          sortingKey: 0c
+          type: markdown
+          version: 1
+        - blockGroup: 3c4f8652-1781-410d-8b9c-0c12ca07386d
+          content: |-
+            ### Tip 5: Know the Dual-Pattern
+            | Approach | When | Directory | Doc |
+            |----------|------|-----------|-----|
+            | EDS-Native | Simple | /blocks/ | raw-eds-blocks |
+            | Build-Enhanced | Complex | /build/ → /blocks/ | complex-eds-blocks |
+
+            **Decision guide:** [design-philosophy-guide.md](docs/for-ai/implementation/design-philosophy-guide.md)
+
+            **Architecture:** [build-blocks-clarification.md](docs/for-ai/implementation/build-blocks-clarification.md)
+
+            Some projects need BOTH patterns!
+          id: 2de57036-a42b-4787-a4ea-07fd159cfdcb
+          metadata: {}
+          sortingKey: 0d
+          type: markdown
+          version: 1
+        - blockGroup: 55de2351-b1bd-4063-96d6-1c2368c03daf
+          content: |-
+            ### Tip 6: Master Three Notebook Types
+            Jupyter notebooks are game-changers:
+
+            1. **Testing** ([explaining-jupyter.md](docs/for-ai/explaining-jupyter.md))
+               - Interactive block development
+               - Browser-only execution
+               - Live HTML previews
+            2. **Educational** ([explaining-educational-notebooks.md](docs/for-ai/explaining-educational-notebooks.md))
+               - Transform text into tutorials
+               - Interactive SPAs
+               - Progressive learning
+            3. **Presentation** ([explaining-presentation-notebooks.md](docs/for-ai/explaining-presentation-notebooks.md))
+               - Professional demos
+               - No executable code
+               - Embedded EDS blocks
+
+            **Choose the right type for your goal!**
+          id: 139269d2-f9b0-413f-a996-57dbd29fc7af
+          metadata: {}
+          sortingKey: 0e
+          type: markdown
+          version: 1
+        - blockGroup: 6356d736-8f56-4324-a130-1436652456c9
+          content: >-
+            ### Tip 7: Use Templates
+
+            **Document:**
+            [templates/ipynb/README.md](docs/for-ai/templates/ipynb/README.md)
+
+
+            Pre-built templates for:
+
+            - Testing notebooks
+
+            - Educational notebooks
+
+            - Presentation notebooks
+
+            - Blog posts
+
+
+            Don't start from scratch - use proven structures!
+          id: e79e7826-fd14-408f-9eb0-ac501b4867e9
+          metadata: {}
+          sortingKey: 0f
+          type: markdown
+          version: 1
+        - blockGroup: a9f6bc81-1702-4722-99ff-d8c477ab3cf3
+          content: |-
+            ### Tip 8: Build Personal Quick Reference
+
+            **Example:**
+
+            > **My Frequent Docs:**
+            > - Complex: [complex-eds-blocks-guide.md](docs/for-ai/implementation/complex-eds-blocks-guide.md)
+            > - Testing: [explaining-jupyter.md](docs/for-ai/explaining-jupyter.md)
+            > - Debug: [debug.md](docs/for-ai/testing/debug.md)
+            > - Decision: [navigation-flows.md](docs/for-ai/navigation-flows.md)
+
+            Different for each role and phase!
+          id: c7048520-ee0c-4f81-b4d8-899d48a5a332
+          metadata: {}
+          sortingKey: 0g
+          type: markdown
+          version: 1
+        - blockGroup: 4cafbb72-f854-411d-9d54-6a5d837fce71
+          content: |-
+            ### Tip 9: Use Slash Commands
+            **Available:**
+            `/new-block` - Create block (follows CDD)
+             `/test-block` - Run tests
+            `/create-notebook` - Create tutorial
+            `/create-presentation` - Create demo
+            `/lint-all` - Run linting
+            `/check-block` - Review architecture
+
+
+            Commands follow best practices automatically!
+          id: f7a0718e-3193-4468-a0a0-d989aa5a22a6
+          metadata: {}
+          sortingKey: 0h
+          type: markdown
+          version: 1
+        - blockGroup: 943611c6-9a76-442a-a17d-df49c96603cc
+          content: |-
+            ### Tip 10: Follow Decision Trees
+            **Document:** [navigation-flows.md](docs/for-ai/navigation-flows.md)
+
+            Quick visual flowcharts:
+
+            **"Should I use Simple or Complex?"**
+            → External dependencies? → Complex
+            → Build process needed? → Complex
+            → Otherwise? → Simple
+
+            **"Which Jupyter notebook type?"**
+            → Testing blocks? → Testing notebook
+            → Teaching concept? → Educational notebook
+            → Client demo? → Presentation notebook
+
+            **"Which testing approach?"**
+            → Interactive development? → Jupyter (explaining-jupyter.md)
+            → Browser rendering? → test.html files
+            → Automated? → Jest/Mocha (future)
+          id: 18adea08-05fa-402f-864f-b13bbe06cde1
+          metadata: {}
+          sortingKey: 0i
+          type: markdown
+          version: 1
+        - blockGroup: 6b13f33b-2c87-489a-893d-3a4ea922559f
+          content: >-
+            ### Tip 11: Leverage AI for Documentation
+
+            **The Efficiency Revolution:**
+
+
+            Creating comprehensive block documentation manually: **2+ hours**
+
+            With Claude and living documentation: **8 minutes**
+
+
+            **How it works:**
+
+            - Describe what you want: "Show content teams how accordion
+            transforms tables"
+
+            - Claude generates complete notebooks with executable examples
+
+            - Plain-English explanations for all audiences
+
+            - Review, refine, publish
+
+
+            **Beyond content generation:**
+
+            - Slash commands (`/new-block`, `/test-block`) automate best
+            practices
+
+            - Documentation becomes executable in tools themselves
+
+            - AI eliminates mechanical burden, you focus on what to document
+
+
+            **Result:** Documentation quality improves while time investment
+            drops 93%.
+          id: 5d7cbd9f-c980-46bb-8096-93f2cecdaf5d
+          metadata: {}
+          sortingKey: 0j
+          type: markdown
+          version: 1
+        - blockGroup: a8064781-0661-452b-80c9-9fb291113e76
+          content: >
+            ### ✅ You've Completed Part 6
+
+
+            **What you've mastered:**
+
+            - 🗺️ Navigation flows and decision trees
+
+            - 📖 Relationship mapping strategies
+
+            - 🔄 Dual-pattern recognition (Simple vs Complex)
+
+            - 🧪 Three Jupyter notebook types
+
+            - 🤖 AI-powered documentation efficiency (93% time savings!)
+
+
+            **You're now a documentation power user!**
+
+
+            **What's next?**
+
+            - 🌍 [Universal Patterns](#) - Apply these strategies anywhere
+
+            - 📚 [Remember - This IS Living Documentation](#) - Remember what
+            matters
+          id: 6d59fcc0-3d99-44dd-ab68-e78e6c475b94
+          metadata: {}
+          sortingKey: 0k
+          type: markdown
+          version: 1
+        - blockGroup: fe72d3d8-650d-4732-ba2d-5bca8d4b8221
+          content: >-
+            ### Part 7: Universal Patterns
+
+
+            These patterns work for EDS... but they work everywhere. Let's see
+            how these principles apply universally...
+
+
+            <!-- action-cards -->
+
+
+            - [Beyond EDS](#)
+
+            - [Universal Patterns](#)
+          id: 187405dc-8a9c-4759-ae75-ec86b97195e4
+          metadata: {}
+          sortingKey: 0l
+          type: markdown
+          version: 1
+        - blockGroup: d4b67fed-069f-4a9b-a92f-6de935a4ffda
+          content: >-
+            ## 🌍 Beyond EDS
+
+            **Reading time: 2 minutes**
+
+            The navigation strategies and living documentation principles in
+            this system apply to ANY project:
+
+
+            **Component Libraries** (React, Vue, Web Components)
+
+            - Role-based: Junior dev vs senior architect
+
+            - Task-based: "How do I customize this button?"
+
+            - Workflow-based: Design → implement → test → document
+
+            - Living docs: Executable examples showing props, state changes,
+            styling
+
+
+            **API Documentation** (REST, GraphQL)
+
+            - Role-based: API consumer vs API designer
+
+            - Task-based: "How do I authenticate?"
+
+            - Workflow-based: Integration → testing → production
+
+            - Living docs: Actual executable requests with real responses
+
+
+            **Design Systems**
+
+            - Role-based: Designer vs frontend developer
+
+            - Task-based: "Which pattern for user input?"
+
+            - Workflow-based: Design tokens → components → patterns
+
+            - Living docs: Interactive pattern libraries that execute
+
+
+            **Open Source Projects**
+
+            - Role-based: First-time contributor vs core maintainer
+
+            - Task-based: "How do I submit a PR?"
+
+            - Workflow-based: Setup → contribution → review
+
+            - Living docs: Examples that prove correctness
+
+
+            **Key insight:** These patterns aren't EDS-specific - they're
+            universal documentation architecture.
+          id: 98f94664-627b-422a-8c09-0913fa1cc9cc
+          metadata: {}
+          sortingKey: 0m
+          type: markdown
+          version: 1
+        - blockGroup: bfe1008e-198f-4d97-a232-321fc93d3536
+          content: >-
+            ## 🔧 Part 8: How This Navigator Works - The Magic Behind
+
+            **Progress: 8 of 8** 🔵🔵🔵🔵🔵🔵🔵🔵
+
+            **Reading time: 3 minutes**
+
+
+            **This notebook is meta-documentation** - it teaches navigation
+            while demonstrating the very features it describes!
+
+
+            ### The Four Pillars
+
+
+            **1. Notebook Mode Variation**
+
+            This notebook uses `| IPynb Viewer (notebook) |` which enables:
+
+            - ✨ Auto-wrapping of pure markdown cells
+
+            - ☰ Hamburger menu for table of contents
+
+            - ✕ Always-visible close button
+
+            - 🎯 Manual code execution (not autorun)
+
+
+            **2. Action Cards Magic**
+
+            Those beautiful navigation cards? Pure markdown!
+
+
+            ```markdown
+
+            <!-- action-cards -->
+
+
+            - [🌍 Part 1: The Big Picture](#)
+
+            - [Use Navigation Flows](#)
+
+            - [Master Three Notebook Types](#)
+
+            ```
+
+
+            The `<!-- action-cards -->` comment triggers automatic styling:
+
+            - All cards use consistent blue design
+
+            - Links are resolved at runtime (find matching headings)
+
+            - Arrows (→) added automatically
+
+            - Hover effects built-in
+
+
+            **3. Auto-Wrapping Pattern Detection**
+
+            This notebook uses **zero manual HTML wrappers** - everything is
+            pure markdown!
+
+
+            The ipynb-viewer automatically detects:
+
+            - **Hero cells** (index 0 with `# `) → `.ipynb-hero-cell`
+
+            - **Intro cells** (index ≤2 with `## `) → `.ipynb-content-card` (6px
+            border)
+
+            - **Content cells** (most cells) → `.ipynb-content-card-thin` (4px
+            border)
+
+            - **Transition cells** (≤3 lines, no headers) →
+            `.ipynb-transition-card`
+
+
+            **Result:** 90% less code to write!
+
+
+            **4. Smart Link Resolution**
+
+            Links like `[Part 3](#)` are **placeholders** - they resolve at
+            runtime:
+
+            1. JavaScript extracts link text: "Part 3"
+
+            2. Searches all cells for matching headings
+
+            3. Updates href to point to correct cell
+
+            4. No hardcoded cell IDs needed!
+          id: 40dd18b4-e1f1-4554-8c60-89fa41c7fadc
+          metadata: {}
+          sortingKey: 0n
+          type: markdown
+          version: 1
+        - blockGroup: 13c051b6-4cce-4af0-a756-96085fef650b
+          content: >-
+            ### Performance Stats & Metadata
+
+
+            | Metric | Value |
+
+            |--------|-------|
+
+            | **Total Parts** | 8 |
+
+            | **Total Cells** | ~60 |
+
+            | **Reading Time** | 20-25 minutes |
+
+            | **Code Savings** | 90% less with auto-wrapping |
+
+            | **Authoring Time** | 8 minutes (vs 2+ hours manually) |
+
+            | **Features Used** | Action cards, auto-wrapping, smart links,
+            hamburger TOC |
+
+
+            **Notebook Metadata Structure:**
+
+
+            ```json
+
+            {
+              "metadata": {
+                "title": "Documentation Navigator",
+                "description": "Navigate comprehensive EDS documentation",
+                "author": "Your Name",
+                "category": "navigation",
+                "difficulty": "beginner",
+                "duration": "20-25 minutes",
+                "tags": ["navigation", "documentation", "tutorial"],
+                "repo": "https://github.com/username/repo"
+              }
+            }
+
+            ```
+
+
+            **What metadata does:**
+
+            - `title` - Shows as notebook header
+
+            - `category`, `difficulty`, `duration` - Display as colored badges
+
+            - `tags` - Shown as gray tag pills
+
+            - `repo` - Auto-converts .md links to full GitHub URLs
+          id: bf273686-06aa-49fc-a820-e9ed90921227
+          metadata: {}
+          sortingKey: 0o
+          type: markdown
+          version: 1
+        - blockGroup: bc20daa2-5385-4d15-abfe-0b80c2f6a91b
+          content: >-
+            ### Notebook-Specific Issues
+
+
+            **Issue:** "Action cards not working or showing"
+
+
+            **Solution:**
+
+            - Verify the action cards HTML comment `<!-- action-cards -->`
+            exists before the list
+
+            - Check that list items contain links with proper format
+
+            - Ensure you're viewing in notebook mode (supports auto-wrapping)
+
+            - Open browser console to check for JavaScript errors
+
+
+            **Issue:** "Links in action cards don't navigate"
+
+
+            **Solution:**
+
+            - Link text must match heading text somewhere in the notebook
+
+            - Check heading exists (search for the text in your IDE)
+
+            - Heading matching is case-insensitive and ignores special
+            characters
+
+            - If still failing, check browser console for "Navigation target not
+            found" messages
+
+
+            **Issue:** "Hamburger menu (☰) is empty or missing items"
+
+
+            **Solution:**
+
+            - Hamburger menu only appears in notebook mode paged overlay
+
+            - Menu shows cells that have headings (h1, h2, h3)
+
+            - Hero cells (first cell with # heading) are intentionally skipped
+
+            - Cells without headings don't appear in menu
+
+            - Make sure cells have proper heading markers (`#`, `##`, `###`)
+
+
+            **Issue:** "Auto-wrapping not applying to my cells"
+
+
+            **Solution:**
+
+            - Auto-wrapping only works in **notebook mode** (`| IPynb Viewer
+            (notebook) |`)
+
+            - Check the block variation in your markdown table
+
+            - Verify you're using pure markdown (no manual HTML `<div>`
+            wrappers)
+
+            - Detection patterns: Hero (index 0 with `# `), Intro (index ≤2 with
+            `## `), Transition (≤3 lines, no headers)
+
+
+            **Issue:** "My custom HTML styling is being overridden"
+
+
+            **Solution:**
+
+            - Auto-wrapping applies default classes, but you can mix approaches
+
+            - Use manual HTML `<div>` wrappers for specific cells needing custom
+            styling
+
+            - Most cells use auto-wrapping, special cells use custom HTML
+
+            - See [🔧 Part 8: How This Navigator Works - The Magic Behind](#)
+            for examples
+
+
+            **Still stuck?** → Open
+            [getting-started-guide.md](docs/for-ai/getting-started-guide.md) -
+            it has detailed decision trees and more guidance.
+          id: 778d4ee3-20b9-4dd6-840b-83df513c3a8b
+          metadata: {}
+          sortingKey: 0p
+          type: markdown
+          version: 1
+        - blockGroup: 4e116bed-148c-44f8-8853-01a608cc6219
+          content: >-
+            ### ipynb-viewer Variations - Which to Use?
+
+
+            The ipynb-viewer block has **4 display modes** - this notebook uses
+            **notebook mode**:
+
+
+            | Variation | When to Use | Features |
+
+            |-----------|-------------|----------|
+
+            | **Default** | Simple display | All cells visible, run buttons, no
+            overlay |
+
+            | **Paged** | Reading mode | One cell/page, Previous/Next buttons,
+            overlay |
+
+            | **Autorun** | Demos/presentations | Auto-executes code, no run
+            buttons |
+
+            | **Notebook** | Tutorials (this one!) | Auto-wrapping, hamburger
+            TOC, manual execution |
+
+
+            **This Notebook Uses: `notebook`**
+
+
+            Why notebook mode for navigation?
+
+            - ✅ **Auto-wrapping** - Pure markdown, 90% less code
+
+            - ✅ **Hamburger TOC** - Quick navigation (☰ button)
+
+            - ✅ **Manual code** - User controls execution
+
+            - ✅ **Close button** - Always visible for easy exit
+
+            - ✅ **Overlay mode** - Immersive full-screen reading
+
+
+            **How to specify variation:**
+
+            ```markdown
+
+            | IPynb Viewer (notebook) |
+
+            |---------------------------|
+
+            | /docs-navigation.ipynb |
+
+            ```
+
+
+            **Other combinations:**
+
+            - `(paged)` - Reading mode only
+
+            - `(autorun)` - Auto-execute all code
+
+            - `(paged, manual)` - Paged with manual button
+
+            - `(notebook)` - All features (this notebook!)
+
+
+            **Feature Matrix:**
+
+
+            | Feature | Default | Paged | Autorun | Notebook |
+
+            |---------|---------|-------|---------|----------|
+
+            | Auto-wrapping | ❌ | ❌ | ❌ | ✅ |
+
+            | Hamburger TOC | ❌ | ❌ | ❌ | ✅ |
+
+            | Overlay mode | ❌ | ✅ | ❌ | ✅ |
+
+            | Auto-execute | ❌ | ❌ | ✅ | ❌ |
+
+            | Run buttons | ✅ | ✅ | ❌ | ✅ |
+
+            | Pagination | ❌ | ✅ | ❌ | ✅ |
+
+
+            **Pro Tip:** Use notebook mode for educational content, autorun for
+            presentations, paged for long-form reading.
+          id: 55a177c4-afb0-4cf3-b8e4-55763c5fe398
+          metadata: {}
+          sortingKey: 0q
+          type: markdown
+          version: 1
+        - blockGroup: 71d67c36-ff18-4458-9e29-78284bd39f4b
+          content: >-
+            ### Code Examples - Action Card Link Resolution
+
+
+            **Want to see the actual code? Here's how action cards resolve
+            links:**
+
+
+            ```javascript
+
+            // This runs automatically when you view the notebook
+
+            function styleActionCards(contentElement) {
+              const ul = contentElement.querySelector('ul');
+              ul.classList.add('ipynb-action-cards');
+              
+              const items = ul.querySelectorAll('li');
+              items.forEach((li) => {
+                li.classList.add('ipynb-action-card', 'ipynb-action-card-blue');
+                
+                const link = li.querySelector('a');
+                const linkText = link.textContent.trim();
+                
+                // Search all cells for matching heading
+                const allCells = document.querySelectorAll('.ipynb-cell');
+                allCells.forEach((cell) => {
+                  const headings = cell.querySelectorAll('h1, h2, h3');
+                  headings.forEach((heading) => {
+                    const headingText = heading.textContent.trim()
+                      .replace(/[^\w\s]/g, '').toLowerCase();
+                    const searchText = linkText
+                      .replace(/[^\w\s]/g, '').toLowerCase();
+                    
+                    if (headingText.includes(searchText)) {
+                      link.href = `#cell-${cell.dataset.cellIndex}`;
+                    }
+                  });
+                });
+              });
+            }
+
+            ```
+
+
+            **Key Insight:** Links match headings at runtime - no hardcoded IDs!
+          id: 3b64c49a-99c3-4e33-9a60-027d754fff64
+          metadata: {}
+          sortingKey: 0r
+          type: markdown
+          version: 1
+        - blockGroup: 9bb257d1-68c3-4b50-a83d-8993244b3739
+          content: |-
+            ### CSS Classes Applied Automatically
+
+            **CSS classes applied automatically:**
+
+            ```css
+            /* Hero cells - dramatic gradient */
+            .ipynb-hero-cell {
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              border-radius: 12px;
+              padding: 48px 32px;
+              color: white;
+            }
+
+            /* Content cards - clean borders */
+            .ipynb-content-card-thin {
+              border-left: 4px solid #42a5f5;
+              border-radius: 8px;
+              padding: 20px;
+            }
+
+            /* Transition cards - subtle background */
+            .ipynb-transition-card {
+              background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+              text-align: center;
+              font-style: italic;
+            }
+            ```
+
+            **Zero manual HTML** - ipynb-viewer does all the styling!
+          id: 18ff26ed-ef14-48f6-9b89-58e926686518
+          metadata: {}
+          sortingKey: 0s
+          type: markdown
+          version: 1
+        - blockGroup: 17c89630-8a59-46c3-ad49-092906a1807e
+          content: >-
+            ### Auto-Wrapping Detection Code
+
+
+            **How auto-wrapping detects cell types:**
+
+
+            ```javascript
+
+            function detectCellType(content, index) {
+              // Hero: first cell with large heading
+              if (index === 0 && content.includes('# ')) {
+                return 'hero';
+              }
+              
+              // Intro: early cells with h2 headings
+              if (index <= 2 && content.includes('## ')) {
+                return 'intro';
+              }
+              
+              // Transition: short cells without headers
+              const lines = content.trim().split('\n').filter(line => line.trim());
+              if (lines.length <= 3 && !content.includes('##')) {
+                return 'transition';
+              }
+              
+              // Everything else is content
+              return 'content';
+            }
+
+            ```
+
+
+            **Pattern matching** determines which CSS class to apply
+            automatically!
+          id: 860d55ea-c659-4247-8220-72a48f52fb1a
+          metadata: {}
+          sortingKey: 0t
+          type: markdown
+          version: 1
+        - blockGroup: fa12a51a-d2d5-4256-8783-313379c362f9
+          content: |-
+            ### Try It Yourself - Create Your Own Navigator
+
+            **Want to create a similar navigation notebook?**
+
+            **Option 1: Use the Slash Command** (Fastest)
+            ```bash
+            /create-notebook
+            ```
+            Claude will guide you through:
+            1. Topic selection
+            2. Structure planning  
+            3. Content organization
+            4. Notebook generation with proper cells
+
+            **Option 2: Manual Creation** (More Control)
+
+            **Step 1: Create the .ipynb file**
+            ```json
+            {
+              "cells": [],
+              "metadata": {
+                "title": "Your Navigator Title",
+                "category": "navigation",
+                "difficulty": "beginner",
+                "duration": "15 minutes",
+                "tags": ["navigation", "docs"]
+              }
+            }
+            ```
+
+            **Step 2: Write pure markdown cells**
+            ```markdown
+            # Main Title
+
+            Lost in docs? This guide helps!
+
+            <!-- action-cards -->
+
+            - [First Topic](#)
+            - [Second Topic](#)
+            - [Third Topic](#)
+            ```
+
+            **Step 3: Use in notebook mode**
+            ```markdown
+            | IPynb Viewer (notebook) |
+            |---------------------------|
+            | /path/to/your-navigator.ipynb |
+            ```
+
+            **Templates Available:**
+            - [Navigation template](docs/for-ai/templates/ipynb/navigation-template.ipynb)
+            - [Tutorial template](docs/for-ai/templates/ipynb/tutorial-template.ipynb)
+            - [Presentation template](docs/for-ai/templates/ipynb/presentation-template.ipynb)
+
+            **See Also:**
+            - [explaining-educational-notebooks.md](docs/for-ai/explaining-educational-notebooks.md) - Complete guide
+            - [ipynb-viewer README](blocks/ipynb-viewer/README.md) - All features and variations
+          id: 268dc074-60eb-41f1-8a1b-4cfc4a5cb6cf
+          metadata: {}
+          sortingKey: 0u
+          type: markdown
+          version: 1
+        - blockGroup: fc2e1887-9a22-4e16-a484-bb264e83c38f
+          content: |-
+            ### 📋 How to Apply This Template
+
+            **This notebook IS the template.** Here's how to adapt it:
+
+            **Step 1: Define Your Domains**
+            - What are you documenting? (Component library, API, Design system, SDK, etc.)
+            - How many documents? (This handles 26 - scales to 50+)
+            - What categories make sense? (Implementation, Testing, Guidelines, Reference)
+
+            **Step 2: Identify Your Audiences**
+            - List 4-6 distinct roles (Developer, Designer, PM, QA, etc.)
+            - What does each role need first? (Create role-based paths)
+            - Which roles overlap? (Share common entry points)
+
+            **Step 3: Map Common Tasks**
+            - List 5-8 frequent tasks ("Build X", "Test Y", "Deploy Z")
+            - What docs does each task require?
+            - Add "Required" vs "Recommended" priorities
+
+            **Step 4: Define Your Workflow**
+            - What phases exist? (Design, Build, Test, Deploy typical)
+            - What docs support each phase?
+            - Where do phases overlap?
+
+            **Step 5: Extract Pro Tips**
+            - What do experts know that beginners don't?
+            - What shortcuts exist?
+            - What common mistakes happen?
+
+            **Step 6: Add Meta-Documentation** (NEW!)
+            - Explain how the navigator itself works
+            - Show the features you're using
+            - Teach users to create their own
+
+            **Ready-to-use template:** [navigation-template.ipynb](docs/for-ai/templates/ipynb/navigation-template.ipynb)
+
+            **See also:**
+            - [🔧 Part 8: How This Navigator Works](#) - Learn from this notebook's implementation
+            - [explaining-educational-notebooks.md](docs/for-ai/explaining-educational-notebooks.md) - Complete notebook creation guide
+            - [ipynb-viewer README](blocks/ipynb-viewer/README.md) - All features and variations
+          id: 844eac9c-41c2-4867-8f06-8ca3308e57b4
+          metadata: {}
+          sortingKey: 0v
+          type: markdown
+          version: 1
+        - blockGroup: d06a54aa-6d2e-4209-821f-af96d9584118
+          content: >-
+            ### ✅ You've Completed the Final Part
+
+
+            **What you've mastered:**
+
+            - 🔧 How this notebook uses ipynb-viewer features
+
+            - 🎨 Action cards implementation (pure markdown + auto-styling)
+
+            - ✨ Auto-wrapping pattern detection (90% code reduction)
+
+            - 🔗 Smart link resolution (runtime heading matching)
+
+            - 📊 Performance stats (8 minutes vs 2+ hours)
+
+            - 🎯 Notebook variations (which mode to use when)
+
+            - 💡 How to create your own navigator
+
+
+            **You now understand living documentation!**
+
+
+            This notebook is:
+
+            - ✅ **Self-documenting** - Explains itself while demonstrating
+            features
+
+            - ✅ **Executable** - Code examples you can run
+
+            - ✅ **Multi-audience** - Serves developers, architects, content
+            creators
+
+            - ✅ **Self-verifying** - Features work or the notebook fails visibly
+
+
+            **What's next?**
+
+            - 🎯 [Try It Yourself - Create Your Own Navigator](#) - Use
+            `/create-notebook`
+
+            - 📖 [📖Read ipynb-viewer docs](blocks/ipynb-viewer/README.md) - All
+            features
+
+            - 🌍 [🌍Apply these patterns](blocks/ipynb-viewer/README.md) -
+            Beyond EDS
+
+
+            **Remember:** You just experienced 93% faster documentation
+            creation! 🚀
+          id: 44c5d84d-8dc3-467c-ac39-f1fb80e139d3
+          metadata: {}
+          sortingKey: 0w
+          type: markdown
+          version: 1
+        - blockGroup: b9334fb7-903e-43be-b756-e344c3edc7ca
+          content: |-
+            ### 📖Resources & Quick Reference - What You've Learned
+            ✅ Documentation structure and categories  
+            ✅ Role-based navigation strategies  
+            ✅ Task-based navigation  
+            ✅ Workflow-based navigation  
+            ✅ Pro navigation strategies  
+            ✅ Three Jupyter notebook types
+          id: fdff339e-9ef7-418d-a585-8ee307747cc7
+          metadata: {}
+          sortingKey: 0x
+          type: markdown
+          version: 1
+        - blockGroup: 0857e509-b77d-4300-9402-8f87ae9e3c43
+          content: |-
+            ### 🔖Essential Bookmarks
+            **Always useful:**
+            - [index.md](docs/for-ai/index.md) - Central hub
+            - [getting-started-guide.md](docs/for-ai/getting-started-guide.md) - Role-based paths
+            - [navigation-flows.md](docs/for-ai/navigation-flows.md) - Decision trees
+            - [document-relationship-mapping.md](docs/for-ai/document-relationship-mapping.md) - Cross-references
+            - [eds.md](docs/for-ai/eds.md) - The Bible
+
+            **For building:**
+            - [block-architecture-standards.md](docs/for-ai/implementation/block-architecture-standards.md)
+            - [raw-eds-blocks-guide.md](docs/for-ai/implementation/raw-eds-blocks-guide.md) OR
+              [complex-eds-blocks-guide.md](docs/for-ai/implementation/complex-eds-blocks-guide.md)
+            - [design-philosophy-guide.md](docs/for-ai/implementation/design-philosophy-guide.md)
+
+            **For content:**
+            - [explaining-educational-notebooks.md](docs/for-ai/explaining-educational-notebooks.md)
+            - [explaining-presentation-notebooks.md](docs/for-ai/explaining-presentation-notebooks.md)
+            - [templates/ipynb/README.md](docs/for-ai/templates/ipynb/README.md)
+          id: b76f0931-267a-4387-a06a-818a58237f2d
+          metadata: {}
+          sortingKey: 0y
+          type: markdown
+          version: 1
+        - blockGroup: 6db200fd-c62c-491e-9b2b-9dc70b46a5e9
+          content: >-
+            ### 🎯Your Next Steps
+
+            1. **Find your role's list** (Part 2) - Developer, Architect, PM, or
+            Content Creator?
+
+            2. **Use decision trees**
+            ([navigation-flows.md](docs/for-ai/navigation-flows.md)) - Visual
+            guidance
+
+            3. **Try interactive testing**
+            ([explaining-jupyter.md](docs/for-ai/explaining-jupyter.md)) - Game
+            changer!
+
+            4. **Build something** (use relevant guide) - Simple or complex?
+
+            5. **Create content** (use `/create-notebook` or
+            `/create-presentation`) - Share your work!
+
+
+            **Remember:** Use this navigator when stuck!
+          id: a28b8916-e438-4d8a-888e-0f996e1848b2
+          metadata: {}
+          sortingKey: 0z
+          type: markdown
+          version: 1
+        - blockGroup: 26dd6bdb-5de4-4312-b1fb-13678cd11c82
+          content: >-
+            ### ⚠️ Troubleshooting Navigation Issues
+
+
+            <!-- action-cards -->
+
+
+            - [⚠️ Troubleshooting Navigation Issues - General Issues](#)
+
+            - [Notebook-Specific Issues](#)
+
+            - [🌟 The Essential Three - Bookmark These Now](#)
+
+            - [🚨 Emergency Navigation - I Need Help NOW!](#)
+
+
+            **Issue:** "I don't fit cleanly into any of these roles"
+
+
+            **Solution:** That's okay! Use task-based (Part 3) or workflow-based
+            (Part 4) navigation instead. Or combine paths: maybe you're 60%
+            Developer + 40% Content Creator.
+
+
+            **Issue:** "This doc references another doc I can't find"
+
+
+            **Solution:** All docs live in `docs/for-ai/` directory. Check
+            [index.md](docs/for-ai/index.md) for the complete catalog. Use your
+            IDE's file search (Cmd/Ctrl+P) to find files quickly.
+
+
+            **Issue:** "The documentation seems outdated"
+
+
+            **Solution:**
+
+            - Check the Recent Commits section at the bottom of the doc
+
+            - Look for "Last updated" metadata
+
+            - File an issue in the project repository
+
+            - For EDS platform changes, check [aem.live](https://www.aem.live/)
+            official docs
+
+
+            **Issue:** "I clicked an action card and nothing happened"
+
+
+            **Solution:** Action cards use smart link resolution - they find
+            headings that match the link text. If nothing happens:
+
+            - The target heading may have been renamed
+
+            - You may need to scroll manually
+
+            - Try using the Table of Contents instead
+
+            - Check browser console for errors
+
+
+            **Issue:** "There are too many docs - I'm overwhelmed"
+
+
+            **Solution:**
+
+            1. Start with the [🌟 The Essential Three - Bookmark These Now](#)
+            (index.md, eds.md, navigation-flows.md)
+
+            2. Use [🚨 Emergency Navigation - I Need Help NOW!](#) if you have
+            an urgent problem
+
+            3. Follow ONLY your role's path - ignore everything else
+
+            4. Remember: You don't read all docs - you navigate to the right one
+
+
+            **Issue:** "Which navigation mode should I use?"
+
+
+            **Solution:**
+
+            - **Know your role?** → Part 2 (By Role)
+
+            - **Know your goal?** → Part 3 (By Task)
+
+            - **Know your phase?** → Part 4 (By Workflow)
+
+            - **Just browsing?** → Part 5 (By Category)
+
+            - **Want to be efficient?** → Part 6 (Pro Tips)
+          id: 41a70cb3-65a4-4f00-a344-281afee3d638
+          metadata: {}
+          sortingKey: "10"
+          type: markdown
+          version: 1
+        - blockGroup: c81f442f-f699-46ff-bf2f-504ce6a867bc
+          content: >-
+            ### 💭Remember - This IS Living Documentation
+
+            **You don't need to read everything.**
+
+
+            You need to know:
+
+            1. ✅ Where things are (organized by category)
+
+            2. ✅ How to find them (decision trees + cross-references)
+
+            3. ✅ When to use them (role + task + workflow navigation)
+
+            4. ✅ How to create them (meta-documentation in Part 8)
+
+
+
+            **Meta-Insight:** This notebook demonstrates the very principles it
+            teaches:
+
+
+            - **Executable** - Open it in notebook mode with `ipynb-viewer`
+
+            - **Multi-audience** - Serves new developers, architects, content
+            creators, PMs
+
+            - **Multi-modal navigation** - Browse by role, task, or workflow
+
+            - **Progressive disclosure** - Summaries → details → deep dives
+
+            - **Decision trees** - Guides you to the right content
+
+            - **Self-documenting** - Part 8 explains how this notebook works
+
+            - **Meta-documentation** - The documentation about documentation
+            that shows documentation patterns
+
+
+            **Key Features You've Experienced:**
+
+            - 🎨 **Action Cards** - Pure markdown navigation (`<!-- action-cards
+            -->`)
+
+            - ✨ **Auto-Wrapping** - Zero HTML wrappers, 90% less code
+
+            - 🔗 **Smart Links** - Runtime resolution of placeholder links
+
+            - ☰ **Hamburger TOC** - Quick navigation in overlay mode
+
+            - 🎯 **Notebook Mode** - The perfect blend for tutorials
+
+
+            This isn't just a guide to navigating EDS docs - it's a working
+            example of living documentation architecture that you can clone and
+            adapt!
+
+
+            **Now go build something!** 🚀
+
+
+            **Or better yet:**
+
+            - 🎯 [Try It Yourself - Create Your Own Navigator](#) - Use
+            `/create-notebook`
+
+            - 🔧 [🔧 Part 8: How This Navigator Works - The Magic Behind](#) -
+            See implementation
+
+            - 🌍 [🌍 Beyond EDS](#) - Apply these patterns
+          id: 2ef95b0d-e1cd-45c0-97af-2656fec86a3e
+          metadata: {}
+          sortingKey: "11"
+          type: markdown
+          version: 1
+        - blockGroup: 84b6d33f-c6f7-42bc-9d73-175b33701ea8
+          content: >-
+            ## 📖 End of Documentation Navigator
+
+
+            **Thank you for exploring this interactive guide!**
+
+
+            You've completed the full journey through the EDS documentation
+            system. You now have:
+
+
+            ✅ Understanding of all 6 documentation categories  
+
+            ✅ Role-based, task-based, and workflow-based navigation strategies  
+
+            ✅ Knowledge of 11 pro navigator tips  
+
+            ✅ Insight into living documentation principles  
+
+            ✅ Ability to create your own navigation systems
+
+
+            **Quick reminders:**
+
+            - Bookmark [index.md](docs/for-ai/index.md),
+            [eds.md](docs/for-ai/eds.md), and
+            [navigation-flows.md](docs/for-ai/navigation-flows.md)
+
+            - Use `/create-notebook` for tutorials, `/new-block` for components
+
+            - Return to this navigator whenever you need guidance
+
+
+            **Happy building! 🚀**
+
+
+            ---
+
+
+            *This Documentation Navigator is part of the AllAboutV2 living
+            documentation system.*
+          id: 953557ad-afe7-472b-aa31-494e6d348cbb
+          metadata: {}
+          sortingKey: "12"
+          type: markdown
+          version: 1
+      executionMode: block
+      id: 5e48bf39-eaa2-4869-bfcf-a582a41066b5
+      isModule: false
+      name: docs-navigation
+  settings: {}
+version: 1.0.0
