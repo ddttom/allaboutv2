@@ -699,6 +699,105 @@ function addToHistory(title, type, cellIndex = null, url = null) {
 }
 
 /**
+ * Bookmark Management - localStorage-based bookmarks per notebook
+ */
+
+/**
+ * Get localStorage key for bookmarks based on notebook path/title
+ * @param {string} notebookId - Unique identifier for the notebook
+ * @returns {string} localStorage key
+ */
+function getBookmarkStorageKey(notebookId) {
+  return `ipynb-bookmarks-${notebookId}`;
+}
+
+/**
+ * Get all bookmarks for a notebook
+ * @param {string} notebookId - Unique identifier for the notebook
+ * @returns {Array<{title: string, pageIndex: number, timestamp: number}>}
+ */
+function getBookmarks(notebookId) {
+  try {
+    const key = getBookmarkStorageKey(notebookId);
+    const stored = localStorage.getItem(key);
+    return stored ? JSON.parse(stored) : [];
+  } catch (error) {
+    console.error('Failed to get bookmarks:', error);
+    return [];
+  }
+}
+
+/**
+ * Save a bookmark for the current page
+ * @param {string} notebookId - Unique identifier for the notebook
+ * @param {string} title - Title of the page
+ * @param {number} pageIndex - Page index to bookmark
+ * @returns {boolean} Success status
+ */
+function saveBookmark(notebookId, title, pageIndex) {
+  try {
+    const bookmarks = getBookmarks(notebookId);
+
+    // Remove existing bookmark for same page
+    const existingIndex = bookmarks.findIndex(b => b.pageIndex === pageIndex);
+    if (existingIndex !== -1) {
+      bookmarks.splice(existingIndex, 1);
+    }
+
+    // Add new bookmark
+    bookmarks.unshift({
+      title,
+      pageIndex,
+      timestamp: Date.now(),
+    });
+
+    // Save to localStorage
+    const key = getBookmarkStorageKey(notebookId);
+    localStorage.setItem(key, JSON.stringify(bookmarks));
+    return true;
+  } catch (error) {
+    console.error('Failed to save bookmark:', error);
+    return false;
+  }
+}
+
+/**
+ * Remove a specific bookmark
+ * @param {string} notebookId - Unique identifier for the notebook
+ * @param {number} pageIndex - Page index to remove
+ * @returns {boolean} Success status
+ */
+function removeBookmark(notebookId, pageIndex) {
+  try {
+    const bookmarks = getBookmarks(notebookId);
+    const filtered = bookmarks.filter(b => b.pageIndex !== pageIndex);
+
+    const key = getBookmarkStorageKey(notebookId);
+    localStorage.setItem(key, JSON.stringify(filtered));
+    return true;
+  } catch (error) {
+    console.error('Failed to remove bookmark:', error);
+    return false;
+  }
+}
+
+/**
+ * Clear all bookmarks for a notebook
+ * @param {string} notebookId - Unique identifier for the notebook
+ * @returns {boolean} Success status
+ */
+function clearAllBookmarks(notebookId) {
+  try {
+    const key = getBookmarkStorageKey(notebookId);
+    localStorage.removeItem(key);
+    return true;
+  } catch (error) {
+    console.error('Failed to clear bookmarks:', error);
+    return false;
+  }
+}
+
+/**
  * Create full-screen overlay for paged variation
  * @param {HTMLElement} container - The notebook container
  * @param {HTMLElement} cellsContainer - Container with cells
@@ -965,6 +1064,146 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     });
   }
 
+  // Bookmark button (notebook mode only) - Save and view bookmarks
+  let bookmarkButton, bookmarkDropdown;
+  if (isNotebookMode) {
+    const notebookId = notebookTitle.toLowerCase().replace(/\s+/g, '-');
+
+    bookmarkButton = document.createElement('button');
+    bookmarkButton.className = 'ipynb-overlay-button ipynb-bookmark-button';
+    bookmarkButton.innerHTML = '&#128278;'; // Bookmark icon (🔖)
+    bookmarkButton.setAttribute('aria-label', 'Bookmarks');
+    bookmarkButton.setAttribute('aria-expanded', 'false');
+    bookmarkButton.setAttribute('title', 'Bookmarks');
+
+    bookmarkDropdown = document.createElement('div');
+    bookmarkDropdown.className = 'ipynb-bookmark-dropdown';
+    bookmarkDropdown.setAttribute('role', 'menu');
+    bookmarkDropdown.style.display = 'none';
+
+    // Function to update bookmark dropdown
+    const updateBookmarkDropdown = () => {
+      bookmarkDropdown.innerHTML = '';
+
+      const bookmarks = getBookmarks(notebookId);
+
+      if (bookmarks.length === 0) {
+        const emptyMessage = document.createElement('div');
+        emptyMessage.className = 'ipynb-bookmark-empty';
+        emptyMessage.textContent = 'No bookmarks yet';
+        bookmarkDropdown.appendChild(emptyMessage);
+      } else {
+        bookmarks.forEach((bookmark) => {
+          const menuItem = document.createElement('button');
+          menuItem.className = 'ipynb-bookmark-item';
+
+          const titleSpan = document.createElement('span');
+          titleSpan.textContent = `📑 ${bookmark.title} (Page ${bookmark.pageIndex + 1})`;
+
+          const removeBtn = document.createElement('span');
+          removeBtn.className = 'ipynb-bookmark-remove';
+          removeBtn.innerHTML = '&times;';
+          removeBtn.setAttribute('aria-label', 'Remove bookmark');
+          removeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            removeBookmark(notebookId, bookmark.pageIndex);
+            updateBookmarkDropdown();
+          });
+
+          menuItem.appendChild(titleSpan);
+          menuItem.appendChild(removeBtn);
+          menuItem.setAttribute('role', 'menuitem');
+
+          menuItem.addEventListener('click', () => {
+            paginationState.currentPage = bookmark.pageIndex;
+            updatePageDisplay();
+            bookmarkDropdown.style.display = 'none';
+            bookmarkButton.setAttribute('aria-expanded', 'false');
+          });
+
+          bookmarkDropdown.appendChild(menuItem);
+        });
+
+        // Add "Clear All" button if there are bookmarks
+        const clearAllBtn = document.createElement('button');
+        clearAllBtn.className = 'ipynb-bookmark-clear-all';
+        clearAllBtn.textContent = 'Clear All Bookmarks';
+        clearAllBtn.addEventListener('click', () => {
+          if (confirm('Are you sure you want to clear all bookmarks?')) {
+            clearAllBookmarks(notebookId);
+            updateBookmarkDropdown();
+          }
+        });
+        bookmarkDropdown.appendChild(clearAllBtn);
+      }
+
+      // Add "Bookmark This Page" button
+      const addBookmarkBtn = document.createElement('button');
+      addBookmarkBtn.className = 'ipynb-bookmark-add';
+      addBookmarkBtn.textContent = '+ Bookmark This Page';
+      addBookmarkBtn.addEventListener('click', () => {
+        const currentPage = pages[paginationState.currentPage];
+        const firstCell = currentPage.cells[0];
+        let title = `Page ${paginationState.currentPage + 1}`;
+
+        // Try to extract title from first cell
+        if (firstCell && firstCell.classList.contains('ipynb-markdown-cell')) {
+          const content = firstCell.querySelector('.ipynb-cell-content');
+          if (content) {
+            const heading = content.querySelector('h1, h2, h3');
+            if (heading) {
+              title = heading.textContent.trim();
+            }
+          }
+        }
+
+        if (saveBookmark(notebookId, title, paginationState.currentPage)) {
+          // Visual feedback
+          bookmarkButton.style.transform = 'scale(1.2)';
+          setTimeout(() => {
+            bookmarkButton.style.transform = '';
+          }, 200);
+          updateBookmarkDropdown();
+        }
+      });
+      bookmarkDropdown.insertBefore(addBookmarkBtn, bookmarkDropdown.firstChild);
+    };
+
+    // Toggle bookmark dropdown on button click
+    bookmarkButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      updateBookmarkDropdown(); // Refresh before showing
+      const isOpen = bookmarkDropdown.style.display === 'block';
+      bookmarkDropdown.style.display = isOpen ? 'none' : 'block';
+      bookmarkButton.setAttribute('aria-expanded', !isOpen);
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      if (bookmarkDropdown && !bookmarkDropdown.contains(e.target) && e.target !== bookmarkButton) {
+        bookmarkDropdown.style.display = 'none';
+        bookmarkButton.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  // Help button (notebook mode only) - Opens help.md in GitHub overlay
+  let helpButton;
+  if (isNotebookMode && repoUrl) {
+    helpButton = document.createElement('button');
+    helpButton.className = 'ipynb-overlay-button ipynb-help-button';
+    helpButton.innerHTML = '&#10067;'; // Question mark icon (❓)
+    helpButton.setAttribute('aria-label', 'Help');
+    helpButton.setAttribute('title', 'Help');
+
+    helpButton.addEventListener('click', () => {
+      // Construct help.md URL
+      const helpUrl = `${repoUrl}/blob/main/docs/help.md`;
+      const helpOverlay = createGitHubMarkdownOverlay(helpUrl, 'IPynb Viewer Help');
+      helpOverlay.openOverlay();
+    });
+  }
+
   // Pagination controls
   const paginationDiv = document.createElement('div');
   paginationDiv.className = 'ipynb-pagination';
@@ -997,8 +1236,14 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   if (isNotebookMode && historyButton) {
     controlsSection.appendChild(historyButton);
   }
+  if (isNotebookMode && bookmarkButton) {
+    controlsSection.appendChild(bookmarkButton);
+  }
   if (isNotebookMode && hamburgerButton) {
     controlsSection.appendChild(hamburgerButton);
+  }
+  if (isNotebookMode && helpButton) {
+    controlsSection.appendChild(helpButton);
   }
   controlsSection.appendChild(closeButton);
 
@@ -1009,6 +1254,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   overlayContent.appendChild(topBar);
   if (isNotebookMode) {
     overlayContent.appendChild(historyDropdown);
+    overlayContent.appendChild(bookmarkDropdown);
     overlayContent.appendChild(tocDropdown);
   }
   overlayContent.appendChild(cellContentArea);

@@ -20,6 +20,8 @@ Display and execute Jupyter notebook (.ipynb) files directly in your EDS site wi
 **Action Cards**: Beautiful navigation cards from pure markdown with emoji color indicators (NEW).
 **GitHub Markdown Overlay**: Click GitHub .md links to view content in-app without leaving the page (NEW).
 **Navigation History**: Track and revisit up to 25 recently viewed cells and markdown files (NEW).
+**Bookmarks**: Save favorite pages to localStorage for quick access anytime (NEW).
+**Help System**: Built-in help documentation accessible via Help button (NEW).
 **Responsive Design**: Mobile-friendly layout.
 **Syntax Highlighting**: Clear code formatting with monospace fonts.
 **Error Handling**: Graceful error messages and visual indicators.
@@ -331,7 +333,7 @@ The ipynb-viewer block uses **three distinct overlay systems** for different pur
 **Purpose:** Navigate through notebook cells one page at a time
 **Visual Controls:**
 - **Attractive top bar** with gradient background (purple-to-blue) displaying notebook title
-- **Control buttons** in top bar: Home, History, TOC (hamburger), and Close (×)
+- **Control buttons** in top bar: Home (🏠), History (🕘), Bookmarks (🔖), TOC (☰), Help (❓), and Close (×)
 - **Previous/Next buttons** at the bottom
 - **Page indicator** showing current page (e.g., "3 / 8")
 
@@ -474,6 +476,106 @@ The ipynb-viewer block automatically tracks your navigation history, recording e
 - **Reference jumping** - Quick access to frequently referenced cells
 - **Learning paths** - Retrace your steps through tutorial content
 - **Documentation browsing** - Navigate between related markdown files
+
+---
+
+### Bookmarks (NEW)
+
+Save your favorite pages for quick access anytime! The bookmark system uses browser localStorage to persist your bookmarks across sessions.
+
+**Features:**
+- ✅ **Persistent Storage** - Bookmarks saved in browser localStorage
+- ✅ **Per-Notebook** - Each notebook has separate bookmarks
+- ✅ **Auto-Titles** - Uses first heading from the page as bookmark title
+- ✅ **Page Numbers** - Shows which page the bookmark points to
+- ✅ **Quick Navigation** - Click bookmark to jump directly to that page
+- ✅ **Easy Management** - Remove individual bookmarks or clear all at once
+- ✅ **Visual Feedback** - Button animation when bookmark is saved
+
+**How to Use:**
+1. Navigate to the page you want to bookmark
+2. Click the **Bookmarks button** (🔖) in the top bar
+3. Click **"+ Bookmark This Page"** at the top of the dropdown
+4. The page is saved with its title and page number
+5. To navigate: Click Bookmarks button → Click any bookmark → Instantly jump to that page
+
+**Bookmark Button Location:**
+- **Position:** Top-right of overlay, between History and TOC buttons
+- **Visibility:** Only in notebook mode variation
+- **Appearance:** Button with bookmark icon (🔖)
+
+**Managing Bookmarks:**
+- **View All:** Click bookmark button to see dropdown list
+- **Navigate:** Click any bookmark to jump to that page
+- **Remove One:** Click the × button next to any bookmark
+- **Clear All:** Click "Clear All Bookmarks" at bottom (with confirmation)
+- **Auto-Update:** Re-bookmarking a page updates the existing bookmark
+
+**Bookmark Storage:**
+- Stored in browser's localStorage with key: `ipynb-bookmarks-{notebook-id}`
+- Each notebook has separate bookmark list
+- Bookmarks persist across browser sessions
+- No server storage required
+- Browser-specific (not synced across devices)
+
+**Use Cases:**
+- **Reference pages** - Save frequently used sections for instant access
+- **Study aids** - Bookmark key concepts while learning
+- **Documentation** - Mark important API references or examples
+- **Tutorial checkpoints** - Save your progress through long tutorials
+- **Comparison** - Bookmark related sections for easy cross-referencing
+
+**Tips:**
+- Bookmark pages with clear headings for better identification
+- Use bookmarks for pages you visit repeatedly
+- Clear old bookmarks periodically to keep list manageable
+- Combine with History for complete navigation workflow
+
+---
+
+### Help System (NEW)
+
+Built-in help documentation accessible anytime via the Help button! The help system displays comprehensive usage instructions in a beautiful overlay.
+
+**Features:**
+- ✅ **Always Accessible** - Help button in top bar for instant access
+- ✅ **Comprehensive Guide** - Covers all features and navigation
+- ✅ **GitHub Integration** - Opens docs/help.md in overlay viewer
+- ✅ **No External Navigation** - Stay in the app while reading help
+- ✅ **Searchable** - Full markdown with headings and table of contents
+- ✅ **Up-to-Date** - Help doc maintained with latest features
+
+**How to Use:**
+1. Click the **Help button** (❓) in the top bar
+2. Browse the comprehensive help guide in the overlay
+3. Read about features, navigation, bookmarks, history, shortcuts
+4. Press ESC or click × to close and return to your notebook
+
+**Help Button Location:**
+- **Position:** Top-right of overlay, between TOC and Close buttons
+- **Visibility:** Only in notebook mode variation (requires `repo` metadata)
+- **Appearance:** Button with question mark icon (❓)
+
+**Help Topics Covered:**
+- Getting Started - Opening notebooks and understanding the interface
+- Navigation Controls - All buttons and their functions
+- Overlay Types - Paged, Manual, GitHub Markdown, Preview overlays
+- Bookmarks - Saving and managing favorite pages
+- History - Tracking and revisiting recent navigation
+- Keyboard Shortcuts - Arrow keys and ESC shortcuts
+- Tips & Tricks - Best practices and workflow examples
+- Troubleshooting - Common issues and solutions
+
+**Requirements:**
+- Help button only appears when `repo` metadata is configured
+- Expects help file at `docs/help.md` in the repository
+- Uses GitHub Markdown Overlay viewer for display
+
+**Benefits:**
+- **Self-Service** - Users find answers without leaving the app
+- **Contextual** - Help available exactly when needed
+- **Complete** - All features documented in one place
+- **Professional** - Beautiful overlay presentation
 
 ---
 
@@ -1513,6 +1615,65 @@ Potential improvements for future versions:
 - Page jump navigation with dropdown selector
 
 ## Recent Changes
+
+### 2025-01-22 - Bookmarks and Help System (v13)
+
+**Added Bookmark Management:**
+- ✅ **Bookmark button** - Bookmark icon (🔖) in top bar for saving favorite pages
+- ✅ **localStorage persistence** - Bookmarks saved across browser sessions
+- ✅ **Per-notebook storage** - Each notebook has separate bookmark list
+- ✅ **Auto-titles** - Extracts first heading from page as bookmark title
+- ✅ **Page indicators** - Shows page number with each bookmark
+- ✅ **Quick navigation** - Click bookmark to jump directly to that page
+- ✅ **Individual removal** - × button to remove single bookmarks
+- ✅ **Clear all** - Button to clear all bookmarks with confirmation
+- ✅ **Visual feedback** - Button animation when bookmark is saved
+- ✅ **"Bookmark This Page" button** - Prominent gradient button in dropdown
+- ✅ **Empty state** - "No bookmarks yet" message
+
+**Added Help System:**
+- ✅ **Help button** - Question mark icon (❓) in top bar
+- ✅ **Comprehensive guide** - Complete usage documentation in docs/help.md
+- ✅ **GitHub integration** - Opens help.md in GitHub Markdown overlay
+- ✅ **In-app viewing** - No external navigation required
+- ✅ **All topics covered** - Getting Started, Navigation, Bookmarks, History, Shortcuts, etc.
+- ✅ **Searchable** - Full markdown with headings and table of contents
+- ✅ **Requires repo metadata** - Help button appears only when repo configured
+
+**Technical Implementation:**
+- `docs/help.md`: Created comprehensive help documentation (340 lines)
+- `ipynb-viewer.js` lines 701-798: Added bookmark functions (getBookmarks, saveBookmark, removeBookmark, clearAllBookmarks)
+- `ipynb-viewer.js` lines 1067-1188: Added bookmark button and dropdown UI with management functions
+- `ipynb-viewer.js` lines 1190-1205: Added help button that opens docs/help.md in GitHub overlay
+- `ipynb-viewer.js` lines 1239-1247: Added bookmark and help buttons to top bar controls assembly
+- `ipynb-viewer.js` line 1257: Added bookmark dropdown to overlay content
+- `ipynb-viewer.css` lines 1148-1270: Added bookmark dropdown styles with gradient "Add" button and styled remove buttons
+- `README.md` lines 23-24, 336, 482-579: Added documentation for bookmarks and help features
+
+**Bookmark Features:**
+- Storage key pattern: `ipynb-bookmarks-{notebook-id}`
+- Automatic deduplication (re-bookmarking updates existing)
+- Sorted by creation time (most recent first)
+- Beautiful dropdown with gradient add button
+- Red remove buttons with hover effects
+- "Clear All" button with confirmation dialog
+
+**Help System Features:**
+- 9 comprehensive sections covering all features
+- Table of Contents for easy navigation
+- Keyboard shortcuts reference
+- Tips & Tricks with workflow examples
+- Troubleshooting section
+- Always accessible in notebook mode
+
+**Benefits:**
+- **Better UX** - Users can save and revisit important pages
+- **Self-service** - Help always available without leaving app
+- **Persistence** - Bookmarks survive browser restarts
+- **Organization** - Easy to manage with visual feedback
+- **Accessibility** - Help documentation right where users need it
+
+---
 
 ### 2025-01-22 - Attractive Top Bar for All Overlays (v12)
 
