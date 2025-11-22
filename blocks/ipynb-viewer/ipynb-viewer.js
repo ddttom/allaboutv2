@@ -705,9 +705,10 @@ function addToHistory(title, type, cellIndex = null, url = null) {
  * @param {boolean} autorun - Whether to autorun code cells
  * @param {boolean} isNotebookMode - Whether this is notebook mode (close button always visible)
  * @param {string} [repoUrl] - Optional repository URL for markdown .md links
+ * @param {string} [notebookTitle] - Optional notebook title for top bar
  * @returns {object} Overlay controls
  */
-function createPagedOverlay(container, cellsContainer, autorun = false, isNotebookMode = false, repoUrl = null) {
+function createPagedOverlay(container, cellsContainer, autorun = false, isNotebookMode = false, repoUrl = null, notebookTitle = 'Jupyter Notebook') {
   const cells = Array.from(cellsContainer.querySelectorAll('.ipynb-cell'));
 
   if (cells.length === 0) return null;
@@ -741,9 +742,23 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   const overlayContent = document.createElement('div');
   overlayContent.className = 'ipynb-paged-overlay-content';
 
+  // Create top bar with title and controls
+  const topBar = document.createElement('div');
+  topBar.className = 'ipynb-overlay-top-bar';
+
+  // Title section
+  const titleSection = document.createElement('div');
+  titleSection.className = 'ipynb-overlay-title';
+  titleSection.textContent = notebookTitle;
+  titleSection.setAttribute('title', notebookTitle);
+
+  // Controls section
+  const controlsSection = document.createElement('div');
+  controlsSection.className = 'ipynb-overlay-controls';
+
   // Close button (always visible, including notebook mode)
   const closeButton = document.createElement('button');
-  closeButton.className = 'ipynb-paged-close';
+  closeButton.className = 'ipynb-overlay-button ipynb-paged-close';
   closeButton.innerHTML = '&times;';
   closeButton.setAttribute('aria-label', 'Close paged view');
 
@@ -754,10 +769,10 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   let homeButton;
   if (isNotebookMode) {
     homeButton = document.createElement('button');
-    homeButton.className = 'ipynb-home-button';
+    homeButton.className = 'ipynb-overlay-button ipynb-home-button';
     homeButton.innerHTML = '🏠';
     homeButton.setAttribute('aria-label', 'Go to first cell');
-    homeButton.setAttribute('title', 'Go to first cell');
+    homeButton.setAttribute('title', 'Home');
 
     // Add click handler to navigate to first page (which contains cell 0)
     homeButton.addEventListener('click', () => {
@@ -770,11 +785,11 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   let historyButton, historyDropdown;
   if (isNotebookMode) {
     historyButton = document.createElement('button');
-    historyButton.className = 'ipynb-history-button';
+    historyButton.className = 'ipynb-overlay-button ipynb-history-button';
     historyButton.innerHTML = '&#128337;'; // Clock icon (🕘)
     historyButton.setAttribute('aria-label', 'Navigation History');
     historyButton.setAttribute('aria-expanded', 'false');
-    historyButton.setAttribute('title', 'Navigation History');
+    historyButton.setAttribute('title', 'History');
 
     historyDropdown = document.createElement('div');
     historyDropdown.className = 'ipynb-history-dropdown';
@@ -851,10 +866,11 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   let hamburgerButton, tocDropdown;
   if (isNotebookMode) {
     hamburgerButton = document.createElement('button');
-    hamburgerButton.className = 'ipynb-hamburger-menu';
+    hamburgerButton.className = 'ipynb-overlay-button ipynb-hamburger-menu';
     hamburgerButton.innerHTML = '&#9776;'; // Hamburger icon
     hamburgerButton.setAttribute('aria-label', 'Table of Contents');
     hamburgerButton.setAttribute('aria-expanded', 'false');
+    hamburgerButton.setAttribute('title', 'Table of Contents');
 
     tocDropdown = document.createElement('div');
     tocDropdown.className = 'ipynb-toc-dropdown';
@@ -974,15 +990,25 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   const cellContentArea = document.createElement('div');
   cellContentArea.className = 'ipynb-paged-cell-area';
 
-  // Assemble overlay
+  // Assemble top bar with controls
   if (isNotebookMode && homeButton) {
-    overlayContent.appendChild(homeButton);
+    controlsSection.appendChild(homeButton);
   }
-  overlayContent.appendChild(closeButton);
+  if (isNotebookMode && historyButton) {
+    controlsSection.appendChild(historyButton);
+  }
+  if (isNotebookMode && hamburgerButton) {
+    controlsSection.appendChild(hamburgerButton);
+  }
+  controlsSection.appendChild(closeButton);
+
+  topBar.appendChild(titleSection);
+  topBar.appendChild(controlsSection);
+
+  // Assemble overlay
+  overlayContent.appendChild(topBar);
   if (isNotebookMode) {
-    overlayContent.appendChild(historyButton);
     overlayContent.appendChild(historyDropdown);
-    overlayContent.appendChild(hamburgerButton);
     overlayContent.appendChild(tocDropdown);
   }
   overlayContent.appendChild(cellContentArea);
@@ -1731,7 +1757,8 @@ export default async function decorate(block) {
       buttonContainer.appendChild(startButton);
 
       // Create overlay with autorun support and notebook mode flag
-      const overlay = createPagedOverlay(container, cellsContainer, shouldAutorun, isNotebook, repoUrl);
+      const notebookTitle = notebook.metadata?.title || 'Jupyter Notebook';
+      const overlay = createPagedOverlay(container, cellsContainer, shouldAutorun, isNotebook, repoUrl, notebookTitle);
 
       // Start button opens overlay
       startButton.addEventListener('click', () => {

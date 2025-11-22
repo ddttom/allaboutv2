@@ -892,6 +892,70 @@ html {
   outline-offset: 2px;
 }
 
+/* Overlay Top Bar - Attractive header for all overlays */
+.ipynb-overlay-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  min-height: 60px;
+  flex-shrink: 0;
+}
+
+.ipynb-overlay-title {
+  flex: 1;
+  font-size: 1.25rem;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-right: 1rem;
+  color: white;
+}
+
+.ipynb-overlay-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.ipynb-overlay-button {
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.ipynb-overlay-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.ipynb-overlay-button:active {
+  transform: translateY(0);
+}
+
+.ipynb-overlay-button:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
 /* Full-screen overlay for paged mode */
 .ipynb-paged-overlay {
   position: fixed;
@@ -931,35 +995,9 @@ html {
   padding: 0;
 }
 
-/* Close button */
-.ipynb-paged-close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  width: 40px;
-  height: 40px;
-  background: rgba(0, 0, 0, 0.1);
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 2rem;
-  line-height: 1;
-  color: var(--text-color, #333);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  transition: all 0.3s ease;
-}
-
+/* Close button - now styled via .ipynb-overlay-button in top bar */
 .ipynb-paged-close:hover {
-  background: rgba(0, 0, 0, 0.2);
   transform: rotate(90deg);
-}
-
-.ipynb-paged-close:focus {
-  outline: 2px solid var(--focus-color, #007bff);
-  outline-offset: 2px;
 }
 
 /* History button (notebook mode only) */
@@ -1057,8 +1095,8 @@ html {
 /* History Dropdown */
 .ipynb-history-dropdown {
   position: absolute;
-  top: 4rem;
-  right: 5.5rem;
+  top: 70px;
+  right: 140px;
   background: white;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -1110,8 +1148,8 @@ html {
 /* Table of Contents Dropdown */
 .ipynb-toc-dropdown {
   position: absolute;
-  top: 4rem;
-  right: 1rem;
+  top: 70px;
+  right: 90px;
   background: white;
   border: 1px solid #ddd;
   border-radius: 8px;
