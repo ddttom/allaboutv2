@@ -101,7 +101,8 @@ function parseMarkdown(markdown, repoUrl = null) {
       const cleanPath = url.replace(/^\.?\//, '');
       // Build full repo URL (assuming GitHub blob/main pattern)
       const fullUrl = `${repoUrl}/blob/main/${cleanPath}`;
-      return `<a href="${fullUrl}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+      // Mark GitHub markdown links with special class for overlay handling
+      return `<a href="${fullUrl}" class="ipynb-github-md-link" data-md-path="${cleanPath}" data-repo="${repoUrl}" rel="noopener noreferrer">${text}</a>`;
     }
     return `<a href="${url}">${text}</a>`;
   });
@@ -396,6 +397,18 @@ function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false) {
   if (html.includes('<!-- action-cards -->')) {
     styleActionCards(content);
   }
+
+  // Add click handlers for GitHub markdown links to open in overlay
+  const githubMdLinks = content.querySelectorAll('.ipynb-github-md-link');
+  githubMdLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const githubUrl = link.href;
+      const title = link.textContent || 'GitHub Markdown';
+      const overlay = createGitHubMarkdownOverlay(githubUrl, title);
+      overlay.openOverlay();
+    });
+  });
 
   cellDiv.appendChild(content);
   return cellDiv;
@@ -1132,6 +1145,124 @@ function createManualButton() {
   manualButton.textContent = 'Read the Manual';
   manualButton.setAttribute('aria-label', 'Read the manual');
   return manualButton;
+}
+
+/**
+ * Convert GitHub blob URL to raw content URL
+ * @param {string} blobUrl - GitHub blob URL
+ * @returns {string} Raw content URL
+ */
+function convertToRawUrl(blobUrl) {
+  // Convert: https://github.com/user/repo/blob/main/path/file.md
+  // To: https://raw.githubusercontent.com/user/repo/main/path/file.md
+  return blobUrl
+    .replace('github.com', 'raw.githubusercontent.com')
+    .replace('/blob/', '/');
+}
+
+/**
+ * Create GitHub markdown overlay for displaying markdown files from GitHub
+ * @param {string} githubUrl - Full GitHub blob URL
+ * @param {string} title - Title to display in overlay header
+ * @returns {Object} Object with openOverlay and closeOverlay functions
+ */
+function createGitHubMarkdownOverlay(githubUrl, title) {
+  // Create overlay container
+  const overlay = document.createElement('div');
+  overlay.className = 'ipynb-manual-overlay ipynb-github-md-overlay';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-label', 'GitHub markdown viewer');
+
+  // Create overlay content
+  const overlayContent = document.createElement('div');
+  overlayContent.className = 'ipynb-manual-overlay-content';
+
+  // Create header with title and close button
+  const overlayHeader = document.createElement('div');
+  overlayHeader.className = 'ipynb-manual-overlay-header';
+
+  const headerTitle = document.createElement('h2');
+  headerTitle.className = 'ipynb-github-md-title';
+  headerTitle.textContent = title;
+  headerTitle.style.cssText = 'position: absolute; left: 1rem; top: 1rem; margin: 0; font-size: 1.2rem; color: var(--text-color, #333); max-width: calc(100% - 5rem); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;';
+
+  const closeButton = document.createElement('button');
+  closeButton.className = 'ipynb-paged-close';
+  closeButton.innerHTML = '&times;';
+  closeButton.setAttribute('aria-label', 'Close markdown viewer');
+
+  overlayHeader.appendChild(headerTitle);
+  overlayHeader.appendChild(closeButton);
+  overlayContent.appendChild(overlayHeader);
+
+  // Create content area for markdown
+  const contentArea = document.createElement('div');
+  contentArea.className = 'ipynb-manual-content-area';
+  overlayContent.appendChild(contentArea);
+
+  overlay.appendChild(overlayContent);
+
+  // Convert blob URL to raw URL
+  const rawUrl = convertToRawUrl(githubUrl);
+
+  // Open/close functions
+  const openOverlay = async () => {
+    // Fetch and display markdown
+    try {
+      contentArea.innerHTML = '<div class="ipynb-loading">Loading markdown from GitHub...</div>';
+      const response = await fetch(rawUrl);
+      if (!response.ok) {
+        throw new Error(`Failed to load markdown: ${response.status}`);
+      }
+      const markdownText = await response.text();
+
+      // Render markdown (without repo URL to avoid recursive link conversion)
+      contentArea.innerHTML = parseMarkdown(markdownText, null);
+
+      // Show overlay
+      overlay.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      closeButton.focus();
+    } catch (error) {
+      console.error('Failed to load markdown:', error);
+      contentArea.innerHTML = `<div class="ipynb-error">Failed to load markdown from GitHub: ${error.message}<br><br>URL: ${rawUrl}</div>`;
+      overlay.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+  };
+
+  const closeOverlay = () => {
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
+  };
+
+  // Close button handler
+  closeButton.addEventListener('click', closeOverlay);
+
+  // Close on overlay click (but not content click)
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      closeOverlay();
+    }
+  });
+
+  // Escape key handler
+  const keyHandler = (e) => {
+    if (e.key === 'Escape' && overlay.style.display === 'flex') {
+      closeOverlay();
+    }
+  };
+
+  document.addEventListener('keydown', keyHandler);
+
+  // Append overlay to body
+  document.body.appendChild(overlay);
+
+  return {
+    openOverlay,
+    closeOverlay,
+  };
 }
 
 /**

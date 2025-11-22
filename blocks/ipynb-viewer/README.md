@@ -4,13 +4,13 @@ Display and execute Jupyter notebook (.ipynb) files directly in your EDS site wi
 
 ## Features
 
-**Parse and Display Notebooks**: Renders both markdown and code cells from .ipynb files. 
-**Interactive Execution**: Run JavaScript code cells individually with a click (async/await support). 
-**Cell Independence**: Run any cell at any time in any order with no initialization required. 
-**Browser Execution**: Runs JavaScript code directly in the browser with native APIs. 
-**Direct ES6 Imports**: Each cell imports what it needs independently. 
-**Output Display**: Shows console logs, results, and errors inline. 
-**Overlay Previews**: Full-screen overlays for visual testing (no popup blockers). 
+**Parse and Display Notebooks**: Renders both markdown and code cells from .ipynb files.
+**Interactive Execution**: Run JavaScript code cells individually with a click (async/await support).
+**Cell Independence**: Run any cell at any time in any order with no initialization required.
+**Browser Execution**: Runs JavaScript code directly in the browser with native APIs.
+**Direct ES6 Imports**: Each cell imports what it needs independently.
+**Output Display**: Shows console logs, results, and errors inline.
+**Overlay Previews**: Full-screen overlays for visual testing (no popup blockers).
 **Paged Variation**: Display cells one at a time with navigation controls.
 **Autorun Mode**: Automatically execute code cells without Run buttons (NEW).
 **Notebook Variation**: Combined manual and paged modes with visible close button (NEW).
@@ -18,6 +18,7 @@ Display and execute Jupyter notebook (.ipynb) files directly in your EDS site wi
 **Link Navigation**: Navigate between overlays using hash targets (NEW).
 **Auto-Wrapping**: Pure markdown authoring with automatic styling in notebook mode - 90% less code (NEW).
 **Action Cards**: Beautiful navigation cards from pure markdown with emoji color indicators (NEW).
+**GitHub Markdown Overlay**: Click GitHub .md links to view content in-app without leaving the page (NEW).
 **Responsive Design**: Mobile-friendly layout.
 **Syntax Highlighting**: Clear code formatting with monospace fonts.
 **Error Handling**: Graceful error messages and visual indicators.
@@ -242,7 +243,7 @@ Headers (H1, H2, H3) with `#`, `##`, `###`. **Bold** text with `**text**`. *Ital
 
 **Documentation Links (NEW with repo metadata):**
 
-When `repo` metadata is provided, links to .md files are automatically converted to full GitHub URLs:
+When `repo` metadata is provided, links to .md files are automatically converted to full GitHub URLs and open in an **in-app overlay viewer** instead of navigating away:
 
 ```markdown
 ✅ Correct syntax (will convert):
@@ -260,7 +261,16 @@ When `repo` metadata is provided, links to .md files are automatically converted
 - Only converts relative paths ending in `.md`
 - Absolute URLs (http://, https://) are never converted
 - Leading `./` or `/` are automatically stripped
-- Converted links open in new tab with security attributes
+- **Converted links open in overlay viewer** - keeps users in the app
+- **ESC key to close** - quick dismissal of overlay
+- **Fetches raw markdown from GitHub** - displays beautifully formatted content
+
+**How It Works:**
+1. Links matching pattern `[text](path.md)` are marked with special class `.ipynb-github-md-link`
+2. Click handler intercepts the link and prevents navigation
+3. Fetches raw markdown content from GitHub (converts blob URL to raw URL)
+4. Displays markdown in full-screen overlay with close button
+5. Users stay within the app - no external navigation
 
 ### Code Cells
 
@@ -379,6 +389,51 @@ When **multiple overlays are open** (e.g., you're in paged mode, have the manual
 - Previous/Next buttons continue to work in the paged overlay beneath other overlays
 
 This hierarchy ensures you can test responsive previews and reference documentation while reading through the notebook without losing your place.
+
+---
+
+### 4. GitHub Markdown Overlay (Documentation Viewer) - NEW
+
+**Triggered by:** Clicking on GitHub .md file links in markdown cells
+**Purpose:** View GitHub markdown documentation without leaving the app
+**Visual Controls:**
+- **Title header** showing the link text
+- Close button (×) in top-right
+- **Scrollable content area** for markdown content
+- **Rendered markdown** with full formatting support
+
+**Keyboard Shortcuts:**
+- `Escape` - Close the GitHub markdown overlay
+
+**When visible:** This overlay appears when you click on a link to a GitHub .md file (when `repo` metadata is provided).
+
+**Features:**
+- ✅ **In-app viewing** - No external navigation, users stay in your app
+- ✅ **Automatic conversion** - Blob URLs converted to raw URLs for fetching
+- ✅ **Full markdown rendering** - Tables, code blocks, lists, headings, etc.
+- ✅ **Loading state** - Shows "Loading markdown from GitHub..." message
+- ✅ **Error handling** - Displays clear error messages if fetch fails
+- ✅ **Visual feedback** - Links styled with dashed underline on hover
+- ✅ **Accessibility** - Full ARIA support and keyboard navigation
+
+**Example:**
+```markdown
+<!-- In a markdown cell with repo metadata set -->
+See the [Getting Started Guide](docs/getting-started.md) for more information.
+```
+
+When clicked, this link:
+1. Prevents default navigation to GitHub
+2. Converts `https://github.com/user/repo/blob/main/docs/getting-started.md` to raw URL
+3. Fetches raw markdown content
+4. Displays in beautiful overlay with title "Getting Started Guide"
+5. Users can read, scroll, and close with ESC or × button
+
+**Benefits:**
+- **Better UX** - Users don't lose their place in your documentation
+- **Faster** - No page navigation or loading external sites
+- **Consistent styling** - Markdown rendered with your app's styles
+- **Professional** - Seamless documentation browsing experience
 
 ---
 
@@ -1418,6 +1473,48 @@ Potential improvements for future versions:
 - Page jump navigation with dropdown selector
 
 ## Recent Changes
+
+### 2025-01-22 - GitHub Markdown Overlay Viewer (v10)
+
+**Added In-App GitHub Markdown Viewing:**
+- ✅ **Overlay viewer for .md links** - GitHub markdown files open in overlay instead of external navigation
+- ✅ **Automatic link marking** - Links to .md files marked with `.ipynb-github-md-link` class
+- ✅ **Raw URL conversion** - Blob URLs automatically converted to raw.githubusercontent.com URLs
+- ✅ **Click interception** - Event listeners prevent external navigation and open overlay
+- ✅ **Full markdown rendering** - Fetched content displayed with complete markdown parsing
+- ✅ **Visual feedback** - Links styled with dashed underline that becomes solid on hover
+- ✅ **Loading states** - Shows "Loading markdown from GitHub..." during fetch
+- ✅ **Error handling** - Clear error messages with URL details if fetch fails
+- ✅ **Accessibility** - ESC key support, ARIA labels, keyboard navigation
+- ✅ **Keeps users in-app** - No external page loads or lost context
+
+**Technical Implementation:**
+- `ipynb-viewer.js` lines 96-108: Modified `parseMarkdown()` to mark GitHub .md links with special class and data attributes
+- `ipynb-viewer.js` lines 1138-1254: Added `convertToRawUrl()` and `createGitHubMarkdownOverlay()` functions
+- `ipynb-viewer.js` lines 401-411: Added click handlers in `createMarkdownCell()` to intercept GitHub markdown links
+- `ipynb-viewer.css` lines 1357-1396: Added styles for `.ipynb-github-md-link` and `.ipynb-github-md-overlay`
+
+**How It Works:**
+1. When `repo` metadata is provided, `parseMarkdown()` marks .md links with `.ipynb-github-md-link` class
+2. Click handler intercepts link clicks and calls `createGitHubMarkdownOverlay()`
+3. Blob URL is converted to raw URL: `github.com/user/repo/blob/main/file.md` → `raw.githubusercontent.com/user/repo/main/file.md`
+4. Raw markdown is fetched via `fetch()` API
+5. Content is rendered using `parseMarkdown()` and displayed in full-screen overlay
+6. User can read, scroll, and close with ESC or × button
+
+**Benefits:**
+- Better user experience - no context switching to GitHub
+- Faster navigation - no external page loads
+- Consistent styling - markdown rendered with app styles
+- Professional documentation browsing without leaving the app
+
+**Migration:** No action required - feature activates automatically when `repo` metadata is present in notebook.
+
+**See:**
+- README.md lines 21, 246-273, 395-437: Complete documentation of feature
+- Example usage: Any notebook with `repo` metadata and .md links in markdown cells
+
+---
 
 ### 2025-01-20 - Auto-Wrapping in Notebook Mode (v7)
 

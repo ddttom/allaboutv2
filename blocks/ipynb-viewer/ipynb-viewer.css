@@ -1354,6 +1354,20 @@ html {
   outline-offset: 2px;
 }
 
+/* GitHub markdown links - styling for overlay-enabled links */
+.ipynb-github-md-link {
+  cursor: pointer;
+  color: var(--primary-color, #007bff);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--primary-color, #007bff);
+  transition: all 0.2s ease;
+}
+
+.ipynb-github-md-link:hover {
+  border-bottom-style: solid;
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
 /* Manual overlay - similar to paged overlay */
 .ipynb-manual-overlay {
   position: fixed;
@@ -1367,6 +1381,18 @@ html {
   align-items: center;
   justify-content: center;
   animation: fadeIn 0.3s ease;
+}
+
+/* GitHub markdown overlay - same as manual overlay with additional header styling */
+.ipynb-github-md-overlay .ipynb-manual-overlay-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ipynb-github-md-title {
+  flex: 1;
+  padding-right: 3rem;
 }
 
 .ipynb-manual-overlay-content {
