@@ -330,7 +330,8 @@ The ipynb-viewer block uses **three distinct overlay systems** for different pur
 **Triggered by:** Clicking the "Start Reading" button
 **Purpose:** Navigate through notebook cells one page at a time
 **Visual Controls:**
-- Close button (×) in top-right
+- **Attractive top bar** with gradient background (purple-to-blue) displaying notebook title
+- **Control buttons** in top bar: Home, History, TOC (hamburger), and Close (×)
 - **Previous/Next buttons** at the bottom
 - **Page indicator** showing current page (e.g., "3 / 8")
 
@@ -348,7 +349,8 @@ The ipynb-viewer block uses **three distinct overlay systems** for different pur
 **Triggered by:** Clicking the "Read the Manual" button
 **Purpose:** Display block documentation and reference material
 **Visual Controls:**
-- Close button (×) in top-right
+- **Attractive top bar** with gradient background (purple-to-blue) displaying document title
+- **Close button** (×) in top bar
 - **Scrollable content area** for long documentation
 - No pagination controls (continuous scroll)
 
@@ -398,8 +400,8 @@ This hierarchy ensures you can test responsive previews and reference documentat
 **Triggered by:** Clicking on GitHub .md file links in markdown cells
 **Purpose:** View GitHub markdown documentation without leaving the app
 **Visual Controls:**
-- **Title header** showing the link text
-- Close button (×) in top-right
+- **Attractive top bar** with gradient background (purple-to-blue) displaying markdown file title
+- **Close button** (×) in top bar
 - **Scrollable content area** for markdown content
 - **Rendered markdown** with full formatting support
 
@@ -1511,6 +1513,41 @@ Potential improvements for future versions:
 - Page jump navigation with dropdown selector
 
 ## Recent Changes
+
+### 2025-01-22 - Attractive Top Bar for All Overlays (v12)
+
+**Added Unified Top Bar Design:**
+- ✅ **Gradient background** - Beautiful purple-to-blue gradient (linear-gradient(135deg, #667eea 0%, #764ba2 100%))
+- ✅ **File/notebook title display** - Shows title with ellipsis overflow for long names
+- ✅ **Unified control buttons** - All overlay controls (Home, History, TOC, Close) in top bar
+- ✅ **Consistent styling** - Same attractive design across all overlay types
+- ✅ **Button hover effects** - Subtle lift animation and shadow on hover
+- ✅ **Responsive layout** - Flexbox-based design adapts to different screen sizes
+- ✅ **Applied to all overlays** - Paged overlay, Manual overlay, and GitHub Markdown overlay
+
+**Visual Features:**
+- Top bar height: 60px minimum
+- Border radius: 12px on top corners
+- Box shadow: Subtle 0 2px 8px rgba(0, 0, 0, 0.15)
+- Button size: 36x36px with rounded 8px corners
+- Button background: Semi-transparent white with border
+- Title: 1.25rem font, white color, truncates with ellipsis
+
+**Technical Implementation:**
+- `ipynb-viewer.js` lines 745-856: Updated `createPagedOverlay()` with top bar structure
+- `ipynb-viewer.js` lines 1344-1368: Updated `createGitHubMarkdownOverlay()` with top bar
+- `ipynb-viewer.js` lines 1448-1489: Updated `createManualOverlay()` with top bar and title extraction
+- `ipynb-viewer.css` lines 895-957: Added `.ipynb-overlay-top-bar`, `.ipynb-overlay-title`, `.ipynb-overlay-controls`, and `.ipynb-overlay-button` styles
+- `ipynb-viewer.css` lines 1122-1136: Updated dropdown positioning for new top bar (top: 70px)
+
+**Benefits:**
+- **Professional appearance** - Modern gradient design elevates the user experience
+- **Better context** - Users always see which file/notebook they're viewing
+- **Improved usability** - All controls centralized in one location
+- **Visual consistency** - Same design language across all overlay types
+- **Accessibility** - Clear button labels and keyboard navigation support
+
+---
 
 ### 2025-01-22 - Navigation History Tracking (v11)
 

@@ -1341,23 +1341,31 @@ function createGitHubMarkdownOverlay(githubUrl, title) {
   const overlayContent = document.createElement('div');
   overlayContent.className = 'ipynb-manual-overlay-content';
 
-  // Create header with title and close button
-  const overlayHeader = document.createElement('div');
-  overlayHeader.className = 'ipynb-manual-overlay-header';
+  // Create top bar with title and controls
+  const topBar = document.createElement('div');
+  topBar.className = 'ipynb-overlay-top-bar';
 
-  const headerTitle = document.createElement('h2');
-  headerTitle.className = 'ipynb-github-md-title';
-  headerTitle.textContent = title;
-  headerTitle.style.cssText = 'position: absolute; left: 1rem; top: 1rem; margin: 0; font-size: 1.2rem; color: var(--text-color, #333); max-width: calc(100% - 5rem); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;';
+  // Title section
+  const titleSection = document.createElement('div');
+  titleSection.className = 'ipynb-overlay-title';
+  titleSection.textContent = title;
+  titleSection.setAttribute('title', title);
 
+  // Controls section
+  const controlsSection = document.createElement('div');
+  controlsSection.className = 'ipynb-overlay-controls';
+
+  // Close button
   const closeButton = document.createElement('button');
-  closeButton.className = 'ipynb-paged-close';
+  closeButton.className = 'ipynb-overlay-button';
   closeButton.innerHTML = '&times;';
   closeButton.setAttribute('aria-label', 'Close markdown viewer');
 
-  overlayHeader.appendChild(headerTitle);
-  overlayHeader.appendChild(closeButton);
-  overlayContent.appendChild(overlayHeader);
+  // Assemble top bar
+  controlsSection.appendChild(closeButton);
+  topBar.appendChild(titleSection);
+  topBar.appendChild(controlsSection);
+  overlayContent.appendChild(topBar);
 
   // Create content area for markdown
   const contentArea = document.createElement('div');
@@ -1438,6 +1446,11 @@ function createGitHubMarkdownOverlay(githubUrl, title) {
  * @returns {Object} Object with openOverlay and closeOverlay functions
  */
 function createManualOverlay(manualPath, repoUrl) {
+  // Extract title from manualPath (filename without extension)
+  const pathParts = manualPath.split('/');
+  const filename = pathParts[pathParts.length - 1];
+  const title = filename.replace(/\.md$/i, '').replace(/[-_]/g, ' ');
+
   // Create overlay container
   const overlay = document.createElement('div');
   overlay.className = 'ipynb-manual-overlay';
@@ -1449,17 +1462,31 @@ function createManualOverlay(manualPath, repoUrl) {
   const overlayContent = document.createElement('div');
   overlayContent.className = 'ipynb-manual-overlay-content';
 
-  // Create header with close button
-  const overlayHeader = document.createElement('div');
-  overlayHeader.className = 'ipynb-manual-overlay-header';
+  // Create top bar with title and controls
+  const topBar = document.createElement('div');
+  topBar.className = 'ipynb-overlay-top-bar';
 
+  // Title section
+  const titleSection = document.createElement('div');
+  titleSection.className = 'ipynb-overlay-title';
+  titleSection.textContent = title;
+  titleSection.setAttribute('title', title);
+
+  // Controls section
+  const controlsSection = document.createElement('div');
+  controlsSection.className = 'ipynb-overlay-controls';
+
+  // Close button
   const closeButton = document.createElement('button');
-  closeButton.className = 'ipynb-paged-close';
+  closeButton.className = 'ipynb-overlay-button';
   closeButton.innerHTML = '&times;';
   closeButton.setAttribute('aria-label', 'Close manual');
 
-  overlayHeader.appendChild(closeButton);
-  overlayContent.appendChild(overlayHeader);
+  // Assemble top bar
+  controlsSection.appendChild(closeButton);
+  topBar.appendChild(titleSection);
+  topBar.appendChild(controlsSection);
+  overlayContent.appendChild(topBar);
 
   // Create content area for manual
   const contentArea = document.createElement('div');
