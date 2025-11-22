@@ -19,6 +19,7 @@ Display and execute Jupyter notebook (.ipynb) files directly in your EDS site wi
 **Auto-Wrapping**: Pure markdown authoring with automatic styling in notebook mode - 90% less code (NEW).
 **Action Cards**: Beautiful navigation cards from pure markdown with emoji color indicators (NEW).
 **GitHub Markdown Overlay**: Click GitHub .md links to view content in-app without leaving the page (NEW).
+**Navigation History**: Track and revisit up to 25 recently viewed cells and markdown files (NEW).
 **Responsive Design**: Mobile-friendly layout.
 **Syntax Highlighting**: Clear code formatting with monospace fonts.
 **Error Handling**: Graceful error messages and visual indicators.
@@ -434,6 +435,43 @@ When clicked, this link:
 - **Faster** - No page navigation or loading external sites
 - **Consistent styling** - Markdown rendered with your app's styles
 - **Professional** - Seamless documentation browsing experience
+
+---
+
+### Navigation History (NEW)
+
+The ipynb-viewer block automatically tracks your navigation history, recording every cell and markdown file you visit. Access your history through the **History button** (🕘 clock icon) in notebook mode.
+
+**Features:**
+- ✅ **Automatic tracking** - Records every cell page and markdown overlay you visit
+- ✅ **Max 25 entries** - Keeps most recent 25 navigation events
+- ✅ **Smart deduplication** - Removes duplicates to keep history clean
+- ✅ **One-click navigation** - Click any history entry to return to that content
+- ✅ **Visual indicators** - Icons show cell (📄) vs markdown (📝) entries
+- ✅ **Empty state** - Shows "No history yet" when history is empty
+
+**How to Use:**
+1. Navigate through cells using Previous/Next buttons or TOC
+2. Click on GitHub markdown links to view documentation
+3. Click the **History button** (🕘) to see your navigation history
+4. Click any entry to jump back to that cell or re-open that markdown file
+
+**History Button Location:**
+- **Position:** Top-right of overlay, left of hamburger menu (☰)
+- **Visibility:** Only in notebook mode variation
+- **Appearance:** Circular button with clock icon (🕘)
+
+**What Gets Tracked:**
+- **Cells:** First heading in each page you navigate to
+- **Markdown files:** GitHub .md files opened in overlay viewer
+- **Timestamp:** Most recent visit time for sorting
+- **Deduplication:** Revisiting content moves it to top of history
+
+**Use Cases:**
+- **Research flow** - Revisit key sections while exploring documentation
+- **Reference jumping** - Quick access to frequently referenced cells
+- **Learning paths** - Retrace your steps through tutorial content
+- **Documentation browsing** - Navigate between related markdown files
 
 ---
 
@@ -1473,6 +1511,52 @@ Potential improvements for future versions:
 - Page jump navigation with dropdown selector
 
 ## Recent Changes
+
+### 2025-01-22 - Navigation History Tracking (v11)
+
+**Added Navigation History Feature:**
+- ✅ **History button** - Clock icon (🕘) button in notebook mode overlay
+- ✅ **Automatic tracking** - Records every cell and markdown file visited
+- ✅ **Max 25 entries** - Maintains most recent 25 navigation events
+- ✅ **Smart deduplication** - Removes duplicate entries, keeps most recent
+- ✅ **History dropdown** - Scrollable list with titles and type icons
+- ✅ **One-click navigation** - Click history entry to jump back to that content
+- ✅ **Visual indicators** - Cell (📄) and markdown (📝) icons
+- ✅ **Empty state** - Shows "No history yet" message when empty
+- ✅ **Cell navigation** - Clicking cell entry jumps to that page in overlay
+- ✅ **Markdown navigation** - Clicking markdown entry re-opens overlay viewer
+
+**Technical Implementation:**
+- `ipynb-viewer.js` lines 661-699: Added `navigationHistory` array and `addToHistory()` function
+- `ipynb-viewer.js` lines 769-848: Created history button and dropdown UI
+- `ipynb-viewer.js` lines 982-987: Added history button to overlay structure
+- `ipynb-viewer.js` lines 1000-1012: Added history tracking in `updatePageDisplay()`
+- `ipynb-viewer.js` line 1361: Added history tracking in `createGitHubMarkdownOverlay()`
+- `ipynb-viewer.css` lines 965-994: Styled history button (positioned at right: 9.5rem)
+- `ipynb-viewer.css` lines 1057-1108: Styled history dropdown and items
+
+**How It Works:**
+1. Global `navigationHistory` array stores up to 25 entries
+2. `addToHistory(title, type, cellIndex, url)` adds/updates entries
+3. Cell navigation tracked in `updatePageDisplay()` - extracts first heading
+4. Markdown navigation tracked in `createGitHubMarkdownOverlay()` - uses link title
+5. History button opens dropdown with all entries
+6. Clicking entry navigates to cell page or re-opens markdown overlay
+7. Duplicates removed and moved to top (most recent first)
+
+**Benefits:**
+- Better UX - easy to retrace navigation steps
+- Research-friendly - quick access to referenced content
+- Learning aid - revisit important sections
+- Documentation navigation - jump between related files
+
+**Migration:** No action required - feature activates automatically in notebook mode.
+
+**See:**
+- README.md lines 22, 441-475: Complete documentation of feature
+- Example usage: Any notebook in notebook mode variation
+
+---
 
 ### 2025-01-22 - GitHub Markdown Overlay Viewer (v10)
 

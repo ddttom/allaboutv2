@@ -659,6 +659,46 @@ function createPageGroups(cells) {
 }
 
 /**
+ * Global history tracking for navigation
+ * @type {Array<{title: string, type: 'cell'|'markdown', cellIndex?: number, url?: string, timestamp: number}>}
+ */
+const navigationHistory = [];
+const MAX_HISTORY_ENTRIES = 25;
+
+/**
+ * Add entry to navigation history
+ * @param {string} title - Title of the entry
+ * @param {string} type - Type: 'cell' or 'markdown'
+ * @param {number} [cellIndex] - Cell index for cell entries
+ * @param {string} [url] - URL for markdown entries
+ */
+function addToHistory(title, type, cellIndex = null, url = null) {
+  const entry = {
+    title,
+    type,
+    cellIndex,
+    url,
+    timestamp: Date.now(),
+  };
+
+  // Remove duplicate if exists (same title and type)
+  const existingIndex = navigationHistory.findIndex(
+    h => h.title === title && h.type === type
+  );
+  if (existingIndex !== -1) {
+    navigationHistory.splice(existingIndex, 1);
+  }
+
+  // Add to front of history
+  navigationHistory.unshift(entry);
+
+  // Limit to MAX_HISTORY_ENTRIES
+  if (navigationHistory.length > MAX_HISTORY_ENTRIES) {
+    navigationHistory.pop();
+  }
+}
+
+/**
  * Create full-screen overlay for paged variation
  * @param {HTMLElement} container - The notebook container
  * @param {HTMLElement} cellsContainer - Container with cells
@@ -723,6 +763,87 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     homeButton.addEventListener('click', () => {
       paginationState.currentPage = 0;
       updatePageDisplay();
+    });
+  }
+
+  // History button (notebook mode only) - Navigation History
+  let historyButton, historyDropdown;
+  if (isNotebookMode) {
+    historyButton = document.createElement('button');
+    historyButton.className = 'ipynb-history-button';
+    historyButton.innerHTML = '&#128337;'; // Clock icon (🕘)
+    historyButton.setAttribute('aria-label', 'Navigation History');
+    historyButton.setAttribute('aria-expanded', 'false');
+    historyButton.setAttribute('title', 'Navigation History');
+
+    historyDropdown = document.createElement('div');
+    historyDropdown.className = 'ipynb-history-dropdown';
+    historyDropdown.setAttribute('role', 'menu');
+    historyDropdown.style.display = 'none';
+
+    // Function to update history dropdown
+    const updateHistoryDropdown = () => {
+      historyDropdown.innerHTML = '';
+
+      if (navigationHistory.length === 0) {
+        const emptyMessage = document.createElement('div');
+        emptyMessage.className = 'ipynb-history-empty';
+        emptyMessage.textContent = 'No history yet';
+        historyDropdown.appendChild(emptyMessage);
+        return;
+      }
+
+      navigationHistory.forEach((entry) => {
+        const menuItem = document.createElement('button');
+        menuItem.className = 'ipynb-history-item';
+
+        // Add icon based on type
+        const icon = entry.type === 'cell' ? '📄' : '📝';
+        menuItem.textContent = `${icon} ${entry.title}`;
+        menuItem.setAttribute('role', 'menuitem');
+
+        menuItem.addEventListener('click', () => {
+          if (entry.type === 'cell' && entry.cellIndex !== null) {
+            // Navigate to cell page
+            // Find page containing this cell
+            for (let i = 0; i < pages.length; i++) {
+              const pageContainsCell = pages[i].cells.some(
+                cell => parseInt(cell.dataset.cellIndex) === entry.cellIndex
+              );
+              if (pageContainsCell) {
+                paginationState.currentPage = i;
+                updatePageDisplay();
+                break;
+              }
+            }
+          } else if (entry.type === 'markdown' && entry.url) {
+            // Re-open GitHub markdown overlay
+            const mdOverlay = createGitHubMarkdownOverlay(entry.url, entry.title);
+            mdOverlay.openOverlay();
+          }
+          historyDropdown.style.display = 'none';
+          historyButton.setAttribute('aria-expanded', 'false');
+        });
+
+        historyDropdown.appendChild(menuItem);
+      });
+    };
+
+    // Toggle history dropdown on button click
+    historyButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      updateHistoryDropdown(); // Refresh before showing
+      const isOpen = historyDropdown.style.display === 'block';
+      historyDropdown.style.display = isOpen ? 'none' : 'block';
+      historyButton.setAttribute('aria-expanded', !isOpen);
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      if (historyDropdown && !historyDropdown.contains(e.target) && e.target !== historyButton) {
+        historyDropdown.style.display = 'none';
+        historyButton.setAttribute('aria-expanded', 'false');
+      }
     });
   }
 
@@ -859,6 +980,8 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   }
   overlayContent.appendChild(closeButton);
   if (isNotebookMode) {
+    overlayContent.appendChild(historyButton);
+    overlayContent.appendChild(historyDropdown);
     overlayContent.appendChild(hamburgerButton);
     overlayContent.appendChild(tocDropdown);
   }
@@ -873,6 +996,20 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
 
     // Get current page group
     const currentPage = pages[paginationState.currentPage];
+
+    // Track first cell in history (if it has a heading)
+    const firstCell = currentPage.cells[0];
+    if (firstCell && firstCell.classList.contains('ipynb-markdown-cell')) {
+      const content = firstCell.querySelector('.ipynb-cell-content');
+      if (content) {
+        const heading = content.querySelector('h1, h2, h3');
+        if (heading) {
+          const title = heading.textContent.trim();
+          const cellIndex = parseInt(firstCell.dataset.cellIndex);
+          addToHistory(title, 'cell', cellIndex);
+        }
+      }
+    }
 
     // Clone and append all cells in this page
     for (const cell of currentPage.cells) {
@@ -1219,6 +1356,9 @@ function createGitHubMarkdownOverlay(githubUrl, title) {
 
       // Render markdown (without repo URL to avoid recursive link conversion)
       contentArea.innerHTML = parseMarkdown(markdownText, null);
+
+      // Add to history
+      addToHistory(title, 'markdown', null, githubUrl);
 
       // Show overlay
       overlay.style.display = 'flex';
