@@ -919,7 +919,7 @@ Every presentation notebook should have proper metadata:
     "title": "Your Presentation Title",
     "description": "Brief description of the presentation",
     "author": "Your Name",
-    "date": "2025-01-19",
+    "creation-date": "2025-01-19",
     "category": "presentation",
     "repo": "https://github.com/username/repo",
     "manual-path": "docs/for-ai/your-documentation.md"
@@ -932,7 +932,7 @@ Every presentation notebook should have proper metadata:
 - **`title`** (required) - Main presentation title
 - **`description`** (optional) - One-line summary
 - **`author`** (optional) - Author name
-- **`date`** (optional) - Publication date
+- **`creation-date`** (optional) - Creation/publication date (preferred; also supports deprecated `date` attribute)
 - **`category`** (optional) - Content category (e.g., "presentation", "demo")
 - **`repo`** (optional) - Repository URL for linking .md files automatically
 - **`manual-path`** (optional) - Path to documentation for "Read the Manual" button

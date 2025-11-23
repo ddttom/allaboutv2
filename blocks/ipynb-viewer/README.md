@@ -4,13 +4,13 @@ Display and execute Jupyter notebook (.ipynb) files directly in your EDS site wi
 
 ## Features
 
-**Parse and Display Notebooks**: Renders both markdown and code cells from .ipynb files. 
-**Interactive Execution**: Run JavaScript code cells individually with a click (async/await support). 
-**Cell Independence**: Run any cell at any time in any order with no initialization required. 
-**Browser Execution**: Runs JavaScript code directly in the browser with native APIs. 
-**Direct ES6 Imports**: Each cell imports what it needs independently. 
-**Output Display**: Shows console logs, results, and errors inline. 
-**Overlay Previews**: Full-screen overlays for visual testing (no popup blockers). 
+**Parse and Display Notebooks**: Renders both markdown and code cells from .ipynb files.
+**Interactive Execution**: Run JavaScript code cells individually with a click (async/await support).
+**Cell Independence**: Run any cell at any time in any order with no initialization required.
+**Browser Execution**: Runs JavaScript code directly in the browser with native APIs.
+**Direct ES6 Imports**: Each cell imports what it needs independently.
+**Output Display**: Shows console logs, results, and errors inline.
+**Overlay Previews**: Full-screen overlays for visual testing (no popup blockers).
 **Paged Variation**: Display cells one at a time with navigation controls.
 **Autorun Mode**: Automatically execute code cells without Run buttons (NEW).
 **Notebook Variation**: Combined manual and paged modes with visible close button (NEW).
@@ -18,6 +18,10 @@ Display and execute Jupyter notebook (.ipynb) files directly in your EDS site wi
 **Link Navigation**: Navigate between overlays using hash targets (NEW).
 **Auto-Wrapping**: Pure markdown authoring with automatic styling in notebook mode - 90% less code (NEW).
 **Action Cards**: Beautiful navigation cards from pure markdown with emoji color indicators (NEW).
+**GitHub Markdown Overlay**: Click GitHub .md links to view content in-app without leaving the page (NEW).
+**Navigation History**: Track and revisit up to 25 recently viewed cells and markdown files (NEW).
+**Bookmarks**: Save favorite pages to localStorage for quick access anytime (NEW).
+**Help System**: Built-in help documentation accessible via Help button (NEW).
 **Responsive Design**: Mobile-friendly layout.
 **Syntax Highlighting**: Clear code formatting with monospace fonts.
 **Error Handling**: Graceful error messages and visual indicators.
@@ -172,6 +176,15 @@ The notebook metadata is displayed in the header section:
   - **When provided:** Markdown links to .md files are automatically converted to full repository URLs
   - **When omitted:** Links render as-is (relative paths remain relative)
   - **Important:** Use markdown link syntax `[text](file.md)`, not inline code `` `file.md` ``
+- `help-repo` - Repository URL for help documentation (e.g., "https://github.com/ddttom/allaboutV2")
+  - **Fallback:** Uses `repo` if not specified, then defaults to allaboutV2
+  - **Purpose:** Separate repository for help button documentation
+  - **Use case:** When notebook content is from one repo but help docs are from viewer's repo
+- `github-branch` - GitHub branch to use when loading .md files (e.g., "main", "develop", "feature/new-docs")
+  - **Default:** `"main"` if not specified
+  - **Purpose:** Specify which branch to load markdown files from
+  - **Use case:** Load docs from feature branch during development when files don't exist in main yet
+  - **Applies to:** All .md file links and help button
 - `manual-path` - Path to the manual/documentation file for the "Read the Manual" button (used with `manual` or `notebook` variations)
   - **REQUIRED for button to appear:** The "Read the Manual" button only displays if `manual-path` is provided in metadata
   - **Plain .md filename:** If path doesn't start with `http://` or `https://`, and ends with `.md`, and `repo` is provided, constructs full GitHub URL: `{repo}/blob/main/{manual-path}`
@@ -202,6 +215,8 @@ The notebook metadata is displayed in the header section:
     "tags": ["tutorial", "javascript", "interactive", "beginner"],
     "license": "MIT",
     "repo": "https://github.com/username/repo",
+    "help-repo": "https://github.com/ddttom/allaboutV2",
+    "github-branch": "main",
     "kernelspec": {
       "display_name": "JavaScript",
       "language": "javascript",
@@ -242,7 +257,7 @@ Headers (H1, H2, H3) with `#`, `##`, `###`. **Bold** text with `**text**`. *Ital
 
 **Documentation Links (NEW with repo metadata):**
 
-When `repo` metadata is provided, links to .md files are automatically converted to full GitHub URLs:
+When `repo` metadata is provided, links to .md files are automatically converted to full GitHub URLs and open in an **in-app overlay viewer** instead of navigating away:
 
 ```markdown
 ✅ Correct syntax (will convert):
@@ -260,7 +275,16 @@ When `repo` metadata is provided, links to .md files are automatically converted
 - Only converts relative paths ending in `.md`
 - Absolute URLs (http://, https://) are never converted
 - Leading `./` or `/` are automatically stripped
-- Converted links open in new tab with security attributes
+- **Converted links open in overlay viewer** - keeps users in the app
+- **ESC key to close** - quick dismissal of overlay
+- **Fetches raw markdown from GitHub** - displays beautifully formatted content
+
+**How It Works:**
+1. Links matching pattern `[text](path.md)` are marked with special class `.ipynb-github-md-link`
+2. Click handler intercepts the link and prevents navigation
+3. Fetches raw markdown content from GitHub (converts blob URL to raw URL)
+4. Displays markdown in full-screen overlay with close button
+5. Users stay within the app - no external navigation
 
 ### Code Cells
 
@@ -319,7 +343,8 @@ The ipynb-viewer block uses **three distinct overlay systems** for different pur
 **Triggered by:** Clicking the "Start Reading" button
 **Purpose:** Navigate through notebook cells one page at a time
 **Visual Controls:**
-- Close button (×) in top-right
+- **Attractive top bar** with gradient background (purple-to-blue) displaying notebook title
+- **Control buttons** in top bar: Home (🏠), History (🕘), Bookmarks (🔖), TOC (☰), Help (❓), and Close (×)
 - **Previous/Next buttons** at the bottom
 - **Page indicator** showing current page (e.g., "3 / 8")
 
@@ -337,7 +362,8 @@ The ipynb-viewer block uses **three distinct overlay systems** for different pur
 **Triggered by:** Clicking the "Read the Manual" button
 **Purpose:** Display block documentation and reference material
 **Visual Controls:**
-- Close button (×) in top-right
+- **Attractive top bar** with gradient background (purple-to-blue) displaying document title
+- **Close button** (×) in top bar
 - **Scrollable content area** for long documentation
 - No pagination controls (continuous scroll)
 
@@ -379,6 +405,188 @@ When **multiple overlays are open** (e.g., you're in paged mode, have the manual
 - Previous/Next buttons continue to work in the paged overlay beneath other overlays
 
 This hierarchy ensures you can test responsive previews and reference documentation while reading through the notebook without losing your place.
+
+---
+
+### 4. GitHub Markdown Overlay (Documentation Viewer) - NEW
+
+**Triggered by:** Clicking on GitHub .md file links in markdown cells
+**Purpose:** View GitHub markdown documentation without leaving the app
+**Visual Controls:**
+- **Attractive top bar** with gradient background (purple-to-blue) displaying markdown file title
+- **Close button** (×) in top bar
+- **Scrollable content area** for markdown content
+- **Rendered markdown** with full formatting support
+
+**Keyboard Shortcuts:**
+- `Escape` - Close the GitHub markdown overlay
+
+**When visible:** This overlay appears when you click on a link to a GitHub .md file (when `repo` metadata is provided).
+
+**Features:**
+- ✅ **In-app viewing** - No external navigation, users stay in your app
+- ✅ **Automatic conversion** - Blob URLs converted to raw URLs for fetching
+- ✅ **Full markdown rendering** - Tables, code blocks, lists, headings, etc.
+- ✅ **Loading state** - Shows "Loading markdown from GitHub..." message
+- ✅ **Error handling** - Displays clear error messages if fetch fails
+- ✅ **Visual feedback** - Links styled with dashed underline on hover
+- ✅ **Accessibility** - Full ARIA support and keyboard navigation
+
+**Example:**
+```markdown
+<!-- In a markdown cell with repo metadata set -->
+See the [Getting Started Guide](docs/getting-started.md) for more information.
+```
+
+When clicked, this link:
+1. Prevents default navigation to GitHub
+2. Converts `https://github.com/user/repo/blob/main/docs/getting-started.md` to raw URL
+3. Fetches raw markdown content
+4. Displays in beautiful overlay with title "Getting Started Guide"
+5. Users can read, scroll, and close with ESC or × button
+
+**Benefits:**
+- **Better UX** - Users don't lose their place in your documentation
+- **Faster** - No page navigation or loading external sites
+- **Consistent styling** - Markdown rendered with your app's styles
+- **Professional** - Seamless documentation browsing experience
+
+---
+
+### Navigation History (NEW)
+
+The ipynb-viewer block automatically tracks your navigation history, recording every cell and markdown file you visit. Access your history through the **History button** (🕘 clock icon) in notebook mode.
+
+**Features:**
+- ✅ **Automatic tracking** - Records every cell page and markdown overlay you visit
+- ✅ **Max 25 entries** - Keeps most recent 25 navigation events
+- ✅ **Smart deduplication** - Removes duplicates to keep history clean
+- ✅ **One-click navigation** - Click any history entry to return to that content
+- ✅ **Visual indicators** - Icons show cell (📄) vs markdown (📝) entries
+- ✅ **Empty state** - Shows "No history yet" when history is empty
+
+**How to Use:**
+1. Navigate through cells using Previous/Next buttons or TOC
+2. Click on GitHub markdown links to view documentation
+3. Click the **History button** (🕘) to see your navigation history
+4. Click any entry to jump back to that cell or re-open that markdown file
+
+**History Button Location:**
+- **Position:** Top-right of overlay, left of hamburger menu (☰)
+- **Visibility:** Only in notebook mode variation
+- **Appearance:** Circular button with clock icon (🕘)
+
+**What Gets Tracked:**
+- **Cells:** First heading in each page you navigate to
+- **Markdown files:** GitHub .md files opened in overlay viewer
+- **Timestamp:** Most recent visit time for sorting
+- **Deduplication:** Revisiting content moves it to top of history
+
+**Use Cases:**
+- **Research flow** - Revisit key sections while exploring documentation
+- **Reference jumping** - Quick access to frequently referenced cells
+- **Learning paths** - Retrace your steps through tutorial content
+- **Documentation browsing** - Navigate between related markdown files
+
+---
+
+### Bookmarks (NEW)
+
+Save your favorite pages for quick access anytime! The bookmark system uses browser localStorage to persist your bookmarks across sessions.
+
+**Features:**
+- ✅ **Persistent Storage** - Bookmarks saved in browser localStorage
+- ✅ **Per-Notebook** - Each notebook has separate bookmarks
+- ✅ **Auto-Titles** - Uses first heading from the page as bookmark title
+- ✅ **Page Numbers** - Shows which page the bookmark points to
+- ✅ **Quick Navigation** - Click bookmark to jump directly to that page
+- ✅ **Easy Management** - Remove individual bookmarks or clear all at once
+- ✅ **Visual Feedback** - Button animation when bookmark is saved
+
+**How to Use:**
+1. Navigate to the page you want to bookmark
+2. Click the **Bookmarks button** (🔖) in the top bar
+3. Click **"+ Bookmark This Page"** at the top of the dropdown
+4. The page is saved with its title and page number
+5. To navigate: Click Bookmarks button → Click any bookmark → Instantly jump to that page
+
+**Bookmark Button Location:**
+- **Position:** Top-right of overlay, between History and TOC buttons
+- **Visibility:** Only in notebook mode variation
+- **Appearance:** Button with bookmark icon (🔖)
+
+**Managing Bookmarks:**
+- **View All:** Click bookmark button to see dropdown list
+- **Navigate:** Click any bookmark to jump to that page
+- **Remove One:** Click the × button next to any bookmark
+- **Clear All:** Click "Clear All Bookmarks" at bottom (with confirmation)
+- **Auto-Update:** Re-bookmarking a page updates the existing bookmark
+
+**Bookmark Storage:**
+- Stored in browser's localStorage with key: `ipynb-bookmarks-{notebook-id}`
+- Each notebook has separate bookmark list
+- Bookmarks persist across browser sessions
+- No server storage required
+- Browser-specific (not synced across devices)
+
+**Use Cases:**
+- **Reference pages** - Save frequently used sections for instant access
+- **Study aids** - Bookmark key concepts while learning
+- **Documentation** - Mark important API references or examples
+- **Tutorial checkpoints** - Save your progress through long tutorials
+- **Comparison** - Bookmark related sections for easy cross-referencing
+
+**Tips:**
+- Bookmark pages with clear headings for better identification
+- Use bookmarks for pages you visit repeatedly
+- Clear old bookmarks periodically to keep list manageable
+- Combine with History for complete navigation workflow
+
+---
+
+### Help System (NEW)
+
+Built-in help documentation accessible anytime via the Help button! The help system displays comprehensive usage instructions in a beautiful overlay.
+
+**Features:**
+- ✅ **Always Accessible** - Help button in top bar for instant access
+- ✅ **Comprehensive Guide** - Covers all features and navigation
+- ✅ **GitHub Integration** - Opens docs/help.md in overlay viewer
+- ✅ **No External Navigation** - Stay in the app while reading help
+- ✅ **Searchable** - Full markdown with headings and table of contents
+- ✅ **Up-to-Date** - Help doc maintained with latest features
+
+**How to Use:**
+1. Click the **Help button** (❓) in the top bar
+2. Browse the comprehensive help guide in the overlay
+3. Read about features, navigation, bookmarks, history, shortcuts
+4. Press ESC or click × to close and return to your notebook
+
+**Help Button Location:**
+- **Position:** Top-right of overlay, between TOC and Close buttons
+- **Visibility:** Only in notebook mode variation (requires `repo` metadata)
+- **Appearance:** Button with question mark icon (❓)
+
+**Help Topics Covered:**
+- Getting Started - Opening notebooks and understanding the interface
+- Navigation Controls - All buttons and their functions
+- Overlay Types - Paged, Manual, GitHub Markdown, Preview overlays
+- Bookmarks - Saving and managing favorite pages
+- History - Tracking and revisiting recent navigation
+- Keyboard Shortcuts - Arrow keys and ESC shortcuts
+- Tips & Tricks - Best practices and workflow examples
+- Troubleshooting - Common issues and solutions
+
+**Requirements:**
+- Help button only appears when `repo` metadata is configured
+- Expects help file at `docs/help.md` in the repository
+- Uses GitHub Markdown Overlay viewer for display
+
+**Benefits:**
+- **Self-Service** - Users find answers without leaving the app
+- **Contextual** - Help available exactly when needed
+- **Complete** - All features documented in one place
+- **Professional** - Beautiful overlay presentation
 
 ---
 
@@ -1418,6 +1626,188 @@ Potential improvements for future versions:
 - Page jump navigation with dropdown selector
 
 ## Recent Changes
+
+### 2025-01-22 - Bookmarks and Help System (v13)
+
+**Added Bookmark Management:**
+- ✅ **Bookmark button** - Bookmark icon (🔖) in top bar for saving favorite pages
+- ✅ **localStorage persistence** - Bookmarks saved across browser sessions
+- ✅ **Per-notebook storage** - Each notebook has separate bookmark list
+- ✅ **Auto-titles** - Extracts first heading from page as bookmark title
+- ✅ **Page indicators** - Shows page number with each bookmark
+- ✅ **Quick navigation** - Click bookmark to jump directly to that page
+- ✅ **Individual removal** - × button to remove single bookmarks
+- ✅ **Clear all** - Button to clear all bookmarks with confirmation
+- ✅ **Visual feedback** - Button animation when bookmark is saved
+- ✅ **"Bookmark This Page" button** - Prominent gradient button in dropdown
+- ✅ **Empty state** - "No bookmarks yet" message
+
+**Added Help System:**
+- ✅ **Help button** - Question mark icon (❓) in top bar
+- ✅ **Comprehensive guide** - Complete usage documentation in docs/help.md
+- ✅ **GitHub integration** - Opens help.md in GitHub Markdown overlay
+- ✅ **In-app viewing** - No external navigation required
+- ✅ **All topics covered** - Getting Started, Navigation, Bookmarks, History, Shortcuts, etc.
+- ✅ **Searchable** - Full markdown with headings and table of contents
+- ✅ **Requires repo metadata** - Help button appears only when repo configured
+
+**Technical Implementation:**
+- `docs/help.md`: Created comprehensive help documentation (340 lines)
+- `ipynb-viewer.js` lines 701-798: Added bookmark functions (getBookmarks, saveBookmark, removeBookmark, clearAllBookmarks)
+- `ipynb-viewer.js` lines 1067-1188: Added bookmark button and dropdown UI with management functions
+- `ipynb-viewer.js` lines 1190-1205: Added help button that opens docs/help.md in GitHub overlay
+- `ipynb-viewer.js` lines 1239-1247: Added bookmark and help buttons to top bar controls assembly
+- `ipynb-viewer.js` line 1257: Added bookmark dropdown to overlay content
+- `ipynb-viewer.css` lines 1148-1270: Added bookmark dropdown styles with gradient "Add" button and styled remove buttons
+- `README.md` lines 23-24, 336, 482-579: Added documentation for bookmarks and help features
+
+**Bookmark Features:**
+- Storage key pattern: `ipynb-bookmarks-{notebook-id}`
+- Automatic deduplication (re-bookmarking updates existing)
+- Sorted by creation time (most recent first)
+- Beautiful dropdown with gradient add button
+- Red remove buttons with hover effects
+- "Clear All" button with confirmation dialog
+
+**Help System Features:**
+- 9 comprehensive sections covering all features
+- Table of Contents for easy navigation
+- Keyboard shortcuts reference
+- Tips & Tricks with workflow examples
+- Troubleshooting section
+- Always accessible in notebook mode
+
+**Benefits:**
+- **Better UX** - Users can save and revisit important pages
+- **Self-service** - Help always available without leaving app
+- **Persistence** - Bookmarks survive browser restarts
+- **Organization** - Easy to manage with visual feedback
+- **Accessibility** - Help documentation right where users need it
+
+---
+
+### 2025-01-22 - Attractive Top Bar for All Overlays (v12)
+
+**Added Unified Top Bar Design:**
+- ✅ **Gradient background** - Beautiful purple-to-blue gradient (linear-gradient(135deg, #667eea 0%, #764ba2 100%))
+- ✅ **File/notebook title display** - Shows title with ellipsis overflow for long names
+- ✅ **Unified control buttons** - All overlay controls (Home, History, TOC, Close) in top bar
+- ✅ **Consistent styling** - Same attractive design across all overlay types
+- ✅ **Button hover effects** - Subtle lift animation and shadow on hover
+- ✅ **Responsive layout** - Flexbox-based design adapts to different screen sizes
+- ✅ **Applied to all overlays** - Paged overlay, Manual overlay, and GitHub Markdown overlay
+
+**Visual Features:**
+- Top bar height: 60px minimum
+- Border radius: 12px on top corners
+- Box shadow: Subtle 0 2px 8px rgba(0, 0, 0, 0.15)
+- Button size: 36x36px with rounded 8px corners
+- Button background: Semi-transparent white with border
+- Title: 1.25rem font, white color, truncates with ellipsis
+
+**Technical Implementation:**
+- `ipynb-viewer.js` lines 745-856: Updated `createPagedOverlay()` with top bar structure
+- `ipynb-viewer.js` lines 1344-1368: Updated `createGitHubMarkdownOverlay()` with top bar
+- `ipynb-viewer.js` lines 1448-1489: Updated `createManualOverlay()` with top bar and title extraction
+- `ipynb-viewer.css` lines 895-957: Added `.ipynb-overlay-top-bar`, `.ipynb-overlay-title`, `.ipynb-overlay-controls`, and `.ipynb-overlay-button` styles
+- `ipynb-viewer.css` lines 1122-1136: Updated dropdown positioning for new top bar (top: 70px)
+
+**Benefits:**
+- **Professional appearance** - Modern gradient design elevates the user experience
+- **Better context** - Users always see which file/notebook they're viewing
+- **Improved usability** - All controls centralized in one location
+- **Visual consistency** - Same design language across all overlay types
+- **Accessibility** - Clear button labels and keyboard navigation support
+
+---
+
+### 2025-01-22 - Navigation History Tracking (v11)
+
+**Added Navigation History Feature:**
+- ✅ **History button** - Clock icon (🕘) button in notebook mode overlay
+- ✅ **Automatic tracking** - Records every cell and markdown file visited
+- ✅ **Max 25 entries** - Maintains most recent 25 navigation events
+- ✅ **Smart deduplication** - Removes duplicate entries, keeps most recent
+- ✅ **History dropdown** - Scrollable list with titles and type icons
+- ✅ **One-click navigation** - Click history entry to jump back to that content
+- ✅ **Visual indicators** - Cell (📄) and markdown (📝) icons
+- ✅ **Empty state** - Shows "No history yet" message when empty
+- ✅ **Cell navigation** - Clicking cell entry jumps to that page in overlay
+- ✅ **Markdown navigation** - Clicking markdown entry re-opens overlay viewer
+
+**Technical Implementation:**
+- `ipynb-viewer.js` lines 661-699: Added `navigationHistory` array and `addToHistory()` function
+- `ipynb-viewer.js` lines 769-848: Created history button and dropdown UI
+- `ipynb-viewer.js` lines 982-987: Added history button to overlay structure
+- `ipynb-viewer.js` lines 1000-1012: Added history tracking in `updatePageDisplay()`
+- `ipynb-viewer.js` line 1361: Added history tracking in `createGitHubMarkdownOverlay()`
+- `ipynb-viewer.css` lines 965-994: Styled history button (positioned at right: 9.5rem)
+- `ipynb-viewer.css` lines 1057-1108: Styled history dropdown and items
+
+**How It Works:**
+1. Global `navigationHistory` array stores up to 25 entries
+2. `addToHistory(title, type, cellIndex, url)` adds/updates entries
+3. Cell navigation tracked in `updatePageDisplay()` - extracts first heading
+4. Markdown navigation tracked in `createGitHubMarkdownOverlay()` - uses link title
+5. History button opens dropdown with all entries
+6. Clicking entry navigates to cell page or re-opens markdown overlay
+7. Duplicates removed and moved to top (most recent first)
+
+**Benefits:**
+- Better UX - easy to retrace navigation steps
+- Research-friendly - quick access to referenced content
+- Learning aid - revisit important sections
+- Documentation navigation - jump between related files
+
+**Migration:** No action required - feature activates automatically in notebook mode.
+
+**See:**
+- README.md lines 22, 441-475: Complete documentation of feature
+- Example usage: Any notebook in notebook mode variation
+
+---
+
+### 2025-01-22 - GitHub Markdown Overlay Viewer (v10)
+
+**Added In-App GitHub Markdown Viewing:**
+- ✅ **Overlay viewer for .md links** - GitHub markdown files open in overlay instead of external navigation
+- ✅ **Automatic link marking** - Links to .md files marked with `.ipynb-github-md-link` class
+- ✅ **Raw URL conversion** - Blob URLs automatically converted to raw.githubusercontent.com URLs
+- ✅ **Click interception** - Event listeners prevent external navigation and open overlay
+- ✅ **Full markdown rendering** - Fetched content displayed with complete markdown parsing
+- ✅ **Visual feedback** - Links styled with dashed underline that becomes solid on hover
+- ✅ **Loading states** - Shows "Loading markdown from GitHub..." during fetch
+- ✅ **Error handling** - Clear error messages with URL details if fetch fails
+- ✅ **Accessibility** - ESC key support, ARIA labels, keyboard navigation
+- ✅ **Keeps users in-app** - No external page loads or lost context
+
+**Technical Implementation:**
+- `ipynb-viewer.js` lines 96-108: Modified `parseMarkdown()` to mark GitHub .md links with special class and data attributes
+- `ipynb-viewer.js` lines 1138-1254: Added `convertToRawUrl()` and `createGitHubMarkdownOverlay()` functions
+- `ipynb-viewer.js` lines 401-411: Added click handlers in `createMarkdownCell()` to intercept GitHub markdown links
+- `ipynb-viewer.css` lines 1357-1396: Added styles for `.ipynb-github-md-link` and `.ipynb-github-md-overlay`
+
+**How It Works:**
+1. When `repo` metadata is provided, `parseMarkdown()` marks .md links with `.ipynb-github-md-link` class
+2. Click handler intercepts link clicks and calls `createGitHubMarkdownOverlay()`
+3. Blob URL is converted to raw URL: `github.com/user/repo/blob/main/file.md` → `raw.githubusercontent.com/user/repo/main/file.md`
+4. Raw markdown is fetched via `fetch()` API
+5. Content is rendered using `parseMarkdown()` and displayed in full-screen overlay
+6. User can read, scroll, and close with ESC or × button
+
+**Benefits:**
+- Better user experience - no context switching to GitHub
+- Faster navigation - no external page loads
+- Consistent styling - markdown rendered with app styles
+- Professional documentation browsing without leaving the app
+
+**Migration:** No action required - feature activates automatically when `repo` metadata is present in notebook.
+
+**See:**
+- README.md lines 21, 246-273, 395-437: Complete documentation of feature
+- Example usage: Any notebook with `repo` metadata and .md links in markdown cells
+
+---
 
 ### 2025-01-20 - Auto-Wrapping in Notebook Mode (v7)
 

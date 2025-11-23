@@ -31,14 +31,32 @@ The user wants to create a presentation about: {{prompt}}
     "title": "Presentation Title",
     "description": "Brief description",
     "author": "Tom Cranstoun",
-    "date": "2025-01-19",
+    "creation-date": "{{TODAY'S DATE IN YYYY-MM-DD FORMAT}}",
+    "version": "1.0",
+    "last-modified": "{{TODAY'S DATE IN YYYY-MM-DD FORMAT}}",
     "category": "presentation",
     "difficulty": "beginner",
     "duration": "10 minutes",
-    "repo": "https://github.com/ddttom/allaboutV2"
+    "repo": "https://github.com/ddttom/allaboutV2",
+    "help-repo": "https://github.com/ddttom/allaboutV2",
+    "github-branch": "main"
   }
 }
 ```
+
+**GitHub Integration:**
+- `repo`: Repository URL for .md file linking
+- `help-repo`: Repository for help documentation (defaults to `repo`)
+- `github-branch`: Branch to use for loading .md files (defaults to `"main"`)
+
+**⚠️ CRITICAL - Version and Date Management:**
+- **ALWAYS update both `version` AND `last-modified` whenever you make ANY change to an .ipynb file**
+- **Version increments:**
+  - Major changes (new slides, restructuring): 1.0 → 2.0
+  - Minor changes (new content, edits): 1.0 → 1.1
+  - Patch changes (typo fixes): 1.0 → 1.0.1
+- **Last-modified**: Update to current date (YYYY-MM-DD) on every edit
+- **Creation-date**: Never change after initial creation
 
 **Cell Structure:**
 1. Title cell with overview
