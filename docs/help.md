@@ -1,44 +1,31 @@
-# IPynb Viewer - User Guide
+# Viewer - User Guide
 
-Welcome to the **IPynb Viewer** interactive help guide! This document will help you understand all the features and how to use them effectively.
-
+Welcome to the **Documentation Viewer** interactive help guide! This document will help you understand all the features and how to use them effectively.
 ## Table of Contents
-
-1. [Getting Started](#getting-started)
-2. [Navigation Controls](#navigation-controls)
-3. [Overlay Types](#overlay-types)
-4. [Bookmarks](#bookmarks)
-5. [History](#history)
-6. [Keyboard Shortcuts](#keyboard-shortcuts)
-7. [Tips & Tricks](#tips--tricks)
-
+[Getting Started](#getting-started)
+[Navigation Controls](#navigation-controls)
+[Overlay Types](#overlay-types)
+[Bookmarks](#bookmarks)
+[History](#history)
+[Keyboard Shortcuts](#keyboard-shortcuts)
+[Tips & Tricks](#tips--tricks)
 ---
-
 ## Getting Started
-
-The IPynb Viewer displays Jupyter notebooks (.ipynb files) directly in your browser with interactive features. You can read through cells, execute code, and navigate seamlessly between content.
-
+The Viewer displays Jupyter notebooks (.ipynb files) directly in your browser with interactive features. You can read through cells, execute code, and navigate seamlessly between content.
 ### Opening a Notebook
-
-1. Click the **"Start Reading"** button to open the paged overlay
-2. Use **Previous/Next** buttons to navigate between pages
-3. Each page may contain one or more cells (markdown or code)
-
+Click the **"Start Reading"** button to open the paged overlay
+Use **Previous/Next** buttons to navigate between pages
+Each page may contain one or more cells (markdown or code)
 ### Understanding the Interface
-
 The overlay has several key areas:
-
-- **Top Bar** - Beautiful gradient header with notebook title and control buttons
-- **Content Area** - Displays the current page's cells
-- **Navigation Controls** - Previous/Next buttons and page indicator at bottom
-- **Control Buttons** - Home, History, Bookmarks, TOC, Help, and Close buttons
-
+**Top Bar** -Header with notebook title and control buttons
+**Content Area** - Displays the current page's cells
+**Navigation Controls** - Previous/Next buttons and page indicator at bottom
+**Control Buttons** - Home, History, Bookmarks, TOC, Help, and Close buttons
 ---
 
 ## Navigation Controls
-
 ### Top Bar Buttons
-
 The top bar contains all your navigation and utility controls:
 
 | Button | Icon | Function |
@@ -52,9 +39,9 @@ The top bar contains all your navigation and utility controls:
 
 ### Previous/Next Navigation
 
-- **Previous Button** (←) - Go to the previous page
-- **Next Button** (→) - Go to the next page
-- **Page Indicator** - Shows current page number (e.g., "3 / 8")
+**Previous Button** (←) - Go to the previous page
+**Next Button** (→) - Go to the next page
+**Page Indicator** - Shows current page number (e.g., "3 / 8")
 
 ### Home Button
 
@@ -64,17 +51,17 @@ Click the **Home** button (🏠) to instantly return to the first page of the no
 
 ## Overlay Types
 
-The IPynb Viewer uses multiple overlay types for different purposes:
+The Viewer uses multiple overlay types for different purposes:
 
 ### 1. Paged Overlay (Reading Mode)
 
 **How to open:** Click "Start Reading" button
 
 **Features:**
-- Navigate one page at a time
-- Full control buttons in top bar
-- Keyboard shortcuts for navigation
-- Page indicator shows progress
+Navigate one page at a time
+Full control buttons in top bar
+Keyboard shortcuts for navigation
+Page indicator shows progress
 
 **Best for:** Sequential reading, tutorials, guided content
 
@@ -162,7 +149,7 @@ This means:
 
 ## History
 
-The IPynb Viewer automatically tracks your navigation history.
+The Viewer automatically tracks your navigation history.
 
 ### How History Works
 
@@ -306,16 +293,6 @@ When `repo` metadata is set, .md links automatically:
 - Reload page if buttons become unresponsive
 - Check browser console for errors
 - Verify notebook JSON is valid
-
----
-
-## Need More Help?
-
-- **Documentation**: See the full [README](../blocks/ipynb-viewer/README.md)
-- **Examples**: Check the example notebooks in the repository
-- **Issues**: Report problems on GitHub
-
----
 
 **Happy Reading!** 📚✨
 

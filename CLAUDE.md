@@ -22,6 +22,25 @@
 - `npm run lint:js` - Lint JavaScript files
 - `npm run lint:css` - Lint CSS files
 - `npm run lint` - Run all linting
+- `npm run debug` - Run local development server (server.js is READ-ONLY)
+
+## ⚠️ CRITICAL: server.js is READ-ONLY
+
+**NEVER modify server.js** - it is a readonly debug tool for local development.
+
+**Why this matters:**
+- `server.js` is a simple static file server with proxy fallback
+- It's meant to be a minimal, unchanging debug tool
+- Any URL handling must be done in the application code, not the server
+- The server only does: serve local files → proxy to production if missing
+
+**When you need URL interception:**
+- ✅ **DO** handle URL transformations in the application (e.g., ipynb-viewer)
+- ✅ **DO** try multiple fetch strategies in the client code
+- ❌ **DON'T** modify server.js to add custom URL routing
+- ❌ **DON'T** add special-case handling to server.js
+
+**See:** Smart link handling in `blocks/ipynb-viewer/ipynb-viewer.js` for proper client-side URL resolution
 
 ### Slash Commands (Claude Code)
 - `/new-block <name>` - Create a new EDS block following Content Driven Development process
@@ -65,6 +84,95 @@ See `.claude/README.md` for complete slash command reference.
   - Content models before code
   - Test content before implementation
   - Author needs before developer needs
+
+## ⚠️ CRITICAL: Event Listeners and DOM Cloning
+
+**Event listeners are NOT copied when using `cloneNode()`**
+
+When working with the ipynb-viewer block or similar components that clone DOM elements:
+
+**The Problem:**
+```javascript
+// Original element has event listener
+element.addEventListener('click', handler);
+
+// Clone does NOT have the event listener
+const clone = element.cloneNode(true);  // ❌ Event listener lost!
+```
+
+**The Solution:**
+Always re-attach event listeners after cloning elements:
+
+```javascript
+// After cloning cells in updatePageDisplay()
+const clonedCell = cell.cloneNode(true);
+container.appendChild(clonedCell);
+
+// ✅ Re-attach ALL event listeners
+const links = clonedCell.querySelectorAll('a');
+links.forEach(link => {
+  link.addEventListener('click', handler);
+});
+```
+
+**In ipynb-viewer specifically:**
+- Smart links (hash `#` navigation) - handlers re-attached in `updatePageDisplay()`
+- GitHub markdown links (`.md` files) - handlers re-attached in `updatePageDisplay()`
+- Run buttons on code cells - handlers re-attached in `updatePageDisplay()`
+
+**See:** `blocks/ipynb-viewer/ipynb-viewer.js` lines 1292-1303 (run buttons), 1347-1388 (hash links), 1390-1400 (GitHub links)
+
+## ⚠️ CRITICAL: ipynb-viewer Smart Link Pattern
+
+**All `.md` links in ipynb-viewer are treated as smart links using the repository URL pattern.**
+
+When a notebook has a `repo` metadata attribute (e.g., `"repo": "https://github.com/user/repo"`), all `.md` file links are automatically converted to GitHub URLs and opened in overlays:
+
+**How it works:**
+1. Markdown links like `[docs](docs/help.md)` are detected
+2. Converted to full GitHub URL: `https://github.com/user/repo/blob/main/docs/help.md`
+3. Stored in `data-md-url` attribute with `href="#"` to prevent prefetch
+4. Click handler fetches from GitHub raw URL and displays in overlay
+
+**CRITICAL: Smart links ALWAYS use GitHub repo URLs**
+- ✅ **DO** use ONLY the GitHub repo URL from notebook metadata
+- ✅ **DO** fetch from `raw.githubusercontent.com` (converted from blob URL)
+- ✅ **DO** rely on the smart link pattern for consistency
+- ❌ **DON'T** try local paths before GitHub
+- ❌ **DON'T** bypass smart links by fetching local files directly
+- ❌ **DON'T** hardcode local paths like `/docs/help.md`
+
+**Why this matters:**
+- The `repo` attribute in notebook metadata is the single source of truth
+- Local development server proxies missing files to production (including GitHub raw URLs)
+- Smart links work identically in development and production
+- No special-casing for local vs production environments
+
+**Example - Regular .md link in cell:**
+```javascript
+// ✅ CORRECT: Uses repo metadata
+const cleanPath = 'docs/guide.md';
+const fullUrl = `${repoUrl}/blob/main/${cleanPath}`;
+const overlay = createGitHubMarkdownOverlay(fullUrl, 'Guide');
+```
+
+**Help button uses separate `help-repo` metadata:**
+- Notebooks have two repo attributes: `repo` (for content) and `help-repo` (for help docs)
+- `help-repo` fallback: help-repo → repo → allaboutV2 default
+- This keeps viewer help documentation separate from notebook content
+- Example: notebook might be from `user/my-project` but help comes from `ddttom/allaboutV2`
+
+```javascript
+// Help button implementation
+const helpRepoUrl = notebook.metadata?.['help-repo'] ||
+                    notebook.metadata?.repo ||
+                    'https://github.com/ddttom/allaboutV2';
+const fullUrl = `${helpRepoUrl}/blob/main/docs/help.md`;
+```
+
+**See:**
+- Help button: `blocks/ipynb-viewer/ipynb-viewer.js` line 1210-1219
+- Metadata handling: `blocks/ipynb-viewer/ipynb-viewer.js` line 1991-1999, 2122-2126
 
 ## ⚠️ CRITICAL: EDS Reserved Class Names
 

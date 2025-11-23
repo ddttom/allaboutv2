@@ -176,6 +176,15 @@ The notebook metadata is displayed in the header section:
   - **When provided:** Markdown links to .md files are automatically converted to full repository URLs
   - **When omitted:** Links render as-is (relative paths remain relative)
   - **Important:** Use markdown link syntax `[text](file.md)`, not inline code `` `file.md` ``
+- `help-repo` - Repository URL for help documentation (e.g., "https://github.com/ddttom/allaboutV2")
+  - **Fallback:** Uses `repo` if not specified, then defaults to allaboutV2
+  - **Purpose:** Separate repository for help button documentation
+  - **Use case:** When notebook content is from one repo but help docs are from viewer's repo
+- `github-branch` - GitHub branch to use when loading .md files (e.g., "main", "develop", "feature/new-docs")
+  - **Default:** `"main"` if not specified
+  - **Purpose:** Specify which branch to load markdown files from
+  - **Use case:** Load docs from feature branch during development when files don't exist in main yet
+  - **Applies to:** All .md file links and help button
 - `manual-path` - Path to the manual/documentation file for the "Read the Manual" button (used with `manual` or `notebook` variations)
   - **REQUIRED for button to appear:** The "Read the Manual" button only displays if `manual-path` is provided in metadata
   - **Plain .md filename:** If path doesn't start with `http://` or `https://`, and ends with `.md`, and `repo` is provided, constructs full GitHub URL: `{repo}/blob/main/{manual-path}`
@@ -206,6 +215,8 @@ The notebook metadata is displayed in the header section:
     "tags": ["tutorial", "javascript", "interactive", "beginner"],
     "license": "MIT",
     "repo": "https://github.com/username/repo",
+    "help-repo": "https://github.com/ddttom/allaboutV2",
+    "github-branch": "main",
     "kernelspec": {
       "display_name": "JavaScript",
       "language": "javascript",

@@ -134,6 +134,8 @@ This guide provides step-by-step instructions for AI assistants to debug and tes
    http://localhost:3000/blocks/your-block-name/test.html
    ```
 
+never adjust server.js when debugging, as it is a readonly artefact.
+
 ## EDS Block Structure
 
 EDS blocks follow a specific structure that must be replicated exactly in test files:

@@ -125,7 +125,9 @@ Every presentation notebook should have:
     "title": "Presentation Title",
     "description": "Brief description",
     "author": "Author Name",
-    "date": "2025-01-19",
+    "creation-date": "{{TODAY'S DATE IN YYYY-MM-DD FORMAT}}",
+    "version": "1.0",
+    "last-modified": "{{TODAY'S DATE IN YYYY-MM-DD FORMAT}}",
     "category": "presentation",
     "repo": "https://github.com/username/repo",
     "manual-path": "docs/for-ai/your-documentation.md"
@@ -133,12 +135,23 @@ Every presentation notebook should have:
 }
 ```
 
+**⚠️ CRITICAL - Version and Date Management:**
+- **ALWAYS update both `version` AND `last-modified` whenever you make ANY change to an .ipynb file**
+- **Version increments:**
+  - Major changes (new slides, restructuring): 1.0 → 2.0
+  - Minor changes (new content, edits): 1.0 → 1.1
+  - Patch changes (typo fixes): 1.0 → 1.0.1
+- **Last-modified**: Update to current date (YYYY-MM-DD) on every edit
+- **Creation-date**: Never change after initial creation
+
 **Key Fields:**
 
 - **`title`** - Main presentation title (required)
 - **`description`** - One-line summary (optional)
 - **`author`** - Author name (optional)
-- **`date`** - Publication date (optional)
+- **`creation-date`** - Initial creation date in YYYY-MM-DD format (required, never change)
+- **`version`** - Version tracking (required, increment on every edit)
+- **`last-modified`** - Last modification date in YYYY-MM-DD format (required, update on every edit)
 - **`category`** - Content category, e.g., "presentation" (optional)
 - **`repo`** - Repository URL for linking .md files (optional)
 - **`manual-path`** - Path to documentation for "Read the Manual" button (optional)

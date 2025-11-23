@@ -671,8 +671,9 @@ When creating notebooks from existing text content:
     "title": "{{GENERATE A GOOD TITLE}}",
     "description": "{{GENERATE A ONE-LINE DESCRIPTION THAT AMPLIFIES THE TITLE}}",
     "author": "{{PICK AUTHOR NAME}}",
-    "date": "{{DATE OF FIRST EDIT}}",
-    "version": "{{INCREASING WITH EVERY EDIT}}",
+    "creation-date": "{{TODAY'S DATE IN YYYY-MM-DD FORMAT}}",
+    "version": "1.0",
+    "last-modified": "{{TODAY'S DATE IN YYYY-MM-DD FORMAT}}",
     "category": "{{tutorial|reference|demo|concept}}",
     "difficulty": "{{beginner|intermediate|advanced}}",
     "duration": "{{ESTIMATED READING TIME}}",
@@ -687,28 +688,39 @@ When creating notebooks from existing text content:
 - `title` - Main notebook title (required)
 - `description` - One-line summary (required)
 - `author` - Author name (required)
-- `date` - Creation/publication date (required)
-- `version` - Version tracking (required)
+- `creation-date` - Initial creation date in YYYY-MM-DD format (required, never change after creation)
+- `version` - Version tracking (required, increment on every edit)
+- `last-modified` - Last modification date in YYYY-MM-DD format (required, update on every edit)
 - `category` - Content type: tutorial, reference, demo, concept (optional, displayed as blue badge)
 - `difficulty` - Skill level: beginner, intermediate, advanced (optional, displayed as orange badge)
 - `duration` - Reading time estimate: "15 minutes", "1 hour" (optional, displayed as purple badge)
 - `tags` - Keywords for searchability (optional, displayed as gray tags)
 - `license` - Content license: MIT, CC BY 4.0, etc (optional)
 
+**⚠️ CRITICAL - Version and Date Management:**
+- **ALWAYS update both `version` AND `last-modified` whenever you make ANY change to an .ipynb file**
+- **Version increments:**
+  - Major changes (restructuring, new parts): 1.0 → 2.0
+  - Minor changes (new cells, significant edits): 1.0 → 1.1
+  - Patch changes (typo fixes, small tweaks): 1.0 → 1.0.1
+- **Last-modified**: Update to current date (YYYY-MM-DD) on every edit
+- **Creation-date**: Never change after initial creation
+
 **Example:**
 
 ```json
 {
   "metadata": {
-    "title": "{{CHOOSE TITLE}}",
-    "description": "{{CHOOSE A ONE-LINER DESCRIPTION THAT AMPLIFIES THE TITLE}}",
-    "author": "{{PICK AUTHOR NAME}}",
-    "date": "{{PICK FIRST EDIT DATE}}",
-    "version": "{{START AT 1, INCREMENT WITH EVERY EDIT}}",
-    "category": "{{CHOOSE CATEGORY}}",
-    "difficulty": "{{CHOOSE DIFFICULTY}}",
-    "duration": "{{CHOOSE ESTIMATED READING TIME}}",
-    "tags": "{{CHOOSE TAGS AS NECESSARY}}","tutorial", "javascript", "notebook", "interactive", "educational"],
+    "title": "Interactive JavaScript Tutorial",
+    "description": "Learn JavaScript fundamentals through hands-on examples and exercises",
+    "author": "Tom Cranstoun",
+    "creation-date": "2025-01-17",
+    "version": "1.4",
+    "last-modified": "2025-11-23",
+    "category": "tutorial",
+    "difficulty": "beginner",
+    "duration": "25 minutes",
+    "tags": ["tutorial", "javascript", "notebook", "interactive", "educational"],
     "license": "MIT"
   }
 }
@@ -716,8 +728,9 @@ When creating notebooks from existing text content:
 
 The ipynb-viewer block displays this metadata professionally in the header with:
 - Large title and description
-- Author and date information
+- Author and creation date information
 - Version number
+- Last modified date
 - Color-coded badges for category (blue), difficulty (orange), duration (purple)
 - Gray tag pills for keywords
 - License information

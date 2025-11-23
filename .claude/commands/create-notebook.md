@@ -543,8 +543,9 @@ Use triple backticks in markdown cells for syntax examples that won't execute:
        "title": "{{GENERATE A GOOD TITLE}}",
        "description": "{{GENERATE A ONE-LINE DESCRIPTION THAT AMPLIFIES THE TITLE}}",
        "author": "{{PICK AUTHOR NAME}}",
-       "date": "{{DATE OF FIRST EDIT}}",
-       "version": "{{INCREASING WITH EVERY EDIT}}",
+       "creation-date": "{{TODAY'S DATE IN YYYY-MM-DD FORMAT}}",
+       "version": "1.0",
+       "last-modified": "{{TODAY'S DATE IN YYYY-MM-DD FORMAT}}",
        "category": "{{tutorial|reference|demo|concept}}",
        "difficulty": "{{beginner|intermediate|advanced}}",
        "duration": "{{ESTIMATED READING TIME}}",
@@ -555,24 +556,53 @@ Use triple backticks in markdown cells for syntax examples that won't execute:
    ```
 
    **Field guide:**
-   - **Required**: title, description, author, date, version, tags
-   - **Optional but recommended**: category, difficulty, duration, license
+   - **Required**: title, description, author, creation-date, version, last-modified, tags
+   - **Optional but recommended**: category, difficulty, duration, license, repo, help-repo, github-branch
    - **Display**: Color-coded badges (category=blue, difficulty=orange, duration=purple) and gray tag pills
+   - **Date format**: Use ISO 8601 (YYYY-MM-DD) for all dates
+   - **Version tracking**: Start at 1.0, increment on changes (see versioning rules below)
+   - **GitHub integration**: Add `repo`, `help-repo`, and `github-branch` for .md file linking
 
-   **Example:**
+   **⚠️ CRITICAL - Version and Date Management:**
+   - **ALWAYS update both `version` AND `last-modified` whenever you make ANY change to an .ipynb file**
+   - **Version increments:**
+     - Major changes (restructuring, new sections): 1.0 → 2.0
+     - Minor changes (new cells, significant edits): 1.0 → 1.1
+     - Patch changes (typo fixes, small tweaks): 1.0 → 1.0.1
+   - **Last-modified**: Update to current date (YYYY-MM-DD) on every edit
+   - **Creation-date**: Never change after initial creation
+
+   **📚 GitHub Integration (Optional but Recommended):**
+   - **`repo`**: GitHub repository URL for converting relative .md links to full URLs
+     - Example: `"repo": "https://github.com/yourorg/yourrepo"`
+     - Enables clickable .md file links in notebook cells
+   - **`help-repo`**: Separate repository for help documentation
+     - Falls back to `repo` if not specified, then to allaboutV2 default
+     - Example: `"help-repo": "https://github.com/ddttom/allaboutV2"`
+   - **`github-branch`**: Specific GitHub branch to use for loading .md files
+     - Defaults to `"main"` if not specified
+     - Example: `"github-branch": "feature/new-docs"`
+     - **Use case**: Load docs from feature branch during development
+     - All .md links and help button will use this branch
+
+   **Example with GitHub Integration:**
    ```json
    {
      "metadata": {
        "title": "The Art of Jupyter Notebooks",
        "description": "A meta-tutorial teaching you how to create engaging, educational notebooks by being one itself",
        "author": "{{PICK AUTHOR NAME}}",
-       "date": "2025-01-17",
+       "creation-date": "2025-01-17",
        "version": "1.4",
+       "last-modified": "2025-11-23",
        "category": "tutorial",
        "difficulty": "intermediate",
        "duration": "25 minutes",
        "tags": ["tutorial", "javascript", "notebook", "interactive", "educational"],
-       "license": "MIT"
+       "license": "MIT",
+       "repo": "https://github.com/yourorg/yourrepo",
+       "help-repo": "https://github.com/ddttom/allaboutV2",
+       "github-branch": "main"
      }
    }
    ```

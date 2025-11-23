@@ -6,6 +6,8 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+//this file is a debugging artefact and it should be treated as readonly
+
 const PORT = process.env.PORT || 3000;
 const PROXY_HOST = 'https://allabout.network';
 

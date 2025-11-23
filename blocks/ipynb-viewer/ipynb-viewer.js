@@ -7,9 +7,10 @@
  * Parse markdown text to HTML (enhanced implementation)
  * @param {string} markdown - Markdown text
  * @param {string} [repoUrl] - Optional repository URL for converting .md links
+ * @param {string} [branch='main'] - GitHub branch to use for .md links
  * @returns {string} HTML string
  */
-function parseMarkdown(markdown, repoUrl = null) {
+function parseMarkdown(markdown, repoUrl = null, branch = 'main') {
   let html = markdown;
 
   // Code blocks (triple backticks) - MUST be processed first before other replacements
@@ -19,6 +20,12 @@ function parseMarkdown(markdown, repoUrl = null) {
     codeBlockPlaceholders.push(`<pre><code class="language-${lang || 'plaintext'}">${code.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`);
     return placeholder;
   });
+
+  // Handle escaped HTML characters (e.g., \<img>, \:// in documentation examples)
+  // These should be rendered as literal text, not actual HTML
+  html = html.replace(/\\</g, '&lt;');
+  html = html.replace(/\\>/g, '&gt;');
+  html = html.replace(/\\:/g, ':');
 
   // Tables - must be before line breaks
   const lines = html.split('\n');
@@ -84,6 +91,10 @@ function parseMarkdown(markdown, repoUrl = null) {
   });
   html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
 
+  // Horizontal rules (must be before bold/italic to avoid conflicts)
+  // Matches: ---, ***, or ___ (3 or more, with optional spaces)
+  html = html.replace(/^(?:[-*_]\s*){3,}$/gim, '<hr>');
+
   // Bold (before italic to handle ** before *)
   html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 
@@ -99,10 +110,11 @@ function parseMarkdown(markdown, repoUrl = null) {
     if (repoUrl && url.endsWith('.md') && !url.startsWith('http://') && !url.startsWith('https://')) {
       // Remove leading ./ or / from the path
       const cleanPath = url.replace(/^\.?\//, '');
-      // Build full repo URL (assuming GitHub blob/main pattern)
-      const fullUrl = `${repoUrl}/blob/main/${cleanPath}`;
+      // Build full repo URL using the specified branch
+      const fullUrl = `${repoUrl}/blob/${branch}/${cleanPath}`;
       // Mark GitHub markdown links with special class for overlay handling
-      return `<a href="${fullUrl}" class="ipynb-github-md-link" data-md-path="${cleanPath}" data-repo="${repoUrl}" rel="noopener noreferrer">${text}</a>`;
+      // Use href="#" to prevent browser prefetching, store actual URL in data attribute
+      return `<a href="#" class="ipynb-github-md-link" data-md-url="${fullUrl}" data-md-path="${cleanPath}" data-repo="${repoUrl}" data-branch="${branch}">${text}</a>`;
     }
     return `<a href="${url}">${text}</a>`;
   });
@@ -371,9 +383,11 @@ function styleActionCards(contentElement) {
  * @param {number} index - Cell index
  * @param {string} [repoUrl] - Optional repository URL for converting .md links
  * @param {boolean} [autoWrap=false] - Whether to auto-wrap with styling classes (notebook mode)
+ * @param {string} [helpRepoUrl] - Optional help repository URL
+ * @param {string} [branch='main'] - GitHub branch to use for .md links
  * @returns {HTMLElement} Cell element
  */
-function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false) {
+function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false, helpRepoUrl = null, branch = 'main') {
   const cellDiv = document.createElement('div');
   cellDiv.className = 'ipynb-cell ipynb-markdown-cell';
   cellDiv.dataset.cellIndex = index;
@@ -383,7 +397,7 @@ function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false) {
 
   // Join source lines and parse markdown
   const markdownText = Array.isArray(cell.source) ? cell.source.join('') : cell.source;
-  let html = parseMarkdown(markdownText, repoUrl);
+  let html = parseMarkdown(markdownText, repoUrl, branch);
 
   // Auto-wrap with styling classes if in notebook mode
   if (autoWrap) {
@@ -403,9 +417,10 @@ function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false) {
   githubMdLinks.forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      const githubUrl = link.href;
+      const githubUrl = link.dataset.mdUrl; // Get URL from data attribute
+      const linkBranch = link.dataset.branch || branch; // Get branch from link or use default
       const title = link.textContent || 'GitHub Markdown';
-      const overlay = createGitHubMarkdownOverlay(githubUrl, title);
+      const overlay = createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl, linkBranch);
       overlay.openOverlay();
     });
   });
@@ -805,9 +820,10 @@ function clearAllBookmarks(notebookId) {
  * @param {boolean} isNotebookMode - Whether this is notebook mode (close button always visible)
  * @param {string} [repoUrl] - Optional repository URL for markdown .md links
  * @param {string} [notebookTitle] - Optional notebook title for top bar
+ * @param {string} [helpRepoUrl] - Optional help repository URL
  * @returns {object} Overlay controls
  */
-function createPagedOverlay(container, cellsContainer, autorun = false, isNotebookMode = false, repoUrl = null, notebookTitle = 'Jupyter Notebook') {
+function createPagedOverlay(container, cellsContainer, autorun = false, isNotebookMode = false, repoUrl = null, notebookTitle = 'Jupyter Notebook', helpRepoUrl = null, branch = 'main') {
   const cells = Array.from(cellsContainer.querySelectorAll('.ipynb-cell'));
 
   if (cells.length === 0) return null;
@@ -845,15 +861,19 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   const topBar = document.createElement('div');
   topBar.className = 'ipynb-overlay-top-bar';
 
+  // Left controls section (for home button in notebook mode)
+  const leftControlsSection = document.createElement('div');
+  leftControlsSection.className = 'ipynb-overlay-controls ipynb-overlay-controls-left';
+
   // Title section
   const titleSection = document.createElement('div');
   titleSection.className = 'ipynb-overlay-title';
   titleSection.textContent = notebookTitle;
   titleSection.setAttribute('title', notebookTitle);
 
-  // Controls section
-  const controlsSection = document.createElement('div');
-  controlsSection.className = 'ipynb-overlay-controls';
+  // Right controls section
+  const rightControlsSection = document.createElement('div');
+  rightControlsSection.className = 'ipynb-overlay-controls ipynb-overlay-controls-right';
 
   // Close button (always visible, including notebook mode)
   const closeButton = document.createElement('button');
@@ -932,7 +952,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
             }
           } else if (entry.type === 'markdown' && entry.url) {
             // Re-open GitHub markdown overlay
-            const mdOverlay = createGitHubMarkdownOverlay(entry.url, entry.title);
+            const mdOverlay = createGitHubMarkdownOverlay(entry.url, entry.title, helpRepoUrl, branch);
             mdOverlay.openOverlay();
           }
           historyDropdown.style.display = 'none';
@@ -1189,7 +1209,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
 
   // Help button (notebook mode only) - Opens help.md in GitHub overlay
   let helpButton;
-  if (isNotebookMode && repoUrl) {
+  if (isNotebookMode && helpRepoUrl) {
     helpButton = document.createElement('button');
     helpButton.className = 'ipynb-overlay-button ipynb-help-button';
     helpButton.innerHTML = '&#10067;'; // Question mark icon (❓)
@@ -1197,9 +1217,11 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     helpButton.setAttribute('title', 'Help');
 
     helpButton.addEventListener('click', () => {
-      // Construct help.md URL
-      const helpUrl = `${repoUrl}/blob/main/docs/help.md`;
-      const helpOverlay = createGitHubMarkdownOverlay(helpUrl, 'IPynb Viewer Help');
+      // Build GitHub URL using the specified branch from notebook metadata
+      const helpPath = `${helpRepoUrl}/blob/${branch}/docs/help.md`;
+
+      // Open using GitHub markdown overlay with branch parameter
+      const helpOverlay = createGitHubMarkdownOverlay(helpPath, 'IPynb Viewer Help', helpRepoUrl, branch);
       helpOverlay.openOverlay();
     });
   }
@@ -1229,26 +1251,31 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   const cellContentArea = document.createElement('div');
   cellContentArea.className = 'ipynb-paged-cell-area';
 
-  // Assemble top bar with controls
+  // Assemble top bar with left/center/right sections
+  // Left section - home button only
   if (isNotebookMode && homeButton) {
-    controlsSection.appendChild(homeButton);
+    leftControlsSection.appendChild(homeButton);
   }
+
+  // Right section - all other controls
   if (isNotebookMode && historyButton) {
-    controlsSection.appendChild(historyButton);
+    rightControlsSection.appendChild(historyButton);
   }
   if (isNotebookMode && bookmarkButton) {
-    controlsSection.appendChild(bookmarkButton);
+    rightControlsSection.appendChild(bookmarkButton);
   }
   if (isNotebookMode && hamburgerButton) {
-    controlsSection.appendChild(hamburgerButton);
+    rightControlsSection.appendChild(hamburgerButton);
   }
   if (isNotebookMode && helpButton) {
-    controlsSection.appendChild(helpButton);
+    rightControlsSection.appendChild(helpButton);
   }
-  controlsSection.appendChild(closeButton);
+  rightControlsSection.appendChild(closeButton);
 
+  // Assemble top bar: left controls, title, right controls
+  topBar.appendChild(leftControlsSection);
   topBar.appendChild(titleSection);
-  topBar.appendChild(controlsSection);
+  topBar.appendChild(rightControlsSection);
 
   // Assemble overlay
   overlayContent.appendChild(topBar);
@@ -1305,42 +1332,36 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       }
     }
 
-    // Re-resolve action card links in the current page
-    const actionCardContainers = cellContentArea.querySelectorAll('.ipynb-action-cards');
-    actionCardContainers.forEach(container => {
-      const items = container.querySelectorAll('li');
-      items.forEach((li) => {
-        const link = li.querySelector('a');
-        if (link && (link.hash === '#' || link.hash === '')) {
-          // Re-resolve the link by finding matching heading
-          const linkText = link.textContent.trim();
+    // Re-resolve ALL links with hash="#" in the current page (action cards, tables, lists, etc.)
+    const allHashLinks = cellContentArea.querySelectorAll('a[href="#"]');
+    allHashLinks.forEach(link => {
+      // Re-resolve the link by finding matching heading
+      const linkText = link.textContent.trim();
 
-          // Search through ALL cells in the notebook (not just current page)
-          const allCells = cellsContainer.querySelectorAll('.ipynb-cell');
-          let targetCell = null;
+      // Search through ALL cells in the notebook (not just current page)
+      const allCells = cellsContainer.querySelectorAll('.ipynb-cell');
+      let targetCell = null;
 
-          allCells.forEach((cell) => {
-            if (targetCell) return; // Already found
-            const headings = cell.querySelectorAll('h1, h2, h3, h4, h5, h6');
-            headings.forEach((heading) => {
-              const headingText = heading.textContent.trim().replace(/[^\w\s]/g, '').toLowerCase();
-              const searchText = linkText.replace(/[^\w\s]/g, '').toLowerCase();
+      allCells.forEach((cell) => {
+        if (targetCell) return; // Already found
+        const headings = cell.querySelectorAll('h1, h2, h3, h4, h5, h6');
+        headings.forEach((heading) => {
+          const headingText = heading.textContent.trim().replace(/[^\w\s]/g, '').toLowerCase();
+          const searchText = linkText.replace(/[^\w\s]/g, '').toLowerCase();
 
-              if (headingText.includes(searchText)) {
-                targetCell = cell;
-                if (!heading.id && cell.dataset.cellIndex) {
-                  heading.id = `cell-${cell.dataset.cellIndex}`;
-                }
-              }
-            });
-          });
-
-          // Update the link
-          if (targetCell && targetCell.dataset.cellIndex) {
-            link.href = `#cell-${targetCell.dataset.cellIndex}`;
+          if (headingText.includes(searchText)) {
+            targetCell = cell;
+            if (!heading.id && cell.dataset.cellIndex) {
+              heading.id = `cell-${cell.dataset.cellIndex}`;
+            }
           }
-        }
+        });
       });
+
+      // Update the link
+      if (targetCell && targetCell.dataset.cellIndex) {
+        link.href = `#cell-${targetCell.dataset.cellIndex}`;
+      }
     });
 
     // Add click handlers to links with hash targets for overlay navigation
@@ -1384,6 +1405,19 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
             navigateToAnchor(newTarget);
           }
         }
+      });
+    });
+
+    // Re-attach click handlers for GitHub markdown links (lost during cloning)
+    const githubMdLinks = cellContentArea.querySelectorAll('.ipynb-github-md-link');
+    githubMdLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const githubUrl = link.dataset.mdUrl; // Get URL from data attribute
+        const linkBranch = link.dataset.branch || branch; // Get branch from link or use default
+        const title = link.textContent || 'GitHub Markdown';
+        const overlay = createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl, linkBranch);
+        overlay.openOverlay();
       });
     });
 
@@ -1557,25 +1591,37 @@ function createManualButton() {
 }
 
 /**
- * Convert GitHub blob URL to raw content URL
- * @param {string} blobUrl - GitHub blob URL
- * @returns {string} Raw content URL
+ * Convert GitHub blob URL to raw content URL, or return local path as-is
+ * @param {string} blobUrl - GitHub blob URL or local path
+ * @param {string} [branch='main'] - GitHub branch to use (only applies to GitHub URLs)
+ * @returns {string} Raw content URL or local path
  */
-function convertToRawUrl(blobUrl) {
+function convertToRawUrl(blobUrl, branch = 'main') {
+  // If it's a local path (starts with /), return as-is
+  if (blobUrl.startsWith('/')) {
+    return blobUrl;
+  }
+
   // Convert: https://github.com/user/repo/blob/main/path/file.md
-  // To: https://raw.githubusercontent.com/user/repo/main/path/file.md
-  return blobUrl
+  // To: https://raw.githubusercontent.com/user/repo/{branch}/path/file.md
+  const rawUrl = blobUrl
     .replace('github.com', 'raw.githubusercontent.com')
     .replace('/blob/', '/');
+
+  // The branch is already in the URL from the calling code, so just return it
+  // No need to do any branch replacement
+  return rawUrl;
 }
 
 /**
  * Create GitHub markdown overlay for displaying markdown files from GitHub
- * @param {string} githubUrl - Full GitHub blob URL
+ * @param {string} githubUrl - Full GitHub blob URL or local path
  * @param {string} title - Title to display in overlay header
+ * @param {string} [helpRepoUrl] - Optional help repository URL
+ * @param {string} [branch='main'] - GitHub branch to use
  * @returns {Object} Object with openOverlay and closeOverlay functions
  */
-function createGitHubMarkdownOverlay(githubUrl, title) {
+function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branch = 'main') {
   // Create overlay container
   const overlay = document.createElement('div');
   overlay.className = 'ipynb-manual-overlay ipynb-github-md-overlay';
@@ -1587,9 +1633,22 @@ function createGitHubMarkdownOverlay(githubUrl, title) {
   const overlayContent = document.createElement('div');
   overlayContent.className = 'ipynb-manual-overlay-content';
 
-  // Create top bar with title and controls
+  // Create top bar with title and controls (three-section layout)
   const topBar = document.createElement('div');
   topBar.className = 'ipynb-overlay-top-bar';
+
+  // Left controls section - home button
+  const leftControlsSection = document.createElement('div');
+  leftControlsSection.className = 'ipynb-overlay-controls ipynb-overlay-controls-left';
+
+  // Home button - navigate to first opened markdown
+  const homeButton = document.createElement('button');
+  homeButton.className = 'ipynb-overlay-button ipynb-home-button';
+  homeButton.innerHTML = '🏠';
+  homeButton.setAttribute('aria-label', 'Go to first page');
+  homeButton.setAttribute('title', 'Home');
+
+  leftControlsSection.appendChild(homeButton);
 
   // Title section
   const titleSection = document.createElement('div');
@@ -1597,9 +1656,58 @@ function createGitHubMarkdownOverlay(githubUrl, title) {
   titleSection.textContent = title;
   titleSection.setAttribute('title', title);
 
-  // Controls section
-  const controlsSection = document.createElement('div');
-  controlsSection.className = 'ipynb-overlay-controls';
+  // Right controls section
+  const rightControlsSection = document.createElement('div');
+  rightControlsSection.className = 'ipynb-overlay-controls ipynb-overlay-controls-right';
+
+  // History button - Navigation History
+  const historyButton = document.createElement('button');
+  historyButton.className = 'ipynb-overlay-button ipynb-history-button';
+  historyButton.innerHTML = '&#128337;'; // Clock icon (🕘)
+  historyButton.setAttribute('aria-label', 'Navigation History');
+  historyButton.setAttribute('aria-expanded', 'false');
+  historyButton.setAttribute('title', 'History');
+
+  const historyDropdown = document.createElement('div');
+  historyDropdown.className = 'ipynb-history-dropdown';
+  historyDropdown.setAttribute('role', 'menu');
+  historyDropdown.style.display = 'none';
+
+  // Bookmark button - Save GitHub markdown pages
+  const bookmarkButton = document.createElement('button');
+  bookmarkButton.className = 'ipynb-overlay-button ipynb-bookmark-button';
+  bookmarkButton.innerHTML = '&#128278;'; // Bookmark icon (🔖)
+  bookmarkButton.setAttribute('aria-label', 'Bookmarks');
+  bookmarkButton.setAttribute('aria-expanded', 'false');
+  bookmarkButton.setAttribute('title', 'Bookmarks');
+
+  const bookmarkDropdown = document.createElement('div');
+  bookmarkDropdown.className = 'ipynb-bookmark-dropdown';
+  bookmarkDropdown.setAttribute('role', 'menu');
+  bookmarkDropdown.style.display = 'none';
+
+  // Hamburger menu (TOC) button - Table of contents
+  const hamburgerButton = document.createElement('button');
+  hamburgerButton.className = 'ipynb-overlay-button ipynb-hamburger-menu';
+  hamburgerButton.innerHTML = '&#9776;'; // Hamburger icon (≡)
+  hamburgerButton.setAttribute('aria-label', 'Table of Contents');
+  hamburgerButton.setAttribute('aria-expanded', 'false');
+  hamburgerButton.setAttribute('title', 'TOC');
+
+  const tocDropdown = document.createElement('div');
+  tocDropdown.className = 'ipynb-toc-dropdown';
+  tocDropdown.setAttribute('role', 'menu');
+  tocDropdown.style.display = 'none';
+
+  // Help button - Opens help.md
+  let helpButton = null;
+  if (helpRepoUrl) {
+    helpButton = document.createElement('button');
+    helpButton.className = 'ipynb-overlay-button ipynb-help-button';
+    helpButton.innerHTML = '&#10067;'; // Question mark icon (❓)
+    helpButton.setAttribute('aria-label', 'Help');
+    helpButton.setAttribute('title', 'Help');
+  }
 
   // Close button
   const closeButton = document.createElement('button');
@@ -1607,11 +1715,24 @@ function createGitHubMarkdownOverlay(githubUrl, title) {
   closeButton.innerHTML = '&times;';
   closeButton.setAttribute('aria-label', 'Close markdown viewer');
 
-  // Assemble top bar
-  controlsSection.appendChild(closeButton);
+  // Assemble top bar: left controls, title, right controls
+  rightControlsSection.appendChild(historyButton);
+  rightControlsSection.appendChild(bookmarkButton);
+  rightControlsSection.appendChild(hamburgerButton);
+  if (helpButton) {
+    rightControlsSection.appendChild(helpButton);
+  }
+  rightControlsSection.appendChild(closeButton);
+
+  topBar.appendChild(leftControlsSection);
   topBar.appendChild(titleSection);
-  topBar.appendChild(controlsSection);
+  topBar.appendChild(rightControlsSection);
   overlayContent.appendChild(topBar);
+
+  // Append dropdowns after top bar
+  overlayContent.appendChild(historyDropdown);
+  overlayContent.appendChild(bookmarkDropdown);
+  overlayContent.appendChild(tocDropdown);
 
   // Create content area for markdown
   const contentArea = document.createElement('div');
@@ -1620,14 +1741,216 @@ function createGitHubMarkdownOverlay(githubUrl, title) {
 
   overlay.appendChild(overlayContent);
 
-  // Convert blob URL to raw URL
-  const rawUrl = convertToRawUrl(githubUrl);
+  // Convert blob URL to raw URL (using specified branch)
+  const rawUrl = convertToRawUrl(githubUrl, branch);
+
+  // Storage key for bookmarks (based on GitHub URL)
+  const bookmarkId = `github-md-${btoa(githubUrl).substring(0, 20)}`;
+
+  // Home button handler - Navigate to initial markdown page
+  const firstPageUrl = githubUrl;
+  const firstPageTitle = title;
+  homeButton.addEventListener('click', () => {
+    // Close current overlay and open first page
+    closeOverlay();
+    const homeOverlay = createGitHubMarkdownOverlay(firstPageUrl, firstPageTitle, helpRepoUrl, branch);
+    homeOverlay.openOverlay();
+  });
+
+  // History button handlers
+  const updateHistoryDropdown = () => {
+    historyDropdown.innerHTML = '';
+
+    if (navigationHistory.length === 0) {
+      const emptyMessage = document.createElement('div');
+      emptyMessage.className = 'ipynb-history-empty';
+      emptyMessage.textContent = 'No history yet';
+      historyDropdown.appendChild(emptyMessage);
+      return;
+    }
+
+    navigationHistory.forEach((entry) => {
+      const menuItem = document.createElement('button');
+      menuItem.className = 'ipynb-history-item';
+
+      // Add icon based on type
+      const icon = entry.type === 'markdown' ? '📝' : '📄';
+      menuItem.textContent = `${icon} ${entry.title}`;
+      menuItem.setAttribute('role', 'menuitem');
+
+      menuItem.addEventListener('click', () => {
+        if (entry.type === 'markdown' && entry.url) {
+          // Close current overlay and open historical markdown
+          closeOverlay();
+          const histOverlay = createGitHubMarkdownOverlay(entry.url, entry.title, helpRepoUrl, branch);
+          histOverlay.openOverlay();
+        }
+        historyDropdown.style.display = 'none';
+        historyButton.setAttribute('aria-expanded', 'false');
+      });
+
+      historyDropdown.appendChild(menuItem);
+    });
+  };
+
+  historyButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    updateHistoryDropdown();
+    const isOpen = historyDropdown.style.display === 'block';
+    historyDropdown.style.display = isOpen ? 'none' : 'block';
+    historyButton.setAttribute('aria-expanded', !isOpen);
+  });
+
+  // Bookmark button handlers
+  const updateBookmarkDropdown = () => {
+    bookmarkDropdown.innerHTML = '';
+
+    const bookmarks = getBookmarks(bookmarkId);
+
+    // Add "Bookmark this page" button at the top
+    const addBookmarkBtn = document.createElement('button');
+    addBookmarkBtn.className = 'ipynb-bookmark-item ipynb-add-bookmark';
+    addBookmarkBtn.textContent = '+ Bookmark this page';
+    addBookmarkBtn.setAttribute('role', 'menuitem');
+
+    addBookmarkBtn.addEventListener('click', () => {
+      // Save current page as bookmark with URL
+      const success = saveBookmark(bookmarkId, title, 0); // Use index 0 as placeholder
+      if (success) {
+        // Store actual GitHub URL in custom format
+        const bookmarksWithUrls = getBookmarks(bookmarkId);
+        if (bookmarksWithUrls.length > 0) {
+          // Add URL to the bookmark
+          bookmarksWithUrls[0].url = githubUrl;
+          bookmarksWithUrls[0].title = title;
+          try {
+            localStorage.setItem(getBookmarkStorageKey(bookmarkId), JSON.stringify(bookmarksWithUrls));
+          } catch (error) {
+            console.error('Failed to save bookmark with URL:', error);
+          }
+        }
+        updateBookmarkDropdown();
+      }
+    });
+
+    if (bookmarks.length === 0) {
+      const emptyMessage = document.createElement('div');
+      emptyMessage.className = 'ipynb-bookmark-empty';
+      emptyMessage.textContent = 'No bookmarks yet';
+      bookmarkDropdown.appendChild(addBookmarkBtn);
+      bookmarkDropdown.appendChild(emptyMessage);
+      return;
+    }
+
+    // Add existing bookmarks
+    bookmarks.forEach((bookmark) => {
+      const menuItem = document.createElement('button');
+      menuItem.className = 'ipynb-bookmark-item';
+      menuItem.textContent = `🔖 ${bookmark.title}`;
+      menuItem.setAttribute('role', 'menuitem');
+
+      menuItem.addEventListener('click', () => {
+        if (bookmark.url) {
+          // Close current overlay and open bookmarked markdown
+          closeOverlay();
+          const bmOverlay = createGitHubMarkdownOverlay(bookmark.url, bookmark.title, helpRepoUrl, branch);
+          bmOverlay.openOverlay();
+        }
+        bookmarkDropdown.style.display = 'none';
+        bookmarkButton.setAttribute('aria-expanded', 'false');
+      });
+
+      bookmarkDropdown.appendChild(menuItem);
+    });
+
+    // Add "Bookmark this page" button at the top
+    bookmarkDropdown.insertBefore(addBookmarkBtn, bookmarkDropdown.firstChild);
+  };
+
+  bookmarkButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    updateBookmarkDropdown();
+    const isOpen = bookmarkDropdown.style.display === 'block';
+    bookmarkDropdown.style.display = isOpen ? 'none' : 'block';
+    bookmarkButton.setAttribute('aria-expanded', !isOpen);
+  });
+
+  // Hamburger (TOC) button handlers - will be populated after markdown is loaded
+  const updateTocDropdown = () => {
+    tocDropdown.innerHTML = '';
+
+    // Find all headings in the content area
+    const headings = contentArea.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+    if (headings.length === 0) {
+      const emptyMessage = document.createElement('div');
+      emptyMessage.className = 'ipynb-toc-empty';
+      emptyMessage.textContent = 'No headings found';
+      tocDropdown.appendChild(emptyMessage);
+      return;
+    }
+
+    headings.forEach((heading) => {
+      const menuItem = document.createElement('button');
+      menuItem.className = `ipynb-toc-item ipynb-toc-${heading.tagName.toLowerCase()}`;
+      menuItem.textContent = heading.textContent.trim();
+      menuItem.setAttribute('role', 'menuitem');
+
+      menuItem.addEventListener('click', () => {
+        // Scroll to heading
+        heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        tocDropdown.style.display = 'none';
+        hamburgerButton.setAttribute('aria-expanded', 'false');
+      });
+
+      tocDropdown.appendChild(menuItem);
+    });
+  };
+
+  hamburgerButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    updateTocDropdown();
+    const isOpen = tocDropdown.style.display === 'block';
+    tocDropdown.style.display = isOpen ? 'none' : 'block';
+    hamburgerButton.setAttribute('aria-expanded', !isOpen);
+  });
+
+  // Help button handler
+  if (helpButton && helpRepoUrl) {
+    helpButton.addEventListener('click', () => {
+      // Build GitHub URL using the specified branch
+      const helpPath = `${helpRepoUrl}/blob/${branch}/docs/help.md`;
+      // Close current overlay and open help
+      closeOverlay();
+      const helpOverlay = createGitHubMarkdownOverlay(helpPath, 'IPynb Viewer Help', helpRepoUrl, branch);
+      helpOverlay.openOverlay();
+    });
+  }
+
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', (e) => {
+    if (historyDropdown && !historyDropdown.contains(e.target) && e.target !== historyButton) {
+      historyDropdown.style.display = 'none';
+      historyButton.setAttribute('aria-expanded', 'false');
+    }
+    if (bookmarkDropdown && !bookmarkDropdown.contains(e.target) && e.target !== bookmarkButton) {
+      bookmarkDropdown.style.display = 'none';
+      bookmarkButton.setAttribute('aria-expanded', 'false');
+    }
+    if (tocDropdown && !tocDropdown.contains(e.target) && e.target !== hamburgerButton) {
+      tocDropdown.style.display = 'none';
+      hamburgerButton.setAttribute('aria-expanded', 'false');
+    }
+  });
 
   // Open/close functions
   const openOverlay = async () => {
     // Fetch and display markdown
     try {
-      contentArea.innerHTML = '<div class="ipynb-loading">Loading markdown from GitHub...</div>';
+      contentArea.innerHTML = '<div class="ipynb-loading">Loading markdown...</div>';
+
+      // Fetch from GitHub raw URL (single source of truth from repo metadata)
+      // Local dev server will proxy to production or serve local file if available
       const response = await fetch(rawUrl);
       if (!response.ok) {
         throw new Error(`Failed to load markdown: ${response.status}`);
@@ -1635,7 +1958,52 @@ function createGitHubMarkdownOverlay(githubUrl, title) {
       const markdownText = await response.text();
 
       // Render markdown (without repo URL to avoid recursive link conversion)
-      contentArea.innerHTML = parseMarkdown(markdownText, null);
+      contentArea.innerHTML = parseMarkdown(markdownText, null, branch);
+
+      // Process smart links in the rendered markdown
+      // 1. Resolve hash links (internal navigation)
+      const hashLinks = contentArea.querySelectorAll('a[href^="#"]');
+      hashLinks.forEach(link => {
+        const linkText = link.textContent.trim();
+        const headings = contentArea.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+        headings.forEach(heading => {
+          const headingText = heading.textContent.trim().replace(/[^\w\s]/g, '').toLowerCase();
+          const searchText = linkText.replace(/[^\w\s]/g, '').toLowerCase();
+
+          if (headingText.includes(searchText)) {
+            // Generate ID if not present
+            if (!heading.id) {
+              heading.id = headingText.replace(/\s+/g, '-');
+            }
+            // Update link to point to heading
+            link.href = `#${heading.id}`;
+          }
+        });
+
+        // Add click handler for smooth scrolling
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = link.getAttribute('href').replace('#', '');
+          const target = contentArea.querySelector(`#${targetId}`);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      // 2. Add click handlers for GitHub markdown links (.md files)
+      const githubMdLinks = contentArea.querySelectorAll('.ipynb-github-md-link');
+      githubMdLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const linkUrl = link.dataset.mdUrl; // Get URL from data attribute
+          const linkBranch = link.dataset.branch || branch; // Get branch from link or use default
+          const linkTitle = link.textContent || 'GitHub Markdown';
+          const nestedOverlay = createGitHubMarkdownOverlay(linkUrl, linkTitle, helpRepoUrl, linkBranch);
+          nestedOverlay.openOverlay();
+        });
+      });
 
       // Add to history
       addToHistory(title, 'markdown', null, githubUrl);
@@ -1689,9 +2057,10 @@ function createGitHubMarkdownOverlay(githubUrl, title) {
  * Create manual overlay for displaying manual content
  * @param {string} manualPath - Path to the manual file (relative or absolute URL)
  * @param {string|null} repoUrl - Repository URL for resolving relative paths
+ * @param {string} [branch='main'] - GitHub branch to use for markdown files
  * @returns {Object} Object with openOverlay and closeOverlay functions
  */
-function createManualOverlay(manualPath, repoUrl) {
+function createManualOverlay(manualPath, repoUrl, branch = 'main') {
   // Extract title from manualPath (filename without extension)
   const pathParts = manualPath.split('/');
   const filename = pathParts[pathParts.length - 1];
@@ -1708,9 +2077,13 @@ function createManualOverlay(manualPath, repoUrl) {
   const overlayContent = document.createElement('div');
   overlayContent.className = 'ipynb-manual-overlay-content';
 
-  // Create top bar with title and controls
+  // Create top bar with title and controls (three-section layout)
   const topBar = document.createElement('div');
   topBar.className = 'ipynb-overlay-top-bar';
+
+  // Left controls section (empty for manual overlay, but keeps layout consistent)
+  const leftControlsSection = document.createElement('div');
+  leftControlsSection.className = 'ipynb-overlay-controls ipynb-overlay-controls-left';
 
   // Title section
   const titleSection = document.createElement('div');
@@ -1718,9 +2091,9 @@ function createManualOverlay(manualPath, repoUrl) {
   titleSection.textContent = title;
   titleSection.setAttribute('title', title);
 
-  // Controls section
-  const controlsSection = document.createElement('div');
-  controlsSection.className = 'ipynb-overlay-controls';
+  // Right controls section
+  const rightControlsSection = document.createElement('div');
+  rightControlsSection.className = 'ipynb-overlay-controls ipynb-overlay-controls-right';
 
   // Close button
   const closeButton = document.createElement('button');
@@ -1728,10 +2101,11 @@ function createManualOverlay(manualPath, repoUrl) {
   closeButton.innerHTML = '&times;';
   closeButton.setAttribute('aria-label', 'Close manual');
 
-  // Assemble top bar
-  controlsSection.appendChild(closeButton);
+  // Assemble top bar: left controls, title, right controls
+  rightControlsSection.appendChild(closeButton);
+  topBar.appendChild(leftControlsSection);
   topBar.appendChild(titleSection);
-  topBar.appendChild(controlsSection);
+  topBar.appendChild(rightControlsSection);
   overlayContent.appendChild(topBar);
 
   // Create content area for manual
@@ -1748,7 +2122,7 @@ function createManualOverlay(manualPath, repoUrl) {
   if (!manualPath.startsWith('http://') && !manualPath.startsWith('https://')) {
     // If it's a plain .md file and we have a repo URL, construct full path
     if (repoUrl && manualPath.endsWith('.md')) {
-      resolvedPath = `${repoUrl}/blob/main/${manualPath}`;
+      resolvedPath = `${repoUrl}/blob/${branch}/${manualPath}`;
     } else if (manualPath.startsWith('/')) {
       // Absolute path from root
       resolvedPath = manualPath;
@@ -1770,7 +2144,52 @@ function createManualOverlay(manualPath, repoUrl) {
       const markdownText = await response.text();
 
       // Render markdown
-      contentArea.innerHTML = parseMarkdown(markdownText);
+      contentArea.innerHTML = parseMarkdown(markdownText, null, branch);
+
+      // Process smart links in the rendered markdown
+      // 1. Resolve hash links (internal navigation)
+      const hashLinks = contentArea.querySelectorAll('a[href^="#"]');
+      hashLinks.forEach(link => {
+        const linkText = link.textContent.trim();
+        const headings = contentArea.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+        headings.forEach(heading => {
+          const headingText = heading.textContent.trim().replace(/[^\w\s]/g, '').toLowerCase();
+          const searchText = linkText.replace(/[^\w\s]/g, '').toLowerCase();
+
+          if (headingText.includes(searchText)) {
+            // Generate ID if not present
+            if (!heading.id) {
+              heading.id = headingText.replace(/\s+/g, '-');
+            }
+            // Update link to point to heading
+            link.href = `#${heading.id}`;
+          }
+        });
+
+        // Add click handler for smooth scrolling
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = link.getAttribute('href').replace('#', '');
+          const target = contentArea.querySelector(`#${targetId}`);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      // 2. Add click handlers for GitHub markdown links (.md files)
+      const githubMdLinks = contentArea.querySelectorAll('.ipynb-github-md-link');
+      githubMdLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const linkUrl = link.dataset.mdUrl; // Get URL from data attribute
+          const linkBranch = link.dataset.branch || branch; // Get branch from link or use default
+          const linkTitle = link.textContent || 'GitHub Markdown';
+          const nestedOverlay = createGitHubMarkdownOverlay(linkUrl, linkTitle, helpRepoUrl, linkBranch);
+          nestedOverlay.openOverlay();
+        });
+      });
 
       // Show overlay
       overlay.style.display = 'flex';
@@ -1862,6 +2281,20 @@ export default async function decorate(block) {
       block.setAttribute('data-repo', notebook.metadata.repo);
     }
 
+    // Set github-branch attribute if available in metadata (defaults to 'main')
+    const githubBranch = notebook.metadata?.['github-branch'] || 'main';
+    block.setAttribute('data-github-branch', githubBranch);
+
+    // Set help-repo attribute if available in metadata
+    // Falls back to repo, then to allaboutV2 default
+    if (notebook.metadata?.['help-repo']) {
+      block.setAttribute('data-help-repo', notebook.metadata['help-repo']);
+    } else if (notebook.metadata?.repo) {
+      block.setAttribute('data-help-repo', notebook.metadata.repo);
+    } else {
+      block.setAttribute('data-help-repo', 'https://github.com/ddttom/allaboutV2');
+    }
+
     // Clear block
     block.textContent = '';
 
@@ -1895,11 +2328,12 @@ export default async function decorate(block) {
       header.appendChild(author);
     }
 
-    // Add date if available
-    if (notebook.metadata?.date) {
+    // Add creation date if available (supports both 'creation-date' and 'date' for backward compatibility)
+    const creationDate = notebook.metadata?.['creation-date'] || notebook.metadata?.date;
+    if (creationDate) {
       const date = document.createElement('div');
-      date.className = 'ipynb-viewer-date';
-      date.textContent = notebook.metadata.date;
+      date.className = 'ipynb-viewer-creation-date';
+      date.textContent = `Created: ${creationDate}`;
       header.appendChild(date);
     }
 
@@ -1909,6 +2343,14 @@ export default async function decorate(block) {
       version.className = 'ipynb-viewer-version';
       version.textContent = `Version ${notebook.metadata.version}`;
       header.appendChild(version);
+    }
+
+    // Add last-modified if available
+    if (notebook.metadata?.['last-modified']) {
+      const lastModified = document.createElement('div');
+      lastModified.className = 'ipynb-viewer-last-modified';
+      lastModified.textContent = `Last modified: ${notebook.metadata['last-modified']}`;
+      header.appendChild(lastModified);
     }
 
     // Create metadata row for category, difficulty, duration
@@ -1983,11 +2425,19 @@ export default async function decorate(block) {
     // Extract repo URL from metadata for linking .md files
     const repoUrl = notebook.metadata?.repo || null;
 
+    // Note: githubBranch already extracted above at line 2282
+
+    // Extract help-repo URL from metadata for help button
+    // Falls back to repo, then to allaboutV2 default
+    const helpRepoUrl = notebook.metadata?.['help-repo'] ||
+                        notebook.metadata?.repo ||
+                        'https://github.com/ddttom/allaboutV2';
+
     notebook.cells.forEach(async (cell, index) => {
       let cellElement;
 
       if (cell.cell_type === 'markdown') {
-        cellElement = createMarkdownCell(cell, index, repoUrl, isNotebook);
+        cellElement = createMarkdownCell(cell, index, repoUrl, isNotebook, helpRepoUrl, githubBranch);
       } else if (cell.cell_type === 'code') {
         cellElement = createCodeCell(cell, index, shouldAutorun);
 
@@ -2031,7 +2481,7 @@ export default async function decorate(block) {
 
       // Create overlay with autorun support and notebook mode flag
       const notebookTitle = notebook.metadata?.title || 'Jupyter Notebook';
-      const overlay = createPagedOverlay(container, cellsContainer, shouldAutorun, isNotebook, repoUrl, notebookTitle);
+      const overlay = createPagedOverlay(container, cellsContainer, shouldAutorun, isNotebook, repoUrl, notebookTitle, helpRepoUrl, githubBranch);
 
       // Start button opens overlay
       startButton.addEventListener('click', () => {
@@ -2046,8 +2496,8 @@ export default async function decorate(block) {
         // Get manual path from metadata
         const manualPath = notebook.metadata['manual-path'];
 
-        // Create manual overlay with configurable path
-        const manualOverlay = createManualOverlay(manualPath, repoUrl);
+        // Create manual overlay with configurable path and branch
+        const manualOverlay = createManualOverlay(manualPath, repoUrl, githubBranch);
 
         // Manual button opens manual overlay
         manualButton.addEventListener('click', () => {
