@@ -90,7 +90,9 @@
       "Bash(then echo 'STILL HAS DATE: $file')",
       "Bash(do if ! jq -e .metadata[\"\"last-modified\"\"] $file)",
       "Bash(then echo $file)",
-      "Bash(python /tmp/debug_overlay_spacing.py:*)"
+      "Bash(python /tmp/debug_overlay_spacing.py:*)",
+      "Bash(for file in blog.ipynb education.ipynb explain.ipynb test.ipynb docs-navigation.ipynb docs/for-ai/templates/ipynb/*.ipynb)",
+      "Bash(do echo \"=== $file ===\")"
     ],
     "deny": [],
     "ask": []
