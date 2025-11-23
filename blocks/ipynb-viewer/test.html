@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IPynb Viewer Test - EDS Block</title>
+    <title>IPynb Viewer Test - Notebook Variation</title>
 
     <!-- EDS Core Styles -->
     <link rel="stylesheet" href="/styles/styles.css">
@@ -49,6 +49,23 @@
             margin-top: 0;
         }
 
+        .feature-list {
+            background: #f0f7ff;
+            border-left: 4px solid #0066cc;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .feature-list h4 {
+            margin-top: 0;
+            color: #0066cc;
+        }
+
+        .feature-list ul {
+            margin-bottom: 0;
+        }
+
         /* EDS pattern - ensure body appears */
         body.appear {
             display: block;
@@ -57,31 +74,92 @@
 </head>
 <body>
     <div class="test-content">
-        <h1>IPynb Viewer Block Test Page</h1>
+        <h1>IPynb Viewer - Notebook Variation Test</h1>
 
         <div class="test-info">
-            <h3>Testing Instructions</h3>
-            <ol>
-                <li>The block below should load and display the Documentation Navigator notebook</li>
-                <li>You should see markdown cells (with formatted text) and code cells (with Run buttons)</li>
-                <li>The notebook contains 55 cells with action cards, hamburger TOC, and smart links</li>
-                <li>Click the "Run" button on any code cell to execute the JavaScript</li>
-                <li>Click "Run All" to execute all code cells in sequence</li>
-                <li>Check the browser console for any errors</li>
-            </ol>
-            <p><strong>Note:</strong> This test uses the actual docs-navigation.ipynb file from the project root, providing realistic testing with production content.</p>
+            <h3>🎯 Testing Notebook Variation with All Features</h3>
+            <p>This test demonstrates the <strong>notebook variation</strong> of ipynb-viewer with all the latest features:</p>
+            <ul>
+                <li>✨ <strong>Auto-wrapping</strong> - Pure markdown cells styled automatically</li>
+                <li>🔖 <strong>Bookmarks</strong> - Save favorite pages to localStorage</li>
+                <li>🕘 <strong>History</strong> - Track navigation (last 25 items)</li>
+                <li>❓ <strong>Help System</strong> - Built-in user guide (opens docs/help.md)</li>
+                <li>🏠 <strong>Home Button</strong> - Jump to first page</li>
+                <li>☰ <strong>TOC (Hamburger Menu)</strong> - Quick navigation</li>
+                <li>🎨 <strong>Attractive Top Bar</strong> - Gradient purple-to-blue design</li>
+                <li>× <strong>Close Button</strong> - Always visible</li>
+            </ul>
+        </div>
+
+        <div class="feature-list">
+            <h4>✅ Features to Test:</h4>
+            <ul>
+                <li><strong>Top Bar</strong> - Beautiful gradient with notebook title</li>
+                <li><strong>Bookmarks Button (🔖)</strong> - Click to save/view bookmarks</li>
+                <li><strong>History Button (🕘)</strong> - View navigation history</li>
+                <li><strong>Help Button (❓)</strong> - Opens comprehensive help guide</li>
+                <li><strong>Home Button (🏠)</strong> - Jump to first page</li>
+                <li><strong>TOC Button (☰)</strong> - Table of contents dropdown</li>
+                <li><strong>Close Button (×)</strong> - Exit overlay</li>
+            </ul>
         </div>
 
         <div class="test-section">
-            <h2>Documentation Navigator (Notebook View)</h2>
-            <p>This test demonstrates the notebook variation with auto-wrapping, hamburger TOC, and manual code execution - perfect for educational content.</p>
+            <h2>Documentation Navigator (Notebook Mode)</h2>
+            <p>This test loads the <strong>docs-navigation.ipynb</strong> file from the repository root, demonstrating:</p>
+            <ul>
+                <li>External .ipynb file loading (not inline JSON)</li>
+                <li>Notebook variation with all features enabled</li>
+                <li>Repo metadata for GitHub markdown overlay support</li>
+                <li>55 cells with action cards, smart links, and transitions</li>
+                <li>Auto-wrapping pattern detection (hero, intro, content, transition)</li>
+            </ul>
 
-            <!-- IPynb Viewer Block with Notebook Variation -->
-            <div class="ipynb-viewer notebook block" id="test-notebook" data-block-name="ipynb-viewer" data-block-status="initialized">
+            <!-- IPynb Viewer Block - Notebook Variation -->
+            <div class="ipynb-viewer notebook block"
+                 id="test-notebook"
+                 data-block-name="ipynb-viewer"
+                 data-block-status="initialized">
                 <div>
                     <div>/docs-navigation.ipynb</div>
                 </div>
             </div>
+        </div>
+
+        <div class="test-info">
+            <h3>📝 Testing Instructions</h3>
+            <ol>
+                <li><strong>Click "Start Reading"</strong> to open the notebook in overlay mode</li>
+                <li><strong>Check the top bar</strong> - Should show gradient background with "Documentation Navigator" title</li>
+                <li><strong>Test all buttons:</strong>
+                    <ul>
+                        <li>🏠 Home - Jumps to first page</li>
+                        <li>🕘 History - Shows navigation history (builds as you navigate)</li>
+                        <li>🔖 Bookmarks - Save pages, view saved bookmarks</li>
+                        <li>☰ TOC - Table of contents dropdown</li>
+                        <li>❓ Help - Opens docs/help.md in GitHub overlay</li>
+                        <li>× Close - Exits overlay</li>
+                    </ul>
+                </li>
+                <li><strong>Navigate through pages</strong> - Use Previous/Next or action cards</li>
+                <li><strong>Try bookmarking</strong> - Click 🔖, then "+ Bookmark This Page"</li>
+                <li><strong>Check history</strong> - Click 🕘 after navigating a few pages</li>
+                <li><strong>Open help</strong> - Click ❓ to see comprehensive help guide</li>
+                <li><strong>Verify auto-wrapping</strong> - Cells should have attractive styling without manual HTML</li>
+            </ol>
+        </div>
+
+        <div class="test-info">
+            <h3>🔍 What to Look For</h3>
+            <ul>
+                <li><strong>Beautiful top bar</strong> - Purple-to-blue gradient</li>
+                <li><strong>Six control buttons</strong> - All properly styled and functional</li>
+                <li><strong>Bookmarks persist</strong> - Should survive page reload (localStorage)</li>
+                <li><strong>History tracks navigation</strong> - Shows up to 25 recent items</li>
+                <li><strong>Help opens in overlay</strong> - No external navigation</li>
+                <li><strong>Action cards work</strong> - Click to navigate between sections</li>
+                <li><strong>Hamburger TOC</strong> - Shows all headings for quick navigation</li>
+            </ul>
         </div>
     </div>
 
@@ -93,15 +171,20 @@
         sampleRUM('top');
         window.addEventListener('load', () => sampleRUM('load'));
 
-        // Load the notebook block - it will fetch the actual notebook file
+        // Load the notebook block
         const block = document.querySelector('#test-notebook');
 
         try {
+            // Load block (will fetch /docs-navigation.ipynb)
             await loadBlock(block);
-            console.log('✅ IPynb Viewer block (notebook) loaded successfully');
+            console.log('✅ IPynb Viewer block (notebook variation) loaded successfully');
+            console.log('📄 Loading notebook from: /docs-navigation.ipynb');
+            console.log('🔖 Bookmarks feature: Active (localStorage)');
+            console.log('🕘 History tracking: Active (max 25 entries)');
+            console.log('❓ Help system: Active (opens docs/help.md)');
         } catch (error) {
             console.error('❌ Block failed to load:', error);
-            block.innerHTML = `<p style="color: red;">Failed to load block: ${error.message}</p>`;
+            block.innerHTML = `<p style="color: red; padding: 2rem;">Failed to load block: ${error.message}</p>`;
         }
 
         // Add body.appear class (EDS pattern)
