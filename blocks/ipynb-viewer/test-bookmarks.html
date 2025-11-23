@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IPynb Viewer - Bookmarks & Help Test</title>
+  <link rel="stylesheet" href="ipynb-viewer.css">
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 2rem;
+    }
+    .test-info {
+      background: #f0f7ff;
+      border-left: 4px solid #0066cc;
+      padding: 1rem;
+      margin-bottom: 2rem;
+      border-radius: 4px;
+    }
+    .test-info h2 {
+      margin-top: 0;
+      color: #0066cc;
+    }
+    .test-info ul {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>IPynb Viewer - Bookmarks & Help Test</h1>
+
+  <div class="test-info">
+    <h2>✅ Features to Test:</h2>
+    <ul>
+      <li><strong>Attractive Top Bar</strong> - Purple-to-blue gradient with notebook title</li>
+      <li><strong>Home Button (🏠)</strong> - Jump to first page</li>
+      <li><strong>History Button (🕘)</strong> - View navigation history</li>
+      <li><strong>Bookmarks Button (🔖)</strong> - Save and manage favorite pages</li>
+      <li><strong>TOC Button (☰)</strong> - Table of contents</li>
+      <li><strong>Help Button (❓)</strong> - Opens comprehensive help guide</li>
+      <li><strong>Close Button (×)</strong> - Close the overlay</li>
+    </ul>
+  </div>
+
+  <!-- IPynb Viewer Block in NOTEBOOK variation -->
+  <div class="ipynb-viewer notebook">
+    <table>
+      <tr>
+        <td>
+          <div class="ipynb-notebook-container"
+               data-notebook-path="test.ipynb"
+               data-repo-url="https://github.com/ddttom/allaboutv2">
+            <!-- Test notebook will be loaded here -->
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <script type="module">
+    // Create a test notebook inline
+    const testNotebook = {
+      cells: [
+        {
+          cell_type: "markdown",
+          metadata: {},
+          source: [
+            "# Welcome to IPynb Viewer Test\n",
+            "\n",
+            "This is a test notebook to verify the new bookmarks and help features."
+          ]
+        },
+        {
+          cell_type: "markdown",
+          metadata: {},
+          source: [
+            "## Page 2: Testing Bookmarks\n",
+            "\n",
+            "**Try this:**\n",
+            "1. Click the **Bookmarks button (🔖)** in the top bar\n",
+            "2. Click **\"+ Bookmark This Page\"**\n",
+            "3. Navigate to another page\n",
+            "4. Click Bookmarks again and jump back here!"
+          ]
+        },
+        {
+          cell_type: "markdown",
+          metadata: {},
+          source: [
+            "## Page 3: Testing History\n",
+            "\n",
+            "**Try this:**\n",
+            "1. Navigate between pages\n",
+            "2. Click the **History button (🕘)**\n",
+            "3. See your recent navigation\n",
+            "4. Click any entry to go back"
+          ]
+        },
+        {
+          cell_type: "markdown",
+          metadata: {},
+          source: [
+            "## Page 4: Testing Help\n",
+            "\n",
+            "**Try this:**\n",
+            "1. Click the **Help button (❓)** in the top bar\n",
+            "2. Read the comprehensive help guide\n",
+            "3. Press ESC to close and return here\n",
+            "\n",
+            "The help guide opens in a GitHub Markdown overlay!"
+          ]
+        },
+        {
+          cell_type: "markdown",
+          metadata: {},
+          source: [
+            "## Page 5: All Features\n",
+            "\n",
+            "**Top Bar Buttons (left to right):**\n",
+            "- 🏠 Home - Jump to first page\n",
+            "- 🕘 History - Recent navigation\n",
+            "- 🔖 Bookmarks - Saved pages\n",
+            "- ☰ TOC - Table of contents\n",
+            "- ❓ Help - User guide\n",
+            "- × Close - Exit overlay\n",
+            "\n",
+            "**Bottom Controls:**\n",
+            "- Previous/Next buttons\n",
+            "- Page indicator (e.g., \"3 / 5\")"
+          ]
+        }
+      ],
+      metadata: {
+        title: "Bookmarks & Help Test",
+        repo: "https://github.com/ddttom/allaboutv2"
+      },
+      nbformat: 4,
+      nbformat_minor: 5
+    };
+
+    // Inject test notebook
+    const container = document.querySelector('.ipynb-notebook-container');
+    container.textContent = JSON.stringify(testNotebook);
+  </script>
+
+  <script src="ipynb-viewer.js"></script>
+</body>
+</html>
