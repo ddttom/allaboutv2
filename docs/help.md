@@ -5,6 +5,7 @@ Welcome to the **Documentation Viewer** interactive help guide! This document wi
 [Getting Started](#getting-started)
 [Navigation Controls](#navigation-controls)
 [Overlay Types](#overlay-types)
+[Navigation Tree](#navigation-tree)
 [Bookmarks](#bookmarks)
 [History](#history)
 [Keyboard Shortcuts](#keyboard-shortcuts)
@@ -25,17 +26,42 @@ The overlay has several key areas:
 ---
 
 ## Navigation Controls
+
+### Navigation Tree Panel
+
+A powerful new navigation panel appears on the left side of the overlay:
+
+**Features:**
+- **Notebook Section** - Shows all cells organized by Parts (or flat structure if no Parts)
+- **Repository Section** - Lists all linked markdown files from the repository
+- **Expandable/Collapsible** - Click triangles (▶) to expand folders and sections
+- **Click to Navigate** - Click any cell or file to jump directly to it
+- **Visual Organization** - Files organized in folder hierarchy
+- **Toggle Visibility** - Use the tree toggle button (◄/►) to hide/show the panel
+
+**Structure:**
+- **Frontmatter** - Cells before first Part (only if Parts exist)
+- **Part N** - Each numbered Part with its cells
+- **Summary** - Cells after completion (only if Parts exist)
+- **Repository** - All .md files referenced in the notebook (auto-hidden if empty)
+
 ### Top Bar Buttons
 The top bar contains all your navigation and utility controls:
 
-| Button | Icon | Function |
-|--------|------|----------|
-| **Home** | 🏠 | Jump to the first page/cell |
-| **History** | 🕘 | View your navigation history (last 25 items) |
-| **Bookmarks** | 🔖 | View and manage your saved bookmarks |
-| **Table of Contents** | ☰ | Quick navigation to any section |
-| **Help** | ❓ | Open this help guide |
-| **Close** | × | Close the overlay |
+| Button | Icon | Position | Function |
+|--------|------|----------|----------|
+| **Home** | 🏠 | Left | Jump to the first page/cell or markdown file |
+| **Tree Toggle** | ◄/► | Left | Hide/show the navigation tree panel |
+| **History** | 🕘 | Right | View your navigation history (last 25 items) |
+| **Bookmarks** | 🔖 | Right | View and manage your saved bookmarks |
+| **Table of Contents** | ☰ | Right | Quick navigation to any section |
+| **Help** | ❓ | Right | Open this help guide |
+| **Close** | × | Right | Close the overlay |
+
+**Tree Toggle Button:**
+- **◄ (Left Arrow)** - Tree is visible, click to hide
+- **► (Right Arrow)** - Tree is hidden, click to show
+- Content area automatically expands when tree is hidden
 
 ### Previous/Next Navigation
 
@@ -65,18 +91,7 @@ Page indicator shows progress
 
 **Best for:** Sequential reading, tutorials, guided content
 
-### 2. Manual Overlay (Documentation)
-
-**How to open:** Click "Read the Manual" button (if available)
-
-**Features:**
-- Continuous scrolling (no pagination)
-- Displays markdown documentation
-- Same top bar controls
-
-**Best for:** Reference material, API docs
-
-### 3. GitHub Markdown Overlay
+### 2. GitHub Markdown Overlay
 
 **How to open:** Click any .md file link in markdown cells
 
@@ -88,7 +103,7 @@ Page indicator shows progress
 
 **Best for:** Cross-referencing documentation, exploring related guides
 
-### 4. Preview Overlay (Code Results)
+### 3. Preview Overlay (Code Results)
 
 **How to open:** Click "Run" on code cells that use `showPreview()`
 
@@ -98,6 +113,80 @@ Page indicator shows progress
 - Shows rendered HTML/CSS
 
 **Best for:** Testing UI components, visual demos
+
+---
+
+## Navigation Tree
+
+**New Feature!** A powerful tree-based navigation panel for exploring notebook structure.
+
+### Overview
+
+The Navigation Tree appears on the left side of the overlay and provides:
+- **Hierarchical view** of all notebook cells and linked files
+- **Quick navigation** - click any item to jump directly to it
+- **Visual organization** - see the complete structure at a glance
+- **Smart hiding** - empty sections auto-hide (e.g., Repository with no .md files)
+
+### Tree Structure
+
+#### Notebook Section
+Shows all cells in the notebook:
+
+**With Part Headings:**
+- **Frontmatter** - Cells before the first "Part N" heading
+- **Part 1, Part 2, etc.** - Grouped cells under each Part
+- **Summary** - Cells after a heading containing "completed" and "final"
+
+**Without Part Headings:**
+- Cells are listed directly under "Notebook" (flat structure)
+- No Frontmatter or Summary sections created
+
+#### Repository Section
+Shows all markdown files linked in the notebook:
+
+- **Automatically populated** from .md links in cells
+- **Folder hierarchy** - files organized by directory structure
+- **Alphabetical sorting** within folders
+- **Auto-hidden** if no .md files are referenced
+- **Deduplication** - same filename only appears once (uses first occurrence)
+
+### Using the Tree
+
+**Expand/Collapse Sections:**
+- Click the triangle icon (▶) next to folders or sections
+- Expanded state: ▼ (downward triangle)
+- Collapsed state: ▶ (right-pointing triangle)
+- Tree state persists when switching between overlays
+
+**Navigate to Content:**
+- Click any cell item to jump to that page
+- Click any .md file to open it in GitHub overlay
+- Currently selected item is highlighted
+
+**Toggle Visibility:**
+- Click the tree toggle button (◄/►) in top-left
+- Hidden state gives more reading space
+- Content area expands to fill available width
+
+### Tree Features
+
+**Smart Detection:**
+- Automatically finds Part headings (pattern: `Part \d+`)
+- Detects Summary section (contains "completed" AND "final")
+- Extracts all .md links from notebook cells
+- Resolves relative paths (../, ./, same directory)
+
+**Visual Feedback:**
+- Selected item has highlight
+- Hover effect on clickable items
+- Indentation shows hierarchy level
+- Icons indicate node type (folder/file)
+
+**State Management:**
+- Expansion state shared across both overlays
+- Tree structure updates when new .md links discovered
+- Duplicate files automatically filtered out
 
 ---
 
@@ -149,14 +238,16 @@ This means:
 
 ## History
 
-The Viewer automatically tracks your navigation history.
+The Viewer automatically tracks your navigation history for each notebook session.
 
 ### How History Works
 
 - **Automatic Tracking** - Every page you visit is recorded
-- **Maximum 25 Entries** - Keeps only the most recent 25 items
+- **Per-Notebook** - Each notebook has its own isolated history
+- **Maximum 25 Entries** - Keeps only the most recent 25 items per notebook
 - **Two Types** - Tracks both cells (📄) and markdown files (📝)
 - **Smart Deduplication** - Revisiting content moves it to the top
+- **Session-Based** - History resets when you close and reopen the notebook
 
 ### Using History
 
@@ -176,8 +267,9 @@ The Viewer automatically tracks your navigation history.
 | Feature | History | Bookmarks |
 |---------|---------|-----------|
 | **Automatic** | ✅ Yes | ❌ No (manual) |
-| **Limit** | 25 items | Unlimited |
-| **Persistence** | Session only | Permanent (localStorage) |
+| **Limit** | 25 items per notebook | Unlimited |
+| **Persistence** | Session only (per notebook) | Permanent (localStorage) |
+| **Scope** | Per-notebook isolation | Per-notebook isolation |
 | **Purpose** | Recent navigation | Important pages |
 | **Best For** | Retracing steps | Favorite sections |
 
@@ -205,7 +297,7 @@ Make navigation faster with keyboard shortcuts:
 
 - Keyboard shortcuts work when overlay is focused
 - Shortcuts don't interfere with typing in code cells
-- ESC closes overlays in order (preview → manual → paged)
+- ESC closes overlays in order (preview → GitHub markdown → paged)
 
 ---
 
@@ -213,28 +305,36 @@ Make navigation faster with keyboard shortcuts:
 
 ### Efficient Navigation
 
-1. **Use TOC for Big Jumps** - Table of Contents (☰) is fastest for skipping to specific sections
-2. **Use History for Recent Pages** - Quickly revisit pages you just read
-3. **Use Bookmarks for Favorites** - Save important reference pages
-4. **Use Home for Reset** - Start over from the beginning anytime
+1. **Use Navigation Tree** - Fastest way to see structure and jump anywhere
+2. **Use TOC for Big Jumps** - Table of Contents (☰) for quick section access
+3. **Use History for Recent Pages** - Quickly revisit pages you just read
+4. **Use Bookmarks for Favorites** - Save important reference pages
+5. **Use Home for Reset** - Start over from the beginning anytime
+6. **Toggle Tree for Focus** - Hide tree (►) to maximize reading space
 
 ### Workflow Examples
 
 **Learning a Tutorial:**
+- Use Navigation Tree to see overall structure
 - Read sequentially with Previous/Next
 - Bookmark key concepts for review
 - Use History to revisit tricky sections
-- Use TOC to skip to exercises
+- Collapse Parts in tree you've completed
 
 **Using as Reference:**
+- Keep Navigation Tree open to see all sections
+- Click tree items to jump directly to content
 - Bookmark frequently used sections
-- Use TOC for quick lookups
 - Use History to jump between related topics
+- Toggle tree (►) when deep reading
 
 **Exploring Documentation:**
 - Click .md links to open related docs in overlay
+- Navigation Tree shows all linked markdown files
+- Click files in Repository section to view them
 - Keep main notebook open while reading related docs
 - Use ESC to close doc overlay and return to main content
+- Tree state persists across GitHub overlays
 
 ### Best Practices
 

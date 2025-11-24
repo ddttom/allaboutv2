@@ -8,9 +8,10 @@
  * @param {string} markdown - Markdown text
  * @param {string} [repoUrl] - Optional repository URL for converting .md links
  * @param {string} [branch='main'] - GitHub branch to use for .md links
+ * @param {string} [currentFilePath] - Optional current file path for resolving relative links
  * @returns {string} HTML string
  */
-function parseMarkdown(markdown, repoUrl = null, branch = 'main') {
+function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePath = null) {
   let html = markdown;
 
   // Code blocks (triple backticks) - MUST be processed first before other replacements
@@ -95,29 +96,84 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main') {
   // Matches: ---, ***, or ___ (3 or more, with optional spaces)
   html = html.replace(/^(?:[-*_]\s*){3,}$/gim, '<hr>');
 
-  // Bold (before italic to handle ** before *)
-  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-
-  // Italic
-  html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
-
   // Code inline (before links to avoid conflicts)
   html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
 
   // Links - convert .md files to repo URLs if repo is available
+  // Process BEFORE bold/italic to handle constructs like **Text** → [link](url)
   html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, text, url) => {
     // Check if it's a .md file and we have a repo URL
     if (repoUrl && url.endsWith('.md') && !url.startsWith('http://') && !url.startsWith('https://')) {
-      // Remove leading ./ or / from the path
-      const cleanPath = url.replace(/^\.?\//, '');
+      let cleanPath = url;
+
+      // Resolve relative paths based on current file location
+      if (currentFilePath && !url.startsWith('/') && !url.startsWith('http')) {
+        // This is a relative path - resolve it based on current file's directory
+        console.log('🔍 Resolving relative path:', url, 'from:', currentFilePath);
+
+        // Extract the directory path from the current file (remove filename)
+        const currentDir = currentFilePath.substring(0, currentFilePath.lastIndexOf('/'));
+        console.log('   Current directory:', currentDir);
+
+        // Combine current directory with relative path
+        const parts = currentDir ? currentDir.split('/') : [];
+        const urlParts = url.replace(/^\.\//, '').split('/'); // Remove leading ./ if present
+
+        // Process each part of the URL
+        for (const part of urlParts) {
+          if (part === '..') {
+            // Go up one directory
+            if (parts.length > 0) {
+              parts.pop();
+            }
+          } else if (part !== '.' && part !== '') {
+            // Add directory or filename
+            parts.push(part);
+          }
+        }
+
+        cleanPath = parts.join('/');
+        console.log('   ✅ Resolved to:', cleanPath);
+      } else if (url.startsWith('/')) {
+        // Absolute path from repo root - remove leading /
+        cleanPath = url.replace(/^\//, '');
+        console.log('🔍 Absolute path from root:', cleanPath);
+      } else {
+        // No currentFilePath or already absolute URL
+        cleanPath = url.replace(/^\.?\//, '');
+        if ((url.startsWith('../') || url.includes('/../')) && !currentFilePath) {
+          console.warn('⚠️  Relative path with ".." but no currentFilePath provided:', url);
+        }
+      }
+
       // Build full repo URL using the specified branch
       const fullUrl = `${repoUrl}/blob/${branch}/${cleanPath}`;
+      console.log(`🔗 Creating GitHub md link: "${text}" -> ${cleanPath} (full: ${fullUrl})`);
       // Mark GitHub markdown links with special class for overlay handling
       // Use href="#" to prevent browser prefetching, store actual URL in data attribute
       return `<a href="#" class="ipynb-github-md-link" data-md-url="${fullUrl}" data-md-path="${cleanPath}" data-repo="${repoUrl}" data-branch="${branch}">${text}</a>`;
     }
-    return `<a href="${url}">${text}</a>`;
+
+    // External links (http/https) - display as non-clickable text with URL shown
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      return `<span class="ipynb-external-link" title="${url}">${text} <code>${url}</code></span>`;
+    }
+
+    // Hash links - keep as-is for internal navigation
+    if (url.startsWith('#')) {
+      return `<a href="${url}">${text}</a>`;
+    }
+
+    // Other file types (.html, .htm, images, etc.) - display as non-clickable text
+    // Show the filename/path for documentation purposes
+    return `<span class="ipynb-non-md-link" title="${url}">${text} <code>(${url})</code></span>`;
   });
+
+  // Bold (after links to preserve bold text before links like **Text** → [link])
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+  // Italic (after bold)
+  html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
 
   // Lists - process line by line with nested list support
   const linesWithLists = html.split('\n');
@@ -385,9 +441,10 @@ function styleActionCards(contentElement) {
  * @param {boolean} [autoWrap=false] - Whether to auto-wrap with styling classes (notebook mode)
  * @param {string} [helpRepoUrl] - Optional help repository URL
  * @param {string} [branch='main'] - GitHub branch to use for .md links
+ * @param {Array} [parentHistory=null] - Optional parent overlay's history array
  * @returns {HTMLElement} Cell element
  */
-function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false, helpRepoUrl = null, branch = 'main') {
+function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false, helpRepoUrl = null, branch = 'main', parentHistory = null) {
   const cellDiv = document.createElement('div');
   cellDiv.className = 'ipynb-cell ipynb-markdown-cell';
   cellDiv.dataset.cellIndex = index;
@@ -420,7 +477,7 @@ function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false, helpR
       const githubUrl = link.dataset.mdUrl; // Get URL from data attribute
       const linkBranch = link.dataset.branch || branch; // Get branch from link or use default
       const title = link.textContent || 'GitHub Markdown';
-      const overlay = createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl, linkBranch);
+      const overlay = createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl, linkBranch, parentHistory);
       overlay.openOverlay();
     });
   });
@@ -674,20 +731,19 @@ function createPageGroups(cells) {
 }
 
 /**
- * Global history tracking for navigation
- * @type {Array<{title: string, type: 'cell'|'markdown', cellIndex?: number, url?: string, timestamp: number}>}
+ * Maximum number of history entries to track per overlay instance
  */
-const navigationHistory = [];
 const MAX_HISTORY_ENTRIES = 25;
 
 /**
- * Add entry to navigation history
+ * Add entry to navigation history for a specific overlay instance
+ * @param {Array} historyArray - The history array for this overlay instance
  * @param {string} title - Title of the entry
  * @param {string} type - Type: 'cell' or 'markdown'
  * @param {number} [cellIndex] - Cell index for cell entries
  * @param {string} [url] - URL for markdown entries
  */
-function addToHistory(title, type, cellIndex = null, url = null) {
+function addToHistory(historyArray, title, type, cellIndex = null, url = null) {
   const entry = {
     title,
     type,
@@ -697,19 +753,19 @@ function addToHistory(title, type, cellIndex = null, url = null) {
   };
 
   // Remove duplicate if exists (same title and type)
-  const existingIndex = navigationHistory.findIndex(
+  const existingIndex = historyArray.findIndex(
     h => h.title === title && h.type === type
   );
   if (existingIndex !== -1) {
-    navigationHistory.splice(existingIndex, 1);
+    historyArray.splice(existingIndex, 1);
   }
 
   // Add to front of history
-  navigationHistory.unshift(entry);
+  historyArray.unshift(entry);
 
   // Limit to MAX_HISTORY_ENTRIES
-  if (navigationHistory.length > MAX_HISTORY_ENTRIES) {
-    navigationHistory.pop();
+  if (historyArray.length > MAX_HISTORY_ENTRIES) {
+    historyArray.pop();
   }
 }
 
@@ -729,7 +785,7 @@ function getBookmarkStorageKey(notebookId) {
 /**
  * Get all bookmarks for a notebook
  * @param {string} notebookId - Unique identifier for the notebook
- * @returns {Array<{title: string, pageIndex: number, timestamp: number}>}
+ * @returns {Array<{title: string, type: string, pageIndex: number|null, url: string|null, timestamp: number}>}
  */
 function getBookmarks(notebookId) {
   try {
@@ -743,18 +799,26 @@ function getBookmarks(notebookId) {
 }
 
 /**
- * Save a bookmark for the current page
+ * Save a bookmark for the current page or markdown file
  * @param {string} notebookId - Unique identifier for the notebook
  * @param {string} title - Title of the page
- * @param {number} pageIndex - Page index to bookmark
+ * @param {string} type - Type: 'cell' or 'markdown'
+ * @param {number|null} pageIndex - Page index to bookmark (for cells)
+ * @param {string|null} url - URL to bookmark (for markdown)
  * @returns {boolean} Success status
  */
-function saveBookmark(notebookId, title, pageIndex) {
+function saveBookmark(notebookId, title, type, pageIndex = null, url = null) {
   try {
     const bookmarks = getBookmarks(notebookId);
 
-    // Remove existing bookmark for same page
-    const existingIndex = bookmarks.findIndex(b => b.pageIndex === pageIndex);
+    // Create unique identifier based on type
+    const identifier = type === 'cell' ? `cell-${pageIndex}` : `md-${url}`;
+
+    // Remove existing bookmark for same item
+    const existingIndex = bookmarks.findIndex(b => {
+      const bookmarkId = b.type === 'cell' ? `cell-${b.pageIndex}` : `md-${b.url}`;
+      return bookmarkId === identifier;
+    });
     if (existingIndex !== -1) {
       bookmarks.splice(existingIndex, 1);
     }
@@ -762,7 +826,9 @@ function saveBookmark(notebookId, title, pageIndex) {
     // Add new bookmark
     bookmarks.unshift({
       title,
+      type,
       pageIndex,
+      url,
       timestamp: Date.now(),
     });
 
@@ -779,13 +845,20 @@ function saveBookmark(notebookId, title, pageIndex) {
 /**
  * Remove a specific bookmark
  * @param {string} notebookId - Unique identifier for the notebook
- * @param {number} pageIndex - Page index to remove
+ * @param {string} type - Type: 'cell' or 'markdown'
+ * @param {number|null} pageIndex - Page index to remove (for cells)
+ * @param {string|null} url - URL to remove (for markdown)
  * @returns {boolean} Success status
  */
-function removeBookmark(notebookId, pageIndex) {
+function removeBookmark(notebookId, type, pageIndex = null, url = null) {
   try {
     const bookmarks = getBookmarks(notebookId);
-    const filtered = bookmarks.filter(b => b.pageIndex !== pageIndex);
+    const identifier = type === 'cell' ? `cell-${pageIndex}` : `md-${url}`;
+
+    const filtered = bookmarks.filter(b => {
+      const bookmarkId = b.type === 'cell' ? `cell-${b.pageIndex}` : `md-${b.url}`;
+      return bookmarkId !== identifier;
+    });
 
     const key = getBookmarkStorageKey(notebookId);
     localStorage.setItem(key, JSON.stringify(filtered));
@@ -813,6 +886,605 @@ function clearAllBookmarks(notebookId) {
 }
 
 /**
+ * Navigation Tree Building Functions
+ */
+
+/**
+ * Extract heading text from markdown cell
+ * @param {HTMLElement} cell - Cell element
+ * @returns {Object|null} Heading object with text and level, or null
+ */
+function extractHeading(cell) {
+  const content = cell.querySelector('.ipynb-cell-content');
+  if (!content) return null;
+
+  const heading = content.querySelector('h1, h2, h3');
+  if (!heading) return null;
+
+  return {
+    text: heading.textContent.trim(),
+    level: parseInt(heading.tagName.substring(1)),
+  };
+}
+
+/**
+ * Extract all markdown file paths from cells
+ * @param {HTMLElement} cellsContainer - Container with all cells
+ * @returns {Array<string>} Array of unique .md file paths
+ */
+function extractMarkdownPaths(cellsContainer) {
+  const paths = new Set(); // Automatic deduplication
+
+  // Find all GitHub markdown links
+  const mdLinks = cellsContainer.querySelectorAll('.ipynb-github-md-link');
+
+  mdLinks.forEach((link) => {
+    const mdUrl = link.dataset.mdUrl;
+    if (mdUrl) {
+      // Extract path from URL (remove blob/branch parts)
+      const pathMatch = mdUrl.match(/\/blob\/[^/]+\/(.+)$/);
+      if (pathMatch) {
+        paths.add(pathMatch[1]);
+      }
+    }
+  });
+
+  return Array.from(paths).sort(); // Sort alphabetically
+}
+
+/**
+ * Extract markdown paths from a specific element (for dynamic scanning)
+ * @param {HTMLElement} element - Element to scan for markdown links
+ * @returns {Array<string>} Array of markdown file paths
+ */
+function extractMarkdownPathsFromElement(element) {
+  const paths = new Set();
+
+  // Find all GitHub markdown links
+  const mdLinks = element.querySelectorAll('.ipynb-github-md-link');
+
+  console.log(`📋 Extracting markdown paths from element - found ${mdLinks.length} links`);
+
+  mdLinks.forEach((link) => {
+    const mdUrl = link.dataset.mdUrl;
+    const mdPath = link.dataset.mdPath;
+    console.log(`   Link: data-md-url="${mdUrl}", data-md-path="${mdPath}"`);
+    if (mdUrl) {
+      // Extract path from URL (remove blob/branch parts)
+      const pathMatch = mdUrl.match(/\/blob\/[^/]+\/(.+)$/);
+      if (pathMatch) {
+        const extractedPath = pathMatch[1];
+        console.log(`   ✅ Extracted path: ${extractedPath}`);
+        paths.add(extractedPath);
+      }
+    }
+  });
+
+  return Array.from(paths).sort();
+}
+
+/**
+ * Add new markdown paths to the navigation tree dynamically
+ * @param {Array} tree - Navigation tree array
+ * @param {Array<string>} newPaths - New markdown file paths to add
+ */
+function addMarkdownPathsToTree(tree, newPaths) {
+  // Find the Repository root node
+  const repoNode = tree.find(node => node.id === 'repository');
+  if (!repoNode) {
+    return; // No repository node exists yet
+  }
+
+  // Get existing paths AND filenames from the tree
+  const existingPaths = new Set();
+  const existingFilenames = new Set();
+  const collectPaths = (node) => {
+    if (node.type === 'markdown' && node.path) {
+      existingPaths.add(node.path);
+      // Extract just the filename from the path
+      const filename = node.path.split('/').pop();
+      existingFilenames.add(filename);
+    }
+    if (node.children) {
+      node.children.forEach(collectPaths);
+    }
+  };
+  collectPaths(repoNode);
+
+  // Filter out paths that already exist OR have matching filenames
+  const pathsToAdd = newPaths.filter(path => {
+    // Skip if exact path already exists
+    if (existingPaths.has(path)) {
+      console.log(`   ⏭️  Skipping ${path} - exact path already exists`);
+      return false;
+    }
+
+    // Skip if a file with the same name already exists (prevents duplicates)
+    const filename = path.split('/').pop();
+    if (existingFilenames.has(filename)) {
+      console.log(`   ⏭️  Skipping ${path} - file "${filename}" already exists in tree`);
+      return false;
+    }
+
+    return true;
+  });
+
+  if (pathsToAdd.length === 0) {
+    console.log('📝 No new paths to add - all files already exist in tree');
+    return; // No new paths to add
+  }
+
+  console.log(`📝 Adding ${pathsToAdd.length} new markdown file(s) to navigation tree:`, pathsToAdd);
+
+  // Rebuild the entire file tree with all paths using the existing buildFileTree function
+  // This ensures consistent structure and no duplicates
+  const allPaths = [...existingPaths, ...pathsToAdd].sort();
+  const helpPath = 'docs/help.md';
+  repoNode.children = buildFileTree(allPaths, helpPath);
+}
+
+/**
+ * Build hierarchical file tree from markdown paths
+ * @param {Array<string>} paths - Array of file paths (e.g., 'docs/help.md')
+ * @param {string} helpPath - Path to help.md (prioritized at start)
+ * @returns {Array} Tree nodes for files with folder hierarchy
+ */
+function buildFileTree(paths, helpPath) {
+  const tree = [];
+  const folderMap = new Map(); // Track folder nodes by full path
+  const pathMap = new Set(); // Deduplicate files
+
+  // Helper to get or create folder node and its parent hierarchy
+  const getOrCreateFolderHierarchy = (folderPath) => {
+    if (folderMap.has(folderPath)) {
+      return folderMap.get(folderPath);
+    }
+
+    const parts = folderPath.split('/');
+    const folderName = parts[parts.length - 1];
+    const level = parts.length;
+
+    const folderNode = {
+      id: `folder-${folderPath}`,
+      label: folderName,
+      type: 'folder',
+      path: null,
+      cellIndex: null,
+      children: [],
+      expanded: false,
+      level,
+    };
+
+    folderMap.set(folderPath, folderNode);
+
+    // If this folder has a parent, create parent hierarchy and add this as child
+    if (parts.length > 1) {
+      const parentPath = parts.slice(0, -1).join('/');
+      const parentNode = getOrCreateFolderHierarchy(parentPath);
+      if (!parentNode.children.includes(folderNode)) {
+        parentNode.children.push(folderNode);
+      }
+    } else {
+      // Top-level folder - add to tree root
+      if (!tree.includes(folderNode)) {
+        tree.push(folderNode);
+      }
+    }
+
+    return folderNode;
+  };
+
+  // Helper to add file to tree
+  const addFileToTree = (filePath, prioritized = false) => {
+    if (pathMap.has(filePath)) return; // Skip if already added
+    pathMap.add(filePath);
+
+    const parts = filePath.split('/');
+    const fileName = parts[parts.length - 1];
+    const level = parts.length;
+
+    const fileNode = {
+      id: filePath,
+      label: fileName,
+      type: 'markdown',
+      path: filePath,
+      cellIndex: null,
+      children: [],
+      expanded: false,
+      level,
+    };
+
+    if (parts.length === 1) {
+      // Root level file
+      if (prioritized) {
+        tree.unshift(fileNode); // Add at start
+      } else {
+        tree.push(fileNode);
+      }
+    } else {
+      // File in folder(s) - create full folder hierarchy
+      const folderPath = parts.slice(0, -1).join('/');
+      const folderNode = getOrCreateFolderHierarchy(folderPath);
+
+      if (prioritized) {
+        folderNode.children.unshift(fileNode);
+      } else {
+        folderNode.children.push(fileNode);
+      }
+    }
+  };
+
+  // Process help.md first if specified
+  if (helpPath) {
+    const helpFileName = helpPath.split('/').pop();
+    const fullHelpPath = paths.find((p) => p.endsWith(helpPath) || p.endsWith(helpFileName));
+    if (fullHelpPath) {
+      addFileToTree(fullHelpPath, true);
+    }
+  }
+
+  // Process remaining paths
+  paths.forEach((path) => {
+    addFileToTree(path, false);
+  });
+
+  // Recursive sort function
+  const sortNode = (node) => {
+    if (node.children && node.children.length > 0) {
+      node.children.sort((a, b) => a.label.localeCompare(b.label));
+      node.children.forEach(sortNode);
+    }
+  };
+
+  // Sort root level
+  tree.sort((a, b) => a.label.localeCompare(b.label));
+  tree.forEach(sortNode);
+
+  return tree;
+}
+
+/**
+ * Build navigation tree from notebook cells and repository files
+ * @param {Array<HTMLElement>} cells - Array of cell elements
+ * @param {HTMLElement} cellsContainer - Container for extracting markdown paths
+ * @param {string} helpRepoUrl - Help repository URL
+ * @returns {Array} Root tree nodes
+ */
+function buildNavigationTree(cells, cellsContainer, helpRepoUrl) {
+  const tree = [];
+
+  // 1. Create "Notebook" root node
+  const notebookNode = {
+    id: 'notebook',
+    label: 'Notebook',
+    type: 'root',
+    path: null,
+    cellIndex: null,
+    children: [],
+    expanded: true, // Open by default
+    level: 0,
+  };
+
+  // 2. First pass: Check if there are any Part headings at all
+  const partRegex = /^Part\s+\d+/i; // Matches "Part 1", "Part 2", etc.
+  const completedRegex = /completed.*final|final.*completed/i; // Matches both "completed" and "final" in any order
+
+  let hasPartHeadings = false;
+  cells.forEach((cell) => {
+    if (cell.classList.contains('ipynb-markdown-cell')) {
+      const heading = extractHeading(cell);
+      if (heading && partRegex.test(heading.text.trim())) {
+        hasPartHeadings = true;
+      }
+    }
+  });
+
+  console.log(`🌲 Building tree - notebook has Part headings: ${hasPartHeadings}`);
+
+  // 3. Add cells based on whether Part headings exist
+  let currentPartNode = null;
+  let frontmatterNode = null;
+  let summaryNode = null;
+
+  cells.forEach((cell, index) => {
+    if (cell.classList.contains('ipynb-markdown-cell')) {
+      const heading = extractHeading(cell);
+      if (heading) {
+        const headingText = heading.text.trim();
+
+        if (hasPartHeadings) {
+          // WITH Part headings: Use Frontmatter/Parts/Summary structure
+
+          // Check if this marks the end of Parts (completion cell)
+          if (completedRegex.test(headingText) && currentPartNode) {
+            // Create Summary node and switch to collecting there
+            summaryNode = {
+              id: 'summary',
+              label: 'Summary',
+              type: 'part',
+              path: null,
+              cellIndex: null,
+              children: [],
+              expanded: false,
+              level: 1,
+            };
+            notebookNode.children.push(summaryNode);
+            currentPartNode = null; // Stop adding to Parts
+
+            // Add the completion cell to Summary
+            summaryNode.children.push({
+              id: `cell-${index}`,
+              label: headingText,
+              type: 'cell',
+              path: null,
+              cellIndex: index,
+              children: [],
+              expanded: false,
+              level: 2,
+            });
+          } else if (summaryNode) {
+            // After Parts ended, add to Summary
+            summaryNode.children.push({
+              id: `cell-${index}`,
+              label: headingText,
+              type: 'cell',
+              path: null,
+              cellIndex: index,
+              children: [],
+              expanded: false,
+              level: 2,
+            });
+          } else if (partRegex.test(headingText)) {
+            // Check if this is a Part heading
+            currentPartNode = {
+              id: `part-${index}`,
+              label: headingText,
+              type: 'part',
+              path: null,
+              cellIndex: index,
+              children: [],
+              expanded: false, // Parts start collapsed
+              level: 1,
+            };
+            notebookNode.children.push(currentPartNode);
+          } else if (currentPartNode) {
+            // Add cell to current Part
+            currentPartNode.children.push({
+              id: `cell-${index}`,
+              label: headingText,
+              type: 'cell',
+              path: null,
+              cellIndex: index,
+              children: [],
+              expanded: false,
+              level: 2,
+            });
+          } else {
+            // No Part yet - add to Frontmatter
+            if (!frontmatterNode) {
+              // Create Frontmatter node on first pre-Part cell
+              frontmatterNode = {
+                id: 'frontmatter',
+                label: 'Frontmatter',
+                type: 'part',
+                path: null,
+                cellIndex: null,
+                children: [],
+                expanded: false,
+                level: 1,
+              };
+              notebookNode.children.push(frontmatterNode);
+            }
+
+            // Add cell to Frontmatter
+            frontmatterNode.children.push({
+              id: `cell-${index}`,
+              label: headingText,
+              type: 'cell',
+              path: null,
+              cellIndex: index,
+              children: [],
+              expanded: false,
+              level: 2,
+            });
+          }
+        } else {
+          // WITHOUT Part headings: Add cells directly under Notebook node
+          notebookNode.children.push({
+            id: `cell-${index}`,
+            label: headingText,
+            type: 'cell',
+            path: null,
+            cellIndex: index,
+            children: [],
+            expanded: false,
+            level: 1, // Level 1 since they're direct children of Notebook
+          });
+        }
+      }
+    }
+  });
+
+  tree.push(notebookNode);
+
+  // 3. Extract markdown paths from cells
+  const markdownPaths = extractMarkdownPaths(cellsContainer);
+
+  // 4. Create "Repository" root node if we have markdown files
+  if (markdownPaths.length > 0) {
+    const repoNode = {
+      id: 'repository',
+      label: 'Repository',
+      type: 'root',
+      path: null,
+      cellIndex: null,
+      children: [],
+      expanded: true, // Open by default
+      level: 0,
+    };
+
+    // Build file tree with help.md prioritized (always look for it)
+    const helpPath = 'docs/help.md';
+    repoNode.children = buildFileTree(markdownPaths, helpPath);
+
+    tree.push(repoNode);
+  }
+
+  return tree;
+}
+
+/**
+ * Navigation Tree Rendering Functions
+ */
+
+/**
+ * Render navigation tree
+ * @param {Array} tree - Tree data structure
+ * @param {HTMLElement} container - Tree container element
+ * @param {Object} treeState - State object with expandedNodes Set and selectedNode
+ * @param {Function} onNodeClick - Click handler for tree nodes
+ */
+function renderNavigationTree(tree, container, treeState, onNodeClick) {
+  container.innerHTML = '';
+
+  // Filter out Repository node if it has no children (no .md files found)
+  const filteredTree = tree.filter((node) => {
+    if (node.id === 'repository') {
+      const hasChildren = node.children && node.children.length > 0;
+      if (!hasChildren) {
+        console.log('🌲 Hiding Repository node - no .md files found');
+        return false; // Don't render this node
+      }
+    }
+    return true; // Render all other nodes
+  });
+
+  filteredTree.forEach((node) => {
+    renderTreeNode(node, container, container, treeState, onNodeClick);
+  });
+}
+
+/**
+ * Render single tree node recursively
+ * @param {Object} node - Tree node
+ * @param {HTMLElement} parentElement - Parent DOM element
+ * @param {HTMLElement} treeContainer - Root tree container (for re-rendering)
+ * @param {Object} treeState - State object
+ * @param {Function} onNodeClick - Click handler
+ */
+function renderTreeNode(node, parentElement, treeContainer, treeState, onNodeClick) {
+  const isExpanded = treeState.expandedNodes.has(node.id);
+  const isSelected = treeState.selectedNode === node.id;
+  const hasChildren = node.children && node.children.length > 0;
+
+  // Create node element
+  const nodeEl = document.createElement('div');
+  nodeEl.className = 'ipynb-nav-tree-item';
+  nodeEl.dataset.type = node.type;
+  nodeEl.dataset.nodeId = node.id;
+  nodeEl.dataset.leaf = !hasChildren;
+  nodeEl.style.setProperty('--level', node.level);
+
+  if (isSelected) {
+    nodeEl.classList.add('active');
+  }
+
+  // Expand/collapse icon (only for non-leaf nodes)
+  if (hasChildren) {
+    const icon = document.createElement('span');
+    icon.className = 'ipynb-nav-tree-icon';
+    if (isExpanded) {
+      icon.classList.add('expanded');
+    }
+    icon.textContent = '▶'; // Right arrow
+    icon.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleTreeNode(node.id, treeState, treeContainer, onNodeClick);
+    });
+    nodeEl.appendChild(icon);
+  } else {
+    // Empty space for alignment
+    const spacer = document.createElement('span');
+    spacer.className = 'ipynb-nav-tree-icon';
+    nodeEl.appendChild(spacer);
+  }
+
+  // Label
+  const label = document.createElement('span');
+  label.textContent = node.label;
+  label.className = 'ipynb-nav-tree-label';
+  nodeEl.appendChild(label);
+
+  // Add tooltip showing full path/name
+  if (node.type === 'markdown' && node.path) {
+    nodeEl.setAttribute('title', node.path);
+  } else if (node.type === 'folder' && node.id) {
+    // Extract folder path from id (format: 'folder-path/to/folder')
+    const folderPath = node.id.replace('folder-', '');
+    nodeEl.setAttribute('title', folderPath);
+  } else if (node.label) {
+    // For cells, parts, and root nodes - show full label
+    nodeEl.setAttribute('title', node.label);
+  }
+
+  // Click handler for navigation
+  nodeEl.addEventListener('click', () => {
+    onNodeClick(node);
+  });
+
+  parentElement.appendChild(nodeEl);
+
+  // Render children if expanded
+  if (isExpanded && hasChildren) {
+    node.children.forEach((child) => {
+      renderTreeNode(child, parentElement, treeContainer, treeState, onNodeClick);
+    });
+  }
+}
+
+/**
+ * Toggle node expansion state
+ * @param {string} nodeId - Node ID to toggle
+ * @param {Object} treeState - State object
+ * @param {HTMLElement} container - Tree container
+ * @param {Function} onNodeClick - Click handler
+ */
+function toggleTreeNode(nodeId, treeState, container, onNodeClick) {
+  if (treeState.expandedNodes.has(nodeId)) {
+    treeState.expandedNodes.delete(nodeId);
+  } else {
+    treeState.expandedNodes.add(nodeId);
+  }
+
+  // Re-render tree
+  const tree = treeState.tree;
+  renderNavigationTree(tree, container, treeState, onNodeClick);
+}
+
+/**
+ * Select node (highlight as active)
+ * @param {string} nodeId - Node ID to select
+ * @param {Object} treeState - State object
+ * @param {HTMLElement} container - Tree container
+ * @param {Function} onNodeClick - Click handler
+ */
+function selectTreeNode(nodeId, treeState, container, onNodeClick) {
+  treeState.selectedNode = nodeId;
+
+  // Re-render tree
+  const tree = treeState.tree;
+  renderNavigationTree(tree, container, treeState, onNodeClick);
+
+  // Scroll to selected node
+  setTimeout(() => {
+    const selectedEl = container.querySelector(`[data-node-id="${nodeId}"]`);
+    if (selectedEl) {
+      selectedEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, 100);
+}
+
+/**
  * Create full-screen overlay for paged variation
  * @param {HTMLElement} container - The notebook container
  * @param {HTMLElement} cellsContainer - Container with cells
@@ -836,12 +1508,46 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   const pages = createPageGroups(cells);
   const totalPages = pages.length;
 
+  // Create instance-specific navigation history (rooted in this overlay)
+  const navigationHistory = [];
+
+  // Build navigation tree (Phase 1 - Testing)
+  const navigationTree = buildNavigationTree(cells, cellsContainer, helpRepoUrl);
+
+  // TEST: Log tree structure to console
+  console.log('=== Navigation Tree Structure ===');
+  console.log('Tree roots:', navigationTree.length);
+  navigationTree.forEach((root) => {
+    console.log(`\n${root.label} (${root.type}):`);
+    console.log(`  - Children: ${root.children.length}`);
+    console.log(`  - Expanded: ${root.expanded}`);
+    root.children.forEach((child) => {
+      console.log(`    • ${child.label} (${child.type})`);
+      if (child.type === 'cell') {
+        console.log(`      Cell Index: ${child.cellIndex}`);
+      } else if (child.type === 'markdown') {
+        console.log(`      Path: ${child.path}`);
+      }
+    });
+  });
+  console.log('=================================\n');
+
+  // Tree state management (shared across overlays)
+  const treeState = {
+    tree: navigationTree,
+    expandedNodes: new Set(['notebook', 'repository']), // Start with root nodes expanded
+    selectedNode: null,
+  };
+
   const paginationState = {
     currentPage: 0,
     totalPages,
     pages,
     isOverlayOpen: false,
     autorun,
+    navigationHistory, // Add history to state for easy access
+    navigationTree, // Add tree to state
+    treeState, // Add tree state to state for sharing across overlays
   };
 
   // Create overlay structure
@@ -861,9 +1567,17 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   const topBar = document.createElement('div');
   topBar.className = 'ipynb-overlay-top-bar';
 
-  // Left controls section (for home button in notebook mode)
+  // Left controls section (for tree toggle and home button in notebook mode)
   const leftControlsSection = document.createElement('div');
   leftControlsSection.className = 'ipynb-overlay-controls ipynb-overlay-controls-left';
+
+  // Tree toggle button - show/hide navigation tree
+  const treeToggleButton = document.createElement('button');
+  treeToggleButton.className = 'ipynb-overlay-button ipynb-tree-toggle-button';
+  treeToggleButton.innerHTML = '&#9664;'; // Left arrow (◄) when open
+  treeToggleButton.setAttribute('aria-label', 'Toggle navigation tree');
+  treeToggleButton.setAttribute('aria-expanded', 'true');
+  treeToggleButton.setAttribute('title', 'Hide Tree');
 
   // Title section
   const titleSection = document.createElement('div');
@@ -952,7 +1666,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
             }
           } else if (entry.type === 'markdown' && entry.url) {
             // Re-open GitHub markdown overlay
-            const mdOverlay = createGitHubMarkdownOverlay(entry.url, entry.title, helpRepoUrl, branch);
+            const mdOverlay = createGitHubMarkdownOverlay(entry.url, entry.title, helpRepoUrl, branch, paginationState);
             mdOverlay.openOverlay();
           }
           historyDropdown.style.display = 'none';
@@ -1118,7 +1832,14 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
           menuItem.className = 'ipynb-bookmark-item';
 
           const titleSpan = document.createElement('span');
-          titleSpan.textContent = `📑 ${bookmark.title} (Page ${bookmark.pageIndex + 1})`;
+          // Display differently based on type
+          if (bookmark.type === 'cell') {
+            titleSpan.textContent = `📑 ${bookmark.title} (Page ${bookmark.pageIndex + 1})`;
+          } else {
+            // For markdown files, show just the file name
+            const fileName = bookmark.url ? bookmark.url.split('/').pop() : bookmark.title;
+            titleSpan.textContent = `📝 ${fileName}`;
+          }
 
           const removeBtn = document.createElement('span');
           removeBtn.className = 'ipynb-bookmark-remove';
@@ -1126,7 +1847,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
           removeBtn.setAttribute('aria-label', 'Remove bookmark');
           removeBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            removeBookmark(notebookId, bookmark.pageIndex);
+            removeBookmark(notebookId, bookmark.type, bookmark.pageIndex, bookmark.url);
             updateBookmarkDropdown();
           });
 
@@ -1135,8 +1856,15 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
           menuItem.setAttribute('role', 'menuitem');
 
           menuItem.addEventListener('click', () => {
-            paginationState.currentPage = bookmark.pageIndex;
-            updatePageDisplay();
+            if (bookmark.type === 'cell') {
+              // Navigate to cell page
+              paginationState.currentPage = bookmark.pageIndex;
+              updatePageDisplay();
+            } else if (bookmark.type === 'markdown' && bookmark.url) {
+              // Open markdown file in overlay
+              const mdOverlay = createGitHubMarkdownOverlay(bookmark.url, bookmark.title, helpRepoUrl, branch, paginationState);
+              mdOverlay.openOverlay();
+            }
             bookmarkDropdown.style.display = 'none';
             bookmarkButton.setAttribute('aria-expanded', 'false');
           });
@@ -1177,7 +1905,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
           }
         }
 
-        if (saveBookmark(notebookId, title, paginationState.currentPage)) {
+        if (saveBookmark(notebookId, title, 'cell', paginationState.currentPage, null)) {
           // Visual feedback
           bookmarkButton.style.transform = 'scale(1.2)';
           setTimeout(() => {
@@ -1221,7 +1949,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       const helpPath = `${helpRepoUrl}/blob/${branch}/docs/help.md`;
 
       // Open using GitHub markdown overlay with branch parameter
-      const helpOverlay = createGitHubMarkdownOverlay(helpPath, 'IPynb Viewer Help', helpRepoUrl, branch);
+      const helpOverlay = createGitHubMarkdownOverlay(helpPath, 'IPynb Viewer Help', helpRepoUrl, branch, paginationState);
       helpOverlay.openOverlay();
     });
   }
@@ -1247,15 +1975,30 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   paginationDiv.appendChild(pageIndicator);
   paginationDiv.appendChild(nextButton);
 
+  // Create navigation tree panel
+  const navTreePanel = document.createElement('nav');
+  navTreePanel.className = 'ipynb-nav-tree';
+  navTreePanel.setAttribute('role', 'navigation');
+  navTreePanel.setAttribute('aria-label', 'Content navigation');
+
+  // Create main content wrapper (tree + cells)
+  const mainContentWrapper = document.createElement('div');
+  mainContentWrapper.className = 'ipynb-overlay-main';
+
   // Cell content area
   const cellContentArea = document.createElement('div');
   cellContentArea.className = 'ipynb-paged-cell-area';
 
+  // Assemble main wrapper
+  mainContentWrapper.appendChild(navTreePanel);
+  mainContentWrapper.appendChild(cellContentArea);
+
   // Assemble top bar with left/center/right sections
-  // Left section - home button only
+  // Left section - home button first, then tree toggle
   if (isNotebookMode && homeButton) {
     leftControlsSection.appendChild(homeButton);
   }
+  leftControlsSection.appendChild(treeToggleButton);
 
   // Right section - all other controls
   if (isNotebookMode && historyButton) {
@@ -1284,7 +2027,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     overlayContent.appendChild(bookmarkDropdown);
     overlayContent.appendChild(tocDropdown);
   }
-  overlayContent.appendChild(cellContentArea);
+  overlayContent.appendChild(mainContentWrapper); // Use wrapper instead of cellContentArea directly
   overlayContent.appendChild(paginationDiv);
   overlay.appendChild(overlayContent);
 
@@ -1305,7 +2048,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
         if (heading) {
           const title = heading.textContent.trim();
           const cellIndex = parseInt(firstCell.dataset.cellIndex);
-          addToHistory(title, 'cell', cellIndex);
+          addToHistory(navigationHistory, title, 'cell', cellIndex);
         }
       }
     }
@@ -1416,7 +2159,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
         const githubUrl = link.dataset.mdUrl; // Get URL from data attribute
         const linkBranch = link.dataset.branch || branch; // Get branch from link or use default
         const title = link.textContent || 'GitHub Markdown';
-        const overlay = createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl, linkBranch);
+        const overlay = createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl, linkBranch, paginationState);
         overlay.openOverlay();
       });
     });
@@ -1443,6 +2186,35 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     prevButton.disabled = paginationState.currentPage === 0;
     nextButton.disabled = paginationState.currentPage === totalPages - 1;
 
+    // Update tree selection to match current page
+    if (currentPage && currentPage.cells.length > 0) {
+      const firstCellIndex = parseInt(currentPage.cells[0].dataset.cellIndex);
+      const notebookRoot = navigationTree.find(root => root.id === 'notebook');
+
+      // Search for cell in notebook tree (might be nested in Parts)
+      let cellNode = null;
+      const searchChildren = (nodes) => {
+        for (const node of nodes) {
+          if (node.cellIndex === firstCellIndex) {
+            return node;
+          }
+          if (node.children && node.children.length > 0) {
+            const found = searchChildren(node.children);
+            if (found) return found;
+          }
+        }
+        return null;
+      };
+
+      if (notebookRoot) {
+        cellNode = searchChildren(notebookRoot.children);
+      }
+
+      if (cellNode) {
+        selectTreeNode(cellNode.id, treeState, navTreePanel, handleTreeNodeClick);
+      }
+    }
+
     // Scroll to top of cell area (not overlayContent)
     cellContentArea.scrollTop = 0;
   }
@@ -1462,12 +2234,99 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     }
   }
 
+  // Tree state is now defined earlier and included in paginationState for sharing
+
+  // Tree navigation handler
+  function handleTreeNodeClick(node) {
+    // Root nodes, folder nodes, and part nodes: do nothing on node click (only icon should toggle)
+    if (node.type === 'root' || node.type === 'folder' || node.type === 'part') {
+      return;
+    }
+
+    // Cell nodes: navigate to the page containing that cell
+    if (node.type === 'cell' && node.cellIndex !== null) {
+      // Find the page that contains this cell
+      for (let i = 0; i < pages.length; i++) {
+        const page = pages[i];
+        const hasCell = page.cells.some(cell => {
+          return parseInt(cell.dataset.cellIndex) === node.cellIndex;
+        });
+
+        if (hasCell) {
+          // Navigate to this page
+          paginationState.currentPage = i;
+          updatePageDisplay();
+
+          // Select this node in tree
+          selectTreeNode(node.id, treeState, navTreePanel, handleTreeNodeClick);
+          return;
+        }
+      }
+    }
+
+    // Markdown nodes: open in overlay
+    if (node.type === 'markdown' && node.path) {
+      // Use repoUrl from closure scope (passed to createPagedOverlay)
+      const mdRepoUrl = repoUrl || 'https://github.com/ddttom/allaboutV2';
+      const fullUrl = `${mdRepoUrl}/blob/${branch}/${node.path}`;
+
+      // Create extended history context with tree references
+      const historyContext = {
+        historyArray: navigationHistory, // Keep the actual array
+        navigationTree, // Reference to the tree for dynamic updates
+        navTreePanel, // Tree panel element for re-rendering
+        treeState, // Tree state for expand/collapse
+        handleTreeNodeClick, // Click handler for tree nodes
+      };
+
+      // Open using GitHub markdown overlay
+      const mdOverlay = createGitHubMarkdownOverlay(fullUrl, node.label, mdRepoUrl, branch, historyContext);
+      mdOverlay.openOverlay();
+
+      // Select this node in tree
+      selectTreeNode(node.id, treeState, navTreePanel, handleTreeNodeClick);
+    }
+  }
+
   // Open overlay
   function openOverlay() {
     paginationState.isOverlayOpen = true;
     overlay.style.display = 'block';
     document.body.style.overflow = 'hidden'; // Prevent background scrolling
     updatePageDisplay();
+
+    // Render navigation tree
+    renderNavigationTree(navigationTree, navTreePanel, treeState, handleTreeNodeClick);
+
+    // Auto-select current page in tree
+    const currentPage = pages[paginationState.currentPage];
+    if (currentPage && currentPage.cells.length > 0) {
+      const firstCellIndex = parseInt(currentPage.cells[0].dataset.cellIndex);
+      const notebookRoot = navigationTree.find(root => root.id === 'notebook');
+
+      // Search for cell in notebook tree (might be nested in Parts)
+      const searchChildren = (nodes) => {
+        for (const node of nodes) {
+          if (node.cellIndex === firstCellIndex) {
+            return node;
+          }
+          if (node.children && node.children.length > 0) {
+            const found = searchChildren(node.children);
+            if (found) return found;
+          }
+        }
+        return null;
+      };
+
+      let cellNode = null;
+      if (notebookRoot) {
+        cellNode = searchChildren(notebookRoot.children);
+      }
+
+      if (cellNode) {
+        selectTreeNode(cellNode.id, treeState, navTreePanel, handleTreeNodeClick);
+      }
+    }
   }
 
   // Close overlay
@@ -1483,6 +2342,26 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   prevButton.addEventListener('click', goToPrevPage);
   nextButton.addEventListener('click', goToNextPage);
   closeButton.addEventListener('click', closeOverlay);
+
+  // Tree toggle button handler
+  treeToggleButton.addEventListener('click', () => {
+    const isVisible = navTreePanel.style.display !== 'none';
+    if (isVisible) {
+      // Hide tree - show right arrow (►) to indicate it can be opened
+      navTreePanel.style.display = 'none';
+      treeToggleButton.innerHTML = '&#9654;'; // Right arrow (►)
+      treeToggleButton.setAttribute('aria-expanded', 'false');
+      treeToggleButton.setAttribute('title', 'Show Tree');
+      console.log('🌲 Tree hidden');
+    } else {
+      // Show tree - show left arrow (◄) to indicate it can be closed
+      navTreePanel.style.display = '';
+      treeToggleButton.innerHTML = '&#9664;'; // Left arrow (◄)
+      treeToggleButton.setAttribute('aria-expanded', 'true');
+      treeToggleButton.setAttribute('title', 'Hide Tree');
+      console.log('🌲 Tree shown');
+    }
+  });
 
   // Keyboard navigation
   const keyHandler = (e) => {
@@ -1578,17 +2457,6 @@ function createPagedStartButton() {
   return startButton;
 }
 
-/**
- * Create manual button for manual variation
- * @returns {HTMLElement} Manual button element
- */
-function createManualButton() {
-  const manualButton = document.createElement('button');
-  manualButton.className = 'ipynb-manual-button';
-  manualButton.textContent = 'Read the Manual';
-  manualButton.setAttribute('aria-label', 'Read the manual');
-  return manualButton;
-}
 
 /**
  * Convert GitHub blob URL to raw content URL, or return local path as-is
@@ -1619,9 +2487,10 @@ function convertToRawUrl(blobUrl, branch = 'main') {
  * @param {string} title - Title to display in overlay header
  * @param {string} [helpRepoUrl] - Optional help repository URL
  * @param {string} [branch='main'] - GitHub branch to use
+ * @param {Array} [parentHistory=null] - Optional parent overlay's history array
  * @returns {Object} Object with openOverlay and closeOverlay functions
  */
-function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branch = 'main') {
+function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branch = 'main', parentHistory = null) {
   // Create overlay container
   const overlay = document.createElement('div');
   overlay.className = 'ipynb-manual-overlay ipynb-github-md-overlay';
@@ -1629,17 +2498,45 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
   overlay.setAttribute('aria-modal', 'true');
   overlay.setAttribute('aria-label', 'GitHub markdown viewer');
 
-  // Create overlay content
+  // Create overlay content - full viewport
   const overlayContent = document.createElement('div');
-  overlayContent.className = 'ipynb-manual-overlay-content';
+  overlayContent.className = 'ipynb-manual-overlay-content ipynb-paged-overlay-content';
+
+  // Create navigation tree panel (left side)
+  const navTreePanel = document.createElement('div');
+  navTreePanel.className = 'ipynb-nav-tree-panel';
+  navTreePanel.setAttribute('role', 'navigation');
+  navTreePanel.setAttribute('aria-label', 'Navigation tree');
+
+  // Use parent's tree state if available (to maintain expand/collapse state across overlays)
+  // Otherwise create a new one (fallback for when there's no parent)
+  let treeState;
+  if (parentHistory && typeof parentHistory === 'object' && parentHistory.treeState) {
+    treeState = parentHistory.treeState;
+    console.log('🌲 Using parent treeState - expandedNodes:', Array.from(treeState.expandedNodes));
+  } else {
+    treeState = {
+      expandedNodes: new Set(['repository']), // Repository root expanded by default
+      selectedNode: null,
+    };
+    console.log('🌲 Created new treeState');
+  }
 
   // Create top bar with title and controls (three-section layout)
   const topBar = document.createElement('div');
   topBar.className = 'ipynb-overlay-top-bar';
 
-  // Left controls section - home button
+  // Left controls section - tree toggle and home button
   const leftControlsSection = document.createElement('div');
   leftControlsSection.className = 'ipynb-overlay-controls ipynb-overlay-controls-left';
+
+  // Tree toggle button - show/hide navigation tree
+  const treeToggleButton = document.createElement('button');
+  treeToggleButton.className = 'ipynb-overlay-button ipynb-tree-toggle-button';
+  treeToggleButton.innerHTML = '&#9664;'; // Left arrow (◄) when open
+  treeToggleButton.setAttribute('aria-label', 'Toggle navigation tree');
+  treeToggleButton.setAttribute('aria-expanded', 'true');
+  treeToggleButton.setAttribute('title', 'Hide Tree');
 
   // Home button - navigate to first opened markdown
   const homeButton = document.createElement('button');
@@ -1649,6 +2546,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
   homeButton.setAttribute('title', 'Home');
 
   leftControlsSection.appendChild(homeButton);
+  leftControlsSection.appendChild(treeToggleButton);
 
   // Title section
   const titleSection = document.createElement('div');
@@ -1729,16 +2627,24 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
   topBar.appendChild(rightControlsSection);
   overlayContent.appendChild(topBar);
 
-  // Append dropdowns after top bar
+  // Append dropdowns (float above content)
   overlayContent.appendChild(historyDropdown);
   overlayContent.appendChild(bookmarkDropdown);
   overlayContent.appendChild(tocDropdown);
 
-  // Create content area for markdown
-  const contentArea = document.createElement('div');
-  contentArea.className = 'ipynb-manual-content-area';
-  overlayContent.appendChild(contentArea);
+  // Create main wrapper (tree + content side by side)
+  const mainWrapper = document.createElement('div');
+  mainWrapper.className = 'ipynb-overlay-main';
 
+  // Append navigation tree panel (left side, inside flex wrapper)
+  mainWrapper.appendChild(navTreePanel);
+
+  // Create content area for markdown (right side, inside flex wrapper)
+  const contentArea = document.createElement('div');
+  contentArea.className = 'ipynb-manual-content-area ipynb-overlay-content ipynb-paged-cell-area';
+  mainWrapper.appendChild(contentArea);
+
+  overlayContent.appendChild(mainWrapper);
   overlay.appendChild(overlayContent);
 
   // Convert blob URL to raw URL (using specified branch)
@@ -1753,7 +2659,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
   homeButton.addEventListener('click', () => {
     // Close current overlay and open first page
     closeOverlay();
-    const homeOverlay = createGitHubMarkdownOverlay(firstPageUrl, firstPageTitle, helpRepoUrl, branch);
+    const homeOverlay = createGitHubMarkdownOverlay(firstPageUrl, firstPageTitle, helpRepoUrl, branch, parentHistory);
     homeOverlay.openOverlay();
   });
 
@@ -1761,7 +2667,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
   const updateHistoryDropdown = () => {
     historyDropdown.innerHTML = '';
 
-    if (navigationHistory.length === 0) {
+    if (!parentHistory || parentHistory.length === 0) {
       const emptyMessage = document.createElement('div');
       emptyMessage.className = 'ipynb-history-empty';
       emptyMessage.textContent = 'No history yet';
@@ -1769,7 +2675,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
       return;
     }
 
-    navigationHistory.forEach((entry) => {
+    parentHistory.forEach((entry) => {
       const menuItem = document.createElement('button');
       menuItem.className = 'ipynb-history-item';
 
@@ -1782,7 +2688,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
         if (entry.type === 'markdown' && entry.url) {
           // Close current overlay and open historical markdown
           closeOverlay();
-          const histOverlay = createGitHubMarkdownOverlay(entry.url, entry.title, helpRepoUrl, branch);
+          const histOverlay = createGitHubMarkdownOverlay(entry.url, entry.title, helpRepoUrl, branch, parentHistory);
           histOverlay.openOverlay();
         }
         historyDropdown.style.display = 'none';
@@ -1814,21 +2720,9 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
     addBookmarkBtn.setAttribute('role', 'menuitem');
 
     addBookmarkBtn.addEventListener('click', () => {
-      // Save current page as bookmark with URL
-      const success = saveBookmark(bookmarkId, title, 0); // Use index 0 as placeholder
+      // Save markdown file as bookmark
+      const success = saveBookmark(bookmarkId, title, 'markdown', null, githubUrl);
       if (success) {
-        // Store actual GitHub URL in custom format
-        const bookmarksWithUrls = getBookmarks(bookmarkId);
-        if (bookmarksWithUrls.length > 0) {
-          // Add URL to the bookmark
-          bookmarksWithUrls[0].url = githubUrl;
-          bookmarksWithUrls[0].title = title;
-          try {
-            localStorage.setItem(getBookmarkStorageKey(bookmarkId), JSON.stringify(bookmarksWithUrls));
-          } catch (error) {
-            console.error('Failed to save bookmark with URL:', error);
-          }
-        }
         updateBookmarkDropdown();
       }
     });
@@ -1853,7 +2747,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
         if (bookmark.url) {
           // Close current overlay and open bookmarked markdown
           closeOverlay();
-          const bmOverlay = createGitHubMarkdownOverlay(bookmark.url, bookmark.title, helpRepoUrl, branch);
+          const bmOverlay = createGitHubMarkdownOverlay(bookmark.url, bookmark.title, helpRepoUrl, branch, parentHistory);
           bmOverlay.openOverlay();
         }
         bookmarkDropdown.style.display = 'none';
@@ -1922,7 +2816,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
       const helpPath = `${helpRepoUrl}/blob/${branch}/docs/help.md`;
       // Close current overlay and open help
       closeOverlay();
-      const helpOverlay = createGitHubMarkdownOverlay(helpPath, 'IPynb Viewer Help', helpRepoUrl, branch);
+      const helpOverlay = createGitHubMarkdownOverlay(helpPath, 'IPynb Viewer Help', helpRepoUrl, branch, parentHistory);
       helpOverlay.openOverlay();
     });
   }
@@ -1957,8 +2851,32 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
       }
       const markdownText = await response.text();
 
-      // Render markdown (without repo URL to avoid recursive link conversion)
-      contentArea.innerHTML = parseMarkdown(markdownText, null, branch);
+      // Extract current file path AND repo URL from GitHub URL for relative link resolution
+      // GitHub URL format: https://github.com/user/repo/blob/branch/path/to/file.md
+      let currentFilePath = null;
+      let currentRepoUrl = helpRepoUrl; // Default to help repo as fallback
+
+      if (githubUrl.includes('/blob/')) {
+        // Extract file path
+        const pathMatch = githubUrl.match(/\/blob\/[^/]+\/(.+)$/);
+        if (pathMatch) {
+          currentFilePath = pathMatch[1]; // Extract path after /blob/branch/
+          console.log('📍 Current file path for relative resolution:', currentFilePath);
+        }
+
+        // Extract repo URL (everything before /blob/)
+        const repoMatch = githubUrl.match(/^(https:\/\/github\.com\/[^/]+\/[^/]+)\/blob\//);
+        if (repoMatch) {
+          currentRepoUrl = repoMatch[1]; // Extract https://github.com/user/repo
+          console.log('📍 Current repo URL:', currentRepoUrl);
+        }
+      } else {
+        console.warn('⚠️  GitHub URL does not contain /blob/, cannot extract path:', githubUrl);
+      }
+
+      // Render markdown with CURRENT repo URL (not help repo!) to generate smart links
+      console.log('🔗 Parsing markdown with:', { repoUrl: currentRepoUrl, branch, currentFilePath });
+      contentArea.innerHTML = parseMarkdown(markdownText, currentRepoUrl, branch, currentFilePath);
 
       // Process smart links in the rendered markdown
       // 1. Resolve hash links (internal navigation)
@@ -1985,9 +2903,11 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
         link.addEventListener('click', (e) => {
           e.preventDefault();
           const targetId = link.getAttribute('href').replace('#', '');
-          const target = contentArea.querySelector(`#${targetId}`);
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (targetId) { // Only try to scroll if there's an actual target ID
+            const target = contentArea.querySelector(`#${targetId}`);
+            if (target) {
+              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
           }
         });
       });
@@ -2000,13 +2920,69 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
           const linkUrl = link.dataset.mdUrl; // Get URL from data attribute
           const linkBranch = link.dataset.branch || branch; // Get branch from link or use default
           const linkTitle = link.textContent || 'GitHub Markdown';
-          const nestedOverlay = createGitHubMarkdownOverlay(linkUrl, linkTitle, helpRepoUrl, linkBranch);
+          const nestedOverlay = createGitHubMarkdownOverlay(linkUrl, linkTitle, helpRepoUrl, linkBranch, parentHistory);
           nestedOverlay.openOverlay();
         });
       });
 
-      // Add to history
-      addToHistory(title, 'markdown', null, githubUrl);
+      // 3. Scan for new markdown smart links and add to navigation tree
+      const newMarkdownPaths = extractMarkdownPathsFromElement(contentArea);
+      if (newMarkdownPaths.length > 0) {
+        console.log('🌲 Found new markdown paths to add to tree:', newMarkdownPaths);
+        // Check if parentHistory is a context object with tree references
+        if (parentHistory && typeof parentHistory === 'object' && parentHistory.navigationTree) {
+          console.log('🌲 Adding', newMarkdownPaths.length, 'new paths to navigation tree');
+          addMarkdownPathsToTree(parentHistory.navigationTree, newMarkdownPaths);
+          // Note: Don't re-render parent's tree here - it will be rendered in this overlay's tree
+        }
+      }
+
+      // 4. Render navigation tree in this overlay (if we have tree context from parent)
+      console.log('🌲 GitHub overlay - checking for tree context:', {
+        hasParentHistory: !!parentHistory,
+        isObject: typeof parentHistory === 'object',
+        hasNavigationTree: parentHistory?.navigationTree ? true : false,
+        treeLength: parentHistory?.navigationTree?.length
+      });
+
+      if (parentHistory && typeof parentHistory === 'object' && parentHistory.navigationTree) {
+        console.log('🌲 Rendering tree in GitHub overlay with', parentHistory.navigationTree.length, 'root nodes');
+
+        // Store tree reference in treeState if not already present (required for toggleTreeNode function)
+        if (!treeState.tree) {
+          treeState.tree = parentHistory.navigationTree;
+        }
+
+        // Create node click handler for this overlay's tree
+        const handleTreeNodeClick = (node) => {
+          if (node.type === 'markdown' && node.path) {
+            const mdRepoUrl = helpRepoUrl || 'https://github.com/ddttom/allaboutV2';
+            const fullUrl = `${mdRepoUrl}/blob/${branch}/${node.path}`;
+
+            // Close current overlay and open new one
+            closeOverlay();
+            const newOverlay = createGitHubMarkdownOverlay(fullUrl, node.label, helpRepoUrl, branch, parentHistory);
+            newOverlay.openOverlay();
+
+            // Select this node in tree
+            selectTreeNode(node.id, treeState, navTreePanel, handleTreeNodeClick);
+          }
+        };
+
+        // Render the tree in THIS overlay's tree panel
+        renderNavigationTree(parentHistory.navigationTree, navTreePanel, treeState, handleTreeNodeClick);
+        console.log('✅ Tree rendered in GitHub overlay');
+      } else {
+        console.warn('⚠️  No tree context available for GitHub overlay');
+      }
+
+      // Add to history (use parent overlay's history if available)
+      if (parentHistory) {
+        const historyArray = parentHistory.historyArray || parentHistory; // Support both context object and direct array
+        if (Array.isArray(historyArray)) {
+          addToHistory(historyArray, title, 'markdown', null, githubUrl);
+        }
+      }
 
       // Show overlay
       overlay.style.display = 'flex';
@@ -2025,188 +3001,25 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
     document.body.style.overflow = '';
   };
 
-  // Close button handler
-  closeButton.addEventListener('click', closeOverlay);
-
-  // Close on overlay click (but not content click)
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) {
-      closeOverlay();
+  // Tree toggle button handler
+  treeToggleButton.addEventListener('click', () => {
+    const isVisible = navTreePanel.style.display !== 'none';
+    if (isVisible) {
+      // Hide tree - show right arrow (►) to indicate it can be opened
+      navTreePanel.style.display = 'none';
+      treeToggleButton.innerHTML = '&#9654;'; // Right arrow (►)
+      treeToggleButton.setAttribute('aria-expanded', 'false');
+      treeToggleButton.setAttribute('title', 'Show Tree');
+      console.log('🌲 Tree hidden');
+    } else {
+      // Show tree - show left arrow (◄) to indicate it can be closed
+      navTreePanel.style.display = '';
+      treeToggleButton.innerHTML = '&#9664;'; // Left arrow (◄)
+      treeToggleButton.setAttribute('aria-expanded', 'true');
+      treeToggleButton.setAttribute('title', 'Hide Tree');
+      console.log('🌲 Tree shown');
     }
   });
-
-  // Escape key handler
-  const keyHandler = (e) => {
-    if (e.key === 'Escape' && overlay.style.display === 'flex') {
-      closeOverlay();
-    }
-  };
-
-  document.addEventListener('keydown', keyHandler);
-
-  // Append overlay to body
-  document.body.appendChild(overlay);
-
-  return {
-    openOverlay,
-    closeOverlay,
-  };
-}
-
-/**
- * Create manual overlay for displaying manual content
- * @param {string} manualPath - Path to the manual file (relative or absolute URL)
- * @param {string|null} repoUrl - Repository URL for resolving relative paths
- * @param {string} [branch='main'] - GitHub branch to use for markdown files
- * @returns {Object} Object with openOverlay and closeOverlay functions
- */
-function createManualOverlay(manualPath, repoUrl, branch = 'main') {
-  // Extract title from manualPath (filename without extension)
-  const pathParts = manualPath.split('/');
-  const filename = pathParts[pathParts.length - 1];
-  const title = filename.replace(/\.md$/i, '').replace(/[-_]/g, ' ');
-
-  // Create overlay container
-  const overlay = document.createElement('div');
-  overlay.className = 'ipynb-manual-overlay';
-  overlay.setAttribute('role', 'dialog');
-  overlay.setAttribute('aria-modal', 'true');
-  overlay.setAttribute('aria-label', 'Manual viewer');
-
-  // Create overlay content
-  const overlayContent = document.createElement('div');
-  overlayContent.className = 'ipynb-manual-overlay-content';
-
-  // Create top bar with title and controls (three-section layout)
-  const topBar = document.createElement('div');
-  topBar.className = 'ipynb-overlay-top-bar';
-
-  // Left controls section (empty for manual overlay, but keeps layout consistent)
-  const leftControlsSection = document.createElement('div');
-  leftControlsSection.className = 'ipynb-overlay-controls ipynb-overlay-controls-left';
-
-  // Title section
-  const titleSection = document.createElement('div');
-  titleSection.className = 'ipynb-overlay-title';
-  titleSection.textContent = title;
-  titleSection.setAttribute('title', title);
-
-  // Right controls section
-  const rightControlsSection = document.createElement('div');
-  rightControlsSection.className = 'ipynb-overlay-controls ipynb-overlay-controls-right';
-
-  // Close button
-  const closeButton = document.createElement('button');
-  closeButton.className = 'ipynb-overlay-button';
-  closeButton.innerHTML = '&times;';
-  closeButton.setAttribute('aria-label', 'Close manual');
-
-  // Assemble top bar: left controls, title, right controls
-  rightControlsSection.appendChild(closeButton);
-  topBar.appendChild(leftControlsSection);
-  topBar.appendChild(titleSection);
-  topBar.appendChild(rightControlsSection);
-  overlayContent.appendChild(topBar);
-
-  // Create content area for manual
-  const contentArea = document.createElement('div');
-  contentArea.className = 'ipynb-manual-content-area';
-  overlayContent.appendChild(contentArea);
-
-  overlay.appendChild(overlayContent);
-
-  // Resolve manual path
-  let resolvedPath = manualPath;
-
-  // If path doesn't start with http:// or https://, treat as relative
-  if (!manualPath.startsWith('http://') && !manualPath.startsWith('https://')) {
-    // If it's a plain .md file and we have a repo URL, construct full path
-    if (repoUrl && manualPath.endsWith('.md')) {
-      resolvedPath = `${repoUrl}/blob/${branch}/${manualPath}`;
-    } else if (manualPath.startsWith('/')) {
-      // Absolute path from root
-      resolvedPath = manualPath;
-    } else {
-      // Relative path - make it absolute from root
-      resolvedPath = `/${manualPath}`;
-    }
-  }
-
-  // Open/close functions
-  const openOverlay = async () => {
-    // Fetch and display manual
-    try {
-      contentArea.innerHTML = '<div class="ipynb-loading">Loading manual...</div>';
-      const response = await fetch(resolvedPath);
-      if (!response.ok) {
-        throw new Error(`Failed to load manual: ${response.status}`);
-      }
-      const markdownText = await response.text();
-
-      // Render markdown
-      contentArea.innerHTML = parseMarkdown(markdownText, null, branch);
-
-      // Process smart links in the rendered markdown
-      // 1. Resolve hash links (internal navigation)
-      const hashLinks = contentArea.querySelectorAll('a[href^="#"]');
-      hashLinks.forEach(link => {
-        const linkText = link.textContent.trim();
-        const headings = contentArea.querySelectorAll('h1, h2, h3, h4, h5, h6');
-
-        headings.forEach(heading => {
-          const headingText = heading.textContent.trim().replace(/[^\w\s]/g, '').toLowerCase();
-          const searchText = linkText.replace(/[^\w\s]/g, '').toLowerCase();
-
-          if (headingText.includes(searchText)) {
-            // Generate ID if not present
-            if (!heading.id) {
-              heading.id = headingText.replace(/\s+/g, '-');
-            }
-            // Update link to point to heading
-            link.href = `#${heading.id}`;
-          }
-        });
-
-        // Add click handler for smooth scrolling
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          const targetId = link.getAttribute('href').replace('#', '');
-          const target = contentArea.querySelector(`#${targetId}`);
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        });
-      });
-
-      // 2. Add click handlers for GitHub markdown links (.md files)
-      const githubMdLinks = contentArea.querySelectorAll('.ipynb-github-md-link');
-      githubMdLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          const linkUrl = link.dataset.mdUrl; // Get URL from data attribute
-          const linkBranch = link.dataset.branch || branch; // Get branch from link or use default
-          const linkTitle = link.textContent || 'GitHub Markdown';
-          const nestedOverlay = createGitHubMarkdownOverlay(linkUrl, linkTitle, helpRepoUrl, linkBranch);
-          nestedOverlay.openOverlay();
-        });
-      });
-
-      // Show overlay
-      overlay.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-      closeButton.focus();
-    } catch (error) {
-      console.error('Failed to load manual:', error);
-      contentArea.innerHTML = `<div class="ipynb-error">Failed to load manual: ${error.message}</div>`;
-      overlay.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    }
-  };
-
-  const closeOverlay = () => {
-    overlay.style.display = 'none';
-    document.body.style.overflow = '';
-  };
 
   // Close button handler
   closeButton.addEventListener('click', closeOverlay);
@@ -2249,9 +3062,9 @@ export default async function decorate(block) {
 
   // Detect variations
   const isPaged = block.classList.contains('paged');
-  const hasManual = block.classList.contains('manual');
   const isAutorun = block.classList.contains('autorun');
   const isNotebook = block.classList.contains('notebook'); // Combines manual and paged (no autorun), close button visible
+  const isIndex = block.classList.contains('index'); // Auto-opens overlay without button click
 
   try {
     // Extract notebook path from block content
@@ -2465,47 +3278,38 @@ export default async function decorate(block) {
     // Assemble container
     container.appendChild(header);
 
-    // Handle paged, autorun, and notebook variations
-    if (isPaged || isNotebook) {
+    // Handle paged, autorun, notebook, and index variations
+    if (isPaged || isNotebook || isIndex) {
       // Hide cells initially in paged mode
       cellsContainer.style.display = 'none';
       container.appendChild(cellsContainer);
-
-      // Create button container for start button (and optional manual button)
-      const buttonContainer = document.createElement('div');
-      buttonContainer.className = 'ipynb-button-container';
-
-      // Create start button
-      const startButton = createPagedStartButton();
-      buttonContainer.appendChild(startButton);
 
       // Create overlay with autorun support and notebook mode flag
       const notebookTitle = notebook.metadata?.title || 'Jupyter Notebook';
       const overlay = createPagedOverlay(container, cellsContainer, shouldAutorun, isNotebook, repoUrl, notebookTitle, helpRepoUrl, githubBranch);
 
-      // Start button opens overlay
-      startButton.addEventListener('click', () => {
-        overlay.openOverlay();
-      });
+      // Index variation: Auto-open overlay without button
+      if (isIndex) {
+        // Auto-open after a brief delay to ensure DOM is ready
+        setTimeout(() => {
+          overlay.openOverlay();
+        }, 100);
+      } else {
+        // Regular notebook/paged: Show start button
+        const buttonContainer = document.createElement('div');
+        buttonContainer.className = 'ipynb-button-container';
 
-      // Add manual button if manual variation or notebook variation is present AND manual-path is configured
-      if ((hasManual || isNotebook) && notebook.metadata?.['manual-path']) {
-        const manualButton = createManualButton();
-        buttonContainer.appendChild(manualButton);
+        // Create start button
+        const startButton = createPagedStartButton();
+        buttonContainer.appendChild(startButton);
 
-        // Get manual path from metadata
-        const manualPath = notebook.metadata['manual-path'];
-
-        // Create manual overlay with configurable path and branch
-        const manualOverlay = createManualOverlay(manualPath, repoUrl, githubBranch);
-
-        // Manual button opens manual overlay
-        manualButton.addEventListener('click', () => {
-          manualOverlay.openOverlay();
+        // Start button opens overlay
+        startButton.addEventListener('click', () => {
+          overlay.openOverlay();
         });
-      }
 
-      container.appendChild(buttonContainer);
+        container.appendChild(buttonContainer);
+      }
     } else {
       // Default mode: show all cells
       container.appendChild(cellsContainer);

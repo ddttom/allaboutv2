@@ -1067,20 +1067,10 @@ The ipynb-viewer block supports multiple display modes:
 | /notebook.ipynb |
 ```
 - Complete educational experience
-- Combines paged overlay + autorun + manual documentation
+- Combines paged overlay + autorun functionality
 - Start Reading button opens paged mode with automatic execution
-- Read the Manual button provides reference documentation
-- Good for complete tutorials and courses with reference material
-
-**5. Paged + Manual Mode**
-```
-| IPynb Viewer (paged, manual) |
-|-------------------------------|
-| /notebook.ipynb |
-```
-- Paged mode plus "Read the Manual" button
-- Links to detailed README.mdc documentation
-- Good for complex topics requiring extensive reference
+- Built-in help button (❓) provides integrated documentation from `help-repo`
+- Good for complete tutorials and courses with built-in help system
 
 ### Link Navigation (NEW)
 

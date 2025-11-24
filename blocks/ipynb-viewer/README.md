@@ -14,11 +14,13 @@ Display and execute Jupyter notebook (.ipynb) files directly in your EDS site wi
 **Paged Variation**: Display cells one at a time with navigation controls.
 **Autorun Mode**: Automatically execute code cells without Run buttons (NEW).
 **Notebook Variation**: Combined manual and paged modes with visible close button (NEW).
+**Index Variation**: Auto-opens overlay on page load - perfect for landing pages (NEW).
 **Hamburger Menu TOC**: Navigate cells via dropdown menu in notebook mode with visual dividers, smart filtering (NEW).
 **Link Navigation**: Navigate between overlays using hash targets (NEW).
 **Auto-Wrapping**: Pure markdown authoring with automatic styling in notebook mode - 90% less code (NEW).
 **Action Cards**: Beautiful navigation cards from pure markdown with emoji color indicators (NEW).
 **GitHub Markdown Overlay**: Click GitHub .md links to view content in-app without leaving the page (NEW).
+**Navigation Tree**: Hierarchical tree panel for exploring notebook structure and linked files (NEW).
 **Navigation History**: Track and revisit up to 25 recently viewed cells and markdown files (NEW).
 **Bookmarks**: Save favorite pages to localStorage for quick access anytime (NEW).
 **Help System**: Built-in help documentation accessible via Help button (NEW).
@@ -123,31 +125,38 @@ Combines manual and paged modes for the complete educational experience:
 - Complex demonstrations with help documentation
 - Training materials with built-in guides
 
-### Variation: Paged + Manual (NEW)
+### Index Variation (NEW)
 
-Combine paged mode with a manual button to provide access to documentation:
+Automatically opens the notebook overlay without requiring a button click - perfect for landing pages and documentation indexes:
 
 ```
-| IPynb Viewer (paged, manual) |
-|-------------------------------|
+| IPynb Viewer (index) |
+|-----------------------|
 | /path/to/notebook.ipynb |
 ```
 
 **Features:**
 
-**Start Reading button** opens the notebook in full-screen paged mode.
-**Read the Manual button** opens the manual specified in notebook metadata in a scrollable overlay.
-**Both buttons side by side** provide easy access to both notebook and documentation.
-**Separate overlays** mean manual and notebook have independent full-screen displays.
-**Markdown rendering** displays manual content beautifully formatted with headings, lists, tables, and code blocks.
-**Scrollable content** allows long documentation to scroll smoothly within the overlay.
-**Same close button (×)** provides consistent UI across both overlays.
-**Escape key** works for both overlays.
+**Auto-open on page load** - Notebook overlay opens automatically after 100ms (no button required).
+**Instant immersion** - Users immediately enter reading mode without clicking.
+**All notebook features** - Includes navigation tree, bookmarks, history, help, and all controls.
+**Perfect for landing pages** - Ideal for documentation indexes, home pages, or main entry points.
+**Close button visible** - Users can exit to see the underlying page content.
+**Minimal friction** - Removes the extra click to start reading.
 
-**Important:** The "Read the Manual" button **only appears** if `manual-path` is provided in the notebook metadata.
+**Use Cases:**
+- Documentation landing pages that should open immediately
+- Main index pages for large documentation sites
+- Welcome screens that guide users through content
+- Single-page apps where the notebook IS the entire experience
+- Tutorial launchers that start automatically
 
-**Use Case:**
-Perfect for interactive tutorials where users need to reference documentation while exploring the notebook.
+**When to Use:**
+- ✅ Use `index` when the notebook is the primary content
+- ✅ Use `index` for landing pages and documentation indexes
+- ✅ Use `index` when you want immediate engagement
+- ❌ Use `notebook` if the page has other content users should see first
+- ❌ Use `notebook` if users should opt-in to the reading experience
 
 ## Notebook Structure Support
 
@@ -178,21 +187,14 @@ The notebook metadata is displayed in the header section:
   - **Important:** Use markdown link syntax `[text](file.md)`, not inline code `` `file.md` ``
 - `help-repo` - Repository URL for help documentation (e.g., "https://github.com/ddttom/allaboutV2")
   - **Fallback:** Uses `repo` if not specified, then defaults to allaboutV2
-  - **Purpose:** Separate repository for help button documentation
+  - **Purpose:** Separate repository for help button (❓) documentation
   - **Use case:** When notebook content is from one repo but help docs are from viewer's repo
+  - **Help button:** In notebook mode, displays a ❓ button that opens `docs/help.md` from the help-repo
 - `github-branch` - GitHub branch to use when loading .md files (e.g., "main", "develop", "feature/new-docs")
   - **Default:** `"main"` if not specified
   - **Purpose:** Specify which branch to load markdown files from
   - **Use case:** Load docs from feature branch during development when files don't exist in main yet
   - **Applies to:** All .md file links and help button
-- `manual-path` - Path to the manual/documentation file for the "Read the Manual" button (used with `manual` or `notebook` variations)
-  - **REQUIRED for button to appear:** The "Read the Manual" button only displays if `manual-path` is provided in metadata
-  - **Plain .md filename:** If path doesn't start with `http://` or `https://`, and ends with `.md`, and `repo` is provided, constructs full GitHub URL: `{repo}/blob/main/{manual-path}`
-  - **Absolute path:** Paths starting with `/` are used as-is (e.g., `/blocks/ipynb-viewer/README.mdc`)
-  - **Relative path:** Other paths are made absolute from root (e.g., `docs/guide.md` → `/docs/guide.md`)
-  - **Full URL:** Paths starting with `http://` or `https://` are used as-is
-  - **No default:** If omitted, the "Read the Manual" button will not appear (even with `manual` or `notebook` variations)
-  - **Example:** `"manual-path": "docs/for-ai/explaining-presentation-notebooks.md"` with `repo` set creates link to GitHub
   - Example with repo: `[guide](docs/guide.md)` → `https://github.com/username/repo/blob/main/docs/guide.md`
   - Example without repo: `[guide](docs/guide.md)` → `<a href="docs/guide.md">guide</a>`
   - ❌ Wrong: `` `getting-started.md` `` (inline code, won't convert)
@@ -564,13 +566,13 @@ Built-in help documentation accessible anytime via the Help button! The help sys
 
 **Help Button Location:**
 - **Position:** Top-right of overlay, between TOC and Close buttons
-- **Visibility:** Only in notebook mode variation (requires `repo` metadata)
+- **Visibility:** Only in notebook mode variation
 - **Appearance:** Button with question mark icon (❓)
 
 **Help Topics Covered:**
 - Getting Started - Opening notebooks and understanding the interface
 - Navigation Controls - All buttons and their functions
-- Overlay Types - Paged, Manual, GitHub Markdown, Preview overlays
+- Overlay Types - Paged, GitHub Markdown, Preview overlays
 - Bookmarks - Saving and managing favorite pages
 - History - Tracking and revisiting recent navigation
 - Keyboard Shortcuts - Arrow keys and ESC shortcuts
@@ -578,7 +580,8 @@ Built-in help documentation accessible anytime via the Help button! The help sys
 - Troubleshooting - Common issues and solutions
 
 **Requirements:**
-- Help button only appears when `repo` metadata is configured
+- Help button appears automatically in notebook mode
+- Uses `help-repo` metadata (falls back to `repo`, then defaults to allaboutV2)
 - Expects help file at `docs/help.md` in the repository
 - Uses GitHub Markdown Overlay viewer for display
 

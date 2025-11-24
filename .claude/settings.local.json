@@ -92,7 +92,10 @@
       "Bash(then echo $file)",
       "Bash(python /tmp/debug_overlay_spacing.py:*)",
       "Bash(for file in blog.ipynb education.ipynb explain.ipynb test.ipynb docs-navigation.ipynb docs/for-ai/templates/ipynb/*.ipynb)",
-      "Bash(do echo \"=== $file ===\")"
+      "Bash(do echo \"=== $file ===\")",
+      "Bash(lsof:*)",
+      "Bash(pkill:*)",
+      "Bash(chmod:*)"
     ],
     "deny": [],
     "ask": []
