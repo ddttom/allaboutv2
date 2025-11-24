@@ -121,6 +121,27 @@
       opacity: 0.9;
     }
 
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #007bff;
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0,123,255,0.4);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .back-to-top:hover {
+      background: #0056b3;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,123,255,0.5);
+    }
+
     @media (max-width: 768px) {
       h1 {
         font-size: 2rem;
