@@ -15,6 +15,7 @@ Display and execute Jupyter notebook (.ipynb) files directly in your EDS site wi
 **Autorun Mode**: Automatically execute code cells without Run buttons (NEW).
 **Notebook Variation**: Combined manual and paged modes with visible close button (NEW).
 **Index Variation**: Auto-opens overlay on page load - perfect for landing pages (NEW).
+**No-Topbar Variation**: Hide top bar for immersive, distraction-free experiences - combines with any mode (NEW).
 **Hamburger Menu TOC**: Navigate cells via dropdown menu in notebook mode with visual dividers, smart filtering (NEW).
 **Link Navigation**: Navigate between overlays using hash targets (NEW).
 **Auto-Wrapping**: Pure markdown authoring with automatic styling in notebook mode - 90% less code (NEW).
@@ -157,6 +158,54 @@ Automatically opens the notebook overlay without requiring a button click - perf
 - ✅ Use `index` when you want immediate engagement
 - ❌ Use `notebook` if the page has other content users should see first
 - ❌ Use `notebook` if users should opt-in to the reading experience
+
+### No-Topbar Variation (NEW)
+
+Hides the top bar (title and buttons) for a cleaner, more immersive reading experience. Can be combined with any display mode:
+
+```
+| IPynb Viewer (paged no-topbar) |
+|----------------------------------|
+| /path/to/notebook.ipynb |
+```
+
+**Features:**
+
+**Hidden top bar** - No title, buttons, or controls visible at the top.
+**Maximum content area** - Content extends from top of overlay to pagination controls.
+**Immersive reading** - Removes visual distractions for focused content consumption.
+**ESC key still works** - Users can still exit using ESC key or backdrop click.
+**Works with any mode** - Combine with `paged`, `autorun`, `notebook`, or `index`.
+
+**Use Cases:**
+- Presentations where you want zero UI distraction
+- Kiosk displays or embedded content
+- Full-screen immersive experiences
+- Content that doesn't need navigation controls
+- Minimalist reading experiences
+
+**Combinations:**
+```
+| IPynb Viewer (index no-topbar) |
+```
+Auto-opens with no top bar - perfect for immersive landing pages.
+
+```
+| IPynb Viewer (notebook no-topbar) |
+```
+Full notebook experience with hidden top bar.
+
+```
+| IPynb Viewer (paged no-topbar) |
+```
+Standard paged mode without the top bar.
+
+**When to Use:**
+- ✅ Use `no-topbar` for immersive, distraction-free experiences
+- ✅ Use `no-topbar` when content should be the sole focus
+- ✅ Use `no-topbar` in kiosks or embedded displays
+- ⚠️ Consider keeping top bar for complex notebooks with multiple sections
+- ❌ Don't use `no-topbar` if users need easy access to help or controls
 
 ## Notebook Structure Support
 

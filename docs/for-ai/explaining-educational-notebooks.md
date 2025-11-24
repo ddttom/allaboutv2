@@ -1072,6 +1072,137 @@ The ipynb-viewer block supports multiple display modes:
 - Built-in help button (❓) provides integrated documentation from `help-repo`
 - Good for complete tutorials and courses with built-in help system
 
+**5. Index Mode (NEW)**
+```
+| IPynb Viewer (index) |
+|----------------------|
+| /notebook.ipynb |
+```
+- **Auto-opens immediately** - No "Start Reading" button required
+- Full-screen overlay launches on page load
+- Perfect for landing pages and documentation hubs
+- Includes navigation tree and all overlay features
+- Good for immediate engagement and zero-click access
+
+**When to Use Index:**
+- ✅ Landing pages that should open immediately
+- ✅ Documentation hub homepages
+- ✅ Tutorial entry points
+- ✅ Any content requiring instant access
+- ✅ Marketing and showcase pages
+
+**Index vs Other Modes:**
+
+| Mode | Button Required | Auto-Execute | Use Case |
+|------|----------------|--------------|----------|
+| `paged` | Yes | No | Standard tutorials |
+| `autorun` | Yes | Yes | Live demonstrations |
+| `notebook` | Yes | Yes | Complete courses |
+| `index` | No (auto-opens) | No | Landing pages |
+| `no-topbar` | Depends on mode | Depends on mode | Immersive, distraction-free |
+
+**6. No-Topbar Variation (NEW)**
+```
+| IPynb Viewer (paged no-topbar) |
+|---------------------------------|
+| /notebook.ipynb |
+```
+- **Hides top bar** - No title, buttons, or navigation tree toggle visible
+- **Hides navigation tree** - Tree automatically hidden (no toggle available)
+- **Maximum content area** - Content extends from top to pagination controls
+- **ESC key still works** - Keyboard shortcuts and backdrop click remain functional
+- **Combines with any mode** - Use with `paged`, `autorun`, `notebook`, or `index`
+- **Perfect for immersive learning** - Minimal UI for focused content consumption
+
+**Combinations:**
+```
+| IPynb Viewer (index no-topbar) |
+```
+Auto-opens with no UI - perfect for immersive tutorial landing pages.
+
+```
+| IPynb Viewer (autorun no-topbar) |
+```
+Auto-executes with no distractions - ideal for recorded demos or kiosk displays.
+
+**When to Use No-Topbar:**
+- ✅ Immersive, distraction-free learning experiences
+- ✅ Kiosk displays or public installations
+- ✅ Embedded tutorials in other applications
+- ✅ Video recordings or screencasts
+- ✅ When content should be the sole focus
+- ⚠️ Not ideal for complex tutorials needing navigation controls
+- ❌ Don't use if learners need access to help or table of contents
+
+### Navigation Tree Panel (NEW)
+
+All paged, notebook, and index modes include a **navigation tree panel** for hierarchical navigation:
+
+**Tree Structure:**
+
+The navigation tree has two main sections:
+
+**1. Notebook Section** - Shows your tutorial's structure:
+```
+📓 Notebook
+├── Frontmatter (if Part headings exist)
+│   └── Introduction
+├── Part 1: Getting Started
+│   ├── Setup
+│   └── First Steps
+├── Part 2: Core Concepts
+│   ├── Fundamentals
+│   └── Examples
+└── Summary (if "completed final" heading)
+    └── Recap
+```
+
+**Structure Rules:**
+- **Frontmatter** - Cells before first "Part" heading (only when Parts exist)
+- **Parts** - Major sections with "Part" in heading text
+- **Summary** - Heading containing BOTH "completed" AND "final"
+- **Direct cells** - When no Parts exist, cells appear directly under Notebook node
+
+**2. Repository Section** - Shows linked documentation:
+```
+📁 Repository
+├── 📁 docs/
+│   ├── api-reference.md
+│   └── troubleshooting.md
+└── README.md
+```
+
+**Features:**
+- Automatically discovers all `.md` links in notebook cells
+- Opens markdown files in GitHub-styled overlay
+- Organizes by directory structure
+- Hidden when no `.md` files are present
+
+**Tree Features:**
+
+- **Toggle visibility** - Click arrow button (◄/►) to hide/show tree
+- **Smart navigation** - Click sections to jump directly
+- **State management** - Expansion state preserved across navigation
+- **Shared state** - Single tree state across all overlays
+
+**Using the Tree in Educational Content:**
+
+```markdown
+# Typical learner workflow:
+1. Open tutorial (tree shows all sections)
+2. Click "Part 2: Advanced" to skip ahead
+3. Click "api-reference.md" for detailed docs
+4. Close markdown overlay, return to tutorial
+5. Tree remembers expansion state throughout
+```
+
+**Best Practices:**
+- Structure tutorials with clear "Part" headings for tree organization
+- Link to relevant `.md` documentation files for reference
+- Use meaningful section titles (they appear in tree)
+- Keep tree visible for long tutorials
+- Hide tree when learners need to focus on content
+
 ### Link Navigation (NEW)
 
 All paged modes support **hash link navigation** for non-linear exploration:

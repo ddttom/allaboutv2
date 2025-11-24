@@ -1211,6 +1211,231 @@ Use design system consistently:
 - **Check on mobile** (responsive design)
 - **Test accessibility** (keyboard navigation, screen reader)
 
+## Display Variations for Presentations
+
+The ipynb-viewer block supports multiple display variations optimized for different presentation scenarios:
+
+### Available Variations
+
+| Variation | Button Required | Best For |
+|-----------|----------------|----------|
+| **Basic** (default) | No button | Quick reference, scrollable content |
+| **Paged** | Yes ("Start Reading") | Standard presentations, step-by-step |
+| **Notebook** | Yes ("Start Reading") | Read-only presentations with auto-wrapping |
+| **Autorun** | Yes, auto-executes | Interactive demos with code execution |
+| **Index** | No (auto-opens) | Landing pages, immediate engagement |
+| **No-Topbar** | Depends on mode | Immersive, distraction-free presentations |
+
+### Index Variation for Landing Pages
+
+The **index variation** is perfect for presentation landing pages that should capture attention immediately:
+
+```html
+<div class="ipynb-viewer index block">
+  <div>
+    <div>presentation.ipynb</div>
+  </div>
+</div>
+```
+
+**Key Features:**
+- ✅ **Auto-opens immediately** - No "Start Reading" button needed
+- ✅ **Perfect for landing pages** - Immediate visual impact
+- ✅ **Full navigation** - Includes navigation tree and all features
+- ✅ **Professional UX** - Zero clicks to engagement
+
+**When to Use Index:**
+- Product showcase landing pages
+- Marketing presentation entry points
+- Documentation hub homepages
+- Client demo start screens
+- Any presentation where immediate viewing is desired
+
+**Implementation:**
+```html
+<!-- Standard paged presentation -->
+<div class="ipynb-viewer paged block">
+  <div><div>quarterly-review.ipynb</div></div>
+</div>
+<!-- User must click "Start Reading" button -->
+
+<!-- Index variation for landing page -->
+<div class="ipynb-viewer index block">
+  <div><div>quarterly-review.ipynb</div></div>
+</div>
+<!-- Opens immediately, no button -->
+```
+
+**Best Practices:**
+- Use index variation for high-impact landing pages
+- Ensure first cell (hero) is visually compelling
+- Keep load times fast (optimize images)
+- Test on various devices for immediate engagement
+
+### Navigation Tree Panel
+
+All paged, notebook, and index variations include a **navigation tree panel** for easy content access:
+
+#### Tree Structure
+
+The navigation tree displays two main sections:
+
+**1. Notebook Section**
+Shows your presentation's internal structure:
+
+```
+📓 Notebook
+├── Frontmatter (if Part headings exist)
+│   └── Introduction cells
+├── Part 1: Product Overview
+│   ├── Features
+│   └── Benefits
+├── Part 2: Pricing
+│   ├── Tiers
+│   └── Comparison
+└── Summary (if "completed final" heading exists)
+    └── Call to Action
+```
+
+**Structure Rules:**
+- **Frontmatter** - Cells before first "Part" heading (only when Parts exist)
+- **Parts** - Major sections with "Part" in heading text
+- **Summary** - Section with heading containing BOTH "completed" AND "final"
+- **Direct cells** - When no Parts exist, cells appear directly under Notebook
+
+**2. Repository Section**
+Shows linked markdown files discovered in your presentation:
+
+```
+📁 Repository
+├── 📁 docs/
+│   ├── product-details.md
+│   └── pricing-guide.md
+└── README.md
+```
+
+**Features:**
+- Automatically discovers `.md` links in cells
+- Opens markdown files in GitHub-styled overlay
+- Organizes by directory structure
+- Hidden when no `.md` files are present
+
+#### Tree Features
+
+**Toggle Visibility:**
+- Click arrow button (◄/►) in top bar to hide/show tree
+- Useful for focusing on content or wide displays
+- Smooth transition animation
+
+**Smart Navigation:**
+- Click any notebook section to jump there
+- Click `.md` files to view documentation
+- Expansion state maintained across navigation
+- Visual indicator shows current location
+
+**State Management:**
+- Single shared tree state across all overlays
+- Expansion preferences preserved
+- Seamless switching between notebook and markdown views
+
+#### Using the Navigation Tree in Presentations
+
+**For Multi-Section Presentations:**
+```markdown
+# When viewers navigate your presentation
+# 1. Tree shows all sections in sidebar
+# 2. Click sections to jump directly
+# 3. Click .md links for supporting docs
+# 4. Tree remembers expanded/collapsed state
+```
+
+**Best Practices:**
+- Structure presentations with clear "Part" headings
+- Link to relevant markdown documentation
+- Use meaningful section titles (shown in tree)
+- Keep tree visible for long presentations
+- Hide tree for focused content viewing
+
+**Navigation Workflow:**
+```
+Viewer opens presentation →
+  Tree shows all sections →
+    Click "Part 2: Pricing" →
+      Jumps to pricing section →
+        Click "pricing-guide.md" →
+          Opens detailed guide in overlay →
+            Close guide →
+              Returns to presentation at same location
+```
+
+### No-Topbar Variation for Immersive Presentations
+
+The **no-topbar variation** removes the top bar completely for a distraction-free, immersive viewing experience:
+
+```html
+<div class="ipynb-viewer paged no-topbar block">
+  <div>
+    <div>presentation.ipynb</div>
+  </div>
+</div>
+```
+
+**Key Features:**
+- ✅ **Hidden top bar** - No title, buttons, or navigation controls visible
+- ✅ **Hidden navigation tree** - Tree is automatically hidden (no toggle button available)
+- ✅ **Maximum content area** - Content extends from top to bottom pagination
+- ✅ **Keyboard shortcuts** - ESC key and backdrop click still work for closing
+- ✅ **Combines with any mode** - Works with `paged`, `notebook`, `autorun`, or `index`
+
+**Use Cases:**
+- Formal presentations without UI distraction
+- Kiosk displays or public installations
+- Embedded presentations in other apps
+- Marketing demos with clean aesthetics
+- Training videos or recorded demos
+- Full-screen immersive storytelling
+
+**Powerful Combinations:**
+
+```html
+<!-- Immersive auto-opening landing page -->
+<div class="ipynb-viewer index no-topbar block">
+  <div><div>product-showcase.ipynb</div></div>
+</div>
+```
+Opens immediately with zero UI - perfect for landing pages and showcases.
+
+```html
+<!-- Distraction-free presentation mode -->
+<div class="ipynb-viewer notebook no-topbar block">
+  <div><div>quarterly-review.ipynb</div></div>
+</div>
+```
+Full presentation experience without any visual clutter.
+
+```html
+<!-- Kiosk or embedded display -->
+<div class="ipynb-viewer autorun no-topbar block">
+  <div><div>interactive-demo.ipynb</div></div>
+</div>
+```
+Auto-executing demo with minimal UI - perfect for trade shows.
+
+**When to Use:**
+- ✅ Formal presentations or client meetings
+- ✅ Public kiosks or digital signage
+- ✅ Embedded content in other applications
+- ✅ Marketing materials and product showcases
+- ✅ When content should be the absolute focus
+- ⚠️ Not recommended for complex multi-section presentations requiring navigation
+- ❌ Don't use if users need access to help, history, or bookmarks
+
+**Navigation Without Top Bar:**
+- Use arrow keys or pagination controls at bottom
+- ESC key closes overlay
+- Backdrop click closes overlay
+- Hash links within content still work for jumping between sections
+
 ## ipynb-viewer Integration
 
 Presentation notebooks work perfectly with the ipynb-viewer block:

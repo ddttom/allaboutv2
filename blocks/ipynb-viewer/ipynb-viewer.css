@@ -1322,6 +1322,12 @@ button.ipynb-help-button {
   overflow-x: hidden !important;
 }
 
+/* No-topbar variation: Extend cell area to top when top bar is hidden */
+.ipynb-viewer.no-topbar .ipynb-paged-cell-area {
+  top: 0;
+  /* Cell area extends from top (0) to bottom pagination bar (80px) */
+}
+
 /* Force consistent typography for all text elements in overlay */
 .ipynb-paged-overlay * {
   font-family: inherit;

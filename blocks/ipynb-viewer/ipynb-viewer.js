@@ -477,7 +477,7 @@ function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false, helpR
       const githubUrl = link.dataset.mdUrl; // Get URL from data attribute
       const linkBranch = link.dataset.branch || branch; // Get branch from link or use default
       const title = link.textContent || 'GitHub Markdown';
-      const overlay = createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl, linkBranch, parentHistory);
+      const overlay = createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl, linkBranch, parentHistory, hideTopbar);
       overlay.openOverlay();
     });
   });
@@ -1495,7 +1495,7 @@ function selectTreeNode(nodeId, treeState, container, onNodeClick) {
  * @param {string} [helpRepoUrl] - Optional help repository URL
  * @returns {object} Overlay controls
  */
-function createPagedOverlay(container, cellsContainer, autorun = false, isNotebookMode = false, repoUrl = null, notebookTitle = 'Jupyter Notebook', helpRepoUrl = null, branch = 'main') {
+function createPagedOverlay(container, cellsContainer, autorun = false, isNotebookMode = false, repoUrl = null, notebookTitle = 'Jupyter Notebook', helpRepoUrl = null, branch = 'main', hideTopbar = false) {
   const cells = Array.from(cellsContainer.querySelectorAll('.ipynb-cell'));
 
   if (cells.length === 0) return null;
@@ -1666,7 +1666,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
             }
           } else if (entry.type === 'markdown' && entry.url) {
             // Re-open GitHub markdown overlay
-            const mdOverlay = createGitHubMarkdownOverlay(entry.url, entry.title, helpRepoUrl, branch, paginationState);
+            const mdOverlay = createGitHubMarkdownOverlay(entry.url, entry.title, helpRepoUrl, branch, paginationState, hideTopbar);
             mdOverlay.openOverlay();
           }
           historyDropdown.style.display = 'none';
@@ -1862,7 +1862,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
               updatePageDisplay();
             } else if (bookmark.type === 'markdown' && bookmark.url) {
               // Open markdown file in overlay
-              const mdOverlay = createGitHubMarkdownOverlay(bookmark.url, bookmark.title, helpRepoUrl, branch, paginationState);
+              const mdOverlay = createGitHubMarkdownOverlay(bookmark.url, bookmark.title, helpRepoUrl, branch, paginationState, hideTopbar);
               mdOverlay.openOverlay();
             }
             bookmarkDropdown.style.display = 'none';
@@ -1949,7 +1949,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       const helpPath = `${helpRepoUrl}/blob/${branch}/docs/help.md`;
 
       // Open using GitHub markdown overlay with branch parameter
-      const helpOverlay = createGitHubMarkdownOverlay(helpPath, 'IPynb Viewer Help', helpRepoUrl, branch, paginationState);
+      const helpOverlay = createGitHubMarkdownOverlay(helpPath, 'IPynb Viewer Help', helpRepoUrl, branch, paginationState, hideTopbar);
       helpOverlay.openOverlay();
     });
   }
@@ -1990,7 +1990,10 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   cellContentArea.className = 'ipynb-paged-cell-area';
 
   // Assemble main wrapper
-  mainContentWrapper.appendChild(navTreePanel);
+  // Only add nav tree if top bar is visible (tree toggle button needs to be accessible)
+  if (!hideTopbar) {
+    mainContentWrapper.appendChild(navTreePanel);
+  }
   mainContentWrapper.appendChild(cellContentArea);
 
   // Assemble top bar with left/center/right sections
@@ -2021,7 +2024,10 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   topBar.appendChild(rightControlsSection);
 
   // Assemble overlay
-  overlayContent.appendChild(topBar);
+  // Conditionally add top bar (hide if no-topbar variation is set)
+  if (!hideTopbar) {
+    overlayContent.appendChild(topBar);
+  }
   if (isNotebookMode) {
     overlayContent.appendChild(historyDropdown);
     overlayContent.appendChild(bookmarkDropdown);
@@ -2159,7 +2165,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
         const githubUrl = link.dataset.mdUrl; // Get URL from data attribute
         const linkBranch = link.dataset.branch || branch; // Get branch from link or use default
         const title = link.textContent || 'GitHub Markdown';
-        const overlay = createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl, linkBranch, paginationState);
+        const overlay = createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl, linkBranch, paginationState, hideTopbar);
         overlay.openOverlay();
       });
     });
@@ -2490,7 +2496,7 @@ function convertToRawUrl(blobUrl, branch = 'main') {
  * @param {Array} [parentHistory=null] - Optional parent overlay's history array
  * @returns {Object} Object with openOverlay and closeOverlay functions
  */
-function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branch = 'main', parentHistory = null) {
+function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branch = 'main', parentHistory = null, hideTopbar = false) {
   // Create overlay container
   const overlay = document.createElement('div');
   overlay.className = 'ipynb-manual-overlay ipynb-github-md-overlay';
@@ -2625,7 +2631,11 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
   topBar.appendChild(leftControlsSection);
   topBar.appendChild(titleSection);
   topBar.appendChild(rightControlsSection);
-  overlayContent.appendChild(topBar);
+
+  // Conditionally add top bar (hide if no-topbar variation is set)
+  if (!hideTopbar) {
+    overlayContent.appendChild(topBar);
+  }
 
   // Append dropdowns (float above content)
   overlayContent.appendChild(historyDropdown);
@@ -2637,7 +2647,10 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
   mainWrapper.className = 'ipynb-overlay-main';
 
   // Append navigation tree panel (left side, inside flex wrapper)
-  mainWrapper.appendChild(navTreePanel);
+  // Only add tree if top bar is visible (tree toggle needs to be accessible)
+  if (!hideTopbar) {
+    mainWrapper.appendChild(navTreePanel);
+  }
 
   // Create content area for markdown (right side, inside flex wrapper)
   const contentArea = document.createElement('div');
@@ -3065,6 +3078,7 @@ export default async function decorate(block) {
   const isAutorun = block.classList.contains('autorun');
   const isNotebook = block.classList.contains('notebook'); // Combines manual and paged (no autorun), close button visible
   const isIndex = block.classList.contains('index'); // Auto-opens overlay without button click
+  const isNoTopbar = block.classList.contains('no-topbar'); // Hides the top bar (buttons and title)
 
   try {
     // Extract notebook path from block content
@@ -3286,7 +3300,7 @@ export default async function decorate(block) {
 
       // Create overlay with autorun support and notebook mode flag
       const notebookTitle = notebook.metadata?.title || 'Jupyter Notebook';
-      const overlay = createPagedOverlay(container, cellsContainer, shouldAutorun, isNotebook, repoUrl, notebookTitle, helpRepoUrl, githubBranch);
+      const overlay = createPagedOverlay(container, cellsContainer, shouldAutorun, isNotebook, repoUrl, notebookTitle, helpRepoUrl, githubBranch, isNoTopbar);
 
       // Index variation: Auto-open overlay without button
       if (isIndex) {
