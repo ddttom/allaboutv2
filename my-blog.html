@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tom Cranstoun's Blog</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: #f5f5f5;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 3rem 2rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .category-section {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .category-title {
+      font-size: 1.8rem;
+      color: #667eea;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 3px solid #667eea;
+    }
+
+    .blog-entry {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .blog-entry:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .blog-title {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .blog-title a {
+      color: #333;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .blog-title a:hover {
+      color: #667eea;
+    }
+
+    .blog-description {
+      color: #666;
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+    }
+
+    .blog-meta {
+      font-size: 0.9rem;
+      color: #999;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .container {
+        padding: 1rem;
+      }
+
+      .category-section {
+        padding: 1.5rem;
+      }
+
+      .category-title {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Tom Cranstoun's Blog</h1>
+    <p class="subtitle">I mostly write about AEM, Edge Delivery Services and AI. A comprehensive archive follows below.</p>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-number">91</div>
+        <div class="stat-label">Articles</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">6</div>
+        <div class="stat-label">Categories</div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="category-map">
+    <div class="container">
+      <h2 style="text-align: center; margin-bottom: 2rem; color: #667eea;">Category Map</h2>
+      <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden;">
+        <thead>
+          <tr style="background: #667eea; color: white;">
+            <th style="padding: 1rem; text-align: left; font-weight: 600;">Category</th>
+            <th style="padding: 1rem; text-align: center; font-weight: 600;">Articles</th>
+            <th style="padding: 1rem; text-align: left; font-weight: 600;">Focus Area</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 1rem;"><a href="#eds-integrations" style="color: #667eea; text-decoration: none; font-weight: 600;">EDS & Integrations</a></td>
+            <td style="padding: 1rem; text-align: center; font-weight: 600; color: #667eea;">22</td>
+            <td style="padding: 1rem; color: #666;">Adobe Edge Delivery Services, frameworks, web components</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 1rem;"><a href="#core-ai-llm" style="color: #667eea; text-decoration: none; font-weight: 600;">Core AI/LLM Topics</a></td>
+            <td style="padding: 1rem; text-align: center; font-weight: 600; color: #667eea;">20</td>
+            <td style="padding: 1rem; color: #666;">Language models, AI fundamentals, machine learning</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 1rem;"><a href="#aem-cms" style="color: #667eea; text-decoration: none; font-weight: 600;">AEM / CMS Focus</a></td>
+            <td style="padding: 1rem; text-align: center; font-weight: 600; color: #667eea;">6</td>
+            <td style="padding: 1rem; color: #666;">Adobe Experience Manager, content management</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 1rem;"><a href="#developer-guide" style="color: #667eea; text-decoration: none; font-weight: 600;">Developer Guide Series</a></td>
+            <td style="padding: 1rem; text-align: center; font-weight: 600; color: #667eea;">13</td>
+            <td style="padding: 1rem; color: #666;">Step-by-step EDS development tutorials</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 1rem;"><a href="#content-creator" style="color: #667eea; text-decoration: none; font-weight: 600;">Content Creator Guide</a></td>
+            <td style="padding: 1rem; text-align: center; font-weight: 600; color: #667eea;">3</td>
+            <td style="padding: 1rem; color: #666;">Authoring guides for non-developers</td>
+          </tr>
+          <tr>
+            <td style="padding: 1rem;"><a href="#general-blog" style="color: #667eea; text-decoration: none; font-weight: 600;">General Blog & Tools</a></td>
+            <td style="padding: 1rem; text-align: center; font-weight: 600; color: #667eea;">27</td>
+            <td style="padding: 1rem; color: #666;">Development tools, AI optimization, best practices</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </nav>
+
+  <div class="container" style="margin-top: 3rem;">
+    <!-- Tutorial Index -->
+    <section class="category-section">
+      <h2 class="category-title">Adobe Edge Delivery Services Tutorial Index</h2>
+      <p style="margin-bottom: 2rem; color: #666;">A comprehensive guide to Document Authoring with Adobe Edge Delivery Services, organized by series.</p>
+
+      <h3 style="color: #667eea; margin-top: 2rem; margin-bottom: 1rem;">Developer Guide Series (12 parts)</h3>
+      <p style="color: #666; margin-bottom: 1rem;"><strong>Target Audience:</strong> Developers, Technical Implementers<br>
+      <strong>Focus:</strong> Technical implementation, coding, blocks, components, AI integration</p>
+
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 2rem;">
+        <thead>
+          <tr style="background: #667eea; color: white;">
+            <th style="padding: 0.75rem; text-align: left;">Part</th>
+            <th style="padding: 0.75rem; text-align: left;">Focus Area</th>
+            <th style="padding: 0.75rem; text-align: left;">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 0.75rem;"><a href="https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-0" style="color: #667eea; text-decoration: none; font-weight: 600;">Part 0</a></td>
+            <td style="padding: 0.75rem; font-weight: 600;">Introduction</td>
+            <td style="padding: 0.75rem; color: #666;">Comprehensive tutorial introduction covering the fundamentals</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 0.75rem;"><a href="https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-1" style="color: #667eea; text-decoration: none; font-weight: 600;">Part 1</a></td>
+            <td style="padding: 0.75rem; font-weight: 600;">Blocks & HTML</td>
+            <td style="padding: 0.75rem; color: #666;">Create custom blocks and modify HTML structure</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 0.75rem;"><a href="https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-2" style="color: #667eea; text-decoration: none; font-weight: 600;">Part 2</a></td>
+            <td style="padding: 0.75rem; font-weight: 600;">Fragments & Metadata</td>
+            <td style="padding: 0.75rem; color: #666;">Advanced block creation with reusable fragments</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 0.75rem;"><a href="https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-3" style="color: #667eea; text-decoration: none; font-weight: 600;">Part 3</a></td>
+            <td style="padding: 0.75rem; font-weight: 600;">Spreadsheets</td>
+            <td style="padding: 0.75rem; color: #666;">Master spreadsheet integration for dynamic content</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 0.75rem;"><a href="https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-4" style="color: #667eea; text-decoration: none; font-weight: 600;">Part 4</a></td>
+            <td style="padding: 0.75rem; font-weight: 600;">SPA Development</td>
+            <td style="padding: 0.75rem; color: #666;">Build modern Single Page Applications</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 0.75rem;"><a href="https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-5" style="color: #667eea; text-decoration: none; font-weight: 600;">Part 5</a></td>
+            <td style="padding: 0.75rem; font-weight: 600;">React Integration</td>
+            <td style="padding: 0.75rem; color: #666;">Complete guide to React-based applications</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 0.75rem;"><a href="https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-6" style="color: #667eea; text-decoration: none; font-weight: 600;">Part 6</a></td>
+            <td style="padding: 0.75rem; font-weight: 600;">JSON & GitHub</td>
+            <td style="padding: 0.75rem; color: #666;">Work with JSON data and GitHub workflows</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 0.75rem;"><a href="https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-7" style="color: #667eea; text-decoration: none; font-weight: 600;">Part 7</a></td>
+            <td style="padding: 0.75rem; font-weight: 600;">Components</td>
+            <td style="padding: 0.75rem; color: #666;">Develop reusable, modular components</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 0.75rem;"><a href="https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-8" style="color: #667eea; text-decoration: none; font-weight: 600;">Part 8</a></td>
+            <td style="padding: 0.75rem; font-weight: 600;">AI Integration</td>
+            <td style="padding: 0.75rem; color: #666;">Implement AI features in your applications</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 0.75rem;"><a href="https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-9" style="color: #667eea; text-decoration: none; font-weight: 600;">Part 9</a></td>
+            <td style="padding: 0.75rem; font-weight: 600;">Setup & Best Practices</td>
+            <td style="padding: 0.75rem; color: #666;">Essential project setup and best practices</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 0.75rem;"><a href="https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-10" style="color: #667eea; text-decoration: none; font-weight: 600;">Part 10</a></td>
+            <td style="padding: 0.75rem; font-weight: 600;">AI for Development</td>
+            <td style="padding: 0.75rem; color: #666;">Leverage AI tools for coding assistance</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 0.75rem;"><a href="https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-11" style="color: #667eea; text-decoration: none; font-weight: 600;">Part 11</a></td>
+            <td style="padding: 0.75rem; font-weight: 600;">AI Documentation</td>
+            <td style="padding: 0.75rem; color: #666;">Advanced AI-powered documentation workflows</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.75rem;"><a href="https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-appendix" style="color: #667eea; text-decoration: none; font-weight: 600;">Appendix</a></td>
+            <td style="padding: 0.75rem; font-weight: 600;">Best Practices Summary</td>
+            <td style="padding: 0.75rem; color: #666;">Summary of Best Practices for EDS Development</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="color: #667eea; margin-top: 2rem; margin-bottom: 1rem;">Content Creator's Guide Series (3 parts)</h3>
+      <p style="color: #666; margin-bottom: 1rem;"><strong>Target Audience:</strong> Content Authors, Editors, Content Strategists<br>
+      <strong>Focus:</strong> Content creation, engagement, authoring best practices</p>
+
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 2rem;">
+        <thead>
+          <tr style="background: #667eea; color: white;">
+            <th style="padding: 0.75rem; text-align: left;">Part</th>
+            <th style="padding: 0.75rem; text-align: left;">Focus Area</th>
+            <th style="padding: 0.75rem; text-align: left;">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 0.75rem;"><a href="https://allabout.network/blogs/ddt/content-creator-guide-to-document-authoring-with-edge-delivery-services" style="color: #667eea; text-decoration: none; font-weight: 600;">Part 1</a></td>
+            <td style="padding: 0.75rem; font-weight: 600;">Engaging Content</td>
+            <td style="padding: 0.75rem; color: #666;">Master creating compelling, audience-focused content</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 0.75rem;"><a href="https://allabout.network/blogs/ddt/content-creator-guide-to-document-authoring-with-edge-delivery-services-part-2" style="color: #667eea; text-decoration: none; font-weight: 600;">Part 2</a></td>
+            <td style="padding: 0.75rem; font-weight: 600;">Content Strategy</td>
+            <td style="padding: 0.75rem; color: #666;">Develop sophisticated content methodologies</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.75rem;"><a href="https://allabout.network/blogs/ddt/content-creator-guide-to-document-authoring-with-edge-delivery-services-part-3" style="color: #667eea; text-decoration: none; font-weight: 600;">Part 3</a></td>
+            <td style="padding: 0.75rem; font-weight: 600;">Content Optimization</td>
+            <td style="padding: 0.75rem; color: #666;">Advanced content refinement and SEO optimization</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <hr style="margin: 2rem 0; border: none; border-top: 2px solid #e0e0e0;">
+
+      <h3 style="color: #667eea; margin-bottom: 1rem;">Additional Resources</h3>
+
+      <div style="margin-bottom: 2rem;">
+        <h4 style="color: #333; margin-bottom: 0.5rem;">Quick Links:</h4>
+        <ul style="list-style: none; padding-left: 0;">
+          <li style="margin-bottom: 0.5rem;"><a href="https://allabout.network/blogs/ddt/integrations/" style="color: #667eea; text-decoration: none;">EDS Integrations Hub</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="https://allabout.network/blogs/ddt/eds-ai" style="color: #667eea; text-decoration: none;">AI Development with EDS</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="https://allabout.network/blogs/ddt/ai/" style="color: #667eea; text-decoration: none;">AI Pages Collection</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="https://allabout.network/blogs/ddt/building-the-ai-native-web-with-eds" style="color: #667eea; text-decoration: none;">Building the AI-Native Web with llms.txt</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 style="color: #333; margin-bottom: 0.5rem;">Related Publications:</h4>
+        <ul style="list-style: none; padding-left: 0;">
+          <li style="margin-bottom: 0.5rem;"><a href="https://www.boye-co.com/blog/2025/1/whats-the-impact-of-the-new-robot-first-web" style="color: #667eea; text-decoration: none;">What's the impact of the new Robot-First Web?</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="https://www.boye-co.com/blog/2024/10/gen-ai-prompting-is-just-another-programming-language" style="color: #667eea; text-decoration: none;">Gen AI prompting is just another programming language</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="https://www.boye-co.com/blog/2024/4/introducing-the-universal-editor-for-adobe-experience-manager" style="color: #667eea; text-decoration: none;">Introducing: The Universal Editor for Adobe Experience Manager</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="https://www.boye-co.com/blog/2024/5/getting-through-the-ai-hype-selecting-an-ai-model-that-works-for-you" style="color: #667eea; text-decoration: none;">Getting through the AI hype: Selecting an AI model</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="https://www.boye-co.com/blog/2024/3/rethinking-ais-role-in-content-management" style="color: #667eea; text-decoration: none;">Rethinking AI's Role in Content Management</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="https://www.boye-co.com/blog/2025/1/from-commodore-pet-to-deepseek-r1" style="color: #667eea; text-decoration: none;">From Commodore PET to DeepSeek-R1</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="https://www.boye-co.com/blog/2025/3/bridging-open-source-enterprise-aem-composability" style="color: #667eea; text-decoration: none;">Bridging Open Source & Enterprise - AEM, Composability, and the Future of DXPs</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="https://www.linkedin.com/pulse/navigating-cms-future-mastering-ai-optimization-tom-cranstoun-zy9ff/" style="color: #667eea; text-decoration: none;">Navigating CMS Future: Mastering AI Optimization</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="https://cmscritic.com/a-cms-consultants-takeaways-from-cms-kickoff-2024" style="color: #667eea; text-decoration: none;">The AI Tipping Point: A Consultant's Takeaways from CMS Kickoff 2024</a></li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div class="container">
+    <!-- EDS & Integrations -->
+    <section class="category-section" id="eds-integrations">
+      <h2 class="category-title">EDS & Integrations</h2>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/integrations/live-jupyter-notebook">Live Jupyter Notebook</a></h3>
+        <p class="blog-description">Jupyter Notebooks (.ipynb files) are an open-source, web-based application for interactive data science and computing. Their core strength is combining live code, equations, visualisations, and ...</p>
+        <p class="blog-meta">Last Modified: 2025-11-19</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/integrations/ai-powered-adobe-eds-development">AI-Powered Adobe EDS Development</a></h3>
+        <p class="blog-description">A comprehensive framework for building sophisticated Adobe EDS components using vanilla JavaScript with zero external dependencies, featuring interactive testing and AI-powered development workflows.</p>
+        <p class="blog-meta">Last Modified: 2025-11-15</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/integrations/living-documentation-browser-based-jupyter-notebooks-for-adobe-eds">Living Documentation - Browser-Based Jupyter Notebooks for Adobe EDS</a></h3>
+        <p class="blog-description">Transform static documentation into interactive experiences where anyone can click Run and see EDS blocks transform content in real-time, no setup required</p>
+        <p class="blog-meta">Last Modified: 2025-11-15</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/integrations/the-convergence-completing-adobe-s-claude-skills-for-perfect-eds-ai-development">The Convergence - Completing Adobe's Claude Skills for Perfect EDS AI Development</a></h3>
+        <p class="blog-description">How my comprehensive docs/for-ai provides the missing 90% that makes Adobe's EDS Skills actually work</p>
+        <p class="blog-meta">Last Modified: 2025-11-08</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/integrations/testing-eds-blocks-with-jupyter-notebooks-a-developer-playground">Testing EDS Blocks with Jupyter Notebooks in VS Code</a></h3>
+        <p class="blog-description">Set up a Jupyter notebook environment in Visual Studio Code for testing Adobe Edge Delivery Services blocks interactively with JavaScript.</p>
+        <p class="blog-meta">Last Modified: 2025-11-08</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/integrations/the-eds-developer-dilemma-and-how-one-framework-solved-it">The EDS Developer's Dilemma - And How One Framework Solved It</a></h3>
+        <p class="blog-description">How one framework solves the EDS developer's dilemma - enabling sophisticated components whilst maintaining EDS principles</p>
+        <p class="blog-meta">Last Modified: 2025-07-11</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/integrations/untitled-document">Repository Review: Web Components with Adobe Edge Delivery Services</a></h3>
+        <p class="blog-description">An in-depth analysis of a repository that successfully bridges the gap between Adobe EDS simplicity and modern web component development</p>
+        <p class="blog-meta">Last Modified: 2025-06-26</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/integrations/spectrum-component-as-eds-block-in-gdoc">Spectrum Component Slide Viewer in GDocs</a></h3>
+        <p class="blog-description">Spectrum Component Slide Viewer in GDocs</p>
+        <p class="blog-meta">Last Modified: 2025-06-25</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/integrations/mastering-eds-block-debugging-a-developer-guide-to-edge-delivery-services">Mastering EDS Block Debugging - A Developer's Guide to Edge Delivery Services</a></h3>
+        <p class="blog-description">Learn systematic approaches to debug Adobe Edge Delivery Services blocks, from basic logging to advanced instrumentation techniques.</p>
+        <p class="blog-meta">Last Modified: 2025-06-25</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/integrations/vue-js-version-of-slide-viewer-in-gdoc">Vue Js Slide Viewer in GDocs</a></h3>
+        <p class="blog-description">Vue Js Slide Viewer in GDocs</p>
+        <p class="blog-meta">Last Modified: 2025-06-25</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/integrations/shoelace-version-of-slide-viewer-in-gdocs">Shoelace Version of Slide Viewer in GDocs</a></h3>
+        <p class="blog-description">Shoelace Version of Slide Viewer in GDocs</p>
+        <p class="blog-meta">Last Modified: 2025-06-24</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/integrations/using-web-components-in-adobe-edge-delivery-services-blocks">Using Web Components in Adobe Edge Delivery Services Blocks</a></h3>
+        <p class="blog-description">A comprehensive guide to implementing web components in EDS blocks, featuring advanced Shoelace Card components with glassmorphism effects and modern web development practices.</p>
+        <p class="blog-meta">Last Modified: 2025-06-24</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/integrations/fast-eds-development-integration-for-ai">Fast EDS Development with AI - A Local-First Approach</a></h3>
+        <p class="blog-description">Transform your Adobe Edge Delivery Services workflow with a simple development server that brings AI assistance to EDS development</p>
+        <p class="blog-meta">Last Modified: 2025-06-19</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/integrations">Beyond Static Pages - Building Rich Apps with Edge Delivery Services</a></h3>
+        <p class="blog-description">Discover how Edge Delivery Services enables interactive applications through framework integrations</p>
+        <p class="blog-meta">Last Modified: 2025-06-16</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/integrations/using-spectrum-components-in-adobe-edge-delivery-services-blocks">Using Spectrum Components in Adobe Edge Delivery Services Blocks</a></h3>
+        <p class="blog-description">Learn how to create dynamic UI components for EDS using Adobe Spectrum Web Components and the query-index.json pattern, with practical examples and testing strategies.</p>
+        <p class="blog-meta">Last Modified: 2025-06-16</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/integrations/building-a-react-app-with-edge-delivery-services">Building a React App with Edge Delivery Services</a></h3>
+        <p class="blog-description">Learn how to integrate React applications with Adobe Edge Delivery Services for modern, component-based content experiences</p>
+        <p class="blog-meta">Last Modified: 2025-06-13</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/integrations/reactjs-version-of-slide-builder">ReactJS version of slide builder</a></h3>
+        <p class="blog-description"></p>
+        <p class="blog-meta">Last Modified: 2025-06-13</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/integrations/building-headless-applications-with-edge-delivery-services">Building Headless Applications with Edge Delivery Services</a></h3>
+        <p class="blog-description">Edge Delivery Services typically works best for static content delivery, but what if you need something more dynamic? This guide shows how to build a headless Single Page Application while keeping the performance benefits that make Edge Delivery Services attractive. Keeping everything framework-less.</p>
+        <p class="blog-meta">Last Modified: 2025-06-10</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/integrations/building-a-vuejs-app-with-edge-delivery-services">Building a VueJS app with Edge Delivery Services</a></h3>
+        <p class="blog-description">This tutorial demonstrates building a Vue.js slide builder app integrated with Adobe Edge Delivery Services. The app dynamically fetches and displays slide content with interactive modal panels.</p>
+        <p class="blog-meta">Last Modified: 2025-06-10</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/the-adapter-pattern-liberating-your-eds-design">The Adapter Pattern - Liberating your EDS Design</a></h3>
+        <p class="blog-description">Using the adapter patter with EDS</p>
+        <p class="blog-meta">Last Modified: 2025-05-10</p>
+      </article>
+    </section>
+
+    <!-- Core AI/LLM Topics -->
+    <section class="category-section" id="core-ai-llm">
+      <h2 class="category-title">Core AI/LLM Topics</h2>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/ai/the-flyball-governor-how-victorian-engineering-gave-us-the-language-of-ai">The Flyball Governor - How Victorian Engineering Gave Us the Language of AI</a></h3>
+        <p class="blog-description">Exploring the surprising connections between steam engine governors and modern AI systems</p>
+        <p class="blog-meta">Last Modified: 2025-11-03</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/ai/you-built-software-for-humans-now-build-it-for-ai">You Built Software for Humans - Now Build It for AI</a></h3>
+        <p class="blog-description">Software that works brilliantly for humans often confuses AI assistants completely - and that's becoming a serious business problem.</p>
+        <p class="blog-meta">Last Modified: 2025-07-20</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/ai/the-no-elephants-problem-why-ai-struggles-with-what-not-to-do">The "No Elephants" Problem - Why AI Struggles With What NOT to Do</a></h3>
+        <p class="blog-description">Exploring why AI systems consistently fail at understanding negation and what this reveals about their fundamental limitations</p>
+        <p class="blog-meta">Last Modified: 2025-06-10</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/ai/the-tokenization-trap-how-ai-actually-processes-german">The Tokenization Trap - How AI Actually Processes German</a></h3>
+        <p class="blog-description">Today we're going under the hood to see what happens when AI processes German text. The discovery might shock you: the problem goes beyond having less German training data. It's about fundamental computational approaches built around English assumptions.</p>
+        <p class="blog-meta">Last Modified: 2025-06-06</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/ai/the-digital-language-caste-system">The Digital Language Caste System - How AI Creates Linguistic Apartheid</a></h3>
+        <p class="blog-description">How artificial intelligence systems are creating a digital hierarchy based on language – and why this transformation is happening faster than most realize</p>
+        <p class="blog-meta">Last Modified: 2025-05-28</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/ai/english-dominance-in-ai-systems-leaves-other-languages-behind">English Dominance in AI Systems</a></h3>
+        <p class="blog-description">Artificial intelligence systems aren't just better at English - they're fundamentally English-centric technologies. From their initial training to their latest developments, from how they process prompts to how they "think" about problems, AI systems operate within an English-dominant framework that leaves other languages struggling to keep pace.</p>
+        <p class="blog-meta">Last Modified: 2025-05-22</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/ai/a-framework-for-evaluating-ai-confidence">A Framework for Evaluating AI Confidence</a></h3>
+        <p class="blog-description">When interacting with large language models like GPT, ChatGPT, or Claude, we often focus on the answer provided. But beneath the surface of these responses lies a landscape of probability and uncertainty that remains invisible to most users. Understanding this hidden dimension offers valuable insight into the reliability of AI-generated information., This analysis explores a practical method for examining AI confidence at the token level, providing a framework for distinguishing between high-confidence information and potentially problematic claims. Even if you are not a developer it is am interesting read.</p>
+        <p class="blog-meta">Last Modified: 2025-05-15</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/ai/complete-guide-to-comfyui-on-mac-installation-configuration-and-troubleshooting">Complete Guide to ComfyUI on Mac: Installation, Configuration, and Troubleshooting</a></h3>
+        <p class="blog-description">Complete Guide to ComfyUI on Mac: Installation, Configuration, and Troubleshooting, This document provides a comprehensive walkthrough for installing, configuring, and troubleshooting ComfyUI on macOS. ComfyUI is a powerful and modular node-based interface for Stable Diffusion, offering a flexible and efficient way to create and experiment with generative AI workflows. This guide aims to take you from the initial setup to effectively utilizing ComfyUI's features on your Mac system. We will cover each step in detail, addressing potential issues and providing helpful tips along the way.</p>
+        <p class="blog-meta">Last Modified: 2025-05-14</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/ai/setting-up-your-mac-for-local-ai-development">Setting Up Your Mac for Local AI Development</a></h3>
+        <p class="blog-description">Recent advancements in AI now allow running advanced machine learning models directly on Apple Silicon Macs. This eliminates reliance on costly cloud services or specialized hardware. This guide provides a comprehensive setup for a local AI development environment on your Mac, enabling work on complex machine learning models privately and without ongoing expenses.</p>
+        <p class="blog-meta">Last Modified: 2025-05-14</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/ai/why-modern-web-architecture-confuses-ai">Why Modern Web Architecture Confuses AI</a></h3>
+        <p class="blog-description">One significant but often overlooked limitation of current AI systems is their struggle to comprehend modern web architectures, particularly headless implementations that separate content from ...</p>
+        <p class="blog-meta">Last Modified: 2025-05-14</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/ai/what-is-missing-from-ai-the-blog-post">What's missing from AI - The Blog Post</a></h3>
+        <p class="blog-description">Despite remarkable progress in artificial intelligence, today's AI systems—particularly Large Language Models—lack several critical capabilities that limit their effectiveness in enterprise settings. This article describes some of them and offers a pragmatic solution</p>
+        <p class="blog-meta">Last Modified: 2025-05-09</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/ai/slide-deck-what-is-missing-from-ai">Slide Deck - What is Missing from AI</a></h3>
+        <p class="blog-description">Slide deck exploring the limitations and challenges of current AI systems</p>
+        <p class="blog-meta">Last Modified: 2025-05-07</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/ai/slide-deck-what-s-missing-from-ai">What's Missing from AI</a></h3>
+        <p class="blog-description">Slide deck exploring the limitations and challenges of current AI systems</p>
+        <p class="blog-meta">Last Modified: 2025-05-07</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/ai/making-llms-txt-work-for-headless-websites">Making LLMs.txt work for Headless Websites</a></h3>
+        <p class="blog-description">There's a critical disconnect hiding in plain sight: AI systems can't see your JavaScript-rendered content. While humans experience rich, interactive websites, large language models encounter only empty shells—missing the very information they're designed to analyze. The llms.txt standard offers an innovative solution, but as a September 2024 proposal, most AI systems don't know it exists yet. Discover how a creative blend of traditional HTML meta tags and modern specifications bridges this gap, ensuring your content remains visible in an AI-mediated world without waiting years for AI systems to catch up.</p>
+        <p class="blog-meta">Last Modified: 2025-04-26</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/ai/how-ai-models-think">Behind the Curtain - How AI Models Think</a></h3>
+        <p class="blog-description">When we interact with AI language models, we often see only their final responses. But what's happening behind the scenes as these systems process our questions, especially when faced with linguistic ambiguity, wordplay, or jokes? A fascinating series of conversations with two AI models—Phi-4 and Deepseek-r1:70b—offers a glimpse into these internal processes.</p>
+        <p class="blog-meta">Last Modified: 2025-04-23</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/ai/the-mathematical-heartbeat-of-ai">The Mathematical Heartbeat of AI</a></h3>
+        <p class="blog-description">Exploring the fundamental mathematical concepts that power artificial intelligence. Euler's number (e) and its role in creating smooth growth patterns, the sigmoid function for binary decisions, ReLU for improved training, and vectorization for language processing. It also explains the softmax function for multi-class classification and how these mathematical building blocks work together in neural networks, emphasizing that understanding these principles is crucial for effectively using and comprehending AI systems</p>
+        <p class="blog-meta">Last Modified: 2025-04-23</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/ai/does-ai-mean-algorithmic-interpolation">Does AI Mean Algorithmic Interpolation</a></h3>
+        <p class="blog-description">Artificial intelligence has recently captivated the public imagination with promises of self-driving cars and effortless creative works. However, these impressive results are not products of thought, but rather the result of sophisticated mathematical operations, specifically advanced forms of algorithmic interpolation.</p>
+        <p class="blog-meta">Last Modified: 2025-04-23</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/ai/the-stripped-down-truth-how-ai-actually-works-without-the-fancy-talk">The Stripped-Down Truth -- How AI Actually Works Without the Fancy TalkI</a></h3>
+        <p class="blog-description">The AI community has been hiding the real math behind clever, human-like terminology since the 1950s—all to make the topic seem more interesting and mysterious than it actually is. Let's cut through the jargon and explain what's really happening with these so-called "intelligent" systems, especially when it comes to mathematical reasoning.</p>
+        <p class="blog-meta">Last Modified: 2025-04-07</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/ai/disadvantages-and-problematic-content-in-common-crawl">Disadvantages and Problematic Content in Common Crawl</a></h3>
+        <p class="blog-description">While Common Crawl provides an invaluable resource for researchers and AI developers, it also presents significant challenges and concerns, particularly regarding problematic content. This document examines the disadvantages of using Common Crawl data, with a specific focus on unsafe, pornographic, violent, hate speech, and racist content that may be present in the dataset.</p>
+        <p class="blog-meta">Last Modified: 2025-04-05</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/ai/mathematics-behind-ai">Slides for Mathematics behind AI</a></h3>
+        <p class="blog-description">The mathematics behind AI</p>
+        <p class="blog-meta">Last Modified: 2025-04-04</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/ai/">Toms Blog - AI Index Page</a></h3>
+        <p class="blog-description">The index page of the AI blogs of a seasoned architect</p>
+        <p class="blog-meta">Last Modified: 2025-04-04</p>
+      </article>
+    </section>
+
+    <!-- AEM / CMS Focus -->
+    <section class="category-section" id="aem-cms">
+      <h2 class="category-title">AEM / CMS Focus</h2>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/strategic-aem-architecture-why-framework-thinking-beats-feature-chasing">Strategic AEM Architecture - Why Framework Thinking Beats Feature Chasing</a></h3>
+        <p class="blog-description">Independent AEM consultant offers strategic architecture, AI integration planning, and team mentoring for digital transformation success.</p>
+        <p class="blog-meta">Last Modified: 2025-07-11</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/dam/dam">DAM Block Demo</a></h3>
+        <p class="blog-description">Demonstration of the DAM block functionality</p>
+        <p class="blog-meta">Last Modified: 2025-05-06</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/aem-development-with-ai">AEMaaCS Development with AI: My Journey with Cline</a></h3>
+        <p class="blog-description">I'm sharing an exciting development that's transforming how I approach development as a non-traditional AEM developer.</p>
+        <p class="blog-meta">Last Modified: 2024-11-11</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/guide-to-aem-development-with-ai">A Guide to AEMaaCS Development with AI</a></h3>
+        <p class="blog-description">I'm sharing an exciting development that's transforming how I approach development as a non-traditional AEM developer.</p>
+        <p class="blog-meta">Last Modified: 2024-11-11</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/adobe-eds-revolutionizing-content-management">Adobe EDS: Revolutionizing Content Management</a></h3>
+        <p class="blog-description">In digital publishing, the quest for the ideal content management system (CMS) is ongoing. Content Authors actually dislike CMS systems. The Content team receives original ...</p>
+        <p class="blog-meta">Last Modified: 2024-11-07</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/local-development-with-aem-and-universal-editor">Local Development with AEM and Universal Editor</a></h3>
+        <p class="blog-description">Setting up a local development environment for AEM with the Universal Editor.</p>
+        <p class="blog-meta">Last Modified: 2024-09-16</p>
+      </article>
+    </section>
+
+    <!-- Developer Guide Series (EDS) -->
+    <section class="category-section" id="developer-guide">
+      <h2 class="category-title">Developer Guide Series (EDS)</h2>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-appendix">Developer Guide to Document Authoring with Edge Delivery Services - Appendix</a></h3>
+        <p class="blog-description">Summary of Best Practices for EDS Development</p>
+        <p class="blog-meta">Last Modified: 2025-04-26</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-11">Developer Guide to Document Authoring with Edge Delivery Services - Part 11</a></h3>
+        <p class="blog-description">Getting AI to document your output., Review its Code, using Cursor, Review its Code, using EDS prompt, Review its Code as a Senior Dev Review its Prompt.</p>
+        <p class="blog-meta">Last Modified: 2024-10-01</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-10">Developer Guide to Document Authoring with Edge Delivery Services - Part 10</a></h3>
+        <p class="blog-description">Using AI to provide Coding, Review, Documentation, and more</p>
+        <p class="blog-meta">Last Modified: 2024-09-21</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-9">Developer Guide to Document Authoring with Edge Delivery Services - Part 9</a></h3>
+        <p class="blog-description">This tutorial will guide you through Document Authoring with Edge Delivery Services. This time, set up and best practice</p>
+        <p class="blog-meta">Last Modified: 2024-09-05</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-8">Developer Guide to Document Authoring with Edge Delivery Services - Part 8</a></h3>
+        <p class="blog-description">This tutorial will guide you through Document Authoring with Edge Delivery Services. This time, using AI with Edge Delivery Services</p>
+        <p class="blog-meta">Last Modified: 2024-09-02</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-7">Developer Guide to Document Authoring with Edge Delivery Services - Part 7</a></h3>
+        <p class="blog-description">This tutorial will guide you through Document Authoring with Edge Delivery Services. This time, some useful components</p>
+        <p class="blog-meta">Last Modified: 2024-09-01</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-6">Developer Guide to Document Authoring with Edge Delivery Services - Part 6</a></h3>
+        <p class="blog-description">This tutorial will guide you through Document Authoring with Edge Delivery Services. Working with Json files and GitHub</p>
+        <p class="blog-meta">Last Modified: 2024-09-01</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-5">Developer Guide to Document Authoring with Edge Delivery Services - Part 5</a></h3>
+        <p class="blog-description">This tutorial will guide you through the use of Document Authoring with Edge Delivery Services. To create a React App that works with Edge Delivery Services</p>
+        <p class="blog-meta">Last Modified: 2024-09-01</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-4">Developer Guide to Document Authoring with Edge Delivery Services - Part 4</a></h3>
+        <p class="blog-description">This tutorial will guide you through the use of Document Authoring with Edge Delivery Services, creating a SPA App.</p>
+        <p class="blog-meta">Last Modified: 2024-09-01</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-3">Developer Guide to Document Authoring with Edge Delivery Services - Part 3</a></h3>
+        <p class="blog-description">This tutorial will guide you through the use of spreadsheets in Document Authoring with Edge Delivery Services.</p>
+        <p class="blog-meta">Last Modified: 2024-09-01</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-2">Developer Guide to Document Authoring with Edge Delivery Services - Part 2</a></h3>
+        <p class="blog-description">This tutorial will guide you through creating your blocks and amending the HTML provided by Edge Delivery Services to ensure that the page has the look and feel you need, with coding examples. Part 2 covers fragments and has more metadata detail</p>
+        <p class="blog-meta">Last Modified: 2024-09-01</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-1">Developer Guide to Document Authoring with Edge Delivery Services - Part 1</a></h3>
+        <p class="blog-description">This tutorial will guide you through creating your blocks and amending the HTML provided by Edge Delivery Services to ensure that the page has the look and feel you need, with coding examples. An ongoing series for developers</p>
+        <p class="blog-meta">Last Modified: 2024-09-01</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-0">Developer Guide to Document Authoring with Edge Delivery Services - Part 0</a></h3>
+        <p class="blog-description">This tutorial will guide you through Document Authoring with Adobe Edge Delivery Services. This is an introduction. An ongoing series for developers</p>
+        <p class="blog-meta">Last Modified: 2024-09-01</p>
+      </article>
+    </section>
+
+    <!-- Content Creator Guide Series -->
+    <section class="category-section" id="content-creator">
+      <h2 class="category-title">Content Creator Guide Series</h2>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/content-creator-guide-to-document-authoring-with-edge-delivery-services-part-3">A Content Creator's Guide to Document Authoring with Edge Delivery Services - Part 3</a></h3>
+        <p class="blog-description">This tutorial will guide you through creating a page full of content that engages. An ongoing series for authors</p>
+        <p class="blog-meta">Last Modified: 2024-09-08</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/content-creator-guide-to-document-authoring-with-edge-delivery-services-part-2">A Content Creator's Guide to Document Authoring with Edge Delivery Services - Part 2</a></h3>
+        <p class="blog-description">This tutorial will guide you through creating a page full of content that engages. An ongoing series for authors</p>
+        <p class="blog-meta">Last Modified: 2024-07-25</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/content-creator-guide-to-document-authoring-with-edge-delivery-services">A Content Creator's Guide to Document Authoring with Edge Delivery Services - Part 1</a></h3>
+        <p class="blog-description">This tutorial will guide you through creating a page full of content that engages. An ongoing series for authors</p>
+        <p class="blog-meta">Last Modified: 2024-06-26</p>
+      </article>
+    </section>
+
+    <!-- General Blog & Tools -->
+    <section class="category-section" id="general-blog">
+      <h2 class="category-title">General Blog & Tools</h2>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/the-hidden-complexities-of-ai-code-modification-a-practical-guide">The Hidden Complexities of AI Code Modification: A Practical Guide</a></h3>
+        <p class="blog-description">I'm sharing how to use AI effectively to modify existing code.</p>
+        <p class="blog-meta">Last Modified: 2025-11-14</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/human-centred-ai-in-content-management">Human-Centred AI in Content Management</a></h3>
+        <p class="blog-description">The post examines why human oversight, strategic thinking, and collaborative decision-making remain essential in AI workflows, using examples like development time reduction and engagement improvements. The key message: companies that thrive will use AI as a powerful assistant that enhances human capabilities whilst keeping people in control of the creative and strategic decisions that matter most., Rather than building systems that push humans aside, the blog advocates for human-centred AI that treats technology as a collaborative partner - one that processes data and suggests solutions while humans provide context, creativity, and final judgment calls.</p>
+        <p class="blog-meta">Last Modified: 2025-09-15</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/faq">Edge Delivery Services Developer FAQ</a></h3>
+        <p class="blog-description"></p>
+        <p class="blog-meta">Last Modified: 2025-05-13</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/five-things-to-do-do-in-york">Five things to do in York, England</a></h3>
+        <p class="blog-description">A number of posts describing what to do in York England</p>
+        <p class="blog-meta">Last Modified: 2025-04-26</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/guide-to-mastering-ai-prompting-the-significance-of-understanding-programming">The Significance of Understanding Programming with AI</a></h3>
+        <p class="blog-description">Guide to Mastering AI Prompting: The Significance of Understanding Programming</p>
+        <p class="blog-meta">Last Modified: 2024-11-26</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/building-the-ai-native-web-with-eds">Building the AI-Native Web with EDS, llms.txt</a></h3>
+        <p class="blog-description">Jeremy Howard's llms.txt is a proposed standard https://llmstxt.org/#proposal for helping LLMs understand and work with websites and new software at inference time, particularly for projects/tools ...</p>
+        <p class="blog-meta">Last Modified: 2024-11-27</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/a-guide-to-ai-optimization-an-update">A guide to AI Optimization - an update</a></h3>
+        <p class="blog-description">An article describing updates in AI Optimization</p>
+        <p class="blog-meta">Last Modified: 2024-11-20</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/">About DDT | Services | Digital transformation</a></h3>
+        <p class="blog-description">Meet Tom Cranstoun and Digital Domain Technologies (DDT), your go-to experts for AEM consulting. With over 12 years of experience, Tom, "The AEM Guy," leads a team offering tailored AEM solutions, including architecture, technical guidance, and innovation roadmapping.</p>
+        <p class="blog-meta">Last Modified: 2024-11-16</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/notes/aem-sites-notes">Instructions for AI, generic version.</a></h3>
+        <p class="blog-description">Digital Domain Technologies Ltd Consultancy has an improved version. Contact tom@digitaldomaintechnologies.com</p>
+        <p class="blog-meta">Last Modified: 2024-10-08</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/blogroll-block-demo">Blogroll Block Demo</a></h3>
+        <p class="blog-description">Demonstration of the Blogroll block for Franklin</p>
+        <p class="blog-meta">Last Modified: 2024-09-26</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/code-expander-block-showcase">Code Expander Block Demo</a></h3>
+        <p class="blog-description">A demonstration of the Code Expander block functionality</p>
+        <p class="blog-meta">Last Modified: 2024-09-23</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/eds-ai">AI-Powered Development</a></h3>
+        <p class="blog-description">An article explaining a recent presentation</p>
+        <p class="blog-meta">Last Modified: 2024-09-20</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/ai-powered-development">AI-Powered Development</a></h3>
+        <p class="blog-description">An article explaining a recent presentation</p>
+        <p class="blog-meta">Last Modified: 2024-09-16</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/structuring-context-for-effective-ai-development">Structuring Context for Effective AI Development</a></h3>
+        <p class="blog-description">This post will explore the three-tiered structure for creating context in Cursor.ai, ensuring your AI assistant has all the information it needs to be a valuable coding partner.</p>
+        <p class="blog-meta">Last Modified: 2024-09-16</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/notes/structuring-context-for-effective-ai-development">Structuring Context for Effective AI Development</a></h3>
+        <p class="blog-description">Tools like Cursor.ai are changing how we approach coding tasks. One crucial aspect of leveraging AI in development is providing the proper context. In this ...</p>
+        <p class="blog-meta">Last Modified: 2024-09-15</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/notes/eds-notes">Instructions for AI, generic version.</a></h3>
+        <p class="blog-description">Digital Domain Technologies Ltd Consultancy has an improved version. Contact tom@digitaldomaintechnologies.com</p>
+        <p class="blog-meta">Last Modified: 2024-09-13</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/notes/cursorrules">.cursorrules file</a></h3>
+        <p class="blog-description">Sample .cursor rules files: Add as much detail as you need for your projects, including project-specific rules and guidance. My private version is four pages ...</p>
+        <p class="blog-meta">Last Modified: 2024-09-12</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/llm-router">Using Cursor with Local LLM</a></h3>
+        <p class="blog-description">An article explaining how to user Cursor with Local LLM. Includes Scripts</p>
+        <p class="blog-meta">Last Modified: 2024-09-11</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/revolutionising-aem-development-with-ai-a-live-demonstration">Revolutionizing AEM Edge Delivery Services Development with AI</a></h3>
+        <p class="blog-description">Welcome, everyone. I'm Tom Cranstoun, an independent Adobe Experience Manager (AEM) Consultant. Today, I'm excited to showcase the transformative power of AI in web development, ...</p>
+        <p class="blog-meta">Last Modified: 2024-09-08</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/tester">AI-Generated Code</a></h3>
+        <p class="blog-description">This is AI-generated code from a one-shot prompt</p>
+        <p class="blog-meta">Last Modified: 2024-09-05</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/ai-generated-code">AI-Generated Code</a></h3>
+        <p class="blog-description">This is AI-generated code from a one-shot prompt</p>
+        <p class="blog-meta">Last Modified: 2024-09-05</p>
+      </article>
+
+      <article class="blog-entry">
+        <h3 class="blog-title"><a href="/blogs/ddt/allaboutmarketing">allabout.network | our offer</a></h3>
+        <p class="blog-description">Want to create a stunning, personalised web page to share your event, passion project or holiday memories? Keep your story from getting lost in the social media shuffle or buried under ads. Introducing allabout.network: Your easy solution to creating and hosting beautiful web pages without the tech hassle.</p>
+        <p class="blog-meta">Last Modified: 2024-07-25</p>
+      </article>
+    </section>
+  </div>
+</body>
+</html>
