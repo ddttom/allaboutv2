@@ -13,56 +13,57 @@
 
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      line-height: 1.6;
+      line-height: 1.5;
       color: #333;
       background: #f5f5f5;
+      font-size: 14px;
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
-      padding: 2rem;
+      padding: 1rem 1.5rem;
     }
 
     header {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
-      padding: 3rem 2rem;
+      padding: 2rem 1.5rem;
       text-align: center;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
     h1 {
-      font-size: 2.5rem;
+      font-size: 2rem;
       font-weight: 700;
       margin-bottom: 0.5rem;
     }
 
     .subtitle {
-      font-size: 1.2rem;
+      font-size: 1rem;
       opacity: 0.9;
     }
 
     .category-section {
       background: white;
-      border-radius: 12px;
-      padding: 2rem;
-      margin-bottom: 2rem;
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
     .category-title {
-      font-size: 1.8rem;
+      font-size: 1.4rem;
       color: #667eea;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       padding-bottom: 0.5rem;
       border-bottom: 3px solid #667eea;
     }
 
     .blog-entry {
-      margin-bottom: 2rem;
-      padding-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
       border-bottom: 1px solid #e0e0e0;
     }
 
@@ -73,8 +74,8 @@
     }
 
     .blog-title {
-      font-size: 1.3rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.05rem;
+      margin-bottom: 0.4rem;
     }
 
     .blog-title a {
@@ -90,21 +91,22 @@
 
     .blog-description {
       color: #666;
-      margin-bottom: 0.5rem;
-      line-height: 1.5;
+      margin-bottom: 0.4rem;
+      line-height: 1.4;
+      font-size: 0.95rem;
     }
 
     .blog-meta {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: #999;
     }
 
     .stats {
       display: flex;
       justify-content: center;
-      gap: 2rem;
+      gap: 1.5rem;
       flex-wrap: wrap;
-      margin-top: 1rem;
+      margin-top: 0.75rem;
     }
 
     .stat {
@@ -112,12 +114,12 @@
     }
 
     .stat-number {
-      font-size: 2rem;
+      font-size: 1.5rem;
       font-weight: 700;
     }
 
     .stat-label {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       opacity: 0.9;
     }
 
@@ -144,19 +146,23 @@
 
     @media (max-width: 768px) {
       h1 {
-        font-size: 2rem;
+        font-size: 1.6rem;
       }
 
       .container {
-        padding: 1rem;
+        padding: 0.75rem;
       }
 
       .category-section {
-        padding: 1.5rem;
+        padding: 1rem;
       }
 
       .category-title {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
+      }
+
+      .blog-title {
+        font-size: 1rem;
       }
     }
   </style>
@@ -182,24 +188,37 @@
       <h2 class="category-title" style="color: #667eea;">Latest Posts</h2>
 
       <article class="blog-entry" style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-        <div style="display: inline-block; background: #667eea; color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem; margin-bottom: 0.5rem;">NEW</div>
         <h3 class="blog-title"><a href="/blogs/ddt/integrations/live-jupyter-notebook">Live Jupyter Notebook</a></h3>
         <p class="blog-description">Jupyter Notebooks (.ipynb files) are an open-source, web-based application for interactive data science and computing. Their core strength is combining live code, equations, visualisations, and ...</p>
-        <p class="blog-meta">Last Modified: 2025-11-19</p>
       </article>
 
       <article class="blog-entry" style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-        <div style="display: inline-block; background: #667eea; color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem; margin-bottom: 0.5rem;">NEW</div>
         <h3 class="blog-title"><a href="/blogs/ddt/integrations/ai-powered-adobe-eds-development">AI-Powered Adobe EDS Development</a></h3>
         <p class="blog-description">A comprehensive framework for building sophisticated Adobe EDS components using vanilla JavaScript with zero external dependencies, featuring interactive testing and AI-powered development workflows.</p>
-        <p class="blog-meta">Last Modified: 2025-11-15</p>
       </article>
 
       <article class="blog-entry" style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-        <div style="display: inline-block; background: #667eea; color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem; margin-bottom: 0.5rem;">NEW</div>
         <h3 class="blog-title"><a href="/blogs/ddt/integrations/living-documentation-browser-based-jupyter-notebooks-for-adobe-eds">Living Documentation - Browser-Based Jupyter Notebooks for Adobe EDS</a></h3>
         <p class="blog-description">Transform static documentation into interactive experiences where anyone can click Run and see EDS blocks transform content in real-time, no setup required</p>
-        <p class="blog-meta">Last Modified: 2025-11-15</p>
+      </article>
+    </section>
+
+    <section class="category-section" style="background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%); border-left: 4px solid #e17055;">
+      <h2 class="category-title" style="color: #e17055;">Most Visited</h2>
+
+      <article class="blog-entry" style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h3 class="blog-title"><a href="https://allabout.network/blogs/ddt/adobe-edge-delivery-services-full-guide-for-devs-architects-and-ai">Adobe Edge Delivery Services Full Guide for Devs, Architects and AI</a></h3>
+        <p class="blog-description">A comprehensive guide to Adobe Edge Delivery Services covering development, architecture, and AI integration strategies.</p>
+      </article>
+
+      <article class="blog-entry" style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h3 class="blog-title"><a href="https://allabout.network/blogs/ddt/creating-an-llms-txt">Creating an llms.txt</a></h3>
+        <p class="blog-description">Learn how to create an llms.txt file to help AI systems better understand and work with your website content.</p>
+      </article>
+
+      <article class="blog-entry" style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h3 class="blog-title"><a href="https://allabout.network/blogs/ddt/integrations/the-eds-developer-dilemma-and-how-one-framework-solved-it">The EDS Developer's Dilemma - And How One Framework Solved It</a></h3>
+        <p class="blog-description">How one framework solves the EDS developer's dilemma - enabling sophisticated components whilst maintaining EDS principles.</p>
       </article>
     </section>
   </div>
@@ -241,10 +260,15 @@
             <td style="padding: 1rem; text-align: center; font-weight: 600; color: #667eea;">3</td>
             <td style="padding: 1rem; color: #666;">Authoring guides for non-developers</td>
           </tr>
-          <tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
             <td style="padding: 1rem;"><a href="#general-blog" style="color: #667eea; text-decoration: none; font-weight: 600;">General Blog & Tools</a></td>
             <td style="padding: 1rem; text-align: center; font-weight: 600; color: #667eea;">27</td>
             <td style="padding: 1rem; color: #666;">Development tools, AI optimization, best practices</td>
+          </tr>
+          <tr>
+            <td style="padding: 1rem;"><a href="#additional-resources" style="color: #667eea; text-decoration: none; font-weight: 600;">Additional Resources</a></td>
+            <td style="padding: 1rem; text-align: center; font-weight: 600; color: #667eea;">13</td>
+            <td style="padding: 1rem; color: #666;">Quick links and external publications</td>
           </tr>
         </tbody>
       </table>
@@ -368,35 +392,6 @@
           </tr>
         </tbody>
       </table>
-
-      <hr style="margin: 2rem 0; border: none; border-top: 2px solid #e0e0e0;">
-
-      <h3 style="color: #667eea; margin-bottom: 1rem;">Additional Resources</h3>
-
-      <div style="margin-bottom: 2rem;">
-        <h4 style="color: #333; margin-bottom: 0.5rem;">Quick Links:</h4>
-        <ul style="list-style: none; padding-left: 0;">
-          <li style="margin-bottom: 0.5rem;"><a href="https://allabout.network/blogs/ddt/integrations/" style="color: #667eea; text-decoration: none;">EDS Integrations Hub</a></li>
-          <li style="margin-bottom: 0.5rem;"><a href="https://allabout.network/blogs/ddt/eds-ai" style="color: #667eea; text-decoration: none;">AI Development with EDS</a></li>
-          <li style="margin-bottom: 0.5rem;"><a href="https://allabout.network/blogs/ddt/ai/" style="color: #667eea; text-decoration: none;">AI Pages Collection</a></li>
-          <li style="margin-bottom: 0.5rem;"><a href="https://allabout.network/blogs/ddt/building-the-ai-native-web-with-eds" style="color: #667eea; text-decoration: none;">Building the AI-Native Web with llms.txt</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 style="color: #333; margin-bottom: 0.5rem;">Related Publications:</h4>
-        <ul style="list-style: none; padding-left: 0;">
-          <li style="margin-bottom: 0.5rem;"><a href="https://www.boye-co.com/blog/2025/1/whats-the-impact-of-the-new-robot-first-web" style="color: #667eea; text-decoration: none;">What's the impact of the new Robot-First Web?</a></li>
-          <li style="margin-bottom: 0.5rem;"><a href="https://www.boye-co.com/blog/2024/10/gen-ai-prompting-is-just-another-programming-language" style="color: #667eea; text-decoration: none;">Gen AI prompting is just another programming language</a></li>
-          <li style="margin-bottom: 0.5rem;"><a href="https://www.boye-co.com/blog/2024/4/introducing-the-universal-editor-for-adobe-experience-manager" style="color: #667eea; text-decoration: none;">Introducing: The Universal Editor for Adobe Experience Manager</a></li>
-          <li style="margin-bottom: 0.5rem;"><a href="https://www.boye-co.com/blog/2024/5/getting-through-the-ai-hype-selecting-an-ai-model-that-works-for-you" style="color: #667eea; text-decoration: none;">Getting through the AI hype: Selecting an AI model</a></li>
-          <li style="margin-bottom: 0.5rem;"><a href="https://www.boye-co.com/blog/2024/3/rethinking-ais-role-in-content-management" style="color: #667eea; text-decoration: none;">Rethinking AI's Role in Content Management</a></li>
-          <li style="margin-bottom: 0.5rem;"><a href="https://www.boye-co.com/blog/2025/1/from-commodore-pet-to-deepseek-r1" style="color: #667eea; text-decoration: none;">From Commodore PET to DeepSeek-R1</a></li>
-          <li style="margin-bottom: 0.5rem;"><a href="https://www.boye-co.com/blog/2025/3/bridging-open-source-enterprise-aem-composability" style="color: #667eea; text-decoration: none;">Bridging Open Source & Enterprise - AEM, Composability, and the Future of DXPs</a></li>
-          <li style="margin-bottom: 0.5rem;"><a href="https://www.linkedin.com/pulse/navigating-cms-future-mastering-ai-optimization-tom-cranstoun-zy9ff/" style="color: #667eea; text-decoration: none;">Navigating CMS Future: Mastering AI Optimization</a></li>
-          <li style="margin-bottom: 0.5rem;"><a href="https://cmscritic.com/a-cms-consultants-takeaways-from-cms-kickoff-2024" style="color: #667eea; text-decoration: none;">The AI Tipping Point: A Consultant's Takeaways from CMS Kickoff 2024</a></li>
-        </ul>
-      </div>
     </section>
   </div>
 
@@ -939,6 +934,36 @@
         <p class="blog-description">Want to create a stunning, personalised web page to share your event, passion project or holiday memories? Keep your story from getting lost in the social media shuffle or buried under ads. Introducing allabout.network: Your easy solution to creating and hosting beautiful web pages without the tech hassle.</p>
         <p class="blog-meta">Last Modified: 2024-07-25</p>
       </article>
+    </section>
+
+    <!-- Additional Resources -->
+    <section class="category-section" id="additional-resources">
+      <h2 class="category-title">Additional Resources</h2>
+
+      <div style="margin-bottom: 2rem;">
+        <h3 style="color: #667eea; font-size: 1.1rem; margin-bottom: 1rem;">Quick Links</h3>
+        <ul style="list-style: none; padding-left: 0;">
+          <li style="margin-bottom: 0.5rem;"><a href="https://allabout.network/blogs/ddt/integrations/" style="color: #667eea; text-decoration: none;">EDS Integrations Hub</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="https://allabout.network/blogs/ddt/eds-ai" style="color: #667eea; text-decoration: none;">AI Development with EDS</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="https://allabout.network/blogs/ddt/ai/" style="color: #667eea; text-decoration: none;">AI Pages Collection</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="https://allabout.network/blogs/ddt/building-the-ai-native-web-with-eds" style="color: #667eea; text-decoration: none;">Building the AI-Native Web with llms.txt</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 style="color: #667eea; font-size: 1.1rem; margin-bottom: 1rem;">Related Publications</h3>
+        <ul style="list-style: none; padding-left: 0;">
+          <li style="margin-bottom: 0.5rem;"><a href="https://www.boye-co.com/blog/2025/1/whats-the-impact-of-the-new-robot-first-web" style="color: #667eea; text-decoration: none;">What's the impact of the new Robot-First Web?</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="https://www.boye-co.com/blog/2024/10/gen-ai-prompting-is-just-another-programming-language" style="color: #667eea; text-decoration: none;">Gen AI prompting is just another programming language</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="https://www.boye-co.com/blog/2024/4/introducing-the-universal-editor-for-adobe-experience-manager" style="color: #667eea; text-decoration: none;">Introducing: The Universal Editor for Adobe Experience Manager</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="https://www.boye-co.com/blog/2024/5/getting-through-the-ai-hype-selecting-an-ai-model-that-works-for-you" style="color: #667eea; text-decoration: none;">Getting through the AI hype: Selecting an AI model</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="https://www.boye-co.com/blog/2024/3/rethinking-ais-role-in-content-management" style="color: #667eea; text-decoration: none;">Rethinking AI's Role in Content Management</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="https://www.boye-co.com/blog/2025/1/from-commodore-pet-to-deepseek-r1" style="color: #667eea; text-decoration: none;">From Commodore PET to DeepSeek-R1</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="https://www.boye-co.com/blog/2025/3/bridging-open-source-enterprise-aem-composability" style="color: #667eea; text-decoration: none;">Bridging Open Source & Enterprise - AEM, Composability, and the Future of DXPs</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="https://www.linkedin.com/pulse/navigating-cms-future-mastering-ai-optimization-tom-cranstoun-zy9ff/" style="color: #667eea; text-decoration: none;">Navigating CMS Future: Mastering AI Optimization</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="https://cmscritic.com/a-cms-consultants-takeaways-from-cms-kickoff-2024" style="color: #667eea; text-decoration: none;">The AI Tipping Point: A Consultant's Takeaways from CMS Kickoff 2024</a></li>
+        </ul>
+      </div>
     </section>
   </div>
   <a href="#" class="back-to-top">Back to Top</a>
