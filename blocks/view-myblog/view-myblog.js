@@ -354,21 +354,6 @@ export default async function decorate(block) {
       container.appendChild(categoriesContainer);
     }
 
-    // Add back to top button
-    const backToTop = document.createElement('a');
-    backToTop.href = '#';
-    backToTop.className = 'view-myblog-back-to-top';
-    backToTop.textContent = 'Back to Top';
-    backToTop.setAttribute('aria-label', 'Back to top of page');
-
-    // Smooth scroll to top
-    backToTop.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    container.appendChild(backToTop);
-
     // Append to block
     block.appendChild(container);
 

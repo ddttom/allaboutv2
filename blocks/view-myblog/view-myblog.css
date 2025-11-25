@@ -192,29 +192,6 @@
   color: #666;
 }
 
-/* Back to Top button */
-.view-myblog-back-to-top {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  background: #007bff;
-  color: white !important;
-  padding: 1rem 1.5rem;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
-  box-shadow: 0 4px 12px rgba(0,123,255,0.4);
-  transition: all 0.3s ease;
-  z-index: 1000;
-}
-
-.view-myblog-back-to-top:hover {
-  background: #0056b3;
-  color: white !important;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0,123,255,0.5);
-}
-
 /* Loading and error states */
 .view-myblog-loading,
 .view-myblog-error {
@@ -279,12 +256,5 @@
   .view-myblog-category-table td {
     padding: 0.5rem;
     font-size: 0.85rem;
-  }
-
-  .view-myblog-back-to-top {
-    bottom: 1rem;
-    right: 1rem;
-    padding: 0.75rem 1rem;
-    font-size: 0.9rem;
   }
 }

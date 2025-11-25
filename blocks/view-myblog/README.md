@@ -18,7 +18,6 @@ The View MyBlog block dynamically fetches and displays blog content from a JSON 
 - **Smart Category Navigation**: Category map automatically hidden when only one category exists
 - **Full Blog Archives**: Renders all blog posts organized by category
 - **Flexible Sorting**: Categories can specify sort order (oldest-first for tutorials)
-- **Back to Top**: Fixed position back-to-top button with white text
 - **Error Handling**: Graceful error handling with user-friendly messages
 
 ## Usage
@@ -232,7 +231,6 @@ Test in multiple browsers:
 - The block fetches data from `/my-blog.json` at runtime
 - All blog content is defined in the JSON file
 - Category links use hash anchors (e.g., `#eds-integrations`)
-- Back-to-top button uses smooth scroll behavior
 - Error handling displays user-friendly messages
 
 ## AI Variation Details
