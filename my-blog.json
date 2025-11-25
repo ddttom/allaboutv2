@@ -1,4 +1,7 @@
 {
+  "metadata": {
+    "last-updated": "2025-11-25"
+  },
   "latestPosts": [
     {
       "title": "Live Jupyter Notebook",
@@ -275,18 +278,6 @@
           "lastModified": "2025-05-09"
         },
         {
-          "title": "Slide Deck - What is Missing from AI",
-          "url": "/blogs/ddt/ai/slide-deck-what-is-missing-from-ai",
-          "description": "Slide deck exploring the limitations and challenges of current AI systems",
-          "lastModified": "2025-05-07"
-        },
-        {
-          "title": "What's Missing from AI",
-          "url": "/blogs/ddt/ai/slide-deck-what-s-missing-from-ai",
-          "description": "Slide deck exploring the limitations and challenges of current AI systems",
-          "lastModified": "2025-05-07"
-        },
-        {
           "title": "Making LLMs.txt work for Headless Websites",
           "url": "/blogs/ddt/ai/making-llms-txt-work-for-headless-websites",
           "description": "There's a critical disconnect hiding in plain sight: AI systems can't see your JavaScript-rendered content. While humans experience rich, interactive websites, large language models encounter only empty shells—missing the very information they're designed to analyze. The llms.txt standard offers an innovative solution, but as a September 2024 proposal, most AI systems don't know it exists yet. Discover how a creative blend of traditional HTML meta tags and modern specifications bridges this gap, ensuring your content remains visible in an AI-mediated world without waiting years for AI systems to catch up.",
@@ -559,12 +550,6 @@
           "lastModified": "2024-09-20"
         },
         {
-          "title": "AI-Powered Development",
-          "url": "/blogs/ddt/ai-powered-development",
-          "description": "An article explaining a recent presentation",
-          "lastModified": "2024-09-16"
-        },
-        {
           "title": "Structuring Context for Effective AI Development",
           "url": "/blogs/ddt/structuring-context-for-effective-ai-development",
           "description": "This post will explore the three-tiered structure for creating context in Cursor.ai, ensuring your AI assistant has all the information it needs to be a valuable coding partner.",
@@ -599,12 +584,6 @@
           "url": "/blogs/ddt/revolutionising-aem-development-with-ai-a-live-demonstration",
           "description": "Welcome, everyone. I'm Tom Cranstoun, an independent Adobe Experience Manager (AEM) Consultant. Today, I'm excited to showcase the transformative power of AI in web development, ...",
           "lastModified": "2024-09-08"
-        },
-        {
-          "title": "AI-Generated Code",
-          "url": "/blogs/ddt/tester",
-          "description": "This is AI-generated code from a one-shot prompt",
-          "lastModified": "2024-09-05"
         },
         {
           "title": "AI-Generated Code",

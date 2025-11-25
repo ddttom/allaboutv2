@@ -101,6 +101,9 @@ The JSON file should have the following structure:
 
 ```json
 {
+  "metadata": {
+    "last-updated": "2025-11-25"
+  },
   "latestPosts": [
     {
       "title": "Post Title",
@@ -140,6 +143,12 @@ The JSON file should have the following structure:
   ]
 }
 ```
+
+#### Metadata
+
+The optional `metadata` object contains information about the data file itself:
+- `last-updated` - Date when the blog data was last updated (ISO format: YYYY-MM-DD)
+- This metadata is not displayed in the block but useful for tracking content freshness
 
 #### Sort Order
 
