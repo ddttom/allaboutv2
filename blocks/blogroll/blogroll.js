@@ -273,34 +273,7 @@ function createCompactBlogrollPanel(groupedPosts, originalPosts, config) {
   
   updatePanelContent(blogrollContent, groupedPosts);
 
-  // Add "Show All" button at the bottom of the panel
-  const showAllContainer = document.createElement('div');
-  showAllContainer.className = 'blogroll-show-all';
-  
-  const showAllButton = document.createElement('button');
-  showAllButton.textContent = 'Show All Posts';
-  showAllButton.setAttribute('aria-label', 'Show all posts');
-  showAllButton.title = 'Show all posts';
-  
-  let isShowingAll = false;
-  
-  showAllContainer.appendChild(showAllButton);
-  showAllContainer.addEventListener('click', () => {
-    if (isShowingAll) {
-      // Revert to previous state
-      updatePanelContent(blogrollContent, groupedPosts);
-      showAllButton.textContent = 'Show All Posts';
-    } else {
-      // Show all posts
-      const allPosts = groupAndSortPosts(originalPosts, { acceptList: [], pathFilters: [] });
-      updatePanelContent(blogrollContent, allPosts);
-      showAllButton.textContent = 'Show Filtered Posts';
-    }
-    isShowingAll = !isShowingAll;
-  });
-
   panel.appendChild(blogrollContent);
-  panel.appendChild(showAllContainer);
 
   return panel;
 }

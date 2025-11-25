@@ -219,31 +219,6 @@
   margin-top: 2px;
 }
 
-.blogroll-show-all {
-  position: sticky;
-  bottom: 0;
-  background-color: var(--blogroll-panel-bg-color);
-  padding: 10px;
-  text-align: center;
-  border-top: 1px solid var(--blogroll-panel-header-border-color);
-}
-
-.blogroll-show-all button {
-  background-color: var(--blogroll-icon-bg-color);
-  color: var(--blogroll-icon-color);
-  border: none;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
-}
-
-.blogroll-show-all button:hover {
-  background-color: var(--blogroll-link-color);
-}
-
 .blogroll-entry {
   /* Add a thin outline */
   border: 1px solid var(--blogroll-entry-border-color, #e0e0e0);

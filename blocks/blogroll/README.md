@@ -87,7 +87,7 @@ The block uses CSS variables for easy customization:
   - For example, `path=blogs/ddt/d` would match `/blogs/ddt/developer-guide-part-1`
   - Special case: `path=*` will filter posts to only show those in the current subdirectory
 - In compact mode, an icon is displayed that opens a side panel when clicked.
-- The compact panel includes a "Show All Posts" toggle.
+- The compact panel displays filtered posts based on configuration.
 - Each blog post entry now has a thin border for improved visual separation.
 
 ## Accessibility
