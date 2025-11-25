@@ -666,6 +666,114 @@ Access your test at: `http://localhost:3000/blocks/your-block/test.html`
 
 ---
 
+## Block Variations
+
+### ⚠️ CRITICAL: Single JavaScript File for All Variations
+
+**MANDATORY RULE: Each block must have exactly ONE JavaScript file, regardless of how many variations it supports.**
+
+EDS blocks should NEVER have multiple JavaScript files like:
+- ❌ `blockname.js`, `blockname-variation1.js`, `blockname-variation2.js`
+- ❌ `view-myblog.js`, `view-myblog-ai.js`
+
+Instead, all variation logic must be handled within the single JavaScript file using class detection:
+
+```javascript
+export default async function decorate(block) {
+  // Detect variation by checking for class
+  const isVariationA = block.classList.contains('variation-a');
+  const isVariationB = block.classList.contains('variation-b');
+
+  // Apply variation-specific logic
+  if (isVariationA) {
+    // Handle variation A logic
+    const data = await fetchAndFilterData();
+    renderVariationA(block, data);
+  } else if (isVariationB) {
+    // Handle variation B logic
+    renderVariationB(block);
+  } else {
+    // Handle default/standard variation
+    renderStandard(block);
+  }
+}
+```
+
+### Why Single File Architecture
+
+- **Maintainability**: All logic for a block is in one place
+- **EDS Convention**: The system expects one JS file per block
+- **Performance**: Avoids loading multiple files for the same block
+- **Consistency**: Follows the same pattern as CSS variations
+- **Simplicity**: Easier to understand and debug
+
+### Real-World Example
+
+A blog block with an AI filter variation:
+
+✅ **CORRECT:**
+```
+blocks/view-myblog/
+├── view-myblog.js    # Single file with both standard and AI filtering
+├── view-myblog.css
+└── README.md
+```
+
+❌ **INCORRECT:**
+```
+blocks/view-myblog/
+├── view-myblog.js
+├── view-myblog-ai.js  # DON'T DO THIS
+├── view-myblog.css
+└── README.md
+```
+
+**Implementation pattern:**
+```javascript
+export default async function decorate(block) {
+  // Detect AI variation
+  const isAIVariation = block.classList.contains('ai');
+
+  // Fetch data
+  const rawData = await fetchData();
+
+  // Filter or transform data based on variation
+  const processedData = isAIVariation ? filterAIContent(rawData) : rawData;
+
+  // Render with variation-aware logic
+  const title = isAIVariation ? 'Latest AI Posts' : 'Latest Posts';
+  render(block, processedData, title);
+}
+
+// Helper function for AI filtering
+function filterAIContent(data) {
+  // Filter logic specific to AI variation
+  return data.filter(post =>
+    post.url.includes('/ai/') ||
+    post.title.toLowerCase().includes('ai')
+  );
+}
+```
+
+### How Authors Use Variations
+
+In Google Docs:
+```
+| view-myblog (ai) |
+|------------------|
+```
+
+This creates:
+```html
+<div class="view-myblog ai block">
+  <!-- Content -->
+</div>
+```
+
+Your single JavaScript file detects the `ai` class and applies appropriate logic.
+
+---
+
 ## Common Patterns
 
 ### Configuration Object

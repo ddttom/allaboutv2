@@ -85,6 +85,40 @@ See `.claude/README.md` for complete slash command reference.
   - Test content before implementation
   - Author needs before developer needs
 
+## ⚠️ CRITICAL: Single JavaScript File for Block Variations
+
+**Each EDS block must have exactly ONE JavaScript file, regardless of variations.**
+
+**NEVER create multiple JavaScript files:**
+- ❌ `blockname.js`, `blockname-variation1.js`, `blockname-variation2.js`
+- ❌ `view-myblog.js`, `view-myblog-ai.js`
+
+**ALWAYS use class detection in the single JavaScript file:**
+
+```javascript
+export default async function decorate(block) {
+  // Detect variation by checking for class
+  const isVariationA = block.classList.contains('variation-a');
+
+  if (isVariationA) {
+    // Handle variation A logic
+    const data = await fetchAndFilterData();
+    renderVariationA(block, data);
+  } else {
+    // Handle default variation
+    renderStandard(block);
+  }
+}
+```
+
+**Why this matters:**
+- **EDS Convention**: System expects one JS file per block
+- **Maintainability**: All logic in one place
+- **Performance**: No multiple file loads
+- **Consistency**: Follows CSS variation pattern
+
+**See:** `.claude/skills/eds-block-development/SKILL.md` and `docs/for-ai/eds.md` for complete details.
+
 ## ⚠️ CRITICAL: Event Listeners and DOM Cloning
 
 **Event listeners are NOT copied when using `cloneNode()`**

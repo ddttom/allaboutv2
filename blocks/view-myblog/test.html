@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View MyBlog Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .test-info {
+            background: #f0f0f0;
+            padding: 1rem;
+            border-bottom: 2px solid #667eea;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .test-info h2 {
+            margin: 0 0 0.5rem 0;
+            color: #667eea;
+        }
+
+        .test-info p {
+            margin: 0.25rem 0;
+            font-size: 0.9rem;
+        }
+
+        .test-info code {
+            background: white;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>View MyBlog Block Test</h2>
+        <p><strong>Block:</strong> <code>view-myblog</code></p>
+        <p><strong>Data Source:</strong> <code>/my-blog.json</code></p>
+        <p><strong>Status:</strong> <span id="status">Loading...</span></p>
+    </div>
+
+    <!--
+        EDS Block Structure:
+        In Google Docs, a table like this:
+
+        | view-myblog |
+        |-------------|
+
+        Gets transformed by EDS into this HTML structure:
+    -->
+    <main>
+        <div>
+            <div class="view-myblog">
+                <!--
+                    Block content would be here in production.
+                    Since this block fetches its own data from JSON,
+                    the initial content can be empty.
+                -->
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import { loadBlock, decorateBlock } from '/scripts/aem.js';
+
+        // Update status function
+        function updateStatus(message, isError = false) {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.style.color = isError ? '#d32f2f' : '#2e7d32';
+        }
+
+        // Initialize the block using EDS patterns
+        async function init() {
+            try {
+                // Add body.appear class (required to show page)
+                document.body.classList.add('appear');
+
+                // Get the block element
+                const block = document.querySelector('.view-myblog');
+
+                if (!block) {
+                    throw new Error('Block element not found');
+                }
+
+                updateStatus('Decorating block...');
+
+                // EDS pattern: decorateBlock adds .block class and other EDS classes
+                decorateBlock(block);
+
+                updateStatus('Loading block content...');
+
+                // Load the block (fetches JS/CSS and runs decorate function)
+                await loadBlock(block);
+
+                updateStatus('Block loaded successfully! ✓');
+
+                // Log success
+                console.log('View MyBlog block loaded successfully');
+                console.log('Block element:', block);
+                console.log('Block classes:', block.className);
+
+            } catch (error) {
+                console.error('Failed to load block:', error);
+                updateStatus(`Error: ${error.message}`, true);
+            }
+        }
+
+        // Start initialization
+        init();
+    </script>
+</body>
+</html>
