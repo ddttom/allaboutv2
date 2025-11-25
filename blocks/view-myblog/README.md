@@ -12,9 +12,10 @@ The View MyBlog block dynamically fetches and displays blog content from a JSON 
 ## Features
 
 - **Dynamic Content Loading**: Fetches blog data from `/my-blog.json`
+- **Configurable Data Source**: Optional parameter to specify custom JSON file path
 - **Responsive Design**: Mobile-first responsive layout
 - **Featured Sections**: Displays "Latest Posts" and "Most Visited" sections
-- **Category Navigation**: Interactive category map with jump links
+- **Smart Category Navigation**: Category map automatically hidden when only one category exists
 - **Full Blog Archives**: Renders all blog posts organized by category
 - **Flexible Sorting**: Categories can specify sort order (oldest-first for tutorials)
 - **Back to Top**: Fixed position back-to-top button with white text
@@ -239,6 +240,7 @@ The AI variation filters and displays only AI-related posts:
 3. **Restructuring**: Creates a single "All AI & LLM Posts" category with filtered posts
 4. **Sorting**: Orders posts by date (newest first)
 5. **Featured Section**: Shows "Latest AI Posts" with the 3 most recent AI articles
+6. **Category Map**: Automatically hidden (since there's only one category)
 
 ### Implementation
 

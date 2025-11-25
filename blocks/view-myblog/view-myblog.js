@@ -337,8 +337,8 @@ export default async function decorate(block) {
 
     container.appendChild(featuredContainer);
 
-    // Add Category Map
-    if (data.categoryMap && data.categoryMap.length > 0) {
+    // Add Category Map (only if more than one category)
+    if (data.categoryMap && data.categoryMap.length > 1) {
       container.appendChild(createCategoryMap(data.categoryMap));
     }
 
