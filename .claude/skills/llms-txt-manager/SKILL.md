@@ -68,20 +68,6 @@ When llms.txt is in a subfolder (e.g., `blogs/ddt/integrations/`):
 
 **Last updated:** [Month Year]
 **Authors:** [Author Names]
-**LinkedIn:** [Profile URLs if applicable]
-
-**Site Type:** [Type]
-**Purpose:** [Purpose]
-**Technology Stack:** [Stack]
-
-## Access Guidelines
-
-- Base Rate: [rate] requests per hour per IP
-- Cache Retention: [time] maximum
-- Content Usage: Attribution required
-- Commercial Use: Requires written permission
-- Training Usage: Permitted for public documentation only
-- Attribution Format: "[Format string]"
 
 ## [Category Name]
 
@@ -132,22 +118,31 @@ When llms.txt is in a subfolder (e.g., `blogs/ddt/integrations/`):
 
 ## Key Concepts
 
-### Recent Additions Section
-
-The "Recent Additions" section is a **reader convenience feature** that highlights the 3 most recently modified posts:
-
-- **Data Source**: ALL posts in the context (not just newly added posts)
-- **Sorting**: By lastModified timestamp descending
-- **Filtering**: Excludes posts with "index page" in title
-- **Duplicates**: Intentional - posts appear in both Recent Additions and organized sections
-- **Purpose**: "What's new" catch-up for readers returning to the catalog
-- **Update Logic**: Recreated fresh on every sync, replacing any existing section
-
-**Important**: This is NOT a list of posts added since last sync. It's the 3 most recent posts by modification date across the entire catalog.
-
 ## Workflows
 
 ### Creating New llms.txt
+
+**Automatic Creation:**
+The sync script now automatically creates llms.txt files if they don't exist:
+
+1. **Detects Missing Files**
+   - Finds all my-blog.json files
+   - Checks for paired llms.txt in same directory
+   - Creates missing files automatically
+
+2. **Builds Complete Structure**
+   - Creates header with title, description, authors
+   - Builds organized sections from my-blog.json categories
+   - Uses folder name for context (e.g., "ai" → "Ai Resources")
+
+3. **Populates Content**
+   - Fetches from query-index.json
+   - Filters by folder context if applicable
+   - Formats posts with titles, URLs, descriptions
+   - Updates metadata to current date
+
+**Manual Creation:**
+If you need to manually create one:
 
 1. **Determine Scope**
    - Root llms.txt: Site-wide catalog
@@ -155,7 +150,7 @@ The "Recent Additions" section is a **reader convenience feature** that highligh
 
 2. **Check for my-blog.json**
    - Look in same directory as llms.txt
-   - If missing, create one
+   - If missing, create one first
    - Filter query-index.json by folder path if folder-specific
 
 3. **Structure Content**
@@ -168,7 +163,7 @@ The "Recent Additions" section is a **reader convenience feature** that highligh
    - Version number
    - Last updated date
    - Category counts
-   - Access guidelines
+   - Access guidelines (optional)
 
 ### Updating Existing llms.txt
 
@@ -181,15 +176,7 @@ The "Recent Additions" section is a **reader convenience feature** that highligh
    - Filter by lastModified > current date
    - Filter by folder context if applicable
 
-3. **Build Recent Additions**
-   - Find the 3 most recent posts from ALL posts (not just new ones)
-   - Sort by lastModified timestamp descending
-   - Exclude blog index pages (titles containing "index page")
-   - Remove any existing "Recent Additions" sections
-   - Insert new "Recent Additions" section before "Version Information"
-   - Note: Posts in Recent Additions will also appear in organized sections (duplicates are intentional)
-
-4. **Merge New Posts**
+3. **Merge New Posts**
    - Add new posts to organized sections
    - Update version number and date
    - Maintain text patterns and formatting
@@ -258,17 +245,16 @@ node scripts/sync-blog-content.js --target=llms
 ```
 
 **Process:**
-1. Find all llms.txt files: `**/*llms.txt`
-2. For each file:
-   - Read last-updated date from metadata
+1. Find all existing llms.txt files: `**/*llms.txt`
+2. Find all my-blog.json files without paired llms.txt
+3. For each file (existing or new):
+   - If new: Create complete structure from my-blog.json
+   - If existing: Read last-updated date from metadata
    - Determine folder context (site-wide or folder-specific)
    - Fetch query-index.json from production
    - Filter by context (folder path matching)
-   - Filter new posts (lastModified > last-updated) for organized sections
-   - Find 3 most recent posts from ALL posts for Recent Additions
-   - Remove existing Recent Additions sections
-   - Add new posts to organized sections
-   - Add Recent Additions section with 3 most recent posts
+   - Filter new posts (lastModified > last-updated)
+   - Add new posts to organized sections (if any)
    - Update version date and metadata
 
 ### /update-my-blog
@@ -298,7 +284,6 @@ Finds all my-blog.json files and updates them with latest content:
 ✅ **Rich descriptions** - Include full descriptions from source
 ✅ **Clear hierarchy** - Main section → Subsection → Posts
 ✅ **Cross-references** - Link between related llms.txt files
-✅ **Recent Additions** - Shows 3 most recent posts by lastModified date (from all posts, not just new ones), excluding index pages. Duplicates with organized sections are intentional - serves as "what's new" convenience for readers
 
 ### URL Management
 
@@ -358,10 +343,6 @@ Categories: Filtered to AI-related posts
 ### Wrong Content Scope
 
 **Solution**: Check folder context and filter query-index.json properly
-
-### Duplicate Entries Between Recent Additions and Organized Sections
-
-**This is intentional!** Posts in "Recent Additions" will also appear in organized sections. Recent Additions serves as a "what's new" convenience section showing the 3 most recently modified posts.
 
 ### Duplicate Entries Within Categories
 

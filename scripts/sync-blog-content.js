@@ -107,18 +107,77 @@ function filterNewEntries(entries, afterDate) {
 }
 
 /**
+ * Create a new llms.txt structure from my-blog.json
+ */
+function createLlmsTxtFromBlogJson(blogJsonPath, context) {
+  const blogJson = JSON.parse(fs.readFileSync(blogJsonPath, 'utf-8'));
+
+  const lines = [];
+
+  // Header
+  lines.push(`# ${context === 'site-wide' ? 'Adobe Edge Delivery Services & AI Development Resources' : context.charAt(0).toUpperCase() + context.slice(1) + ' Resources'}`);
+  lines.push('');
+  lines.push('Technical documentation and educational resources.');
+  lines.push('');
+  lines.push(`**Last updated:** ${new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}`);
+  lines.push('**Authors:** Tom Cranstoun, Cate Nisbet');
+  lines.push('');
+
+  // Access Guidelines (optional, can be added if needed)
+
+  // Build organized sections from my-blog.json
+  blogJson.categories.forEach(category => {
+    if (category.posts && category.posts.length > 0) {
+      lines.push('');
+      lines.push(`## ${category.name}`);
+      lines.push('');
+
+      category.posts.forEach(post => {
+        const url = post.url.startsWith('http') ? post.url : `https://allabout.network${post.url}`;
+        if (post.description) {
+          lines.push(`- [${post.title}](${url}): ${post.description}`);
+        } else {
+          lines.push(`- [${post.title}](${url})`);
+        }
+      });
+    }
+  });
+
+  return lines.join('\n');
+}
+
+/**
  * Update llms.txt file with new content
  */
 async function updateLlmsTxt(filePath, queryIndex) {
   console.log(`\n📝 Processing: ${filePath}`);
 
-  if (!fs.existsSync(filePath)) {
-    console.log(`⚠️  File not found, skipping: ${filePath}`);
-    return;
-  }
+  // Check if file exists
+  let content;
+  let metadata;
+  let isNewFile = false;
 
-  const content = fs.readFileSync(filePath, 'utf-8');
-  const metadata = extractLlmsTxtDate(content);
+  if (!fs.existsSync(filePath)) {
+    console.log(`   ⚠️  File not found - will create new llms.txt`);
+
+    // Check for corresponding my-blog.json
+    const dir = path.dirname(filePath);
+    const blogJsonPath = path.join(dir, 'my-blog.json');
+
+    if (!fs.existsSync(blogJsonPath)) {
+      console.log(`   ⚠️  No my-blog.json found at ${blogJsonPath}, skipping`);
+      return;
+    }
+
+    // Create new llms.txt from my-blog.json
+    const context = getFolderContext(filePath);
+    content = createLlmsTxtFromBlogJson(blogJsonPath, context || 'site-wide');
+    metadata = { lastUpdated: '2020-01-01', version: '1.0' };
+    isNewFile = true;
+  } else {
+    content = fs.readFileSync(filePath, 'utf-8');
+    metadata = extractLlmsTxtDate(content);
+  }
 
   console.log(`   Last updated: ${metadata.lastUpdated}`);
   console.log(`   Current version: ${metadata.version}`);
@@ -132,9 +191,14 @@ async function updateLlmsTxt(filePath, queryIndex) {
 
   console.log(`   New posts found: ${newEntries.length}`);
 
-  if (newEntries.length === 0) {
+  if (newEntries.length === 0 && !isNewFile) {
     console.log(`   ✅ Already up to date`);
     return;
+  }
+
+  if (isNewFile && newEntries.length === 0) {
+    // New file with no new entries beyond what's already in my-blog.json
+    console.log(`   ✅ Created new file from my-blog.json`);
   }
 
   // List new posts that will be added
@@ -146,18 +210,10 @@ async function updateLlmsTxt(filePath, queryIndex) {
     console.log(`      ... and ${newEntries.length - 5} more`);
   }
 
-  // Find the 3 most recent posts from ALL entries (not just new ones)
-  // by looking at the full context filtered entries, excluding index pages
-  const allFilteredEntries = filterByContext(queryIndex, context, filePath);
-  const recentPosts = allFilteredEntries
-    .filter(entry => !entry.title.toLowerCase().includes('index page'))
-    .sort((a, b) => parseInt(b.lastModified) - parseInt(a.lastModified))
-    .slice(0, 3);
-
-  // Build Recent Additions section
+  // Parse content into lines for processing
   const lines = content.split('\n');
 
-  // Remove any existing "Recent Additions" sections
+  // Remove any existing "Recent Additions" sections (no longer needed in llms.txt)
   let i = 0;
   while (i < lines.length) {
     if (lines[i].includes('## Recent Additions')) {
@@ -173,30 +229,6 @@ async function updateLlmsTxt(filePath, queryIndex) {
     }
   }
 
-  const versionLineIndex = lines.findIndex(line => line.includes('## Version Information'));
-
-  const newContent = [];
-  newContent.push('');
-  newContent.push(`## Recent Additions (Updated: ${new Date().toISOString().split('T')[0]})`);
-  newContent.push('');
-
-  recentPosts.forEach(entry => {
-    const url = entry.path.startsWith('http') ? entry.path : `https://allabout.network${entry.path}`;
-    if (entry.description) {
-      newContent.push(`- [${entry.title}](${url}): ${entry.description}`);
-    } else {
-      newContent.push(`- [${entry.title}](${url})`);
-    }
-  });
-  newContent.push('');
-
-  // Insert before version info or at end
-  if (versionLineIndex !== -1) {
-    lines.splice(versionLineIndex, 0, ...newContent);
-  } else {
-    lines.push(...newContent);
-  }
-
   // Update the version date in the header
   const updatedContent = lines.map(line => {
     if (line.startsWith('**Last updated:**')) {
@@ -209,7 +241,12 @@ async function updateLlmsTxt(filePath, queryIndex) {
 
   // Write updated content
   fs.writeFileSync(filePath, updatedContent, 'utf-8');
-  console.log(`   ✅ Updated with ${newEntries.length} new posts`);
+
+  if (isNewFile) {
+    console.log(`   ✅ Created new file from my-blog.json with all content`);
+  } else {
+    console.log(`   ✅ Updated with ${newEntries.length} new posts`);
+  }
 }
 
 /**
@@ -467,9 +504,29 @@ async function main() {
     console.log('='.repeat(60));
 
     const llmsFiles = findFiles('llms.txt');
-    console.log(`\nFound ${llmsFiles.length} llms.txt file(s)\n`);
 
-    for (const file of llmsFiles) {
+    // Also check for my-blog.json files without paired llms.txt
+    const blogFiles = findFiles('my-blog.json');
+    const missingLlmsFiles = [];
+
+    for (const blogFile of blogFiles) {
+      const dir = path.dirname(blogFile);
+      const expectedLlmsFile = path.join(dir, 'llms.txt');
+
+      if (!llmsFiles.includes(expectedLlmsFile) && !fs.existsSync(expectedLlmsFile)) {
+        missingLlmsFiles.push(expectedLlmsFile);
+      }
+    }
+
+    const allLlmsFiles = [...new Set([...llmsFiles, ...missingLlmsFiles])];
+    console.log(`\nFound ${llmsFiles.length} existing llms.txt file(s)`);
+    if (missingLlmsFiles.length > 0) {
+      console.log(`Found ${missingLlmsFiles.length} my-blog.json file(s) without paired llms.txt - will create them\n`);
+    } else {
+      console.log('');
+    }
+
+    for (const file of allLlmsFiles) {
       await updateLlmsTxt(file, queryIndex);
     }
   }

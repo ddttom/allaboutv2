@@ -1,0 +1,203 @@
+{
+  "metadata": {
+    "last-updated": "2025-11-25",
+    "scope": "ai"
+  },
+  "categoryMap": [
+    {
+      "id": "eds-integrations",
+      "name": "EDS & Integrations",
+      "count": 0,
+      "description": "Adobe Edge Delivery Services integrations and framework implementations"
+    },
+    {
+      "id": "core-ai-llm",
+      "name": "Core AI/LLM Topics",
+      "count": 21,
+      "description": "AI fundamentals, language processing, and machine learning concepts"
+    },
+    {
+      "id": "aem-cms",
+      "name": "AEM / CMS Focus",
+      "count": 0,
+      "description": "Adobe Experience Manager and content management systems"
+    },
+    {
+      "id": "developer-guide-series",
+      "name": "Developer Guide Series",
+      "count": 0,
+      "description": "Comprehensive EDS development tutorials"
+    },
+    {
+      "id": "content-creator-guide",
+      "name": "Content Creator Guide",
+      "count": 0,
+      "description": "Resources for content authors and editors"
+    },
+    {
+      "id": "general-blog",
+      "name": "General Blog & Tools",
+      "count": 0,
+      "description": "General development topics, tools, and best practices"
+    }
+  ],
+  "categories": [
+    {
+      "id": "eds-integrations",
+      "name": "EDS & Integrations",
+      "posts": []
+    },
+    {
+      "id": "core-ai-llm",
+      "name": "Core AI/LLM Topics",
+      "posts": [
+        {
+          "title": "Slides for Mathematics behind AI",
+          "url": "/blogs/ddt/ai/mathematics-behind-ai",
+          "description": "The mathematics behind AI",
+          "lastModified": "1743769783"
+        },
+        {
+          "title": "Toms Blog - AI Index Page",
+          "url": "/blogs/ddt/ai/",
+          "description": "The index page of the AI blogs of a seasoned architect.",
+          "lastModified": "1764066528"
+        },
+        {
+          "title": "The Stripped-Down Truth -- How AI Actually Works Without the Fancy TalkI",
+          "url": "/blogs/ddt/ai/the-stripped-down-truth-how-ai-actually-works-without-the-fancy-talk",
+          "description": "The AI community has been hiding the real math behind clever, human-like terminology since the 1950s—all to make the topic seem more interesting and mysterious than it actually is. Let's cut through the jargon and explain what's really happening with these so-called \"intelligent\" systems, especially when it comes to mathematical reasoning.",
+          "lastModified": "1744013504"
+        },
+        {
+          "title": "Disadvantages and Problematic Content in Common Crawl",
+          "url": "/blogs/ddt/ai/disadvantages-and-problematic-content-in-common-crawl",
+          "description": "While Common Crawl provides an invaluable resource for researchers and AI developers, it also presents significant challenges and concerns, particularly regarding problematic content. This document examines the disadvantages of using Common Crawl data, with a specific focus on unsafe, pornographic, violent, hate speech, and racist content that may be present in the dataset.",
+          "lastModified": "1743868120"
+        },
+        {
+          "title": "Does AI Mean Algorithmic Interpolation",
+          "url": "/blogs/ddt/ai/does-ai-mean-algorithmic-interpolation",
+          "description": "Artificial intelligence has recently captivated the public imagination with promises of self-driving cars and effortless creative works. However, these impressive results are not products of thought, but rather the result of sophisticated mathematical operations, specifically advanced forms of algorithmic interpolation.",
+          "lastModified": "1745424515"
+        },
+        {
+          "title": "The Mathematical Heartbeat of AI",
+          "url": "/blogs/ddt/ai/the-mathematical-heartbeat-of-ai",
+          "description": "Exploring the fundamental mathematical concepts that power artificial intelligence. Euler's number (e) and its role in creating smooth growth patterns, the sigmoid function for binary decisions, ReLU for improved training, and vectorization for language processing. It also explains the softmax function for multi-class classification and how these mathematical building blocks work together in neural networks, emphasizing that understanding these principles is crucial for effectively using and comprehending AI systems",
+          "lastModified": "1745425905"
+        },
+        {
+          "title": "Behind the Curtain - How AI Models Think",
+          "url": "/blogs/ddt/ai/how-ai-models-think",
+          "description": "When we interact with AI language models, we often see only their final responses. But what's happening behind the scenes as these systems process our questions, especially when faced with linguistic ambiguity, wordplay, or jokes? A fascinating series of conversations with two AI models—Phi-4 and Deepseek-r1:70b—offers a glimpse into these internal processes.",
+          "lastModified": "1745431103"
+        },
+        {
+          "title": "Making LLMs.txt work for Headless Websites",
+          "url": "/blogs/ddt/ai/making-llms-txt-work-for-headless-websites",
+          "description": "There's a critical disconnect hiding in plain sight: AI systems can't see your JavaScript-rendered content. While humans experience rich, interactive websites, large language models encounter only empty shells—missing the very information they're designed to analyze. The llms.txt standard offers an innovative solution, but as a September 2024 proposal, most AI systems don't know it exists yet.  Discover how a creative blend of traditional HTML meta tags and modern specifications bridges this gap, ensuring your content remains visible in an AI-mediated world without waiting years for AI systems to catch up.",
+          "lastModified": "1745699265"
+        },
+        {
+          "title": "Why Modern Web Architecture Confuses AI",
+          "url": "/blogs/ddt/ai/why-modern-web-architecture-confuses-ai",
+          "description": "One significant but often overlooked limitation of current AI systems is their struggle to comprehend modern web architectures, particularly headless implementations that separate content from ...",
+          "lastModified": "1747239920"
+        },
+        {
+          "title": "What's missing from AI - The Blog Post",
+          "url": "/blogs/ddt/ai/what-is-missing-from-ai-the-blog-post",
+          "description": "Despite remarkable progress in artificial intelligence, today's AI systems—particularly Large Language Models—lack several critical capabilities that limit their effectiveness in enterprise settings.  This article describes some of them and offers a pragmatic solution",
+          "lastModified": "1746795031"
+        },
+        {
+          "title": "A Framework for Evaluating AI Confidence",
+          "url": "/blogs/ddt/ai/a-framework-for-evaluating-ai-confidence",
+          "description": "When interacting with large language models like GPT, ChatGPT, or Claude, we often focus on the answer provided. But beneath the surface of these responses lies a landscape of probability and uncertainty that remains invisible to most users. Understanding this hidden dimension offers valuable insight into the reliability of AI-generated information., This analysis explores a practical method for examining AI confidence at the token level, providing a framework for distinguishing between high-confidence information and potentially problematic claims.  Even if you are not a developer it is am interesting read.",
+          "lastModified": "1747308178"
+        },
+        {
+          "title": "Complete Guide to ComfyUI on Mac: Installation, Configuration, and Troubleshooting",
+          "url": "/blogs/ddt/ai/complete-guide-to-comfyui-on-mac-installation-configuration-and-troubleshooting",
+          "description": "Complete Guide to ComfyUI on Mac: Installation, Configuration, and Troubleshooting, This document provides a comprehensive walkthrough for installing, configuring, and troubleshooting ComfyUI on macOS. ComfyUI is a powerful and modular node-based interface for Stable Diffusion, offering a flexible and efficient way to create and experiment with generative AI workflows. This guide aims to take you from the initial setup to effectively utilizing ComfyUI's features on your Mac system. We will cover each step in detail, addressing potential issues and providing helpful tips along the way.",
+          "lastModified": "1747238894"
+        },
+        {
+          "title": "Setting Up Your Mac for Local AI Development",
+          "url": "/blogs/ddt/ai/setting-up-your-mac-for-local-ai-development",
+          "description": "Recent advancements in AI now allow running advanced machine learning models directly on Apple Silicon Macs. This eliminates reliance on costly cloud services or specialized hardware. This guide provides a comprehensive setup for a local AI development environment on your Mac, enabling work on complex machine learning models privately and without ongoing expenses.",
+          "lastModified": "1747239730"
+        },
+        {
+          "title": "English Dominance in AI Systems",
+          "url": "/blogs/ddt/ai/english-dominance-in-ai-systems-leaves-other-languages-behind",
+          "description": "Artificial intelligence systems aren't just better at English - they're fundamentally English-centric technologies. From their initial training to their latest developments, from how they process prompts to how they \"think\" about problems, AI systems operate within an English-dominant framework that leaves other languages struggling to keep pace.",
+          "lastModified": "1747918350"
+        },
+        {
+          "title": "The Digital Language Caste System - How AI Creates Linguistic Apartheid",
+          "url": "/blogs/ddt/ai/the-digital-language-caste-system",
+          "description": "How artificial intelligence systems are creating a digital hierarchy based on language – and why this transformation is happening faster than most realize",
+          "lastModified": "1748434052"
+        },
+        {
+          "title": "The Tokenization Trap - How AI Actually Processes German",
+          "url": "/blogs/ddt/ai/the-tokenization-trap-how-ai-actually-processes-german",
+          "description": "Today we're going under the hood to see what happens when AI processes German text. The discovery might shock you: the problem goes beyond having less German training data. It's about fundamental computational approaches built around English assumptions.",
+          "lastModified": "1749229017"
+        },
+        {
+          "title": "The \"No Elephants\" Problem - Why AI Struggles With What NOT to Do",
+          "url": "/blogs/ddt/ai/the-no-elephants-problem-why-ai-struggles-with-what-not-to-do",
+          "description": "Exploring why AI systems consistently fail at understanding negation and what this reveals about their fundamental limitations",
+          "lastModified": "1749581892"
+        },
+        {
+          "title": "You Built Software for Humans - Now Build It for AI",
+          "url": "/blogs/ddt/ai/you-built-software-for-humans-now-build-it-for-ai",
+          "description": "Software that works brilliantly for humans often confuses AI assistants completely - and that's becoming a serious business problem.",
+          "lastModified": "1753036688"
+        },
+        {
+          "title": "The Flyball Governor - How Victorian Engineering Gave Us the Language of AI",
+          "url": "/blogs/ddt/ai/the-flyball-governor-how-victorian-engineering-gave-us-the-language-of-ai",
+          "description": "Exploring the surprising connections between steam engine governors and modern AI systems",
+          "lastModified": "1762142244"
+        },
+        {
+          "title": "Toms Blog - AI Index Page",
+          "url": "/blogs/ddt/ai/",
+          "description": "The index page of the AI blogs of a seasoned architect.",
+          "lastModified": "1764066528"
+        },
+        {
+          "title": "Toms Blog - AI Index Page",
+          "url": "/blogs/ddt/ai/",
+          "description": "The index page of the AI blogs of a seasoned architect.",
+          "lastModified": "1764066528"
+        }
+      ]
+    },
+    {
+      "id": "aem-cms",
+      "name": "AEM / CMS Focus",
+      "posts": []
+    },
+    {
+      "id": "developer-guide-series",
+      "name": "Developer Guide Series",
+      "posts": []
+    },
+    {
+      "id": "content-creator-guide",
+      "name": "Content Creator Guide",
+      "posts": []
+    },
+    {
+      "id": "general-blog",
+      "name": "General Blog & Tools",
+      "posts": []
+    }
+  ]
+}

@@ -170,11 +170,10 @@ Looking for the full interactive experience?
 
 
 
-## Recent Additions (Updated: 2025-11-25)
 
-- [Live Jupyter Notebook](https://allabout.network/blogs/ddt/integrations/live-jupyter-notebook): Jupyter Notebooks (.ipynb files) are an open-source, web-based application for interactive data science and computing. Their core strength is combining live code, equations, visualisations, and ...
-- [AI-Powered Adobe EDS Development](https://allabout.network/blogs/ddt/integrations/ai-powered-adobe-eds-development): A comprehensive framework for building sophisticated Adobe EDS components using vanilla JavaScript with zero external dependencies, featuring interactive testing and AI-powered development workflows.
-- [Living Documentation - Browser-Based Jupyter Notebooks for Adobe EDS](https://allabout.network/blogs/ddt/integrations/living-documentation-browser-based-jupyter-notebooks-for-adobe-eds): Transform static documentation into interactive experiences where anyone can click Run and see EDS blocks transform content in real-time, no setup required
+
+
+
 
 ## Version Information
 

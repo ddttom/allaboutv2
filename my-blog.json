@@ -46,7 +46,7 @@
     {
       "id": "core-ai-llm",
       "name": "Core AI/LLM Topics",
-      "count": 20,
+      "count": 24,
       "description": "Language models, AI fundamentals, machine learning"
     },
     {
@@ -70,7 +70,7 @@
     {
       "id": "general-blog",
       "name": "General Blog & Tools",
-      "count": 22,
+      "count": 26,
       "description": "Development tools, AI optimization, best practices"
     },
     {
@@ -318,6 +318,30 @@
           "url": "/blogs/ddt/ai/mathematics-behind-ai",
           "description": "The mathematics behind AI",
           "lastModified": "2025-04-04"
+        },
+        {
+          "title": "Toms Blog - AI Index Page",
+          "url": "/blogs/ddt/ai/",
+          "description": "The index page of the AI blogs of a seasoned architect.",
+          "lastModified": "1764066528"
+        },
+        {
+          "title": "Toms Blog - AI Index Page",
+          "url": "/blogs/ddt/ai/",
+          "description": "The index page of the AI blogs of a seasoned architect.",
+          "lastModified": "1764066528"
+        },
+        {
+          "title": "Toms Blog - AI Index Page",
+          "url": "/blogs/ddt/ai/",
+          "description": "The index page of the AI blogs of a seasoned architect.",
+          "lastModified": "1764066528"
+        },
+        {
+          "title": "Toms Blog - AI Index Page",
+          "url": "/blogs/ddt/ai/",
+          "description": "The index page of the AI blogs of a seasoned architect.",
+          "lastModified": "1764066528"
         },
         {
           "title": "Toms Blog - AI Index Page",
@@ -608,6 +632,30 @@
           "url": "/blogs/ddt/allaboutmarketing",
           "description": "Want to create a stunning, personalised web page to share your event, passion project or holiday memories? Keep your story from getting lost in the social media shuffle or buried under ads. Introducing allabout.network: Your easy solution to creating and hosting beautiful web pages without the tech hassle.",
           "lastModified": "2024-07-25"
+        },
+        {
+          "title": "Tom's Blog Index Page",
+          "url": "/blogs/ddt/",
+          "description": "The index page of the blogs of a seasoned AEM architect",
+          "lastModified": "1764067033"
+        },
+        {
+          "title": "Tom's Blog Index Page",
+          "url": "/blogs/ddt/",
+          "description": "The index page of the blogs of a seasoned AEM architect",
+          "lastModified": "1764067033"
+        },
+        {
+          "title": "Tom's Blog Index Page",
+          "url": "/blogs/ddt/",
+          "description": "The index page of the blogs of a seasoned AEM architect",
+          "lastModified": "1764067033"
+        },
+        {
+          "title": "Tom's Blog Index Page",
+          "url": "/blogs/ddt/",
+          "description": "The index page of the blogs of a seasoned AEM architect",
+          "lastModified": "1764067033"
         },
         {
           "title": "Tom's Blog Index Page",
