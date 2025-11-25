@@ -1,27 +1,60 @@
-
 ## Edge Delivery Services Framework Integrations
 
 Technical blog and portfolio showcasing modern JavaScript framework integrations with Adobe Edge Delivery Services, demonstrating how to build interactive experiences while maintaining performance. From vanilla JavaScript to React, Vue, Web Components, and Adobe Spectrum.
 
-Last updated: June 2025\. Author: Tom Cranstoun. LinkedIn: [https://www.linkedin.com/in/tom-cranstoun/](https://www.linkedin.com/in/tom-cranstoun/)
+Last updated: November 2025. Author: Tom Cranstoun. LinkedIn: [https://www.linkedin.com/in/tom-cranstoun/](https://www.linkedin.com/in/tom-cranstoun/)
 
-Site Type: Technical Documentation, Tutorial Collection Purpose: Educational Content on Edge Delivery Services Technology Stack: Edge Delivery Services with various JavaScript frameworks
+Site Type: Technical Documentation, Tutorial Collection
+Purpose: Educational Content on Edge Delivery Services
+Technology Stack: Edge Delivery Services with various JavaScript frameworks
 
 ## Access Guidelines
 
-- Base Rate: 200 requests per hour per IP  
-- Maximum 20 requests per minute  
-- Cache for maximum 48 hours  
-- Attribution format: "Source: Tom Cranstoun \- Edge Delivery Services Integrations (allabout.network)"  
+- Base Rate: 200 requests per hour per IP
+- Maximum 20 requests per minute
+- Cache for maximum 48 hours
+- Attribution format: "Source: Tom Cranstoun - Edge Delivery Services Integrations (allabout.network)"
 - Commercial use requires permission
 
-## Primary Content
+## EDS Integration Tutorials
 
-- [React Integration Guide](https://allabout.network/blogs/ddt/integrations/building-a-react-app-with-edge-delivery-services): Complete tutorial on building React applications with Edge Delivery Services, showing how to maintain performance while adding interactivity.  
-- [Vue.js Integration Guide](https://allabout.network/blogs/ddt/integrations/building-a-vuejs-app-with-edge-delivery-services): Step-by-step guide for implementing Vue.js applications within the Edge Delivery Services architecture.  
-- [Adobe Spectrum Components](https://allabout.network/blogs/ddt/integrations/spectrum-component-as-eds-block-in-gdoc): Tutorial on using Adobe Spectrum web components as EDS blocks, bridging design systems with performance.  
-- [EDS Fundamentals \- York Example](https://allabout.network/blogs/ddt/five-things-to-do-do-in-york): Practical demonstration of pure Edge Delivery Services implementation showcasing five tourist attractions in York, England.  
-- [Query Index JSON](https://allabout.network/slides/query-index.json): Essential JSON data source for framework integrations, demonstrating the headless architecture approach.
+### Interactive Development & Testing
+
+- [Live Jupyter Notebook](https://allabout.network/blogs/ddt/integrations/live-jupyter-notebook): Jupyter Notebooks (.ipynb files) for interactive data science and computing with EDS, combining live code, equations, and visualizations
+- [AI-Powered Adobe EDS Development](https://allabout.network/blogs/ddt/integrations/ai-powered-adobe-eds-development): Comprehensive framework for building sophisticated Adobe EDS components using vanilla JavaScript with zero external dependencies, featuring interactive testing and AI-powered development workflows
+- [Living Documentation - Browser-Based Jupyter Notebooks](https://allabout.network/blogs/ddt/integrations/living-documentation-browser-based-jupyter-notebooks-for-adobe-eds): Transform static documentation into interactive experiences where anyone can click Run and see EDS blocks transform content in real-time, no setup required
+- [Testing EDS Blocks with Jupyter Notebooks in VS Code](https://allabout.network/blogs/ddt/integrations/testing-eds-blocks-with-jupyter-notebooks-a-developer-playground): Set up a Jupyter notebook environment in Visual Studio Code for testing Adobe Edge Delivery Services blocks interactively with JavaScript
+
+### AI & Development Workflows
+
+- [The Convergence - Completing Adobe's Claude Skills](https://allabout.network/blogs/ddt/integrations/the-convergence-completing-adobe-s-claude-skills-for-perfect-eds-ai-development): How comprehensive docs/for-ai provides the missing 90% that makes Adobe's EDS Skills actually work
+- [Fast EDS Development with AI](https://allabout.network/blogs/ddt/integrations/fast-eds-development-integration-for-ai): Transform your Adobe Edge Delivery Services workflow with a simple development server that brings AI assistance to EDS development
+
+### Framework Integrations
+
+- [Building a React App with Edge Delivery Services](https://allabout.network/blogs/ddt/integrations/building-a-react-app-with-edge-delivery-services): Learn how to integrate React applications with Adobe Edge Delivery Services for modern, component-based content experiences
+- [ReactJS version of slide builder](https://allabout.network/blogs/ddt/integrations/reactjs-version-of-slide-builder): React implementation of slide builder application
+- [Building a VueJS app with Edge Delivery Services](https://allabout.network/blogs/ddt/integrations/building-a-vuejs-app-with-edge-delivery-services): Build a Vue.js slide builder app integrated with Adobe Edge Delivery Services with dynamic content fetching and interactive modal panels
+- [Vue Js Slide Viewer in GDocs](https://allabout.network/blogs/ddt/integrations/vue-js-version-of-slide-viewer-in-gdoc): Vue.js implementation of slide viewer component
+- [Building Headless Applications with Edge Delivery Services](https://allabout.network/blogs/ddt/integrations/building-headless-applications-with-edge-delivery-services): Build a headless Single Page Application while keeping the performance benefits that make Edge Delivery Services attractive, keeping everything framework-less
+
+### Web Components
+
+- [Using Web Components in Adobe Edge Delivery Services Blocks](https://allabout.network/blogs/ddt/integrations/using-web-components-in-adobe-edge-delivery-services-blocks): Comprehensive guide to implementing web components in EDS blocks, featuring advanced Shoelace Card components with glassmorphism effects and modern web development practices
+- [Shoelace Version of Slide Viewer in GDocs](https://allabout.network/blogs/ddt/integrations/shoelace-version-of-slide-viewer-in-gdocs): Shoelace web component implementation of slide viewer
+- [Repository Review: Web Components with Adobe EDS](https://allabout.network/blogs/ddt/integrations/untitled-document): In-depth analysis of a repository that successfully bridges the gap between Adobe EDS simplicity and modern web component development
+
+### Adobe Spectrum Components
+
+- [Using Spectrum Components in Adobe Edge Delivery Services Blocks](https://allabout.network/blogs/ddt/integrations/using-spectrum-components-in-adobe-edge-delivery-services-blocks): Create dynamic UI components for EDS using Adobe Spectrum Web Components and the query-index.json pattern, with practical examples and testing strategies
+- [Spectrum Component Slide Viewer in GDocs](https://allabout.network/blogs/ddt/integrations/spectrum-component-as-eds-block-in-gdoc): Adobe Spectrum web component slide viewer implementation
+
+### Architecture & Development
+
+- [The EDS Developer's Dilemma - And How One Framework Solved It](https://allabout.network/blogs/ddt/integrations/the-eds-developer-dilemma-and-how-one-framework-solved-it): How one framework solves the EDS developer's dilemma - enabling sophisticated components whilst maintaining EDS principles
+- [Beyond Static Pages - Building Rich Apps with EDS](https://allabout.network/blogs/ddt/integrations): Discover how Edge Delivery Services enables interactive applications through framework integrations
+- [The Adapter Pattern - Liberating your EDS Design](https://allabout.network/blogs/ddt/the-adapter-pattern-liberating-your-eds-design): Using the adapter pattern with Edge Delivery Services for flexible architecture
+- [Mastering EDS Block Debugging](https://allabout.network/blogs/ddt/integrations/mastering-eds-block-debugging-a-developer-guide-to-edge-delivery-services): Learn systematic approaches to debug Adobe Edge Delivery Services blocks, from basic logging to advanced instrumentation techniques
 
 ## Key Concepts
 
@@ -31,22 +64,23 @@ The journey through modern framework integrations with Edge Delivery Services st
 
 ### What You Can Build
 
-- Product catalogues with advanced filtering  
-- Interactive image galleries  
-- Data visualizations and charts  
-- Dashboard interfaces  
+- Product catalogues with advanced filtering
+- Interactive image galleries
+- Data visualizations and charts
+- Dashboard interfaces
+- Interactive testing and documentation environments
 - All while maintaining Edge Delivery Services' core performance strengths
 
 ### Architecture Philosophy
 
 Each framework adds organization while preserving the speed that makes Edge Delivery Services compelling. The goal is to go beyond static pages and create rich, interactive experiences through thoughtful architecture and modern JavaScript techniques.
 
-## Optional
+### Modern Development Workflows
 
-- [Portfolio Overview](https://allabout.network/): Main website showcasing various Edge Delivery Services projects and experiments.  
-- [Technical Deep Dives](https://allabout.network/blogs/ddt/): Additional technical articles exploring Edge Delivery Services capabilities.  
-- [Performance Benchmarks](https://allabout.network/blogs/ddt/performance/): Comparative analysis of different framework implementations.  
-- [Best Practices Guide](https://allabout.network/blogs/ddt/best-practices/): Recommendations for optimal Edge Delivery Services development.
+- **Jupyter Notebooks**: Interactive testing and documentation in the browser
+- **AI-Powered Development**: Leverage AI assistants for faster EDS block development
+- **Living Documentation**: Documentation that's executable and demonstrable
+- **Framework Flexibility**: Choose the right tool (React, Vue, Web Components, Spectrum) for your needs
 
 ## Implementation Details
 
@@ -54,24 +88,39 @@ Each framework adds organization while preserving the speed that makes Edge Deli
 
 The next evolution involves converting vanilla JavaScript implementations to structured frameworks. Each architecture adds organization patterns while maintaining performance:
 
-- React: Component-based architecture with virtual DOM  
-- Vue: Progressive framework with reactive data binding  
-- Web Components: Native browser standards for encapsulation  
-- Adobe Spectrum: Enterprise-ready design system components
+- **React**: Component-based architecture with virtual DOM
+- **Vue**: Progressive framework with reactive data binding
+- **Web Components**: Native browser standards for encapsulation
+- **Adobe Spectrum**: Enterprise-ready design system components
+- **Headless SPA**: Framework-less approach for maximum control
+
+### Testing & Development
+
+- **Browser-based Jupyter**: Test blocks interactively without build steps
+- **VS Code Integration**: Develop and test within your IDE
+- **AI Assistance**: Use Claude and other AI tools for faster development
+- **Debugging Techniques**: Systematic approaches from logging to instrumentation
+
+## Related Resources
+
+- [EDS Developer Guide Series](https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-0): 13-part comprehensive guide to Edge Delivery Services development
+- [Main Site llms.txt](https://allabout.network/llms.txt): Complete catalog of all content including AI topics, AEM guides, and more
 
 ## Error Handling
 
 If documentation is unavailable:
 
-1. Check the query-index.json endpoint for data availability  
-2. Verify Edge Delivery Services CDN status  
-3. Alternative contact: LinkedIn message to Tom Cranstoun  
+1. Check the query-index.json endpoint for data availability
+2. Verify Edge Delivery Services CDN status
+3. Alternative contact: LinkedIn message to Tom Cranstoun
 4. Fallback resource: Adobe Experience League documentation
 
 ## For Human Visitors
 
-Looking for the full interactive experience? Visit https://allabout.network for live demonstrations.
+Looking for the full interactive experience? Visit https://allabout.network/blogs/ddt/integrations for live demonstrations.
 
-Want to implement these patterns? Start with the fundamentals at the York example page.
+Want to implement these patterns? Start with the framework tutorials and work through the progression from vanilla JavaScript to your preferred framework.
 
-Curious about this file? Learn more about the llms.txt standard at https://llmstxt.org  
+Curious about this file? Learn more about the llms.txt standard at https://llmstxt.org
+
+Version: 1.1 (Updated: Nov 25 2025) - Comprehensive catalog of 20 EDS integration tutorials

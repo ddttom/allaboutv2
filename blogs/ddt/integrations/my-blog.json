@@ -1,0 +1,197 @@
+{
+  "metadata": {
+    "last-updated": "2025-11-25",
+    "scope": "integrations"
+  },
+  "categoryMap": [
+    {
+      "id": "eds-integrations",
+      "name": "EDS & Integrations",
+      "count": 20,
+      "description": "Adobe Edge Delivery Services integrations and framework implementations"
+    },
+    {
+      "id": "core-ai-llm",
+      "name": "Core AI/LLM Topics",
+      "count": 0,
+      "description": "AI fundamentals, language processing, and machine learning concepts"
+    },
+    {
+      "id": "aem-cms",
+      "name": "AEM / CMS Focus",
+      "count": 0,
+      "description": "Adobe Experience Manager and content management systems"
+    },
+    {
+      "id": "developer-guide-series",
+      "name": "Developer Guide Series",
+      "count": 0,
+      "description": "Comprehensive EDS development tutorials"
+    },
+    {
+      "id": "content-creator-guide",
+      "name": "Content Creator Guide",
+      "count": 0,
+      "description": "Resources for content authors and editors"
+    },
+    {
+      "id": "general-blog",
+      "name": "General Blog & Tools",
+      "count": 0,
+      "description": "General development topics, tools, and best practices"
+    }
+  ],
+  "categories": [
+    {
+      "id": "eds-integrations",
+      "name": "EDS & Integrations",
+      "posts": [
+        {
+          "title": "Vue Js Slide Viewer in GDocs",
+          "url": "/blogs/ddt/integrations/vue-js-version-of-slide-viewer-in-gdoc",
+          "description": "Vue Js  Slide Viewer in GDocs",
+          "lastModified": "1750851437"
+        },
+        {
+          "title": "Building a VueJS app with Edge Delivery Services",
+          "url": "/blogs/ddt/integrations/building-a-vuejs-app-with-edge-delivery-services",
+          "description": "This tutorial demonstrates building a Vue.js slide builder app integrated with Adobe Edge Delivery Services. The app dynamically fetches and displays slide content with interactive modal panels.",
+          "lastModified": "1749560930"
+        },
+        {
+          "title": "Building Headless Applications with Edge Delivery Services",
+          "url": "/blogs/ddt/integrations/building-headless-applications-with-edge-delivery-services",
+          "description": "Edge Delivery Services typically works best for static content delivery, but what if you need something more dynamic? This guide shows how to build a headless Single Page Application while keeping the performance benefits that make Edge Delivery Services attractive. Keeping everything framework-less.",
+          "lastModified": "1749574623"
+        },
+        {
+          "title": "Using Web Components in Adobe Edge Delivery Services Blocks",
+          "url": "/blogs/ddt/integrations/using-web-components-in-adobe-edge-delivery-services-blocks",
+          "description": "A comprehensive guide to implementing web components in EDS blocks, featuring advanced Shoelace Card components with glassmorphism effects and modern web development practices.",
+          "lastModified": "1750768798"
+        },
+        {
+          "title": "ReactJS version of slide builder",
+          "url": "/blogs/ddt/integrations/reactjs-version-of-slide-builder",
+          "description": "",
+          "lastModified": "1749802495"
+        },
+        {
+          "title": "Building a React App with Edge Delivery Services",
+          "url": "/blogs/ddt/integrations/building-a-react-app-with-edge-delivery-services",
+          "description": "Learn how to integrate React applications with Adobe Edge Delivery Services for modern, component-based content experiences",
+          "lastModified": "1749834831"
+        },
+        {
+          "title": "Spectrum Component Slide Viewer in GDocs",
+          "url": "/blogs/ddt/integrations/spectrum-component-as-eds-block-in-gdoc",
+          "description": "Spectrum Component  Slide Viewer in GDocs",
+          "lastModified": "1750851133"
+        },
+        {
+          "title": "Using Spectrum Components in Adobe Edge Delivery Services Blocks",
+          "url": "/blogs/ddt/integrations/using-spectrum-components-in-adobe-edge-delivery-services-blocks",
+          "description": "Learn how to create dynamic UI components for EDS using Adobe Spectrum Web Components and the query-index.json pattern, with practical examples and testing strategies.",
+          "lastModified": "1750065032"
+        },
+        {
+          "title": "Beyond Static Pages - Building Rich Apps with Edge Delivery Services",
+          "url": "/blogs/ddt/integrations/",
+          "description": "Discover how Edge Delivery Services enables interactive applications through framework integrations",
+          "lastModified": "1750065978"
+        },
+        {
+          "title": "Fast EDS Development with AI - A Local-First Approach",
+          "url": "/blogs/ddt/integrations/fast-eds-development-integration-for-ai",
+          "description": "Transform your Adobe Edge Delivery Services workflow with a simple development server that brings AI assistance to EDS development",
+          "lastModified": "1750329926"
+        },
+        {
+          "title": "Shoelace Version of Slide Viewer in GDocs",
+          "url": "/blogs/ddt/integrations/shoelace-version-of-slide-viewer-in-gdocs",
+          "description": "Shoelace Version of Slide Viewer in GDocs",
+          "lastModified": "1750764961"
+        },
+        {
+          "title": "Mastering EDS Block Debugging - A Developer's Guide to Edge Delivery Services",
+          "url": "/blogs/ddt/integrations/mastering-eds-block-debugging-a-developer-guide-to-edge-delivery-services",
+          "description": "Learn systematic approaches to debug Adobe Edge Delivery Services blocks, from basic logging to advanced instrumentation techniques.",
+          "lastModified": "1750869543"
+        },
+        {
+          "title": "The EDS Developer's Dilemma - And How One Framework Solved It",
+          "url": "/blogs/ddt/integrations/the-eds-developer-dilemma-and-how-one-framework-solved-it",
+          "description": "How one framework solves the EDS developer's dilemma - enabling sophisticated components whilst maintaining EDS principles",
+          "lastModified": "1752260724"
+        },
+        {
+          "title": "The Convergence - Completing Adobe's Claude Skills for Perfect  EDS AI Development",
+          "url": "/blogs/ddt/integrations/the-convergence-completing-adobe-s-claude-skills-for-perfect-eds-ai-development",
+          "description": "How my comprehensive docs/for-ai provides the missing 90% that makes Adobe's EDS Skills actually work",
+          "lastModified": "1762598120"
+        },
+        {
+          "title": "Testing EDS Blocks with Jupyter Notebooks in VS Code",
+          "url": "/blogs/ddt/integrations/testing-eds-blocks-with-jupyter-notebooks-a-developer-playground",
+          "description": "Set up a Jupyter notebook environment in Visual Studio Code for testing Adobe Edge Delivery Services blocks interactively with JavaScript.",
+          "lastModified": "1762642030"
+        },
+        {
+          "title": "Live version of the ipynb blog post",
+          "url": "/blogs/ddt/integrations/live-version-of-the-ipynb-blog-post",
+          "description": "How I built a browser-based Jupyter notebook system with zero configuration where each cell imports what it needs and previews appear as overlays, the live version",
+          "lastModified": "1763057353"
+        },
+        {
+          "title": "Building Interactive Notebooks for EDS - A Journey in Context-Aware Design",
+          "url": "/blogs/ddt/integrations/building-interactive-notebooks-for-eds-a-journey-in-context-aware-design",
+          "description": "How we built a browser-based Jupyter notebook system with zero configuration where each cell imports what it needs and previews appear as overlays",
+          "lastModified": "1763056706"
+        },
+        {
+          "title": "Living Documentation - Browser-Based Jupyter Notebooks for Adobe EDS",
+          "url": "/blogs/ddt/integrations/living-documentation-browser-based-jupyter-notebooks-for-adobe-eds",
+          "description": "Transform static documentation into interactive experiences where anyone can click Run and see EDS blocks transform content in real-time, no setup required",
+          "lastModified": "1763200046"
+        },
+        {
+          "title": "AI-Powered Adobe EDS Development",
+          "url": "/blogs/ddt/integrations/ai-powered-adobe-eds-development",
+          "description": "A comprehensive framework for building sophisticated Adobe EDS components using vanilla JavaScript with zero external dependencies, featuring interactive testing and AI-powered development workflows.",
+          "lastModified": "1763233144"
+        },
+        {
+          "title": "Live Jupyter Notebook",
+          "url": "/blogs/ddt/integrations/live-jupyter-notebook",
+          "description": "Jupyter Notebooks (.ipynb files) are an open-source, web-based application for interactive data science and computing. Their core strength is combining live code, equations, visualisations, and ...",
+          "lastModified": "1763550678"
+        }
+      ]
+    },
+    {
+      "id": "core-ai-llm",
+      "name": "Core AI/LLM Topics",
+      "posts": []
+    },
+    {
+      "id": "aem-cms",
+      "name": "AEM / CMS Focus",
+      "posts": []
+    },
+    {
+      "id": "developer-guide-series",
+      "name": "Developer Guide Series",
+      "posts": []
+    },
+    {
+      "id": "content-creator-guide",
+      "name": "Content Creator Guide",
+      "posts": []
+    },
+    {
+      "id": "general-blog",
+      "name": "General Blog & Tools",
+      "posts": []
+    }
+  ]
+}

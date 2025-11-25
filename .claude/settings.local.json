@@ -95,7 +95,8 @@
       "Bash(do echo \"=== $file ===\")",
       "Bash(lsof:*)",
       "Bash(pkill:*)",
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "Bash(../deepnote/node_modules/.pnpm/tsx@4.20.6/node_modules/tsx/dist/cli.mjs scripts/sync-blog-content.ts --target=llms)"
     ],
     "deny": [],
     "ask": []
