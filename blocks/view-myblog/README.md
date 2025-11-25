@@ -155,14 +155,32 @@ Categories can optionally specify a `sortOrder` field:
 - `"oldest-first"` - Sorts posts by date ascending (oldest to newest). Perfect for tutorial series like "Part 0, Part 1, Part 2..."
 - Default (no sortOrder specified) - Posts display in the order they appear in JSON (typically newest first)
 
+## Behavior
+
+### Link Handling
+
+- **Blog Post Links**: All blog post links open in new tabs (`target="_blank"`)
+  - Includes security attributes (`rel="noopener noreferrer"`)
+  - Applies to Latest Posts, Most Visited, and all category posts
+- **Category Map Links**: Hash anchor links stay on same page (internal navigation)
+- **Link Styling**:
+  - Default: Blue color (`#667eea`) - clearly visible as links
+  - Hover: Purple color (`#764ba2`) with underline
+
+### Category Map Display
+
+- **Multiple Categories**: Category map table displayed with navigation
+- **Single Category**: Category map automatically hidden (e.g., AI variation)
+
 ## Styling
 
 The block includes comprehensive CSS that matches the original `my-blog.html` design:
 
 - **Latest Posts**: Blue gradient section
 - **Most Visited**: Orange gradient section
-- **Category Map**: Clean table with hover effects
+- **Category Map**: Clean table with hover effects (hidden when only one category)
 - **Blog Entries**: Compact card layout with minimal white space
+- **Links**: Blue links with purple hover state and underline
 - **Responsive**: Optimized for mobile, tablet, and desktop
 
 ## Customization

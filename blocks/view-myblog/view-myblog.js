@@ -92,6 +92,8 @@ function createBlogEntry(entry, isLast = false) {
   const link = document.createElement('a');
   link.href = entry.url;
   link.textContent = entry.title;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
   title.appendChild(link);
 
   const description = document.createElement('p');
@@ -210,6 +212,8 @@ function createCategorySection(category) {
       const a = document.createElement('a');
       a.href = link.url;
       a.textContent = link.title;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
       a.style.color = '#667eea';
       a.style.textDecoration = 'none';
       a.style.transition = 'color 0.3s ease';
@@ -251,6 +255,8 @@ function createCategorySection(category) {
       const link = document.createElement('a');
       link.href = post.url;
       link.textContent = post.title;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
       postTitle.appendChild(link);
 
       const description = document.createElement('p');

@@ -95,14 +95,15 @@
 }
 
 .view-myblog-entry-title a {
-  color: #333;
+  color: #667eea;
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s ease;
 }
 
 .view-myblog-entry-title a:hover {
-  color: #667eea;
+  color: #764ba2;
+  text-decoration: underline;
 }
 
 .view-myblog-entry-description {
