@@ -7,7 +7,9 @@ This directory contains Claude Code configuration, custom skills, and slash comm
 ```
 .claude/
 ├── README.md                    # This file
-├── commands/                    # Slash commands for common workflows
+├── agents_README.md             # Agent documentation
+├── settings.json                # Claude Code configuration
+├── commands/                    # Slash commands (19 total)
 │   ├── new-block.md            # Create new EDS block with CDD
 │   ├── start-cdd.md            # Start Content Driven Development
 │   ├── test-block.md           # Test a specific block
@@ -17,19 +19,44 @@ This directory contains Claude Code configuration, custom skills, and slash comm
 │   ├── check-block.md          # Architecture review of a block
 │   ├── check-security.md       # Security validation
 │   ├── review-docs.md          # Navigate EDS documentation
-│   ├── jupyter-notebook.md     # Create/edit Jupyter notebooks for testing
-│   ├── update-llms.md          # Update all llms.txt files
-│   └── update-my-blog.md       # Update all my-blog.json files
-└── skills/                      # Extended capabilities
+│   ├── jupyter-notebook.md     # Create/edit testing notebooks
+│   ├── create-notebook.md      # Create educational notebooks
+│   ├── create-presentation.md  # Create presentation notebooks
+│   ├── validate-notebook.md    # Validate notebook quality
+│   ├── dev-docs.md             # Create strategic plans
+│   └── dev-docs-update.md      # Update dev documentation
+├── agents/                      # Autonomous agents (6 total)
+│   ├── code-architecture-reviewer.md
+│   ├── code-refactor-master.md
+│   ├── documentation-architect.md
+│   ├── plan-reviewer.md
+│   ├── refactor-planner.md
+│   └── web-research-specialist.md
+├── hooks/                       # Development workflow automation
+│   ├── CONFIG.md               # Hook configuration guide
+│   ├── skill-activation-prompt.sh
+│   ├── skill-activation-prompt.ts
+│   ├── post-tool-use-tracker.sh
+│   └── package.json            # TypeScript dependencies
+└── skills/                      # Extended capabilities (26 total)
     ├── building-blocks/         # Create/modify EDS blocks
     ├── content-driven-development/  # CDD process orchestration
     ├── content-modeling/        # Design author-friendly content models
     ├── testing-blocks/          # Comprehensive block testing
-    ├── jupyter-notebook-testing.md  # Interactive testing with Jupyter
+    ├── jupyter-notebook-testing/ # Interactive testing with Jupyter
+    ├── jupyter-educational-notebook/ # Educational notebook creation
+    ├── create-presentation/     # Presentation notebook creation
+    ├── ipynb-validator/         # Notebook validation
     ├── block-collection-and-party/  # Find reference implementations
     ├── docs-search/             # Search aem.live documentation
-    ├── llms-txt-manager/        # Manage llms.txt and my-blog.json files
-    └── [other general skills]   # Canvas design, artifacts, etc.
+    ├── llms-txt-manager/        # Manage llms.txt and my-blog.json
+    ├── eds-block-development/   # EDS block development patterns
+    ├── eds-block-testing/       # EDS block testing
+    ├── eds-performance-debugging/ # Performance optimization
+    ├── frontend-dev-guidelines/ # Frontend patterns
+    ├── skill-developer/         # Create custom skills
+    ├── skill-creator/           # Skill creation toolkit
+    └── [other general skills]   # Theme factory, web testing, etc.
 ```
 
 ## Quick Start
@@ -150,8 +177,54 @@ These skills are available but not EDS-specific:
 | `/check-security` | Run security checklist validation based on EDS security guidelines | `/check-security` |
 | `/review-docs` | Review and understand the EDS documentation structure in docs/for-AI | `/review-docs` |
 | `/jupyter-notebook` | Create or edit Jupyter notebooks for testing EDS blocks interactively | `/jupyter-notebook` |
-| `/update-llms` | Update all llms.txt files with latest content from query-index.json | `/update-llms` |
-| `/update-my-blog` | Update all my-blog.json files with latest content from query-index.json | `/update-my-blog` |
+| `/create-notebook` | Create educational and interactive Jupyter notebooks (tutorials, guides, blogs) | `/create-notebook` |
+| `/create-presentation` | Create or update presentation-mode notebooks with embedded HTML/JS blocks | `/create-presentation` |
+| `/validate-notebook` | Validate notebook for production readiness (smart links, structure, quality) | `/validate-notebook` |
+| `/dev-docs` | Create comprehensive strategic plan with structured task breakdown | `/dev-docs refactor auth` |
+| `/dev-docs-update` | Update dev documentation before context compaction | `/dev-docs-update` |
+
+## Agents
+
+Specialized autonomous agents for complex, multi-step tasks. See [agents_README.md](agents_README.md) for details.
+
+### Available Agents (6 for EDS)
+
+**Code Quality & Architecture:**
+- **code-architecture-reviewer** - Review block implementations and architectural consistency
+- **code-refactor-master** - Plan and execute comprehensive refactoring
+- **documentation-architect** - Create comprehensive documentation for blocks and features
+
+**Planning & Research:**
+- **plan-reviewer** - Review development plans before implementation
+- **refactor-planner** - Create comprehensive refactoring strategies
+- **web-research-specialist** - Research EDS patterns and solutions online
+
+### How to Use Agents
+
+Ask Claude to use an agent for complex tasks:
+```
+Use the code-architecture-reviewer agent to review the new carousel block
+```
+
+Agents work autonomously and return comprehensive reports when complete.
+
+## Hooks
+
+Active hooks that enhance the development workflow:
+
+### skill-activation-prompt.sh
+- **Trigger:** When you submit a prompt
+- **Purpose:** Auto-suggests relevant skills based on your message
+- **Implementation:** TypeScript-based pattern matching
+
+### post-tool-use-tracker.sh
+- **Trigger:** After file edits (Edit, MultiEdit, Write)
+- **Purpose:** Tracks modified files for session context
+- **Implementation:** Lightweight bash script
+
+### Configuration
+
+Hooks are configured in [.claude/settings.json](.claude/settings.json:0:0-0:0). For advanced customization, see [hooks/CONFIG.md](hooks/CONFIG.md).
 
 ## Documentation
 

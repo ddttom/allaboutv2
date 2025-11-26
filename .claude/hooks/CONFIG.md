@@ -2,11 +2,9 @@
 
 This guide explains how to configure and customize the hooks system for your project.
 
-## Quick Start Configuration
+## Current Configuration
 
-### 1. Register Hooks in .claude/settings.json
-
-Create or update `.claude/settings.json` in your project root:
+This project uses a **minimal hooks setup** optimized for EDS development. The active configuration in `.claude/settings.json`:
 
 ```json
 {
@@ -31,149 +29,98 @@ Create or update `.claude/settings.json` in your project root:
           }
         ]
       }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/stop-prettier-formatter.sh"
-          },
-          {
-            "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/stop-build-check-enhanced.sh"
-          },
-          {
-            "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/error-handling-reminder.sh"
-          }
-        ]
-      }
     ]
   }
 }
 ```
 
+### Active Hooks
+
+**skill-activation-prompt.sh**
+- **Trigger:** When user submits a prompt
+- **Purpose:** Auto-suggest relevant skills based on prompt content
+- **Implementation:** TypeScript-based detection in `skill-activation-prompt.ts`
+
+**post-tool-use-tracker.sh**
+- **Trigger:** After Edit, MultiEdit, or Write operations
+- **Purpose:** Track modified files for session context
+- **Implementation:** Bash script with minimal overhead
+
+## Quick Start Configuration
+
+### 1. Verify Existing Setup
+
+The configuration is already in place. To verify:
+
+```bash
+cat .claude/settings.json | jq .hooks
+```
+
 ### 2. Install Dependencies
+
+The hooks use TypeScript, which requires dependencies:
 
 ```bash
 cd .claude/hooks
 npm install
 ```
 
-### 3. Set Execute Permissions
+### 3. Verify Execute Permissions
 
+Hooks should already have execute permissions:
+
+```bash
+ls -la .claude/hooks/*.sh
+```
+
+If needed, set permissions:
 ```bash
 chmod +x .claude/hooks/*.sh
 ```
 
 ## Customization Options
 
-### Project Structure Detection
+### EDS Project Structure
 
-By default, hooks detect these directory patterns:
+This project follows Adobe Edge Delivery Services conventions:
 
-**Frontend:** `frontend/`, `client/`, `web/`, `app/`, `ui/`
-**Backend:** `backend/`, `server/`, `api/`, `src/`, `services/`
-**Database:** `database/`, `prisma/`, `migrations/`
-**Monorepo:** `packages/*`, `examples/*`
+**Blocks:** `blocks/` - EDS block components
+**Build:** `build/` - Build-enhanced blocks with dependencies
+**Scripts:** `scripts/` - Shared JavaScript utilities
+**Docs:** `docs/` - Documentation including `docs/for-ai/`
+**Tools:** `tools/` - Development and build tools
 
-#### Adding Custom Directory Patterns
+### Customizing Skill Triggers
 
-Edit `.claude/hooks/post-tool-use-tracker.sh`, function `detect_repo()`:
+The `skill-activation-prompt.ts` hook auto-suggests skills based on:
+- Keywords in user prompts
+- Intent patterns (regex matching)
+- File paths being modified
+- Content patterns in files
 
-```bash
-case "$repo" in
-    # Add your custom directories here
-    my-custom-service)
-        echo "$repo"
-        ;;
-    admin-panel)
-        echo "$repo"
-        ;;
-    # ... existing patterns
-esac
-```
+Edit `.claude/skills/skill-rules.json` to customize triggers for EDS-specific patterns.
 
-### Build Command Detection
+### File Tracking Customization
 
-The hooks auto-detect build commands based on:
-1. Presence of `package.json` with "build" script
-2. Package manager (pnpm > npm > yarn)
-3. Special cases (Prisma schemas)
+The `post-tool-use-tracker.sh` hook tracks modified files. Customize what gets tracked:
 
-#### Customizing Build Commands
-
-Edit `.claude/hooks/post-tool-use-tracker.sh`, function `get_build_command()`:
+Edit `.claude/hooks/post-tool-use-tracker.sh`:
 
 ```bash
-# Add custom build logic
-if [[ "$repo" == "my-service" ]]; then
-    echo "cd $repo_path && make build"
-    return
+# Skip certain files or directories
+if [[ "$file_path" =~ /node_modules/ ]] || [[ "$file_path" =~ /\.cache/ ]]; then
+    exit 0  # Don't track
 fi
 ```
 
-### TypeScript Configuration
+### EDS-Specific Patterns
 
-Hooks automatically detect:
-- `tsconfig.json` for standard TypeScript projects
-- `tsconfig.app.json` for Vite/React projects
-
-#### Custom TypeScript Configs
-
-Edit `.claude/hooks/post-tool-use-tracker.sh`, function `get_tsc_command()`:
-
-```bash
-if [[ "$repo" == "my-service" ]]; then
-    echo "cd $repo_path && npx tsc --project tsconfig.build.json --noEmit"
-    return
-fi
-```
-
-### Prettier Configuration
-
-The prettier hook searches for configs in this order:
-1. Current file directory (walking upward)
-2. Project root
-3. Falls back to Prettier defaults
-
-#### Custom Prettier Config Search
-
-Edit `.claude/hooks/stop-prettier-formatter.sh`, function `get_prettier_config()`:
-
-```bash
-# Add custom config locations
-if [[ -f "$project_root/config/.prettierrc" ]]; then
-    echo "$project_root/config/.prettierrc"
-    return
-fi
-```
-
-### Error Handling Reminders
-
-Configure file category detection in `.claude/hooks/error-handling-reminder.ts`:
-
-```typescript
-function getFileCategory(filePath: string): 'backend' | 'frontend' | 'database' | 'other' {
-    // Add custom patterns
-    if (filePath.includes('/my-custom-dir/')) return 'backend';
-    // ... existing patterns
-}
-```
-
-### Error Threshold Configuration
-
-Change when to recommend the auto-error-resolver agent.
-
-Edit `.claude/hooks/stop-build-check-enhanced.sh`:
-
-```bash
-# Default is 5 errors - change to your preference
-if [[ $total_errors -ge 10 ]]; then  # Now requires 10+ errors
-    # Recommend agent
-fi
-```
+For EDS development, you might want to track:
+- Block JavaScript files: `blocks/**/*.js`
+- Block CSS files: `blocks/**/*.css`
+- Test files: `blocks/**/test.html`
+- Jupyter notebooks: `**/*.ipynb`
+- Documentation: `docs/**/*.md`
 
 ## Environment Variables
 
@@ -199,30 +146,51 @@ SKIP_ERROR_REMINDER=1 claude-code
 
 ## Hook Execution Order
 
-Stop hooks run in the order specified in `settings.json`:
+Hooks run in the order specified in `settings.json`. This project has two sequential hook triggers:
 
-```json
-"Stop": [
-  {
-    "hooks": [
-      { "command": "...formatter.sh" },    // Runs FIRST
-      { "command": "...build-check.sh" },  // Runs SECOND
-      { "command": "...reminder.sh" }      // Runs THIRD
-    ]
-  }
-]
-```
+1. **UserPromptSubmit** - skill-activation-prompt.sh runs first
+2. **PostToolUse** - post-tool-use-tracker.sh runs after file edits
 
 **Why this order matters:**
-1. Format files first (clean code)
-2. Then check for errors
-3. Finally show reminders
+- Skill suggestions happen before any work begins
+- File tracking happens after edits are made
+- Minimal overhead for fast development workflow
 
 ## Selective Hook Enabling
 
-You don't need all hooks. Choose what works for your project:
+This project uses a minimal, optimized setup. You can customize by enabling/disabling hooks:
 
-### Minimal Setup (Skill Activation Only)
+### Current Setup (Both Hooks)
+
+```json
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/skill-activation-prompt.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|MultiEdit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/post-tool-use-tracker.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+### Skill Activation Only
 
 ```json
 {
@@ -241,7 +209,7 @@ You don't need all hooks. Choose what works for your project:
 }
 ```
 
-### Build Checking Only (No Formatting)
+### File Tracking Only
 
 ```json
 {
@@ -253,46 +221,6 @@ You don't need all hooks. Choose what works for your project:
           {
             "type": "command",
             "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/post-tool-use-tracker.sh"
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/stop-build-check-enhanced.sh"
-          }
-        ]
-      }
-    ]
-  }
-}
-```
-
-### Formatting Only (No Build Checking)
-
-```json
-{
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "Edit|MultiEdit|Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/post-tool-use-tracker.sh"
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/stop-prettier-formatter.sh"
           }
         ]
       }
@@ -402,34 +330,33 @@ You can create your own hooks for other events:
 }
 ```
 
-### Monorepo Configuration
+### EDS Multi-Directory Projects
 
-For monorepos with multiple packages:
+For projects with multiple block collections:
 
 ```bash
-# In post-tool-use-tracker.sh, detect_repo()
-case "$repo" in
-    packages)
-        # Get the package name
-        local package=$(echo "$relative_path" | cut -d'/' -f2)
-        if [[ -n "$package" ]]; then
-            echo "packages/$package"
-        else
-            echo "$repo"
-        fi
+# In post-tool-use-tracker.sh
+case "$directory" in
+    blocks)
+        echo "Main EDS blocks"
+        ;;
+    build)
+        echo "Build-enhanced blocks"
         ;;
 esac
 ```
 
-### Docker/Container Projects
+### Custom Linting Integration
 
-If your build commands need to run in containers:
+EDS projects use ESLint and Stylelint:
 
 ```bash
-# In post-tool-use-tracker.sh, get_build_command()
-if [[ "$repo" == "api" ]]; then
-    echo "docker-compose exec api npm run build"
-    return
+# Add to post-tool-use-tracker.sh
+if [[ "$file_path" =~ \.js$ ]]; then
+    npx eslint "$file_path"
+fi
+if [[ "$file_path" =~ \.css$ ]]; then
+    npx stylelint "$file_path"
 fi
 ```
 

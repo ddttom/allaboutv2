@@ -4,8 +4,9 @@
 
 ### For AI Assistants
 - **Comprehensive Documentation**: See `docs/for-ai/` directory (26 detailed guides)
-- **Claude Code Tools**: See `.claude/` directory (skills and slash commands)
+- **Claude Code Tools**: See `.claude/` directory (19 commands, 26 skills, 6 agents, 2 hooks)
 - **Start Here**: `docs/for-ai/index.md` for complete navigation
+- **Agents**: See `.claude/agents_README.md` for autonomous task handlers
 
 ### Common Workflows
 - **Create new block**: Use `/new-block <name>` command (follows Content Driven Development)
@@ -43,17 +44,59 @@
 **See:** Smart link handling in `blocks/ipynb-viewer/ipynb-viewer.js` for proper client-side URL resolution
 
 ### Slash Commands (Claude Code)
+**Block Development:**
 - `/new-block <name>` - Create a new EDS block following Content Driven Development process
 - `/start-cdd` - Start Content Driven Development process for creating or modifying blocks
 - `/test-block <name>` - Run tests for a specific EDS block
 - `/deploy-block <name>` - Deploy a block from build/ directory to blocks/ directory
-- `/create-notebook` - Create educational/interactive Jupyter notebooks (tutorials, guides, blogs)
-- `/lint-all` - Run all linting checks (JavaScript and CSS) across the project
 - `/check-block <name>` - Analyze a block and provide architecture review and improvement suggestions
+
+**Notebooks:**
+- `/create-notebook` - Create educational/interactive Jupyter notebooks (tutorials, guides, blogs)
+- `/create-presentation` - Create or update presentation-mode notebooks with embedded HTML/JS blocks
+- `/jupyter-notebook` - Create or edit Jupyter notebooks for testing EDS blocks interactively
+- `/validate-notebook` - Validate notebook for production readiness (smart links, structure, quality)
+
+**Project Utilities:**
+- `/lint-all` - Run all linting checks (JavaScript and CSS) across the project
 - `/check-security` - Run security checklist validation based on EDS security guidelines
 - `/review-docs` - Review and understand the EDS documentation structure in docs/for-AI
+- `/dev-docs` - Create comprehensive strategic plan with structured task breakdown
+- `/find-block-content` - Find pages in the site that use a specific block
 
-See `.claude/README.md` for complete slash command reference.
+See `.claude/README.md` for complete slash command reference (19 total).
+
+### Agents (Claude Code)
+For complex, multi-step tasks, use autonomous agents:
+
+**Code Quality & Architecture:**
+- `code-architecture-reviewer` - Review block implementations and architectural consistency
+- `code-refactor-master` - Refactor blocks, scripts, and code organization
+- `documentation-architect` - Document blocks, features, and development patterns
+
+**Planning & Research:**
+- `plan-reviewer` - Review implementation plans before starting work
+- `refactor-planner` - Plan comprehensive code reorganization
+- `web-research-specialist` - Research EDS patterns and best practices
+
+**Usage:** Ask Claude to "Use the [agent-name] agent to [task]"
+
+See `.claude/agents_README.md` for complete agent documentation.
+
+### Hooks (Claude Code)
+Active hooks that enhance development workflow:
+
+**skill-activation-prompt.sh**
+- Auto-suggests relevant skills based on prompt content
+- Runs when you submit a prompt
+- TypeScript-based pattern matching
+
+**post-tool-use-tracker.sh**
+- Tracks modified files for session context
+- Runs after file edits (Edit, MultiEdit, Write)
+- Lightweight bash script
+
+See `.claude/hooks/CONFIG.md` for configuration and customization.
 
 ## Code Style
 - **JS**: Follows Airbnb style guide (eslint-config-airbnb-base)
@@ -262,9 +305,12 @@ When creating or modifying blocks, ALWAYS use Content Driven Development:
   - Core: `docs/for-ai/eds.md` - EDS fundamentals (1,937 lines)
 
 ### Claude Code Configuration
-- **`.claude/README.md`** - Skills, commands, and workflow integration
-- **`.claude/commands/`** - Slash commands for common tasks
-- **`.claude/skills/`** - Extended capabilities for EDS development
+- **`.claude/README.md`** - Complete overview (commands, skills, agents, hooks)
+- **`.claude/agents_README.md`** - Agent documentation (6 autonomous agents)
+- **`.claude/commands/`** - Slash commands for common tasks (19 total)
+- **`.claude/skills/`** - Extended capabilities for EDS development (26 total)
+- **`.claude/hooks/`** - Development workflow automation (2 active hooks)
+  - `CONFIG.md` - Hook configuration and customization guide
 
 ### Quick Links
 - Architecture standards: `docs/for-ai/implementation/block-architecture-standards.md`
