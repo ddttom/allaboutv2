@@ -8,11 +8,12 @@ The View MyBlog block dynamically fetches and displays blog content from a JSON 
 
 - **Dynamic Content Loading**: Fetches blog data from `/my-blog.json`
 - **Configurable Data Source**: Optional parameter to specify custom JSON file path
-- **Auto-Generated Latest Posts**: Automatically generates "Latest Posts" section if not provided in JSON (top 3 most recent non-index posts)
+- **Auto-Generated Latest Posts**: Automatically generates "Latest Posts" section if not provided in JSON (top 3 most recent non-index posts, hidden in single category mode)
 - **Index Page Filtering**: Automatically filters out index pages (URLs ending with `/`, `/index`, `/index.html`, `/index.htm`)
 - **Smart Category Management**: Empty categories are automatically hidden after filtering
+- **Single Category Mode**: Automatically simplifies layout when only one category exists (hides Latest Posts and Category Map)
 - **Responsive Design**: Mobile-first responsive layout
-- **Featured Sections**: Displays "Latest Posts" and "Most Visited" sections
+- **Featured Sections**: Displays "Latest Posts" (multi-category only) and "Most Visited" sections
 - **Smart Category Navigation**: Category map automatically hidden when only one category exists
 - **Full Blog Archives**: Renders all blog posts organized by category
 - **Flexible Sorting**: Categories can specify sort order (oldest-first for tutorials)
@@ -162,6 +163,16 @@ Categories can optionally specify a `sortOrder` field:
 - Default (no sortOrder specified) - Posts display in the order they appear in JSON (typically newest first)
 
 ## Behavior
+
+### Single Category Mode
+
+When only one active category exists (after filtering index pages and empty categories):
+- **Latest Posts section**: Hidden (not displayed)
+- **Category Map**: Hidden (not displayed)
+- **Most Visited section**: Still displayed if available
+- **Category section**: Displayed directly without navigation overhead
+
+This creates a cleaner, simpler layout when all posts belong to a single category.
 
 ### Link Handling
 

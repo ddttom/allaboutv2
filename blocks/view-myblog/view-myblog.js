@@ -3,6 +3,7 @@
  * Fetches and displays blog content from my-blog.json
  * Features:
  * - Auto-generates latestPosts if not provided (top 3 most recent non-index posts)
+ * - Single category mode: hides Latest Posts and Category Map when only one category
  * - Filters out index pages (URLs ending with /, /index, /index.html, /index.htm)
  * - Hides empty category sections
  * - Shows category map only when there are multiple active categories
@@ -304,6 +305,22 @@ export default async function decorate(block) {
       data.latestPosts = generateLatestPosts(data.categories);
     }
 
+    // Count active categories (categories with posts after index page filtering)
+    let activeCategoryCount = 0;
+    if (data.categories) {
+      data.categories.forEach((category) => {
+        if (category.posts) {
+          const nonIndexPosts = category.posts.filter(post => !isIndexPage(post.url));
+          if (nonIndexPosts.length > 0) {
+            activeCategoryCount++;
+          }
+        } else if (category.links) {
+          // Additional Resources section counts as active
+          activeCategoryCount++;
+        }
+      });
+    }
+
     // Clear the block
     block.textContent = '';
 
@@ -315,8 +332,8 @@ export default async function decorate(block) {
     const featuredContainer = document.createElement('div');
     featuredContainer.className = 'view-myblog-featured';
 
-    // Add Latest Posts section (filter out index pages)
-    if (data.latestPosts && data.latestPosts.length > 0) {
+    // Add Latest Posts section only if there are multiple active categories
+    if (activeCategoryCount > 1 && data.latestPosts && data.latestPosts.length > 0) {
       const filteredLatest = data.latestPosts.filter(post => !isIndexPage(post.url));
       if (filteredLatest.length > 0) {
         featuredContainer.appendChild(
