@@ -232,7 +232,7 @@ export async function createJSON() {
         let text = replaceTokens(window.siteConfig, coString);
         text = `{
         "@graph": [
-          {${text}}
+          ${text}
         ]
       }`;
         script.textContent = text;
