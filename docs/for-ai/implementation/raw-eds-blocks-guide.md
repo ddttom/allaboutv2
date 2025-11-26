@@ -1249,6 +1249,31 @@ These bugs were all found in production and fixed using the patterns above:
 
 **Lesson learned**: Follow these patterns from the start to avoid production bugs.
 
+### Real-World Content Authoring Issue
+
+**Problem:** Author name was displaying as full URL instead of name
+
+**Root cause:** In Google Docs, the hyperlink text was the image URL, and the code didn't handle this case
+
+**JavaScript fix:** Smart URL detection in bio.js:
+```javascript
+// Check if link text is a URL (not a proper author name)
+const linkText = link.textContent || '';
+const isLinkTextUrl = linkText.startsWith('http://') || linkText.startsWith('https://');
+
+// Only use link text as alt if it's NOT a URL
+// If it's a URL, leave alt empty - author name will be extracted from meta tag
+img.alt = isLinkTextUrl ? '' : linkText || 'Bio image';
+```
+
+**How it works:**
+1. Detects if link text starts with `http://` or `https://`
+2. If it's a URL → sets `alt=""` (empty)
+3. Author name extraction falls back to `<meta name="author">` tag
+4. Result: Author name from meta tag, not URL
+
+**Best practice:** While the code now handles URL link text gracefully, it's still better to use the author name as the link text in Google Docs for better semantics.
+
 ## See Also
 
 ### Architecture & Standards

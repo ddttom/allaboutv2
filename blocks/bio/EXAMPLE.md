@@ -44,7 +44,12 @@ The bio block automatically converts image links to actual images:
 1. The block detects the link points to an image (.jpg, .jpeg, .png, .gif, .webp, .svg)
 2. Converts the link to an `<img>` element using `replaceWith()`
 3. The original `<a>` tag is completely removed from the DOM
-4. Uses the link text as the image's alt attribute
+4. Uses the link text as the image's alt attribute (if link text is not a URL)
+5. If link text is a URL, ignores it and uses the page's `<meta name="author">` tag
+
+**💡 TIP:** For best results, use the author name as the link text in Google Docs:
+- ✅ **Best**: Hyperlink text "Tom Cranstoun" → URL "https://example.com/photo.jpg"
+- ✅ **Also works**: Hyperlink text "https://example.com/photo.jpg" → URL "https://example.com/photo.jpg" (will use meta tag)
 
 **Supported image extensions:**
 - .jpg / .jpeg

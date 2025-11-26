@@ -123,6 +123,10 @@ python /tmp/test_bio_block.py
 - **Cause**: Using `hide-author` class or link doesn't end in image extension
 - **Fix**: Remove `hide-author` class or ensure link ends in .jpg, .png, etc.
 
+### Author name shows as URL
+- **Cause**: Link text was a URL and page is missing `<meta name="author">` tag
+- **Fix**: Add `<meta name="author" content="Your Name">` to the page head, or in Google Docs, change the link text to the author name
+
 ### Multiple blocks showing same content
 - **Cause**: Using global selectors (`document.querySelector('.bio')`) in decorate function
 - **Fix**: Always use `block.querySelector()` to query within the current block

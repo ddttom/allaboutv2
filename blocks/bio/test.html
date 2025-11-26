@@ -202,6 +202,25 @@
         </div>
     </div>
 
+    <!-- Test Case 8: URL as Link Text (Production Bug) -->
+    <div class="test-section">
+        <h2>Test Case 8: URL as Link Text (Badly Formed - Production Issue)</h2>
+        <p class="test-description">
+            ⚠️ Tests the fix for when link text is a URL instead of author name<br>
+            ✅ Should ignore URL link text and use meta tag for author name<br>
+            ✅ Image should still be created correctly
+        </p>
+
+        <div class="bio-wrapper">
+            <div class="bio">
+                <div>
+                    <div><a href="https://picsum.photos/200/208.jpg">https://picsum.photos/200/208.jpg</a></div>
+                    <div>This bio has the URL as link text (badly formed content). Should use meta tag for author.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script type="module">
         import { loadBlock } from '/scripts/aem.js';
 

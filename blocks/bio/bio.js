@@ -21,7 +21,14 @@ export default function decorate(block) {
           // Create an img element to replace the link
           const img = document.createElement('img');
           img.src = link.href;
-          img.alt = link.textContent || 'Bio image';
+
+          // Check if link text is a URL (not a proper author name)
+          const linkText = link.textContent || '';
+          const isLinkTextUrl = linkText.startsWith('http://') || linkText.startsWith('https://');
+
+          // Only use link text as alt if it's NOT a URL
+          // If it's a URL, leave alt empty - author name will be extracted from meta tag
+          img.alt = isLinkTextUrl ? '' : linkText || 'Bio image';
 
           // Replace the link with the image (atomic operation)
           link.replaceWith(img);
