@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "last-updated": "2025-11-25",
+    "last-updated": "2025-11-26",
     "scope": "ai"
   },
   "categoryMap": [
@@ -13,7 +13,7 @@
     {
       "id": "core-ai-llm",
       "name": "Core AI/LLM Topics",
-      "count": 21,
+      "count": 23,
       "description": "AI fundamentals, language processing, and machine learning concepts"
     },
     {
@@ -176,6 +176,18 @@
           "url": "/blogs/ddt/ai/",
           "description": "The index page of the AI blogs of a seasoned architect.",
           "lastModified": "1764066528"
+        },
+        {
+          "title": "Toms Blog - AI Index Page",
+          "url": "/blogs/ddt/ai/",
+          "description": "The index page of the AI blogs of a seasoned architect.",
+          "lastModified": "1764066528"
+        },
+        {
+          "title": "When a Five-Year-Old Beats an AI at Its Own Game",
+          "url": "/blogs/ddt/ai/when-a-five-year-old-beats-an-ai-at-its-own-game",
+          "description": "A linguistic puzzle exposes the fundamental difference between pattern matching and genuine understanding.",
+          "lastModified": "1764165436"
         }
       ]
     },

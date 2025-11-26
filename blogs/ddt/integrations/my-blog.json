@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "last-updated": "2025-11-25",
+    "last-updated": "2025-11-26",
     "scope": "integrations"
   },
   "categoryMap": [
     {
       "id": "eds-integrations",
       "name": "EDS & Integrations",
-      "count": 20,
+      "count": 22,
       "description": "Adobe Edge Delivery Services integrations and framework implementations"
     },
     {
@@ -165,6 +165,18 @@
           "url": "/blogs/ddt/integrations/live-jupyter-notebook",
           "description": "Jupyter Notebooks (.ipynb files) are an open-source, web-based application for interactive data science and computing. Their core strength is combining live code, equations, visualisations, and ...",
           "lastModified": "1763550678"
+        },
+        {
+          "title": "Toms Blog - AI Index Page",
+          "url": "/blogs/ddt/integrations/",
+          "description": "The index page of the Integrations blogs of a seasoned architect.",
+          "lastModified": "1764166997"
+        },
+        {
+          "title": "Beyond Static Pages - Building Rich Apps with Edge Delivery Services",
+          "url": "/blogs/ddt/integrations/beyond-static-pages-building-rich-apps-with-edge-delivery-services",
+          "description": "Discover how Edge Delivery Services enables interactive applications through framework integrations",
+          "lastModified": "1764166869"
         }
       ]
     },

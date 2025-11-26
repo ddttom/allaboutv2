@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "last-updated": "2025-11-25"
+    "last-updated": "2025-11-26"
   },
   "mostVisited": [
     {
@@ -23,13 +23,13 @@
     {
       "id": "eds-integrations",
       "name": "EDS & Integrations",
-      "count": 20,
+      "count": 22,
       "description": "Adobe Edge Delivery Services, frameworks, web components"
     },
     {
       "id": "core-ai-llm",
       "name": "Core AI/LLM Topics",
-      "count": 24,
+      "count": 26,
       "description": "Language models, AI fundamentals, machine learning"
     },
     {
@@ -53,7 +53,7 @@
     {
       "id": "general-blog",
       "name": "General Blog & Tools",
-      "count": 26,
+      "count": 28,
       "description": "Development tools, AI optimization, best practices"
     },
     {
@@ -187,6 +187,18 @@
           "url": "/blogs/ddt/the-adapter-pattern-liberating-your-eds-design",
           "description": "Using the adapter patter with EDS",
           "lastModified": "2025-05-10"
+        },
+        {
+          "title": "Toms Blog - AI Index Page",
+          "url": "/blogs/ddt/integrations/",
+          "description": "The index page of the Integrations blogs of a seasoned architect.",
+          "lastModified": "1764166997"
+        },
+        {
+          "title": "Beyond Static Pages - Building Rich Apps with Edge Delivery Services",
+          "url": "/blogs/ddt/integrations/beyond-static-pages-building-rich-apps-with-edge-delivery-services",
+          "description": "Discover how Edge Delivery Services enables interactive applications through framework integrations",
+          "lastModified": "1764166869"
         }
       ]
     },
@@ -337,6 +349,18 @@
           "url": "/blogs/ddt/ai/",
           "description": "The index page of the AI blogs of a seasoned architect.",
           "lastModified": "1764066528"
+        },
+        {
+          "title": "Toms Blog - AI Index Page",
+          "url": "/blogs/ddt/ai/",
+          "description": "The index page of the AI blogs of a seasoned architect.",
+          "lastModified": "1764066528"
+        },
+        {
+          "title": "When a Five-Year-Old Beats an AI at Its Own Game",
+          "url": "/blogs/ddt/ai/when-a-five-year-old-beats-an-ai-at-its-own-game",
+          "description": "A linguistic puzzle exposes the fundamental difference between pattern matching and genuine understanding.",
+          "lastModified": "1764165436"
         }
       ]
     },
@@ -651,6 +675,18 @@
           "url": "/blogs/ddt/",
           "description": "The index page of the blogs of a seasoned AEM architect",
           "lastModified": "1764067033"
+        },
+        {
+          "title": "Tom's Blog Index Page",
+          "url": "/blogs/ddt/",
+          "description": "The index page of the blogs of a seasoned AEM architect",
+          "lastModified": "1764067033"
+        },
+        {
+          "title": "Edge Delivery Services Knowledge Hub",
+          "url": "/blogs/ddt/edge-delivery-services-knowledge-hub",
+          "description": "This document serves as a comprehensive resource centre for Adobe's Edge Delivery Services (EDS). It provides technical documentation, implementation guides, AI integration strategies and best practices for content creation. The site is intended for developers, content authors, and those seeking guidance on AI integration. It is built on Adobe Edge Delivery Services and a document-based architecture.",
+          "lastModified": "1764167201"
         }
       ]
     },
