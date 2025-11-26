@@ -2085,14 +2085,14 @@ By implementing these standards, development teams can create robust, accessible
 - [`eds-architecture-and-testing-guide.md`](eds-architecture-and-testing-guide.md) - Advanced debugging strategies
 
 ### Development Environment
-- [`server-README.md`](server-README.md) - Development server setup and local testing workflows
+- [`../Server-README.md`](../Server-README.md) - Development server setup and local testing workflows
 
 ## Next Steps {#next-steps}
 
 ### For New Developers
 1. **Start with foundations** → Read [`eds.md`](eds.md) for comprehensive EDS understanding
 2. **Choose your approach** → Use [`design-philosophy-guide.md`](design-philosophy-guide.md) to select simple vs complex patterns
-3. **Set up environment** → Follow [`server-README.md`](server-README.md) for local development setup
+3. **Set up environment** → Follow [`../Server-README.md`](../Server-README.md) for local development setup
 4. **Begin implementation** → Choose [`raw-eds-blocks-guide.md`](raw-eds-blocks-guide.md) or [`complex-eds-blocks-guide.md`](complex-eds-blocks-guide.md)
 
 ### For Experienced Developers

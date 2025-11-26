@@ -196,7 +196,7 @@ This document defines testing standards specifically for EDS-Native pattern comp
 
 ## EDS Native Style Integration
 
-*Related: [EDS Overview](../eds.md) for style system architecture | [Server README](../../server-README.md) for development server setup*
+*Related: [EDS Overview](../eds.md) for style system architecture | [Server README](../../../Server-README.md) for development server setup*
 
 ### Using Native EDS Styles
 
@@ -623,7 +623,7 @@ testFramework.runAll();
 - **[Project Structure](../project-structure.md)** - Understanding the overall EDS project organization and file conventions
 
 ### Development Environment & Tools
-- **[Server README](../../server-README.md)** - Development server setup and configuration for EDS block development and testing
+- **[Server README](../../../Server-README.md)** - Development server setup and configuration for EDS block development and testing
 - **[Performance Optimization](performance-optimization.md)** - Techniques for optimizing EDS block performance and loading
 - **[Browser Compatibility](browser-compatibility.md)** - Ensuring cross-browser compatibility for EDS implementations
 - **[Build Tools Configuration](build-tools-configuration.md)** - Advanced build tool setup and configuration

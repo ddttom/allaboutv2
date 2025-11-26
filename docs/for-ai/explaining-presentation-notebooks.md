@@ -4,8 +4,11 @@
 
 Presentation notebooks are Jupyter notebooks designed for **viewing and presentation** rather than code execution. They transform complex content into beautiful, interactive experiences using embedded HTML, inline styling, and EDS blocks—all within markdown cells. No executable code cells, just pure presentation.
 
+> **📚 Notebook Types Reference:** For complete classification of all three notebook types (Testing, Educational, Presentation), see [Explaining Jupyter - Notebook Types Reference](explaining-jupyter.md#notebook-types-reference).
+
 **Key Distinction:**
-- **Educational Notebooks** (`explaining-educational-notebooks.md`) - Interactive, executable, for learning
+- **Testing Notebooks** - Interactive browser execution for testing EDS blocks
+- **Educational Notebooks** - Interactive, executable, for learning and tutorials
 - **Presentation Notebooks** (this guide) - Non-executable, for presenting, showcasing, and client demos
 
 ## Purpose

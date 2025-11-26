@@ -5,105 +5,17 @@
 
 This guide demonstrates how to create effective EDS blocks using **vanilla JavaScript**, **minimal dependencies**, and **additive enhancement** patterns that preserve content and follow EDS philosophy.
 
-# Creating Raw EDS Blocks
-## The Simple, EDS-Native Approach
-
-**Related Documentation:** [Block Architecture Standards](block-architecture-standards.md) | [EDS Overview](../eds.md) | [Complex EDS Blocks Guide](complex-eds-blocks-guide.md) | [Debug Guide](../testing/debug.md)
-
-This guide demonstrates how to create effective EDS blocks using **vanilla JavaScript**, **minimal dependencies**, and **additive enhancement** patterns that preserve content and follow EDS philosophy.
-
 ## **🔒 Critical EDS Constraint: Block Names Are Fixed**
 
-**Before you start:** Understand that EDS automatically generates file paths from your HTML class names. This is non-negotiable.
+> **Critical EDS Constraint:** EDS requires exact file name matching - block names in HTML must match JavaScript file names exactly. See [Block Architecture Standards](block-architecture-standards.md#file-naming-conventions) for complete details on this constraint and the dual-directory architecture solution.
 
-### **How EDS Dynamic Loading Works**
-
-When your HTML contains:
-```html
-<div class="highlight-text">**Important** content here</div>
-```
-
-EDS automatically:
-
-1. **Adds block attributes**:
-   ```html
-   <div class="highlight-text block" data-block-name="highlight-text" data-block-status="initialized">
-   ```
-
-2. **Generates import paths** (you cannot change this):
-   ```javascript
-   // This happens in scripts/aem.js - completely automatic
-   const mod = await import(`/blocks/highlight-text/highlight-text.js`);
-   ```
-
-3. **Requires exact file structure**:
-   ```
-   /blocks/highlight-text/highlight-text.js   ← MUST match class name
-   /blocks/highlight-text/highlight-text.css  ← MUST match class name
-   ```
-
-### **What You Cannot Do**
-
-❌ **Different file names:**
-```
-HTML: <div class="highlight-text">
-Files: /blocks/highlight-text/text-highlighter.js  ← EDS won't find this
-```
-
-❌ **Import redirection:**
-```javascript
-// This won't work - EDS controls the import path
-import('./my-better-implementation.js');
-```
-
-❌ **Flexible naming:**
-```
-HTML: <div class="my-component">
-Files: /blocks/my-component/enhanced-version.js  ← Impossible
-```
-
-### **What You Must Do**
-
-✅ **Exact name matching:**
-```
-HTML: <div class="highlight-text">
-Files: /blocks/highlight-text/highlight-text.js  ← Perfect match required
-```
-
-This constraint affects every decision in EDS block development.
+**Quick summary:** When HTML contains `<div class="highlight-text">`, EDS automatically imports `/blocks/highlight-text/highlight-text.js` - you cannot change this path. This constraint affects every decision in EDS block development.
 
 ## **Understanding EDS HTML States** 📄
 
-### **Served vs Rendered HTML**
+> **Understanding HTML States:** EDS transforms served HTML into rendered HTML through decoration. See [Design Philosophy Guide](design-philosophy-guide.md#understanding-served-vs-rendered-html) for the complete explanation of this two-phase process.
 
-Before writing your first block, understand that EDS processes HTML in two states:
-
-#### **Served HTML** (What CMS Delivers)
-```html
-<!-- Raw content from authoring system -->
-<div class="highlight-text">
-  **Important** words need highlighting
-</div>
-```
-
-#### **Rendered HTML** (What EDS Creates)
-```html
-<!-- After EDS scripts process it -->
-<div class="highlight-text block" data-block-name="highlight-text" data-block-status="initialized">
-  <div>
-    <div>**Important** words need highlighting</div>
-  </div>
-</div>
-```
-
-### **Why This Matters for Block Development**
-
-**Your `decorate` function receives the RENDERED HTML**, which means:
-
-1. **Content is nested**: Look for content in `<div><div>` structure
-2. **EDS attributes exist**: `data-block-name`, `data-block-status` are present  
-3. **Block class added**: `.block` class is automatically added
-4. **Extraction strategy**: Use `block.querySelector('div div')` pattern
+**Quick summary:** Your `decorate` function receives RENDERED HTML with nested `<div><div>` structure and EDS attributes. Use `block.querySelector('div div')` to extract content.
 
 ### **Two Test Files (When Needed)**
 
@@ -1303,7 +1215,8 @@ img.alt = isLinkTextUrl ? '' : linkText || 'Bio image';
 1. **Start with [EDS Overview](../eds.md)** to understand the fundamental concepts and architecture
 2. **Review [Block Architecture Standards](block-architecture-standards.md)** for essential development guidelines
 3. **Follow this guide** to create your first simple block using the highlight-text example
-4. **Practice with [Block Examples](block-examples.md)** to see more implementation patterns
+4. **Debug issues** with [Debug Guide](../testing/debug.md) for troubleshooting EDS blocks
+5. **Test your blocks** using [EDS Native Testing Standards](../testing/eds-native-testing-standards.md)
 
 ### For Experienced Developers
 1. **Master the enhancement patterns** shown in this guide's advanced counter example

@@ -302,7 +302,6 @@ When creating or modifying blocks, ALWAYS use Content Driven Development:
    - Use `/create-notebook` command
    - Files: `education.ipynb`, `docs-navigation.ipynb`, `blog.ipynb`
    - Focus: Teaching and explaining concepts with visual engagement
-   - See: `docs/for-ai/fixes/showpreview-notebook-mode-fix.md` for details
 
 4. **ipynb-viewer Block** - Display notebooks on EDS pages
    - Display .ipynb files on EDS pages

@@ -16,6 +16,10 @@ This document explains the Jupyter notebook implementation for **interactive tes
 
 ## What This Is
 
+<a id="notebook-types-reference"></a>
+
+### Notebook Types Reference
+
 **Jupyter Notebooks in EDS** provide three specialized environments for different use cases:
 
 ### 1. Testing Notebooks (test.ipynb)

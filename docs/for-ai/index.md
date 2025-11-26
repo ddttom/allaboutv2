@@ -20,7 +20,12 @@ This index provides structured access to all documentation within the `docs/for-
   - Blog posts, tutorials, reference guides, demos
   - Use `/create-notebook` command for guided creation
   - Perfect for sharing knowledge and onboarding
-- **[`../NOTEBOOK-VALIDATION.md`](../NOTEBOOK-VALIDATION.md)** - **Validate notebooks for production**
+- **[`explaining-presentation-notebooks.md`](explaining-presentation-notebooks.md)** - **Create professional presentations**
+  - Professional presentations with embedded HTML/JavaScript
+  - Visual consistency standards and color schemes
+  - EDS block integration in presentations
+  - Ready-to-use cell structure for showcases and demos
+- **[`NOTEBOOK-VALIDATION.md`](NOTEBOOK-VALIDATION.md)** - **Validate notebooks for production**
   - Comprehensive validation tool checking smart links, structure, transitions
   - Use `/validate-notebook` command for quality checks
   - Scoring system (88-100 = production ready)
@@ -118,6 +123,11 @@ This index provides structured access to all documentation within the `docs/for-
   - Progressive learning with demonstrations
   - Use `/create-notebook` command for guided creation
   - Target: Developers creating tutorials, documentation, and demos
+- **[`explaining-presentation-notebooks.md`](explaining-presentation-notebooks.md)**
+  - Create professional presentations with embedded HTML/JavaScript
+  - Visual consistency standards and EDS block integration
+  - Build process and styling guidelines for showcases
+  - Target: Developers creating client presentations and demos
 
 - **[`testing/debug.md`](testing/debug.md)**
   - Debugging policies and standard approaches
@@ -175,7 +185,7 @@ This index provides structured access to all documentation within the `docs/for-
   - Target: Architects and senior developers
 
 ### Development Environment
-- **[`../server-README.md`](../server-README.md)**
+- **[`../Server-README.md`](../Server-README.md)**
   - Development server documentation and configuration
   - Local development workflow and proxy setup
   - File serving strategies and testing approaches
@@ -186,7 +196,7 @@ This index provides structured access to all documentation within the `docs/for-
 ## 🐛 Bug Fixes & Known Issues
 
 ### Resolved Issues
-- **[`fixes/showpreview-notebook-mode-fix.md`](fixes/showpreview-notebook-mode-fix.md)**
+- **`showPreview()` Notebook Mode Fix (2025-11-21)**
   - Fixed `showPreview()` not working in ipynb-viewer notebook mode
   - Enhanced error handling with user-friendly messages
   - Improved overlay z-index hierarchy for notebook context
@@ -241,9 +251,10 @@ This index provides structured access to all documentation within the `docs/for-
 ### For New Developers
 1. [`eds.md`](eds.md) - Start here for comprehensive overview
 2. [`implementation/raw-eds-blocks-guide.md`](implementation/raw-eds-blocks-guide.md) - Simple component development
-3. [`../server-README.md`](../server-README.md) - Local development setup
+3. [`../Server-README.md`](../Server-README.md) - Local development setup
 4. [`guidelines/frontend-guidelines.md`](guidelines/frontend-guidelines.md) - Coding standards
 5. [`explaining-educational-notebooks.md`](explaining-educational-notebooks.md) - Create interactive tutorials and documentation
+6. [`explaining-presentation-notebooks.md`](explaining-presentation-notebooks.md) - Create professional presentations
 
 ### For Experienced Developers
 1. [`implementation/block-architecture-standards.md`](implementation/block-architecture-standards.md) - Architecture patterns
@@ -276,7 +287,7 @@ This index provides structured access to all documentation within the `docs/for-
 ### Development Phase
 - [`implementation/block-architecture-standards.md`](implementation/block-architecture-standards.md) - Standards and patterns
 - [`implementation/raw-eds-blocks-guide.md`](implementation/raw-eds-blocks-guide.md) OR [`implementation/complex-eds-blocks-guide.md`](implementation/complex-eds-blocks-guide.md) - Implementation
-- [`../server-README.md`](../server-README.md) - Local development
+- [`../Server-README.md`](../Server-README.md) - Local development
 
 ### Testing Phase
 - [`testing/eds-native-testing-standards.md`](testing/eds-native-testing-standards.md) - Testing standards
@@ -360,7 +371,7 @@ Comprehensive references and detailed analysis documents
 1. Start with [`getting-started-guide.md`](getting-started-guide.md) for role-based learning paths
 2. Follow with [`eds.md`](eds.md) for complete overview
 3. Choose implementation guide based on component complexity
-4. Set up local environment using [`../server-README.md`](../server-README.md)
+4. Set up local environment using [`../Server-README.md`](../Server-README.md)
 5. Follow testing standards from [`testing/eds-native-testing-standards.md`](testing/eds-native-testing-standards.md)
 6. Create tutorials and documentation using [`explaining-educational-notebooks.md`](explaining-educational-notebooks.md)
 

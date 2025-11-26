@@ -4,6 +4,8 @@
 
 Educational Jupyter notebooks are interactive Single Page Applications (SPAs) designed to explain concepts, teach topics, and create engaging content for end users, learners, and clients. They are displayed via the ipynb-viewer block and focus on education rather than technical testing.
 
+> **📚 Notebook Types Reference:** For complete classification of all three notebook types (Testing, Educational, Presentation), see [Explaining Jupyter - Notebook Types Reference](explaining-jupyter.md#notebook-types-reference).
+
 ## Purpose and Use Cases
 
 ### What Are Educational Notebooks?
