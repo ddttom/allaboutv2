@@ -1,25 +1,32 @@
 /**
  * View MyBlog Block
  * Fetches and displays blog content from my-blog.json
- * Supports variations:
- * - Default: Shows all blog posts
- * - AI variation (.ai class): Shows only AI-related posts
+ * Features:
+ * - Auto-generates latestPosts if not provided (top 3 most recent non-index posts)
+ * - Filters out index pages (URLs ending with /, /index, /index.html, /index.htm)
+ * - Hides empty category sections
+ * - Shows category map only when there are multiple active categories
  */
 
 /**
- * Check if a post is AI-related
+ * Check if a URL is an index page
  */
-function isAIRelated(post) {
-  const urlLower = post.url.toLowerCase();
-  const titleLower = post.title.toLowerCase();
+function isIndexPage(url) {
+  // Normalize URL to handle both relative and absolute URLs
+  const urlPath = url.toLowerCase();
 
-  // Check for /ai/ in path
-  if (urlLower.includes('/ai/')) {
+  // Check for paths ending with /
+  if (urlPath.endsWith('/')) {
     return true;
   }
 
-  // Check for 'ai' or 'llm' in title (as whole words or parts of words)
-  if (titleLower.includes('ai') || titleLower.includes('llm')) {
+  // Check for paths ending with /index
+  if (urlPath.endsWith('/index')) {
+    return true;
+  }
+
+  // Check for paths ending with /index.html or /index.htm
+  if (urlPath.endsWith('/index.html') || urlPath.endsWith('/index.htm')) {
     return true;
   }
 
@@ -27,18 +34,21 @@ function isAIRelated(post) {
 }
 
 /**
- * Filter and restructure data to show only AI-related content
+ * Generate latestPosts from categories if not provided
+ * Collects all posts from all categories, filters index pages,
+ * sorts by lastModified (newest first), and returns top 3
  */
-function filterAIContent(data) {
-  const aiPosts = [];
+function generateLatestPosts(categories) {
+  const allPosts = [];
 
-  // Collect all AI-related posts from all categories
-  if (data.categories) {
-    data.categories.forEach((category) => {
+  // Collect all posts from all categories
+  if (categories) {
+    categories.forEach((category) => {
       if (category.posts) {
         category.posts.forEach((post) => {
-          if (isAIRelated(post)) {
-            aiPosts.push({ ...post, originalCategory: category.name });
+          // Filter out index pages
+          if (!isIndexPage(post.url)) {
+            allPosts.push(post);
           }
         });
       }
@@ -46,34 +56,14 @@ function filterAIContent(data) {
   }
 
   // Sort by lastModified date (newest first)
-  aiPosts.sort((a, b) => {
+  allPosts.sort((a, b) => {
     const dateA = new Date(a.lastModified || '1970-01-01');
     const dateB = new Date(b.lastModified || '1970-01-01');
     return dateB - dateA;
   });
 
-  // Get latest 3 posts for featured section
-  const latestPosts = aiPosts.slice(0, 3);
-
-  // Create restructured data
-  return {
-    latestPosts,
-    categoryMap: [
-      {
-        id: 'all-ai-posts',
-        name: 'All AI & LLM Posts',
-        count: aiPosts.length,
-        description: 'All articles about AI, LLM, and machine learning topics'
-      }
-    ],
-    categories: [
-      {
-        id: 'all-ai-posts',
-        name: 'All AI & LLM Posts',
-        posts: aiPosts
-      }
-    ]
-  };
+  // Return top 3 most recent posts
+  return allPosts.slice(0, 3);
 }
 
 /**
@@ -284,9 +274,6 @@ function createCategorySection(category) {
  * Main decorate function
  */
 export default async function decorate(block) {
-  // Check if this is the AI variation
-  const isAIVariation = block.classList.contains('ai');
-
   // Get data URL from block content or use default
   const blockContent = block.textContent.trim();
   const dataUrl = blockContent || '/my-blog.json';
@@ -297,12 +284,12 @@ export default async function decorate(block) {
   // Configuration
   const config = {
     dataUrl,
-    errorMessage: `Unable to load ${isAIVariation ? 'AI ' : ''}blog content. Please try again later.`
+    errorMessage: 'Unable to load blog content. Please try again later.'
   };
 
   try {
     // Show loading state
-    block.innerHTML = `<p class="view-myblog-loading">Loading ${isAIVariation ? 'AI ' : ''}blog content...</p>`;
+    block.innerHTML = '<p class="view-myblog-loading">Loading blog content...</p>';
 
     // Fetch blog data
     const response = await fetch(config.dataUrl);
@@ -310,10 +297,12 @@ export default async function decorate(block) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
 
-    const rawData = await response.json();
+    const data = await response.json();
 
-    // Filter data if AI variation
-    const data = isAIVariation ? filterAIContent(rawData) : rawData;
+    // Auto-generate latestPosts if not provided
+    if (!data.latestPosts || data.latestPosts.length === 0) {
+      data.latestPosts = generateLatestPosts(data.categories);
+    }
 
     // Clear the block
     block.textContent = '';
@@ -326,38 +315,72 @@ export default async function decorate(block) {
     const featuredContainer = document.createElement('div');
     featuredContainer.className = 'view-myblog-featured';
 
-    // Add Latest Posts section
+    // Add Latest Posts section (filter out index pages)
     if (data.latestPosts && data.latestPosts.length > 0) {
-      const latestTitle = isAIVariation ? 'Latest AI Posts' : 'Latest Posts';
-      featuredContainer.appendChild(
-        createFeaturedSection(latestTitle, data.latestPosts, 'latest')
-      );
+      const filteredLatest = data.latestPosts.filter(post => !isIndexPage(post.url));
+      if (filteredLatest.length > 0) {
+        featuredContainer.appendChild(
+          createFeaturedSection('Latest Posts', filteredLatest, 'latest')
+        );
+      }
     }
 
-    // Add Most Visited section
+    // Add Most Visited section (filter out index pages)
     if (data.mostVisited && data.mostVisited.length > 0) {
-      featuredContainer.appendChild(
-        createFeaturedSection('Most Visited', data.mostVisited, 'popular')
-      );
+      const filteredVisited = data.mostVisited.filter(post => !isIndexPage(post.url));
+      if (filteredVisited.length > 0) {
+        featuredContainer.appendChild(
+          createFeaturedSection('Most Visited', filteredVisited, 'popular')
+        );
+      }
     }
 
     container.appendChild(featuredContainer);
 
-    // Add Category Map (only if more than one category)
+    // Add Category Map (recalculate counts, filter empty categories, only show if > 1 active)
     if (data.categoryMap && data.categoryMap.length > 1) {
-      container.appendChild(createCategoryMap(data.categoryMap));
+      // Filter out categories that would have 0 posts after index page filtering
+      const activeCategoryMap = data.categoryMap.map(cat => {
+        // Find matching category to check actual post count
+        const matchingCategory = data.categories?.find(c => c.id === cat.id);
+        if (matchingCategory?.posts) {
+          const filteredCount = matchingCategory.posts.filter(post => !isIndexPage(post.url)).length;
+          return { ...cat, count: filteredCount };
+        }
+        return cat;
+      }).filter(cat => cat.count > 0); // Remove categories with 0 posts
+
+      // Only show map if there's still more than one active category
+      if (activeCategoryMap.length > 1) {
+        container.appendChild(createCategoryMap(activeCategoryMap));
+      }
     }
 
-    // Add category sections with blog posts
+    // Add category sections with blog posts (filter index pages and hide empty categories)
     if (data.categories && data.categories.length > 0) {
       const categoriesContainer = document.createElement('div');
       categoriesContainer.className = 'view-myblog-categories';
 
       data.categories.forEach((category) => {
-        categoriesContainer.appendChild(createCategorySection(category));
+        // Filter out index pages from category posts
+        if (category.posts) {
+          const filteredPosts = category.posts.filter(post => !isIndexPage(post.url));
+
+          // Only render category section if it has posts after filtering
+          if (filteredPosts.length > 0) {
+            const filteredCategory = { ...category, posts: filteredPosts };
+            categoriesContainer.appendChild(createCategorySection(filteredCategory));
+          }
+        } else if (category.links) {
+          // Additional Resources section - render as-is
+          categoriesContainer.appendChild(createCategorySection(category));
+        }
       });
 
-      container.appendChild(categoriesContainer);
+      // Only append categories container if it has children
+      if (categoriesContainer.children.length > 0) {
+        container.appendChild(categoriesContainer);
+      }
     }
 
     // Append to block

@@ -4,15 +4,13 @@
 
 The View MyBlog block dynamically fetches and displays blog content from a JSON data source, reproducing the layout and functionality of `my-blog.html` as an EDS block.
 
-### Block Variations
-
-- **Standard** (`view-myblog`): Displays all blog posts organized by category
-- **AI Filter** (`view-myblog (ai)`): Shows only AI-related posts
-
 ## Features
 
 - **Dynamic Content Loading**: Fetches blog data from `/my-blog.json`
 - **Configurable Data Source**: Optional parameter to specify custom JSON file path
+- **Auto-Generated Latest Posts**: Automatically generates "Latest Posts" section if not provided in JSON (top 3 most recent non-index posts)
+- **Index Page Filtering**: Automatically filters out index pages (URLs ending with `/`, `/index`, `/index.html`, `/index.htm`)
+- **Smart Category Management**: Empty categories are automatically hidden after filtering
 - **Responsive Design**: Mobile-first responsive layout
 - **Featured Sections**: Displays "Latest Posts" and "Most Visited" sections
 - **Smart Category Navigation**: Category map automatically hidden when only one category exists
@@ -24,50 +22,31 @@ The View MyBlog block dynamically fetches and displays blog content from a JSON 
 
 ### In Google Docs
 
-**Standard variation (default JSON file):**
+**Default (uses `/my-blog.json`):**
+```
 | view-myblog |
 |-------------|
+```
 
-**Standard variation (custom JSON file):**
+**With custom JSON file:**
+```
 | view-myblog |
 |-------------|
 | /path/to/custom-blog.json |
-
-**AI variation (filters for AI-related posts only):**
-| view-myblog (ai) |
-|------------------|
-
-**AI variation (custom JSON file):**
-| view-myblog (ai) |
-|------------------|
-| /path/to/custom-blog.json |
+```
 
 ### In HTML
 
-**Standard variation:**
+**Default:**
 ```html
 <div class="view-myblog">
   <!-- Content will be loaded here -->
 </div>
 ```
 
-**Standard variation with custom JSON:**
+**With custom JSON:**
 ```html
 <div class="view-myblog">
-  /path/to/custom-blog.json
-</div>
-```
-
-**AI variation:**
-```html
-<div class="view-myblog ai">
-  <!-- Content will be loaded here -->
-</div>
-```
-
-**AI variation with custom JSON:**
-```html
-<div class="view-myblog ai">
   /path/to/custom-blog.json
 </div>
 ```
@@ -76,34 +55,59 @@ The View MyBlog block dynamically fetches and displays blog content from a JSON 
 
 ### JSON Data Source
 
-By default, the block loads data from `/my-blog.json`. You can specify a custom JSON file path by adding it as the block content:
+By default, the block loads data from `/my-blog.json`. You can specify a custom JSON file path by adding it as the block content. If no path is specified, the block defaults to `/my-blog.json`.
 
-**In Google Docs:**
-```
-| view-myblog |
-|-------------|
-| /path/to/custom-blog.json |
+### Auto-Generated Latest Posts
+
+If your JSON file does not include a `latestPosts` array (or if it's empty), the block will automatically generate one by:
+1. Collecting all posts from all categories
+2. Filtering out index pages
+3. Sorting by `lastModified` date (newest first)
+4. Taking the top 3 most recent posts
+
+This means you can have a simpler JSON structure with just `categories`, and the Latest Posts section will be created automatically.
+
+**Example - Minimal JSON structure:**
+```json
+{
+  "categories": [
+    {
+      "id": "blog",
+      "name": "Blog Posts",
+      "posts": [
+        {
+          "title": "My Latest Post",
+          "url": "/blog/my-latest-post",
+          "description": "Description here",
+          "lastModified": "2025-01-20"
+        }
+      ]
+    }
+  ]
+}
 ```
 
-**In HTML:**
-```html
-<div class="view-myblog">
-  /path/to/custom-blog.json
-</div>
-```
+The block will automatically create a "Latest Posts" section from the 3 most recent posts across all categories.
 
-If no path is specified, the block defaults to `/my-blog.json`.
+### Index Page Filtering
+
+The block automatically filters out index pages from all sections (Latest Posts, Most Visited, and category sections). Index pages are identified by URLs that end with:
+- `/` (e.g., `/blogs/ddt/ai/`)
+- `/index` (e.g., `/blogs/ddt/index`)
+- `/index.html` or `/index.htm`
+
+This ensures that only actual blog post pages are displayed, not category or section landing pages.
 
 ### Content Structure
 
-The JSON file should have the following structure:
+The JSON file should have the following structure (note that `latestPosts` and `mostVisited` are optional and will be auto-generated if not provided):
 
 ```json
 {
   "metadata": {
     "last-updated": "2025-11-25"
   },
-  "latestPosts": [
+  "latestPosts": [  // Optional - auto-generated if missing
     {
       "title": "Post Title",
       "url": "/path/to/post",
@@ -143,11 +147,13 @@ The JSON file should have the following structure:
 }
 ```
 
-#### Metadata
+#### Optional Fields
 
-The optional `metadata` object contains information about the data file itself:
-- `last-updated` - Date when the blog data was last updated (ISO format: YYYY-MM-DD)
-- This metadata is not displayed in the block but useful for tracking content freshness
+Several fields in the JSON structure are optional:
+
+- **`metadata`** - Contains information about the data file itself (e.g., `last-updated`)
+- **`latestPosts`** - If missing or empty, will be auto-generated from the 3 most recent posts across all categories
+- **`mostVisited`** - If missing, the "Most Visited" section will not be displayed
 
 #### Sort Order
 
@@ -170,7 +176,9 @@ Categories can optionally specify a `sortOrder` field:
 ### Category Map Display
 
 - **Multiple Categories**: Category map table displayed with navigation
-- **Single Category**: Category map automatically hidden (e.g., AI variation)
+- **Single Category**: Category map automatically hidden
+- **Empty Categories**: Categories with 0 posts after filtering are not displayed
+- **Dynamic Counts**: Category counts are recalculated after index page filtering
 
 ## Styling
 
@@ -250,58 +258,8 @@ Test in multiple browsers:
 - All blog content is defined in the JSON file
 - Category links use hash anchors (e.g., `#eds-integrations`)
 - Error handling displays user-friendly messages
-
-## AI Variation Details
-
-### How It Works
-
-The AI variation filters and displays only AI-related posts:
-
-1. **Class Detection**: The `decorate()` function checks if the block has the `ai` class
-2. **Filtering**: Posts are filtered if they match ANY of these criteria:
-   - URL path contains `/ai/` (e.g., `/blogs/ddt/ai/how-ai-models-think`)
-   - Title contains 'AI' (case-insensitive)
-   - Title contains 'LLM' (case-insensitive)
-3. **Restructuring**: Creates a single "All AI & LLM Posts" category with filtered posts
-4. **Sorting**: Orders posts by date (newest first)
-5. **Featured Section**: Shows "Latest AI Posts" with the 3 most recent AI articles
-6. **Category Map**: Automatically hidden (since there's only one category)
-
-### Implementation
-
-The variation is implemented in the main `view-myblog.js` file:
-
-```javascript
-export default async function decorate(block) {
-  // Check if this is the AI variation
-  const isAIVariation = block.classList.contains('ai');
-
-  // Fetch and filter data
-  const rawData = await response.json();
-  const data = isAIVariation ? filterAIContent(rawData) : rawData;
-
-  // Render with conditional title
-  const latestTitle = isAIVariation ? 'Latest AI Posts' : 'Latest Posts';
-}
-```
-
-### Customizing the AI Filter
-
-To modify which posts are considered "AI-related", edit the `isAIRelated()` function in `view-myblog.js`:
-
-```javascript
-function isAIRelated(post) {
-  const urlLower = post.url.toLowerCase();
-  const titleLower = post.title.toLowerCase();
-
-  // Add your custom filtering logic
-  if (urlLower.includes('/ai/')) return true;
-  if (titleLower.includes('ai') || titleLower.includes('llm')) return true;
-  if (titleLower.includes('machine learning')) return true; // Example addition
-
-  return false;
-}
-```
+- Index pages are automatically filtered from all sections
+- Empty categories are automatically hidden
 
 ## Maintenance
 
@@ -309,4 +267,4 @@ To update blog content:
 1. Edit `/my-blog.json` with new posts or categories
 2. Content updates automatically without code changes
 3. No need to rebuild or redeploy the block code
-4. AI variation automatically picks up new AI-related posts
+4. Index pages in the JSON will be automatically filtered out
