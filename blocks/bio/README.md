@@ -10,7 +10,7 @@ If the bio block doesn't have the class 'hide-author', the function performs bot
 
 1. **Image Link Detection**: The function checks if the first cell of the bio block contains a link to an image file.
 
-2. **Image Link Conversion**: If a link pointing to an image file (.jpg, .jpeg, .png, .gif, .webp, .svg) is found, it automatically converts the link into an actual `<img>` element, using the link's text content as the image's `alt` attribute.
+2. **Image Link Conversion**: If a link pointing to an image file (.jpg, .jpeg, .png, .gif, .webp, .svg) is found, it automatically replaces the link element with an actual `<img>` element using `replaceWith()`, preserving the link's text content as the image's `alt` attribute.
 
 ### Author Name Processing
 

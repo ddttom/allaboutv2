@@ -23,10 +23,9 @@ export default function decorate(block) {
           const img = document.createElement('img');
           img.src = link.href;
           img.alt = link.textContent || 'Bio image';
-          
-          // Replace the link with the image
-          firstCell.innerHTML = '';
-          firstCell.appendChild(img);
+
+          // Replace the link with the image (atomic operation)
+          link.replaceWith(img);
         }
       }
     }

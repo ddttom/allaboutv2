@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Default Author Name">
+    <title>Bio Block Test - EDS Native Pattern</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+    <link rel="stylesheet" href="/styles/fonts.css">
+    <link rel="stylesheet" href="/styles/lazy-styles.css">
+
+    <!-- Note: Block CSS is loaded automatically by EDS -->
+
+    <style>
+        /* Test-specific styling */
+        body {
+            padding: 2rem;
+            background: var(--light-color);
+        }
+
+        .test-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--background-color);
+            padding: 2rem;
+            border-radius: 8px;
+        }
+
+        .test-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border: 2px solid var(--dark-color);
+            border-radius: 4px;
+            background: white;
+        }
+
+        .test-section h2 {
+            margin-top: 0;
+            color: var(--dark-color);
+            border-bottom: 1px solid var(--light-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .test-description {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test controls */
+        .test-controls {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: white;
+            padding: 1rem;
+            border: 2px solid var(--dark-color);
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .test-controls button {
+            display: block;
+            width: 100%;
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            border: 1px solid var(--dark-color);
+            background: var(--light-color);
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .test-controls button:hover {
+            background: var(--dark-color);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-controls">
+        <h3 style="margin-top: 0;">Test Controls</h3>
+        <button onclick="logAllBios()">Log All Bios</button>
+        <button onclick="checkImageLinks()">Check Image Links</button>
+        <button onclick="window.location.reload()">Reload Page</button>
+    </div>
+
+    <div class="test-content">
+        <h1>Bio Block Test Page</h1>
+        <p>This page tests the bio block with various configurations including image link conversion using <code>replaceWith()</code>.</p>
+
+        <!-- Test Case 1: Image Link Conversion (Primary Test) -->
+        <div class="test-section">
+            <h2>Test Case 1: Image Link Conversion</h2>
+            <p class="test-description">
+                Tests that image links are properly converted to &lt;img&gt; elements and the original &lt;a&gt; tag is removed from the DOM.
+            </p>
+
+            <div class="bio">
+                <div>
+                    <div>
+                        <a href="https://picsum.photos/200/200">Author Name from Link</a>
+                    </div>
+                    <div>
+                        <p>This is a test bio with an image link that should be converted to an actual image. The link should be completely removed from the DOM after conversion.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test Case 2: Regular Image (Picture Element) -->
+        <div class="test-section">
+            <h2>Test Case 2: Regular Image with Picture Element</h2>
+            <p class="test-description">
+                Tests with a standard picture element. Author name should be extracted from image alt text.
+            </p>
+
+            <div class="bio">
+                <div>
+                    <div>
+                        <picture>
+                            <img src="https://picsum.photos/200/201" alt="Jane Doe" loading="lazy">
+                        </picture>
+                    </div>
+                    <div>
+                        <p>Senior Developer with 10 years of experience in web technologies. Passionate about creating accessible and performant web applications.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test Case 3: Different Image Extensions -->
+        <div class="test-section">
+            <h2>Test Case 3: Different Image Extensions</h2>
+            <p class="test-description">
+                Tests image link conversion with various file extensions (.png, .webp, .svg).
+            </p>
+
+            <div class="bio">
+                <div>
+                    <div>
+                        <a href="https://picsum.photos/200/202.webp">WebP Author</a>
+                    </div>
+                    <div>
+                        <p>Testing with .webp extension image link.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bio">
+                <div>
+                    <div>
+                        <a href="https://via.placeholder.com/200.png">PNG Author</a>
+                    </div>
+                    <div>
+                        <p>Testing with .png extension image link.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test Case 4: No Image (Fallback to Meta Author) -->
+        <div class="test-section">
+            <h2>Test Case 4: No Image (Fallback to Meta Tag)</h2>
+            <p class="test-description">
+                Tests fallback behavior when no image is present. Should use meta tag author (check page head).
+            </p>
+
+            <div class="bio">
+                <div>
+                    <div>
+                        <!-- No image -->
+                    </div>
+                    <div>
+                        <p>This bio has no image, so it should fall back to the author from the meta tag in the page head.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test Case 5: Hidden Author Variant -->
+        <div class="test-section">
+            <h2>Test Case 5: Hidden Author Variant</h2>
+            <p class="test-description">
+                Tests the 'hide-author' class. Should not process image links or add author name.
+            </p>
+
+            <div class="bio hide-author">
+                <div>
+                    <div>
+                        <a href="https://picsum.photos/200/203">Hidden Author</a>
+                    </div>
+                    <div>
+                        <p>This bio has the 'hide-author' class. The image link should NOT be converted and no author name should be added.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test Case 6: Multiple Bios on Same Page -->
+        <div class="test-section">
+            <h2>Test Case 6: Multiple Bios on Same Page</h2>
+            <p class="test-description">
+                Tests multiple bio blocks on the same page to ensure proper isolation.
+            </p>
+
+            <div class="bio">
+                <div>
+                    <div>
+                        <a href="https://picsum.photos/200/204">First Author</a>
+                    </div>
+                    <div>
+                        <p>First bio instance.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bio">
+                <div>
+                    <div>
+                        <a href="https://picsum.photos/200/205">Second Author</a>
+                    </div>
+                    <div>
+                        <p>Second bio instance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test Case 7: Long Content (Responsive Test) -->
+        <div class="test-section">
+            <h2>Test Case 7: Long Content (Responsive Test)</h2>
+            <p class="test-description">
+                Tests bio block with longer content for responsive behavior. Resize browser to test mobile layout.
+            </p>
+
+            <div class="bio">
+                <div>
+                    <div>
+                        <a href="https://picsum.photos/200/206">Responsive Author</a>
+                    </div>
+                    <div>
+                        <p>This is a much longer bio to test responsive behavior. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test Case 8: Highlighted Variant -->
+        <div class="test-section">
+            <h2>Test Case 8: Highlighted Variant</h2>
+            <p class="test-description">
+                Tests the 'highlighted' variant with blue border around image.
+            </p>
+
+            <div class="bio highlighted">
+                <div>
+                    <div>
+                        <a href="https://picsum.photos/200/207">Highlighted Author</a>
+                    </div>
+                    <div>
+                        <p>This bio uses the highlighted variant with a blue border around the image.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test Case 9: Non-Image Link (Should Not Convert) -->
+        <div class="test-section">
+            <h2>Test Case 9: Non-Image Link (Should Not Convert)</h2>
+            <p class="test-description">
+                Tests that regular links (non-image) are NOT converted. The link should remain as-is.
+            </p>
+
+            <div class="bio">
+                <div>
+                    <div>
+                        <a href="https://example.com/profile">Profile Page Link</a>
+                    </div>
+                    <div>
+                        <p>This bio has a regular link (not an image link). The link should remain unchanged.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EDS Core Scripts -->
+    <script type="module">
+        import {
+            sampleRUM,
+            loadBlock,
+            loadCSS
+        } from '/scripts/aem.js';
+
+        // Initialize RUM (optional for testing)
+        sampleRUM('top');
+        window.addEventListener('load', () => sampleRUM('load'));
+
+        // CRITICAL: Add body.appear class FIRST (before loadBlock)
+        // EDS global styles hide body by default to prevent FOUC
+        // This makes the page visible before blocks load
+        document.body.classList.add('appear');
+
+        // Load all bio blocks on the page
+        // Mimic EDS behavior: find by block name, add .block class automatically
+        const blocks = document.querySelectorAll('.bio');
+
+        console.group('🧪 Bio Block Testing');
+        console.log(`Found ${blocks.length} bio blocks to test`);
+
+        for (const block of blocks) {
+            try {
+                // Store original HTML for debugging
+                const originalHTML = block.innerHTML;
+
+                console.group(`Loading bio block: ${block.className}`);
+                console.log('Original HTML:', originalHTML);
+
+                // Check for image links before decoration
+                const imageLink = block.querySelector('a[href*=".jpg"], a[href*=".jpeg"], a[href*=".png"], a[href*=".gif"], a[href*=".webp"], a[href*=".svg"]');
+                if (imageLink) {
+                    console.log('📸 Image link found:', imageLink.href);
+                }
+
+                // Add .block class like EDS decorateBlock() does
+                block.classList.add('block');
+                await loadBlock(block);
+
+                // Check if image link was converted
+                if (imageLink) {
+                    const linkStillExists = block.contains(imageLink);
+                    const imgElement = block.querySelector('img');
+
+                    console.log('✅ After decoration:');
+                    console.log('  - Link removed:', !linkStillExists);
+                    console.log('  - Image created:', !!imgElement);
+                    if (imgElement) {
+                        console.log('  - Image src:', imgElement.src);
+                        console.log('  - Image alt:', imgElement.alt);
+                    }
+                }
+
+                console.log('✅ Block loaded successfully');
+                console.groupEnd();
+            } catch (error) {
+                console.error(`❌ Block failed: ${block.className}`, error);
+                console.groupEnd();
+            }
+        }
+
+        console.groupEnd();
+
+        // Test helper functions
+        window.logAllBios = () => {
+            console.group('📊 Bio Block State');
+            const bios = document.querySelectorAll('.bio');
+            bios.forEach((bio, index) => {
+                console.group(`Bio ${index + 1}`);
+                console.log('Classes:', bio.className);
+                console.log('Has image:', !!bio.querySelector('img'));
+                console.log('Has link:', !!bio.querySelector('a'));
+                console.log('Author element:', bio.querySelector('strong')?.textContent);
+                console.log('HTML:', bio.innerHTML);
+                console.groupEnd();
+            });
+            console.groupEnd();
+        };
+
+        window.checkImageLinks = () => {
+            console.group('🔍 Image Link Check');
+            const bios = document.querySelectorAll('.bio');
+            let totalLinks = 0;
+            let totalImages = 0;
+
+            bios.forEach((bio, index) => {
+                const links = bio.querySelectorAll('a');
+                const images = bio.querySelectorAll('img');
+
+                totalLinks += links.length;
+                totalImages += images.length;
+
+                if (links.length > 0 && !bio.classList.contains('hide-author')) {
+                    console.warn(`⚠️ Bio ${index + 1} still has ${links.length} link(s):`, Array.from(links).map(l => l.href));
+                }
+            });
+
+            console.log(`Total links found: ${totalLinks}`);
+            console.log(`Total images found: ${totalImages}`);
+
+            if (totalLinks === 0) {
+                console.log('✅ All image links have been properly converted and removed!');
+            }
+
+            console.groupEnd();
+        };
+
+        // Auto-run checks after a short delay
+        setTimeout(() => {
+            console.log('\n🔍 Running automatic validation checks...\n');
+            checkImageLinks();
+        }, 1000);
+    </script>
+</body>
+</html>
