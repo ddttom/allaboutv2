@@ -327,6 +327,19 @@ export default function decorate(block) {
 
 ### 4. Test File
 
+#### 🔴 CRITICAL: test.html Requirements
+
+**Your test.html MUST include these critical elements or loadBlock() will fail:**
+
+1. **Block structure with wrappers** (if using external plugins)
+2. **`.block` class** on block element
+3. **`data-block-name` attribute** set to block name
+4. **Manual decoration** OR use EDS's `loadBlock()` function
+
+#### Template A: Manual Decoration (Simple)
+
+Use when your block has no external dependencies:
+
 ```html
 <!-- blocks/highlight-text/test.html -->
 <!DOCTYPE html>
@@ -354,7 +367,7 @@ export default function decorate(block) {
 </head>
 <body>
     <h1>Highlight Text Block Tests</h1>
-    
+
     <div class="test-section">
         <h2>Basic Highlighting</h2>
         <div class="highlight-text block" data-block-name="highlight-text" data-block-status="initialized">
@@ -363,7 +376,7 @@ export default function decorate(block) {
             </div>
         </div>
     </div>
-    
+
     <div class="test-section">
         <h2>Multiple Highlights</h2>
         <div class="highlight-text block" data-block-name="highlight-text" data-block-status="initialized">
@@ -372,7 +385,7 @@ export default function decorate(block) {
             </div>
         </div>
     </div>
-    
+
     <div class="test-section">
         <h2>No Highlights (Graceful Handling)</h2>
         <div class="highlight-text block" data-block-name="highlight-text" data-block-status="initialized">
@@ -381,7 +394,7 @@ export default function decorate(block) {
             </div>
         </div>
     </div>
-    
+
     <div class="test-section">
         <h2>Empty Content</h2>
         <div class="highlight-text block" data-block-name="highlight-text" data-block-status="initialized">
@@ -393,7 +406,7 @@ export default function decorate(block) {
 
     <script type="module">
         import decorate from './highlight-text.js';
-        
+
         document.addEventListener('DOMContentLoaded', () => {
             const blocks = document.querySelectorAll('.highlight-text.block');
             blocks.forEach(block => {
@@ -405,6 +418,136 @@ export default function decorate(block) {
 </body>
 </html>
 ```
+
+#### Template B: Using EDS loadBlock() (Advanced)
+
+Use when testing full EDS integration or when block uses external plugins:
+
+```html
+<!-- blocks/bio/test.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bio Block - Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <style>
+        /* Test page styling */
+        body {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .test-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+        }
+
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bio Block Tests</h1>
+
+    <!-- Test Case 1: Image Link Conversion -->
+    <div class="test-section">
+        <h2>Test: Image Link Conversion</h2>
+
+        <!-- 🔴 CRITICAL: Wrapper div required if block uses external plugins -->
+        <div class="bio-wrapper">
+            <div class="bio">
+                <div>
+                    <div><a href="https://picsum.photos/200/200.jpg">Test Author</a></div>
+                    <div>This bio has an image link that should be converted to an image element.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Case 2: Multiple Blocks -->
+    <div class="test-section">
+        <h2>Test: Multiple Bio Blocks</h2>
+
+        <div class="bio-wrapper">
+            <div class="bio">
+                <div>
+                    <div><a href="https://picsum.photos/200/201.jpg">First Author</a></div>
+                    <div>First bio instance.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bio-wrapper">
+            <div class="bio">
+                <div>
+                    <div><a href="https://picsum.photos/200/202.jpg">Second Author</a></div>
+                    <div>Second bio instance.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { loadBlock } from '/scripts/aem.js';
+
+        // 🔴 CRITICAL: Add body.appear class FIRST
+        document.body.classList.add('appear');
+
+        // Get all bio blocks
+        const bioBlocks = document.querySelectorAll('.bio');
+
+        // Load each block using EDS loadBlock()
+        for (const block of bioBlocks) {
+            // 🔴 CRITICAL: Set dataset.blockName BEFORE calling loadBlock()
+            block.classList.add('block');
+            block.dataset.blockName = 'bio';
+
+            await loadBlock(block);
+        }
+
+        console.log('✅ All blocks loaded');
+    </script>
+</body>
+</html>
+```
+
+#### Why These Requirements Matter
+
+**1. Wrapper divs (`.{blockname}-wrapper`)**
+- Required if block uses external plugins (expressions, etc.)
+- Plugin queries for wrapper element in production
+- Without wrapper, plugin fails with null pointer errors
+- Pattern: `.bio-wrapper` contains `.bio` block
+
+**2. `block.dataset.blockName`**
+- EDS's `loadBlock()` uses this to construct import path
+- Without it: `/blocks/undefined/undefined.js 404` error
+- Must be set BEFORE calling `loadBlock()`
+- Format: `block.dataset.blockName = 'bio';`
+
+**3. `.block` class**
+- Indicates block has been processed by EDS
+- Some EDS utilities check for this class
+- Add it manually in test files: `block.classList.add('block');`
+
+#### Common test.html Errors and Fixes
+
+| Error | Cause | Fix |
+|-------|-------|-----|
+| `/blocks/undefined/undefined.js 404` | Missing `dataset.blockName` | Add `block.dataset.blockName = 'bio';` before `loadBlock()` |
+| `Cannot read properties of null` | Missing wrapper div | Wrap block in `<div class="bio-wrapper">` |
+| All blocks show same content | Using global selectors in decorate | Change `document.querySelector()` to `block.querySelector()` |
+| Plugin errors | Plugin called before wrapper exists | Ensure wrappers exist in HTML structure |
 
 ## Advanced Example: Interactive Counter
 
@@ -626,6 +769,131 @@ export default function decorate(block) {
 }
 ```
 
+## 🔴 CRITICAL: Use Block Parameter Not Global Selectors
+
+**NEVER use global selectors in your decorate function. ALWAYS query from the `block` parameter.**
+
+### The Problem: Global Selectors Break Multi-Block Pages
+
+When you use `document.querySelector()` in a decorate function, it **always finds the first matching block on the page**, causing severe bugs when multiple blocks exist.
+
+#### ❌ BAD: Global Selectors (Production Bug Example from bio block)
+
+```javascript
+export default function decorate(block) {
+  // ❌ This finds the FIRST .bio on the page, not the current block!
+  const bioElement = document.querySelector('.bio');
+  if (!bioElement.classList.contains('hide-author')) {
+    // This check applies first block's classes to ALL blocks!
+  }
+
+  // ❌ Gets image from FIRST block, not current block
+  const imgElement = document.querySelector('.bio.block img');
+
+  // ❌ Appends to FIRST block, not current block
+  const bioBlock = document.querySelector('.bio.block');
+  bioBlock.appendChild(authorElement);
+}
+```
+
+**What happens:**
+1. Page has 3 bio blocks: normal, hide-author, normal
+2. First block is normal (no hide-author)
+3. ALL blocks check first block's classes → ALL blocks process as normal
+4. ALL blocks query first block's image → wrong images everywhere
+5. ALL blocks append to first block → names pile up on first block only
+
+**Real production bug:** Image links showed as text because all blocks were checking the first block's configuration instead of their own.
+
+#### ✅ GOOD: Block Parameter Scoping
+
+```javascript
+export default function decorate(block) {
+  // ✅ Check THIS block's classes
+  if (!block.classList.contains('hide-author')) {
+    // Correctly handles each block independently
+  }
+
+  // ✅ Query within THIS block
+  const imgElement = block.querySelector('img');
+
+  // ✅ Append to THIS block
+  block.appendChild(authorElement);
+}
+```
+
+### Why EDS Calls Decorate Multiple Times
+
+EDS's `decorateBlock()` function loops through ALL blocks of a type:
+
+```javascript
+// Inside EDS core (scripts/aem.js):
+document.querySelectorAll('.bio').forEach(block => {
+  decorate(block);  // Called once per block with unique block parameter
+});
+```
+
+**Your decorate function MUST use the `block` parameter** to work correctly when multiple blocks exist.
+
+### Complete Bio Block Example (Fixed)
+
+```javascript
+export default function decorate(block) {
+  // ✅ Check current block's classes
+  if (!block.classList.contains('hide-author')) {
+
+    // ✅ Query within current block
+    const firstCell = block.querySelector('div > div:first-child');
+    if (firstCell) {
+      const link = firstCell.querySelector('a');
+      if (link && link.href) {
+        const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
+        const isImageLink = imageExtensions.some(ext =>
+          link.href.toLowerCase().includes(ext)
+        );
+
+        if (isImageLink) {
+          const img = document.createElement('img');
+          img.src = link.href;
+          img.alt = link.textContent || 'Bio image';
+          link.replaceWith(img);  // Atomic DOM replacement
+        }
+      }
+    }
+
+    // ✅ Query image within current block
+    const imgElement = block.querySelector('img');
+
+    let author = '';
+    if (imgElement && imgElement.getAttribute('alt')) {
+      author = imgElement.getAttribute('alt');
+    }
+
+    if (!author) {
+      const metaAuthor = document.querySelector('meta[name="author"]');
+      if (metaAuthor) {
+        author = metaAuthor.getAttribute('content');
+      }
+    }
+
+    const authorElement = document.createElement('strong');
+    authorElement.textContent = author;
+
+    // ✅ Append to current block
+    block.appendChild(authorElement);
+  }
+}
+```
+
+### Rule of Thumb
+
+**Inside `decorate(block)` function:**
+- ✅ `block.querySelector()` - ALWAYS correct
+- ✅ `block.classList` - ALWAYS correct
+- ✅ `block.appendChild()` - ALWAYS correct
+- ❌ `document.querySelector('.your-block')` - NEVER correct
+- ⚠️ `document.querySelector('meta[name="author"]')` - OK only for page-level queries (not block-specific)
+
 ## Best Practices for Raw EDS Blocks
 
 ### 1. Content Extraction Patterns
@@ -651,7 +919,73 @@ function extractContent(block) {
 }
 ```
 
-### 2. Progressive Enhancement
+### 2. DOM Manipulation Patterns
+
+**Use `.replaceWith()` for surgical element replacement:**
+
+#### ❌ BAD: Clearing and Appending
+
+```javascript
+// This destroys all other content in the container
+firstCell.innerHTML = '';
+firstCell.appendChild(img);
+
+// If firstCell had other elements, they're now gone!
+```
+
+#### ✅ GOOD: Atomic Replacement with `.replaceWith()`
+
+```javascript
+// This surgically replaces ONLY the link element
+link.replaceWith(img);
+
+// Other elements in firstCell remain untouched
+```
+
+**Why `.replaceWith()` is better:**
+1. **Surgical precision** - Only replaces the target element
+2. **Atomic operation** - Single DOM change instead of clear + append
+3. **Preserves siblings** - Other elements in container remain intact
+4. **Better performance** - Fewer DOM mutations
+5. **Clearer intent** - Code shows exact transformation
+
+#### Real-World Example: Image Link Conversion
+
+```javascript
+export default function decorate(block) {
+  const firstCell = block.querySelector('div > div:first-child');
+  if (firstCell) {
+    const link = firstCell.querySelector('a');
+    if (link && link.href) {
+      const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
+      const isImageLink = imageExtensions.some(ext =>
+        link.href.toLowerCase().includes(ext)
+      );
+
+      if (isImageLink) {
+        // Create replacement element
+        const img = document.createElement('img');
+        img.src = link.href;
+        img.alt = link.textContent || 'Bio image';
+
+        // ✅ Atomic replacement - link is removed, img takes its place
+        link.replaceWith(img);
+      }
+    }
+  }
+}
+```
+
+#### When to Use Each Pattern
+
+| Pattern | Use When | Example |
+|---------|----------|---------|
+| `.replaceWith()` | Replacing one element with another | Link → Image, div → button |
+| `.innerHTML = ''` then `.appendChild()` | Rebuilding entire container | Complete UI reconstruction |
+| `.appendChild()` | Adding to existing content | Appending new elements |
+| `.insertBefore()` / `.insertAfter()` | Precise positioning | Injecting elements at specific locations |
+
+### 3. Progressive Enhancement
 
 **Build functionality in layers:**
 
@@ -672,7 +1006,73 @@ export default function decorate(block) {
 }
 ```
 
-### 3. Error Boundaries
+### 3. Wrapper Divs for External Plugins
+
+**Understanding the `.{blockname}-wrapper` pattern:**
+
+#### When to Use Wrappers
+
+Wrapper divs are ONLY needed when:
+1. Your block uses external plugins (expressions, etc.)
+2. The plugin needs a parent container for queries
+3. In production, EDS creates this wrapper automatically
+4. In test.html, you MUST create it manually
+
+#### Production vs Test Environment
+
+**Production (automatic):**
+```html
+<!-- EDS creates this structure automatically -->
+<section>
+  <div class="bio-wrapper">  <!-- EDS adds this -->
+    <div class="bio block">...</div>
+  </div>
+</section>
+```
+
+**Test.html (manual):**
+```html
+<!-- You MUST create the wrapper yourself -->
+<div class="bio-wrapper">  <!-- You add this -->
+  <div class="bio">...</div>
+</div>
+```
+
+#### Example: Bio Block with Expressions Plugin
+
+```javascript
+export default function decorate(block) {
+  // Your block decoration code...
+
+  // At the end, call external plugin
+  // Plugin queries for .bio-wrapper
+  renderExpressions(document.querySelector('.bio-wrapper'));
+}
+```
+
+**Why this matters:**
+- The expressions plugin calls `document.querySelector('.bio-wrapper')`
+- In production, EDS creates the wrapper automatically
+- In test.html, you must create it manually
+- Without the wrapper: `Cannot read properties of null (reading 'firstChild')`
+
+#### When Wrappers Are NOT Needed
+
+Skip the wrapper if:
+- Your block has no external plugin dependencies
+- Your block is fully self-contained
+- You're only using EDS core utilities
+
+```html
+<!-- Simple block without external plugins - no wrapper needed -->
+<div class="highlight-text block">
+  <div>
+    <div>Content here</div>
+  </div>
+</div>
+```
+
+### 4. Error Boundaries
 
 **Never let enhancement break the page:**
 
@@ -773,17 +1173,81 @@ window.testBlock = function(blockSelector) {
 };
 ```
 
+## 🎯 Critical Takeaways: Common Pitfalls to Avoid
+
+### 1. **NEVER use global selectors in decorate()**
+```javascript
+// ❌ WRONG - Breaks multi-block pages
+const element = document.querySelector('.my-block');
+
+// ✅ CORRECT - Always query from block parameter
+const element = block.querySelector('.some-element');
+```
+
+### 2. **ALWAYS set dataset.blockName before loadBlock()**
+```javascript
+// ❌ WRONG - Results in 404 errors
+await loadBlock(block);
+
+// ✅ CORRECT - Set blockName first
+block.dataset.blockName = 'bio';
+await loadBlock(block);
+```
+
+### 3. **Use wrapper divs for blocks with external plugins**
+```html
+<!-- ❌ WRONG - Plugin will fail with null errors -->
+<div class="bio">...</div>
+
+<!-- ✅ CORRECT - Wrapper for plugin queries -->
+<div class="bio-wrapper">
+  <div class="bio">...</div>
+</div>
+```
+
+### 4. **Use .replaceWith() for element replacement**
+```javascript
+// ❌ WRONG - Destroys all siblings
+element.innerHTML = '';
+element.appendChild(newElement);
+
+// ✅ CORRECT - Surgical replacement
+oldElement.replaceWith(newElement);
+```
+
+### 5. **Test with multiple blocks on the page**
+```html
+<!-- Always test with at least 2 blocks to catch selector bugs -->
+<div class="my-block">First instance</div>
+<div class="my-block">Second instance</div>
+```
+
 ## Summary
 
-Raw EDS blocks follow the **enhancement pattern**:
+Raw EDS blocks follow the **enhancement pattern** with these critical requirements:
 
 1. **Extract** content safely using multiple strategies
 2. **Enhance** existing DOM without destruction
 3. **Add** functionality progressively
 4. **Preserve** original content as fallback
 5. **Handle** errors gracefully
+6. **🔴 Always use `block` parameter** - Never use global selectors
+7. **🔴 Set `dataset.blockName`** - Required before `loadBlock()`
+8. **🔴 Include wrapper divs** - Required for external plugins
+9. **🔴 Use `.replaceWith()`** - For surgical DOM manipulation
+10. **🔴 Test multiple blocks** - Catch scoping bugs early
 
 This approach maintains EDS's philosophy of simplicity while providing rich, interactive experiences that work reliably across all environments.
+
+### Real-World Bug Examples from Production
+
+These bugs were all found in production and fixed using the patterns above:
+
+1. **Bio block image link bug**: Used global selectors → all blocks checked first block's configuration → image links showed as text on subsequent blocks
+2. **Test.html 404 errors**: Missing `dataset.blockName` → `/blocks/undefined/undefined.js` errors
+3. **Expressions plugin errors**: Missing wrapper divs → `Cannot read properties of null (reading 'firstChild')` errors
+
+**Lesson learned**: Follow these patterns from the start to avoid production bugs.
 
 ## See Also
 

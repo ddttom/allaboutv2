@@ -4,9 +4,8 @@ import { renderExpressions } from '/plusplus/plugins/expressions/src/expressions
 
 // eslint-disable-next-line no-unused-vars
 export default function decorate(block) {
-  const bioElement = document.querySelector('.bio');
-
-  if (!bioElement.classList.contains('hide-author')) {
+  // Check the current block, not a global selector
+  if (!block.classList.contains('hide-author')) {
     // Check if the first cell contains a link to an image and replace it with the actual image
     const firstCell = block.querySelector('div > div:first-child');
     if (firstCell) {
@@ -29,8 +28,8 @@ export default function decorate(block) {
         }
       }
     }
-    // Find the <img> element within the .bio.block
-    const imgElement = document.querySelector('.bio.block img');
+    // Find the <img> element within the current block
+    const imgElement = block.querySelector('img');
 
     let author = '';
 
@@ -51,11 +50,8 @@ export default function decorate(block) {
     const authorElement = document.createElement('strong');
     authorElement.textContent = author;
 
-    // Find the .bio.block element
-    const bioBlock = document.querySelector('.bio.block');
-
-    // Insert the author element as the last child of the .bio.block element
-    bioBlock.appendChild(authorElement);
+    // Insert the author element as the last child of the current block
+    block.appendChild(authorElement);
   }
   renderExpressions(document.querySelector('.bio-wrapper'));
 }

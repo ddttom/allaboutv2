@@ -601,6 +601,55 @@ export default function decorate(block) {
 
 ### Create test.html
 
+**⚠️ CRITICAL: Correct EDS HTML Structure**
+
+The HTML structure in test.html must EXACTLY match how EDS transforms Google Docs tables:
+
+```
+Block Element (has block name class)
+└── Row(s) (direct children, one <div> per row)
+    └── Cell(s) (children of row, one <div> per cell)
+```
+
+**Example - Two-column block with one row:**
+```html
+<div class="your-block">          <!-- Block element -->
+    <div>                          <!-- Row 1 -->
+        <div>Cell 1 content</div>  <!-- Cell 1 -->
+        <div>Cell 2 content</div>  <!-- Cell 2 -->
+    </div>
+</div>
+```
+
+**Example - Two-column block with multiple rows:**
+```html
+<div class="your-block">           <!-- Block element -->
+    <div>                           <!-- Row 1 -->
+        <div>Row 1, Cell 1</div>    <!-- Cell 1 -->
+        <div>Row 1, Cell 2</div>    <!-- Cell 2 -->
+    </div>
+    <div>                           <!-- Row 2 -->
+        <div>Row 2, Cell 1</div>    <!-- Cell 1 -->
+        <div>Row 2, Cell 2</div>    <!-- Cell 2 -->
+    </div>
+</div>
+```
+
+**❌ COMMON MISTAKE - Extra wrapper div:**
+```html
+<!-- ❌ WRONG - Do NOT add extra wrapper divs -->
+<div class="your-block">
+    <div>                    <!-- ❌ Extra wrapper -->
+        <div>                <!-- Row -->
+            <div>Cell 1</div>
+            <div>Cell 2</div>
+        </div>
+    </div>
+</div>
+```
+
+### Complete test.html Template
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -618,43 +667,198 @@ export default function decorate(block) {
         body.appear {
             display: block;
         }
+
+        /* Optional: Test page styling */
+        body {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .test-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+
+        .test-section h2 {
+            margin-top: 0;
+        }
     </style>
 </head>
 <body>
-    <!-- Note: Only use block name class, .block is added automatically -->
-    <div class="your-block">
-        <div>
-            <div>Title 1</div>
-            <div>Description 1</div>
+    <h1>Your Block Test Page</h1>
+
+    <!-- Test Case 1: Basic Usage -->
+    <div class="test-section">
+        <h2>Test Case 1: Basic Two-Column Block</h2>
+
+        <div class="your-block">
+            <div>
+                <div>Title 1</div>
+                <div>Description 1</div>
+            </div>
+            <div>
+                <div>Title 2</div>
+                <div>Description 2</div>
+            </div>
         </div>
-        <div>
-            <div>Title 2</div>
-            <div>Description 2</div>
+    </div>
+
+    <!-- Test Case 2: With Images -->
+    <div class="test-section">
+        <h2>Test Case 2: With Images</h2>
+
+        <div class="your-block">
+            <div>
+                <div>
+                    <picture>
+                        <img src="https://via.placeholder.com/300x200" alt="Test Image">
+                    </picture>
+                </div>
+                <div>Content with image</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Case 3: Block Variant -->
+    <div class="test-section">
+        <h2>Test Case 3: Block Variant</h2>
+
+        <div class="your-block variant-name">
+            <div>
+                <div>Variant content</div>
+                <div>Testing variant styling</div>
+            </div>
         </div>
     </div>
 
     <script type="module">
         import { loadBlock } from '/scripts/aem.js';
 
-        // Add body.appear class (required to show page)
+        // CRITICAL: Add body.appear class FIRST (before loadBlock)
+        // This makes the page visible (EDS hides body by default)
         document.body.classList.add('appear');
 
-        // Load and decorate the block
-        const block = document.querySelector('.your-block');
+        // Get all blocks to test
+        const blocks = document.querySelectorAll('.your-block');
 
-        // Add .block class to mimic EDS production behavior
-        block.classList.add('block');
+        console.log(`Testing ${blocks.length} block(s)...`);
 
-        await loadBlock(block);
+        // Load each block
+        for (const block of blocks) {
+            try {
+                // Add .block class to mimic EDS production behavior
+                block.classList.add('block');
+
+                // CRITICAL: Set blockName dataset (required by loadBlock)
+                // In production, decorateBlock() gets this from classList[0]
+                block.dataset.blockName = 'your-block';
+
+                // Load the block (loads JS and CSS automatically)
+                await loadBlock(block);
+
+                console.log('✅ Block loaded:', block.className);
+            } catch (error) {
+                console.error('❌ Block failed:', block.className, error);
+            }
+        }
+
+        console.log('All blocks loaded!');
     </script>
 </body>
 </html>
 ```
 
-**Important:**
-- The `.block` class is added by the script (`block.classList.add('block')`) to mimic EDS production behavior
-- In production, EDS's `decorateBlock()` function automatically adds this class
-- Your HTML only needs the block name class (e.g., `class="your-block"`)
+**Important Notes:**
+
+1. **Block Structure**: Each block must have rows as direct children, and cells as children of rows
+2. **`.block` class**: Added by script to mimic EDS production (where `decorateBlock()` adds it automatically)
+3. **`block.dataset.blockName`**: **CRITICAL** - Must be set before calling `loadBlock()`, otherwise you'll get "undefined" errors
+4. **`body.appear`**: REQUIRED - EDS hides body by default, this class makes it visible
+5. **Block loading order**: Add `body.appear` class BEFORE calling `loadBlock()`
+6. **Multiple blocks**: Use `querySelectorAll()` and loop to test multiple instances
+7. **Console logging**: Add logs to track loading progress and catch errors
+8. **Block wrappers**: If your block uses `document.querySelector('.{blockname}-wrapper')` (e.g., for expressions plugin), wrap each block in `<div class="{blockname}-wrapper">` in test.html
+
+**Common Errors:**
+- If you see `/blocks/undefined/undefined.js 404`, you forgot to set `block.dataset.blockName`!
+- If you see `Cannot read properties of null (reading 'firstChild')` in expressions.js, you need to wrap blocks in `.{blockname}-wrapper` divs
+
+### Common HTML Structure Mistakes
+
+❌ **WRONG** - Extra nesting:
+```html
+<div class="your-block">
+    <div><div><div>Content</div></div></div>  <!-- Too many divs! -->
+</div>
+```
+
+❌ **WRONG** - Missing row wrapper:
+```html
+<div class="your-block">
+    <div>Cell 1</div>  <!-- No row wrapper! -->
+    <div>Cell 2</div>
+</div>
+```
+
+✅ **CORRECT** - Proper structure:
+```html
+<div class="your-block">
+    <div>               <!-- Row -->
+        <div>Cell 1</div>  <!-- Cell -->
+        <div>Cell 2</div>  <!-- Cell -->
+    </div>
+</div>
+```
+
+✅ **CORRECT** - With wrapper (when block uses `.{blockname}-wrapper` selector):
+```html
+<div class="your-block-wrapper">  <!-- Wrapper for global selectors -->
+    <div class="your-block">
+        <div>                      <!-- Row -->
+            <div>Cell 1</div>      <!-- Cell -->
+            <div>Cell 2</div>      <!-- Cell -->
+        </div>
+    </div>
+</div>
+```
+
+**When to use wrappers in test.html:**
+- Your block uses `document.querySelector('.{blockname}-wrapper')` in its JavaScript
+- Your block depends on external plugins (like expressions) that expect wrappers
+- In production, EDS automatically wraps blocks in `.{blockname}-wrapper` divs
+- Without the wrapper, code that queries for it will get `null` and may error
+
+### Debugging Tips for test.html
+
+If your test.html doesn't work, check:
+
+1. **Structure**: Use browser DevTools to inspect the DOM structure
+   - Right-click block → Inspect Element
+   - Verify: Block → Row(s) → Cell(s)
+
+2. **Classes**: Check that `.block` class was added
+   - Should see: `<div class="your-block block">`
+
+3. **Console errors**: Open DevTools Console (F12)
+   - Look for JavaScript errors
+   - Check if `loadBlock()` succeeded
+
+4. **Network tab**: Check if CSS/JS files loaded
+   - Should see: `/blocks/your-block/your-block.css`
+   - Should see: `/blocks/your-block/your-block.js`
+
+5. **Block scoping**: Ensure your JS uses `block` parameter, not global selectors
+   ```javascript
+   // ✅ CORRECT
+   const cells = block.querySelectorAll('div > div');
+
+   // ❌ WRONG
+   const cells = document.querySelectorAll('.your-block div > div');
+   ```
 
 ### Test with Development Server
 
@@ -859,6 +1063,69 @@ function createOverlay(content) {
 - `.{blockname}-wrapper` - Reserved by EDS for block elements
 
 **This mistake caused a production bug:** Using `.overlay-container` in CSS with `position: fixed; z-index: 999; opacity: 0;` made entire pages invisible because EDS added `overlay-container` class to the parent section, applying those styles to the wrong element.
+
+### ❌ CRITICAL: Don't Use Global Selectors - Use the `block` Parameter
+
+**This is the most common bug in EDS blocks!**
+
+```javascript
+// ❌ BAD - Uses global selectors instead of block parameter
+export default function decorate(block) {
+  const bioElement = document.querySelector('.bio');  // ❌ Gets FIRST block on page!
+
+  if (!bioElement.classList.contains('hide-author')) {
+    const imgElement = document.querySelector('.bio.block img');  // ❌ Global!
+    const bioBlock = document.querySelector('.bio.block');        // ❌ Global!
+
+    bioBlock.appendChild(authorElement);  // ❌ Always modifies first block!
+  }
+}
+```
+
+**Why this is wrong:**
+- `document.querySelector('.bio')` always returns the FIRST matching element on the page
+- If you have multiple bio blocks, they ALL use the first block's configuration
+- The second, third, etc. blocks won't work correctly
+- Image link conversion fails because it checks the wrong block
+
+```javascript
+// ✅ GOOD - Uses block parameter for proper scoping
+export default function decorate(block) {
+  // Check the CURRENT block, not a global selector
+  if (!block.classList.contains('hide-author')) {
+    // Find img within CURRENT block
+    const imgElement = block.querySelector('img');
+
+    // Append to CURRENT block
+    block.appendChild(authorElement);
+  }
+}
+```
+
+**Why this is correct:**
+- The `block` parameter is the specific block being decorated
+- Each block operates independently
+- Multiple blocks on the same page work correctly
+- Each block can have different configurations
+
+**Real-world bug example:**
+```javascript
+// ❌ This code broke in production:
+const bioElement = document.querySelector('.bio');  // Always gets first block
+if (!bioElement.classList.contains('hide-author')) {
+  // Processes ALL blocks, but checks only the FIRST block's classes!
+}
+```
+
+**The fix:**
+```javascript
+// ✅ Check the CURRENT block being decorated:
+if (!block.classList.contains('hide-author')) {
+  // Now each block checks its OWN classes
+}
+```
+
+**Rule:** ALWAYS query from the `block` parameter, NEVER use global `document.querySelector()` for block-specific elements.
 
 ### ❌ Don't Forget to Clear the Block
 
