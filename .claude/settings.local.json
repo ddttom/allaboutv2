@@ -96,7 +96,8 @@
       "Bash(lsof:*)",
       "Bash(pkill:*)",
       "Bash(chmod:*)",
-      "Bash(../deepnote/node_modules/.pnpm/tsx@4.20.6/node_modules/tsx/dist/cli.mjs scripts/sync-blog-content.ts --target=llms)"
+      "Bash(../deepnote/node_modules/.pnpm/tsx@4.20.6/node_modules/tsx/dist/cli.mjs scripts/sync-blog-content.ts --target=llms)",
+      "Skill(llms-txt-manager)"
     ],
     "deny": [],
     "ask": []
