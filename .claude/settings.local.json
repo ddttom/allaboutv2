@@ -97,7 +97,9 @@
       "Bash(pkill:*)",
       "Bash(chmod:*)",
       "Bash(../deepnote/node_modules/.pnpm/tsx@4.20.6/node_modules/tsx/dist/cli.mjs scripts/sync-blog-content.ts --target=llms)",
-      "Skill(llms-txt-manager)"
+      "Skill(llms-txt-manager)",
+      "Bash(for file in /Users/tomcranstoun/Documents/GitHub/allaboutV2/my-blog.json /Users/tomcranstoun/Documents/GitHub/allaboutV2/blogs/ddt/my-blog.json /Users/tomcranstoun/Documents/GitHub/allaboutV2/blogs/ddt/integrations/my-blog.json /Users/tomcranstoun/Documents/GitHub/allaboutV2/blogs/ddt/ai/my-blog.json)",
+      "Bash(do)"
     ],
     "deny": [],
     "ask": []

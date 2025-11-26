@@ -9,6 +9,10 @@
  *   node scripts/sync-blog-content.js --target=llms    # Update all llms.txt files
  *   node scripts/sync-blog-content.js --target=blog    # Update all my-blog.json files
  *   node scripts/sync-blog-content.js --target=all     # Update both (default)
+ *
+ * IMPORTANT: This script does NOT generate latestPosts arrays in my-blog.json files.
+ * The view-myblog block automatically generates latestPosts from the 3 most recent posts.
+ * DO NOT manually add latestPosts to my-blog.json - it defeats auto-generation.
  */
 
 import * as fs from 'fs';

@@ -91,6 +91,13 @@ When llms.txt is in a subfolder (e.g., `blogs/ddt/integrations/`):
     "last-updated": "YYYY-MM-DD",
     "scope": "folder-name-or-site-wide"
   },
+  "mostVisited": [
+    {
+      "title": "Popular Post Title",
+      "url": "/path/to/post",
+      "description": "Post description"
+    }
+  ],
   "categoryMap": [
     {
       "id": "category-id",
@@ -115,6 +122,8 @@ When llms.txt is in a subfolder (e.g., `blogs/ddt/integrations/`):
   ]
 }
 ```
+
+**IMPORTANT:** Do NOT include a `latestPosts` array in my-blog.json files. The view-myblog block automatically generates it from the 3 most recent posts. Including it manually requires maintenance and defeats the purpose of auto-generation.
 
 ## Key Concepts
 
