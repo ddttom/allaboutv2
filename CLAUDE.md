@@ -101,11 +101,182 @@ See `.claude/hooks/CONFIG.md` for configuration and customization.
 ## Code Style
 - **JS**: Follows Airbnb style guide (eslint-config-airbnb-base)
 - **CSS**: Follows stylelint-config-standard
-- **Block Structure**: Each block has its own directory with JS/CSS/README
+- **Block Structure**: Each block has its own directory with JS/CSS/README (see complete structure in [Block Development](#block-file-structure))
 - **Naming**: Use kebab-case for files and block names
 - **JS Modules**: Use ES modules with named exports
-- **Error Handling**: Use try/catch with graceful degradation
+- **Error Handling**: Use try/catch with custom error types for consistency, graceful degradation
 - **DOM Manipulation**: Use vanilla JS DOM methods
+- **Async Operations**: Use async/await only (never `.then()`)
+- **Imports**: Only import what you use - keep imports clean
+
+### Code Organization Standards
+
+**Function Structure:**
+Structure code in three distinct sections:
+1. **decorate** - Main block decoration function (exported as default)
+2. **sub-components** - Reusable component builders
+3. **helpers** - Utility functions
+
+**Function Declarations:**
+- Use `function` keyword for pure functions (adds clarity over arrow functions)
+- Favor named exports for functions
+- Example:
+```javascript
+// Pure function with function keyword
+function createCard(data) {
+  return element;
+}
+
+// Named export
+export { createCard, processData };
+```
+
+**Code Cleanliness:**
+- No TODOs or placeholders in code - resolve before committing
+- Favor iteration and modularization to adhere to DRY principles
+- Avoid code duplication through proper abstraction
+
+### Commenting Guidelines
+
+Add comments that explain the "why" and "how", not just the "what":
+
+**What to comment:**
+- Purpose of functions or code blocks
+- How complex algorithms or logic work
+- Assumptions or limitations in the code
+- Meaning of important variables or data structures
+- Potential edge cases or error handling
+
+**Comment style:**
+- Use clear and concise language
+- Avoid stating the obvious (don't just restate what the code does)
+- Use single-line comments for brief explanations
+- Use multi-line comments for longer explanations or function descriptions
+- Precede console statements with `// eslint-disable-next-line no-console`
+
+## Configuration Patterns
+
+### Project Standards (AI Assistant Reference)
+
+**Note:** These standards are defined as instruction context for AI assistants.
+
+**Project Information:**
+- Developer: Tom Cranstoun
+- Company: tom
+- Blocks Directory: `/blocks`
+
+**Code Standards:**
+- Style Guide: Airbnb (eslint-config-airbnb-base)
+- CSS Naming: kebab-case
+- JS Modules: ESM
+- Markdown: GitHub Flavored Markdown (GFM)
+
+**Sample Resources** (for AI to use when creating examples):
+- **Profile Image**: `https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png`
+- **Sample Images**:
+  - `https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png`
+  - `https://allabout.network/media_14e918fa88c2a9a810fd454fa04f0bd152c01fed2.jpeg`
+  - `https://allabout.network/media_1d92670adcfb7a18a062e49fd7967f4e9f76d8a52.jpeg`
+  - `https://allabout.network/media_1e744525e97292dcd074e9b1c7ab2cf47a048f292.jpeg`
+  - `https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png`
+
+When AI assistants create block examples or documentation, they should reference these pre-defined resources rather than inventing new URLs.
+
+### Block-Level BLOCKNAME_CONFIG
+
+**Every block JavaScript file must define a CONFIG object at the top:**
+
+```javascript
+const BLOCKNAME_CONFIG = {
+  // Error messages
+  ERROR_MESSAGE: 'Error loading content. Please try again.',
+  HTTP_ERROR_MESSAGE: 'HTTP error! status:',
+
+  // File paths
+  INPUT_DATA: '/path/to/data.json',
+
+  // Thresholds and timings
+  COPY_BUTTON_RESET_DELAY: 2000,
+  LONG_DOCUMENT_THRESHOLD: 40,
+
+  // UI text
+  BOOK_TITLE: 'Code',
+  BUTTON_LABEL: 'Click here',
+};
+
+export default async function decorate(block) {
+  // Use CONFIG throughout
+  const response = await fetch(BLOCKNAME_CONFIG.INPUT_DATA);
+  // ...
+}
+```
+
+**Why this matters:**
+- All configuration in one place at the top of the file
+- Easy to find and modify settings
+- Facilitates translation and localization
+- Improves maintainability
+
+### Text String Management
+
+**All unique text strings must be promoted to the top as const variables:**
+
+- Group all text strings together for ease of translation
+- Never hardcode user-facing text in the middle of functions
+- Use descriptive constant names
+
+```javascript
+const BLOCKNAME_CONFIG = {
+  // Group all user-facing text
+  MESSAGES: {
+    LOADING: 'Loading content...',
+    ERROR: 'Failed to load',
+    SUCCESS: 'Content loaded successfully',
+  },
+  LABELS: {
+    SUBMIT: 'Submit',
+    CANCEL: 'Cancel',
+    RESET: 'Reset Form',
+  },
+};
+```
+
+### File Path Configuration
+
+**Files referenced in code should be declared at the top:**
+
+```javascript
+const BLOCKNAME_CONFIG = {
+  // File paths
+  INPUT_DATA: '/data/query-index.json',
+  TEMPLATE_PATH: '/templates/card.html',
+  ICON_SPRITE: '/icons/sprite.svg',
+};
+
+// Use in code
+async function loadData() {
+  const response = await fetch(BLOCKNAME_CONFIG.INPUT_DATA);
+  // ...
+}
+```
+
+### Sample Image Resources (For AI-Generated Examples)
+
+When AI assistants create block examples or demos, use these pre-defined sample images:
+
+**Available Resources:**
+- **Profile Image**: `https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png`
+- **Sample Images**:
+  - `https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png`
+  - `https://allabout.network/media_14e918fa88c2a9a810fd454fa04f0bd152c01fed2.jpeg`
+  - `https://allabout.network/media_1d92670adcfb7a18a062e49fd7967f4e9f76d8a52.jpeg`
+  - `https://allabout.network/media_1e744525e97292dcd074e9b1c7ab2cf47a048f292.jpeg`
+  - `https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png`
+
+**Usage:**
+- In `example.json`, `example.csv`, or demo content, use these pre-defined URLs
+- Ensures examples work immediately without broken image links
+- Maintains consistency across all block documentation
 
 ## Architecture
 - Project follows Adobe Helix/Franklin (EDS - Edge Delivery Services) architecture
@@ -120,13 +291,103 @@ See `.claude/hooks/CONFIG.md` for configuration and customization.
 
 ## Conventions
 - Keep code DRY, simple, and accessible
-- Add README for each new block with usage examples
+- Add README for each new block with usage examples (see [Documentation Files](#documentation-files) for complete structure)
 - Responsive design throughout all components
 - Never use Typescript or any Framework like React
 - **ALWAYS follow Content Driven Development (CDD)** when creating or modifying blocks
   - Content models before code
   - Test content before implementation
   - Author needs before developer needs
+- **Block Variation Strategy**: Consider using variations within existing blocks rather than creating new blocks - improves efficiency and reduces author cognitive overload
+- **Code Quality**: No TODOs or placeholders in committed code - resolve before commit
+- **Import Cleanliness**: Only import what you use - avoid unused dependencies
+
+## ⚠️ CRITICAL: No Inline CSS
+
+**Never use inline CSS in JavaScript files** - always create CSS in CSS files.
+
+**Why this matters:**
+- Separates concerns (structure, presentation, behavior)
+- Maintains CSS cacheability
+- Enables style reuse
+- Follows EDS best practices
+
+**Wrong:**
+```javascript
+// ❌ Don't do this
+element.style.color = 'red';
+element.style.display = 'flex';
+```
+
+**Correct:**
+```javascript
+// ✅ Do this - add classes and style in CSS
+element.classList.add('highlighted');
+```
+
+```css
+/* In blockname.css */
+.blockname .highlighted {
+  color: var(--highlight-color, red);
+  display: flex;
+}
+```
+
+### CSS Variables as Configuration
+
+Use CSS variables at the block level for easy theming and configuration:
+
+```css
+/* Block configuration variables */
+.blockname {
+    --block-spacing: 1rem;
+    --block-color: var(--color-primary, #000);
+    --block-radius: 0.5rem;
+}
+
+/* Use variables throughout */
+.blockname-content {
+    padding: var(--block-spacing);
+    color: var(--block-color);
+    border-radius: var(--block-radius);
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+    .blockname {
+        --block-spacing: 2rem;
+    }
+}
+```
+
+### CSS Variation Class Naming
+
+Variations use additional classes, not separate files:
+
+**In markdown:** `BlockName (bold)` becomes `blockname bold` classes
+
+**CSS pattern:**
+```css
+/* Base block styles */
+.blockname {
+  /* default styles */
+}
+
+/* Variation styles using additional class */
+.blockname.bold {
+  font-weight: bold;
+  /* variation-specific styles */
+}
+
+.blockname.large {
+  font-size: 1.5rem;
+}
+```
+
+**Why this matters:**
+- One CSS file per block (matches JS pattern)
+- Easy to combine variations: `BlockName (bold, large)`
+- Maintainability and consistency
 
 ## ⚠️ CRITICAL: Single JavaScript File for Block Variations
 
@@ -295,6 +556,388 @@ When creating or modifying blocks, ALWAYS use Content Driven Development:
 - For: Interactive components, data visualization, design systems
 
 **Decision Guide**: See `docs/for-ai/implementation/design-philosophy-guide.md`
+
+### Block File Structure
+
+**Complete file structure for EDS blocks:**
+
+```
+/blocks/{blockname}/
+├── {blockname}.js           # Core block functionality (required)
+├── {blockname}.css          # Block styles (required)
+├── README.md                # Complete documentation (required)
+├── example.md               # Usage example in markdown table format (required)
+├── demo.md                  # Full demo with metadata (recommended)
+├── example.json             # Sample data feed (if block uses JSON)
+└── example.csv              # CSV version of sample data (if JSON exists)
+```
+
+**File purposes:**
+- **`{blockname}.js`**: Single JavaScript file with `decorate()` function - handles all variations via class detection
+- **`{blockname}.css`**: All block styles including variations using `.blockname.variation` pattern
+- **`README.md`**: Complete documentation - see [Documentation Files](#documentation-files) section for 14-part structure
+- **`example.md`**: Markdown table showing how authors use the block in docs
+- **`demo.md`**: Full-featured demo with context, use cases, and metadata
+- **`self-review.md`**: Quality checklist completed before requesting review
+- **`senior-review.md`**: Feedback and approval from senior developer
+- **`example.json`**: If block fetches data, provide realistic sample with required structure
+- **`example.csv`**: CSV representation of the data array from example.json
+
+**See [Documentation Files](#documentation-files) and [Data Files](#data-files) for detailed requirements.**
+
+## Block Development
+
+### JavaScript Requirements
+
+**CONFIG Object Pattern:**
+Every block must define a CONFIG object at the top (see [Block-Level BLOCKNAME_CONFIG](#block-level-blockname_config)):
+
+```javascript
+const BLOCKNAME_CONFIG = {
+  ERROR_MESSAGE: 'Error loading content',
+  INPUT_DATA: '/path/to/data.json',
+  DELAY_MS: 2000,
+};
+
+export default async function decorate(block) {
+  // Use CONFIG throughout
+}
+```
+
+**Function Structure:**
+Organize code in three sections:
+1. **decorate** - Main export function
+2. **sub-components** - Component builders (e.g., `createCard()`, `buildHeader()`)
+3. **helpers** - Utility functions (e.g., `formatDate()`, `sanitizeInput()`)
+
+**Pure Functions:**
+Use `function` keyword for pure functions (clarity over arrow functions):
+```javascript
+function createCard(data) {
+  // Pure function with explicit function declaration
+  return element;
+}
+```
+
+**Custom Error Types:**
+Create custom errors for consistent error handling:
+```javascript
+class BlockDataError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'BlockDataError';
+  }
+}
+```
+
+**Variation Handling:**
+Single JS file handles all variations via class detection (see [Single JavaScript File](#critical-single-javascript-file-for-block-variations)):
+```javascript
+export default async function decorate(block) {
+  const isBold = block.classList.contains('bold');
+  const isLarge = block.classList.contains('large');
+
+  // Apply variation logic
+  if (isBold) {
+    // Bold variation handling
+  }
+}
+```
+
+### CSS Requirements
+
+**No Inline CSS:**
+See [⚠️ CRITICAL: No Inline CSS](#critical-no-inline-css) - always use CSS files, never `element.style`.
+
+**CSS Variables for Configuration:**
+Define configurable variables at block level (see [CSS Variables as Configuration](#css-variables-as-configuration)):
+```css
+.blockname {
+  --block-spacing: 1rem;
+  --block-color: var(--color-primary, #000);
+}
+```
+
+**Variation Class Naming:**
+Use `.blockname.variation` pattern (see [CSS Variation Class Naming](#css-variation-class-naming)):
+```css
+.blockname.bold {
+  font-weight: bold;
+}
+```
+
+**Container/Wrapper Restriction:**
+Never style `.{blockname}-container` or `.{blockname}-wrapper` - EDS reserves these (see [⚠️ CRITICAL: EDS Reserved Class Names](#critical-eds-reserved-class-names)).
+
+### Documentation Files
+
+**README.md Structure (14 sections):**
+
+1. **Block Name** - H1 heading
+2. **Description** - Brief purpose (1-2 sentences)
+3. **Features** - Bulleted list of capabilities
+4. **Usage** - Markdown table showing block syntax
+5. **Authoring** - How to create content in Google Docs/Word
+6. **Configuration** - CSS variables, variations, options
+7. **Styling** - CSS classes and customization
+8. **Behavior** - Interactive features and JavaScript functionality
+9. **Dependencies** - Any required external resources (if applicable)
+10. **Examples** - Real-world usage scenarios with markdown tables (never show empty cells)
+11. **Accessibility** - ARIA roles, keyboard navigation, screen reader support
+12. **Performance** - Loading strategy, optimization techniques
+13. **Troubleshooting** - Common issues and solutions
+14. **Browser Compatibility** - Supported browsers and known issues
+
+**EXAMPLE.md Structure:**
+```markdown
+# {blockname}
+
+| BlockName |
+| :-------- |
+| Content   |
+| More rows as needed |
+
+```
+- First line: `# {blockname}` only
+- Blank line
+- Markdown table with block name in first row
+- Always end with newline
+- No triple backticks for code - use single backticks (see [EDS-Specific Requirements](#eds-specific-requirements))
+
+**DEMO.md Structure (7 parts):**
+1. Title
+2. Introduction
+3. Sample table (working example)
+4. Explanation of how the block works
+5. Information on customization options
+6. Potential use cases
+7. Metadata section (no heading before metadata - see [Metadata Table Format](#metadata-table-format))
+
+**Self-Review and Senior-Review Files:**
+- **self-review.md**: Quality checklist (accessibility, performance, security, documentation)
+- **senior-review.md**: Senior developer feedback and approval notes
+
+### Data Files
+
+**JSON Feed Structure:**
+If block requires data, create `example-{var}.json` with this structure:
+
+```json
+{
+  "total": 1,
+  "offset": 0,
+  "limit": 1,
+  "data": [
+    {
+      "path": "/path/to/content",
+      "title": "Content Title",
+      "image": "/image.png?width=1200&format=pjpg&optimize=medium",
+      "description": "Description text",
+      "lastModified": "1724942455"
+    }
+  ],
+  ":type": "sheet"
+}
+```
+
+**Required fields:** total, offset, limit, data array, :type
+
+**CSV File Structure:**
+Extract the `data` array from JSON into CSV format as `example-{var}.csv`:
+
+```csv
+path,title,image,description,lastModified
+"/path/to/content","Content Title","/image.png","Description text",1724942455
+```
+
+**Naming convention:** `example-{var}.json` and `example-{var}.csv` where `{var}` describes the data (e.g., `example-posts.json`, `example-posts.csv`)
+
+## EDS-Specific Requirements
+
+### ⚠️ CRITICAL: Markdown Code Snippets Format
+
+**Use single backticks ONLY in demo.md, readme.md, example.md, and review files.**
+
+**DO NOT use triple backticks** - this is an EDS requirement for proper code block rendering.
+
+**Format:**
+```
+`Title of Code Snippet`
+`const example = 'code here';`
+`console.log(example);`
+```
+
+**Rules:**
+- Each pair of single backticks = separate code snippet
+- First line within backticks = title of the snippet
+- This is a special signal to EDS for code rendering
+
+**Wrong:**
+````markdown
+```javascript
+const code = 'here';
+```
+````
+
+**Correct:**
+```
+`JavaScript Example`
+`const code = 'here';`
+```
+
+### Metadata Table Format
+
+Every demo.md should include metadata at the end:
+
+```markdown
+| metadata        |                          |
+| :-------------- | :----------------------- |
+| title           | Block Demo Title         |
+| description     | Brief description        |
+| json-ld         | article                  |
+| image           |                          |
+| author          | Tom Cranstoun            |
+| longdescription | Detailed description... |
+```
+
+**Important:** Do NOT add a heading before the metadata table - place it "silently" at the end of the document.
+
+### Markdown to HTML Transformation
+
+EDS automatically transforms markdown tables into HTML divs. Understanding this helps design better content models:
+
+**Markdown:**
+```markdown
+| BlockName | Column2 |
+| :-------- | :------ |
+| Content 1 | Value 1 |
+| Content 2 | Value 2 |
+```
+
+**Transforms to HTML:**
+```html
+<div class="blockname">
+  <div>
+    <div>Content 1</div>
+    <div>Value 1</div>
+  </div>
+  <div>
+    <div>Content 2</div>
+    <div>Value 2</div>
+  </div>
+</div>
+```
+
+**Key points:**
+- Tables become nested divs
+- First cell can be empty: `|  |`
+- Each cell becomes `<div>` with content wrapped in `<p>` elements
+- Empty cells become empty divs
+
+### query-index.json Pattern
+
+**Every EDS folder contains a `query-index.json` file** for dynamic content access:
+
+```javascript
+// Fetch pattern
+const response = await fetch('/path/to/folder/query-index.json');
+const index = await response.json();
+
+// Structure
+{
+  "total": 4,
+  "offset": 0,
+  "limit": 4,
+  "data": [
+    {
+      "path": "/content/page-url",
+      "title": "Page Title",
+      "image": "/image.png?width=1200&format=pjpg&optimize=medium",
+      "description": "Page description",
+      "lastModified": "1720279421"
+    }
+  ],
+  ":type": "sheet"
+}
+```
+
+**Use for:**
+- Building navigation
+- Listing blog posts
+- Creating index pages
+- Dynamic content loading
+
+### E-L-D Loading Pattern
+
+**E-L-D = Eager, Lazy, Delayed** - EDS performance optimization pattern:
+
+- **Eager**: Critical above-the-fold content (loaded immediately)
+- **Lazy**: Below-the-fold content (loaded when scrolling near)
+- **Delayed**: Non-critical features (loaded after page interactive)
+
+Apply this pattern for optimal performance and Lighthouse scores.
+
+### lib-franklin.js → aem.js
+
+**Historical note:** EDS core library was renamed from `lib-franklin.js` to `aem.js`.
+
+If you see references to `lib-franklin.js` in old code or documentation:
+- Replace with `aem.js`
+- Import path: `/scripts/aem.js`
+
+## Block Development Strategy
+
+### Variation Strategy
+
+**Consider variations before creating new blocks:**
+
+- **Improves efficiency**: Reuse existing block logic
+- **Reduces author overload**: Fewer blocks to learn
+- **Better UX**: Authors familiar with base block can easily use variations
+
+**When to use variations:**
+- Similar functionality with different styling
+- Same data structure, different presentation
+- Related content types (e.g., card, card-large, card-featured)
+
+**When to create new block:**
+- Completely different data structure
+- Unrelated functionality
+- Would require too many conditionals in single block
+
+**Process:**
+1. After creating blocks, reiterate to identify variation opportunities
+2. Ask: "Could this be a variation of an existing block?"
+3. Refactor if yes - consolidate logic, add variation styles
+
+### Response Template for Block Creation
+
+**When documenting block creation, use this format:**
+
+```markdown
+# Block: [Name]
+
+## Analysis
+[Technical evaluation of requirements]
+
+## Files Generated
+- {blockname}.js
+- {blockname}.css
+- README.md
+- example.md
+- demo.md
+- example.json (if applicable)
+- example.csv (if applicable)
+
+## Implementation Details
+[Key technical decisions and patterns used]
+
+## Usage Examples
+[How authors use the block in markdown]
+
+## Testing Notes
+[Testing strategy and validation approach]
+```
 
 ## Documentation
 
