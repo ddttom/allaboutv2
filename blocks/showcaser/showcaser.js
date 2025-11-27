@@ -97,7 +97,7 @@ function highlightSyntax(code, language) {
 export default async function decorate(block) {
   // Create container and book structure
   const container = document.createElement('div');
-  container.className = 'showcaser-container';
+  container.className = 'showcaser-main';
   block.appendChild(container);
 
   const book = document.createElement('div');
@@ -112,6 +112,8 @@ export default async function decorate(block) {
 
   // Function to scroll back to the top of the block, accounting for header height
   const scrollToTop = () => {
+    // INTENTIONAL: This block operates on document-level elements
+    // It needs to access the global header to calculate scroll position
     const header = document.querySelector('header');
     const headerHeight = header ? header.offsetHeight : 0;
     const blockTop = block.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20; // 20px extra padding
@@ -160,7 +162,6 @@ export default async function decorate(block) {
   const returnToMenuButton = document.createElement('button');
   returnToMenuButton.className = 'showcaser-returntomenu';
   returnToMenuButton.textContent = 'Return to Menu';
-  returnToMenuButton.style.display = 'none';
   container.appendChild(returnToMenuButton);
 
   // Show/hide "Return to Menu" button based on scroll position
@@ -168,9 +169,9 @@ export default async function decorate(block) {
     const blockTop = block.getBoundingClientRect().top;
     const blockBottom = block.getBoundingClientRect().bottom;
     if (blockTop < 0 && blockBottom > window.innerHeight) {
-      returnToMenuButton.style.display = 'block';
+      returnToMenuButton.classList.add('visible');
     } else {
-      returnToMenuButton.style.display = 'none';
+      returnToMenuButton.classList.remove('visible');
     }
   });
 
@@ -184,6 +185,9 @@ export default async function decorate(block) {
 
   try {
     // Collect and process code snippets from the page
+    // INTENTIONAL: This block operates on document-level elements
+    // Showcaser collects ALL code snippets from the entire document,
+    // not just within the block, to create a code snippet viewer
     const codeSnippets = [];
     const codeElements = document.querySelectorAll('pre > code');
     
@@ -296,8 +300,7 @@ export default async function decorate(block) {
     codeElements.forEach((element) => {
       const preElement = element.parentElement;
       if (preElement && preElement.tagName.toLowerCase() === 'pre') {
-        preElement.style.display = 'none';
-        preElement.classList.add('showcaser-original-code');
+        preElement.classList.add('showcaser-original-code', 'hidden');
       }
     });
 
@@ -319,9 +322,9 @@ export default async function decorate(block) {
 
       rightPage.appendChild(snippetContainer);
 
-      
-      snippetContainer.style.display = 'none';
-      
+
+      snippetContainer.classList.add('hidden');
+
     });
 
     // Add click event to title elements to show corresponding snippet
@@ -331,7 +334,11 @@ export default async function decorate(block) {
         e.preventDefault();
         const snippets = rightPage.querySelectorAll('.showcaser-snippet');
         snippets.forEach((snippet, i) => {
-          snippet.style.display = i === index ? 'block' : 'none';
+          if (i === index) {
+            snippet.classList.remove('hidden');
+          } else {
+            snippet.classList.add('hidden');
+          }
         });
       });
     });

@@ -26,9 +26,18 @@
     transform: rotate(45deg);
 }
 
+.arrow.up {
+    -webkit-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+}
+
 .index-content {
-    display: none;
+    display: block;
     margin-top: 10px;
+}
+
+.index-content.hidden {
+    display: none;
 }
 
 .index-content ul {
@@ -43,4 +52,9 @@
 .index-content ul li a {
     text-decoration: none;
     color: #333;
+}
+
+/* Use CSS custom property for indentation */
+.index-item {
+    margin-left: calc(var(--indent-level, 0) * 20px);
 }

@@ -13,6 +13,10 @@
     display: none;
 }
 
+.returntotop.visible {
+    display: block;
+}
+
 .returntotop:hover {
     background-color: #0056b3;
 }

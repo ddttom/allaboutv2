@@ -19,7 +19,7 @@
   --blogroll-panel-date-color: #555;
 }
 
-.blogroll-container {
+.blogroll-content {
   font-family: var(--blogroll-font-family);
   max-width: var(--blogroll-max-width);
   margin: 0 auto;

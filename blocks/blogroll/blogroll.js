@@ -357,7 +357,7 @@ export default async function decorate(block) {
     // Only create the full blogroll if it's not compact mode
     if (!config.isCompact) {
       const blogrollContainer = document.createElement('div');
-      blogrollContainer.className = 'blogroll-container';
+      blogrollContainer.className = 'blogroll-content';
 
       // Ensure groupedPosts is an array
       if (!Array.isArray(groupedPosts) || groupedPosts.length === 0) {

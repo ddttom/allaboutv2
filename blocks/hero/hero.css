@@ -1,11 +1,11 @@
 /* Block specific CSS */
 
-/* Hero container styles */
-main .hero-container > div {
+/* Hero main wrapper styles */
+main .hero-main > div {
     max-width: unset;
 }
 
-main .hero-container {
+main .hero-main {
     padding: 0;
 }
 

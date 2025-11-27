@@ -21,7 +21,7 @@
   --showcaser-transition-duration: 0.3s;
 }
 
-.showcaser-container {
+.showcaser-main {
   background-color: var(--showcaser-bg-color);
   color: var(--showcaser-text-color);
   font-family: var(--showcaser-font-family);
@@ -118,6 +118,10 @@
 
 .showcaser-snippet {
   margin-bottom: 20px;
+}
+
+.showcaser-snippet.hidden {
+  display: none;
 }
 
 .showcaser-snippet pre {
@@ -278,6 +282,10 @@
   transition: background-color var(--showcaser-transition-duration) ease;
 }
 
+.showcaser-returntomenu.visible {
+  display: block;
+}
+
 .showcaser-returntomenu:hover {
   background-color: var(--showcaser-active-bg);
   color: var(--showcaser-title-color);
@@ -295,4 +303,14 @@
 
 .showcaser.compact .showcaser-right-page {
   font-size: 0.9em;
+}
+
+/* Utility class for hiding elements with display */
+.hidden {
+  display: none;
+}
+
+/* Hide original code elements that showcaser processes */
+.showcaser-original-code.hidden {
+  display: none;
 }

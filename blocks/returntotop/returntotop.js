@@ -1,11 +1,18 @@
 // eslint-disable-next-line no-unused-vars
+
+const RETURNTOTOP_CONFIG = {
+  SCROLL_THRESHOLD: 100, // pixels
+};
+
 export default async function decorate(block) {
-  const returnToTopButton = document.querySelector('.returntotop');
+  // Use block parameter instead of global selector
+  const returnToTopButton = block;
+
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 100) {
-      returnToTopButton.style.display = 'block';
+    if (window.scrollY > RETURNTOTOP_CONFIG.SCROLL_THRESHOLD) {
+      returnToTopButton.classList.add('visible');
     } else {
-      returnToTopButton.style.display = 'none';
+      returnToTopButton.classList.remove('visible');
     }
   });
 
