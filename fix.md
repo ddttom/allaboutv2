@@ -1395,6 +1395,77 @@ The only violation was the reserved class name `.dam-wrapper` which is automatic
 
 ---
 
+### Block: code-expander
+
+**Files Modified:**
+- `blocks/code-expander/code-expander.js`
+
+**Violations Found:**
+1. ⚠️ **Global selectors** - Multiple document-level queries (INTENTIONAL for this block)
+
+**Changes Made:**
+
+**1. Documented INTENTIONAL global selectors:**
+
+The code-expander block legitimately needs document-level access:
+
+```javascript
+// INTENTIONAL: Code-expander is a document-level enhancer that processes all code blocks on the page
+// Find all code elements in the document
+const codeElements = document.querySelectorAll('pre code');
+
+// INTENTIONAL: Tooltips must be added to document body for proper positioning and z-index
+if (!document.body.contains(tooltip)) {
+  document.body.appendChild(tooltip);
+}
+
+// INTENTIONAL: Temporary download anchor must be added to document body to trigger download
+document.body.appendChild(a);
+a.click();
+document.body.removeChild(a);
+```
+
+**Rationale:**
+
+The code-expander block was already well-structured with:
+- CODE_EXPANDER_CONFIG object present with all configuration
+- No inline CSS (uses CSS classes and custom properties)
+- No reserved class names
+- Proper error handling
+
+The block legitimately needs global selectors because it:
+1. **Enhances all code blocks**: Operates on all `<pre><code>` elements in the document (document-level enhancer)
+2. **Modal and tooltip positioning**: Requires document.body for proper z-index and positioning
+3. **Download functionality**: Needs temporary anchor in document.body to trigger file downloads
+
+This is the intended behavior - adding INTENTIONAL comments documents this design decision.
+
+**Testing Notes:**
+- [ ] All code blocks on page are enhanced
+- [ ] Syntax highlighting works for all supported languages
+- [ ] Copy to clipboard functionality works
+- [ ] Raw/formatted view toggle works
+- [ ] Download as file works with correct extensions
+- [ ] Expand/collapse works for long code blocks
+- [ ] Keyboard navigation works (arrow keys)
+- [ ] Info tooltip displays and positions correctly
+- [ ] Filename prompt modal works
+- [ ] Mobile responsive design works
+- [ ] Console errors checked
+
+**Risk Level:** VERY LOW
+
+**Reasoning:**
+- Only added INTENTIONAL comments (no logic changes)
+- Block already has CONFIG object
+- No CSS changes needed
+- Global selectors are by design (document-level enhancer)
+- No functionality changes whatsoever
+
+**Status:** ✅ Complete - Ready for testing
+
+---
+
 ## Phase 3: MEDIUM PRIORITY Fixes
 
 **Goal:** Fix single-violation blocks

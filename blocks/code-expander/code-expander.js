@@ -47,7 +47,8 @@ const CODE_EXPANDER_CONFIG = {
 export default async function decorate(block) {
   // Check if the block has a "text" class and set forceText accordingly
   const forceText = block.classList.contains('text');
-  
+
+  // INTENTIONAL: Code-expander is a document-level enhancer that processes all code blocks on the page
   // Find all code elements in the document
   const codeElements = document.querySelectorAll('pre code');
   
@@ -371,11 +372,12 @@ export default async function decorate(block) {
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = filename;
-    
+
+    // INTENTIONAL: Temporary download anchor must be added to document body to trigger download
     // Append to the body, click to trigger download, then remove
     document.body.appendChild(a);
     a.click();
-    
+
     // Clean up
     setTimeout(() => {
       document.body.removeChild(a);
@@ -389,6 +391,7 @@ export default async function decorate(block) {
    * @param {HTMLElement} button - The button that triggered the tooltip
    */
   function showTooltip(tooltip, button) {
+    // INTENTIONAL: Tooltips must be added to document body for proper positioning and z-index
     // Add tooltip to document body if not already added
     if (!document.body.contains(tooltip)) {
       document.body.appendChild(tooltip);
