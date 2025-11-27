@@ -2,21 +2,27 @@
 /* eslint-disable import/no-absolute-path */
 import { renderExpressions } from '/plusplus/plugins/expressions/src/expressions.js';
 
+const BIO_CONFIG = {
+  IMAGE_EXTENSIONS: ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'],
+  DEFAULT_ALT_TEXT: 'Bio image',
+  HIDE_AUTHOR_CLASS: 'hide-author',
+  META_AUTHOR_SELECTOR: 'meta[name="author"]',
+};
+
 // eslint-disable-next-line no-unused-vars
 export default function decorate(block) {
   // Check the current block, not a global selector
-  if (!block.classList.contains('hide-author')) {
+  if (!block.classList.contains(BIO_CONFIG.HIDE_AUTHOR_CLASS)) {
     // Check if the first cell contains a link to an image and replace it with the actual image
     const firstCell = block.querySelector('div > div:first-child');
     if (firstCell) {
       const link = firstCell.querySelector('a');
       if (link && link.href) {
         // Check if the link points to an image file
-        const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
-        const isImageLink = imageExtensions.some(ext => 
+        const isImageLink = BIO_CONFIG.IMAGE_EXTENSIONS.some(ext =>
           link.href.toLowerCase().includes(ext)
         );
-        
+
         if (isImageLink) {
           // Create an img element to replace the link
           const img = document.createElement('img');
@@ -28,7 +34,7 @@ export default function decorate(block) {
 
           // Only use link text as alt if it's NOT a URL
           // If it's a URL, leave alt empty - author name will be extracted from meta tag
-          img.alt = isLinkTextUrl ? '' : linkText || 'Bio image';
+          img.alt = isLinkTextUrl ? '' : linkText || BIO_CONFIG.DEFAULT_ALT_TEXT;
 
           // Replace the link with the image (atomic operation)
           link.replaceWith(img);
@@ -47,7 +53,8 @@ export default function decorate(block) {
 
     // If the alt attribute is empty or not present, fall back to the <meta> tag's author content
     if (!author) {
-      const metaAuthor = document.querySelector('meta[name="author"]');
+      // INTENTIONAL: Meta tags are document-level elements
+      const metaAuthor = document.querySelector(BIO_CONFIG.META_AUTHOR_SELECTOR);
       if (metaAuthor) {
         author = metaAuthor.getAttribute('content');
       }
@@ -60,5 +67,10 @@ export default function decorate(block) {
     // Insert the author element as the last child of the current block
     block.appendChild(authorElement);
   }
-  renderExpressions(document.querySelector('.bio-wrapper'));
+
+  // Find the wrapper element relative to the block (traverse up to find the wrapper)
+  const wrapper = block.closest('.bio-wrapper') || block.parentElement?.closest('.bio-wrapper');
+  if (wrapper) {
+    renderExpressions(wrapper);
+  }
 }
