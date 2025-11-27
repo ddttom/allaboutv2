@@ -652,8 +652,9 @@ export default function decorate(block) {
     
     // Announce search results for screen readers
     function announceSearchResults(hasResults, totalItems) {
+      // INTENTIONAL: Live region for screen readers must be at document level for accessibility
       let liveRegion = document.getElementById('faq-live-region');
-      
+
       if (!liveRegion) {
         liveRegion = document.createElement('div');
         liveRegion.id = 'faq-live-region';

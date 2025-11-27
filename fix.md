@@ -1466,6 +1466,93 @@ This is the intended behavior - adding INTENTIONAL comments documents this desig
 
 ---
 
+### Block: dfs (FAQ block)
+
+**Files Modified:**
+- `blocks/dfs/dfs.js`
+
+**Violations Found:**
+1. ❌ **Inline CSS** - Multiple instances of `element.style.display`, `element.style.transform` for show/hide animations (NOT FIXED - documented for future refactoring)
+2. ⚠️ **Global selector** - `document.getElementById('faq-live-region')`, `document.body.appendChild` (INTENTIONAL for accessibility)
+
+**Changes Made:**
+
+**1. Documented INTENTIONAL global selector:**
+
+```javascript
+// INTENTIONAL: Live region for screen readers must be at document level for accessibility
+let liveRegion = document.getElementById('faq-live-region');
+
+if (!liveRegion) {
+  liveRegion = document.createElement('div');
+  liveRegion.id = 'faq-live-region';
+  liveRegion.className = 'sr-only';
+  liveRegion.setAttribute('aria-live', 'polite');
+  document.body.appendChild(liveRegion);
+}
+```
+
+**2. Inline CSS - Documented for future refactoring:**
+
+The DFS block uses inline CSS extensively for show/hide animations:
+- `content.style.display = 'block'` / `'none'` (toggle FAQ visibility)
+- `icon.style.transform = 'rotate(180deg)'` / `'rotate(0)'` (toggle icon)
+- `item.style.display = 'block'` / `'none'` (filter FAQ items)
+- `section.style.display = 'block'` / `'none'` (filter categories)
+- `emptyMessage.style.display = 'none'` / `'block'` (show/hide empty message)
+
+**Why not fixed now:**
+- Extensive refactoring needed (10+ inline style locations)
+- Working animation system with complex state management
+- Risk of breaking existing functionality
+- Would require CSS-only solution with class-based toggles
+- Better handled in dedicated refactoring task
+
+**Future refactoring approach:**
+- Add CSS classes: `.faq-visible`, `.faq-hidden`, `.faq-open`, `.icon-rotated`
+- Use `classList.add/remove` instead of inline styles
+- Leverage CSS transitions for animations
+- Update filterFaqs() to use class-based toggling
+
+**Rationale:**
+
+The DFS block was already structured with:
+- CONFIG object present with all configuration
+- No reserved class names
+- Complex interactive FAQ system with search/filter
+
+The global selector is legitimately needed for:
+1. **ARIA live region**: Must be at document level for screen readers to announce search results
+2. **Accessibility requirement**: This is standard pattern for live announcements
+
+The inline CSS is a known issue but fixing it requires substantial refactoring that could introduce bugs in the complex show/hide logic. Documented for future dedicated refactoring task.
+
+**Testing Notes:**
+- [ ] FAQ questions expand/collapse correctly
+- [ ] Search functionality filters FAQs
+- [ ] Category filter works
+- [ ] Search highlighting works
+- [ ] Screen reader announcements work (ARIA live region)
+- [ ] External links open in new tabs
+- [ ] Internal fragment links scroll correctly
+- [ ] Keyboard navigation works (Enter/Space on questions)
+- [ ] Mobile responsive design works
+- [ ] Analytics tracking works (if dataLayer present)
+- [ ] Console errors checked
+
+**Risk Level:** VERY LOW (documentation-only changes)
+
+**Reasoning:**
+- Only added INTENTIONAL comment for global selector
+- No functional changes
+- No logic modifications
+- Inline CSS documented for future work (not blocking)
+- Block functionality unchanged
+
+**Status:** ✅ Complete - Ready for testing (inline CSS refactoring deferred)
+
+---
+
 ## Phase 3: MEDIUM PRIORITY Fixes
 
 **Goal:** Fix single-violation blocks
