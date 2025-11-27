@@ -284,6 +284,8 @@ When AI assistants create block examples or demos, use these pre-defined sample 
 - Configuration in /config directory with environment-specific variables
 - Scripts loaded via head.html and scripts.js
 
+**Complete architecture details:** See [EDS Architecture Standards](docs/for-ai/implementation/eds-architecture-standards.md)
+
 ### Dual-Directory Pattern
 - **`/blocks/`** - Production-ready EDS blocks (simple components or deployed build output)
 - **`/build/`** - Development workspace for complex components with external dependencies
@@ -391,41 +393,16 @@ Variations use additional classes, not separate files:
 
 ## ⚠️ CRITICAL: Single JavaScript File for Block Variations
 
-**Each EDS block must have exactly ONE JavaScript file, regardless of variations.**
+**Each EDS block must have exactly ONE JavaScript file, regardless of variations.** Use `block.classList.contains('variation-name')` to detect variations.
 
-**NEVER create multiple JavaScript files:**
-- ❌ `blockname.js`, `blockname-variation1.js`, `blockname-variation2.js`
-- ❌ `view-myblog.js`, `view-myblog-ai.js`
+**NEVER:** Multiple JS files (❌ `blockname.js`, `blockname-variation1.js`)
+**ALWAYS:** Single JS file with class detection
 
-**ALWAYS use class detection in the single JavaScript file:**
-
-```javascript
-export default async function decorate(block) {
-  // Detect variation by checking for class
-  const isVariationA = block.classList.contains('variation-a');
-
-  if (isVariationA) {
-    // Handle variation A logic
-    const data = await fetchAndFilterData();
-    renderVariationA(block, data);
-  } else {
-    // Handle default variation
-    renderStandard(block);
-  }
-}
-```
-
-**Why this matters:**
-- **EDS Convention**: System expects one JS file per block
-- **Maintainability**: All logic in one place
-- **Performance**: No multiple file loads
-- **Consistency**: Follows CSS variation pattern
-
-**See:** `.claude/skills/eds-block-development/SKILL.md` and `docs/for-ai/eds.md` for complete details.
+**Details:** See [Block Variations](docs/for-ai/eds.md#block-variations) in EDS Fundamentals Guide
 
 ## ⚠️ CRITICAL: Event Listeners and DOM Cloning
 
-**Event listeners are NOT copied when using `cloneNode()`**
+**Event listeners are NOT copied when using `cloneNode()`** - see [DOM Manipulation Best Practices](docs/for-ai/guidelines/frontend-guidelines.md#dom-manipulation) for general guidance.
 
 When working with the ipynb-viewer block or similar components that clone DOM elements:
 
@@ -525,7 +502,7 @@ const fullUrl = `${helpRepoUrl}/blob/main/docs/help.md`;
 **Safe suffixes to use instead:**
 - `-backdrop`, `-modal`, `-panel`, `-inner`, `-grid`, `-list`, `-content`
 
-**See:** `.claude/skills/eds-block-development/SKILL.md` for complete details and `PROBLEM.md` for the bug report.
+**See:** `.claude/skills/eds-block-development/SKILL.md` for complete details, `PROBLEM.md` for the bug report, and [CSS Styling Standards](docs/for-ai/implementation/block-architecture-standards.md#3-css-styling-standards) for naming conventions.
 
 ## Development Workflow
 
@@ -541,6 +518,8 @@ When creating or modifying blocks, ALWAYS use Content Driven Development:
 - Test content exists before coding
 - Better PRs with validation links
 - Fewer bugs and edge cases
+
+**Complete CDD methodology:** See [Design Philosophy Guide](docs/for-ai/implementation/design-philosophy-guide.md)
 
 ### Simple vs Complex Blocks
 
@@ -559,198 +538,35 @@ When creating or modifying blocks, ALWAYS use Content Driven Development:
 
 ### Block File Structure
 
-**Complete file structure for EDS blocks:**
+**Standard structure:** Each block has its own directory with JS, CSS, and documentation files.
 
-```
-/blocks/{blockname}/
-├── {blockname}.js           # Core block functionality (required)
-├── {blockname}.css          # Block styles (required)
-├── README.md                # Complete documentation (required)
-├── example.md               # Usage example in markdown table format (required)
-├── demo.md                  # Full demo with metadata (recommended)
-├── example.json             # Sample data feed (if block uses JSON)
-└── example.csv              # CSV version of sample data (if JSON exists)
-```
+**Complete template:** See [Standard File Organization](docs/for-ai/eds-appendix.md#standard-file-organization) in EDS Reference Guide
 
-**File purposes:**
-- **`{blockname}.js`**: Single JavaScript file with `decorate()` function - handles all variations via class detection
-- **`{blockname}.css`**: All block styles including variations using `.blockname.variation` pattern
-- **`README.md`**: Complete documentation - see [Documentation Files](#documentation-files) section for 14-part structure
-- **`example.md`**: Markdown table showing how authors use the block in docs
-- **`demo.md`**: Full-featured demo with context, use cases, and metadata
-- **`self-review.md`**: Quality checklist completed before requesting review
-- **`senior-review.md`**: Feedback and approval from senior developer
-- **`example.json`**: If block fetches data, provide realistic sample with required structure
-- **`example.csv`**: CSV representation of the data array from example.json
-
-**See [Documentation Files](#documentation-files) and [Data Files](#data-files) for detailed requirements.**
+**Essential files:** `{blockname}.js` (required), `{blockname}.css` (required), `README.md` (required), `example.md` (required)
 
 ## Block Development
 
 ### JavaScript Requirements
 
-**CONFIG Object Pattern:**
-Every block must define a CONFIG object at the top (see [Block-Level BLOCKNAME_CONFIG](#block-level-blockname_config)):
+**Architecture patterns:** See [JavaScript Architecture Standards](docs/for-ai/implementation/block-architecture-standards.md#2-javascript-architecture-standards) for complete details on CONFIG object pattern, function structure, error handling, and variation handling.
 
-```javascript
-const BLOCKNAME_CONFIG = {
-  ERROR_MESSAGE: 'Error loading content',
-  INPUT_DATA: '/path/to/data.json',
-  DELAY_MS: 2000,
-};
-
-export default async function decorate(block) {
-  // Use CONFIG throughout
-}
-```
-
-**Function Structure:**
-Organize code in three sections:
-1. **decorate** - Main export function
-2. **sub-components** - Component builders (e.g., `createCard()`, `buildHeader()`)
-3. **helpers** - Utility functions (e.g., `formatDate()`, `sanitizeInput()`)
-
-**Pure Functions:**
-Use `function` keyword for pure functions (clarity over arrow functions):
-```javascript
-function createCard(data) {
-  // Pure function with explicit function declaration
-  return element;
-}
-```
-
-**Custom Error Types:**
-Create custom errors for consistent error handling:
-```javascript
-class BlockDataError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = 'BlockDataError';
-  }
-}
-```
-
-**Variation Handling:**
-Single JS file handles all variations via class detection (see [Single JavaScript File](#critical-single-javascript-file-for-block-variations)):
-```javascript
-export default async function decorate(block) {
-  const isBold = block.classList.contains('bold');
-  const isLarge = block.classList.contains('large');
-
-  // Apply variation logic
-  if (isBold) {
-    // Bold variation handling
-  }
-}
-```
+**Quick reference:** Always define BLOCKNAME_CONFIG at top, organize code in three sections (decorate → sub-components → helpers), use `function` keyword for pure functions.
 
 ### CSS Requirements
 
-**No Inline CSS:**
-See [⚠️ CRITICAL: No Inline CSS](#critical-no-inline-css) - always use CSS files, never `element.style`.
+**No inline CSS:** Always use CSS files, never `element.style` (see [⚠️ CRITICAL: No Inline CSS](#critical-no-inline-css)).
 
-**CSS Variables for Configuration:**
-Define configurable variables at block level (see [CSS Variables as Configuration](#css-variables-as-configuration)):
-```css
-.blockname {
-  --block-spacing: 1rem;
-  --block-color: var(--color-primary, #000);
-}
-```
-
-**Variation Class Naming:**
-Use `.blockname.variation` pattern (see [CSS Variation Class Naming](#css-variation-class-naming)):
-```css
-.blockname.bold {
-  font-weight: bold;
-}
-```
-
-**Container/Wrapper Restriction:**
-Never style `.{blockname}-container` or `.{blockname}-wrapper` - EDS reserves these (see [⚠️ CRITICAL: EDS Reserved Class Names](#critical-eds-reserved-class-names)).
+**Standards:** See [CSS Styling Standards](docs/for-ai/implementation/block-architecture-standards.md#3-css-styling-standards) for CSS variables, variation class naming (`.blockname.variation`), and reserved class names to avoid.
 
 ### Documentation Files
 
-**README.md Structure (14 sections):**
+**Required files:** README.md (14-section structure), EXAMPLE.md (markdown table format), DEMO.md (7-part structure), self-review.md, senior-review.md
 
-1. **Block Name** - H1 heading
-2. **Description** - Brief purpose (1-2 sentences)
-3. **Features** - Bulleted list of capabilities
-4. **Usage** - Markdown table showing block syntax
-5. **Authoring** - How to create content in Google Docs/Word
-6. **Configuration** - CSS variables, variations, options
-7. **Styling** - CSS classes and customization
-8. **Behavior** - Interactive features and JavaScript functionality
-9. **Dependencies** - Any required external resources (if applicable)
-10. **Examples** - Real-world usage scenarios with markdown tables (never show empty cells)
-11. **Accessibility** - ARIA roles, keyboard navigation, screen reader support
-12. **Performance** - Loading strategy, optimization techniques
-13. **Troubleshooting** - Common issues and solutions
-14. **Browser Compatibility** - Supported browsers and known issues
-
-**EXAMPLE.md Structure:**
-```markdown
-# {blockname}
-
-| BlockName |
-| :-------- |
-| Content   |
-| More rows as needed |
-
-```
-- First line: `# {blockname}` only
-- Blank line
-- Markdown table with block name in first row
-- Always end with newline
-- No triple backticks for code - use single backticks (see [EDS-Specific Requirements](#eds-specific-requirements))
-
-**DEMO.md Structure (7 parts):**
-1. Title
-2. Introduction
-3. Sample table (working example)
-4. Explanation of how the block works
-5. Information on customization options
-6. Potential use cases
-7. Metadata section (no heading before metadata - see [Metadata Table Format](#metadata-table-format))
-
-**Self-Review and Senior-Review Files:**
-- **self-review.md**: Quality checklist (accessibility, performance, security, documentation)
-- **senior-review.md**: Senior developer feedback and approval notes
+**Complete structures:** See [Documentation Requirements](docs/for-ai/eds-appendix.md#documentation-requirements) in EDS Reference Guide
 
 ### Data Files
 
-**JSON Feed Structure:**
-If block requires data, create `example-{var}.json` with this structure:
-
-```json
-{
-  "total": 1,
-  "offset": 0,
-  "limit": 1,
-  "data": [
-    {
-      "path": "/path/to/content",
-      "title": "Content Title",
-      "image": "/image.png?width=1200&format=pjpg&optimize=medium",
-      "description": "Description text",
-      "lastModified": "1724942455"
-    }
-  ],
-  ":type": "sheet"
-}
-```
-
-**Required fields:** total, offset, limit, data array, :type
-
-**CSV File Structure:**
-Extract the `data` array from JSON into CSV format as `example-{var}.csv`:
-
-```csv
-path,title,image,description,lastModified
-"/path/to/content","Content Title","/image.png","Description text",1724942455
-```
-
-**Naming convention:** `example-{var}.json` and `example-{var}.csv` where `{var}` describes the data (e.g., `example-posts.json`, `example-posts.csv`)
+**Data structures:** See [Data File Formats](docs/for-ai/eds-appendix.md#data-file-formats) for JSON feed structure and CSV format requirements.
 
 ## EDS-Specific Requirements
 
@@ -787,103 +603,31 @@ const code = 'here';
 
 ### Metadata Table Format
 
-Every demo.md should include metadata at the end:
+**Important:** Do NOT add a heading before metadata table - place it "silently" at end of demo.md
 
-```markdown
-| metadata        |                          |
-| :-------------- | :----------------------- |
-| title           | Block Demo Title         |
-| description     | Brief description        |
-| json-ld         | article                  |
-| image           |                          |
-| author          | Tom Cranstoun            |
-| longdescription | Detailed description... |
-```
-
-**Important:** Do NOT add a heading before the metadata table - place it "silently" at the end of the document.
+**Complete structure:** See [Metadata and Documentation](docs/for-ai/eds.md#metadata-and-documentation) in EDS Fundamentals Guide
 
 ### Markdown to HTML Transformation
 
-EDS automatically transforms markdown tables into HTML divs. Understanding this helps design better content models:
+**Key concept:** EDS transforms markdown tables into nested HTML divs. Understanding this helps design better content models.
 
-**Markdown:**
-```markdown
-| BlockName | Column2 |
-| :-------- | :------ |
-| Content 1 | Value 1 |
-| Content 2 | Value 2 |
-```
-
-**Transforms to HTML:**
-```html
-<div class="blockname">
-  <div>
-    <div>Content 1</div>
-    <div>Value 1</div>
-  </div>
-  <div>
-    <div>Content 2</div>
-    <div>Value 2</div>
-  </div>
-</div>
-```
-
-**Key points:**
-- Tables become nested divs
-- First cell can be empty: `|  |`
-- Each cell becomes `<div>` with content wrapped in `<p>` elements
-- Empty cells become empty divs
+**Details:** See [Markdown to HTML Transformation](docs/for-ai/eds.md#markdown-to-html-transformation) in EDS Fundamentals Guide
 
 ### query-index.json Pattern
 
-**Every EDS folder contains a `query-index.json` file** for dynamic content access:
+**Every EDS folder contains `query-index.json`** for dynamic content access (navigation, blog listings, index pages).
 
-```javascript
-// Fetch pattern
-const response = await fetch('/path/to/folder/query-index.json');
-const index = await response.json();
-
-// Structure
-{
-  "total": 4,
-  "offset": 0,
-  "limit": 4,
-  "data": [
-    {
-      "path": "/content/page-url",
-      "title": "Page Title",
-      "image": "/image.png?width=1200&format=pjpg&optimize=medium",
-      "description": "Page description",
-      "lastModified": "1720279421"
-    }
-  ],
-  ":type": "sheet"
-}
-```
-
-**Use for:**
-- Building navigation
-- Listing blog posts
-- Creating index pages
-- Dynamic content loading
+**Details:** See [query-index.json Pattern](docs/for-ai/eds.md#query-indexjson-pattern) in EDS Fundamentals Guide
 
 ### E-L-D Loading Pattern
 
-**E-L-D = Eager, Lazy, Delayed** - EDS performance optimization pattern:
+**E-L-D = Eager, Lazy, Delayed** - EDS performance optimization for optimal Lighthouse scores.
 
-- **Eager**: Critical above-the-fold content (loaded immediately)
-- **Lazy**: Below-the-fold content (loaded when scrolling near)
-- **Delayed**: Non-critical features (loaded after page interactive)
-
-Apply this pattern for optimal performance and Lighthouse scores.
+**Details:** See [E-L-D Loading Pattern](docs/for-ai/eds.md#e-l-d-loading-pattern) in EDS Fundamentals Guide
 
 ### lib-franklin.js → aem.js
 
-**Historical note:** EDS core library was renamed from `lib-franklin.js` to `aem.js`.
-
-If you see references to `lib-franklin.js` in old code or documentation:
-- Replace with `aem.js`
-- Import path: `/scripts/aem.js`
+**Historical note:** Core library renamed from `lib-franklin.js` to `aem.js`. Use `/scripts/aem.js` import path.
 
 ## Block Development Strategy
 
@@ -966,7 +710,7 @@ If you see references to `lib-franklin.js` in old code or documentation:
 
 ### Testing & Documentation Approaches
 
-**Multiple approaches available:**
+**Multiple approaches available:** See [EDS Testing Guide](docs/for-ai/testing/EDS-Architecture-and-Testing-Guide.md) for comprehensive testing strategy.
 
 1. **Traditional test.html** - Browser-based visual testing
    - Full EDS core integration
