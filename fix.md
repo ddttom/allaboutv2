@@ -1079,6 +1079,118 @@ Simple fixes for reserved class and missing CONFIG. Uses standard EDS variation 
 
 ---
 
+### Block: fragment
+
+**Files Modified:**
+- `blocks/fragment/fragment.js`
+- `blocks/fragment/fragment.css`
+
+**Violations Found:**
+1. ❌ CRITICAL: Reserved class `.fragment-wrapper` used in CSS (3 instances)
+2. ❌ CRITICAL: Global selector `block.closest('.fragment')` instead of using block parameter
+3. ❌ MEDIUM: Missing CONFIG object
+4. ❌ MEDIUM: Hard-coded values (file extensions, selectors)
+5. ✅ No inline CSS
+
+**Changes Made:**
+
+**JavaScript Changes:**
+
+1. Added FRAGMENT_CONFIG object (lines 15-19):
+
+```javascript
+const FRAGMENT_CONFIG = {
+  PLAIN_HTML_EXTENSION: '.plain.html',
+  MEDIA_PREFIX: './media_',
+  SECTION_SELECTOR: ':scope .section',
+};
+```
+
+2. Fixed global selector in decorate function (lines 57-62):
+
+**Before:**
+```javascript
+block.closest('.section').classList.add(...fragmentSection.classList);
+block.closest('.fragment').replaceWith(...fragment.childNodes);
+```
+
+**After:**
+```javascript
+const section = block.closest('.section');
+if (section) {
+  section.classList.add(...fragmentSection.classList);
+}
+// Use block parameter instead of class selector
+block.replaceWith(...fragment.childNodes);
+```
+
+3. Used CONFIG throughout loadFragment function for file extension and media prefix
+
+**CSS Changes:**
+
+1. Replaced reserved class `.fragment-wrapper` with `.fragment`:
+
+**Before:**
+```css
+.fragment-wrapper > .section {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.fragment-wrapper > .section:first-of-type {
+  padding-top: 0;
+}
+
+.fragment-wrapper > .section:last-of-type {
+  padding-bottom: 0;
+}
+```
+
+**After:**
+```css
+.fragment > .section {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.fragment > .section:first-of-type {
+  padding-top: 0;
+}
+
+.fragment > .section:last-of-type {
+  padding-bottom: 0;
+}
+```
+
+**Rationale:**
+
+The fragment block loads external HTML content and injects it into the page. The fixes ensure:
+
+1. **Reserved class removal**: CSS uses `.fragment` instead of `.fragment-wrapper`
+2. **Block-scoped operations**: Uses `block` parameter directly instead of querying by class name
+3. **Configuration centralization**: File extensions and selectors moved to FRAGMENT_CONFIG
+4. **Safety**: Added null check for section before adding classes
+
+**Testing Notes:**
+- [ ] Fragment loads correctly from path
+- [ ] Section classes transferred to parent section
+- [ ] Nested section padding suppressed correctly
+- [ ] Media paths resolved correctly with fragment base
+- [ ] Block replaces itself with fragment content
+- [ ] Console errors checked
+
+**Risk Level:** LOW
+
+**Reasoning:**
+- Simple CONFIG addition and CSS class rename
+- Global selector fix uses block parameter directly (safer)
+- Added null safety check for section
+- No logic changes to fragment loading
+
+**Status:** ✅ Complete - Ready for testing
+
+---
+
 ## Phase 3: MEDIUM PRIORITY Fixes
 
 **Goal:** Fix single-violation blocks
