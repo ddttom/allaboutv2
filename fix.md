@@ -1008,6 +1008,77 @@ The `document.querySelector('meta[name="author"]')` global selector is acceptabl
 
 ---
 
+### Block: inline-svg
+
+**Files Modified:**
+- `blocks/inline-svg/inline-svg.js`
+- `blocks/inline-svg/inline-svg.css`
+
+**Violations Found:**
+1. ❌ CRITICAL: Reserved class `.inline-svg-wrapper` used in CSS
+2. ❌ MEDIUM: Missing CONFIG object
+3. ❌ MEDIUM: Hard-coded values (icon path, svg attributes, alt text)
+4. ✅ No global selectors
+5. ✅ No inline CSS
+
+**Changes Made:**
+
+**JavaScript Changes:**
+
+1. Added INLINE_SVG_CONFIG object (lines 1-9):
+
+```javascript
+const INLINE_SVG_CONFIG = {
+  ICONS_PATH: '/icons/',
+  ICON_FILE_EXTENSION: '.svg',
+  ICON_CLASS_PREFIX: 'icon-',
+  SVG_WIDTH: '100%',
+  SVG_HEIGHT: '100%',
+  ALT_TEXT_SUFFIX: ' illustration',
+  ERROR_MESSAGE: 'No valid icon or SVG content found in the block',
+};
+```
+
+2. Used CONFIG throughout for icon paths, alt text, SVG attributes, and error messages
+
+**CSS Changes:**
+
+1. Replaced reserved class `.inline-svg-wrapper` with variation class:
+
+**Before:**
+```css
+.inline-svg-wrapper {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+```
+
+**After:**
+```css
+.inline-svg.fullwidth {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+```
+
+**Rationale:**
+
+Simple fixes for reserved class and missing CONFIG. Uses standard EDS variation pattern (`.inline-svg.fullwidth`) instead of reserved wrapper class.
+
+**Testing Notes:**
+- [ ] Icon mode - span with icon class loads SVG from /icons/
+- [ ] SVG mode - inline SVG markup renders
+- [ ] Fullwidth variation works correctly
+- [ ] Alt text generated with illustration suffix
+
+**Risk Level:** LOW - Simple CONFIG addition and CSS class rename
+
+**Status:** ✅ Complete - Ready for testing
+
+---
+
 ## Phase 3: MEDIUM PRIORITY Fixes
 
 **Goal:** Fix single-violation blocks

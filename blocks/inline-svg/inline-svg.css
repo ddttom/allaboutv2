@@ -12,7 +12,8 @@
   max-width: 100%;
 }
 
-.inline-svg-wrapper {
+/* Fullwidth variation - use .inline-svg.fullwidth instead of -wrapper */
+.inline-svg.fullwidth {
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
