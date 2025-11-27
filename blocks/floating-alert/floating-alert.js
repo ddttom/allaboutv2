@@ -12,8 +12,9 @@ const FLOATING_ALERT_CONFIG = {
 function createSparkle() {
   const sparkle = document.createElement('div');
   sparkle.className = 'floating-alert-sparkle';
-  sparkle.style.left = `${Math.random() * 100}%`;
-  sparkle.style.top = `${Math.random() * 100}%`;
+  // Use CSS custom properties for dynamic positioning
+  sparkle.style.setProperty('--sparkle-left', `${Math.random() * 100}%`);
+  sparkle.style.setProperty('--sparkle-top', `${Math.random() * 100}%`);
   return sparkle;
 }
 

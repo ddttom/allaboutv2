@@ -1,33 +1,60 @@
+const DASHBOARD_CONFIG = {
+  JSON_URL: '/query-index.json',
+  DASHBOARD_TITLE: 'Edge Delivery Services Content Dashboard',
+  FILTER_LABEL: 'Filter by status: ',
+  STATUS_OPTIONS: ['All', 'Green', 'Amber', 'Red'],
+  TABLE_HEADERS: ['Title', 'Path', 'Description', 'Last Modified', 'Review', 'Expiry'],
+  PATH_TRUNCATE_LENGTH: 20,
+  PATH_TRUNCATE_SUFFIX: '...',
+  REVIEW_PERIOD_FALLBACK: 300, // days
+  EXPIRY_PERIOD_FALLBACK: 365, // days
+  RESPONSIVE_BREAKPOINT: 1024, // px
+  POPUP_OFFSET: 10, // px
+  IMAGE_POPUP_MAX_SIZE: 300, // px
+  ERROR_MESSAGE: 'Error fetching data',
+};
+
 export default function decorate(block) {
-  const dashboardContainer = block.querySelector('.dashboard-container') || block;
-  const jsonUrl = '/query-index.json';
+  const dashboardContainer = block;
   let mouseX = 0;
   let mouseY = 0;
   let activePopup = null;
   let data = null;
 
   // Fetch JSON data and create dashboard
-  fetch(jsonUrl)
-    .then(response => response.json())
-    .then(jsonData => {
+  async function init() {
+    try {
+      const response = await fetch(DASHBOARD_CONFIG.JSON_URL);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const jsonData = await response.json();
       data = jsonData.data;
       const dashboardElement = createDashboard(data);
       dashboardContainer.appendChild(dashboardElement);
       addEventListeners();
       handleResponsiveLayout();
-      
+
       // Sort initially by Title
       sortTable(0, true);
-      document.querySelector('.content-table th[data-column="0"]').classList.add('asc');
-    })
-    .catch(error => console.error('Error fetching data:', error));
+      const firstHeader = block.querySelector('.content-table th[data-column="0"]');
+      if (firstHeader) {
+        firstHeader.classList.add('asc');
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(`${DASHBOARD_CONFIG.ERROR_MESSAGE}:`, error);
+    }
+  }
+
+  init();
 
   function createDashboard(data) {
     const dashboard = document.createElement('div');
     dashboard.className = 'dashboard';
 
     const title = document.createElement('h1');
-    title.textContent = 'Edge Delivery Services Content Dashboard';
+    title.textContent = DASHBOARD_CONFIG.DASHBOARD_TITLE;
     dashboard.appendChild(title);
 
     const filter = createFilter();
@@ -44,13 +71,13 @@ export default function decorate(block) {
     filterContainer.className = 'filter-container';
 
     const label = document.createElement('label');
-    label.textContent = 'Filter by status: ';
+    label.textContent = DASHBOARD_CONFIG.FILTER_LABEL;
     filterContainer.appendChild(label);
 
     const select = document.createElement('select');
     select.id = 'status-filter';
-    
-    ['All', 'Green', 'Amber', 'Red'].forEach(option => {
+
+    DASHBOARD_CONFIG.STATUS_OPTIONS.forEach(option => {
       const optionElement = document.createElement('option');
       optionElement.value = option.toLowerCase();
       optionElement.textContent = option;
@@ -67,7 +94,7 @@ export default function decorate(block) {
 
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
-    ['Title', 'Path', 'Description', 'Last Modified', 'Review', 'Expiry'].forEach((text, index) => {
+    DASHBOARD_CONFIG.TABLE_HEADERS.forEach((text, index) => {
       const th = document.createElement('th');
       th.textContent = text;
       th.className = 'sortable';
@@ -128,7 +155,10 @@ export default function decorate(block) {
     const link = document.createElement('a');
     link.href = path;
     link.className = 'path-link';
-    link.textContent = path.length > 20 ? path.substring(0, 17) + '...' : path;
+    const truncateLength = DASHBOARD_CONFIG.PATH_TRUNCATE_LENGTH;
+    link.textContent = path.length > truncateLength
+      ? path.substring(0, truncateLength - 3) + DASHBOARD_CONFIG.PATH_TRUNCATE_SUFFIX
+      : path;
     link.title = path;
 
     if (image) {
@@ -195,7 +225,8 @@ export default function decorate(block) {
     if (!lastModified) {
       return 'Invalid Date';
     }
-    const reviewPeriod = parseInt(window.siteConfig?.['$co:defaultreviewperiod']) || 300;
+    const reviewPeriod = parseInt(window.siteConfig?.['$co:defaultreviewperiod'], 10)
+      || DASHBOARD_CONFIG.REVIEW_PERIOD_FALLBACK;
     const lastModifiedDate = parseDate(lastModified);
     if (!lastModifiedDate) {
       return 'Invalid Date';
@@ -207,7 +238,8 @@ export default function decorate(block) {
     if (!lastModified) {
       return 'Invalid Date';
     }
-    const expiryPeriod = parseInt(window.siteConfig?.['$co:defaultexpiryperiod']) || 365;
+    const expiryPeriod = parseInt(window.siteConfig?.['$co:defaultexpiryperiod'], 10)
+      || DASHBOARD_CONFIG.EXPIRY_PERIOD_FALLBACK;
     const lastModifiedDate = parseDate(lastModified);
     if (!lastModifiedDate) {
       return 'Invalid Date';
@@ -217,17 +249,20 @@ export default function decorate(block) {
 
   function addEventListeners() {
     window.addEventListener('resize', handleResponsiveLayout);
-    document.getElementById('status-filter').addEventListener('change', filterTable);
+    const statusFilter = block.querySelector('#status-filter');
+    if (statusFilter) {
+      statusFilter.addEventListener('change', filterTable);
+    }
     document.addEventListener('mousemove', updateMousePosition);
-    const pathLinks = document.querySelectorAll('.path-link');
+    const pathLinks = block.querySelectorAll('.path-link');
     pathLinks.forEach(link => {
       link.addEventListener('mouseenter', showPopup);
       link.addEventListener('mouseleave', hidePopup);
     });
-    const headers = document.querySelectorAll('.content-table th');
+    const headers = block.querySelectorAll('.content-table th');
     headers.forEach(header => {
       header.addEventListener('click', () => {
-        const column = parseInt(header.dataset.column);
+        const column = parseInt(header.dataset.column, 10);
         const isAscending = header.classList.contains('asc');
         sortTable(column, !isAscending);
       });
@@ -246,7 +281,7 @@ export default function decorate(block) {
     const popup = event.currentTarget.querySelector('.image-popup');
     if (popup) {
       activePopup = popup;
-      popup.style.display = 'block';
+      popup.classList.add('visible');
       positionPopup(popup);
     }
   }
@@ -254,55 +289,66 @@ export default function decorate(block) {
   function hidePopup(event) {
     const popup = event.currentTarget.querySelector('.image-popup');
     if (popup) {
-      popup.style.display = 'none';
+      popup.classList.remove('visible');
       activePopup = null;
     }
   }
 
   function positionPopup(popup) {
     const rect = popup.getBoundingClientRect();
-    let left = mouseX + 10;
-    let top = mouseY + 10;
+    const offset = DASHBOARD_CONFIG.POPUP_OFFSET;
+    let left = mouseX + offset;
+    let top = mouseY + offset;
 
     if (left + rect.width > window.innerWidth) {
-      left = window.innerWidth - rect.width - 10;
+      left = window.innerWidth - rect.width - offset;
     }
     if (top + rect.height > window.innerHeight) {
-      top = window.innerHeight - rect.height - 10;
+      top = window.innerHeight - rect.height - offset;
     }
 
-    popup.style.left = `${left}px`;
-    popup.style.top = `${top}px`;
+    popup.style.setProperty('--popup-left', `${left}px`);
+    popup.style.setProperty('--popup-top', `${top}px`);
   }
 
   function handleResponsiveLayout() {
-    const dashboard = document.querySelector('.dashboard');
-    const table = document.querySelector('.content-table');
-    if (window.innerWidth < 1024) {
-      dashboard.classList.add('card-view');
-      table.classList.add('card-layout');
+    const dashboard = block.querySelector('.dashboard');
+    const table = block.querySelector('.content-table');
+    if (window.innerWidth < DASHBOARD_CONFIG.RESPONSIVE_BREAKPOINT) {
+      if (dashboard) dashboard.classList.add('card-view');
+      if (table) table.classList.add('card-layout');
     } else {
-      dashboard.classList.remove('card-view');
-      table.classList.remove('card-layout');
+      if (dashboard) dashboard.classList.remove('card-view');
+      if (table) table.classList.remove('card-layout');
     }
   }
 
   function filterTable() {
-    const filterValue = document.getElementById('status-filter').value;
-    const rows = document.querySelectorAll('.content-table tbody tr');
+    const statusFilter = block.querySelector('#status-filter');
+    if (!statusFilter) return;
+
+    const filterValue = statusFilter.value;
+    const rows = block.querySelectorAll('.content-table tbody tr');
     rows.forEach(row => {
       const reviewDateCell = row.querySelector('.review-date-cell');
       const expiryDateCell = row.querySelector('.expiry-date-cell');
-      const showRow = filterValue === 'all' || 
-                      (filterValue === 'green' && reviewDateCell.classList.contains('green') && expiryDateCell.classList.contains('green')) ||
-                      (filterValue === 'amber' && (reviewDateCell.classList.contains('amber') || expiryDateCell.classList.contains('amber'))) ||
-                      (filterValue === 'red' && (reviewDateCell.classList.contains('red') || expiryDateCell.classList.contains('red')));
-      row.style.display = showRow ? '' : 'none';
+      const showRow = filterValue === 'all'
+        || (filterValue === 'green' && reviewDateCell.classList.contains('green') && expiryDateCell.classList.contains('green'))
+        || (filterValue === 'amber' && (reviewDateCell.classList.contains('amber') || expiryDateCell.classList.contains('amber')))
+        || (filterValue === 'red' && (reviewDateCell.classList.contains('red') || expiryDateCell.classList.contains('red')));
+
+      if (showRow) {
+        row.classList.remove('hidden');
+      } else {
+        row.classList.add('hidden');
+      }
     });
   }
 
   function sortTable(column, ascending) {
-    const tbody = document.querySelector('.content-table tbody');
+    const tbody = block.querySelector('.content-table tbody');
+    if (!tbody) return;
+
     const rows = Array.from(tbody.querySelectorAll('tr'));
 
     rows.sort((a, b) => {
@@ -316,19 +362,20 @@ export default function decorate(block) {
 
       if (ascending) {
         return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
-      } else {
-        return aValue < bValue ? 1 : aValue > bValue ? -1 : 0;
       }
+      return aValue < bValue ? 1 : aValue > bValue ? -1 : 0;
     });
 
     tbody.innerHTML = '';
     rows.forEach(row => tbody.appendChild(row));
 
-    const headers = document.querySelectorAll('.content-table th');
+    const headers = block.querySelectorAll('.content-table th');
     headers.forEach(header => {
       header.classList.remove('asc', 'desc');
     });
-    const sortedHeader = document.querySelector(`.content-table th[data-column="${column}"]`);
-    sortedHeader.classList.add(ascending ? 'asc' : 'desc');
+    const sortedHeader = block.querySelector(`.content-table th[data-column="${column}"]`);
+    if (sortedHeader) {
+      sortedHeader.classList.add(ascending ? 'asc' : 'desc');
+    }
   }
 }

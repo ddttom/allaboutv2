@@ -531,36 +531,315 @@ const RETURNTOTOP_CONFIG = {
 
 ---
 
-### Block: [Next block to be added]
+### Block: floating-alert
 
 **Files Modified:**
-- [file paths]
+- `blocks/floating-alert/floating-alert.js`
+- `blocks/floating-alert/floating-alert.css`
 
 **Violations Found:**
-- [list violations]
+1. ✅ Has CONFIG object (FLOATING_ALERT_CONFIG)
+2. ❌ HIGH: Inline CSS in sparkle effect (2 instances)
+3. ⚠️  INTENTIONAL: Global selectors `document.body.appendChild(overlay)` and `document.addEventListener('keydown')` - this block creates a modal overlay that needs document-level positioning and keyboard handling
 
 **Changes Made:**
 
+**JavaScript Changes:**
+
+1. Inline CSS fix in `createSparkle()` function (lines 16-17):
+
 **Before:**
-```[language]
-[old code]
+```javascript
+function createSparkle() {
+  const sparkle = document.createElement('div');
+  sparkle.className = 'floating-alert-sparkle';
+  sparkle.style.left = `${Math.random() * 100}%`;
+  sparkle.style.top = `${Math.random() * 100}%`;
+  return sparkle;
+}
 ```
 
 **After:**
-```[language]
-[new code]
+```javascript
+function createSparkle() {
+  const sparkle = document.createElement('div');
+  sparkle.className = 'floating-alert-sparkle';
+  // Use CSS custom properties for dynamic positioning
+  sparkle.style.setProperty('--sparkle-left', `${Math.random() * 100}%`);
+  sparkle.style.setProperty('--sparkle-top', `${Math.random() * 100}%`);
+  return sparkle;
+}
 ```
 
-**Testing Notes:**
-- [ ] Visual inspection - no layout changes
-- [ ] Single instance test - works correctly
-- [ ] Multiple instances test - all work independently
-- [ ] All variations tested
-- [ ] Console errors checked
-- [ ] Screenshot comparison (if applicable)
+**CSS Changes:**
 
-**Risk Level:** [LOW/MEDIUM/HIGH]
-**Status:** [In Progress/Complete]
+1. Added CSS custom properties for sparkle positioning (lines 103-104):
+
+**Before:**
+```css
+.floating-alert-sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--alert-sparkle-color);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: floating-alert-sparkle 1s ease-out forwards;
+}
+```
+
+**After:**
+```css
+.floating-alert-sparkle {
+  position: absolute;
+  left: var(--sparkle-left, 50%);
+  top: var(--sparkle-top, 50%);
+  width: 4px;
+  height: 4px;
+  background: var(--alert-sparkle-color);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: floating-alert-sparkle 1s ease-out forwards;
+}
+```
+
+**Rationale:**
+
+The floating-alert block creates a modal overlay with decorative sparkle effects. The sparkles need random positioning, which requires dynamic values. Instead of using `element.style.left/top` (inline CSS violation), we use CSS custom properties (`--sparkle-left`, `--sparkle-top`) which:
+
+1. Maintain separation of concerns (CSS handles positioning)
+2. Allow dynamic values through custom properties
+3. Support fallback values (50% default)
+4. Enable easier theming and customization
+
+**Global Selectors - INTENTIONAL:**
+
+This block legitimately needs global selectors because:
+- Modal overlay must be positioned at document level (`document.body.appendChild`)
+- ESC key handling needs document-level event listener (`document.addEventListener('keydown')`)
+- Modal overlays by design exist outside the normal block flow
+- This is standard modal pattern, not a violation
+
+**Testing Notes:**
+- [ ] Visual inspection - sparkles should appear at random positions
+- [ ] Single instance test - alert displays correctly
+- [ ] Multiple instances test - N/A (only one alert per page by design)
+- [ ] Sparkle animation - verify random positioning works
+- [ ] Console errors checked
+- [ ] ESC key dismissal works
+- [ ] Click outside dismissal works
+- [ ] localStorage persistence works
+
+**Risk Level:** LOW
+
+**Reasoning:**
+- Simple CSS pattern change (inline styles → custom properties)
+- No logic changes
+- Fallback values ensure graceful degradation
+- Sparkle positioning is decorative (non-critical feature)
+
+**Status:** ✅ Complete - Ready for testing
+
+---
+
+### Block: dashboard
+
+**Files Modified:**
+- `blocks/dashboard/dashboard.js`
+- `blocks/dashboard/dashboard.css`
+
+**Violations Found:**
+1. ❌ CRITICAL: Reserved class `.dashboard-container` (JS line 2)
+2. ❌ CRITICAL: Global selectors throughout (21+ instances)
+3. ❌ HIGH: Inline CSS violations (5 instances for popup display/positioning and row filtering)
+4. ❌ MEDIUM: Missing CONFIG object
+5. ❌ MEDIUM: No try/catch error handling in fetch
+
+**Changes Made:**
+
+**JavaScript Changes:**
+
+1. Added DASHBOARD_CONFIG object (lines 1-15):
+
+```javascript
+const DASHBOARD_CONFIG = {
+  JSON_URL: '/query-index.json',
+  DASHBOARD_TITLE: 'Edge Delivery Services Content Dashboard',
+  FILTER_LABEL: 'Filter by status: ',
+  STATUS_OPTIONS: ['All', 'Green', 'Amber', 'Red'],
+  TABLE_HEADERS: ['Title', 'Path', 'Description', 'Last Modified', 'Review', 'Expiry'],
+  PATH_TRUNCATE_LENGTH: 20,
+  PATH_TRUNCATE_SUFFIX: '...',
+  REVIEW_PERIOD_FALLBACK: 300, // days
+  EXPIRY_PERIOD_FALLBACK: 365, // days
+  RESPONSIVE_BREAKPOINT: 1024, // px
+  POPUP_OFFSET: 10, // px
+  IMAGE_POPUP_MAX_SIZE: 300, // px
+  ERROR_MESSAGE: 'Error fetching data',
+};
+```
+
+2. Fixed reserved class name (line 18):
+
+**Before:**
+```javascript
+const dashboardContainer = block.querySelector('.dashboard-container') || block;
+```
+
+**After:**
+```javascript
+const dashboardContainer = block;
+```
+
+3. Converted fetch to async/await with proper error handling (lines 25-50):
+
+**Before:**
+```javascript
+fetch(jsonUrl)
+  .then(response => response.json())
+  .then(jsonData => {
+    // ...
+  })
+  .catch(error => console.error('Error fetching data:', error));
+```
+
+**After:**
+```javascript
+async function init() {
+  try {
+    const response = await fetch(DASHBOARD_CONFIG.JSON_URL);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const jsonData = await response.json();
+    // ...
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(`${DASHBOARD_CONFIG.ERROR_MESSAGE}:`, error);
+  }
+}
+init();
+```
+
+4. Fixed all global selectors to use `block` parameter:
+
+**Before:**
+```javascript
+document.querySelector('.content-table th[data-column="0"]')
+document.getElementById('status-filter')
+document.querySelectorAll('.path-link')
+document.querySelectorAll('.content-table th')
+```
+
+**After:**
+```javascript
+block.querySelector('.content-table th[data-column="0"]')
+block.querySelector('#status-filter')
+block.querySelectorAll('.path-link')
+block.querySelectorAll('.content-table th')
+```
+
+5. Fixed inline CSS for popup visibility (lines 280-312):
+
+**Before:**
+```javascript
+popup.style.display = 'block';
+popup.style.display = 'none';
+popup.style.left = `${left}px`;
+popup.style.top = `${top}px`;
+```
+
+**After:**
+```javascript
+popup.classList.add('visible');
+popup.classList.remove('visible');
+popup.style.setProperty('--popup-left', `${left}px`);
+popup.style.setProperty('--popup-top', `${top}px`);
+```
+
+6. Fixed inline CSS for row filtering (lines 340-344):
+
+**Before:**
+```javascript
+row.style.display = showRow ? '' : 'none';
+```
+
+**After:**
+```javascript
+if (showRow) {
+  row.classList.remove('hidden');
+} else {
+  row.classList.add('hidden');
+}
+```
+
+**CSS Changes:**
+
+1. Added CSS custom properties for popup positioning (lines 102-103):
+
+```css
+.image-popup {
+  display: none;
+  position: fixed;
+  left: var(--popup-left, 0);
+  top: var(--popup-top, 0);
+  /* ... rest of styles ... */
+}
+```
+
+2. Added `.visible` class for popup display (lines 112-114):
+
+```css
+.image-popup.visible {
+  display: block;
+}
+```
+
+3. Added `.hidden` class for row filtering (line 198):
+
+```css
+.hidden { display: none; }
+```
+
+**Rationale:**
+
+The dashboard block is a complex data table component with multiple interactive features (sorting, filtering, image popups). The fixes ensure:
+
+1. **Block scoping**: All queries use the `block` parameter instead of global `document` selectors, allowing multiple dashboard instances on the same page
+2. **Configuration centralization**: All magic numbers and strings moved to DASHBOARD_CONFIG for easy maintenance
+3. **Proper error handling**: Async/await with try/catch for robust fetch error handling
+4. **Inline CSS elimination**: Dynamic values use CSS custom properties, state changes use classes
+5. **Reserved class fix**: Removed `.dashboard-container` fallback (not needed, block parameter is always the container)
+
+**Global Selectors - Exceptions:**
+
+Two global selectors are legitimately needed:
+- `document.addEventListener('mousemove')` - Required for tracking mouse position for image popup positioning (line 256)
+- `window.addEventListener('resize')` - Required for responsive layout handling (line 251)
+
+These are acceptable because they handle document-level events, not block-specific queries.
+
+**Testing Notes:**
+- [ ] Visual inspection - table renders correctly
+- [ ] Single instance test - sorting, filtering, image popups work
+- [ ] Multiple instances test - each dashboard works independently
+- [ ] Responsive layout - card view activates at < 1024px
+- [ ] Filter dropdown - filters by status correctly
+- [ ] Table sorting - click headers to sort by column
+- [ ] Image popups - hover over paths to see preview images
+- [ ] Popup positioning - popups stay within viewport bounds
+- [ ] Error handling - graceful degradation if fetch fails
+- [ ] Console errors checked
+
+**Risk Level:** MEDIUM
+
+**Reasoning:**
+- Extensive refactoring (CONFIG, async/await, global selector fixes)
+- Complex interactive features (sorting, filtering, popups)
+- Responsive layout logic must work correctly
+- Higher risk due to number of changes, but all follow established patterns
+
+**Status:** ✅ Complete - Ready for testing
 
 ---
 
