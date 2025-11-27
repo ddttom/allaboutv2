@@ -1191,6 +1191,152 @@ The fragment block loads external HTML content and injects it into the page. The
 
 ---
 
+### Block: header
+
+**Files Modified:**
+- `blocks/header/header.js`
+- `blocks/header/header.css`
+
+**Violations Found:**
+1. ❌ **Missing CONFIG object** - No centralized configuration for constants
+2. ❌ **Inline CSS** - `document.body.style.overflowY` directly manipulates body overflow
+3. ⚠️ **Global selectors** - Multiple document-level queries (INTENTIONAL for this block)
+4. ❌ **Hard-coded values** - Magic strings for nav ID, paths, keys, aria labels
+
+**Changes Made:**
+
+**1. Added HEADER_CONFIG object:**
+```javascript
+const HEADER_CONFIG = {
+  NAV_ID: 'nav',
+  NAV_PATH_DEFAULT: '/nav',
+  NAV_META_KEY: 'nav',
+  DESKTOP_BREAKPOINT: '(min-width: 900px)',
+  NAV_CLASS_NAMES: ['brand', 'sections', 'tools'],
+  ARIA_LABEL_OPEN: 'Open navigation',
+  ARIA_LABEL_CLOSE: 'Close navigation',
+  ESCAPE_KEY: 'Escape',
+  ENTER_KEY: 'Enter',
+  SPACE_KEY: 'Space',
+};
+```
+
+**2. Fixed inline CSS - Added CSS class for body scroll control:**
+
+Before:
+```javascript
+document.body.style.overflowY = (expanded || isDesktop.matches) ? '' : 'hidden';
+```
+
+After (CSS):
+```css
+/* Prevent body scroll when mobile nav is open */
+body.nav-open-no-scroll {
+  overflow-y: hidden;
+}
+```
+
+After (JavaScript):
+```javascript
+// INTENTIONAL: Header is a document-level component, controls body scroll when mobile nav is open
+if (expanded || isDesktop.matches) {
+  document.body.classList.remove('nav-open-no-scroll');
+} else {
+  document.body.classList.add('nav-open-no-scroll');
+}
+```
+
+**3. Updated all hard-coded values to use CONFIG:**
+
+Navigation metadata and path:
+```javascript
+// Before
+const navMeta = getMetadata('nav');
+const navPath = navMeta ? new URL(navMeta).pathname : '/nav';
+
+// After
+const navMeta = getMetadata(HEADER_CONFIG.NAV_META_KEY);
+const navPath = navMeta ? new URL(navMeta).pathname : HEADER_CONFIG.NAV_PATH_DEFAULT;
+```
+
+Navigation ID and classes:
+```javascript
+// Before
+nav.id = 'nav';
+const classes = ['brand', 'sections', 'tools'];
+classes.forEach((c, i) => { ... });
+
+// After
+nav.id = HEADER_CONFIG.NAV_ID;
+HEADER_CONFIG.NAV_CLASS_NAMES.forEach((c, i) => { ... });
+```
+
+Aria labels:
+```javascript
+// Before
+hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">`;
+button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
+
+// After
+hamburger.innerHTML = `<button type="button" aria-controls="${HEADER_CONFIG.NAV_ID}" aria-label="${HEADER_CONFIG.ARIA_LABEL_OPEN}">`;
+button.setAttribute('aria-label', expanded ? HEADER_CONFIG.ARIA_LABEL_OPEN : HEADER_CONFIG.ARIA_LABEL_CLOSE);
+```
+
+**4. Documented INTENTIONAL global selectors:**
+
+The header block legitimately needs document-level access:
+```javascript
+// INTENTIONAL: Header is a document-level component, needs to access global nav element
+const nav = document.getElementById(HEADER_CONFIG.NAV_ID);
+
+// INTENTIONAL: Header is a document-level component, needs to access currently focused element
+const focused = document.activeElement;
+
+// INTENTIONAL: Header is a document-level component, controls body scroll when mobile nav is open
+document.body.classList.add/remove('nav-open-no-scroll');
+```
+
+**Rationale:**
+
+The header block is a document-level navigation component that requires special considerations:
+
+1. **CONFIG centralization**: All configuration values (paths, IDs, labels, keys) now in one place for easy maintenance and localization
+2. **Inline CSS elimination**: Body overflow control moved to CSS class pattern, maintaining separation of concerns
+3. **INTENTIONAL global selectors**: Header operates at document level by design:
+   - Global nav element with fixed ID
+   - Document-level keyboard event handling (ESC, Enter, Space)
+   - Body scroll control for mobile navigation
+   - Focus management across document
+4. **Improved maintainability**: Configuration values easy to update, no magic strings scattered through code
+
+**Testing Notes:**
+- [ ] Desktop navigation displays correctly
+- [ ] Mobile hamburger menu opens/closes
+- [ ] Body scroll prevented when mobile nav open
+- [ ] Body scroll restored when mobile nav closed or on desktop
+- [ ] ESC key closes dropdowns (desktop) and menu (mobile)
+- [ ] Enter/Space keys open nav dropdowns
+- [ ] Keyboard navigation works (tab, focus)
+- [ ] Aria labels correct (Open/Close navigation)
+- [ ] Nav sections toggle correctly
+- [ ] Window resize transitions correctly between mobile/desktop
+- [ ] Navigation fragment loads from metadata or default path
+- [ ] Console errors checked
+
+**Risk Level:** LOW-MEDIUM
+
+**Reasoning:**
+- CONFIG addition is non-breaking (values unchanged)
+- Inline CSS → CSS class pattern is standard and safe
+- Body scroll control logic preserved (same behavior)
+- Global selectors are INTENTIONAL and documented
+- Header is a critical component but changes are conservative
+- All hard-coded values replaced systematically
+
+**Status:** ✅ Complete - Ready for testing
+
+---
+
 ## Phase 3: MEDIUM PRIORITY Fixes
 
 **Goal:** Fix single-violation blocks

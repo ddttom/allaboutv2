@@ -1,12 +1,26 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 
+const HEADER_CONFIG = {
+  NAV_ID: 'nav',
+  NAV_PATH_DEFAULT: '/nav',
+  NAV_META_KEY: 'nav',
+  DESKTOP_BREAKPOINT: '(min-width: 900px)',
+  NAV_CLASS_NAMES: ['brand', 'sections', 'tools'],
+  ARIA_LABEL_OPEN: 'Open navigation',
+  ARIA_LABEL_CLOSE: 'Close navigation',
+  ESCAPE_KEY: 'Escape',
+  ENTER_KEY: 'Enter',
+  SPACE_KEY: 'Space',
+};
+
 // media query match that indicates mobile/tablet width
-const isDesktop = window.matchMedia('(min-width: 900px)');
+const isDesktop = window.matchMedia(HEADER_CONFIG.DESKTOP_BREAKPOINT);
 
 function closeOnEscape(e) {
-  if (e.code === 'Escape') {
-    const nav = document.getElementById('nav');
+  if (e.code === HEADER_CONFIG.ESCAPE_KEY) {
+    // INTENTIONAL: Header is a document-level component, needs to access global nav element
+    const nav = document.getElementById(HEADER_CONFIG.NAV_ID);
     const navSections = nav.querySelector('.nav-sections');
     const navSectionExpanded = navSections.querySelector('[aria-expanded="true"]');
     if (navSectionExpanded && isDesktop.matches) {
@@ -22,9 +36,10 @@ function closeOnEscape(e) {
 }
 
 function openOnKeydown(e) {
+  // INTENTIONAL: Header is a document-level component, needs to access currently focused element
   const focused = document.activeElement;
   const isNavDrop = focused.className === 'nav-drop';
-  if (isNavDrop && (e.code === 'Enter' || e.code === 'Space')) {
+  if (isNavDrop && (e.code === HEADER_CONFIG.ENTER_KEY || e.code === HEADER_CONFIG.SPACE_KEY)) {
     const dropExpanded = focused.getAttribute('aria-expanded') === 'true';
     // eslint-disable-next-line no-use-before-define
     toggleAllNavSections(focused.closest('.nav-sections'));
@@ -33,6 +48,7 @@ function openOnKeydown(e) {
 }
 
 function focusNavSection() {
+  // INTENTIONAL: Header is a document-level component, needs to access currently focused element
   document.activeElement.addEventListener('keydown', openOnKeydown);
 }
 
@@ -56,10 +72,15 @@ function toggleAllNavSections(sections, expanded = false) {
 function toggleMenu(nav, navSections, forceExpanded = null) {
   const expanded = forceExpanded !== null ? !forceExpanded : nav.getAttribute('aria-expanded') === 'true';
   const button = nav.querySelector('.nav-hamburger button');
-  document.body.style.overflowY = (expanded || isDesktop.matches) ? '' : 'hidden';
+  // INTENTIONAL: Header is a document-level component, controls body scroll when mobile nav is open
+  if (expanded || isDesktop.matches) {
+    document.body.classList.remove('nav-open-no-scroll');
+  } else {
+    document.body.classList.add('nav-open-no-scroll');
+  }
   nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
   toggleAllNavSections(navSections, expanded || isDesktop.matches ? 'false' : 'true');
-  button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
+  button.setAttribute('aria-label', expanded ? HEADER_CONFIG.ARIA_LABEL_OPEN : HEADER_CONFIG.ARIA_LABEL_CLOSE);
   // enable nav dropdown keyboard accessibility
   const navDrops = navSections.querySelectorAll('.nav-drop');
   if (isDesktop.matches) {
@@ -92,17 +113,16 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
  */
 export default async function decorate(block) {
   // load nav as fragment
-  const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta).pathname : '/nav';
+  const navMeta = getMetadata(HEADER_CONFIG.NAV_META_KEY);
+  const navPath = navMeta ? new URL(navMeta).pathname : HEADER_CONFIG.NAV_PATH_DEFAULT;
   const fragment = await loadFragment(navPath);
 
   // decorate nav DOM
   const nav = document.createElement('nav');
-  nav.id = 'nav';
+  nav.id = HEADER_CONFIG.NAV_ID;
   while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
 
-  const classes = ['brand', 'sections', 'tools'];
-  classes.forEach((c, i) => {
+  HEADER_CONFIG.NAV_CLASS_NAMES.forEach((c, i) => {
     const section = nav.children[i];
     if (section) section.classList.add(`nav-${c}`);
   });
@@ -129,7 +149,7 @@ export default async function decorate(block) {
     // hamburger for mobile
     const hamburger = document.createElement('div');
     hamburger.classList.add('nav-hamburger');
-    hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
+    hamburger.innerHTML = `<button type="button" aria-controls="${HEADER_CONFIG.NAV_ID}" aria-label="${HEADER_CONFIG.ARIA_LABEL_OPEN}">
       <span class="nav-hamburger-icon"></span>
     </button>`;
     hamburger.addEventListener('click', () => toggleMenu(nav, navSections));

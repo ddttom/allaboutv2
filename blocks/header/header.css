@@ -6,6 +6,11 @@ header .nav-wrapper {
   position: fixed;
 }
 
+/* Prevent body scroll when mobile nav is open */
+body.nav-open-no-scroll {
+  overflow-y: hidden;
+}
+
 header nav {
   box-sizing: border-box;
   display: grid;
