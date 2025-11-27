@@ -1553,6 +1553,116 @@ The inline CSS is a known issue but fixing it requires substantial refactoring t
 
 ---
 
+### Block: tags
+
+**Files Modified:**
+- `blocks/tags/tags.js`
+
+**Violations Found:**
+1. ❌ **Missing CONFIG object** - No centralized configuration
+2. ❌ **Global selector** - `document.querySelector('.tags.block')` should use `block` parameter
+3. ⚠️ **Global object** - `window.siteConfig` (INTENTIONAL - global configuration)
+
+**Changes Made:**
+
+**1. Added TAGS_CONFIG object:**
+
+```javascript
+const TAGS_CONFIG = {
+  META_KEYS: {
+    CONTENT_TECHNOLOGY: '$meta:contenttechnology$',
+    CATEGORY: '$meta:category$',
+  },
+  CSS_CLASSES: {
+    TAG: 'card-tag',
+    TAG_ALT: 'card-tag alt',
+  },
+};
+```
+
+**2. Fixed global selector - Use block parameter:**
+
+Before:
+```javascript
+const tagsBlock = document.querySelector('.tags.block');
+// ...
+tagsBlock.innerHTML = tagsHTML;
+block.appendChild(tagsBlock);
+```
+
+After:
+```javascript
+// Use block parameter directly instead of document.querySelector
+block.innerHTML = tagsHTML;
+```
+
+**3. Documented INTENTIONAL global object:**
+
+```javascript
+// INTENTIONAL: window.siteConfig is a global configuration object
+if (window.siteConfig && window.siteConfig[TAGS_CONFIG.META_KEYS.CONTENT_TECHNOLOGY]) {
+  // ...
+}
+```
+
+**4. Used CONFIG throughout:**
+
+```javascript
+// Before
+tagsHTML += `<span class='card-tag'>${window.siteConfig['$meta:contenttechnology$']}</span>`;
+tagsHTML += `<span class='card-tag alt'>${window.siteConfig['$meta:category$']}</span>`;
+
+// After
+tagsHTML += `<span class='${TAGS_CONFIG.CSS_CLASSES.TAG}'>${window.siteConfig[TAGS_CONFIG.META_KEYS.CONTENT_TECHNOLOGY]}</span>`;
+tagsHTML += `<span class='${TAGS_CONFIG.CSS_CLASSES.TAG_ALT}'>${window.siteConfig[TAGS_CONFIG.META_KEYS.CATEGORY]}</span>`;
+```
+
+**Rationale:**
+
+The tags block displays metadata tags from global site configuration:
+
+1. **CONFIG centralization**: Meta keys and CSS classes now in one place for easy maintenance
+2. **Fixed global selector**: Uses `block` parameter directly instead of `document.querySelector('.tags.block')`
+3. **Simplified logic**: Removed unnecessary `tagsBlock` variable and `appendChild` call
+4. **INTENTIONAL global object**: `window.siteConfig` is a legitimate global configuration object
+
+**Testing Notes:**
+- [ ] Tags display correctly when siteConfig has content technology
+- [ ] Tags display correctly when siteConfig has category
+- [ ] Both tags display when both meta keys present
+- [ ] No tags display when siteConfig missing or empty
+- [ ] Tag styling correct (red border for technology, blue for category)
+- [ ] Console errors checked
+
+**Risk Level:** LOW
+
+**Reasoning:**
+- Simple CONFIG addition (non-breaking)
+- Fixed global selector to use block parameter (cleaner, safer)
+- Simplified logic (removed unnecessary steps)
+- No functionality changes
+- Tags still display from same global configuration
+
+**Status:** ✅ Complete - Ready for testing
+
+---
+
+## Phase 2: Summary
+
+**Completed:** All 8 Phase 2 blocks fixed
+- bio, inline-svg, fragment, header, dam, code-expander, dfs, tags
+
+**Key Achievements:**
+- Added CONFIG objects where missing
+- Fixed reserved class names
+- Fixed global selectors (or documented INTENTIONAL)
+- Removed inline CSS (or documented for future refactoring)
+- All changes committed to `fix/eds-blocks-standards-compliance` branch
+
+**Next Steps:** Phase 3 - MEDIUM PRIORITY Fixes (single-violation blocks)
+
+---
+
 ## Phase 3: MEDIUM PRIORITY Fixes
 
 **Goal:** Fix single-violation blocks
