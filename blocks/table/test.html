@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <!-- Table Block Styles -->
+    <link rel="stylesheet" href="/blocks/table/table.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .test-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .test-info h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.75rem;
+        }
+
+        .test-info p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .test-info code {
+            background: rgba(255,255,255,0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .test-section {
+            margin: 2rem auto;
+            max-width: 1400px;
+            padding: 0 1rem;
+        }
+
+        .test-section h3 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0 0 0;
+            border-radius: 8px 8px 0 0;
+            font-size: 1.1rem;
+        }
+
+        .test-section .description {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 1rem;
+        }
+
+        .test-section .description strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .test-section .description p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        /* Status indicators */
+        .status {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Table wrapper for consistent spacing */
+        .table-wrapper {
+            background: white;
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* Instructions section */
+        .instructions {
+            margin: 3rem auto;
+            max-width: 1400px;
+            padding: 2rem;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: #667eea;
+            font-size: 1.3rem;
+        }
+
+        .instructions ol, .instructions ul {
+            line-height: 1.8;
+            padding-left: 1.5rem;
+        }
+
+        .instructions li {
+            margin: 0.5rem 0;
+        }
+
+        .instructions strong {
+            color: #667eea;
+        }
+
+        .instructions code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>Table Block Test Suite</h2>
+        <p><strong>Block:</strong> <code>table</code></p>
+        <p><strong>Test Count:</strong> <code>7 test scenarios</code></p>
+        <p><strong>Status:</strong> <span id="status" class="status info">Loading...</span></p>
+        <p><strong>Purpose:</strong> Visual and functional testing of accessible table component with ARIA implementation and multiple styling variations</p>
+    </div>
+
+    <main>
+        <!-- Test 1: Basic Table (3x4) -->
+        <div class="test-section">
+            <h3>Test 1: Basic Table (3x4)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Standard table with bold header row and data rows. First row becomes thead with th elements. Subsequent rows become tbody with td elements.</p>
+                <p><strong>Validation:</strong> Check ARIA attributes (role="table", scope="col", aria-describedby). Verify semantic HTML structure.</p>
+            </div>
+            <div class="table-wrapper">
+                <div class="table block">
+                    <div>
+                        <div>Product</div>
+                        <div>Price</div>
+                        <div>Stock</div>
+                    </div>
+                    <div>
+                        <div>Laptop</div>
+                        <div>$999</div>
+                        <div>In Stock</div>
+                    </div>
+                    <div>
+                        <div>Mouse</div>
+                        <div>$25</div>
+                        <div>In Stock</div>
+                    </div>
+                    <div>
+                        <div>Keyboard</div>
+                        <div>$75</div>
+                        <div>Low Stock</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 2: Striped Variation -->
+        <div class="test-section">
+            <h3>Test 2: Striped Variation</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Alternating row backgrounds for improved readability. Odd rows have light gray background.</p>
+                <p><strong>Validation:</strong> Verify .striped class applied. Check CSS variable --overlay-background-color used for backgrounds.</p>
+            </div>
+            <div class="table-wrapper">
+                <div class="table striped block">
+                    <div>
+                        <div>Name</div>
+                        <div>Department</div>
+                        <div>Email</div>
+                    </div>
+                    <div>
+                        <div>Alice Johnson</div>
+                        <div>Engineering</div>
+                        <div>alice@example.com</div>
+                    </div>
+                    <div>
+                        <div>Bob Smith</div>
+                        <div>Marketing</div>
+                        <div>bob@example.com</div>
+                    </div>
+                    <div>
+                        <div>Carol White</div>
+                        <div>Sales</div>
+                        <div>carol@example.com</div>
+                    </div>
+                    <div>
+                        <div>David Brown</div>
+                        <div>Support</div>
+                        <div>david@example.com</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 3: Bordered Variation -->
+        <div class="test-section">
+            <h3>Test 3: Bordered Variation</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Borders around all cells for clear separation. Creates grid appearance.</p>
+                <p><strong>Validation:</strong> Verify .bordered class applied. Check all cells have 1px borders.</p>
+            </div>
+            <div class="table-wrapper">
+                <div class="table bordered block">
+                    <div>
+                        <div>Country</div>
+                        <div>Capital</div>
+                        <div>Population</div>
+                    </div>
+                    <div>
+                        <div>USA</div>
+                        <div>Washington DC</div>
+                        <div>331M</div>
+                    </div>
+                    <div>
+                        <div>UK</div>
+                        <div>London</div>
+                        <div>67M</div>
+                    </div>
+                    <div>
+                        <div>France</div>
+                        <div>Paris</div>
+                        <div>65M</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 4: First-line Variation -->
+        <div class="test-section">
+            <h3>Test 4: First-line Variation</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> First data row highlighted with pale blue background. Draws attention to featured row.</p>
+                <p><strong>Validation:</strong> Verify .first-line class applied. Check --table-first-line-bg CSS variable used (#e6f2ff).</p>
+            </div>
+            <div class="table-wrapper">
+                <div class="table first-line block">
+                    <div>
+                        <div>Plan</div>
+                        <div>Price</div>
+                        <div>Features</div>
+                    </div>
+                    <div>
+                        <div>Starter</div>
+                        <div>Free</div>
+                        <div>Basic features</div>
+                    </div>
+                    <div>
+                        <div>Pro</div>
+                        <div>$29/mo</div>
+                        <div>All features</div>
+                    </div>
+                    <div>
+                        <div>Enterprise</div>
+                        <div>Custom</div>
+                        <div>Custom solutions</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 5: No-header Variation -->
+        <div class="test-section">
+            <h3>Test 5: No-header Variation</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> All rows treated as data rows. No bold header row. First row not converted to th elements.</p>
+                <p><strong>Validation:</strong> Verify .no-header class applied. Check all cells are td elements (no th elements).</p>
+            </div>
+            <div class="table-wrapper">
+                <div class="table no-header block">
+                    <div>
+                        <div>Monday</div>
+                        <div>9:00 AM</div>
+                        <div>Team Meeting</div>
+                    </div>
+                    <div>
+                        <div>Tuesday</div>
+                        <div>2:00 PM</div>
+                        <div>Client Workshop</div>
+                    </div>
+                    <div>
+                        <div>Wednesday</div>
+                        <div>10:00 AM</div>
+                        <div>Code Review</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 6: Combined Variations (striped + bordered) -->
+        <div class="test-section">
+            <h3>Test 6: Combined Variations (Striped + Bordered)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Both striped and bordered styles applied. Alternating row backgrounds WITH borders around all cells.</p>
+                <p><strong>Validation:</strong> Verify both .striped and .bordered classes present. Check combined styling works correctly.</p>
+            </div>
+            <div class="table-wrapper">
+                <div class="table striped bordered block">
+                    <div>
+                        <div>Item</div>
+                        <div>Quantity</div>
+                        <div>Price</div>
+                        <div>Total</div>
+                    </div>
+                    <div>
+                        <div>Apples</div>
+                        <div>10</div>
+                        <div>$1.50</div>
+                        <div>$15.00</div>
+                    </div>
+                    <div>
+                        <div>Bananas</div>
+                        <div>5</div>
+                        <div>$1.20</div>
+                        <div>$6.00</div>
+                    </div>
+                    <div>
+                        <div>Oranges</div>
+                        <div>8</div>
+                        <div>$1.75</div>
+                        <div>$14.00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 7: Wide Table (Responsive Scrolling) -->
+        <div class="test-section">
+            <h3>Test 7: Wide Table (Responsive Scrolling)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Table with many columns. Horizontal scrolling on narrow viewports. Font size adjusts responsively.</p>
+                <p><strong>Validation:</strong> Resize browser to mobile width and verify horizontal scrolling. Check font-size changes at breakpoints (600px, 900px).</p>
+            </div>
+            <div class="table-wrapper">
+                <div class="table striped block">
+                    <div>
+                        <div>ID</div>
+                        <div>Name</div>
+                        <div>Email</div>
+                        <div>Phone</div>
+                        <div>Department</div>
+                        <div>Location</div>
+                        <div>Status</div>
+                        <div>Manager</div>
+                    </div>
+                    <div>
+                        <div>001</div>
+                        <div>John Doe</div>
+                        <div>john@example.com</div>
+                        <div>555-0101</div>
+                        <div>Engineering</div>
+                        <div>New York</div>
+                        <div>Active</div>
+                        <div>Jane Smith</div>
+                    </div>
+                    <div>
+                        <div>002</div>
+                        <div>Jane Smith</div>
+                        <div>jane@example.com</div>
+                        <div>555-0102</div>
+                        <div>Marketing</div>
+                        <div>Los Angeles</div>
+                        <div>Active</div>
+                        <div>Bob Wilson</div>
+                    </div>
+                    <div>
+                        <div>003</div>
+                        <div>Bob Wilson</div>
+                        <div>bob@example.com</div>
+                        <div>555-0103</div>
+                        <div>Sales</div>
+                        <div>Chicago</div>
+                        <div>Active</div>
+                        <div>Alice Brown</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import decorate from '/blocks/table/table.js';
+
+        // Update status function
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+
+        // Log table structure for debugging
+        function logTableStructure(block, index) {
+            console.log(`\n=== Table Block ${index + 1} ===`);
+            console.log('Block classes:', Array.from(block.classList));
+            console.log('Initial children (rows):', block.children.length);
+
+            const rows = Array.from(block.children);
+            rows.forEach((row, i) => {
+                const cells = Array.from(row.children);
+                console.log(`  Row ${i + 1}:`, cells.map(cell => cell.textContent.substring(0, 20)).join(' | '));
+            });
+        }
+
+        // Log final structure
+        function logFinalStructure(block, index) {
+            console.log(`\n=== After Decoration (Block ${index + 1}) ===`);
+
+            const table = block.querySelector('table');
+            if (!table) {
+                console.error('✗ No table element created!');
+                return;
+            }
+
+            console.log('✓ Table element created');
+            console.log('  Table role:', table.getAttribute('role'));
+
+            const thead = table.querySelector('thead');
+            const tbody = table.querySelector('tbody');
+
+            if (thead) {
+                const headers = thead.querySelectorAll('th');
+                console.log('✓ Headers created:', headers.length);
+                headers.forEach((th, i) => {
+                    console.log(`  Header ${i + 1}: "${th.textContent}" (id="${th.id}", scope="${th.getAttribute('scope')}", role="${th.getAttribute('role')}")`);
+                });
+            } else {
+                console.log('  No thead (possibly no-header variation)');
+            }
+
+            if (tbody) {
+                const rows = tbody.querySelectorAll('tr');
+                console.log('✓ Data rows created:', rows.length);
+
+                const cells = tbody.querySelectorAll('td');
+                console.log('✓ Data cells created:', cells.length);
+
+                // Sample first few cells
+                const sampleCells = Array.from(cells).slice(0, 3);
+                sampleCells.forEach((td, i) => {
+                    console.log(`  Cell ${i + 1}: "${td.textContent}" (aria-describedby="${td.getAttribute('aria-describedby')}")`);
+                });
+            }
+        }
+
+        // Verify ARIA relationships
+        function verifyARIA(block, index) {
+            console.log(`\n=== ARIA Validation (Block ${index + 1}) ===`);
+
+            const table = block.querySelector('table');
+            if (!table) {
+                console.error('✗ No table found for ARIA validation');
+                return;
+            }
+
+            // Check table role
+            const tableRole = table.getAttribute('role');
+            if (tableRole === 'table') {
+                console.log('✓ Table has role="table"');
+            } else {
+                console.error('✗ Table missing role="table"');
+            }
+
+            // Check headers
+            const headers = table.querySelectorAll('th');
+            let errors = 0;
+
+            if (headers.length > 0) {
+                headers.forEach((th, i) => {
+                    const hasId = th.id && th.id.startsWith('header-');
+                    const hasScope = th.getAttribute('scope') === 'col';
+                    const hasRole = th.getAttribute('role') === 'columnheader';
+
+                    if (hasId && hasScope && hasRole) {
+                        console.log(`✓ Header ${i + 1}: All ARIA attributes valid`);
+                    } else {
+                        console.error(`✗ Header ${i + 1}: Missing attributes (id=${hasId}, scope=${hasScope}, role=${hasRole})`);
+                        errors++;
+                    }
+                });
+            } else {
+                console.log('  No headers (possibly no-header variation)');
+            }
+
+            // Check data cells
+            const cells = table.querySelectorAll('td');
+            if (cells.length > 0) {
+                const sampleCells = Array.from(cells).slice(0, 3);
+                sampleCells.forEach((td, i) => {
+                    const describedBy = td.getAttribute('aria-describedby');
+                    if (describedBy && describedBy.startsWith('header-')) {
+                        console.log(`✓ Cell ${i + 1}: aria-describedby="${describedBy}"`);
+                    } else {
+                        console.error(`✗ Cell ${i + 1}: Invalid aria-describedby="${describedBy}"`);
+                        errors++;
+                    }
+                });
+            }
+
+            if (errors === 0) {
+                console.log('✓ All ARIA attributes valid');
+            } else {
+                console.error(`✗ ${errors} ARIA validation errors found`);
+            }
+        }
+
+        // Initialize all table blocks
+        async function init() {
+            try {
+                // Add body.appear class (required to show page)
+                document.body.classList.add('appear');
+
+                updateStatus('Decorating blocks...', 'info');
+
+                // Get all table blocks
+                const tableBlocks = document.querySelectorAll('.table.block');
+
+                if (tableBlocks.length === 0) {
+                    throw new Error('No table blocks found');
+                }
+
+                console.log(`Found ${tableBlocks.length} table blocks to decorate`);
+
+                // Decorate each table block
+                tableBlocks.forEach((block, index) => {
+                    console.log(`\n${'='.repeat(50)}`);
+                    console.log(`Processing Table Block ${index + 1}`);
+                    console.log('='.repeat(50));
+
+                    // Log initial structure
+                    logTableStructure(block, index);
+
+                    // Run decoration
+                    try {
+                        decorate(block);
+                        console.log('✓ Decoration completed successfully');
+                    } catch (error) {
+                        console.error(`✗ Decoration failed:`, error);
+                        throw error;
+                    }
+
+                    // Log final structure
+                    logFinalStructure(block, index);
+
+                    // Verify ARIA relationships
+                    verifyARIA(block, index);
+                });
+
+                updateStatus(`✓ ${tableBlocks.length} table blocks loaded successfully`, 'success');
+
+                console.log('\n' + '='.repeat(50));
+                console.log('All table blocks decorated successfully!');
+                console.log('='.repeat(50));
+                console.log('\nTest Instructions:');
+                console.log('1. Verify table structure and styling');
+                console.log('2. Test variations (striped, bordered, first-line, no-header)');
+                console.log('3. Resize browser to test responsive behavior');
+                console.log('4. Check ARIA attributes in DevTools Elements panel');
+                console.log('5. Test with screen reader (NVDA, JAWS, VoiceOver)');
+                console.log('6. Verify horizontal scrolling on wide table');
+
+            } catch (error) {
+                console.error('Failed to initialize table blocks:', error);
+                updateStatus(`✗ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Start initialization
+        init();
+    </script>
+
+    <div class="instructions">
+        <h3>Testing Instructions</h3>
+        <ol>
+            <li><strong>Visual Inspection:</strong> Scroll through all test sections and verify tables display correctly:
+                <ul>
+                    <li>Headers are bold with top and bottom borders</li>
+                    <li>Data rows have bottom borders</li>
+                    <li>Variations show correct styling</li>
+                    <li>Cell padding and spacing appropriate</li>
+                </ul>
+            </li>
+            <li><strong>Variation Testing:</strong> Verify each variation works correctly:
+                <ul>
+                    <li><strong>Striped:</strong> Odd rows have alternating background</li>
+                    <li><strong>Bordered:</strong> All cells have borders</li>
+                    <li><strong>First-line:</strong> First data row has pale blue background</li>
+                    <li><strong>No-header:</strong> No bold header row, all rows look similar</li>
+                    <li><strong>Combined:</strong> Both striped and bordered effects visible</li>
+                </ul>
+            </li>
+            <li><strong>Responsive Testing:</strong> Resize browser window and observe:
+                <ul>
+                    <li>Mobile (< 600px): Smaller font size, horizontal scrolling on wide table</li>
+                    <li>Tablet (600px - 899px): Medium font size</li>
+                    <li>Desktop (≥ 900px): Larger font size</li>
+                    <li>Wide table scrolls horizontally on narrow viewports</li>
+                </ul>
+            </li>
+            <li><strong>ARIA Verification:</strong> Inspect in DevTools and verify:
+                <ul>
+                    <li>Table has <code>role="table"</code></li>
+                    <li>Headers have <code>scope="col"</code> and <code>role="columnheader"</code></li>
+                    <li>Headers have unique IDs (<code>header-0</code>, <code>header-1</code>, etc.)</li>
+                    <li>Data cells have <code>aria-describedby</code> pointing to header IDs</li>
+                </ul>
+            </li>
+            <li><strong>Screen Reader Testing:</strong> Test with screen reader:
+                <ul>
+                    <li>Table is announced with row/column count</li>
+                    <li>Headers announced when navigating cells</li>
+                    <li>Cell content associated with headers</li>
+                    <li>Navigation by row/column works correctly</li>
+                </ul>
+            </li>
+            <li><strong>Console Output:</strong> Review console logs for:
+                <ul>
+                    <li>Decoration process details</li>
+                    <li>ARIA validation results</li>
+                    <li>Any errors or warnings</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>Expected Results</h3>
+        <ul>
+            <li><strong>Test 1:</strong> Basic table with semantic HTML structure and ARIA attributes</li>
+            <li><strong>Test 2:</strong> Striped variation with alternating row backgrounds</li>
+            <li><strong>Test 3:</strong> Bordered variation with borders around all cells</li>
+            <li><strong>Test 4:</strong> First-line variation with pale blue first row</li>
+            <li><strong>Test 5:</strong> No-header variation with all rows as data rows</li>
+            <li><strong>Test 6:</strong> Combined striped and bordered styling</li>
+            <li><strong>Test 7:</strong> Wide table with horizontal scrolling and responsive font sizing</li>
+        </ul>
+
+        <h3>Accessibility Checklist</h3>
+        <ul>
+            <li><strong>Semantic HTML:</strong> Proper use of table, thead, tbody, tr, th, td elements</li>
+            <li><strong>ARIA Role:</strong> role="table" on table element</li>
+            <li><strong>Header Attributes:</strong> scope="col" and role="columnheader" on th elements</li>
+            <li><strong>Header IDs:</strong> Unique IDs on all header cells</li>
+            <li><strong>Cell Associations:</strong> aria-describedby on td elements linking to headers</li>
+            <li><strong>Screen Reader:</strong> Announces table structure, headers, and cell associations</li>
+        </ul>
+
+        <h3>Responsive Breakpoints to Test</h3>
+        <ul>
+            <li><strong>&lt; 600px (Mobile):</strong> font-size: var(--body-font-size-xs)</li>
+            <li><strong>600px - 899px (Tablet):</strong> font-size: var(--body-font-size-s)</li>
+            <li><strong>≥ 900px (Desktop):</strong> font-size: var(--body-font-size-m)</li>
+            <li><strong>Wide tables:</strong> Horizontal scrolling enabled at all breakpoints</li>
+        </ul>
+
+        <h3>CSS Variables to Verify</h3>
+        <ul>
+            <li><code>--table-first-line-bg</code>: #e6f2ff (pale blue for first-line variation)</li>
+            <li><code>--overlay-background-color</code>: rgba(0, 0, 0, 0.05) (for striped rows)</li>
+            <li><code>--body-font-size-xs</code>: Mobile font size</li>
+            <li><code>--body-font-size-s</code>: Tablet font size</li>
+            <li><code>--body-font-size-m</code>: Desktop font size</li>
+        </ul>
+
+        <h3>Known Characteristics</h3>
+        <ul>
+            <li><strong>Horizontal Scrolling:</strong> Wide tables scroll horizontally (expected behavior)</li>
+            <li><strong>No Column Hiding:</strong> All columns always visible (no responsive hiding)</li>
+            <li><strong>No Interactive Features:</strong> No sorting, filtering, or pagination (future enhancements)</li>
+            <li><strong>Static Display:</strong> Tables are static content displays (no JavaScript after decoration)</li>
+        </ul>
+
+        <h3>Debugging Tips</h3>
+        <ul>
+            <li>Check browser console for detailed logs and ARIA validation results</li>
+            <li>Use DevTools Elements panel to inspect table structure and ARIA attributes</li>
+            <li>Test with multiple screen readers for compatibility verification</li>
+            <li>Verify CSS variables are defined in styles.css</li>
+            <li>Check Network tab if table.js or table.css fail to load</li>
+            <li>Inspect element classes to verify variations are applied</li>
+        </ul>
+
+        <h3>Browser Compatibility</h3>
+        <ul>
+            <li><strong>Fully Supported:</strong> Chrome, Firefox, Safari, Edge (last 2 versions)</li>
+            <li><strong>Mobile:</strong> iOS Safari, Android Chrome (last 2 versions)</li>
+            <li><strong>Partial Support:</strong> IE11 (requires polyfills and CSS variable fallbacks)</li>
+        </ul>
+    </div>
+</body>
+</html>

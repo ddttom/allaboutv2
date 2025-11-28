@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <!-- Hero Block Styles -->
+    <link rel="stylesheet" href="/blocks/hero/hero.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .test-info {
+            background: #f0f0f0;
+            padding: 1rem;
+            border-bottom: 2px solid #667eea;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .test-info h2 {
+            margin: 0 0 0.5rem 0;
+            color: #667eea;
+        }
+
+        .test-info p {
+            margin: 0.25rem 0;
+            font-size: 0.9rem;
+        }
+
+        .test-info code {
+            background: white;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        .test-section {
+            margin-bottom: 3rem;
+            border: 2px solid #e0e0e0;
+            background: white;
+        }
+
+        .test-section h3 {
+            background: #667eea;
+            color: white;
+            padding: 0.75rem 1rem;
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .test-section .description {
+            padding: 1rem;
+            background: #f9f9f9;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 0.9rem;
+        }
+
+        .test-section .description strong {
+            color: #667eea;
+        }
+
+        /* Reduce hero height for testing */
+        main .hero {
+            min-height: 400px;
+        }
+
+        /* Status indicators */
+        .status {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status.info {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>Hero Block Test Suite</h2>
+        <p><strong>Block:</strong> <code>hero</code></p>
+        <p><strong>Test Count:</strong> <code>5 variations</code></p>
+        <p><strong>Status:</strong> <span id="status" class="status info">Loading...</span></p>
+        <p><strong>Purpose:</strong> Visual testing of responsive hero block with image merging</p>
+    </div>
+
+    <main>
+        <!-- Test 1: Basic Hero -->
+        <div class="test-section">
+            <h3>Test 1: Basic Hero (Default)</h3>
+            <div class="description">
+                <strong>Expected Behavior:</strong> Two images merge into single responsive picture. Text overlays on left, vertically centered. Mobile image (400x300) on small screens, desktop image (800x400) on large screens.
+            </div>
+            <div class="hero-wrapper">
+                <div class="hero block">
+                    <div>
+                        <picture>
+                            <source media="(min-width: 768px)" srcset="https://via.placeholder.com/800x400/4a5568/ffffff?text=Desktop+Image+1">
+                            <img src="https://via.placeholder.com/400x300/667eea/ffffff?text=Mobile+Image+1" alt="Test hero image 1">
+                        </picture>
+                    </div>
+                    <div>
+                        <picture>
+                            <source media="(min-width: 768px)" srcset="https://via.placeholder.com/800x400/667eea/ffffff?text=Desktop+Image+2">
+                            <img src="https://via.placeholder.com/400x300/4a5568/ffffff?text=Mobile+Image+2" alt="Test hero image 2">
+                        </picture>
+                    </div>
+                    <div>
+                        <h1>Welcome to Our World</h1>
+                        <p>Discover amazing experiences with our innovative solutions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 2: Manual Variation -->
+        <div class="test-section">
+            <h3>Test 2: Hero (Manual Variation)</h3>
+            <div class="description">
+                <strong>Expected Behavior:</strong> White text color, 100px top padding, custom line height (69px) for h2. Images merge as in Test 1.
+            </div>
+            <div class="hero-wrapper">
+                <div class="hero manual block">
+                    <div>
+                        <picture>
+                            <source media="(min-width: 768px)" srcset="https://via.placeholder.com/800x400/1e293b/ffffff?text=Desktop+Manual">
+                            <img src="https://via.placeholder.com/400x300/334155/ffffff?text=Mobile+Manual" alt="Manual hero image 1">
+                        </picture>
+                    </div>
+                    <div>
+                        <picture>
+                            <source media="(min-width: 768px)" srcset="https://via.placeholder.com/800x400/334155/ffffff?text=Desktop+Manual+2">
+                            <img src="https://via.placeholder.com/400x300/1e293b/ffffff?text=Mobile+Manual+2" alt="Manual hero image 2">
+                        </picture>
+                    </div>
+                    <div>
+                        <h2>Transform Your Business</h2>
+                        <p>Professional solutions with manual styling</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 3: Techem Variation -->
+        <div class="test-section">
+            <h3>Test 3: Hero (Techem Variation)</h3>
+            <div class="description">
+                <strong>Expected Behavior:</strong> Center-aligned text, max-width constraint (77pc), large h3 (3rem), white text. Images merge as in Test 1.
+            </div>
+            <div class="hero-wrapper">
+                <div class="hero techem block">
+                    <div>
+                        <picture>
+                            <source media="(min-width: 768px)" srcset="https://via.placeholder.com/800x400/0f172a/ffffff?text=Desktop+Techem">
+                            <img src="https://via.placeholder.com/400x300/1e293b/ffffff?text=Mobile+Techem" alt="Techem hero image 1">
+                        </picture>
+                    </div>
+                    <div>
+                        <picture>
+                            <source media="(min-width: 768px)" srcset="https://via.placeholder.com/800x400/1e293b/ffffff?text=Desktop+Techem+2">
+                            <img src="https://via.placeholder.com/400x300/0f172a/ffffff?text=Mobile+Techem+2" alt="Techem hero image 2">
+                        </picture>
+                    </div>
+                    <div>
+                        <h3>Innovative Technology Solutions</h3>
+                        <p>Building the future together with centered layout</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 4: Embolden Variation -->
+        <div class="test-section">
+            <h3>Test 4: Hero (Embolden Variation)</h3>
+            <div class="description">
+                <strong>Expected Behavior:</strong> Bold font weight throughout. Images merge as in Test 1. Otherwise uses default hero styling.
+            </div>
+            <div class="hero-wrapper">
+                <div class="hero embolden block">
+                    <div>
+                        <picture>
+                            <source media="(min-width: 768px)" srcset="https://via.placeholder.com/800x400/7c3aed/ffffff?text=Desktop+Bold">
+                            <img src="https://via.placeholder.com/400x300/a855f7/ffffff?text=Mobile+Bold" alt="Embolden hero image 1">
+                        </picture>
+                    </div>
+                    <div>
+                        <picture>
+                            <source media="(min-width: 768px)" srcset="https://via.placeholder.com/800x400/a855f7/ffffff?text=Desktop+Bold+2">
+                            <img src="https://via.placeholder.com/400x300/7c3aed/ffffff?text=Mobile+Bold+2" alt="Embolden hero image 2">
+                        </picture>
+                    </div>
+                    <div>
+                        <h1>Make a Bold Statement</h1>
+                        <p>Stand out with emphasis-driven messaging</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 5: Combined Variations -->
+        <div class="test-section">
+            <h3>Test 5: Hero (Manual + Embolden)</h3>
+            <div class="description">
+                <strong>Expected Behavior:</strong> Combines manual (white text, padding) + embolden (bold weight). Images merge as in Test 1. Maximum visual impact.
+            </div>
+            <div class="hero-wrapper">
+                <div class="hero manual embolden block">
+                    <div>
+                        <picture>
+                            <source media="(min-width: 768px)" srcset="https://via.placeholder.com/800x400/dc2626/ffffff?text=Desktop+Combined">
+                            <img src="https://via.placeholder.com/400x300/ef4444/ffffff?text=Mobile+Combined" alt="Combined hero image 1">
+                        </picture>
+                    </div>
+                    <div>
+                        <picture>
+                            <source media="(min-width: 768px)" srcset="https://via.placeholder.com/800x400/ef4444/ffffff?text=Desktop+Combined+2">
+                            <img src="https://via.placeholder.com/400x300/dc2626/ffffff?text=Mobile+Combined+2" alt="Combined hero image 2">
+                        </picture>
+                    </div>
+                    <div>
+                        <h2>Uncompromising Quality</h2>
+                        <p>Excellence in every detail with combined styling</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import decorate from '/blocks/hero/hero.js';
+
+        // Update status function
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+
+        // Initialize all hero blocks
+        async function init() {
+            try {
+                // Add body.appear class (required to show page)
+                document.body.classList.add('appear');
+
+                updateStatus('Decorating blocks...', 'info');
+
+                // Get all hero blocks
+                const heroBlocks = document.querySelectorAll('.hero.block');
+
+                if (heroBlocks.length === 0) {
+                    throw new Error('No hero blocks found');
+                }
+
+                // Decorate each hero block
+                heroBlocks.forEach((block, index) => {
+                    console.log(`Decorating hero block ${index + 1}:`, block);
+
+                    // Log initial state
+                    const initialPictures = block.querySelectorAll('picture');
+                    console.log(`  Initial pictures: ${initialPictures.length}`);
+
+                    // Run decoration
+                    decorate(block);
+
+                    // Log final state
+                    const finalPictures = block.querySelectorAll('picture');
+                    console.log(`  Final pictures: ${finalPictures.length}`);
+                    console.log(`  Picture sources:`, Array.from(finalPictures).map(p =>
+                        Array.from(p.querySelectorAll('source')).map(s => ({
+                            media: s.media,
+                            srcset: s.srcset.substring(0, 50) + '...'
+                        }))
+                    ));
+                });
+
+                updateStatus(`✓ ${heroBlocks.length} hero blocks loaded successfully`, 'success');
+
+                console.log('All hero blocks decorated successfully');
+                console.log('Test visual behavior by resizing the browser window');
+                console.log('- < 768px: Should show "Mobile" images');
+                console.log('- >= 768px: Should show "Desktop" images');
+
+            } catch (error) {
+                console.error('Failed to initialize hero blocks:', error);
+                updateStatus(`Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Start initialization
+        init();
+    </script>
+
+    <div style="padding: 2rem; background: #f9f9f9; border-top: 2px solid #667eea; font-family: system-ui;">
+        <h3 style="margin-top: 0; color: #667eea;">Testing Instructions</h3>
+        <ol style="line-height: 1.8;">
+            <li><strong>Responsive Testing:</strong> Resize your browser window to < 768px and >= 768px to see image swapping</li>
+            <li><strong>Image Merging:</strong> Open browser DevTools and inspect each hero block - should have only ONE picture element</li>
+            <li><strong>Variations:</strong> Verify that manual, techem, and embolden variations apply correct styles</li>
+            <li><strong>Text Overlay:</strong> Check that text is properly positioned over images with good contrast</li>
+            <li><strong>Console Output:</strong> Review console logs for decoration process details</li>
+        </ol>
+
+        <h3 style="color: #667eea;">Expected Results</h3>
+        <ul style="line-height: 1.8;">
+            <li>Each hero block should have exactly 1 picture element after decoration (down from 2)</li>
+            <li>The first picture's desktop source should be replaced with the second picture's desktop source</li>
+            <li>The second picture element should be removed entirely</li>
+            <li>Text should overlay images with proper styling per variation</li>
+            <li>At < 768px viewport, "Mobile" images display</li>
+            <li>At >= 768px viewport, "Desktop 2" images display (merged from second picture)</li>
+        </ul>
+
+        <h3 style="color: #667eea;">Variation Styles to Verify</h3>
+        <ul style="line-height: 1.8;">
+            <li><strong>Manual:</strong> White text, 100px top padding, 69px line height on h2</li>
+            <li><strong>Techem:</strong> Center-aligned text, 3rem h3 font size, max-width constraint</li>
+            <li><strong>Embolden:</strong> Bolder font weight throughout</li>
+            <li><strong>Manual + Embolden:</strong> Combined effects from both variations</li>
+        </ul>
+    </div>
+</body>
+</html>

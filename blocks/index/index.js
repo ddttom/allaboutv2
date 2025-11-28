@@ -1,8 +1,10 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-use-before-define */
 export default function decorate(block) {
+  // Global Selector is INTENTIONAL - used for Document access
+  // This block scans ALL page headings to build table of contents
   const headers = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
-  const indexBlock = document.querySelector('.index');
+  const indexBlock = block;
   // Create the index header
   const indexHeader = document.createElement('div');
   indexHeader.className = 'index-header';
@@ -36,7 +38,7 @@ export default function decorate(block) {
   });
 
   function buildIndex() {
-    const indexContent2 = document.querySelector('.index-content');
+    const indexContent2 = block.querySelector('.index-content');
     const ul = document.createElement('ul');
     headers.forEach((header, index) => {
       const id = `header-${index}`;

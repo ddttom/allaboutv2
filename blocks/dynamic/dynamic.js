@@ -9,8 +9,8 @@ import {
 import ffetch from '/plusplus/block-party/ffetch.js';
 
 export default async function decorate(block) {
-// Select the element by its class
-  const element = document.querySelector('.dynamic-container');
+// Use the block parameter directly
+  const element = block;
 
   // Get the value of the 'data-maxreturn' attribute, or system value, or use the default value of 8
   let maxReturn = element.getAttribute('data-maxreturn') ||

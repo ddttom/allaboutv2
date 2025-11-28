@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <!-- Search Block Styles -->
+    <link rel="stylesheet" href="/blocks/search/search.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .test-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .test-info h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.75rem;
+        }
+
+        .test-info p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .test-info code {
+            background: rgba(255,255,255,0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .test-info strong {
+            font-weight: 600;
+        }
+
+        .test-section {
+            margin: 2rem auto;
+            max-width: 1400px;
+            padding: 0 1rem;
+        }
+
+        .test-section h3 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0 0 0;
+            border-radius: 8px 8px 0 0;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .test-section .description {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 1rem;
+        }
+
+        .test-section .description strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .test-section .description p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        /* Status indicators */
+        .status {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Search wrapper for consistent spacing */
+        .search-wrapper {
+            background: white;
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* Instructions section */
+        .instructions {
+            margin: 3rem auto;
+            max-width: 1400px;
+            padding: 2rem;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: #667eea;
+            font-size: 1.3rem;
+        }
+
+        .instructions ol, .instructions ul {
+            line-height: 1.8;
+            padding-left: 1.5rem;
+        }
+
+        .instructions li {
+            margin: 0.5rem 0;
+        }
+
+        .instructions strong {
+            color: #667eea;
+        }
+
+        .instructions code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        /* Highlight for testing */
+        mark {
+            background-color: #ffeb3b;
+            padding: 0 2px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>Search Block Test Suite</h2>
+        <p><strong>Block:</strong> <code>search</code></p>
+        <p><strong>Test Count:</strong> <code>3 test scenarios</code></p>
+        <p><strong>Status:</strong> <span id="status" class="status info">Loading...</span></p>
+        <p><strong>Purpose:</strong> Visual and functional testing of real-time search with query-index.json integration</p>
+    </div>
+
+    <main>
+        <!-- Test 1: Basic Search with Mock Data -->
+        <div class="test-section">
+            <h3>Test 1: Standard Search Layout</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Search input with icon, real-time filtering on input, results display in grid layout with images, titles, and descriptions. Search terms highlighted with &lt;mark&gt; elements.</p>
+                <p><strong>Validation:</strong> Type 3+ characters to trigger search. Check that results appear, search terms are highlighted, and grid layout is responsive.</p>
+                <p><strong>Test Keywords:</strong> Try searching for "test", "example", "search", "block"</p>
+            </div>
+            <div class="search-wrapper">
+                <div class="search block" id="search-test-1">
+                    <div>
+                        <p><a href="#mock-data">Mock Data Source</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 2: Minimal Variation -->
+        <div class="test-section">
+            <h3>Test 2: Minimal Variation (Compact List)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Minimal variation displays results in a compact list format with small circular thumbnails on the left, link-colored titles, and minimal spacing.</p>
+                <p><strong>Validation:</strong> Type 3+ characters to search. Verify list layout (not grid), small circular images (24px), and link-colored titles with underline on hover.</p>
+                <p><strong>Test Keywords:</strong> Try "guide", "document", "page"</p>
+            </div>
+            <div class="search-wrapper">
+                <div class="search minimal block" id="search-test-2">
+                    <div>
+                        <p><a href="#mock-data">Mock Data Source</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 3: URL Parameter Integration -->
+        <div class="test-section">
+            <h3>Test 3: URL Parameter Persistence</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Search terms persist in URL as ?q= parameter. On page load with ?q= parameter, search auto-populates and executes. ESC key clears search and removes URL parameter.</p>
+                <p><strong>Validation:</strong>
+                    1. Type a search term and observe URL update to include ?q=yourterm
+                    2. Refresh page and verify search remains populated
+                    3. Press ESC to clear search and verify URL parameter removed
+                </p>
+                <p><strong>Test Actions:</strong> Search, then refresh browser to test persistence. Press ESC to test clearing.</p>
+            </div>
+            <div class="search-wrapper">
+                <div class="search block" id="search-test-3">
+                    <div>
+                        <p><a href="#mock-data">Mock Data Source</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import decorate from '/blocks/search/search.js';
+        import { fetchData } from '/blocks/search/search.js';
+
+        // Mock query-index.json data for testing
+        const mockData = {
+            data: [
+                {
+                    path: '/docs/getting-started',
+                    title: 'Getting Started Guide',
+                    header: 'Getting Started',
+                    description: 'Learn how to get started with our platform. This comprehensive guide covers installation, setup, and basic usage.',
+                    image: 'https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png',
+                    lastModified: '1234567890'
+                },
+                {
+                    path: '/docs/api-reference',
+                    title: 'API Reference Documentation',
+                    header: 'API Reference',
+                    description: 'Complete API reference with all endpoints, parameters, and response examples for developers.',
+                    image: 'https://allabout.network/media_14e918fa88c2a9a810fd454fa04f0bd152c01fed2.jpeg',
+                    lastModified: '1234567891'
+                },
+                {
+                    path: '/blog/search-best-practices',
+                    title: 'Search Best Practices',
+                    header: 'Best Practices',
+                    description: 'Implementing effective search functionality: tips, tricks, and optimization strategies for better user experience.',
+                    image: 'https://allabout.network/media_1d92670adcfb7a18a062e49fd7967f4e9f76d8a52.jpeg',
+                    lastModified: '1234567892'
+                },
+                {
+                    path: '/tutorials/block-development',
+                    title: 'Block Development Tutorial',
+                    header: 'Block Development',
+                    description: 'Step-by-step tutorial for creating custom blocks with examples and code snippets.',
+                    image: 'https://allabout.network/media_1e744525e97292dcd074e9b1c7ab2cf47a048f292.jpeg',
+                    lastModified: '1234567893'
+                },
+                {
+                    path: '/examples/search-block',
+                    title: 'Search Block Examples',
+                    header: 'Examples',
+                    description: 'Real-world examples of search block implementation with various configurations and variations.',
+                    image: 'https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png',
+                    lastModified: '1234567894'
+                },
+                {
+                    path: '/docs/testing',
+                    title: 'Testing Guide',
+                    header: 'Testing',
+                    description: 'Comprehensive testing guide covering unit tests, integration tests, and end-to-end testing strategies.',
+                    image: 'https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png',
+                    lastModified: '1234567895'
+                },
+                {
+                    path: '/blog/performance-optimization',
+                    title: 'Performance Optimization Tips',
+                    header: 'Performance',
+                    description: 'Optimize your site for maximum performance: caching, lazy loading, and Core Web Vitals improvements.',
+                    image: 'https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png',
+                    lastModified: '1234567896'
+                },
+                {
+                    path: '/docs/accessibility',
+                    title: 'Accessibility Guidelines',
+                    header: 'Accessibility',
+                    description: 'Ensuring your content is accessible to all users: WCAG compliance, ARIA labels, and keyboard navigation.',
+                    image: 'https://allabout.network/media_14e918fa88c2a9a810fd454fa04f0bd152c01fed2.jpeg',
+                    lastModified: '1234567897'
+                }
+            ]
+        };
+
+        // Mock fetch for testing
+        const originalFetch = window.fetch;
+        window.fetch = async function(url) {
+            // Intercept query-index.json requests for testing
+            if (url.includes('#mock-data') || url.includes('query-index.json')) {
+                console.log('Returning mock data for:', url);
+                return {
+                    ok: true,
+                    json: async () => mockData
+                };
+            }
+            // Pass through other requests
+            return originalFetch.apply(this, arguments);
+        };
+
+        // Update status function
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+
+        // Log search block structure
+        function logSearchStructure(block, index) {
+            console.log(`\n=== Search Block ${index + 1} ===`);
+            console.log('Initial children:', block.children.length);
+            console.log('Has variation:', block.classList.contains('minimal') ? 'minimal' : 'standard');
+        }
+
+        // Log decorated structure
+        function logDecoratedStructure(block, index) {
+            console.log(`\n=== After Decoration (Block ${index + 1}) ===`);
+            const searchBox = block.querySelector('.search-box');
+            const searchInput = block.querySelector('.search-input');
+            const searchResults = block.querySelector('.search-results');
+            const searchIcon = block.querySelector('.icon-search');
+
+            console.log('Search box:', !!searchBox);
+            console.log('Search input:', !!searchInput);
+            console.log('Search results container:', !!searchResults);
+            console.log('Search icon:', !!searchIcon);
+
+            if (searchInput) {
+                console.log('Input placeholder:', searchInput.placeholder);
+                console.log('Input aria-label:', searchInput.getAttribute('aria-label'));
+            }
+
+            if (searchResults) {
+                console.log('Results heading level:', searchResults.dataset.h);
+            }
+        }
+
+        // Initialize all search blocks
+        async function init() {
+            try {
+                // Add body.appear class (required to show page)
+                document.body.classList.add('appear');
+
+                updateStatus('Decorating blocks...', 'info');
+
+                // Get all search blocks
+                const searchBlocks = document.querySelectorAll('.search.block');
+
+                if (searchBlocks.length === 0) {
+                    throw new Error('No search blocks found');
+                }
+
+                console.log(`Found ${searchBlocks.length} search blocks to decorate`);
+
+                // Decorate each search block
+                for (let index = 0; index < searchBlocks.length; index++) {
+                    const block = searchBlocks[index];
+                    console.log(`\n${'='.repeat(50)}`);
+                    console.log(`Processing Search Block ${index + 1}`);
+                    console.log('='.repeat(50));
+
+                    // Log initial structure
+                    logSearchStructure(block, index);
+
+                    // Run decoration
+                    try {
+                        await decorate(block);
+                        console.log('✓ Decoration completed successfully');
+                    } catch (error) {
+                        console.error(`✗ Decoration failed:`, error);
+                        throw error;
+                    }
+
+                    // Log decorated structure
+                    logDecoratedStructure(block, index);
+                }
+
+                updateStatus(`✓ ${searchBlocks.length} search blocks loaded successfully`, 'success');
+
+                console.log('\n' + '='.repeat(50));
+                console.log('All search blocks decorated successfully!');
+                console.log('='.repeat(50));
+                console.log('\nTest Instructions:');
+                console.log('1. Type 3+ characters in search input to trigger search');
+                console.log('2. Observe search terms highlighted with <mark> elements');
+                console.log('3. Check URL updates with ?q= parameter');
+                console.log('4. Press ESC to clear search and URL parameter');
+                console.log('5. Refresh page with ?q= parameter to test persistence');
+                console.log('6. Compare standard vs minimal variations');
+                console.log('7. Resize window to test responsive grid layout');
+
+            } catch (error) {
+                console.error('Failed to initialize search blocks:', error);
+                updateStatus(`✗ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Start initialization
+        init();
+    </script>
+
+    <div class="instructions">
+        <h3>Testing Instructions</h3>
+        <ol>
+            <li><strong>Basic Search Functionality:</strong>
+                <ul>
+                    <li>Type 3+ characters in any search input (e.g., "test", "guide", "search")</li>
+                    <li>Verify results appear in real-time as you type</li>
+                    <li>Check that search terms are highlighted in results with yellow background</li>
+                    <li>Confirm that typing fewer than 3 characters shows no results</li>
+                </ul>
+            </li>
+            <li><strong>Search Ranking:</strong>
+                <ul>
+                    <li>Search for "guide" - results with "guide" in title/header should appear first</li>
+                    <li>Results are ranked by: Header matches → Meta content matches</li>
+                    <li>Within each tier, earlier matches rank higher</li>
+                </ul>
+            </li>
+            <li><strong>URL Parameter Persistence:</strong>
+                <ul>
+                    <li>Type a search term and observe URL update: <code>?q=yourterm</code></li>
+                    <li>Refresh the page - search should auto-populate and execute</li>
+                    <li>Press ESC key to clear search and verify URL parameter removed</li>
+                    <li>Use browser back/forward buttons to test history navigation</li>
+                </ul>
+            </li>
+            <li><strong>Visual Layout Testing:</strong>
+                <ul>
+                    <li><strong>Standard variation:</strong> Grid layout with card-based results</li>
+                    <li><strong>Minimal variation:</strong> List layout with small circular thumbnails</li>
+                    <li>Resize window to test responsive behavior (1 col mobile, 2-3 cols desktop)</li>
+                </ul>
+            </li>
+            <li><strong>Highlighting:</strong>
+                <ul>
+                    <li>Type "block" - word should be highlighted in titles and descriptions</li>
+                    <li>Type multiple words "search block" - both words highlighted</li>
+                    <li>Verify original casing is preserved in highlights</li>
+                </ul>
+            </li>
+            <li><strong>Keyboard Interactions:</strong>
+                <ul>
+                    <li>Tab to focus search input</li>
+                    <li>Type to search</li>
+                    <li>ESC to clear search</li>
+                    <li>Tab through results (result links should be focusable)</li>
+                </ul>
+            </li>
+            <li><strong>Browser Console:</strong> Review console logs for detailed decoration process, search operations, and any errors</li>
+        </ol>
+
+        <h3>Expected Results by Test</h3>
+        <ul>
+            <li><strong>Test 1 (Standard):</strong> Grid layout with card-based results, images at 4:3 aspect ratio, titles and descriptions with highlighting</li>
+            <li><strong>Test 2 (Minimal):</strong> List layout with small circular thumbnails (24px), link-colored titles, compact spacing</li>
+            <li><strong>Test 3 (URL):</strong> Search terms persist in URL, auto-populate on page load, clear with ESC</li>
+        </ul>
+
+        <h3>Mock Data Details</h3>
+        <p>This test uses mock query-index.json data with 8 sample results covering:</p>
+        <ul>
+            <li>Documentation pages (Getting Started, API Reference, Testing, Accessibility)</li>
+            <li>Blog posts (Search Best Practices, Performance Optimization)</li>
+            <li>Tutorials (Block Development)</li>
+            <li>Examples (Search Block Examples)</li>
+        </ul>
+        <p>All results include images, titles, headers, descriptions, and paths for comprehensive testing.</p>
+
+        <h3>Search Algorithm Testing</h3>
+        <ul>
+            <li><strong>Header matches first:</strong> Search "Getting Started" - result with that header appears first</li>
+            <li><strong>Meta matches second:</strong> Search "optimization" - matches in description rank lower than title matches</li>
+            <li><strong>Multiple terms:</strong> Search "block development" - finds results with both words</li>
+            <li><strong>Case insensitive:</strong> Search "GUIDE" or "guide" - both work identically</li>
+            <li><strong>Partial matches:</strong> Search "perform" - finds "Performance Optimization"</li>
+        </ul>
+
+        <h3>Responsive Breakpoints to Test</h3>
+        <ul>
+            <li><strong>&lt; 768px (Mobile):</strong> Single column grid, full-width cards</li>
+            <li><strong>768px - 1024px (Tablet):</strong> 2 columns (278px minimum card width)</li>
+            <li><strong>&gt; 1024px (Desktop):</strong> 3-4 columns based on container width</li>
+            <li><strong>Grid Auto-fill:</strong> No fixed breakpoints - natural reflow based on min card width (278px)</li>
+        </ul>
+
+        <h3>Accessibility Testing</h3>
+        <ul>
+            <li>Verify search input has <code>aria-label</code> attribute</li>
+            <li>Check semantic HTML: <code>&lt;ul&gt;</code>, <code>&lt;li&gt;</code>, <code>&lt;a&gt;</code></li>
+            <li>Test keyboard navigation: Tab, Enter, ESC</li>
+            <li>Verify proper heading hierarchy (data-h attribute on results container)</li>
+            <li>Check that images have alt text (if present in data)</li>
+            <li>Test with screen reader if available</li>
+        </ul>
+
+        <h3>Performance Considerations</h3>
+        <ul>
+            <li><strong>Lazy data loading:</strong> Data only fetches on first search (not on page load)</li>
+            <li><strong>Image optimization:</strong> Uses createOptimizedPicture for responsive sources</li>
+            <li><strong>No artificial debouncing:</strong> Browser-native input event provides natural throttling</li>
+            <li><strong>Minimal DOM manipulation:</strong> Results container cleared and rebuilt only when needed</li>
+        </ul>
+
+        <h3>Known Behaviors</h3>
+        <ul>
+            <li><strong>3-character minimum:</strong> Search doesn't trigger until 3+ characters typed (prevents overly broad searches)</li>
+            <li><strong>URL persistence:</strong> Intentional feature for sharing/bookmarking search results</li>
+            <li><strong>No "no results" until search:</strong> Empty state only shows after a search returns zero results</li>
+            <li><strong>Case-insensitive search:</strong> Searches work regardless of casing, but original casing preserved in highlights</li>
+        </ul>
+
+        <h3>Debugging Tips</h3>
+        <ul>
+            <li>Check browser console for fetch errors or data structure issues</li>
+            <li>Inspect Network tab for query-index.json requests (should see mock data in this test)</li>
+            <li>Use DevTools Elements panel to inspect result DOM structure after search</li>
+            <li>Verify mock data intercept is working (console log: "Returning mock data for...")</li>
+            <li>Test in multiple browsers (Chrome, Firefox, Safari) for consistency</li>
+            <li>Check that CSS variables <code>--dark-color</code>, <code>--link-color</code> are defined</li>
+        </ul>
+
+        <h3>Integration with Real Data</h3>
+        <p>To test with real query-index.json data:</p>
+        <ol>
+            <li>Remove or modify the mock fetch intercept in the script</li>
+            <li>Ensure your site has a <code>/query-index.json</code> file</li>
+            <li>Verify the JSON structure matches expected format (data array with path, title, description, image fields)</li>
+            <li>Test on a live server or use the local development server (npm run debug)</li>
+        </ol>
+    </div>
+</body>
+</html>

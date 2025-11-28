@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <!-- Markdown Block Styles -->
+    <link rel="stylesheet" href="/blocks/markdown/markdown.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .test-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .test-info h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.75rem;
+        }
+
+        .test-info p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .test-info code {
+            background: rgba(255,255,255,0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .test-info strong {
+            font-weight: 600;
+        }
+
+        .test-section {
+            margin: 2rem auto;
+            max-width: 1400px;
+            padding: 0 1rem;
+        }
+
+        .test-section h3 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0 0 0;
+            border-radius: 8px 8px 0 0;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .test-section .description {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 1rem;
+        }
+
+        .test-section .description strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .test-section .description p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        /* Status indicators */
+        .status {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Markdown wrapper for consistent spacing */
+        .markdown-wrapper {
+            background: white;
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* Instructions section */
+        .instructions {
+            margin: 3rem auto;
+            max-width: 1400px;
+            padding: 2rem;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: #667eea;
+            font-size: 1.3rem;
+        }
+
+        .instructions ol, .instructions ul {
+            line-height: 1.8;
+            padding-left: 1.5rem;
+        }
+
+        .instructions li {
+            margin: 0.5rem 0;
+        }
+
+        .instructions strong {
+            color: #667eea;
+        }
+
+        .instructions code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>Markdown Block Test Suite</h2>
+        <p><strong>Block:</strong> <code>markdown</code></p>
+        <p><strong>Test Count:</strong> <code>6 test scenarios</code></p>
+        <p><strong>Status:</strong> <span id="status" class="status info">Loading...</span></p>
+        <p><strong>Purpose:</strong> Visual and functional testing of JavaScript syntax highlighting code display</p>
+    </div>
+
+    <main>
+        <!-- Test 1: Simple Function -->
+        <div class="test-section">
+            <h3>Test 1: Simple Function</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Single-line function with syntax highlighting. Keywords in blue, function name in brown, proper monospace display.</p>
+                <p><strong>Validation:</strong> Verify light blue container, blue border, rounded corners, keyword highlighting.</p>
+            </div>
+            <div class="markdown-wrapper">
+                <div class="markdown block">
+                    <div>
+                        <div>function add(a, b) { return a + b; }</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 2: Multi-Line Code -->
+        <div class="test-section">
+            <h3>Test 2: Multi-Line Code with Keywords</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Multi-line function with indentation preserved. Keywords (const, let, for, return) highlighted in blue. Numbers in teal.</p>
+                <p><strong>Validation:</strong> Check indentation, keyword colors, number colors, function name colors.</p>
+            </div>
+            <div class="markdown-wrapper">
+                <div class="markdown block">
+                    <div>
+                        <div>function calculateTotal(items) {</div>
+                    </div>
+                    <div>
+                        <div>  let total = 0;</div>
+                    </div>
+                    <div>
+                        <div>  for (const item of items) {</div>
+                    </div>
+                    <div>
+                        <div>    total += item.price;</div>
+                    </div>
+                    <div>
+                        <div>  }</div>
+                    </div>
+                    <div>
+                        <div>  return total;</div>
+                    </div>
+                    <div>
+                        <div>}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 3: Code with Comments -->
+        <div class="test-section">
+            <h3>Test 3: Code with Comments</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Single-line and multi-line comments highlighted in green. Comments should be distinct from code.</p>
+                <p><strong>Validation:</strong> Verify comment colors (green), comment syntax (// and /* */), readability.</p>
+            </div>
+            <div class="markdown-wrapper">
+                <div class="markdown block">
+                    <div>
+                        <div>// This function validates user input</div>
+                    </div>
+                    <div>
+                        <div>function validateInput(data) {</div>
+                    </div>
+                    <div>
+                        <div>  /* Check if data exists and is not empty */</div>
+                    </div>
+                    <div>
+                        <div>  if (!data || data.trim() === '') {</div>
+                    </div>
+                    <div>
+                        <div>    return false;</div>
+                    </div>
+                    <div>
+                        <div>  }</div>
+                    </div>
+                    <div>
+                        <div>  return true;</div>
+                    </div>
+                    <div>
+                        <div>}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 4: Strings and Numbers -->
+        <div class="test-section">
+            <h3>Test 4: Strings and Numbers</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> String literals highlighted in red. Numbers highlighted in teal. Both single and double quoted strings supported.</p>
+                <p><strong>Validation:</strong> Check string colors (red), number colors (teal), quote handling.</p>
+            </div>
+            <div class="markdown-wrapper">
+                <div class="markdown block">
+                    <div>
+                        <div>const greeting = 'Hello, World!';</div>
+                    </div>
+                    <div>
+                        <div>const message = "Welcome to EDS";</div>
+                    </div>
+                    <div>
+                        <div>const count = 42;</div>
+                    </div>
+                    <div>
+                        <div>let total = 100;</div>
+                    </div>
+                    <div>
+                        <div>var active = true;</div>
+                    </div>
+                    <div>
+                        <div>console.log(greeting, count);</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 5: Control Flow -->
+        <div class="test-section">
+            <h3>Test 5: Control Flow Structures</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Keywords (if, else, while, for) highlighted in blue. Proper indentation maintained. Logical operators visible.</p>
+                <p><strong>Validation:</strong> Verify if/else/while highlighting, indentation, operator visibility.</p>
+            </div>
+            <div class="markdown-wrapper">
+                <div class="markdown block">
+                    <div>
+                        <div>if (user.age >= 18) {</div>
+                    </div>
+                    <div>
+                        <div>  console.log('User is an adult');</div>
+                    </div>
+                    <div>
+                        <div>} else if (user.age >= 13) {</div>
+                    </div>
+                    <div>
+                        <div>  console.log('User is a teenager');</div>
+                    </div>
+                    <div>
+                        <div>} else {</div>
+                    </div>
+                    <div>
+                        <div>  console.log('User is a child');</div>
+                    </div>
+                    <div>
+                        <div>}</div>
+                    </div>
+                    <div>
+                        <div></div>
+                    </div>
+                    <div>
+                        <div>while (count < 10) {</div>
+                    </div>
+                    <div>
+                        <div>  count++;</div>
+                    </div>
+                    <div>
+                        <div>}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 6: Class Definition -->
+        <div class="test-section">
+            <h3>Test 6: Class Definition</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Class keyword highlighted. Function names (constructor, methods) in brown. Proper method indentation.</p>
+                <p><strong>Validation:</strong> Check class keyword, function colors, method structure, this keyword handling.</p>
+            </div>
+            <div class="markdown-wrapper">
+                <div class="markdown block">
+                    <div>
+                        <div>class DataManager {</div>
+                    </div>
+                    <div>
+                        <div>  constructor() {</div>
+                    </div>
+                    <div>
+                        <div>    this.data = [];</div>
+                    </div>
+                    <div>
+                        <div>  }</div>
+                    </div>
+                    <div>
+                        <div></div>
+                    </div>
+                    <div>
+                        <div>  add(item) {</div>
+                    </div>
+                    <div>
+                        <div>    this.data.push(item);</div>
+                    </div>
+                    <div>
+                        <div>  }</div>
+                    </div>
+                    <div>
+                        <div></div>
+                    </div>
+                    <div>
+                        <div>  find(id) {</div>
+                    </div>
+                    <div>
+                        <div>    return this.data.find(item => item.id === id);</div>
+                    </div>
+                    <div>
+                        <div>  }</div>
+                    </div>
+                    <div>
+                        <div>}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import decorate from '/blocks/markdown/markdown.js';
+
+        // Update status function
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+
+        // Log markdown block structure
+        function logMarkdownStructure(block, index) {
+            console.log(`\n=== Markdown Block ${index + 1} ===`);
+            console.log('Original content length:', block.textContent.length);
+            console.log('First 50 chars:', block.textContent.substring(0, 50));
+        }
+
+        // Log final structure
+        function logFinalStructure(block, index) {
+            console.log(`\n=== After Decoration (Block ${index + 1}) ===`);
+
+            const container = block.querySelector('.markdown-content');
+            if (container) {
+                console.log('✓ Container created with class:', container.className);
+
+                const pre = container.querySelector('pre');
+                if (pre) {
+                    console.log('✓ Pre element created');
+
+                    // Count highlighted elements
+                    const keywords = container.querySelectorAll('.keyword').length;
+                    const strings = container.querySelectorAll('.string').length;
+                    const comments = container.querySelectorAll('.comment').length;
+                    const numbers = container.querySelectorAll('.number').length;
+                    const functions = container.querySelectorAll('.function').length;
+
+                    console.log('Syntax highlighting counts:');
+                    console.log(`  - Keywords: ${keywords}`);
+                    console.log(`  - Strings: ${strings}`);
+                    console.log(`  - Comments: ${comments}`);
+                    console.log(`  - Numbers: ${numbers}`);
+                    console.log(`  - Functions: ${functions}`);
+                } else {
+                    console.error('✗ Pre element not found');
+                }
+            } else {
+                console.error('✗ Container not created');
+            }
+        }
+
+        // Verify syntax highlighting
+        function verifySyntaxHighlighting(block, index) {
+            console.log(`\n=== Syntax Highlighting Validation (Block ${index + 1}) ===`);
+
+            const container = block.querySelector('.markdown-content');
+            if (!container) {
+                console.error('✗ Container not found');
+                return;
+            }
+
+            // Check for syntax spans
+            const hasKeywords = container.querySelectorAll('.keyword').length > 0;
+            const hasStrings = container.querySelectorAll('.string').length > 0;
+            const hasComments = container.querySelectorAll('.comment').length > 0;
+            const hasNumbers = container.querySelectorAll('.number').length > 0;
+            const hasFunctions = container.querySelectorAll('.function').length > 0;
+
+            console.log(`Keywords highlighted: ${hasKeywords ? '✓' : '✗'}`);
+            console.log(`Strings highlighted: ${hasStrings ? '✓' : '✗'}`);
+            console.log(`Comments highlighted: ${hasComments ? '✓' : '✗'}`);
+            console.log(`Numbers highlighted: ${hasNumbers ? '✓' : '✗'}`);
+            console.log(`Functions highlighted: ${hasFunctions ? '✓' : '✓ (may not be present)'}`);
+        }
+
+        // Check CSS variables
+        function checkCSSVariables() {
+            console.log('\n=== CSS Variables ===');
+            const markdown = document.querySelector('.markdown');
+            if (markdown) {
+                const styles = getComputedStyle(markdown);
+                console.log('--markdown-bg-color:', styles.getPropertyValue('--markdown-bg-color').trim());
+                console.log('--markdown-border-color:', styles.getPropertyValue('--markdown-border-color').trim());
+                console.log('--markdown-border-radius:', styles.getPropertyValue('--markdown-border-radius').trim());
+                console.log('--markdown-padding:', styles.getPropertyValue('--markdown-padding').trim());
+            }
+        }
+
+        // Initialize all markdown blocks
+        async function init() {
+            try {
+                // Add body.appear class (required to show page)
+                document.body.classList.add('appear');
+
+                updateStatus('Decorating blocks...', 'info');
+
+                // Get all markdown blocks
+                const markdownBlocks = document.querySelectorAll('.markdown.block');
+
+                if (markdownBlocks.length === 0) {
+                    throw new Error('No markdown blocks found');
+                }
+
+                console.log(`Found ${markdownBlocks.length} markdown blocks to decorate`);
+
+                // Decorate each markdown block
+                markdownBlocks.forEach((block, index) => {
+                    console.log(`\n${'='.repeat(50)}`);
+                    console.log(`Processing Markdown Block ${index + 1}`);
+                    console.log('='.repeat(50));
+
+                    // Log initial structure
+                    logMarkdownStructure(block, index);
+
+                    // Run decoration
+                    try {
+                        decorate(block);
+                        console.log('✓ Decoration completed successfully');
+                    } catch (error) {
+                        console.error(`✗ Decoration failed:`, error);
+                        throw error;
+                    }
+
+                    // Log final structure
+                    logFinalStructure(block, index);
+
+                    // Verify syntax highlighting
+                    verifySyntaxHighlighting(block, index);
+                });
+
+                // Check CSS variables
+                checkCSSVariables();
+
+                updateStatus(`✓ ${markdownBlocks.length} markdown blocks loaded successfully`, 'success');
+
+                console.log('\n' + '='.repeat(50));
+                console.log('All markdown blocks decorated successfully!');
+                console.log('='.repeat(50));
+                console.log('\nTest Instructions:');
+                console.log('1. Verify light blue containers with borders');
+                console.log('2. Check syntax highlighting colors (keywords blue, strings red, etc.)');
+                console.log('3. Resize browser to test responsive behavior');
+                console.log('4. Check indentation preservation');
+                console.log('5. Inspect elements in DevTools to verify structure');
+
+            } catch (error) {
+                console.error('Failed to initialize markdown blocks:', error);
+                updateStatus(`✗ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Start initialization
+        init();
+    </script>
+
+    <div class="instructions">
+        <h3>Testing Instructions</h3>
+        <ol>
+            <li><strong>Visual Inspection:</strong> Scroll through all test sections and verify:
+                <ul>
+                    <li>Light blue background (#e6f3ff)</li>
+                    <li>Blue border (#4a90e2)</li>
+                    <li>Rounded corners (8px)</li>
+                    <li>Monospace font (Courier New)</li>
+                    <li>Proper padding (20px)</li>
+                </ul>
+            </li>
+            <li><strong>Syntax Highlighting:</strong> Verify colors for:
+                <ul>
+                    <li><strong>Keywords:</strong> Blue (#0000ff) - const, let, var, function, return, if, else, for, while, class</li>
+                    <li><strong>Strings:</strong> Red (#a31515) - Single and double quoted strings</li>
+                    <li><strong>Comments:</strong> Green (#008000) - // and /* */ comments</li>
+                    <li><strong>Numbers:</strong> Teal (#09885a) - Numeric literals</li>
+                    <li><strong>Functions:</strong> Brown (#795e26) - Function names</li>
+                </ul>
+            </li>
+            <li><strong>Responsive Testing:</strong> Resize browser window and observe:
+                <ul>
+                    <li>Mobile (< 768px): Padding reduces to 10px</li>
+                    <li>Tablet (~768px): Standard padding (20px)</li>
+                    <li>Desktop (> 1024px): Full padding (20px)</li>
+                    <li>Code remains readable at all sizes</li>
+                </ul>
+            </li>
+            <li><strong>Content Verification:</strong> Check that:
+                <ul>
+                    <li>Indentation is preserved</li>
+                    <li>Line breaks are maintained</li>
+                    <li>White space is correct (pre-wrap)</li>
+                    <li>No HTML entities visible (< > & should be escaped)</li>
+                </ul>
+            </li>
+            <li><strong>DevTools Inspection:</strong> Inspect in DevTools and verify:
+                <ul>
+                    <li><code>.markdown.block</code> element exists</li>
+                    <li><code>.markdown-content</code> container created</li>
+                    <li><code>pre</code> element with syntax spans</li>
+                    <li>CSS variables defined and applied</li>
+                    <li>Syntax spans have correct classes (.keyword, .string, etc.)</li>
+                </ul>
+            </li>
+            <li><strong>Console Output:</strong> Review console logs for:
+                <ul>
+                    <li>Decoration process details</li>
+                    <li>Syntax highlighting counts</li>
+                    <li>CSS variable values</li>
+                    <li>Any errors or warnings</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>Expected Results</h3>
+        <ul>
+            <li><strong>Test 1:</strong> Simple function with keyword and function name highlighting</li>
+            <li><strong>Test 2:</strong> Multi-line function with preserved indentation and keyword colors</li>
+            <li><strong>Test 3:</strong> Comments highlighted in green (single and multi-line)</li>
+            <li><strong>Test 4:</strong> Strings in red, numbers in teal, mixed content</li>
+            <li><strong>Test 5:</strong> Control flow keywords highlighted, proper structure</li>
+            <li><strong>Test 6:</strong> Class definition with method highlighting</li>
+        </ul>
+
+        <h3>Syntax Highlighting Reference</h3>
+        <ul>
+            <li><strong>Supported Keywords:</strong> const, let, var, function, return, if, else, for, while, class</li>
+            <li><strong>String Detection:</strong> Single and double quoted strings</li>
+            <li><strong>Comment Detection:</strong> Single-line (//) and multi-line (/* */)</li>
+            <li><strong>Number Detection:</strong> Numeric literals (integers only in current implementation)</li>
+            <li><strong>Function Detection:</strong> Words followed by opening parenthesis</li>
+        </ul>
+
+        <h3>Known Limitations</h3>
+        <ul>
+            <li><strong>Limited Keywords:</strong> Only basic JavaScript keywords supported (no async, await, etc.)</li>
+            <li><strong>JavaScript Only:</strong> No syntax highlighting for other languages</li>
+            <li><strong>Basic Patterns:</strong> Simple regex patterns (may miss complex syntax)</li>
+            <li><strong>No Line Numbers:</strong> Line numbering not implemented</li>
+        </ul>
+
+        <h3>Debugging Tips</h3>
+        <ul>
+            <li>Check browser console for detailed logs and syntax highlighting counts</li>
+            <li>Use DevTools Elements panel to inspect HTML structure and classes</li>
+            <li>Verify CSS variables in computed styles panel</li>
+            <li>Test with Network tab to ensure markdown.js and markdown.css load (200 status)</li>
+            <li>Inspect individual syntax spans to see regex matching</li>
+        </ul>
+
+        <h3>Browser Compatibility</h3>
+        <ul>
+            <li><strong>Supported:</strong> Chrome, Firefox, Safari, Edge (last 2 versions)</li>
+            <li><strong>Partial:</strong> IE11 (requires polyfills, CSS variables not supported)</li>
+            <li><strong>Mobile:</strong> iOS Safari, Android Chrome (last 2 versions)</li>
+        </ul>
+
+        <h3>Accessibility Notes</h3>
+        <ul>
+            <li>Pre element semantically announces code block</li>
+            <li>Syntax highlighting is visual only (doesn't affect screen readers)</li>
+            <li>Content remains accessible as plain text</li>
+            <li>Color contrast meets WCAG AA standards</li>
+            <li>No keyboard traps or interactive elements</li>
+        </ul>
+    </div>
+</body>
+</html>

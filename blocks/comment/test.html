@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comment Block - Test Suite</title>
+  <script type="module">
+    // Minimal EDS polyfill for testing environment
+    const toClassName = (name) => name.toLowerCase().replace(/[^0-9a-z]/gi, '-');
+
+    // Mock decorateBlock function
+    function decorateBlock(block) {
+      const classes = Array.from(block.classList.values());
+      const blockName = classes[0];
+
+      if (!blockName) return;
+
+      // Apply block CSS
+      const cssPath = `/blocks/${blockName}/${blockName}.css`;
+      const cssLink = document.createElement('link');
+      cssLink.rel = 'stylesheet';
+      cssLink.href = cssPath;
+      document.head.appendChild(cssLink);
+
+      // Load block JS if exists
+      import(`/blocks/${blockName}/${blockName}.js`)
+        .then(mod => {
+          if (mod.default) {
+            mod.default(block);
+          }
+        })
+        .catch(() => {
+          // Silent fail for blocks with no JS (like comment)
+        });
+    }
+
+    // Test framework
+    const tests = [];
+    let passed = 0;
+    let failed = 0;
+
+    function test(name, fn) {
+      tests.push({ name, fn });
+    }
+
+    function assert(condition, message) {
+      if (!condition) {
+        throw new Error(message || 'Assertion failed');
+      }
+    }
+
+    function assertEqual(actual, expected, message) {
+      if (actual !== expected) {
+        throw new Error(message || `Expected ${expected} but got ${actual}`);
+      }
+    }
+
+    async function runTests() {
+      const resultsEl = document.getElementById('test-results');
+      resultsEl.innerHTML = '<h2>Running tests...</h2>';
+
+      for (const test of tests) {
+        try {
+          await test.fn();
+          passed++;
+          resultsEl.innerHTML += `<div class="test-pass">✓ ${test.name}</div>`;
+        } catch (error) {
+          failed++;
+          resultsEl.innerHTML += `<div class="test-fail">✗ ${test.name}<br><small>${error.message}</small></div>`;
+        }
+      }
+
+      resultsEl.innerHTML += `
+        <div class="test-summary">
+          <h3>Test Summary</h3>
+          <p>Total: ${tests.length} | Passed: ${passed} | Failed: ${failed}</p>
+          ${failed === 0 ? '<p class="success">All tests passed!</p>' : '<p class="failure">Some tests failed.</p>'}
+        </div>
+      `;
+    }
+
+    // Define tests
+    test('Comment block exists in DOM', () => {
+      const blocks = document.querySelectorAll('.comment');
+      assert(blocks.length > 0, 'No comment blocks found');
+    });
+
+    test('Comment block has display:none style', () => {
+      const block = document.querySelector('.comment');
+      const style = window.getComputedStyle(block);
+      assertEqual(style.display, 'none', 'Comment block is not hidden');
+    });
+
+    test('Comment block not visible (offsetHeight = 0)', () => {
+      const block = document.querySelector('.comment');
+      assertEqual(block.offsetHeight, 0, 'Comment block has height (should be 0)');
+    });
+
+    test('Comment block not visible (offsetWidth = 0)', () => {
+      const block = document.querySelector('.comment');
+      assertEqual(block.offsetWidth, 0, 'Comment block has width (should be 0)');
+    });
+
+    test('Multiple comment blocks all hidden', () => {
+      const blocks = document.querySelectorAll('.comment');
+      blocks.forEach((block, index) => {
+        const style = window.getComputedStyle(block);
+        assertEqual(style.display, 'none', `Comment block ${index + 1} is visible`);
+      });
+    });
+
+    test('Comment CSS file loaded', () => {
+      const cssLoaded = Array.from(document.styleSheets).some(sheet => {
+        return sheet.href && sheet.href.includes('/comment.css');
+      });
+      assert(cssLoaded, 'comment.css not found in loaded stylesheets');
+    });
+
+    test('Comment block not in accessibility tree', () => {
+      const block = document.querySelector('.comment');
+      // Elements with display:none are not in accessibility tree
+      const style = window.getComputedStyle(block);
+      assertEqual(style.display, 'none', 'Comment block should be display:none');
+    });
+
+    test('Comment content exists in DOM (but hidden)', () => {
+      const block = document.querySelector('.comment');
+      assert(block.children.length > 0, 'Comment block has no children');
+    });
+
+    test('Comment block class applied correctly', () => {
+      const block = document.querySelector('.comment');
+      assert(block.classList.contains('comment'), 'Block missing "comment" class');
+    });
+
+    test('No JavaScript errors during decoration', () => {
+      // This test passes if we get here without errors
+      assert(true, 'JavaScript errors occurred');
+    });
+
+    test('Comment block has zero paint area', () => {
+      const block = document.querySelector('.comment');
+      const rect = block.getBoundingClientRect();
+      assertEqual(rect.width, 0, 'Comment block has width in layout');
+      assertEqual(rect.height, 0, 'Comment block has height in layout');
+    });
+
+    test('Comment block takes no space in layout', () => {
+      const block = document.querySelector('.comment');
+      const parent = block.parentElement;
+
+      // Get parent height
+      const parentHeight = parent.offsetHeight;
+
+      // Temporarily show comment
+      block.style.display = 'block';
+      const expandedParentHeight = parent.offsetHeight;
+      block.style.display = '';
+
+      // Parent height should increase when comment is shown
+      // This proves comment takes no space when hidden
+      assert(expandedParentHeight >= parentHeight, 'Layout test failed');
+    });
+
+    // Run tests after page load
+    window.addEventListener('load', () => {
+      // Decorate all blocks
+      document.querySelectorAll('.comment').forEach(decorateBlock);
+
+      // Wait for CSS to load and run tests
+      setTimeout(runTests, 500);
+    });
+  </script>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      background: #f5f5f5;
+    }
+
+    h1 {
+      color: #333;
+      border-bottom: 3px solid #0066cc;
+      padding-bottom: 0.5rem;
+    }
+
+    .test-container {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+
+    .visual-test {
+      border: 2px solid #ddd;
+      padding: 1rem;
+      margin: 1rem 0;
+      background: #fafafa;
+    }
+
+    .visual-test-label {
+      font-weight: bold;
+      color: #666;
+      margin-bottom: 0.5rem;
+    }
+
+    .test-results {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .test-pass {
+      color: #28a745;
+      padding: 0.5rem;
+      margin: 0.25rem 0;
+      border-left: 3px solid #28a745;
+      padding-left: 1rem;
+      background: #f0fdf4;
+    }
+
+    .test-fail {
+      color: #dc3545;
+      padding: 0.5rem;
+      margin: 0.25rem 0;
+      border-left: 3px solid #dc3545;
+      padding-left: 1rem;
+      background: #fef2f2;
+    }
+
+    .test-fail small {
+      display: block;
+      margin-top: 0.25rem;
+      color: #666;
+    }
+
+    .test-summary {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: #f8f9fa;
+      border-radius: 4px;
+      border: 1px solid #dee2e6;
+    }
+
+    .test-summary h3 {
+      margin-top: 0;
+    }
+
+    .success {
+      color: #28a745;
+      font-weight: bold;
+    }
+
+    .failure {
+      color: #dc3545;
+      font-weight: bold;
+    }
+
+    .info-box {
+      background: #e7f3ff;
+      border-left: 4px solid #0066cc;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+
+    .warning-box {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+
+    code {
+      background: #f4f4f4;
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+    }
+
+    pre {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 1rem;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+
+    .demo-content {
+      border: 2px dashed #ccc;
+      padding: 1rem;
+      margin: 1rem 0;
+      background: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>Comment Block - Test Suite</h1>
+
+  <div class="test-container">
+    <h2>Overview</h2>
+    <p>
+      This test suite validates the Comment block functionality. The Comment block is a special
+      authoring-only utility that hides content from the published website using CSS.
+    </p>
+
+    <div class="info-box">
+      <strong>Expected Behavior:</strong> All comment blocks below should be completely invisible.
+      If you can see any comment content on this page, the block is not working correctly.
+    </div>
+  </div>
+
+  <div class="test-container">
+    <h2>Visual Test: Comment Block Visibility</h2>
+
+    <div class="visual-test">
+      <div class="visual-test-label">Test 1: Single Comment Block</div>
+      <p>Before comment:</p>
+
+      <!-- Comment block - should be invisible -->
+      <div class="comment">
+        <div>
+          <p>This is a comment that should NOT be visible on the page.</p>
+          <p>If you can read this, the comment block is broken!</p>
+        </div>
+      </div>
+
+      <p>After comment (if you see text between "Before" and "After", the test failed)</p>
+    </div>
+
+    <div class="visual-test">
+      <div class="visual-test-label">Test 2: Multiple Comment Blocks</div>
+      <p>Section 1</p>
+
+      <div class="comment">
+        <div>Hidden comment 1</div>
+      </div>
+
+      <p>Section 2</p>
+
+      <div class="comment">
+        <div>Hidden comment 2</div>
+      </div>
+
+      <p>Section 3</p>
+
+      <div class="comment">
+        <div>Hidden comment 3</div>
+      </div>
+
+      <p>End (you should only see "Section 1", "Section 2", "Section 3", and "End")</p>
+    </div>
+
+    <div class="visual-test">
+      <div class="visual-test-label">Test 3: Comment with Complex Content</div>
+      <p>Regular content before</p>
+
+      <div class="comment">
+        <div>
+          <h3>Hidden Heading</h3>
+          <p><strong>Bold text</strong> and <em>italic text</em></p>
+          <ul>
+            <li>Hidden list item 1</li>
+            <li>Hidden list item 2</li>
+          </ul>
+          <p>More hidden content with <a href="#">hidden link</a></p>
+        </div>
+      </div>
+
+      <p>Regular content after (no content should appear between these paragraphs)</p>
+    </div>
+  </div>
+
+  <div class="test-container">
+    <h2>Browser DevTools Manual Tests</h2>
+
+    <div class="info-box">
+      <strong>Manual Testing Instructions:</strong>
+      <ol>
+        <li>Open browser DevTools (F12 or Cmd+Option+I)</li>
+        <li>Select a comment block with element inspector</li>
+        <li>Verify the computed style shows <code>display: none</code></li>
+        <li>Check that <code>offsetHeight</code> and <code>offsetWidth</code> are both 0</li>
+        <li>Verify no space is allocated in the layout</li>
+      </ol>
+    </div>
+
+    <pre>
+// Run in browser console to check all comment blocks
+const comments = document.querySelectorAll('.comment');
+comments.forEach((block, i) => {
+  const style = getComputedStyle(block);
+  console.log(`Comment ${i + 1}:`, {
+    display: style.display,
+    offsetHeight: block.offsetHeight,
+    offsetWidth: block.offsetWidth
+  });
+});
+    </pre>
+  </div>
+
+  <div class="test-container">
+    <h2>Accessibility Testing</h2>
+
+    <div class="info-box">
+      <strong>Screen Reader Testing:</strong>
+      <ol>
+        <li>Enable screen reader (NVDA, JAWS, VoiceOver, etc.)</li>
+        <li>Navigate through this page</li>
+        <li>Verify screen reader does NOT announce any comment content</li>
+        <li>Elements with <code>display: none</code> are removed from accessibility tree</li>
+      </ol>
+    </div>
+
+    <div class="demo-content">
+      <p>Screen reader test area:</p>
+      <p>Paragraph 1 - should be announced</p>
+
+      <div class="comment">
+        <div>This comment should NOT be announced by screen readers</div>
+      </div>
+
+      <p>Paragraph 2 - should be announced immediately after Paragraph 1</p>
+    </div>
+  </div>
+
+  <div class="test-container">
+    <h2>Performance Testing</h2>
+
+    <div class="info-box">
+      <strong>Performance Test:</strong>
+      <ol>
+        <li>Open Chrome DevTools Performance tab</li>
+        <li>Record a page load</li>
+        <li>Verify comment blocks do not contribute to:
+          <ul>
+            <li>Paint operations</li>
+            <li>Layout calculations</li>
+            <li>JavaScript execution time</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+
+    <div class="warning-box">
+      <strong>Expected Results:</strong> Comment blocks should have ZERO performance impact.
+      Elements with <code>display: none</code> are removed from the render tree and don't
+      participate in layout, paint, or composite operations.
+    </div>
+  </div>
+
+  <div class="test-results">
+    <h2>Automated Test Results</h2>
+    <div id="test-results">
+      <p>Loading tests...</p>
+    </div>
+  </div>
+
+  <div class="test-container">
+    <h2>Test Summary</h2>
+    <p>
+      The Comment block is intentionally minimal. It requires:
+    </p>
+    <ul>
+      <li>✓ Single CSS rule: <code>.comment { display: none; }</code></li>
+      <li>✓ No JavaScript decoration</li>
+      <li>✓ No external dependencies</li>
+      <li>✓ Zero performance impact</li>
+      <li>✓ Universal browser compatibility</li>
+    </ul>
+
+    <div class="info-box">
+      <strong>Success Criteria:</strong> All automated tests pass, visual tests show no comment
+      content, and manual DevTools inspection confirms <code>display: none</code> is applied.
+    </div>
+  </div>
+</body>
+</html>

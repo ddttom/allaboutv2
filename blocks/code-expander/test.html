@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Expander Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <!-- Code Expander Block Styles -->
+    <link rel="stylesheet" href="/blocks/code-expander/code-expander.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .test-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .test-info h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.75rem;
+        }
+
+        .test-info p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .test-info code {
+            background: rgba(255,255,255,0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .test-info strong {
+            font-weight: 600;
+        }
+
+        .test-section {
+            margin: 2rem auto;
+            max-width: 1400px;
+            padding: 0 1rem;
+        }
+
+        .test-section h3 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0 0 0;
+            border-radius: 8px 8px 0 0;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .test-section .description {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 1rem;
+        }
+
+        .test-section .description strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .test-section .description p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        /* Status indicators */
+        .status {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Code wrapper for consistent spacing */
+        .code-wrapper {
+            background: white;
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* Instructions section */
+        .instructions {
+            margin: 3rem auto;
+            max-width: 1400px;
+            padding: 2rem;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: #667eea;
+            font-size: 1.3rem;
+        }
+
+        .instructions ol, .instructions ul {
+            line-height: 1.8;
+            padding-left: 1.5rem;
+        }
+
+        .instructions li {
+            margin: 0.5rem 0;
+        }
+
+        .instructions strong {
+            color: #667eea;
+        }
+
+        .instructions code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>Code Expander Block Test Suite</h2>
+        <p><strong>Block:</strong> <code>code-expander</code></p>
+        <p><strong>Test Count:</strong> <code>8 test scenarios + 1 variation test</code></p>
+        <p><strong>Status:</strong> <span id="status" class="status info">Loading...</span></p>
+        <p><strong>Purpose:</strong> Visual and functional testing of syntax highlighting, copy functionality, and interactive code display features</p>
+    </div>
+
+    <main>
+        <!-- Test 1: JavaScript Code with Syntax Highlighting -->
+        <div class="test-section">
+            <h3>Test 1: JavaScript Code with Syntax Highlighting</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> JavaScript code with proper syntax highlighting (keywords in blue, strings in red, comments in green). All interactive buttons (Copy, View Raw, Download, Expand, Info) should be functional.</p>
+                <p><strong>Validation:</strong> Check language label shows "JAVASCRIPT", verify syntax colors, test copy-to-clipboard functionality, and info tooltip displays usage instructions.</p>
+            </div>
+            <div class="code-wrapper">
+                <div class="code-expander block"></div>
+                <pre><code>// Function to calculate Fibonacci numbers
+function fibonacci(n) {
+  if (n <= 1) return n;
+
+  let prev = 0;
+  let current = 1;
+
+  for (let i = 2; i <= n; i++) {
+    const next = prev + current;
+    prev = current;
+    current = next;
+  }
+
+  return current;
+}
+
+// Test the function
+const result = fibonacci(10);
+console.log('Fibonacci(10):', result);</code></pre>
+            </div>
+        </div>
+
+        <!-- Test 2: Python Code Detection -->
+        <div class="test-section">
+            <h3>Test 2: Python Code with Auto-Detection</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Python code automatically detected via import statements or shebang. Language label shows "PYTHON". Bold string highlighting for Python-specific patterns.</p>
+                <p><strong>Validation:</strong> Verify language detection works, check syntax highlighting for Python keywords, strings, and comments. Test download button saves as .py file.</p>
+            </div>
+            <div class="code-wrapper">
+                <div class="code-expander block"></div>
+                <pre><code>#!/usr/bin/env python3
+import numpy as np
+import pandas as pd
+from typing import List, Dict
+
+def process_data(data: List[Dict]) -> pd.DataFrame:
+    """
+    Process raw data into a pandas DataFrame.
+
+    Args:
+        data: List of dictionaries containing raw data
+
+    Returns:
+        Processed DataFrame with cleaned data
+    """
+    df = pd.DataFrame(data)
+
+    # Remove duplicates
+    df = df.drop_duplicates()
+
+    # Fill missing values
+    df = df.fillna(0)
+
+    return df
+
+# Example usage
+raw_data = [
+    {'name': 'Alice', 'age': 30, 'score': 95},
+    {'name': 'Bob', 'age': 25, 'score': 87},
+    {'name': 'Charlie', 'age': 35, 'score': 92}
+]
+
+processed_df = process_data(raw_data)
+print(processed_df.head())</code></pre>
+            </div>
+        </div>
+
+        <!-- Test 3: Shell/Bash Commands -->
+        <div class="test-section">
+            <h3>Test 3: Shell Commands with Shebang</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Shell script detected via shebang line or command patterns. Language label shows "SHELL". Download saves as .sh file.</p>
+                <p><strong>Validation:</strong> Check shebang detection, verify command highlighting, test that common shell commands (ls, cd, git) trigger shell detection.</p>
+            </div>
+            <div class="code-wrapper">
+                <div class="code-expander block"></div>
+                <pre><code>#!/bin/bash
+# Deploy script for production
+
+# Set variables
+DEPLOY_DIR="/var/www/production"
+BACKUP_DIR="/var/backups/$(date +%Y%m%d)"
+
+# Create backup
+echo "Creating backup..."
+mkdir -p "$BACKUP_DIR"
+cp -r "$DEPLOY_DIR" "$BACKUP_DIR/"
+
+# Pull latest changes
+echo "Pulling latest code..."
+cd "$DEPLOY_DIR" || exit 1
+git pull origin main
+
+# Install dependencies
+echo "Installing dependencies..."
+npm install --production
+
+# Build project
+echo "Building project..."
+npm run build
+
+# Restart services
+echo "Restarting services..."
+systemctl restart nginx
+systemctl restart app-service
+
+echo "Deployment complete!"</code></pre>
+            </div>
+        </div>
+
+        <!-- Test 4: HTML Code -->
+        <div class="test-section">
+            <h3>Test 4: HTML Markup</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> HTML code with proper entity encoding (< > become &lt; &gt;). Tags highlighted, string attributes colored. Language label shows "HTML".</p>
+                <p><strong>Validation:</strong> Verify HTML is properly escaped and not rendered. Check tag highlighting, attribute string colors. Test that download saves as .html file.</p>
+            </div>
+            <div class="code-wrapper">
+                <div class="code-expander block"></div>
+                <pre><code><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Main content section -->
+    <header class="site-header">
+        <h1>Welcome to My Site</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <article>
+            <h2>Article Title</h2>
+            <p>This is a sample paragraph with <strong>bold</strong> and <em>italic</em> text.</p>
+            <img src="image.jpg" alt="Description" width="800" height="600">
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 My Website. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html></code></pre>
+            </div>
+        </div>
+
+        <!-- Test 5: CSS Styles -->
+        <div class="test-section">
+            <h3>Test 5: CSS Stylesheet</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> CSS code detected via selectors (. @ starting characters) or property:value patterns. Properties in red, values in blue. Language label shows "CSS".</p>
+                <p><strong>Validation:</strong> Verify CSS detection works, check property and value color highlighting. Test download saves as .css file.</p>
+            </div>
+            <div class="code-wrapper">
+                <div class="code-expander block"></div>
+                <pre><code>/* Global variables */
+:root {
+  --primary-color: #667eea;
+  --secondary-color: #764ba2;
+  --text-color: #333;
+  --background-color: #ffffff;
+  --border-radius: 8px;
+  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
+/* Header styles */
+.site-header {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  padding: 2rem;
+  box-shadow: var(--box-shadow);
+}
+
+.site-header h1 {
+  color: white;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Navigation styles */
+nav ul {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  transition: background-color 0.3s ease;
+}
+
+nav a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .site-header {
+    padding: 1rem;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}</code></pre>
+            </div>
+        </div>
+
+        <!-- Test 6: JSON Data -->
+        <div class="test-section">
+            <h3>Test 6: JSON Configuration</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> JSON detected via brace patterns and key:value structure. Keys in blue, strings in red, booleans/nulls highlighted. Language label shows "JSON".</p>
+                <p><strong>Validation:</strong> Verify JSON detection, check key/value color differentiation, test boolean and number highlighting. Download saves as .json file.</p>
+            </div>
+            <div class="code-wrapper">
+                <div class="code-expander block"></div>
+                <pre><code>{
+  "name": "allaboutV2",
+  "version": "2.0.0",
+  "description": "Adobe Edge Delivery Services project with comprehensive block library",
+  "main": "scripts/scripts.js",
+  "scripts": {
+    "lint:js": "eslint .",
+    "lint:css": "stylelint blocks/**/*.css styles/*.css",
+    "lint": "npm run lint:js && npm run lint:css",
+    "debug": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ddttom/allaboutV2.git"
+  },
+  "author": "Tom Cranstoun",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@babel/core": "^7.24.0",
+    "@babel/eslint-parser": "^7.24.0",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "stylelint": "^16.3.0"
+  },
+  "keywords": [
+    "adobe",
+    "edge-delivery",
+    "blocks",
+    "eds",
+    "franklin"
+  ],
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "private": true,
+  "enabled": true,
+  "count": 42,
+  "score": 98.5,
+  "verified": null
+}</code></pre>
+            </div>
+        </div>
+
+        <!-- Test 7: Markdown Content -->
+        <div class="test-section">
+            <h3>Test 7: Markdown Document</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Markdown detected via heading (#), list (*, -), or link patterns. Headings in blue bold, lists in green, code in brown, links in light blue. Language label shows "MARKDOWN".</p>
+                <p><strong>Validation:</strong> Check markdown pattern detection, verify heading/list/code/link highlighting. Download saves as .md file.</p>
+            </div>
+            <div class="code-wrapper">
+                <div class="code-expander block"></div>
+                <pre><code># Code Expander Block Documentation
+
+## Overview
+
+The Code Expander block enhances all `<pre><code>` elements on a page with interactive features.
+
+### Features
+
+* Automatic language detection
+* Syntax highlighting
+* Copy to clipboard functionality
+* View raw/formatted toggle
+* Download as file option
+* Keyboard navigation support
+
+## Usage
+
+Simply add an empty code-expander block:
+
+```
+| code-expander |
+| ------------- |
+```
+
+The block automatically finds and enhances all code blocks.
+
+## Configuration
+
+You can customize the block using CSS variables:
+
+* `--code-expander-button-bg` - Button background color
+* `--code-expander-code-bg` - Code background color
+* `--code-expander-font-size-normal` - Base font size
+
+> **Note:** All CSS variables have sensible defaults.
+
+## Examples
+
+See the [example.md](example.md) file for usage examples.
+
+## Support
+
+For questions or issues, please contact [support@example.com](mailto:support@example.com).</code></pre>
+            </div>
+        </div>
+
+        <!-- Test 8: Long Code Block (Tests Expand/Collapse) -->
+        <div class="test-section">
+            <h3>Test 8: Long Code Block (> 40 Lines - Tests Expand/Collapse)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Code blocks longer than 40 lines (LONG_DOCUMENT_THRESHOLD) display an Expand/Collapse button. Initially collapsed to max-height: 300px with overflow hidden. Clicking Expand shows full content.</p>
+                <p><strong>Validation:</strong> Verify Expand button appears, check collapse/expand transitions work smoothly, confirm button text changes between "Expand" and "Collapse".</p>
+            </div>
+            <div class="code-wrapper">
+                <div class="code-expander block"></div>
+                <pre><code>/**
+ * Code Expander Block - Complete Implementation
+ *
+ * This is a long code example to test the expand/collapse functionality.
+ * When code exceeds 40 lines, the block should show an expand button.
+ */
+
+const CODE_EXPANDER_CONFIG = {
+  LONG_DOCUMENT_THRESHOLD: 40,
+  COPY_BUTTON_RESET_DELAY: 2000,
+  SCROLL_HINT_TEXT: 'scroll with arrow keys',
+  COPY_TEXT: 'Copy',
+  COPIED_TEXT: 'Copied!',
+  VIEW_RAW_TEXT: 'View Raw',
+  VIEW_FORMATTED_TEXT: 'View Formatted',
+  DOWNLOAD_TEXT: 'Download',
+  EXPAND_TEXT: 'Expand',
+  COLLAPSE_TEXT: 'Collapse',
+  CLOSE_TEXT: 'Close',
+  FILENAME_PROMPT_TEXT: 'Enter filename (without extension):',
+  DOWNLOAD_BUTTON_TEXT: 'Download',
+  CANCEL_BUTTON_TEXT: 'Cancel',
+  DEFAULT_FILENAME: 'code-snippet'
+};
+
+export default async function decorate(block) {
+  const forceText = block.classList.contains('text');
+  const codeElements = document.querySelectorAll('pre code');
+
+  if (codeElements.length === 0) {
+    console.log('Code-expander: No code elements found on the page');
+    return;
+  }
+
+  function detectLanguage(code) {
+    const firstLine = code.trim().split('\n')[0];
+
+    if (firstLine.startsWith('#!')) {
+      if (firstLine.includes('/bin/bash') ||
+          firstLine.includes('/bin/sh') ||
+          firstLine.includes('/usr/bin/env bash') ||
+          firstLine.includes('/usr/bin/env sh')) {
+        return 'shell';
+      }
+      if (firstLine.includes('/python') ||
+          firstLine.includes('/usr/bin/env python')) {
+        return 'python';
+      }
+      return 'shell';
+    }
+
+    if (firstLine.trim().startsWith('//') || firstLine.trim().startsWith('/*')) {
+      return 'javascript';
+    }
+
+    if (firstLine.trim().startsWith('<link') || firstLine.trim().startsWith('<!--')) {
+      return 'html';
+    }
+
+    if (firstLine.trim() === '/' || firstLine.trim().startsWith('/')) {
+      return 'shell';
+    }
+
+    if (firstLine.trim().startsWith('.') || firstLine.trim().startsWith('@')) {
+      return 'css';
+    }
+
+    if (firstLine.startsWith('import ')) {
+      return 'python';
+    }
+
+    if (code.trim().startsWith('"') || code.trim().startsWith("'")) {
+      return 'text';
+    }
+
+    return 'text';
+  }
+
+  function highlightSyntax(code, language) {
+    // Syntax highlighting implementation
+    return code;
+  }
+
+  function createCodeExpanderWrapper(codeElement, index, forceText) {
+    const code = codeElement.textContent;
+    const language = forceText ? 'text' : detectLanguage(code);
+    const lines = code.split('\n');
+    const isLongDocument = lines.length > CODE_EXPANDER_CONFIG.LONG_DOCUMENT_THRESHOLD;
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'code-expander-wrapper';
+
+    return wrapper;
+  }
+
+  Array.from(codeElements).forEach((codeElement, index) => {
+    if (codeElement.closest('.code-expander-wrapper')) {
+      return;
+    }
+
+    const wrapper = createCodeExpanderWrapper(codeElement, index, forceText);
+    const preElement = codeElement.parentNode;
+    const container = document.createElement('div');
+
+    preElement.parentNode.replaceChild(container, preElement);
+    container.appendChild(wrapper);
+  });
+}</code></pre>
+            </div>
+        </div>
+
+        <!-- Test 9: Text Variation (No Syntax Highlighting) -->
+        <div class="test-section">
+            <h3>Test 9: Text Variation (Forces Plain Text Display)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> When code-expander has "text" class, all code blocks display as plain text without syntax highlighting. Language label shows "TEXT" regardless of content. Useful for displaying non-code content or overriding auto-detection.</p>
+                <p><strong>Validation:</strong> Verify no syntax highlighting applied, language label always shows "TEXT", all interactive buttons still work (Copy, View Raw, Download).</p>
+            </div>
+            <div class="code-wrapper">
+                <div class="code-expander text block"></div>
+                <pre><code>This is plain text content that should not be syntax highlighted.
+
+Even if it contains code-like patterns:
+- function example() { return true; }
+- const variable = "value";
+- <html><body>Tags</body></html>
+
+None of the above should trigger syntax highlighting because
+the code-expander block has the "text" variation class applied.
+
+This is useful for:
+1. Displaying configuration files that shouldn't be highlighted
+2. Showing command output or logs
+3. Presenting formatted text content
+4. Overriding automatic language detection
+
+All interactive features (Copy, View Raw, Download) still work normally.</code></pre>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import decorate from '/blocks/code-expander/code-expander.js';
+
+        // Update status function
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+
+        // Log code expander structure for debugging
+        function logCodeExpanderStructure(wrapper, index) {
+            console.log(`\n=== Code Expander ${index + 1} ===`);
+            const header = wrapper.querySelector('.code-expander-header');
+            const language = wrapper.querySelector('.code-expander-language');
+            const buttons = wrapper.querySelectorAll('button');
+            const preElement = wrapper.querySelector('pre');
+            const codeElement = wrapper.querySelector('code');
+
+            console.log('Header found:', !!header);
+            console.log('Language label:', language ? language.textContent : 'N/A');
+            console.log('Buttons count:', buttons.length);
+            console.log('Button types:', Array.from(buttons).map(b => b.className).join(', '));
+            console.log('Pre element found:', !!preElement);
+            console.log('Code element found:', !!codeElement);
+            console.log('Code lines:', codeElement ? codeElement.textContent.split('\n').length : 0);
+
+            if (preElement) {
+                const isCollapsible = preElement.classList.contains('collapsible');
+                console.log('Is collapsible:', isCollapsible);
+            }
+        }
+
+        // Initialize all code-expander blocks
+        async function init() {
+            try {
+                // Add body.appear class (required to show page)
+                document.body.classList.add('appear');
+
+                updateStatus('Decorating blocks...', 'info');
+
+                // Get all code-expander blocks
+                const codeExpanderBlocks = document.querySelectorAll('.code-expander.block');
+
+                if (codeExpanderBlocks.length === 0) {
+                    throw new Error('No code-expander blocks found');
+                }
+
+                console.log(`Found ${codeExpanderBlocks.length} code-expander blocks to decorate`);
+
+                // Decorate each code-expander block
+                for (let i = 0; i < codeExpanderBlocks.length; i++) {
+                    const block = codeExpanderBlocks[i];
+                    console.log(`\n${'='.repeat(50)}`);
+                    console.log(`Processing Code Expander Block ${i + 1}`);
+                    console.log('='.repeat(50));
+
+                    try {
+                        await decorate(block);
+                        console.log('✓ Decoration completed successfully');
+
+                        // Log structure after decoration
+                        const wrapper = block.closest('.code-wrapper').querySelector('.code-expander-wrapper');
+                        if (wrapper) {
+                            logCodeExpanderStructure(wrapper, i);
+                        }
+                    } catch (error) {
+                        console.error(`✗ Decoration failed:`, error);
+                        throw error;
+                    }
+                }
+
+                // Count total code blocks enhanced
+                const totalWrappers = document.querySelectorAll('.code-expander-wrapper').length;
+                updateStatus(`✓ ${codeExpanderBlocks.length} code-expander blocks initialized, ${totalWrappers} code snippets enhanced`, 'success');
+
+                console.log('\n' + '='.repeat(50));
+                console.log('All code-expander blocks decorated successfully!');
+                console.log(`Total code snippets enhanced: ${totalWrappers}`);
+                console.log('='.repeat(50));
+                console.log('\nTest Instructions:');
+                console.log('1. Verify language detection is accurate for each code block');
+                console.log('2. Test Copy button - should copy code to clipboard and show "Copied!" message');
+                console.log('3. Test View Raw button - toggle between formatted and raw text view');
+                console.log('4. Test Download button - should prompt for filename and download with correct extension');
+                console.log('5. Test Expand button (on long code blocks) - should expand/collapse content');
+                console.log('6. Test Info button - should show tooltip with usage instructions');
+                console.log('7. Verify keyboard navigation (arrow keys for scrolling)');
+                console.log('8. Check syntax highlighting colors for each language');
+                console.log('9. Test "text" variation - should show "TEXT" label with no syntax highlighting');
+
+            } catch (error) {
+                console.error('Failed to initialize code-expander blocks:', error);
+                updateStatus(`✗ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Start initialization
+        init();
+    </script>
+
+    <div class="instructions">
+        <h3>Testing Instructions</h3>
+        <ol>
+            <li><strong>Visual Inspection:</strong> Scroll through all test sections and verify code blocks are properly enhanced with headers, language labels, and buttons</li>
+            <li><strong>Language Detection:</strong> Check that each code block displays the correct language label (JAVASCRIPT, PYTHON, SHELL, HTML, CSS, JSON, MARKDOWN, TEXT)</li>
+            <li><strong>Syntax Highlighting:</strong> Verify syntax colors match language conventions:
+                <ul>
+                    <li><strong>JavaScript:</strong> Keywords (blue), strings (red), comments (green), numbers (green)</li>
+                    <li><strong>Python:</strong> Strings bold red, comments green</li>
+                    <li><strong>HTML:</strong> Tags (maroon), strings (red), comments (green)</li>
+                    <li><strong>CSS:</strong> Properties (red), values (blue)</li>
+                    <li><strong>JSON:</strong> Keys (blue), strings (red), booleans (blue), numbers (green)</li>
+                    <li><strong>Markdown:</strong> Headings (blue bold), lists (green), code (brown), links (light blue)</li>
+                </ul>
+            </li>
+            <li><strong>Copy Functionality:</strong> Click Copy button on any code block:
+                <ul>
+                    <li>Button text should change to "Copied!" for 2 seconds</li>
+                    <li>Code should be in clipboard (test by pasting into text editor)</li>
+                    <li>Verify copied code maintains proper formatting</li>
+                </ul>
+            </li>
+            <li><strong>View Raw Toggle:</strong> Click "View Raw" button:
+                <ul>
+                    <li>Should display plain text version without syntax highlighting</li>
+                    <li>Button text changes to "View Formatted"</li>
+                    <li>Click again to toggle back to formatted view</li>
+                    <li>Scroll hint should update for vertical scrolling in raw view</li>
+                </ul>
+            </li>
+            <li><strong>Download Feature:</strong> Click Download button:
+                <ul>
+                    <li>Modal appears prompting for filename</li>
+                    <li>Enter custom filename or use default "code-snippet"</li>
+                    <li>File downloads with correct extension (.js, .py, .sh, .html, .css, .json, .md, .txt)</li>
+                    <li>Verify downloaded file contains exact code content</li>
+                    <li>Test Cancel button closes modal without downloading</li>
+                </ul>
+            </li>
+            <li><strong>Expand/Collapse (Long Code):</strong> On Test 8 (long code block):
+                <ul>
+                    <li>Verify Expand button appears in header</li>
+                    <li>Initially code is collapsed to ~300px height</li>
+                    <li>Click Expand - code displays full height, button text changes to "Collapse"</li>
+                    <li>Click Collapse - code returns to collapsed state</li>
+                </ul>
+            </li>
+            <li><strong>Info Tooltip:</strong> Click the "?" info button:
+                <ul>
+                    <li>Tooltip appears below button with usage instructions</li>
+                    <li>Lists all button functions (Copy, View Raw, Download, Expand, Keyboard)</li>
+                    <li>Click outside or click button again to close</li>
+                    <li>Tooltip positioned properly, doesn't go off-screen</li>
+                </ul>
+            </li>
+            <li><strong>Keyboard Navigation:</strong> Click inside a code block to focus:
+                <ul>
+                    <li>Use <code>←</code> <code>→</code> arrow keys to scroll horizontally in formatted view</li>
+                    <li>Switch to raw view, use <code>↑</code> <code>↓</code> arrow keys to scroll vertically</li>
+                    <li>Verify scroll hint displays when overflow detected</li>
+                </ul>
+            </li>
+            <li><strong>Text Variation (Test 9):</strong> On the last test section:
+                <ul>
+                    <li>Language label should show "TEXT"</li>
+                    <li>No syntax highlighting applied despite code-like patterns</li>
+                    <li>All interactive buttons still functional</li>
+                </ul>
+            </li>
+            <li><strong>Responsive Testing:</strong> Resize browser window:
+                <ul>
+                    <li>Check buttons remain visible and accessible on mobile</li>
+                    <li>Verify button sizes and spacing adjust appropriately</li>
+                    <li>Test on screens < 480px, 480-768px, and > 768px</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>Expected Results</h3>
+        <ul>
+            <li><strong>Test 1:</strong> JavaScript with blue keywords, red strings, copy/download/info all work</li>
+            <li><strong>Test 2:</strong> Python detected via imports, proper syntax highlighting, downloads as .py</li>
+            <li><strong>Test 3:</strong> Shell detected via shebang, commands highlighted, downloads as .sh</li>
+            <li><strong>Test 4:</strong> HTML properly escaped and highlighted, downloads as .html</li>
+            <li><strong>Test 5:</strong> CSS properties and values colored correctly, downloads as .css</li>
+            <li><strong>Test 6:</strong> JSON keys/values differentiated by color, downloads as .json</li>
+            <li><strong>Test 7:</strong> Markdown patterns highlighted (headings, lists, code, links), downloads as .md</li>
+            <li><strong>Test 8:</strong> Long code shows Expand button, smooth expand/collapse transitions</li>
+            <li><strong>Test 9:</strong> Text variation shows "TEXT" label, no syntax highlighting applied</li>
+        </ul>
+
+        <h3>Language Detection Heuristics</h3>
+        <ul>
+            <li><strong>Shebang Priority:</strong> <code>#!/bin/bash</code>, <code>#!/usr/bin/env python</code> trigger shell/python</li>
+            <li><strong>JavaScript:</strong> Detects <code>//</code> or <code>/*</code> comments, or <code>function</code>/<code>const</code>/<code>var</code> keywords</li>
+            <li><strong>Python:</strong> Detects <code>import</code> statements, especially <code>import numpy</code>, <code>import pandas</code>, <code>from X import Y</code></li>
+            <li><strong>Shell:</strong> Detects lines starting with <code>/</code>, or commands like <code>ls</code>, <code>cd</code>, <code>git</code>, <code>npm</code></li>
+            <li><strong>HTML:</strong> Detects <code>&lt;link</code> tags or <code>&lt;!--</code> comments at start</li>
+            <li><strong>CSS:</strong> Detects lines starting with <code>.</code> (selectors) or <code>@</code> (at-rules)</li>
+            <li><strong>JSON:</strong> Detects brace patterns <code>{</code> with colon-separated key:value pairs</li>
+            <li><strong>Markdown:</strong> Detects heading <code>#</code>, list <code>*/-</code>, link <code>[text](url)</code> patterns</li>
+            <li><strong>Text:</strong> Fallback when no language-specific patterns detected</li>
+        </ul>
+
+        <h3>Interactive Features</h3>
+        <ul>
+            <li><strong>Copy Button:</strong> Uses <code>navigator.clipboard.writeText()</code> API, shows confirmation message</li>
+            <li><strong>View Raw Toggle:</strong> Switches between syntax-highlighted and plain text view</li>
+            <li><strong>Download Button:</strong> Creates Blob with code content, triggers browser download with proper filename/extension</li>
+            <li><strong>Expand/Collapse:</strong> Only appears for code > 40 lines, toggles between 300px max-height and full height</li>
+            <li><strong>Info Tooltip:</strong> Displays usage instructions for all buttons, positioned relative to viewport</li>
+            <li><strong>Keyboard Navigation:</strong> Arrow keys scroll horizontally (formatted) or vertically (raw view)</li>
+        </ul>
+
+        <h3>Known Behavior</h3>
+        <ul>
+            <li><strong>Page-Wide Enhancement:</strong> Block enhances ALL <code>&lt;pre&gt;&lt;code&gt;</code> elements on page, not just those near the block</li>
+            <li><strong>Single Decoration:</strong> Each code element only decorated once (skips already-wrapped elements)</li>
+            <li><strong>Scroll Hints:</strong> Display when horizontal (formatted) or vertical (raw) overflow detected</li>
+            <li><strong>Modal Overlay:</strong> Filename prompt displays as fixed overlay, click outside or Cancel to dismiss</li>
+            <li><strong>Text Variation:</strong> Setting <code>text</code> class on block forces all code to display as plain text</li>
+        </ul>
+
+        <h3>Debugging Tips</h3>
+        <ul>
+            <li>Check browser console for detailed decoration logs and language detection results</li>
+            <li>Inspect Network tab if clipboard API fails (requires HTTPS or localhost)</li>
+            <li>Use DevTools Elements panel to verify <code>.code-expander-wrapper</code> structure</li>
+            <li>Test in multiple browsers (Chrome, Firefox, Safari) for clipboard API compatibility</li>
+            <li>Verify CSS variables are loaded from <code>code-expander.css</code></li>
+            <li>Check that <code>body.appear</code> class is added for page visibility</li>
+        </ul>
+
+        <h3>CSS Variables for Customization</h3>
+        <p>All visual aspects can be customized via CSS variables. Key variables include:</p>
+        <ul>
+            <li><code>--code-expander-button-bg</code> - Button background color (default: #4a90e2)</li>
+            <li><code>--code-expander-button-hover-bg</code> - Button hover color (default: #3a7bc8)</li>
+            <li><code>--code-expander-code-bg</code> - Code background (default: #f8f8f8)</li>
+            <li><code>--code-expander-font-family</code> - Code font (default: monospace)</li>
+            <li><code>--code-expander-font-size-normal</code> - Base font size (default: 0.9rem)</li>
+            <li><code>--code-expander-js-keyword</code> - JavaScript keyword color (default: blue)</li>
+            <li><code>--code-expander-js-string</code> - String color (default: red)</li>
+        </ul>
+    </div>
+</body>
+</html>

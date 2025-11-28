@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Showcaser Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <!-- Showcaser Block Styles -->
+    <link rel="stylesheet" href="/blocks/showcaser/showcaser.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .test-info {
+            background: #f0f0f0;
+            padding: 1rem;
+            border-bottom: 2px solid #0066cc;
+        }
+
+        .test-info h2 {
+            margin: 0 0 0.5rem 0;
+            color: #0066cc;
+        }
+
+        .test-info p {
+            margin: 0.25rem 0;
+            font-size: 0.9rem;
+        }
+
+        .test-info code {
+            background: white;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        /* Status indicators */
+        .status {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status.info {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status.error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        /* Sample Code Sections */
+        .code-samples {
+            margin: 2rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .code-samples h2 {
+            color: #0066cc;
+            margin-top: 0;
+        }
+
+        .code-samples h3 {
+            color: #333;
+            margin-top: 2rem;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 0.5rem;
+        }
+
+        .code-samples p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Instructions section */
+        .instructions {
+            padding: 2rem;
+            background: #f9f9f9;
+            border-top: 2px solid #0066cc;
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: #0066cc;
+        }
+
+        .instructions ol,
+        .instructions ul {
+            line-height: 1.8;
+        }
+
+        .instructions strong {
+            color: #0066cc;
+        }
+
+        /* Showcaser wrapper */
+        .showcaser-test-wrapper {
+            margin: 2rem;
+        }
+
+        /* Fix header for test environment */
+        header {
+            background: #0066cc;
+            color: white;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Showcaser Block Test Environment</h1>
+    </header>
+
+    <div class="test-info">
+        <h2>Showcaser Block Test Suite</h2>
+        <p><strong>Block:</strong> <code>showcaser</code></p>
+        <p><strong>Test Type:</strong> <code>Document-level code collection</code></p>
+        <p><strong>Status:</strong> <span id="status" class="status info">Loading...</span></p>
+        <p><strong>Purpose:</strong> Test document-level code snippet collection, book-like interface, syntax highlighting, copy functionality, and expand/collapse for long snippets</p>
+        <p><strong>Note:</strong> This block intentionally uses global selectors (<code>document.querySelectorAll</code>) to collect ALL code snippets from the entire page</p>
+    </div>
+
+    <!-- Code Samples Section - These will be collected by the Showcaser -->
+    <div class="code-samples">
+        <h2>Sample Code Snippets on Page</h2>
+        <p>The Showcaser block below will automatically collect and display all code snippets from this page in a book-like interface.</p>
+
+        <h3>JavaScript Example</h3>
+        <p>Here's a simple JavaScript function:</p>
+        <pre><code>// Example JavaScript Function
+function calculateTotal(items) {
+  return items.reduce((sum, item) => {
+    return sum + (item.price * item.quantity);
+  }, 0);
+}
+
+const cart = [
+  { name: 'Widget', price: 9.99, quantity: 2 },
+  { name: 'Gadget', price: 19.99, quantity: 1 }
+];
+
+const total = calculateTotal(cart);
+console.log(`Total: $${total.toFixed(2)}`); // Output: Total: $39.97</code></pre>
+
+        <h3>HTML Structure</h3>
+        <p>A basic HTML5 document structure:</p>
+        <pre><code><!-- HTML5 Document Structure -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Web Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to My Site</h1>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+    <main>
+        <article>
+            <h2>Article Title</h2>
+            <p>Article content goes here...</p>
+        </article>
+    </main>
+    <footer>
+        <p>&copy; 2025 My Website</p>
+    </footer>
+</body>
+</html></code></pre>
+
+        <h3>CSS Styling</h3>
+        <p>Modern CSS with custom properties:</p>
+        <pre><code>/* CSS Custom Properties and Flexbox */
+:root {
+  --primary-color: #0066cc;
+  --secondary-color: #333;
+  --spacing: 1rem;
+  --border-radius: 8px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing);
+  border-radius: var(--border-radius);
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  margin-bottom: calc(var(--spacing) * 0.5);
+}
+
+.card-content {
+  color: var(--secondary-color);
+  line-height: 1.6;
+}</code></pre>
+
+        <h3>JSON Data</h3>
+        <p>Sample JSON configuration:</p>
+        <pre><code>JSON Configuration File
+{
+  "name": "my-awesome-project",
+  "version": "1.0.0",
+  "description": "A sample project demonstrating JSON structure",
+  "author": {
+    "name": "Tom Cranstoun",
+    "email": "tom@example.com"
+  },
+  "dependencies": {
+    "express": "^4.18.0",
+    "lodash": "^4.17.21"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "keywords": ["example", "demo", "json"],
+  "license": "MIT"
+}</code></pre>
+
+        <h3>Shell Commands</h3>
+        <p>Common command-line operations:</p>
+        <pre><code>Terminal Commands for Git and NPM
+# Initialize a new Git repository
+git init
+
+# Add all files to staging
+git add .
+
+# Commit changes with a message
+git commit -m "Initial commit"
+
+# Create and switch to a new branch
+git checkout -b feature/new-feature
+
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Run linting checks
+npm run lint
+
+# Build for production
+npm run build</code></pre>
+
+        <h3>Markdown Example</h3>
+        <p>Sample markdown formatting:</p>
+        <pre><code># Markdown Formatting Guide
+
+## Headers
+
+Use `#` symbols for headers. More `#` symbols = smaller headers.
+
+## Text Formatting
+
+**Bold text** uses double asterisks.
+*Italic text* uses single asterisks.
+`Inline code` uses backticks.
+
+## Lists
+
+Unordered list:
+- Item one
+- Item two
+- Item three
+
+Ordered list:
+1. First item
+2. Second item
+3. Third item
+
+## Links and Images
+
+[Link text](https://example.com)
+![Alt text for image](https://example.com/image.jpg)
+
+## Code Blocks
+
+Use triple backticks for code blocks:
+```javascript
+const greeting = 'Hello World';
+```
+
+## Blockquotes
+
+> This is a blockquote.
+> It can span multiple lines.</code></pre>
+
+        <h3>Long Code Snippet (Tests Expand/Collapse)</h3>
+        <p>This snippet has more than 40 lines to test the expand/collapse functionality:</p>
+        <pre><code>Long JavaScript Module Example
+// Complete User Management Module
+class UserManager {
+  constructor() {
+    this.users = new Map();
+    this.idCounter = 1;
+  }
+
+  // Create a new user
+  createUser(userData) {
+    const user = {
+      id: this.idCounter++,
+      name: userData.name,
+      email: userData.email,
+      createdAt: new Date(),
+      active: true
+    };
+
+    this.users.set(user.id, user);
+    console.log(`User created: ${user.name}`);
+    return user;
+  }
+
+  // Get user by ID
+  getUserById(id) {
+    return this.users.get(id);
+  }
+
+  // Update user information
+  updateUser(id, updates) {
+    const user = this.users.get(id);
+    if (!user) {
+      throw new Error(`User with ID ${id} not found`);
+    }
+
+    Object.assign(user, updates, {
+      updatedAt: new Date()
+    });
+
+    this.users.set(id, user);
+    console.log(`User updated: ${user.name}`);
+    return user;
+  }
+
+  // Delete user
+  deleteUser(id) {
+    const user = this.users.get(id);
+    if (!user) {
+      throw new Error(`User with ID ${id} not found`);
+    }
+
+    this.users.delete(id);
+    console.log(`User deleted: ${user.name}`);
+    return true;
+  }
+
+  // Get all active users
+  getActiveUsers() {
+    return Array.from(this.users.values())
+      .filter(user => user.active);
+  }
+
+  // Search users by name or email
+  searchUsers(query) {
+    const lowerQuery = query.toLowerCase();
+    return Array.from(this.users.values())
+      .filter(user =>
+        user.name.toLowerCase().includes(lowerQuery) ||
+        user.email.toLowerCase().includes(lowerQuery)
+      );
+  }
+
+  // Get user statistics
+  getStats() {
+    const allUsers = Array.from(this.users.values());
+    return {
+      total: allUsers.length,
+      active: allUsers.filter(u => u.active).length,
+      inactive: allUsers.filter(u => !u.active).length
+    };
+  }
+}
+
+// Usage example
+const manager = new UserManager();
+
+manager.createUser({
+  name: 'Alice Johnson',
+  email: 'alice@example.com'
+});
+
+manager.createUser({
+  name: 'Bob Smith',
+  email: 'bob@example.com'
+});
+
+const stats = manager.getStats();
+console.log('User Statistics:', stats);</code></pre>
+    </div>
+
+    <!-- Showcaser Block -->
+    <div class="showcaser-test-wrapper">
+        <h2 style="color: #0066cc; margin-bottom: 1rem;">Showcaser Block</h2>
+        <p style="color: #666;">The block below collects all code snippets from this page:</p>
+
+        <div class="showcaser block">
+        </div>
+    </div>
+
+    <!-- Testing Instructions -->
+    <div class="instructions">
+        <h3>Testing Instructions</h3>
+        <ol>
+            <li><strong>Code Collection:</strong> Verify that the showcaser displays all 7 code snippets from the page</li>
+            <li><strong>Left Sidebar:</strong> Check that all snippet titles appear in the left navigation panel</li>
+            <li><strong>Click Navigation:</strong> Click each title in the left sidebar and verify the corresponding code displays on the right</li>
+            <li><strong>Toggle Button:</strong> Click the toggle button (< or >) in the top-left corner to collapse/expand the left sidebar</li>
+            <li><strong>Copy to Clipboard:</strong> Click the copy button for any snippet and verify it copies successfully</li>
+            <li><strong>Syntax Highlighting:</strong> Verify different languages have appropriate color highlighting</li>
+            <li><strong>Expand/Collapse:</strong> For the long code snippet (>40 lines), verify Expand/Collapse buttons work</li>
+            <li><strong>Return to Menu:</strong> Scroll down the page and verify the "Return to Menu" button appears</li>
+            <li><strong>Scroll Behavior:</strong> Click "Return to Menu" and verify it scrolls back to the showcaser block</li>
+            <li><strong>Responsive Design:</strong> Resize the browser window to test mobile layout</li>
+        </ol>
+
+        <h3>Expected Results</h3>
+        <ul>
+            <li><strong>Code Collection:</strong> All <code>&lt;pre&gt;&lt;code&gt;</code> elements from the page should be collected</li>
+            <li><strong>Title Extraction:</strong> First line of each code snippet becomes the title (or "Code Snippet N" if no title)</li>
+            <li><strong>Book Layout:</strong> Left page shows navigation, right page shows selected code</li>
+            <li><strong>First Snippet:</strong> The first code snippet should be displayed automatically on load</li>
+            <li><strong>Collapsible Sidebar:</strong> Toggle button should smoothly collapse/expand the left panel</li>
+            <li><strong>Copy Functionality:</strong> Copy button should change to "Copied!" for 2 seconds after clicking</li>
+            <li><strong>Long Code Handling:</strong> Code snippets with >40 lines should show Expand button (top) and "..." button (bottom)</li>
+            <li><strong>Return Button:</strong> Should appear when scrolling past the showcaser block and hide when scrolling back up</li>
+            <li><strong>Smooth Scroll:</strong> Return button should scroll to block top, accounting for fixed header height</li>
+        </ul>
+
+        <h3>Language Detection to Verify</h3>
+        <ul>
+            <li><strong>JavaScript:</strong> Blue keywords, green comments, red strings</li>
+            <li><strong>HTML:</strong> Blue tags, green comments</li>
+            <li><strong>CSS:</strong> Red properties, blue values, maroon selectors</li>
+            <li><strong>JSON:</strong> Blue keys, red strings, blue booleans</li>
+            <li><strong>Shell:</strong> Detected by commands like git, npm, or $ prefix</li>
+            <li><strong>Markdown:</strong> Maroon headers, blue links, gray blockquotes</li>
+        </ul>
+
+        <h3>Document-Level Operations (Intentional)</h3>
+        <p>This block uses global selectors by design:</p>
+        <ul>
+            <li><code>document.querySelectorAll('pre > code')</code> - Collects ALL code from entire page</li>
+            <li><code>document.querySelector('header')</code> - Gets page header for scroll calculations</li>
+            <li><code>window.scrollTo()</code> - Controls page-level scrolling</li>
+            <li><code>window.addEventListener('scroll')</code> - Monitors page scroll position</li>
+        </ul>
+        <p><strong>Why:</strong> The showcaser's purpose is to aggregate and display all code snippets from the entire document in one centralized location. Local scoping would defeat this purpose.</p>
+
+        <h3>Accessibility Features</h3>
+        <ul>
+            <li><strong>Keyboard Navigation:</strong> Tab through all interactive elements</li>
+            <li><strong>Focus Styles:</strong> All buttons should have visible focus indicators</li>
+            <li><strong>ARIA Labels:</strong> Navigation panel has proper role and aria-label</li>
+            <li><strong>Screen Readers:</strong> Titles use proper link semantics with aria-controls</li>
+        </ul>
+
+        <h3>Browser Console Checks</h3>
+        <ul>
+            <li>No JavaScript errors should appear in console</li>
+            <li>Check that original code elements are hidden (not removed) with <code>.showcaser-original-code</code> class</li>
+            <li>Verify clipboard API works (may require HTTPS in some browsers)</li>
+        </ul>
+    </div>
+
+    <script type="module">
+        import decorate from '/blocks/showcaser/showcaser.js';
+
+        // Update status function
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+
+        // Initialize showcaser block
+        async function init() {
+            try {
+                updateStatus('Initializing...', 'info');
+
+                // Get the showcaser block
+                const showcaserBlock = document.querySelector('.showcaser.block');
+
+                if (!showcaserBlock) {
+                    throw new Error('Showcaser block not found');
+                }
+
+                console.log('🔍 Showcaser Test Suite Started');
+                console.log('📊 Code snippets on page:', document.querySelectorAll('pre > code').length);
+
+                // Decorate the showcaser block
+                await decorate(showcaserBlock);
+
+                console.log('✅ Showcaser block decorated successfully');
+
+                // Verify decoration
+                const leftPage = showcaserBlock.querySelector('.showcaser-left-page');
+                const rightPage = showcaserBlock.querySelector('.showcaser-right-page');
+                const titles = showcaserBlock.querySelectorAll('.showcaser-title');
+
+                console.log('📚 Left page titles:', titles.length);
+                console.log('📄 Right page exists:', !!rightPage);
+
+                // Log collected snippets
+                titles.forEach((title, index) => {
+                    console.log(`  ${index + 1}. ${title.textContent}`);
+                });
+
+                updateStatus(`✓ Showcaser loaded successfully with ${titles.length} code snippets`, 'success');
+
+                // Add body.appear class
+                document.body.classList.add('appear');
+
+            } catch (error) {
+                console.error('❌ Failed to initialize showcaser:', error);
+                updateStatus(`Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Start initialization
+        init();
+
+        // Monitor for errors
+        window.addEventListener('error', (e) => {
+            console.error('❌ JavaScript Error:', e.message);
+            updateStatus(`Error: ${e.message}`, 'error');
+        });
+
+        // Log scroll events for testing
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                const returnButton = document.querySelector('.showcaser-returntomenu');
+                if (returnButton) {
+                    console.log('📍 Return to Menu button display:', window.getComputedStyle(returnButton).display);
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>

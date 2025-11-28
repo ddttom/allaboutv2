@@ -134,7 +134,7 @@ export default async function decorate(block) {
     return slideItem;
   }
 
-  const container = document.querySelector(".slide-builder");
+  const container = block;
   const slides = await fetchSlides();
 
   const observer = new IntersectionObserver(

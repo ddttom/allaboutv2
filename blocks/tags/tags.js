@@ -1,5 +1,5 @@
 export default function decorate(block) {
-  const tagsBlock = document.querySelector('.tags.block');
+  const tagsBlock = block;
   let tagsHTML = '';
   if (window.siteConfig && window.siteConfig['$meta:contenttechnology$']) {
     tagsHTML += `<span class='card-tag'>${window.siteConfig['$meta:contenttechnology$']}</span>`;

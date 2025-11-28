@@ -1,142 +1,864 @@
 # Bio Block
 
-The bio block displays author information with an image and bio text. It supports automatic image link conversion, responsive layouts, and multiple variants.
+The bio block displays author or team member biographies with profile images and biographical text. It features automatic image link conversion, responsive layouts, author name extraction, and multiple variations for different presentation needs.
 
-## How It Works
+## Table of Contents
 
-The `decorate` function takes a `block` parameter and performs the following steps:
+1. [Overview](#overview)
+2. [Features](#features)
+3. [Content Structure](#content-structure)
+4. [Block Variations](#block-variations)
+5. [Author Name Extraction](#author-name-extraction)
+6. [Configuration](#configuration)
+7. [Styling and Appearance](#styling-and-appearance)
+8. [Responsive Design](#responsive-design)
+9. [Accessibility](#accessibility)
+10. [Performance](#performance)
+11. [Browser Compatibility](#browser-compatibility)
+12. [Testing](#testing)
+13. [Troubleshooting](#troubleshooting)
+14. [Related Documentation](#related-documentation)
 
-**🔴 CRITICAL:** All DOM queries use the `block` parameter to ensure proper scoping when multiple bio blocks exist on the same page. Never use `document.querySelector('.bio')` - always query from the `block` parameter.
+---
 
-## Processing Logic
+## Overview
 
-If the bio block doesn't have the class 'hide-author', the function performs both image link processing and author name extraction:
+The bio block is an EDS-native component designed to display author biographies in a consistent, visually appealing format. It automatically handles image link conversion, extracts author names from multiple sources, and provides responsive layouts that work across all device sizes.
 
-### Image Link Processing
+**Use cases:**
+- Blog post author bylines
+- Team member profiles
+- Guest contributor information
+- Speaker biographies
+- Editorial staff listings
 
-The block automatically converts image links to actual images:
+**Key capabilities:**
+- Automatic image link → `<img>` element conversion
+- Smart author name extraction (alt attribute → meta tag fallback)
+- Expression variable support for dynamic content
+- Mobile-first responsive design
+- Multiple presentation variations
 
-1. **Image Link Detection**: The function checks if the first cell of the bio block contains a link to an image file.
+---
 
-2. **Image Link Conversion**: If a link pointing to an image file (.jpg, .jpeg, .png, .gif, .webp, .svg) is found, it automatically replaces the link element with an actual `<img>` element using `.replaceWith()`, preserving the link's text content as the image's `alt` attribute.
+## Features
 
-**Why `.replaceWith()`?**
-- **Surgical precision**: Only replaces the link element, not the entire cell
-- **Atomic operation**: Single DOM mutation is more efficient
-- **Preserves siblings**: Other content in the cell remains intact
-- **Modern best practice**: Follows patterns used in other EDS blocks
+### Automatic Image Link Conversion
 
-### Author Name Processing
+The block intelligently detects image links in the first cell and converts them to actual `<img>` elements:
 
-The block extracts and displays the author's name:
+**Supported image formats:**
+- `.jpg` / `.jpeg`
+- `.png`
+- `.gif`
+- `.webp`
+- `.svg`
 
-1. **Search for image**: Queries for an `<img>` element within the current block using `block.querySelector('img')`.
+**How it works:**
+1. Scans the first cell for `<a>` tags pointing to image files
+2. Creates an `<img>` element with the link's URL as `src`
+3. Uses link text as `alt` attribute (if text is not a URL)
+4. Replaces the link atomically using `.replaceWith()`
+5. Preserves other cell content
 
-2. **Extract from alt attribute**: If the `<img>` element is found and has a non-empty `alt` attribute, the function extracts the author name from the `alt` attribute (highest priority).
+**Why this matters:**
+- Authors can paste image URLs directly in Google Docs
+- No need for complex image insertion workflows
+- Consistent image handling across all bio instances
+- Proper semantic HTML in production
 
-3. **Fallback to meta tag**: If the author name is not found in the `alt` attribute or if the `<img>` element doesn't exist, the function looks for a `<meta>` tag with the `name` attribute set to `"author"`. If found, it retrieves the author name from the `content` attribute of the `<meta>` tag.
+### Author Name Extraction
 
-4. **Create author element**: The function creates a new `<strong>` element and sets its text content to the author name.
+The block automatically adds the author's name in a `<strong>` element below the bio:
 
-5. **Append to block**: The function appends the newly created `<strong>` element containing the author name as the last child of the current block using `block.appendChild(authorElement)`.
+**Extraction priority:**
+1. **Image alt attribute** (highest priority)
+2. **Page meta tag** (`<meta name="author" content="Name">`)
 
-**Author name priority:**
-1. Image `alt` attribute (recommended)
-2. Page `<meta name="author">` tag (fallback)
+**URL detection logic:**
+- If link text is a URL (starts with `http://` or `https://`), it's ignored
+- Fallback to meta tag prevents "https://example.com/photo.jpg" from appearing as author name
+- Ensures clean, professional presentation
 
-## Variants
+### Expression Processing
 
-### Default (Standard)
-Standard bio block with image, text, and author name.
+The block integrates with the expressions plugin for dynamic content:
 
-```
-| bio                                    |                                                           |
-|----------------------------------------|-----------------------------------------------------------|
-| https://example.com/author-image.jpg   | Jane Doe is a senior developer with 10 years experience. |
-```
+**Example usage:**
 
-### Hide Author (`hide-author`)
-Does NOT convert image links or add author name.
-
-```
-| bio (hide-author)                      |                                                           |
-|----------------------------------------|-----------------------------------------------------------|
-| https://example.com/author-image.jpg   | Brief bio without author name displayed below.            |
-```
-
-**Important:** When `hide-author` class is present:
-- Image links remain as links (not converted to images)
-- No author name is added to the block
-
-### Highlighted (`highlighted`)
-Adds a 2px blue border around the image.
-
-```
-| bio (highlighted)                      |                                                           |
-|----------------------------------------|-----------------------------------------------------------|
-| https://example.com/vip-author.jpg     | Dr. Emily Roberts is the lead researcher in AI.          |
-```
-
-## Mobile Responsiveness
-
-The bio block includes responsive CSS that:
-- **Desktop (>768px)**: 80px circular images, horizontal layout, 20px gap
-- **Tablet (≤768px)**: 60px circular images, vertical layout, 15px gap
-- **Mobile (≤480px)**: 50px circular images, vertical centered layout, 12px gap
-
-## Expression Processing
-
-The block supports dynamic expressions through the expressions plugin. If a `.bio-wrapper` element exists (in production), expressions are processed on that wrapper.
-
-**Supported expressions:**
-- `{{expand,$NAMESPACE:VARIABLE$}}` - Expands profile variables
+`Dynamic Bio Content`
+`{{expand,$profile:name$}} is a developer at {{expand,$profile:company$}}.`
 
 **Requirements:**
-- `$system:enableprofilevariables$` must be set to 'y'
-- Profile variables must be defined
+- Expressions plugin must be loaded
+- `$system:enableprofilevariables$` set to 'y'
+- Profile variables defined
 
-**Note:** The expressions plugin is optional. If the wrapper doesn't exist (e.g., in test environments), the block functions normally without expression processing.
+**Note:** Expression processing only occurs if `.bio-wrapper` element exists (production environment). Test environments function normally without expressions.
+
+---
+
+## Content Structure
+
+### Basic Markdown Table
+
+Create a two-column table in Google Docs or markdown:
+
+`Basic Bio Structure`
+`| bio                                    |                                                           |`
+`|----------------------------------------|-----------------------------------------------------------|`
+`| https://example.com/author-image.jpg   | Jane Doe is a senior developer with 10 years experience. |`
+
+**Structure breakdown:**
+- **Column 1**: Image URL or pasted image
+- **Column 2**: Biographical text
+
+### EDS HTML Transformation
+
+EDS converts the markdown table to this HTML structure:
+
+`HTML Output Structure`
+`<div class="bio-wrapper">`
+`  <div class="bio block">`
+`    <div>`
+`      <div><img src="..." alt="..."></div>`
+`      <div>Bio text content</div>`
+`    </div>`
+`    <strong>Author Name</strong>`
+`  </div>`
+`</div>`
+
+**CSS targets:**
+- `.bio` - Main block container
+- `.bio > div` - Flexbox wrapper
+- `.bio > div > div:first-child` - Image container
+- `.bio > div > div:last-child` - Text container
+- `.bio strong` - Author name
+
+---
+
+## Block Variations
+
+### Default (Standard)
+
+Standard bio block with image, text, and author name.
+
+`Standard Bio Example`
+`| bio                                    |                                                           |`
+`|----------------------------------------|-----------------------------------------------------------|`
+`| https://example.com/author-image.jpg   | Jane Doe is a senior developer with 10 years experience. |`
+
+**Features:**
+- Image link converted to `<img>` element
+- Author name extracted and displayed
+- Circular 80px image (desktop)
+- Horizontal layout on desktop
+
+---
+
+### Hide Author Variation
+
+Use `(hide-author)` to suppress image conversion and author name display:
+
+`Hide Author Example`
+`| bio (hide-author)                      |                                                           |`
+`|----------------------------------------|-----------------------------------------------------------|`
+`| https://example.com/author-image.jpg   | Brief bio without author name displayed below.            |`
+
+**Behavior:**
+- Image links remain as `<a>` tags (not converted)
+- No `<strong>` author name element added
+- All author extraction logic skipped
+
+**Use cases:**
+- Anonymous contributors
+- Bios where name is already in the text
+- Placeholder content
+
+**Implementation:** When `block.classList.contains('hide-author')` is true, the entire decoration function returns early.
+
+---
+
+### Highlighted Variation
+
+Use `(highlighted)` to add a 2px blue border around the image:
+
+`Highlighted Bio Example`
+`| bio (highlighted)                      |                                                           |`
+`|----------------------------------------|-----------------------------------------------------------|`
+`| https://example.com/vip-author.jpg     | Dr. Emily Roberts is the lead researcher in AI.          |`
+
+**Styling:**
+- 2px solid blue border
+- `box-sizing: border-box` prevents size increase
+- Useful for featured authors, VIP guests, or keynote speakers
+
+**CSS implementation:**
+
+`.bio.highlighted img { border: 2px solid blue; box-sizing: border-box; }`
+
+---
+
+## Author Name Extraction
+
+### Extraction Logic
+
+The block uses a two-tier fallback system for author names:
+
+**Priority 1: Image Alt Attribute**
+
+`Alt Attribute Priority`
+`const imgElement = block.querySelector('img');`
+`if (imgElement && imgElement.getAttribute('alt')) {`
+`  author = imgElement.getAttribute('alt');`
+`}`
+
+**Priority 2: Page Meta Tag**
+
+`Meta Tag Fallback`
+`if (!author) {`
+`  const metaAuthor = document.querySelector('meta[name="author"]');`
+`  if (metaAuthor) {`
+`    author = metaAuthor.getAttribute('content');`
+`  }`
+`}`
+
+### URL Detection Protection
+
+To prevent URLs from appearing as author names:
+
+`URL Detection Logic`
+`const linkText = link.textContent || '';`
+`const isLinkTextUrl = linkText.startsWith('http://') || linkText.startsWith('https://');`
+`img.alt = isLinkTextUrl ? '' : linkText || 'Bio image';`
+
+**Why this matters:**
+- In Google Docs, users often paste URLs as link text
+- Without detection, "https://example.com/photo.jpg" would appear as author name
+- Empty alt triggers fallback to meta tag
+- Ensures professional, clean presentation
+
+### Best Practices
+
+**For authors creating content:**
+1. **Option A (Recommended)**: Use author name as link text
+   ```
+   Link text: "Jane Doe"
+   Link URL: https://example.com/photo.jpg
+   Result: "Jane Doe" appears as author name
+   ```
+
+2. **Option B**: Add alt text to pasted images
+   - Right-click image → Alt text → Enter name
+
+3. **Option C**: Add meta tag to page
+   ```html
+   <meta name="author" content="Jane Doe">
+   ```
+
+**Priority recommendation:** Alt attribute > Meta tag for best author-side control.
+
+---
+
+## Configuration
+
+### Block Configuration Object
+
+While the bio block doesn't use an explicit `BIO_CONFIG` object, it follows configuration patterns through:
+
+**Supported Image Extensions (Constant Array):**
+
+`Image Extension Configuration`
+`const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];`
+
+**Extension points:**
+- Add new image formats by extending the array
+- Modify detection logic in `imageExtensions.some()`
+
+### Expression Plugin Integration
+
+The block supports dynamic expressions through plugin integration:
+
+`Expression Processing`
+`renderExpressions(document.querySelector('.bio-wrapper'));`
+
+**Configuration requirements:**
+- Expressions plugin loaded (`/plusplus/plugins/expressions/src/expressions.js`)
+- `$system:enableprofilevariables$` = 'y'
+- Profile variables defined in appropriate namespace
+
+**Error handling:**
+- Plugin import uses `/* eslint-disable import/no-unresolved */`
+- Graceful degradation if plugin unavailable
+- No errors thrown in test environments
+
+---
+
+## Styling and Appearance
+
+### Image Styling
+
+**Default circular images:**
+
+`.bio-wrapper .bio.block img {`
+`  border-radius: 50%;`
+`  object-fit: cover;`
+`  width: 80px;`
+`  height: 80px;`
+`}`
+
+**Properties explained:**
+- `border-radius: 50%` - Creates perfect circle
+- `object-fit: cover` - Crops to fill circle without distortion
+- Fixed dimensions ensure consistency
+
+### Highlighted Variation
+
+**Blue border for featured authors:**
+
+`.bio-wrapper .bio.block.highlighted img {`
+`  border: 2px solid blue;`
+`  box-sizing: border-box;`
+`}`
+
+### Layout Structure
+
+**Desktop flexbox layout:**
+
+`.bio > div {`
+`  display: flex;`
+`  align-items: center;`
+`  gap: 20px;`
+`}`
+
+**Container behavior:**
+
+`.bio > div > div:first-child {`
+`  flex-shrink: 0;  /* Image container never shrinks */`
+`}`
+`.bio > div > div:last-child {`
+`  flex-grow: 1;    /* Text container takes remaining space */`
+`}`
+
+---
+
+## Responsive Design
+
+### Breakpoint Strategy
+
+The bio block uses mobile-first responsive design with two breakpoints:
+
+**Tablet (≤768px):**
+- Image size: 60×60px
+- Layout: Vertical stack, centered
+- Gap: 15px
+
+**Mobile (≤480px):**
+- Image size: 50×50px
+- Layout: Vertical stack, centered
+- Gap: 12px
+
+### Tablet Styles
+
+`Tablet Responsive Styles`
+`@media (max-width: 768px) {`
+`  .bio-wrapper .bio.block img {`
+`    width: 60px;`
+`    height: 60px;`
+`  }`
+`  .bio > div {`
+`    gap: 15px;`
+`    flex-direction: column;`
+`    text-align: center;`
+`  }`
+`}`
+
+### Mobile Styles
+
+`Mobile Responsive Styles`
+`@media (max-width: 480px) {`
+`  .bio-wrapper .bio.block img {`
+`    width: 50px;`
+`    height: 50px;`
+`  }`
+`  .bio > div {`
+`    gap: 12px;`
+`    flex-direction: column;`
+`    text-align: center;`
+`  }`
+`}`
+
+### Testing Responsive Behavior
+
+**Manual testing:**
+1. Open test page or live page
+2. Use browser DevTools responsive mode
+3. Test at 1200px (desktop), 768px (tablet), 480px (mobile)
+4. Verify layout changes, image sizes, text alignment
+
+**Automated testing:**
+- Use Playwright with viewport configurations
+- Test all three breakpoints
+- Verify computed styles match specifications
+
+---
+
+## Accessibility
+
+### Image Alt Text
+
+**Automatic alt attribute handling:**
+- Link text becomes alt text (if not a URL)
+- Fallback to "Bio image" if no text provided
+- Empty alt if URL detected (prevents reading URLs)
+
+**Best practices:**
+- Always provide descriptive alt text
+- Include author name in alt attribute
+- Example: "Jane Doe, Senior Developer"
+
+### Semantic HTML
+
+The block uses proper semantic markup:
+
+**Author name element:**
+
+`<strong>Author Name</strong>`
+
+**Why `<strong>`:**
+- Semantic meaning (importance/emphasis)
+- Better than unstyled `<div>` or `<span>`
+- Screen readers understand emphasis
+- SEO benefits
+
+### Keyboard Navigation
+
+**Interactive elements:**
+- No buttons or interactive elements by default
+- If bio text contains links, they are keyboard accessible
+- Tab order follows DOM order
+
+### Screen Reader Considerations
+
+**Element announcement order:**
+1. Image (with alt text)
+2. Bio text content
+3. Author name (`<strong>` element)
+
+**ARIA attributes:**
+- Not required for basic bio block (native semantics sufficient)
+- Consider `role="complementary"` for sidebar bios
+- Consider `aria-labelledby` for complex layouts
+
+---
+
+## Performance
+
+### Image Optimization
+
+**Recommended specifications:**
+- Format: WebP (fallback to JPG/PNG)
+- Dimensions: 200×200px (square)
+- File size: <50KB
+- Compression: 80-85% quality
+
+**Why these specifications:**
+- Block displays at 80px max (desktop)
+- 200×200px provides 2.5× resolution for Retina displays
+- Small file size ensures fast loading
+- WebP provides best compression with quality
+
+### DOM Manipulation Efficiency
+
+**Atomic operations:**
+
+`Efficient DOM Replacement`
+`link.replaceWith(img);  // Single DOM mutation`
+
+**Why `.replaceWith()` is efficient:**
+- Single DOM operation (not multiple appends/removes)
+- Preserves siblings automatically
+- No reflow between steps
+- Modern browser optimization
+
+### Lazy Loading Consideration
+
+**Current implementation:**
+- Images load immediately (eager loading)
+- Appropriate for above-the-fold bios
+
+**Future enhancement:**
+- Add `loading="lazy"` for below-fold bios
+- Consider intersection observer for large bio lists
+
+### Core Web Vitals Impact
+
+**LCP (Largest Contentful Paint):**
+- Bio images are small (80px max)
+- Minimal LCP impact
+- Use above-the-fold for critical bios
+
+**CLS (Cumulative Layout Shift):**
+- Fixed image dimensions prevent shift
+- Author name added to end (minimal shift)
+- CSS ensures consistent layout
+
+**FID (First Input Delay):**
+- No JavaScript blocking user interaction
+- Decoration runs asynchronously
+- No impact on interactivity
+
+---
+
+## Browser Compatibility
+
+### JavaScript Features
+
+**ES6+ features used:**
+- `async`/`await` - Supported in all modern browsers
+- Arrow functions - Fully supported
+- `const`/`let` - Fully supported
+- Template literals - Fully supported
+- `.replaceWith()` - Supported in all modern browsers (including IE11 with polyfill)
+
+**Minimum browser versions:**
+- Chrome 60+
+- Firefox 55+
+- Safari 12+
+- Edge 79+
+
+### CSS Features
+
+**Modern CSS used:**
+- Flexbox - Universal support
+- `border-radius: 50%` - Universal support
+- `object-fit: cover` - IE11 needs polyfill
+- `gap` property - Modern browsers only (graceful degradation)
+
+**IE11 considerations:**
+- `object-fit` polyfill required
+- `gap` property not supported (use margin alternative)
+- Flexbox supported but buggy (test thoroughly)
+
+### Image Format Support
+
+**Format compatibility:**
+- JPG/JPEG - Universal support
+- PNG - Universal support
+- WebP - Modern browsers (95%+ support)
+- SVG - Universal support
+- GIF - Universal support
+
+**Recommendation:** Use WebP with JPG/PNG fallback for best compatibility.
+
+---
 
 ## Testing
 
-Test the bio block using:
-- **Test file**: [test.html](test.html) - Comprehensive test suite with 7 test cases
-- **Test script**: [/tmp/test_bio_block.py](/tmp/test_bio_block.py) - Automated Playwright tests
-- **Examples**: [EXAMPLE.md](EXAMPLE.md) - Google Docs authoring examples
+### Test Files
+
+**Comprehensive test suite:**
+
+1. **test.html** - Browser-based visual testing
+   - 8 test cases covering all variations
+   - Console logging with detailed validation
+   - Manual visual inspection
+   - Located: `/blocks/bio/test.html`
+
+2. **EXAMPLE.md** - Content authoring guide
+   - Google Docs authoring examples
+   - Best practices for authors
+   - Troubleshooting guide
+   - Located: `/blocks/bio/EXAMPLE.md`
 
 ### Running Tests
 
-```bash
-# Start debug server
-npm run debug
+**Start development server:**
 
-# Open test page in browser
-open http://localhost:3000/blocks/bio/test.html
+`npm run debug`
 
-# Run automated tests (requires Playwright)
-python /tmp/test_bio_block.py
-```
+**Open test page:**
+- URL: `http://localhost:3000/blocks/bio/test.html`
+- Browser: Chrome, Firefox, Safari
+- DevTools Console: View detailed test results
 
-## Common Issues
+### Test Cases Covered
 
-### Image links not converting
-- **Cause**: Using `hide-author` class or link doesn't end in image extension
-- **Fix**: Remove `hide-author` class or ensure link ends in .jpg, .png, etc.
+The test.html file validates:
 
-### Author name shows as URL
-- **Cause**: Link text was a URL and page is missing `<meta name="author">` tag
-- **Fix**: Add `<meta name="author" content="Your Name">` to the page head, or in Google Docs, change the link text to the author name
+1. **Image Link Conversion** - Primary functionality
+   - Link with image URL converts to `<img>`
+   - Original `<a>` tag removed completely
+   - Alt text preserved from link text
 
-### Multiple blocks showing same content
-- **Cause**: Using global selectors (`document.querySelector('.bio')`) in decorate function
-- **Fix**: Always use `block.querySelector()` to query within the current block
+2. **Regular Picture Element** - Standard `<picture>` tags
+   - Image displayed correctly
+   - Alt attribute extracted for author name
 
-### No author name appears
-- **Cause**: Image has no alt text and no meta tag on page
-- **Fix**: Add alt text to image or add `<meta name="author" content="Name">` to page head
+3. **Different Image Extensions** - .png, .jpg, .gif, etc.
+   - All supported formats handled
+   - Extension detection case-insensitive
+
+4. **Hide Author Variant** - `hide-author` class
+   - Link NOT converted
+   - Author name NOT added
+
+5. **Multiple Bio Blocks** - Block scoping
+   - Each block processed independently
+   - No cross-contamination between instances
+
+6. **Non-Image Link** - Regular URLs
+   - Links without image extensions preserved
+   - No conversion attempted
+
+7. **Highlighted Variant** - Blue border styling
+   - CSS class applied correctly
+   - Visual styling verified
+
+8. **URL as Link Text** - Production bug fix
+   - URL link text ignored
+   - Fallback to meta tag
+   - Prevents "https://..." as author name
+
+### Test Results Interpretation
+
+**Console output format:**
+
+`Test Results Example`
+`🧪 BIO BLOCK TEST SUITE`
+`Found 8 bio blocks to test`
+`Test 1: Standard`
+`  📸 Image link found: https://picsum.photos/200/200.jpg`
+`  📊 Results:`
+`    Image created: true`
+`    Link removed: true`
+`    Author added: true`
+`  ✅ PASSED`
+
+**Success criteria:**
+- All 8 tests pass
+- No JavaScript errors in console
+- Visual rendering matches expectations
+
+### Automated Testing
+
+**Playwright test example:**
+
+`Automated Test Structure`
+`import { test, expect } from '@playwright/test';`
+`test('bio block converts image links', async ({ page }) => {`
+`  await page.goto('http://localhost:3000/blocks/bio/test.html');`
+`  const img = await page.locator('.bio img').first();`
+`  await expect(img).toBeVisible();`
+`  const link = await page.locator('.bio a[href$=".jpg"]').first();`
+`  await expect(link).not.toBeVisible();`
+`});`
+
+---
+
+## Troubleshooting
+
+### Issue: Image link not converting
+
+**Symptoms:**
+- Link remains as `<a>` tag
+- No image displayed
+
+**Possible causes:**
+1. Using `hide-author` class (intentional behavior)
+2. Link doesn't end in image extension (.jpg, .png, etc.)
+3. JavaScript error preventing decoration
+
+**Solutions:**
+- Remove `hide-author` class if not needed
+- Ensure URL ends with valid image extension
+- Check browser console for JavaScript errors
+- Verify link is in first cell of block
+
+**Validation:**
+
+`Check DOM in DevTools`
+`// Should see <img>, not <a>`
+`document.querySelector('.bio img')`
+`// Should return null`
+`document.querySelector('.bio a[href$=".jpg"]')`
+
+---
+
+### Issue: Author name shows as URL
+
+**Symptoms:**
+- Author name displays as "https://example.com/photo.jpg"
+
+**Cause:**
+- Link text was the URL (not author name)
+- No meta tag on page for fallback
+
+**Solutions:**
+1. **Option A**: Change link text to author name in Google Docs
+2. **Option B**: Add meta tag to page:
+   ```html
+   <meta name="author" content="Author Name">
+   ```
+
+**Why this happens:**
+- Older bio blocks converted link text directly to alt
+- Bug fix now detects URLs and ignores them
+- Fallback to meta tag ensures clean presentation
+
+---
+
+### Issue: No author name appears
+
+**Symptoms:**
+- Image displays correctly
+- No `<strong>` element with author name
+
+**Possible causes:**
+1. Image has no alt text
+2. No meta tag on page
+3. Using `hide-author` class
+
+**Solutions:**
+- Add alt text to image in Google Docs
+- Add `<meta name="author" content="Name">` to page
+- Remove `hide-author` class if not intended
+
+**Validation:**
+
+`Check author extraction`
+`// Should show author name`
+`document.querySelector('.bio strong').textContent`
+
+---
+
+### Issue: Multiple blocks showing wrong content
+
+**Symptoms:**
+- All bio blocks show same author name
+- Images appear in wrong blocks
+
+**Cause:**
+- Using global selectors (`document.querySelector('.bio')`)
+- Should use block-scoped selectors
+
+**Solution:**
+This is a code-level issue. The current implementation correctly uses `block.querySelector()`, not `document.querySelector()`.
+
+**If implementing custom modifications:**
+- Always use `block` parameter
+- Never query `document` directly
+- Example: `block.querySelector('img')` not `document.querySelector('.bio img')`
+
+---
+
+### Issue: Image too large or small
+
+**Symptoms:**
+- Image doesn't match 80px (desktop) size
+- Appears pixelated or blurry
+
+**Cause:**
+- CSS not loading correctly
+- Image source too low resolution
+
+**Solutions:**
+1. Verify CSS loaded: Check DevTools → Network → bio.css
+2. Upload higher resolution image (minimum 200×200px)
+3. Check for CSS conflicts with custom styles
+
+**Expected computed styles:**
+
+`Expected Image Styles`
+`width: 80px (desktop), 60px (tablet), 50px (mobile)`
+`height: 80px (desktop), 60px (tablet), 50px (mobile)`
+`border-radius: 50%`
+`object-fit: cover`
+
+---
+
+### Issue: Layout broken on mobile
+
+**Symptoms:**
+- Horizontal layout persists on mobile
+- Image not centered
+
+**Cause:**
+- CSS media queries not applied
+- Conflicting custom styles
+
+**Solutions:**
+1. Check viewport meta tag:
+   ```html
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   ```
+2. Verify bio.css loading correctly
+3. Check for `!important` rules overriding media queries
+
+**Expected mobile behavior:**
+- `flex-direction: column` (not row)
+- `text-align: center`
+- Smaller image dimensions
+
+---
 
 ## Related Documentation
 
-- **[Complete examples](EXAMPLE.md)** - Google Docs authoring guide with best practices
-- **[EDS Block Guide](../../docs/for-ai/implementation/raw-eds-blocks-guide.md)** - Critical patterns and pitfalls
-- **[Block Architecture Standards](../../docs/for-ai/implementation/block-architecture-standards.md)** - EDS block development standards
+### Internal Documentation
+
+**Block-specific:**
+- [EXAMPLE.md](EXAMPLE.md) - Complete Google Docs authoring guide with examples
+- [test.html](test.html) - Comprehensive test suite (8 test cases)
+
+**EDS Architecture:**
+- [EDS Fundamentals Guide](../../docs/for-ai/eds.md) - Core EDS concepts and patterns
+- [Block Architecture Standards](../../docs/for-ai/implementation/block-architecture-standards.md) - Development standards
+- [Raw EDS Blocks Guide](../../docs/for-ai/implementation/raw-eds-blocks-guide.md) - Critical patterns and pitfalls
+
+**Development Guidelines:**
+- [Frontend Guidelines](../../docs/for-ai/guidelines/frontend-guidelines.md) - General frontend best practices
+- [Security Checklist](../../docs/for-ai/guidelines/security-checklist.md) - Security considerations
+
+### External Resources
+
+**Adobe Edge Delivery Services:**
+- [EDS Documentation](https://www.aem.live/docs/) - Official documentation
+- [Block Development](https://www.aem.live/developer/block-collection) - Block collection and examples
+
+**Web Standards:**
+- [MDN: Flexbox](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout) - Flexbox layout guide
+- [MDN: Media Queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries) - Responsive design patterns
+- [MDN: Image Alt Text](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#alt) - Accessibility best practices
+
+---
+
+## Version History
+
+**Current version:** 2.0 (2024-11-26)
+
+**Recent changes:**
+- Added URL detection to prevent URLs as author names
+- Improved image link conversion with `.replaceWith()`
+- Enhanced test suite with 8 comprehensive test cases
+- Added expressions plugin integration
+- Improved responsive design (768px, 480px breakpoints)
+
+**Known limitations:**
+- Expressions plugin requires production environment
+- No built-in lazy loading (manual implementation needed)
+- IE11 requires polyfills for `object-fit` and `replaceWith()`
+
+---
+
+## Contributing
+
+When modifying the bio block:
+
+1. **Test thoroughly** - Run all 8 test cases
+2. **Maintain block scoping** - Always use `block.querySelector()`, never `document.querySelector('.bio')`
+3. **Follow EDS patterns** - Use single JS file, CSS variations, no inline styles
+4. **Update documentation** - Keep README.md, EXAMPLE.md, and tests in sync
+5. **Consider accessibility** - Test with screen readers, verify alt text
+6. **Check responsiveness** - Test at 1200px, 768px, 480px breakpoints
+
+**Questions or issues?** See [Related Documentation](#related-documentation) or review test.html for implementation examples.

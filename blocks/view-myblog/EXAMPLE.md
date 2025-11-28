@@ -1,130 +1,376 @@
-# View MyBlog Block - Google Docs Example
+# View MyBlog Block - Author Guide
 
-## How to Use in Google Docs
+Complete guide for content authors using the View MyBlog block in Google Docs or SharePoint.
 
-### Simple Usage (Recommended)
+## Quick Start
 
-Create a table with just the block name:
+### Basic Usage
 
-| view-myblog |
-|-------------|
+Create a simple two-row table with the block name:
 
-The block will automatically:
-- Fetch data from `/my-blog.json`
-- Display the blog header with stats
-- Show latest posts section
-- Show most visited section
-- Display category map
-- Add back-to-top button
+| View MyBlog |
+| --- |
 
-### Expected Output
+The block will automatically load your blog content from `/my-blog.json`.
 
-When you use this block, it will render:
+### Custom Data Source
 
-1. **Header Section**
-   - Blog title
-   - Subtitle
-   - Statistics (article count, category count)
+To use a different JSON file location:
 
-2. **Latest Posts Section**
-   - 3 most recent blog posts
-   - Blue gradient background
-   - Post titles, descriptions, and links
+| View MyBlog |
+| --- |
+| /custom-path/blog-data.json |
 
-3. **Most Visited Section**
-   - 3 most popular blog posts
-   - Orange gradient background
-   - Post titles, descriptions, and links
+## What You'll Get
 
-4. **Category Map**
-   - Table with all blog categories
-   - Article counts per category
-   - Clickable links to category sections
-   - Category descriptions
+When you add the View MyBlog block to your page, it displays:
 
-5. **Back to Top Button**
-   - Fixed position button
-   - Smooth scroll to top
+### 1. Latest Posts Section
 
-## Visual Example
+Shows the 3 most recent blog posts automatically:
+- Blue gradient background for visual emphasis
+- Post titles as clickable links
+- Brief descriptions
+- Automatically updated when you add new posts
 
-```
-┌─────────────────────────────────────────────┐
-│         Tom Cranstoun's Blog                │
-│   I mostly write about AEM, EDS and AI      │
-│        91 Articles  |  6 Categories         │
-└─────────────────────────────────────────────┘
+`Example Display`
+`┌─────────────────────────────────────┐`
+`│ Latest Posts                        │`
+`├─────────────────────────────────────┤`
+`│ • Your Newest Post                  │`
+`│   Brief description...              │`
+`│                                     │`
+`│ • Second Newest Post                │`
+`│   Brief description...              │`
+`│                                     │`
+`│ • Third Newest Post                 │`
+`│   Brief description...              │`
+`└─────────────────────────────────────┘`
 
-┌─────────────────────────────────────────────┐
-│ Latest Posts                                │
-├─────────────────────────────────────────────┤
-│ • Live Jupyter Notebook                     │
-│   Description...                            │
-│                                             │
-│ • AI-Powered Adobe EDS Development          │
-│   Description...                            │
-│                                             │
-│ • Living Documentation...                   │
-│   Description...                            │
-└─────────────────────────────────────────────┘
+### 2. Most Visited Section
 
-┌─────────────────────────────────────────────┐
-│ Most Visited                                │
-├─────────────────────────────────────────────┤
-│ • Adobe EDS Full Guide...                   │
-│   Description...                            │
-│                                             │
-│ • Creating an llms.txt                      │
-│   Description...                            │
-│                                             │
-│ • The EDS Developer's Dilemma...            │
-│   Description...                            │
-└─────────────────────────────────────────────┘
+Highlights your popular content:
+- Orange gradient background
+- Manually curated (you control what appears)
+- Perfect for showcasing best content
+- Optional (only shows if you provide it)
 
-┌─────────────────────────────────────────────┐
-│       Category Map, click one to jump       │
-├─────────────────────────────────────────────┤
-│ Category          | Count | Focus Area      │
-├─────────────────────────────────────────────┤
-│ EDS & Integrations|  22   | Adobe EDS...    │
-│ Core AI/LLM       |  20   | Language models │
-│ AEM / CMS Focus   |   6   | Adobe Experience│
-│ Developer Guide   |  13   | Step-by-step... │
-│ Content Creator   |   3   | Authoring guides│
-│ General Blog      |  27   | Development...  │
-│ Additional        |  13   | Quick links...  │
-└─────────────────────────────────────────────┘
+`Example Display`
+`┌─────────────────────────────────────┐`
+`│ Most Visited                        │`
+`├─────────────────────────────────────┤`
+`│ • Your Most Popular Post            │`
+`│   Why readers love this...          │`
+`│                                     │`
+`│ • Second Most Popular               │`
+`│   Another reader favorite...        │`
+`└─────────────────────────────────────┘`
 
-                            [Back to Top ↑]
-```
+### 3. Category Map
 
-## Notes for Authors
+Interactive navigation table:
+- Shows all your blog categories
+- Article count per category
+- Click to jump to that category section
+- Focus area descriptions
 
-- **Zero Configuration**: Just add the block name, everything else is automatic
-- **Dynamic Content**: Content is loaded from `/my-blog.json` at runtime
-- **No Manual Updates**: Edit the JSON file to update blog content
-- **Responsive**: Works on mobile, tablet, and desktop
-- **Accessible**: Keyboard navigation and screen reader friendly
+`Example Display`
+`┌────────────────────────────────────────────────┐`
+`│     Category Map, click one to jump            │`
+`├────────────────────────────────────────────────┤`
+`│ Category        │ Count │ Focus Area           │`
+`├────────────────────────────────────────────────┤`
+`│ Development     │  15   │ Web dev tutorials    │`
+`│ Design          │   8   │ UI/UX best practices │`
+`│ Tools           │  12   │ Developer tools      │`
+`└────────────────────────────────────────────────┘`
 
-## Common Issues
+### 4. Category Sections
 
-### Block Not Loading
-- Ensure `/my-blog.json` exists and is accessible
-- Check browser console for errors
-- Verify JSON syntax is valid
+Full blog archive organized by category:
+- Each category has its own section
+- All posts with titles, descriptions, dates
+- Posts sorted by date (newest first by default)
+- Optional oldest-first sorting for tutorial series
 
-### Content Not Displaying
-- Check that the JSON structure matches the expected format
-- Verify URLs in the JSON are correct
-- Ensure the block name is exactly "view-myblog" (lowercase with hyphen)
+## Usage Examples
 
-## For Developers
+### Example 1: Default Blog Page
 
-If you need to customize the data source or error messages, edit the configuration in `view-myblog.js`:
+`Standard blog landing page`
+`# Tom's Blog`
+``
+`Welcome to my blog about web development and design.`
+``
+`| View MyBlog |`
+`| --- |`
 
-```javascript
-const config = {
-  dataUrl: '/my-blog.json',
-  errorMessage: 'Unable to load blog content'
-};
-```
+**Result:** Full blog viewer with all sections, loading from `/my-blog.json`
+
+### Example 2: Custom Data Location
+
+`Blog with custom JSON location`
+`# Project Blog`
+``
+`Updates and articles about our project.`
+``
+`| View MyBlog |`
+`| --- |`
+`| /projects/myproject/blog.json |`
+
+**Result:** Blog viewer loading from custom JSON file
+
+### Example 3: Subdomain Blog
+
+`Blog on subdomain with full URL`
+`# Company News`
+``
+`| View MyBlog |`
+`| --- |`
+`| https://blog.company.com/posts.json |`
+
+**Result:** Blog viewer loading from external URL
+
+## Single Category Mode
+
+When your blog has only one category, the block automatically simplifies:
+
+**Hidden:**
+- Latest Posts section (no point when all posts are in one category)
+- Category Map (no need to navigate between categories)
+
+**Shown:**
+- Most Visited section (if provided)
+- Single category section with all posts
+
+This creates a cleaner, more focused layout for single-topic blogs.
+
+## Content Management
+
+### JSON Data Structure
+
+Your blog content lives in a JSON file (typically `/my-blog.json`). Here's what it looks like:
+
+`Minimal JSON Example`
+`{`
+`  "categories": [`
+`    {`
+`      "id": "tutorials",`
+`      "name": "Tutorials",`
+`      "posts": [`
+`        {`
+`          "title": "Getting Started",`
+`          "url": "/blog/getting-started",`
+`          "description": "Learn the basics",`
+`          "lastModified": "2025-11-20"`
+`        }`
+`      ]`
+`    }`
+`  ]`
+`}`
+
+### Best Practices
+
+**DO:**
+- Let the block auto-generate Latest Posts (don't include `latestPosts` in JSON)
+- Manually curate Most Visited to highlight best content
+- Use descriptive category names and descriptions
+- Include lastModified dates for automatic sorting
+- Keep descriptions brief (1-2 sentences)
+
+**DON'T:**
+- Don't include index pages in your blog posts
+- Don't manually maintain Latest Posts (let it auto-generate)
+- Don't create empty categories
+- Don't use overly long descriptions
+
+## Special Features
+
+### Auto-Generated Latest Posts
+
+The block automatically creates Latest Posts by:
+1. Looking at all posts across all categories
+2. Sorting by lastModified date (newest first)
+3. Taking the top 3 most recent posts
+4. Filtering out index pages
+
+**Why this is great:**
+- Always shows your newest content
+- No manual maintenance required
+- Updates automatically when you add posts
+
+### Index Page Filtering
+
+The block automatically filters out index/landing pages that end with:
+- `/` (e.g., `/blog/`)
+- `/index`
+- `/index.html` or `/index.htm`
+
+**Why this matters:**
+- Shows only actual blog posts
+- Prevents duplicate navigation pages
+- Keeps content focused
+
+### Category Sorting
+
+Categories can be sorted two ways:
+
+**Newest First (default):**
+- Most recent posts at the top
+- Best for news, updates, announcements
+- No configuration needed
+
+**Oldest First:**
+- Earliest posts at the top
+- Perfect for tutorial series (Part 1, Part 2, Part 3...)
+- Add `"sortOrder": "oldest-first"` to category in JSON
+
+`Oldest-First Example`
+`{`
+`  "id": "tutorial-series",`
+`  "name": "Complete Tutorial Series",`
+`  "sortOrder": "oldest-first",`
+`  "posts": [ ... ]`
+`}`
+
+### Additional Resources
+
+Special category type for external links:
+
+`External Links Example`
+`{`
+`  "id": "resources",`
+`  "name": "Additional Resources",`
+`  "links": [`
+`    {`
+`      "title": "Official Documentation",`
+`      "url": "https://example.com/docs"`
+`    }`
+`  ]`
+`}`
+
+**Features:**
+- Displays as bullet list
+- Opens in new tabs
+- Perfect for external references
+- Different from blog posts
+
+## Responsive Design
+
+The block automatically adapts to screen size:
+
+**Desktop:**
+- Wide layout with generous spacing
+- Full-width category table
+- Larger text sizes
+
+**Tablet:**
+- Medium spacing
+- Responsive table
+- Adjusted margins
+
+**Mobile:**
+- Compact spacing
+- Smaller fonts
+- Touch-friendly links
+- Scrollable table
+
+## Accessibility Features
+
+The block is built with accessibility in mind:
+
+**Screen Readers:**
+- Proper heading hierarchy (H2 for sections, H3 for posts)
+- Navigation landmarks
+- Descriptive link text
+
+**Keyboard Users:**
+- All links keyboard accessible
+- Logical tab order
+- Focus indicators
+
+**Visual:**
+- High contrast text and links
+- Clear color distinctions
+- Readable font sizes
+
+## Troubleshooting for Authors
+
+### Block Not Showing Content
+
+**Check these:**
+1. Is the JSON file accessible at the specified URL?
+2. Is the JSON properly formatted? (Use a JSON validator)
+3. Check browser console for error messages
+4. Verify the block name is exactly `View MyBlog`
+
+### Latest Posts Not Appearing
+
+**Possible reasons:**
+1. Only one category exists (single-category mode hides Latest Posts)
+2. Fewer than 3 posts total
+3. All posts are index pages (filtered out)
+4. Posts missing lastModified dates
+
+### Category Map Missing
+
+**Possible reasons:**
+1. Only one category exists (map hidden in single-category mode)
+2. All categories are empty after filtering
+3. categoryMap array missing from JSON
+
+### Links Not Working
+
+**Check these:**
+1. URLs in JSON are complete and correct
+2. URLs don't have typos
+3. External links include https://
+4. Internal links start with /
+
+## Tips for Content Authors
+
+1. **Keep Descriptions Short:** 1-2 sentences per post
+2. **Update Dates:** Always include lastModified for proper sorting
+3. **Use Categories:** Group related content together
+4. **Feature Best Content:** Use Most Visited for your top articles
+5. **Test Regularly:** Preview changes before publishing
+6. **Monitor Performance:** Check which posts get most clicks
+7. **Clean URLs:** Use clear, descriptive URLs for posts
+
+## Related Documentation
+
+- **Technical Guide:** README.md (for developers)
+- **Test File:** test.html (for testing locally)
+- **Sample Data:** /my-blog.json (for reference)
+
+## Getting Help
+
+If you encounter issues:
+1. Check the browser console for error messages
+2. Validate your JSON file syntax
+3. Review the EXAMPLE.md file (this document)
+4. Contact your development team
+5. Test with the sample data first
+
+## Quick Reference Table
+
+| Feature | Configuration | Default Behavior |
+| --- | --- | --- |
+| Data Source | Optional URL parameter | /my-blog.json |
+| Latest Posts | Auto-generated | Top 3 newest posts |
+| Most Visited | Must be in JSON | Not shown if missing |
+| Category Sorting | sortOrder in JSON | Newest first |
+| Index Filtering | Automatic | Always active |
+| Single Category Mode | Automatic detection | Simplifies UI |
+| Mobile Responsive | Automatic | Breakpoint at 768px |
+| External Links | target="_blank" | Opens new tab |
+| Category Map | Automatic when >1 category | Hidden if 1 category |
+
+## Version History
+
+**v1.0** - Initial release
+- Auto-generated Latest Posts
+- Index page filtering
+- Single category mode
+- Dynamic category map
+- Responsive design

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IPynb Viewer Block - Test Suite</title>
+
+  <!-- EDS Core CSS -->
+  <link rel="stylesheet" href="/styles/styles.css">
+
+  <!-- Block-specific CSS -->
+  <link rel="stylesheet" href="/blocks/ipynb-viewer/ipynb-viewer.css">
+
+  <style>
+    /* Test page specific styles */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+    }
+
+    .test-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .test-header h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .test-header p {
+      margin: 0;
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .test-section {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .test-section h2 {
+      font-size: 1.5rem;
+      margin: 2rem 0 1rem 0;
+      color: #333;
+      border-bottom: 2px solid #667eea;
+      padding-bottom: 0.5rem;
+    }
+
+    .test-case {
+      background: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .test-case h3 {
+      margin: 0 0 1rem 0;
+      color: #667eea;
+      font-size: 1.2rem;
+    }
+
+    .test-case p {
+      margin: 0.5rem 0;
+      color: #666;
+    }
+
+    .test-case code {
+      background: #f5f5f5;
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+      color: #d63384;
+    }
+
+    .info-box {
+      background: #e3f2fd;
+      border-left: 4px solid #2196f3;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 4px;
+    }
+
+    .warning-box {
+      background: #fff3e0;
+      border-left: 4px solid #ff9800;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 4px;
+    }
+
+    .success-box {
+      background: #e8f5e9;
+      border-left: 4px solid #4caf50;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 4px;
+    }
+
+    /* Override EDS default container widths for testing */
+    .ipynb-viewer-container {
+      max-width: 1200px;
+    }
+
+    /* Test footer */
+    .test-footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
+    }
+
+    .test-footer a {
+      color: #667eea;
+      text-decoration: none;
+    }
+
+    .test-footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <!-- Test Header -->
+  <div class="test-header">
+    <h1>🧪 IPynb Viewer Block Test Suite</h1>
+    <p>Interactive testing environment for Jupyter notebook display and execution</p>
+  </div>
+
+  <!-- Test Instructions -->
+  <div class="test-section">
+    <h2>📋 Test Instructions</h2>
+
+    <div class="info-box">
+      <strong>Development Server Required:</strong> This test file requires the development server to be running. Start it with <code>npm run debug</code> and access at <code>http://localhost:3000/blocks/ipynb-viewer/test.html</code>
+    </div>
+
+    <div class="warning-box">
+      <strong>Test Notebook Files:</strong> Ensure test notebook files exist in <code>/notebooks/</code> directory before testing. Sample notebooks are provided below.
+    </div>
+  </div>
+
+  <!-- Test Case 1: Basic Display -->
+  <div class="test-section">
+    <h2>Test Case 1: Basic Display Mode</h2>
+
+    <div class="test-case">
+      <h3>Default Mode with All Cells Visible</h3>
+      <p><strong>Expected behavior:</strong> Displays all notebook cells with run buttons. Markdown cells show formatted text, code cells show syntax-highlighted code.</p>
+
+      <div class="info-box">
+        <strong>Test Actions:</strong>
+        <ol>
+          <li>Verify notebook title, author, and date display correctly in header</li>
+          <li>Confirm markdown cells render with proper formatting (headings, bold, italic, code)</li>
+          <li>Check code cells have "Run" buttons</li>
+          <li>Click Run button on code cell and verify output displays</li>
+          <li>Test console.log() output appears in output area</li>
+          <li>Test return value displays correctly</li>
+          <li>Verify error handling with intentional error</li>
+        </ol>
+      </div>
+
+      <!-- Basic Display Test Block -->
+      <div class="ipynb-viewer block">
+        <div>
+          <div>/notebooks/test-basic.ipynb</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Test Case 2: Paged Variation -->
+  <div class="test-section">
+    <h2>Test Case 2: Paged Variation</h2>
+
+    <div class="test-case">
+      <h3>Full-Screen Overlay with Navigation</h3>
+      <p><strong>Expected behavior:</strong> Shows "Start Reading" button, opens full-screen overlay, displays one page at a time with Previous/Next navigation.</p>
+
+      <div class="info-box">
+        <strong>Test Actions:</strong>
+        <ol>
+          <li>Click "Start Reading" button</li>
+          <li>Verify full-screen overlay opens (90vw × 90vh on desktop)</li>
+          <li>Confirm top bar displays notebook title and controls (Home, History, Bookmarks, TOC, Help, Close)</li>
+          <li>Test Previous/Next buttons navigate between pages</li>
+          <li>Verify page indicator shows current page (e.g., "1 / 5")</li>
+          <li>Test keyboard shortcuts: Arrow Left (previous), Arrow Right (next), Escape (close)</li>
+          <li>Verify smart cell grouping (instruction markdown + code on same page)</li>
+          <li>Test close button (×) exits overlay</li>
+          <li>Check responsive design on mobile (100vw × 100vh)</li>
+        </ol>
+      </div>
+
+      <!-- Paged Variation Test Block -->
+      <div class="ipynb-viewer paged block">
+        <div>
+          <div>/notebooks/test-paged.ipynb</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Test Case 3: Autorun Variation -->
+  <div class="test-section">
+    <h2>Test Case 3: Autorun Variation</h2>
+
+    <div class="test-case">
+      <h3>Automatic Code Execution</h3>
+      <p><strong>Expected behavior:</strong> Code cells execute automatically when displayed. Run buttons are hidden, output is always visible.</p>
+
+      <div class="info-box">
+        <strong>Test Actions:</strong>
+        <ol>
+          <li>Verify code cells execute automatically on page load</li>
+          <li>Confirm Run buttons are not visible</li>
+          <li>Check output areas display results immediately</li>
+          <li>Test console.log() output appears automatically</li>
+          <li>Verify error handling works with automatic execution</li>
+        </ol>
+      </div>
+
+      <!-- Autorun Variation Test Block -->
+      <div class="ipynb-viewer autorun block">
+        <div>
+          <div>/notebooks/test-autorun.ipynb</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Test Case 4: Notebook Variation -->
+  <div class="test-section">
+    <h2>Test Case 4: Notebook Variation</h2>
+
+    <div class="test-case">
+      <h3>Complete Educational Experience with Navigation Features</h3>
+      <p><strong>Expected behavior:</strong> Shows "Start Reading" and "Read the Manual" buttons. Includes navigation tree, history, bookmarks, TOC, and help system.</p>
+
+      <div class="info-box">
+        <strong>Test Actions:</strong>
+        <ol>
+          <li>Click "Start Reading" button to enter paged mode</li>
+          <li>Verify navigation tree panel on left shows notebook structure</li>
+          <li>Test History button (🕘) - tracks visited pages and markdown files</li>
+          <li>Test Bookmarks button (🔖) - save and navigate to favorite pages</li>
+          <li>Test TOC button (☰) - shows table of contents with cell headings</li>
+          <li>Test Help button (❓) - opens help documentation in overlay</li>
+          <li>Test Home button (🏠) - returns to first page</li>
+          <li>Click "Read the Manual" button to view documentation</li>
+          <li>Verify manual opens in scrollable overlay with markdown rendering</li>
+          <li>Test GitHub markdown links open in overlay viewer (if repo metadata present)</li>
+          <li>Test action cards resolve links to matching headings</li>
+          <li>Verify auto-wrapping detects cell types (hero, intro, transition, content)</li>
+        </ol>
+      </div>
+
+      <!-- Notebook Variation Test Block -->
+      <div class="ipynb-viewer notebook block">
+        <div>
+          <div>/notebooks/test-notebook.ipynb</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Test Case 5: Index Variation -->
+  <div class="test-section">
+    <h2>Test Case 5: Index Variation</h2>
+
+    <div class="test-case">
+      <h3>Auto-Open Landing Page</h3>
+      <p><strong>Expected behavior:</strong> Notebook overlay opens automatically after 100ms without requiring button click. Perfect for landing pages.</p>
+
+      <div class="warning-box">
+        <strong>Warning:</strong> This variation will auto-open the overlay. Refresh the page to test again. Use Escape or close button to dismiss.
+      </div>
+
+      <div class="info-box">
+        <strong>Test Actions:</strong>
+        <ol>
+          <li>Verify overlay opens automatically after short delay (100ms)</li>
+          <li>Confirm all notebook features available (navigation, bookmarks, history, help)</li>
+          <li>Test close button exits to underlying page</li>
+          <li>Verify no "Start Reading" button visible on page</li>
+          <li>Test auto-open behavior on page reload</li>
+        </ol>
+      </div>
+
+      <!-- Index Variation Test Block (commented out to prevent auto-open during general testing) -->
+      <!-- Uncomment to test auto-open behavior -->
+      <!--
+      <div class="ipynb-viewer index block">
+        <div>
+          <div>/notebooks/test-index.ipynb</div>
+        </div>
+      </div>
+      -->
+
+      <div class="success-box">
+        <strong>Note:</strong> Index variation test is commented out by default to prevent auto-opening during general testing. Uncomment the HTML above to test auto-open behavior.
+      </div>
+    </div>
+  </div>
+
+  <!-- Test Case 6: No-Topbar Variation -->
+  <div class="test-section">
+    <h2>Test Case 6: No-Topbar Variation</h2>
+
+    <div class="test-case">
+      <h3>Immersive Experience Without Top Bar</h3>
+      <p><strong>Expected behavior:</strong> Top bar (title and buttons) is hidden. Content extends from top to pagination controls. Can combine with any mode.</p>
+
+      <div class="info-box">
+        <strong>Test Actions:</strong>
+        <ol>
+          <li>Click "Start Reading" button</li>
+          <li>Verify top bar is not visible</li>
+          <li>Confirm content area extends to top of viewport</li>
+          <li>Test Escape key still works to close overlay</li>
+          <li>Verify pagination controls visible at bottom</li>
+          <li>Test Previous/Next navigation works without top bar</li>
+        </ol>
+      </div>
+
+      <!-- No-Topbar Variation Test Block -->
+      <div class="ipynb-viewer paged no-topbar block">
+        <div>
+          <div>/notebooks/test-no-topbar.ipynb</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Test Case 7: Metadata Display -->
+  <div class="test-section">
+    <h2>Test Case 7: Metadata Display</h2>
+
+    <div class="test-case">
+      <h3>Complete Notebook Metadata</h3>
+      <p><strong>Expected behavior:</strong> Header displays title, description, author, date, version, category, difficulty, duration, tags, and license.</p>
+
+      <div class="info-box">
+        <strong>Test Actions:</strong>
+        <ol>
+          <li>Verify title displays (1.8rem, bold, centered)</li>
+          <li>Check description displays (1.1rem, italic, gray #555)</li>
+          <li>Confirm author displays (1rem, italic, gray #666)</li>
+          <li>Verify date displays (0.9rem, light gray #999)</li>
+          <li>Check version displays (0.85rem, gray #888, bold)</li>
+          <li>Test meta row badges: category (blue), difficulty (orange), duration (purple)</li>
+          <li>Verify tags display as gray badges</li>
+          <li>Check license displays (0.8rem, gray #888)</li>
+          <li>Test display order matches documentation</li>
+        </ol>
+      </div>
+
+      <!-- Metadata Test Block -->
+      <div class="ipynb-viewer block">
+        <div>
+          <div>/notebooks/test-metadata.ipynb</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Test Case 8: Helper Functions -->
+  <div class="test-section">
+    <h2>Test Case 8: Helper Functions (testBlock, showPreview)</h2>
+
+    <div class="test-case">
+      <h3>ES6 Import and Block Testing</h3>
+      <p><strong>Expected behavior:</strong> Cells can import helper functions using ES6 imports. testBlock() and showPreview() work correctly.</p>
+
+      <div class="info-box">
+        <strong>Test Actions:</strong>
+        <ol>
+          <li>Run cell with <code>import('/scripts/ipynb-helpers.js')</code></li>
+          <li>Verify testBlock() creates block element</li>
+          <li>Check block decoration executes correctly</li>
+          <li>Test showPreview() opens overlay with block preview</li>
+          <li>Verify responsive view buttons work (Mobile, Tablet, Desktop)</li>
+          <li>Test close button (×) closes preview overlay</li>
+          <li>Verify Escape key closes preview overlay</li>
+        </ol>
+      </div>
+
+      <!-- Helper Functions Test Block -->
+      <div class="ipynb-viewer block">
+        <div>
+          <div>/notebooks/test-helpers.ipynb</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Test Case 9: Markdown Rendering -->
+  <div class="test-section">
+    <h2>Test Case 9: Enhanced Markdown Rendering</h2>
+
+    <div class="test-case">
+      <h3>Code Blocks, Tables, Lists, and Formatting</h3>
+      <p><strong>Expected behavior:</strong> Markdown cells render with full formatting support including code blocks, tables, lists, and inline formatting.</p>
+
+      <div class="info-box">
+        <strong>Test Actions:</strong>
+        <ol>
+          <li>Verify code blocks render with syntax highlighting</li>
+          <li>Test tables display with header rows and alternating row colors</li>
+          <li>Check unordered lists render correctly</li>
+          <li>Verify ordered lists display with proper numbering</li>
+          <li>Test bold, italic, and inline code formatting</li>
+          <li>Check links are clickable (external links shown as non-clickable with URL)</li>
+          <li>Test blockquotes render with proper styling</li>
+          <li>Verify horizontal rules display correctly</li>
+        </ol>
+      </div>
+
+      <!-- Markdown Test Block -->
+      <div class="ipynb-viewer block">
+        <div>
+          <div>/notebooks/test-markdown.ipynb</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Test Case 10: Responsive Design -->
+  <div class="test-section">
+    <h2>Test Case 10: Responsive Design</h2>
+
+    <div class="test-case">
+      <h3>Mobile, Tablet, and Desktop Layouts</h3>
+      <p><strong>Expected behavior:</strong> Block adapts to different screen sizes with appropriate breakpoints at 768px and 480px.</p>
+
+      <div class="info-box">
+        <strong>Test Actions:</strong>
+        <ol>
+          <li>Test on desktop (>768px): 90vw × 90vh overlay, border radius visible</li>
+          <li>Test on tablet (768px): 95vw × 95vh overlay, adjusted padding</li>
+          <li>Test on mobile (<480px): 100vw × 100vh overlay, no border radius, full screen</li>
+          <li>Verify buttons stack correctly on small screens</li>
+          <li>Check font sizes adjust for readability on mobile</li>
+          <li>Test touch interactions on mobile devices</li>
+          <li>Verify horizontal scrolling works for long code blocks</li>
+        </ol>
+      </div>
+
+      <div class="success-box">
+        <strong>Testing Tip:</strong> Use browser DevTools device emulation to test different screen sizes. Test portrait and landscape orientations on mobile.
+      </div>
+    </div>
+  </div>
+
+  <!-- Test Footer -->
+  <div class="test-footer">
+    <p><strong>IPynb Viewer Block</strong> | Version 13.0 | <a href="/blocks/ipynb-viewer/README.md">Documentation</a> | <a href="/blocks/ipynb-viewer/EXAMPLE.md">Examples</a></p>
+    <p>© 2025 Tom Cranstoun | <a href="https://github.com/ddttom/allaboutV2">GitHub</a></p>
+  </div>
+
+  <!-- EDS Core JavaScript -->
+  <script type="module" src="/scripts/aem.js"></script>
+
+  <!-- Block JavaScript (loaded via EDS) -->
+  <script>
+    // EDS will automatically load block JavaScript
+    // This test file only needs to provide the block structure
+    console.log('✅ IPynb Viewer test page loaded');
+    console.log('📝 Ensure test notebook files exist in /notebooks/ directory');
+    console.log('🚀 Start testing by interacting with each test case above');
+  </script>
+</body>
+</html>

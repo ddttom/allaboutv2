@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Counter Block - Test Suite</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: #f5f5f5;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 0.5rem;
+      font-size: 2rem;
+    }
+
+    .subtitle {
+      color: #7f8c8d;
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+
+    h2 {
+      color: #34495e;
+      margin: 2rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #3498db;
+      font-size: 1.5rem;
+    }
+
+    h3 {
+      color: #555;
+      margin: 1.5rem 0 0.75rem;
+      font-size: 1.1rem;
+    }
+
+    .test-section {
+      margin: 1.5rem 0;
+      padding: 1.5rem;
+      background: #f8f9fa;
+      border-radius: 4px;
+      border-left: 4px solid #3498db;
+    }
+
+    .test-description {
+      margin-bottom: 1rem;
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    .test-result {
+      margin-top: 1rem;
+      padding: 0.75rem;
+      background: white;
+      border-radius: 4px;
+      border: 1px solid #dee2e6;
+    }
+
+    .counter {
+      margin: 1rem 0;
+    }
+
+    .expected {
+      margin-top: 0.5rem;
+      padding: 0.5rem;
+      background: #e8f4f8;
+      border-left: 3px solid #3498db;
+      font-size: 0.9rem;
+    }
+
+    .expected strong {
+      color: #2980b9;
+    }
+
+    .info-box {
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 4px;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+
+    .info-box strong {
+      color: #856404;
+    }
+
+    .success-box {
+      background: #d4edda;
+      border: 1px solid #28a745;
+      border-radius: 4px;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+
+    .success-box strong {
+      color: #155724;
+    }
+
+    .error-box {
+      background: #f8d7da;
+      border: 1px solid #dc3545;
+      border-radius: 4px;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+
+    .error-box strong {
+      color: #721c24;
+    }
+
+    code {
+      background: #e9ecef;
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+    }
+
+    .event-log {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #282c34;
+      color: #abb2bf;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .event-log-entry {
+      padding: 0.25rem 0;
+      border-bottom: 1px solid #3e4451;
+    }
+
+    .event-log-entry:last-child {
+      border-bottom: none;
+    }
+
+    .timestamp {
+      color: #61afef;
+    }
+
+    .event-type {
+      color: #98c379;
+    }
+
+    .event-value {
+      color: #e5c07b;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+
+    th, td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    th {
+      background: #f8f9fa;
+      font-weight: 600;
+      color: #495057;
+    }
+
+    .controls {
+      margin: 1rem 0;
+      padding: 1rem;
+      background: white;
+      border-radius: 4px;
+      border: 1px solid #dee2e6;
+    }
+
+    .controls button {
+      margin: 0.25rem;
+      padding: 0.5rem 1rem;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+
+    .controls button:hover {
+      background: #2980b9;
+    }
+
+    .controls button:disabled {
+      background: #95a5a6;
+      cursor: not-allowed;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 1rem;
+      border-radius: 4px;
+      border-left: 4px solid #3498db;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: #7f8c8d;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-top: 0.25rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Counter Block Test Suite</h1>
+    <p class="subtitle">Comprehensive testing for the Counter Web Component</p>
+
+    <div class="info-box">
+      <strong>About this test:</strong> This page tests the Counter block with various configurations and use cases. The Counter block uses Web Components with Shadow DOM for encapsulation and event-based communication.
+    </div>
+
+    <!-- Test 1: Basic Functionality -->
+    <h2>1. Basic Functionality</h2>
+    
+    <div class="test-section">
+      <h3>Default Counter (Starting at 0)</h3>
+      <div class="test-description">
+        Tests the default counter with no initial value specified.
+      </div>
+      <div class="test-result">
+        <div class="counter">0</div>
+      </div>
+      <div class="expected">
+        <strong>Expected:</strong> Counter displays 0, increment/decrement buttons work
+      </div>
+    </div>
+
+    <div class="test-section">
+      <h3>Counter with Initial Value (42)</h3>
+      <div class="test-description">
+        Tests counter with a positive initial value.
+      </div>
+      <div class="test-result">
+        <div class="counter">42</div>
+      </div>
+      <div class="expected">
+        <strong>Expected:</strong> Counter displays 42, buttons adjust value correctly
+      </div>
+    </div>
+
+    <div class="test-section">
+      <h3>Counter with Negative Value (-10)</h3>
+      <div class="test-description">
+        Tests counter with a negative initial value.
+      </div>
+      <div class="test-result">
+        <div class="counter">-10</div>
+      </div>
+      <div class="expected">
+        <strong>Expected:</strong> Counter displays -10, can go more negative or positive
+      </div>
+    </div>
+
+    <!-- Test 2: Multiple Instances -->
+    <h2>2. Multiple Instances</h2>
+    
+    <div class="test-section">
+      <h3>Three Independent Counters</h3>
+      <div class="test-description">
+        Tests that multiple counters work independently on the same page.
+      </div>
+      <div class="test-result">
+        <p>Counter A (start: 0):</p>
+        <div class="counter">0</div>
+        
+        <p>Counter B (start: 50):</p>
+        <div class="counter">50</div>
+        
+        <p>Counter C (start: 100):</p>
+        <div class="counter">100</div>
+      </div>
+      <div class="expected">
+        <strong>Expected:</strong> All three counters operate independently without interference
+      </div>
+    </div>
+
+    <!-- Test 3: Edge Cases -->
+    <h2>3. Edge Cases</h2>
+    
+    <div class="test-section">
+      <h3>Invalid Initial Value (Non-numeric)</h3>
+      <div class="test-description">
+        Tests error handling with invalid initial value.
+      </div>
+      <div class="test-result">
+        <div class="counter">abc</div>
+      </div>
+      <div class="expected">
+        <strong>Expected:</strong> Error message displayed: "Invalid initial value provided"
+      </div>
+    </div>
+
+    <div class="test-section">
+      <h3>Empty Initial Value</h3>
+      <div class="test-description">
+        Tests counter with empty content cell.
+      </div>
+      <div class="test-result">
+        <div class="counter"></div>
+      </div>
+      <div class="expected">
+        <strong>Expected:</strong> Counter defaults to 0
+      </div>
+    </div>
+
+    <div class="test-section">
+      <h3>Large Initial Value (10000)</h3>
+      <div class="test-description">
+        Tests counter with a large number.
+      </div>
+      <div class="test-result">
+        <div class="counter">10000</div>
+      </div>
+      <div class="expected">
+        <strong>Expected:</strong> Counter handles large numbers correctly
+      </div>
+    </div>
+
+    <!-- Test 4: Event System -->
+    <h2>4. Event System Testing</h2>
+    
+    <div class="test-section">
+      <h3>Custom Event Dispatching</h3>
+      <div class="test-description">
+        Tests that the counter dispatches 'count-change' events correctly.
+      </div>
+      <div class="test-result">
+        <div class="counter" id="event-test-counter">0</div>
+        <div class="event-log" id="event-log">
+          <div>Event log (click counter buttons to see events):</div>
+        </div>
+      </div>
+      <div class="expected">
+        <strong>Expected:</strong> Each button click logs an event with the new count value
+      </div>
+    </div>
+
+    <!-- Test 5: Programmatic Control -->
+    <h2>5. Programmatic Control</h2>
+    
+    <div class="test-section">
+      <h3>External Control via JavaScript</h3>
+      <div class="test-description">
+        Tests programmatic access to counter state.
+      </div>
+      <div class="test-result">
+        <div class="counter" id="programmatic-counter">25</div>
+        <div class="controls">
+          <button onclick="setCounterValue(50)">Set to 50</button>
+          <button onclick="setCounterValue(100)">Set to 100</button>
+          <button onclick="setCounterValue(0)">Reset to 0</button>
+          <button onclick="readCounterValue()">Read Current Value</button>
+        </div>
+        <div id="programmatic-result" class="info-box" style="display: none;"></div>
+      </div>
+      <div class="expected">
+        <strong>Expected:</strong> Buttons programmatically control the counter value
+      </div>
+    </div>
+
+    <!-- Test 6: Performance -->
+    <h2>6. Performance Testing</h2>
+    
+    <div class="test-section">
+      <h3>Rapid Click Performance</h3>
+      <div class="test-description">
+        Tests counter responsiveness under rapid interaction.
+      </div>
+      <div class="test-result">
+        <div class="counter" id="performance-counter">0</div>
+        <div class="controls">
+          <button onclick="rapidIncrement()">Rapid Increment (100x)</button>
+          <button onclick="rapidDecrement()">Rapid Decrement (100x)</button>
+        </div>
+        <div class="stats">
+          <div class="stat-card">
+            <div class="stat-label">Total Clicks</div>
+            <div class="stat-value" id="total-clicks">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Avg Time (ms)</div>
+            <div class="stat-value" id="avg-time">-</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Current Value</div>
+            <div class="stat-value" id="current-value">0</div>
+          </div>
+        </div>
+      </div>
+      <div class="expected">
+        <strong>Expected:</strong> Counter remains responsive, updates complete in <16ms per operation
+      </div>
+    </div>
+
+    <!-- Test 7: Accessibility -->
+    <h2>7. Accessibility</h2>
+    
+    <div class="test-section">
+      <h3>ARIA Labels and Keyboard Navigation</h3>
+      <div class="test-description">
+        Tests accessibility features (use Tab key to navigate, Space/Enter to activate).
+      </div>
+      <div class="test-result">
+        <div class="counter" id="accessibility-counter">0</div>
+        <div class="info-box">
+          <strong>Manual Testing Required:</strong>
+          <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+            <li>Press Tab to focus on buttons</li>
+            <li>Verify focus indicators are visible</li>
+            <li>Press Space or Enter to activate buttons</li>
+            <li>Use screen reader to verify ARIA labels</li>
+          </ul>
+        </div>
+      </div>
+      <div class="expected">
+        <strong>Expected:</strong> Full keyboard navigation, visible focus indicators, proper ARIA labels
+      </div>
+    </div>
+
+    <!-- Test 8: Styling and Theming -->
+    <h2>8. Styling and Theming</h2>
+    
+    <div class="test-section">
+      <h3>Custom CSS Variables</h3>
+      <div class="test-description">
+        Tests custom theming via CSS variables.
+      </div>
+      <div class="test-result">
+        <style>
+          #themed-counter counter-element {
+            --counter-button-bg: #28a745;
+            --counter-button-color: white;
+            --counter-display-bg: #e9ecef;
+            --counter-display-color: #495057;
+          }
+        </style>
+        <div class="counter" id="themed-counter">0</div>
+      </div>
+      <div class="expected">
+        <strong>Expected:</strong> Counter displays with custom green theme
+      </div>
+    </div>
+
+    <!-- Test Summary -->
+    <h2>Test Summary</h2>
+    <div class="success-box">
+      <strong>All tests loaded successfully!</strong> Interact with the counters above to verify functionality. Check the browser console for detailed event logging.
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Test Category</th>
+          <th>Description</th>
+          <th>Manual Check</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Basic Functionality</td>
+          <td>Default values, positive/negative numbers</td>
+          <td>✓ Click buttons to verify increment/decrement</td>
+        </tr>
+        <tr>
+          <td>Multiple Instances</td>
+          <td>Independent operation of multiple counters</td>
+          <td>✓ Verify counters don't affect each other</td>
+        </tr>
+        <tr>
+          <td>Edge Cases</td>
+          <td>Invalid values, empty values, large numbers</td>
+          <td>✓ Check error handling</td>
+        </tr>
+        <tr>
+          <td>Event System</td>
+          <td>Custom event dispatching</td>
+          <td>✓ Watch event log for count-change events</td>
+        </tr>
+        <tr>
+          <td>Programmatic Control</td>
+          <td>JavaScript API access</td>
+          <td>✓ Use control buttons</td>
+        </tr>
+        <tr>
+          <td>Performance</td>
+          <td>Rapid interaction handling</td>
+          <td>✓ Run rapid click tests</td>
+        </tr>
+        <tr>
+          <td>Accessibility</td>
+          <td>ARIA labels, keyboard navigation</td>
+          <td>✓ Test with keyboard and screen reader</td>
+        </tr>
+        <tr>
+          <td>Theming</td>
+          <td>CSS variable customization</td>
+          <td>✓ Verify themed counter appearance</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Load EDS Core and Counter Block -->
+  <script type="module">
+    // Import counter block decoration function
+    import decorate from './counter.js';
+
+    // Initialize all counter blocks
+    document.addEventListener('DOMContentLoaded', () => {
+      const counters = document.querySelectorAll('.counter');
+      counters.forEach(counter => {
+        decorate(counter);
+      });
+
+      // Setup event logging for the event test counter
+      const eventTestCounter = document.querySelector('#event-test-counter counter-element');
+      if (eventTestCounter) {
+        const eventLog = document.getElementById('event-log');
+        eventTestCounter.addEventListener('count-change', (event) => {
+          const timestamp = new Date().toLocaleTimeString();
+          const entry = document.createElement('div');
+          entry.className = 'event-log-entry';
+          entry.innerHTML = `<span class="timestamp">[${timestamp}]</span> <span class="event-type">count-change</span>: <span class="event-value">${event.detail.count}</span>`;
+          eventLog.appendChild(entry);
+          eventLog.scrollTop = eventLog.scrollHeight;
+        });
+      }
+
+      console.log('Counter block test suite initialized');
+    });
+
+    // Programmatic control functions
+    window.setCounterValue = function(value) {
+      const counter = document.querySelector('#programmatic-counter counter-element');
+      if (counter) {
+        counter.count = value;
+        const display = counter.shadowRoot.querySelector('.counter-display');
+        if (display) {
+          display.textContent = value.toString();
+        }
+        const result = document.getElementById('programmatic-result');
+        result.style.display = 'block';
+        result.innerHTML = `<strong>Success:</strong> Counter value set to ${value}`;
+        setTimeout(() => {
+          result.style.display = 'none';
+        }, 3000);
+      }
+    };
+
+    window.readCounterValue = function() {
+      const counter = document.querySelector('#programmatic-counter counter-element');
+      if (counter) {
+        const result = document.getElementById('programmatic-result');
+        result.style.display = 'block';
+        result.innerHTML = `<strong>Current Value:</strong> ${counter.count}`;
+      }
+    };
+
+    // Performance testing functions
+    let totalClicks = 0;
+    let totalTime = 0;
+
+    window.rapidIncrement = function() {
+      const counter = document.querySelector('#performance-counter counter-element');
+      if (counter) {
+        const incrementButton = counter.shadowRoot.querySelector('.counter-button:last-child');
+        const startTime = performance.now();
+        
+        for (let i = 0; i < 100; i++) {
+          incrementButton.click();
+        }
+        
+        const endTime = performance.now();
+        const duration = endTime - startTime;
+        totalClicks += 100;
+        totalTime += duration;
+        
+        updatePerformanceStats(counter, duration);
+      }
+    };
+
+    window.rapidDecrement = function() {
+      const counter = document.querySelector('#performance-counter counter-element');
+      if (counter) {
+        const decrementButton = counter.shadowRoot.querySelector('.counter-button:first-child');
+        const startTime = performance.now();
+        
+        for (let i = 0; i < 100; i++) {
+          decrementButton.click();
+        }
+        
+        const endTime = performance.now();
+        const duration = endTime - startTime;
+        totalClicks += 100;
+        totalTime += duration;
+        
+        updatePerformanceStats(counter, duration);
+      }
+    };
+
+    function updatePerformanceStats(counter, lastDuration) {
+      document.getElementById('total-clicks').textContent = totalClicks;
+      document.getElementById('avg-time').textContent = (lastDuration / 100).toFixed(2);
+      document.getElementById('current-value').textContent = counter.count;
+    }
+  </script>
+</body>
+</html>

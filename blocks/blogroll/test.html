@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogroll Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <!-- Blogroll Block Styles -->
+    <link rel="stylesheet" href="/blocks/blogroll/blogroll.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .test-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .test-info h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.75rem;
+        }
+
+        .test-info p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .test-info code {
+            background: rgba(255,255,255,0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .test-info strong {
+            font-weight: 600;
+        }
+
+        .test-section {
+            margin: 2rem auto;
+            max-width: 1400px;
+            padding: 0 1rem;
+        }
+
+        .test-section h3 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0 0 0;
+            border-radius: 8px 8px 0 0;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .test-section .description {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 1rem;
+        }
+
+        .test-section .description strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .test-section .description p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        /* Status indicators */
+        .status {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Blogroll wrapper for consistent spacing */
+        .blogroll-wrapper {
+            background: white;
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            min-height: 200px;
+        }
+
+        /* Instructions section */
+        .instructions {
+            margin: 3rem auto;
+            max-width: 1400px;
+            padding: 2rem;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: #667eea;
+            font-size: 1.3rem;
+        }
+
+        .instructions ol, .instructions ul {
+            line-height: 1.8;
+            padding-left: 1.5rem;
+        }
+
+        .instructions li {
+            margin: 0.5rem 0;
+        }
+
+        .instructions strong {
+            color: #667eea;
+        }
+
+        .instructions code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        /* Mock data notice */
+        .mock-notice {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            color: #856404;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .mock-notice strong {
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>Blogroll Block Test Suite</h2>
+        <p><strong>Block:</strong> <code>blogroll</code></p>
+        <p><strong>Test Count:</strong> <code>6 test scenarios</code></p>
+        <p><strong>Status:</strong> <span id="status" class="status info">Loading...</span></p>
+        <p><strong>Purpose:</strong> Visual and functional testing of blog post filtering, series grouping, and dual display modes</p>
+    </div>
+
+    <main>
+        <div class="mock-notice">
+            <strong>Note:</strong> This test uses mock data since `/query-index.json` may not be available.
+            In production, the block fetches real blog data from that endpoint.
+        </div>
+
+        <!-- Test 1: Default Mode with Mock Data -->
+        <div class="test-section">
+            <h3>Test 1: Default Mode - No Filters (Simulated)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Shows all blog posts from mock data, grouped by series. Posts with "Part N" in titles are grouped together and sorted by part number.</p>
+                <p><strong>Validation:</strong> Check that series are grouped correctly, posts are sorted by part number, and dates are formatted as DD/MM/YYYY.</p>
+            </div>
+            <div class="blogroll-wrapper">
+                <div id="test1-blogroll" class="blogroll block">
+                    <!-- Will be populated by test script -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 2: Path Filtering -->
+        <div class="test-section">
+            <h3>Test 2: Path-Based Filtering (path=/blogs/tech)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Shows only posts with "/blogs/tech" in their path. If no matches found, falls back to title matching.</p>
+                <p><strong>Validation:</strong> Verify only tech-related posts appear.</p>
+            </div>
+            <div class="blogroll-wrapper">
+                <div id="test2-blogroll" class="blogroll block">
+                    <div><div>path=/blogs/tech</div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 3: Current Directory Filter -->
+        <div class="test-section">
+            <h3>Test 3: Current Directory Filter (path=*)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Shows only posts in the current page's directory. Since this is a test page at `/blocks/blogroll/test.html`, it would show posts from `/blocks/blogroll/` path.</p>
+                <p><strong>Validation:</strong> Verify filtering by current directory works (may show empty if no posts match).</p>
+            </div>
+            <div class="blogroll-wrapper">
+                <div id="test3-blogroll" class="blogroll block">
+                    <div><div>path=*</div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 4: Keyword Filtering -->
+        <div class="test-section">
+            <h3>Test 4: Keyword Filtering (JavaScript, React)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Shows posts with "JavaScript" OR "React" in their path or title.</p>
+                <p><strong>Validation:</strong> Check that filtered results contain the keywords.</p>
+            </div>
+            <div class="blogroll-wrapper">
+                <div id="test4-blogroll" class="blogroll block">
+                    <div><div>JavaScript</div></div>
+                    <div><div>React</div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 5: Series Grouping -->
+        <div class="test-section">
+            <h3>Test 5: Series Detection & Grouping</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Posts with "- Part N" pattern are grouped into series. Within each series, posts are sorted by part number ascending.</p>
+                <p><strong>Validation:</strong> Verify "React Basics - Part 1/2/3" appears as a single series, ordered correctly.</p>
+            </div>
+            <div class="blogroll-wrapper">
+                <div id="test5-blogroll" class="blogroll block">
+                    <div><div>React</div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 6: Compact Mode -->
+        <div class="test-section">
+            <h3>Test 6: Compact Mode with Floating Panel</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Displays a floating book icon (📚) with "Blogroll" text in top-left corner. Clicking opens a slide-out panel from the left. Panel contains compact post listings.</p>
+                <p><strong>Validation:</strong> Check icon appears, panel slides in on click, close button works, ESC key closes panel, clicking outside closes panel.</p>
+                <p><strong>Note:</strong> Scroll down to see the compact icon in the top-left corner. The panel will be appended to document.body.</p>
+            </div>
+            <div class="blogroll-wrapper">
+                <div id="test6-blogroll" class="blogroll block compact">
+                    <div><div>JavaScript</div></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import decorate from '/blocks/blogroll/blogroll.js';
+
+        // Update status function
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+
+        // Mock blog data for testing
+        const mockBlogData = {
+            total: 12,
+            offset: 0,
+            limit: 100,
+            data: [
+                {
+                    path: '/blogs/tech/javascript-basics',
+                    title: 'JavaScript Basics',
+                    description: 'Learn the fundamentals of JavaScript programming.',
+                    longdescription: 'A comprehensive introduction to JavaScript covering variables, functions, and control flow.',
+                    lastModified: '1701388800', // Dec 1, 2023
+                },
+                {
+                    path: '/blogs/tech/react-basics-part-1',
+                    title: 'React Basics - Part 1',
+                    description: 'Introduction to React components.',
+                    longdescription: 'Learn how to create your first React components and understand the component lifecycle.',
+                    lastModified: '1701475200', // Dec 2, 2023
+                },
+                {
+                    path: '/blogs/tech/react-basics-part-2',
+                    title: 'React Basics - Part 2',
+                    description: 'React state and props.',
+                    longdescription: 'Deep dive into React state management and props passing between components.',
+                    lastModified: '1701561600', // Dec 3, 2023
+                },
+                {
+                    path: '/blogs/tech/react-basics-part-3',
+                    title: 'React Basics - Part 3',
+                    description: 'React hooks and effects.',
+                    longdescription: 'Master React hooks including useState, useEffect, and custom hooks.',
+                    lastModified: '1701648000', // Dec 4, 2023
+                },
+                {
+                    path: '/blogs/design/ux-principles',
+                    title: 'UX Design Principles',
+                    description: 'Fundamental principles of user experience design.',
+                    longdescription: 'Explore the core principles that guide effective UX design practices.',
+                    lastModified: '1701734400', // Dec 5, 2023
+                },
+                {
+                    path: '/blogs/tech/typescript-guide',
+                    title: 'TypeScript Complete Guide',
+                    description: 'Everything you need to know about TypeScript.',
+                    longdescription: 'From basic types to advanced generics, this guide covers all TypeScript concepts.',
+                    lastModified: '1701820800', // Dec 6, 2023
+                },
+                {
+                    path: '/tutorials/vue-introduction-part-1',
+                    title: 'Vue Introduction - Part 1',
+                    description: 'Getting started with Vue.js',
+                    longdescription: 'Learn the basics of Vue.js framework and create your first Vue application.',
+                    lastModified: '1701907200', // Dec 7, 2023
+                },
+                {
+                    path: '/tutorials/vue-introduction-part-2',
+                    title: 'Vue Introduction - Part 2',
+                    description: 'Vue components and directives',
+                    longdescription: 'Understand Vue components, directives, and data binding techniques.',
+                    lastModified: '1701993600', // Dec 8, 2023
+                },
+                {
+                    path: '/blogs/tech/web-performance',
+                    title: 'Web Performance Optimization',
+                    description: 'Speed up your websites',
+                    longdescription: 'Techniques and strategies for optimizing web performance and improving load times.',
+                    lastModified: '1702080000', // Dec 9, 2023
+                },
+                {
+                    path: '/blogs/design/color-theory',
+                    title: 'Color Theory for Designers',
+                    description: 'Understanding color in design',
+                    longdescription: 'A comprehensive guide to color theory and its application in modern design.',
+                    lastModified: '1702166400', // Dec 10, 2023
+                },
+                {
+                    path: '/blogs/tech/css-grid-guide',
+                    title: 'CSS Grid Layout Guide',
+                    description: 'Master CSS Grid',
+                    longdescription: 'Learn how to create complex responsive layouts with CSS Grid.',
+                    lastModified: '1702252800', // Dec 11, 2023
+                },
+                {
+                    path: '/blogs/tech/javascript-async',
+                    title: 'Async JavaScript',
+                    description: 'Promises, async/await, and more',
+                    longdescription: 'Master asynchronous JavaScript patterns including promises and async/await.',
+                    lastModified: '1702339200', // Dec 12, 2023
+                }
+            ]
+        };
+
+        // Mock fetch function for testing
+        async function mockFetch(url) {
+            if (url === '/query-index.json') {
+                return {
+                    ok: true,
+                    status: 200,
+                    json: async () => mockBlogData
+                };
+            }
+            return {
+                ok: false,
+                status: 404,
+                json: async () => ({ error: 'Not found' })
+            };
+        }
+
+        // Override fetch for testing
+        const originalFetch = window.fetch;
+        window.fetch = mockFetch;
+
+        // Log block structure for debugging
+        function logBlockStructure(block, index, testName) {
+            console.log(`\n=== ${testName} (Block ${index + 1}) ===`);
+            console.log('Block classes:', block.className);
+            console.log('Has compact class:', block.classList.contains('compact'));
+            console.log('Initial children:', block.children.length);
+        }
+
+        // Log final structure
+        function logFinalStructure(block, index, testName) {
+            console.log(`\n=== After Decoration: ${testName} ===`);
+            const container = block.querySelector('.blogroll-container');
+            const panel = document.querySelector('.blogroll-panel');
+            const icon = document.querySelector('.blogroll-icon-container');
+
+            if (container) {
+                const series = container.querySelectorAll('.blogroll-series');
+                console.log('Series groups found:', series.length);
+                series.forEach((s, i) => {
+                    const title = s.querySelector('h2')?.textContent || 'No title';
+                    const entries = s.querySelectorAll('li').length;
+                    console.log(`  Series ${i + 1}: "${title}" (${entries} posts)`);
+                });
+            } else if (icon) {
+                console.log('Compact mode: Icon and panel created');
+                console.log('Icon visible:', icon.offsetParent !== null);
+                console.log('Panel exists:', panel !== null);
+            } else {
+                console.log('Block appears empty or not decorated');
+            }
+        }
+
+        // Initialize all blogroll blocks
+        async function init() {
+            try {
+                // Add body.appear class (required to show page)
+                document.body.classList.add('appear');
+
+                updateStatus('Decorating blocks with mock data...', 'info');
+
+                // Get all blogroll test blocks
+                const testBlocks = [
+                    { el: document.getElementById('test1-blogroll'), name: 'Test 1: Default Mode' },
+                    { el: document.getElementById('test2-blogroll'), name: 'Test 2: Path Filter' },
+                    { el: document.getElementById('test3-blogroll'), name: 'Test 3: Current Dir' },
+                    { el: document.getElementById('test4-blogroll'), name: 'Test 4: Keywords' },
+                    { el: document.getElementById('test5-blogroll'), name: 'Test 5: Series Grouping' },
+                    { el: document.getElementById('test6-blogroll'), name: 'Test 6: Compact Mode' }
+                ];
+
+                console.log(`Found ${testBlocks.length} test blocks to decorate`);
+
+                // Decorate each test block
+                for (let i = 0; i < testBlocks.length; i++) {
+                    const { el: block, name } = testBlocks[i];
+
+                    console.log(`\n${'='.repeat(60)}`);
+                    console.log(`Processing: ${name}`);
+                    console.log('='.repeat(60));
+
+                    // Log initial structure
+                    logBlockStructure(block, i, name);
+
+                    // Run decoration
+                    try {
+                        await decorate(block);
+                        console.log('✓ Decoration completed successfully');
+
+                        // Small delay to allow DOM updates
+                        await new Promise(resolve => setTimeout(resolve, 100));
+
+                        // Log final structure
+                        logFinalStructure(block, i, name);
+                    } catch (error) {
+                        console.error(`✗ Decoration failed:`, error);
+                        throw error;
+                    }
+                }
+
+                updateStatus(`✓ ${testBlocks.length} test blocks loaded successfully`, 'success');
+
+                console.log('\n' + '='.repeat(60));
+                console.log('All blogroll blocks decorated successfully!');
+                console.log('='.repeat(60));
+                console.log('\nTest Instructions:');
+                console.log('1. Scroll through each test section');
+                console.log('2. Verify posts are filtered correctly');
+                console.log('3. Check series grouping (posts with "Part N")');
+                console.log('4. Test compact mode (icon in top-left corner)');
+                console.log('5. Click compact icon to open panel');
+                console.log('6. Test panel close methods (ESC, close button, click outside)');
+                console.log('7. Verify dates are formatted as DD/MM/YYYY');
+
+            } catch (error) {
+                console.error('Failed to initialize blogroll blocks:', error);
+                updateStatus(`✗ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Start initialization
+        init();
+    </script>
+
+    <div class="instructions">
+        <h3>Testing Instructions</h3>
+        <ol>
+            <li><strong>Visual Inspection:</strong> Scroll through all test sections and verify posts display correctly with proper formatting</li>
+            <li><strong>Filter Validation:</strong>
+                <ul>
+                    <li>Test 1: Should show all mock posts grouped by series</li>
+                    <li>Test 2: Should show only posts with "/blogs/tech" in path</li>
+                    <li>Test 3: Should show posts from current directory (may be empty)</li>
+                    <li>Test 4: Should show posts with "JavaScript" OR "React" keywords</li>
+                    <li>Test 5: Should group "React Basics" parts together</li>
+                    <li>Test 6: Should show floating icon with slide-out panel</li>
+                </ul>
+            </li>
+            <li><strong>Series Grouping:</strong> Verify posts with "- Part N" are grouped and sorted by part number</li>
+            <li><strong>Date Formatting:</strong> Check dates appear as DD/MM/YYYY format (e.g., "01/12/2023")</li>
+            <li><strong>Compact Mode Testing:</strong>
+                <ul>
+                    <li>Verify book icon (📚) with "Blogroll" text appears in top-left corner</li>
+                    <li>Click icon to open panel - should slide in from left</li>
+                    <li>Click close button (×) - panel should close</li>
+                    <li>Open panel and press ESC key - panel should close</li>
+                    <li>Open panel and click outside - panel should close</li>
+                </ul>
+            </li>
+            <li><strong>DOM Structure:</strong> Inspect any blogroll in DevTools Elements panel and verify:
+                <ul>
+                    <li>Full mode: <code>&lt;div class="blogroll-container"&gt;</code> with series divs</li>
+                    <li>Compact mode: Icon and panel appended to <code>document.body</code></li>
+                    <li>Each entry has <code>class="blogroll-entry"</code> with border</li>
+                    <li>Series have <code>&lt;h2&gt;</code> headings</li>
+                </ul>
+            </li>
+            <li><strong>Console Output:</strong> Review console logs for detailed decoration process and any errors</li>
+        </ol>
+
+        <h3>Expected Results</h3>
+        <ul>
+            <li><strong>Test 1:</strong> 12 mock posts displayed, grouped into series (React Basics, Vue Introduction, etc.)</li>
+            <li><strong>Test 2:</strong> ~8 posts from "/blogs/tech" path</li>
+            <li><strong>Test 3:</strong> May show empty if no posts match `/blocks/blogroll/` path</li>
+            <li><strong>Test 4:</strong> Posts containing "JavaScript" or "React" keywords</li>
+            <li><strong>Test 5:</strong> "React Basics" series with Parts 1, 2, 3 in order</li>
+            <li><strong>Test 6:</strong> Floating icon with interactive slide-out panel</li>
+        </ul>
+
+        <h3>Mock Data Information</h3>
+        <ul>
+            <li><strong>Total Posts:</strong> 12 mock blog posts</li>
+            <li><strong>Series:</strong> "React Basics" (3 parts), "Vue Introduction" (2 parts)</li>
+            <li><strong>Paths:</strong> /blogs/tech (7), /blogs/design (2), /tutorials (2), /blogs/tech/css (1)</li>
+            <li><strong>Keywords:</strong> JavaScript, React, TypeScript, Vue, CSS, Design</li>
+            <li><strong>Date Range:</strong> December 1-12, 2023</li>
+        </ul>
+
+        <h3>Filter Priority Testing</h3>
+        <p>The blogroll applies filters in this priority order:</p>
+        <ol>
+            <li><strong>Current directory filter (path=*)</strong> - Highest priority</li>
+            <li><strong>Path filters (path=value)</strong> - Medium priority (with title fallback)</li>
+            <li><strong>Keyword filters</strong> - Lowest priority</li>
+        </ol>
+        <p>If higher priority filters match, lower priority filters are ignored.</p>
+
+        <h3>Known Behaviors</h3>
+        <ul>
+            <li><strong>Default Fallback:</strong> When no config provided, automatically applies <code>path=*</code></li>
+            <li><strong>Case Sensitivity:</strong> Most filters are case-sensitive except "guide" (backward compatibility)</li>
+            <li><strong>Empty Results:</strong> Shows "No blog posts found" when filters match nothing</li>
+            <li><strong>Series Detection:</strong> Only recognizes "- Part N" format (case insensitive)</li>
+            <li><strong>Compact Mode:</strong> Icon and panel added to <code>document.body</code>, not block element</li>
+        </ul>
+
+        <h3>Debugging Tips</h3>
+        <ul>
+            <li>Check browser console for detailed logs of each test scenario</li>
+            <li>Inspect Network tab (should show no real fetch - using mock data)</li>
+            <li>Use DevTools Elements panel to verify DOM transformations</li>
+            <li>Test with real <code>/query-index.json</code> by removing mock fetch override</li>
+            <li>Verify CSS variables are properly defined in <code>:root</code></li>
+        </ul>
+
+        <h3>Accessibility Testing</h3>
+        <ul>
+            <li><strong>Keyboard:</strong> Tab through all links, verify focus indicators</li>
+            <li><strong>Screen Reader:</strong> Test with NVDA/VoiceOver for ARIA label announcements</li>
+            <li><strong>Compact Panel:</strong> Verify ESC key closes panel, close button has aria-label</li>
+            <li><strong>Semantic HTML:</strong> Check heading hierarchy (h2 for series titles)</li>
+        </ul>
+    </div>
+</body>
+</html>

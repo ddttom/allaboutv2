@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 2rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .test-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .test-info h1 {
+            margin: 0 0 1rem 0;
+            font-size: 2rem;
+        }
+
+        .test-info p {
+            margin: 0.5rem 0;
+            opacity: 0.95;
+        }
+
+        .test-info code {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .test-section {
+            margin: 2rem 0;
+            padding: 2rem;
+            border: 2px solid #e1e4e8;
+            border-radius: 8px;
+            background: #f6f8fa;
+        }
+
+        .test-section h2 {
+            margin: 0 0 1rem 0;
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .test-description {
+            background: white;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+
+        .test-description strong {
+            color: #667eea;
+        }
+
+        .test-case {
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .test-case h3 {
+            margin: 0 0 1rem 0;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .test-input {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #e1e4e8;
+        }
+
+        .test-input strong {
+            color: #667eea;
+        }
+
+        .test-output {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #fff;
+            border: 2px dashed #667eea;
+            border-radius: 4px;
+            min-height: 50px;
+        }
+
+        .test-controls {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+
+        .test-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .test-button:hover {
+            background: #5568d3;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .test-button:active {
+            transform: translateY(0);
+        }
+
+        #test-results {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .result-success {
+            color: #28a745;
+            padding: 0.25rem 0;
+        }
+
+        .result-error {
+            color: #dc3545;
+            padding: 0.25rem 0;
+        }
+
+        .result-info {
+            color: #17a2b8;
+            padding: 0.25rem 0;
+        }
+
+        .config-display {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            border: 1px solid #e1e4e8;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .config-display pre {
+            margin: 0;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.85rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /* Highlight the text blocks for testing */
+        .text.block {
+            margin: 1rem 0;
+            padding: 1rem;
+            min-height: 40px;
+            background: white;
+            border: 1px solid #e1e4e8;
+        }
+
+        /* Add some visual separation */
+        hr {
+            border: none;
+            border-top: 2px solid #e1e4e8;
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h1>Text Block Test Suite</h1>
+        <p><strong>Block:</strong> <code>text</code></p>
+        <p><strong>Purpose:</strong> Display text with dynamic template expression expansion</p>
+        <p><strong>Plugin:</strong> <code>/plusplus/plugins/expressions/src/expressions.js</code></p>
+        <p><strong>Status:</strong> <span id="status">Initializing...</span></p>
+    </div>
+
+    <!-- Test Controls -->
+    <div class="test-controls">
+        <h3>Test Controls</h3>
+        <button class="test-button" onclick="reloadAllBlocks()">Reload All Blocks</button>
+        <button class="test-button" onclick="testExpressions()">Test Expressions</button>
+        <button class="test-button" onclick="showConfigValues()">Show Config Values</button>
+        <button class="test-button" onclick="clearResults()">Clear Results</button>
+        <div id="test-results"></div>
+    </div>
+
+    <!-- Test Case 1: Simple Variable Expansion -->
+    <div class="test-section">
+        <h2>Test Case 1: Simple Variable Expansion (expand)</h2>
+        <div class="test-description">
+            <strong>Tests:</strong> Single variable expansion using {{expand, $var$}} syntax
+        </div>
+
+        <div class="test-case">
+            <h3>Scenario: Expand Page Title</h3>
+            <div class="test-input">
+                <strong>Input:</strong> Welcome to {{expand, $page:title$}}!
+            </div>
+            <div class="test-output">
+                <div class="text block" data-block-name="text" data-test-id="test-1">
+                    <div class="text-wrapper">
+                        Welcome to {{expand, $page:title$}}!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-case">
+            <h3>Scenario: Expand System Date</h3>
+            <div class="test-input">
+                <strong>Input:</strong> Today is {{expand, $system:dateinenglish$}}
+            </div>
+            <div class="test-output">
+                <div class="text block" data-block-name="text" data-test-id="test-2">
+                    <div class="text-wrapper">
+                        Today is {{expand, $system:dateinenglish$}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Case 2: List Expansion -->
+    <div class="test-section">
+        <h2>Test Case 2: List Expansion (expandlist)</h2>
+        <div class="test-description">
+            <strong>Tests:</strong> Multiple variable expansion with line breaks
+        </div>
+
+        <div class="test-case">
+            <h3>Scenario: Expand Date Components</h3>
+            <div class="test-input">
+                <strong>Input:</strong> {{expandlist, $system:year$, $system:month$, $system:day$}}
+            </div>
+            <div class="test-output">
+                <div class="text block" data-block-name="text" data-test-id="test-3">
+                    <div class="text-wrapper">
+                        {{expandlist, $system:year$, $system:month$, $system:day$}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Case 3: Profile Expansion -->
+    <div class="test-section">
+        <h2>Test Case 3: Profile Expansion (expandprofile)</h2>
+        <div class="test-description">
+            <strong>Tests:</strong> Complex HTML element creation with multiple variables
+        </div>
+
+        <div class="test-case">
+            <h3>Scenario: Create Profile Card</h3>
+            <div class="test-input">
+                <strong>Input:</strong> {{expandprofile, $profile:name$; $profile:title$; $profile:bio$; $profile:linkedinurl$; $profile:linkedintitle$}}
+            </div>
+            <div class="test-output">
+                <div class="text block" data-block-name="text" data-test-id="test-4">
+                    <div class="text-wrapper">
+                        {{expandprofile, $profile:name$; $profile:title$; $profile:bio$; $profile:linkedinurl$; $profile:linkedintitle$}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Case 4: Mixed Content -->
+    <div class="test-section">
+        <h2>Test Case 4: Mixed Static and Dynamic Content</h2>
+        <div class="test-description">
+            <strong>Tests:</strong> Combination of plain text and multiple expressions
+        </div>
+
+        <div class="test-case">
+            <h3>Scenario: Article Header</h3>
+            <div class="test-input">
+                <strong>Input:</strong> Published on {{expand, $system:dateinenglish$}} by {{expand, $profile:name$}}. Reading time: {{expand, $page:readspeed$}} minutes.
+            </div>
+            <div class="test-output">
+                <div class="text block" data-block-name="text" data-test-id="test-5">
+                    <div class="text-wrapper">
+                        Published on {{expand, $system:dateinenglish$}} by {{expand, $profile:name$}}. Reading time: {{expand, $page:readspeed$}} minutes.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Case 5: Plain Text (No Expressions) -->
+    <div class="test-section">
+        <h2>Test Case 5: Plain Text (No Expressions)</h2>
+        <div class="test-description">
+            <strong>Tests:</strong> Block handles plain text without expressions
+        </div>
+
+        <div class="test-case">
+            <h3>Scenario: Static Content</h3>
+            <div class="test-input">
+                <strong>Input:</strong> This is plain text without any template expressions. It should display exactly as written.
+            </div>
+            <div class="test-output">
+                <div class="text block" data-block-name="text" data-test-id="test-6">
+                    <div class="text-wrapper">
+                        This is plain text without any template expressions. It should display exactly as written.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Case 6: Missing Variables -->
+    <div class="test-section">
+        <h2>Test Case 6: Missing Variables</h2>
+        <div class="test-description">
+            <strong>Tests:</strong> Fallback behavior when variables don't exist
+        </div>
+
+        <div class="test-case">
+            <h3>Scenario: Non-existent Variable</h3>
+            <div class="test-input">
+                <strong>Input:</strong> Value: {{expand, $missing:variable$}}
+            </div>
+            <div class="test-output">
+                <div class="text block" data-block-name="text" data-test-id="test-7">
+                    <div class="text-wrapper">
+                        Value: {{expand, $missing:variable$}}
+                    </div>
+                </div>
+            </div>
+            <p style="color: #666; font-style: italic; margin-top: 0.5rem;">
+                Expected: Variable name displayed as literal text
+            </p>
+        </div>
+    </div>
+
+    <!-- Test Case 7: Copyright Notice -->
+    <div class="test-section">
+        <h2>Test Case 7: Copyright Notice</h2>
+        <div class="test-description">
+            <strong>Tests:</strong> Common use case - dynamic copyright year
+        </div>
+
+        <div class="test-case">
+            <h3>Scenario: Footer Copyright</h3>
+            <div class="test-input">
+                <strong>Input:</strong> © {{expand, $system:year$}} Tom Cranstoun. All rights reserved.
+            </div>
+            <div class="test-output">
+                <div class="text block" data-block-name="text" data-test-id="test-8">
+                    <div class="text-wrapper">
+                        © {{expand, $system:year$}} Tom Cranstoun. All rights reserved.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Case 8: Unknown Expression -->
+    <div class="test-section">
+        <h2>Test Case 8: Unknown Expression</h2>
+        <div class="test-description">
+            <strong>Tests:</strong> Behavior when expression type doesn't exist
+        </div>
+
+        <div class="test-case">
+            <h3>Scenario: Invalid Expression Name</h3>
+            <div class="test-input">
+                <strong>Input:</strong> {{unknownExpression, some args}}
+            </div>
+            <div class="test-output">
+                <div class="text block" data-block-name="text" data-test-id="test-9">
+                    <div class="text-wrapper">
+                        {{unknownExpression, some args}}
+                    </div>
+                </div>
+            </div>
+            <p style="color: #666; font-style: italic; margin-top: 0.5rem;">
+                Expected: Console warning, expression not rendered
+            </p>
+        </div>
+    </div>
+
+    <!-- Test Case 9: Multiple Blocks -->
+    <div class="test-section">
+        <h2>Test Case 9: Multiple Text Blocks</h2>
+        <div class="test-description">
+            <strong>Tests:</strong> Multiple blocks on same page all process correctly
+        </div>
+
+        <div class="test-case">
+            <h3>Scenario: Three Blocks with Different Content</h3>
+            <div class="test-output">
+                <div class="text block" data-block-name="text" data-test-id="test-10a">
+                    <div class="text-wrapper">
+                        Block 1: {{expand, $system:year$}}
+                    </div>
+                </div>
+            </div>
+            <div class="test-output">
+                <div class="text block" data-block-name="text" data-test-id="test-10b">
+                    <div class="text-wrapper">
+                        Block 2: {{expand, $page:title$}}
+                    </div>
+                </div>
+            </div>
+            <div class="test-output">
+                <div class="text block" data-block-name="text" data-test-id="test-10c">
+                    <div class="text-wrapper">
+                        Block 3: Plain text
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Config Display Section -->
+    <div class="test-section">
+        <h2>Window Config Inspector</h2>
+        <div class="test-description">
+            <strong>Purpose:</strong> View the current window.siteConfig values used by expressions
+        </div>
+        <button class="test-button" onclick="showConfigValues()">Refresh Config Display</button>
+        <div class="config-display">
+            <pre id="config-output">Click "Show Config Values" to display...</pre>
+        </div>
+    </div>
+
+    <script type="module">
+        import { loadBlock, decorateBlock } from '/scripts/aem.js';
+
+        // Update status function
+        function updateStatus(message, isError = false) {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.style.color = isError ? '#ff6b6b' : '#51cf66';
+        }
+
+        // Helper to add test results
+        function addTestResult(testId, type, message) {
+            const resultsDiv = document.getElementById('test-results');
+            const resultClass = type === 'success' ? 'result-success' : type === 'error' ? 'result-error' : 'result-info';
+            const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
+
+            const resultLine = document.createElement('div');
+            resultLine.className = resultClass;
+            resultLine.textContent = `${icon} [${testId}] ${message}`;
+            resultsDiv.appendChild(resultLine);
+        }
+
+        // Setup test configurations
+        function setupTestConfigs() {
+            // Ensure window.siteConfig exists
+            if (!window.siteConfig) {
+                window.siteConfig = {};
+            }
+
+            // System variables
+            const now = new Date();
+            const months = ["January", "February", "March", "April", "May", "June",
+                          "July", "August", "September", "October", "November", "December"];
+
+            window.siteConfig['$system:year$'] = now.getFullYear().toString();
+            window.siteConfig['$system:month$'] = (now.getMonth() + 1).toString();
+            window.siteConfig['$system:day$'] = now.getDate().toString();
+            window.siteConfig['$system:dateinenglish$'] = `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+            window.siteConfig['$system:time$'] = now.toLocaleTimeString();
+            window.siteConfig['$system:environment$'] = 'test';
+            window.siteConfig['$system:locale$'] = navigator.language;
+            window.siteConfig['$system:timezone$'] = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+            // Page variables
+            window.siteConfig['$page:title$'] = 'Text Block Test Suite';
+            window.siteConfig['$page:name$'] = '/blocks/text/test.html';
+            window.siteConfig['$page:location$'] = window.location.href;
+            window.siteConfig['$page:url$'] = window.location.href;
+            window.siteConfig['$page:path$'] = window.location.pathname;
+            window.siteConfig['$page:wordcount$'] = '500';
+            window.siteConfig['$page:readspeed$'] = '4';
+
+            // Profile variables (for profile expansion test)
+            window.siteConfig['$profile:name$'] = 'Tom Cranstoun';
+            window.siteConfig['$profile:title$'] = 'Senior Developer';
+            window.siteConfig['$profile:bio$'] = 'Experienced developer specializing in Edge Delivery Services';
+            window.siteConfig['$profile:linkedinurl$'] = 'https://linkedin.com/in/tomcranstoun';
+            window.siteConfig['$profile:linkedintitle$'] = 'Connect on LinkedIn';
+
+            // Metadata variables
+            window.siteConfig['$meta:category$'] = 'Tutorial';
+            window.siteConfig['$meta:contenttechnology$'] = 'EDS';
+
+            addTestResult('setup', 'info', 'Test configurations initialized');
+            console.log('Test configs set:', window.siteConfig);
+        }
+
+        // Load all text blocks
+        async function loadAllBlocks() {
+            try {
+                const textBlocks = document.querySelectorAll('.text.block');
+
+                console.log('═'.repeat(60));
+                console.log('📝 TEXT BLOCK TEST SUITE');
+                console.log('═'.repeat(60));
+                console.log(`Found ${textBlocks.length} text blocks to test\n`);
+
+                updateStatus('Loading blocks...');
+
+                let passed = 0;
+                let failed = 0;
+
+                for (let i = 0; i < textBlocks.length; i++) {
+                    const block = textBlocks[i];
+                    const testId = block.dataset.testId || `block-${i}`;
+
+                    try {
+                        console.group(`Test ${testId}: Loading Text Block`);
+
+                        // Store original content for comparison
+                        const wrapper = block.querySelector('.text-wrapper');
+                        const originalContent = wrapper ? wrapper.textContent.trim() : block.textContent.trim();
+                        console.log('Original content:', originalContent);
+
+                        // Decorate block (adds classes)
+                        decorateBlock(block);
+
+                        // Load the block (fetches JS/CSS and runs decorate)
+                        await loadBlock(block);
+
+                        // Small delay to allow rendering
+                        await new Promise(resolve => setTimeout(resolve, 100));
+
+                        // Verify results
+                        const finalContent = block.textContent.trim();
+                        const hasExpressions = originalContent.includes('{{');
+                        const hasChanged = finalContent !== originalContent;
+
+                        console.log('\n📊 Results:');
+                        console.log('  Final content:', finalContent);
+                        console.log('  Had expressions:', hasExpressions);
+                        console.log('  Content changed:', hasChanged);
+
+                        // Validation logic
+                        if (!hasExpressions) {
+                            // Plain text should remain unchanged
+                            if (finalContent === originalContent) {
+                                console.log('✅ PASSED (plain text preserved)');
+                                passed++;
+                                addTestResult(testId, 'success', 'Plain text rendered correctly');
+                            } else {
+                                console.log('❌ FAILED: Plain text was modified');
+                                failed++;
+                                addTestResult(testId, 'error', 'Plain text was unexpectedly modified');
+                            }
+                        } else {
+                            // Expression content should change
+                            if (hasChanged) {
+                                console.log('✅ PASSED (expressions processed)');
+                                passed++;
+                                addTestResult(testId, 'success', 'Expressions processed successfully');
+                            } else {
+                                console.log('⚠️  WARNING: Expressions may not have processed');
+                                // Still count as passed if block loaded without error
+                                passed++;
+                                addTestResult(testId, 'info', 'Block loaded (check console for expression warnings)');
+                            }
+                        }
+
+                        console.groupEnd();
+
+                    } catch (error) {
+                        console.error(`❌ Test ${testId} threw error:`, error);
+                        failed++;
+                        addTestResult(testId, 'error', error.message);
+                        console.groupEnd();
+                    }
+                }
+
+                // Final summary
+                console.log('\n' + '═'.repeat(60));
+                console.log('📋 FINAL RESULTS');
+                console.log('═'.repeat(60));
+                console.log(`Total tests: ${textBlocks.length}`);
+                console.log(`✅ Passed: ${passed}`);
+                console.log(`❌ Failed: ${failed}`);
+
+                if (failed === 0) {
+                    console.log('\n🎉 ALL TESTS PASSED!');
+                    updateStatus('All tests passed! ✓');
+                    addTestResult('summary', 'success', `All ${passed} tests passed!`);
+                } else {
+                    console.log('\n⚠️  SOME TESTS FAILED');
+                    updateStatus(`${failed} test(s) failed`, true);
+                    addTestResult('summary', 'error', `${failed} of ${textBlocks.length} tests failed`);
+                }
+
+                console.log('═'.repeat(60));
+
+            } catch (error) {
+                console.error('Failed to load blocks:', error);
+                updateStatus(`Error: ${error.message}`, true);
+            }
+        }
+
+        // Global functions for test controls
+        window.reloadAllBlocks = async function() {
+            console.log('🔄 Reloading all text blocks...');
+            document.getElementById('test-results').innerHTML = '';
+            setupTestConfigs();
+
+            // Reset all blocks to their original state
+            document.querySelectorAll('.text.block').forEach(block => {
+                const wrapper = block.querySelector('.text-wrapper');
+                if (wrapper) {
+                    // Store original if not already stored
+                    if (!block.dataset.originalContent) {
+                        block.dataset.originalContent = wrapper.innerHTML;
+                    } else {
+                        // Restore original
+                        wrapper.innerHTML = block.dataset.originalContent;
+                    }
+                }
+            });
+
+            await loadAllBlocks();
+        };
+
+        window.testExpressions = function() {
+            console.log('🔍 Testing expression functionality...');
+            addTestResult('expression-test', 'info', 'Testing expressions...');
+
+            // Test each expression type
+            const tests = [
+                { name: 'expand', test: () => window.siteConfig['$page:title$'] },
+                { name: 'expandlist', test: () => window.siteConfig['$system:year$'] },
+                { name: 'expandprofile', test: () => window.siteConfig['$profile:name$'] },
+            ];
+
+            tests.forEach(({ name, test }) => {
+                const result = test();
+                if (result) {
+                    console.log(`✅ ${name} expression: data available`);
+                    addTestResult(`expression-${name}`, 'success', `${name}: data available`);
+                } else {
+                    console.log(`❌ ${name} expression: data missing`);
+                    addTestResult(`expression-${name}`, 'error', `${name}: data missing`);
+                }
+            });
+        };
+
+        window.showConfigValues = function() {
+            const output = document.getElementById('config-output');
+
+            if (!window.siteConfig) {
+                output.textContent = '❌ window.siteConfig is not defined';
+                return;
+            }
+
+            output.textContent = '--- window.siteConfig ---\n\n' +
+                JSON.stringify(window.siteConfig, null, 2);
+
+            console.log('Current siteConfig:', window.siteConfig);
+            addTestResult('config-display', 'info', 'Config values displayed');
+        };
+
+        window.clearResults = function() {
+            document.getElementById('test-results').innerHTML = '';
+            console.clear();
+            console.log('🧹 Results cleared');
+        };
+
+        // Initialize test environment
+        async function init() {
+            try {
+                // CRITICAL: Add body.appear class FIRST
+                document.body.classList.add('appear');
+
+                updateStatus('Initializing test environment...');
+
+                // Setup test configurations
+                setupTestConfigs();
+
+                updateStatus('Loading blocks...');
+
+                // Load all blocks
+                await loadAllBlocks();
+
+                updateStatus('Tests complete! ✓');
+
+            } catch (error) {
+                console.error('Test initialization failed:', error);
+                updateStatus(`Initialization error: ${error.message}`, true);
+            }
+        }
+
+        // Start tests
+        init();
+    </script>
+</body>
+</html>

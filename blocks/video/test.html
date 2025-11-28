@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <!-- Video Block Styles -->
+    <link rel="stylesheet" href="/blocks/video/video.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .test-info {
+            background: #f0f0f0;
+            padding: 1rem;
+            border-bottom: 2px solid #667eea;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .test-info h2 {
+            margin: 0 0 0.5rem 0;
+            color: #667eea;
+        }
+
+        .test-info p {
+            margin: 0.25rem 0;
+            font-size: 0.9rem;
+        }
+
+        .test-info code {
+            background: white;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        .test-section {
+            margin-bottom: 3rem;
+            border: 2px solid #e0e0e0;
+            background: white;
+        }
+
+        .test-section h3 {
+            background: #667eea;
+            color: white;
+            padding: 0.75rem 1rem;
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .test-section .description {
+            padding: 1rem;
+            background: #f9f9f9;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 0.9rem;
+        }
+
+        .test-section .description strong {
+            color: #667eea;
+        }
+
+        /* Status indicators */
+        .status {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status.info {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status.warning {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        /* Spacer to test lazy loading */
+        .spacer {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>Video Block Test Suite</h2>
+        <p><strong>Block:</strong> <code>video</code></p>
+        <p><strong>Test Count:</strong> <code>6 scenarios</code></p>
+        <p><strong>Status:</strong> <span id="status" class="status info">Loading...</span></p>
+        <p><strong>Purpose:</strong> Visual testing of video embedding with lazy loading and autoplay</p>
+    </div>
+
+    <main>
+        <!-- Test 1: YouTube with Poster -->
+        <div class="test-section">
+            <h3>Test 1: YouTube Video with Poster Image (Click-to-Play)</h3>
+            <div class="description">
+                <strong>Expected Behavior:</strong> Poster image displays with play button overlay. Clicking loads YouTube video. No lazy loading (loads on click).
+            </div>
+            <div class="video-wrapper">
+                <div class="video block">
+                    <div>
+                        <picture>
+                            <img src="https://via.placeholder.com/800x450/667eea/ffffff?text=Click+to+Play+Video" alt="YouTube video thumbnail">
+                        </picture>
+                    </div>
+                    <div>
+                        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">YouTube Video</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 2: Vimeo with Poster -->
+        <div class="test-section">
+            <h3>Test 2: Vimeo Video with Poster Image (Click-to-Play)</h3>
+            <div class="description">
+                <strong>Expected Behavior:</strong> Poster image displays with play button overlay. Clicking loads Vimeo video. No lazy loading (loads on click).
+            </div>
+            <div class="video-wrapper">
+                <div class="video block">
+                    <div>
+                        <picture>
+                            <img src="https://via.placeholder.com/800x450/764ba2/ffffff?text=Vimeo+Video+Poster" alt="Vimeo video thumbnail">
+                        </picture>
+                    </div>
+                    <div>
+                        <a href="https://vimeo.com/148751763">Vimeo Video</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Spacer to test lazy loading -->
+        <div class="spacer">
+            ↓ Scroll Down to Test Lazy Loading ↓
+        </div>
+
+        <!-- Test 3: YouTube without Poster (Lazy Load) -->
+        <div class="test-section">
+            <h3>Test 3: YouTube Video without Poster (Lazy Load on Scroll)</h3>
+            <div class="description">
+                <strong>Expected Behavior:</strong> Empty space reserved with aspect ratio. Video iframe loads only when scrolled into view. Check console for lazy load event.
+            </div>
+            <div class="video-wrapper">
+                <div class="video block lazy-loading" data-test="lazy-youtube">
+                    <div>
+                        <a href="https://www.youtube.com/watch?v=C0DPdy98e4c">YouTube Video</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 4: Vimeo without Poster (Lazy Load) -->
+        <div class="test-section">
+            <h3>Test 4: Vimeo Video without Poster (Lazy Load on Scroll)</h3>
+            <div class="description">
+                <strong>Expected Behavior:</strong> Empty space reserved. Video loads when scrolled into view. Check console for lazy load event.
+            </div>
+            <div class="video-wrapper">
+                <div class="video block lazy-loading" data-test="lazy-vimeo">
+                    <div>
+                        <a href="https://vimeo.com/76979871">Vimeo Video</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 5: Autoplay Video -->
+        <div class="test-section">
+            <h3>Test 5: Autoplay Video (Muted, Looping, No Controls)</h3>
+            <div class="description">
+                <strong>Expected Behavior:</strong> Video lazy loads on scroll, then begins autoplay (muted). Loops continuously. No controls visible. Check console for autoplay trigger.
+            </div>
+            <div class="video-wrapper">
+                <div class="video autoplay block lazy-loading" data-test="autoplay">
+                    <div>
+                        <a href="https://vimeo.com/148751763">Autoplay Video</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 6: Short YouTube URL Format -->
+        <div class="test-section">
+            <h3>Test 6: YouTube Short URL (youtu.be format)</h3>
+            <div class="description">
+                <strong>Expected Behavior:</strong> Handles youtu.be short URLs correctly. Video loads on scroll (no poster).
+            </div>
+            <div class="video-wrapper">
+                <div class="video block lazy-loading" data-test="short-url">
+                    <div>
+                        <a href="https://youtu.be/dQw4w9WgXcQ">Short YouTube URL</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 7: Multiple Videos (Performance Test) -->
+        <div class="test-section">
+            <h3>Test 7: Multiple Videos on Same Page</h3>
+            <div class="description">
+                <strong>Expected Behavior:</strong> All videos lazy load independently. No performance issues. Each loads only when scrolled into view.
+            </div>
+            <div class="video-wrapper">
+                <div class="video block">
+                    <div>
+                        <picture>
+                            <img src="https://via.placeholder.com/800x450/e65100/ffffff?text=Video+1" alt="Video 1">
+                        </picture>
+                    </div>
+                    <div>
+                        <a href="https://www.youtube.com/watch?v=C0DPdy98e4c">Video 1</a>
+                    </div>
+                </div>
+            </div>
+            <div style="height: 50vh; background: #f5f5f5; display: flex; align-items: center; justify-content: center;">
+                Space between videos (scroll past this)
+            </div>
+            <div class="video-wrapper">
+                <div class="video block lazy-loading" data-test="multi-2">
+                    <div>
+                        <a href="https://vimeo.com/76979871">Video 2</a>
+                    </div>
+                </div>
+            </div>
+            <div style="height: 50vh; background: #f5f5f5; display: flex; align-items: center; justify-content: center;">
+                Space between videos (scroll past this)
+            </div>
+            <div class="video-wrapper">
+                <div class="video block lazy-loading" data-test="multi-3">
+                    <div>
+                        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Video 3</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import decorate from '/blocks/video/video.js';
+
+        // Update status function
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+
+        // Track lazy load events
+        let lazyLoadCount = 0;
+        const lazyLoadTargets = document.querySelectorAll('.video.lazy-loading').length;
+
+        // Initialize all video blocks
+        async function init() {
+            try {
+                // Add body.appear class (required to show page)
+                document.body.classList.add('appear');
+
+                updateStatus('Decorating blocks...', 'info');
+
+                // Get all video blocks
+                const videoBlocks = document.querySelectorAll('.video.block');
+
+                if (videoBlocks.length === 0) {
+                    throw new Error('No video blocks found');
+                }
+
+                console.log(`Found ${videoBlocks.length} video blocks`);
+
+                // Decorate each video block
+                videoBlocks.forEach((block, index) => {
+                    console.log(`\nDecorating video block ${index + 1}:`, block);
+
+                    const testId = block.getAttribute('data-test');
+                    const hasAutoplay = block.classList.contains('autoplay');
+                    const hasPoster = block.querySelector('picture') !== null;
+                    const videoLink = block.querySelector('a')?.href || 'unknown';
+
+                    console.log(`  Test ID: ${testId || 'none'}`);
+                    console.log(`  Has poster: ${hasPoster}`);
+                    console.log(`  Autoplay: ${hasAutoplay}`);
+                    console.log(`  Video URL: ${videoLink}`);
+
+                    // Run decoration
+                    decorate(block);
+
+                    // Log state after decoration
+                    if (hasPoster) {
+                        console.log(`  → Click-to-play mode (poster present)`);
+                    } else {
+                        console.log(`  → Lazy load mode (IntersectionObserver active)`);
+                    }
+                });
+
+                // Monitor lazy load completion
+                const checkLazyLoad = setInterval(() => {
+                    const loadedBlocks = document.querySelectorAll('.video[data-embed-is-loaded="true"]').length;
+                    const clickBlocks = document.querySelectorAll('.video .video-placeholder').length;
+                    const totalExpected = videoBlocks.length;
+                    const loaded = loadedBlocks + clickBlocks;
+
+                    if (loaded === totalExpected) {
+                        clearInterval(checkLazyLoad);
+                        updateStatus(`✓ All ${videoBlocks.length} video blocks ready`, 'success');
+                    } else {
+                        updateStatus(`Waiting for lazy load... (${loaded}/${totalExpected} ready)`, 'warning');
+                    }
+                }, 500);
+
+                console.log('\n=== Video Block Test Suite Initialized ===');
+                console.log(`Total blocks: ${videoBlocks.length}`);
+                console.log(`Lazy load blocks: ${lazyLoadTargets}`);
+                console.log(`\nScroll down to trigger lazy loading for videos without posters`);
+                console.log('Watch the console for lazy load events\n');
+
+            } catch (error) {
+                console.error('Failed to initialize video blocks:', error);
+                updateStatus(`Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Monkey-patch IntersectionObserver to log lazy load events
+        const OriginalIntersectionObserver = window.IntersectionObserver;
+        window.IntersectionObserver = class extends OriginalIntersectionObserver {
+            constructor(callback, options) {
+                super((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && entry.target.classList.contains('video')) {
+                            const testId = entry.target.getAttribute('data-test');
+                            console.log(`\n🎬 Lazy Load Triggered: ${testId || 'unnamed'}`);
+                            console.log(`  Video entering viewport:`, entry.target);
+                            console.log(`  Intersection ratio: ${(entry.intersectionRatio * 100).toFixed(1)}%`);
+                            lazyLoadCount++;
+                        }
+                    });
+                    callback(entries, observer);
+                }, options);
+            }
+        };
+
+        // Start initialization
+        init();
+
+        // Add scroll tracking
+        let lastScrollY = window.scrollY;
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            if (currentScrollY > lastScrollY + 100) {
+                console.log(`Scrolled to: ${currentScrollY}px (look for lazy load triggers above)`);
+                lastScrollY = currentScrollY;
+            }
+        });
+    </script>
+
+    <div style="padding: 2rem; background: #f9f9f9; border-top: 2px solid #667eea; font-family: system-ui;">
+        <h3 style="margin-top: 0; color: #667eea;">Testing Instructions</h3>
+        <ol style="line-height: 1.8;">
+            <li><strong>Poster Tests (1-2):</strong> Click play button on poster images to load videos</li>
+            <li><strong>Lazy Load Tests (3-4):</strong> Scroll down to trigger IntersectionObserver</li>
+            <li><strong>Autoplay Test (5):</strong> Scroll to video and verify muted autoplay begins</li>
+            <li><strong>Short URL Test (6):</strong> Verify youtu.be format parses correctly</li>
+            <li><strong>Multiple Videos (7):</strong> Check each loads independently without conflicts</li>
+            <li><strong>Console Monitoring:</strong> Watch browser console for lazy load events and debug info</li>
+        </ol>
+
+        <h3 style="color: #667eea;">Expected Results</h3>
+        <ul style="line-height: 1.8;">
+            <li><strong>Videos with posters:</strong> Display custom image with play button overlay</li>
+            <li><strong>Videos without posters:</strong> Reserve space (16:9) then load when scrolled into view</li>
+            <li><strong>Autoplay video:</strong> Muted, looping, no controls, begins automatically when visible</li>
+            <li><strong>YouTube videos:</strong> Embed from youtube.com/embed/ with proper parameters</li>
+            <li><strong>Vimeo videos:</strong> Embed from player.vimeo.com/video/ with proper parameters</li>
+            <li><strong>All videos:</strong> 16:9 aspect ratio maintained, responsive width</li>
+        </ul>
+
+        <h3 style="color: #667eea;">Performance Checks</h3>
+        <ul style="line-height: 1.8;">
+            <li><strong>Network Tab:</strong> Verify videos don't load until scrolled into view</li>
+            <li><strong>Layout Shift:</strong> Check for no jumping/shifting as videos load</li>
+            <li><strong>Memory Usage:</strong> Monitor memory with multiple videos (DevTools Performance)</li>
+            <li><strong>IntersectionObserver:</strong> Verify observer disconnects after loading</li>
+        </ul>
+
+        <h3 style="color: #667eea;">Platform Testing</h3>
+        <ul style="line-height: 1.8;">
+            <li><strong>YouTube:</strong>
+                <ul>
+                    <li>Standard URL format (watch?v=)</li>
+                    <li>Short URL format (youtu.be/)</li>
+                    <li>Controls visible and functional</li>
+                    <li>Fullscreen mode works</li>
+                </ul>
+            </li>
+            <li><strong>Vimeo:</strong>
+                <ul>
+                    <li>Standard URL format (vimeo.com/ID)</li>
+                    <li>Controls visible (or hidden for autoplay)</li>
+                    <li>Fullscreen mode works</li>
+                </ul>
+            </li>
+            <li><strong>Autoplay:</strong>
+                <ul>
+                    <li>Muted playback confirmed</li>
+                    <li>Looping enabled</li>
+                    <li>No controls visible</li>
+                    <li>Plays inline on mobile</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3 style="color: #667eea;">Browser Console Commands</h3>
+        <p>Try these commands in the browser console:</p>
+        <pre style="background: #333; color: #0f0; padding: 1rem; border-radius: 4px; overflow-x: auto;">
+// Check all video blocks
+document.querySelectorAll('.video.block')
+
+// Check loaded videos
+document.querySelectorAll('.video[data-embed-is-loaded="true"]')
+
+// Check pending lazy load
+document.querySelectorAll('.video.lazy-loading')
+
+// Check poster mode videos
+document.querySelectorAll('.video .video-placeholder')
+
+// Check autoplay videos
+document.querySelectorAll('.video.autoplay')
+
+// Get video URLs
+Array.from(document.querySelectorAll('.video iframe')).map(i => i.src)
+        </pre>
+    </div>
+</body>
+</html>

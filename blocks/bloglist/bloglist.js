@@ -1,5 +1,5 @@
 export default async function decorate(block) {
-  const blogListElement = document.querySelector(".bloglist");
+  const blogListElement = block;
   const url = "/query-index.json";
   const currentPath = window.location.pathname; // Get the current document's path
 

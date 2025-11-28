@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centreblock Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <!-- Centreblock Styles -->
+    <link rel="stylesheet" href="/blocks/centreblock/centreblock.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .test-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .test-info h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.75rem;
+        }
+
+        .test-info p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .test-info code {
+            background: rgba(255,255,255,0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .test-info strong {
+            font-weight: 600;
+        }
+
+        .test-section {
+            margin: 0;
+        }
+
+        .test-section h3 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            margin: 0;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .test-section .description {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            margin: 0;
+        }
+
+        .test-section .description strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .test-section .description p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        /* Status indicators */
+        .status {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Visual boundary for centreblock testing */
+        .centreblock-container {
+            background: white;
+            border: 2px dashed #ccc;
+            margin: 0;
+        }
+
+        /* Instructions section */
+        .instructions {
+            margin: 3rem auto;
+            max-width: 1400px;
+            padding: 2rem;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: #667eea;
+            font-size: 1.3rem;
+        }
+
+        .instructions ol, .instructions ul {
+            line-height: 1.8;
+            padding-left: 1.5rem;
+        }
+
+        .instructions li {
+            margin: 0.5rem 0;
+        }
+
+        .instructions strong {
+            color: #667eea;
+        }
+
+        .instructions code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        /* Measurement overlays for testing */
+        .measurement {
+            position: relative;
+        }
+
+        .measurement::before {
+            content: '← 100px margin →';
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .measurement::after {
+            content: '← 100px margin →';
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>Centreblock Test Suite</h2>
+        <p><strong>Block:</strong> <code>centreblock</code></p>
+        <p><strong>Test Count:</strong> <code>6 test scenarios</code></p>
+        <p><strong>Status:</strong> <span id="status" class="status info">Loading...</span></p>
+        <p><strong>Purpose:</strong> Visual testing of centered content layout with vertical spacing</p>
+    </div>
+
+    <main>
+        <!-- Test 1: Simple Text -->
+        <div class="test-section">
+            <h3>Test 1: Simple Text (No Heading)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Text centered horizontally with 100px vertical margins above and below.</p>
+                <p><strong>Validation:</strong> Verify text is centered. Check DevTools computed styles for margin-top and margin-bottom (should be 100px).</p>
+            </div>
+            <div class="centreblock-container">
+                <div class="centreblock block measurement">
+                    <div>
+                        <div>Welcome to our platform</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 2: Heading with Subtext -->
+        <div class="test-section">
+            <h3>Test 2: Heading with Supporting Text</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> H3 heading styled as inline-block with 0.5rem padding. Both heading and text centered with 100px vertical spacing.</p>
+                <p><strong>Validation:</strong> Inspect H3 element - verify display: inline-block and padding: 0.5rem. Check text-align: center on parent div.</p>
+            </div>
+            <div class="centreblock-container">
+                <div class="centreblock block measurement">
+                    <div>
+                        <div>
+                            <h3>Transform Your Business</h3>
+                            <p>Discover powerful tools that help you work smarter and grow faster</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 3: Multiple Paragraphs -->
+        <div class="test-section">
+            <h3>Test 3: Multiple Paragraphs</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> All paragraphs centered with proper spacing. Demonstrates handling of multi-line content.</p>
+                <p><strong>Validation:</strong> Verify all paragraphs inherit text-align: center. Check readability of centered multi-line text.</p>
+            </div>
+            <div class="centreblock-container">
+                <div class="centreblock block measurement">
+                    <div>
+                        <div>
+                            <h3>Our Mission</h3>
+                            <p>Building better experiences through thoughtful design and innovative technology.</p>
+                            <p>We believe in creating tools that empower teams to do their best work.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 4: With Image -->
+        <div class="test-section">
+            <h3>Test 4: Content with Image</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Image and text both centered. Image maintains aspect ratio and centers within container.</p>
+                <p><strong>Validation:</strong> Verify image loads and displays centered. Check responsive behavior on mobile (image should scale appropriately).</p>
+            </div>
+            <div class="centreblock-container">
+                <div class="centreblock block measurement">
+                    <div>
+                        <div>
+                            <img src="https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png" alt="Sample feature icon" style="max-width: 150px; height: auto; display: block; margin: 0 auto 1rem;">
+                            <h3>Lightning Fast Performance</h3>
+                            <p>Experience load times under 1 second with our edge delivery network</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 5: Minimal Content -->
+        <div class="test-section">
+            <h3>Test 5: Single Line (Minimal Content)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Single line of text centered with full vertical spacing. Demonstrates that block works with minimal content.</p>
+                <p><strong>Validation:</strong> Verify 100px margins maintained even with minimal content. Check visual balance.</p>
+            </div>
+            <div class="centreblock-container">
+                <div class="centreblock block measurement">
+                    <div>
+                        <div>Join our newsletter for weekly insights</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 6: Rich Content -->
+        <div class="test-section">
+            <h3>Test 6: Rich Content (Bold, Italic, Links)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> All formatted text (bold, italic, links) maintains centered alignment. Formatting preserved.</p>
+                <p><strong>Validation:</strong> Check that text formatting works. Verify links are clickable and properly styled.</p>
+            </div>
+            <div class="centreblock-container">
+                <div class="centreblock block measurement">
+                    <div>
+                        <div>
+                            <h3>Ready to Get Started?</h3>
+                            <p><strong>Join thousands</strong> of <em>satisfied customers</em> who trust our platform. <a href="#test">Learn more</a> about our features.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import init from '/blocks/centreblock/centreblock.js';
+
+        // Update status function
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+
+        // Log centreblock structure
+        function logStructure(block, index) {
+            console.log(`\n=== Centreblock ${index + 1} ===`);
+            console.log('Block element:', block);
+            console.log('Children:', block.children.length);
+
+            const div = block.querySelector(':scope > div');
+            if (div) {
+                const computedStyle = window.getComputedStyle(div);
+                console.log('Computed styles:');
+                console.log('  text-align:', computedStyle.textAlign);
+                console.log('  margin-top:', computedStyle.marginTop);
+                console.log('  margin-bottom:', computedStyle.marginBottom);
+            }
+
+            const h3 = block.querySelector('h3');
+            if (h3) {
+                const h3Style = window.getComputedStyle(h3);
+                console.log('H3 computed styles:');
+                console.log('  display:', h3Style.display);
+                console.log('  padding:', h3Style.padding);
+            }
+        }
+
+        // Verify CSS application
+        function verifyCSSApplied(block, index) {
+            console.log(`\n=== CSS Validation (Block ${index + 1}) ===`);
+
+            const div = block.querySelector(':scope > div');
+            if (!div) {
+                console.error('✗ Missing direct child div');
+                return false;
+            }
+
+            const computedStyle = window.getComputedStyle(div);
+            let errors = 0;
+
+            // Check text-align
+            if (computedStyle.textAlign !== 'center') {
+                console.error(`✗ text-align should be "center", got "${computedStyle.textAlign}"`);
+                errors++;
+            } else {
+                console.log('✓ text-align: center');
+            }
+
+            // Check margin-top
+            const marginTop = parseInt(computedStyle.marginTop);
+            if (marginTop !== 100) {
+                console.error(`✗ margin-top should be 100px, got ${marginTop}px`);
+                errors++;
+            } else {
+                console.log('✓ margin-top: 100px');
+            }
+
+            // Check margin-bottom
+            const marginBottom = parseInt(computedStyle.marginBottom);
+            if (marginBottom !== 100) {
+                console.error(`✗ margin-bottom should be 100px, got ${marginBottom}px`);
+                errors++;
+            } else {
+                console.log('✓ margin-bottom: 100px');
+            }
+
+            // Check H3 if present
+            const h3 = block.querySelector('h3');
+            if (h3) {
+                const h3Style = window.getComputedStyle(h3);
+
+                if (h3Style.display !== 'inline-block') {
+                    console.error(`✗ H3 display should be "inline-block", got "${h3Style.display}"`);
+                    errors++;
+                } else {
+                    console.log('✓ H3 display: inline-block');
+                }
+
+                const h3Padding = h3Style.padding;
+                if (!h3Padding.includes('0.5rem') && !h3Padding.includes('8px')) {
+                    console.warn(`⚠ H3 padding may be incorrect: ${h3Padding}`);
+                } else {
+                    console.log('✓ H3 padding: 0.5rem');
+                }
+            }
+
+            if (errors === 0) {
+                console.log('✓ All CSS rules applied correctly');
+                return true;
+            } else {
+                console.error(`✗ ${errors} CSS validation errors found`);
+                return false;
+            }
+        }
+
+        // Initialize all centreblock blocks
+        async function initialize() {
+            try {
+                // Add body.appear class (required to show page)
+                document.body.classList.add('appear');
+
+                updateStatus('Initializing centreblocks...', 'info');
+
+                // Get all centreblock blocks
+                const blocks = document.querySelectorAll('.centreblock.block');
+
+                if (blocks.length === 0) {
+                    throw new Error('No centreblock blocks found');
+                }
+
+                console.log(`Found ${blocks.length} centreblock blocks`);
+
+                let allValid = true;
+
+                // Process each block
+                blocks.forEach((block, index) => {
+                    console.log(`\n${'='.repeat(50)}`);
+                    console.log(`Processing Centreblock ${index + 1}`);
+                    console.log('='.repeat(50));
+
+                    // Call init function (should do nothing)
+                    try {
+                        init(block);
+                        console.log('✓ Init function called (no-op expected)');
+                    } catch (error) {
+                        console.error(`✗ Init function failed:`, error);
+                        throw error;
+                    }
+
+                    // Log structure
+                    logStructure(block, index);
+
+                    // Verify CSS
+                    const valid = verifyCSSApplied(block, index);
+                    if (!valid) {
+                        allValid = false;
+                    }
+                });
+
+                if (allValid) {
+                    updateStatus(`✓ ${blocks.length} centreblocks validated successfully`, 'success');
+                } else {
+                    updateStatus(`⚠ ${blocks.length} centreblocks loaded with warnings`, 'error');
+                }
+
+                console.log('\n' + '='.repeat(50));
+                console.log('All centreblocks processed!');
+                console.log('='.repeat(50));
+                console.log('\nTest Instructions:');
+                console.log('1. Verify all content appears centered');
+                console.log('2. Check vertical spacing (100px above/below)');
+                console.log('3. Inspect H3 elements for inline-block display');
+                console.log('4. Resize browser to test responsive behavior');
+                console.log('5. Check measurements overlay indicators');
+
+            } catch (error) {
+                console.error('Failed to initialize centreblocks:', error);
+                updateStatus(`✗ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Start initialization
+        initialize();
+    </script>
+
+    <div class="instructions">
+        <h3>Testing Instructions</h3>
+        <ol>
+            <li><strong>Visual Inspection:</strong> Scroll through all test sections and verify content is centered horizontally</li>
+            <li><strong>Spacing Verification:</strong> Check that vertical spacing is consistent:
+                <ul>
+                    <li>100px margin above each centreblock</li>
+                    <li>100px margin below each centreblock</li>
+                    <li>Measurement overlays show margin indicators</li>
+                </ul>
+            </li>
+            <li><strong>Heading Styles:</strong> Inspect H3 elements in DevTools:
+                <ul>
+                    <li>Should have <code>display: inline-block</code></li>
+                    <li>Should have <code>padding: 0.5rem</code></li>
+                    <li>Text should be centered</li>
+                </ul>
+            </li>
+            <li><strong>Responsive Testing:</strong> Resize browser window and observe:
+                <ul>
+                    <li>Mobile (< 600px): Content remains centered, consider horizontal padding</li>
+                    <li>Tablet (~768px): Centered layout works well</li>
+                    <li>Desktop (> 1024px): Full vertical spacing maintained</li>
+                </ul>
+            </li>
+            <li><strong>Content Variations:</strong> Verify all test cases work:
+                <ul>
+                    <li>Test 1: Simple text only</li>
+                    <li>Test 2: Heading with subtext</li>
+                    <li>Test 3: Multiple paragraphs</li>
+                    <li>Test 4: With images</li>
+                    <li>Test 5: Minimal content</li>
+                    <li>Test 6: Rich formatted text</li>
+                </ul>
+            </li>
+            <li><strong>CSS Verification:</strong> Use browser DevTools to check:
+                <ul>
+                    <li>Inspect <code>.centreblock > div</code> element</li>
+                    <li>Verify <code>text-align: center</code></li>
+                    <li>Verify <code>margin: 100px 0</code></li>
+                    <li>Check H3 has <code>display: inline-block</code> and <code>padding: 0.5rem</code></li>
+                </ul>
+            </li>
+            <li><strong>Console Output:</strong> Review console logs for:
+                <ul>
+                    <li>Computed style values</li>
+                    <li>CSS validation results</li>
+                    <li>Any errors or warnings</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>Expected Results</h3>
+        <ul>
+            <li><strong>Test 1:</strong> Simple text centered with vertical spacing</li>
+            <li><strong>Test 2:</strong> H3 heading styled properly, both elements centered</li>
+            <li><strong>Test 3:</strong> Multiple paragraphs all centered, readable layout</li>
+            <li><strong>Test 4:</strong> Image and text both centered, image scales properly</li>
+            <li><strong>Test 5:</strong> Single line maintains full vertical spacing</li>
+            <li><strong>Test 6:</strong> Formatted text (bold, italic, links) works correctly</li>
+        </ul>
+
+        <h3>CSS Inspection Checklist</h3>
+        <ul>
+            <li><strong>Block container:</strong> <code>.centreblock > div</code> should have <code>text-align: center</code></li>
+            <li><strong>Vertical spacing:</strong> <code>margin-top</code> and <code>margin-bottom</code> should both be <code>100px</code></li>
+            <li><strong>H3 display:</strong> <code>display: inline-block</code> applied to H3 elements</li>
+            <li><strong>H3 padding:</strong> <code>padding: 0.5rem</code> (8px) around H3 elements</li>
+        </ul>
+
+        <h3>Responsive Breakpoints to Test</h3>
+        <ul>
+            <li><strong>&lt; 600px (Mobile):</strong> Content centered, may benefit from horizontal padding</li>
+            <li><strong>600px - 1024px (Tablet):</strong> Centered layout natural and balanced</li>
+            <li><strong>&gt; 1024px (Desktop):</strong> Full 100px vertical spacing, consider max-width</li>
+        </ul>
+
+        <h3>Performance Notes</h3>
+        <ul>
+            <li><strong>JavaScript:</strong> Empty init function (no-op) - zero overhead</li>
+            <li><strong>CSS:</strong> Minimal rules (~150 bytes minified)</li>
+            <li><strong>Rendering:</strong> Instant (pure CSS, no DOM manipulation)</li>
+            <li><strong>Memory:</strong> Zero JavaScript memory footprint</li>
+        </ul>
+
+        <h3>Known Characteristics</h3>
+        <ul>
+            <li><strong>Pure CSS:</strong> All functionality handled by CSS (no JavaScript transformation)</li>
+            <li><strong>Empty init:</strong> JavaScript function does nothing by design</li>
+            <li><strong>Fixed margins:</strong> 100px vertical spacing not responsive by default (can be customized)</li>
+            <li><strong>H3 specific:</strong> Only H3 gets inline-block styling (other headings use default)</li>
+        </ul>
+
+        <h3>Debugging Tips</h3>
+        <ul>
+            <li>Check browser console for computed style logs</li>
+            <li>Use DevTools Elements panel to inspect applied CSS rules</li>
+            <li>Verify <code>centreblock.css</code> loaded (Network tab)</li>
+            <li>Check for conflicting CSS rules from other stylesheets</li>
+            <li>Test with CSS disabled to see raw HTML structure</li>
+            <li>Use measurement overlays to visualize margins</li>
+        </ul>
+
+        <h3>Browser Compatibility</h3>
+        <ul>
+            <li><strong>Fully Supported:</strong> All modern browsers including IE11</li>
+            <li><strong>Required CSS:</strong> text-align, margin, padding, display (universal support)</li>
+            <li><strong>No JavaScript:</strong> Works even if JavaScript disabled</li>
+        </ul>
+
+        <h3>Customization Examples</h3>
+        <p>Add these to your project CSS to customize centreblock:</p>
+
+        <h4>Reduce spacing on mobile:</h4>
+        <code>
+            @media (max-width: 600px) {<br>
+            &nbsp;&nbsp;.centreblock > div { margin: 50px 0; }<br>
+            }
+        </code>
+
+        <h4>Add max-width for readability:</h4>
+        <code>
+            .centreblock > div {<br>
+            &nbsp;&nbsp;max-width: 800px;<br>
+            &nbsp;&nbsp;margin: 100px auto;<br>
+            }
+        </code>
+
+        <h4>Add background and padding:</h4>
+        <code>
+            .centreblock > div {<br>
+            &nbsp;&nbsp;background: #f8f9fa;<br>
+            &nbsp;&nbsp;padding: 2rem;<br>
+            &nbsp;&nbsp;border-radius: 8px;<br>
+            }
+        </code>
+    </div>
+</body>
+</html>

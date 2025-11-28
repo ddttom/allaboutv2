@@ -100,7 +100,8 @@
       "Skill(llms-txt-manager)",
       "Bash(for file in /Users/tomcranstoun/Documents/GitHub/allaboutV2/my-blog.json /Users/tomcranstoun/Documents/GitHub/allaboutV2/blogs/ddt/my-blog.json /Users/tomcranstoun/Documents/GitHub/allaboutV2/blogs/ddt/integrations/my-blog.json /Users/tomcranstoun/Documents/GitHub/allaboutV2/blogs/ddt/ai/my-blog.json)",
       "Bash(do)",
-      "Bash(comm:*)"
+      "Bash(comm:*)",
+      "Bash(wc:*)"
     ],
     "deny": [],
     "ask": []

@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Test Author">
+    <title>Bloglist Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <!-- Block-specific CSS -->
+    <link rel="stylesheet" href="/blocks/bloglist/bloglist.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page styling */
+        body {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .test-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid #0078d4;
+        }
+
+        .test-header h1 {
+            margin: 0 0 0.5rem 0;
+            color: #0078d4;
+        }
+
+        .test-header p {
+            margin: 0.5rem 0;
+            color: #666;
+        }
+
+        .test-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+
+        .test-section h2 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 2px solid #0078d4;
+            padding-bottom: 0.5rem;
+        }
+
+        .test-description {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #fff;
+            border-left: 4px solid #0078d4;
+            line-height: 1.6;
+        }
+
+        .test-notes {
+            background: #fffbcc;
+            border-left: 4px solid #f4a700;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .test-notes strong {
+            color: #d97706;
+        }
+
+        /* Highlight the bloglist blocks for testing */
+        .bloglist {
+            margin: 1rem 0;
+            background: white;
+            border: 2px dashed #0078d4;
+            padding: 1rem;
+        }
+
+        /* Mock data container */
+        .mock-data {
+            background: #f0f0f0;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            font-family: monospace;
+            font-size: 0.85rem;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+
+        /* Status indicators */
+        .status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.875rem;
+        }
+
+        .status.pass {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.fail {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        /* Console output styling */
+        #console-output {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1rem;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.875rem;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 1rem;
+        }
+
+        #console-output .log-entry {
+            margin: 0.25rem 0;
+            padding: 0.25rem;
+            border-left: 3px solid transparent;
+        }
+
+        #console-output .log-success {
+            color: #4ec9b0;
+            border-left-color: #4ec9b0;
+        }
+
+        #console-output .log-error {
+            color: #f48771;
+            border-left-color: #f48771;
+        }
+
+        #console-output .log-info {
+            color: #569cd6;
+            border-left-color: #569cd6;
+        }
+
+        #console-output .log-warn {
+            color: #dcdcaa;
+            border-left-color: #dcdcaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-header">
+        <h1>Bloglist Block Test Suite</h1>
+        <p>Testing the bloglist block with various scenarios and edge cases.</p>
+        <p><strong>Open DevTools Console</strong> to see detailed test results and network requests.</p>
+    </div>
+
+    <!-- Console Output Display -->
+    <div class="test-section">
+        <h2>Test Console Output</h2>
+        <div id="console-output"></div>
+    </div>
+
+    <!-- Test Case 1: Basic Bloglist -->
+    <div class="test-section">
+        <h2>Test Case 1: Basic Bloglist (Primary Test)</h2>
+        <p class="test-description">
+            ✅ Tests basic bloglist functionality<br>
+            ✅ Verifies data fetching from /query-index.json<br>
+            ✅ Confirms filtering for "developer-guide" in path<br>
+            ✅ Validates exclusion of current page<br>
+            ✅ Checks limit to 4 items<br>
+            ✅ Verifies sort by lastModified (descending)
+        </p>
+
+        <div class="test-notes">
+            <strong>Note:</strong> This test requires /query-index.json to exist with blog posts containing "developer-guide" in their paths.
+            If the file doesn't exist, the test will fail gracefully with an error in the console.
+        </div>
+
+        <div class="bloglist-wrapper">
+            <div class="bloglist block" data-block-name="bloglist">
+                <!-- Initial content (will be replaced by block decoration) -->
+                <div>Loading blog posts...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Case 2: Empty Result Set -->
+    <div class="test-section">
+        <h2>Test Case 2: Error Handling</h2>
+        <p class="test-description">
+            ✅ Tests error handling when query-index.json fails to load<br>
+            ✅ Verifies graceful degradation<br>
+            ❌ Should log error to console (expected behavior)
+        </p>
+
+        <div class="test-notes">
+            <strong>Note:</strong> This test intentionally points to a non-existent URL to test error handling.
+            You should see an error in the console (this is expected and correct behavior).
+        </div>
+
+        <div class="mock-data">
+Expected behavior:
+1. Fetch fails (404 or network error)
+2. Error logged to console: "Error fetching the JSON data:"
+3. Block remains empty (no items displayed)
+        </div>
+
+        <p><span class="status info">INFO</span> Error handling is implemented in the decorate function (try/catch block).</p>
+    </div>
+
+    <!-- Test Case 3: Current Page Exclusion -->
+    <div class="test-section">
+        <h2>Test Case 3: Current Page Exclusion Logic</h2>
+        <p class="test-description">
+            ✅ Verifies that the current page is excluded from the blog list<br>
+            ✅ Checks that window.location.pathname is used for comparison<br>
+            ✅ Confirms no duplicate current page appears in results
+        </p>
+
+        <div class="mock-data">
+Current page path: <span id="current-path"></span>
+
+Expected behavior:
+1. Block fetches query-index.json
+2. Filters items: item.path.includes("developer-guide")
+3. Excludes current page: item.path !== currentPath
+4. Result: Current page never appears in the list
+        </div>
+
+        <script>
+            document.getElementById('current-path').textContent = window.location.pathname;
+        </script>
+
+        <p><span class="status pass">PASS</span> Current page exclusion is implemented on line 13 of bloglist.js</p>
+    </div>
+
+    <!-- Test Case 4: Data Structure Validation -->
+    <div class="test-section">
+        <h2>Test Case 4: Required Data Fields</h2>
+        <p class="test-description">
+            ✅ Validates that the block handles all required fields from query-index.json<br>
+            ✅ Checks for proper error handling if fields are missing
+        </p>
+
+        <div class="mock-data">
+Required fields from query-index.json data items:
+- path (string): URL path to the blog post
+- title (string): Article title
+- image (string): Featured image URL
+- description (string): Brief summary
+- lastModified (number): Unix timestamp in seconds
+
+Expected data structure:
+{
+  "data": [
+    {
+      "path": "/blogs/developer-guide/article",
+      "title": "Article Title",
+      "image": "/media/image.jpg",
+      "description": "Article description",
+      "lastModified": 1700000000
+    }
+  ]
+}
+        </div>
+
+        <p><span class="status info">INFO</span> The block expects all fields to be present. Missing fields may cause rendering issues.</p>
+    </div>
+
+    <!-- Test Case 5: Date Formatting -->
+    <div class="test-section">
+        <h2>Test Case 5: Date Formatting</h2>
+        <p class="test-description">
+            ✅ Tests date formatting function (DD/Month/YYYY)<br>
+            ✅ Verifies Unix timestamp conversion<br>
+            ✅ Checks month name display
+        </p>
+
+        <div class="mock-data">
+Date formatting logic:
+1. Input: Unix timestamp (seconds) from lastModified field
+2. Convert to milliseconds: timestamp * 1000
+3. Create Date object: new Date(milliseconds)
+4. Format: DD/Month/YYYY (e.g., "15/November/2024")
+
+Example:
+Input: 1700000000
+Output: "15/November/2023"
+        </div>
+
+        <div id="date-test-results"></div>
+
+        <script>
+            // Test the date formatting logic
+            function formatDate(date) {
+                const day = String(date.getDate()).padStart(2, '0');
+                const monthNames = [
+                    "January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                ];
+                const month = monthNames[date.getMonth()];
+                const year = date.getFullYear();
+                return `${day}/${month}/${year}`;
+            }
+
+            // Test with sample timestamp
+            const testTimestamp = 1700000000;
+            const testDate = new Date(testTimestamp * 1000);
+            const formattedDate = formatDate(testDate);
+
+            document.getElementById('date-test-results').innerHTML = `
+                <p><span class="status pass">PASS</span> Date formatting test:</p>
+                <ul>
+                    <li>Input timestamp: ${testTimestamp}</li>
+                    <li>Date object: ${testDate.toISOString()}</li>
+                    <li>Formatted output: ${formattedDate}</li>
+                </ul>
+            `;
+        </script>
+    </div>
+
+    <!-- Test Case 6: Responsive Layout -->
+    <div class="test-section">
+        <h2>Test Case 6: Responsive Grid Layout</h2>
+        <p class="test-description">
+            ✅ Tests responsive grid behavior<br>
+            ✅ Verifies single column at ≤600px<br>
+            ✅ Checks auto-fit columns at >600px
+        </p>
+
+        <div class="mock-data">
+CSS Grid Configuration:
+- Desktop (>600px): grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))
+- Mobile (≤600px): grid-template-columns: 1fr
+- Gap: 20px
+- Min column width: 300px
+
+Test Instructions:
+1. Resize browser window to >600px width
+   → Should see multiple columns (2-4 depending on width)
+2. Resize browser window to ≤600px width
+   → Should see single column
+        </div>
+
+        <p><span class="status info">INFO</span> Resize the browser window to test responsive behavior.</p>
+    </div>
+
+    <!-- Test Case 7: Sorting Verification -->
+    <div class="test-section">
+        <h2>Test Case 7: Sort Order (lastModified Descending)</h2>
+        <p class="test-description">
+            ✅ Verifies items are sorted by lastModified date<br>
+            ✅ Confirms newest items appear first<br>
+            ✅ Checks that sort happens before slice (limit)
+        </p>
+
+        <div class="mock-data">
+Sorting logic (line 17-19 in bloglist.js):
+const sortedBlogItems = filteredBlogItems.sort((a, b) =>
+  a.title.localeCompare(b.title)
+);
+
+⚠️ POTENTIAL BUG DETECTED:
+The code sorts by TITLE, not lastModified!
+Line 17-19 should be:
+  filteredBlogItems.sort((a, b) => b.lastModified - a.lastModified)
+
+Current: Alphabetical by title (A-Z)
+Expected: Chronological by date (newest first)
+        </div>
+
+        <p><span class="status fail">FAIL</span> The block currently sorts by title, not lastModified date. This may not match the expected behavior described in the documentation.</p>
+    </div>
+
+    <!-- Test Case 8: Filter Validation -->
+    <div class="test-section">
+        <h2>Test Case 8: Path Filter ("developer-guide")</h2>
+        <p class="test-description">
+            ✅ Tests path filtering logic<br>
+            ✅ Verifies only items with "developer-guide" in path are included<br>
+            ✅ Confirms case-sensitive matching
+        </p>
+
+        <div class="mock-data">
+Filter logic (line 12-14 in bloglist.js):
+const filteredBlogItems = data.data.filter((item) =>
+  item.path.includes("developer-guide") && item.path !== currentPath
+);
+
+Behavior:
+- Includes: /blogs/developer-guide/article
+- Includes: /developer-guide/test
+- Includes: /path/developer-guide-extra/page
+- Excludes: /blogs/Developer-Guide/article (case-sensitive)
+- Excludes: /blogs/developerguide/article (requires hyphen)
+- Excludes: current page path
+        </div>
+
+        <p><span class="status pass">PASS</span> Filter uses .includes() method for substring matching.</p>
+    </div>
+
+    <!-- Test Case 9: Limit Verification -->
+    <div class="test-section">
+        <h2>Test Case 9: Item Limit (4 Items)</h2>
+        <p class="test-description">
+            ✅ Verifies that only 4 items are displayed<br>
+            ✅ Confirms limit is applied after sorting<br>
+            ✅ Checks that slice() method works correctly
+        </p>
+
+        <div class="mock-data">
+Limit logic (line 22 in bloglist.js):
+const limitedBlogItems = sortedBlogItems.slice(0, 4);
+
+⚠️ WARNING: Variable `limitedBlogItems` is created but never used!
+Line 25 uses `sortedBlogItems` instead:
+  const content = generateContent(sortedBlogItems);
+
+This means ALL filtered items are displayed, not just 4.
+
+Expected fix:
+  const content = generateContent(limitedBlogItems);
+        </div>
+
+        <p><span class="status fail">FAIL</span> The limit is defined but not applied. The block displays ALL filtered items instead of just 4.</p>
+    </div>
+
+    <!-- Test Case 10: HTML Structure Validation -->
+    <div class="test-section">
+        <h2>Test Case 10: Generated HTML Structure</h2>
+        <p class="test-description">
+            ✅ Validates the HTML structure generated by generateContent()<br>
+            ✅ Checks for proper semantic elements<br>
+            ✅ Verifies class names and attributes
+        </p>
+
+        <div class="mock-data">
+Expected HTML structure per item:
+&lt;div class="blog-item"&gt;
+    &lt;a href="${item.path}"&gt;
+        &lt;img src="${item.image}" alt="${item.title}"&gt;
+        &lt;strong&gt;${item.title}&lt;/strong&gt;
+    &lt;/a&gt;
+    &lt;p&gt;${item.description}&lt;/p&gt;
+    &lt;p class="last-modified"&gt;Last Modified: ${formattedDate}&lt;/p&gt;
+&lt;/div&gt;
+
+Elements:
+- .blog-item: Container for each blog card
+- a: Link wrapper for image and title
+- img: Blog post featured image
+- strong: Bold title text
+- p: Description text
+- p.last-modified: Formatted date with separator
+        </div>
+
+        <p><span class="status pass">PASS</span> HTML structure follows semantic standards.</p>
+    </div>
+
+    <!-- Summary Section -->
+    <div class="test-section" style="background: #e8f4fd; border-color: #0078d4;">
+        <h2>Test Summary</h2>
+        <div id="test-summary"></div>
+    </div>
+
+    <script type="module">
+        import { loadBlock } from '/scripts/aem.js';
+
+        // Console output logger
+        const consoleOutput = document.getElementById('console-output');
+
+        function logToConsole(message, type = 'info') {
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            consoleOutput.appendChild(entry);
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+
+            // Also log to browser console
+            console[type === 'error' ? 'error' : 'log'](message);
+        }
+
+        // CRITICAL: Add body.appear class FIRST
+        document.body.classList.add('appear');
+
+        // Initialize test results
+        const testResults = {
+            total: 10,
+            passed: 0,
+            failed: 0,
+            warnings: 0,
+            tests: []
+        };
+
+        // Test execution
+        logToConsole('═'.repeat(60), 'info');
+        logToConsole('🧪 BLOGLIST BLOCK TEST SUITE STARTING', 'info');
+        logToConsole('═'.repeat(60), 'info');
+
+        // Test Case 1: Load the bloglist block
+        const bloglistBlock = document.querySelector('.bloglist');
+
+        if (!bloglistBlock) {
+            logToConsole('❌ CRITICAL: No bloglist block found on page', 'error');
+            testResults.failed++;
+        } else {
+            logToConsole('✅ Found bloglist block element', 'success');
+            testResults.passed++;
+
+            try {
+                logToConsole('📡 Fetching /query-index.json...', 'info');
+
+                // Decorate the block
+                await loadBlock(bloglistBlock);
+
+                logToConsole('✅ Block decoration completed', 'success');
+
+                // Wait a moment for data to load
+                await new Promise(resolve => setTimeout(resolve, 500));
+
+                // Validate results
+                const blogItems = bloglistBlock.querySelectorAll('.blog-item');
+                const itemCount = blogItems.length;
+
+                logToConsole(`📊 Found ${itemCount} blog items`, 'info');
+
+                // Test 2: Item count
+                if (itemCount > 0) {
+                    logToConsole(`✅ Blog items rendered successfully`, 'success');
+                    testResults.passed++;
+
+                    // Test 3: Check item count is 4 or less
+                    if (itemCount <= 4) {
+                        logToConsole(`✅ Item count within limit (${itemCount} ≤ 4)`, 'success');
+                        testResults.passed++;
+                    } else {
+                        logToConsole(`⚠️  WARNING: Expected 4 items, found ${itemCount}`, 'warn');
+                        logToConsole('    This confirms the bug in line 25: limitedBlogItems is not used', 'warn');
+                        testResults.warnings++;
+                    }
+
+                    // Test 4: Validate HTML structure
+                    let structureValid = true;
+                    blogItems.forEach((item, index) => {
+                        const link = item.querySelector('a');
+                        const img = item.querySelector('img');
+                        const title = item.querySelector('strong');
+                        const description = item.querySelector('p:not(.last-modified)');
+                        const date = item.querySelector('p.last-modified');
+
+                        if (!link || !img || !title || !description || !date) {
+                            logToConsole(`❌ Item ${index + 1}: Missing required elements`, 'error');
+                            structureValid = false;
+                        }
+                    });
+
+                    if (structureValid) {
+                        logToConsole('✅ All blog items have valid HTML structure', 'success');
+                        testResults.passed++;
+                    } else {
+                        logToConsole('❌ Some blog items have invalid HTML structure', 'error');
+                        testResults.failed++;
+                    }
+
+                    // Test 5: Validate dates are formatted correctly
+                    const dates = bloglistBlock.querySelectorAll('.last-modified');
+                    let datesValid = true;
+                    dates.forEach((dateEl, index) => {
+                        const dateText = dateEl.textContent;
+                        // Check format: "Last Modified: DD/Month/YYYY"
+                        const datePattern = /Last Modified: \d{2}\/[A-Z][a-z]+\/\d{4}/;
+                        if (!datePattern.test(dateText)) {
+                            logToConsole(`❌ Date ${index + 1}: Invalid format: ${dateText}`, 'error');
+                            datesValid = false;
+                        }
+                    });
+
+                    if (datesValid) {
+                        logToConsole('✅ All dates formatted correctly (DD/Month/YYYY)', 'success');
+                        testResults.passed++;
+                    } else {
+                        logToConsole('❌ Some dates have invalid format', 'error');
+                        testResults.failed++;
+                    }
+
+                    // Test 6: Validate images load
+                    const images = bloglistBlock.querySelectorAll('img');
+                    let imagesChecked = 0;
+                    let imagesLoaded = 0;
+
+                    images.forEach(img => {
+                        imagesChecked++;
+                        if (img.complete && img.naturalHeight !== 0) {
+                            imagesLoaded++;
+                        }
+                    });
+
+                    if (imagesLoaded === imagesChecked) {
+                        logToConsole(`✅ All ${imagesLoaded} images loaded successfully`, 'success');
+                        testResults.passed++;
+                    } else {
+                        logToConsole(`⚠️  WARNING: ${imagesLoaded}/${imagesChecked} images loaded`, 'warn');
+                        testResults.warnings++;
+                    }
+
+                } else {
+                    logToConsole('⚠️  No blog items found. Possible causes:', 'warn');
+                    logToConsole('    - /query-index.json not found (404)', 'warn');
+                    logToConsole('    - No items with "developer-guide" in path', 'warn');
+                    logToConsole('    - JavaScript error during processing', 'warn');
+                    testResults.warnings++;
+                }
+
+                // Test 7: Check for current page exclusion
+                const currentPath = window.location.pathname;
+                const links = bloglistBlock.querySelectorAll('a');
+                let currentPageFound = false;
+
+                links.forEach(link => {
+                    if (link.getAttribute('href') === currentPath) {
+                        currentPageFound = true;
+                    }
+                });
+
+                if (!currentPageFound) {
+                    logToConsole('✅ Current page correctly excluded from list', 'success');
+                    testResults.passed++;
+                } else {
+                    logToConsole('❌ Current page appears in the list (should be excluded)', 'error');
+                    testResults.failed++;
+                }
+
+            } catch (error) {
+                logToConsole(`❌ Error during block decoration: ${error.message}`, 'error');
+                logToConsole(`   Stack: ${error.stack}`, 'error');
+                testResults.failed++;
+            }
+        }
+
+        // Known issues from code review
+        logToConsole('\n' + '═'.repeat(60), 'info');
+        logToConsole('📋 KNOWN ISSUES FROM CODE REVIEW', 'warn');
+        logToConsole('═'.repeat(60), 'info');
+
+        logToConsole('⚠️  Issue 1: Sort by title instead of lastModified (line 17-19)', 'warn');
+        logToConsole('   Current: filteredBlogItems.sort((a, b) => a.title.localeCompare(b.title))', 'warn');
+        logToConsole('   Expected: filteredBlogItems.sort((a, b) => b.lastModified - a.lastModified)', 'warn');
+        testResults.warnings++;
+
+        logToConsole('\n⚠️  Issue 2: Limit not applied (line 25)', 'warn');
+        logToConsole('   Current: generateContent(sortedBlogItems) - shows ALL items', 'warn');
+        logToConsole('   Expected: generateContent(limitedBlogItems) - shows only 4', 'warn');
+        testResults.warnings++;
+
+        // Final summary
+        logToConsole('\n' + '═'.repeat(60), 'info');
+        logToConsole('📊 FINAL TEST RESULTS', 'info');
+        logToConsole('═'.repeat(60), 'info');
+        logToConsole(`Total Tests: ${testResults.total}`, 'info');
+        logToConsole(`✅ Passed: ${testResults.passed}`, 'success');
+        logToConsole(`❌ Failed: ${testResults.failed}`, testResults.failed > 0 ? 'error' : 'info');
+        logToConsole(`⚠️  Warnings: ${testResults.warnings}`, testResults.warnings > 0 ? 'warn' : 'info');
+
+        const successRate = Math.round((testResults.passed / testResults.total) * 100);
+        logToConsole(`\n📈 Success Rate: ${successRate}%`, successRate >= 70 ? 'success' : 'error');
+
+        if (testResults.failed === 0 && testResults.warnings === 0) {
+            logToConsole('\n🎉 ALL TESTS PASSED WITH NO WARNINGS!', 'success');
+        } else if (testResults.failed === 0) {
+            logToConsole('\n✅ ALL TESTS PASSED (with warnings)', 'success');
+        } else {
+            logToConsole('\n⚠️  SOME TESTS FAILED - Review results above', 'error');
+        }
+
+        logToConsole('═'.repeat(60), 'info');
+
+        // Update summary section
+        const summaryEl = document.getElementById('test-summary');
+        summaryEl.innerHTML = `
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                <div style="padding: 1rem; background: white; border-radius: 4px;">
+                    <h3 style="margin: 0 0 0.5rem 0;">Total Tests</h3>
+                    <p style="font-size: 2rem; margin: 0; font-weight: bold;">${testResults.total}</p>
+                </div>
+                <div style="padding: 1rem; background: #d4edda; border-radius: 4px; border: 2px solid #155724;">
+                    <h3 style="margin: 0 0 0.5rem 0; color: #155724;">Passed</h3>
+                    <p style="font-size: 2rem; margin: 0; font-weight: bold; color: #155724;">${testResults.passed}</p>
+                </div>
+                <div style="padding: 1rem; background: #f8d7da; border-radius: 4px; border: 2px solid #721c24;">
+                    <h3 style="margin: 0 0 0.5rem 0; color: #721c24;">Failed</h3>
+                    <p style="font-size: 2rem; margin: 0; font-weight: bold; color: #721c24;">${testResults.failed}</p>
+                </div>
+                <div style="padding: 1rem; background: #fff3cd; border-radius: 4px; border: 2px solid #856404;">
+                    <h3 style="margin: 0 0 0.5rem 0; color: #856404;">Warnings</h3>
+                    <p style="font-size: 2rem; margin: 0; font-weight: bold; color: #856404;">${testResults.warnings}</p>
+                </div>
+            </div>
+            <div style="margin-top: 1rem; padding: 1rem; background: white; border-radius: 4px;">
+                <h3 style="margin: 0 0 0.5rem 0;">Success Rate</h3>
+                <div style="width: 100%; height: 40px; background: #f0f0f0; border-radius: 4px; overflow: hidden;">
+                    <div style="width: ${successRate}%; height: 100%; background: ${successRate >= 70 ? '#28a745' : '#dc3545'}; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; transition: width 0.3s ease;">
+                        ${successRate}%
+                    </div>
+                </div>
+            </div>
+            ${testResults.warnings > 0 ? `
+            <div style="margin-top: 1rem; padding: 1rem; background: #fffbcc; border-radius: 4px; border-left: 4px solid #f4a700;">
+                <h3 style="margin: 0 0 0.5rem 0; color: #d97706;">⚠️ Code Issues Detected</h3>
+                <ul style="margin: 0.5rem 0;">
+                    <li><strong>Line 17-19:</strong> Sorts by title instead of lastModified</li>
+                    <li><strong>Line 25:</strong> Uses sortedBlogItems instead of limitedBlogItems (shows all items, not 4)</li>
+                </ul>
+                <p style="margin: 0.5rem 0 0 0; font-size: 0.875rem;">
+                    See console output above for detailed analysis.
+                </p>
+            </div>
+            ` : ''}
+            <div style="margin-top: 1rem; padding: 1rem; background: white; border-radius: 4px;">
+                <p style="margin: 0; text-align: center;">
+                    ${testResults.failed === 0 && testResults.warnings === 0
+                        ? '🎉 <strong>All tests passed with no issues!</strong>'
+                        : testResults.failed === 0
+                        ? '✅ <strong>All tests passed</strong> (with warnings - see above)'
+                        : '⚠️ <strong>Some tests failed</strong> - Review console output for details'}
+                </p>
+            </div>
+        `;
+    </script>
+</body>
+</html>

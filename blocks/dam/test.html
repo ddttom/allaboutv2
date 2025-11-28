@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAM Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <!-- DAM Block Styles -->
+    <link rel="stylesheet" href="/blocks/dam/dam.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .test-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .test-info h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.75rem;
+        }
+
+        .test-info p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .test-info code {
+            background: rgba(255,255,255,0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .test-info strong {
+            font-weight: 600;
+        }
+
+        .test-section {
+            margin: 2rem auto;
+            max-width: 1400px;
+            padding: 0 1rem;
+        }
+
+        .test-section h3 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0 0 0;
+            border-radius: 8px 8px 0 0;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .test-section .description {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 1rem;
+        }
+
+        .test-section .description strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .test-section .description p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        /* Status indicators */
+        .status {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* DAM wrapper for consistent spacing */
+        .dam-wrapper {
+            background: white;
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* Instructions section */
+        .instructions {
+            margin: 3rem auto;
+            max-width: 1400px;
+            padding: 2rem;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: #667eea;
+            font-size: 1.3rem;
+        }
+
+        .instructions ol, .instructions ul {
+            line-height: 1.8;
+            padding-left: 1.5rem;
+        }
+
+        .instructions li {
+            margin: 0.5rem 0;
+        }
+
+        .instructions strong {
+            color: #667eea;
+        }
+
+        .instructions code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>DAM Block Test Suite</h2>
+        <p><strong>Block:</strong> <code>dam</code></p>
+        <p><strong>Test Count:</strong> <code>5 test scenarios</code></p>
+        <p><strong>Status:</strong> <span id="status" class="status info">Loading...</span></p>
+        <p><strong>Purpose:</strong> Visual and functional testing of digital asset metadata extraction and JSON display</p>
+    </div>
+
+    <main>
+        <!-- Test 1: Basic Asset Catalog -->
+        <div class="test-section">
+            <h3>Test 1: Basic Asset Catalog (3 Assets)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Extracts metadata from three assets and displays formatted JSON. Each asset includes note, description, classification, tag, image path, and additional info.</p>
+                <p><strong>Validation:</strong> Check that JSON is properly formatted with 2-space indentation. Verify image paths are extracted from full URLs. Confirm all metadata fields are populated.</p>
+            </div>
+            <div class="dam-wrapper">
+                <div class="dam block">
+                    <div>
+                        <div>DAM</div>
+                        <div>Note</div>
+                        <div>Description</div>
+                        <div>Classification</div>
+                        <div>Tag</div>
+                        <div>Image</div>
+                        <div>Additional Info</div>
+                    </div>
+                    <div>
+                        <div></div>
+                        <div>Profile Image</div>
+                        <div>Professional headshot</div>
+                        <div>Portrait</div>
+                        <div>Profile</div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png" alt="Profile">
+                            </picture>
+                        </div>
+                        <div>Main profile photo</div>
+                    </div>
+                    <div>
+                        <div></div>
+                        <div>Sample Art</div>
+                        <div>Abstract artwork</div>
+                        <div>Art</div>
+                        <div>Gallery</div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png" alt="Art">
+                            </picture>
+                        </div>
+                        <div>Featured piece</div>
+                    </div>
+                    <div>
+                        <div></div>
+                        <div>Nature Photo</div>
+                        <div>Landscape view</div>
+                        <div>Photography</div>
+                        <div>Nature</div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_14e918fa88c2a9a810fd454fa04f0bd152c01fed2.jpeg" alt="Nature">
+                            </picture>
+                        </div>
+                        <div>Scenic vista</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 2: Minimal Metadata -->
+        <div class="test-section">
+            <h3>Test 2: Minimal Metadata (Optional Fields Empty)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Handles assets with minimal metadata. Optional fields (description, classification, tag, additional info) are empty strings in JSON output.</p>
+                <p><strong>Validation:</strong> Verify empty fields show as empty strings ("") in JSON. Confirm path extraction still works. Check JSON structure is valid.</p>
+            </div>
+            <div class="dam-wrapper">
+                <div class="dam block">
+                    <div>
+                        <div>DAM</div>
+                        <div>Note</div>
+                        <div>Description</div>
+                        <div>Classification</div>
+                        <div>Tag</div>
+                        <div>Image</div>
+                        <div>Additional Info</div>
+                    </div>
+                    <div>
+                        <div></div>
+                        <div>Logo</div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png" alt="Logo">
+                            </picture>
+                        </div>
+                        <div></div>
+                    </div>
+                    <div>
+                        <div></div>
+                        <div>Icon</div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png" alt="Icon">
+                            </picture>
+                        </div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 3: Marketing Assets -->
+        <div class="test-section">
+            <h3>Test 3: Marketing Assets Collection</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Extracts metadata for marketing campaign assets. Tests classification and tag fields with marketing-specific values.</p>
+                <p><strong>Validation:</strong> Verify Marketing classification. Check Social, Email, and Campaign tags. Confirm additional info includes campaign details.</p>
+            </div>
+            <div class="dam-wrapper">
+                <div class="dam block">
+                    <div>
+                        <div>DAM</div>
+                        <div>Note</div>
+                        <div>Description</div>
+                        <div>Classification</div>
+                        <div>Tag</div>
+                        <div>Image</div>
+                        <div>Additional Info</div>
+                    </div>
+                    <div>
+                        <div></div>
+                        <div>Social Banner</div>
+                        <div>Facebook cover image</div>
+                        <div>Marketing</div>
+                        <div>Social</div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_1e744525e97292dcd074e9b1c7ab2cf47a048f292.jpeg" alt="Social">
+                            </picture>
+                        </div>
+                        <div>1200x630px</div>
+                    </div>
+                    <div>
+                        <div></div>
+                        <div>Email Header</div>
+                        <div>Newsletter banner</div>
+                        <div>Marketing</div>
+                        <div>Email</div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png" alt="Email">
+                            </picture>
+                        </div>
+                        <div>Responsive</div>
+                    </div>
+                    <div>
+                        <div></div>
+                        <div>Campaign Hero</div>
+                        <div>Landing page image</div>
+                        <div>Marketing</div>
+                        <div>Campaign</div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png" alt="Campaign">
+                            </picture>
+                        </div>
+                        <div>Q4 2024</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 4: Product Catalog -->
+        <div class="test-section">
+            <h3>Test 4: Product Catalog</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Documents product images with detailed classifications. Tests Product classification with Featured, Detail, and Lifestyle tags.</p>
+                <p><strong>Validation:</strong> Verify Product classification is consistent. Check tag variations (Featured, Detail, Lifestyle). Confirm quality indicators in additional info.</p>
+            </div>
+            <div class="dam-wrapper">
+                <div class="dam block">
+                    <div>
+                        <div>DAM</div>
+                        <div>Note</div>
+                        <div>Description</div>
+                        <div>Classification</div>
+                        <div>Tag</div>
+                        <div>Image</div>
+                        <div>Additional Info</div>
+                    </div>
+                    <div>
+                        <div></div>
+                        <div>Product Hero</div>
+                        <div>Main product image</div>
+                        <div>Product</div>
+                        <div>Featured</div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png" alt="Product Hero">
+                            </picture>
+                        </div>
+                        <div>4K resolution</div>
+                    </div>
+                    <div>
+                        <div></div>
+                        <div>Product Detail</div>
+                        <div>Close-up shot</div>
+                        <div>Product</div>
+                        <div>Detail</div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_14e918fa88c2a9a810fd454fa04f0bd152c01fed2.jpeg" alt="Product Detail">
+                            </picture>
+                        </div>
+                        <div>Shows texture</div>
+                    </div>
+                    <div>
+                        <div></div>
+                        <div>Product Usage</div>
+                        <div>In-context photo</div>
+                        <div>Product</div>
+                        <div>Lifestyle</div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_1d92670adcfb7a18a062e49fd7967f4e9f76d8a52.jpeg" alt="Product Usage">
+                            </picture>
+                        </div>
+                        <div>Customer use case</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 5: Single Asset -->
+        <div class="test-section">
+            <h3>Test 5: Single Asset</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Handles single asset case. Tests edge case of minimal block content with only one data row.</p>
+                <p><strong>Validation:</strong> Verify JSON array contains single object. Check proper JSON formatting. Confirm all fields extracted correctly.</p>
+            </div>
+            <div class="dam-wrapper">
+                <div class="dam block">
+                    <div>
+                        <div>DAM</div>
+                        <div>Note</div>
+                        <div>Description</div>
+                        <div>Classification</div>
+                        <div>Tag</div>
+                        <div>Image</div>
+                        <div>Additional Info</div>
+                    </div>
+                    <div>
+                        <div></div>
+                        <div>Featured Banner</div>
+                        <div>Homepage hero image</div>
+                        <div>Hero</div>
+                        <div>Featured</div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png" alt="Featured">
+                            </picture>
+                        </div>
+                        <div>Updated monthly</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import decorate from '/blocks/dam/dam.js';
+
+        // Update status function
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+
+        // Log DAM block structure for debugging
+        function logDamStructure(block, index) {
+            console.log(`\n=== DAM Block ${index + 1} ===`);
+            console.log('Initial children count:', block.children.length);
+
+            const rows = Array.from(block.children);
+            console.log('Header row:', rows[0]?.textContent);
+            console.log('Data rows:', rows.length - 1);
+
+            rows.slice(1).forEach((row, i) => {
+                const cells = Array.from(row.children);
+                const note = cells[1]?.textContent?.trim() || '(empty)';
+                const hasImage = cells[5]?.querySelector('img') !== null;
+                console.log(`  Row ${i + 1}: Note="${note}", HasImage=${hasImage}`);
+            });
+        }
+
+        // Log final JSON output
+        function logFinalOutput(block, index) {
+            console.log(`\n=== After Decoration (Block ${index + 1}) ===`);
+            const pre = block.querySelector('pre.dam-code');
+            if (pre) {
+                const code = pre.querySelector('code');
+                if (code) {
+                    console.log('JSON Output:');
+                    console.log(code.textContent);
+
+                    // Validate JSON
+                    try {
+                        const parsed = JSON.parse(code.textContent);
+                        console.log('✓ Valid JSON');
+                        console.log('✓ Array length:', parsed.length);
+                        console.log('✓ First item keys:', Object.keys(parsed[0] || {}));
+                    } catch (error) {
+                        console.error('✗ Invalid JSON:', error.message);
+                    }
+                } else {
+                    console.error('✗ No <code> element found');
+                }
+            } else {
+                console.error('✗ No <pre> element found after decoration');
+            }
+        }
+
+        // Initialize all DAM blocks
+        async function init() {
+            try {
+                // Add body.appear class (required to show page)
+                document.body.classList.add('appear');
+
+                updateStatus('Decorating blocks...', 'info');
+
+                // Get all DAM blocks
+                const damBlocks = document.querySelectorAll('.dam.block');
+
+                if (damBlocks.length === 0) {
+                    throw new Error('No DAM blocks found');
+                }
+
+                console.log(`Found ${damBlocks.length} DAM blocks to decorate`);
+
+                // Decorate each DAM block
+                damBlocks.forEach((block, index) => {
+                    console.log(`\n${'='.repeat(50)}`);
+                    console.log(`Processing DAM Block ${index + 1}`);
+                    console.log('='.repeat(50));
+
+                    // Log initial structure
+                    logDamStructure(block, index);
+
+                    // Run decoration
+                    try {
+                        decorate(block);
+                        console.log('✓ Decoration completed successfully');
+                    } catch (error) {
+                        console.error(`✗ Decoration failed:`, error);
+                        throw error;
+                    }
+
+                    // Log final output
+                    logFinalOutput(block, index);
+                });
+
+                updateStatus(`✓ ${damBlocks.length} DAM blocks loaded successfully`, 'success');
+
+                console.log('\n' + '='.repeat(50));
+                console.log('All DAM blocks decorated successfully!');
+                console.log('='.repeat(50));
+                console.log('\nTest Instructions:');
+                console.log('1. Inspect each JSON output for proper formatting');
+                console.log('2. Verify image paths are extracted correctly');
+                console.log('3. Check that optional fields show empty strings when not provided');
+                console.log('4. Test code block keyboard accessibility (Tab to focus, arrow keys to scroll)');
+                console.log('5. Validate JSON structure matches expected schema');
+
+            } catch (error) {
+                console.error('Failed to initialize DAM blocks:', error);
+                updateStatus(`✗ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Start initialization
+        init();
+    </script>
+
+    <div class="instructions">
+        <h3>Testing Instructions</h3>
+        <ol>
+            <li><strong>Visual Inspection:</strong> Scroll through all test sections and verify JSON is properly formatted in code blocks</li>
+            <li><strong>JSON Validation:</strong> Copy JSON output and validate using online JSON validator or browser console</li>
+            <li><strong>Path Extraction:</strong> Verify image paths are extracted correctly as pathnames (e.g., "/media_xxx.png")</li>
+            <li><strong>DOM Structure:</strong> Inspect any DAM block in DevTools Elements panel and verify:
+                <ul>
+                    <li>Outer <code>&lt;div class="dam block"&gt;</code></li>
+                    <li>Inner <code>&lt;pre class="dam-code"&gt;</code></li>
+                    <li>Code element <code>&lt;code&gt;</code> with JSON text</li>
+                    <li>ARIA attributes: <code>role="region"</code>, <code>aria-label</code>, <code>tabindex="0"</code></li>
+                </ul>
+            </li>
+            <li><strong>Keyboard Accessibility:</strong> Test keyboard navigation:
+                <ul>
+                    <li>Press <code>Tab</code> to focus on code block (should show focus outline)</li>
+                    <li>Use arrow keys to scroll JSON horizontally/vertically</li>
+                    <li><code>Ctrl/Cmd + C</code> to copy JSON (browser default)</li>
+                </ul>
+            </li>
+            <li><strong>Responsive Testing:</strong> Resize browser window and verify:
+                <ul>
+                    <li>Code block scrolls horizontally for long lines</li>
+                    <li>Padding reduces on mobile (< 768px)</li>
+                    <li>Monospace font remains readable</li>
+                </ul>
+            </li>
+            <li><strong>Console Output:</strong> Review console logs for:
+                <ul>
+                    <li>Detailed block structure before decoration</li>
+                    <li>JSON validation results</li>
+                    <li>Any error messages or warnings</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>Expected Results</h3>
+        <ul>
+            <li><strong>Test 1:</strong> Three assets with complete metadata in formatted JSON array</li>
+            <li><strong>Test 2:</strong> Two assets with minimal metadata, empty strings for optional fields</li>
+            <li><strong>Test 3:</strong> Three marketing assets with Marketing classification and varied tags</li>
+            <li><strong>Test 4:</strong> Three product images with Product classification and quality indicators</li>
+            <li><strong>Test 5:</strong> Single asset in JSON array, properly formatted</li>
+        </ul>
+
+        <h3>JSON Schema Validation</h3>
+        <p>Each asset object should have this structure:</p>
+        <ul>
+            <li><code>note</code>: String (may be empty)</li>
+            <li><code>description</code>: String (may be empty)</li>
+            <li><code>classification</code>: String (may be empty)</li>
+            <li><code>tag</code>: String (may be empty)</li>
+            <li><code>path</code>: String (pathname from image URL)</li>
+            <li><code>additionalInfo</code>: String (may be empty)</li>
+        </ul>
+
+        <h3>Known Limitations</h3>
+        <ul>
+            <li><strong>No Syntax Highlighting:</strong> JSON is displayed as plain text - consider adding highlighting library for future enhancement</li>
+            <li><strong>No Copy Button:</strong> Users must manually select and copy JSON - planned for future release</li>
+            <li><strong>Static Output:</strong> No filtering, sorting, or search - consider for large asset collections</li>
+            <li><strong>Path Only:</strong> Extracts pathname only, not full URL - designed for relative path use cases</li>
+        </ul>
+
+        <h3>Debugging Tips</h3>
+        <ul>
+            <li>Check browser console for detailed decoration logs and error messages</li>
+            <li>Verify table structure has correct 7-column format</li>
+            <li>Inspect image cells to ensure <code>&lt;img&gt;</code> elements exist</li>
+            <li>Test with minimal example first, then add complexity</li>
+            <li>Validate JSON output using external validator (jsonlint.com)</li>
+            <li>Check CSS variables are properly defined in dam.css</li>
+        </ul>
+
+        <h3>Future Enhancements</h3>
+        <ul>
+            <li>Copy to clipboard button</li>
+            <li>Syntax highlighting for JSON</li>
+            <li>Export as .json file</li>
+            <li>Filter and search within assets</li>
+            <li>Sort by field (note, classification, tag)</li>
+            <li>Thumbnail preview in JSON output</li>
+        </ul>
+    </div>
+</body>
+</html>

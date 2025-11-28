@@ -10,7 +10,7 @@ The Overlay block allows you to display additional information without navigatin
 
 - A header showing the button text
 - Your custom content (text, images, links, lists, etc.)
-- An animated close button (X) in the top right
+- An animated close button (×) in the top right
 - Smooth fade-in/fade-out animations
 - Click outside or press ESC to close
 
@@ -170,8 +170,38 @@ blocks/overlay/
 ├── overlay.js       # Decorate function and overlay logic
 ├── overlay.css      # Styling and animations
 ├── README.md        # This file
-└── EXAMPLE.md       # Google Docs authoring example
+├── EXAMPLE.md       # Google Docs authoring example
+└── test.html        # Browser-based testing file
 ```
+
+### Architecture Overview
+
+#### Document-Level Block Pattern
+
+The Overlay block uses a **document-level pattern** that differs from typical EDS blocks:
+
+**Standard EDS blocks:**
+- Operate within their own `<div>` container
+- Scoped to the block element
+- Do not affect document body
+
+**Overlay block (document-level):**
+- Appends overlay to `document.body` (not the block container)
+- Adds `overlay-open` class to `document.body` to prevent scrolling
+- Uses fixed positioning at high z-index (999) to appear above all content
+- Manages global keyboard events (ESC key)
+
+**Why document-level?**
+1. **Full viewport coverage:** Fixed positioning relative to viewport, not parent container
+2. **Backdrop layer:** Needs to cover entire page including header, nav, footer
+3. **Scroll lock:** Must prevent body scroll while overlay is open
+4. **Z-index stacking:** Appears above all other page content consistently
+
+**Technical implications:**
+- Block decoration happens in block container, but overlay DOM is appended to body
+- Event listeners attached to document for ESC key handling
+- Body class manipulation for scroll locking
+- Cleanup required when overlay closes (remove from body, restore scroll)
 
 ### JavaScript API
 
@@ -204,12 +234,63 @@ const CONFIG = {
 
 ### Key Functions
 
-- **createOverlay(title, contentElement)** - Builds the overlay DOM structure with close button (always visible)
-- **showOverlay(overlay, triggerButton)** - Displays overlay with animation and sets up event handlers
-- **closeOverlay(overlay)** - Hides overlay with animation and cleans up
-- **setupOverlayEventHandlers(overlay)** - Manages keyboard, click, and focus events
+**createOverlay(title, contentElement)**
+- Builds the overlay DOM structure with close button (always visible)
+- Creates backdrop, modal, header, title, close button, and content area
+- Sets up ARIA attributes for accessibility
+- Returns the complete overlay container element
+
+**showOverlay(overlay, triggerButton)**
+- Appends overlay to `document.body` (document-level operation)
+- Adds `overlay-open` class to body to lock scroll
+- Triggers CSS animations using `requestAnimationFrame`
+- Sets initial focus to close button
+- Stores reference to trigger button for focus return
+- Calls `setupOverlayEventHandlers()` to attach event listeners
+
+**closeOverlay(overlay)**
+- Removes visibility class and adds dismissing class for exit animation
+- Waits for animation duration (300ms) before cleanup
+- Returns focus to trigger button
+- Removes overlay from DOM
+- Removes `overlay-open` class from body to restore scroll
+
+**setupOverlayEventHandlers(overlay)**
+- Attaches close button click handler
+- Attaches backdrop click handler (click outside to close)
+- Attaches ESC key handler to document
+- Implements tab trapping to keep focus within modal
+- Manages Shift+Tab for reverse navigation
 
 ### CSS Architecture
+
+#### Document-Level Styling
+
+```css
+/* Body scroll lock - affects entire document */
+body.overlay-open {
+  overflow: hidden;
+}
+
+/* Overlay backdrop - positioned relative to viewport */
+.overlay-backdrop {
+  position: fixed;  /* Fixed relative to viewport, not parent */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;     /* Above all other content */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+```
+
+**Key CSS patterns:**
+1. **Fixed positioning:** Overlay uses `position: fixed` to cover entire viewport
+2. **High z-index:** Ensures overlay appears above all page content
+3. **Flexbox centering:** Modal centered both horizontally and vertically
+4. **Viewport units:** `100vw` and `100vh` for full coverage
 
 #### Custom Properties Used
 - `--background-color` - Modal background
@@ -219,7 +300,7 @@ const CONFIG = {
 
 #### Key Classes
 - `.overlay-trigger` - The button that opens the overlay
-- `.overlay-backdrop` - Full-viewport backdrop
+- `.overlay-backdrop` - Full-viewport backdrop (document-level)
 - `.overlay-modal` - The modal window
 - `.overlay-header` - Header section with title
 - `.overlay-title` - Title text (h2)
@@ -229,31 +310,66 @@ const CONFIG = {
 #### State Classes
 - `.overlay-backdrop--visible` - Fades in the overlay
 - `.overlay-backdrop--dismissing` - Fades out the overlay
-- `body.overlay-open` - Prevents body scroll when overlay is active
+- `body.overlay-open` - Prevents body scroll when overlay is active (document-level)
 
 #### Responsive Breakpoints
 - **≤768px (Tablet/Mobile):** Adjusted padding, border-radius (12px), max-height (90vh)
 - **≤480px (Small Mobile):** Further optimized spacing, border-radius (8px), max-height (95vh)
+
+#### Animation Strategy
+
+**CSS Transitions:**
+```css
+.overlay-backdrop {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.overlay-backdrop--visible {
+  opacity: 1;
+}
+
+.overlay-modal {
+  transform: scale(0.95);
+  transition: transform 0.3s ease-in-out;
+}
+
+.overlay-backdrop--visible .overlay-modal {
+  transform: scale(1);
+}
+```
+
+**Animation sequence:**
+1. Overlay appended to body with `opacity: 0` and `scale(0.95)`
+2. `requestAnimationFrame` triggers adding `--visible` class
+3. CSS transitions animate opacity to 1 and scale to 1
+4. Close sequence reverses: remove `--visible`, add `--dismissing`
+5. After 300ms, remove overlay from DOM
 
 ### Accessibility Implementation
 
 - **ARIA Roles:** `role="dialog"`, `aria-modal="true"`
 - **ARIA Labels:** `aria-labelledby` for title, `aria-label` for close button
 - **Keyboard Support:**
-  - `ESC` - Close overlay
+  - `ESC` - Close overlay (document-level event listener)
   - `Tab` - Navigate focusable elements (trapped within modal)
   - `Shift+Tab` - Reverse navigation
 - **Focus Management:**
   - Focuses close button on open
-  - Traps focus within modal
+  - Traps focus within modal using keyboard event handlers
   - Returns focus to trigger button on close
 
 ### Event Handling
 
-1. **Click outside** - Closes overlay
-2. **ESC key** - Closes overlay
-3. **Close button** - Closes overlay
-4. **Tab trapping** - Keeps focus within modal while open
+**Document-level events:**
+1. **ESC key** - Attached to `document` to close overlay from anywhere
+2. **Backdrop click** - Click outside modal to close
+3. **Tab trapping** - Keyboard events on modal to keep focus within
+
+**Cleanup:**
+- ESC key handler is removed when overlay closes
+- Overlay DOM removed from body
+- Body class removed to restore scroll
 
 ### Error Handling
 
@@ -292,13 +408,27 @@ Test with `blocks/overlay/test.html` or use the examples in `/drafts/overlay-exa
 - ✅ Keyboard navigation
 - ✅ Screen reader compatibility
 
+**Document-level testing:**
+- ✅ Overlay appends to `document.body` (not block container)
+- ✅ Body gets `overlay-open` class when open
+- ✅ Body scroll is locked (test by trying to scroll page)
+- ✅ Overlay appears above all page content (header, nav, footer)
+- ✅ ESC key works from anywhere on page
+- ✅ Opening second overlay while first is open (should work independently)
+
 ### Performance Considerations
 
 - Uses CSS transforms for animations (GPU accelerated)
-- Event listeners are properly cleaned up
+- Event listeners are properly cleaned up on overlay close
 - Content is cloned (not moved) to preserve original
 - Minimal DOM manipulation
 - No external dependencies
+
+**Document-level performance:**
+- Only one overlay can be active at a time per trigger
+- Overlay is removed from DOM when closed (not just hidden)
+- Body class manipulation is lightweight
+- ESC key listener cleaned up to prevent memory leaks
 
 ### Common Issues
 
@@ -306,6 +436,7 @@ Test with `blocks/overlay/test.html` or use the examples in `/drafts/overlay-exa
 - Check browser console for errors
 - Ensure block has exactly 3 rows: row 1 = "Overlay", row 2 = button text, row 3 = content
 - Verify JavaScript is loading
+- Check that overlay is being appended to body (inspect DOM)
 
 #### Content is cut off
 - Long content automatically becomes scrollable
@@ -316,6 +447,16 @@ Test with `blocks/overlay/test.html` or use the examples in `/drafts/overlay-exa
 - Check global button styles in `styles/styles.css`
 - Verify CSS custom properties are defined
 - Check for CSS specificity conflicts
+
+#### Body scroll not locked
+- Verify `body.overlay-open` class is added when overlay opens
+- Check CSS rule for `body.overlay-open { overflow: hidden; }`
+- Inspect body element in DevTools to confirm class is present
+
+#### Overlay appears behind other content
+- Verify z-index is 999 on `.overlay-backdrop`
+- Check for conflicting z-index values on other elements
+- Confirm overlay is appended to body (not nested in container with z-index)
 
 ### Customization
 
@@ -331,6 +472,45 @@ To customize the overlay appearance, modify the CSS variables or override styles
   background-color: rgba(0, 0, 0, 0.7); /* Darker backdrop */
 }
 ```
+
+**Document-level customizations:**
+
+```css
+/* Change scroll lock behavior */
+body.overlay-open {
+  overflow: hidden;
+  position: fixed; /* Prevents scroll jump on some mobile browsers */
+  width: 100%;
+}
+
+/* Adjust z-index if conflicts with other fixed elements */
+.overlay-backdrop {
+  z-index: 1000; /* Increase if needed */
+}
+```
+
+## Comparison with Modal Block
+
+If your project has both overlay and modal blocks, here's how they differ:
+
+| Feature | Overlay Block | Modal Block |
+|---------|---------------|-------------|
+| **Positioning** | Document-level (appends to body) | Container-level (within block) |
+| **Scroll Lock** | Yes (body scroll locked) | Depends on implementation |
+| **Z-Index** | 999 (above all content) | Scoped to container |
+| **Use Case** | Full-page interruption, important info | In-page content, contextual info |
+| **Close Methods** | Button, backdrop, ESC key | Varies by implementation |
+| **Backdrop** | Full viewport | Depends on implementation |
+
+**When to use Overlay:**
+- Need to cover entire page including header/footer
+- Critical information that requires user attention
+- Legal notices, terms, privacy policies
+
+**When to use Modal:**
+- Contextual information within a section
+- Less critical content
+- Multiple modals on same page without conflicts
 
 ## Examples
 
@@ -348,6 +528,8 @@ See [drafts/overlay-examples/index.html](../../drafts/overlay-examples/index.htm
 - **v1.0.0** (2025-01-17) - Initial release
   - Button trigger with customizable text
   - Full-viewport overlay with backdrop
+  - Document-level DOM manipulation
   - Animated entrance and exit
   - Keyboard navigation and accessibility
+  - Body scroll locking
   - Mobile responsive design

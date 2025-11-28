@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Tom Cranstoun">
+    <title>Fortune Cookie Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <!-- Block Styles -->
+    <link rel="stylesheet" href="fortunecookie.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page styling */
+        body {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        .test-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+
+        .test-section h2 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 2px solid #0078d4;
+            padding-bottom: 0.5rem;
+        }
+
+        .test-description {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #fff;
+            border-left: 4px solid #0078d4;
+        }
+
+        /* Highlight the fortunecookie blocks for testing */
+        .fortunecookie {
+            margin: 1rem 0;
+            padding: 1.5rem;
+            background: white;
+            border: 2px dashed #0078d4;
+            border-radius: 8px;
+            min-height: 50px;
+        }
+
+        .fortunecookie p {
+            margin: 0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .fortunecookie strong {
+            color: #0078d4;
+        }
+
+        /* Test utilities */
+        .test-controls {
+            margin: 2rem 0;
+            padding: 1rem;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .test-button {
+            background: #0078d4;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .test-button:hover {
+            background: #005a9e;
+        }
+
+        .test-button:active {
+            transform: translateY(1px);
+        }
+
+        #test-results {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #fff;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .result-success {
+            color: #28a745;
+        }
+
+        .result-error {
+            color: #dc3545;
+        }
+
+        .result-info {
+            color: #17a2b8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Fortune Cookie Block Test Page</h1>
+    <p>Testing the fortune cookie block with various configurations and scenarios. Open DevTools Console to see detailed logs.</p>
+
+    <!-- Test Controls -->
+    <div class="test-controls">
+        <h3>Test Controls</h3>
+        <button class="test-button" onclick="reloadAllBlocks()">Reload All Fortunes</button>
+        <button class="test-button" onclick="testDataSource()">Test Data Source</button>
+        <button class="test-button" onclick="clearResults()">Clear Results</button>
+        <div id="test-results"></div>
+    </div>
+
+    <!-- Test Case 1: Single Instance -->
+    <div class="test-section">
+        <h2>Test Case 1: Single Fortune Cookie</h2>
+        <p class="test-description">
+            ✅ Tests basic functionality with a single instance<br>
+            ✅ Verifies fetch operation and random selection<br>
+            ✅ Validates display format (key: value)
+        </p>
+
+        <div class="fortunecookie block" data-block-name="fortunecookie" data-test-id="test-1">
+        </div>
+    </div>
+
+    <!-- Test Case 2: Multiple Instances -->
+    <div class="test-section">
+        <h2>Test Case 2: Multiple Fortune Cookies</h2>
+        <p class="test-description">
+            ✅ Tests that multiple blocks work independently<br>
+            ✅ Each should display a different (or possibly same) random fortune
+        </p>
+
+        <div class="fortunecookie block" data-block-name="fortunecookie" data-test-id="test-2a">
+        </div>
+
+        <div class="fortunecookie block" data-block-name="fortunecookie" data-test-id="test-2b">
+        </div>
+
+        <div class="fortunecookie block" data-block-name="fortunecookie" data-test-id="test-2c">
+        </div>
+    </div>
+
+    <!-- Test Case 3: Footer Context Simulation -->
+    <div class="test-section">
+        <h2>Test Case 3: Footer Context</h2>
+        <p class="test-description">
+            ✅ Simulates typical footer usage<br>
+            ✅ Tests styling in constrained footer-like environment
+        </p>
+
+        <footer style="background: #f0f0f0; padding: 2rem; border-radius: 8px;">
+            <p style="margin: 0 0 1rem 0; color: #666;">© 2024 Your Company. All rights reserved.</p>
+            <div class="fortunecookie block" data-block-name="fortunecookie" data-test-id="test-3">
+            </div>
+        </footer>
+    </div>
+
+    <!-- Test Case 4: Error Handling -->
+    <div class="test-section">
+        <h2>Test Case 4: Error Handling</h2>
+        <p class="test-description">
+            ℹ️ This test demonstrates error handling (console only - no user-facing error)<br>
+            ℹ️ Check browser console for error logs
+        </p>
+
+        <p><strong>Note:</strong> To test error handling, temporarily rename cookies.json or modify the URL in the JavaScript file.</p>
+    </div>
+
+    <!-- Test Case 5: Display Format Verification -->
+    <div class="test-section">
+        <h2>Test Case 5: Display Format</h2>
+        <p class="test-description">
+            ✅ Verifies correct HTML structure<br>
+            ✅ Ensures key is wrapped in &lt;strong&gt; tag<br>
+            ✅ Validates semantic HTML usage
+        </p>
+
+        <div class="fortunecookie block" data-block-name="fortunecookie" data-test-id="test-5">
+        </div>
+
+        <div id="structure-check" style="margin-top: 1rem; padding: 1rem; background: #fff; border-radius: 4px;">
+            <strong>Structure Check:</strong> (Run after blocks load)
+            <button class="test-button" onclick="checkStructure()">Verify HTML Structure</button>
+            <pre id="structure-output" style="margin-top: 0.5rem; color: #666;"></pre>
+        </div>
+    </div>
+
+    <script type="module">
+        import { loadBlock } from '/scripts/aem.js';
+
+        // CRITICAL: Add body.appear class FIRST
+        document.body.classList.add('appear');
+
+        // Get all fortunecookie blocks
+        const fortuneBlocks = document.querySelectorAll('.fortunecookie.block');
+
+        console.log('═'.repeat(60));
+        console.log('🥠 FORTUNE COOKIE BLOCK TEST SUITE');
+        console.log('═'.repeat(60));
+        console.log(`Found ${fortuneBlocks.length} fortune cookie blocks to test\n`);
+
+        // Track results
+        const results = {
+            total: fortuneBlocks.length,
+            passed: 0,
+            failed: 0,
+            errors: []
+        };
+
+        // Load each block
+        async function loadAllBlocks() {
+            for (let i = 0; i < fortuneBlocks.length; i++) {
+                const block = fortuneBlocks[i];
+                const testId = block.dataset.testId || `block-${i}`;
+
+                try {
+                    console.group(`Test ${testId}: Loading Fortune Cookie`);
+
+                    // Add .block class (should already have it from HTML)
+                    block.classList.add('block');
+                    block.dataset.blockName = 'fortunecookie';
+
+                    // Load the block
+                    await loadBlock(block);
+
+                    // Small delay to allow async operations
+                    await new Promise(resolve => setTimeout(resolve, 500));
+
+                    // Verify results
+                    const content = block.innerHTML;
+                    const hasContent = content.trim().length > 0;
+                    const hasStrong = block.querySelector('strong') !== null;
+                    const hasParagraph = block.querySelector('p') !== null;
+
+                    console.log('\n📊 Results:');
+                    console.log('  Has content:', hasContent);
+                    console.log('  Has <strong> tag:', hasStrong);
+                    console.log('  Has <p> tag:', hasParagraph);
+                    console.log('  Content:', content.substring(0, 100));
+
+                    if (hasContent && hasStrong && hasParagraph) {
+                        console.log('✅ PASSED');
+                        results.passed++;
+                        addTestResult(testId, 'success', 'Block loaded and displayed fortune correctly');
+                    } else {
+                        console.log('❌ FAILED: Missing expected elements');
+                        results.failed++;
+                        results.errors.push(`${testId}: Missing expected HTML elements`);
+                        addTestResult(testId, 'error', 'Missing expected HTML elements');
+                    }
+
+                    console.groupEnd();
+
+                } catch (error) {
+                    console.error(`❌ Test ${testId} threw error:`, error);
+                    results.failed++;
+                    results.errors.push(`${testId}: ${error.message}`);
+                    addTestResult(testId, 'error', error.message);
+                    console.groupEnd();
+                }
+            }
+
+            // Final summary
+            console.log('\n' + '═'.repeat(60));
+            console.log('📋 FINAL RESULTS');
+            console.log('═'.repeat(60));
+            console.log(`Total tests: ${results.total}`);
+            console.log(`✅ Passed: ${results.passed}`);
+            console.log(`❌ Failed: ${results.failed}`);
+
+            if (results.errors.length > 0) {
+                console.log('\nErrors:');
+                results.errors.forEach(err => console.log(`  • ${err}`));
+            }
+
+            if (results.failed === 0) {
+                console.log('\n🎉 ALL TESTS PASSED!');
+                addTestResult('summary', 'success', `All ${results.passed} tests passed!`);
+            } else {
+                console.log('\n⚠️  SOME TESTS FAILED');
+                addTestResult('summary', 'error', `${results.failed} of ${results.total} tests failed`);
+            }
+
+            console.log('═'.repeat(60));
+        }
+
+        // Helper function to add test results to page
+        function addTestResult(testId, type, message) {
+            const resultsDiv = document.getElementById('test-results');
+            const resultClass = type === 'success' ? 'result-success' : type === 'error' ? 'result-error' : 'result-info';
+            const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
+
+            const resultLine = document.createElement('div');
+            resultLine.className = resultClass;
+            resultLine.textContent = `${icon} [${testId}] ${message}`;
+            resultsDiv.appendChild(resultLine);
+        }
+
+        // Global functions for test controls
+        window.reloadAllBlocks = async function() {
+            console.log('🔄 Reloading all fortune cookie blocks...');
+            document.getElementById('test-results').innerHTML = '';
+            results.passed = 0;
+            results.failed = 0;
+            results.errors = [];
+            await loadAllBlocks();
+        };
+
+        window.testDataSource = async function() {
+            console.log('🔍 Testing data source: /data/cookies.json');
+            addTestResult('data-source', 'info', 'Testing data source connection...');
+
+            try {
+                const response = await fetch('/data/cookies.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                const data = await response.json();
+                console.log('✅ Data source available:', data);
+                addTestResult('data-source', 'success', `Found ${data.total} fortunes in data source`);
+            } catch (error) {
+                console.error('❌ Data source error:', error);
+                addTestResult('data-source', 'error', `Data source error: ${error.message}`);
+            }
+        };
+
+        window.clearResults = function() {
+            document.getElementById('test-results').innerHTML = '';
+            console.clear();
+            console.log('🧹 Results cleared');
+        };
+
+        window.checkStructure = function() {
+            const testBlock = document.querySelector('[data-test-id="test-5"]');
+            const output = document.getElementById('structure-output');
+
+            if (!testBlock) {
+                output.textContent = '❌ Test block not found';
+                return;
+            }
+
+            const hasP = testBlock.querySelector('p') !== null;
+            const hasStrong = testBlock.querySelector('strong') !== null;
+            const innerHTML = testBlock.innerHTML;
+
+            let report = '--- HTML Structure Report ---\n';
+            report += `Has <p> tag: ${hasP ? '✅' : '❌'}\n`;
+            report += `Has <strong> tag: ${hasStrong ? '✅' : '❌'}\n`;
+            report += `Content length: ${innerHTML.length} characters\n`;
+            report += '\nActual HTML:\n' + innerHTML;
+
+            output.textContent = report;
+            console.log(report);
+        };
+
+        // Run tests on load
+        loadAllBlocks();
+    </script>
+</body>
+</html>

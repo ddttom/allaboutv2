@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Cube Block Test</title>
+  <script type="module">
+    // Import EDS core functions
+    import {
+      sampleRUM,
+      loadHeader,
+      loadFooter,
+      decorateButtons,
+      decorateIcons,
+      decorateSections,
+      decorateBlocks,
+      decorateTemplateAndTheme,
+      waitForLCP,
+      loadBlocks,
+      loadCSS,
+    } from '/scripts/aem.js';
+
+    // Load LCP
+    const lcpBlocks = [];
+    const usp = new URLSearchParams(window.location.search);
+    const productionHost = 'main--allaboutv2--ddttom.hlx.page';
+    sampleRUM.productionHost = productionHost;
+    waitForLCP(lcpBlocks);
+
+    async function loadPage() {
+      // Decorate page
+      decorateTemplateAndTheme();
+      decorateSections(document.querySelector('main'));
+      decorateBlocks(document.querySelector('main'));
+      decorateButtons(document.querySelector('main'));
+      decorateIcons(document.querySelector('main'));
+
+      // Load blocks
+      await loadBlocks(document.querySelector('main'));
+
+      // Sample RUM
+      sampleRUM('lazy');
+      sampleRUM.observe(document.querySelectorAll('main picture > img'));
+    }
+
+    // Wait for DOM to be ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadPage);
+    } else {
+      loadPage();
+    }
+  </script>
+  <style>
+    /* Basic page styles */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1, h2, h3 {
+      color: white;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: rgba(255, 255, 255, 0.8);
+      text-align: center;
+      margin-bottom: 3rem;
+      font-size: 1.1rem;
+    }
+
+    .test-section {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .test-section h2 {
+      color: #333;
+      margin-top: 0;
+      border-bottom: 2px solid #667eea;
+      padding-bottom: 0.5rem;
+    }
+
+    .test-description {
+      color: #666;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .block-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 400px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      border-radius: 8px;
+      padding: 2rem;
+      perspective: 1000px;
+    }
+
+    .instructions {
+      background: #f8f9fa;
+      border-left: 4px solid #667eea;
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 4px;
+    }
+
+    .instructions h3 {
+      color: #667eea;
+      margin-top: 0;
+      font-size: 1.1rem;
+    }
+
+    .instructions ul {
+      margin: 0.5rem 0 0 0;
+      padding-left: 1.5rem;
+      color: #555;
+    }
+
+    .instructions li {
+      margin-bottom: 0.5rem;
+    }
+
+    .controls {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .control-button {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .control-button:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .control-button:active {
+      transform: translateY(0);
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .info-card {
+      background: #f8f9fa;
+      padding: 1rem;
+      border-radius: 6px;
+      border: 1px solid #e9ecef;
+    }
+
+    .info-card h4 {
+      margin: 0 0 0.5rem 0;
+      color: #667eea;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .info-card p {
+      margin: 0;
+      color: #333;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .test-section {
+        padding: 1.5rem;
+      }
+
+      .block-wrapper {
+        min-height: 300px;
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>3D Cube Block Test</h1>
+    <p class="subtitle">Interactive testing environment for the 3D Cube block</p>
+
+    <!-- Test 1: Basic Product Showcase -->
+    <div class="test-section">
+      <h2>Test 1: Basic Product Showcase</h2>
+      <p class="test-description">
+        A basic 3D cube with six product images. Each face links to a different product page.
+      </p>
+
+      <div class="instructions">
+        <h3>Interaction Instructions</h3>
+        <ul>
+          <li><strong>Drag:</strong> Click and drag on the cube to rotate it in any direction</li>
+          <li><strong>Hover:</strong> Hover over faces to see opacity increase</li>
+          <li><strong>Double-click:</strong> Double-click any face to navigate to its linked page</li>
+          <li><strong>Initial View:</strong> Cube starts at -90° Y rotation showing the first image</li>
+        </ul>
+      </div>
+
+      <div class="block-wrapper">
+        <div class="tdcube block" data-block-name="3dcube" data-block-status="initialized">
+          <div>
+            <div><img src="https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png" alt="Product Front"></div>
+            <div><a href="https://example.com/product/front">Product Front View</a></div>
+          </div>
+          <div>
+            <div><img src="https://allabout.network/media_14e918fa88c2a9a810fd454fa04f0bd152c01fed2.jpeg" alt="Product Back"></div>
+            <div><a href="https://example.com/product/back">Product Back View</a></div>
+          </div>
+          <div>
+            <div><img src="https://allabout.network/media_1d92670adcfb7a18a062e49fd7967f4e9f76d8a52.jpeg" alt="Product Side"></div>
+            <div><a href="https://example.com/product/side">Product Side View</a></div>
+          </div>
+          <div>
+            <div><img src="https://allabout.network/media_1e744525e97292dcd074e9b1c7ab2cf47a048f292.jpeg" alt="Product Detail"></div>
+            <div><a href="https://example.com/product/detail">Product Detail</a></div>
+          </div>
+          <div>
+            <div><img src="https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png" alt="Product Top"></div>
+            <div><a href="https://example.com/product/top">Product Top View</a></div>
+          </div>
+          <div>
+            <div><img src="https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png" alt="Product Bottom"></div>
+            <div><a href="https://example.com/product/bottom">Product Bottom View</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="control-button" onclick="resetRotation(0)">Reset Rotation</button>
+        <button class="control-button" onclick="rotateTo(0, 0)">Front Face</button>
+        <button class="control-button" onclick="rotateTo(0, -90)">Right Face</button>
+        <button class="control-button" onclick="rotateTo(0, -180)">Back Face</button>
+        <button class="control-button" onclick="rotateTo(0, -270)">Left Face</button>
+        <button class="control-button" onclick="rotateTo(-90, -90)">Top Face</button>
+        <button class="control-button" onclick="rotateTo(90, -90)">Bottom Face</button>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <h4>Block Type</h4>
+          <p>3D Cube</p>
+        </div>
+        <div class="info-card">
+          <h4>Faces</h4>
+          <p>6 (Front, Back, Right, Left, Top, Bottom)</p>
+        </div>
+        <div class="info-card">
+          <h4>Cube Size</h4>
+          <p>200px × 200px</p>
+        </div>
+        <div class="info-card">
+          <h4>Rotation Speed</h4>
+          <p>0.5× mouse movement</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Test 2: Portfolio Navigation -->
+    <div class="test-section">
+      <h2>Test 2: Portfolio Navigation</h2>
+      <p class="test-description">
+        Portfolio showcase using the 3D cube for interactive navigation between different work categories.
+      </p>
+
+      <div class="block-wrapper">
+        <div class="tdcube block" data-block-name="3dcube" data-block-status="initialized">
+          <div>
+            <div><img src="https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png" alt="Web Design"></div>
+            <div><a href="/portfolio/web-design">Web Design Portfolio</a></div>
+          </div>
+          <div>
+            <div><img src="https://allabout.network/media_14e918fa88c2a9a810fd454fa04f0bd152c01fed2.jpeg" alt="Branding"></div>
+            <div><a href="/portfolio/branding">Branding Portfolio</a></div>
+          </div>
+          <div>
+            <div><img src="https://allabout.network/media_1d92670adcfb7a18a062e49fd7967f4e9f76d8a52.jpeg" alt="Photography"></div>
+            <div><a href="/portfolio/photography">Photography Portfolio</a></div>
+          </div>
+          <div>
+            <div><img src="https://allabout.network/media_1e744525e97292dcd074e9b1c7ab2cf47a048f292.jpeg" alt="Illustration"></div>
+            <div><a href="/portfolio/illustration">Illustration Portfolio</a></div>
+          </div>
+          <div>
+            <div><img src="https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png" alt="UI/UX"></div>
+            <div><a href="/portfolio/ui-ux">UI/UX Portfolio</a></div>
+          </div>
+          <div>
+            <div><img src="https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png" alt="Motion Graphics"></div>
+            <div><a href="/portfolio/motion">Motion Graphics Portfolio</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <h4>Use Case</h4>
+          <p>Portfolio Navigation</p>
+        </div>
+        <div class="info-card">
+          <h4>Categories</h4>
+          <p>6 Portfolio Types</p>
+        </div>
+        <div class="info-card">
+          <h4>Mobile Size</h4>
+          <p>150px × 150px</p>
+        </div>
+        <div class="info-card">
+          <h4>Hover Effect</h4>
+          <p>Opacity 0.8 → 1.0</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Test 3: Team Member Profiles -->
+    <div class="test-section">
+      <h2>Test 3: Team Member Profiles</h2>
+      <p class="test-description">
+        Team member showcase with profile images on each cube face, linking to individual team member pages.
+      </p>
+
+      <div class="block-wrapper">
+        <div class="tdcube block" data-block-name="3dcube" data-block-status="initialized">
+          <div>
+            <div><img src="https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png" alt="CEO"></div>
+            <div><a href="/team/ceo">CEO Profile</a></div>
+          </div>
+          <div>
+            <div><img src="https://allabout.network/media_14e918fa88c2a9a810fd454fa04f0bd152c01fed2.jpeg" alt="CTO"></div>
+            <div><a href="/team/cto">CTO Profile</a></div>
+          </div>
+          <div>
+            <div><img src="https://allabout.network/media_1d92670adcfb7a18a062e49fd7967f4e9f76d8a52.jpeg" alt="Lead Designer"></div>
+            <div><a href="/team/lead-designer">Lead Designer Profile</a></div>
+          </div>
+          <div>
+            <div><img src="https://allabout.network/media_1e744525e97292dcd074e9b1c7ab2cf47a048f292.jpeg" alt="Marketing Director"></div>
+            <div><a href="/team/marketing-director">Marketing Director Profile</a></div>
+          </div>
+          <div>
+            <div><img src="https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png" alt="Operations Manager"></div>
+            <div><a href="/team/operations-manager">Operations Manager Profile</a></div>
+          </div>
+          <div>
+            <div><img src="https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png" alt="Sales Lead"></div>
+            <div><a href="/team/sales-lead">Sales Lead Profile</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <h4>Use Case</h4>
+          <p>Team Profiles</p>
+        </div>
+        <div class="info-card">
+          <h4>Team Members</h4>
+          <p>6 Leadership Roles</p>
+        </div>
+        <div class="info-card">
+          <h4>Cursor States</h4>
+          <p>grab / grabbing</p>
+        </div>
+        <div class="info-card">
+          <h4>Browser Support</h4>
+          <p>Chrome 12+, Firefox 10+, Safari 4+</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Helper function to reset rotation
+    function resetRotation(index) {
+      const cubes = document.querySelectorAll('.cube');
+      if (cubes[index]) {
+        cubes[index].style.transform = 'rotateX(0deg) rotateY(-90deg)';
+      }
+    }
+
+    // Helper function to rotate to specific face
+    function rotateTo(rotX, rotY) {
+      const cubes = document.querySelectorAll('.cube');
+      cubes.forEach(cube => {
+        cube.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+      });
+    }
+
+    // Log cube interactions
+    document.addEventListener('DOMContentLoaded', () => {
+      const cubes = document.querySelectorAll('.cube');
+      cubes.forEach((cube, index) => {
+        cube.addEventListener('mousedown', () => {
+          // eslint-disable-next-line no-console
+          console.log(`Cube ${index + 1}: Rotation started`);
+        });
+
+        cube.addEventListener('dblclick', (e) => {
+          const face = e.target.closest('.cube__face');
+          if (face) {
+            // eslint-disable-next-line no-console
+            console.log(`Cube ${index + 1}: Double-click on face`, face.className);
+            // eslint-disable-next-line no-console
+            console.log(`Navigation to: ${face.dataset.href}`);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

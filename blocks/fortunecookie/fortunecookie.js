@@ -1,6 +1,6 @@
 
 export  default async function decorate(block) {
-    const fortuneCookieElement = document.querySelector('.fortunecookie');
+    const fortuneCookieElement = block;
     const url = '/data/cookies.json';
     try {
         const response = await fetch(url);

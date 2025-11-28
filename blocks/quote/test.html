@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .test-info {
+            background: #f5f5f5;
+            padding: 1.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .test-info h1 {
+            margin: 0 0 0.5rem 0;
+            color: #667eea;
+            font-size: 1.5rem;
+        }
+
+        .test-info p {
+            margin: 0.25rem 0;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .test-info code {
+            background: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+
+        .test-section {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .test-section h2 {
+            color: #333;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0.5rem;
+            margin: 2rem 0 1rem 0;
+        }
+
+        .test-description {
+            background: #f9f9f9;
+            padding: 1rem;
+            border-left: 4px solid #667eea;
+            margin: 1rem 0;
+        }
+
+        .test-description strong {
+            color: #667eea;
+        }
+
+        /* Spacing between test cases */
+        .quote {
+            margin: 2rem 0;
+        }
+
+        /* Visual separator */
+        .separator {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #ddd, transparent);
+            margin: 3rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h1>Quote Block Test Suite</h1>
+        <p><strong>Block:</strong> <code>quote</code></p>
+        <p><strong>Purpose:</strong> Display quotations with optional author attribution</p>
+        <p><strong>Status:</strong> <span id="status">Loading tests...</span></p>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 1: Basic Quote (No Attribution)</h2>
+        <div class="test-description">
+            <strong>Test:</strong> Single cell with quote text only<br>
+            <strong>Expected:</strong> Quote with automatic quotation marks, no attribution
+        </div>
+
+        <!--
+            EDS Structure:
+            | Quote |
+            |-------|
+            | The best way to predict the future is to invent it. |
+        -->
+        <div class="quote">
+            <div>
+                <div>The best way to predict the future is to invent it.</div>
+            </div>
+        </div>
+
+        <div class="separator"></div>
+
+        <h2>Test 2: Quote with Simple Attribution</h2>
+        <div class="test-description">
+            <strong>Test:</strong> Two cells - quote + plain text attribution<br>
+            <strong>Expected:</strong> Quote with author name, em-dash prefix, right-aligned
+        </div>
+
+        <!--
+            EDS Structure:
+            | Quote |
+            |-------|
+            | Simplicity is the ultimate sophistication. |
+            | Leonardo da Vinci |
+        -->
+        <div class="quote">
+            <div>
+                <div>Simplicity is the ultimate sophistication.</div>
+            </div>
+            <div>
+                <div>Leonardo da Vinci</div>
+            </div>
+        </div>
+
+        <div class="separator"></div>
+
+        <h2>Test 3: Quote with Citation (Emphasized)</h2>
+        <div class="test-description">
+            <strong>Test:</strong> Attribution with &lt;em&gt; tag (converts to &lt;cite&gt;)<br>
+            <strong>Expected:</strong> Author name wrapped in semantic cite element
+        </div>
+
+        <!--
+            EDS Structure:
+            | Quote |
+            |-------|
+            | Programs must be written for people to read, and only incidentally for machines to execute. |
+            | *Harold Abelson and Gerald Jay Sussman* |
+        -->
+        <div class="quote">
+            <div>
+                <div>Programs must be written for people to read, and only incidentally for machines to execute.</div>
+            </div>
+            <div>
+                <div><em>Harold Abelson and Gerald Jay Sussman</em></div>
+            </div>
+        </div>
+
+        <div class="separator"></div>
+
+        <h2>Test 4: Long Quote</h2>
+        <div class="test-description">
+            <strong>Test:</strong> Multi-line quote with attribution<br>
+            <strong>Expected:</strong> Opening quote at start, closing quote at end, proper wrapping
+        </div>
+
+        <!--
+            EDS Structure:
+            | Quote |
+            |-------|
+            | In the beginner's mind there are many possibilities, but in the expert's mind there are few. People have a hard time letting go of their suffering. Out of a fear of the unknown, they prefer suffering that is familiar. |
+            | *Shunryu Suzuki* |
+        -->
+        <div class="quote">
+            <div>
+                <div>In the beginner's mind there are many possibilities, but in the expert's mind there are few. People have a hard time letting go of their suffering. Out of a fear of the unknown, they prefer suffering that is familiar.</div>
+            </div>
+            <div>
+                <div><em>Shunryu Suzuki</em></div>
+            </div>
+        </div>
+
+        <div class="separator"></div>
+
+        <h2>Test 5: Testimonial</h2>
+        <div class="test-description">
+            <strong>Test:</strong> Customer testimonial format with title<br>
+            <strong>Expected:</strong> Professional testimonial display
+        </div>
+
+        <!--
+            EDS Structure:
+            | Quote |
+            |-------|
+            | Working with this team transformed our digital presence. The results exceeded all expectations, and the attention to detail was remarkable. |
+            | *Sarah Johnson, CEO at TechCorp* |
+        -->
+        <div class="quote">
+            <div>
+                <div>Working with this team transformed our digital presence. The results exceeded all expectations, and the attention to detail was remarkable.</div>
+            </div>
+            <div>
+                <div><em>Sarah Johnson, CEO at TechCorp</em></div>
+            </div>
+        </div>
+
+        <div class="separator"></div>
+
+        <h2>Test 6: Pull Quote (Article Context)</h2>
+        <div class="test-description">
+            <strong>Test:</strong> Quote without attribution (for highlighting article content)<br>
+            <strong>Expected:</strong> Centered quote, no attribution section
+        </div>
+
+        <p style="max-width: 700px; margin: 0 auto 2rem auto; color: #666;">
+            Context: Regular article text would appear here, discussing research findings and methodology...
+        </p>
+
+        <!--
+            EDS Structure:
+            | Quote |
+            |-------|
+            | The most important finding from our research was the impact of early intervention on long-term outcomes. |
+        -->
+        <div class="quote">
+            <div>
+                <div>The most important finding from our research was the impact of early intervention on long-term outcomes.</div>
+            </div>
+        </div>
+
+        <p style="max-width: 700px; margin: 2rem auto 0 auto; color: #666;">
+            Context: Article text continues here, expanding on the highlighted quote...
+        </p>
+
+        <div class="separator"></div>
+
+        <h2>Test 7: Short Quote</h2>
+        <div class="test-description">
+            <strong>Test:</strong> Very brief quote<br>
+            <strong>Expected:</strong> Proper formatting even with minimal text
+        </div>
+
+        <!--
+            EDS Structure:
+            | Quote |
+            |-------|
+            | Less is more. |
+            | *Ludwig Mies van der Rohe* |
+        -->
+        <div class="quote">
+            <div>
+                <div>Less is more.</div>
+            </div>
+            <div>
+                <div><em>Ludwig Mies van der Rohe</em></div>
+            </div>
+        </div>
+
+        <div class="separator"></div>
+
+        <h2>Test 8: Quote with Pre-wrapped Paragraph</h2>
+        <div class="test-description">
+            <strong>Test:</strong> Quote already wrapped in paragraph tag<br>
+            <strong>Expected:</strong> Proper handling without double-wrapping
+        </div>
+
+        <!--
+            EDS Structure (with existing paragraph):
+            | Quote |
+            |-------|
+            | <p>Design is not just what it looks like and feels like. Design is how it works.</p> |
+            | <p><em>Steve Jobs</em></p> |
+        -->
+        <div class="quote">
+            <div>
+                <div><p>Design is not just what it looks like and feels like. Design is how it works.</p></div>
+            </div>
+            <div>
+                <div><p><em>Steve Jobs</em></p></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { loadBlock, decorateBlock } from '/scripts/aem.js';
+
+        // Update status function
+        function updateStatus(message, isError = false) {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.style.color = isError ? '#d32f2f' : '#2e7d32';
+        }
+
+        // Initialize all quote blocks
+        async function init() {
+            try {
+                // Add body.appear class (required to show page)
+                document.body.classList.add('appear');
+
+                // Get all quote blocks
+                const blocks = document.querySelectorAll('.quote');
+
+                if (blocks.length === 0) {
+                    throw new Error('No quote blocks found');
+                }
+
+                updateStatus(`Decorating ${blocks.length} quote blocks...`);
+
+                // Process each block
+                let successCount = 0;
+                for (const block of blocks) {
+                    try {
+                        // EDS pattern: decorateBlock adds .block class and other EDS classes
+                        decorateBlock(block);
+
+                        // Load the block (fetches JS/CSS and runs decorate function)
+                        await loadBlock(block);
+
+                        successCount++;
+                    } catch (blockError) {
+                        console.error('Failed to load block:', blockError);
+                        block.innerHTML = `<p style="color: red;">Error: ${blockError.message}</p>`;
+                    }
+                }
+
+                updateStatus(`Successfully loaded ${successCount}/${blocks.length} quote blocks ✓`);
+
+                // Log success
+                console.log(`${successCount} quote blocks loaded successfully`);
+                console.log('Blocks:', blocks);
+
+            } catch (error) {
+                console.error('Failed to initialize blocks:', error);
+                updateStatus(`Error: ${error.message}`, true);
+            }
+        }
+
+        // Start initialization
+        init();
+    </script>
+</body>
+</html>

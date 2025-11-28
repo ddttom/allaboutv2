@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabs Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <!-- Tabs Block Styles -->
+    <link rel="stylesheet" href="/blocks/tabs/tabs.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .test-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .test-info h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.75rem;
+        }
+
+        .test-info p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .test-info code {
+            background: rgba(255,255,255,0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .test-info strong {
+            font-weight: 600;
+        }
+
+        .test-section {
+            margin: 2rem auto;
+            max-width: 1400px;
+            padding: 0 1rem;
+        }
+
+        .test-section h3 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0 0 0;
+            border-radius: 8px 8px 0 0;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .test-section .description {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 1rem;
+        }
+
+        .test-section .description strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .test-section .description p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        /* Status indicators */
+        .status {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Tabs wrapper for consistent spacing */
+        .tabs-wrapper {
+            background: white;
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* Instructions section */
+        .instructions {
+            margin: 3rem auto;
+            max-width: 1400px;
+            padding: 2rem;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: #667eea;
+            font-size: 1.3rem;
+        }
+
+        .instructions ol, .instructions ul {
+            line-height: 1.8;
+            padding-left: 1.5rem;
+        }
+
+        .instructions li {
+            margin: 0.5rem 0;
+        }
+
+        .instructions strong {
+            color: #667eea;
+        }
+
+        .instructions code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>Tabs Block Test Suite</h2>
+        <p><strong>Block:</strong> <code>tabs</code></p>
+        <p><strong>Test Count:</strong> <code>5 test scenarios</code></p>
+        <p><strong>Status:</strong> <span id="status" class="status info">Loading...</span></p>
+        <p><strong>Purpose:</strong> Visual and functional testing of accessible tabbed interface with WAI-ARIA implementation</p>
+    </div>
+
+    <main>
+        <!-- Test 1: Basic Tabs (3 tabs) -->
+        <div class="test-section">
+            <h3>Test 1: Basic Tabs (3 tabs)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Three tabs in horizontal list. First tab selected by default. Only one panel visible at a time. Click tabs to switch panels.</p>
+                <p><strong>Validation:</strong> Check ARIA attributes (aria-selected, aria-hidden, aria-controls). Verify click interaction works.</p>
+            </div>
+            <div class="tabs-wrapper">
+                <div class="tabs block">
+                    <div>
+                        <div>Overview</div>
+                        <div>This is the overview section. It provides introductory information about the product or service. The first tab is selected by default when the page loads.</div>
+                    </div>
+                    <div>
+                        <div>Features</div>
+                        <div>Explore our comprehensive feature set including advanced capabilities, integrations, and customization options. Click this tab to see features content.</div>
+                    </div>
+                    <div>
+                        <div>Pricing</div>
+                        <div>View our flexible pricing plans designed for teams of all sizes. We offer competitive rates and transparent pricing with no hidden fees.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 2: Many Tabs (6 tabs) -->
+        <div class="test-section">
+            <h3>Test 2: Many Tabs (6 tabs)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Six tabs test horizontal scrolling on mobile. Tab list should scroll horizontally if tabs don't fit. All tabs remain accessible.</p>
+                <p><strong>Validation:</strong> Resize browser to mobile width and verify horizontal scrolling works. Check all tabs are clickable.</p>
+            </div>
+            <div class="tabs-wrapper">
+                <div class="tabs block">
+                    <div>
+                        <div>Getting Started</div>
+                        <div>Begin your journey with our step-by-step guide. Learn the basics and get up and running quickly.</div>
+                    </div>
+                    <div>
+                        <div>Installation</div>
+                        <div>Install using npm: npm install package-name. Verify installation by running the version command.</div>
+                    </div>
+                    <div>
+                        <div>Configuration</div>
+                        <div>Configure your environment settings, API keys, and deployment options. Check our configuration guide for details.</div>
+                    </div>
+                    <div>
+                        <div>API Reference</div>
+                        <div>Complete API documentation including endpoints, parameters, authentication methods, and response formats.</div>
+                    </div>
+                    <div>
+                        <div>Examples</div>
+                        <div>Browse real-world examples and code snippets. Copy and adapt them for your own projects.</div>
+                    </div>
+                    <div>
+                        <div>Troubleshooting</div>
+                        <div>Common issues and solutions. Check here first before opening a support ticket for faster resolution.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 3: Long Content -->
+        <div class="test-section">
+            <h3>Test 3: Long Content in Panels</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Tabs with varying content lengths. Panel should scroll if content exceeds container height (overflow: auto).</p>
+                <p><strong>Validation:</strong> Check that long content in panels is scrollable. Verify overflow doesn't break layout.</p>
+            </div>
+            <div class="tabs-wrapper">
+                <div class="tabs block">
+                    <div>
+                        <div>Short Content</div>
+                        <div>This tab has brief content that fits easily within the panel.</div>
+                    </div>
+                    <div>
+                        <div>Medium Content</div>
+                        <div>This tab has a moderate amount of content. It provides a good balance between information and readability. The content is long enough to demonstrate proper text flow but not so long that it requires scrolling. This is the typical use case for most tabs.</div>
+                    </div>
+                    <div>
+                        <div>Long Content</div>
+                        <div>This tab has extensive content to test scrolling behavior. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 4: Rich Content -->
+        <div class="test-section">
+            <h3>Test 4: Rich Content (Images, Lists, Formatting)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Tabs can contain any HTML content including images, headings, lists, and formatted text.</p>
+                <p><strong>Validation:</strong> Verify all content types render correctly within panels. Check images load properly.</p>
+            </div>
+            <div class="tabs-wrapper">
+                <div class="tabs block">
+                    <div>
+                        <div>Text Content</div>
+                        <div><p><strong>Bold text</strong> and <em>italic text</em> work within panels.</p><p>Multiple paragraphs are supported. Each paragraph maintains proper spacing and readability.</p></div>
+                    </div>
+                    <div>
+                        <div>With Image</div>
+                        <div><img src="https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png" alt="Sample" style="max-width: 200px; height: auto;"><p>Images can be included inline with text. They should load properly and maintain aspect ratio.</p></div>
+                    </div>
+                    <div>
+                        <div>With List</div>
+                        <div><p>Key features:</p><ul><li>Feature one with description</li><li>Feature two with benefits</li><li>Feature three with use cases</li></ul><p>Lists provide clear organization of information.</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 5: Keyboard Navigation -->
+        <div class="test-section">
+            <h3>Test 5: Keyboard Navigation & Accessibility</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Tabs are fully keyboard accessible. Tab key moves focus to/from tab list. Enter/Space activates tab. All ARIA attributes set correctly.</p>
+                <p><strong>Validation:</strong> Use keyboard only (no mouse). Test with screen reader. Verify focus indicators visible. Check ARIA attributes in DevTools.</p>
+            </div>
+            <div class="tabs-wrapper">
+                <div class="tabs block">
+                    <div>
+                        <div>Keyboard Test</div>
+                        <div>Press Tab key to move focus to this tab list. Use Enter or Space to activate a tab. Focus indicators should be clearly visible.</div>
+                    </div>
+                    <div>
+                        <div>ARIA Test</div>
+                        <div>This tab tests ARIA attributes. Inspect this element in DevTools to verify role="tabpanel", aria-labelledby, and aria-hidden attributes.</div>
+                    </div>
+                    <div>
+                        <div>Screen Reader</div>
+                        <div>Screen readers should announce "tab list" when entering the tab area. Each tab should announce its label, role, and selection state.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import decorate from '/blocks/tabs/tabs.js';
+
+        // Update status function
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+
+        // Log tab structure for debugging
+        function logTabStructure(block, index) {
+            console.log(`\n=== Tabs Block ${index + 1} ===`);
+            console.log('Initial children count:', block.children.length);
+
+            const rows = Array.from(block.children);
+            rows.forEach((row, i) => {
+                const cells = Array.from(row.children);
+                console.log(`  Row ${i + 1}:`, cells.map(cell => cell.textContent.substring(0, 30)).join(' | '));
+            });
+        }
+
+        // Log final structure
+        function logFinalStructure(block, index) {
+            console.log(`\n=== After Decoration (Block ${index + 1}) ===`);
+
+            const tablist = block.querySelector('[role="tablist"]');
+            if (tablist) {
+                const tabs = tablist.querySelectorAll('[role="tab"]');
+                console.log('Tabs created:', tabs.length);
+                tabs.forEach((tab, i) => {
+                    console.log(`  Tab ${i + 1}: "${tab.textContent}" (id="${tab.id}", selected="${tab.getAttribute('aria-selected')}")`);
+                });
+            }
+
+            const panels = block.querySelectorAll('[role="tabpanel"]');
+            console.log('Panels created:', panels.length);
+            panels.forEach((panel, i) => {
+                console.log(`  Panel ${i + 1}: id="${panel.id}", hidden="${panel.getAttribute('aria-hidden')}"`);
+            });
+        }
+
+        // Verify ARIA relationships
+        function verifyARIA(block, index) {
+            console.log(`\n=== ARIA Validation (Block ${index + 1}) ===`);
+
+            const tabs = block.querySelectorAll('[role="tab"]');
+            let errors = 0;
+
+            tabs.forEach((tab, i) => {
+                const panelId = tab.getAttribute('aria-controls');
+                const panel = document.getElementById(panelId);
+
+                if (!panel) {
+                    console.error(`✗ Tab ${i + 1}: Controls invalid panel ID "${panelId}"`);
+                    errors++;
+                } else if (panel.getAttribute('aria-labelledby') !== tab.id) {
+                    console.error(`✗ Tab ${i + 1}: Panel aria-labelledby doesn't match tab ID`);
+                    errors++;
+                } else {
+                    console.log(`✓ Tab ${i + 1}: ARIA relationships valid`);
+                }
+            });
+
+            if (errors === 0) {
+                console.log('✓ All ARIA relationships valid');
+            } else {
+                console.error(`✗ ${errors} ARIA validation errors found`);
+            }
+        }
+
+        // Initialize all tabs blocks
+        async function init() {
+            try {
+                // Add body.appear class (required to show page)
+                document.body.classList.add('appear');
+
+                updateStatus('Decorating blocks...', 'info');
+
+                // Get all tabs blocks
+                const tabsBlocks = document.querySelectorAll('.tabs.block');
+
+                if (tabsBlocks.length === 0) {
+                    throw new Error('No tabs blocks found');
+                }
+
+                console.log(`Found ${tabsBlocks.length} tabs blocks to decorate`);
+
+                // Decorate each tabs block
+                tabsBlocks.forEach((block, index) => {
+                    console.log(`\n${'='.repeat(50)}`);
+                    console.log(`Processing Tabs Block ${index + 1}`);
+                    console.log('='.repeat(50));
+
+                    // Log initial structure
+                    logTabStructure(block, index);
+
+                    // Run decoration
+                    try {
+                        decorate(block);
+                        console.log('✓ Decoration completed successfully');
+                    } catch (error) {
+                        console.error(`✗ Decoration failed:`, error);
+                        throw error;
+                    }
+
+                    // Log final structure
+                    logFinalStructure(block, index);
+
+                    // Verify ARIA relationships
+                    verifyARIA(block, index);
+                });
+
+                updateStatus(`✓ ${tabsBlocks.length} tabs blocks loaded successfully`, 'success');
+
+                console.log('\n' + '='.repeat(50));
+                console.log('All tabs blocks decorated successfully!');
+                console.log('='.repeat(50));
+                console.log('\nTest Instructions:');
+                console.log('1. Click different tabs to verify panel switching');
+                console.log('2. Use keyboard (Tab, Enter/Space) to test navigation');
+                console.log('3. Resize browser to test responsive behavior');
+                console.log('4. Check ARIA attributes in DevTools Elements panel');
+                console.log('5. Test with screen reader (NVDA, JAWS, VoiceOver)');
+
+            } catch (error) {
+                console.error('Failed to initialize tabs blocks:', error);
+                updateStatus(`✗ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Start initialization
+        init();
+    </script>
+
+    <div class="instructions">
+        <h3>Testing Instructions</h3>
+        <ol>
+            <li><strong>Visual Inspection:</strong> Scroll through all test sections and verify tabs display correctly with proper styling</li>
+            <li><strong>Interaction Testing:</strong> Click each tab button and verify:
+                <ul>
+                    <li>Corresponding panel appears</li>
+                    <li>Previous panel hides</li>
+                    <li>Selected tab has distinct visual state</li>
+                    <li>Only one panel visible at a time</li>
+                </ul>
+            </li>
+            <li><strong>Responsive Testing:</strong> Resize browser window and observe:
+                <ul>
+                    <li>Mobile (< 600px): Tab list scrolls horizontally</li>
+                    <li>Tablet (~768px): Tabs fit comfortably</li>
+                    <li>Desktop (> 1024px): Full horizontal display</li>
+                </ul>
+            </li>
+            <li><strong>Keyboard Navigation:</strong> Use keyboard only (no mouse):
+                <ul>
+                    <li>Press <code>Tab</code> to move focus to tab list</li>
+                    <li>Press <code>Enter</code> or <code>Space</code> to activate tab</li>
+                    <li>Verify focus indicators are visible</li>
+                    <li>All tabs are accessible via keyboard</li>
+                </ul>
+            </li>
+            <li><strong>ARIA Verification:</strong> Inspect in DevTools and verify:
+                <ul>
+                    <li>Tab list has <code>role="tablist"</code></li>
+                    <li>Each button has <code>role="tab"</code></li>
+                    <li>Each panel has <code>role="tabpanel"</code></li>
+                    <li>Selected tab has <code>aria-selected="true"</code></li>
+                    <li>Visible panel has <code>aria-hidden="false"</code></li>
+                    <li>Hidden panels have <code>aria-hidden="true"</code></li>
+                    <li>ARIA relationships (<code>aria-controls</code>, <code>aria-labelledby</code>) are correct</li>
+                </ul>
+            </li>
+            <li><strong>Screen Reader Testing:</strong> Test with screen reader:
+                <ul>
+                    <li>Tab list is announced</li>
+                    <li>Tab count is communicated</li>
+                    <li>Selection state is announced</li>
+                    <li>Panel content is associated with tab</li>
+                </ul>
+            </li>
+            <li><strong>Console Output:</strong> Review console logs for:
+                <ul>
+                    <li>Decoration process details</li>
+                    <li>ARIA validation results</li>
+                    <li>Any errors or warnings</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>Expected Results</h3>
+        <ul>
+            <li><strong>Test 1:</strong> Three basic tabs with click-to-switch functionality</li>
+            <li><strong>Test 2:</strong> Six tabs demonstrating horizontal scrolling on narrow viewports</li>
+            <li><strong>Test 3:</strong> Tabs with varying content lengths, panels scroll when needed</li>
+            <li><strong>Test 4:</strong> Rich content (images, lists, formatting) renders correctly</li>
+            <li><strong>Test 5:</strong> Full keyboard accessibility and correct ARIA implementation</li>
+        </ul>
+
+        <h3>Accessibility Checklist</h3>
+        <ul>
+            <li><strong>Semantic HTML:</strong> Proper use of button elements with role="tab"</li>
+            <li><strong>ARIA Roles:</strong> tablist, tab, tabpanel all correctly applied</li>
+            <li><strong>ARIA States:</strong> aria-selected, aria-hidden properly managed</li>
+            <li><strong>ARIA Relationships:</strong> aria-controls and aria-labelledby link tabs to panels</li>
+            <li><strong>Keyboard Support:</strong> Tab, Enter, Space keys all functional</li>
+            <li><strong>Focus Management:</strong> Visible focus indicators on all interactive elements</li>
+            <li><strong>Screen Reader:</strong> Announces tab list, selection state, and panel content</li>
+        </ul>
+
+        <h3>Responsive Breakpoints to Test</h3>
+        <ul>
+            <li><strong>&lt; 600px (Mobile):</strong> Horizontal tab scrolling, touch-friendly</li>
+            <li><strong>600px - 1024px (Tablet):</strong> Comfortable tab spacing, readable content</li>
+            <li><strong>&gt; 1024px (Desktop):</strong> Full horizontal display with hover states</li>
+        </ul>
+
+        <h3>Known Limitations</h3>
+        <ul>
+            <li><strong>Arrow Key Navigation:</strong> Not implemented (Tab/Enter/Space only)</li>
+            <li><strong>Deep Linking:</strong> No URL hash support for direct tab access</li>
+            <li><strong>Dynamic Tabs:</strong> Cannot add/remove tabs after initialization</li>
+            <li><strong>Disabled Tabs:</strong> No built-in disabled state support</li>
+        </ul>
+
+        <h3>Debugging Tips</h3>
+        <ul>
+            <li>Check browser console for detailed logs and ARIA validation results</li>
+            <li>Use DevTools Elements panel to inspect ARIA attributes</li>
+            <li>Test with multiple screen readers for compatibility verification</li>
+            <li>Verify CSS variables (<code>--dark-color</code>, <code>--light-color</code>, <code>--background-color</code>) are defined</li>
+            <li>Check Network tab if tabs.js or tabs.css fail to load</li>
+        </ul>
+
+        <h3>Browser Compatibility</h3>
+        <ul>
+            <li><strong>Supported:</strong> Chrome, Firefox, Safari, Edge (last 2 versions)</li>
+            <li><strong>Partial:</strong> IE11 (requires polyfills for Array.from)</li>
+            <li><strong>Mobile:</strong> iOS Safari, Android Chrome (last 2 versions)</li>
+        </ul>
+    </div>
+</body>
+</html>

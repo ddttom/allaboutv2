@@ -112,6 +112,8 @@ export default async function decorate(block) {
 
   // Function to scroll back to the top of the block, accounting for header height
   const scrollToTop = () => {
+    // Global Selector is INTENTIONAL - used for Document access
+    // Document header element for scroll position calculation
     const header = document.querySelector('header');
     const headerHeight = header ? header.offsetHeight : 0;
     const blockTop = block.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20; // 20px extra padding
@@ -185,6 +187,8 @@ export default async function decorate(block) {
   try {
     // Collect and process code snippets from the page
     const codeSnippets = [];
+    // Global Selector is INTENTIONAL - used for Document access
+    // Collects ALL code snippets from entire page for showcasing
     const codeElements = document.querySelectorAll('pre > code');
     
     codeElements.forEach((element, index) => {

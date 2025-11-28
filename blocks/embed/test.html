@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embed Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <!-- Embed Block Styles -->
+    <link rel="stylesheet" href="/blocks/embed/embed.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .test-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .test-info h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.75rem;
+        }
+
+        .test-info p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .test-info code {
+            background: rgba(255,255,255,0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .test-info strong {
+            font-weight: 600;
+        }
+
+        .test-section {
+            margin: 2rem auto;
+            max-width: 1400px;
+            padding: 0 1rem;
+        }
+
+        .test-section h3 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0 0 0;
+            border-radius: 8px 8px 0 0;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .test-section .description {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 1rem;
+        }
+
+        .test-section .description strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .test-section .description p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        /* Status indicators */
+        .status {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Embed wrapper for consistent spacing */
+        .embed-wrapper {
+            background: white;
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* Instructions section */
+        .instructions {
+            margin: 3rem auto;
+            max-width: 1400px;
+            padding: 2rem;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: #667eea;
+            font-size: 1.3rem;
+        }
+
+        .instructions ol, .instructions ul {
+            line-height: 1.8;
+            padding-left: 1.5rem;
+        }
+
+        .instructions li {
+            margin: 0.5rem 0;
+        }
+
+        .instructions strong {
+            color: #667eea;
+        }
+
+        .instructions code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        /* Scroll note */
+        .scroll-note {
+            padding: 1rem;
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 6px;
+            margin: 1rem 0;
+            color: #856404;
+        }
+
+        .scroll-note strong {
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>Embed Block Test Suite</h2>
+        <p><strong>Block:</strong> <code>embed</code></p>
+        <p><strong>Test Count:</strong> <code>6 test scenarios</code></p>
+        <p><strong>Status:</strong> <span id="status" class="status info">Loading...</span></p>
+        <p><strong>Purpose:</strong> Test multi-provider embed support with lazy loading, placeholders, and responsive aspect ratio</p>
+    </div>
+
+    <main>
+        <!-- Test 1: YouTube Standard URL -->
+        <div class="test-section">
+            <h3>Test 1: YouTube Standard URL (Lazy Loading)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> YouTube video embedded with 16:9 aspect ratio. Loads when scrolled into viewport using Intersection Observer.</p>
+                <p><strong>Validation:</strong> Scroll down to trigger lazy loading. Check embed-is-loaded class added. Verify iframe src contains youtube.com/embed/VIDEO_ID.</p>
+            </div>
+            <div class="scroll-note">
+                <strong>Note:</strong> This embed uses lazy loading. Scroll down to trigger loading.
+            </div>
+            <div class="embed-wrapper">
+                <div class="embed block">
+                    <div>
+                        <div>
+                            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">https://www.youtube.com/watch?v=dQw4w9WgXcQ</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 2: YouTube with Placeholder -->
+        <div class="test-section">
+            <h3>Test 2: YouTube with Placeholder Image (Click-to-Play)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Custom preview image with play button overlay. Click triggers video load with autoplay. Best for Core Web Vitals optimization.</p>
+                <p><strong>Validation:</strong> Verify play button centered over image. Click play button. Check video loads with autoplay=1 parameter. Verify embed-is-loaded class added.</p>
+            </div>
+            <div class="embed-wrapper">
+                <div class="embed block">
+                    <div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png" alt="Video preview" style="width: 100%; height: auto;">
+                            </picture>
+                            <a href="https://www.youtube.com/watch?v=jNQXAC9IVRw">https://www.youtube.com/watch?v=jNQXAC9IVRw</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 3: YouTube Short URL (youtu.be) -->
+        <div class="test-section">
+            <h3>Test 3: YouTube Short URL (youtu.be)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Short URL format recognized. Video ID extracted from pathname. Embedded identically to standard URL.</p>
+                <p><strong>Validation:</strong> Scroll to trigger loading. Verify embed-youtube class applied. Check iframe src uses extracted video ID.</p>
+            </div>
+            <div class="scroll-note">
+                <strong>Note:</strong> This embed uses lazy loading. Scroll down to trigger loading.
+            </div>
+            <div class="embed-wrapper">
+                <div class="embed block">
+                    <div>
+                        <div>
+                            <a href="https://youtu.be/dQw4w9WgXcQ">https://youtu.be/dQw4w9WgXcQ</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 4: Vimeo Video -->
+        <div class="test-section">
+            <h3>Test 4: Vimeo Video</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Vimeo player embedded with 16:9 aspect ratio. Lazy loads when scrolled into view. Clean player interface.</p>
+                <p><strong>Validation:</strong> Scroll to trigger loading. Verify embed-vimeo class applied. Check iframe src contains player.vimeo.com. Test fullscreen support.</p>
+            </div>
+            <div class="scroll-note">
+                <strong>Note:</strong> This embed uses lazy loading. Scroll down to trigger loading.
+            </div>
+            <div class="embed-wrapper">
+                <div class="embed block">
+                    <div>
+                        <div>
+                            <a href="https://vimeo.com/76979871">https://vimeo.com/76979871</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 5: Twitter Post -->
+        <div class="test-section">
+            <h3>Test 5: Twitter Post</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Twitter blockquote created. Widget.js loads dynamically. Tweet renders with full styling (text, images, interactions).</p>
+                <p><strong>Validation:</strong> Scroll to trigger loading. Verify blockquote with twitter-tweet class. Check platform.twitter.com/widgets.js loaded. Wait 2-5 seconds for rendering.</p>
+                <p><strong>Note:</strong> Twitter embeds may take longer to load due to external script dependency (~50KB).</p>
+            </div>
+            <div class="scroll-note">
+                <strong>Note:</strong> This embed uses lazy loading. Scroll down to trigger loading. Twitter may take 2-5 seconds to render.
+            </div>
+            <div class="embed-wrapper">
+                <div class="embed block">
+                    <div>
+                        <div>
+                            <a href="https://twitter.com/Interior/status/463440424141459456">https://twitter.com/Interior/status/463440424141459456</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 6: Generic Embed (Unsupported Provider) -->
+        <div class="test-section">
+            <h3>Test 6: Generic Embed (Unknown Provider)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Generic 16:9 iframe for unknown provider. Uses default embed HTML. Works if provider allows iframe embedding.</p>
+                <p><strong>Validation:</strong> Scroll to trigger loading. Verify generic embed class (no provider-specific class). Check iframe src matches original URL. Test if content loads (depends on provider).</p>
+                <p><strong>Note:</strong> This test uses example.com which may not load. In production, use actual embeddable content.</p>
+            </div>
+            <div class="scroll-note">
+                <strong>Note:</strong> This embed uses lazy loading. Scroll down to trigger loading.
+            </div>
+            <div class="embed-wrapper">
+                <div class="embed block">
+                    <div>
+                        <div>
+                            <a href="https://www.example.com/embed/sample">https://www.example.com/embed/sample</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import decorate from '/blocks/embed/embed.js';
+
+        // Update status function
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+
+        // Log embed structure for debugging
+        function logEmbedStructure(block, index) {
+            console.log(`\n=== Embed Block ${index + 1} ===`);
+            const link = block.querySelector('a');
+            const picture = block.querySelector('picture');
+            console.log('Link URL:', link ? link.href : 'No link found');
+            console.log('Has placeholder:', picture !== null);
+            if (picture) {
+                const img = picture.querySelector('img');
+                console.log('Placeholder image:', img ? img.src : 'No image');
+            }
+        }
+
+        // Log final structure
+        function logFinalStructure(block, index) {
+            console.log(`\n=== After Decoration (Block ${index + 1}) ===`);
+            console.log('Has embed-is-loaded class:', block.classList.contains('embed-is-loaded'));
+            console.log('Block classes:', block.className);
+
+            const iframe = block.querySelector('iframe');
+            if (iframe) {
+                console.log('Iframe src:', iframe.src);
+                console.log('Iframe title:', iframe.title);
+                console.log('Lazy loading:', iframe.getAttribute('loading'));
+            }
+
+            const placeholder = block.querySelector('.embed-placeholder');
+            if (placeholder) {
+                console.log('Has placeholder:', true);
+                const playButton = placeholder.querySelector('button');
+                console.log('Has play button:', playButton !== null);
+            }
+
+            const blockquote = block.querySelector('.twitter-tweet');
+            if (blockquote) {
+                console.log('Twitter blockquote created:', true);
+            }
+        }
+
+        // Verify provider detection
+        function verifyProvider(block, index) {
+            console.log(`\n=== Provider Detection (Block ${index + 1}) ===`);
+
+            if (block.classList.contains('embed-youtube')) {
+                console.log('✓ YouTube provider detected');
+            } else if (block.classList.contains('embed-vimeo')) {
+                console.log('✓ Vimeo provider detected');
+            } else if (block.classList.contains('embed-twitter')) {
+                console.log('✓ Twitter provider detected');
+            } else if (block.classList.contains('embed-is-loaded')) {
+                console.log('✓ Generic embed (unknown provider)');
+            } else {
+                console.log('⚠ Provider not yet detected (waiting for load)');
+            }
+        }
+
+        // Monitor embed loading
+        function setupLoadMonitoring(block, index) {
+            // Create observer to detect when embed loads
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        if (block.classList.contains('embed-is-loaded')) {
+                            console.log(`\n=== Embed ${index + 1} Loaded ===`);
+                            logFinalStructure(block, index);
+                            verifyProvider(block, index);
+                            observer.disconnect();
+                        }
+                    }
+                });
+            });
+
+            observer.observe(block, { attributes: true });
+        }
+
+        // Initialize all embed blocks
+        async function init() {
+            try {
+                // Add body.appear class (required to show page)
+                document.body.classList.add('appear');
+
+                updateStatus('Decorating blocks...', 'info');
+
+                // Get all embed blocks
+                const embedBlocks = document.querySelectorAll('.embed.block');
+
+                if (embedBlocks.length === 0) {
+                    throw new Error('No embed blocks found');
+                }
+
+                console.log(`Found ${embedBlocks.length} embed blocks to decorate`);
+
+                // Decorate each embed block
+                embedBlocks.forEach((block, index) => {
+                    console.log(`\n${'='.repeat(50)}`);
+                    console.log(`Processing Embed Block ${index + 1}`);
+                    console.log('='.repeat(50));
+
+                    // Log initial structure
+                    logEmbedStructure(block, index);
+
+                    // Setup monitoring before decoration
+                    setupLoadMonitoring(block, index);
+
+                    // Run decoration
+                    try {
+                        decorate(block);
+                        console.log('✓ Decoration completed successfully');
+                    } catch (error) {
+                        console.error(`✗ Decoration failed:`, error);
+                        throw error;
+                    }
+
+                    // Log immediate post-decoration state
+                    const hasPlaceholder = block.querySelector('.embed-placeholder') !== null;
+                    if (hasPlaceholder) {
+                        console.log('→ Click-to-play placeholder active (awaiting user click)');
+                        logFinalStructure(block, index);
+                    } else {
+                        console.log('→ Lazy loading active (awaiting viewport entry)');
+                    }
+                });
+
+                updateStatus(`✓ ${embedBlocks.length} embed blocks decorated successfully`, 'success');
+
+                console.log('\n' + '='.repeat(50));
+                console.log('All embed blocks decorated successfully!');
+                console.log('='.repeat(50));
+                console.log('\nTest Instructions:');
+                console.log('1. Scroll down to trigger lazy loading for embeds without placeholders');
+                console.log('2. Click play buttons on placeholder embeds');
+                console.log('3. Verify embeds load and display correctly');
+                console.log('4. Check browser console for loading events');
+                console.log('5. Resize browser to test responsive behavior');
+                console.log('6. Test keyboard navigation (Tab, Enter/Space)');
+                console.log('7. Verify aspect ratio maintained at all screen sizes');
+
+            } catch (error) {
+                console.error('Failed to initialize embed blocks:', error);
+                updateStatus(`✗ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Start initialization
+        init();
+    </script>
+
+    <div class="instructions">
+        <h3>Testing Instructions</h3>
+        <ol>
+            <li><strong>Visual Inspection:</strong> Scroll through all test sections and verify embeds display correctly
+                <ul>
+                    <li>Test 1: YouTube standard URL (lazy loads on scroll)</li>
+                    <li>Test 2: YouTube with placeholder (click to play)</li>
+                    <li>Test 3: YouTube short URL (youtu.be format)</li>
+                    <li>Test 4: Vimeo video</li>
+                    <li>Test 5: Twitter post (may take 2-5 seconds)</li>
+                    <li>Test 6: Generic embed (unknown provider)</li>
+                </ul>
+            </li>
+            <li><strong>Lazy Loading Testing:</strong> Scroll to trigger embeds without placeholders
+                <ul>
+                    <li>Embeds should load when entering viewport</li>
+                    <li>Check console for loading events</li>
+                    <li>Verify embed-is-loaded class added</li>
+                    <li>Confirm no loading before scroll</li>
+                </ul>
+            </li>
+            <li><strong>Placeholder Testing:</strong> Click play button on Test 2
+                <ul>
+                    <li>Play button should be centered over image</li>
+                    <li>Click triggers video load</li>
+                    <li>Video should autoplay after loading</li>
+                    <li>Keyboard accessible (Tab + Enter/Space)</li>
+                </ul>
+            </li>
+            <li><strong>Provider Detection:</strong> Verify correct provider-specific classes
+                <ul>
+                    <li>YouTube: embed-youtube class</li>
+                    <li>Vimeo: embed-vimeo class</li>
+                    <li>Twitter: embed-twitter class</li>
+                    <li>Generic: embed class only (no provider class)</li>
+                </ul>
+            </li>
+            <li><strong>Responsive Testing:</strong> Resize browser window
+                <ul>
+                    <li>Mobile (< 600px): Full width, 16:9 ratio maintained</li>
+                    <li>Tablet (~768px): Centered, max-width 800px</li>
+                    <li>Desktop (> 1024px): Centered, optimal viewing size</li>
+                    <li>All sizes: No layout shift, no overflow</li>
+                </ul>
+            </li>
+            <li><strong>Keyboard Navigation:</strong> Test accessibility
+                <ul>
+                    <li>Tab to play button (placeholder embeds)</li>
+                    <li>Enter or Space to activate</li>
+                    <li>Tab into iframe (embedded content)</li>
+                    <li>Verify focus indicators visible</li>
+                </ul>
+            </li>
+            <li><strong>Console Output:</strong> Review console logs for:
+                <ul>
+                    <li>Initial block structure</li>
+                    <li>Decoration process</li>
+                    <li>Provider detection results</li>
+                    <li>Loading events (lazy load or click)</li>
+                    <li>Any errors or warnings</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>Expected Results</h3>
+        <ul>
+            <li><strong>Test 1:</strong> YouTube video lazy loads when scrolled into view</li>
+            <li><strong>Test 2:</strong> Placeholder with play button, video loads on click with autoplay</li>
+            <li><strong>Test 3:</strong> Short URL recognized, identical to Test 1</li>
+            <li><strong>Test 4:</strong> Vimeo player loads when scrolled into view</li>
+            <li><strong>Test 5:</strong> Twitter blockquote renders as full tweet (may take 2-5 seconds)</li>
+            <li><strong>Test 6:</strong> Generic iframe created (may not load due to example.com)</li>
+        </ul>
+
+        <h3>Accessibility Checklist</h3>
+        <ul>
+            <li><strong>Semantic HTML:</strong> Proper use of iframe and button elements</li>
+            <li><strong>Iframe Titles:</strong> Descriptive title attributes (e.g., "Content from Youtube")</li>
+            <li><strong>Play Button:</strong> Button type="button" with title="Play"</li>
+            <li><strong>Keyboard Support:</strong> Tab, Enter, Space all functional</li>
+            <li><strong>Focus Management:</strong> Visible focus indicators</li>
+            <li><strong>Alternative Content:</strong> Link fallback if embed fails</li>
+        </ul>
+
+        <h3>Performance Checklist</h3>
+        <ul>
+            <li><strong>Lazy Loading:</strong> Embeds don't load until needed</li>
+            <li><strong>Placeholders:</strong> Reduce initial page weight significantly</li>
+            <li><strong>Intersection Observer:</strong> Efficient viewport detection</li>
+            <li><strong>Loading Attribute:</strong> Iframe has loading="lazy"</li>
+            <li><strong>No Layout Shift:</strong> Aspect ratio preserved with CSS</li>
+            <li><strong>Twitter Script:</strong> Loaded only for Twitter embeds</li>
+        </ul>
+
+        <h3>Responsive Breakpoints to Test</h3>
+        <ul>
+            <li><strong>&lt; 600px (Mobile):</strong> Full width, touch-friendly</li>
+            <li><strong>600px - 1024px (Tablet):</strong> Centered with max-width</li>
+            <li><strong>&gt; 1024px (Desktop):</strong> Optimal viewing size</li>
+        </ul>
+
+        <h3>Known Behaviors</h3>
+        <ul>
+            <li><strong>Lazy Loading Delay:</strong> May take 1-2 seconds after scroll</li>
+            <li><strong>Twitter Rendering:</strong> Takes 2-5 seconds due to widget.js</li>
+            <li><strong>Autoplay:</strong> Only works with placeholders (user-initiated)</li>
+            <li><strong>Generic Embeds:</strong> Depend on provider allowing iframe embedding</li>
+        </ul>
+
+        <h3>Debugging Tips</h3>
+        <ul>
+            <li>Check browser console for detailed logs and provider detection</li>
+            <li>Use DevTools Elements panel to inspect embed structure</li>
+            <li>Check Network tab for iframe requests and Twitter widget.js</li>
+            <li>Verify embed.js and embed.css loaded successfully</li>
+            <li>Test in multiple browsers for compatibility verification</li>
+            <li>Use Lighthouse for performance and accessibility scores</li>
+        </ul>
+
+        <h3>Browser Compatibility</h3>
+        <ul>
+            <li><strong>Supported:</strong> Chrome, Firefox, Safari, Edge (last 2 versions)</li>
+            <li><strong>Partial:</strong> IE11 (requires Intersection Observer polyfill)</li>
+            <li><strong>Mobile:</strong> iOS Safari, Android Chrome (last 2 versions)</li>
+        </ul>
+
+        <h3>Provider-Specific Notes</h3>
+        <ul>
+            <li><strong>YouTube:</strong> Some videos disable embedding or have geographic restrictions</li>
+            <li><strong>Vimeo:</strong> Privacy settings may prevent embedding</li>
+            <li><strong>Twitter:</strong> Requires external script, slowest to load</li>
+            <li><strong>Generic:</strong> Providers must allow iframe embedding (no X-Frame-Options DENY)</li>
+        </ul>
+    </div>
+</body>
+</html>

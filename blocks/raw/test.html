@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raw Block - Test Suite</title>
+  <script type="module">
+    // Import EDS core functionality
+    import { loadCSS } from '../../scripts/aem.js';
+
+    // Load block CSS
+    await loadCSS('/blocks/raw/raw.css');
+
+    // Import and decorate block
+    const mod = await import('../../blocks/raw/raw.js');
+    const decorate = mod.default;
+
+    // Test scenarios
+    const testScenarios = [
+      {
+        title: 'Basic HTML Structure',
+        content: '<div class="custom-content"><h2>Custom Heading</h2><p>This is raw HTML content rendered directly in the page.</p></div>'
+      },
+      {
+        title: 'Alert Box with Styling',
+        content: '<div style="padding: 1rem; background: #d4edda; border: 1px solid #28a745; border-radius: 4px; color: #155724;"><strong>Success:</strong> Your operation completed successfully.</div>'
+      },
+      {
+        title: 'Quote-Wrapped Content',
+        content: '"<div style=\'padding: 1.5rem; background: #f8f9fa; border-left: 4px solid #007bff;\'><blockquote style=\'margin: 0; font-style: italic; font-size: 1.1rem;\'>This content was copied with surrounding quotes and will be properly processed.</blockquote></div>"'
+      },
+      {
+        title: 'HTML Entity Encoded Content',
+        content: '&lt;div style="padding: 1rem; background: #e9ecef;"&gt;&lt;p&gt;This HTML was encoded with entities and will be decoded automatically.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Item 1&lt;/li&gt;&lt;li&gt;Item 2&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;'
+      },
+      {
+        title: 'Embedded mmhmm Video',
+        content: '<iframe src="https://ooo.mmhmm.app/embed/abc123xyz" width="640" height="360" frameborder="0" allowfullscreen allow="autoplay; fullscreen"></iframe>'
+      },
+      {
+        title: 'Data Table',
+        content: '<table style="width: 100%; border-collapse: collapse;"><thead><tr style="background: #f5f5f5;"><th style="padding: 0.5rem; border: 1px solid #ddd; text-align: left;">Product</th><th style="padding: 0.5rem; border: 1px solid #ddd; text-align: left;">Price</th></tr></thead><tbody><tr><td style="padding: 0.5rem; border: 1px solid #ddd;">Product A</td><td style="padding: 0.5rem; border: 1px solid #ddd;">$99.99</td></tr><tr><td style="padding: 0.5rem; border: 1px solid #ddd;">Product B</td><td style="padding: 0.5rem; border: 1px solid #ddd;">$149.99</td></tr></tbody></table>'
+      },
+      {
+        title: 'Feature Grid Layout',
+        content: '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;"><div style="padding: 1rem; border: 1px solid #ddd; border-radius: 4px;"><h3 style="margin-top: 0;">Feature One</h3><p>Description of the first feature.</p></div><div style="padding: 1rem; border: 1px solid #ddd; border-radius: 4px;"><h3 style="margin-top: 0;">Feature Two</h3><p>Description of the second feature.</p></div></div>'
+      },
+      {
+        title: 'Security Test: Script Tag (Should be Removed)',
+        content: '<div><p>Content before script</p><script>alert("XSS Attack")</script><p>Content after script</p></div>'
+      },
+      {
+        title: 'Security Test: Event Handlers (Should be Removed)',
+        content: '<div onclick="alert(\'XSS\')" onload="alert(\'XSS\')" onerror="alert(\'XSS\')"><p>This div has event handlers that should be removed.</p></div>'
+      },
+      {
+        title: 'Security Test: Untrusted Iframe (Should be Blocked)',
+        content: '<iframe src="https://untrusted-domain.com/embed" width="640" height="360"></iframe>'
+      },
+      {
+        title: 'Invalid HTML Structure (Should Show Warning)',
+        content: '<div><p>Unclosed paragraph<div>Nested incorrectly</p></div>'
+      },
+      {
+        title: 'Image with Caption',
+        content: '<figure style="margin: 0;"><img src="https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png" alt="Sample image" style="width: 100%; max-width: 600px; height: auto; border-radius: 4px;"><figcaption style="margin-top: 0.5rem; font-size: 0.9rem; color: #666; text-align: center;">Sample image with a descriptive caption</figcaption></figure>'
+      },
+      {
+        title: 'Testimonial Card',
+        content: '<div style="padding: 2rem; background: white; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"><div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;"><img src="https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png" alt="Profile" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;"><div><strong style="display: block; font-size: 1.1rem;">Tom Cranstoun</strong><span style="color: #666; font-size: 0.9rem;">Software Developer</span></div></div><p style="font-style: italic; color: #333; line-height: 1.6; margin: 0;">"This platform has transformed the way we build and deploy web applications. Highly recommended for any development team."</p></div>'
+      }
+    ];
+
+    // Create test blocks
+    const container = document.getElementById('test-container');
+
+    testScenarios.forEach((scenario, index) => {
+      // Create section wrapper
+      const section = document.createElement('section');
+      section.className = 'test-case';
+
+      // Create title
+      const title = document.createElement('h2');
+      title.textContent = `Test ${index + 1}: ${scenario.title}`;
+      title.className = 'test-title';
+      section.appendChild(title);
+
+      // Create block element
+      const block = document.createElement('div');
+      block.className = 'raw block';
+      block.innerHTML = scenario.content;
+      section.appendChild(block);
+
+      // Add to container
+      container.appendChild(section);
+
+      // Decorate the block
+      decorate(block);
+    });
+
+    // Add console monitoring
+    console.log('%c Raw Block Test Suite Loaded', 'color: #28a745; font-weight: bold; font-size: 14px;');
+    console.log('Monitor console for security warnings and validation errors');
+  </script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 2rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: #f5f5f5;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 2rem;
+    }
+
+    header p {
+      margin: 0;
+      opacity: 0.95;
+      font-size: 1.1rem;
+    }
+
+    .info-panel {
+      background: #e7f3ff;
+      border: 1px solid #2196F3;
+      border-radius: 4px;
+      padding: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .info-panel h3 {
+      margin-top: 0;
+      color: #1976D2;
+    }
+
+    .info-panel ul {
+      margin: 0.5rem 0 0 0;
+      padding-left: 1.5rem;
+    }
+
+    .info-panel li {
+      margin: 0.25rem 0;
+    }
+
+    .test-case {
+      background: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .test-title {
+      margin: 0 0 1rem 0;
+      color: #333;
+      font-size: 1.3rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #667eea;
+    }
+
+    .raw.block {
+      margin: 0;
+    }
+
+    footer {
+      margin-top: 3rem;
+      padding: 2rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    footer h3 {
+      margin-top: 0;
+      color: #667eea;
+    }
+
+    .console-info {
+      background: #f8f9fa;
+      border-left: 4px solid #ffc107;
+      padding: 1rem;
+      margin-top: 1rem;
+      border-radius: 4px;
+    }
+
+    .console-info strong {
+      color: #856404;
+    }
+
+    code {
+      background: #f4f4f4;
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Raw Block - Test Suite</h1>
+    <p>Comprehensive testing for raw HTML content insertion with security validation</p>
+  </header>
+
+  <div class="info-panel">
+    <h3>Test Objectives</h3>
+    <ul>
+      <li><strong>Content Rendering:</strong> Verify HTML is correctly decoded and displayed</li>
+      <li><strong>Security Sanitization:</strong> Confirm script tags and event handlers are removed</li>
+      <li><strong>Quote Handling:</strong> Test quote-wrapped content processing</li>
+      <li><strong>HTML Entity Decoding:</strong> Validate entity conversion</li>
+      <li><strong>Iframe Security:</strong> Check trusted domain validation</li>
+      <li><strong>Error Handling:</strong> Verify invalid HTML detection and reporting</li>
+    </ul>
+  </div>
+
+  <main id="test-container">
+    <!-- Test cases will be dynamically inserted here -->
+  </main>
+
+  <footer>
+    <h3>Testing Instructions</h3>
+    <p>
+      <strong>1. Visual Inspection:</strong> Check that each test case renders correctly without broken layouts.
+    </p>
+    <p>
+      <strong>2. Console Monitoring:</strong> Open browser DevTools (F12) and check the console for:
+    </p>
+    <ul>
+      <li>Security warnings about removed script tags</li>
+      <li>Warnings about invalid HTML structure</li>
+      <li>Error messages about blocked iframes</li>
+    </ul>
+    <p>
+      <strong>3. Security Validation:</strong> Verify that:
+    </p>
+    <ul>
+      <li>No JavaScript alerts appear (scripts should be removed)</li>
+      <li>Event handlers are stripped from elements</li>
+      <li>Untrusted iframe sources are blocked</li>
+    </ul>
+    <p>
+      <strong>4. Accessibility Testing:</strong> Use browser accessibility tools to verify:
+    </p>
+    <ul>
+      <li>Semantic HTML structure is preserved</li>
+      <li>Images have alt attributes</li>
+      <li>Content is keyboard accessible</li>
+    </ul>
+
+    <div class="console-info">
+      <strong>Console Monitoring:</strong> Expected warnings for tests 8-11 (security tests).
+      If you see <code>alert()</code> dialogs, security measures have failed.
+    </div>
+  </footer>
+</body>
+</html>

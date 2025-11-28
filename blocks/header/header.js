@@ -1,11 +1,13 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 
-// media query match that indicates mobile/tablet width
+// Global Selector is INTENTIONAL - used for Document access
+// Document-level media query for responsive behavior
 const isDesktop = window.matchMedia('(min-width: 900px)');
 
 function closeOnEscape(e) {
   if (e.code === 'Escape') {
+    // Global Selector is INTENTIONAL - used for Document access
     const nav = document.getElementById('nav');
     const navSections = nav.querySelector('.nav-sections');
     const navSectionExpanded = navSections.querySelector('[aria-expanded="true"]');
@@ -22,6 +24,7 @@ function closeOnEscape(e) {
 }
 
 function openOnKeydown(e) {
+  // Global Selector is INTENTIONAL - used for Document access
   const focused = document.activeElement;
   const isNavDrop = focused.className === 'nav-drop';
   if (isNavDrop && (e.code === 'Enter' || e.code === 'Space')) {
@@ -33,6 +36,7 @@ function openOnKeydown(e) {
 }
 
 function focusNavSection() {
+  // Global Selector is INTENTIONAL - used for Document access
   document.activeElement.addEventListener('keydown', openOnKeydown);
 }
 
@@ -56,6 +60,8 @@ function toggleAllNavSections(sections, expanded = false) {
 function toggleMenu(nav, navSections, forceExpanded = null) {
   const expanded = forceExpanded !== null ? !forceExpanded : nav.getAttribute('aria-expanded') === 'true';
   const button = nav.querySelector('.nav-hamburger button');
+  // Global Selector is INTENTIONAL - used for Document access
+  // Document body scroll control when mobile menu is open
   document.body.style.overflowY = (expanded || isDesktop.matches) ? '' : 'hidden';
   nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
   toggleAllNavSections(navSections, expanded || isDesktop.matches ? 'false' : 'true');
@@ -79,9 +85,11 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
   }
   // enable menu collapse on escape keypress
   if (!expanded || isDesktop.matches) {
-    // collapse menu on escape press
+    // Global Selector is INTENTIONAL - used for Document access
+    // Document-level keyboard listener for Escape key
     window.addEventListener('keydown', closeOnEscape);
   } else {
+    // Global Selector is INTENTIONAL - used for Document access
     window.removeEventListener('keydown', closeOnEscape);
   }
 }

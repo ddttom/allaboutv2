@@ -27,6 +27,33 @@ The block automatically collects all code snippets from the current page and dis
 - "Return to Menu" button appears when scrolling down and, when clicked, smoothly scrolls the page back to the top of the Showcaser block
 - Toggle button in the top-left corner to collapse/expand the left sidebar
 
+## Document-Level Operations
+
+⚠️ **This block intentionally uses global selectors for document-level functionality.**
+
+This block operates at the document level because it:
+
+1. **Collects ALL code snippets from the entire page** (`document.querySelectorAll('pre > code')`)
+   - Scans the full document to find every `<pre><code>` element, not just within the block
+   - Creates a comprehensive showcase of all code on the page
+   - This is the primary purpose - to aggregate and display all code snippets in one location
+
+2. **Calculates scroll positions relative to page header** (`document.querySelector('header')`)
+   - Needs to find the document's header element to account for fixed header height
+   - Ensures "Return to Menu" button scrolls to correct position
+   - Uses `window.pageYOffset` for global scroll tracking
+
+3. **Controls global page scrolling** (`window.scrollTo()`)
+   - Scrolls the entire page (not just the block) when "Return to Menu" is clicked
+   - Listens to global scroll events (`window.addEventListener('scroll')`)
+   - Shows/hides return button based on page scroll position
+
+4. **Monitors viewport for scroll behavior** (`window.innerHeight`)
+   - Tracks global scroll position to show/hide navigation button
+   - Responds to page-level scroll events for UI updates
+
+**This is by design** - the showcaser block needs to collect code from across the entire document to create a centralized code reference. Without document-level scanning, it would only find code within its own block element, defeating its purpose as a code aggregator.
+
 ## Accessibility
 
 - Uses semantic HTML structure for better screen reader compatibility

@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tags Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 2rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .test-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .test-info h1 {
+            margin: 0 0 1rem 0;
+            font-size: 2rem;
+        }
+
+        .test-info p {
+            margin: 0.5rem 0;
+            opacity: 0.95;
+        }
+
+        .test-info code {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .test-section {
+            margin: 2rem 0;
+            padding: 2rem;
+            border: 2px solid #e1e4e8;
+            border-radius: 8px;
+            background: #f6f8fa;
+        }
+
+        .test-section h2 {
+            margin: 0 0 1rem 0;
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .test-description {
+            background: white;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+
+        .test-description strong {
+            color: #667eea;
+        }
+
+        .test-case {
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .test-case h3 {
+            margin: 0 0 1rem 0;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .test-metadata {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #e1e4e8;
+        }
+
+        .test-metadata strong {
+            color: #667eea;
+        }
+
+        .test-output {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #fff;
+            border: 2px dashed #667eea;
+            border-radius: 4px;
+            min-height: 50px;
+        }
+
+        .test-controls {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+
+        .test-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .test-button:hover {
+            background: #5568d3;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .test-button:active {
+            transform: translateY(0);
+        }
+
+        #test-results {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .result-success {
+            color: #28a745;
+            padding: 0.25rem 0;
+        }
+
+        .result-error {
+            color: #dc3545;
+            padding: 0.25rem 0;
+        }
+
+        .result-info {
+            color: #17a2b8;
+            padding: 0.25rem 0;
+        }
+
+        .config-display {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            border: 1px solid #e1e4e8;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .config-display pre {
+            margin: 0;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.85rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /* Highlight the tags blocks for testing */
+        .tags.block {
+            margin: 1rem 0;
+            padding: 1rem;
+            min-height: 40px;
+            background: white;
+        }
+
+        /* Add some visual separation */
+        hr {
+            border: none;
+            border-top: 2px solid #e1e4e8;
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h1>Tags Block Test Suite</h1>
+        <p><strong>Block:</strong> <code>tags</code></p>
+        <p><strong>Purpose:</strong> Display metadata-driven content technology and category tags</p>
+        <p><strong>Data Source:</strong> <code>window.siteConfig</code> metadata</p>
+        <p><strong>Status:</strong> <span id="status">Initializing...</span></p>
+    </div>
+
+    <!-- Test Controls -->
+    <div class="test-controls">
+        <h3>Test Controls</h3>
+        <button class="test-button" onclick="reloadAllBlocks()">Reload All Blocks</button>
+        <button class="test-button" onclick="testConfigAccess()">Test Config Access</button>
+        <button class="test-button" onclick="showConfigValues()">Show Config Values</button>
+        <button class="test-button" onclick="clearResults()">Clear Results</button>
+        <div id="test-results"></div>
+    </div>
+
+    <!-- Test Case 1: Both Tags Present -->
+    <div class="test-section">
+        <h2>Test Case 1: Both Tags Present</h2>
+        <div class="test-description">
+            <strong>Tests:</strong> Block displays both content technology and category tags
+        </div>
+
+        <div class="test-case">
+            <h3>Scenario: Edge Delivery + Tutorial</h3>
+            <div class="test-metadata">
+                <strong>contenttechnology:</strong> "Edge Delivery"<br>
+                <strong>category:</strong> "Tutorial"
+            </div>
+            <div class="test-output">
+                <div class="tags block" data-block-name="tags" data-test-id="test-1">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Case 2: Only Content Technology -->
+    <div class="test-section">
+        <h2>Test Case 2: Only Content Technology Tag</h2>
+        <div class="test-description">
+            <strong>Tests:</strong> Block displays only content technology tag (no category)
+        </div>
+
+        <div class="test-case">
+            <h3>Scenario: JavaScript Only</h3>
+            <div class="test-metadata">
+                <strong>contenttechnology:</strong> "JavaScript"<br>
+                <strong>category:</strong> (not set)
+            </div>
+            <div class="test-output">
+                <div class="tags block" data-block-name="tags" data-test-id="test-2">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Case 3: Only Category -->
+    <div class="test-section">
+        <h2>Test Case 3: Only Category Tag</h2>
+        <div class="test-description">
+            <strong>Tests:</strong> Block displays only category tag (no content technology)
+        </div>
+
+        <div class="test-case">
+            <h3>Scenario: Blog Post Only</h3>
+            <div class="test-metadata">
+                <strong>contenttechnology:</strong> (not set)<br>
+                <strong>category:</strong> "Blog Post"
+            </div>
+            <div class="test-output">
+                <div class="tags block" data-block-name="tags" data-test-id="test-3">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Case 4: No Metadata -->
+    <div class="test-section">
+        <h2>Test Case 4: No Metadata</h2>
+        <div class="test-description">
+            <strong>Tests:</strong> Block remains empty when no metadata is present
+        </div>
+
+        <div class="test-case">
+            <h3>Scenario: No Tags Defined</h3>
+            <div class="test-metadata">
+                <strong>contenttechnology:</strong> (not set)<br>
+                <strong>category:</strong> (not set)
+            </div>
+            <div class="test-output">
+                <div class="tags block" data-block-name="tags" data-test-id="test-4">
+                </div>
+            </div>
+            <p style="color: #666; font-style: italic; margin-top: 0.5rem;">
+                Expected: Block should be empty or not visible
+            </p>
+        </div>
+    </div>
+
+    <!-- Test Case 5: Multiple Tags Blocks -->
+    <div class="test-section">
+        <h2>Test Case 5: Multiple Tags Blocks</h2>
+        <div class="test-description">
+            <strong>Tests:</strong> Multiple blocks on same page all display correctly
+        </div>
+
+        <div class="test-case">
+            <h3>Scenario: Three Blocks with Same Config</h3>
+            <p style="color: #666; margin-bottom: 1rem;">
+                All blocks should display identical tags based on the global config
+            </p>
+            <div class="test-output">
+                <div class="tags block" data-block-name="tags" data-test-id="test-5a">
+                </div>
+            </div>
+            <div class="test-output">
+                <div class="tags block" data-block-name="tags" data-test-id="test-5b">
+                </div>
+            </div>
+            <div class="test-output">
+                <div class="tags block" data-block-name="tags" data-test-id="test-5c">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Case 6: HTML Structure Verification -->
+    <div class="test-section">
+        <h2>Test Case 6: HTML Structure Verification</h2>
+        <div class="test-description">
+            <strong>Tests:</strong> Correct HTML structure and CSS classes
+        </div>
+
+        <div class="test-case">
+            <h3>Structure Check</h3>
+            <button class="test-button" onclick="checkStructure()">Verify HTML Structure</button>
+            <div class="config-display">
+                <pre id="structure-output">Click "Verify HTML Structure" to see results...</pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Config Display Section -->
+    <div class="test-section">
+        <h2>Window Config Inspector</h2>
+        <div class="test-description">
+            <strong>Purpose:</strong> View the current window.siteConfig values
+        </div>
+        <button class="test-button" onclick="showConfigValues()">Refresh Config Display</button>
+        <div class="config-display">
+            <pre id="config-output">Click "Show Config Values" to display...</pre>
+        </div>
+    </div>
+
+    <script type="module">
+        import { loadBlock, decorateBlock } from '/scripts/aem.js';
+
+        // Update status function
+        function updateStatus(message, isError = false) {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.style.color = isError ? '#ff6b6b' : '#51cf66';
+        }
+
+        // Helper to add test results
+        function addTestResult(testId, type, message) {
+            const resultsDiv = document.getElementById('test-results');
+            const resultClass = type === 'success' ? 'result-success' : type === 'error' ? 'result-error' : 'result-info';
+            const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
+
+            const resultLine = document.createElement('div');
+            resultLine.className = resultClass;
+            resultLine.textContent = `${icon} [${testId}] ${message}`;
+            resultsDiv.appendChild(resultLine);
+        }
+
+        // Setup test metadata configurations
+        function setupTestConfigs() {
+            // Ensure window.siteConfig exists
+            if (!window.siteConfig) {
+                window.siteConfig = {};
+            }
+
+            // Set test configurations based on default (test case 1)
+            window.siteConfig['$meta:contenttechnology$'] = 'Edge Delivery';
+            window.siteConfig['$meta:category$'] = 'Tutorial';
+
+            addTestResult('setup', 'info', 'Test configurations initialized');
+            console.log('Test configs set:', window.siteConfig);
+        }
+
+        // Load all tag blocks
+        async function loadAllBlocks() {
+            try {
+                const tagBlocks = document.querySelectorAll('.tags.block');
+
+                console.log('═'.repeat(60));
+                console.log('🏷️  TAGS BLOCK TEST SUITE');
+                console.log('═'.repeat(60));
+                console.log(`Found ${tagBlocks.length} tags blocks to test\n`);
+
+                updateStatus('Loading blocks...');
+
+                let passed = 0;
+                let failed = 0;
+
+                for (let i = 0; i < tagBlocks.length; i++) {
+                    const block = tagBlocks[i];
+                    const testId = block.dataset.testId || `block-${i}`;
+
+                    try {
+                        console.group(`Test ${testId}: Loading Tags Block`);
+
+                        // Setup specific config for each test case
+                        setupTestConfig(testId);
+
+                        // Decorate block (adds classes)
+                        decorateBlock(block);
+
+                        // Load the block (fetches JS/CSS and runs decorate)
+                        await loadBlock(block);
+
+                        // Small delay to allow rendering
+                        await new Promise(resolve => setTimeout(resolve, 100));
+
+                        // Verify results
+                        const content = block.innerHTML;
+                        const hasContent = content.trim().length > 0;
+                        const spans = block.querySelectorAll('span.card-tag');
+                        const spanCount = spans.length;
+
+                        console.log('\n📊 Results:');
+                        console.log('  Has content:', hasContent);
+                        console.log('  Number of tags:', spanCount);
+                        console.log('  Content:', content.substring(0, 200));
+
+                        // Test-specific validation
+                        const expectedResult = getExpectedResult(testId);
+                        if (validateResult(testId, spanCount, expectedResult)) {
+                            console.log('✅ PASSED');
+                            passed++;
+                            addTestResult(testId, 'success', `Block rendered correctly (${spanCount} tags)`);
+                        } else {
+                            console.log('❌ FAILED: Unexpected result');
+                            failed++;
+                            addTestResult(testId, 'error', `Expected ${expectedResult} tags, got ${spanCount}`);
+                        }
+
+                        console.groupEnd();
+
+                    } catch (error) {
+                        console.error(`❌ Test ${testId} threw error:`, error);
+                        failed++;
+                        addTestResult(testId, 'error', error.message);
+                        console.groupEnd();
+                    }
+                }
+
+                // Final summary
+                console.log('\n' + '═'.repeat(60));
+                console.log('📋 FINAL RESULTS');
+                console.log('═'.repeat(60));
+                console.log(`Total tests: ${tagBlocks.length}`);
+                console.log(`✅ Passed: ${passed}`);
+                console.log(`❌ Failed: ${failed}`);
+
+                if (failed === 0) {
+                    console.log('\n🎉 ALL TESTS PASSED!');
+                    updateStatus('All tests passed! ✓');
+                    addTestResult('summary', 'success', `All ${passed} tests passed!`);
+                } else {
+                    console.log('\n⚠️  SOME TESTS FAILED');
+                    updateStatus(`${failed} test(s) failed`, true);
+                    addTestResult('summary', 'error', `${failed} of ${tagBlocks.length} tests failed`);
+                }
+
+                console.log('═'.repeat(60));
+
+            } catch (error) {
+                console.error('Failed to load blocks:', error);
+                updateStatus(`Error: ${error.message}`, true);
+            }
+        }
+
+        // Setup config for specific test cases
+        function setupTestConfig(testId) {
+            if (!window.siteConfig) {
+                window.siteConfig = {};
+            }
+
+            switch (testId) {
+                case 'test-1':
+                    // Both tags
+                    window.siteConfig['$meta:contenttechnology$'] = 'Edge Delivery';
+                    window.siteConfig['$meta:category$'] = 'Tutorial';
+                    break;
+                case 'test-2':
+                    // Only technology
+                    window.siteConfig['$meta:contenttechnology$'] = 'JavaScript';
+                    delete window.siteConfig['$meta:category$'];
+                    break;
+                case 'test-3':
+                    // Only category
+                    delete window.siteConfig['$meta:contenttechnology$'];
+                    window.siteConfig['$meta:category$'] = 'Blog Post';
+                    break;
+                case 'test-4':
+                    // No tags
+                    delete window.siteConfig['$meta:contenttechnology$'];
+                    delete window.siteConfig['$meta:category$'];
+                    break;
+                case 'test-5a':
+                case 'test-5b':
+                case 'test-5c':
+                    // Multiple blocks - use default (both tags)
+                    window.siteConfig['$meta:contenttechnology$'] = 'Edge Delivery';
+                    window.siteConfig['$meta:category$'] = 'Tutorial';
+                    break;
+                default:
+                    // Default config
+                    window.siteConfig['$meta:contenttechnology$'] = 'Edge Delivery';
+                    window.siteConfig['$meta:category$'] = 'Tutorial';
+            }
+        }
+
+        // Get expected result for test case
+        function getExpectedResult(testId) {
+            switch (testId) {
+                case 'test-1':
+                case 'test-5a':
+                case 'test-5b':
+                case 'test-5c':
+                    return 2; // Both tags
+                case 'test-2':
+                case 'test-3':
+                    return 1; // One tag
+                case 'test-4':
+                    return 0; // No tags
+                default:
+                    return 2;
+            }
+        }
+
+        // Validate result matches expected
+        function validateResult(testId, actualCount, expectedCount) {
+            return actualCount === expectedCount;
+        }
+
+        // Global functions for test controls
+        window.reloadAllBlocks = async function() {
+            console.log('🔄 Reloading all tags blocks...');
+            document.getElementById('test-results').innerHTML = '';
+            setupTestConfigs();
+            await loadAllBlocks();
+        };
+
+        window.testConfigAccess = function() {
+            console.log('🔍 Testing window.siteConfig access...');
+            addTestResult('config-access', 'info', 'Testing config access...');
+
+            if (!window.siteConfig) {
+                console.error('❌ window.siteConfig is not defined');
+                addTestResult('config-access', 'error', 'window.siteConfig is not defined');
+                return;
+            }
+
+            const techTag = window.siteConfig['$meta:contenttechnology$'];
+            const categoryTag = window.siteConfig['$meta:category$'];
+
+            console.log('Content Technology:', techTag);
+            console.log('Category:', categoryTag);
+
+            addTestResult('config-access', 'success', `Technology: "${techTag || 'none'}", Category: "${categoryTag || 'none'}"`);
+        };
+
+        window.showConfigValues = function() {
+            const output = document.getElementById('config-output');
+
+            if (!window.siteConfig) {
+                output.textContent = '❌ window.siteConfig is not defined';
+                return;
+            }
+
+            // Filter to show only metadata-related config
+            const metaConfig = {};
+            Object.keys(window.siteConfig).forEach(key => {
+                if (key.includes('meta')) {
+                    metaConfig[key] = window.siteConfig[key];
+                }
+            });
+
+            output.textContent = '--- window.siteConfig (metadata only) ---\n\n' +
+                JSON.stringify(metaConfig, null, 2);
+
+            console.log('Current siteConfig (metadata):', metaConfig);
+            addTestResult('config-display', 'info', 'Config values displayed');
+        };
+
+        window.clearResults = function() {
+            document.getElementById('test-results').innerHTML = '';
+            console.clear();
+            console.log('🧹 Results cleared');
+        };
+
+        window.checkStructure = function() {
+            const testBlock = document.querySelector('[data-test-id="test-1"]');
+            const output = document.getElementById('structure-output');
+
+            if (!testBlock) {
+                output.textContent = '❌ Test block not found';
+                return;
+            }
+
+            const spans = testBlock.querySelectorAll('span.card-tag');
+            const primaryTag = testBlock.querySelector('span.card-tag:not(.alt)');
+            const secondaryTag = testBlock.querySelector('span.card-tag.alt');
+
+            let report = '--- HTML Structure Report ---\n\n';
+            report += `Total span elements: ${spans.length}\n`;
+            report += `Primary tag (card-tag): ${primaryTag ? '✅' : '❌'}\n`;
+            report += `Secondary tag (card-tag alt): ${secondaryTag ? '✅' : '❌'}\n`;
+            report += `Block has class "tags": ${testBlock.classList.contains('tags') ? '✅' : '❌'}\n`;
+            report += `Block has class "block": ${testBlock.classList.contains('block') ? '✅' : '❌'}\n\n`;
+            report += 'Full HTML:\n' + testBlock.innerHTML;
+
+            output.textContent = report;
+            console.log(report);
+            addTestResult('structure-check', 'info', 'Structure verification complete');
+        };
+
+        // Initialize test environment
+        async function init() {
+            try {
+                // CRITICAL: Add body.appear class FIRST
+                document.body.classList.add('appear');
+
+                updateStatus('Initializing test environment...');
+
+                // Setup test configurations
+                setupTestConfigs();
+
+                updateStatus('Loading blocks...');
+
+                // Load all blocks
+                await loadAllBlocks();
+
+                updateStatus('Tests complete! ✓');
+
+            } catch (error) {
+                console.error('Test initialization failed:', error);
+                updateStatus(`Initialization error: ${error.message}`, true);
+            }
+        }
+
+        // Start tests
+        init();
+    </script>
+</body>
+</html>

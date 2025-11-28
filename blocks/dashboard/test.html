@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <!-- Dashboard Block Styles -->
+    <link rel="stylesheet" href="/blocks/dashboard/dashboard.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .test-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .test-info h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.75rem;
+        }
+
+        .test-info p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .test-info code {
+            background: rgba(255,255,255,0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .test-info strong {
+            font-weight: 600;
+        }
+
+        .test-section {
+            margin: 2rem auto;
+            max-width: 1400px;
+            padding: 0 1rem;
+        }
+
+        .test-section h3 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0 0 0;
+            border-radius: 8px 8px 0 0;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .test-section .description {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 1rem;
+        }
+
+        .test-section .description strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .test-section .description p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        /* Status indicators */
+        .status {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Dashboard wrapper */
+        .dashboard-wrapper {
+            background: white;
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-top: 1rem;
+        }
+
+        /* Instructions section */
+        .instructions {
+            margin: 3rem auto;
+            max-width: 1400px;
+            padding: 2rem;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: #667eea;
+            font-size: 1.3rem;
+        }
+
+        .instructions ol, .instructions ul {
+            line-height: 1.8;
+            padding-left: 1.5rem;
+        }
+
+        .instructions li {
+            margin: 0.5rem 0;
+        }
+
+        .instructions strong {
+            color: #667eea;
+        }
+
+        .instructions code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>Dashboard Block Test Suite</h2>
+        <p><strong>Block:</strong> <code>dashboard</code></p>
+        <p><strong>Test Count:</strong> <code>3 test scenarios</code></p>
+        <p><strong>Status:</strong> <span id="status" class="status info">Loading...</span></p>
+        <p><strong>Purpose:</strong> Test sortable table, filterable statuses, image previews, and responsive layout for content management dashboard</p>
+    </div>
+
+    <main>
+        <!-- Test 1: Basic Dashboard with Sample Data -->
+        <div class="test-section">
+            <h3>Test 1: Basic Dashboard with Mock Data</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Dashboard loads with title, filter dropdown, and sortable table. Displays 6 columns (Title, Path, Description, Last Modified, Review, Expiry). Date cells have color-coded status indicators (green/amber/red). Initial sort by Title (ascending).</p>
+                <p><strong>Validation:</strong> Check that table renders with all columns, sort arrows appear on headers, filter dropdown has 4 options (All, Green, Amber, Red), and date colors are correct based on status.</p>
+            </div>
+            <div class="dashboard-wrapper">
+                <div class="dashboard block" id="dashboard-test-1">
+                    <!-- Dashboard will be decorated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 2: Dashboard with Mixed Status Dates -->
+        <div class="test-section">
+            <h3>Test 2: Dashboard with Mixed Status Content</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Dashboard displays content with various review/expiry statuses (green, amber, red). Tests RAG indicator logic and filtering functionality.</p>
+                <p><strong>Validation:</strong> Verify green dates (30+ days away), amber dates (0-30 days), and red dates (past due) have correct background colors. Test filter dropdown to show only selected statuses.</p>
+            </div>
+            <div class="dashboard-wrapper">
+                <div class="dashboard block" id="dashboard-test-2">
+                    <!-- Dashboard will be decorated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 3: Dashboard with Image Popups -->
+        <div class="test-section">
+            <h3>Test 3: Dashboard with Image Preview Popups</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Path links show image popups on hover. Popups follow mouse cursor and stay within viewport bounds.</p>
+                <p><strong>Validation:</strong> Hover over path links to see image previews. Check that popups appear, follow mouse movement, and hide when mouse leaves link. Verify popup positioning avoids viewport edges.</p>
+            </div>
+            <div class="dashboard-wrapper">
+                <div class="dashboard block" id="dashboard-test-3">
+                    <!-- Dashboard will be decorated here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import decorate from '/blocks/dashboard/dashboard.js';
+
+        // Mock query-index.json data for testing
+        const mockDataBasic = {
+            data: [
+                {
+                    title: "Home Page",
+                    path: "/",
+                    description: "Main landing page for the website",
+                    lastModified: Math.floor(Date.now() / 1000) - (60 * 86400), // 60 days ago
+                    image: "https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png"
+                },
+                {
+                    title: "About Us",
+                    path: "/about",
+                    description: "Company information and team profiles",
+                    lastModified: Math.floor(Date.now() / 1000) - (120 * 86400), // 120 days ago
+                    image: "https://allabout.network/media_14e918fa88c2a9a810fd454fa04f0bd152c01fed2.jpeg"
+                },
+                {
+                    title: "Products",
+                    path: "/products",
+                    description: "Product catalog and descriptions",
+                    lastModified: Math.floor(Date.now() / 1000) - (30 * 86400), // 30 days ago
+                    image: "https://allabout.network/media_1d92670adcfb7a18a062e49fd7967f4e9f76d8a52.jpeg"
+                },
+                {
+                    title: "Contact",
+                    path: "/contact",
+                    description: "Contact form and office locations",
+                    lastModified: Math.floor(Date.now() / 1000) - (90 * 86400), // 90 days ago
+                    image: "https://allabout.network/media_1e744525e97292dcd074e9b1c7ab2cf47a048f292.jpeg"
+                },
+                {
+                    title: "Blog",
+                    path: "/blog",
+                    description: "Latest news and articles",
+                    lastModified: Math.floor(Date.now() / 1000) - (15 * 86400), // 15 days ago
+                    image: "https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png"
+                }
+            ]
+        };
+
+        const mockDataMixedStatus = {
+            data: [
+                {
+                    title: "Recent Content (Green)",
+                    path: "/recent",
+                    description: "Recently updated content - review date far in future",
+                    lastModified: Math.floor(Date.now() / 1000) - (30 * 86400), // 30 days ago (270 days until review)
+                    image: "https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png"
+                },
+                {
+                    title: "Warning Content (Amber)",
+                    path: "/warning",
+                    description: "Content needing review soon - within 30 day window",
+                    lastModified: Math.floor(Date.now() / 1000) - (280 * 86400), // 280 days ago (20 days until review)
+                    image: "https://allabout.network/media_14e918fa88c2a9a810fd454fa04f0bd152c01fed2.jpeg"
+                },
+                {
+                    title: "Overdue Content (Red)",
+                    path: "/overdue",
+                    description: "Content past review date - needs immediate attention",
+                    lastModified: Math.floor(Date.now() / 1000) - (320 * 86400), // 320 days ago (20 days overdue)
+                    image: "https://allabout.network/media_1d92670adcfb7a18a062e49fd7967f4e9f76d8a52.jpeg"
+                },
+                {
+                    title: "Very Old Content (Red)",
+                    path: "/old",
+                    description: "Very old content far past review and expiry dates",
+                    lastModified: Math.floor(Date.now() / 1000) - (400 * 86400), // 400 days ago (very overdue)
+                    image: "https://allabout.network/media_1e744525e97292dcd074e9b1c7ab2cf47a048f292.jpeg"
+                },
+                {
+                    title: "Fresh Content (Green)",
+                    path: "/fresh",
+                    description: "Brand new content with long review cycle ahead",
+                    lastModified: Math.floor(Date.now() / 1000) - (5 * 86400), // 5 days ago (295 days until review)
+                    image: "https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png"
+                },
+                {
+                    title: "Borderline Amber Content",
+                    path: "/borderline",
+                    description: "Content right at the amber threshold (30 days)",
+                    lastModified: Math.floor(Date.now() / 1000) - (270 * 86400), // 270 days ago (30 days until review)
+                    image: "https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png"
+                }
+            ]
+        };
+
+        const mockDataWithImages = {
+            data: [
+                {
+                    title: "Page with Hero Image",
+                    path: "/hero-page",
+                    description: "Page featuring large hero image - hover to preview",
+                    lastModified: Math.floor(Date.now() / 1000) - (45 * 86400), // 45 days ago
+                    image: "https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png"
+                },
+                {
+                    title: "Product Page",
+                    path: "/product-showcase",
+                    description: "Product showcase with featured image - hover path to see",
+                    lastModified: Math.floor(Date.now() / 1000) - (60 * 86400), // 60 days ago
+                    image: "https://allabout.network/media_14e918fa88c2a9a810fd454fa04f0bd152c01fed2.jpeg"
+                },
+                {
+                    title: "Page Without Image",
+                    path: "/no-image",
+                    description: "This page has no image - hover over path shows nothing",
+                    lastModified: Math.floor(Date.now() / 1000) - (75 * 86400) // 75 days ago
+                    // No image property - popup won't appear
+                },
+                {
+                    title: "Team Profile Page",
+                    path: "/team",
+                    description: "Team member profiles with photo - hover to preview",
+                    lastModified: Math.floor(Date.now() / 1000) - (90 * 86400), // 90 days ago
+                    image: "https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png"
+                },
+                {
+                    title: "Case Study",
+                    path: "/case-study",
+                    description: "Client case study with project imagery - hover path link",
+                    lastModified: Math.floor(Date.now() / 1000) - (105 * 86400), // 105 days ago
+                    image: "https://allabout.network/media_1d92670adcfb7a18a062e49fd7967f4e9f76d8a52.jpeg"
+                }
+            ]
+        };
+
+        // Mock fetch function
+        const originalFetch = window.fetch;
+        window.fetch = function(url) {
+            if (url === '/query-index.json') {
+                // Determine which mock data to return based on which block is being decorated
+                const currentBlock = document.querySelector('.dashboard.block:not([data-decorated])');
+                let mockData = mockDataBasic;
+
+                if (currentBlock) {
+                    const blockId = currentBlock.id;
+                    if (blockId === 'dashboard-test-2') {
+                        mockData = mockDataMixedStatus;
+                    } else if (blockId === 'dashboard-test-3') {
+                        mockData = mockDataWithImages;
+                    }
+                    currentBlock.setAttribute('data-decorated', 'true');
+                }
+
+                return Promise.resolve({
+                    ok: true,
+                    json: () => Promise.resolve(mockData)
+                });
+            }
+            return originalFetch.apply(this, arguments);
+        };
+
+        // Set site config for testing
+        window.siteConfig = {
+            '$co:defaultreviewperiod': 300,  // 300 days
+            '$co:defaultexpiryperiod': 365   // 365 days
+        };
+
+        // Update status function
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+
+        // Log dashboard structure for debugging
+        function logDashboardStructure(block, index) {
+            console.log(`\n=== Dashboard Block ${index + 1} ===`);
+            console.log('Block ID:', block.id);
+            console.log('Initial children count:', block.children.length);
+        }
+
+        // Log final structure
+        function logFinalStructure(block, index) {
+            console.log(`\n=== After Decoration (Block ${index + 1}) ===`);
+            const dashboard = block.querySelector('.dashboard');
+            if (dashboard) {
+                const title = dashboard.querySelector('h1');
+                const filter = dashboard.querySelector('.filter-container');
+                const table = dashboard.querySelector('.content-table');
+
+                console.log('Dashboard created:', !!dashboard);
+                console.log('Title:', title ? title.textContent : 'MISSING');
+                console.log('Filter:', !!filter);
+                console.log('Table:', !!table);
+
+                if (table) {
+                    const rows = table.querySelectorAll('tbody tr');
+                    console.log('Table rows:', rows.length);
+
+                    // Check status colors
+                    const greenCells = table.querySelectorAll('.green').length;
+                    const amberCells = table.querySelectorAll('.amber').length;
+                    const redCells = table.querySelectorAll('.red').length;
+                    console.log('Status indicators - Green:', greenCells, 'Amber:', amberCells, 'Red:', redCells);
+                }
+            } else {
+                console.error('Dashboard element not created!');
+            }
+        }
+
+        // Initialize all dashboard blocks
+        async function init() {
+            try {
+                // Add body.appear class (required to show page)
+                document.body.classList.add('appear');
+
+                updateStatus('Decorating dashboards...', 'info');
+
+                // Get all dashboard blocks
+                const dashboardBlocks = document.querySelectorAll('.dashboard.block');
+
+                if (dashboardBlocks.length === 0) {
+                    throw new Error('No dashboard blocks found');
+                }
+
+                console.log(`Found ${dashboardBlocks.length} dashboard blocks to decorate`);
+
+                // Decorate each dashboard block
+                for (let i = 0; i < dashboardBlocks.length; i++) {
+                    const block = dashboardBlocks[i];
+                    console.log(`\n${'='.repeat(50)}`);
+                    console.log(`Processing Dashboard Block ${i + 1}`);
+                    console.log('='.repeat(50));
+
+                    // Log initial structure
+                    logDashboardStructure(block, i);
+
+                    // Run decoration
+                    try {
+                        await decorate(block);
+                        console.log('✓ Decoration completed successfully');
+                    } catch (error) {
+                        console.error(`✗ Decoration failed:`, error);
+                        throw error;
+                    }
+
+                    // Wait for async operations to complete
+                    await new Promise(resolve => setTimeout(resolve, 500));
+
+                    // Log final structure
+                    logFinalStructure(block, i);
+                }
+
+                updateStatus(`✓ ${dashboardBlocks.length} dashboard blocks loaded successfully`, 'success');
+
+                console.log('\n' + '='.repeat(50));
+                console.log('All dashboard blocks decorated successfully!');
+                console.log('='.repeat(50));
+                console.log('\nTest Instructions:');
+                console.log('1. Check that all dashboards display with title, filter, and table');
+                console.log('2. Click column headers to test sorting (ascending/descending)');
+                console.log('3. Use filter dropdown to show only Green, Amber, or Red statuses');
+                console.log('4. Hover over path links to see image popups (Test 3)');
+                console.log('5. Resize browser window to test responsive layout (<1024px)');
+                console.log('6. Inspect DOM to verify table structure and status classes');
+
+            } catch (error) {
+                console.error('Failed to initialize dashboard blocks:', error);
+                updateStatus(`✗ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Start initialization
+        init();
+    </script>
+
+    <div class="instructions">
+        <h3>Testing Instructions</h3>
+        <ol>
+            <li><strong>Visual Inspection:</strong> Scroll through all test sections and verify dashboards display correctly with title, filter, and table</li>
+            <li><strong>Sort Testing:</strong> Click each column header (Title, Path, Description, Last Modified, Review, Expiry) to test sorting:
+                <ul>
+                    <li>First click: Ascending order (↑ arrow)</li>
+                    <li>Second click: Descending order (↓ arrow)</li>
+                    <li>Verify data reorders correctly</li>
+                </ul>
+            </li>
+            <li><strong>Filter Testing:</strong> Use "Filter by status" dropdown to test filtering:
+                <ul>
+                    <li>Select "Green" - only rows with green review/expiry dates show</li>
+                    <li>Select "Amber" - only rows with amber review/expiry dates show</li>
+                    <li>Select "Red" - only rows with red review/expiry dates show</li>
+                    <li>Select "All" - all rows display</li>
+                </ul>
+            </li>
+            <li><strong>Status Color Testing:</strong> Verify date cell background colors:
+                <ul>
+                    <li>Green: Dates 30+ days in the future</li>
+                    <li>Amber: Dates 0-30 days in the future</li>
+                    <li>Red: Dates in the past (overdue)</li>
+                </ul>
+            </li>
+            <li><strong>Image Preview Testing (Test 3):</strong> Hover over path links to test image popups:
+                <ul>
+                    <li>Popup appears near mouse cursor</li>
+                    <li>Popup follows mouse movement</li>
+                    <li>Popup hides when mouse leaves link</li>
+                    <li>Popup stays within viewport bounds (doesn't go offscreen)</li>
+                </ul>
+            </li>
+            <li><strong>Responsive Testing:</strong> Resize browser window to test layout switching:
+                <ul>
+                    <li>Desktop (≥1024px): Table layout with all columns visible</li>
+                    <li>Mobile (<1024px): Card layout with labeled rows</li>
+                    <li>Verify all functionality works in both layouts</li>
+                </ul>
+            </li>
+            <li><strong>Date Calculations:</strong> Verify review and expiry dates are calculated correctly:
+                <ul>
+                    <li>Review date = Last Modified + 300 days (default)</li>
+                    <li>Expiry date = Last Modified + 365 days (default)</li>
+                    <li>Check Console logs for calculation details</li>
+                </ul>
+            </li>
+            <li><strong>DOM Structure:</strong> Inspect any dashboard in DevTools Elements panel and verify:
+                <ul>
+                    <li>Outer <code>&lt;div class="dashboard"&gt;</code> contains title, filter, table</li>
+                    <li>Table has <code>&lt;thead&gt;</code> and <code>&lt;tbody&gt;</code></li>
+                    <li>Headers have <code>data-column</code> attributes (0-5)</li>
+                    <li>Date cells have <code>.green</code>, <code>.amber</code>, or <code>.red</code> classes</li>
+                    <li>Path cells have <code>.path-link</code> and optional <code>.image-popup</code></li>
+                </ul>
+            </li>
+            <li><strong>Console Output:</strong> Review console logs for detailed decoration process and any errors</li>
+        </ol>
+
+        <h3>Expected Results</h3>
+        <ul>
+            <li><strong>Test 1 (Basic):</strong> Dashboard with 5 content items, mixed review/expiry statuses, sortable columns, filter dropdown</li>
+            <li><strong>Test 2 (Mixed Status):</strong> Dashboard demonstrating all three status colors (green, amber, red) with different date ranges</li>
+            <li><strong>Test 3 (Image Popups):</strong> Dashboard with hover-based image previews on path links, one item without image to test edge case</li>
+        </ul>
+
+        <h3>Responsive Breakpoints to Test</h3>
+        <ul>
+            <li><strong>&lt; 1024px (Mobile/Tablet):</strong> Card-based layout with data labels, vertical stacking</li>
+            <li><strong>≥ 1024px (Desktop):</strong> Full table layout with horizontal columns</li>
+            <li><strong>Note:</strong> Layout switches automatically via JavaScript <code>handleResponsiveLayout()</code> function</li>
+        </ul>
+
+        <h3>Status Indicator Testing</h3>
+        <ul>
+            <li><strong>Green cells:</strong> Review or expiry date is 30+ days in future (healthy content)</li>
+            <li><strong>Amber cells:</strong> Review or expiry date is 0-30 days in future (warning - needs attention soon)</li>
+            <li><strong>Red cells:</strong> Review or expiry date has passed (overdue - needs immediate attention)</li>
+            <li><strong>Filter logic:</strong> Selecting status filters rows where EITHER review OR expiry matches selected status</li>
+        </ul>
+
+        <h3>Known Behaviors</h3>
+        <ul>
+            <li><strong>Mock Data:</strong> Test uses mock data (not real query-index.json) - dates calculated relative to today</li>
+            <li><strong>Configuration:</strong> Test uses <code>defaultreviewperiod: 300</code> and <code>defaultexpiryperiod: 365</code></li>
+            <li><strong>Image Popups:</strong> Only appear on items with <code>image</code> property - Test 3 includes one item without image</li>
+            <li><strong>Sort Persistence:</strong> Sort state persists after filtering - table remains sorted by last clicked column</li>
+        </ul>
+
+        <h3>Debugging Tips</h3>
+        <ul>
+            <li>Check browser console for detailed decoration logs and error messages</li>
+            <li>Use DevTools Elements panel to verify DOM structure and CSS classes</li>
+            <li>Test sorting manually in Console: <code>sortTable(0, true)</code> (sort by column 0, ascending)</li>
+            <li>Test filtering manually in Console: <code>filterTable()</code></li>
+            <li>Check mouse position tracking: <code>console.log(mouseX, mouseY)</code> after moving mouse</li>
+            <li>Verify status classes on date cells: <code>document.querySelectorAll('.green').length</code></li>
+        </ul>
+
+        <h3>Browser Testing</h3>
+        <ul>
+            <li>Test in Chrome/Edge (last 2 versions) - Primary development browsers</li>
+            <li>Test in Firefox (last 2 versions) - Verify cross-browser compatibility</li>
+            <li>Test in Safari (last 2 versions) - Check WebKit rendering</li>
+            <li>Test on iOS Safari - Verify mobile touch interactions</li>
+            <li>Test on Android Chrome - Verify mobile responsive layout</li>
+        </ul>
+    </div>
+</body>
+</html>
