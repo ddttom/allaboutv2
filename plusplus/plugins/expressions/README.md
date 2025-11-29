@@ -108,5 +108,5 @@ createExpression('cta', ({ parent, args }) => {
 
 ## Links
 
-- [Live demo](https://main--franklin-expressions-website--vtsaplin.hlx.page/)
+- [Live demo](https://main--franklin-expressions-website--vtsaplin.aem.page/)
 - [Demo project](https://github.com/vtsaplin/franklin-expressions-website)
