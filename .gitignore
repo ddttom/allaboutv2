@@ -1,17 +1,69 @@
+# ========================================
+# Adobe Helix/EDS Specific
+# ========================================
 .hlx/*
-coverage/*
-logs/*
-node_modules/*
-.vscode/*
 helix-importer-ui
-.DS_Store
+
+# ========================================
+# Build Artifacts & Dependencies
+# ========================================
+node_modules/
+build/*/dist/
+build/*/.parcel-cache/
+coverage/
+
+# ========================================
+# IDE & Editor Configuration
+# ========================================
+.vscode/
+.cursor/
+.idea/
+.codegpt
+
+# ========================================
+# Linter & TypeScript Caches
+# ========================================
+.eslintcache
+.stylelintcache
+
+# ========================================
+# Environment & Secrets
+# ========================================
+.env
+.env.local
+.env.*.local
+.secrets/
+
+# ========================================
+# Editor Temporary Files
+# ========================================
+*.swp
+*.swo
+*~
 *.bak
-.idea
-scrap/*
-.vscode/*
+*.tmp
+
+# ========================================
+# Logs
+# ========================================
+logs/
+*.log
+
+# ========================================
+# Jupyter Notebooks
+# ========================================
+.ipynb_checkpoints/
+
+# ========================================
+# Operating System Files
+# ========================================
+.DS_Store
+Thumbs.db
+
+# ========================================
+# Project Specific
+# ========================================
+scrap/
+/docs/remediation/
 bifrost.json
 promptloc/
-
-.codegpt
-node_modules
-/docs/remediation/
