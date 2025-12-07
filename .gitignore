@@ -14,3 +14,4 @@ promptloc/
 
 .codegpt
 node_modules
+/docs/remediation/
