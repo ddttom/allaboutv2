@@ -39,6 +39,44 @@ The SEO Analysis Tool has **false positive detection issues** when analyzing Ado
 
 ---
 
+## ⚠️ EXCLUSION POLICY: Jupyter Notebooks (.ipynb files)
+
+**All analysis in this remediation project EXCLUDES Jupyter notebook pages** rendered via the ipynb-viewer block.
+
+### Excluded URLs (Pattern Matching)
+
+Ignore all URLs containing Jupyter notebook content:
+- Any page ending in `.ipynb`
+- Any page using the `ipynb-viewer` block
+- Blog posts about notebooks: `*jupyter*`, `*notebook*`, `*ipynb*`
+
+### Rationale
+
+1. **Different content paradigm**: Notebooks are interactive educational tools, not traditional web pages
+2. **Dynamic structure**: Notebook DOM is generated client-side for execution, not SEO
+3. **Intentional complexity**: Code cells and output require complex structures by design
+4. **Separate standards**: Notebooks follow Jupyter accessibility standards, not web page standards
+5. **Out of scope**: Notebook content authoring is handled separately from web content
+
+### Impact on Reports
+
+When processing this remediation analysis:
+- **Exclude notebook pages** from all counts, metrics, and recommendations
+- **Filter out notebook URLs** from CSV data before analysis
+- **Ignore notebook-related violations** in accessibility reports
+- **Skip notebook pages** in content quality scoring
+
+### Example Excluded Pages
+
+- `/blogs/ddt/integrations/testing-eds-blocks-with-jupyter-notebooks-a-developer-playground`
+- `/blogs/ddt/integrations/building-interactive-notebooks-for-eds-a-journey-in-context-aware-design`
+- `/blogs/ddt/integrations/living-documentation-browser-based-jupyter-notebooks-for-adobe-eds`
+- `/blogs/ddt/integrations/live-jupyter-notebook`
+- `/blogs/ddt/creating-an-llms-txt` (uses ipynb-viewer block)
+- `/blogs/ddt/integrations/ipynbviewer` (documentation about notebooks)
+
+**Reference**: All notebook-related URLs can be identified in the CSV results by searching for patterns: `jupyter`, `notebook`, `ipynb`, `creating-an-llms-txt`, `ipynbviewer`.
+
 ---
 
 ## Report Overview

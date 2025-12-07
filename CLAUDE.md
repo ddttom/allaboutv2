@@ -4,7 +4,7 @@
 
 ### For AI Assistants
 - **Comprehensive Documentation**: See `docs/for-ai/` directory (26 detailed guides)
-- **Claude Code Tools**: See `.claude/` directory (19 commands, 26 skills, 6 agents, 2 hooks)
+- **Claude Code Tools**: See `.claude/` directory (17 commands, 25 skills, 6 agents, 2 hooks)
 - **Start Here**: `docs/for-ai/index.md` for complete navigation
 - **Agents**: See `.claude/agents_README.md` for autonomous task handlers
 
@@ -64,7 +64,11 @@
 - `/dev-docs` - Create comprehensive strategic plan with structured task breakdown
 - `/find-block-content` - Find pages in the site that use a specific block
 
-See `.claude/README.md` for complete slash command reference (19 total).
+**Content Management:**
+- `/update-llms` - Find and update all llms.txt files in the project
+- `/update-my-blog` - Find and update all my-blog.json files in the project
+
+See `.claude/README.md` for complete slash command reference (17 total).
 
 ### Agents (Claude Code)
 For complex, multi-step tasks, use autonomous agents:
@@ -710,16 +714,17 @@ const code = 'here';
 
 ### Site Remediation & SEO Strategy
 - **Executive Summary**: `docs/remediation/files/00-executive-summary.md` - Complete 121-page audit analysis with 6 prioritized remediation strategies
-- **Report Documentation**: `docs/remediation/files/report-layout.md` - Audit report structure and EDS-specific limitations
+  - **Note**: Jupyter notebook pages (.ipynb files) excluded from analysis
+- **Report Documentation**: `docs/remediation/files/report-layout.md` - Audit report structure, EDS-specific limitations, and notebook exclusion policy
 - **Critical Priority** (🔴):
-  - `docs/remediation/files/01-critical-accessibility-fixes.md` - WCAG compliance for 3 pages (2-4 hours)
-  - `docs/remediation/files/02-image-optimization-strategy.md` - Alt text for 200+ images (12 hours, $1,200)
+  - `docs/remediation/files/01-critical-accessibility-fixes.md` - WCAG compliance (~~3 pages~~ → 1 page, ~~2-4 hours~~ → 1 hour, notebook pages excluded)
+  - `docs/remediation/files/02-image-optimization-strategy.md` - Alt text for 200+ images (12 hours, $1,200, excludes notebooks)
 - **High Priority** (🟠):
   - `docs/remediation/files/03-security-headers-implementation.md` - CSP & security headers (30-60 min quick win!)
-  - `docs/remediation/files/04-content-freshness-dates.md` - Last-modified dates (12 hours)
+  - `docs/remediation/files/04-content-freshness-dates.md` - Last-modified dates (12 hours, excludes notebooks)
 - **Medium Priority** (🟡):
-  - `docs/remediation/files/05-metadata-optimization.md` - Titles & descriptions for 30 pages (8 hours)
-  - `docs/remediation/files/06-content-quality-improvements.md` - Bottom 10 pages (21 hours)
+  - `docs/remediation/files/05-metadata-optimization.md` - Titles & descriptions for 30 pages (8 hours, excludes notebooks)
+  - `docs/remediation/files/06-content-quality-improvements.md` - Bottom 10 pages (21 hours, excludes notebooks)
 - **Key Discovery**: EDS automatically handles lazy loading and responsive images - audit tool reported false positives
 
 ### Testing & Documentation Approaches

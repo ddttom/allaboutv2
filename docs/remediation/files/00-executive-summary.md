@@ -4,6 +4,8 @@
 **Site Audited**: allabout.network (121 pages)
 **Total Documents**: 6 prioritized remediation strategies
 
+**⚠️ IMPORTANT**: This analysis **EXCLUDES** Jupyter notebook pages (`.ipynb` files, ipynb-viewer block content). See [report-layout.md](report-layout.md#%EF%B8%8F-exclusion-policy-jupyter-notebooks-ipynb-files) for exclusion policy details.
+
 ---
 
 ## 🎉 Key Discovery: EDS Already Optimized for Performance!

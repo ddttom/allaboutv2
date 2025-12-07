@@ -2,15 +2,25 @@
 
 **Priority Level**: 🔴 CRITICAL
 **Impact**: Severe WCAG violations blocking users with disabilities
-**Affected Pages**: 3 pages with 0-50% accessibility scores
-**Estimated Effort**: 2-4 hours total
+**Affected Pages**: ~~3 pages~~ → **1 page** (notebook pages now excluded)
+**Estimated Effort**: ~~2-4 hours~~ → **1 hour** (only `/notes/cursorrules` needs fixing)
 **Quick Win Potential**: ⭐⭐⭐⭐⭐ (Fixes complete failures)
+
+**⚠️ EXCLUSION NOTICE**: Jupyter notebook pages are **EXCLUDED** from this remediation per project policy. See [report-layout.md](report-layout.md#%EF%B8%8F-exclusion-policy-jupyter-notebooks-ipynb-files).
+
+**Pages excluded** (no longer require fixes):
+- `/blogs/ddt/creating-an-llms-txt` (uses ipynb-viewer block)
+- `/blogs/ddt/integrations/ipynbviewer` (notebook documentation)
+
+**Remaining page to fix**: `/notes/cursorrules` (heading hierarchy issues)
 
 ---
 
 ## Executive Summary
 
-Three pages have severe WCAG AA accessibility violations (0-50% compliance scores) that completely block or significantly impair access for users with disabilities. These violations stem from complex interactive notebook content with broken heading hierarchies and semantic HTML issues.
+~~Three pages~~ **One page** has severe WCAG AA accessibility violations that ~~completely block or significantly impair~~ **significantly impairs** access for users with disabilities. ~~These violations stem from complex interactive notebook content with~~ **This violation stems from** broken heading hierarchies ~~and semantic HTML issues~~.
+
+**Note**: The original audit identified 3 pages, but 2 pages with notebook content are now excluded from remediation scope per project policy.
 
 **Business Impact:**
 - Legal risk: WCAG AA non-compliance
@@ -24,11 +34,11 @@ Three pages have severe WCAG AA accessibility violations (0-50% compliance score
 
 ### Pages with Critical Violations
 
-| URL | Score | Critical Issues | WCAG Level | Primary Problem |
-|-----|-------|----------------|-----------|-----------------|
-| `/blogs/ddt/creating-an-llms-txt` | **0.00%** | 50 violations | WCAG AA | Complete accessibility failure |
-| `/blogs/ddt/integrations/ipynbviewer` | **20.00%** | 8 violations | WCAG AA | Interactive notebook structure |
-| `/notes/cursorrules` | **50.00%** | 5 violations | WCAG AA | Heading hierarchy broken |
+| URL | Score | Critical Issues | WCAG Level | Primary Problem | Status |
+|-----|-------|----------------|-----------|-----------------|--------|
+| ~~`/blogs/ddt/creating-an-llms-txt`~~ | ~~0.00%~~ | ~~50 violations~~ | ~~WCAG AA~~ | ~~Complete accessibility failure~~ | **EXCLUDED** (notebook) |
+| ~~`/blogs/ddt/integrations/ipynbviewer`~~ | ~~20.00%~~ | ~~8 violations~~ | ~~WCAG AA~~ | ~~Interactive notebook structure~~ | **EXCLUDED** (notebook) |
+| `/notes/cursorrules` | **50.00%** | 5 violations | WCAG AA | Heading hierarchy broken | **REQUIRES FIX** |
 
 ### Site-Wide Context
 

@@ -6,6 +6,8 @@
 **Estimated Effort**: 1-2 days for systematic solution
 **Quick Win Potential**: ⭐⭐⭐⭐ (Major SEO boost, relatively easy fix)
 
+**⚠️ EXCLUSION NOTICE**: Jupyter notebook pages are **EXCLUDED** from content freshness analysis per project policy. See [report-layout.md](report-layout.md#%EF%B8%8F-exclusion-policy-jupyter-notebooks-ipynb-files). Filter out notebook URLs when processing content freshness data.
+
 ---
 
 ## Executive Summary

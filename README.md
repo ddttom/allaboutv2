@@ -214,14 +214,15 @@ Each block should include:
   - 6 prioritized remediation strategies with ROI calculations
   - $5,000 investment, $120,000 annual benefit, 1,969% ROI
   - Key discovery: EDS automatically handles lazy loading and responsive images
-- **[report-layout.md](docs/remediation/files/report-layout.md)** - Complete audit report documentation including EDS-specific limitations
+  - **Note**: Jupyter notebook pages (.ipynb files) excluded from analysis
+- **[report-layout.md](docs/remediation/files/report-layout.md)** - Complete audit report documentation including EDS-specific limitations and notebook exclusion policy
 - **Priority Documents**:
-  - 🔴 [Critical Accessibility Fixes](docs/remediation/files/01-critical-accessibility-fixes.md) - WCAG compliance (3 pages, 2-4 hours)
-  - 🔴 [Image Optimization Strategy](docs/remediation/files/02-image-optimization-strategy.md) - Alt text remediation (12 hours, $1,200)
+  - 🔴 [Critical Accessibility Fixes](docs/remediation/files/01-critical-accessibility-fixes.md) - WCAG compliance (~~3 pages~~ → 1 page, ~~2-4 hours~~ → 1 hour) - notebook pages excluded
+  - 🔴 [Image Optimization Strategy](docs/remediation/files/02-image-optimization-strategy.md) - Alt text remediation (12 hours, $1,200) - excludes notebooks
   - 🟠 [Security Headers Implementation](docs/remediation/files/03-security-headers-implementation.md) - CSP, X-Frame-Options (30-60 min quick win!)
-  - 🟠 [Content Freshness Dates](docs/remediation/files/04-content-freshness-dates.md) - Last-modified dates (12 hours)
-  - 🟡 [Metadata Optimization](docs/remediation/files/05-metadata-optimization.md) - Titles & descriptions (8 hours)
-  - 🟡 [Content Quality Improvements](docs/remediation/files/06-content-quality-improvements.md) - Bottom 10 pages (21 hours)
+  - 🟠 [Content Freshness Dates](docs/remediation/files/04-content-freshness-dates.md) - Last-modified dates (12 hours) - excludes notebooks
+  - 🟡 [Metadata Optimization](docs/remediation/files/05-metadata-optimization.md) - Titles & descriptions (8 hours) - excludes notebooks
+  - 🟡 [Content Quality Improvements](docs/remediation/files/06-content-quality-improvements.md) - Bottom 10 pages (21 hours) - excludes notebooks
 
 ### Core Documentation
 - [Development Server Guide](docs/Server-README.md) - Comprehensive server documentation

@@ -6,6 +6,8 @@
 **Estimated Effort**: 7-9 hours (Alt text only - responsive/lazy already working!)
 **Quick Win Potential**: ⭐⭐⭐⭐⭐ (Easier than expected - 2 of 4 issues already solved!)
 
+**⚠️ EXCLUSION NOTICE**: Jupyter notebook pages are **EXCLUDED** from image optimization per project policy. See [report-layout.md](report-layout.md#%EF%B8%8F-exclusion-policy-jupyter-notebooks-ipynb-files). Filter out notebook URLs when processing image optimization data.
+
 ---
 
 ## 🎉 IMPORTANT UPDATE: EDS Already Solves Most Issues!

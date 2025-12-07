@@ -6,6 +6,8 @@
 **Estimated Effort**: 30-60 minutes (ONE-TIME configuration)
 **Quick Win Potential**: ⭐⭐⭐⭐⭐ (Instant site-wide security improvement)
 
+**⚠️ NOTE**: Security headers apply site-wide, including notebook pages. The notebook exclusion policy does not apply to security implementations.
+
 ---
 
 ## Executive Summary

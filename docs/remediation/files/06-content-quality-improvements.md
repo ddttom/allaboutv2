@@ -6,6 +6,8 @@
 **Estimated Effort**: 10-20 hours (1-2 hours per page)
 **Quick Win Potential**: ⭐⭐⭐ (Targeted improvements, high page-level impact)
 
+**⚠️ EXCLUSION NOTICE**: Jupyter notebook pages are **EXCLUDED** from content quality analysis per project policy. See [report-layout.md](report-layout.md#%EF%B8%8F-exclusion-policy-jupyter-notebooks-ipynb-files). Filter out notebook URLs when processing content quality data.
+
 ---
 
 ## Executive Summary
