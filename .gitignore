@@ -65,6 +65,6 @@ Thumbs.db
 # ========================================
 scrap/
 # Remediation: Ignore audit results but keep strategy documents
-docs/remediation/files/results/
+docs/remediation/files/results/**
 bifrost.json
 promptloc/
