@@ -9,7 +9,7 @@ const MARKDOWN_CONFIG = {
 function processContent(content) {
   return content
     .split('\n')
-    .map(line => line.trim())
+    .map((line) => line.trim())
     .join('\n')
     .replace(/``/g, '`\n`');
 }
@@ -17,11 +17,11 @@ function processContent(content) {
 // Function to escape HTML special characters
 function escapeHtml(unsafe) {
   return unsafe
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
 }
 
 // Function to add syntax highlighting
@@ -43,14 +43,14 @@ export default function decorate(block) {
   try {
     const content = block.textContent.trim();
     const processedContent = processContent(content);
-    
+
     const container = document.createElement('div');
     container.className = MARKDOWN_CONFIG.CONTAINER_CLASS;
-    
+
     // Create a pre element to preserve formatting
     const preElement = document.createElement('pre');
     preElement.innerHTML = addSyntaxHighlighting(processedContent);
-    
+
     container.appendChild(preElement);
 
     // Clear the original content and append the processed content

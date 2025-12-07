@@ -26,17 +26,17 @@ const DAM_CONFIG = {
 function extractPath(element) {
   const img = element.querySelector(DAM_CONFIG.SELECTORS.IMAGE);
   const link = element.querySelector(DAM_CONFIG.SELECTORS.LINK);
-  
+
   if (img) {
     const url = new URL(img.src);
     return url.pathname;
   }
-  
+
   if (link) {
     const url = new URL(link.href);
     return url.pathname;
   }
-  
+
   return '';
 }
 
@@ -52,9 +52,8 @@ function createDamJson(block) {
 
   const rows = Array.from(block.children).slice(1);
   const damData = rows.map((row) => {
-    const [, note, description, classification, tag, imageCell, additionalInfo] = 
-      Array.from(row.children);
-    
+    const [, note, description, classification, tag, imageCell, additionalInfo] = Array.from(row.children);
+
     return {
       note: note?.textContent?.trim() || '',
       description: description?.textContent?.trim() || '',
@@ -64,7 +63,7 @@ function createDamJson(block) {
       additionalInfo: additionalInfo?.textContent?.trim() || '',
     };
   });
-  
+
   return JSON.stringify(damData, null, 2);
 }
 
@@ -76,15 +75,15 @@ function createDamJson(block) {
 function createCodeDisplay(jsonString) {
   const pre = document.createElement('pre');
   const code = document.createElement('code');
-  
+
   pre.setAttribute('role', 'region');
   pre.setAttribute('aria-label', DAM_CONFIG.ARIA_LABELS.CODE_SECTION);
   pre.setAttribute('tabindex', '0');
-  
+
   code.textContent = jsonString;
   pre.appendChild(code);
   pre.className = DAM_CONFIG.CLASS_NAMES.CODE_WRAPPER;
-  
+
   return pre;
 }
 

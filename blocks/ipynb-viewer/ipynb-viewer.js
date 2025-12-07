@@ -49,18 +49,18 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
         tableRows = [];
       }
 
-      const cells = line.split('|').filter(cell => cell.trim());
-      const row = '<tr>' + cells.map((cell, idx) => {
+      const cells = line.split('|').filter((cell) => cell.trim());
+      const row = `<tr>${cells.map((cell, idx) => {
         // First row is header
         const tag = tableRows.length === 0 ? 'th' : 'td';
         return `<${tag}>${cell.trim()}</${tag}>`;
-      }).join('') + '</tr>';
+      }).join('')}</tr>`;
       tableRows.push(row);
     } else {
       // Not a table row
       if (inTable) {
         // End of table, flush accumulated rows
-        processedLines.push('<table>' + tableRows.join('') + '</table>');
+        processedLines.push(`<table>${tableRows.join('')}</table>`);
         tableRows = [];
         inTable = false;
       }
@@ -70,7 +70,7 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
 
   // Flush any remaining table
   if (inTable && tableRows.length > 0) {
-    processedLines.push('<table>' + tableRows.join('') + '</table>');
+    processedLines.push(`<table>${tableRows.join('')}</table>`);
   }
 
   html = processedLines.join('\n');
@@ -83,9 +83,9 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
     const id = text
       .toLowerCase()
       .replace(/[^\w\s-]/g, '') // Remove special characters except word chars, spaces, hyphens
-      .replace(/\s+/g, '-')      // Replace spaces with hyphens
-      .replace(/-+/g, '-')       // Replace multiple hyphens with single hyphen
-      .replace(/^-+|-+$/g, '')   // Remove leading and trailing hyphens
+      .replace(/\s+/g, '-') // Replace spaces with hyphens
+      .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
+      .replace(/^-+|-+$/g, '') // Remove leading and trailing hyphens
       .trim();
 
     return `<h2 id="${id}">${text}</h2>`;
@@ -320,7 +320,7 @@ function detectCellType(content, index) {
   }
 
   // Transition cells are short (1-2 lines) and often centered text
-  const lines = content.trim().split('\n').filter(line => line.trim());
+  const lines = content.trim().split('\n').filter((line) => line.trim());
   if (lines.length <= 3 && !content.includes('##') && !content.includes('###')) {
     return 'transition';
   }
@@ -471,7 +471,7 @@ function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false, helpR
 
   // Add click handlers for GitHub markdown links to open in overlay
   const githubMdLinks = content.querySelectorAll('.ipynb-github-md-link');
-  githubMdLinks.forEach(link => {
+  githubMdLinks.forEach((link) => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
       const githubUrl = link.dataset.mdUrl; // Get URL from data attribute
@@ -551,7 +551,7 @@ function createCodeCell(cell, index, autorun = false) {
  * @param {HTMLElement} cellDiv - Cell element
  */
 async function executeCodeCell(cellDiv) {
-  const code = cellDiv.dataset.code;
+  const { code } = cellDiv.dataset;
   const output = cellDiv.querySelector('.ipynb-cell-output');
 
   // Clear previous output
@@ -576,7 +576,7 @@ async function executeCodeCell(cellDiv) {
   try {
     // Execute code (with async support)
     // eslint-disable-next-line no-new-func
-    const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
+    const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor;
     const func = new AsyncFunction(code);
     const result = await func();
 
@@ -585,12 +585,10 @@ async function executeCodeCell(cellDiv) {
     console.error = originalConsoleError;
 
     // Display logs
-    logs.forEach(log => {
+    logs.forEach((log) => {
       const logDiv = document.createElement('div');
       logDiv.className = `ipynb-output-${log.type}`;
-      logDiv.textContent = log.args.map(arg =>
-        typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
-      ).join(' ');
+      logDiv.textContent = log.args.map((arg) => (typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg))).join(' ');
       output.appendChild(logDiv);
     });
 
@@ -615,7 +613,6 @@ async function executeCodeCell(cellDiv) {
 
     // Show success indicator
     cellDiv.classList.add('ipynb-cell-executed');
-
   } catch (error) {
     // Restore console
     console.log = originalConsoleLog;
@@ -668,19 +665,19 @@ function shouldGroupWithNext(cell, nextCell) {
 
   // Patterns that suggest the markdown is describing the following code
   const groupingPatterns = [
-    /:\s*$/,                           // Ends with colon
-    /below/i,                          // Contains "below"
-    /following/i,                      // Contains "following"
-    /try running/i,                    // Contains "try running"
-    /click run/i,                      // Contains "click run"
-    /run the cell/i,                   // Contains "run the cell"
-    /let's test/i,                     // Contains "let's test"
-    /let's try/i,                      // Contains "let's try"
-    /example:/i,                       // Contains "example:"
-    /here's how/i,                     // Contains "here's how"
+    /:\s*$/, // Ends with colon
+    /below/i, // Contains "below"
+    /following/i, // Contains "following"
+    /try running/i, // Contains "try running"
+    /click run/i, // Contains "click run"
+    /run the cell/i, // Contains "run the cell"
+    /let's test/i, // Contains "let's test"
+    /let's try/i, // Contains "let's try"
+    /example:/i, // Contains "example:"
+    /here's how/i, // Contains "here's how"
   ];
 
-  return groupingPatterns.some(pattern => pattern.test(content));
+  return groupingPatterns.some((pattern) => pattern.test(content));
 }
 
 /**
@@ -704,9 +701,9 @@ function createPageGroups(cells) {
 
       // Check for additional consecutive code cells (up to MAX_CODE_GROUP_SIZE total)
       while (
-        j < cells.length &&
-        cells[j].classList.contains('ipynb-code-cell') &&
-        groupedCells.filter(c => c.classList.contains('ipynb-code-cell')).length < MAX_CODE_GROUP_SIZE
+        j < cells.length
+        && cells[j].classList.contains('ipynb-code-cell')
+        && groupedCells.filter((c) => c.classList.contains('ipynb-code-cell')).length < MAX_CODE_GROUP_SIZE
       ) {
         groupedCells.push(cells[j]);
         j++;
@@ -754,7 +751,7 @@ function addToHistory(historyArray, title, type, cellIndex = null, url = null) {
 
   // Remove duplicate if exists (same title and type)
   const existingIndex = historyArray.findIndex(
-    h => h.title === title && h.type === type
+    (h) => h.title === title && h.type === type,
   );
   if (existingIndex !== -1) {
     historyArray.splice(existingIndex, 1);
@@ -815,7 +812,7 @@ function saveBookmark(notebookId, title, type, pageIndex = null, url = null) {
     const identifier = type === 'cell' ? `cell-${pageIndex}` : `md-${url}`;
 
     // Remove existing bookmark for same item
-    const existingIndex = bookmarks.findIndex(b => {
+    const existingIndex = bookmarks.findIndex((b) => {
       const bookmarkId = b.type === 'cell' ? `cell-${b.pageIndex}` : `md-${b.url}`;
       return bookmarkId === identifier;
     });
@@ -855,7 +852,7 @@ function removeBookmark(notebookId, type, pageIndex = null, url = null) {
     const bookmarks = getBookmarks(notebookId);
     const identifier = type === 'cell' ? `cell-${pageIndex}` : `md-${url}`;
 
-    const filtered = bookmarks.filter(b => {
+    const filtered = bookmarks.filter((b) => {
       const bookmarkId = b.type === 'cell' ? `cell-${b.pageIndex}` : `md-${b.url}`;
       return bookmarkId !== identifier;
     });
@@ -919,7 +916,7 @@ function extractMarkdownPaths(cellsContainer) {
   const mdLinks = cellsContainer.querySelectorAll('.ipynb-github-md-link');
 
   mdLinks.forEach((link) => {
-    const mdUrl = link.dataset.mdUrl;
+    const { mdUrl } = link.dataset;
     if (mdUrl) {
       // Extract path from URL (remove blob/branch parts)
       const pathMatch = mdUrl.match(/\/blob\/[^/]+\/(.+)$/);
@@ -946,8 +943,8 @@ function extractMarkdownPathsFromElement(element) {
   console.log(`📋 Extracting markdown paths from element - found ${mdLinks.length} links`);
 
   mdLinks.forEach((link) => {
-    const mdUrl = link.dataset.mdUrl;
-    const mdPath = link.dataset.mdPath;
+    const { mdUrl } = link.dataset;
+    const { mdPath } = link.dataset;
     console.log(`   Link: data-md-url="${mdUrl}", data-md-path="${mdPath}"`);
     if (mdUrl) {
       // Extract path from URL (remove blob/branch parts)
@@ -970,7 +967,7 @@ function extractMarkdownPathsFromElement(element) {
  */
 function addMarkdownPathsToTree(tree, newPaths) {
   // Find the Repository root node
-  const repoNode = tree.find(node => node.id === 'repository');
+  const repoNode = tree.find((node) => node.id === 'repository');
   if (!repoNode) {
     return; // No repository node exists yet
   }
@@ -992,7 +989,7 @@ function addMarkdownPathsToTree(tree, newPaths) {
   collectPaths(repoNode);
 
   // Filter out paths that already exist OR have matching filenames
-  const pathsToAdd = newPaths.filter(path => {
+  const pathsToAdd = newPaths.filter((path) => {
     // Skip if exact path already exists
     if (existingPaths.has(path)) {
       console.log(`   ⏭️  Skipping ${path} - exact path already exists`);
@@ -1457,7 +1454,7 @@ function toggleTreeNode(nodeId, treeState, container, onNodeClick) {
   }
 
   // Re-render tree
-  const tree = treeState.tree;
+  const { tree } = treeState;
   renderNavigationTree(tree, container, treeState, onNodeClick);
 }
 
@@ -1472,7 +1469,7 @@ function selectTreeNode(nodeId, treeState, container, onNodeClick) {
   treeState.selectedNode = nodeId;
 
   // Re-render tree
-  const tree = treeState.tree;
+  const { tree } = treeState;
   renderNavigationTree(tree, container, treeState, onNodeClick);
 
   // Scroll to selected node
@@ -1502,7 +1499,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
 
   // Remove any existing overlays to prevent duplicates
   const existingOverlays = document.querySelectorAll('.ipynb-paged-overlay');
-  existingOverlays.forEach(overlay => overlay.remove());
+  existingOverlays.forEach((overlay) => overlay.remove());
 
   // Create page groups (smart grouping)
   const pages = createPageGroups(cells);
@@ -1615,7 +1612,8 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   }
 
   // History button (notebook mode only) - Navigation History
-  let historyButton, historyDropdown;
+  let historyButton; let
+    historyDropdown;
   if (isNotebookMode) {
     historyButton = document.createElement('button');
     historyButton.className = 'ipynb-overlay-button ipynb-history-button';
@@ -1656,7 +1654,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
             // Find page containing this cell
             for (let i = 0; i < pages.length; i++) {
               const pageContainsCell = pages[i].cells.some(
-                cell => parseInt(cell.dataset.cellIndex) === entry.cellIndex
+                (cell) => parseInt(cell.dataset.cellIndex) === entry.cellIndex,
               );
               if (pageContainsCell) {
                 paginationState.currentPage = i;
@@ -1696,7 +1694,8 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   }
 
   // Hamburger menu (notebook mode only) - Table of Contents
-  let hamburgerButton, tocDropdown;
+  let hamburgerButton; let
+    tocDropdown;
   if (isNotebookMode) {
     hamburgerButton = document.createElement('button');
     hamburgerButton.className = 'ipynb-overlay-button ipynb-hamburger-menu';
@@ -1748,9 +1747,13 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
 
       // Add to TOC based on type
       if (itemType === 'content' && title) {
-        tocItems.push({ index, title, pageIndex: Math.floor(index / 1), type: 'content' });
+        tocItems.push({
+          index, title, pageIndex: Math.floor(index / 1), type: 'content',
+        });
       } else if (itemType === 'divider') {
-        tocItems.push({ index, title: null, pageIndex: Math.floor(index / 1), type: 'divider' });
+        tocItems.push({
+          index, title: null, pageIndex: Math.floor(index / 1), type: 'divider',
+        });
       }
       // Skip hero cells entirely
     });
@@ -1799,7 +1802,8 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   }
 
   // Bookmark button (notebook mode only) - Save and view bookmarks
-  let bookmarkButton, bookmarkDropdown;
+  let bookmarkButton; let
+    bookmarkDropdown;
   if (isNotebookMode) {
     const notebookId = notebookTitle.toLowerCase().replace(/\s+/g, '-');
 
@@ -2083,7 +2087,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
 
     // Re-resolve ALL links with hash="#" in the current page (action cards, tables, lists, etc.)
     const allHashLinks = cellContentArea.querySelectorAll('a[href="#"]');
-    allHashLinks.forEach(link => {
+    allHashLinks.forEach((link) => {
       // Re-resolve the link by finding matching heading
       const linkText = link.textContent.trim();
 
@@ -2115,7 +2119,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
 
     // Add click handlers to links with hash targets for overlay navigation
     const links = cellContentArea.querySelectorAll('a[href^="#"]');
-    links.forEach(link => {
+    links.forEach((link) => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
 
@@ -2159,7 +2163,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
 
     // Re-attach click handlers for GitHub markdown links (lost during cloning)
     const githubMdLinks = cellContentArea.querySelectorAll('.ipynb-github-md-link');
-    githubMdLinks.forEach(link => {
+    githubMdLinks.forEach((link) => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const githubUrl = link.dataset.mdUrl; // Get URL from data attribute
@@ -2195,7 +2199,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     // Update tree selection to match current page
     if (currentPage && currentPage.cells.length > 0) {
       const firstCellIndex = parseInt(currentPage.cells[0].dataset.cellIndex);
-      const notebookRoot = navigationTree.find(root => root.id === 'notebook');
+      const notebookRoot = navigationTree.find((root) => root.id === 'notebook');
 
       // Search for cell in notebook tree (might be nested in Parts)
       let cellNode = null;
@@ -2254,9 +2258,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       // Find the page that contains this cell
       for (let i = 0; i < pages.length; i++) {
         const page = pages[i];
-        const hasCell = page.cells.some(cell => {
-          return parseInt(cell.dataset.cellIndex) === node.cellIndex;
-        });
+        const hasCell = page.cells.some((cell) => parseInt(cell.dataset.cellIndex) === node.cellIndex);
 
         if (hasCell) {
           // Navigate to this page
@@ -2308,7 +2310,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     const currentPage = pages[paginationState.currentPage];
     if (currentPage && currentPage.cells.length > 0) {
       const firstCellIndex = parseInt(currentPage.cells[0].dataset.cellIndex);
-      const notebookRoot = navigationTree.find(root => root.id === 'notebook');
+      const notebookRoot = navigationTree.find((root) => root.id === 'notebook');
 
       // Search for cell in notebook tree (might be nested in Parts)
       const searchChildren = (nodes) => {
@@ -2374,9 +2376,9 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     if (!paginationState.isOverlayOpen) return;
 
     // Only handle if user isn't typing in an input
-    if (!document.activeElement ||
-        (document.activeElement.tagName !== 'INPUT' &&
-         document.activeElement.tagName !== 'TEXTAREA')) {
+    if (!document.activeElement
+        || (document.activeElement.tagName !== 'INPUT'
+         && document.activeElement.tagName !== 'TEXTAREA')) {
       if (e.key === 'ArrowLeft') {
         e.preventDefault();
         goToPrevPage();
@@ -2410,13 +2412,13 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       const page = pages[i];
 
       // Check if any cell in this page contains the target ID
-      const hasTarget = page.cells.some(cell => {
+      const hasTarget = page.cells.some((cell) => {
         // Use both querySelector and textContent search for robustness
         const hasId = cell.querySelector(`#${targetId}`) !== null;
 
         // Also check if cell contains an h2 that would generate this ID
         const headers = cell.querySelectorAll('h2');
-        const hasMatchingHeader = Array.from(headers).some(h2 => {
+        const hasMatchingHeader = Array.from(headers).some((h2) => {
           const generatedId = h2.textContent
             .toLowerCase()
             .replace(/[^\w\s-]/g, '')
@@ -2462,7 +2464,6 @@ function createPagedStartButton() {
   startButton.setAttribute('aria-label', 'Start paged reading mode');
   return startButton;
 }
-
 
 /**
  * Convert GitHub blob URL to raw content URL, or return local path as-is
@@ -2894,11 +2895,11 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
       // Process smart links in the rendered markdown
       // 1. Resolve hash links (internal navigation)
       const hashLinks = contentArea.querySelectorAll('a[href^="#"]');
-      hashLinks.forEach(link => {
+      hashLinks.forEach((link) => {
         const linkText = link.textContent.trim();
         const headings = contentArea.querySelectorAll('h1, h2, h3, h4, h5, h6');
 
-        headings.forEach(heading => {
+        headings.forEach((heading) => {
           const headingText = heading.textContent.trim().replace(/[^\w\s]/g, '').toLowerCase();
           const searchText = linkText.replace(/[^\w\s]/g, '').toLowerCase();
 
@@ -2927,7 +2928,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
 
       // 2. Add click handlers for GitHub markdown links (.md files)
       const githubMdLinks = contentArea.querySelectorAll('.ipynb-github-md-link');
-      githubMdLinks.forEach(link => {
+      githubMdLinks.forEach((link) => {
         link.addEventListener('click', (e) => {
           e.preventDefault();
           const linkUrl = link.dataset.mdUrl; // Get URL from data attribute
@@ -2954,8 +2955,8 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
       console.log('🌲 GitHub overlay - checking for tree context:', {
         hasParentHistory: !!parentHistory,
         isObject: typeof parentHistory === 'object',
-        hasNavigationTree: parentHistory?.navigationTree ? true : false,
-        treeLength: parentHistory?.navigationTree?.length
+        hasNavigationTree: !!parentHistory?.navigationTree,
+        treeLength: parentHistory?.navigationTree?.length,
       });
 
       if (parentHistory && typeof parentHistory === 'object' && parentHistory.navigationTree) {
@@ -3218,7 +3219,7 @@ export default async function decorate(block) {
       const tagsContainer = document.createElement('div');
       tagsContainer.className = 'ipynb-viewer-tags';
 
-      notebook.metadata.tags.forEach(tag => {
+      notebook.metadata.tags.forEach((tag) => {
         const tagSpan = document.createElement('span');
         tagSpan.className = 'ipynb-viewer-tag';
         tagSpan.textContent = tag;
@@ -3256,9 +3257,9 @@ export default async function decorate(block) {
 
     // Extract help-repo URL from metadata for help button
     // Falls back to repo, then to allaboutV2 default
-    const helpRepoUrl = notebook.metadata?.['help-repo'] ||
-                        notebook.metadata?.repo ||
-                        'https://github.com/ddttom/allaboutV2';
+    const helpRepoUrl = notebook.metadata?.['help-repo']
+                        || notebook.metadata?.repo
+                        || 'https://github.com/ddttom/allaboutV2';
 
     notebook.cells.forEach(async (cell, index) => {
       let cellElement;
@@ -3330,7 +3331,6 @@ export default async function decorate(block) {
     }
 
     block.appendChild(container);
-
   } catch (error) {
     console.error('Block decoration failed:', error);
     block.innerHTML = `<div class="ipynb-error">${config.errorMessage}: ${error.message}</div>`;

@@ -1,1 +1,5 @@
 helix-importer-ui
+assets/
+build/*/dist/
+build/*/.parcel-cache/
+blocks/react-test/

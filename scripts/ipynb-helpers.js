@@ -83,7 +83,7 @@ export async function showPreview(blockName, innerHTML = '') {
 
   // Wait for DOM to be ready before checking for paged overlay
   // This fixes timing issues where the paged overlay hasn't fully rendered yet
-  await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
 
   // Check if we're in notebook mode
   const pagedOverlay = document.querySelector('.ipynb-paged-overlay[data-notebook-mode="true"]');
@@ -174,13 +174,13 @@ export async function showPreview(blockName, innerHTML = '') {
 
   // Handle view switching (only if not in notebook mode)
   if (!isNotebookMode) {
-    viewBtns.forEach(btn => {
+    viewBtns.forEach((btn) => {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
-        const view = btn.dataset.view;
+        const { view } = btn.dataset;
 
         // Update active state
-        viewBtns.forEach(b => b.classList.remove('active'));
+        viewBtns.forEach((b) => b.classList.remove('active'));
         btn.classList.add('active');
 
         // Update container class

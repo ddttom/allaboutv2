@@ -708,6 +708,20 @@ const code = 'here';
 - Security checklist: `docs/for-ai/guidelines/security-checklist.md`
 - Frontend guidelines: `docs/for-ai/guidelines/frontend-guidelines.md`
 
+### Site Remediation & SEO Strategy
+- **Executive Summary**: `docs/remediation/files/00-executive-summary.md` - Complete 121-page audit analysis with 6 prioritized remediation strategies
+- **Report Documentation**: `docs/remediation/files/report-layout.md` - Audit report structure and EDS-specific limitations
+- **Critical Priority** (🔴):
+  - `docs/remediation/files/01-critical-accessibility-fixes.md` - WCAG compliance for 3 pages (2-4 hours)
+  - `docs/remediation/files/02-image-optimization-strategy.md` - Alt text for 200+ images (12 hours, $1,200)
+- **High Priority** (🟠):
+  - `docs/remediation/files/03-security-headers-implementation.md` - CSP & security headers (30-60 min quick win!)
+  - `docs/remediation/files/04-content-freshness-dates.md` - Last-modified dates (12 hours)
+- **Medium Priority** (🟡):
+  - `docs/remediation/files/05-metadata-optimization.md` - Titles & descriptions for 30 pages (8 hours)
+  - `docs/remediation/files/06-content-quality-improvements.md` - Bottom 10 pages (21 hours)
+- **Key Discovery**: EDS automatically handles lazy loading and responsive images - audit tool reported false positives
+
 ### Testing & Documentation Approaches
 
 **Multiple approaches available:** See [EDS Testing Guide](docs/for-ai/testing/EDS-Architecture-and-Testing-Guide.md) for comprehensive testing strategy.

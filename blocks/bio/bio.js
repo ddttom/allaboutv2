@@ -13,10 +13,8 @@ export default function decorate(block) {
       if (link && link.href) {
         // Check if the link points to an image file
         const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
-        const isImageLink = imageExtensions.some(ext => 
-          link.href.toLowerCase().includes(ext)
-        );
-        
+        const isImageLink = imageExtensions.some((ext) => link.href.toLowerCase().includes(ext));
+
         if (isImageLink) {
           // Create an img element to replace the link
           const img = document.createElement('img');

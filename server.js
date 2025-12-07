@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-//this file is a debugging artefact and it should be treated as readonly
+// this file is a debugging artefact and it should be treated as readonly
 
 const PORT = process.env.PORT || 3000;
 const PROXY_HOST = 'https://allabout.network';
@@ -139,10 +139,10 @@ async function handleRequest(req, res) {
   console.log(`Request: ${req.method} ${url}`);
 
   // Handle Chrome DevTools specific requests gracefully
-  if (url.includes('/.well-known/appspecific/') || 
-      url.includes('/chrome-devtools/') ||
-      url.includes('/__vscode_') ||
-      url.includes('/favicon.ico')) {
+  if (url.includes('/.well-known/appspecific/')
+      || url.includes('/chrome-devtools/')
+      || url.includes('/__vscode_')
+      || url.includes('/favicon.ico')) {
     // Return 204 No Content for DevTools requests to avoid proxy errors
     console.log(`🔧 Skipping DevTools/system request: ${url}`);
     res.writeHead(204, { 'Content-Type': 'text/plain' });
@@ -194,7 +194,7 @@ server.listen(PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`📄 Main page: http://localhost:${PORT}/server.html`);
   // eslint-disable-next-line no-console
-  console.log(`🔧 DevTools requests will be handled gracefully`);
+  console.log('🔧 DevTools requests will be handled gracefully');
 });
 
 // Graceful shutdown

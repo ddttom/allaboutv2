@@ -1,6 +1,6 @@
 export default async function decorate(block) {
   const blogListElement = block;
-  const url = "/query-index.json";
+  const url = '/query-index.json';
   const currentPath = window.location.pathname; // Get the current document's path
 
   try {
@@ -9,16 +9,11 @@ export default async function decorate(block) {
 
     // Filter the blog items based on the presence of "/blogs/ddt/a-developer" in the path
     // and exclude the current document
-    const filteredBlogItems = data.data.filter((item) =>
-      item.path.includes("developer-guide") && item.path !== currentPath
-    );
+    const filteredBlogItems = data.data.filter((item) => item.path.includes('developer-guide') && item.path !== currentPath);
 
     // Sort the filtered blog items by title
-    const sortedBlogItems = filteredBlogItems.sort((a, b) =>
-      a.title.localeCompare(b.title)
-    );
+    const sortedBlogItems = filteredBlogItems.sort((a, b) => a.title.localeCompare(b.title));
 
-    
     const limitedBlogItems = sortedBlogItems.slice(0, 4);
 
     // generate the content
@@ -26,11 +21,11 @@ export default async function decorate(block) {
 
     blogListElement.innerHTML = content;
   } catch (error) {
-    console.error("Error fetching the JSON data:", error);
+    console.error('Error fetching the JSON data:', error);
   }
 }
 function generateContent(blogItems) {
-  let content = "";
+  let content = '';
 
   blogItems.forEach((item) => {
     const lastModifiedDate = new Date(item.lastModified * 1000);
@@ -61,18 +56,18 @@ function formatDate(date) {
 
 function getMonthName(monthIndex) {
   const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
   ];
 
   return monthNames[monthIndex];

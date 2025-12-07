@@ -4,19 +4,19 @@
 
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import {
-  a, div, li, p, h3, span, ul
-} from '/plusplus/block-party/dom-helpers.js';
-import ffetch from '/plusplus/block-party/ffetch.js';
+  a, div, li, p, h3, span, ul,
+} from '../../../../../../../plusplus/block-party/dom-helpers.js';
+import ffetch from '../../../../../../../plusplus/block-party/ffetch.js';
 
 export default async function decorate(block) {
 // Use the block parameter directly
   const element = block;
 
   // Get the value of the 'data-maxreturn' attribute, or system value, or use the default value of 8
-  let maxReturn = element.getAttribute('data-maxreturn') ||
-  window.siteConfig?.['$meta:maxreturn$'] ||
-  window.siteConfig?.['$system:maxreturn$'] ||
-  '8';
+  let maxReturn = element.getAttribute('data-maxreturn')
+  || window.siteConfig?.['$meta:maxreturn$']
+  || window.siteConfig?.['$system:maxreturn$']
+  || '8';
 
   if (maxReturn === '-1') {
     maxReturn = 1000;
@@ -45,9 +45,9 @@ export default async function decorate(block) {
     targetNames = bnames.split(' ');
   }
   // Filter content to exclude paths containing '/template' and the current page path
-  const filteredContent = content.filter((card) => !card.path.includes('/template') && !card.path.includes('/test') &&
-  card.path !== window.location.pathname && // Dynamically exclude the current page path
-  targetNames.some((target) => card.path.includes(`/${target}/`)),
+  const filteredContent = content.filter((card) => !card.path.includes('/template') && !card.path.includes('/test')
+  && card.path !== window.location.pathname // Dynamically exclude the current page path
+  && targetNames.some((target) => card.path.includes(`/${target}/`)),
   );
 
   // Sort the filtered content by 'lastModified' in descending order

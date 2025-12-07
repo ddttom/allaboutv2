@@ -8,19 +8,19 @@ export default function decorate(block) {
 
   // Fetch JSON data and create dashboard
   fetch(jsonUrl)
-    .then(response => response.json())
-    .then(jsonData => {
+    .then((response) => response.json())
+    .then((jsonData) => {
       data = jsonData.data;
       const dashboardElement = createDashboard(data);
       dashboardContainer.appendChild(dashboardElement);
       addEventListeners();
       handleResponsiveLayout();
-      
+
       // Sort initially by Title
       sortTable(0, true);
       document.querySelector('.content-table th[data-column="0"]').classList.add('asc');
     })
-    .catch(error => console.error('Error fetching data:', error));
+    .catch((error) => console.error('Error fetching data:', error));
 
   function createDashboard(data) {
     const dashboard = document.createElement('div');
@@ -49,8 +49,8 @@ export default function decorate(block) {
 
     const select = document.createElement('select');
     select.id = 'status-filter';
-    
-    ['All', 'Green', 'Amber', 'Red'].forEach(option => {
+
+    ['All', 'Green', 'Amber', 'Red'].forEach((option) => {
       const optionElement = document.createElement('option');
       optionElement.value = option.toLowerCase();
       optionElement.textContent = option;
@@ -78,7 +78,7 @@ export default function decorate(block) {
     table.appendChild(thead);
 
     const tbody = document.createElement('tbody');
-    data.forEach(item => {
+    data.forEach((item) => {
       const row = createTableRow(item);
       tbody.appendChild(row);
     });
@@ -128,7 +128,7 @@ export default function decorate(block) {
     const link = document.createElement('a');
     link.href = path;
     link.className = 'path-link';
-    link.textContent = path.length > 20 ? path.substring(0, 17) + '...' : path;
+    link.textContent = path.length > 20 ? `${path.substring(0, 17)}...` : path;
     link.title = path;
 
     if (image) {
@@ -151,7 +151,7 @@ export default function decorate(block) {
     const parsedDate = parseDate(date);
     const formattedDate = parsedDate ? formatDate(parsedDate) : 'Invalid Date';
     cell.textContent = formattedDate;
-    
+
     if (formattedDate === 'Invalid Date') {
       cell.classList.add('red');
     } else if (className === 'review-date-cell' || className === 'expiry-date-cell') {
@@ -164,7 +164,7 @@ export default function decorate(block) {
         cell.classList.add('green');
       }
     }
-    
+
     return cell;
   }
 
@@ -187,7 +187,7 @@ export default function decorate(block) {
     return date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
-      day: 'numeric'
+      day: 'numeric',
     });
   }
 
@@ -220,12 +220,12 @@ export default function decorate(block) {
     document.getElementById('status-filter').addEventListener('change', filterTable);
     document.addEventListener('mousemove', updateMousePosition);
     const pathLinks = document.querySelectorAll('.path-link');
-    pathLinks.forEach(link => {
+    pathLinks.forEach((link) => {
       link.addEventListener('mouseenter', showPopup);
       link.addEventListener('mouseleave', hidePopup);
     });
     const headers = document.querySelectorAll('.content-table th');
-    headers.forEach(header => {
+    headers.forEach((header) => {
       header.addEventListener('click', () => {
         const column = parseInt(header.dataset.column);
         const isAscending = header.classList.contains('asc');
@@ -290,13 +290,13 @@ export default function decorate(block) {
   function filterTable() {
     const filterValue = document.getElementById('status-filter').value;
     const rows = document.querySelectorAll('.content-table tbody tr');
-    rows.forEach(row => {
+    rows.forEach((row) => {
       const reviewDateCell = row.querySelector('.review-date-cell');
       const expiryDateCell = row.querySelector('.expiry-date-cell');
-      const showRow = filterValue === 'all' || 
-                      (filterValue === 'green' && reviewDateCell.classList.contains('green') && expiryDateCell.classList.contains('green')) ||
-                      (filterValue === 'amber' && (reviewDateCell.classList.contains('amber') || expiryDateCell.classList.contains('amber'))) ||
-                      (filterValue === 'red' && (reviewDateCell.classList.contains('red') || expiryDateCell.classList.contains('red')));
+      const showRow = filterValue === 'all'
+                      || (filterValue === 'green' && reviewDateCell.classList.contains('green') && expiryDateCell.classList.contains('green'))
+                      || (filterValue === 'amber' && (reviewDateCell.classList.contains('amber') || expiryDateCell.classList.contains('amber')))
+                      || (filterValue === 'red' && (reviewDateCell.classList.contains('red') || expiryDateCell.classList.contains('red')));
       row.style.display = showRow ? '' : 'none';
     });
   }
@@ -309,23 +309,22 @@ export default function decorate(block) {
       let aValue = a.children[column].textContent.trim();
       let bValue = b.children[column].textContent.trim();
 
-      if (column >= 3) {  // Date columns
+      if (column >= 3) { // Date columns
         aValue = new Date(aValue).getTime();
         bValue = new Date(bValue).getTime();
       }
 
       if (ascending) {
         return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
-      } else {
-        return aValue < bValue ? 1 : aValue > bValue ? -1 : 0;
       }
+      return aValue < bValue ? 1 : aValue > bValue ? -1 : 0;
     });
 
     tbody.innerHTML = '';
-    rows.forEach(row => tbody.appendChild(row));
+    rows.forEach((row) => tbody.appendChild(row));
 
     const headers = document.querySelectorAll('.content-table th');
-    headers.forEach(header => {
+    headers.forEach((header) => {
       header.classList.remove('asc', 'desc');
     });
     const sortedHeader = document.querySelector(`.content-table th[data-column="${column}"]`);

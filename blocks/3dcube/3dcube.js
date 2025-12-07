@@ -1,16 +1,16 @@
 export default async function decorate(block) {
   const cube = document.createElement('div');
   cube.className = 'cube';
-  
+
   const faces = ['front', 'back', 'right', 'left', 'top', 'bottom'];
   const rows = [...block.children];
-  
+
   faces.forEach((face, index) => {
     if (rows[index]) {
       const [imageCell, linkCell] = rows[index].children;
       const img = imageCell.querySelector('img');
       const link = linkCell.querySelector('a');
-      
+
       if (img && link) {
         const faceSide = document.createElement('div');
         faceSide.className = `cube__face cube__face--${face}`;

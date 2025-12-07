@@ -41,19 +41,19 @@ function detectLanguage(code) {
   if (decodedCode.trim().startsWith('"') || decodedCode.trim().startsWith("'")) {
     return 'text';
   }
-  
+
   if (/^(ls|cd|pwd|mkdir|rm|cp|mv|cat|echo|grep|sed|awk|curl|wget|ssh|git|npm|yarn|docker|kubectl)\s/.test(decodedCode)) {
     return 'shell';
   }
-  
+
   if (decodedCode.includes('function') || decodedCode.includes('var') || decodedCode.includes('const')) return 'javascript';
   if (decodedCode.includes('{') && decodedCode.includes('}')) {
     if (decodedCode.match(/[a-z-]+\s*:\s*[^;]+;/)) return 'css';
   }
   if (decodedCode.includes('<') && decodedCode.includes('>') && (decodedCode.includes('</') || decodedCode.includes('/>'))) return 'html';
-  
+
   if (decodedCode.startsWith('$') || decodedCode.startsWith('#')) return 'shell';
-  
+
   return 'text';
 }
 
@@ -64,21 +64,19 @@ function detectLanguage(code) {
  * @returns {string} HTML string with syntax highlighting
  */
 function highlightSyntax(code, language) {
-  const encodeHtmlEntities = (text) => {
-    return text
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  };
+  const encodeHtmlEntities = (text) => text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
 
   const decodedCode = decodeHtmlEntities(code);
   const encodedCode = encodeHtmlEntities(decodedCode);
 
   switch (language) {
-    case "html":
-      return encodedCode.replace(/(&lt;[^&]*&gt;)|(&lt;!--[\s\S]*?--&gt;)/g, match => {
+    case 'html':
+      return encodedCode.replace(/(&lt;[^&]*&gt;)|(&lt;!--[\s\S]*?--&gt;)/g, (match) => {
         if (match.startsWith('&lt;!--')) {
           return `<span class="comment">${match}</span>`;
         }
@@ -119,7 +117,7 @@ export default async function decorate(block) {
     const blockTop = block.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20; // 20px extra padding
     window.scrollTo({
       top: blockTop,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   };
 
@@ -142,7 +140,7 @@ export default async function decorate(block) {
     toggleButton.classList.toggle('collapsed');
     toggleButton.textContent = leftPage.classList.contains('collapsed') ? '>' : '<';
     toggleButton.setAttribute('aria-expanded', !leftPage.classList.contains('collapsed'));
-    
+
     if (leftPage.classList.contains('collapsed')) {
       returnToMenu();
     }
@@ -190,13 +188,13 @@ export default async function decorate(block) {
     // Global Selector is INTENTIONAL - used for Document access
     // Collects ALL code snippets from entire page for showcasing
     const codeElements = document.querySelectorAll('pre > code');
-    
+
     codeElements.forEach((element, index) => {
       const code = element.textContent;
-      
+
       const lines = code.split('\n');
       const title = lines[0].replace(/\/\/|\/\*|\*\//g, '').trim() || `Code Snippet ${index + 1}`;
-      
+
       if (code.trim()) {
         const language = detectLanguage(code);
         const highlightedCode = highlightSyntax(code, language);
@@ -213,7 +211,7 @@ export default async function decorate(block) {
       titleElement.setAttribute('aria-controls', `snippet-${index}`);
       titleElement.addEventListener('click', (e) => {
         e.preventDefault();
-        
+
         // Ensure left page is visible when a snippet is selected
         if (leftPage.classList.contains('collapsed')) {
           leftPage.classList.remove('collapsed');
@@ -257,7 +255,7 @@ export default async function decorate(block) {
                 copyButton.textContent = `Copy ${snippet.language} to clipboard`;
               }, SHOWCASER_CONFIG.COPY_BUTTON_RESET_DELAY);
             })
-            .catch(err => {
+            .catch((err) => {
               console.error('Error copying content:', err);
             });
         });
@@ -265,25 +263,25 @@ export default async function decorate(block) {
         // Add expand/collapse functionality for long code snippets
         if (snippet.content.split('\n').length > SHOWCASER_CONFIG.LONG_DOCUMENT_THRESHOLD) {
           pre.classList.add('collapsible');
-          
+
           const topExpandButton = document.createElement('button');
           topExpandButton.className = 'showcaser-expand-collapse top';
           topExpandButton.textContent = 'Expand';
-          
+
           const bottomExpandButton = document.createElement('button');
           bottomExpandButton.className = 'showcaser-expand-collapse bottom';
           bottomExpandButton.textContent = '....';
-          
+
           const toggleExpansion = () => {
             pre.classList.toggle('expanded');
             const isExpanded = pre.classList.contains('expanded');
             topExpandButton.textContent = isExpanded ? 'Collapse' : 'Expand';
             bottomExpandButton.textContent = isExpanded ? 'Close' : '....';
           };
-          
+
           topExpandButton.onclick = toggleExpansion;
           bottomExpandButton.onclick = toggleExpansion;
-          
+
           codeWrapper.insertBefore(topExpandButton, pre);
           codeWrapper.appendChild(bottomExpandButton);
         }
@@ -309,7 +307,7 @@ export default async function decorate(block) {
     codeSnippets.forEach((snippet, index) => {
       const snippetContainer = document.createElement('div');
       snippetContainer.className = 'showcaser-snippet';
-      
+
       const titleElement = document.createElement('h3');
       titleElement.textContent = snippet.title;
       snippetContainer.appendChild(titleElement);
@@ -323,9 +321,7 @@ export default async function decorate(block) {
 
       rightPage.appendChild(snippetContainer);
 
-      
       snippetContainer.style.display = 'none';
-      
     });
 
     // Add click event to title elements to show corresponding snippet
@@ -339,7 +335,6 @@ export default async function decorate(block) {
         });
       });
     });
-
   } catch (error) {
     // Handle errors and display error message
     console.error('Showcaser Error:', error);

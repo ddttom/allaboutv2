@@ -40,33 +40,33 @@ function decodeHTMLEntities(text) {
 function sanitizeHTML(html) {
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, 'text/html');
-  
+
   // Remove potentially harmful elements and attributes
   const harmfulTags = ['script', 'object', 'embed'];
   const harmfulAttributes = ['onerror', 'onload', 'onclick', 'onmouseover'];
-  
-  harmfulTags.forEach(tag => {
+
+  harmfulTags.forEach((tag) => {
     const elements = doc.getElementsByTagName(tag);
     for (let i = elements.length - 1; i >= 0; i--) {
       elements[i].parentNode.removeChild(elements[i]);
     }
   });
-  
-  doc.body.querySelectorAll('*').forEach(el => {
-    harmfulAttributes.forEach(attr => {
+
+  doc.body.querySelectorAll('*').forEach((el) => {
+    harmfulAttributes.forEach((attr) => {
       el.removeAttribute(attr);
     });
-    
+
     // Special handling for iframes
     if (el.tagName.toLowerCase() === 'iframe') {
       // Allow only specific attributes
       const allowedAttributes = ['src', 'width', 'height', 'frameborder', 'allowfullscreen', 'allow'];
-      Array.from(el.attributes).forEach(attr => {
+      Array.from(el.attributes).forEach((attr) => {
         if (!allowedAttributes.includes(attr.name)) {
           el.removeAttribute(attr.name);
         }
       });
-      
+
       // Ensure src is from a trusted domain
       const trustedDomains = ['ooo.mmhmm.app']; // Add more trusted domains as needed
       const src = el.getAttribute('src');
@@ -78,7 +78,7 @@ function sanitizeHTML(html) {
       }
     }
   });
-  
+
   return doc.body.innerHTML;
 }
 
