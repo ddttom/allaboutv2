@@ -186,6 +186,25 @@ Add comments that explain the "why" and "how", not just the "what":
 
 When AI assistants create block examples or documentation, they should reference these pre-defined resources rather than inventing new URLs.
 
+### Design System Standards
+
+**Comprehensive design language:** See `docs/for-ai/guidelines/design-system.md`
+
+**Key Design Tokens:**
+- Colors, typography, spacing extracted from allabout.network
+- CSS custom properties reference (`styles/styles.css`)
+- Component design patterns (buttons, links, borders)
+- Responsive breakpoints (600px, 900px)
+- Implementation guidelines for blocks
+- Accessibility standards (WCAG 2.1 AA)
+
+**Essential Values:**
+- Primary color: `--link-color: #035fe6`
+- Font family: `--body-font-family: roboto, roboto-fallback`
+- Most common spacing: `22px` (aligns with body font size)
+- Button border-radius: `30px` (distinctive pill shape)
+- 8px base spacing system
+
 ### Block-Level BLOCKNAME_CONFIG
 
 **Every block JavaScript file must define a CONFIG object at the top:**

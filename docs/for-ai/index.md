@@ -225,6 +225,13 @@ This index provides structured access to all documentation within the `docs/for-
   - Performance, accessibility, and browser compatibility
   - Target: Frontend developers and code reviewers
 
+- **[`guidelines/design-system.md`](guidelines/design-system.md)**
+  - Complete visual design language for allabout.network
+  - Colors, typography, spacing, component patterns
+  - CSS custom properties reference and implementation guidelines
+  - Responsive breakpoints and accessibility standards
+  - Target: Developers, designers, and AI assistants creating blocks
+
 ### Project Management and Requirements
 - **[`guidelines/prd.md`](guidelines/prd.md)**
   - Product Requirements Document for EDS applications

@@ -7,6 +7,67 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-07d] - Design System Documentation Integration
+
+### Added
+- **Comprehensive Design System Documentation**: Complete visual design language extracted from allabout.network
+  - Created `docs/for-ai/guidelines/design-system.md` (~700 lines)
+  - 11 comprehensive sections covering colors, typography, spacing, components, responsive design, and accessibility
+  - CSS custom properties reference with implementation guidelines
+  - Component patterns (buttons, links, borders) with code examples
+  - Responsive breakpoints (600px, 900px) and mobile-first approach
+  - WCAG 2.1 AA accessibility standards with contrast ratio documentation
+- **JSON Source Metadata**: Enhanced `docs/for-ai/allabout.network.json` with comprehensive metadata
+  - Project information and design philosophy (flat design, minimal effects)
+  - Self-hosted font documentation (Roboto 400/700 from `/fonts/`)
+  - Logo and icon system placeholders
+  - Extraction date and verification notes
+
+### Changed
+- **Fixed Frontend Guidelines**: Corrected `docs/for-ai/guidelines/frontend-guidelines.md` with **actual EDS design tokens**
+  - **CRITICAL FIX**: Replaced misleading Adobe generic examples (`--color-primary: #1473e6`)
+  - Updated with verified allabout.network CSS variables (`--link-color: #035fe6`, etc.)
+  - Added EDS-specific spacing guidelines (22px most common, 8px base system)
+  - Updated component examples to use correct EDS variables
+  - Added reference to comprehensive design-system.md
+- **Enhanced CLAUDE.md**: Added "Design System Standards" section in Configuration Patterns
+  - Key design tokens for quick AI reference
+  - Essential values: primary color, font family, common spacing, button radius
+  - Direct link to comprehensive design system documentation
+- **Updated Documentation Index**: Added design-system.md to `docs/for-ai/index.md`
+  - Positioned in Project Guidelines section after frontend-guidelines.md
+  - Clear target audience: Developers, designers, and AI assistants
+- **Cross-Linked Documentation**:
+  - `guidelines/style-guide.md` - Added reference to design-system.md for visual standards
+  - `implementation/block-architecture-standards.md` - Added comprehensive design system reference in CSS Standards section
+
+### Technical Details
+- **Verification**: All CSS variables verified against `styles/styles.css` lines 15-41
+- **Self-Hosted Fonts**: Roboto 400/700 from `/fonts/` directory (no external dependencies)
+- **Key Design Tokens**:
+  - Primary color: `--link-color: #035fe6`
+  - Font family: `--body-font-family: roboto, roboto-fallback`
+  - Most common spacing: `22px` (54 instances, aligns with body font size)
+  - Button border-radius: `30px` (distinctive pill shape)
+  - 8px base spacing system
+- **Design Philosophy**: Flat design, minimal effects, self-hosted fonts, clean aesthetic
+
+### Rationale
+Provides a single source of truth for visual design standards across all EDS blocks. The comprehensive documentation ensures developers and AI assistants have accurate, verified design tokens that match the actual production site. Fixes critical issue where frontend-guidelines.md contained incorrect Adobe generic examples.
+
+### Files Modified
+1. `docs/for-ai/allabout.network.json` - Added metadata, font info, logo documentation
+2. `docs/for-ai/guidelines/design-system.md` - **NEW** comprehensive design language guide
+3. `docs/for-ai/guidelines/frontend-guidelines.md` - Fixed incorrect examples with actual EDS tokens
+4. `CLAUDE.md` - Added design system reference in Configuration Patterns
+5. `docs/for-ai/index.md` - Added design-system.md to Guidelines section
+6. `docs/for-ai/guidelines/style-guide.md` - Added cross-reference
+7. `docs/for-ai/implementation/block-architecture-standards.md` - Added design system reference
+
+**Total: 6 files modified + 1 new file + 1 JSON update = 8 file operations**
+
+---
+
 ## [2025-12-07c] - Response Timestamp System Implementation
 
 ### Added
