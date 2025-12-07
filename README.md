@@ -209,6 +209,9 @@ Each block should include:
 
 ### Site Remediation & SEO
 
+The site audit is created with https://github.com/ddttom/my-pa11y-project
+
+
 **📊 EDS Site Remediation Strategy**
 - **[Executive Summary](docs/remediation/files/00-executive-summary.md)** - Complete overview of site audit findings and remediation plan
   - Comprehensive 121-page SEO/accessibility/performance audit analysis
