@@ -197,6 +197,14 @@ Each block should include:
 
 ## Documentation
 
+### Project Instructions for AI Assistants
+
+**📋 CLAUDE.md** - Compact project guide for AI assistants
+- Quick reference guide covering essential patterns and workflows
+- References comprehensive documentation in `docs/for-ai/` (26+ guides)
+- Recently compacted (48 lines reduced) by extracting ipynb details to dedicated docs
+- Single source of truth approach: critical patterns here, comprehensive details in linked docs
+
 ### Navigation & Getting Started
 
 **🗺️ Documentation Navigator** - Start here!

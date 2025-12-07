@@ -7,6 +7,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-07e] - CLAUDE.md Documentation Compaction
+
+### Changed
+- **CLAUDE.md Compaction**: Reduced ipynb/Jupyter notebook documentation by 48 lines (807→759 lines, 6% overall reduction)
+  - **Smart Link Pattern section** (lines 463-513): Condensed from 51 to 21 lines with references to ipynb-viewer README
+    - Kept critical rules and "why this matters" explanations
+    - Added references to specific sections: Enhanced Markdown Rendering, Three Types of Overlays, Interactive Features
+  - **Testing & Documentation Approaches section** (lines 777-802): Condensed from 40 to 29 lines
+    - Replaced detailed descriptions with concise summaries
+    - Added references to comprehensive guides: explaining-jupyter.md, explaining-educational-notebooks.md, explaining-presentation-notebooks.md
+    - Added Presentation Notebooks section (previously missing)
+  - **Event Listeners and DOM Cloning section** (lines 430-461): Condensed from 36 to 30 lines
+    - Kept critical DOM cloning pattern explanation
+    - Reduced ipynb-viewer examples to references with line numbers
+    - Added reference to DOM Manipulation Best Practices guide
+
+### Added
+- **README.md Documentation Section**: New "Project Instructions for AI Assistants" section
+  - Documents CLAUDE.md as compact project guide
+  - Explains single source of truth approach (critical patterns + references to comprehensive docs)
+  - Notes the 48-line compaction achievement
+
+### Rationale
+Eliminates duplication between CLAUDE.md and comprehensive documentation in `docs/for-ai/` and `blocks/ipynb-viewer/README.md`. Maintains critical EDS patterns while providing clear pathways to detailed documentation. Improves maintainability by establishing single sources of truth for each topic.
+
+### Benefits
+1. **Single Source of Truth**: Comprehensive details maintained in dedicated documentation (88KB ipynb-viewer README, 45-54KB explaining-*.md guides)
+2. **Easier Maintenance**: Update documentation once, not in multiple places
+3. **Better Discovery**: Users find complete feature docs through clear references
+4. **Clearer Context**: CLAUDE.md focuses on critical patterns, not feature details
+5. **Improved Scanability**: Shorter sections make information easier to find
+
+### Files Modified
+- `CLAUDE.md` - 3 sections compacted (48 lines reduced)
+- `README.md` - Added documentation section explaining compaction approach
+
+### Verification
+All referenced files verified to exist:
+- ✅ `/blocks/ipynb-viewer/README.md` (88KB)
+- ✅ `/docs/for-ai/explaining-jupyter.md` (45KB)
+- ✅ `/docs/for-ai/explaining-educational-notebooks.md` (45KB)
+- ✅ `/docs/for-ai/explaining-presentation-notebooks.md` (54KB)
+- ✅ `/blocks/ipynb-viewer/ipynb-viewer.js` (120KB)
+- ✅ `/docs/for-ai/guidelines/frontend-guidelines.md` (22KB)
+- ✅ `/docs/for-ai/testing/EDS-Architecture-and-Testing-Guide.md` (21KB)
+
+---
+
 ## [2025-12-07d] - Design System Documentation Integration
 
 ### Added

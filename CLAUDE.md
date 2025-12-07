@@ -425,24 +425,18 @@ Variations use additional classes, not separate files:
 
 ## ⚠️ CRITICAL: Event Listeners and DOM Cloning
 
-**Event listeners are NOT copied when using `cloneNode()`** - see [DOM Manipulation Best Practices](docs/for-ai/guidelines/frontend-guidelines.md#dom-manipulation) for general guidance.
-
-When working with the ipynb-viewer block or similar components that clone DOM elements:
+**Event listeners are NOT copied when using `cloneNode()`**
 
 **The Problem:**
 ```javascript
-// Original element has event listener
 element.addEventListener('click', handler);
-
-// Clone does NOT have the event listener
 const clone = element.cloneNode(true);  // ❌ Event listener lost!
 ```
 
 **The Solution:**
-Always re-attach event listeners after cloning elements:
+Always re-attach event listeners after cloning:
 
 ```javascript
-// After cloning cells in updatePageDisplay()
 const clonedCell = cell.cloneNode(true);
 container.appendChild(clonedCell);
 
@@ -453,64 +447,34 @@ links.forEach(link => {
 });
 ```
 
-**In ipynb-viewer specifically:**
-- Smart links (hash `#` navigation) - handlers re-attached in `updatePageDisplay()`
-- GitHub markdown links (`.md` files) - handlers re-attached in `updatePageDisplay()`
-- Run buttons on code cells - handlers re-attached in `updatePageDisplay()`
+**ipynb-viewer implementation:** See [ipynb-viewer.js](blocks/ipynb-viewer/ipynb-viewer.js):
+- Run buttons (lines 1292-1303)
+- Smart links (lines 1347-1388)
+- GitHub links (lines 1390-1400)
 
-**See:** `blocks/ipynb-viewer/ipynb-viewer.js` lines 1292-1303 (run buttons), 1347-1388 (hash links), 1390-1400 (GitHub links)
+**General guidance:** See [DOM Manipulation Best Practices](docs/for-ai/guidelines/frontend-guidelines.md#dom-manipulation)
 
 ## ⚠️ CRITICAL: ipynb-viewer Smart Link Pattern
 
 **All `.md` links in ipynb-viewer are treated as smart links using the repository URL pattern.**
 
-When a notebook has a `repo` metadata attribute (e.g., `"repo": "https://github.com/user/repo"`), all `.md` file links are automatically converted to GitHub URLs and opened in overlays:
+When a notebook has a `repo` metadata attribute, all `.md` file links are automatically converted to GitHub URLs and opened in overlays.
 
-**How it works:**
-1. Markdown links like `[docs](docs/help.md)` are detected
-2. Converted to full GitHub URL: `https://github.com/user/repo/blob/main/docs/help.md`
-3. Stored in `data-md-url` attribute with `href="#"` to prevent prefetch
-4. Click handler fetches from GitHub raw URL and displays in overlay
-
-**CRITICAL: Smart links ALWAYS use GitHub repo URLs**
+**CRITICAL Rules:**
 - ✅ **DO** use ONLY the GitHub repo URL from notebook metadata
 - ✅ **DO** fetch from `raw.githubusercontent.com` (converted from blob URL)
-- ✅ **DO** rely on the smart link pattern for consistency
 - ❌ **DON'T** try local paths before GitHub
-- ❌ **DON'T** bypass smart links by fetching local files directly
 - ❌ **DON'T** hardcode local paths like `/docs/help.md`
 
 **Why this matters:**
 - The `repo` attribute in notebook metadata is the single source of truth
-- Local development server proxies missing files to production (including GitHub raw URLs)
+- Local development server proxies missing files to production
 - Smart links work identically in development and production
-- No special-casing for local vs production environments
 
-**Example - Regular .md link in cell:**
-```javascript
-// ✅ CORRECT: Uses repo metadata
-const cleanPath = 'docs/guide.md';
-const fullUrl = `${repoUrl}/blob/main/${cleanPath}`;
-const overlay = createGitHubMarkdownOverlay(fullUrl, 'Guide');
-```
-
-**Help button uses separate `help-repo` metadata:**
-- Notebooks have two repo attributes: `repo` (for content) and `help-repo` (for help docs)
-- `help-repo` fallback: help-repo → repo → allaboutV2 default
-- This keeps viewer help documentation separate from notebook content
-- Example: notebook might be from `user/my-project` but help comes from `ddttom/allaboutV2`
-
-```javascript
-// Help button implementation
-const helpRepoUrl = notebook.metadata?.['help-repo'] ||
-                    notebook.metadata?.repo ||
-                    'https://github.com/ddttom/allaboutV2';
-const fullUrl = `${helpRepoUrl}/blob/main/docs/help.md`;
-```
-
-**See:**
-- Help button: `blocks/ipynb-viewer/ipynb-viewer.js` line 1210-1219
-- Metadata handling: `blocks/ipynb-viewer/ipynb-viewer.js` line 1991-1999, 2122-2126
+**Complete details:** See [ipynb-viewer README](blocks/ipynb-viewer/README.md) sections on:
+- Smart Links and GitHub Integration (Section 3: Enhanced Markdown Rendering)
+- Help Button and Metadata (Section 6: Three Types of Overlays)
+- Link Navigation Implementation (Section 4: Interactive Features)
 
 ## ⚠️ CRITICAL: EDS Reserved Class Names
 
@@ -748,6 +712,9 @@ const code = 'here';
 - Frontend guidelines: `docs/for-ai/guidelines/frontend-guidelines.md`
 
 ### Site Remediation & SEO Strategy
+
+The reports are created by https://github.com/ddttom/my-pa11y-project
+
 - **Executive Summary**: `docs/remediation/files/00-executive-summary.md` - Complete 121-page audit analysis with 6 prioritized remediation strategies
   - **Note**: Jupyter notebook pages (.ipynb files) excluded from analysis
 - **Report Documentation**: `docs/remediation/files/report-layout.md` - Audit report structure, EDS-specific limitations, and notebook exclusion policy
@@ -767,38 +734,27 @@ const code = 'here';
 **Multiple approaches available:** See [EDS Testing Guide](docs/for-ai/testing/EDS-Architecture-and-Testing-Guide.md) for comprehensive testing strategy.
 
 1. **Traditional test.html** - Browser-based visual testing
-   - Full EDS core integration
-   - Real browser rendering
-   - User interaction testing
+   - Full EDS core integration, real browser rendering, user interaction testing
 
-2. **Jupyter Testing Notebooks (JSLab)** - Interactive development testing
-   - Context-aware (Node.js and browser modes)
-   - jsdom virtual DOM for block decoration
-   - Live preview HTML generation with iframe controls
-   - Cell-by-cell execution with inline documentation
+2. **Jupyter Testing Notebooks** - Interactive block development
+   - See: [Explaining Jupyter](docs/for-ai/explaining-jupyter.md)
+   - Context-aware execution, jsdom virtual DOM, live preview with iframe controls
    - File: `test.ipynb`
-   - Focus: Testing EDS blocks
 
-3. **Educational Jupyter Notebooks** - Interactive tutorials and documentation
-   - Create tutorials, guides, blog posts as SPAs
-   - Transform text into engaging interactive content
-   - Progressive learning with demonstrations
-   - **Visual block demonstrations** using `showPreview()` for beautiful overlays
-   - Available blocks: accordion, cards, tabs, hero, quote (use existing blocks only)
-   - **Note:** `showPreview()` now works correctly in notebook mode (fixed 2025-11-21)
+3. **Educational Notebooks** - Interactive tutorials and documentation
+   - See: [Educational Notebooks Guide](docs/for-ai/explaining-educational-notebooks.md)
+   - Create SPAs for teaching/tutorials/blogs with visual block demonstrations
    - Use `/create-notebook` command
-   - Files: `education.ipynb`, `docs-navigation.ipynb`, `blog.ipynb`
-   - Focus: Teaching and explaining concepts with visual engagement
 
-4. **ipynb-viewer Block** - Display notebooks on EDS pages
-   - Display .ipynb files on EDS pages
-   - Interactive JavaScript execution in browser
-   - Multiple display modes: basic, paged, autorun, notebook
-   - Link navigation between pages with hash targets
-   - Perfect for sharing tutorials, demos, documentation
-   - Location: `blocks/ipynb-viewer/`
+4. **Presentation Notebooks** - Client demos and showcases
+   - See: [Presentation Notebooks Guide](docs/for-ai/explaining-presentation-notebooks.md)
+   - Embedded HTML/JS with EDS blocks, auto-wrapping and action cards
 
-5. **Automated Tests** - CI/CD integration
+5. **ipynb-viewer Block** - Display notebooks on EDS pages
+   - See: [ipynb-viewer README](blocks/ipynb-viewer/README.md)
+   - Interactive JavaScript execution, multiple modes (basic, paged, autorun, notebook)
+   - Link navigation with hash targets
+
+6. **Automated Tests** - CI/CD integration
    - Jest/Mocha for regression testing
-   - Coverage reports
    - Future implementation
