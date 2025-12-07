@@ -140,6 +140,7 @@ Auto-activating skills provide inline guidance for:
 - **jupyter-educational-notebook** - Create educational notebooks with auto-wrapping (pure markdown) or manual HTML styling
 - **ipynb-validator** - Validate Jupyter notebooks for production readiness (smart links, structure, transitions, part flow)
 - **create-presentation** - Create presentation notebooks (non-interactive) with auto-wrapping or custom styling
+- **response-timestamps** - Automatic timestamp and execution duration tracking for all Claude responses
 - **skill-developer** - Managing Claude Code skills
 
 All skills are tailored specifically for EDS vanilla JavaScript development.

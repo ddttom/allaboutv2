@@ -7,6 +7,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-07c] - Response Timestamp System Implementation
+
+### Added
+- **Response Timestamp Guardrail Skill**: Automatic timestamp and execution duration tracking for all Claude responses
+  - Created `.claude/skills/response-timestamps/SKILL.md` - Guardrail skill with formatting requirements
+  - Registered in `.claude/skills/skill-rules.json` with wildcard trigger for all prompts
+  - High-priority suggest enforcement for consistent application
+- **CLAUDE.md Documentation**: New "Response Timestamps" section documenting the requirement
+  - Format specification: ISO 8601 timestamps with timezone
+  - Start and end timestamps with calculated execution duration
+  - Visual separators and emojis (🕒 ⏱️) for easy scanning
+- **README.md Update**: Added response-timestamps skill to Claude Code Integration section
+
+### Technical Details
+- **Implementation Approach**: Skill-based rather than hook-based
+  - Claude Code hook system lacks response-level timing hooks
+  - Hooks cannot modify Claude's output text directly
+  - Guardrail skill provides reliable voluntary compliance
+- **Format Requirements**:
+  - Start: `🕒 Response Started: [YYYY-MM-DD HH:MM:SS TIMEZONE]`
+  - End: `🕒 Response Completed: [YYYY-MM-DD HH:MM:SS TIMEZONE]`
+  - Duration: `⏱️ Execution Duration: [X minutes Y seconds]`
+- **Activation**: Wildcard keyword trigger (`"*"`) ensures all prompts activate the skill
+
+### Rationale
+Provides accountability and performance monitoring for AI-assisted development by tracking exact response timing. The skill-based approach works within Claude Code's architecture constraints while delivering the desired functionality reliably.
+
+### Files Modified
+- `.claude/skills/response-timestamps/SKILL.md` (new)
+- `.claude/skills/skill-rules.json` (registration)
+- `CLAUDE.md` (documentation)
+- `README.md` (skills list)
+
+---
+
 ## [2025-12-07b] - Remediation Documentation: Jupyter Notebook Exclusion Policy
 
 ### Changed

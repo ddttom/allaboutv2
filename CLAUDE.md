@@ -687,6 +687,22 @@ const code = 'here';
 [Testing strategy and validation approach]
 ```
 
+## Response Timestamps
+
+**All Claude responses must include timestamps and execution duration.**
+
+**Format**:
+- **Start**: Begin response with timestamp: `🕒 Response Started: [YYYY-MM-DD HH:MM:SS TIMEZONE]`
+- **End**: Conclude response with timestamp and duration:
+  ```
+  🕒 Response Completed: [YYYY-MM-DD HH:MM:SS TIMEZONE]
+  ⏱️  Execution Duration: [X minutes Y seconds]
+  ```
+
+**Purpose**: Track response timing for accountability and performance monitoring.
+
+**Implementation**: Automatically handled by `response-timestamps` skill (`.claude/skills/response-timestamps/`).
+
 ## Documentation
 
 ### Primary Documentation
