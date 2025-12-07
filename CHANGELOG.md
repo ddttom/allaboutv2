@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-07b] - Remediation Documentation: Jupyter Notebook Exclusion Policy
+
+### Changed
+- **Remediation Analysis Scope**: Jupyter notebook pages (.ipynb files) now **EXCLUDED** from all remediation analysis
+  - Added comprehensive exclusion policy to `docs/remediation/files/report-layout.md`
+  - Documents rationale: notebooks are interactive educational tools following Jupyter standards, not web content standards
+  - Lists 6 excluded notebook pages with URL patterns for filtering
+- **Revised Accessibility Fixes** (`01-critical-accessibility-fixes.md`):
+  - Pages affected: ~~3 pages~~ → **1 page** (67% reduction)
+  - Effort estimate: ~~2-4 hours~~ → **1 hour** (75% reduction)
+  - Only `/notes/cursorrules` requires fixes; 2 notebook pages excluded
+- **Updated All Remediation Strategies**:
+  - Added exclusion notices to image optimization, content freshness, metadata, and content quality docs
+  - Security headers remain site-wide (includes notebooks for security)
+- **Documentation Updates**:
+  - `README.md` - Added notebook exclusion notes to Site Remediation section
+  - `CLAUDE.md` - Updated remediation quick links with revised estimates
+  - `00-executive-summary.md` - Added prominent exclusion notice
+
+### Rationale
+Notebooks serve educational/documentation purposes with intentional complexity for code execution. They follow different accessibility standards (Jupyter) vs traditional web pages (WCAG), and their DOM is dynamically generated client-side rather than optimized for SEO.
+
+### Impact
+- **Accessibility**: 67% fewer pages to remediate (3→1)
+- **Effort**: 75% reduction in accessibility work (2-4h→1h)
+- **Cost**: Minimal savings as most effort was already in content/images
+- **Clarity**: Clear boundaries between web content and notebook content remediation
+
+---
+
 ## [2025-12-07] - Site Remediation Documentation & Lint Configuration
 
 ### Added
