@@ -4,12 +4,14 @@
 
 ### For AI Assistants
 - **Comprehensive Documentation**: See `docs/for-ai/` directory (26 detailed guides)
-- **Claude Code Tools**: See `.claude/` directory (17 commands, 25 skills, 6 agents, 2 hooks)
+- **Claude Code Tools**: See `.claude/` directory (17 commands, 27 skills, 6 agents, 2 hooks)
 - **Start Here**: `docs/for-ai/index.md` for complete navigation
 - **Agents**: See `.claude/agents_README.md` for autonomous task handlers
 
 ### Common Workflows
 - **Create new block**: Use `/new-block <name>` command (follows Content Driven Development)
+- **Find reference blocks**: Use `block-collection-and-party` skill to search Block Collection and Block Party
+- **Survey available blocks**: Use `block-inventory` skill to understand block palette for authoring
 - **Test a block**: Use `/test-block <name>` command or open `test.ipynb` in JSLab
 - **Interactive testing**: Use Jupyter notebooks with context-aware execution
 - **Create educational notebook**: Use `/create-notebook` for tutorials, guides, and demos
@@ -698,7 +700,7 @@ const code = 'here';
 - **`.claude/README.md`** - Complete overview (commands, skills, agents, hooks)
 - **`.claude/agents_README.md`** - Agent documentation (6 autonomous agents)
 - **`.claude/commands/`** - Slash commands for common tasks (19 total)
-- **`.claude/skills/`** - Extended capabilities for EDS development (26 total)
+- **`.claude/skills/`** - Extended capabilities for EDS development (27 total)
 - **`.claude/hooks/`** - Development workflow automation (2 active hooks)
   - `CONFIG.md` - Hook configuration and customization guide
 

@@ -7,6 +7,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-08e] - Claude Code Skills Enhancement
+
+### Added
+- **block-inventory skill**: New skill for surveying available blocks from local AEM Edge Delivery Services project and Block Collection
+  - Scans local blocks directory to find existing blocks
+  - Searches Block Collection for common blocks (hero, cards, columns, accordion, tabs, carousel, quote, fragment)
+  - Consolidates block inventory with purposes to inform content modeling decisions
+  - Provides block palette understanding similar to what authors see in authoring tools
+  - Use when starting page imports or planning content structure
+  - Located at `.claude/skills/block-inventory/SKILL.md` (257 lines)
+
+### Changed
+- **block-collection-and-party skill**: Enhanced with critical block structure fetching capability
+  - **New Step 5**: Get Block Structure Examples using `get-block-structure.js` script
+  - Fetches pre-decoration HTML structure before JavaScript decoration
+  - Reveals row/column patterns for accurate HTML generation
+  - Displays multiple block variants (e.g., "Cards" vs "Cards (no images)")
+  - Prevents HTML structure mistakes that cause blocks to fail decoration
+  - Critical for page migration and HTML generation workflows
+  - New script: `.claude/skills/block-collection-and-party/scripts/get-block-structure.js` (240 lines)
+- **docs-search skill**: Updated description to clarify "AEM Edge Delivery Services features"
+- **content-driven-development**: Enhanced HTML structure resources in `resources/html-structure.md` (363 lines modified)
+- **Slash commands**: Updated `/create-notebook` and `/create-presentation` command documentation
+- **agentsetup.sh**: Enhanced documentation and setup process (16 lines modified)
+
+### Rationale
+The block-inventory skill fills a critical gap in the content modeling workflow by providing the same block palette visibility that authors see in authoring tools. The block-collection-and-party enhancement prevents the most common HTML structure mistakes during page migrations by fetching and displaying the exact pre-decoration structure that blocks expect. Together, these improvements streamline the workflow from content modeling to HTML generation.
+
+### Files Modified
+1. `.claude/skills/block-inventory/SKILL.md` - **NEW** (257 lines)
+2. `.claude/skills/block-collection-and-party/SKILL.md` - Enhanced Step 5 documentation (51 lines added)
+3. `.claude/skills/block-collection-and-party/scripts/get-block-structure.js` - **NEW** (240 lines)
+4. `.claude/skills/content-driven-development/resources/html-structure.md` - Enhanced structure examples (363 lines modified)
+5. `.claude/skills/docs-search/SKILL.md` - Description clarification (1 line changed)
+6. `.claude/commands/create-notebook.md` - Documentation updates (6 lines changed)
+7. `.claude/commands/create-presentation.md` - Documentation updates (4 lines changed)
+8. `agentsetup.sh` - Enhanced setup process (16 lines changed)
+9. `.gitignore` - Configuration updates (2 lines changed)
+10. `.claude/skills/skill-rules.json` - **ADDED** auto-trigger registration for both new skills (82 lines added)
+11. `README.md` - Added 2 skills to Skills section (2 lines added)
+12. `CLAUDE.md` - Updated skill count (25→27) and added 2 workflow entries (4 lines changed)
+
+**Total: 9 files modified + 3 documentation updates = 12 file operations**
+
+---
+
 ## [2025-12-08d] - Bio Block Profile Image Fetching & Config-Based Defaults
 
 ### Added

@@ -159,6 +159,8 @@ See [`.claude/README.md`](.claude/README.md) for complete command reference.
 ### Skills
 Auto-activating skills provide inline guidance for:
 - **building-blocks** - Creating and modifying EDS blocks
+- **block-collection-and-party** - Reference implementations from Block Collection and Block Party repositories, with block structure fetching
+- **block-inventory** - Survey available blocks from local project and Block Collection to understand authoring options
 - **content-driven-development** - CDD workflow patterns
 - **content-modeling** - Author-friendly content structures
 - **testing-blocks** - Block testing strategies
