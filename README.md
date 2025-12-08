@@ -7,6 +7,27 @@
 
 This project is built for Adobe Edge Delivery Services (EDS) with a focus on simplicity, performance, and modern web standards. The project intentionally avoids TypeScript and build-heavy frameworks to maintain simplicity and reduce build complexity.
 
+## Project Statistics
+
+*Statistics generated using [scc](https://github.com/boyter/scc)*
+
+- **Total Files**: 867
+- **Lines of Code**: 227,477 (excluding blanks and comments)
+- **Codebase Size**: 10.78 MB
+
+### Language Breakdown
+
+| Language   | Files | Lines of Code | % of Total |
+|------------|-------|---------------|------------|
+| Markdown   | 314   | 98,472        | 43.3%      |
+| JavaScript | 108   | 22,396        | 9.8%       |
+| CSS        | 75    | 13,398        | 5.9%       |
+| Python     | 61    | 11,889        | 5.2%       |
+| HTML       | 62    | 25,086        | 11.0%      |
+| Other      | 247   | 19,816        | 8.7%       |
+
+*This is a documentation-first project with comprehensive guides for AI-assisted development (see [docs/for-ai/](docs/for-ai/))*
+
 ## Development Requirements
 
 - Modern JavaScript (ES modules) without TypeScript
