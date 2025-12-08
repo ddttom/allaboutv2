@@ -101,7 +101,12 @@
       "Bash(for file in /Users/tomcranstoun/Documents/GitHub/allaboutV2/my-blog.json /Users/tomcranstoun/Documents/GitHub/allaboutV2/blogs/ddt/my-blog.json /Users/tomcranstoun/Documents/GitHub/allaboutV2/blogs/ddt/integrations/my-blog.json /Users/tomcranstoun/Documents/GitHub/allaboutV2/blogs/ddt/ai/my-blog.json)",
       "Bash(do)",
       "Bash(comm:*)",
-      "Bash(wc:*)"
+      "Bash(wc:*)",
+      "Bash(pip3 install:*)",
+      "Bash(source .venv/bin/activate)",
+      "Bash(pip install:*)",
+      "Bash(python -m playwright:*)",
+      "Bash(python:*)"
     ],
     "deny": [],
     "ask": []
