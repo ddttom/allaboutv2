@@ -18,6 +18,14 @@ This project is built for Adobe Edge Delivery Services (EDS) with a focus on sim
 
 ## Quick Start
 
+### Environment Setup
+
+Run the setup script to configure symlinks for AI agents (Gemini/Claude):
+
+```bash
+./agentsetup.sh
+```
+
 ### Development Server
 
 Start the development server designed to improve AI assistant workflows when testing blocks and components:

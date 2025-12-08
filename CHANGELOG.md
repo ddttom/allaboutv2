@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-08] - Gemini Agent Environment Setup
+
+### Added
+- **Gemini Agent Support**: Added `GEMINI.md` as a symlink to `CLAUDE.md` for Gemini-based agents.
+- **Workflow Symlinks**: Added `.agent/workflows` symlink pointing to `.claude/skills` to enable skill usage as workflows.
+- **Setup Script**: Created `agentsetup.sh` to automate the recreation of these environment symlinks.
+- **Git Configuration**: Updated `.gitignore` to track the new workflow symlink configuration.
+
 ## [2025-12-07e] - CLAUDE.md Documentation Compaction
 
 ### Changed
