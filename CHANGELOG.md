@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-08b] - AI Development Icon and Agent Setup Enhancement
+
+### Added
+- **AI Development Icon**: Created `icons/ai-dev.svg` - interactive SVG visualization
+  - Illustrates AI-assisted EDS development workflow
+  - Shows collaboration between developer, AI assistant, and documentation
+  - Key message: "Simple Tools + AI Collaboration = Better EDS Development"
+  - Features: Zero Dependencies, Interactive Testing, 21 AI Skills, Browser-Based Notebooks
+  - Dimensions: 800x400 responsive SVG with embedded styling
+
+### Changed
+- **Enhanced agentsetup.sh**: Refined multi-AI environment setup script
+  - Updated script description: "Gemini environment setup" → "multi-AI environment setup"
+  - Added AGENTS.md symlink pointing to CLAUDE.md (legacy compatibility)
+  - Improved inline comments for better clarity
+  - Now creates three symlinks: GEMINI.md, AGENTS.md, and .agent/workflows
+
+### Rationale
+The ai-dev.svg provides a visual representation of the project's AI-assisted development approach, making it easier to communicate the workflow to new developers and stakeholders. The agentsetup.sh enhancements support broader AI agent compatibility beyond just Gemini, with legacy AGENTS.md support for older tooling.
+
+### Files Modified
+- `agentsetup.sh` - Added AGENTS.md symlink, enhanced documentation
+- `icons/ai-dev.svg` - **NEW** visual workflow diagram (170 lines)
+
+**Total: 1 file modified + 1 new file = 2 file operations**
+
+---
+
 ## [2025-12-08] - Gemini Agent Environment Setup
 
 ### Added
