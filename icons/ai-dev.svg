@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Adobe EDS Components - Illustration</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h1 {
+            color: #1e293b;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        svg {
+            width: 100%;
+            height: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Building Adobe EDS Components Without the Complexity</h1>
+        
+        <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+            <!-- Background -->
+            <rect width="800" height="400" fill="#f8fafc"/>
+            
+            <!-- Title -->
+            <text x="400" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#1e293b" text-anchor="middle">
+                Simple Tools + AI Collaboration = Better EDS Development
+            </text>
+            
+            <!-- Left side - Developer -->
+            <g id="developer">
+                <!-- Developer figure -->
+                <circle cx="150" cy="150" r="30" fill="#3b82f6"/>
+                <rect x="130" y="180" width="40" height="60" rx="5" fill="#3b82f6"/>
+                <rect x="120" y="200" width="20" height="50" rx="3" fill="#3b82f6"/>
+                <rect x="160" y="200" width="20" height="50" rx="3" fill="#3b82f6"/>
+                
+                <!-- Laptop -->
+                <rect x="100" y="260" width="100" height="60" rx="5" fill="#64748b" stroke="#475569" stroke-width="2"/>
+                <rect x="105" y="265" width="90" height="45" fill="#1e293b"/>
+                <line x1="100" y1="320" x2="80" y2="330" stroke="#475569" stroke-width="3"/>
+                <line x1="200" y1="320" x2="220" y2="330" stroke="#475569" stroke-width="3"/>
+                
+                <text x="150" y="360" font-family="Arial, sans-serif" font-size="14" fill="#475569" text-anchor="middle" font-weight="bold">
+                    Developer
+                </text>
+            </g>
+            
+            <!-- Right side - AI Assistant -->
+            <g id="ai-assistant">
+                <!-- AI figure -->
+                <rect x="620" y="120" width="60" height="60" rx="10" fill="#8b5cf6"/>
+                <circle cx="640" cy="145" r="5" fill="#ffffff"/>
+                <circle cx="660" cy="145" r="5" fill="#ffffff"/>
+                <rect x="640" y="160" width="20" height="3" rx="1.5" fill="#ffffff"/>
+                
+                <!-- AI body -->
+                <rect x="625" y="185" width="50" height="55" rx="5" fill="#8b5cf6"/>
+                <rect x="615" y="200" width="20" height="35" rx="3" fill="#8b5cf6"/>
+                <rect x="665" y="200" width="20" height="35" rx="3" fill="#8b5cf6"/>
+                
+                <!-- AI sparkles -->
+                <circle cx="610" cy="130" r="3" fill="#fbbf24"/>
+                <circle cx="690" cy="140" r="3" fill="#fbbf24"/>
+                <circle cx="700" cy="170" r="3" fill="#fbbf24"/>
+                
+                <text x="650" y="360" font-family="Arial, sans-serif" font-size="14" fill="#475569" text-anchor="middle" font-weight="bold">
+                    AI Assistant
+                </text>
+            </g>
+            
+            <!-- Center - Documentation flow -->
+            <g id="documentation">
+                <!-- Documentation stack -->
+                <rect x="360" y="140" width="80" height="100" rx="5" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+                <line x1="370" y1="160" x2="420" y2="160" stroke="#cbd5e1" stroke-width="2"/>
+                <line x1="370" y1="175" x2="430" y2="175" stroke="#cbd5e1" stroke-width="2"/>
+                <line x1="370" y1="190" x2="410" y2="190" stroke="#cbd5e1" stroke-width="2"/>
+                <line x1="370" y1="205" x2="425" y2="205" stroke="#cbd5e1" stroke-width="2"/>
+                <line x1="370" y1="220" x2="415" y2="220" stroke="#cbd5e1" stroke-width="2"/>
+                
+                <!-- "docs/for-ai" label -->
+                <rect x="365" y="145" width="70" height="20" rx="3" fill="#10b981"/>
+                <text x="400" y="159" font-family="monospace" font-size="11" fill="#ffffff" text-anchor="middle" font-weight="bold">
+                    docs/for-ai
+                </text>
+                
+                <text x="400" y="270" font-family="Arial, sans-serif" font-size="14" fill="#475569" text-anchor="middle" font-weight="bold">
+                    Documentation
+                </text>
+            </g>
+            
+            <!-- Arrows showing collaboration -->
+            <!-- Developer to Docs -->
+            <g id="arrow-left">
+                <path d="M 220 280 Q 290 260 355 220" fill="none" stroke="#3b82f6" stroke-width="3" marker-end="url(#arrowblue)"/>
+                <text x="260" y="265" font-family="Arial, sans-serif" font-size="11" fill="#3b82f6">
+                    Creates
+                </text>
+            </g>
+            
+            <!-- Docs to AI -->
+            <g id="arrow-right">
+                <path d="M 445 220 Q 530 260 610 280" fill="none" stroke="#8b5cf6" stroke-width="3" marker-end="url(#arrowpurple)"/>
+                <text x="510" y="265" font-family="Arial, sans-serif" font-size="11" fill="#8b5cf6">
+                    Guides
+                </text>
+            </g>
+            
+            <!-- Bidirectional collaboration -->
+            <g id="collab-arrow">
+                <path d="M 220 200 Q 400 160 610 200" fill="none" stroke="#10b981" stroke-width="2" stroke-dasharray="5,5"/>
+                <text x="400" y="125" font-family="Arial, sans-serif" font-size="12" fill="#10b981" text-anchor="middle" font-style="italic">
+                    Continuous Collaboration
+                </text>
+            </g>
+            
+            <!-- Arrow markers -->
+            <defs>
+                <marker id="arrowblue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#3b82f6"/>
+                </marker>
+                <marker id="arrowpurple" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#8b5cf6"/>
+                </marker>
+            </defs>
+            
+            <!-- Bottom - Key features -->
+            <g id="features">
+                <rect x="50" y="300" width="700" height="80" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+                
+                <text x="400" y="325" font-family="Arial, sans-serif" font-size="14" fill="#1e293b" text-anchor="middle" font-weight="bold">
+                    Zero Dependencies • Interactive Testing • 21 AI Skills • Browser-Based Notebooks
+                </text>
+                
+                <text x="400" y="350" font-family="Arial, sans-serif" font-size="12" fill="#64748b" text-anchor="middle">
+                    Built for AI, Useful for People
+                </text>
+                
+                <text x="400" y="370" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle" font-style="italic">
+                    Cherry-pick what you need • Add Adobe's boilerplate • Get started
+                </text>
+            </g>
+        </svg>
+    </div>
+</body>
+</html>
