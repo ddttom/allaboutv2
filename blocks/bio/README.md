@@ -67,6 +67,51 @@ The block intelligently detects image links in the first cell and converts them 
 - Consistent image handling across all bio instances
 - Proper semantic HTML in production
 
+### "Picture Here" Placeholder Text
+
+The block supports a convenient placeholder text feature for quick bio creation with intelligent image fetching:
+
+**How it works:**
+1. Type "Picture Here" (case-insensitive) in the first cell
+2. Block automatically fetches the author's profile image
+3. Falls back to configured default image if profile not found
+4. No need to paste image URLs for standard bio images
+
+**Supported text variations:**
+- `Picture Here` (standard case)
+- `picture here` (lowercase)
+- `PICTURE HERE` (uppercase)
+- Any mix of cases (case-insensitive matching)
+
+**Example usage:**
+
+`Bio with Placeholder`
+`| bio                                    |                                                           |`
+`|----------------------------------------|-----------------------------------------------------------|`
+`| Picture Here                           | Web development doesn't need complex tooling...           |`
+
+**Image source priority:**
+1. **Author profile image** - Fetched from `https://allabout.network/profiles/{author-name}.json`
+   - Uses `$profile:imagelink$` field from profile
+   - Author name from `<meta name="author">` tag
+   - Converted to URL slug (e.g., "Tom Cranstoun" → "tom-cranstoun")
+2. **Config default image** - Fallback from `/config/defaults.json`
+   - Key: `$bio:defaultimage$`
+   - Current value: `https://allabout.network/blogs/ddt/media_145e13ea388af99109b4e34d2c57d40f5fc22d9c9.jpg`
+
+**Configuration:**
+- Default image URL managed in `/config/defaults.json`
+- Change `$bio:defaultimage$` value to update site-wide default
+- Profile images managed per-author in individual profile JSON files
+
+**Why this is useful:**
+- Automatically uses correct author image from their profile
+- Speeds up bio creation for team pages
+- Ensures consistent fallback images during development
+- Allows authors to focus on content first, images later
+- Centralized configuration management
+- Easy to replace with specific images during review phase
+
 ### Author Name Extraction
 
 The block automatically adds the author's name in a `<strong>` element below the bio:
@@ -264,16 +309,58 @@ To prevent URLs from appearing as author names:
 
 ### Block Configuration Object
 
-While the bio block doesn't use an explicit `BIO_CONFIG` object, it follows configuration patterns through:
+The bio block uses a `BIO_CONFIG` object for centralized JavaScript configuration:
 
-**Supported Image Extensions (Constant Array):**
+`BIO_CONFIG Object`
+`const BIO_CONFIG = {`
+`  PLACEHOLDER_TEXT: 'picture here',`
+`  DEFAULT_ALT_TEXT: 'Bio image',`
+`  IMAGE_EXTENSIONS: ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'],`
+`  CONFIG_URL: '/config/defaults.json',`
+`};`
 
-`Image Extension Configuration`
-`const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];`
+**Configuration options:**
 
-**Extension points:**
-- Add new image formats by extending the array
-- Modify detection logic in `imageExtensions.some()`
+| Option | Default | Purpose |
+|--------|---------|---------|
+| `PLACEHOLDER_TEXT` | `'picture here'` | Text to match for placeholder replacement (lowercase for case-insensitive matching) |
+| `DEFAULT_ALT_TEXT` | `'Bio image'` | Alt text for placeholder images when author name not available |
+| `IMAGE_EXTENSIONS` | `['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg']` | Supported image file extensions for link detection |
+| `CONFIG_URL` | `'/config/defaults.json'` | Path to configuration file for runtime values |
+
+**Runtime Configuration (config/defaults.json):**
+
+The default image URL is managed in the centralized configuration file:
+
+```json
+{
+  "Item": "$bio:defaultimage$",
+  "Value": "https://allabout.network/blogs/ddt/media_145e13ea388af99109b4e34d2c57d40f5fc22d9c9.jpg"
+}
+```
+
+**Configuration functions:**
+
+1. **`getConfigValue(key)`** - Fetches configuration values from `defaults.json`
+   - Caches config after first fetch for performance
+   - Returns null if key not found
+   - Example: `await getConfigValue('$bio:defaultimage$')`
+
+2. **`getProfileImage(authorName)`** - Fetches author profile image
+   - Converts author name to URL slug
+   - Fetches from `https://allabout.network/profiles/{slug}.json`
+   - Extracts `$profile:imagelink$` field
+   - Returns null if profile or image not found
+
+3. **`nameToSlug(name)`** - Converts author names to URL-safe slugs
+   - Example: "Tom Cranstoun" → "tom-cranstoun"
+   - Handles special characters and whitespace
+
+**Customization:**
+- Modify `$bio:defaultimage$` in `/config/defaults.json` to change default image site-wide
+- Add new formats to `IMAGE_EXTENSIONS` array for additional image type support
+- Change `PLACEHOLDER_TEXT` to use different placeholder text (remember to lowercase)
+- Update `CONFIG_URL` if using different configuration file location
 
 ### Expression Plugin Integration
 
@@ -802,6 +889,55 @@ This is a code-level issue. The current implementation correctly uses `block.que
 
 ---
 
+### Issue: Profile image not loading with "Picture Here" placeholder
+
+**Symptoms:**
+- Using "Picture Here" placeholder
+- Shows fallback image instead of author's profile image
+- Console shows "Profile not found" or CORS error
+
+**Possible causes:**
+1. **CORS error in local development** (expected behavior)
+   - Profile fetching works in production (same-origin)
+   - Local development blocks cross-origin requests
+   - Fallback to config default is correct behavior
+
+2. **Profile doesn't exist**
+   - Author profile JSON not created yet
+   - Profile URL slug doesn't match author name
+
+3. **Profile missing image field**
+   - Profile exists but has no `$profile:imagelink$` field
+   - Field value is null or empty
+
+**Solutions:**
+
+**For CORS in development:**
+- This is expected behavior - profile fetching works in production
+- Verify fallback to config default works correctly
+- Test in production environment for full functionality
+
+**For missing profiles:**
+1. Create author profile at `https://allabout.network/profiles/{slug}.json`
+2. Ensure slug matches name conversion:
+   - "Tom Cranstoun" → "tom-cranstoun"
+   - Lowercase, spaces to hyphens, special chars removed
+3. Add `$profile:imagelink$` field with image URL
+
+**For debugging:**
+
+`Check console logs`
+`Bio block - Fetching profile: https://allabout.network/profiles/author-name.json`
+`Bio block - Profile not found for Author Name`
+`Bio block - Falling back to config default image`
+
+**Validation:**
+- Profile URL should match expected slug format
+- Fallback to config default indicates profile fetch failed
+- Check network tab in DevTools for HTTP status code
+
+---
+
 ## Related Documentation
 
 ### Internal Documentation
@@ -834,12 +970,22 @@ This is a code-level issue. The current implementation correctly uses `block.que
 
 ## Version History
 
-**Current version:** 2.0 (2024-11-26)
+**Current version:** 3.0 (2025-12-08)
 
 **Recent changes:**
+- Added intelligent profile image fetching from author profiles
+- Moved default image URL to centralized config (`/config/defaults.json`)
+- Added `getProfileImage()` function for automatic author image lookup
+- Added `nameToSlug()` function for URL slug generation
+- Fixed case-insensitive placeholder matching (Test Case 10)
+- Improved cell selection to avoid multi-cell text content issues
+- Added config caching for improved performance
+- Enhanced fallback chain: Profile → Config → Error
+
+**Previous version:** 2.0 (2024-11-26)
 - Added URL detection to prevent URLs as author names
 - Improved image link conversion with `.replaceWith()`
-- Enhanced test suite with 8 comprehensive test cases
+- Enhanced test suite with 11 comprehensive test cases
 - Added expressions plugin integration
 - Improved responsive design (768px, 480px breakpoints)
 
@@ -847,6 +993,7 @@ This is a code-level issue. The current implementation correctly uses `block.que
 - Expressions plugin requires production environment
 - No built-in lazy loading (manual implementation needed)
 - IE11 requires polyfills for `object-fit` and `replaceWith()`
+- Profile fetching may fail with CORS in local development (expected, works in production)
 
 ---
 

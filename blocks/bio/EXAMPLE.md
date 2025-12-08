@@ -5,6 +5,7 @@ This document shows how to create bio blocks in Google Docs. The bio block displ
 ## Table of Contents
 - [Basic Example](#basic-example)
 - [Example with Image Link](#example-with-image-link)
+- [Example with "Picture Here" Placeholder](#example-with-picture-here-placeholder)
 - [Example with Direct Image](#example-with-direct-image)
 - [Variations](#variations)
 - [Best Practices](#best-practices)
@@ -57,6 +58,59 @@ The bio block automatically converts image links to actual images:
 - .gif
 - .webp
 - .svg
+
+---
+
+## Example with "Picture Here" Placeholder
+
+The bio block supports a convenient placeholder text for quick bio creation without needing to paste image URLs:
+
+```
+| bio                                    |                                                           |
+|----------------------------------------|-----------------------------------------------------------|
+| Picture Here                           | Web development doesn't need complex tooling - this       |
+|                                        | framework proves you can build production-ready Adobe     |
+|                                        | Edge Delivery Services components with nothing but       |
+|                                        | vanilla JavaScript and precise documentation.             |
+```
+
+**How it works:**
+1. Type "Picture Here" (case-insensitive) in the first cell
+2. The block automatically detects this placeholder text
+3. Replaces it with a configured default image at runtime
+4. Author name is extracted from the page's `<meta name="author">` tag
+
+**Supported text variations:**
+- `Picture Here` (standard capitalization)
+- `picture here` (all lowercase)
+- `PICTURE HERE` (all uppercase)
+- Any mix of cases - matching is case-insensitive
+
+**Default image:**
+The placeholder uses this configured image:
+```
+https://allabout.network/blogs/ddt/media_145e13ea388af99109b4e34d2c57d40f5fc22d9c9.jpg
+```
+
+**When to use this:**
+- 🚀 **Quick prototyping**: Create multiple bios quickly without sourcing images
+- 📝 **Content-first workflow**: Focus on bio text first, add specific images later
+- 👥 **Team pages**: Use consistent placeholder during development
+- 🔄 **Review phases**: Easy to identify which bios need final images
+
+**Configuration:**
+The default image can be changed by modifying `BIO_CONFIG.DEFAULT_IMAGE_URL` in `bio.js`:
+
+```javascript
+const BIO_CONFIG = {
+  PLACEHOLDER_TEXT: 'picture here',
+  DEFAULT_IMAGE_URL: 'https://your-site.com/default-avatar.jpg',
+  DEFAULT_ALT_TEXT: 'Bio image',
+  IMAGE_EXTENSIONS: ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'],
+};
+```
+
+**💡 TIP:** This is perfect for creating multiple bios in bulk - just use "Picture Here" in all of them, then come back and replace with specific images once you have them ready!
 
 ---
 

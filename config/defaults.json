@@ -1,5 +1,5 @@
 {
-    "total": 4,
+    "total": 5,
     "offset": 0,
     "limit": 1,
     "data": [
@@ -18,6 +18,10 @@
       {
         "Item": "$meta:enablecontentops$",
         "Value": "y"
+      },
+      {
+        "Item": "$bio:defaultimage$",
+        "Value": "https://allabout.network/blogs/ddt/media_145e13ea388af99109b4e34d2c57d40f5fc22d9c9.jpg"
       }
     ],
     ":type": "fallback"
