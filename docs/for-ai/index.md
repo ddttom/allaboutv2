@@ -103,6 +103,15 @@ This index provides structured access to all documentation within the `docs/for-
   - API token security audit checklist
   - Target: AI assistants, DevOps, system administrators managing allabout.network
 
+- **[`helix-config.md`](helix-config.md)**
+  - Complete .helix/config file reference and configuration guide
+  - CDN integration setup with Cloudflare (production environment)
+  - Push invalidation credentials and authentication
+  - Environment hostname configuration (preview, live, production)
+  - Double-CDN architecture explanation and security best practices
+  - Configuration validation checklist and troubleshooting guide
+  - Target: AI assistants, DevOps, system administrators configuring EDS projects
+
 ### Comprehensive Development Guide
 - **[`eds.md`](eds.md)**
   - Complete EDS development guide (1,937 lines)
