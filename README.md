@@ -274,6 +274,15 @@ The site audit is created with https://github.com/ddttom/my-pa11y-project
 - [EDS Development Guide](docs/eds.md) - Complete EDS development reference
 - [EDS Best Practices](docs/eds-appendix.md) - Advanced patterns and techniques
 
+### Infrastructure & Operations
+- **[Cloudflare Configuration Reference](docs/for-ai/implementation/cloudflare.md)** - Complete infrastructure documentation
+  - Double-CDN architecture (Cloudflare → Adobe Fastly → Adobe EDS)
+  - Worker setup, push invalidation, DNS/SSL/TLS configuration
+  - Health check automation scripts and monitoring guidance
+  - API token security audit checklist
+  - Operational procedures for publishing and cache management
+  - Target: AI assistants, DevOps, system administrators
+
 ### Testing & Documentation
 - [Jupyter Notebook Testing Guide](docs/for-ai/explaining-jupyter.md) - Context-aware interactive testing with live preview, includes:
   - JSLab mode for development with jsdom virtual DOM

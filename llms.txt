@@ -2,7 +2,7 @@
 
 Technical documentation and educational resources for Adobe Edge Delivery Services development, AI integration, and modern web architecture. Comprehensive guides covering EDS block development, framework integrations, AI/LLM fundamentals, and content management systems.
 
-**Last updated:** November 2025
+**Last updated:** December 2025
 **Authors:** Tom Cranstoun, Cate Nisbet
 **LinkedIn:** [https://www.linkedin.com/in/tom-cranstoun/](https://www.linkedin.com/in/tom-cranstoun/)
 

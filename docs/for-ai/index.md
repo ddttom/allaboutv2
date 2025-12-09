@@ -91,6 +91,18 @@ This index provides structured access to all documentation within the `docs/for-
   - Build vs deployment environment clarification
   - Target: All developers, especially those new to the project structure
 
+### Infrastructure and Operations
+- **[`implementation/cloudflare.md`](implementation/cloudflare.md)**
+  - Complete Cloudflare CDN configuration reference
+  - Adobe Edge Delivery Services integration with Cloudflare Worker
+  - Push invalidation setup and troubleshooting
+  - Double-CDN architecture (Cloudflare → Adobe Fastly → EDS)
+  - SSL/TLS configuration, DNS setup, and monitoring
+  - Operational procedures for publishing, cache management, and updates
+  - Health check automation scripts and performance metrics
+  - API token security audit checklist
+  - Target: AI assistants, DevOps, system administrators managing allabout.network
+
 ### Comprehensive Development Guide
 - **[`eds.md`](eds.md)**
   - Complete EDS development guide (1,937 lines)
