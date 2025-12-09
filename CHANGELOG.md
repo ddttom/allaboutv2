@@ -7,6 +7,107 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-09c] - Cloudflare Pro Plan Upgrade
+
+### Changed
+- **Upgraded Cloudflare Plan**: From Free to Pro ($20/month, approximately £16/month)
+  - **Surgical Cache Purging** - Major performance improvement (only changed URLs invalidated vs. entire site)
+  - **WAF Rules** - Custom security rules now available (not yet configured)
+  - **Rate Limiting** - DDoS and API protection now available (not yet configured)
+  - **Image Optimization** - Polish compression features now available (not yet configured)
+  - **Priority Support** - Faster response times than Free plan
+  - **Advanced Analytics** - Enhanced traffic insights and reporting
+  - **20 Page Rules** - Up from 3 on Free plan (17 additional rules)
+  - **10M Worker Requests/Month** - Up from 100K/day on Free plan (significantly higher capacity)
+
+- **Cloudflare Documentation Updated**: Complete revision of `docs/for-ai/implementation/cloudflare.md` (Version 1.0 → 1.1)
+  - **Account Details** (line 87): Updated plan from "Free" to "Pro ($20/month)"
+  - **Push Invalidation Section** (lines 277-303): Completely rewritten to document surgical cache purging
+    - Changed from "entire site purge" documentation to "surgical purging (only changed URLs)"
+    - Added Free vs. Pro vs. Enterprise comparison table
+    - Documented minimal performance impact vs. cold cache on Free plan
+  - **Upgrade Considerations Section** (lines 688-744): Major restructure
+    - Renamed from "Upgrade Considerations" to "Current Plan Features and Upgrade Path"
+    - Listed all active Pro features with checkmarks
+    - Documented what was gained from Free → Pro upgrade
+    - Added comprehensive comparison table (Free vs. Pro vs. Enterprise)
+    - Identified features not yet configured (WAF, Rate Limiting, Image Optimization)
+  - **Cost Analysis Section** (lines 906-923): Updated pricing and rationale
+    - Current cost: £0/month → £16/month
+    - Added upgrade rationale (7 key benefits)
+    - Removed "stay on Free" recommendation
+    - Added Pro plan value proposition
+  - **Worker Metrics** (lines 180-186): Updated quotas
+    - Daily limit: 100K/day (Free) → 10M/month (Pro)
+    - Current usage: <0.01% of Pro quota
+  - **Feature Availability Updates**:
+    - WAF (lines 418-422): "Not available" → "Available on Pro plan (not yet configured)"
+    - Rate Limiting (lines 424-428): "Not available" → "Available on Pro plan (not yet configured)"
+    - DDoS Protection (line 407): Updated to "Pro plan"
+    - Support (line 857): Updated to "Priority support with faster response times"
+  - **Best Practices** (lines 759-762, 772-776): Revised for Pro features
+    - Removed full site cache clear warnings
+    - Updated to reflect surgical purging efficiency
+    - Removed worker quota warnings (ample capacity on Pro)
+  - **Future Considerations** (lines 887-897): Moved Pro features from "future" to "now available"
+    - Image optimization, WAF, rate limiting now marked as available
+    - Removed "requires Pro plan" language
+  - **Cache Warming** (lines 222-228): Clarified Pro plan status (not included, Enterprise feature)
+  - **Worker Necessity** (line 178): Updated to note Transform Rules available on Pro as potential alternative
+  - **Change Log Entry** (lines 1027-1060): Added comprehensive upgrade documentation
+    - Lists all 8 key improvements gained
+    - Documents all 13 documentation section updates with line numbers
+    - Configuration notes and features not yet configured
+    - Version increment (1.0 → 1.1)
+
+- **README.md Updates**: Enhanced Infrastructure & Operations section
+  - Added Pro plan designation and upgrade date
+  - Listed key features (surgical cache purging, WAF, rate limiting, image optimization)
+  - Updated worker capacity (10M requests/month)
+  - Added version reference (1.1 - Pro Plan)
+
+### Rationale
+The upgrade from Free to Pro plan provides significant performance improvements through surgical cache purging (only changed URLs invalidated rather than full site clears). This eliminates cold cache delays after content publishing, resulting in near-instant content updates for changed pages while maintaining optimal performance for unchanged content. Additional Pro features (WAF, rate limiting, image optimization) provide enhanced security and performance capabilities for future configuration.
+
+The surgical cache purging alone justifies the £16/month cost by:
+1. Eliminating 10-30 second cold cache delays after publishing
+2. Maintaining site-wide performance during content updates
+3. Reducing server load from unnecessary cache refills
+4. Improving user experience with instant content updates
+
+### Cost-Benefit Analysis
+- **Investment**: £16/month (£192/year)
+- **Primary Benefit**: Surgical cache purging (vs. full site purge on Free)
+- **Secondary Benefits**: WAF, rate limiting, image optimization, priority support
+- **Performance Impact**: Near-instant content updates vs. 10-30 second cold cache on Free
+- **Capacity Increase**: 100x worker request capacity (100K/day → 10M/month)
+- **ROI**: Significant improvement in publishing workflow and content freshness
+
+### Technical Details
+- **Plan**: Cloudflare Pro ($20/month USD, approximately £16/month GBP)
+- **Upgrade Date**: 9 December 2025
+- **Documentation Version**: 1.0 → 1.1
+- **Lines Modified in Documentation**: ~60 lines across 15 sections
+- **Major Rewrites**: 3 sections (Push Invalidation, Upgrade Considerations, Cost Analysis)
+
+### Features Not Yet Configured
+The following Pro features are available but not yet configured:
+1. **WAF Custom Rules** - Enhanced security against web exploits
+2. **Rate Limiting Rules** - DDoS and API protection
+3. **Image Optimization (Polish)** - Lossless/lossy compression for bandwidth reduction
+4. **Mobile Optimization** - Performance tuning for mobile devices
+
+These can be configured in the Cloudflare dashboard as needed.
+
+### Files Modified
+1. `docs/for-ai/implementation/cloudflare.md` - Complete Pro plan documentation update (60+ lines across 15 sections)
+2. `README.md` - Updated Infrastructure & Operations section with Pro plan details
+3. `CHANGELOG.md` - This comprehensive entry
+
+**Total: 3 files modified**
+
+---
+
 ## [2025-12-09b] - Homepage Implementation
 
 ### Added

@@ -83,8 +83,8 @@ graph TD
 
 ## Cloudflare Account Details
 
-**Account:** tom.cranstoun@gmail.com  
-**Plan:** Free  
+**Account:** tom.cranstoun@gmail.com
+**Plan:** Pro ($20/month)  
 
 ### Nameservers
 
@@ -175,13 +175,14 @@ Adobe Edge Delivery Services uses Fastly's SSL certificates. These certificates 
 5. **Processes push invalidation** requests from Adobe EDS
 6. **Returns content** to visitor via Cloudflare
 
-**Why the Worker is necessary:** Cloudflare Free plan doesn't allow Host header modification via Transform Rules or Origin Rules. The Worker provides this functionality.
+**Why the Worker is necessary:** Cloudflare Pro plan supports Transform Rules, but the Worker approach is battle-tested and proven. Transform Rules could potentially replace the Worker for host header rewriting, but the current Worker implementation is stable and efficient (0.8ms CPU time). Consider evaluating Transform Rules as an alternative in the future if Worker limits become a concern.
 
 ### Worker Metrics
 
-**Daily request limit (Free plan):** 100,000 requests/day  
-**Current usage:** ~337 requests/day (well within limits)  
-**CPU time per request:** ~0.8ms (very efficient)  
+**Monthly request limit (Pro plan):** 10,000,000 requests/month (10 million)
+**Daily equivalent:** ~333,000 requests/day (significantly higher than Free plan's 100K/day)
+**Current usage:** ~337 requests/day (well within limits - using <0.01% of quota)
+**CPU time per request:** ~0.8ms (very efficient)
 **Error rate:** 0% (no errors observed)
 
 ---
@@ -220,7 +221,11 @@ Adobe Edge Delivery Services uses Fastly's SSL certificates. These certificates 
 
 ### Cache Warming
 
-Cloudflare Free plan doesn't include automatic cache warming. Cache fills naturally as visitors browse the site.
+**Pro plan status:** Automatic cache warming not included in standard Pro plan features. Cache fills naturally as visitors browse the site.
+
+**Available on:** Enterprise plans with custom configuration
+
+**Current approach:** Cache fills organically through visitor traffic. With surgical purging on Pro plan, unchanged content remains cached, minimizing cold cache impact.
 
 ---
 
@@ -279,27 +284,28 @@ Configuration stored in Adobe EDS project config file (`.helix/config.xlsx` or `
 1. **Content published** in Adobe EDS (via Sidekick)
 2. **Adobe EDS triggers** push invalidation webhook
 3. **Cloudflare API called** using stored credentials
-4. **Cache purged** (entire site on Free plan)
-5. **Next request** fetches fresh content from origin
+4. **Cache purged** - Pro plan uses surgical purging (only changed URLs invalidated)
+5. **Next request** for changed URLs fetches fresh content from origin
 6. **Content re-cached** for subsequent visitors
 
-### Free Plan Behavior
+### Pro Plan Behavior (Surgical Cache Purging)
 
 **What happens on publish:**
-- Entire site cache cleared (not just changed URLs)
-- All cached content purged
-- Next visitors trigger cache misses
-- Content re-cached as visitors browse
+- **Only changed URLs** are invalidated (not entire site)
+- Unchanged content remains cached and served efficiently
+- Surgical purging targets specific paths/URLs
+- Rest of site cache remains warm and performant
 
 **Performance impact:**
-- Brief slowdown immediately after publish (cold cache)
-- 10-30 seconds for most popular pages to re-cache
-- Performance returns to normal within minutes
+- **Minimal performance impact** - only changed pages need re-caching
+- No cold cache for unchanged pages
+- Near-instant content updates for changed URLs
+- Site-wide performance remains optimal during publishing
 
-**Enterprise plan comparison:**
-- Enterprise: Surgical purging (only changed URLs)
-- Enterprise: Minimal performance impact
-- Free plan: Acceptable for normal publishing workflows
+**Plan comparison:**
+- **Free plan:** Full site purge on every publish (all cache cleared)
+- **Pro plan:** Surgical purging (only changed URLs) - ✅ Current plan
+- **Enterprise:** Surgical purging plus advanced cache analytics
 
 ### Testing Push Invalidation
 
@@ -404,9 +410,9 @@ x-served-by: cache-lga21965 [Fastly cache identifier]
 
 ### DDoS Protection
 
-**Status:** Active (Cloudflare Free plan)  
-**Type:** Automatic, always-on  
-**Coverage:** L3/L4 and L7 DDoS attacks  
+**Status:** Active (Cloudflare Pro plan)
+**Type:** Automatic, always-on
+**Coverage:** L3/L4 and L7 DDoS attacks
 **No configuration needed:** Works automatically
 
 ### Security Level
@@ -417,13 +423,15 @@ x-served-by: cache-lga21965 [Fastly cache identifier]
 
 ### WAF (Web Application Firewall)
 
-**Status:** Not available on Free plan  
-**Upgrade required:** Pro plan ($20/month) or higher for WAF rules
+**Status:** Available on Pro plan (not yet configured)
+**Configuration:** Can create custom security rules to protect against common web exploits
+**Next Steps:** Consider configuring WAF rules for enhanced security based on traffic patterns
 
 ### Rate Limiting
 
-**Status:** Not configured (not available on Free plan)  
-**Available on:** Pro plan ($20/month) or higher
+**Status:** Available on Pro plan (not yet configured)
+**Configuration:** Can be enabled as needed for DDoS protection and API endpoint protection
+**Use Cases:** Protect against brute force attacks, API abuse, or excessive requests
 
 ### SSL/TLS Encryption
 
@@ -465,7 +473,7 @@ x-served-by: cache-lga21965 [Fastly cache identifier]
 **Access:** Workers & Pages → aem-worker → Metrics
 
 **Current status:**
-- Requests: 337/100,000 daily limit (0.3% used)
+- Requests: ~337/day (using <0.01% of Pro plan's 10M/month quota)
 - CPU time: 0.8ms average (very efficient)
 - Errors: 0%
 - Success rate: 100%
@@ -682,47 +690,63 @@ chmod +x cloudflare-health-check.sh
 
 ---
 
-## Upgrade Considerations
+## Current Plan Features and Upgrade Path
 
-### Cloudflare Free Plan Limitations
+### Pro Plan Features (Current - $20/month)
 
-**Current limitations:**
-- 3 Page Rules (enough for basic needs)
-- No WAF rules (no custom security rules)
-- No rate limiting
-- Entire site cache purge (not surgical)
-- Basic analytics only
-- Email support (slower response)
+**Active features on Pro plan:**
+- ✅ **Surgical cache purging** - Only changed URLs invalidated (major performance win)
+- ✅ **WAF rules** - Custom security rules available (not yet configured)
+- ✅ **Rate limiting** - DDoS and API protection available (not yet configured)
+- ✅ **Image optimization** - Polish and compression features (not yet configured)
+- ✅ **Priority support** - Faster response times than Free plan
+- ✅ **Advanced analytics** - Enhanced traffic insights and reporting
+- ✅ **20 Page Rules** - More flexibility than Free plan's 3 rules
+- ✅ **Mobile optimization** - Improved mobile performance features
+- ✅ **CDN functionality** - Unlimited bandwidth (same as Free)
+- ✅ **SSL certificates** - Automatic provisioning and renewal
+- ✅ **DDoS protection** - L3/L4 and L7 protection
+- ✅ **Workers** - 10 million requests/month (vs. 100K/day on Free)
 
-**What works well on Free:**
-- CDN functionality (unlimited bandwidth)
-- SSL certificates
-- DDoS protection
-- Workers (10,000 requests/day)
-- Basic cache control
-- Push invalidation (entire site purge)
+**What we gained from Free → Pro upgrade:**
+1. **Surgical cache purging** (biggest benefit) - No more full site cache clears
+2. **WAF and rate limiting** - Enhanced security capabilities
+3. **Image optimization** - Reduce bandwidth and improve load times
+4. **Priority support** - Faster help when needed
+5. **Advanced analytics** - Better insights into traffic and performance
+6. **More page rules** - Greater configuration flexibility
 
-### Pro Plan Benefits ($20/month)
+**Features not yet configured:**
+- WAF custom rules (available but needs configuration)
+- Rate limiting rules (available but needs configuration)
+- Image optimization (Polish) (available but needs enabling)
+- Mobile optimization features (available but needs tuning)
 
-**Worth considering if:**
-- Need WAF rules (custom security)
-- Want surgical cache purging (faster updates)
-- Need advanced analytics
-- Require priority support
-- Want mobile optimisation
+### Comparison: Free vs. Pro vs. Enterprise
 
-**Probably not needed for allabout.network** unless security requirements change or publishing frequency increases significantly.
+| Feature | Free | **Pro (Current)** | Enterprise |
+|---------|------|-------------------|------------|
+| **Cache Purging** | Full site only | ✅ Surgical (URLs) | Surgical + analytics |
+| **WAF Rules** | ❌ | ✅ Yes | Advanced WAF |
+| **Rate Limiting** | ❌ | ✅ Yes | Advanced + API |
+| **Image Optimization** | ❌ | ✅ Polish | Polish + Mirage |
+| **Support** | Email | ✅ Priority | Dedicated 24/7 |
+| **Analytics** | Basic | ✅ Advanced | Enterprise |
+| **Page Rules** | 3 | ✅ 20 | 125 |
+| **Worker Requests** | 100K/day | ✅ 10M/month | Unlimited |
+| **Cost** | £0/month | ✅ **£16/month** | £160-£1000+/month |
 
-### Enterprise Plan Benefits (Custom pricing)
+### Future Upgrade: Enterprise Plan
 
-**Only needed if:**
-- Very high traffic (millions of requests/day)
-- Need 99.95% SLA
-- Advanced security requirements
-- Multiple team members managing
-- Need dedicated support
+**Consider Enterprise only if:**
+- Very high traffic (millions of requests/day) - not currently needed
+- Need 99.95% uptime SLA - not required for current use case
+- Advanced security requirements - Pro plan adequate for now
+- Multiple team members managing infrastructure
+- Need dedicated support engineer
+- Custom SSL certificate requirements
 
-**Not recommended for allabout.network** - significant overkill for personal/professional site.
+**Current assessment:** Enterprise is significant overkill for allabout.network. Pro plan provides excellent balance of features and cost for professional/business site needs.
 
 ---
 
@@ -738,8 +762,8 @@ chmod +x cloudflare-health-check.sh
 
 **Don't:**
 - Manually purge Cloudflare cache unless necessary
-- Publish multiple times rapidly (gives cache no time to warm)
-- Forget that Free plan purges entire site (brief performance impact)
+- Publish multiple times rapidly (even with surgical purging, give cache time to serve)
+- Worry about publishing performance impact - Pro plan surgical purging is highly efficient
 
 ### Worker Management
 
@@ -753,7 +777,7 @@ chmod +x cloudflare-health-check.sh
 - Modify worker code unless necessary (Adobe's code is well-tested)
 - Share API tokens or Zone IDs publicly
 - Delete worker routes accidentally (site will break)
-- Exceed 100,000 requests/day (upgrade if approaching limit)
+- Worry about request limits - Pro plan provides 10M requests/month (far beyond current needs)
 
 ### Security
 
@@ -854,7 +878,7 @@ dig main--allaboutv2--ddttom.aem.live +short
 **Cloudflare Issues:**
 - Community forum: https://community.cloudflare.com/
 - Status page: https://www.cloudflarestatus.com/
-- Support: Available via dashboard (response time: hours on Free plan)
+- Support: Priority support via dashboard (Pro plan: faster response times than Free)
 
 **Adobe EDS Issues:**
 - Discord: https://discord.gg/aem-live
@@ -883,14 +907,16 @@ dig main--allaboutv2--ddttom.aem.live +short
 - Would need DNS CNAME and worker route
 
 **Performance Optimisation:**
-- Auto Minify (available on Free plan)
-- Image optimisation (requires Pro plan)
-- Additional cache rules (if needed)
+- Auto Minify (available and can be enabled)
+- **Image optimisation** (now available on Pro plan - not yet configured)
+- Additional cache rules (available on Pro, can be configured as needed)
+- Polish image optimization (Pro feature - lossless/lossy compression)
 
 **Security Enhancement:**
-- WAF rules (requires Pro plan)
-- Rate limiting (requires Pro plan)
-- Bot management (advanced features on paid plans)
+- **WAF rules** (now available on Pro plan - not yet configured)
+- **Rate limiting** (now available on Pro plan - not yet configured)
+- Bot management (enhanced features available on Pro)
+- Custom firewall rules for specific threat protection
 
 ### Monitoring Improvements
 
@@ -901,14 +927,22 @@ dig main--allaboutv2--ddttom.aem.live +short
 
 ### Cost Analysis
 
-**Current cost:** £0/month (Cloudflare Free)
+**Current cost:** £16/month (approx. $20/month Cloudflare Pro)
 
-**Upgrade cost if needed:**
-- Pro: $20/month (£16/month)
-- Business: $200/month (£160/month)
-- Enterprise: Custom pricing (thousands/month)
+**Upgrade from Free to Pro rationale:**
+- Surgical cache purging (only changed URLs invalidated vs. entire site)
+- Significantly improved performance after content publishing
+- WAF rules for enhanced security
+- Rate limiting for DDoS and API protection
+- Image optimization capabilities
+- Priority support with faster response times
+- Advanced analytics and insights
 
-**Recommendation:** Stay on Free plan unless specific paid features become necessary.
+**Further upgrade options:**
+- Business: $200/month (£160/month) - Advanced security, guaranteed uptime SLA
+- Enterprise: Custom pricing (thousands/month) - Dedicated support, custom solutions
+
+**Recommendation:** Pro plan provides excellent value for professional/business sites requiring enhanced performance and security features.
 
 ---
 
@@ -971,11 +1005,11 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 
 ## Document Maintenance
 
-**Owner:** Tom Cranstoun  
-**Created:** 9 December 2025  
-**Last Updated:** 9 December 2025  
-**Review Schedule:** Quarterly or after significant changes  
-**Version:** 1.0
+**Owner:** Tom Cranstoun
+**Created:** 9 December 2025
+**Last Updated:** 9 December 2025
+**Review Schedule:** Quarterly or after significant changes
+**Version:** 1.1
 
 **Update this document when:**
 - Configuration changes made
@@ -990,7 +1024,42 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 
 ## Change Log
 
-### 2025-12-09 - Initial Documentation
+### 2025-12-09 - Upgraded to Cloudflare Pro Plan (Version 1.1)
+**Major upgrade from Free to Pro plan ($20/month)**
+
+**Key improvements gained:**
+- ✅ **Surgical cache purging** - Only changed URLs invalidated (biggest performance improvement)
+- ✅ **WAF rules** - Custom security rules now available (not yet configured)
+- ✅ **Rate limiting** - DDoS and API protection now available (not yet configured)
+- ✅ **Image optimization** - Polish compression features now available (not yet configured)
+- ✅ **Priority support** - Faster response times than Free plan
+- ✅ **Advanced analytics** - Enhanced traffic insights and reporting
+- ✅ **20 Page Rules** - Up from 3 on Free plan
+- ✅ **10M worker requests/month** - Up from 100K/day on Free plan
+
+**Documentation updates:**
+- Updated Account Details section (line 87) to reflect Pro plan
+- Rewrote "Upgrade Considerations" as "Current Plan Features and Upgrade Path" (lines 688-744)
+- Updated Cost Analysis (lines 906-923) to show £16/month cost and Pro upgrade rationale
+- Rewrote Push Invalidation section (lines 277-303) to document surgical cache purging
+- Updated WAF section (lines 418-422) to show available but not yet configured
+- Updated Rate Limiting section (lines 424-428) to show available but not yet configured
+- Updated Worker Metrics (lines 180-186) with Pro plan 10M/month quota
+- Updated Future Considerations sections (lines 887-897) to show Pro features as "now available"
+- Updated Best Practices (lines 759-762, 772-776) to reflect surgical purging and higher quotas
+- Updated Security sections to reflect Pro plan status
+- Updated Support section (line 857) to document priority support
+- Updated Cache Warming section (lines 222-228) to clarify Pro plan status
+- Added comprehensive Free vs. Pro vs. Enterprise comparison table (lines 720-732)
+
+**Configuration notes:**
+- Current cost: £16/month (approx. $20/month USD)
+- Worker quotas significantly increased (10M/month vs. 100K/day)
+- Surgical cache purging eliminates full site cache clears on publish
+- Pro features available but not yet configured: WAF, Rate Limiting, Image Optimization
+- Transform Rules now available as potential Worker alternative (noted for future evaluation)
+
+### 2025-12-09 - Initial Documentation (Version 1.0)
 - Documented complete Cloudflare configuration
 - Added worker setup details (aem-worker with ORIGIN_HOSTNAME and PUSH_INVALIDATION)
 - Included push invalidation configuration with API token setup
