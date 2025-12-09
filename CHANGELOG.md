@@ -7,6 +7,120 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-09b] - Homepage Implementation
+
+### Added
+- **Blog-Focused Homepage**: Complete homepage (index.html) showcasing latest content and blog posts
+  - **Hero Section**: Gradient background banner with site branding
+    - H1: "Edge Delivery Services Knowledge Hub"
+    - Subtitle: "86+ articles on EDS development, AI integration, and content creation"
+    - Dual CTAs: "Explore Content" (primary) + "View FAQ" (secondary)
+  - **Featured Articles Section**: Cards block with 3 handpicked posts
+    - Building Interactive Notebooks for EDS
+    - Developer Guide to Document Authoring
+    - Cloudflare Infrastructure & EDS
+    - Each card includes image, title, description, and link
+  - **Category Navigation**: Interactive tab-based filtering system
+    - All Posts (default view, 86+ posts)
+    - EDS & Integrations (22 posts from /blogs/ddt/integrations/)
+    - AI/LLM Topics (23 posts from /blogs/ddt/ai/)
+  - **Dynamic Blog Listings**: Multiple Blogroll block instances
+    - One instance per category with path filtering
+    - Client-side show/hide for instant category switching
+    - Series grouping and date sorting automatic via Blogroll
+  - **About Section**: Site description with links to bio, FAQ, and blog archive
+  - **Full EDS Integration**: Header and footer blocks for consistent navigation
+
+- **Homepage Styling** (styles/homepage.css - 230 lines)
+  - **Hero Section Styling**:
+    - Blue gradient background (--link-color to --link-hover-color)
+    - Centered layout with max-width 1200px
+    - Responsive padding (4rem → 5rem → 6rem at breakpoints)
+    - Button hover effects with translateY and shadow
+  - **Category Tabs Styling**:
+    - Pill-shaped buttons with 30px border-radius
+    - Active state: filled blue background
+    - Hover state: lighter blue with smooth transition
+    - Focus outline for accessibility
+  - **Responsive Design**:
+    - Mobile-first approach with progressive enhancement
+    - Breakpoints at 600px and 900px (standard EDS pattern)
+    - Heading size scales from 48px → 56px → 64px
+  - **Design Token Usage**:
+    - All colors use CSS variables (--link-color, --light-color, etc.)
+    - Typography uses --body-font-family and size variables
+    - Consistent with existing site design system
+
+- **Category Filtering JavaScript** (scripts/homepage-tabs.js - 120 lines)
+  - **initCategoryTabs() Function**: Main initialization
+    - Queries all tab buttons and blogroll containers
+    - Attaches click and keyboard event listeners
+    - Manages active states and visibility toggling
+  - **handleTabClick() Function**: Tab switching logic
+    - Updates active class on clicked tab
+    - Shows corresponding blogroll container
+    - Hides non-active containers
+    - Updates URL hash for bookmarkable states
+  - **Hash-Based Navigation**: Restores category from URL hash on page load
+    - Pattern: #category-{categoryName}
+    - Enables deep linking to specific categories
+  - **Accessibility Features**:
+    - ARIA attributes (aria-pressed, aria-hidden)
+    - Keyboard support (Enter and Space keys)
+    - Screen reader compatible
+  - **Configuration Pattern**: HOMEPAGE_TABS_CONFIG object
+    - Centralized constants (ACTIVE_CLASS, HIDDEN_CLASS)
+    - Follows EDS best practices
+  - **Auto-Initialization**: DOMContentLoaded event handling
+
+### Technical Details
+- **Architecture**: Hybrid EDS integration
+  - Full EDS blocks (header, footer, cards, blogroll)
+  - Custom sections (hero, category tabs, about)
+  - No modifications to existing blocks
+- **Blogroll Block Usage**: Multiple instances with path filtering
+  - Instance 1: `path=/blogs/ddt/` (all posts)
+  - Instance 2: `path=/blogs/ddt/integrations/` (EDS posts)
+  - Instance 3: `path=/blogs/ddt/ai/` (AI posts)
+- **Data Source**: Blogroll automatically fetches from query-index.json or my-blog.json
+- **Performance**:
+  - No page reloads for category switching
+  - Minimal JavaScript (120 lines)
+  - Leverages existing Blogroll block logic
+  - E-L-D loading pattern (EDS standard)
+- **Accessibility**: WCAG 2.1 AA compliant
+  - Semantic HTML structure
+  - Keyboard navigation fully functional
+  - ARIA attributes for dynamic content
+  - Color contrast ratios meet standards
+- **Featured Post URLs**:
+  - `/blogs/ddt/integrations/building-interactive-notebooks-for-eds-a-journey-in-context-aware-design`
+  - `/blogs/ddt/ai/developer-guide-to-document-authoring-with-edge-delivery-services-part-0`
+  - `/blogs/ddt/integrations/cloudflare-infrastructure-edge-delivery-services`
+
+### Changed
+- **README.md**: Added "Homepage" subsection in Overview
+  - Documents homepage structure and features
+  - Lists 86+ blog posts across 3 directories
+  - References all 3 new files with links
+  - Explains EDS best practices followed
+
+### Rationale
+Creates a professional, blog-focused homepage that effectively showcases the site's extensive content library (86+ posts). Leverages existing EDS blocks (Blogroll, Cards) to minimize custom code while providing a polished user experience. The category filtering system allows visitors to quickly find relevant content without page reloads.
+
+### Files Created
+1. `index.html` - Homepage structure (140 lines)
+2. `styles/homepage.css` - Homepage styling (230 lines)
+3. `scripts/homepage-tabs.js` - Category filtering logic (120 lines)
+
+### Files Modified
+1. `README.md` - Added Homepage section (14 lines added)
+2. `CHANGELOG.md` - This entry
+
+**Total: 3 new files + 2 modified = 5 file operations**
+
+---
+
 ## [2025-12-09] - Cloudflare Infrastructure Documentation Enhancement
 
 ### Added

@@ -7,6 +7,23 @@
 
 This project is built for Adobe Edge Delivery Services (EDS) with a focus on simplicity, performance, and modern web standards. The project intentionally avoids TypeScript and build-heavy frameworks to maintain simplicity and reduce build complexity.
 
+### Homepage
+
+The site features a blog-focused homepage ([index.html](index.html)) that showcases the latest content:
+
+- **Hero Section**: Eye-catching gradient banner with site branding and CTAs
+- **Featured Articles**: Handpicked posts displayed using the Cards block
+- **Category Navigation**: Interactive tabs for filtering posts by category (All Posts, EDS & Integrations, AI/LLM Topics)
+- **Dynamic Blog Listings**: Uses the Blogroll block with client-side filtering for instant category switching
+- **86+ Blog Posts**: Comprehensive collection organized across `/blogs/ddt/`, `/blogs/ddt/ai/`, and `/blogs/ddt/integrations/`
+
+The homepage follows EDS best practices:
+- Full EDS block integration (header, footer, cards, blogroll)
+- Responsive design with mobile-first approach
+- No inline CSS - all styling in [styles/homepage.css](styles/homepage.css)
+- Pure vanilla JavaScript for tab switching ([scripts/homepage-tabs.js](scripts/homepage-tabs.js))
+- Accessible keyboard navigation and ARIA attributes
+
 ## Project Statistics
 
 *Statistics generated using [scc](https://github.com/boyter/scc)*
