@@ -25,13 +25,20 @@ Adobe Edge Delivery Services (EDS) provides an incredibly fast foundation for we
    | publication-date | 2025-12-10                   |
    ```
 
+   **Pro Tip**: Add `longdescription` for SEO-optimized content:
+   ```
+   | longdescription  | Detailed 2-3 sentence description for search engines |
+   ```
+
+   The worker uses `longdescription` (if present) for JSON-LD, while keeping `og:description` shorter for social media. This gives you separate control over search engine vs. social media descriptions.
+
 3. **Publish. Done.** The worker automatically generates perfect JSON-LD:
    ```json
    {
      "@context": "https://schema.org",
      "@type": "Article",
      "headline": "Your Article Title",
-     "description": "Your article description",
+     "description": "Detailed 2-3 sentence description for search engines",
      "author": {
        "@type": "Person",
        "name": "Your Name"
@@ -43,6 +50,8 @@ Adobe Edge Delivery Services (EDS) provides an incredibly fast foundation for we
      }
    }
    ```
+
+   **Smart Description Handling**: The worker prioritizes `longdescription` → `og:description` → omit if neither exists. Your social media cards still use `og:description`, while search engines get the more detailed version.
 
 **No JSON syntax to learn. No schema.org documentation to read. No manual updates when content changes.**
 
