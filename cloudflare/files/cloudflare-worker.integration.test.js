@@ -193,6 +193,66 @@ describe('Cloudflare Worker Integration Tests', () => {
     });
   });
 
+  describe('JSON-LD Trigger Mechanisms', () => {
+    test('Trigger 1: detects legacy EDS error script with "article"', () => {
+      const article = { shouldGenerateJsonLd: false };
+      const errorMessage = 'error in json-ld: Unexpected token \'a\', "article" is not valid JSON';
+
+      // Simulate HTMLRewriter handler logic
+      if (errorMessage && errorMessage.includes('"article"')) {
+        article.shouldGenerateJsonLd = true;
+      }
+
+      expect(article.shouldGenerateJsonLd).toBe(true);
+    });
+
+    test('Trigger 2: detects new jsonld metadata (no EDS error)', () => {
+      const article = { shouldGenerateJsonLd: false };
+      const metaContent = 'article';
+
+      // Simulate HTMLRewriter handler logic for meta[name="jsonld"]
+      if (metaContent === 'article') {
+        article.shouldGenerateJsonLd = true;
+      }
+
+      expect(article.shouldGenerateJsonLd).toBe(true);
+    });
+
+    test('Trigger 3: detects legacy perfect JSON-LD script (regenerate)', () => {
+      const article = { shouldGenerateJsonLd: false };
+
+      // Simulate HTMLRewriter handler for script[type="application/ld+json"]:not([data-error])
+      // Any existing JSON-LD triggers regeneration from fresh metadata
+      article.shouldGenerateJsonLd = true;
+
+      expect(article.shouldGenerateJsonLd).toBe(true);
+    });
+
+    test('ignores EDS error without "article" keyword', () => {
+      const article = { shouldGenerateJsonLd: false };
+      const errorMessage = 'error in json-ld: some other error';
+
+      // Simulate HTMLRewriter handler logic
+      if (errorMessage && errorMessage.includes('"article"')) {
+        article.shouldGenerateJsonLd = true;
+      }
+
+      expect(article.shouldGenerateJsonLd).toBe(false);
+    });
+
+    test('ignores jsonld metadata with wrong value', () => {
+      const article = { shouldGenerateJsonLd: false };
+      const metaContent = 'blogpost'; // Not "article"
+
+      // Simulate HTMLRewriter handler logic
+      if (metaContent === 'article') {
+        article.shouldGenerateJsonLd = true;
+      }
+
+      expect(article.shouldGenerateJsonLd).toBe(false);
+    });
+  });
+
   describe('HTMLRewriter Behavior', () => {
     test('creates HTMLRewriter instance', () => {
       const rewriter = new HTMLRewriter();

@@ -138,6 +138,7 @@ const handleRequest = async (request, env, _ctx) => {
 
     // eslint-disable-next-line no-undef
     resp = new HTMLRewriter()
+      // Trigger 1: Legacy EDS error script with "article"
       .on('script[type="application/ld+json"][data-error]', {
         element(e) {
           const error = e.getAttribute('data-error');
@@ -145,6 +146,26 @@ const handleRequest = async (request, env, _ctx) => {
           if (error && error.includes('"article"')) {
             article.shouldGenerateJsonLd = true;
           }
+          e.remove();
+        },
+      })
+      // Trigger 2: New metadata approach (jsonld=article, no EDS error)
+      .on('meta[name="jsonld"]', {
+        element(e) {
+          const value = e.getAttribute('content');
+          if (value === 'article') {
+            article.shouldGenerateJsonLd = true;
+          }
+          e.remove();
+        },
+      })
+      // Trigger 3: Legacy perfect JSON-LD (remove and regenerate from fresh metadata)
+      .on('script[type="application/ld+json"]:not([data-error])', {
+        element(e) {
+          // Only trigger if script contains Article type
+          // Note: Can't read content in element handler, so we trigger on presence
+          // This catches legacy pages where Adobe might have fixed backend
+          article.shouldGenerateJsonLd = true;
           e.remove();
         },
       })

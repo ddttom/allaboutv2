@@ -288,27 +288,57 @@ The worker transforms it to:
 
 Plus adds CORS headers for API integration.
 
-### The Clever Authoring Trick
+### The Authoring Evolution: Three Trigger Mechanisms
 
-How do authors trigger JSON-LD generation? Adobe EDS processes metadata in document properties. We use a clever workaround:
+How do authors trigger JSON-LD generation? The worker now supports **three approaches**:
+
+#### 1. Recommended: Clean Metadata (No Errors!)
+
+**In document metadata:**
+```
+| jsonld | article |
+```
+
+This generates clean HTML:
+```html
+<meta name="jsonld" content="article">
+```
+
+No authoring error, no error script - just clean markup. **This is the recommended approach** for new pages.
+
+#### 2. Legacy: EDS Error Workaround (Backward Compatible)
 
 **In document metadata:**
 ```
 | json-ld | article |
 ```
 
-This tells EDS to create JSON-LD, but EDS doesn't know how, so it generates:
+Adobe EDS tries to create JSON-LD but fails, generating:
 ```html
 <script type="application/ld+json" data-error="error in json-ld: Unexpected token..."></script>
 ```
 
-Our worker detects this error script as a **trigger**:
-1. Remove the error script
-2. Extract metadata (og:title, author, description, etc.)
-3. Generate valid JSON-LD
-4. Insert in the same location
+Still supported for existing pages - worker detects and fixes the error.
 
-It's using an authoring error as a feature flag. Elegant and zero-configuration for authors.
+#### 3. Future: Perfect JSON-LD (If Adobe Fixes Backend)
+
+If legacy pages have perfect JSON-LD:
+```html
+<script type="application/ld+json">{"@context": "https://schema.org", ...}</script>
+```
+
+The worker **regenerates from fresh metadata** to ensure consistency.
+
+#### How All Three Work
+
+Regardless of trigger method:
+1. Worker detects trigger (meta tag, error script, or perfect script)
+2. Extracts current metadata (og:title, author, description, etc.)
+3. Generates fresh JSON-LD from that metadata
+4. Removes/replaces trigger element
+5. Inserts new JSON-LD in `<head>`
+
+This ensures **always using latest metadata**, never stale JSON-LD. Elegant, flexible, and future-proof.
 
 ### Lessons Learned
 

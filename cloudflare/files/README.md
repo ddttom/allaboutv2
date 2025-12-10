@@ -13,9 +13,11 @@ This Worker extends Adobe's standard EDS Cloudflare Worker template to:
 
 ## Features
 
-### Trigger Mechanism
+### Trigger Mechanisms
 
-The Worker detects and fixes a common authoring error pattern:
+The Worker supports **three trigger mechanisms** for JSON-LD generation:
+
+#### 1. Legacy EDS Error (Backward Compatibility)
 
 When you add this to your EDS metadata:
 ```
@@ -27,19 +29,47 @@ An authoring error generates:
 <script type="application/ld+json" data-error="error in json-ld: Unexpected token 'a', "article" is not valid JSON"></script>
 ```
 
-The Worker uses this as a trigger:
-1. Detects the error script containing "article"
-2. Uses "article" as the signal to generate JSON-LD
-3. Removes the error script
-4. Generates proper Article schema JSON-LD
+The Worker detects this error script and uses it as a trigger.
 
-This approach is pragmatic:
-- Uses standard EDS metadata fields
-- Works around the authoring error
-- Cleans up the mistake automatically
-- Generates correct JSON-LD output
+#### 2. NEW: Clean Metadata (Recommended)
 
-**Note:** This is a temporary workaround. The authoring error that generates the malformed script will be investigated separately.
+**This is the recommended authoring practice** - avoids EDS errors:
+
+```
+| jsonld | article |
+```
+
+Generates clean HTML:
+```html
+<meta name="jsonld" content="article">
+```
+
+No error script, cleaner markup, same functionality.
+
+#### 3. Legacy Perfect JSON-LD (Future-Proofing)
+
+If Adobe fixes the backend and existing pages have perfect JSON-LD:
+
+```html
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  ...
+}</script>
+```
+
+The Worker will **regenerate** JSON-LD from fresh metadata to ensure consistency.
+
+#### How All Three Work
+
+Regardless of trigger:
+1. Worker detects the trigger element
+2. Extracts current metadata from page (og:title, author, description, etc.)
+3. Generates fresh JSON-LD from that metadata
+4. Removes/replaces the trigger element
+5. Inserts new JSON-LD script in `<head>`
+
+This ensures **always using latest metadata**, never stale JSON-LD.
 
 ### CORS Headers
 
@@ -315,19 +345,39 @@ The Worker uses this order for the JSON-LD description:
 
 Add these properties to your EDS document metadata:
 
+### Recommended (Clean Metadata)
+
 ```
 | Metadata         | Value               |
 |------------------|---------------------|
-| json-ld          | article             |
+| jsonld           | article             |
 | author           | Tom Cranstoun       |
 | publication-date | 2024-12-10          |
 | modified-date    | 2024-12-10          |
 | longdescription  | Detailed text here  |
 ```
 
-The `json-ld` field triggers JSON-LD generation - without it, the Worker processes metadata but doesn't create the JSON-LD script.
+**Use `jsonld` (not `json-ld`)** - avoids EDS authoring errors, cleaner markup.
 
-EDS will generate the corresponding meta tags, which the Worker will process.
+### Legacy (Backward Compatibility)
+
+```
+| Metadata         | Value               |
+|------------------|---------------------|
+| json-ld          | article             |
+```
+
+Still supported for existing pages. Generates EDS error script which worker detects and fixes.
+
+### How It Works
+
+1. Add `jsonld` or `json-ld` field with value `article`
+2. EDS generates corresponding HTML (`<meta>` tag or error `<script>`)
+3. Worker detects trigger, extracts all metadata
+4. Worker generates fresh JSON-LD from metadata
+5. Worker removes trigger and inserts JSON-LD
+
+**Note:** Worker always uses latest metadata from page, ensuring JSON-LD stays current.
 
 ## License
 
