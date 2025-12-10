@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-10h] - Cloudflare Worker JSON-LD Enhancements
+
+### Added
+- **Intelligent Date Formatting**: Automatic conversion of various date formats to ISO 8601
+  - Added `formatISO8601Date()` helper function in `cloudflare/files/cloudflare-worker.js`
+  - Supports UK numeric format (dd/mm/yyyy), month names (Dec/December), and ISO 8601
+  - Validates dates and omits invalid ones gracefully
+  - Handles edge cases: leap years, month boundaries, various separators
+- **Author URL with LinkedIn Fallback**: Smart author URL handling for JSON-LD Person objects
+  - Added `handleAuthorUrl()` and `handleLinkedIn()` handlers
+  - Falls back to LinkedIn meta tag when author-url not provided
+  - Preserves LinkedIn meta tag for social media cards
+  - Priority: author-url > linkedin > omit
+
+### Changed
+- **Updated `cloudflare/files/cloudflare-worker.js`**: Added date formatting and LinkedIn fallback logic (lines 28-156)
+- **Updated `cloudflare/files/cloudflare-worker.test.js`**: Added 13 new tests for date formatting and author URL handling (41 tests total)
+- **Updated `cloudflare/files/README.md`**: Documented date formats, LinkedIn fallback, and usage examples
+- **Updated `cloudflare/blog.md`**: Added feature highlights for intelligent date formatting and author URL fallback
+
+### Fixed
+- **Google Rich Results Test Warnings**: Resolved "Date/time not in ISO 8601 format" and "Missing field 'url'" warnings
+
+### Technical Details
+- **Date Parsing**: UK format (dd/mm/yyyy) as default, month name detection, validation
+- **Test Coverage**: 41 passing tests covering all date formats and fallback scenarios
+- **Backward Compatibility**: Existing pages work unchanged, new features are additive
+
 ## [2025-12-10g] - Pre-Push Documentation Validation System
 
 ### Added

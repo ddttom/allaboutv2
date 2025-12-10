@@ -131,7 +131,7 @@ Access your tests at: `http://localhost:3000/blocks/your-block/test.html`
 ├── cloudflare/            # NEW: Cloudflare Worker infrastructure
 │   └── files/             # Custom Adobe EDS worker (CORS, JSON-LD)
 │       ├── cloudflare-worker.js  # Worker code with custom enhancements
-│       ├── cloudflare-worker.test.js  # Unit tests (30+ test cases)
+│       ├── cloudflare-worker.test.js  # Unit tests (41 test cases)
 │       ├── wrangler.toml  # Wrangler configuration
 │       ├── package.json   # Worker dependencies and scripts
 │       ├── README.md      # Complete implementation guide (520+ lines)
@@ -323,18 +323,20 @@ The site audit is created with https://github.com/ddttom/my-pa11y-project
   - Operational procedures for publishing and cache management
   - Target: AI assistants, DevOps, system administrators
 - **[Custom Cloudflare Worker](cloudflare/files/README.md)** - Enhanced Adobe EDS worker implementation
-  - **Custom Features**: CORS headers, JSON-LD structured data generation, metadata cleanup
+  - **Custom Features**: CORS headers, JSON-LD structured data generation, intelligent date formatting, metadata cleanup
   - Extends Adobe's standard worker template (Apache License 2.0)
   - **Quick Start**: [cloudflare/files/SETUP.md](cloudflare/files/SETUP.md) for daily development workflow
   - **Production Status**: 0% error rate, production-ready with comprehensive testing
   - **Key Capabilities**:
     - Adds `Access-Control-Allow-Origin: *` to all responses
     - Generates schema.org Article JSON-LD from page metadata
+    - Intelligent date formatting: UK format (dd/mm/yyyy), month names (Dec/December), ISO 8601
+    - Author URL with LinkedIn fallback for Person objects
     - Removes EDS error tags and non-social metadata
     - Optional debug logging with `DEBUG=true` flag
     - Environment variable validation
   - **Development**: Wrangler CLI for local testing (localhost:8787) and deployment
-  - **Testing**: 42 automated tests (21 unit + 21 integration) with 100% pass rate
+  - **Testing**: 41 automated tests with 100% pass rate
   - **Documentation**: 520+ line implementation guide with examples and troubleshooting
   - **Read-Only Testing**: Complete test infrastructure treating worker as production code (10:1 test-to-code ratio)
   - **Blog Post**: [cloudflare/blog.md](cloudflare/blog.md) - Journey from challenge to production-ready deployment

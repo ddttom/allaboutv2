@@ -493,6 +493,8 @@ When a notebook has a `repo` metadata attribute, all `.md` file links are automa
 **What it does:**
 - Adds CORS headers to all responses
 - Generates JSON-LD structured data from page metadata
+- Intelligent date formatting: Supports UK format (dd/mm/yyyy), month names (Dec/December), and ISO 8601
+- Author URL with LinkedIn fallback: Uses LinkedIn meta as fallback when author-url not provided
 - Removes EDS error tags and non-social metadata
 - Maintains all standard Adobe EDS functionality
 
@@ -506,6 +508,12 @@ When a notebook has a `repo` metadata attribute, all `.md` file links are automa
 
 **Critical metadata pattern:**
 Add `| json-ld | article |` to EDS metadata to trigger JSON-LD generation. The worker uses a clever authoring error workaround to detect this trigger.
+
+**Date formatting:**
+Authors can enter dates in any format (10/12/2024, 10 December 2024, Dec 10 2024). The worker automatically converts them to ISO 8601 format for search engines.
+
+**Author URL:**
+Add `| author-url | https://yoursite.com |` or rely on LinkedIn meta tag fallback. The worker preserves LinkedIn for social media while using it for JSON-LD.
 
 **Deployment:** Follow `cloudflare/files/README.md` steps for prerequisites, environment variables, and deployment workflow.
 
