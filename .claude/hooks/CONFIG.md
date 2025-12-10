@@ -46,6 +46,13 @@ This project uses a **minimal hooks setup** optimized for EDS development. The a
 - **Purpose:** Track modified files for session context
 - **Implementation:** Bash script with minimal overhead
 
+**pre-push-validation.sh** (Git Hook)
+- **Trigger:** Before `git push` operations
+- **Purpose:** Validate CLAUDE.md, README.md, and CHANGELOG.md are updated before push
+- **Implementation:** Bash script with git integration
+- **Usage:** Runs automatically via git hooks, or manually with `/validate-docs` command
+- **Bypass:** Use `git push --no-verify` (not recommended for main branches)
+
 ## Quick Start Configuration
 
 ### 1. Verify Existing Setup

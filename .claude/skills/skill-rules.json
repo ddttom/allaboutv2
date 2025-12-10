@@ -538,6 +538,37 @@
                     "understand.*?block.*?(available|option|palette)"
                 ]
             }
+        },
+        "pre-push-validation": {
+            "type": "workflow",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "Ensures CLAUDE.md, README.md, and CHANGELOG.md are updated before git push. Validates documentation currency before pushing changes.",
+            "promptTriggers": {
+                "keywords": [
+                    "git push",
+                    "push changes",
+                    "ready to push",
+                    "before push",
+                    "validate docs",
+                    "check documentation",
+                    "commit push",
+                    "pushing",
+                    "documentation current",
+                    "update docs",
+                    "changelog",
+                    "readme",
+                    "claude.md"
+                ],
+                "intentPatterns": [
+                    "(git|ready|about to).*?push",
+                    "push.*?(change|commit|code)",
+                    "(validate|check|verify).*?(doc|documentation)",
+                    "(before|prior to).*?push",
+                    "(update|check).*?(changelog|readme|claude)",
+                    "documentation.*?(current|updated|ready)"
+                ]
+            }
         }
     },
     "notes": {

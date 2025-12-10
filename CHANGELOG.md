@@ -7,6 +7,74 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-10g] - Pre-Push Documentation Validation System
+
+### Added
+- **Pre-Push Validation Hook**: Automatic documentation validation before git push operations
+  - Created `.claude/hooks/pre-push-validation.sh` (230+ lines bash script)
+  - Validates CLAUDE.md, README.md, and CHANGELOG.md are current before push
+  - Color-coded validation output with pass/fail indicators
+  - Blocks push if documentation is outdated
+  - Warns (but doesn't block) for uncommitted changes
+- **Git Hook Integration**: Native git pre-push hook delegates to Claude Code hook system
+  - Created `.git/hooks/pre-push` (15 lines)
+  - Automatically triggers on `git push` operations
+  - Graceful fallback if Claude hook missing
+- **Manual Validation Command**: `/validate-docs` slash command for pre-checking
+  - Created `.claude/commands/validate-docs.md` (120+ lines)
+  - Check documentation status anytime
+  - Same validation as automatic hook
+- **Skill Auto-Suggestion**: Pre-push validation skill with keyword/intent triggers
+  - Created `.claude/skills/pre-push-validation/SKILL.md` (270+ lines)
+  - Registered in `.claude/skills/skill-rules.json`
+  - Auto-suggests when user mentions "git push", "pushing changes", etc.
+  - High priority workflow skill
+- **Quick Reference Guide**: Comprehensive usage documentation
+  - Created `.claude/hooks/USAGE.md` (160+ lines)
+  - Example output for passing/failing validation
+  - Workflow integration guidance
+  - Troubleshooting section
+
+### Changed
+- **Updated `.claude/hooks/CONFIG.md`**: Documented new pre-push-validation hook
+- **Updated `.claude/skills/skill-rules.json`**: Added pre-push-validation skill registration with 12 keywords and 6 intent patterns
+
+### Technical Details
+- **Validation Logic**: Compares file modification dates with oldest unpushed commit date
+- **Git Commands**: Uses `git log`, `git diff`, `git rev-parse` for validation
+- **ANSI Colors**: RED, GREEN, YELLOW, BLUE for terminal output
+- **Bypass Mechanism**: `git push --no-verify` for emergency situations
+- **Permissions**: Both hook scripts made executable with `chmod +x`
+
+### Workflow Integration
+1. **Automatic**: Runs on every `git push` attempt
+2. **Manual**: Use `/validate-docs` command or run script directly
+3. **Skill**: Claude suggests validation when user mentions pushing
+4. **Blocking**: Push fails if documentation outdated
+5. **Warning**: Non-blocking warning for uncommitted changes
+
+### Benefits
+- Never forget to update documentation before pushing
+- Better code reviews with current documentation in PRs
+- Reduced technical debt from documentation lag
+- Team alignment on what changed and why
+- Historical accuracy in CHANGELOG
+
+### Files Created
+1. `.claude/hooks/pre-push-validation.sh` - Core validation script
+2. `.git/hooks/pre-push` - Git hook integration
+3. `.claude/commands/validate-docs.md` - Slash command
+4. `.claude/skills/pre-push-validation/SKILL.md` - Skill definition
+5. `.claude/hooks/USAGE.md` - Quick reference guide
+
+### Files Modified
+1. `.claude/hooks/CONFIG.md` - Added hook documentation
+2. `.claude/skills/skill-rules.json` - Registered skill
+
+**Total: 5 files created, 2 files modified**
+
+---
+
 ## [2025-12-10f] - Cloudflare Worker HTTP Header Manipulation Documentation
 
 ### Added

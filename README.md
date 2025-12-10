@@ -183,6 +183,7 @@ This project includes a complete Claude Code configuration for AI-assisted devel
 - `/test-block <name>` - Run tests for a specific block
 - `/create-notebook` - Create educational/interactive Jupyter notebooks with auto-wrapping support
 - `/validate-notebook <name>` - Validate notebook for production readiness (smart links, structure, transitions, part flow)
+- `/validate-docs` - Validate CLAUDE.md, README.md, and CHANGELOG.md are current before push
 - `/check-block <name>` - Review block architecture and suggest improvements
 - `/deploy-block <name>` - Deploy a block from build/ to blocks/
 - `/lint-all` - Run all linting checks
@@ -208,6 +209,7 @@ Auto-activating skills provide inline guidance for:
 - **ipynb-validator** - Validate Jupyter notebooks for production readiness (smart links, structure, transitions, part flow)
 - **create-presentation** - Create presentation notebooks (non-interactive) with auto-wrapping or custom styling
 - **response-timestamps** - Automatic timestamp and execution duration tracking for all Claude responses
+- **pre-push-validation** - Ensures CLAUDE.md, README.md, and CHANGELOG.md are updated before git push
 - **skill-developer** - Managing Claude Code skills
 
 All skills are tailored specifically for EDS vanilla JavaScript development.

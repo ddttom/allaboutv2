@@ -66,6 +66,7 @@
 - `/review-docs` - Review and understand the EDS documentation structure in docs/for-AI
 - `/dev-docs` - Create comprehensive strategic plan with structured task breakdown
 - `/find-block-content` - Find pages in the site that use a specific block
+- `/validate-docs` - Validate CLAUDE.md, README.md, and CHANGELOG.md are current before push
 
 **Content Management:**
 - `/update-llms` - Find and update all llms.txt files in the project
@@ -102,6 +103,12 @@ Active hooks that enhance development workflow:
 - Tracks modified files for session context
 - Runs after file edits (Edit, MultiEdit, Write)
 - Lightweight bash script
+
+**pre-push-validation.sh** (Git Hook)
+- Validates CLAUDE.md, README.md, and CHANGELOG.md before push
+- Blocks push if documentation outdated
+- Auto-triggers on `git push` operations
+- Use `/validate-docs` for manual validation
 
 See `.claude/hooks/CONFIG.md` for configuration and customization.
 
