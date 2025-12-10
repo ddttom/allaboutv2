@@ -7,6 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-10f] - Cloudflare Worker HTTP Header Manipulation Documentation
+
+### Added
+- **HTTP Header Manipulation Documentation**: Complete technical documentation of worker header modifications
+  - Added new section in `cloudflare/files/README.md` (lines 414-476)
+  - Documents three header modifications in double-CDN architecture
+  - **CSP Header Removal on 304 Responses**: Why Content-Security-Policy shouldn't be on empty Not Modified responses
+  - **Age Header Removal**: Double-CDN architecture timing issue (Cloudflare → Adobe Fastly → Adobe EDS)
+    - Adobe's `age` header reflects only Adobe's cache time, not end-to-end cache time
+    - Removal prevents misleading cache timing information for end users
+  - **x-robots-tag Header Removal**: SEO control at edge vs origin
+    - Allows full SEO control at Cloudflare edge without origin interference
+    - Enables custom SEO rules in worker
+
+### Technical Details
+- **Section Location**: After "Error Handling" section, before "Troubleshooting"
+- **Documentation Size**: 38 lines of detailed technical explanation
+- **Code Examples**: JavaScript snippets showing each header manipulation
+- **Architecture Context**: Double-CDN flow diagram (Cloudflare → Adobe Fastly → Adobe EDS)
+
+### Rationale
+Provides developers with clear understanding of why the worker modifies response headers. These modifications handle edge cases in the double-CDN architecture and ensure clean, accurate responses. Documentation includes the "why" behind each decision, not just the "what."
+
+### Files Modified
+1. `cloudflare/files/README.md` - Added HTTP Header Manipulation section (38 lines)
+2. `CHANGELOG.md` - This entry
+
+**Total: 2 files modified**
+
+**Git Commit**: `d5219474` - "docs(cloudflare): Add HTTP header manipulation section to README"
+
+---
+
 ## [2025-12-10e] - Cloudflare Worker Wrangler Removal & Simplification
 
 ### Removed
