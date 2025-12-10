@@ -6,9 +6,6 @@
   "scripts": {
     "test": "vitest run cloudflare-worker.test.js",
     "test:coverage": "vitest run --coverage",
-    "dev": "wrangler dev cloudflare-worker.js",
-    "deploy": "wrangler deploy cloudflare-worker.js",
-    "tail": "wrangler tail",
     "lint": "eslint cloudflare-worker.js"
   },
   "keywords": [
@@ -27,8 +24,7 @@
     "eslint": "^8.57.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.29.1",
-    "vitest": "^2.1.0",
-    "wrangler": "^4.53.0"
+    "vitest": "^2.1.0"
   },
   "engines": {
     "node": ">=18.0.0"

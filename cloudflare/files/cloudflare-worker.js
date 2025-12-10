@@ -200,7 +200,6 @@ export const handleViewport = (element, article, requestUrl, DEBUG) => {
   }
 };
 
-
 const handleRequest = async (request, env, _ctx) => {
   // Validate required environment variables
   if (!env.ORIGIN_HOSTNAME) {
@@ -316,49 +315,49 @@ const handleRequest = async (request, env, _ctx) => {
     // eslint-disable-next-line no-undef
     resp = new HTMLRewriter()
       .on('script[type="application/ld+json"][data-error]', {
-        element: (e) => handleJsonLdErrorScript(e, article)
+        element: (e) => handleJsonLdErrorScript(e, article),
       })
       .on('meta[name="jsonld"]', {
-        element: (e) => handleJsonLdMeta(e, article)
+        element: (e) => handleJsonLdMeta(e, article),
       })
       .on('script[type="application/ld+json"]:not([data-error])', {
-        element: (e) => handleLegacyJsonLdScript(e, article)
+        element: (e) => handleLegacyJsonLdScript(e, article),
       })
       .on('meta[data-error]', {
         element(e) { e.remove(); },
       })
       .on('meta[property="og:title"]', {
-        element: (e) => handleOgTitle(e, article, DEBUG)
+        element: (e) => handleOgTitle(e, article, DEBUG),
       })
       .on('meta[property="og:description"]', {
-        element: (e) => handleOgDescription(e, article)
+        element: (e) => handleOgDescription(e, article),
       })
       .on('meta[name="longdescription"]', {
-        element: (e) => handleLongDescription(e, article)
+        element: (e) => handleLongDescription(e, article),
       })
       .on('meta[property="og:url"]', {
-        element: (e) => handleOgUrl(e, article)
+        element: (e) => handleOgUrl(e, article),
       })
       .on('meta[property="og:image"]', {
-        element: (e) => handleOgImage(e, article)
+        element: (e) => handleOgImage(e, article),
       })
       .on('meta[property="og:image:alt"]', {
-        element: (e) => handleOgImageAlt(e, article)
+        element: (e) => handleOgImageAlt(e, article),
       })
       .on('meta[name="description"]', {
-        element: (e) => handleDescription(e, article)
+        element: (e) => handleDescription(e, article),
       })
       .on('meta[name="author"]', {
-        element: (e) => handleAuthor(e, article)
+        element: (e) => handleAuthor(e, article),
       })
       .on('meta[name="publication-date"], meta[name="published-date"]', {
-        element: (e) => handlePublicationDate(e, article)
+        element: (e) => handlePublicationDate(e, article),
       })
       .on('meta[name="modified-date"], meta[name="last-modified"]', {
-        element: (e) => handleModifiedDate(e, article)
+        element: (e) => handleModifiedDate(e, article),
       })
       .on('meta[name="viewport"]', {
-        element: (e) => handleViewport(e, article, new URL(request.url), DEBUG)
+        element: (e) => handleViewport(e, article, new URL(request.url), DEBUG),
       })
       .transform(resp);
   }

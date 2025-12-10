@@ -113,38 +113,14 @@ cd cloudflare/files
 npm install
 ```
 
-**Configure environment**:
-Edit `wrangler.toml` and set your `ORIGIN_HOSTNAME`:
-```toml
-[vars]
-ORIGIN_HOSTNAME = "main--project--owner.aem.live"
-DEBUG = "true"
-```
-
-**Start local dev server**:
-```bash
-npm run dev
-```
-
-The worker will be available at `http://localhost:8787`
-
 ### Quick Start Commands
 
 ```bash
-# Local development with hot reload
-npm run dev
-
 # Run all tests (Unit + Integration)
 npm test
 
 # Run tests with coverage report
 npm run test:coverage
-
-# Deploy to Cloudflare (production)
-npm run deploy
-
-# View live logs from deployed worker
-npm run tail
 
 # Lint JavaScript code
 npm run lint
@@ -157,11 +133,10 @@ npm run lint
 - Cloudflare account with Workers enabled
 - Adobe EDS project configured
 - Node.js 18+ installed
-- Wrangler CLI configured (via `npm install`)
 
 ### Required Environment Variables
 
-Set these in your Cloudflare Worker settings:
+Set these in your Cloudflare Worker settings (Dashboard):
 
 - `ORIGIN_HOSTNAME` - **Required**. Your EDS origin (e.g., `main--project--org.hlx.live`)
 - `ORIGIN_AUTHENTICATION` - (Optional) Auth token for EDS
@@ -172,37 +147,36 @@ Set these in your Cloudflare Worker settings:
 
 ### Deploy Steps
 
-**Option 1: Deploy with Wrangler CLI (Recommended)**:
-```bash
-# Login to Cloudflare
-npx wrangler login
+**Cloudflare Dashboard Deployment**:
 
-# Set your ORIGIN_HOSTNAME in wrangler.toml
-# Edit wrangler.toml and uncomment/set ORIGIN_HOSTNAME
+1. Navigate to **Cloudflare Dashboard** → **Workers & Pages**
+2. Create new Worker or select existing "aem-worker"
+3. Copy contents of `cloudflare-worker.js`
+4. Paste into Dashboard code editor
+5. Click **"Save and Deploy"**
 
-# Deploy to production
-npm run deploy
+**Configure Environment Variables** (in Dashboard):
+- Settings → Variables → Add variable
+- `ORIGIN_HOSTNAME` = `main--allaboutv2--ddttom.aem.page` (Required)
+- `DEBUG` = `true` (Optional - enables logging)
+- `ORIGIN_AUTHENTICATION` = token (Optional)
+- `PUSH_INVALIDATION` = `disabled` (Optional)
 
-# Or deploy to specific environment
-npx wrangler deploy --env production
-```
-
-**Option 2: Manual Deploy via Cloudflare Dashboard**:
-1. Create a new Worker in Cloudflare dashboard
-2. Copy the contents of `cloudflare-worker.js`
-3. Configure environment variables in Worker settings
-4. Add routes in Worker settings:
-   - `yourdomain.com/*`
-   - `www.yourdomain.com/*`
-5. Save and deploy
+**Configure Routes** (in Dashboard):
+- Settings → Triggers → Add Route
+- `yourdomain.com/*`
+- `www.yourdomain.com/*`
 
 **Post-Deployment**:
 ```bash
-# View live logs
-npm run tail
-
 # Test worker is responding
 curl -I https://yourdomain.com
+
+# Verify JSON-LD generation
+curl -s https://yourdomain.com/ | grep -A 10 'application/ld+json'
+
+# Check CORS headers
+curl -I https://yourdomain.com | grep -i access-control
 ```
 
 ## How It Works
@@ -526,58 +500,6 @@ npm run test:coverage
 **Status:** ✅ All tests passing
 
 For complete testing details, see [TESTING.md](TESTING.md).
-
-### Local Testing with Wrangler
-
-Test the worker locally before deploying:
-
-**Method 1: Using npm scripts (recommended)**:
-```bash
-# Start local dev server (uses wrangler.toml config)
-npm run dev
-
-# Worker runs at http://localhost:8787
-# Hot reload enabled - changes apply automatically
-```
-
-**Method 2: Direct wrangler commands**:
-```bash
-# Basic local testing
-npx wrangler dev
-
-# With environment variables
-npx wrangler dev --var ORIGIN_HOSTNAME:main--project--org.aem.live --var DEBUG:true
-
-# Test specific environment
-npx wrangler dev --env development
-
-# Test with remote mode (uses actual Cloudflare infrastructure)
-npx wrangler dev --remote
-```
-
-**Testing the local worker**:
-```bash
-# Test basic response
-curl http://localhost:8787/
-
-# Test with specific path
-curl http://localhost:8787/test-page
-
-# View response headers
-curl -I http://localhost:8787/
-
-# Test CORS preflight
-curl -X OPTIONS http://localhost:8787/ \
-  -H "Origin: https://example.com" \
-  -H "Access-Control-Request-Method: GET"
-```
-
-**Wrangler features**:
-- Hot reload on file changes
-- Local debugging with console.log output
-- Environment variable injection
-- Request/response inspection
-- Performance metrics
 
 ### Integration Testing
 

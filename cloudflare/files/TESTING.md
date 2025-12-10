@@ -42,39 +42,40 @@ We test the main `fetch` handler by mocking `HTMLRewriter` and `fetch`. This ens
 - The request flow (CORS, URL sanitization) works as expected.
 - The `article` state is correctly built and passed to `buildJsonLd`.
 
-## Manual Testing (Local Dev)
+## Manual Testing (Production)
 
-You can still run the worker locally with Wrangler to test against real URLs.
+Since the worker is deployed via Cloudflare Dashboard, manual testing is done against the deployed worker.
 
-### Start Development Server
-
-```bash
-npm run dev
-```
-
-Worker runs at: `http://localhost:8787` (or similar port).
-
-**Note:** If specific port redirects are active in the worker code, you may need to disable them temporarily for local browser testing, or rely on `npm test` which bypasses network-level redirects.
-
-### Manual Test Commands
+### Test Production Worker
 
 ```bash
-# Test basic request
-curl -I http://localhost:8787/
+# Test CORS headers
+curl -I https://allabout.network | grep -i access-control
 
-# Test generated JSON-LD (requires valid triggers on origin)
-curl -s http://localhost:8787/path/to/page | grep "application/ld+json"
+# Test JSON-LD generation
+curl -s https://allabout.network/blog/article | grep -i "application/ld+json"
+
+# Test specific page
+curl -s https://allabout.network/path/to/page | grep "application/ld+json"
 ```
+
+### Verify Environment Variables
+
+Test that the worker validates environment variables:
+1. Temporarily remove `ORIGIN_HOSTNAME` from Dashboard settings
+2. Request any page - should return 500 with clear error message
+3. Re-add `ORIGIN_HOSTNAME` and verify recovery
 
 ## Production Testing
 
-### Deploy to Staging
+### View Logs
 
-```bash
-npx wrangler deploy --env staging
-```
+View logs in Cloudflare Dashboard:
+1. Workers & Pages → aem-worker
+2. Click "Logs" tab
+3. View real-time logs with DEBUG=true enabled
 
-### Test Production Worker
+### Verify Production Deployment
 
 ```bash
 # Test CORS headers
