@@ -111,7 +111,8 @@
       "Bash(npm run test:integration:*)",
       "Bash(npm run test:all:*)",
       "Bash(npm run test:server:*)",
-      "Bash(./compare-responses.sh:*)"
+      "Bash(./compare-responses.sh:*)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []
