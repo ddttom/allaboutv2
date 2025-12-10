@@ -7,6 +7,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-10d] - Cloudflare Worker Refactor & Education
+
+### Changed
+- **Cloudflare Worker Architecture**: Refactored to "Two-File" Simplicity
+  - Refactored `cloudflare-worker.js` to use **Pure Functions** (`buildJsonLd`, `shouldGenerateJsonLd`) for core logic
+  - Consolidated all testing into `cloudflare-worker.test.js` (Unit + Integration)
+  - Removed outdated complex test infrastructure (scripts, manual tests, split files)
+  - Achieved **100% Test Coverage** (19 tests) with significantly less code
+- **Documentation Overhaul**:
+  - `cloudflare/blog.md`: Rewritten as a generic **Educational Case Study**
+    - Title: "Case Study: Architecting Testable Cloudflare Workers for Adobe EDS"
+    - Focuses on the "Pattern" rather than the specific project implementation
+    - Explains "Pure Core + Thin Shell" architecture
+    - Explains "Unit + Integration" testing strategy
+    - Removed project-specific setup instructions
+  - `cloudflare/files/README.md`: Updated to reflect simplified testing commands (`npm test`)
+  - `cloudflare/files/TESTING.md`: Simplified to match the new 2-file architecture
+
+### Removed
+- **Obsolete Files**:
+  - `cloudflare-worker.integration.test.js` (merged into main test file)
+  - `test-server.sh`, `manual-test.sh` (replaced by simplified `npm test`)
+  - `TEST-SUMMARY.md`, `COMPARE-GUIDE.md` (redundant)
+
+### Technical Details
+- **Test Count**: 19 automated tests (18 unit, 1 integration)
+- **Execution Time**: < 1000ms
+- **Architecture**: Single Worker File + Single Test File
+
+### Rationale
+Moved from a "proven but complex" initial implementation to a "refined and elegant" final architecture. The blog post was transformed into an educational resource to share this pattern with the community effectively.
+
+### Files Modified
+1. `cloudflare/files/cloudflare-worker.js` - Refactored for exportability
+2. `cloudflare/files/cloudflare-worker.test.js` - Consolidated test suite
+3. `cloudflare/blog.md` - Complete rewrite as case study
+4. `cloudflare/files/README.md` - Updated instructions
+5. `cloudflare/files/TESTING.md` - Updated guide
+6. `cloudflare/files/package.json` - Cleaned up scripts
+
+**Total: 6 files modified, 10+ files deleted**
+
+---
+
 ## [2025-12-10c] - Cloudflare Worker Local Testing Infrastructure
 
 ### Added

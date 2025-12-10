@@ -5,19 +5,16 @@
  * Run with: npm test (requires vitest or jest)
  */
 
-import { describe, test, expect } from 'vitest';
-
-// Helper functions extracted for testing
-const getExtension = (path) => {
-  const basename = path.split('/').pop();
-  const pos = basename.lastIndexOf('.');
-  return (basename === '' || pos < 1) ? '' : basename.slice(pos + 1);
-};
-
-const isMediaRequest = (url) => (
-  /\/media_[0-9a-f]{40,}[/a-zA-Z0-9_-]*\.[0-9a-z]+$/.test(url.pathname)
-);
-const isRUMRequest = (url) => /\/\.(rum|optel)\/.*/.test(url.pathname);
+import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest';
+import worker, { 
+  getExtension, 
+  isMediaRequest, 
+  isRUMRequest, 
+  buildJsonLd,
+  handleJsonLdMeta,
+  handleOgTitle,
+  handleViewport
+} from './cloudflare-worker.js';
 
 // Test suite for getExtension
 describe('getExtension', () => {
@@ -119,58 +116,8 @@ describe('isRUMRequest', () => {
   });
 });
 
-// Mock test suite for environment variable validation
-describe('Environment Variable Validation', () => {
-  test('validates ORIGIN_HOSTNAME is present', () => {
-    const env = { ORIGIN_HOSTNAME: 'main--project--owner.aem.live' };
-    expect(env.ORIGIN_HOSTNAME).toBeTruthy();
-  });
-
-  test('detects missing ORIGIN_HOSTNAME', () => {
-    const env = {};
-    expect(env.ORIGIN_HOSTNAME).toBeFalsy();
-  });
-
-  test('validates ORIGIN_HOSTNAME format', () => {
-    const validHostnames = [
-      'main--project--owner.aem.live',
-      'main--project--owner.hlx.live',
-      'branch--project--owner.aem.live',
-    ];
-
-    // Pattern accepts any branch name (main, branch, feature, etc.)
-    const pattern = /^https:\/\/[a-z0-9-]+--.*--.*\.(?:aem|hlx)\.live/;
-
-    validHostnames.forEach((hostname) => {
-      const url = `https://${hostname}`;
-      expect(url).toMatch(pattern);
-    });
-  });
-});
-
-// Mock test suite for DEBUG flag
-describe('Debug Flag Handling', () => {
-  test('enables debug mode when DEBUG=true', () => {
-    const env = { DEBUG: 'true' };
-    const DEBUG = env.DEBUG === 'true';
-    expect(DEBUG).toBe(true);
-  });
-
-  test('disables debug mode when DEBUG is not set', () => {
-    const env = {};
-    const DEBUG = env.DEBUG === 'true';
-    expect(DEBUG).toBe(false);
-  });
-
-  test('disables debug mode when DEBUG=false', () => {
-    const env = { DEBUG: 'false' };
-    const DEBUG = env.DEBUG === 'true';
-    expect(DEBUG).toBe(false);
-  });
-});
-
-// Integration test suite for JSON-LD generation logic
-describe('JSON-LD Generation Logic', () => {
+// Test suite for buildJsonLd
+describe('buildJsonLd', () => {
   test('creates valid Article schema structure', () => {
     const article = {
       title: 'Test Article',
@@ -179,53 +126,38 @@ describe('JSON-LD Generation Logic', () => {
       author: 'John Doe',
       publishDate: '2024-12-10',
       modifiedDate: '2024-12-10',
+      shouldGenerateJsonLd: true
     };
-
-    const jsonLd = {
-      '@context': 'https://schema.org',
-      '@type': 'Article',
-      headline: article.title,
-      description: article.description,
-      url: article.url,
-      datePublished: article.publishDate,
-      dateModified: article.modifiedDate,
-      author: {
-        '@type': 'Person',
-        name: article.author,
-      },
-      publisher: {
-        '@type': 'Organization',
-        name: 'example.com',
-      },
-    };
+    const hostname = 'example.com';
+    const jsonLd = buildJsonLd(article, hostname);
 
     expect(jsonLd['@context']).toBe('https://schema.org');
     expect(jsonLd['@type']).toBe('Article');
     expect(jsonLd.headline).toBe(article.title);
+    expect(jsonLd.description).toBe(article.description);
+    expect(jsonLd.url).toBe(article.url);
+    expect(jsonLd.datePublished).toBe(article.publishDate);
+    expect(jsonLd.dateModified).toBe(article.modifiedDate);
+    
+    expect(jsonLd.author).toBeDefined();
     expect(jsonLd.author['@type']).toBe('Person');
+    expect(jsonLd.author.name).toBe(article.author);
+    
+    expect(jsonLd.publisher).toBeDefined();
     expect(jsonLd.publisher['@type']).toBe('Organization');
+    expect(jsonLd.publisher.name).toBe(hostname);
   });
 
   test('omits empty fields from JSON-LD', () => {
-    const article = {
+     const article = {
       title: 'Test Article',
       description: null,
       url: null,
       author: null,
+      shouldGenerateJsonLd: true
     };
-
-    const jsonLd = {
-      '@context': 'https://schema.org',
-      '@type': 'Article',
-      headline: article.title,
-    };
-
-    // Only add non-null fields
-    if (article.description) jsonLd.description = article.description;
-    if (article.url) jsonLd.url = article.url;
-    if (article.author) {
-      jsonLd.author = { '@type': 'Person', name: article.author };
-    }
+    const hostname = 'example.com';
+    const jsonLd = buildJsonLd(article, hostname);
 
     expect(jsonLd).not.toHaveProperty('description');
     expect(jsonLd).not.toHaveProperty('url');
@@ -235,47 +167,149 @@ describe('JSON-LD Generation Logic', () => {
 
   test('handles image objects correctly', () => {
     const article = {
+      title: 'Test',
       image: 'https://example.com/image.jpg',
       imageAlt: 'Alt text',
     };
+    const hostname = 'example.com';
+    const jsonLd = buildJsonLd(article, hostname);
 
-    const imageObj = {
-      '@type': 'ImageObject',
-      url: article.image,
-      caption: article.imageAlt,
-    };
-
-    expect(imageObj['@type']).toBe('ImageObject');
-    expect(imageObj.url).toBe(article.image);
-    expect(imageObj.caption).toBe(article.imageAlt);
+    expect(jsonLd.image).toBeDefined();
+    expect(jsonLd.image['@type']).toBe('ImageObject');
+    expect(jsonLd.image.url).toBe(article.image);
+    expect(jsonLd.image.caption).toBe(article.imageAlt);
   });
 });
 
-// Test suite for JSON serialization error handling
-describe('JSON Serialization Error Handling', () => {
-  test('successfully serializes valid JSON-LD', () => {
-    const jsonLd = {
-      '@context': 'https://schema.org',
-      '@type': 'Article',
-      headline: 'Test',
-    };
+// Test suite for Handler Functions (Unit Tests)
+describe('Handler Functions', () => {
+  let mockElement;
+  let article;
 
-    expect(() => JSON.stringify(jsonLd)).not.toThrow();
-    const result = JSON.stringify(jsonLd);
-    expect(result).toContain('"@context"');
-    expect(result).toContain('"@type"');
+  beforeEach(() => {
+    mockElement = {
+      getAttribute: vi.fn(),
+      remove: vi.fn(),
+      after: vi.fn(),
+    };
+    article = {
+      shouldGenerateJsonLd: false,
+      title: null,
+    };
   });
 
-  test('handles circular references gracefully', () => {
-    const jsonLd = {
-      '@context': 'https://schema.org',
-      '@type': 'Article',
-      headline: 'Test',
+  test('handleJsonLdMeta sets flag when content is "article"', () => {
+    mockElement.getAttribute.mockReturnValue('article');
+    handleJsonLdMeta(mockElement, article);
+    expect(article.shouldGenerateJsonLd).toBe(true);
+    expect(mockElement.remove).toHaveBeenCalled();
+  });
+
+  test('handleJsonLdMeta does not set flag when content is not "article"', () => {
+    mockElement.getAttribute.mockReturnValue('website');
+    handleJsonLdMeta(mockElement, article);
+    expect(article.shouldGenerateJsonLd).toBe(false);
+    expect(mockElement.remove).toHaveBeenCalled();
+  });
+
+  test('handleOgTitle extracts title', () => {
+    mockElement.getAttribute.mockReturnValue('My Title');
+    handleOgTitle(mockElement, article, false);
+    expect(article.title).toBe('My Title');
+  });
+
+  test('handleViewport triggers JSON-LD generation if flag and title present', () => {
+    article.shouldGenerateJsonLd = true;
+    article.title = 'My Title';
+    const url = new URL('https://example.com/page');
+
+    handleViewport(mockElement, article, url, false);
+
+    expect(mockElement.after).toHaveBeenCalled();
+    const script = mockElement.after.mock.calls[0][0];
+    expect(script).toContain('application/ld+json');
+    expect(script).toContain('"headline":"My Title"');
+  });
+
+  test('handleViewport skips JSON-LD generation if flag missing', () => {
+    article.shouldGenerateJsonLd = false;
+    article.title = 'My Title';
+    const url = new URL('https://example.com/page');
+
+    handleViewport(mockElement, article, url, false);
+
+    expect(mockElement.after).not.toHaveBeenCalled();
+  });
+});
+
+// Mock HTMLRewriter for integration testing
+class MockHTMLRewriter {
+  static activeHandlers = [];
+
+  constructor() {
+    this.handlers = [];
+  }
+
+  on(selector, handler) {
+    const h = { selector, handler };
+    this.handlers.push(h);
+    MockHTMLRewriter.activeHandlers.push(h);
+    return this;
+  }
+
+  transform(response) {
+    return response;
+  }
+}
+
+describe('handleRequest Integration', () => {
+  // Mock global HTMLRewriter
+  beforeEach(() => {
+    MockHTMLRewriter.activeHandlers = []; // Reset handlers
+    global.HTMLRewriter = MockHTMLRewriter;
+    global.Response = class Response {
+      constructor(body, init) {
+        this.body = body;
+        this.status = init?.status || 200;
+        this.headers = new Map(init?.headers ? Object.entries(init.headers) : []);
+      }
+      get headers() { return this._headers || new Map(); }
+      set headers(val) { this._headers = val; }
+    };
+    
+    // Mock fetch
+    global.fetch = vi.fn().mockResolvedValue(new Response('<html>...</html>', {
+      headers: { 'content-type': 'text/html' }
+    }));
+  });
+
+  afterEach(() => {
+    delete global.HTMLRewriter;
+    delete global.Response;
+    delete global.fetch;
+  });
+
+  test('registers all handlers', async () => {
+    const env = {
+      ORIGIN_HOSTNAME: 'main--test--owner.aem.live',
+      DEBUG: 'true'
+    };
+    const request = {
+      url: 'https://allabout.network/article',
+      method: 'GET',
+      headers: new Map(),
     };
 
-    // Create circular reference
-    jsonLd.self = jsonLd;
+    const response = await worker.fetch(request, env);
 
-    expect(() => JSON.stringify(jsonLd)).toThrow();
+    expect(response.status).toBe(200);
+    expect(MockHTMLRewriter.activeHandlers.length).toBeGreaterThan(0);
+    
+    // Verify specific handlers are present
+    const hasViewport = MockHTMLRewriter.activeHandlers.some(h => h.selector === 'meta[name="viewport"]');
+    expect(hasViewport).toBe(true);
+    
+    const hasJsonLd = MockHTMLRewriter.activeHandlers.some(h => h.selector === 'meta[name="jsonld"]');
+    expect(hasJsonLd).toBe(true);
   });
 });

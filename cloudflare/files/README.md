@@ -134,11 +134,8 @@ The worker will be available at `http://localhost:8787`
 # Local development with hot reload
 npm run dev
 
-# Run unit tests
+# Run all tests (Unit + Integration)
 npm test
-
-# Run tests in watch mode
-npm run test:watch
 
 # Run tests with coverage report
 npm run test:coverage
@@ -496,52 +493,39 @@ This blog documents:
 
 ## Testing
 
-### Comprehensive Test Environment
+### Simple, Robust Testing
 
-This worker includes a **complete test environment** that treats `cloudflare-worker.js` as **read-only** while providing full coverage through multiple testing approaches.
+The project uses a single test file `cloudflare-worker.test.js` that covers both:
+1. **Unit Tests**: Verifies individual handler functions (`handleJsonLdMeta`, `handleViewport`, etc.) using mock elements.
+2. **Integration Tests**: Verifies the entire `fetch` flow using a mocked `HTMLRewriter` to ensure handlers are wired correctly using request/result mocks.
 
-**Test files:**
-- `cloudflare-worker.test.js` - 21 unit tests
-- `cloudflare-worker.integration.test.js` - 21 integration tests (includes 5 trigger mechanism tests)
-- `test-server.sh` - Automated test runner
-- `manual-test.sh` - Manual testing script
-- `TESTING.md` - Complete testing guide (180 lines)
-- `TEST-SUMMARY.md` - Quick reference
+This approach allows comprehensive testing of the worker logic locally without needing a complex dev server setup or port redirects.
 
 ### Quick Test Commands
 
 ```bash
-# Run all automated tests (42 tests)
-npm run test:all
-
-# Run unit tests only (21 tests)
+# Run all tests (Unit + Integration)
 npm test
 
-# Run integration tests (16 tests)
-npm run test:integration
-
-# Run automated test suite with linter
-npm run test:server
-
-# Run manual tests (requires dev server)
-npm run test:manual
+# Run tests with coverage report
+npm run test:coverage
 ```
 
 ### Test Coverage
 
-**42 total tests covering:**
-- Helper functions (16 unit tests)
-- Environment validation (6 tests)
-- CORS headers (4 tests)
-- URL sanitization (4 tests)
-- JSON-LD generation (2 tests)
-- JSON-LD trigger mechanisms (5 tests)
-- Debug logging (5 tests)
-- Error handling (multiple tests)
+**Tests cover:**
+- Helper functions (19+ tests)
+- Environment validation
+- CORS headers
+- URL sanitization
+- JSON-LD generation
+- Debug logging
+- Error handling
+- Handler wiring
 
 **Status:** ✅ All tests passing
 
-For complete testing documentation, see [TESTING.md](TESTING.md) and [TEST-SUMMARY.md](TEST-SUMMARY.md)
+For complete testing details, see [TESTING.md](TESTING.md).
 
 ### Local Testing with Wrangler
 

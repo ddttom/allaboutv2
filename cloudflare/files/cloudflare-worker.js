@@ -13,16 +13,193 @@
  * governing permissions and limitations under the License.
  */
 
-const getExtension = (path) => {
+export const getExtension = (path) => {
   const basename = path.split('/').pop();
   const pos = basename.lastIndexOf('.');
   return (basename === '' || pos < 1) ? '' : basename.slice(pos + 1);
 };
 
-const isMediaRequest = (url) => (
+export const isMediaRequest = (url) => (
   /\/media_[0-9a-f]{40,}[/a-zA-Z0-9_-]*\.[0-9a-z]+$/.test(url.pathname)
 );
-const isRUMRequest = (url) => /\/\.(rum|optel)\/.*/.test(url.pathname);
+
+export const isRUMRequest = (url) => /\/\.(rum|optel)\/.*/.test(url.pathname);
+
+/**
+ * Builds JSON-LD object from article metadata
+ * @param {Object} article - Article metadata
+ * @param {string} hostname - Publisher hostname
+ * @returns {Object} JSON-LD object
+ */
+export const buildJsonLd = (article, hostname) => {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title,
+  };
+
+  // Only add fields that have values
+  if (article.description) jsonLd.description = article.description;
+  if (article.url) jsonLd.url = article.url;
+  if (article.publishDate) jsonLd.datePublished = article.publishDate;
+  if (article.modifiedDate) jsonLd.dateModified = article.modifiedDate;
+
+  if (article.author) {
+    jsonLd.author = {
+      '@type': 'Person',
+      name: article.author,
+    };
+  }
+
+  if (article.image) {
+    jsonLd.image = {
+      '@type': 'ImageObject',
+      url: article.image,
+    };
+    if (article.imageAlt) {
+      jsonLd.image.caption = article.imageAlt;
+    }
+  }
+
+  jsonLd.publisher = {
+    '@type': 'Organization',
+    name: hostname,
+  };
+
+  return jsonLd;
+};
+
+// --- HTMLRewriter Handlers ---
+// These functions encapsulates the logic for each element type
+// They modify the 'article' state object or the 'element' itself
+
+export const handleJsonLdErrorScript = (e, article) => {
+  const error = e.getAttribute('data-error');
+  if (error && error.includes('"article"')) {
+    article.shouldGenerateJsonLd = true;
+  }
+  e.remove();
+};
+
+export const handleJsonLdMeta = (e, article) => {
+  const value = e.getAttribute('content');
+  if (value === 'article') {
+    article.shouldGenerateJsonLd = true;
+  }
+  e.remove();
+};
+
+export const handleLegacyJsonLdScript = (e, article) => {
+  article.shouldGenerateJsonLd = true;
+  e.remove();
+};
+
+export const handleOgTitle = (e, article, DEBUG) => {
+  const content = e.getAttribute('content');
+  article.title = content;
+  if (DEBUG) {
+    // eslint-disable-next-line no-console
+    console.log('og:title extracted:', { content, hasContent: !!content });
+  }
+};
+
+export const handleOgDescription = (e, article) => {
+  if (!article.description) {
+    article.description = e.getAttribute('content');
+  }
+};
+
+export const handleLongDescription = (e, article) => {
+  article.description = e.getAttribute('content');
+  e.remove();
+};
+
+export const handleOgUrl = (e, article) => {
+  article.url = e.getAttribute('content');
+};
+
+export const handleOgImage = (e, article) => {
+  if (!article.image) {
+    article.image = e.getAttribute('content');
+  }
+};
+
+export const handleOgImageAlt = (e, article) => {
+  article.imageAlt = e.getAttribute('content');
+};
+
+export const handleDescription = (e, article) => {
+  if (!article.description) {
+    article.description = e.getAttribute('content');
+  }
+  e.remove();
+};
+
+export const handleAuthor = (e, article) => {
+  article.author = e.getAttribute('content');
+  e.remove();
+};
+
+export const handlePublicationDate = (e, article) => {
+  if (!article.publishDate) {
+    article.publishDate = e.getAttribute('content');
+  }
+  e.remove();
+};
+
+export const handleModifiedDate = (e, article) => {
+  if (!article.modifiedDate) {
+    article.modifiedDate = e.getAttribute('content');
+  }
+  e.remove();
+};
+
+export const handleViewport = (element, article, requestUrl, DEBUG) => {
+  if (DEBUG) {
+    // eslint-disable-next-line no-console
+    console.log('Viewport handler:', {
+      shouldGenerate: article.shouldGenerateJsonLd,
+      hasTitle: !!article.title,
+      title: article.title,
+    });
+  }
+
+  // Only generate JSON-LD if triggered by json-ld meta tag and we have title
+  if (!article.shouldGenerateJsonLd || !article.title) {
+    if (DEBUG) {
+      // eslint-disable-next-line no-console
+      console.log('JSON-LD skipped:', {
+        reason: !article.shouldGenerateJsonLd ? 'no trigger' : 'no title',
+      });
+    }
+    return;
+  }
+
+  const jsonLd = buildJsonLd(article, requestUrl.hostname);
+
+  try {
+    const script = `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>`;
+    element.after(script, { html: true });
+
+    if (DEBUG) {
+      // eslint-disable-next-line no-console
+      console.log('JSON-LD generated successfully:', {
+        url: requestUrl.pathname,
+        fields: Object.keys(jsonLd),
+        hasAuthor: !!article.author,
+        hasImage: !!article.image,
+      });
+    }
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error('JSON-LD serialization failed:', {
+      error: err.message,
+      url: requestUrl.pathname,
+      title: article.title,
+    });
+  }
+};
+
 
 const handleRequest = async (request, env, _ctx) => {
   // Validate required environment variables
@@ -138,188 +315,50 @@ const handleRequest = async (request, env, _ctx) => {
 
     // eslint-disable-next-line no-undef
     resp = new HTMLRewriter()
-      // Trigger 1: Legacy EDS error script with "article"
       .on('script[type="application/ld+json"][data-error]', {
-        element(e) {
-          const error = e.getAttribute('data-error');
-          // Check if error message contains 'article' - this is our trigger
-          if (error && error.includes('"article"')) {
-            article.shouldGenerateJsonLd = true;
-          }
-          e.remove();
-        },
+        element: (e) => handleJsonLdErrorScript(e, article)
       })
-      // Trigger 2: New metadata approach (jsonld=article, no EDS error)
       .on('meta[name="jsonld"]', {
-        element(e) {
-          const value = e.getAttribute('content');
-          if (value === 'article') {
-            article.shouldGenerateJsonLd = true;
-          }
-          e.remove();
-        },
+        element: (e) => handleJsonLdMeta(e, article)
       })
-      // Trigger 3: Legacy perfect JSON-LD (remove and regenerate from fresh metadata)
       .on('script[type="application/ld+json"]:not([data-error])', {
-        element(e) {
-          // Only trigger if script contains Article type
-          // Note: Can't read content in element handler, so we trigger on presence
-          // This catches legacy pages where Adobe might have fixed backend
-          article.shouldGenerateJsonLd = true;
-          e.remove();
-        },
+        element: (e) => handleLegacyJsonLdScript(e, article)
       })
       .on('meta[data-error]', {
         element(e) { e.remove(); },
       })
       .on('meta[property="og:title"]', {
-        element(e) {
-          const content = e.getAttribute('content');
-          article.title = content;
-          if (DEBUG) {
-            // eslint-disable-next-line no-console
-            console.log('og:title extracted:', { content, hasContent: !!content });
-          }
-        },
+        element: (e) => handleOgTitle(e, article, DEBUG)
       })
       .on('meta[property="og:description"]', {
-        element(e) {
-          if (!article.description) {
-            article.description = e.getAttribute('content');
-          }
-        },
+        element: (e) => handleOgDescription(e, article)
       })
       .on('meta[name="longdescription"]', {
-        element(e) {
-          article.description = e.getAttribute('content');
-          e.remove();
-        },
+        element: (e) => handleLongDescription(e, article)
       })
       .on('meta[property="og:url"]', {
-        element(e) { article.url = e.getAttribute('content'); },
+        element: (e) => handleOgUrl(e, article)
       })
       .on('meta[property="og:image"]', {
-        element(e) {
-          if (!article.image) {
-            article.image = e.getAttribute('content');
-          }
-        },
+        element: (e) => handleOgImage(e, article)
       })
       .on('meta[property="og:image:alt"]', {
-        element(e) { article.imageAlt = e.getAttribute('content'); },
+        element: (e) => handleOgImageAlt(e, article)
       })
       .on('meta[name="description"]', {
-        element(e) {
-          if (!article.description) {
-            article.description = e.getAttribute('content');
-          }
-          e.remove();
-        },
+        element: (e) => handleDescription(e, article)
       })
       .on('meta[name="author"]', {
-        element(e) {
-          article.author = e.getAttribute('content');
-          e.remove();
-        },
+        element: (e) => handleAuthor(e, article)
       })
       .on('meta[name="publication-date"], meta[name="published-date"]', {
-        element(e) {
-          if (!article.publishDate) {
-            article.publishDate = e.getAttribute('content');
-          }
-          e.remove();
-        },
+        element: (e) => handlePublicationDate(e, article)
       })
       .on('meta[name="modified-date"], meta[name="last-modified"]', {
-        element(e) {
-          if (!article.modifiedDate) {
-            article.modifiedDate = e.getAttribute('content');
-          }
-          e.remove();
-        },
+        element: (e) => handleModifiedDate(e, article)
       })
       .on('meta[name="viewport"]', {
-        element(element) {
-          if (DEBUG) {
-            // eslint-disable-next-line no-console
-            console.log('Viewport handler:', {
-              shouldGenerate: article.shouldGenerateJsonLd,
-              hasTitle: !!article.title,
-              title: article.title,
-            });
-          }
-
-          // Only generate JSON-LD if triggered by json-ld meta tag and we have title
-          if (!article.shouldGenerateJsonLd || !article.title) {
-            if (DEBUG) {
-              // eslint-disable-next-line no-console
-              console.log('JSON-LD skipped:', {
-                reason: !article.shouldGenerateJsonLd ? 'no trigger' : 'no title',
-              });
-            }
-            return;
-          }
-
-          const jsonLd = {
-            '@context': 'https://schema.org',
-            '@type': 'Article',
-            headline: article.title,
-          };
-
-          // Only add fields that have values
-          if (article.description) jsonLd.description = article.description;
-          if (article.url) jsonLd.url = article.url;
-          if (article.publishDate) jsonLd.datePublished = article.publishDate;
-          if (article.modifiedDate) jsonLd.dateModified = article.modifiedDate;
-
-          if (article.author) {
-            jsonLd.author = {
-              '@type': 'Person',
-              name: article.author,
-            };
-          }
-
-          if (article.image) {
-            jsonLd.image = {
-              '@type': 'ImageObject',
-              url: article.image,
-            };
-            if (article.imageAlt) {
-              jsonLd.image.caption = article.imageAlt;
-            }
-          }
-
-          // Add publisher
-          const requestUrl = new URL(request.url);
-          jsonLd.publisher = {
-            '@type': 'Organization',
-            name: requestUrl.hostname,
-          };
-
-          // Safe JSON serialization with error handling
-          try {
-            const script = `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>`;
-            element.after(script, { html: true });
-
-            if (DEBUG) {
-              // eslint-disable-next-line no-console
-              console.log('JSON-LD generated successfully:', {
-                url: url.pathname,
-                fields: Object.keys(jsonLd),
-                hasAuthor: !!article.author,
-                hasImage: !!article.image,
-              });
-            }
-          } catch (err) {
-            // Log serialization errors
-            // eslint-disable-next-line no-console
-            console.error('JSON-LD serialization failed:', {
-              error: err.message,
-              url: url.pathname,
-              title: article.title,
-            });
-          }
-        },
+        element: (e) => handleViewport(e, article, new URL(request.url), DEBUG)
       })
       .transform(resp);
   }
