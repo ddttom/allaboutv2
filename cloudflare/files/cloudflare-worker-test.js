@@ -101,8 +101,11 @@ const handleRequest = async (request, env, _ctx) => {
   searchParams.sort();
 
   url.hostname = env.ORIGIN_HOSTNAME;
-  if (!url.origin.match(/^https:\/\/main--.*--.*\.(?:aem|hlx)\.live/)) {
-    return new Response('Invalid ORIGIN_HOSTNAME', { status: 500 });
+  const originPattern = /^https?:\/\/main--.*--.*\.(?:aem|hlx)\.(?:live|page)/;
+  if (!url.origin.match(originPattern)) {
+    // eslint-disable-next-line no-console
+    console.log('Origin validation failed:', { origin: url.origin, pattern: originPattern.toString() });
+    return new Response(`Invalid ORIGIN_HOSTNAME: ${url.origin}`, { status: 500 });
   }
 
   const req = new Request(url, request);

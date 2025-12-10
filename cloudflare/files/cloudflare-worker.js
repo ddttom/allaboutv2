@@ -99,7 +99,7 @@ const handleRequest = async (request, env, _ctx) => {
   searchParams.sort();
 
   url.hostname = env.ORIGIN_HOSTNAME;
-  if (!url.origin.match(/^https:\/\/main--.*--.*\.(?:aem|hlx)\.live/)) {
+  if (!url.origin.match(/^https?:\/\/main--.*--.*\.(?:aem|hlx)\.(?:live|page)/)) {
     return new Response('Invalid ORIGIN_HOSTNAME', { status: 500 });
   }
 
@@ -173,7 +173,14 @@ const handleRequest = async (request, env, _ctx) => {
         element(e) { e.remove(); },
       })
       .on('meta[property="og:title"]', {
-        element(e) { article.title = e.getAttribute('content'); },
+        element(e) {
+          const content = e.getAttribute('content');
+          article.title = content;
+          if (DEBUG) {
+            // eslint-disable-next-line no-console
+            console.log('og:title extracted:', { content, hasContent: !!content });
+          }
+        },
       })
       .on('meta[property="og:description"]', {
         element(e) {
@@ -233,11 +240,22 @@ const handleRequest = async (request, env, _ctx) => {
       })
       .on('meta[name="viewport"]', {
         element(element) {
+          if (DEBUG) {
+            // eslint-disable-next-line no-console
+            console.log('Viewport handler:', {
+              shouldGenerate: article.shouldGenerateJsonLd,
+              hasTitle: !!article.title,
+              title: article.title,
+            });
+          }
+
           // Only generate JSON-LD if triggered by json-ld meta tag and we have title
           if (!article.shouldGenerateJsonLd || !article.title) {
-            if (DEBUG && article.shouldGenerateJsonLd && !article.title) {
+            if (DEBUG) {
               // eslint-disable-next-line no-console
-              console.log('JSON-LD skipped: trigger active but no title found');
+              console.log('JSON-LD skipped:', {
+                reason: !article.shouldGenerateJsonLd ? 'no trigger' : 'no title',
+              });
             }
             return;
           }

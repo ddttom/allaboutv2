@@ -14,7 +14,7 @@ workers_dev = true
 ORIGIN_HOSTNAME = "main--allaboutv2--ddttom.aem.page"
 
 # Enable debug logging (optional)
-# DEBUG = "true"
+DEBUG = "true"
 
 # Push invalidation setting (optional)
 # PUSH_INVALIDATION = "enabled"
