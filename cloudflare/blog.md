@@ -292,7 +292,7 @@ Plus adds CORS headers for API integration.
 
 How do authors trigger JSON-LD generation? The worker now supports **three approaches**:
 
-#### 1. Recommended: Clean Metadata (No Errors!)
+#### 1. Recommended: Clean Metadata
 
 **In document metadata:**
 ```
@@ -304,25 +304,20 @@ This generates clean HTML:
 <meta name="jsonld" content="article">
 ```
 
-No authoring error, no error script - just clean markup. **This is the recommended approach** for new pages.
+Simple, clean markup. **This is the recommended approach** for all pages.
 
-#### 2. Legacy: EDS Error Workaround (Backward Compatible)
+#### 2. Legacy: json-ld Metadata
 
 **In document metadata:**
 ```
 | json-ld | article |
 ```
 
-Adobe EDS tries to create JSON-LD but fails, generating:
-```html
-<script type="application/ld+json" data-error="error in json-ld: Unexpected token..."></script>
-```
+Still supported for existing pages. Note: Some EDS versions may generate an error element with this metadata name, which the worker detects and handles.
 
-Still supported for existing pages - worker detects and fixes the error.
+#### 3. Future-Proofing: Existing JSON-LD Scripts
 
-#### 3. Future: Perfect JSON-LD (If Adobe Fixes Backend)
-
-If legacy pages have perfect JSON-LD:
+If pages already have JSON-LD:
 ```html
 <script type="application/ld+json">{"@context": "https://schema.org", ...}</script>
 ```
@@ -332,13 +327,13 @@ The worker **regenerates from fresh metadata** to ensure consistency.
 #### How All Three Work
 
 Regardless of trigger method:
-1. Worker detects trigger (meta tag, error script, or perfect script)
+1. Worker detects trigger (meta tag or existing script)
 2. Extracts current metadata (og:title, author, description, etc.)
 3. Generates fresh JSON-LD from that metadata
 4. Removes/replaces trigger element
 5. Inserts new JSON-LD in `<head>`
 
-This ensures **always using latest metadata**, never stale JSON-LD. Elegant, flexible, and future-proof.
+This ensures **always using latest metadata**, never stale JSON-LD. Simple, flexible, and future-proof.
 
 ### Lessons Learned
 

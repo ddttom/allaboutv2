@@ -17,23 +17,9 @@ This Worker extends Adobe's standard EDS Cloudflare Worker template to:
 
 The Worker supports **three trigger mechanisms** for JSON-LD generation:
 
-#### 1. Legacy EDS Error (Backward Compatibility)
+#### Recommended: Clean Metadata
 
-When you add this to your EDS metadata:
-```
-| json-ld | article |
-```
-
-An authoring error generates:
-```html
-<script type="application/ld+json" data-error="error in json-ld: Unexpected token 'a', "article" is not valid JSON"></script>
-```
-
-The Worker detects this error script and uses it as a trigger.
-
-#### 2. NEW: Clean Metadata (Recommended)
-
-**This is the recommended authoring practice** - avoids EDS errors:
+**Use this for all new pages:**
 
 ```
 | jsonld | article |
@@ -44,21 +30,27 @@ Generates clean HTML:
 <meta name="jsonld" content="article">
 ```
 
-No error script, cleaner markup, same functionality.
+Simple, clean markup.
 
-#### 3. Legacy Perfect JSON-LD (Future-Proofing)
+#### Legacy: json-ld Metadata
 
-If Adobe fixes the backend and existing pages have perfect JSON-LD:
+Still supported for existing pages:
 
-```html
-<script type="application/ld+json">{
-  "@context": "https://schema.org",
-  "@type": "Article",
-  ...
-}</script>
+```
+| json-ld | article |
 ```
 
-The Worker will **regenerate** JSON-LD from fresh metadata to ensure consistency.
+Note: Some EDS versions generate an error element with this metadata name, which the worker also detects and handles.
+
+#### Future-Proofing: Existing JSON-LD Scripts
+
+If pages already have JSON-LD scripts:
+
+```html
+<script type="application/ld+json">{...}</script>
+```
+
+The Worker regenerates from fresh metadata to ensure consistency.
 
 #### How All Three Work
 
