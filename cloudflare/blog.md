@@ -110,7 +110,7 @@ Unit tests verify helper functions extracted from the worker:
 - Environment validation (3 tests)
 - Debug flag handling (2 tests)
 
-**Layer 2: Integration Tests** (16 tests)
+**Layer 2: Integration Tests** (21 tests)
 ```javascript
 // cloudflare-worker.integration.test.js
 global.HTMLRewriter = class HTMLRewriter {
@@ -228,9 +228,9 @@ This honors the read-only testing principle: **the worker is correct, so we adap
 
 After implementation, we have:
 
-**✅ 37 Automated Tests** (100% passing)
+**✅ 42 Automated Tests** (100% passing)
 - 21 unit tests covering helper functions
-- 16 integration tests verifying worker behavior
+- 21 integration tests verifying worker behavior (includes 5 trigger mechanism tests)
 - 0 test-specific code in production worker
 
 **✅ Code Quality**
@@ -379,7 +379,7 @@ Better to accept the testing limitation and validate in production after deploym
 **Development Effort:**
 - Worker enhancements: ~200 lines of code
 - Unit tests: 280 lines (21 tests)
-- Integration tests: 310 lines (16 tests)
+- Integration tests: 350 lines (21 tests)
 - Test scripts: 400+ lines (2 shell scripts)
 - Comparison tools: 500+ lines (shell script + HTML/JS)
 - Documentation: 1,400+ lines (5 comprehensive guides)
@@ -420,7 +420,7 @@ But for now, we have a production-ready Cloudflare Worker that:
 - ✅ Generates valid schema.org JSON-LD
 - ✅ Cleans up redundant metadata
 - ✅ Preserves social media tags
-- ✅ Has 37 automated tests (100% passing)
+- ✅ Has 42 automated tests (100% passing)
 - ✅ Has comprehensive documentation
 - ✅ Follows read-only testing principles
 - ✅ Maintains clean architecture
@@ -451,7 +451,7 @@ All code follows the Apache License 2.0 (matching Adobe's EDS license). The test
 
 Building a production-ready Cloudflare Worker isn't just about writing JavaScript that works. It's about:
 
-- **Testing** - 37 automated tests prove correctness
+- **Testing** - 42 automated tests prove correctness
 - **Documentation** - 1,400+ lines explain every decision
 - **Developer Experience** - Six npm scripts cover every workflow
 - **Architecture** - Read-only testing preserves production integrity
