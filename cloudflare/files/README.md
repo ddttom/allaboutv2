@@ -411,6 +411,44 @@ The worker includes robust error handling:
 }
 ```
 
+### HTTP Header Manipulation
+
+The worker modifies response headers to handle edge cases in the double-CDN architecture (Cloudflare → Adobe Fastly → Adobe EDS):
+
+**CSP Header Removal on 304 Responses**:
+```javascript
+if (resp.status === 304) {
+  resp.headers.delete('Content-Security-Policy');
+}
+```
+
+- **Why**: HTTP 304 (Not Modified) responses have no body content
+- **Issue**: Content-Security-Policy header is only meaningful for responses with content
+- **Solution**: Remove CSP header from 304 responses to keep headers clean
+
+**Age Header Removal**:
+```javascript
+resp.headers.delete('age');
+```
+
+- **Why**: Double-CDN architecture issue
+- **Flow**: Request → Cloudflare → Adobe Fastly → Adobe EDS
+- **Issue**: Adobe's `age` header reflects time since Adobe's CDN cached it, not time since Cloudflare cached it
+- **Problem**: End users see inaccurate cache age (doesn't include Cloudflare's cache time)
+- **Solution**: Remove Adobe's `age` header so browsers don't receive misleading cache timing
+
+**x-robots-tag Header Removal**:
+```javascript
+resp.headers.delete('x-robots-tag');
+```
+
+- **Why**: SEO control at edge rather than origin
+- **Issue**: Adobe EDS might set `x-robots-tag` at origin
+- **Solution**: Remove origin's robots directive to allow full SEO control at Cloudflare edge
+- **Benefit**: Can implement custom SEO rules in worker without origin interference
+
+These header modifications ensure clean, accurate responses that properly reflect the complete CDN architecture and provide maximum flexibility for edge-level optimizations.
+
 ## Troubleshooting
 
 ### JSON-LD not appearing in pages
