@@ -1,0 +1,67 @@
+# Wrangler Configuration for Adobe EDS Cloudflare Worker
+# Documentation: https://developers.cloudflare.com/workers/wrangler/configuration/
+
+name = "aem-worker"
+main = "cloudflare-worker-test.js"
+compatibility_date = "2024-12-10"
+
+# Worker settings
+workers_dev = true
+
+# Environment variables for local development
+[vars]
+# Set your Adobe EDS origin hostname
+ORIGIN_HOSTNAME = "main--allaboutv2--ddttom.aem.page"
+
+# Enable debug logging (optional)
+# DEBUG = "true"
+
+# Push invalidation setting (optional)
+# PUSH_INVALIDATION = "enabled"
+
+# Routes (configure in Cloudflare Dashboard or uncomment below)
+# [[routes]]
+# pattern = "allabout.network/*"
+# zone_name = "allabout.network"
+
+# [[routes]]
+# pattern = "www.allabout.network/*"
+# zone_name = "allabout.network"
+
+# Build configuration
+[build]
+command = ""
+
+# Observability
+[observability]
+enabled = true
+
+# Limits
+[limits]
+cpu_ms = 50
+
+# Local development settings
+[dev]
+ip = "127.0.0.1"
+port = 8787
+local_protocol = "http"
+
+# Environment-specific configuration
+
+# Development environment
+[env.development]
+name = "aem-worker-dev"
+vars = { DEBUG = "true" }
+
+# Staging environment
+[env.staging]
+name = "aem-worker-staging"
+
+# Production environment (deployed to Cloudflare)
+[env.production]
+name = "aem-worker"
+workers_dev = false
+
+# For secrets (API tokens, etc.), use:
+# wrangler secret put ORIGIN_AUTHENTICATION
+# wrangler secret put CLOUDFLARE_API_TOKEN

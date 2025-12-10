@@ -138,12 +138,35 @@ Adobe Edge Delivery Services uses Fastly's SSL certificates. These certificates 
 
 ### Worker Details
 
-**Worker Name:** aem-worker  
-**Type:** Cloudflare Worker (JavaScript)  
-**Code Source:** Adobe official repository  
-**GitHub URL:** https://github.com/adobe/aem-cloudflare-prod-worker  
-**Code URL:** https://raw.githubusercontent.com/adobe/aem-cloudflare-prod-worker/main/src/index.mjs  
+**Worker Name:** aem-worker
+**Type:** Cloudflare Worker (JavaScript)
+**Code Source:** Adobe official repository
+**GitHub URL:** https://github.com/adobe/aem-cloudflare-prod-worker
+**Code URL:** https://raw.githubusercontent.com/adobe/aem-cloudflare-prod-worker/main/src/index.mjs
 **Status:** Active
+
+### Custom Worker Implementation
+
+**Note:** This project uses a **modified version** of the Adobe EDS Cloudflare Worker with additional features.
+
+**Custom features:**
+- CORS headers on all responses
+- JSON-LD structured data generation from page metadata
+- Metadata cleanup (removes EDS error tags)
+- Trigger mechanism via authoring error workaround
+
+**Complete documentation:** `cloudflare/files/README.md` (293 lines)
+**Worker code:** `cloudflare/files/cloudflare-worker.js` (8.9 KB)
+
+**Why custom?**
+- Enables cross-origin requests for API integrations
+- Improves SEO with rich structured data
+- Cleans up HTML output (removes error scripts and non-social meta tags)
+
+**Deployment notes:**
+- Follow deployment steps in `cloudflare/files/README.md`
+- Uses same environment variables as standard worker (ORIGIN_HOSTNAME, PUSH_INVALIDATION)
+- Additional trigger: Add `| json-ld | article |` to EDS metadata
 
 ### Environment Variables
 
@@ -840,6 +863,7 @@ chmod +x cloudflare-health-check.sh
 - **Security Guidelines**: `docs/for-ai/guidelines/security-checklist.md` - Security validation checklist
 - **Block Architecture**: `docs/for-ai/implementation/block-architecture-standards.md` - Block development standards
 - **Design System**: `docs/for-ai/guidelines/design-system.md` - Design tokens and component patterns
+- **Custom Worker Implementation**: `cloudflare/files/README.md` - Custom features (CORS, JSON-LD) deployment guide
 - **Project Guide**: `CLAUDE.md` - Complete project overview for AI assistants
 - **Documentation Index**: `docs/for-ai/index.md` - Navigation hub for all documentation
 

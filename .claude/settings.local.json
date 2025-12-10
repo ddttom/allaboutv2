@@ -106,7 +106,12 @@
       "Bash(source .venv/bin/activate)",
       "Bash(pip install:*)",
       "Bash(python -m playwright:*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(npm test:*)",
+      "Bash(npm run test:integration:*)",
+      "Bash(npm run test:all:*)",
+      "Bash(npm run test:server:*)",
+      "Bash(./compare-responses.sh:*)"
     ],
     "deny": [],
     "ask": []

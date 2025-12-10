@@ -18,6 +18,7 @@
 - **Share executable demos**: Use ipynb-viewer block for end-user interaction
 - **Review documentation**: Use `/review-docs` command
 - **Run all linting**: Use `/lint-all` command or `npm run lint`
+- **Deploy custom Cloudflare worker**: See `cloudflare/files/` for CORS and JSON-LD worker
 
 ## Commands
 
@@ -478,6 +479,29 @@ When a notebook has a `repo` metadata attribute, all `.md` file links are automa
 - Help Button and Metadata (Section 6: Three Types of Overlays)
 - Link Navigation Implementation (Section 4: Interactive Features)
 
+## Cloudflare Custom Worker Implementation
+
+**Custom Adobe EDS worker with enhanced features** - see `cloudflare/files/`
+
+**What it does:**
+- Adds CORS headers to all responses
+- Generates JSON-LD structured data from page metadata
+- Removes EDS error tags and non-social metadata
+- Maintains all standard Adobe EDS functionality
+
+**Key files:**
+- `cloudflare/files/README.md` - Complete implementation guide and deployment instructions
+- `cloudflare/files/cloudflare-worker.js` - Worker code (Apache License 2.0)
+
+**Documentation references:**
+- General Cloudflare config: `docs/for-ai/implementation/cloudflare.md`
+- Custom worker implementation: `cloudflare/files/README.md`
+
+**Critical metadata pattern:**
+Add `| json-ld | article |` to EDS metadata to trigger JSON-LD generation. The worker uses a clever authoring error workaround to detect this trigger.
+
+**Deployment:** Follow `cloudflare/files/README.md` steps for prerequisites, environment variables, and deployment workflow.
+
 ## ⚠️ CRITICAL: EDS Reserved Class Names
 
 **NEVER use these class name patterns in blocks:**
@@ -711,6 +735,7 @@ const code = 'here';
 - **NEW: Educational notebooks**: `docs/for-ai/explaining-educational-notebooks.md` - Create tutorials, guides, and interactive demos as SPAs
 - **NEW: ipynb-viewer block**: `blocks/ipynb-viewer/README.md` - Display executable notebooks with autorun, paged, and link navigation
 - **Helix Configuration**: `docs/for-ai/helix-config.md` - Complete .helix/config file reference covering CDN integration (Cloudflare), push invalidation, environment configuration, and troubleshooting
+- **Custom Cloudflare Worker**: `cloudflare/files/README.md` - Custom Adobe EDS worker implementation with CORS headers, JSON-LD generation, and metadata cleanup
 - Security checklist: `docs/for-ai/guidelines/security-checklist.md`
 - Frontend guidelines: `docs/for-ai/guidelines/frontend-guidelines.md`
 

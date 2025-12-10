@@ -103,6 +103,8 @@ This index provides structured access to all documentation within the `docs/for-
   - API token security audit checklist
   - Target: AI assistants, DevOps, system administrators managing allabout.network
 
+- **Custom Worker Implementation**: `cloudflare/files/README.md` - Modified Adobe EDS worker with CORS headers, JSON-LD structured data generation, and metadata cleanup. Deployment guide and implementation details.
+
 - **[`helix-config.md`](helix-config.md)**
   - Complete .helix/config file reference and configuration guide
   - CDN integration setup with Cloudflare (production environment)
