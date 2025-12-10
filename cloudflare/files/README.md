@@ -81,11 +81,19 @@ Extracts metadata from your EDS pages and creates schema.org Article structured 
 - `og:description` or `longdescription` → description
 - `og:url` → url
 - `og:image` + `og:image:alt` → image object
-- `author` → author (Person)
-- `publication-date` or `published-date` → datePublished
-- `modified-date` or `last-modified` → dateModified
+- `author` → author (Person name)
+- `author-url` → author (Person url) - optional (falls back to `linkedin` meta if not provided)
+- `publication-date` or `published-date` → datePublished (auto-formatted to ISO 8601)
+- `modified-date` or `last-modified` → dateModified (auto-formatted to ISO 8601)
 
 The JSON-LD script is inserted into the page `<head>`.
+
+**Date formatting:**
+Dates are automatically converted to ISO 8601 format (YYYY-MM-DD). Supports multiple input formats:
+- ISO 8601: `2024-12-10` (passed through unchanged)
+- UK numeric: `10/12/2024` (day/month/year)
+- Month names: `10 December 2024`, `Dec 10 2024`, `10-Dec-2024`
+- Invalid dates are omitted from JSON-LD rather than causing errors
 
 ### Metadata Cleanup
 
@@ -95,6 +103,7 @@ The JSON-LD script is inserted into the page `<head>`.
 - `name="description"`
 - `name="longdescription"`
 - `name="author"`
+- `name="author-url"`
 - `name="publication-date"` / `name="published-date"`
 - `name="modified-date"` / `name="last-modified"`
 
@@ -274,7 +283,8 @@ The Worker uses this order for the JSON-LD description:
   <meta property="og:description" content="Short description">
   <meta name="longdescription" content="Detailed description">
   <meta name="author" content="Tom Cranstoun">
-  <meta name="publication-date" content="2024-12-10">
+  <meta name="author-url" content="https://allabout.network">
+  <meta name="publication-date" content="10/12/2024">
   <script type="application/ld+json" data-error="error in json-ld: Unexpected token 'a', &quot;article&quot; is not valid JSON"></script>
 </head>
 ```
@@ -293,7 +303,8 @@ The Worker uses this order for the JSON-LD description:
     "description": "Detailed description",
     "author": {
       "@type": "Person",
-      "name": "Tom Cranstoun"
+      "name": "Tom Cranstoun",
+      "url": "https://allabout.network"
     },
     "datePublished": "2024-12-10",
     "publisher": {
@@ -311,16 +322,21 @@ Add these properties to your EDS document metadata:
 ### Recommended (Clean Metadata)
 
 ```
-| Metadata         | Value               |
-|------------------|---------------------|
-| jsonld           | article             |
-| author           | Tom Cranstoun       |
-| publication-date | 2024-12-10          |
-| modified-date    | 2024-12-10          |
-| longdescription  | Detailed text here  |
+| Metadata         | Value                      |
+|------------------|----------------------------|
+| jsonld           | article                    |
+| author           | Tom Cranstoun              |
+| author-url       | https://allabout.network   |
+| publication-date | 10/12/2024                 |
+| modified-date    | 10 December 2024           |
+| longdescription  | Detailed text here         |
 ```
 
 **Use `jsonld` (not `json-ld`)** - avoids EDS authoring errors, cleaner markup.
+
+**Date formats:** You can use any format (UK numeric `10/12/2024`, month names `10 December 2024`, `Dec 10 2024`, etc.). The worker automatically converts to ISO 8601 format.
+
+**Author URL fallback:** If you don't provide `author-url`, the worker will automatically use your `linkedin` meta tag as the author URL (if present). This keeps your LinkedIn meta for social media while also using it for structured data.
 
 ### Legacy (Backward Compatibility)
 
@@ -353,8 +369,9 @@ Modified by Digital Domain Technologies Ltd
 - Currently works around an authoring error that generates malformed JSON-LD scripts
 - Requires at least `og:title` to generate JSON-LD
 - Requires `<meta name="viewport">` tag (standard in all EDS pages)
-- Date formats should be ISO 8601 compatible
+- Dates are automatically converted to ISO 8601; invalid dates are omitted
 - Publisher name is derived from hostname
+- Author URL is optional and not validated (schema.org handles validation)
 
 ## Debugging and Error Handling
 

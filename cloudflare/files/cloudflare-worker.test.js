@@ -6,13 +6,16 @@
  */
 
 import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest';
-import worker, { 
-  getExtension, 
-  isMediaRequest, 
-  isRUMRequest, 
+import worker, {
+  getExtension,
+  isMediaRequest,
+  isRUMRequest,
   buildJsonLd,
+  formatISO8601Date,
   handleJsonLdMeta,
   handleOgTitle,
+  handleAuthorUrl,
+  handleLinkedIn,
   handleViewport
 } from './cloudflare-worker.js';
 
@@ -116,6 +119,81 @@ describe('isRUMRequest', () => {
   });
 });
 
+// Test suite for formatISO8601Date
+describe('formatISO8601Date', () => {
+  test('passes through already formatted ISO 8601 dates', () => {
+    expect(formatISO8601Date('2024-12-10')).toBe('2024-12-10');
+    expect(formatISO8601Date('2025-01-01')).toBe('2025-01-01');
+  });
+
+  test('handles UK numeric format (dd/mm/yyyy)', () => {
+    expect(formatISO8601Date('10/12/2024')).toBe('2024-12-10');
+    expect(formatISO8601Date('01/02/2024')).toBe('2024-02-01');
+    expect(formatISO8601Date('25/03/2024')).toBe('2024-03-25');
+  });
+
+  test('handles UK numeric format with dashes (dd-mm-yyyy)', () => {
+    expect(formatISO8601Date('10-12-2024')).toBe('2024-12-10');
+    expect(formatISO8601Date('01-02-2024')).toBe('2024-02-01');
+  });
+
+  test('handles UK numeric format with spaces (dd mm yyyy)', () => {
+    expect(formatISO8601Date('10 12 2024')).toBe('2024-12-10');
+  });
+
+  test('handles full month names - day month year format', () => {
+    expect(formatISO8601Date('10 December 2024')).toBe('2024-12-10');
+    expect(formatISO8601Date('25 March 2024')).toBe('2024-03-25');
+    expect(formatISO8601Date('1 January 2025')).toBe('2025-01-01');
+  });
+
+  test('handles abbreviated month names - day month year format', () => {
+    expect(formatISO8601Date('10 Dec 2024')).toBe('2024-12-10');
+    expect(formatISO8601Date('25 Mar 2024')).toBe('2024-03-25');
+    expect(formatISO8601Date('1 Jan 2025')).toBe('2025-01-01');
+  });
+
+  test('handles month-day-year format with dashes', () => {
+    expect(formatISO8601Date('10-Dec-2024')).toBe('2024-12-10');
+    expect(formatISO8601Date('25-March-2024')).toBe('2024-03-25');
+  });
+
+  test('handles US style month day year format', () => {
+    expect(formatISO8601Date('December 10, 2024')).toBe('2024-12-10');
+    expect(formatISO8601Date('March 25, 2024')).toBe('2024-03-25');
+  });
+
+  test('handles abbreviated US style month day year', () => {
+    expect(formatISO8601Date('Dec 10 2024')).toBe('2024-12-10');
+    expect(formatISO8601Date('Mar 25 2024')).toBe('2024-03-25');
+  });
+
+  test('returns null for invalid dates', () => {
+    expect(formatISO8601Date('')).toBeNull();
+    expect(formatISO8601Date('   ')).toBeNull();
+    expect(formatISO8601Date('invalid')).toBeNull();
+    expect(formatISO8601Date('32/12/2024')).toBeNull(); // Invalid day
+    expect(formatISO8601Date('10/13/2024')).toBeNull(); // Invalid month (13)
+  });
+
+  test('returns null for non-string inputs', () => {
+    expect(formatISO8601Date(null)).toBeNull();
+    expect(formatISO8601Date(undefined)).toBeNull();
+    expect(formatISO8601Date(12345)).toBeNull();
+  });
+
+  test('handles edge case dates', () => {
+    expect(formatISO8601Date('29/02/2024')).toBe('2024-02-29'); // Leap year
+    expect(formatISO8601Date('31/01/2024')).toBe('2024-01-31');
+    expect(formatISO8601Date('30/04/2024')).toBe('2024-04-30');
+  });
+
+  test('rejects invalid leap year dates', () => {
+    expect(formatISO8601Date('29/02/2023')).toBeNull(); // Not a leap year
+    expect(formatISO8601Date('31/04/2024')).toBeNull(); // April has 30 days
+  });
+});
+
 // Test suite for buildJsonLd
 describe('buildJsonLd', () => {
   test('creates valid Article schema structure', () => {
@@ -179,6 +257,85 @@ describe('buildJsonLd', () => {
     expect(jsonLd.image.url).toBe(article.image);
     expect(jsonLd.image.caption).toBe(article.imageAlt);
   });
+
+  test('formats dates to ISO 8601', () => {
+    const article = {
+      title: 'Test Article',
+      publishDate: '10/12/2024', // UK format
+      modifiedDate: '25 March 2024', // Full month name
+    };
+    const hostname = 'example.com';
+    const jsonLd = buildJsonLd(article, hostname);
+
+    expect(jsonLd.datePublished).toBe('2024-12-10');
+    expect(jsonLd.dateModified).toBe('2024-03-25');
+  });
+
+  test('omits invalid dates from JSON-LD', () => {
+    const article = {
+      title: 'Test Article',
+      publishDate: 'invalid date',
+      modifiedDate: '32/12/2024',
+    };
+    const hostname = 'example.com';
+    const jsonLd = buildJsonLd(article, hostname);
+
+    expect(jsonLd).not.toHaveProperty('datePublished');
+    expect(jsonLd).not.toHaveProperty('dateModified');
+  });
+
+  test('includes author URL when available', () => {
+    const article = {
+      title: 'Test Article',
+      author: 'John Doe',
+      authorUrl: 'https://example.com/author/john-doe',
+    };
+    const hostname = 'example.com';
+    const jsonLd = buildJsonLd(article, hostname);
+
+    expect(jsonLd.author).toBeDefined();
+    expect(jsonLd.author['@type']).toBe('Person');
+    expect(jsonLd.author.name).toBe('John Doe');
+    expect(jsonLd.author.url).toBe('https://example.com/author/john-doe');
+  });
+
+  test('handles author without URL', () => {
+    const article = {
+      title: 'Test Article',
+      author: 'Jane Smith',
+      authorUrl: null,
+    };
+    const hostname = 'example.com';
+    const jsonLd = buildJsonLd(article, hostname);
+
+    expect(jsonLd.author).toBeDefined();
+    expect(jsonLd.author['@type']).toBe('Person');
+    expect(jsonLd.author.name).toBe('Jane Smith');
+    expect(jsonLd.author).not.toHaveProperty('url');
+  });
+
+  test('uses LinkedIn as fallback for author URL', () => {
+    const article = {
+      title: 'Test Article',
+      author: 'John Doe',
+      authorUrl: 'https://linkedin.com/in/johndoe', // Fallback from LinkedIn
+    };
+    const jsonLd = buildJsonLd(article, 'example.com');
+
+    expect(jsonLd.author.url).toBe('https://linkedin.com/in/johndoe');
+  });
+
+  test('author-url takes precedence over LinkedIn', () => {
+    const article = {
+      title: 'Test Article',
+      author: 'John Doe',
+      authorUrl: 'https://example.com/author/john-doe', // Explicit author-url
+    };
+    const jsonLd = buildJsonLd(article, 'example.com');
+
+    // Should use author-url, not LinkedIn
+    expect(jsonLd.author.url).toBe('https://example.com/author/john-doe');
+  });
 });
 
 // Test suite for Handler Functions (Unit Tests)
@@ -216,6 +373,27 @@ describe('Handler Functions', () => {
     mockElement.getAttribute.mockReturnValue('My Title');
     handleOgTitle(mockElement, article, false);
     expect(article.title).toBe('My Title');
+  });
+
+  test('handleAuthorUrl extracts author URL', () => {
+    mockElement.getAttribute.mockReturnValue('https://example.com/author');
+    handleAuthorUrl(mockElement, article);
+    expect(article.authorUrl).toBe('https://example.com/author');
+    expect(mockElement.remove).toHaveBeenCalled();
+  });
+
+  test('handleLinkedIn extracts LinkedIn URL as fallback', () => {
+    mockElement.getAttribute.mockReturnValue('https://linkedin.com/in/author');
+    handleLinkedIn(mockElement, article);
+    expect(article.authorUrl).toBe('https://linkedin.com/in/author');
+    expect(mockElement.remove).not.toHaveBeenCalled(); // LinkedIn meta stays
+  });
+
+  test('handleLinkedIn does not override existing author-url', () => {
+    article.authorUrl = 'https://example.com/author';
+    mockElement.getAttribute.mockReturnValue('https://linkedin.com/in/author');
+    handleLinkedIn(mockElement, article);
+    expect(article.authorUrl).toBe('https://example.com/author'); // Not overridden
   });
 
   test('handleViewport triggers JSON-LD generation if flag and title present', () => {

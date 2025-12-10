@@ -26,6 +26,107 @@ export const isMediaRequest = (url) => (
 export const isRUMRequest = (url) => /\/\.(rum|optel)\/.*/.test(url.pathname);
 
 /**
+ * Formats a date string to ISO 8601 format (YYYY-MM-DD)
+ * Handles UK date format (dd/mm/yyyy) as default and month names (Dec, December)
+ * @param {string} dateString - Date string in various formats
+ * @returns {string|null} ISO 8601 formatted date or null if invalid
+ */
+export const formatISO8601Date = (dateString) => {
+  if (!dateString || typeof dateString !== 'string') return null;
+
+  const trimmed = dateString.trim();
+  if (!trimmed) return null;
+
+  // If already ISO 8601 format (YYYY-MM-DD), return as-is
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+    return trimmed;
+  }
+
+  // Month name mapping (full and abbreviated)
+  const months = {
+    january: 0,
+    jan: 0,
+    february: 1,
+    feb: 1,
+    march: 2,
+    mar: 2,
+    april: 3,
+    apr: 3,
+    may: 4,
+    june: 5,
+    jun: 5,
+    july: 6,
+    jul: 6,
+    august: 7,
+    aug: 7,
+    september: 8,
+    sep: 8,
+    sept: 8,
+    october: 9,
+    oct: 9,
+    november: 10,
+    nov: 10,
+    december: 11,
+    dec: 11,
+  };
+
+  let day;
+  let month;
+  let year;
+
+  // Try to parse dates with month names first
+  // Patterns: "10 December 2024", "December 10, 2024"
+  // eslint-disable-next-line max-len
+  const monthNamePattern = /(\d{1,2})[\s-]*([a-zA-Z]+)[\s,-]*(\d{4})|([a-zA-Z]+)[\s-]*(\d{1,2})[\s,-]*(\d{4})/i;
+  const monthMatch = trimmed.match(monthNamePattern);
+
+  if (monthMatch) {
+    if (monthMatch[1]) {
+      // Pattern: day month year (10 December 2024, 10-Dec-2024)
+      day = parseInt(monthMatch[1], 10);
+      month = months[monthMatch[2].toLowerCase()];
+      year = parseInt(monthMatch[3], 10);
+    } else {
+      // Pattern: month day year (December 10 2024, Dec 10 2024)
+      month = months[monthMatch[4].toLowerCase()];
+      day = parseInt(monthMatch[5], 10);
+      year = parseInt(monthMatch[6], 10);
+    }
+  } else {
+    // Try numeric format: assume UK format (dd/mm/yyyy) by default
+    const numericPattern = /(\d{1,2})[/\s-](\d{1,2})[/\s-](\d{4})/;
+    const numericMatch = trimmed.match(numericPattern);
+
+    if (numericMatch) {
+      // UK format: day/month/year
+      day = parseInt(numericMatch[1], 10);
+      month = parseInt(numericMatch[2], 10) - 1; // Convert to 0-indexed
+      year = parseInt(numericMatch[3], 10);
+    } else {
+      // Unable to parse
+      return null;
+    }
+  }
+
+  // Validate parsed values
+  if (month === undefined || month < 0 || month > 11) return null;
+  if (!day || day < 1 || day > 31) return null;
+  if (!year || year < 1900 || year > 2100) return null;
+
+  // Create date object and validate it's a real date
+  const date = new Date(year, month, day);
+  if (date.getFullYear() !== year || date.getMonth() !== month || date.getDate() !== day) {
+    return null;
+  }
+
+  // Format as ISO 8601 (YYYY-MM-DD)
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, '0');
+  const dd = String(date.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+};
+
+/**
  * Builds JSON-LD object from article metadata
  * @param {Object} article - Article metadata
  * @param {string} hostname - Publisher hostname
@@ -41,14 +142,23 @@ export const buildJsonLd = (article, hostname) => {
   // Only add fields that have values
   if (article.description) jsonLd.description = article.description;
   if (article.url) jsonLd.url = article.url;
-  if (article.publishDate) jsonLd.datePublished = article.publishDate;
-  if (article.modifiedDate) jsonLd.dateModified = article.modifiedDate;
+
+  // Format dates to ISO 8601 before adding
+  const formattedPublishDate = formatISO8601Date(article.publishDate);
+  if (formattedPublishDate) jsonLd.datePublished = formattedPublishDate;
+
+  const formattedModifiedDate = formatISO8601Date(article.modifiedDate);
+  if (formattedModifiedDate) jsonLd.dateModified = formattedModifiedDate;
 
   if (article.author) {
     jsonLd.author = {
       '@type': 'Person',
       name: article.author,
     };
+    // Add author URL if available
+    if (article.authorUrl) {
+      jsonLd.author.url = article.authorUrl;
+    }
   }
 
   if (article.image) {
@@ -138,6 +248,21 @@ export const handleDescription = (e, article) => {
 export const handleAuthor = (e, article) => {
   article.author = e.getAttribute('content');
   e.remove();
+};
+
+export const handleAuthorUrl = (e, article) => {
+  if (!article.authorUrl) {
+    article.authorUrl = e.getAttribute('content');
+  }
+  e.remove();
+};
+
+export const handleLinkedIn = (e, article) => {
+  // Use LinkedIn as fallback for author URL if not already set
+  if (!article.authorUrl) {
+    article.authorUrl = e.getAttribute('content');
+  }
+  // Keep LinkedIn meta tag for social media (don't remove)
 };
 
 export const handlePublicationDate = (e, article) => {
@@ -307,6 +432,7 @@ const handleRequest = async (request, env, _ctx) => {
       imageAlt: null,
       url: null,
       author: null,
+      authorUrl: null,
       publishDate: null,
       modifiedDate: null,
       shouldGenerateJsonLd: false,
@@ -349,6 +475,12 @@ const handleRequest = async (request, env, _ctx) => {
       })
       .on('meta[name="author"]', {
         element: (e) => handleAuthor(e, article),
+      })
+      .on('meta[name="author-url"]', {
+        element: (e) => handleAuthorUrl(e, article),
+      })
+      .on('meta[name="linkedin"]', {
+        element: (e) => handleLinkedIn(e, article),
       })
       .on('meta[name="publication-date"], meta[name="published-date"]', {
         element: (e) => handlePublicationDate(e, article),
