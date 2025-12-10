@@ -7,6 +7,83 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-10b] - Cloudflare Worker Three Trigger Mechanisms
+
+### Added
+- **Three JSON-LD Trigger Mechanisms**: Worker now supports three ways to activate JSON-LD generation
+  - **Trigger 1 (Recommended)**: Clean metadata (`| jsonld | article |`)
+    - Generates `<meta name="jsonld" content="article">`
+    - No EDS errors, cleanest markup
+    - Recommended for all new pages
+  - **Trigger 2 (Legacy)**: json-ld metadata (`| json-ld | article |`)
+    - Supported for backward compatibility with existing pages
+    - Some EDS versions generate error element, worker detects and handles
+  - **Trigger 3 (Future-proofing)**: Existing JSON-LD scripts
+    - Detects `<script type="application/ld+json">` without errors
+    - Regenerates from fresh metadata for consistency
+    - Handles legacy pages where Adobe might fix backend
+  - **Critical behavior**: All three triggers regenerate JSON-LD from current metadata
+    - Never pass through existing JSON-LD unchanged
+    - Always use latest page metadata
+    - Ensures JSON-LD stays current and accurate
+
+### Changed
+- **Worker Code** (`cloudflare-worker.js`):
+  - Added three HTMLRewriter handlers for trigger detection (lines 141-171)
+  - `shouldGenerateJsonLd` flag controls JSON-LD generation
+  - All triggers remove/replace original element
+  - Comprehensive inline documentation explaining each trigger
+- **Test Infrastructure**:
+  - Added 5 new integration tests in `cloudflare-worker.integration.test.js`
+  - Test count: 37 → 42 tests (21 unit + 21 integration)
+  - 100% pass rate maintained
+  - Tests cover all three triggers plus negative cases
+- **Documentation Updates**:
+  - `README.md` - Updated test count to 42 (line 335)
+  - `cloudflare/files/README.md` - Added comprehensive trigger mechanisms section
+    - Explains all three triggers with examples
+    - Documents metadata configuration patterns
+    - Updated test counts throughout
+  - `cloudflare/blog.md` - Added "Authoring Evolution" section
+    - Documents recommended vs legacy approaches
+    - Simplified tone about EDS behavior
+  - `manual-test.sh` - Added trigger testing documentation
+  - `TEST-SUMMARY.md` - Updated test coverage tables
+  - `TRANSFORMATION-ANALYSIS.md` - Updated production checklist
+  - `CHANGELOG.md` - This entry
+
+### Technical Details
+- **Test Coverage**: 42 automated tests (21 unit + 21 integration, 100% passing)
+- **Trigger Detection**: HTMLRewriter element handlers for each mechanism
+- **Regeneration Strategy**: All triggers extract fresh metadata, generate new JSON-LD
+- **Backward Compatibility**: Supports both clean (`jsonld`) and legacy (`json-ld`) metadata
+- **Future-Proofing**: Detects and regenerates existing JSON-LD scripts
+
+### Rationale
+Provides flexible trigger mechanisms while maintaining clean authoring practices. The recommended `jsonld` metadata avoids EDS errors while legacy support ensures existing pages continue working. All triggers regenerate from current metadata to prevent stale JSON-LD, ensuring search engines always see accurate structured data.
+
+### Impact
+- **Author Experience**: Clean metadata name (`jsonld`) avoids confusing error elements
+- **Backward Compatibility**: Existing pages with `json-ld` continue working
+- **Future-Proofing**: Handles legacy pages if Adobe fixes backend JSON-LD generation
+- **SEO**: Always uses latest metadata, never stale JSON-LD
+- **Testing**: Comprehensive coverage with 42 passing tests
+
+### Files Modified
+1. `cloudflare/files/cloudflare-worker.js` - Added 3 trigger handlers (30 lines)
+2. `cloudflare/files/cloudflare-worker.integration.test.js` - Added 5 trigger tests (60 lines)
+3. `cloudflare/files/README.md` - Added trigger mechanisms section (120+ lines)
+4. `cloudflare/blog.md` - Added authoring evolution section (80+ lines)
+5. `cloudflare/files/manual-test.sh` - Added trigger documentation (20 lines)
+6. `cloudflare/files/TEST-SUMMARY.md` - Updated test counts (10 lines)
+7. `cloudflare/files/TRANSFORMATION-ANALYSIS.md` - Updated checklist (2 lines)
+8. `README.md` - Updated test count (1 line)
+9. `CHANGELOG.md` - This comprehensive entry
+
+**Total: 9 files modified, 323+ lines added**
+
+---
+
 ## [2025-12-10] - Cloudflare Worker Testing Environment Completion
 
 ### Added
