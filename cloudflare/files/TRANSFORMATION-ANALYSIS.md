@@ -162,7 +162,7 @@ Before deploying:
 
 - [x] Worker code reviewed (`cloudflare-worker.js`)
 - [x] Unit tests passing (21 tests)
-- [x] Integration tests passing (16 tests)
+- [x] Integration tests passing (21 tests)
 - [x] ESLint validation passing
 - [x] Environment variables configured (ORIGIN_HOSTNAME)
 - [ ] Deploy to Cloudflare: `npm run deploy`
@@ -203,4 +203,4 @@ The worker is production-ready and will correctly transform your page. Local tes
 3. **Validate with Google**: Use Rich Results Test
 4. **Monitor performance**: Check Cloudflare analytics
 
-All 37 automated tests pass, ESLint validation passes, and the code is ready for deployment.
+All 42 automated tests pass (21 unit + 21 integration), ESLint validation passes, and the code is ready for deployment.

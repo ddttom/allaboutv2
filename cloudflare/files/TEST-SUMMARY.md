@@ -115,14 +115,14 @@ Features:
 
 ## 📊 Test Coverage Summary
 
-### Total Tests: 37 tests (21 unit + 16 integration)
+### Total Tests: 42 tests (21 unit + 21 integration)
 
 | Test Type | Tests | Status |
 |-----------|-------|--------|
 | Unit Tests | 21 | ✅ All passing |
-| Integration Tests | 16 | ✅ All passing |
+| Integration Tests | 21 | ✅ All passing |
 | Skipped (require dev server) | 2 | ⏭️ Manual only |
-| **Total** | **37** | **✅ 100%** |
+| **Total** | **42** | **✅ 100%** |
 
 ### Coverage by Feature
 
@@ -229,7 +229,7 @@ npm run test:all && npm run lint
 
 ## 📈 Success Metrics
 
-✅ **37 automated tests** covering core functionality
+✅ **42 automated tests** covering core functionality (includes trigger mechanism tests)
 ✅ **100% of tests passing**
 ✅ **Zero modifications** to worker code
 ✅ **ESLint validation** passing (Airbnb style)

@@ -483,11 +483,11 @@ This blog documents:
 - **The Implementation**: Four key worker enhancements with code examples
 - **The Testing Environment**: Three-layer test infrastructure (unit, integration, manual)
 - **The Port Redirect Challenge**: How we handled a production feature that blocked local testing
-- **The Results**: 37 tests passing, comprehensive documentation, 10:1 test-to-code ratio
+- **The Results**: 42 tests passing, comprehensive documentation, 10:1 test-to-code ratio
 - **Lessons Learned**: Four key insights about read-only testing, developer experience, documentation as testing, and production safety
 
 **Key Metrics from the Journey:**
-- 37 automated tests (100% passing)
+- 42 automated tests (100% passing)
 - 3,000 lines of test infrastructure for 300-line worker (10:1 ratio)
 - Zero technical debt
 - Production-ready with read-only testing principle maintained throughout
@@ -502,7 +502,7 @@ This worker includes a **complete test environment** that treats `cloudflare-wor
 
 **Test files:**
 - `cloudflare-worker.test.js` - 21 unit tests
-- `cloudflare-worker.integration.test.js` - 16 integration tests
+- `cloudflare-worker.integration.test.js` - 21 integration tests (includes 5 trigger mechanism tests)
 - `test-server.sh` - Automated test runner
 - `manual-test.sh` - Manual testing script
 - `TESTING.md` - Complete testing guide (180 lines)
@@ -511,7 +511,7 @@ This worker includes a **complete test environment** that treats `cloudflare-wor
 ### Quick Test Commands
 
 ```bash
-# Run all automated tests (37 tests)
+# Run all automated tests (42 tests)
 npm run test:all
 
 # Run unit tests only (21 tests)
@@ -529,12 +529,13 @@ npm run test:manual
 
 ### Test Coverage
 
-**37 total tests covering:**
+**42 total tests covering:**
 - Helper functions (16 unit tests)
 - Environment validation (6 tests)
 - CORS headers (4 tests)
 - URL sanitization (4 tests)
 - JSON-LD generation (2 tests)
+- JSON-LD trigger mechanisms (5 tests)
 - Debug logging (5 tests)
 - Error handling (multiple tests)
 

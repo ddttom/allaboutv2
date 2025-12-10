@@ -332,7 +332,7 @@ The site audit is created with https://github.com/ddttom/my-pa11y-project
     - Optional debug logging with `DEBUG=true` flag
     - Environment variable validation
   - **Development**: Wrangler CLI for local testing (localhost:8787) and deployment
-  - **Testing**: 37 automated tests (21 unit + 16 integration) with 100% pass rate
+  - **Testing**: 42 automated tests (21 unit + 21 integration) with 100% pass rate
   - **Documentation**: 520+ line implementation guide with examples and troubleshooting
   - **Read-Only Testing**: Complete test infrastructure treating worker as production code (10:1 test-to-code ratio)
   - **Blog Post**: [cloudflare/blog.md](cloudflare/blog.md) - Journey from challenge to production-ready deployment
