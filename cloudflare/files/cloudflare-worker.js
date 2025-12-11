@@ -252,7 +252,7 @@ export const handleDescription = (e, article) => {
 
 export const handleAuthor = (e, article) => {
   article.author = e.getAttribute('content');
-  e.remove();
+  // Keep author meta tag for attribution (like LinkedIn) - don't remove
 };
 
 export const handleAuthorUrl = (e, article) => {

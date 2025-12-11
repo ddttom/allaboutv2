@@ -22,7 +22,7 @@
   <meta name="twitter:description" content="This page validates that the custom Cloudflare worker is deployed and functioning correctly.">
   <meta name="twitter:image" content="https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png">
 
-  <!-- Article metadata (will be removed by worker) -->
+  <!-- Article metadata (author preserved, others removed by worker) -->
   <meta name="author" content="Tom Cranstoun">
   <meta name="author-url" content="https://allabout.network">
   <meta name="publication-date" content="11 December 2024">
@@ -475,7 +475,6 @@
     function testMetadataCleanup() {
       // Test that non-social meta tags were removed
       const removedTags = [
-        'meta[name="author"]',
         'meta[name="author-url"]',
         'meta[name="publication-date"]',
         'meta[name="modified-date"]',
@@ -499,7 +498,8 @@
         'meta[property="og:url"]',
         'meta[property="og:image"]',
         'meta[name="twitter:card"]',
-        'meta[name="linkedin"]'
+        'meta[name="linkedin"]',
+        'meta[name="author"]'
       ];
 
       const missing = preservedTags.filter(selector => !document.querySelector(selector));

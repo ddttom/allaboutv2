@@ -125,15 +125,18 @@ Dates are automatically converted to ISO 8601 format (YYYY-MM-DD). Supports mult
 - `<meta data-error>` (any meta tags with errors)
 - `name="description"`
 - `name="longdescription"`
-- `name="author"`
 - `name="author-url"`
 - `name="publication-date"` / `name="published-date"`
 - `name="modified-date"` / `name="last-modified"`
 
-**Keeps these for social media:**
+**Keeps these for social media & attribution:**
 - All `og:*` properties
 - All `twitter:*` properties
-- `name="linkedin"`
+- `name="linkedin"` (used as fallback for author-url)
+- `name="author"` (preserved for attribution)
+
+**Why preserve author metadata?**
+The `author` tag is kept in the HTML for proper attribution and accessibility, similar to how social media tags (LinkedIn, Twitter, Open Graph) are preserved. The author information is still extracted for JSON-LD generation, but the original meta tag remains for compatibility with tools and crawlers that expect standard author metadata.
 
 ## Getting Started
 
@@ -375,9 +378,11 @@ Still supported for existing pages. Generates EDS error script which worker dete
 
 1. Add `jsonld` or `json-ld` field with value `article`
 2. EDS generates corresponding HTML (`<meta>` tag or error `<script>`)
-3. Worker detects trigger, extracts all metadata
-4. Worker generates fresh JSON-LD from metadata
-5. Worker removes trigger and inserts JSON-LD
+3. Worker detects trigger, extracts all metadata (author, dates, descriptions)
+4. Worker removes non-social metadata tags (author-url, dates, descriptions)
+5. Worker keeps social and attribution tags (og:*, twitter:*, linkedin, author)
+6. Worker generates fresh JSON-LD from extracted metadata
+7. Worker inserts JSON-LD after viewport meta tag
 
 **Note:** Worker always uses latest metadata from page, ensuring JSON-LD stays current.
 
