@@ -152,6 +152,7 @@ Access your tests at: `http://localhost:3000/blocks/your-block/test.html`
 │   └── ...                # Other scripts
 ├── styles/                # Global styles
 ├── test.ipynb             # NEW: Context-aware testing notebook
+├── todo.txt               # Developer utility notes and reference examples
 ├── server.js              # Development server
 └── package.json           # Project configuration
 ```
