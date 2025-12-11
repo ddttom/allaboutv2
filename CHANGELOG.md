@@ -7,7 +7,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [2025-12-11] - Developer Utility Notes
+## [2025-12-11b] - Cloudflare Worker Version Tracking System
+
+### Added
+- **Worker Version Header**: Added semantic versioning to Cloudflare worker
+  - `WORKER_VERSION` constant (1.0.0) in `cloudflare/files/cloudflare-worker.js`
+  - `cfw` response header in all requests for deployment tracking
+  - Follows semantic versioning (MAJOR.MINOR.PATCH)
+  - Exported for test validation
+- **Version Validation Tests**: Added 4 new tests for version tracking
+  - Unit tests for WORKER_VERSION constant format
+  - Integration tests for cfw header presence
+  - Tests verify semantic versioning pattern
+  - Total test count increased to 45 tests (all passing)
+- **Deployment Test Page**: Comprehensive test page at `cloudflare/test.html`
+  - Auto-tests: version header, CORS, JSON-LD, metadata cleanup
+  - Visual feedback with status indicators
+  - Accessible at `https://allabout.network/cloudflare/test.html`
+  - Complete metadata to trigger all worker features
+- **Version Monitoring Infrastructure**:
+  - **Skill**: `.claude/skills/cfw-version-monitor/SKILL.md` - Comprehensive monitoring guidance
+  - **Command**: `.claude/commands/increment-cfw-version.md` - `/increment-cfw-version [MAJOR|MINOR|PATCH]`
+  - **Hook**: `.claude/hooks/pre-tool-use-version-check.sh` - Pre-tool-use monitoring
+    - Warns if version not incremented when modifying worker
+    - Compares current version with git HEAD
+    - Non-blocking (warning only)
+
+### Changed
+- **Updated `.claude/settings.json`**: Added PreToolUse hook configuration for version monitoring
+- **Updated `.claude/README.md`**: Documented new version monitoring hook and command
+- **Updated `cloudflare/files/README.md`**: Added Version Header section with management rules
+- **Updated `CLAUDE.md`**: Added deployment testing section
+- **Updated `README.md`**: Updated test count (45 tests), added version tracking feature
+- **Updated `docs/for-ai/implementation/cloudflare.md`**: Documented version management
+
+### Technical Details
+- **Version Format**: Semantic versioning (MAJOR.MINOR.PATCH)
+- **Version Rules**:
+  - MAJOR (x.0.0): Breaking changes or major features
+  - MINOR (1.x.0): New features, backward-compatible changes
+  - PATCH (1.0.x): Bug fixes, refactoring, documentation
+- **Monitoring**: Automatic version check on all worker file edits
+- **Testing**: Comprehensive unit and integration test coverage
+
+## [2025-12-11a] - Developer Utility Notes
 
 ### Added
 - **Developer Note**: Added `todo.txt` with Cloudflare worker example for robots.txt handling
