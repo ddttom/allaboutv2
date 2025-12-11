@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-11] - Developer Utility Notes
+
+### Added
+- **Developer Note**: Added `todo.txt` with Cloudflare worker example for robots.txt handling
+  - Example worker intercepts `/robots.txt` requests
+  - Returns customized robots.txt content
+  - Forwards all other requests to origin
+  - Reference for future Cloudflare worker implementations
+
 ## [2025-12-10h] - Cloudflare Worker JSON-LD Enhancements
 
 ### Added

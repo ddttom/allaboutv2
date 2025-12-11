@@ -517,6 +517,13 @@ Add `| author-url | https://yoursite.com |` or rely on LinkedIn meta tag fallbac
 
 **Deployment:** Follow `cloudflare/files/README.md` steps for prerequisites, environment variables, and deployment workflow.
 
+**Developer Notes:**
+- `todo.txt` - Reference example of Cloudflare worker for robots.txt handling
+  - Demonstrates intercepting specific paths (`/robots.txt`)
+  - Shows custom response generation
+  - Example of forwarding other requests to origin
+  - Useful template for future worker implementations
+
 ## ⚠️ CRITICAL: EDS Reserved Class Names
 
 **NEVER use these class name patterns in blocks:**
