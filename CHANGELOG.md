@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-11c] - Cloudflare Worker Author Metadata Preservation
+
+### Changed
+- **Cloudflare Worker**: Author metadata now preserved in HTML responses
+  - Modified `handleAuthor()` in `cloudflare/files/cloudflare-worker.js` to keep author meta tag
+  - Follows same pattern as LinkedIn metadata (extract for JSON-LD but don't remove)
+  - Author information still used for JSON-LD generation
+  - Improves SEO and compatibility with tools expecting standard author metadata
+- **Test Page**: Updated `cloudflare/test.html` expectations
+  - Removed `meta[name="author"]` from removedTags test array
+  - Added `meta[name="author"]` to preservedTags test array
+  - Updated comment to reflect author preservation
+- **Documentation**: Updated `cloudflare/files/README.md`
+  - Moved author from "Removes" to "Keeps for social media & attribution" list
+  - Added rationale explaining why author metadata is preserved
+  - Updated "How It Works" section with clarified metadata flow
+
+### Rationale
+- **Attribution**: Standard HTML practice for proper author attribution
+- **SEO**: Many tools and crawlers expect `meta[name="author"]` tag
+- **Consistency**: Aligns with LinkedIn preservation pattern
+- **Compatibility**: Maintains compatibility with metadata-dependent tools
+
 ## [2025-12-11b] - Cloudflare Worker Version Tracking System
 
 ### Added
