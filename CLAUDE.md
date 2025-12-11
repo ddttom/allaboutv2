@@ -494,8 +494,9 @@ When a notebook has a `repo` metadata attribute, all `.md` file links are automa
 - Adds CORS headers to all responses
 - Generates JSON-LD structured data from page metadata
 - Intelligent date formatting: Supports UK format (dd/mm/yyyy), month names (Dec/December), and ISO 8601
+- Author metadata preservation: Keeps author meta tag for attribution (like LinkedIn)
 - Author URL with LinkedIn fallback: Uses LinkedIn meta as fallback when author-url not provided
-- Removes EDS error tags and non-social metadata
+- Removes EDS error tags and non-social metadata (except author and LinkedIn)
 - Maintains all standard Adobe EDS functionality
 
 **Key files:**
