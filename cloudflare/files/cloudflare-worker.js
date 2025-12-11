@@ -11,7 +11,12 @@
  * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
+ *
+ * @version 1.0.0
  */
+
+// Worker version - increment using semantic versioning for all changes
+export const WORKER_VERSION = '1.0.0';
 
 export const getExtension = (path) => {
   const basename = path.split('/').pop();
@@ -516,6 +521,9 @@ const handleRequest = async (request, env, _ctx) => {
   resp.headers.set('Access-Control-Allow-Origin', '*');
   resp.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   resp.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+
+  // Add worker version header
+  resp.headers.set('cfw', WORKER_VERSION);
 
   return resp;
 };

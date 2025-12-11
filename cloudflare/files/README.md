@@ -13,6 +13,29 @@ This Worker extends Adobe's standard EDS Cloudflare Worker template to:
 
 ## Features
 
+### Version Header
+
+The worker includes a version header in all responses:
+- **Header name**: `cfw` (CloudflareWorker)
+- **Format**: Semantic versioning (MAJOR.MINOR.PATCH)
+- **Current version**: `1.0.0`
+- **Usage**: Track deployed worker version for debugging and monitoring
+
+**Version Management:**
+- **MUST increment** the version number for ALL changes to `cloudflare-worker.js`
+- Use semantic versioning:
+  - **MAJOR** (x.0.0): Breaking changes or major feature additions
+  - **MINOR** (1.x.0): New features, backward-compatible changes
+  - **PATCH** (1.0.x): Bug fixes, documentation updates
+- Update the `WORKER_VERSION` constant at the top of `cloudflare-worker.js`
+- Version is validated by automated tests
+
+**Check deployed version:**
+```bash
+curl -I https://yourdomain.com | grep cfw
+# Output: cfw: 1.0.0
+```
+
 ### Trigger Mechanisms
 
 The Worker supports **three trigger mechanisms** for JSON-LD generation:
@@ -543,6 +566,7 @@ npm run test:coverage
 ### Test Coverage
 
 **Tests cover:**
+- Worker version validation (2 tests)
 - Helper functions (19+ tests)
 - Environment validation
 - CORS headers
@@ -551,14 +575,31 @@ npm run test:coverage
 - Debug logging
 - Error handling
 - Handler wiring
+- Version header presence in responses (2 integration tests)
 
-**Status:** ✅ All tests passing
+**Status:** ✅ 45 tests passing
 
 For complete testing details, see [TESTING.md](TESTING.md).
 
 ### Integration Testing
 
-**Test JSON-LD generation**:
+**Comprehensive Deployment Test Page**:
+
+A complete test page is available at `/cloudflare/test.html` that validates all worker features:
+
+1. Deploy worker to Cloudflare Dashboard
+2. Wait 30 seconds for global propagation
+3. Access: `https://allabout.network/cloudflare/test.html`
+4. Tests auto-run and display results with visual indicators
+
+**Tests performed:**
+- ✅ Version header (`cfw`) with semantic versioning
+- ✅ CORS headers (Access-Control-Allow-*)
+- ✅ JSON-LD generation and schema structure
+- ✅ Date formatting (ISO 8601)
+- ✅ Metadata cleanup (non-social tags removed)
+
+**Manual JSON-LD test**:
 1. Deploy worker to Cloudflare
 2. Create test page with metadata: `| json-ld | article |`
 3. View page source and verify `<script type="application/ld+json">`

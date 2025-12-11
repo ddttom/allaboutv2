@@ -16,8 +16,27 @@ import worker, {
   handleOgTitle,
   handleAuthorUrl,
   handleLinkedIn,
-  handleViewport
+  handleViewport,
+  WORKER_VERSION
 } from './cloudflare-worker.js';
+
+// Test suite for worker version
+describe('Worker Version', () => {
+  test('WORKER_VERSION constant exists and follows semantic versioning', () => {
+    expect(WORKER_VERSION).toBeDefined();
+    expect(typeof WORKER_VERSION).toBe('string');
+    // Semantic versioning pattern: MAJOR.MINOR.PATCH (e.g., 1.0.0)
+    expect(WORKER_VERSION).toMatch(/^\d+\.\d+\.\d+$/);
+  });
+
+  test('WORKER_VERSION starts at v1.0.0', () => {
+    // Verify initial version is 1.0.0
+    const [major, minor, patch] = WORKER_VERSION.split('.').map(Number);
+    expect(major).toBeGreaterThanOrEqual(1);
+    expect(minor).toBeGreaterThanOrEqual(0);
+    expect(patch).toBeGreaterThanOrEqual(0);
+  });
+});
 
 // Test suite for getExtension
 describe('getExtension', () => {
@@ -482,12 +501,57 @@ describe('handleRequest Integration', () => {
 
     expect(response.status).toBe(200);
     expect(MockHTMLRewriter.activeHandlers.length).toBeGreaterThan(0);
-    
+
     // Verify specific handlers are present
     const hasViewport = MockHTMLRewriter.activeHandlers.some(h => h.selector === 'meta[name="viewport"]');
     expect(hasViewport).toBe(true);
-    
+
     const hasJsonLd = MockHTMLRewriter.activeHandlers.some(h => h.selector === 'meta[name="jsonld"]');
     expect(hasJsonLd).toBe(true);
+  });
+
+  test('includes cfw version header in response', async () => {
+    const env = {
+      ORIGIN_HOSTNAME: 'main--test--owner.aem.live',
+      DEBUG: 'false'
+    };
+    const request = {
+      url: 'https://allabout.network/article',
+      method: 'GET',
+      headers: new Map(),
+    };
+
+    const response = await worker.fetch(request, env);
+
+    expect(response.status).toBe(200);
+
+    // Verify cfw header exists and matches WORKER_VERSION
+    const cfwHeader = response.headers.get('cfw');
+    expect(cfwHeader).toBeDefined();
+    expect(cfwHeader).toBe(WORKER_VERSION);
+
+    // Verify it follows semantic versioning
+    expect(cfwHeader).toMatch(/^\d+\.\d+\.\d+$/);
+  });
+
+  test('includes cfw version header for media requests', async () => {
+    const env = {
+      ORIGIN_HOSTNAME: 'main--test--owner.aem.live',
+      DEBUG: 'false'
+    };
+    const request = {
+      url: 'https://allabout.network/media_1234567890abcdef1234567890abcdef12345678.png',
+      method: 'GET',
+      headers: new Map(),
+    };
+
+    const response = await worker.fetch(request, env);
+
+    expect(response.status).toBe(200);
+
+    // Verify cfw header is present even for media requests
+    const cfwHeader = response.headers.get('cfw');
+    expect(cfwHeader).toBeDefined();
+    expect(cfwHeader).toBe(WORKER_VERSION);
   });
 });

@@ -129,9 +129,10 @@ Access your tests at: `http://localhost:3000/blocks/your-block/test.html`
 │   ├── ipynb-viewer/      # NEW: Interactive Jupyter notebook viewer block
 │   └── ...                # Other blocks
 ├── cloudflare/            # NEW: Cloudflare Worker infrastructure
+│   ├── test.html          # NEW: Comprehensive deployment test page
 │   └── files/             # Custom Adobe EDS worker (CORS, JSON-LD)
 │       ├── cloudflare-worker.js  # Worker code with custom enhancements
-│       ├── cloudflare-worker.test.js  # Unit tests (41 test cases)
+│       ├── cloudflare-worker.test.js  # Unit tests (45 test cases)
 │       ├── wrangler.toml  # Wrangler configuration
 │       ├── package.json   # Worker dependencies and scripts
 │       ├── README.md      # Complete implementation guide (520+ lines)
@@ -324,11 +325,12 @@ The site audit is created with https://github.com/ddttom/my-pa11y-project
   - Operational procedures for publishing and cache management
   - Target: AI assistants, DevOps, system administrators
 - **[Custom Cloudflare Worker](cloudflare/files/README.md)** - Enhanced Adobe EDS worker implementation
-  - **Custom Features**: CORS headers, JSON-LD structured data generation, intelligent date formatting, metadata cleanup
+  - **Custom Features**: Version header (`cfw`), CORS headers, JSON-LD structured data generation, intelligent date formatting, metadata cleanup
   - Extends Adobe's standard worker template (Apache License 2.0)
   - **Quick Start**: [cloudflare/files/SETUP.md](cloudflare/files/SETUP.md) for daily development workflow
   - **Production Status**: 0% error rate, production-ready with comprehensive testing
   - **Key Capabilities**:
+    - Version tracking header for deployment monitoring (semantic versioning)
     - Adds `Access-Control-Allow-Origin: *` to all responses
     - Generates schema.org Article JSON-LD from page metadata
     - Intelligent date formatting: UK format (dd/mm/yyyy), month names (Dec/December), ISO 8601
@@ -337,7 +339,8 @@ The site audit is created with https://github.com/ddttom/my-pa11y-project
     - Optional debug logging with `DEBUG=true` flag
     - Environment variable validation
   - **Development**: Wrangler CLI for local testing (localhost:8787) and deployment
-  - **Testing**: 41 automated tests with 100% pass rate
+  - **Testing**: 45 automated tests with 100% pass rate (includes version validation)
+  - **Deployment Testing**: [cloudflare/test.html](cloudflare/test.html) - Comprehensive test page validates all worker features
   - **Documentation**: 520+ line implementation guide with examples and troubleshooting
   - **Read-Only Testing**: Complete test infrastructure treating worker as production code (10:1 test-to-code ratio)
   - **Blog Post**: [cloudflare/blog.md](cloudflare/blog.md) - Journey from challenge to production-ready deployment

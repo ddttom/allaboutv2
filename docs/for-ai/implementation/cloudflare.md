@@ -150,12 +150,19 @@ Adobe Edge Delivery Services uses Fastly's SSL certificates. These certificates 
 **Note:** This project uses a **modified version** of the Adobe EDS Cloudflare Worker with additional features.
 
 **Custom features:**
+- Version header (`cfw`) in all responses for deployment tracking
 - CORS headers on all responses
 - JSON-LD structured data generation from page metadata
 - Metadata cleanup (removes EDS error tags)
 - Trigger mechanism via authoring error workaround
 
-**Complete documentation:** `cloudflare/files/README.md` (293 lines)
+**Version Management:**
+- Current version: `1.0.0` (semantic versioning)
+- Check deployed version: `curl -I https://allabout.network | grep cfw`
+- **MUST increment** version for ALL changes to worker code
+- Version validated by automated tests (45 tests passing)
+
+**Complete documentation:** `cloudflare/files/README.md` (584 lines)
 **Worker code:** `cloudflare/files/cloudflare-worker.js` (8.9 KB)
 
 **Why custom?**
@@ -167,6 +174,25 @@ Adobe Edge Delivery Services uses Fastly's SSL certificates. These certificates 
 - Follow deployment steps in `cloudflare/files/README.md`
 - Uses same environment variables as standard worker (ORIGIN_HOSTNAME, PUSH_INVALIDATION)
 - Additional trigger: Add `| json-ld | article |` to EDS metadata
+
+### Testing & Validation
+
+**Automated Testing:**
+- Single unified test file: `cloudflare/files/cloudflare-worker.test.js`
+- 45 tests covering unit and integration testing (includes version header validation)
+- Test approach: Pure functions + mocked HTMLRewriter
+- Run tests: `cd cloudflare/files && npm test`
+- Coverage report: `npm run test:coverage`
+- Documentation: See `cloudflare/files/TESTING.md`
+
+**Production Validation:**
+- Adobe CDN validator: https://www.aem.live/tools/cdn-validator
+- Manual testing via curl (see Troubleshooting section)
+- Monitor worker metrics in Cloudflare Dashboard
+- View real-time logs: Dashboard → Workers & Pages → aem-worker → Logs
+
+**Test Strategy:**
+The worker uses a two-file approach: one production file (`cloudflare-worker.js`) and one test file (`cloudflare-worker.test.js`). The test suite combines unit tests for helper functions with integration tests for the complete request flow, using lightweight mocks instead of complex E2E infrastructure. This ensures reliable testing without the overhead of local dev servers or port management.
 
 ### Environment Variables
 

@@ -517,6 +517,12 @@ Add `| author-url | https://yoursite.com |` or rely on LinkedIn meta tag fallbac
 
 **Deployment:** Follow `cloudflare/files/README.md` steps for prerequisites, environment variables, and deployment workflow.
 
+**Deployment Testing:**
+- Comprehensive test page: `cloudflare/test.html`
+- Access at: `https://allabout.network/cloudflare/test.html`
+- Auto-tests: version header, CORS, JSON-LD, metadata cleanup
+- Visual feedback with status indicators
+
 **Developer Notes:**
 - `todo.txt` - Reference example of Cloudflare worker for robots.txt handling
   - Demonstrates intercepting specific paths (`/robots.txt`)
