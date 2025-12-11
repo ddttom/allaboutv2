@@ -214,7 +214,7 @@ Before deploying to Cloudflare:
 - Worker file: `cloudflare/files/cloudflare-worker.js`
 - Test file: `cloudflare/files/cloudflare-worker.test.js`
 - Documentation: `cloudflare/files/README.md` (lines 16-37)
-- Implementation guide: `docs/for-ai/implementation/cloudflare.md` (lines 159-163)
+- Implementation guide: `cloudflare/cloudflare.md` (lines 159-163)
 
 ## Technical Implementation
 

@@ -92,7 +92,7 @@ This index provides structured access to all documentation within the `docs/for-
   - Target: All developers, especially those new to the project structure
 
 ### Infrastructure and Operations
-- **[`implementation/cloudflare.md`](implementation/cloudflare.md)**
+- **[`cloudflare/cloudflare.md`](../../cloudflare/cloudflare.md)**
   - Complete Cloudflare CDN configuration reference
   - Adobe Edge Delivery Services integration with Cloudflare Worker
   - Push invalidation setup and troubleshooting

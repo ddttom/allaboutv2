@@ -589,7 +589,7 @@ curl -X POST https://admin.hlx.page/config/ddttom/sites/allaboutv2/cdn/prod.json
 - **CDN Validator Tool:** https://www.aem.live/tools/cdn-validator
 
 ### Project Documentation
-- **Cloudflare Setup:** [docs/for-ai/implementation/cloudflare.md](cloudflare.md)
+- **Cloudflare Setup:** [cloudflare/cloudflare.md](../../cloudflare/cloudflare.md)
 - **EDS Architecture:** [docs/for-ai/implementation/eds-architecture-standards.md](implementation/eds-architecture-standards.md)
 - **Security Checklist:** [docs/for-ai/guidelines/security-checklist.md](guidelines/security-checklist.md)
 

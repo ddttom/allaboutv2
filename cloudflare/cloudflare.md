@@ -884,14 +884,14 @@ chmod +x cloudflare-health-check.sh
 ### Related Project Documentation
 
 **allabout.network Documentation:**
-- **EDS Architecture**: `docs/for-ai/implementation/eds-architecture-standards.md` - Core EDS architecture patterns and standards
-- **Build Process**: `docs/for-ai/implementation/build-blocks-clarification.md` - Dual-directory pattern for complex components
-- **Security Guidelines**: `docs/for-ai/guidelines/security-checklist.md` - Security validation checklist
-- **Block Architecture**: `docs/for-ai/implementation/block-architecture-standards.md` - Block development standards
-- **Design System**: `docs/for-ai/guidelines/design-system.md` - Design tokens and component patterns
-- **Custom Worker Implementation**: `cloudflare/files/README.md` - Custom features (CORS, JSON-LD) deployment guide
-- **Project Guide**: `CLAUDE.md` - Complete project overview for AI assistants
-- **Documentation Index**: `docs/for-ai/index.md` - Navigation hub for all documentation
+- **EDS Architecture**: `../docs/for-ai/implementation/eds-architecture-standards.md` - Core EDS architecture patterns and standards
+- **Build Process**: `../docs/for-ai/implementation/build-blocks-clarification.md` - Dual-directory pattern for complex components
+- **Security Guidelines**: `../docs/for-ai/guidelines/security-checklist.md` - Security validation checklist
+- **Block Architecture**: `../docs/for-ai/implementation/block-architecture-standards.md` - Block development standards
+- **Design System**: `../docs/for-ai/guidelines/design-system.md` - Design tokens and component patterns
+- **Custom Worker Implementation**: `files/README.md` - Custom features (CORS, JSON-LD) deployment guide
+- **Project Guide**: `../CLAUDE.md` - Complete project overview for AI assistants
+- **Documentation Index**: `../docs/for-ai/index.md` - Navigation hub for all documentation
 
 ### Quick Reference Commands
 

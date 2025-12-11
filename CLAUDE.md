@@ -503,7 +503,7 @@ When a notebook has a `repo` metadata attribute, all `.md` file links are automa
 - `cloudflare/files/cloudflare-worker.js` - Worker code (Apache License 2.0)
 
 **Documentation references:**
-- General Cloudflare config: `docs/for-ai/implementation/cloudflare.md`
+- General Cloudflare config: `cloudflare/cloudflare.md`
 - Custom worker implementation: `cloudflare/files/README.md`
 
 **Critical metadata pattern:**

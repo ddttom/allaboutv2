@@ -287,7 +287,7 @@ Expected output:
 - Worker file: `cloudflare/files/cloudflare-worker.js` (line 19)
 - Version documentation: `cloudflare/files/README.md` (lines 16-37)
 - Test file: `cloudflare/files/cloudflare-worker.test.js` (lines 23-39, 513-556)
-- Implementation guide: `docs/for-ai/implementation/cloudflare.md` (lines 159-163)
+- Implementation guide: `cloudflare/cloudflare.md` (lines 159-163)
 
 ## Related Commands
 

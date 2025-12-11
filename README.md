@@ -315,7 +315,7 @@ The site audit is created with https://github.com/ddttom/my-pa11y-project
 - [EDS Best Practices](docs/eds-appendix.md) - Advanced patterns and techniques
 
 ### Infrastructure & Operations
-- **[Cloudflare Configuration Reference](docs/for-ai/implementation/cloudflare.md)** - Complete infrastructure documentation (Version 1.1 - Pro Plan)
+- **[Cloudflare Configuration Reference](cloudflare/cloudflare.md)** - Complete infrastructure documentation (Version 1.1 - Pro Plan)
   - **Plan**: Cloudflare Pro ($20/month) - Upgraded from Free plan (2025-12-09)
   - **Key Features**: Surgical cache purging, WAF rules, rate limiting, image optimization
   - Double-CDN architecture (Cloudflare → Adobe Fastly → Adobe EDS)
