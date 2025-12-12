@@ -7,6 +7,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12l] - Cloudflare Worker Local HTML Processing Test
+
+### Added
+- **Local HTML Processing Test**: New `test-local-html.js` validates HTML transformations using actual test.html file
+  - **Purpose**: Validates string handling functions work correctly with real production HTML (not mocked data)
+  - **Coverage**: 13 comprehensive tests covering comment removal, placeholder replacement, structure integrity, output analysis
+  - **Run Command**: `npm run test:local` (added to package.json scripts)
+  - **Output**: Writes processed HTML to `test-rendered.html` for manual inspection
+  - **Benefits**:
+    - No Cloudflare runtime dependency (runs in Node.js)
+    - Tests with actual production test file
+    - Provides visual output for comparison (`diff cloudflare/test.html cloudflare/test-rendered.html`)
+    - Complements unit tests with real-world validation
+
+### Test Details
+- **13 Tests**:
+  - HTML comment removal (3 tests)
+  - Picture placeholder replacement (3 tests)
+  - Combined processing (1 test)
+  - HTML structure integrity (5 tests)
+  - Output analysis and size reduction (1 test)
+- **Test Results**: ✅ 13/13 passing, 196 bytes saved (0.92% reduction)
+
+### Documentation
+- **README.md**: Added "Local HTML Processing Test" section with:
+  - Run command and what it does
+  - Test coverage breakdown
+  - Example output with visual indicators
+  - Why it matters (validates string ops with real HTML)
+  - Comparison commands for manual inspection
+
+### Files Modified
+1. `cloudflare/files/test-local-html.js` - New local HTML processing test
+2. `cloudflare/files/package.json` - Added `test:local` npm script
+3. `cloudflare/files/README.md` - Documented new test in Testing section
+
+### User Request
+> "i want a new entry to @cloudflare/ testing the new test should read the text from @cloudflare/test.html and pas it to the string handling process in @cloudflare/files/cloudflare-worker.js (create an export and code if necessary) to ensute the html is properly handled"
+
 ## [2025-12-12k] - Cloudflare Worker JSON-LD Injection Fix
 
 ### Fixed
