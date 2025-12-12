@@ -715,3 +715,4 @@ curl -X OPTIONS https://yourdomain.com \
 2. Request any page
 3. Should return 500 with clear error message
 4. Re-add `ORIGIN_HOSTNAME` and verify recovery
+ 
