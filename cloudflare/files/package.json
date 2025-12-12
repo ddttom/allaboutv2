@@ -1,6 +1,7 @@
 {
   "name": "allabout-cloudflare-worker",
   "version": "1.1.5",
+  "type": "module",
   "description": "Custom Adobe EDS Cloudflare Worker with CORS, JSON-LD, and Speculation Rules",
   "main": "cloudflare-worker.js",
   "scripts": {

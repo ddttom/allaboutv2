@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12ah] - Fix Cloudflare worker package.json to use ES modules
+
+### Fixed
+- **cloudflare/files/package.json**: Added `"type": "module"` to package.json
+  - Fixes Node.js ES module detection warning
+  - Resolves ERR_MODULE_NOT_FOUND error in test:local script
+  - Properly declares ES module usage for cloudflare-worker.js and test files
+  - All 83 vitest tests pass
+  - Local HTML test passes (20/20 tests)
+
 ## [2025-12-12ag] - CI: Fix lint job to install Cloudflare worker dependencies
 
 ### Fixed
