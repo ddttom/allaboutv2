@@ -15,8 +15,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Working Directory Verification**: Added critical instructions to prevent directory confusion
   - New section in `CLAUDE.md` with protocol for verifying working directory before creating files
   - New section in `.claude/README.md` with examples of correct vs incorrect behavior
+  - Brief mention in `README.md` (Environment Setup section) linking to full instructions
+  - Added verification steps to key skills:
+    - `building-blocks/SKILL.md`: Phase 3 (Create or Modify Block Structure)
+    - `content-driven-development/SKILL.md`: New Phase 0 (Verify Working Directory)
+    - `jupyter-notebook-testing/SKILL.md`: Quick Start section
   - Addresses issue where AI assistants would create `.claude/` in wrong directory
   - Includes red flags, correct protocol, and project root path reference
+  - Ensures all file creation workflows verify location first
 
 ## [2025-12-11c] - Cloudflare Worker Author Metadata Preservation
 
