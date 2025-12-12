@@ -22,7 +22,7 @@ import worker, {
   handleAuthorUrl,
   handleLinkedIn,
   handleViewport,
-  handlePicturePlaceholder,
+  replacePicturePlaceholder,
   WORKER_VERSION,
   PICTURE_PLACEHOLDER_CONFIG,
 } from './cloudflare-worker.js';
@@ -446,92 +446,84 @@ describe('Handler Functions', () => {
   });
 });
 
-// Test suite for handlePicturePlaceholder
-describe('handlePicturePlaceholder', () => {
-  let mockElement;
-  let textCallbacks;
-  let endtagCallback;
-
-  beforeEach(() => {
-    textCallbacks = [];
-    endtagCallback = null;
-
-    mockElement = {
-      ontext: vi.fn((cb) => { textCallbacks.push(cb); }),
-      onendtag: vi.fn((cb) => { endtagCallback = cb; }),
-      replace: vi.fn(),
-    };
-  });
-
+// Test suite for replacePicturePlaceholder
+describe('replacePicturePlaceholder', () => {
   test('replaces div with exact match "Picture Here"', () => {
-    handlePicturePlaceholder(mockElement);
+    const html = '<div><div>Picture Here</div></div>';
+    const result = replacePicturePlaceholder(html);
 
-    // Simulate text node
-    textCallbacks.forEach((cb) => cb({ text: 'Picture Here' }));
-
-    // Simulate end tag
-    endtagCallback();
-
-    expect(mockElement.replace).toHaveBeenCalledWith(
-      expect.stringContaining('<img'),
-      { html: true },
-    );
-    expect(mockElement.replace).toHaveBeenCalledWith(
-      expect.stringContaining(PICTURE_PLACEHOLDER_CONFIG.IMAGE_URL),
-      { html: true },
-    );
+    expect(result).toContain('<img');
+    expect(result).toContain(PICTURE_PLACEHOLDER_CONFIG.IMAGE_URL);
+    expect(result).toContain(PICTURE_PLACEHOLDER_CONFIG.IMAGE_ALT);
+    expect(result).not.toContain('Picture Here');
   });
 
   test('does not replace div with different text', () => {
-    handlePicturePlaceholder(mockElement);
+    const html = '<div><div>Other Content</div></div>';
+    const result = replacePicturePlaceholder(html);
 
-    textCallbacks.forEach((cb) => cb({ text: 'Other Content' }));
-    endtagCallback();
-
-    expect(mockElement.replace).not.toHaveBeenCalled();
+    expect(result).toBe(html);
+    expect(result).toContain('Other Content');
+    expect(result).not.toContain('<img');
   });
 
-  test('handles whitespace trimming', () => {
-    handlePicturePlaceholder(mockElement);
+  test('handles whitespace around text', () => {
+    const html = '<div>  <div>  Picture Here  </div>  </div>';
+    const result = replacePicturePlaceholder(html);
 
-    textCallbacks.forEach((cb) => cb({ text: '  Picture Here  ' }));
-    endtagCallback();
-
-    expect(mockElement.replace).toHaveBeenCalled();
+    expect(result).toContain('<img');
+    expect(result).not.toContain('Picture Here');
   });
 
-  test('handles multiple text nodes', () => {
-    handlePicturePlaceholder(mockElement);
+  test('handles multiple occurrences', () => {
+    const html = '<div><div>Picture Here</div></div><p>Text</p><div><div>Picture Here</div></div>';
+    const result = replacePicturePlaceholder(html);
 
-    // Text split across nodes
-    textCallbacks.forEach((cb) => {
-      cb({ text: 'Picture ' });
-      cb({ text: 'Here' });
-    });
-    endtagCallback();
-
-    expect(mockElement.replace).toHaveBeenCalled();
+    // Should replace both occurrences
+    const imgCount = (result.match(/<img/g) || []).length;
+    expect(imgCount).toBe(2);
+    expect(result).not.toContain('Picture Here');
   });
 
-  test('handles case sensitivity', () => {
-    handlePicturePlaceholder(mockElement);
+  test('handles case sensitivity (case-sensitive by default)', () => {
+    const html = '<div><div>picture here</div></div>';
+    const result = replacePicturePlaceholder(html);
 
-    textCallbacks.forEach((cb) => cb({ text: 'picture here' }));
-    endtagCallback();
-
-    // Should NOT match (case-sensitive by default)
-    expect(mockElement.replace).not.toHaveBeenCalled();
+    // Should NOT match (case-sensitive)
+    expect(result).toBe(html);
+    expect(result).toContain('picture here');
+    expect(result).not.toContain('<img');
   });
 
-  test('includes correct image URL and alt text', () => {
-    handlePicturePlaceholder(mockElement);
+  test('includes correct image URL and alt text in replacement', () => {
+    const html = '<div><div>Picture Here</div></div>';
+    const result = replacePicturePlaceholder(html);
 
-    textCallbacks.forEach((cb) => cb({ text: 'Picture Here' }));
-    endtagCallback();
+    expect(result).toContain(`src="${PICTURE_PLACEHOLDER_CONFIG.IMAGE_URL}"`);
+    expect(result).toContain(`alt="${PICTURE_PLACEHOLDER_CONFIG.IMAGE_ALT}"`);
+  });
 
-    const replaceCall = mockElement.replace.mock.calls[0][0];
-    expect(replaceCall).toContain(PICTURE_PLACEHOLDER_CONFIG.IMAGE_URL);
-    expect(replaceCall).toContain(PICTURE_PLACEHOLDER_CONFIG.IMAGE_ALT);
+  test('preserves surrounding HTML structure', () => {
+    const html = '<html><body><h1>Title</h1>'
+      + '<div><div>Picture Here</div></div><p>Footer</p></body></html>';
+    const result = replacePicturePlaceholder(html);
+
+    expect(result).toContain('<h1>Title</h1>');
+    expect(result).toContain('<p>Footer</p>');
+    expect(result).toContain('<img');
+    expect(result).not.toContain('Picture Here');
+  });
+
+  test('only matches exact two-level div nesting', () => {
+    // Pattern matches inner <div>Picture Here</div> within outer div
+    // This is the EDS-generated pattern we expect
+    const html = '<div><div><div>Picture Here</div></div></div>';
+    const result = replacePicturePlaceholder(html);
+
+    // The regex will match the inner two divs: <div><div>Picture Here</div></div>
+    // This is acceptable since EDS generates <div><div>text</div></div>
+    expect(result).toContain('<img');
+    expect(result).not.toContain('Picture Here');
   });
 });
 
@@ -566,12 +558,22 @@ describe('handleRequest Integration', () => {
       constructor(body, init) {
         this.body = body;
         this.status = init?.status || 200;
+        this.statusText = init?.statusText || 'OK';
         this.headers = new Map(init?.headers ? Object.entries(init.headers) : []);
+        this.bodyUsed = false;
       }
 
       get headers() { return this._headers || new Map(); }
 
       set headers(val) { this._headers = val; }
+
+      async text() {
+        if (this.bodyUsed) {
+          throw new Error('Body already used');
+        }
+        this.bodyUsed = true;
+        return typeof this.body === 'string' ? this.body : '<html>...</html>';
+      }
     };
 
     // Mock fetch
@@ -672,11 +674,9 @@ describe('handleRequest Integration', () => {
 
     await worker.fetch(request, env);
 
-    // Verify div handler registered
-    const hasDivHandler = MockHTMLRewriter.activeHandlers.some(
-      (h) => h.selector === 'div',
-    );
-    expect(hasDivHandler).toBe(true);
+    // Note: Picture placeholder replacement is now done via string replacement,
+    // not HTMLRewriter, so no div handler is registered
+    expect(MockHTMLRewriter.activeHandlers.length).toBeGreaterThan(0);
   });
 
   test('picture replacement does not affect version header', async () => {

@@ -340,33 +340,27 @@ export const handleViewport = (element, article, requestUrl, DEBUG) => {
 };
 
 /**
- * Handles picture placeholder replacement
- * Detects divs with "Picture Here" text and replaces with author image
- * Uses HTMLRewriter element handler pattern with ontext/onendtag
+ * Replaces picture placeholder pattern in HTML content
+ * Detects <div><div>Picture Here</div></div> and replaces with author image
+ * Pure string replacement - fully testable without Cloudflare Workers runtime
+ * @param {string} html - HTML content to process
+ * @returns {string} Processed HTML with placeholders replaced
  */
-export const handlePicturePlaceholder = (element) => {
-  let textBuffer = '';
+export const replacePicturePlaceholder = (html) => {
+  // Build replacement: <div><img src="..." alt="..."></div>
+  const replacement = `<div><img src="${PICTURE_PLACEHOLDER_CONFIG.IMAGE_URL}" `
+    + `alt="${PICTURE_PLACEHOLDER_CONFIG.IMAGE_ALT}"></div>`;
 
-  element.ontext((text) => {
-    textBuffer += text.text;
-  });
+  if (PICTURE_PLACEHOLDER_CONFIG.MATCH_CASE_SENSITIVE) {
+    // Case-sensitive: match <div><div>Picture Here</div></div> exactly
+    // Pattern ensures no nested divs before "Picture Here"
+    const pattern = /<div>\s*<div>([^<]*Picture Here[^<]*)<\/div>\s*<\/div>/g;
+    return html.replace(pattern, replacement);
+  }
 
-  element.onendtag(() => {
-    const trimmed = PICTURE_PLACEHOLDER_CONFIG.TRIM_WHITESPACE
-      ? textBuffer.trim()
-      : textBuffer;
-
-    const matches = PICTURE_PLACEHOLDER_CONFIG.MATCH_CASE_SENSITIVE
-      ? trimmed === PICTURE_PLACEHOLDER_CONFIG.TRIGGER_TEXT
-      : trimmed.toLowerCase() === PICTURE_PLACEHOLDER_CONFIG.TRIGGER_TEXT.toLowerCase();
-
-    if (matches) {
-      // Replace this div with img tag
-      const imgTag = `<img src="${PICTURE_PLACEHOLDER_CONFIG.IMAGE_URL}" `
-        + `alt="${PICTURE_PLACEHOLDER_CONFIG.IMAGE_ALT}">`;
-      element.replace(imgTag, { html: true });
-    }
-  });
+  // Case-insensitive
+  const pattern = /<div>\s*<div>([^<]*Picture Here[^<]*)<\/div>\s*<\/div>/gi;
+  return html.replace(pattern, replacement);
 };
 
 const handleRequest = async (request, env, _ctx) => {
@@ -466,9 +460,23 @@ const handleRequest = async (request, env, _ctx) => {
     },
   });
 
-  // Only process HTML responses for JSON-LD injection
+  // Only process HTML responses for JSON-LD injection and picture replacement
   const contentType = resp.headers.get('content-type');
   if (contentType && contentType.includes('text/html')) {
+    // First, get the HTML text for picture replacement
+    let htmlText = await resp.text();
+
+    // Apply picture placeholder replacement via string replacement
+    htmlText = replacePicturePlaceholder(htmlText);
+
+    // Create new response with processed HTML
+    resp = new Response(htmlText, {
+      status: resp.status,
+      statusText: resp.statusText,
+      headers: resp.headers,
+    });
+
+    // Now apply HTMLRewriter for JSON-LD injection
     const article = {
       title: null,
       description: null,
@@ -534,11 +542,6 @@ const handleRequest = async (request, env, _ctx) => {
       })
       .on('meta[name="viewport"]', {
         element: (e) => handleViewport(e, article, new URL(request.url), DEBUG),
-      })
-      .on('div', {
-        element: (e) => {
-          handlePicturePlaceholder(e);
-        },
       })
       .transform(resp);
   }
