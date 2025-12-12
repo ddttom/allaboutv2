@@ -63,6 +63,66 @@ This directory contains Claude Code configuration, custom skills, and slash comm
     └── [other general skills]   # Theme factory, web testing, etc.
 ```
 
+## ⚠️ CRITICAL: Working Directory Verification
+
+**ALWAYS verify your working directory before creating files or folders that you expect to exist.**
+
+### The Problem
+
+When Claude cannot find an expected file or folder (like `.claude/`, `blocks/`, `docs/`, etc.), it may be tempting to create it. However, the issue is often that you're **in the wrong directory**, not that the file/folder doesn't exist.
+
+### Required Check Before Creating
+
+Before creating ANY file or folder that should already exist in the project:
+
+1. **Check current working directory**:
+   ```bash
+   pwd
+   ```
+
+2. **Verify project root markers**:
+   ```bash
+   ls -la | grep -E "(\.claude|blocks|package\.json|CLAUDE\.md)"
+   ```
+
+3. **If markers are missing**, navigate to project root:
+   ```bash
+   cd /Users/tomcranstoun/Documents/GitHub/allaboutV2
+   ```
+
+### Red Flags That Indicate Wrong Directory
+
+- Cannot find `.claude/` directory
+- Cannot find `blocks/` directory
+- Cannot find `CLAUDE.md` or `README.md`
+- Cannot find `package.json`
+- Path includes `/blocks/`, `/docs/`, or other subdirectories in `pwd` output
+
+### Examples of Incorrect Behavior
+
+❌ **WRONG**:
+```
+Cannot find .claude/ directory. I will create it.
+mkdir .claude
+```
+
+✅ **CORRECT**:
+```
+Cannot find .claude/ directory. Let me verify my working directory first.
+pwd
+# Output: /Users/tomcranstoun/Documents/GitHub/allaboutV2/blocks/hero
+# This is a subdirectory! Navigate to project root.
+cd /Users/tomcranstoun/Documents/GitHub/allaboutV2
+# Now verify .claude/ exists
+ls -la .claude
+```
+
+### Project Root Path
+
+The project root is: `/Users/tomcranstoun/Documents/GitHub/allaboutV2`
+
+All `.claude/` operations, block creation, and documentation updates should happen from this directory.
+
 ## Quick Start
 
 ### For EDS Block Development

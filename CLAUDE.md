@@ -20,6 +20,69 @@
 - **Run all linting**: Use `/lint-all` command or `npm run lint`
 - **Deploy custom Cloudflare worker**: See `cloudflare/files/` for CORS and JSON-LD worker
 
+## ⚠️ CRITICAL: Working Directory Verification
+
+**ALWAYS verify your working directory before creating files or folders that you expect to exist.**
+
+### The Problem
+
+When AI assistants cannot find an expected file or folder (like `.claude/`, `blocks/`, `docs/`, etc.), the instinct may be to create it. However, the issue is often that you're **in the wrong directory**, not that the file/folder doesn't exist.
+
+### Required Protocol
+
+Before creating ANY file or folder that should already exist in this project:
+
+1. **Check current working directory**:
+   ```bash
+   pwd
+   ```
+
+2. **Verify you're in project root** by checking for these markers:
+   ```bash
+   ls -la | grep -E "(\.claude|blocks|package\.json|CLAUDE\.md)"
+   ```
+   All four should exist in project root.
+
+3. **If markers are missing**, you're in the wrong directory:
+   ```bash
+   cd /Users/tomcranstoun/Documents/GitHub/allaboutV2
+   ```
+
+### Red Flags (Wrong Directory)
+
+- Cannot find `.claude/` directory
+- Cannot find `blocks/` directory
+- Cannot find `CLAUDE.md` or `README.md`
+- Cannot find `package.json`
+- `pwd` output shows you're inside `/blocks/`, `/docs/`, or other subdirectory
+
+### Correct Behavior
+
+❌ **WRONG**:
+```
+Error: .claude/ directory not found
+Solution: Creating .claude/ directory...
+mkdir .claude
+```
+
+✅ **CORRECT**:
+```
+Error: .claude/ directory not found
+Solution: Verify working directory first
+pwd
+# Output: /Users/tomcranstoun/Documents/GitHub/allaboutV2/blocks/hero
+# I'm in a subdirectory! Navigate to project root.
+cd /Users/tomcranstoun/Documents/GitHub/allaboutV2
+# Verify .claude/ exists
+ls -la .claude
+```
+
+### Project Root
+
+**Absolute path**: `/Users/tomcranstoun/Documents/GitHub/allaboutV2`
+
+All `.claude/` operations, block creation, slash commands, and documentation updates require being in this directory.
+
 ## Commands
 
 ### NPM Scripts

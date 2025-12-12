@@ -64,6 +64,8 @@ Run the setup script to configure symlinks for AI agents (Gemini/Claude):
 ./agentsetup.sh
 ```
 
+**Important for AI Assistants**: Always verify your working directory (`pwd`) before creating files or folders. See the "Working Directory Verification" section in [CLAUDE.md](CLAUDE.md) and [.claude/README.md](.claude/README.md) for critical instructions on preventing directory confusion.
+
 ### Development Server
 
 Start the development server designed to improve AI assistant workflows when testing blocks and components:

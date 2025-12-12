@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improves SEO by helping search engines discover the complete sitemap
   - Standard best practice for search engine optimization
   - Follows robots.txt protocol specifications
+- **Working Directory Verification**: Added critical instructions to prevent directory confusion
+  - New section in `CLAUDE.md` with protocol for verifying working directory before creating files
+  - New section in `.claude/README.md` with examples of correct vs incorrect behavior
+  - Addresses issue where AI assistants would create `.claude/` in wrong directory
+  - Includes red flags, correct protocol, and project root path reference
 
 ## [2025-12-11c] - Cloudflare Worker Author Metadata Preservation
 
