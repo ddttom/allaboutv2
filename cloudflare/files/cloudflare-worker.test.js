@@ -21,7 +21,7 @@ import worker, {
   handleOgTitle,
   handleAuthorUrl,
   handleLinkedIn,
-  handleViewport,
+  handleJsonLdInjection,
   replacePicturePlaceholder,
   removeHtmlComments,
   WORKER_VERSION,
@@ -375,6 +375,7 @@ describe('Handler Functions', () => {
       getAttribute: vi.fn(),
       remove: vi.fn(),
       after: vi.fn(),
+      prepend: vi.fn(),
     };
     article = {
       shouldGenerateJsonLd: false,
@@ -423,27 +424,27 @@ describe('Handler Functions', () => {
     expect(article.authorUrl).toBe('https://example.com/author'); // Not overridden
   });
 
-  test('handleViewport triggers JSON-LD generation if flag and title present', () => {
+  test('handleJsonLdInjection triggers JSON-LD generation if flag and title present', () => {
     article.shouldGenerateJsonLd = true;
     article.title = 'My Title';
     const url = new URL('https://example.com/page');
 
-    handleViewport(mockElement, article, url, false);
+    handleJsonLdInjection(mockElement, article, url, false);
 
-    expect(mockElement.after).toHaveBeenCalled();
-    const script = mockElement.after.mock.calls[0][0];
+    expect(mockElement.prepend).toHaveBeenCalled();
+    const script = mockElement.prepend.mock.calls[0][0];
     expect(script).toContain('application/ld+json');
     expect(script).toContain('"headline":"My Title"');
   });
 
-  test('handleViewport skips JSON-LD generation if flag missing', () => {
+  test('handleJsonLdInjection skips JSON-LD generation if flag missing', () => {
     article.shouldGenerateJsonLd = false;
     article.title = 'My Title';
     const url = new URL('https://example.com/page');
 
-    handleViewport(mockElement, article, url, false);
+    handleJsonLdInjection(mockElement, article, url, false);
 
-    expect(mockElement.after).not.toHaveBeenCalled();
+    expect(mockElement.prepend).not.toHaveBeenCalled();
   });
 });
 
@@ -658,10 +659,10 @@ describe('handleRequest Integration', () => {
     expect(MockHTMLRewriter.activeHandlers.length).toBeGreaterThan(0);
 
     // Verify specific handlers are present
-    const hasViewport = MockHTMLRewriter.activeHandlers.some(
-      (h) => h.selector === 'meta[name="viewport"]',
+    const hasHead = MockHTMLRewriter.activeHandlers.some(
+      (h) => h.selector === 'head',
     );
-    expect(hasViewport).toBe(true);
+    expect(hasHead).toBe(true);
 
     const hasJsonLd = MockHTMLRewriter.activeHandlers.some(
       (h) => h.selector === 'meta[name="jsonld"]',
@@ -744,8 +745,8 @@ describe('handleRequest Integration', () => {
 
     const response = await worker.fetch(request, env);
 
-    // Verify version header still present and shows 1.1.2
+    // Verify version header still present and shows 1.1.3
     expect(response.headers.get('cfw')).toBe(WORKER_VERSION);
-    expect(WORKER_VERSION).toBe('1.1.2');
+    expect(WORKER_VERSION).toBe('1.1.3');
   });
 });

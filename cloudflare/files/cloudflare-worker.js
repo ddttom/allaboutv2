@@ -12,11 +12,11 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  *
- * @version 1.1.2
+ * @version 1.1.3
  */
 
 // Worker version - increment using semantic versioning for all changes
-export const WORKER_VERSION = '1.1.2';
+export const WORKER_VERSION = '1.1.3';
 
 // Picture placeholder configuration
 export const PICTURE_PLACEHOLDER_CONFIG = {
@@ -291,10 +291,18 @@ export const handleModifiedDate = (e, article) => {
   e.remove();
 };
 
-export const handleViewport = (element, article, requestUrl, DEBUG) => {
+/**
+ * Handles JSON-LD injection at the end of <head> tag
+ * This runs after all meta tags have been processed, ensuring all data is collected
+ * @param {Object} element - HTMLRewriter element (head closing tag)
+ * @param {Object} article - Article metadata collected from meta tags
+ * @param {URL} requestUrl - Request URL object
+ * @param {boolean} DEBUG - Debug mode flag
+ */
+export const handleJsonLdInjection = (element, article, requestUrl, DEBUG) => {
   if (DEBUG) {
     // eslint-disable-next-line no-console
-    console.log('Viewport handler:', {
+    console.log('JSON-LD injection at </head>:', {
       shouldGenerate: article.shouldGenerateJsonLd,
       hasTitle: !!article.title,
       title: article.title,
@@ -316,7 +324,7 @@ export const handleViewport = (element, article, requestUrl, DEBUG) => {
 
   try {
     const script = `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>`;
-    element.after(script, { html: true });
+    element.prepend(script, { html: true });
 
     if (DEBUG) {
       // eslint-disable-next-line no-console
@@ -550,8 +558,14 @@ const handleRequest = async (request, env, _ctx) => {
       .on('meta[name="modified-date"], meta[name="last-modified"]', {
         element: (e) => handleModifiedDate(e, article),
       })
-      .on('meta[name="viewport"]', {
-        element: (e) => handleViewport(e, article, new URL(request.url), DEBUG),
+      .on('head', {
+        element: () => {
+          // Do nothing on opening <head> tag
+        },
+        comments: () => {}, // Ignore comments
+        text: () => {}, // Ignore text
+        // Inject JSON-LD right before </head> closes (after all meta tags processed)
+        element_end: (e) => handleJsonLdInjection(e, article, new URL(request.url), DEBUG),
       })
       .transform(resp);
   }

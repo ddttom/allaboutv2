@@ -20,7 +20,7 @@ This Worker extends Adobe's standard EDS Cloudflare Worker template to:
 The worker includes a version header in all responses:
 - **Header name**: `cfw` (CloudflareWorker)
 - **Format**: Semantic versioning (MAJOR.MINOR.PATCH)
-- **Current version**: `1.1.2`
+- **Current version**: `1.1.3`
 - **Usage**: Track deployed worker version for debugging and monitoring
 
 **Version Management:**
@@ -315,9 +315,9 @@ curl -I https://yourdomain.com | grep -i access-control
    - HTMLRewriter processes the response stream:
      - Detects malformed error script containing "article" (authoring error workaround)
      - Removes error scripts and error meta tags
-     - Extracts metadata from meta tags
-     - When viewport meta is reached, generates and inserts JSON-LD (if triggered)
-     - Removes non-social meta tags
+     - Extracts metadata from meta tags (triggers, titles, dates, authors, etc.)
+     - When `</head>` closing tag is reached, generates and inserts JSON-LD (if triggered)
+     - Removes non-social meta tags during extraction
 6. Creates new Response object for header modifications
 7. Adds CORS headers
 8. Returns response
@@ -350,7 +350,7 @@ HTMLRewriter processes elements **as they appear** in the HTML stream. This crea
 - Handlers on `<head>` fire before metadata is extracted
 - Therefore, trying to insert JSON-LD at `<head>` results in empty data
 
-**Solution**: Insert JSON-LD after the `viewport` meta tag, which always appears after OG tags in EDS:
+**Solution**: Insert JSON-LD at the `</head>` closing tag, which appears after all meta tags:
 
 ```
 HTML Stream Order:
@@ -358,11 +358,11 @@ HTML Stream Order:
 2. <title>
 3. og:title         ← Extract title
 4. og:description   ← Extract description
-5. viewport         ← Perfect insertion point - all metadata extracted
-6. </head>
+5. All other meta tags processed
+6. </head>          ← Perfect insertion point - all metadata extracted
 ```
 
-This ensures all metadata is available when generating the JSON-LD script.
+This ensures all `<head>` metadata is available when generating the JSON-LD script.
 
 ### HTML Processing
 
@@ -378,11 +378,11 @@ HTMLRewriter processes the response as a stream, which means:
 The Worker:
 - Reads meta tags as they appear in the stream
 - Builds a JSON-LD object from available data
-- Inserts the JSON-LD script after the `viewport` meta tag (which comes after all OG tags in EDS)
+- Inserts the JSON-LD script right before `</head>` closes (after all meta tags processed)
 - Only includes fields that have values in the JSON-LD
-- Removes specified meta tags
+- Removes specified meta tags during extraction
 
-**Why insert after viewport meta?** HTMLRewriter processes elements as it encounters them. The `<head>` element appears before the meta tags, so handlers on `<head>` fire before metadata is extracted. The viewport meta tag always comes after the OG tags in EDS HTML, ensuring all metadata has been processed before JSON-LD insertion.
+**Why insert at `</head>` closing tag?** HTMLRewriter processes elements as it encounters them. The opening `<head>` tag appears before meta tags, so handlers on `<head>` fire before metadata is extracted. The closing `</head>` tag appears after all meta tags, ensuring all metadata has been processed before JSON-LD insertion.
 
 ### Description Priority
 
@@ -472,10 +472,10 @@ Still supported for existing pages. Generates EDS error script which worker dete
 1. Add `jsonld` or `json-ld` field with value `article`
 2. EDS generates corresponding HTML (`<meta>` tag or error `<script>`)
 3. Worker detects trigger, extracts all metadata (author, dates, descriptions)
-4. Worker removes non-social metadata tags (author-url, dates, descriptions)
+4. Worker removes non-social metadata tags during extraction (author-url, dates, descriptions)
 5. Worker keeps social and attribution tags (og:*, twitter:*, linkedin, author)
 6. Worker generates fresh JSON-LD from extracted metadata
-7. Worker inserts JSON-LD after viewport meta tag
+7. Worker inserts JSON-LD right before `</head>` closes (after all meta tags processed)
 
 **Note:** Worker always uses latest metadata from page, ensuring JSON-LD stays current.
 
@@ -489,7 +489,6 @@ Modified by Digital Domain Technologies Ltd
 - Only processes HTML responses
 - Currently works around an authoring error that generates malformed JSON-LD scripts
 - Requires at least `og:title` to generate JSON-LD
-- Requires `<meta name="viewport">` tag (standard in all EDS pages)
 - Dates are automatically converted to ISO 8601; invalid dates are omitted
 - Publisher name is derived from hostname
 - Author URL is optional and not validated (schema.org handles validation)
@@ -596,8 +595,7 @@ These header modifications ensure clean, accurate responses that properly reflec
 3. **Verify routes**: Ensure `yourdomain.com/*` route is configured
 4. **Clear cache**: Use Ctrl+Shift+R (or Cmd+Shift+R) to bypass cache
 5. **Check metadata**: Page must have at least `og:title` meta tag
-6. **Verify viewport meta**: Page must have `<meta name="viewport">` tag (standard in EDS)
-7. **View source**: Check raw HTML, not rendered page
+6. **View source**: Check raw HTML, not rendered page
 
 If you see the error script in the source but no JSON-LD, the Worker isn't processing it. Check deployment and routes.
 

@@ -7,6 +7,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12k] - Cloudflare Worker JSON-LD Injection Fix
+
+### Fixed
+- **Cloudflare Worker v1.1.3**: JSON-LD generation now working correctly
+  - **Root Cause**: HTMLRewriter processing order issue - viewport meta appeared before jsonld meta trigger
+  - **Previous Behavior**: JSON-LD injection at `<meta name="viewport">` tag (line 5 in HTML)
+  - **New Behavior**: JSON-LD injection at `</head>` closing tag (after all meta tags processed)
+  - **Why This Fixes It**: The `</head>` closing tag appears AFTER all `<head>` meta tags, ensuring all metadata (titles, descriptions, dates, authors, triggers) is extracted before JSON-LD generation
+
+### Changed
+- **Injection Point**: Moved from viewport meta tag to `</head>` closing tag
+  - Uses `element_end` handler on `head` element
+  - Changed from `element.after()` to `element.prepend()` for proper placement
+  - Guarantees all metadata extraction completes before generation
+- **Function Renamed**: `handleViewport` → `handleJsonLdInjection` (more accurate name)
+- **Processing Order**: Extraction → Generation → Cleanup (meta tags removed during extraction)
+
+### Technical Details
+- **File**: `cloudflare/files/cloudflare-worker.js`
+- **Change Location**: Lines 561-569 (HTMLRewriter configuration)
+- **Handler Pattern**:
+  ```javascript
+  .on('head', {
+    element: () => {},  // Ignore opening tag
+    element_end: (e) => handleJsonLdInjection(...),  // Inject at closing tag
+  })
+  ```
+- **Tests Updated**: `handleViewport` → `handleJsonLdInjection`, `after` → `prepend`
+- **Documentation Updated**: README.md, removed viewport meta requirement
+
+### Test Results
+- ✅ All 63 tests passing
+- ✅ Pure function pattern maintained (HTML comments + picture replacement)
+- ✅ Two-file testing rule followed (cloudflare-worker.js + cloudflare-worker.test.js)
+
+### Files Modified
+1. `cloudflare/files/cloudflare-worker.js` - Changed injection point, renamed function
+2. `cloudflare/files/cloudflare-worker.test.js` - Updated tests for new function name and method
+3. `cloudflare/files/README.md` - Updated documentation (v1.1.3, removed viewport requirement)
+
+### User Report
+> "check the @cloudflare/test-rendered.html @cloudflare/test.html reading @cloudflare/ report on whats wrong"
+>
+> Analysis revealed: JSON-LD script tag missing from rendered HTML. Root cause: Processing order - viewport processed before jsonld trigger detected.
+
 ## [2025-12-12j] - Interactive Pre-Push CHANGELOG Update
 
 ### Changed
