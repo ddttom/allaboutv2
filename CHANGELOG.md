@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12b] - Picture Placeholder Test Coverage
+
+### Added
+- **Test Page Enhancement**: Added picture placeholder tests to `cloudflare/test.html`
+  - New test section (5️⃣): Picture Placeholder Replacement
+  - Test 1: Validates "Picture Here" → image replacement
+  - Test 2: Validates non-matching text preserved
+  - Hidden test divs for automated validation
+  - Integrated into auto-run test workflow
+  - Updated footer version to 1.1.0
+  - Total automated checks: 13 (was 11)
+
+### Changed
+- **Test Page**: Renumbered JSON-LD Output section from 5️⃣ to 6️⃣
+
+**Files Modified:**
+1. `cloudflare/test.html` - Added placeholder replacement test coverage
+
+**Total: 1 file modified**
+
 ## [2025-12-12a] - Picture Placeholder Replacement Feature
 
 ### Added
