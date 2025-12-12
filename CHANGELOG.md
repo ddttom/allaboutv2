@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12z] - CI/CD: Fix Package.json Local Dependency Issue
+
+### Fixed
+- **package.json**: Removed local `link:` dependency to `@deepnote/blocks`
+  - **Issue**: CI failing with `EUNSUPPORTEDPROTOCOL` error
+  - **Root Cause**: `link:/Users/tomcranstoun/Documents/GitHub/deepnote/packages/blocks` only exists locally
+  - **Solution**: Removed unused dependency (not referenced anywhere in codebase)
+  - **Impact**: GitHub Actions CI now passes dependency installation
+
 ## [2025-12-12y] - Cloudflare Test Page: Clarify Auto-Run Behavior
 
 ### Changed
