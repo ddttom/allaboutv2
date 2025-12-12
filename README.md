@@ -213,7 +213,7 @@ Auto-activating skills provide inline guidance for:
 - **ipynb-validator** - Validate Jupyter notebooks for production readiness (smart links, structure, transitions, part flow)
 - **create-presentation** - Create presentation notebooks (non-interactive) with auto-wrapping or custom styling
 - **response-timestamps** - Automatic timestamp and execution duration tracking for all Claude responses
-- **pre-push-validation** - Ensures CLAUDE.md, README.md, and CHANGELOG.md are updated before git push
+- **pre-push-validation** - Ensures CLAUDE.md, README.md, and CHANGELOG.md are updated before git push (uses `git add .` to include all user edits)
 - **skill-developer** - Managing Claude Code skills
 
 All skills are tailored specifically for EDS vanilla JavaScript development.
