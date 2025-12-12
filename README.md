@@ -342,9 +342,16 @@ The site audit is created with https://github.com/ddttom/my-pa11y-project
     - Optional debug logging with `DEBUG=true` flag
     - Environment variable validation
   - **Development**: Wrangler CLI for local testing (localhost:8787) and deployment
-  - **Testing**: 53 automated tests with 100% pass rate (includes picture placeholder tests)
+  - **Testing**: Two-file testing system (cloudflare-worker.js + cloudflare-worker.test.js)
+    - 53 automated tests with 100% pass rate (unit + integration)
+    - Pure function pattern: All core logic testable without Cloudflare runtime
+    - `/check-cloudflare-tests` command validates test structure
+    - Pre-tool-use hook enforces two-file rule (blocks extra test files)
   - **Deployment Testing**: [cloudflare/test.html](cloudflare/test.html) - Comprehensive test page with 13 automated checks (validates version header, CORS, JSON-LD, metadata cleanup, picture placeholder replacement)
-  - **Documentation**: 520+ line implementation guide with examples and troubleshooting
+  - **Documentation**:
+    - [cloudflare/files/TESTING.md](cloudflare/files/TESTING.md) - Two-file rule and pure function requirements
+    - [cloudflare/files/README.md](cloudflare/files/README.md) - 520+ line implementation guide
+    - [CLAUDE.md](CLAUDE.md) - Critical testing system section for AI assistants
   - **Read-Only Testing**: Complete test infrastructure treating worker as production code (10:1 test-to-code ratio)
   - **Blog Post**: [cloudflare/blog.md](cloudflare/blog.md) - Journey from challenge to production-ready deployment
 
