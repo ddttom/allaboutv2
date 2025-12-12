@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12x] - CI/CD: Change Cloudflare Deployment to Manual Only
+
+### Changed
+- **deploy-cloudflare.yml**: Removed automatic deployment on push
+  - **Before**: Triggered automatically on cloudflare/files/ changes
+  - **After**: Manual only via workflow_dispatch
+  - **Reason**: User preference for manual control over production deployments
+- **Deployment Process**: Now requires manual trigger from GitHub Actions UI
+  - Navigate to: Actions → Deploy Cloudflare Worker → Run workflow
+  - Choose environment: staging or production
+  - Tests run before deployment, smoke tests after
+
+### Updated
+- **CLAUDE.md**: Updated deployment trigger documentation (manual only)
+
 ## [2025-12-12w] - CI/CD: Add GitHub Actions Workflows
 
 ### Added
@@ -19,11 +34,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Security checks (npm audit, secret scanning)
     - Project structure validation (required files, JSON syntax)
     - Build verification for build/ directories
-  - **deploy-cloudflare.yml**: Automated Cloudflare worker deployment
+  - **deploy-cloudflare.yml**: Manual Cloudflare worker deployment
     - Tests before deployment
     - Version verification
     - Smoke tests after deployment (CORS headers, worker version)
-    - Manual workflow dispatch for staging/production
+    - Manual workflow dispatch only (staging/production)
   - **pr-checks.yml**: Enhanced PR validation
     - PR title format validation (conventional commits)
     - Issue linking checks
@@ -40,7 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Implementation Details
 - **ci.yml**: Runs on every push to main and all PRs
-- **deploy-cloudflare.yml**: Runs on cloudflare worker changes or manual trigger
+- **deploy-cloudflare.yml**: Manual trigger only (workflow_dispatch)
 - **pr-checks.yml**: Runs on PR open, sync, or reopen
 - **Secrets Required**: `CLOUDFLARE_API_TOKEN` for deployment workflow
 - **Skip Options**: Use `[skip changelog]` in commit message to bypass CHANGELOG validation

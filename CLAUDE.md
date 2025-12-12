@@ -331,11 +331,12 @@ The project uses GitHub Actions for continuous integration and deployment.
 - **Build Verification**: Tests build/ directories if present
 
 **deploy-cloudflare.yml** - Cloudflare Worker Deployment
-- **Triggers**: Pushes to main affecting cloudflare/files/, or manual workflow dispatch
+- **Trigger**: Manual only (workflow_dispatch)
 - **Pre-deployment**: Runs all worker tests
 - **Deployment**: Uses Wrangler to deploy to Cloudflare
 - **Post-deployment**: Smoke tests (site response, CORS headers, worker version)
-- **Environments**: Supports staging and production via workflow dispatch
+- **Environments**: Supports staging and production
+- **How to deploy**: Go to Actions → Deploy Cloudflare Worker → Run workflow
 
 **pr-checks.yml** - Enhanced PR Validation
 - **PR Title**: Validates conventional commit format (feat/fix/docs/chore)

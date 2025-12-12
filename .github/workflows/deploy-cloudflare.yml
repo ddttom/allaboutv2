@@ -1,12 +1,6 @@
 name: Deploy Cloudflare Worker
 
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - 'cloudflare/files/cloudflare-worker.js'
-      - 'cloudflare/files/wrangler.toml'
-      - '.github/workflows/deploy-cloudflare.yml'
   workflow_dispatch:
     inputs:
       environment:
@@ -52,10 +46,9 @@ jobs:
     name: Deploy to Cloudflare
     needs: test
     runs-on: ubuntu-latest
-    # Only deploy on main branch or manual workflow dispatch
-    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+    # Manual deployment only via workflow dispatch
     environment:
-      name: ${{ github.event.inputs.environment || 'production' }}
+      name: ${{ github.event.inputs.environment }}
     steps:
       - uses: actions/checkout@v4
 
@@ -86,7 +79,7 @@ jobs:
         run: |
           echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- **Environment**: ${{ github.event.inputs.environment || 'production' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Environment**: ${{ github.event.inputs.environment }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Triggered by**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Timestamp**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> $GITHUB_STEP_SUMMARY
