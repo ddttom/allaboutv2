@@ -10,7 +10,8 @@ This Worker extends Adobe's standard EDS Cloudflare Worker template to:
 2. Generate Article schema JSON-LD from page metadata
 3. Remove EDS error tags and non-social metadata after processing
 4. Replace "Picture Here" placeholders with author images
-5. Maintain all standard Adobe EDS functionality
+5. Remove all HTML comments from HTML responses
+6. Maintain all standard Adobe EDS functionality
 
 ## Features
 
@@ -19,7 +20,7 @@ This Worker extends Adobe's standard EDS Cloudflare Worker template to:
 The worker includes a version header in all responses:
 - **Header name**: `cfw` (CloudflareWorker)
 - **Format**: Semantic versioning (MAJOR.MINOR.PATCH)
-- **Current version**: `1.1.0`
+- **Current version**: `1.1.2`
 - **Usage**: Track deployed worker version for debugging and monitoring
 
 **Version Management:**
@@ -182,6 +183,45 @@ The feature is configured via `PICTURE_PLACEHOLDER_CONFIG` constant in the worke
 - Consistent author branding across pages
 - Dynamic image replacement without manual HTML edits
 
+### HTML Comment Removal
+
+Automatically removes all HTML comments from HTML responses for cleaner output and reduced page size.
+
+**Behavior:**
+- Removes all `<!-- comment -->` patterns from HTML
+- Handles multiline comments
+- Handles multiple comments per page
+- Pure string replacement (fully testable)
+- Does not affect JavaScript `//` or `/* */` comments
+
+**Example:**
+```html
+<!-- Input HTML -->
+<html>
+  <!-- This is a comment -->
+  <body>
+    <div>Content</div>
+    <!-- Another comment
+         spanning multiple lines -->
+  </body>
+</html>
+
+<!-- Output HTML -->
+<html>
+
+  <body>
+    <div>Content</div>
+
+  </body>
+</html>
+```
+
+**Use Cases:**
+- Reduce HTML payload size
+- Remove development/debugging comments from production
+- Clean up comments left by content authors
+- Improve HTML cleanliness for scrapers and bots
+
 ## Getting Started
 
 ### Local Development Setup
@@ -267,12 +307,17 @@ curl -I https://yourdomain.com | grep -i access-control
 3. Sanitises URL parameters based on request type
 4. Forwards request to EDS origin
 5. For HTML responses:
-   - HTMLRewriter processes the response stream in order
-   - Detects malformed error script containing "article" (authoring error workaround)
-   - Removes error scripts and error meta tags
-   - Extracts metadata from meta tags
-   - When viewport meta is reached, generates and inserts JSON-LD (if triggered)
-   - Removes non-social meta tags
+   - Extracts HTML text from response body
+   - Applies pure string operations:
+     - Replaces picture placeholders with author images
+     - Removes all HTML comments
+   - Creates new Response with processed HTML
+   - HTMLRewriter processes the response stream:
+     - Detects malformed error script containing "article" (authoring error workaround)
+     - Removes error scripts and error meta tags
+     - Extracts metadata from meta tags
+     - When viewport meta is reached, generates and inserts JSON-LD (if triggered)
+     - Removes non-social meta tags
 6. Creates new Response object for header modifications
 7. Adds CORS headers
 8. Returns response
@@ -282,15 +327,19 @@ curl -I https://yourdomain.com | grep -i access-control
 The Worker must process HTMLRewriter **before** creating a new Response object for header modifications. This is because creating a new Response consumes the body stream, making it unavailable for HTMLRewriter:
 
 ```javascript
-// CORRECT order:
+// CORRECT order with string operations + HTMLRewriter:
 resp = await fetch(req);
-resp = new HTMLRewriter().transform(resp);  // Process stream first
-resp = new Response(resp.body, resp);       // Then modify headers
+let htmlText = await resp.text();           // Extract HTML text
+htmlText = replacePicturePlaceholder(htmlText);  // Pure string op
+htmlText = removeHtmlComments(htmlText);    // Pure string op
+resp = new Response(htmlText, resp);        // Create new Response
+resp = new HTMLRewriter().transform(resp);  // Then HTMLRewriter
+resp = new Response(resp.body, resp);       // Finally modify headers
 
-// WRONG order (body consumed before processing):
+// WRONG order (HTMLRewriter before string ops):
 resp = await fetch(req);
-resp = new Response(resp.body, resp);       // Body consumed here
-resp = new HTMLRewriter().transform(resp);  // Nothing left to transform
+resp = new HTMLRewriter().transform(resp);  // Body consumed
+let htmlText = await resp.text();           // Nothing left to read
 ```
 
 ### HTMLRewriter Timing and Insertion Point
@@ -670,7 +719,7 @@ npm run test:coverage
 - Handler wiring (including div handler)
 - Version header presence in responses (2 integration tests)
 
-**Status:** ✅ 53 tests passing
+**Status:** ✅ 63 tests passing
 
 For complete testing details, see [TESTING.md](TESTING.md).
 

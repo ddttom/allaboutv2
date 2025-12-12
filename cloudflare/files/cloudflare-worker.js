@@ -12,11 +12,11 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  *
- * @version 1.1.1
+ * @version 1.1.2
  */
 
 // Worker version - increment using semantic versioning for all changes
-export const WORKER_VERSION = '1.1.1';
+export const WORKER_VERSION = '1.1.2';
 
 // Picture placeholder configuration
 export const PICTURE_PLACEHOLDER_CONFIG = {
@@ -361,6 +361,17 @@ export const replacePicturePlaceholder = (html) => {
   return html.replace(pattern, replacement);
 };
 
+/**
+ * Removes all HTML comments from content
+ * Pure string replacement - fully testable without Cloudflare Workers runtime
+ * @param {string} html - HTML content to process
+ * @returns {string} Processed HTML with comments removed
+ */
+export const removeHtmlComments = (html) => (
+  // Regex pattern: <!-- followed by any characters (non-greedy), then -->
+  html.replace(/<!--[\s\S]*?-->/g, '')
+);
+
 const handleRequest = async (request, env, _ctx) => {
   // Validate required environment variables
   if (!env.ORIGIN_HOSTNAME) {
@@ -464,8 +475,9 @@ const handleRequest = async (request, env, _ctx) => {
     // First, get the HTML text for picture replacement
     let htmlText = await resp.text();
 
-    // Apply picture placeholder replacement via string replacement
+    // Apply pure string operations (TESTABLE)
     htmlText = replacePicturePlaceholder(htmlText);
+    htmlText = removeHtmlComments(htmlText);
 
     // Create new response with processed HTML
     resp = new Response(htmlText, {

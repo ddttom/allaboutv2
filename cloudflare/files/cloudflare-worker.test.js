@@ -23,6 +23,7 @@ import worker, {
   handleLinkedIn,
   handleViewport,
   replacePicturePlaceholder,
+  removeHtmlComments,
   WORKER_VERSION,
   PICTURE_PLACEHOLDER_CONFIG,
 } from './cloudflare-worker.js';
@@ -528,6 +529,57 @@ describe('replacePicturePlaceholder', () => {
   });
 });
 
+// Test suite for removeHtmlComments
+describe('removeHtmlComments', () => {
+  test('removes simple HTML comment', () => {
+    const html = '<div><!-- comment --></div>';
+    const result = removeHtmlComments(html);
+    expect(result).toBe('<div></div>');
+    expect(result).not.toContain('<!--');
+  });
+
+  test('removes multiple comments', () => {
+    const html = '<!-- first --><p>text</p><!-- second -->';
+    const result = removeHtmlComments(html);
+    expect(result).toBe('<p>text</p>');
+  });
+
+  test('removes multiline comments', () => {
+    const html = '<!-- line 1\nline 2\nline 3 --><div>content</div>';
+    const result = removeHtmlComments(html);
+    expect(result).toContain('<div>content</div>');
+    expect(result).not.toContain('<!--');
+  });
+
+  test('handles nested-looking comments', () => {
+    // HTML comments don't actually nest - first --> closes the comment
+    const html = '<!-- outer <!-- inner --> still in comment -->';
+    const result = removeHtmlComments(html);
+    expect(result).toBe(' still in comment -->');
+  });
+
+  test('preserves HTML structure', () => {
+    const html = '<html><!-- comment --><body>text</body></html>';
+    const result = removeHtmlComments(html);
+    expect(result).toBe('<html><body>text</body></html>');
+  });
+
+  test('handles empty string', () => {
+    expect(removeHtmlComments('')).toBe('');
+  });
+
+  test('handles HTML without comments', () => {
+    const html = '<div>no comments here</div>';
+    expect(removeHtmlComments(html)).toBe(html);
+  });
+
+  test('removes comments with special characters', () => {
+    const html = '<!-- comment with <tags> and & entities -->';
+    const result = removeHtmlComments(html);
+    expect(result).toBe('');
+  });
+});
+
 // Mock HTMLRewriter for integration testing
 class MockHTMLRewriter {
   static activeHandlers = [];
@@ -692,8 +744,8 @@ describe('handleRequest Integration', () => {
 
     const response = await worker.fetch(request, env);
 
-    // Verify version header still present and shows 1.1.1
+    // Verify version header still present and shows 1.1.2
     expect(response.headers.get('cfw')).toBe(WORKER_VERSION);
-    expect(WORKER_VERSION).toBe('1.1.1');
+    expect(WORKER_VERSION).toBe('1.1.2');
   });
 });

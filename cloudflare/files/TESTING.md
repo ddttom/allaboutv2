@@ -57,7 +57,13 @@ export const replacePicturePlaceholder = (html) => {
   return html.replace(pattern, replacement);
 };
 
-// Test works perfectly in Node.js - no runtime needed
+// ✅ CORRECT - Another pure function example
+export const removeHtmlComments = (html) => (
+  // Regex pattern: <!-- followed by any characters (non-greedy), then -->
+  html.replace(/<!--[\s\S]*?-->/g, '')
+);
+
+// Both functions work perfectly in Node.js - no runtime needed
 test('replaces Picture Here with image', () => {
   const html = '<div><div>Picture Here</div></div>';
   const result = replacePicturePlaceholder(html);
@@ -65,6 +71,12 @@ test('replaces Picture Here with image', () => {
   expect(result).toContain('<img');
   expect(result).toContain(PICTURE_PLACEHOLDER_CONFIG.IMAGE_URL);
   expect(result).not.toContain('Picture Here');
+});
+
+test('removes HTML comments', () => {
+  const html = '<div><!-- comment --></div>';
+  const result = removeHtmlComments(html);
+  expect(result).toBe('<div></div>');
 });
 ```
 
@@ -125,6 +137,7 @@ export default {
 import { describe, test, expect } from 'vitest';
 import worker, {
   replacePicturePlaceholder,
+  removeHtmlComments,
   handleOgTitle,
   WORKER_VERSION,
 } from './cloudflare-worker.js';
@@ -145,6 +158,19 @@ describe('Pure Functions (Unit Tests)', () => {
 
     const imgCount = (result.match(/<img/g) || []).length;
     expect(imgCount).toBe(2);
+  });
+
+  test('removeHtmlComments removes simple comment', () => {
+    const html = '<div><!-- comment --></div>';
+    const result = removeHtmlComments(html);
+    expect(result).toBe('<div></div>');
+  });
+
+  test('removeHtmlComments handles multiline comments', () => {
+    const html = '<!-- line 1\nline 2 --><div>content</div>';
+    const result = removeHtmlComments(html);
+    expect(result).toContain('<div>content</div>');
+    expect(result).not.toContain('<!--');
   });
 });
 
@@ -285,11 +311,12 @@ curl -s https://allabout.network/blog/article | grep -i "application/ld+json"
 
 ## Test Coverage
 
-**Status:** ✅ All tests passing
+**Status:** ✅ All 63 tests passing
 
-- **Functions:** 100% coverage of exported helpers.
-- **Handlers:** 100% coverage of extracted handlers.
-- **Integration:** Core flow covered by mock integration test.
+- **Functions:** 100% coverage of exported helpers (including `removeHtmlComments`)
+- **Handlers:** 100% coverage of extracted handlers
+- **Integration:** Core flow covered by mock integration test
+- **HTML Comment Removal:** 8 unit tests covering all edge cases
 
 ## Troubleshooting
 
