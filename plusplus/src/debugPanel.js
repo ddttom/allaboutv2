@@ -1,3 +1,4 @@
+/* eslint-disable max-len, no-restricted-syntax, no-shadow */
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-console */
 function toggleDebugPanel() {

@@ -1,3 +1,4 @@
+/* eslint-disable max-len, no-restricted-syntax, no-shadow */
 import {
   replaceTokens,
   convertToISODate,

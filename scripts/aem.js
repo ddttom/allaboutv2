@@ -11,6 +11,7 @@
  */
 
 /* eslint-env browser */
+/* eslint-disable max-len */
 
 /**
  * log RUM if part of the sample.

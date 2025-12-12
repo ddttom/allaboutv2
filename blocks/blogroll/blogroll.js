@@ -30,9 +30,10 @@ function groupAndSortPosts(posts, config) {
     // console.log('Applying current directory filter (path=*):', currentDirFilter);
     filteredPosts = posts.filter((post) => {
       // Check if post.path is a string and starts with the current directory path
-      const match = typeof post.path === 'string' && post.path.startsWith(currentDirFilter);
+      const match = typeof post.path === 'string'
+        && post.path.startsWith(currentDirFilter);
       if (match) {
-      //   console.log(`Current directory match found: "${currentDirFilter}" starts path "${post.path}"`);
+      //   console.log(`Current directory match found: "${currentDirFilter}"`);
       }
       return match;
     });
@@ -44,15 +45,14 @@ function groupAndSortPosts(posts, config) {
       // console.log('No matches found using current directory filter (path=*).');
       // We don't attempt title fallback for path=*
     }
-  }
   // *** Priority 2: Handle regular pathFilters only if path=* wasn't used ***
-  else if (pathFilters.length > 0) {
+  } else if (pathFilters.length > 0) {
     // console.log('Applying regular path filters:', pathFilters);
 
     // Attempt to filter by path first
-    const pathFilteredPosts = posts.filter((post) =>
-      // Check if post.path is a string and includes any of the pathFilters
-      pathFilters.some((pathFilter) => typeof post.path === 'string' && post.path.includes(pathFilter)));
+    const pathFilteredPosts = posts.filter((post) => pathFilters.some(
+      (pathFilter) => typeof post.path === 'string' && post.path.includes(pathFilter),
+    ));
 
     // console.log(`Found ${pathFilteredPosts.length} posts matching path filters`);
 
@@ -62,9 +62,9 @@ function groupAndSortPosts(posts, config) {
     } else {
       // If no path matches, attempt to filter by title as a fallback
       // console.log('No path matches found for path filters, trying title filtering');
-      const titleFilteredPosts = posts.filter((post) =>
-        // Check if post.title is a string and includes any of the pathFilters
-        pathFilters.some((pathFilter) => typeof post.title === 'string' && post.title.includes(pathFilter)));
+      const titleFilteredPosts = posts.filter((post) => pathFilters.some(
+        (pathFilter) => typeof post.title === 'string' && post.title.includes(pathFilter),
+      ));
 
       // console.log(`Found ${titleFilteredPosts.length} posts matching title filters`);
 
@@ -79,8 +79,10 @@ function groupAndSortPosts(posts, config) {
     }
   }
 
-  // *** Priority 3: Apply regular acceptList filtering only if NO path or title filters were successfully applied ***
+  // Priority 3: Apply regular acceptList filtering only if NO path or title
+  // filters were successfully applied
   if (!usedPathFilter && !usedTitleFilter && acceptList.length > 0) {
+    // eslint-disable-next-line no-console
     console.log('Applying regular acceptList filtering:', acceptList);
     filteredPosts = filteredPosts.filter((post) => acceptList.some((term) => {
       // Case-insensitive check for terms containing 'guide' (backward compatibility)
@@ -92,12 +94,13 @@ function groupAndSortPosts(posts, config) {
       // Check if post.path is a string before calling includes()
       return typeof post.path === 'string' && post.path.includes(term);
     }));
+    // eslint-disable-next-line no-console
     console.log(`Found ${filteredPosts.length} posts after acceptList filtering.`);
   }
 
   // If after all filtering attempts, filteredPosts is empty, return immediately.
   if (filteredPosts.length === 0) {
-    //  console.log('Returning empty array because filteredPosts is empty after all filtering attempts');
+    // console.log('Returning empty array - filteredPosts is empty after filtering');
     return []; // Return an empty array directly
   }
 
@@ -140,11 +143,14 @@ function groupAndSortPosts(posts, config) {
   // Sort the series themselves based on the number of posts (descending)
   return Array.from(seriesMap.entries())
     .sort((a, b) => b[1].length - a[1].length) // Sort series by number of posts descending
-    .map(([key, postsInSeries]) => {
+    .map(([_key, postsInSeries]) => {
       // Extract a representative series name (e.g., from the first post's title before " - Part")
       // Ensure the first post and its title exist
-      const firstPostTitle = postsInSeries[0] && typeof postsInSeries[0].title === 'string' ? postsInSeries[0].title : '';
-      const seriesName = firstPostTitle.includes(' - Part') ? firstPostTitle.split(' - Part')[0] : firstPostTitle;
+      const firstPostTitle = postsInSeries[0]
+        && typeof postsInSeries[0].title === 'string'
+        ? postsInSeries[0].title : '';
+      const seriesName = firstPostTitle.includes(' - Part')
+        ? firstPostTitle.split(' - Part')[0] : firstPostTitle;
       return [seriesName, postsInSeries];
     }); // Return array of [seriesName, sortedPostsArray]
 }
@@ -162,7 +168,10 @@ function getConfig(block) {
   const rows = [...block.children];
   if (rows.length > 0) {
     // Process the first row which contains the filter terms
-    const firstRow = rows.shift(); // Removes the first row (header) if it exists, assumes filters are in subsequent rows. Check if this is the intended logic or if filters are in the *first* data row. If filters are in the first row, just use rows[0].
+    // Removes the first row (header) if it exists, assumes filters are in subsequent rows.
+    // Check if this is the intended logic or if filters are in the *first* data row.
+    // If filters are in the first row, just use rows[0].
+    const firstRow = rows.shift();
 
     // Iterate over cells in the filter row
     [...firstRow.children].forEach((cell) => {
@@ -196,8 +205,10 @@ function getConfig(block) {
         }
       } else {
         // Process regular filter terms (non-path filters)
-        // Only convert to lowercase if it contains 'guide' (case insensitive for backward compatibility)
-        const processedText = text.toLowerCase().includes('guide') ? text.toLowerCase() : text;
+        // Only convert to lowercase if it contains 'guide'
+        // (case insensitive for backward compatibility)
+        const processedText = text.toLowerCase().includes('guide')
+          ? text.toLowerCase() : text;
         config.acceptList.push(processedText);
       }
     });
@@ -205,7 +216,9 @@ function getConfig(block) {
 
   // Fallback mechanism: Set default path=* when no configuration is present
   // If all filter arrays are empty and no currentDirFilter is set, apply path=* as default
-  if (config.acceptList.length === 0 && config.pathFilters.length === 0 && !config.currentDirFilter) {
+  if (config.acceptList.length === 0
+    && config.pathFilters.length === 0
+    && !config.currentDirFilter) {
     const currentPath = window.location.pathname;
     // console.log('No configuration detected, applying default path=* behavior');
     // console.log('Current pathname for default fallback:', currentPath);
@@ -222,8 +235,12 @@ function getConfig(block) {
   }
 
   // Default filter for compact mode if no other filters are specified
-  // If both acceptList and pathFilters are empty AND currentDirFilter is not set AND it's compact mode, set default path
-  if (config.acceptList.length === 0 && config.pathFilters.length === 0 && !config.currentDirFilter && config.isCompact) {
+  // If both acceptList and pathFilters are empty AND currentDirFilter is not set
+  // AND it's compact mode, set default path
+  if (config.acceptList.length === 0
+    && config.pathFilters.length === 0
+    && !config.currentDirFilter
+    && config.isCompact) {
     const currentPath = window.location.pathname.toLowerCase();
     const pathParts = currentPath.split('/');
     // Remove potential part number suffix (e.g., -part-1) from the page name
@@ -237,42 +254,8 @@ function getConfig(block) {
   // Return the final configuration object
   return config;
 }
-// Function to create the compact blogroll panel
-function createCompactBlogrollPanel(groupedPosts, originalPosts, config) {
-  const panel = document.createElement('div');
-  panel.className = 'blogroll-panel';
 
-  const panelHeader = document.createElement('div');
-  panelHeader.className = 'blogroll-panel-header';
-
-  const panelTitle = document.createElement('div');
-  panelTitle.className = 'blogroll-panel-title';
-  panelTitle.textContent = 'Blogroll';
-  panelHeader.appendChild(panelTitle);
-
-  const closeButton = document.createElement('button');
-  closeButton.innerHTML = '&times;'; // This creates a × symbol
-  closeButton.className = 'blogroll-panel-close';
-  closeButton.setAttribute('aria-label', 'Close blogroll panel');
-  closeButton.addEventListener('click', () => panel.classList.remove('open'));
-  panelHeader.appendChild(closeButton);
-
-  panel.appendChild(panelHeader);
-
-  const blogrollContent = document.createElement('div');
-  blogrollContent.className = 'blogroll-panel-content';
-
-  // console.log('In createCompactBlogrollPanel, groupedPosts:', groupedPosts);
-  // console.log('In createCompactBlogrollPanel, groupedPosts type:', typeof groupedPosts);
-  // console.log('In createCompactBlogrollPanel, groupedPosts length:', groupedPosts.length);
-  // console.log('In createCompactBlogrollPanel, is array?', Array.isArray(groupedPosts));
-
-  updatePanelContent(blogrollContent, groupedPosts);
-
-  panel.appendChild(blogrollContent);
-
-  return panel;
-}
+// Helper function to update panel content
 function updatePanelContent(container, groupedPosts) {
   container.innerHTML = ''; // Clear existing content
 
@@ -319,6 +302,43 @@ function updatePanelContent(container, groupedPosts) {
     seriesContainer.appendChild(postList);
     container.appendChild(seriesContainer);
   });
+}
+
+// Function to create the compact blogroll panel
+function createCompactBlogrollPanel(groupedPosts, _originalPosts, _config) {
+  const panel = document.createElement('div');
+  panel.className = 'blogroll-panel';
+
+  const panelHeader = document.createElement('div');
+  panelHeader.className = 'blogroll-panel-header';
+
+  const panelTitle = document.createElement('div');
+  panelTitle.className = 'blogroll-panel-title';
+  panelTitle.textContent = 'Blogroll';
+  panelHeader.appendChild(panelTitle);
+
+  const closeButton = document.createElement('button');
+  closeButton.innerHTML = '&times;'; // This creates a × symbol
+  closeButton.className = 'blogroll-panel-close';
+  closeButton.setAttribute('aria-label', 'Close blogroll panel');
+  closeButton.addEventListener('click', () => panel.classList.remove('open'));
+  panelHeader.appendChild(closeButton);
+
+  panel.appendChild(panelHeader);
+
+  const blogrollContent = document.createElement('div');
+  blogrollContent.className = 'blogroll-panel-content';
+
+  // console.log('In createCompactBlogrollPanel, groupedPosts:', groupedPosts);
+  // console.log('In createCompactBlogrollPanel, groupedPosts type:', typeof groupedPosts);
+  // console.log('In createCompactBlogrollPanel, groupedPosts length:', groupedPosts.length);
+  // console.log('In createCompactBlogrollPanel, is array?', Array.isArray(groupedPosts));
+
+  updatePanelContent(blogrollContent, groupedPosts);
+
+  panel.appendChild(blogrollContent);
+
+  return panel;
 }
 
 export default async function decorate(block) {
@@ -441,7 +461,9 @@ export default async function decorate(block) {
 
       // Add click event to document to close panel when clicking outside
       document.addEventListener('click', (e) => {
-        if (panel.classList.contains('open') && !panel.contains(e.target) && e.target !== iconContainer) {
+        if (panel.classList.contains('open')
+          && !panel.contains(e.target)
+          && e.target !== iconContainer) {
           closePanel();
         }
       });

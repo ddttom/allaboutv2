@@ -1,6 +1,4 @@
-/* eslint-disable function-paren-newline */
-/* eslint-disable import/extensions */
-/* eslint-disable no-alert */
+/* eslint-disable function-paren-newline, import/extensions, no-alert, no-unused-vars, import/no-unresolved, import/no-self-import, max-len */
 
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import {

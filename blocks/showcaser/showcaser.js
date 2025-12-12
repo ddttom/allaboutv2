@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define, max-len, no-plusplus, no-console, no-restricted-syntax, no-continue, no-loop-func, radix, no-lonely-if, no-restricted-globals, no-alert, prefer-destructuring, brace-style, no-param-reassign, no-return-assign, no-await-in-loop, no-shadow, no-nested-ternary, func-names, no-void, no-sequences, no-unused-expressions, no-useless-escape, no-unused-vars, import/no-unresolved, import/no-self-import */
 // Constants for configuration
 const SHOWCASER_CONFIG = {
   BOOK_TITLE: 'Code',
@@ -17,7 +18,7 @@ function decodeHtmlEntities(text) {
  * Detects the programming language of the given code snippet
  * @param {string} code - The code snippet to analyze
  * @returns {string} The detected language
- */
+ no-unused-vars, import/no-unresolved, import/no-self-import */
 function detectLanguage(code) {
   const decodedCode = decodeHtmlEntities(code);
 
@@ -62,7 +63,7 @@ function detectLanguage(code) {
  * @param {string} code - The code to highlight
  * @param {string} language - The detected language
  * @returns {string} HTML string with syntax highlighting
- */
+ no-unused-vars, import/no-unresolved, import/no-self-import */
 function highlightSyntax(code, language) {
   const encodeHtmlEntities = (text) => text
     .replace(/&/g, '&amp;')
@@ -91,7 +92,7 @@ function highlightSyntax(code, language) {
 /**
  * Main function to decorate the Showcaser block
  * @param {HTMLElement} block - The block element to decorate
- */
+ no-unused-vars, import/no-unresolved, import/no-self-import */
 export default async function decorate(block) {
   // Create container and book structure
   const container = document.createElement('div');

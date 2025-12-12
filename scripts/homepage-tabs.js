@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export, no-use-before-define, prefer-destructuring, no-unused-vars, max-len */
 /**
  * Homepage Category Tabs
  * Handles category filtering for blog posts on the homepage

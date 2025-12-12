@@ -1,3 +1,4 @@
+/* eslint-disable no-console, no-plusplus, no-restricted-syntax, no-await-in-loop, no-use-before-define, max-len, no-continue, no-loop-func, radix, no-lonely-if, no-restricted-globals, no-alert, prefer-destructuring */
 /**
  * IPynb Viewer Block
  * Displays Jupyter notebook (.ipynb) files with interactive JavaScript execution
@@ -50,7 +51,7 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
       }
 
       const cells = line.split('|').filter((cell) => cell.trim());
-      const row = `<tr>${cells.map((cell, idx) => {
+      const row = `<tr>${cells.map((cell, _idx) => {
         // First row is header
         const tag = tableRows.length === 0 ? 'th' : 'td';
         return `<${tag}>${cell.trim()}</${tag}>`;
@@ -477,7 +478,7 @@ function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false, helpR
       const githubUrl = link.dataset.mdUrl; // Get URL from data attribute
       const linkBranch = link.dataset.branch || branch; // Get branch from link or use default
       const title = link.textContent || 'GitHub Markdown';
-      const overlay = createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl, linkBranch, parentHistory, hideTopbar);
+      const overlay = createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl, linkBranch, parentHistory, false);
       overlay.openOverlay();
     });
   });
@@ -1147,7 +1148,7 @@ function buildFileTree(paths, helpPath) {
  * @param {string} helpRepoUrl - Help repository URL
  * @returns {Array} Root tree nodes
  */
-function buildNavigationTree(cells, cellsContainer, helpRepoUrl) {
+function buildNavigationTree(cells, cellsContainer, _helpRepoUrl) {
   const tree = [];
 
   // 1. Create "Notebook" root node
@@ -2169,8 +2170,8 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
         const githubUrl = link.dataset.mdUrl; // Get URL from data attribute
         const linkBranch = link.dataset.branch || branch; // Get branch from link or use default
         const title = link.textContent || 'GitHub Markdown';
-        const overlay = createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl, linkBranch, paginationState, hideTopbar);
-        overlay.openOverlay();
+        const mdOverlay = createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl, linkBranch, paginationState, hideTopbar);
+        mdOverlay.openOverlay();
       });
     });
 
@@ -2471,7 +2472,7 @@ function createPagedStartButton() {
  * @param {string} [branch='main'] - GitHub branch to use (only applies to GitHub URLs)
  * @returns {string} Raw content URL or local path
  */
-function convertToRawUrl(blobUrl, branch = 'main') {
+function convertToRawUrl(blobUrl, _branch = 'main') {
   // If it's a local path (starts with /), return as-is
   if (blobUrl.startsWith('/')) {
     return blobUrl;

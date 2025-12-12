@@ -20,10 +20,6 @@ import worker, {
   normalizeYear,
   replacePicturePlaceholder,
   removeHtmlComments,
-  removeNonSocialMetadata,
-  extractMetaContent,
-  shouldGenerateJsonLd,
-  injectJsonLd,
   WORKER_VERSION,
   PICTURE_PLACEHOLDER_CONFIG,
 } from './cloudflare-worker.js';
@@ -790,8 +786,8 @@ describe('handleRequest Integration', () => {
 
     const response = await worker.fetch(request, env);
 
-    // Verify version header still present and shows 1.1.3
+    // Verify version header still present and shows 1.1.4
     expect(response.headers.get('cfw')).toBe(WORKER_VERSION);
-    expect(WORKER_VERSION).toBe('1.1.3');
+    expect(WORKER_VERSION).toBe('1.1.4');
   });
 });

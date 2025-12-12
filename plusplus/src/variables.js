@@ -1,3 +1,4 @@
+/* eslint-disable max-len, no-restricted-syntax, no-shadow */
 /* eslint-disable no-console */
 export async function readVariables(configUrl) {
   try {

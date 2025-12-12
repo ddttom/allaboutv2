@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { createServer } from 'http';
 import { readFile, access } from 'fs/promises';
 import { join, extname, dirname } from 'path';

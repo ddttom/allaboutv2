@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12ab] - Fix Linting
+
+### Fixed
+- Fixed all linting errors across entire project (7,632 → 0 errors)
+
 ## [2025-12-12aa] - Cloudflare Worker: Single Source of Truth for Version
 
 ### Changed

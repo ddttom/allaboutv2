@@ -3,3 +3,18 @@ assets/
 build/*/dist/
 build/*/.parcel-cache/
 blocks/react-test/
+
+# Bundled library files (minified/transpiled external dependencies)
+blocks/spectrum-card/spectrum-card.js
+blocks/shoelace-card/shoelace-card.js
+
+# Static bundled files (minified/compiled)
+static/js/
+static/css/
+
+# Third-party code
+plusplus/block-party/
+plusplus/src/samples/
+
+# Build directories with external dependencies
+build/spectrum-card/

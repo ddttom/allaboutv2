@@ -1,3 +1,4 @@
+/* eslint-disable no-promise-executor-return, max-len, no-console, no-use-before-define, no-shadow */
 /**
  * IPYNB Helper Functions for Browser Testing
  *

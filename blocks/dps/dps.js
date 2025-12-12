@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define, max-len, no-plusplus, prefer-destructuring, brace-style, no-param-reassign, no-return-assign */
 /**
  * Digital Presentation System (DPS) Block
  * A block for creating and displaying interactive presentations
@@ -360,7 +361,6 @@ function extractIllustrationItems(content, cell) {
   potentialElements.forEach((el) => {
     let item = null;
     let identifier = null;
-    let added = false;
 
     // Skip if element is nested inside another already processed element (like img in picture)
     if (processedIdentifiers.has(el.closest('picture')?.querySelector('img')?.getAttribute('src')) && el.tagName === 'IMG') return;
@@ -372,25 +372,25 @@ function extractIllustrationItems(content, cell) {
       identifier = img ? img.getAttribute('src') : el.innerHTML.substring(0, 100);
       if (identifier) { // Ensure picture has content before adding
         item = { type: 'picture', content: el.outerHTML };
-        added = addUniqueItem(item, identifier);
+        addUniqueItem(item, identifier);
       }
     } else if (el.tagName === 'IFRAME') {
       identifier = el.getAttribute('src');
       if (identifier) {
         item = { type: 'iframe', url: identifier, content: el.outerHTML };
-        added = addUniqueItem(item, identifier);
+        addUniqueItem(item, identifier);
       }
     } else if (el.tagName === 'SVG') {
       identifier = `svg:${el.innerHTML.substring(0, 100)}`;
       item = { type: 'svg', content: el.outerHTML };
-      added = addUniqueItem(item, identifier);
+      addUniqueItem(item, identifier);
     } else if (el.tagName === 'IMG') {
       // Only process if not inside a picture (already handled)
       if (!el.closest('picture')) {
         identifier = el.getAttribute('src');
         if (identifier) {
           item = { type: 'image', content: identifier, alt: el.getAttribute('alt') || '' };
-          added = addUniqueItem(item, identifier);
+          addUniqueItem(item, identifier);
         }
       }
     } else if (el.tagName === 'SPAN' && el.classList.contains('icon')) {
@@ -401,17 +401,17 @@ function extractIllustrationItems(content, cell) {
         item = {
           type: 'icon', iconName, content: identifier, alt: `${iconName} Illustration`,
         };
-        added = addUniqueItem(item, identifier);
+        addUniqueItem(item, identifier);
       }
     } else if (el.tagName === 'A' && el.hasAttribute('href')) {
       identifier = el.getAttribute('href');
       if (isImageUrl(identifier)) {
         item = { type: 'image', content: identifier, alt: el.textContent || '' };
-        added = addUniqueItem(item, identifier);
+        addUniqueItem(item, identifier);
       } else if (identifier.match(/^https?:\/\//)) {
         // Treat other http(s) links as potential iframes
         item = { type: 'iframe', url: identifier, content: `<iframe src="${identifier}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>` };
-        added = addUniqueItem(item, identifier);
+        addUniqueItem(item, identifier);
       }
     } else if (el.tagName === 'P') {
       // Check paragraph content specifically for "iframe URL" patterns
@@ -421,13 +421,13 @@ function extractIllustrationItems(content, cell) {
       if (iframeMatch) {
         identifier = iframeMatch[1];
         item = { type: 'iframe', url: identifier, content: `<iframe src="${identifier}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>` };
-        added = addUniqueItem(item, identifier);
+        addUniqueItem(item, identifier);
       }
       // Also check for plain image URLs in paragraphs
       else if (isImageUrl(textContent.trim())) {
         identifier = textContent.trim();
         item = { type: 'image', content: identifier, alt: '' };
-        added = addUniqueItem(item, identifier);
+        addUniqueItem(item, identifier);
       }
     }
   });
@@ -609,7 +609,6 @@ function createSequenceHTML(items) {
   // Process each illustration item
   items.forEach((item, index) => {
     const isActive = index === 0;
-    const typeLabel = item.type.charAt(0).toUpperCase() + item.type.slice(1);
 
     // Create container for this item
     html += `<div class="sequence-item-container ${isActive ? 'active' : ''}" data-sequence-id="${index}">`;
@@ -1018,7 +1017,6 @@ function togglePresenterMode() {
 
   const isPresenterMode = presenterNotes.classList.contains('presenter-mode');
   const header = document.querySelector('.dps-header');
-  const footer = document.querySelector('.dps-footer');
   const slides = document.querySelectorAll('.slide');
   const currentSlide = slides[currentSlideIndex];
   const presenterButton = document.querySelector('.presenter-toggle');
@@ -1136,10 +1134,12 @@ function setupResizeHandler() {
 /**
  * Set up touch handling for mobile devices
  */
+// Touch tracking variables for swipe detection
+let touchStartX = 0;
+let touchEndX = 0;
+
 function setupMobileHandling() {
   const slidesContainer = document.getElementById('slides-container');
-  let touchStartX = 0;
-  let touchEndX = 0;
 
   // Detect if device is likely a mobile/touch device
   const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;

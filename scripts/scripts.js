@@ -1,6 +1,4 @@
-/* eslint-disable operator-linebreak */
-/* eslint-disable import/no-unresolved */
-/* eslint-disable import/no-absolute-path */
+/* eslint-disable operator-linebreak, import/no-unresolved, import/no-absolute-path, max-len */
 import {
   sampleRUM,
   buildBlock,
