@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12t] - Claude Code Settings: Add test:local to Auto-Approve List
+
+### Changed
+- **`.claude/settings.local.json`**: Added `"Bash(npm run test:local:*)"` to auto-approve list
+  - Streamlines local testing workflow for Cloudflare worker tests
+  - Allows automated execution of `npm run test:local` without manual approval
+
 ## [2025-12-12s] - Cloudflare Worker v1.1.4: Fix JSON-LD Publisher Organization Hostname
 
 ### Fixed
