@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12m] - Cloudflare Worker v1.1.3 Visual Test Messages
+
+### Changed
+- **Improved test-rendered.html Messages**: Updated test.html to show informative messages when CORS/header tests fail locally
+  - Replaced technical errors ("✗ Version header (cfw) not found", "✗ Missing or incorrect: null")
+  - Added helpful explanations directing users to https://allabout.network/cloudflare/test.html
+  - Clarified that headers are added by Cloudflare Worker at request time (not embedded in HTML)
+  - Enhanced user experience when opening test-rendered.html locally for visual testing
+
+### Fixed
+- **ESLint Compliance**: Fixed all eslint violations in test-local-html.js
+  - All `// eslint-disable-next-line no-console` directives properly placed
+  - File now passes `npx eslint test-local-html.js` without errors
+
+### Documentation
+- **Updated Visual Testing Docs**:
+  - README.md: Enhanced "Visual Testing with test-rendered.html" section
+  - TESTING.md: Documented expected behavior when opening test-rendered.html locally
+  - CLAUDE.md: Updated Cloudflare Worker section with v1.1.3 information
+
+### Test Results
+- ✅ All 20/20 local HTML processing tests passing
+- ✅ ESLint validation passing
+- ✅ Visual test artifact provides clear user guidance
+
 ## [2025-12-12l] - Cloudflare Worker Local HTML Processing Test
 
 ### Added
