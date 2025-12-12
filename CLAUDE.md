@@ -298,22 +298,20 @@ Active hooks that enhance development workflow:
 - Runs after file edits (Edit, MultiEdit, Write)
 - Lightweight bash script
 
-**pre-push-validation.sh** (Git Hook)
-- **INTERACTIVE:** Prompts for CHANGELOG.md entry if outdated, automatically adds it to the file
-- **REQUIRED:** Validates CHANGELOG.md is updated before push (blocks push if not updated)
-- **SUGGESTED:** Recommends updating CLAUDE.md and README.md (won't block push, only suggests)
-- **Implementation Note:** Uses `/dev/tty` for user input to avoid reading git push refs from stdin
-- **Auto-skips** when pushing from Claude Code or other IDEs (no TTY available)
-- **Workflow (terminal only):**
-  1. Run `git push` from terminal → Hook detects CHANGELOG.md needs updating
-  2. Prompts: "What changed in this commit/push?"
-  3. You provide summary (e.g., "Added HTML comment removal")
-  4. Hook automatically inserts entry into CHANGELOG.md
-  5. Push blocked → Review CHANGELOG.md, commit it, and push again
-- Auto-triggers on `git push` from terminal
-- Skips validation when pushing from Claude Code (use CHANGELOG.md manually)
-- Use `/validate-docs` for manual validation
-- **Bypass:** Use `SKIP_DOC_CHECK=1 git push` if docs truly don't need updating
+**pre-commit-changelog.sh** (Git Hook)
+- **REQUIRED:** Validates CHANGELOG.md is included in commits (blocks commit if missing)
+- **Simple Check:** Verifies CHANGELOG.md is staged before allowing commit
+- **Works with Claude Code:** No TTY issues - just checks staged files
+- **Workflow:**
+  1. Make code changes
+  2. Update CHANGELOG.md with your changes
+  3. Stage both: `git add . CHANGELOG.md`
+  4. Commit: `git commit -m "your message"`
+  5. Hook validates CHANGELOG.md is included, allows commit
+- **If CHANGELOG.md missing:**
+  - Commit blocked with clear instructions
+  - Add CHANGELOG.md and amend commit, or use `git commit --amend --no-edit`
+- **Bypass:** Use `SKIP_DOC_CHECK=1 git commit -m "message"` if docs truly don't need updating
 
 See `.claude/hooks/CONFIG.md` for configuration and customization.
 

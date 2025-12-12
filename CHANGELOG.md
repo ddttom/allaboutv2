@@ -7,6 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12v] - Git Hooks: Replace Pre-Push with Pre-Commit Validation
+
+### Changed
+- **Git Hook Strategy**: Replaced pre-push validation hook with pre-commit validation hook
+  - **Removed**: `.claude/hooks/pre-push-validation.sh` (interactive prompts don't work in Claude Code)
+  - **Added**: `.claude/hooks/pre-commit-changelog.sh` (simple staged file validation)
+  - **Benefit**: Works seamlessly in all environments (terminal, Claude Code, IDEs, CI/CD)
+- **New Workflow**:
+  1. Make code changes
+  2. Update CHANGELOG.md with changes
+  3. Stage both: `git add . CHANGELOG.md`
+  4. Commit: `git commit -m "message"` (hook validates CHANGELOG.md is included)
+  5. Push: `git push` (no validation hook on push)
+
+### Fixed
+- **Claude Code Compatibility**: Pre-commit hook doesn't require TTY access
+  - No more `/dev/tty: Device not configured` errors
+  - No more stdin input capture issues
+  - Simple file detection using `git diff --cached --name-only`
+
+### Updated
+- **CLAUDE.md**: Replaced pre-push-validation.sh documentation with pre-commit-changelog.sh
+- **`.claude/hooks/CONFIG.md`**: Updated Active Hooks section with new pre-commit workflow
+- **`.git/hooks/pre-commit`**: Installed symlink to `.claude/hooks/pre-commit-changelog.sh`
+- **`.git/hooks/pre-push`**: Removed pre-push hook
+
+### Implementation Details
+- **Pre-commit hook** checks if CHANGELOG.md is in staged files
+- Blocks commit if CHANGELOG.md not staged (exit code 1)
+- Allows bypass with `SKIP_DOC_CHECK=1 git commit -m "message"`
+- No interactive prompts - just validation logic
+- Works identically in all environments
+
 ## [2025-12-12u] - Pre-Push Validation Hook: Fix stdin Input Bug
 
 ### Fixed

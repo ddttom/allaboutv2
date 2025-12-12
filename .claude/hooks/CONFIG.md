@@ -46,28 +46,28 @@ This project uses a **minimal hooks setup** optimized for EDS development. The a
 - **Purpose:** Track modified files for session context
 - **Implementation:** Bash script with minimal overhead
 
-**pre-push-validation.sh** (Git Hook)
-- **Trigger:** Before `git push` operations (interactive terminal only)
+**pre-commit-changelog.sh** (Git Hook)
+- **Trigger:** Before `git commit` operations
 - **Purpose:**
-  - **INTERACTIVE:** Prompts for CHANGELOG.md entry if outdated, automatically adds it
-  - **REQUIRED:** Validates CHANGELOG.md is updated before push (blocks push if not updated)
-  - **SUGGESTED:** Recommends updating CLAUDE.md and README.md (won't block push)
-- **Implementation:** Bash script with git integration and interactive prompts
-  - **CRITICAL FIX:** Uses `/dev/tty` for user input to avoid reading git push refs from stdin
-  - Git hooks receive push information on stdin (refs), so `read` must redirect from terminal
-  - **Auto-skips** in non-interactive environments (IDEs, CI/CD) where TTY is unavailable
+  - **REQUIRED:** Validates CHANGELOG.md is included in commits (blocks commit if missing)
+  - **Simple Check:** Verifies CHANGELOG.md is staged before allowing commit
+  - **Works with Claude Code:** No TTY issues - just checks staged files
+- **Implementation:** Bash script with staged file detection
+  - Uses `git diff --cached --name-only` to check for CHANGELOG.md
+  - No interactive prompts - just validates file is staged
+  - Works seamlessly in all environments (terminal, IDE, CI/CD)
 - **Usage:**
-  - Runs automatically when pushing from terminal: `git push`
-  - Skips automatically when pushing from Claude Code or other IDEs
-  - Manual validation: use `/validate-docs` command
-- **Bypass:** Use `SKIP_DOC_CHECK=1 git push` (not recommended for main branches)
-- **Interactive Workflow:**
-  1. Hook detects CHANGELOG.md needs updating
-  2. Prompts: "What changed in this commit/push?"
-  3. User provides summary (e.g., "Added HTML comment removal")
-  4. Hook automatically inserts entry into CHANGELOG.md
-  5. Push blocked with instructions to review, commit, and push again
-  6. User reviews, commits CHANGELOG.md, and pushes successfully
+  - Runs automatically before every commit: `git commit -m "message"`
+  - Blocks commit if CHANGELOG.md not staged
+  - Provides clear instructions on next steps
+- **Bypass:** Use `SKIP_DOC_CHECK=1 git commit -m "message"` (only if CHANGELOG truly doesn't need updating)
+- **Workflow:**
+  1. Make code changes
+  2. Update CHANGELOG.md with your changes
+  3. Stage both: `git add . CHANGELOG.md`
+  4. Commit: `git commit -m "your message"`
+  5. Hook validates CHANGELOG.md is included, allows commit
+  6. Push: `git push` (no validation hook on push)
 
 ## Quick Start Configuration
 
