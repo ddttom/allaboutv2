@@ -19,8 +19,6 @@ coverage/
 .cursor/
 .idea/
 .codegpt
-.claude/settings.local.json
-.claude/settings.json
 
 # ========================================
 # Linter & TypeScript Caches

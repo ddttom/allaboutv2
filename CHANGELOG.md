@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12q] - Enable Claude settings version control
+
+### Changed
+- **Git Ignore**: Removed `.claude/settings.local.json` and `.claude/settings.json` from `.gitignore`
+  - Claude Code settings now tracked in version control
+  - Allows sharing of project-specific Claude configuration across team
+  - Enables consistent Claude Code experience for all developers
+  - Settings include tool permissions, agent configurations, and workflow preferences
+
+### Rationale
+- Claude settings define project-specific AI assistant behavior
+- Tracking these ensures all developers get consistent AI assistance
+- Tool permissions and agent configs are part of development workflow
+- Version control provides history and rollback capability for setting changes
+
+### Files Modified
+1. `.gitignore` - Removed `.claude/settings.local.json` and `.claude/settings.json` entries
+
 ## [2025-12-12p] - Add tsc-cache to gitignore
 
 ### Changed
