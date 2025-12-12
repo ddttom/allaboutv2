@@ -16,7 +16,8 @@
  */
 
 // Worker version - imported from package.json for single source of truth
-import pkg from './package' with { type: 'json' };
+// eslint-disable-next-line import/extensions
+import pkg from './package.json' with { type: 'json' };
 
 export const WORKER_VERSION = pkg.version;
 
@@ -352,6 +353,25 @@ export const injectJsonLd = (html, hostname) => {
   return html.replace('</head>', `${jsonLdScript}\n</head>`);
 };
 
+/**
+ * Injects Speculation Rules API script into HTML for near-instant navigation
+ * Pure string function - fully testable without Cloudflare Workers runtime
+ * @param {string} html - HTML content to process
+ * @returns {string} Processed HTML with speculation rules injected
+ */
+export const injectSpeculationRules = (html) => {
+  // Create speculation rules script tag
+  const speculationScript = `<script type="speculationrules">
+  {
+    "prerender": [{ "where": { "href_matches": "/*" }, "eagerness": "moderate" }],
+    "prefetch": [{ "where": { "href_matches": "/*" }, "eagerness": "moderate" }]
+  }
+</script>`;
+
+  // Inject before </head> closing tag
+  return html.replace('</head>', `${speculationScript}\n</head>`);
+};
+
 const handleRequest = async (request, env, _ctx) => {
   // Validate required environment variables
   if (!env.ORIGIN_HOSTNAME) {
@@ -460,11 +480,14 @@ const handleRequest = async (request, env, _ctx) => {
     // 2. Transform: Inject JSON-LD structured data
     htmlText = injectJsonLd(htmlText, publicHostname);
 
+    // 3. Transform: Inject Speculation Rules for near-instant navigation
+    htmlText = injectSpeculationRules(htmlText);
+
     // CRITICAL ORDER: Apply removals (DELETE content) LAST
-    // 3. Clean: Remove non-social metadata tags
+    // 4. Clean: Remove non-social metadata tags
     htmlText = removeNonSocialMetadata(htmlText);
 
-    // 4. Clean: Remove HTML comments (must be last to preserve triggers for transforms)
+    // 5. Clean: Remove HTML comments (must be last to preserve triggers for transforms)
     htmlText = removeHtmlComments(htmlText);
 
     // Create new response with processed HTML

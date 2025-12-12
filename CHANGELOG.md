@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed all linting errors across entire project (7,632 → 0 errors)
 - Fixed vitest import resolution in cloudflare-worker.test.js
+- Fixed package.json import path and extension in cloudflare-worker.js
 
 ## [2025-12-12aa] - Cloudflare Worker: Single Source of Truth for Version
 
