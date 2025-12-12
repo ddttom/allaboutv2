@@ -5,7 +5,7 @@
 
 ## Overview
 
-This project is built for Adobe Edge Delivery Services (EDS) with a focus on simplicity, performance, and modern web standards. The project intentionally avoids TypeScript and build-heavy frameworks to maintain simplicity and reduce build complexity. Enhanced with a custom Cloudflare worker (v1.1.0) that adds CORS headers, JSON-LD structured data generation, picture placeholder replacement, and preserves author metadata for proper attribution. Includes [robots.txt](robots.txt) with sitemap directive for optimal search engine indexing.
+This project is built for Adobe Edge Delivery Services (EDS) with a focus on simplicity, performance, and modern web standards. The project intentionally avoids TypeScript and build-heavy frameworks to maintain simplicity and reduce build complexity. Enhanced with a custom Cloudflare worker (v1.1.1) that adds CORS headers, JSON-LD structured data generation, picture placeholder replacement (with case-insensitive matching), and preserves author metadata for proper attribution. Includes [robots.txt](robots.txt) with sitemap directive for optimal search engine indexing.
 
 ### Homepage
 
