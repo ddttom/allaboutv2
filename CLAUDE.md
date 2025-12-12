@@ -738,7 +738,7 @@ When a notebook has a `repo` metadata attribute, all `.md` file links are automa
 
 ## Cloudflare Custom Worker Implementation
 
-**Custom Adobe EDS worker with enhanced features (v1.1.3)** - see `cloudflare/files/`
+**Custom Adobe EDS worker with enhanced features (v1.1.4)** - see `cloudflare/files/`
 
 **What it does:**
 - Adds CORS headers to all responses
@@ -751,10 +751,18 @@ When a notebook has a `repo` metadata attribute, all `.md` file links are automa
 - Removes all HTML comments from HTML responses
 - Maintains all standard Adobe EDS functionality
 
+**Version Management:**
+- Version defined once in `cloudflare/files/package.json` (single source of truth)
+- Worker imports version: `import pkg from './package' with { type: 'json' }`
+- Wrangler/esbuild inlines version at build time
+- Tests validate version automatically
+- Check deployed version: `curl -I https://allabout.network/ | grep cfw`
+
 **Key files:**
 - `cloudflare/files/README.md` - Complete implementation guide and deployment instructions
 - `cloudflare/files/TESTING.md` - Two-file testing system and pure function approach
 - `cloudflare/files/cloudflare-worker.js` - Worker code (Apache License 2.0)
+- `cloudflare/files/package.json` - Version source of truth
 
 **Documentation references:**
 - General Cloudflare config: `cloudflare/cloudflare.md`
@@ -1029,7 +1037,7 @@ const code = 'here';
 - **NEW: Educational notebooks**: `docs/for-ai/explaining-educational-notebooks.md` - Create tutorials, guides, and interactive demos as SPAs
 - **NEW: ipynb-viewer block**: `blocks/ipynb-viewer/README.md` - Display executable notebooks with autorun, paged, and link navigation
 - **Helix Configuration**: `docs/for-ai/helix-config.md` - Complete .helix/config file reference covering CDN integration (Cloudflare), push invalidation, environment configuration, and troubleshooting
-- **Custom Cloudflare Worker**: `cloudflare/files/README.md` - Custom Adobe EDS worker implementation (v1.1.0) with CORS headers, JSON-LD generation, picture placeholder replacement, and metadata cleanup
+- **Custom Cloudflare Worker**: `cloudflare/files/README.md` - Custom Adobe EDS worker implementation (v1.1.4) with CORS headers, JSON-LD generation, picture placeholder replacement, and metadata cleanup. Version managed via package.json single source of truth.
 - Security checklist: `docs/for-ai/guidelines/security-checklist.md`
 - Frontend guidelines: `docs/for-ai/guidelines/frontend-guidelines.md`
 

@@ -23,19 +23,21 @@ The worker includes a version header in all responses:
 - **Current version**: `1.1.4`
 - **Usage**: Track deployed worker version for debugging and monitoring
 
-**Version Management:**
-- **MUST increment** the version number for ALL changes to `cloudflare-worker.js`
+**Version Management (Single Source of Truth):**
+- **Version location**: `package.json` version field (canonical source)
+- **Worker imports**: `import pkg from './package' with { type: 'json' };`
+- **At build time**: Wrangler/esbuild inlines the version from package.json into the worker bundle
+- **MUST increment** the version in `package.json` for ALL changes to `cloudflare-worker.js`
 - Use semantic versioning:
   - **MAJOR** (x.0.0): Breaking changes or major feature additions
   - **MINOR** (1.x.0): New features, backward-compatible changes
   - **PATCH** (1.0.x): Bug fixes, documentation updates
-- Update the `WORKER_VERSION` constant at the top of `cloudflare-worker.js`
-- Version is validated by automated tests
+- Version is validated by automated tests (test imports from worker, worker imports from package.json)
 
 **Check deployed version:**
 ```bash
-curl -I https://yourdomain.com | grep cfw
-# Output: cfw: 1.0.0
+curl -I https://allabout.network/ | grep cfw
+# Output: cfw: 1.1.4
 ```
 
 ### Trigger Mechanisms

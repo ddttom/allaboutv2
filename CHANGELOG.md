@@ -17,10 +17,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **Impact**: Tests and worker code now reference same version source
 - **cloudflare/files/package.json**: Updated version to 1.1.4 (canonical source)
 
+### Updated
+- **cloudflare/files/README.md**: Documented version management approach
+  - Added "Version Management (Single Source of Truth)" section
+  - Explained Wrangler/esbuild bundling behavior
+  - Updated version check example
+- **.github/workflows/deploy-cloudflare.yml**: Extract version from package.json
+  - Changed from grepping worker file to reading package.json
+  - Uses `node -p "require('./package.json').version"`
+- **CLAUDE.md**: Updated Cloudflare worker documentation
+  - Version bumped from 1.1.3 to 1.1.4
+  - Added Version Management section with implementation details
+  - Updated Quick Links with version management note
+
 ### Technical Details
 - Used modern `with { type: 'json' }` syntax (not deprecated `assert`)
 - Followed ESLint rules (blank line after import, no file extension)
 - All 74 tests pass with new version import pattern
+- Wrangler/esbuild inlines JSON at build time (no runtime file reads)
 
 ## [2025-12-12z] - CI/CD: Fix Package.json Local Dependency Issue
 

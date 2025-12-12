@@ -71,8 +71,8 @@ jobs:
       - name: Verify deployment
         working-directory: cloudflare/files
         run: |
-          # Extract version from worker file
-          VERSION=$(grep -oP 'WORKER_VERSION\s*=\s*['\''\"](\d+\.\d+\.\d+)['\''\"]' cloudflare-worker.js | head -1 | grep -oP '\d+\.\d+\.\d+')
+          # Extract version from package.json (single source of truth)
+          VERSION=$(node -p "require('./package.json').version")
           echo "✓ Deployed version: $VERSION"
 
       - name: Create deployment summary
