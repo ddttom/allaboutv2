@@ -308,7 +308,35 @@
       </div>
 
       <div class="test-section">
-        <h2>5️⃣ JSON-LD Output</h2>
+        <h2>5️⃣ Picture Placeholder Replacement</h2>
+        <div class="test-item">
+          <span class="icon pending" id="placeholder-replaced-icon">⏳</span>
+          <div class="content">
+            <strong>Picture Here → Image Replacement</strong>
+            <div class="test-result" id="placeholder-replaced-result">Waiting for test...</div>
+          </div>
+        </div>
+        <div class="test-item">
+          <span class="icon pending" id="placeholder-non-match-icon">⏳</span>
+          <div class="content">
+            <strong>Non-Matching Text Preserved</strong>
+            <div class="test-result" id="placeholder-non-match-result">Waiting for test...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hidden test divs for placeholder replacement testing -->
+      <div style="display: none;">
+        <div id="test-placeholder-match">
+          <div>Picture Here</div>
+        </div>
+        <div id="test-placeholder-non-match">
+          <div>Some Other Text</div>
+        </div>
+      </div>
+
+      <div class="test-section">
+        <h2>6️⃣ JSON-LD Output</h2>
         <div class="test-item">
           <span class="icon pending" id="jsonld-display-icon">⏳</span>
           <div class="content">
@@ -321,7 +349,7 @@
 
     <div class="footer">
       <p><strong>Cloudflare Worker Deployment Test</strong></p>
-      <p>Version 1.0.0 • Digital Domain Technologies Ltd</p>
+      <p>Version 1.1.0 • Digital Domain Technologies Ltd</p>
     </div>
   </div>
 
@@ -340,6 +368,9 @@
 
       // Test 4: Metadata Cleanup
       testMetadataCleanup();
+
+      // Test 5: Picture Placeholder Replacement
+      testPicturePlaceholder();
 
       console.log('All tests completed!');
     }
@@ -508,6 +539,39 @@
         setTestResult('meta-kept', 'success', '✓ All social meta tags preserved');
       } else {
         setTestResult('meta-kept', 'error', `✗ Missing tags: ${missing.join(', ')}`);
+      }
+    }
+
+    function testPicturePlaceholder() {
+      // Test 1: Check if "Picture Here" was replaced with img tag
+      const matchDiv = document.getElementById('test-placeholder-match');
+      const matchInnerDiv = matchDiv ? matchDiv.querySelector('div') : null;
+      const matchImg = matchDiv ? matchDiv.querySelector('img') : null;
+
+      if (matchImg && matchImg.src.includes('media_126e99d56f06caf788bee715aff92281d2e31a206.png')) {
+        const altText = matchImg.alt || '';
+        if (altText.includes('Tom Cranstoun') || altText.includes('Author')) {
+          setTestResult('placeholder-replaced', 'success', `✓ "Picture Here" replaced with image: ${matchImg.src.substring(matchImg.src.lastIndexOf('/') + 1, matchImg.src.lastIndexOf('/') + 20)}...`);
+        } else {
+          setTestResult('placeholder-replaced', 'error', `✗ Image found but alt text incorrect: "${altText}"`);
+        }
+      } else if (matchInnerDiv && matchInnerDiv.textContent.trim() === 'Picture Here') {
+        setTestResult('placeholder-replaced', 'error', '✗ "Picture Here" text not replaced (worker may not be deployed or v1.1.0+)');
+      } else {
+        setTestResult('placeholder-replaced', 'error', '✗ Unable to determine replacement status');
+      }
+
+      // Test 2: Check that non-matching text was NOT replaced
+      const nonMatchDiv = document.getElementById('test-placeholder-non-match');
+      const nonMatchInnerDiv = nonMatchDiv ? nonMatchDiv.querySelector('div') : null;
+      const nonMatchImg = nonMatchDiv ? nonMatchDiv.querySelector('img') : null;
+
+      if (!nonMatchImg && nonMatchInnerDiv && nonMatchInnerDiv.textContent.includes('Some Other Text')) {
+        setTestResult('placeholder-non-match', 'success', '✓ Non-matching text preserved correctly');
+      } else if (nonMatchImg) {
+        setTestResult('placeholder-non-match', 'error', '✗ Non-matching text was incorrectly replaced with image');
+      } else {
+        setTestResult('placeholder-non-match', 'error', '✗ Test element not found or structure changed');
       }
     }
 
