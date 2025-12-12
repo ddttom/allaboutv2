@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12g] - Cloudflare Worker Picture Placeholder Fix
+
+### Fixed
+- **Cloudflare Worker v1.1.1**: Picture placeholder replacement now matches divs with attributes
+  - **Issue**: Regex pattern only matched bare `<div>` tags without attributes
+  - **Fix**: Changed pattern from `<div>` to `<div[^>]*>` to allow attributes (style, id, class, etc.)
+  - **Example**: Now matches `<div style="display: none;">` and `<div id="test-placeholder-match">`
+
+### Changed
+- **Case-insensitive matching**: "Picture Here" comparison now case-insensitive
+  - Matches: "Picture Here", "picture here", "PICTURE HERE", etc.
+  - Removed `MATCH_CASE_SENSITIVE` and `TRIM_WHITESPACE` config flags (no longer needed)
+- **Config-driven trigger text**: Pattern now uses `PICTURE_PLACEHOLDER_CONFIG.TRIGGER_TEXT`
+  - Added regex escaping to prevent regex injection
+  - Previously hardcoded "Picture Here" in pattern
+
+### Technical Details
+- **Files modified**:
+  - `cloudflare/files/cloudflare-worker.js`: Updated `replacePicturePlaceholder()` function
+  - `cloudflare/files/cloudflare-worker.test.js`: Updated test expectations for case-insensitive behavior
+- **Version**: Bumped from 1.1.0 → 1.1.1 (patch fix)
+- **Tests**: All 55 tests passing
+- **Linting**: No errors
+
+### Root Cause
+The original regex `/<div>\s*<div>([^<]*Picture Here[^<]*)<\/div>\s*<\/div>/g` only matched consecutive bare div tags. Test HTML had attributes like `<div style="display: none;">` which broke the pattern match.
+
+### Deployment
+Ready to deploy to Cloudflare Dashboard. After deployment, test at `https://allabout.network/cloudflare/test.html` to verify picture placeholder replacement tests pass.
+
 ## [2025-12-12f] - Pre-Push Validation Workflow Update
 
 ### Changed

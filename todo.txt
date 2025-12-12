@@ -1,7 +1,5 @@
  // note to dev
 
- Make  PICTURE_PLACEHOLDER_CONFIG.MATCH_CASE_SENSITIVE case insensitive
-
  /*
  * Based on Adobe's Cloudflare Worker template
  * Original copyright 2022 Adobe. Licensed under Apache License, Version 2.0
