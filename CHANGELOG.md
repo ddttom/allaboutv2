@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12f] - Pre-Push Validation Workflow Update
+
+### Changed
+- **Git Workflow**: Updated pre-push validation documentation to use `git add .` instead of selective file staging
+  - Changed from: `git add CHANGELOG.md README.md CLAUDE.md`
+  - Changed to: `git add .`
+  - Rationale: Captures all user-edited files, not just files modified in current Claude Code chat session
+
+### Files Updated
+- **CLAUDE.md**: Added IMPORTANT note in pre-push-validation.sh section
+  - Documents that `git add .` should be used when validation fails
+  - Ensures AI assistants include all user edits in commits
+- **.claude/skills/pre-push-validation/SKILL.md**: Updated all git add examples
+  - Line 139: "Commit all changes (including user edits)"
+  - Line 211: Updated troubleshooting solution
+  - Line 220: Updated "Has uncommitted changes" solution
+- **.claude/commands/validate-docs.md**: Updated commit workflow example
+  - Line 96: Changed to `git add .` in follow-up actions
+
+### Why This Matters
+- **Complete Commits**: Captures all working directory changes, not just chat-modified files
+- **User Intent**: Includes manual edits made outside Claude Code session
+- **Prevents Partial Commits**: No risk of missing user modifications
+- **Better Workflow**: Single command stages everything ready to commit
+
+### User Request
+> "change the /pre-push-validation command to get claude to include user edited files in the commit, not just the files in the current chat, i.e use 'add .'"
+
 ## [2025-12-12e] - Cloudflare Worker Two-File Testing System Documentation
 
 ### Added
