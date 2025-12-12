@@ -73,3 +73,4 @@ promptloc/
 GEMINI.md
 .agents/workflows
 cloudflare/test-rendered.html
+.claude/tsc-cache/
