@@ -91,9 +91,9 @@ Please update the following files before pushing:
 ### If Validation Fails
 
 1. **Update the outdated files** with your changes
-2. **Commit the documentation:**
+2. **Commit all changes (including user edits):**
    ```bash
-   git add CHANGELOG.md README.md CLAUDE.md
+   git add .
    git commit -m "docs: Update documentation for [your changes]"
    ```
 3. **Run validation again** to verify: `/validate-docs`

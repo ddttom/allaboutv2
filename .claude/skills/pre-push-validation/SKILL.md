@@ -134,9 +134,9 @@ Please update the following files before pushing:
    - README.md - Update if structure changed
    - CLAUDE.md - Update if AI instructions changed
 
-3. **Commit documentation:**
+3. **Commit all changes (including user edits):**
    ```bash
-   git add CHANGELOG.md README.md CLAUDE.md
+   git add .
    git commit -m "docs: Update documentation for [feature/fix]"
    ```
 
@@ -208,7 +208,7 @@ git log origin/main..HEAD --oneline
 **Solution:**
 1. Check which files need updating (listed in error message)
 2. Update those files with your changes
-3. Commit the updates: `git add [files] && git commit -m "docs: Update documentation"`
+3. Commit all changes (including user edits): `git add . && git commit -m "docs: Update documentation"`
 4. Try pushing again: `git push`
 
 ### "Has uncommitted changes" Warning
@@ -217,7 +217,7 @@ git log origin/main..HEAD --oneline
 
 **Solution:**
 1. Review changes: `git diff [file]`
-2. Stage changes: `git add [file]`
+2. Stage all changes: `git add .`
 3. Commit changes: `git commit -m "docs: Update [file]"`
 4. Push: `git push`
 

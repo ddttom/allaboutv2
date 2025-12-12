@@ -303,6 +303,7 @@ Active hooks that enhance development workflow:
 - Blocks push if documentation outdated
 - Auto-triggers on `git push` operations
 - Use `/validate-docs` for manual validation
+- **IMPORTANT**: When validation fails and you update docs, use `git add .` to include all user-edited files, not just the files from the current chat session
 
 See `.claude/hooks/CONFIG.md` for configuration and customization.
 
