@@ -721,6 +721,91 @@ npm run test:coverage
 
 For complete testing details, see [TESTING.md](TESTING.md).
 
+### Local HTML Processing Test
+
+**Validates HTML transformations using actual test.html file without Cloudflare runtime.**
+
+The `test-local-html.js` script reads the actual `cloudflare/test.html` file and processes it through the worker's pure string handling functions to ensure HTML is properly transformed.
+
+**Run the test:**
+```bash
+npm run test:local
+```
+
+**What it does:**
+1. Reads actual `cloudflare/test.html` file
+2. Processes through `replacePicturePlaceholder()` function
+3. Processes through `removeHtmlComments()` function
+4. Validates all transformations with 13 comprehensive tests
+5. Writes processed output to `cloudflare/test-rendered.html`
+
+**Test coverage:**
+- HTML comment removal (3 tests)
+- Picture placeholder replacement (3 tests)
+- Combined processing (1 test)
+- HTML structure integrity (5 tests)
+- Output analysis and size reduction (1 test)
+
+**Example output:**
+```
+🧪 LOCAL HTML PROCESSING TEST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ Loaded 21365 characters
+
+1️⃣  HTML Comment Removal
+✓ Comments removed
+✓ Trigger comment removed
+✓ Hidden divs comment removed
+
+2️⃣  Picture Placeholder Replacement
+✓ Picture Here replaced
+✓ Image tag inserted: URL: true, Alt: true
+✓ Non-matching text preserved
+
+3️⃣  Combined Processing
+✓ Both transformations applied
+
+4️⃣  HTML Structure Integrity
+✓ DOCTYPE preserved
+✓ HTML tags preserved
+✓ Head section preserved
+✓ Body section preserved
+✓ Meta tags preserved
+
+5️⃣  Output Analysis
+Original size: 21365 bytes
+Processed size: 21169 bytes
+Reduction: 196 bytes (0.92%)
+✓ Size reduced: 196 bytes saved
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ ALL TESTS PASSED
+Tests: 13/13 passed
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ Processed HTML written to: test-rendered.html
+💡 Compare with test.html to verify transformations
+```
+
+**Why this test matters:**
+- Validates string operations work correctly in isolation
+- Tests with real production HTML (not mocked data)
+- No Cloudflare runtime dependency (runs in Node.js)
+- Provides visual output for manual inspection
+- Complements unit tests by using actual test file
+
+**Compare output:**
+```bash
+# View original HTML
+cat cloudflare/test.html
+
+# View processed HTML
+cat cloudflare/test-rendered.html
+
+# Or diff them
+diff cloudflare/test.html cloudflare/test-rendered.html
+```
+
 ### Integration Testing
 
 **Comprehensive Deployment Test Page**:
