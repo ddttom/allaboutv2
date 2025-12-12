@@ -5,7 +5,12 @@
  * Run with: npm test (requires vitest or jest)
  */
 
-import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest';
+/* eslint-disable max-classes-per-file */
+// Multiple mock classes needed for testing
+
+import {
+  describe, test, expect, vi, beforeEach, afterEach,
+} from 'vitest';
 import worker, {
   getExtension,
   isMediaRequest,
@@ -17,7 +22,9 @@ import worker, {
   handleAuthorUrl,
   handleLinkedIn,
   handleViewport,
-  WORKER_VERSION
+  handlePicturePlaceholder,
+  WORKER_VERSION,
+  PICTURE_PLACEHOLDER_CONFIG,
 } from './cloudflare-worker.js';
 
 // Test suite for worker version
@@ -223,7 +230,7 @@ describe('buildJsonLd', () => {
       author: 'John Doe',
       publishDate: '2024-12-10',
       modifiedDate: '2024-12-10',
-      shouldGenerateJsonLd: true
+      shouldGenerateJsonLd: true,
     };
     const hostname = 'example.com';
     const jsonLd = buildJsonLd(article, hostname);
@@ -235,23 +242,23 @@ describe('buildJsonLd', () => {
     expect(jsonLd.url).toBe(article.url);
     expect(jsonLd.datePublished).toBe(article.publishDate);
     expect(jsonLd.dateModified).toBe(article.modifiedDate);
-    
+
     expect(jsonLd.author).toBeDefined();
     expect(jsonLd.author['@type']).toBe('Person');
     expect(jsonLd.author.name).toBe(article.author);
-    
+
     expect(jsonLd.publisher).toBeDefined();
     expect(jsonLd.publisher['@type']).toBe('Organization');
     expect(jsonLd.publisher.name).toBe(hostname);
   });
 
   test('omits empty fields from JSON-LD', () => {
-     const article = {
+    const article = {
       title: 'Test Article',
       description: null,
       url: null,
       author: null,
-      shouldGenerateJsonLd: true
+      shouldGenerateJsonLd: true,
     };
     const hostname = 'example.com';
     const jsonLd = buildJsonLd(article, hostname);
@@ -439,6 +446,98 @@ describe('Handler Functions', () => {
   });
 });
 
+// Test suite for handlePicturePlaceholder
+describe('handlePicturePlaceholder', () => {
+  let mockElement;
+  let state;
+  let textCallbacks;
+  let endtagCallback;
+
+  beforeEach(() => {
+    textCallbacks = [];
+    endtagCallback = null;
+
+    mockElement = {
+      ontext: vi.fn((cb) => { textCallbacks.push(cb); }),
+      onendtag: vi.fn((cb) => { endtagCallback = cb; }),
+      replace: vi.fn(),
+    };
+
+    state = { textBuffer: '', elementId: '' };
+  });
+
+  test('replaces div with exact match "Picture Here"', () => {
+    handlePicturePlaceholder(mockElement, state);
+
+    // Simulate text node
+    textCallbacks.forEach((cb) => cb({ text: 'Picture Here' }));
+
+    // Simulate end tag
+    endtagCallback();
+
+    expect(mockElement.replace).toHaveBeenCalledWith(
+      expect.stringContaining('<img'),
+      { html: true },
+    );
+    expect(mockElement.replace).toHaveBeenCalledWith(
+      expect.stringContaining(PICTURE_PLACEHOLDER_CONFIG.IMAGE_URL),
+      { html: true },
+    );
+  });
+
+  test('does not replace div with different text', () => {
+    handlePicturePlaceholder(mockElement, state);
+
+    textCallbacks.forEach((cb) => cb({ text: 'Other Content' }));
+    endtagCallback();
+
+    expect(mockElement.replace).not.toHaveBeenCalled();
+  });
+
+  test('handles whitespace trimming', () => {
+    handlePicturePlaceholder(mockElement, state);
+
+    textCallbacks.forEach((cb) => cb({ text: '  Picture Here  ' }));
+    endtagCallback();
+
+    expect(mockElement.replace).toHaveBeenCalled();
+  });
+
+  test('handles multiple text nodes', () => {
+    handlePicturePlaceholder(mockElement, state);
+
+    // Text split across nodes
+    textCallbacks.forEach((cb) => {
+      cb({ text: 'Picture ' });
+      cb({ text: 'Here' });
+    });
+    endtagCallback();
+
+    expect(mockElement.replace).toHaveBeenCalled();
+  });
+
+  test('handles case sensitivity', () => {
+    handlePicturePlaceholder(mockElement, state);
+
+    textCallbacks.forEach((cb) => cb({ text: 'picture here' }));
+    endtagCallback();
+
+    // Should NOT match (case-sensitive by default)
+    expect(mockElement.replace).not.toHaveBeenCalled();
+  });
+
+  test('includes correct image URL and alt text', () => {
+    handlePicturePlaceholder(mockElement, state);
+
+    textCallbacks.forEach((cb) => cb({ text: 'Picture Here' }));
+    endtagCallback();
+
+    const replaceCall = mockElement.replace.mock.calls[0][0];
+    expect(replaceCall).toContain(PICTURE_PLACEHOLDER_CONFIG.IMAGE_URL);
+    expect(replaceCall).toContain(PICTURE_PLACEHOLDER_CONFIG.IMAGE_ALT);
+  });
+});
+
 // Mock HTMLRewriter for integration testing
 class MockHTMLRewriter {
   static activeHandlers = [];
@@ -454,7 +553,9 @@ class MockHTMLRewriter {
     return this;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   transform(response) {
+    // Mock transform - this is a stub for testing
     return response;
   }
 }
@@ -470,13 +571,15 @@ describe('handleRequest Integration', () => {
         this.status = init?.status || 200;
         this.headers = new Map(init?.headers ? Object.entries(init.headers) : []);
       }
+
       get headers() { return this._headers || new Map(); }
+
       set headers(val) { this._headers = val; }
     };
-    
+
     // Mock fetch
     global.fetch = vi.fn().mockResolvedValue(new Response('<html>...</html>', {
-      headers: { 'content-type': 'text/html' }
+      headers: { 'content-type': 'text/html' },
     }));
   });
 
@@ -489,7 +592,7 @@ describe('handleRequest Integration', () => {
   test('registers all handlers', async () => {
     const env = {
       ORIGIN_HOSTNAME: 'main--test--owner.aem.live',
-      DEBUG: 'true'
+      DEBUG: 'true',
     };
     const request = {
       url: 'https://allabout.network/article',
@@ -503,17 +606,21 @@ describe('handleRequest Integration', () => {
     expect(MockHTMLRewriter.activeHandlers.length).toBeGreaterThan(0);
 
     // Verify specific handlers are present
-    const hasViewport = MockHTMLRewriter.activeHandlers.some(h => h.selector === 'meta[name="viewport"]');
+    const hasViewport = MockHTMLRewriter.activeHandlers.some(
+      (h) => h.selector === 'meta[name="viewport"]',
+    );
     expect(hasViewport).toBe(true);
 
-    const hasJsonLd = MockHTMLRewriter.activeHandlers.some(h => h.selector === 'meta[name="jsonld"]');
+    const hasJsonLd = MockHTMLRewriter.activeHandlers.some(
+      (h) => h.selector === 'meta[name="jsonld"]',
+    );
     expect(hasJsonLd).toBe(true);
   });
 
   test('includes cfw version header in response', async () => {
     const env = {
       ORIGIN_HOSTNAME: 'main--test--owner.aem.live',
-      DEBUG: 'false'
+      DEBUG: 'false',
     };
     const request = {
       url: 'https://allabout.network/article',
@@ -537,7 +644,7 @@ describe('handleRequest Integration', () => {
   test('includes cfw version header for media requests', async () => {
     const env = {
       ORIGIN_HOSTNAME: 'main--test--owner.aem.live',
-      DEBUG: 'false'
+      DEBUG: 'false',
     };
     const request = {
       url: 'https://allabout.network/media_1234567890abcdef1234567890abcdef12345678.png',
@@ -553,5 +660,42 @@ describe('handleRequest Integration', () => {
     const cfwHeader = response.headers.get('cfw');
     expect(cfwHeader).toBeDefined();
     expect(cfwHeader).toBe(WORKER_VERSION);
+  });
+
+  test('wires picture placeholder handler correctly', async () => {
+    const env = {
+      ORIGIN_HOSTNAME: 'main--test--owner.aem.live',
+      DEBUG: 'false',
+    };
+    const request = {
+      url: 'https://allabout.network/page',
+      method: 'GET',
+      headers: new Map(),
+    };
+
+    await worker.fetch(request, env);
+
+    // Verify div handler registered
+    const hasDivHandler = MockHTMLRewriter.activeHandlers.some(
+      (h) => h.selector === 'div',
+    );
+    expect(hasDivHandler).toBe(true);
+  });
+
+  test('picture replacement does not affect version header', async () => {
+    const env = {
+      ORIGIN_HOSTNAME: 'main--test--owner.aem.live',
+    };
+    const request = {
+      url: 'https://allabout.network/page',
+      method: 'GET',
+      headers: new Map(),
+    };
+
+    const response = await worker.fetch(request, env);
+
+    // Verify version header still present and shows 1.1.0
+    expect(response.headers.get('cfw')).toBe(WORKER_VERSION);
+    expect(WORKER_VERSION).toBe('1.1.0');
   });
 });

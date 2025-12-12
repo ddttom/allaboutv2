@@ -9,7 +9,8 @@ This Worker extends Adobe's standard EDS Cloudflare Worker template to:
 1. Add CORS headers to all responses
 2. Generate Article schema JSON-LD from page metadata
 3. Remove EDS error tags and non-social metadata after processing
-4. Maintain all standard Adobe EDS functionality
+4. Replace "Picture Here" placeholders with author images
+5. Maintain all standard Adobe EDS functionality
 
 ## Features
 
@@ -18,7 +19,7 @@ This Worker extends Adobe's standard EDS Cloudflare Worker template to:
 The worker includes a version header in all responses:
 - **Header name**: `cfw` (CloudflareWorker)
 - **Format**: Semantic versioning (MAJOR.MINOR.PATCH)
-- **Current version**: `1.0.0`
+- **Current version**: `1.1.0`
 - **Usage**: Track deployed worker version for debugging and monitoring
 
 **Version Management:**
@@ -137,6 +138,49 @@ Dates are automatically converted to ISO 8601 format (YYYY-MM-DD). Supports mult
 
 **Why preserve author metadata?**
 The `author` tag is kept in the HTML for proper attribution and accessibility, similar to how social media tags (LinkedIn, Twitter, Open Graph) are preserved. The author information is still extracted for JSON-LD generation, but the original meta tag remains for compatibility with tools and crawlers that expect standard author metadata.
+
+### Picture Placeholder Replacement
+
+Automatically replaces placeholder text with author images in HTML content.
+
+**Pattern Detection:**
+```html
+<!-- Input HTML -->
+<div>
+  <div>Picture Here</div>
+</div>
+
+<!-- Output HTML -->
+<div>
+  <img src="https://allabout.network/dam/media_126e99d56f06caf788bee715aff92281d2e31a206.png" alt="Author: Tom Cranstoun">
+</div>
+```
+
+**Behavior:**
+- Detects all `<div>` elements containing exactly "Picture Here" text
+- Replaces matching divs with author image tag
+- Case-sensitive matching with whitespace trimming
+- Multiple occurrences on same page are all replaced
+- Outer div wrapper is preserved
+- Non-matching divs are unaffected
+
+**Configuration:**
+The feature is configured via `PICTURE_PLACEHOLDER_CONFIG` constant in the worker:
+```javascript
+{
+  TRIGGER_TEXT: 'Picture Here',
+  IMAGE_URL: 'https://allabout.network/dam/media_126e99d56f06caf788bee715aff92281d2e31a206.png',
+  IMAGE_ALT: 'Author: Tom Cranstoun',
+  MATCH_CASE_SENSITIVE: true,
+  TRIM_WHITESPACE: true
+}
+```
+
+**Use Cases:**
+- Placeholder images in blog posts
+- Author profile pictures in article templates
+- Consistent author branding across pages
+- Dynamic image replacement without manual HTML edits
 
 ## Getting Started
 
@@ -577,12 +621,13 @@ npm run test:coverage
 - CORS headers
 - URL sanitization
 - JSON-LD generation
+- Picture placeholder replacement (6 unit tests)
 - Debug logging
 - Error handling
-- Handler wiring
+- Handler wiring (including div handler)
 - Version header presence in responses (2 integration tests)
 
-**Status:** ✅ 45 tests passing
+**Status:** ✅ 53 tests passing
 
 For complete testing details, see [TESTING.md](TESTING.md).
 

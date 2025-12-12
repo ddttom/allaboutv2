@@ -12,11 +12,20 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  *
- * @version 1.0.0
+ * @version 1.1.0
  */
 
 // Worker version - increment using semantic versioning for all changes
-export const WORKER_VERSION = '1.0.0';
+export const WORKER_VERSION = '1.1.0';
+
+// Picture placeholder configuration
+export const PICTURE_PLACEHOLDER_CONFIG = {
+  TRIGGER_TEXT: 'Picture Here',
+  IMAGE_URL: 'https://allabout.network/dam/media_126e99d56f06caf788bee715aff92281d2e31a206.png',
+  IMAGE_ALT: 'Author: Tom Cranstoun',
+  MATCH_CASE_SENSITIVE: true,
+  TRIM_WHITESPACE: true,
+};
 
 export const getExtension = (path) => {
   const basename = path.split('/').pop();
@@ -330,6 +339,48 @@ export const handleViewport = (element, article, requestUrl, DEBUG) => {
   }
 };
 
+/**
+ * Handles picture placeholder replacement
+ * Detects divs with "Picture Here" text and replaces with author image
+ * @param {Element} element - The div element being processed
+ * @param {Object} state - Shared state object for text buffering
+ */
+export const handlePicturePlaceholder = (element, state) => {
+  const elementId = Math.random().toString(36).substring(7);
+  state.textBuffer = '';
+  state.elementId = elementId;
+
+  // Collect text content from this div
+  element.ontext((text) => {
+    if (state.elementId === elementId) {
+      state.textBuffer += text.text;
+    }
+  });
+
+  // Process after all text collected
+  element.onendtag(() => {
+    if (state.elementId !== elementId) return;
+
+    const trimmed = PICTURE_PLACEHOLDER_CONFIG.TRIM_WHITESPACE
+      ? state.textBuffer.trim()
+      : state.textBuffer;
+
+    const matches = PICTURE_PLACEHOLDER_CONFIG.MATCH_CASE_SENSITIVE
+      ? trimmed === PICTURE_PLACEHOLDER_CONFIG.TRIGGER_TEXT
+      : trimmed.toLowerCase() === PICTURE_PLACEHOLDER_CONFIG.TRIGGER_TEXT.toLowerCase();
+
+    if (matches) {
+      // Replace this div with img tag
+      const imgTag = `<img src="${PICTURE_PLACEHOLDER_CONFIG.IMAGE_URL}" `
+        + `alt="${PICTURE_PLACEHOLDER_CONFIG.IMAGE_ALT}">`;
+      element.replace(imgTag, { html: true });
+    }
+
+    // Reset state
+    state.textBuffer = '';
+  });
+};
+
 const handleRequest = async (request, env, _ctx) => {
   // Validate required environment variables
   if (!env.ORIGIN_HOSTNAME) {
@@ -495,6 +546,12 @@ const handleRequest = async (request, env, _ctx) => {
       })
       .on('meta[name="viewport"]', {
         element: (e) => handleViewport(e, article, new URL(request.url), DEBUG),
+      })
+      .on('div', {
+        element: (e) => {
+          const placeholderState = { textBuffer: '', elementId: '' };
+          handlePicturePlaceholder(e, placeholderState);
+        },
       })
       .transform(resp);
   }

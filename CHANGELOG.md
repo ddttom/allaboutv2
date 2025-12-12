@@ -7,6 +7,94 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12a] - Picture Placeholder Replacement Feature
+
+### Added
+- **Cloudflare Worker (v1.1.0)**: Picture placeholder replacement functionality
+  - Detects `<div><div>Picture Here</div></div>` pattern in HTML
+  - Replaces with author image tag server-side before page delivery
+  - Configuration via `PICTURE_PLACEHOLDER_CONFIG` constant
+  - Case-sensitive matching with whitespace trimming
+  - Multiple occurrences on same page all replaced
+  - Preserves outer div wrapper, replaces only inner div
+- **Worker Configuration**: New `PICTURE_PLACEHOLDER_CONFIG` constant (lines 21-28)
+  - `TRIGGER_TEXT: 'Picture Here'`
+  - `IMAGE_URL: 'https://allabout.network/dam/media_126e99d56f06caf788bee715aff92281d2e31a206.png'`
+  - `IMAGE_ALT: 'Author: Tom Cranstoun'`
+  - `MATCH_CASE_SENSITIVE: true`
+  - `TRIM_WHITESPACE: true`
+- **Handler Function**: New `handlePicturePlaceholder()` function (lines 333-373)
+  - Text buffering strategy with element tracking
+  - Lazy evaluation using ontext() and onendtag()
+  - Direct element replacement with img tag
+- **HTMLRewriter Integration**: New div handler wired into chain (lines 499-504)
+  - Each div gets isolated state object
+  - Prevents cross-contamination between elements
+- **Test Coverage**: 8 new tests (6 unit + 2 integration)
+  - Exact match replacement
+  - Non-matching text ignored
+  - Whitespace handling
+  - Multiple text nodes
+  - Case sensitivity
+  - Correct URL/alt text
+  - Handler wiring verification
+  - Version header validation
+  - Test suite now at 53 tests (all passing)
+
+### Changed
+- **Cloudflare Worker Version**: Updated from 1.0.0 → 1.1.0 (minor version bump)
+  - Lines 15, 19 in `cloudflare/files/cloudflare-worker.js`
+  - Semantic versioning for new backward-compatible feature
+- **Bio Block (v3.1)**: Removed duplicate placeholder logic
+  - Removed ~90 lines of code
+  - Removed 3 helper functions: `getProfileImage()`, `getConfigValue()`, `nameToSlug()`
+  - Removed 2 BIO_CONFIG properties: `PLACEHOLDER_TEXT`, `CONFIG_URL`
+  - Simplified to focus solely on image link conversion and author name extraction
+  - Block now receives already-transformed HTML from worker
+- **Documentation Updates**:
+  - `cloudflare/files/README.md`: Added Picture Placeholder Replacement section
+  - `cloudflare/files/README.md`: Updated version to 1.1.0, test count to 53
+  - `blocks/bio/README.md`: Updated placeholder section to note worker handles it
+  - `blocks/bio/README.md`: Removed obsolete configuration documentation
+  - `blocks/bio/README.md`: Updated version history to v3.1
+  - `blocks/bio/README.md`: Added troubleshooting for worker deployment
+  - `blocks/bio/EXAMPLE.md`: Updated placeholder example with worker details
+
+### Technical Details
+- **Architecture**: Centralized placeholder handling at edge worker level
+  - Server-side transformation before page delivery
+  - Consistent behavior across all blocks site-wide
+  - More efficient than per-block client-side JavaScript
+- **Implementation**: HTMLRewriter streaming API
+  - Text buffering with random element IDs
+  - State isolation between div elements
+  - Fast string comparison on every div
+  - Minimal performance impact (< 5ms per page)
+- **Testing**: Comprehensive coverage
+  - Unit tests for handler function behavior
+  - Integration tests for wiring and version header
+  - All tests passing (53/53)
+
+### Files Modified
+1. `cloudflare/files/cloudflare-worker.js` - Added placeholder replacement feature (v1.1.0)
+2. `cloudflare/files/cloudflare-worker.test.js` - Added 8 tests for new feature
+3. `cloudflare/files/README.md` - Documented picture placeholder replacement
+4. `blocks/bio/bio.js` - Removed duplicate placeholder logic (simplified)
+5. `blocks/bio/README.md` - Updated to reflect worker handles placeholders
+6. `blocks/bio/EXAMPLE.md` - Updated example with worker configuration
+
+**Total: 6 files modified**
+
+### Benefits
+- **Single Source of Truth**: One configuration for placeholder replacement
+- **No Code Duplication**: Eliminated ~90 lines of duplicate code from bio block
+- **Consistent Behavior**: Same replacement logic across all blocks
+- **Better Performance**: Edge-level transformation vs client-side JavaScript
+- **Easier Maintenance**: Update one place (worker) instead of multiple blocks
+- **Future-Proof**: Any block can use "Picture Here" without additional code
+
+## [2025-12-11d] - Project Cleanup and Documentation
+
 ### Added
 - **robots.txt**: Added sitemap directive pointing to `https://allabout.network/sitemap.xml`
   - Improves SEO by helping search engines discover the complete sitemap

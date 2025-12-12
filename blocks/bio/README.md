@@ -67,21 +67,21 @@ The block intelligently detects image links in the first cell and converts them 
 - Consistent image handling across all bio instances
 - Proper semantic HTML in production
 
-### "Picture Here" Placeholder Text
+### "Picture Here" Placeholder Text (Handled by Cloudflare Worker)
 
-The block supports a convenient placeholder text feature for quick bio creation with intelligent image fetching:
+**Important:** The "Picture Here" placeholder functionality has been moved to the Cloudflare worker (v1.1.0+) for global HTML transformation. This block no longer handles placeholder replacement.
 
 **How it works:**
-1. Type "Picture Here" (case-insensitive) in the first cell
-2. Block automatically fetches the author's profile image
-3. Falls back to configured default image if profile not found
-4. No need to paste image URLs for standard bio images
+1. Type "Picture Here" (case-sensitive) in the first cell in Google Docs/markdown
+2. EDS transforms to: `<div><div>Picture Here</div></div>`
+3. Cloudflare worker automatically replaces with author image before page delivery
+4. Bio block receives already-replaced `<img>` tag
 
-**Supported text variations:**
-- `Picture Here` (standard case)
-- `picture here` (lowercase)
-- `PICTURE HERE` (uppercase)
-- Any mix of cases (case-insensitive matching)
+**Replacement performed by:**
+- **Cloudflare Worker** (v1.1.0+) - Server-side HTML transformation
+- Configuration: `cloudflare/files/cloudflare-worker.js`
+- Image URL: `https://allabout.network/dam/media_126e99d56f06caf788bee715aff92281d2e31a206.png`
+- Alt text: "Author: Tom Cranstoun"
 
 **Example usage:**
 
@@ -90,27 +90,26 @@ The block supports a convenient placeholder text feature for quick bio creation 
 `|----------------------------------------|-----------------------------------------------------------|`
 `| Picture Here                           | Web development doesn't need complex tooling...           |`
 
-**Image source priority:**
-1. **Author profile image** - Fetched from `https://allabout.network/profiles/{author-name}.json`
-   - Uses `$profile:imagelink$` field from profile
-   - Author name from `<meta name="author">` tag
-   - Converted to URL slug (e.g., "Tom Cranstoun" → "tom-cranstoun")
-2. **Config default image** - Fallback from `/config/defaults.json`
-   - Key: `$bio:defaultimage$`
-   - Current value: `https://allabout.network/blogs/ddt/media_145e13ea388af99109b4e34d2c57d40f5fc22d9c9.jpg`
+**What the block receives:**
+```html
+<div class="bio">
+  <div>
+    <div><img src="..." alt="Author: Tom Cranstoun"></div>
+    <div>Web development doesn't need complex tooling...</div>
+  </div>
+</div>
+```
 
-**Configuration:**
-- Default image URL managed in `/config/defaults.json`
-- Change `$bio:defaultimage$` value to update site-wide default
-- Profile images managed per-author in individual profile JSON files
+**Why this changed:**
+- Centralized placeholder handling across all blocks (not just bio)
+- Eliminated duplicate logic and config management
+- Consistent behavior site-wide
+- Worker-level transformation more efficient than per-block JavaScript
 
-**Why this is useful:**
-- Automatically uses correct author image from their profile
-- Speeds up bio creation for team pages
-- Ensures consistent fallback images during development
-- Allows authors to focus on content first, images later
-- Centralized configuration management
-- Easy to replace with specific images during review phase
+**For developers:**
+- The bio block's `getProfileImage()`, `getConfigValue()`, and `nameToSlug()` functions have been removed (v3.1)
+- Placeholder matching logic removed from decorate function
+- Block now focuses solely on image link conversion and author name extraction
 
 ### Author Name Extraction
 
@@ -313,54 +312,22 @@ The bio block uses a `BIO_CONFIG` object for centralized JavaScript configuratio
 
 `BIO_CONFIG Object`
 `const BIO_CONFIG = {`
-`  PLACEHOLDER_TEXT: 'picture here',`
 `  DEFAULT_ALT_TEXT: 'Bio image',`
 `  IMAGE_EXTENSIONS: ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'],`
-`  CONFIG_URL: '/config/defaults.json',`
 `};`
 
 **Configuration options:**
 
 | Option | Default | Purpose |
 |--------|---------|---------|
-| `PLACEHOLDER_TEXT` | `'picture here'` | Text to match for placeholder replacement (lowercase for case-insensitive matching) |
-| `DEFAULT_ALT_TEXT` | `'Bio image'` | Alt text for placeholder images when author name not available |
+| `DEFAULT_ALT_TEXT` | `'Bio image'` | Alt text for images when author name not available |
 | `IMAGE_EXTENSIONS` | `['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg']` | Supported image file extensions for link detection |
-| `CONFIG_URL` | `'/config/defaults.json'` | Path to configuration file for runtime values |
-
-**Runtime Configuration (config/defaults.json):**
-
-The default image URL is managed in the centralized configuration file:
-
-```json
-{
-  "Item": "$bio:defaultimage$",
-  "Value": "https://allabout.network/blogs/ddt/media_145e13ea388af99109b4e34d2c57d40f5fc22d9c9.jpg"
-}
-```
-
-**Configuration functions:**
-
-1. **`getConfigValue(key)`** - Fetches configuration values from `defaults.json`
-   - Caches config after first fetch for performance
-   - Returns null if key not found
-   - Example: `await getConfigValue('$bio:defaultimage$')`
-
-2. **`getProfileImage(authorName)`** - Fetches author profile image
-   - Converts author name to URL slug
-   - Fetches from `https://allabout.network/profiles/{slug}.json`
-   - Extracts `$profile:imagelink$` field
-   - Returns null if profile or image not found
-
-3. **`nameToSlug(name)`** - Converts author names to URL-safe slugs
-   - Example: "Tom Cranstoun" → "tom-cranstoun"
-   - Handles special characters and whitespace
 
 **Customization:**
-- Modify `$bio:defaultimage$` in `/config/defaults.json` to change default image site-wide
 - Add new formats to `IMAGE_EXTENSIONS` array for additional image type support
-- Change `PLACEHOLDER_TEXT` to use different placeholder text (remember to lowercase)
-- Update `CONFIG_URL` if using different configuration file location
+- Modify `DEFAULT_ALT_TEXT` if different fallback alt text needed
+
+**Note:** "Picture Here" placeholder configuration has moved to the Cloudflare worker. See the ["Picture Here" Placeholder Text](#picture-here-placeholder-text-handled-by-cloudflare-worker) section above.
 
 ### Expression Plugin Integration
 
@@ -889,52 +856,39 @@ This is a code-level issue. The current implementation correctly uses `block.que
 
 ---
 
-### Issue: Profile image not loading with "Picture Here" placeholder
+### Issue: "Picture Here" placeholder not working
 
 **Symptoms:**
-- Using "Picture Here" placeholder
-- Shows fallback image instead of author's profile image
-- Console shows "Profile not found" or CORS error
+- Text "Picture Here" remains visible instead of showing image
+- No image replacement occurring
 
-**Possible causes:**
-1. **CORS error in local development** (expected behavior)
-   - Profile fetching works in production (same-origin)
-   - Local development blocks cross-origin requests
-   - Fallback to config default is correct behavior
-
-2. **Profile doesn't exist**
-   - Author profile JSON not created yet
-   - Profile URL slug doesn't match author name
-
-3. **Profile missing image field**
-   - Profile exists but has no `$profile:imagelink$` field
-   - Field value is null or empty
+**Cause:**
+- Cloudflare worker not deployed or not running correctly
+- Worker v1.1.0+ required for placeholder replacement
 
 **Solutions:**
+1. **Verify worker deployment:**
+   ```bash
+   curl -I https://allabout.network | grep cfw
+   # Should show: cfw: 1.1.0 or higher
+   ```
 
-**For CORS in development:**
-- This is expected behavior - profile fetching works in production
-- Verify fallback to config default works correctly
-- Test in production environment for full functionality
+2. **Check worker configuration:**
+   - Worker must be deployed to Cloudflare Dashboard
+   - Route must match your domain pattern
+   - Environment variables must be set (`ORIGIN_HOSTNAME`)
 
-**For missing profiles:**
-1. Create author profile at `https://allabout.network/profiles/{slug}.json`
-2. Ensure slug matches name conversion:
-   - "Tom Cranstoun" → "tom-cranstoun"
-   - Lowercase, spaces to hyphens, special chars removed
-3. Add `$profile:imagelink$` field with image URL
+3. **Test in production:**
+   - Placeholder replacement only works on pages served through Cloudflare
+   - Local development (localhost:3000) will show "Picture Here" text
+   - Use production URL for testing: `https://allabout.network/your-page`
 
-**For debugging:**
+**For local development:**
+- Placeholder text will remain visible (expected)
+- Use actual image URLs instead of "Picture Here"
+- Or test on production/staging environment
 
-`Check console logs`
-`Bio block - Fetching profile: https://allabout.network/profiles/author-name.json`
-`Bio block - Profile not found for Author Name`
-`Bio block - Falling back to config default image`
-
-**Validation:**
-- Profile URL should match expected slug format
-- Fallback to config default indicates profile fetch failed
-- Check network tab in DevTools for HTTP status code
+**See also:** [Cloudflare Worker Documentation](../../cloudflare/files/README.md#picture-placeholder-replacement)
 
 ---
 
@@ -970,9 +924,18 @@ This is a code-level issue. The current implementation correctly uses `block.que
 
 ## Version History
 
-**Current version:** 3.0 (2025-12-08)
+**Current version:** 3.1 (2025-12-12)
 
 **Recent changes:**
+- **BREAKING:** Removed "Picture Here" placeholder logic (now handled by Cloudflare worker v1.1.0+)
+- Removed `getProfileImage()` function (no longer needed)
+- Removed `getConfigValue()` function (no longer needed)
+- Removed `nameToSlug()` function (no longer needed)
+- Removed `PLACEHOLDER_TEXT` and `CONFIG_URL` from BIO_CONFIG
+- Simplified block to focus on image link conversion and author name extraction
+- Updated documentation to reflect Cloudflare worker integration
+
+**Previous version:** 3.0 (2025-12-08)
 - Added intelligent profile image fetching from author profiles
 - Moved default image URL to centralized config (`/config/defaults.json`)
 - Added `getProfileImage()` function for automatic author image lookup
@@ -993,7 +956,7 @@ This is a code-level issue. The current implementation correctly uses `block.que
 - Expressions plugin requires production environment
 - No built-in lazy loading (manual implementation needed)
 - IE11 requires polyfills for `object-fit` and `replaceWith()`
-- Profile fetching may fail with CORS in local development (expected, works in production)
+- "Picture Here" placeholder replacement requires Cloudflare worker v1.1.0+ (not available in local development)
 
 ---
 
