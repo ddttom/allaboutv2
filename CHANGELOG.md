@@ -7,6 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12u] - Pre-Push Validation Hook: Fix stdin Input Bug
+
+### Fixed
+- **pre-push-validation.sh**: Fixed critical bug where hook was reading git push refs from stdin instead of user input
+  - **Root Cause**: Git hooks receive push information (branch refs) on stdin
+  - **Symptom**: CHANGELOG entries contained malformed git metadata like `refs/heads/main [commit-hash]...`
+  - **Solution**:
+    - Redirect `read` command to use `/dev/tty` for interactive terminal sessions
+    - Detect Claude Code via `CLAUDECODE=1` environment variable and skip validation
+    - Skip validation in non-interactive environments (IDEs, CI/CD)
+  - **Impact**: Hook now works correctly in terminal, automatically skips in Claude Code/IDEs
+
+### Changed
+- **`.claude/hooks/pre-push-validation.sh`**:
+  - Added Claude Code detection (CLAUDECODE env var) to skip validation (lines 23-29)
+  - Added TTY detection for non-interactive environments (lines 31-37)
+  - Changed `read` command to use `/dev/tty` redirect for terminal sessions (line 97)
+- **`.claude/hooks/CONFIG.md`**:
+  - Documented `/dev/tty` fix and stdin handling
+  - Added auto-skip behavior for Claude Code and IDEs
+  - Clarified terminal vs IDE usage patterns
+- **`CLAUDE.md`**:
+  - Added implementation note about stdin handling
+  - Documented auto-skip in Claude Code/IDEs
+  - Updated workflow to specify "terminal only" for interactive prompts
+
+### Technical Details
+- **Previous Behavior**: Hook prompted for input but captured git push refs from stdin
+- **New Behavior**: Hook detects environment and either prompts correctly (terminal) or skips (IDEs)
+- **Claude Code**: Automatically detected via `CLAUDECODE=1` env var, validation skipped
+- **Terminal**: Interactive prompts work correctly with `/dev/tty` redirect
+- **CI/CD**: Automatically skipped in non-interactive environments
+
 ## [2025-12-12t] - Claude Code Settings: Add test:local to Auto-Approve List
 
 ### Changed
