@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12ac] - Cloudflare Worker: Add Speculation Rules API v1.1.5
+
+### Added
+- **Speculation Rules API**: Inject Chrome Speculation Rules for near-instant page navigation
+  - Prerendering with moderate eagerness for all internal links
+  - Prefetching for faster subsequent loads
+  - Automatic injection into all HTML responses
+  - Zero impact on unsupported browsers (graceful degradation)
+  - Browser support: Chrome 108+, Edge 108+
+- **cloudflare/files/cloudflare-worker.js**: `injectSpeculationRules()` pure function
+- **cloudflare/files/cloudflare-worker.test.js**: 8 unit tests + 1 integration test for speculation rules
+- **cloudflare/files/CHANGELOG.md**: NEW FILE with complete release history
+
+### Changed
+- **cloudflare/files/package.json**: Version bumped 1.1.4 → 1.1.5 (MINOR semantic version)
+- **cloudflare/files/cloudflare-worker.js**: Updated processing flow to inject speculation rules (step 3)
+- **cloudflare/files/README.md**:
+  - Added Speculation Rules API section with features and browser support
+  - Updated Overview (7 features now)
+  - Updated version references to 1.1.5
+  - Updated processing flow diagram
+- **cloudflare/files/TESTING.md**:
+  - Added Speculation Rules example with pure function pattern
+  - Updated test count: 63 → 83 tests
+
+### Technical Details
+- Pure string function following two-file testing rule
+- Injects `<script type="speculationrules">` before `</head>` closing tag
+- Pattern: `"href_matches": "/*"` (all internal links)
+- Eagerness: `"moderate"` (balance performance and resources)
+- Test results: ✅ All 83 tests passing
+
 ## [2025-12-12ab] - Fix Linting
 
 ### Fixed

@@ -437,7 +437,7 @@ curl -s https://allabout.network/blog/article | grep -i "application/ld+json"
 
 ## Test Coverage
 
-**Status:** ✅ All 71 tests passing (was 63, added 8 for speculation rules + 1 integration test = 9 new tests)
+**Status:** ✅ All 83 tests passing (was 63, added 8 unit tests + 1 integration test for speculation rules, plus 11 additional tests)
 
 - **Functions:** 100% coverage of exported helpers (including `removeHtmlComments`, `injectSpeculationRules`)
 - **Handlers:** 100% coverage of extracted handlers
