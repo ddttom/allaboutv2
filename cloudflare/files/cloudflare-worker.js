@@ -342,28 +342,19 @@ export const handleViewport = (element, article, requestUrl, DEBUG) => {
 /**
  * Handles picture placeholder replacement
  * Detects divs with "Picture Here" text and replaces with author image
- * @param {Element} element - The div element being processed
- * @param {Object} state - Shared state object for text buffering
+ * Uses HTMLRewriter element handler pattern with ontext/onendtag
  */
-export const handlePicturePlaceholder = (element, state) => {
-  const elementId = Math.random().toString(36).substring(7);
-  state.textBuffer = '';
-  state.elementId = elementId;
+export const handlePicturePlaceholder = (element) => {
+  let textBuffer = '';
 
-  // Collect text content from this div
   element.ontext((text) => {
-    if (state.elementId === elementId) {
-      state.textBuffer += text.text;
-    }
+    textBuffer += text.text;
   });
 
-  // Process after all text collected
   element.onendtag(() => {
-    if (state.elementId !== elementId) return;
-
     const trimmed = PICTURE_PLACEHOLDER_CONFIG.TRIM_WHITESPACE
-      ? state.textBuffer.trim()
-      : state.textBuffer;
+      ? textBuffer.trim()
+      : textBuffer;
 
     const matches = PICTURE_PLACEHOLDER_CONFIG.MATCH_CASE_SENSITIVE
       ? trimmed === PICTURE_PLACEHOLDER_CONFIG.TRIGGER_TEXT
@@ -375,9 +366,6 @@ export const handlePicturePlaceholder = (element, state) => {
         + `alt="${PICTURE_PLACEHOLDER_CONFIG.IMAGE_ALT}">`;
       element.replace(imgTag, { html: true });
     }
-
-    // Reset state
-    state.textBuffer = '';
   });
 };
 
@@ -549,8 +537,7 @@ const handleRequest = async (request, env, _ctx) => {
       })
       .on('div', {
         element: (e) => {
-          const placeholderState = { textBuffer: '', elementId: '' };
-          handlePicturePlaceholder(e, placeholderState);
+          handlePicturePlaceholder(e);
         },
       })
       .transform(resp);

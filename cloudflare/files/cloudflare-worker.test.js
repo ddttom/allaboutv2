@@ -449,7 +449,6 @@ describe('Handler Functions', () => {
 // Test suite for handlePicturePlaceholder
 describe('handlePicturePlaceholder', () => {
   let mockElement;
-  let state;
   let textCallbacks;
   let endtagCallback;
 
@@ -462,12 +461,10 @@ describe('handlePicturePlaceholder', () => {
       onendtag: vi.fn((cb) => { endtagCallback = cb; }),
       replace: vi.fn(),
     };
-
-    state = { textBuffer: '', elementId: '' };
   });
 
   test('replaces div with exact match "Picture Here"', () => {
-    handlePicturePlaceholder(mockElement, state);
+    handlePicturePlaceholder(mockElement);
 
     // Simulate text node
     textCallbacks.forEach((cb) => cb({ text: 'Picture Here' }));
@@ -486,7 +483,7 @@ describe('handlePicturePlaceholder', () => {
   });
 
   test('does not replace div with different text', () => {
-    handlePicturePlaceholder(mockElement, state);
+    handlePicturePlaceholder(mockElement);
 
     textCallbacks.forEach((cb) => cb({ text: 'Other Content' }));
     endtagCallback();
@@ -495,7 +492,7 @@ describe('handlePicturePlaceholder', () => {
   });
 
   test('handles whitespace trimming', () => {
-    handlePicturePlaceholder(mockElement, state);
+    handlePicturePlaceholder(mockElement);
 
     textCallbacks.forEach((cb) => cb({ text: '  Picture Here  ' }));
     endtagCallback();
@@ -504,7 +501,7 @@ describe('handlePicturePlaceholder', () => {
   });
 
   test('handles multiple text nodes', () => {
-    handlePicturePlaceholder(mockElement, state);
+    handlePicturePlaceholder(mockElement);
 
     // Text split across nodes
     textCallbacks.forEach((cb) => {
@@ -517,7 +514,7 @@ describe('handlePicturePlaceholder', () => {
   });
 
   test('handles case sensitivity', () => {
-    handlePicturePlaceholder(mockElement, state);
+    handlePicturePlaceholder(mockElement);
 
     textCallbacks.forEach((cb) => cb({ text: 'picture here' }));
     endtagCallback();
@@ -527,7 +524,7 @@ describe('handlePicturePlaceholder', () => {
   });
 
   test('includes correct image URL and alt text', () => {
-    handlePicturePlaceholder(mockElement, state);
+    handlePicturePlaceholder(mockElement);
 
     textCallbacks.forEach((cb) => cb({ text: 'Picture Here' }));
     endtagCallback();
