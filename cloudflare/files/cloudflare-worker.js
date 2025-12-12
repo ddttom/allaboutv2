@@ -12,19 +12,17 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  *
- * @version 1.1.0
+ * @version 1.1.1
  */
 
 // Worker version - increment using semantic versioning for all changes
-export const WORKER_VERSION = '1.1.0';
+export const WORKER_VERSION = '1.1.1';
 
 // Picture placeholder configuration
 export const PICTURE_PLACEHOLDER_CONFIG = {
   TRIGGER_TEXT: 'Picture Here',
   IMAGE_URL: 'https://allabout.network/dam/media_126e99d56f06caf788bee715aff92281d2e31a206.png',
   IMAGE_ALT: 'Author: Tom Cranstoun',
-  MATCH_CASE_SENSITIVE: true,
-  TRIM_WHITESPACE: true,
 };
 
 export const getExtension = (path) => {
@@ -351,15 +349,15 @@ export const replacePicturePlaceholder = (html) => {
   const replacement = `<div><img src="${PICTURE_PLACEHOLDER_CONFIG.IMAGE_URL}" `
     + `alt="${PICTURE_PLACEHOLDER_CONFIG.IMAGE_ALT}"></div>`;
 
-  if (PICTURE_PLACEHOLDER_CONFIG.MATCH_CASE_SENSITIVE) {
-    // Case-sensitive: match <div><div>Picture Here</div></div> exactly
-    // Pattern ensures no nested divs before "Picture Here"
-    const pattern = /<div>\s*<div>([^<]*Picture Here[^<]*)<\/div>\s*<\/div>/g;
-    return html.replace(pattern, replacement);
-  }
-
-  // Case-insensitive
-  const pattern = /<div>\s*<div>([^<]*Picture Here[^<]*)<\/div>\s*<\/div>/gi;
+  // Case-insensitive comparison using trigger text from config
+  // Escape special regex characters in trigger text
+  const escapedTrigger = PICTURE_PLACEHOLDER_CONFIG.TRIGGER_TEXT
+    .replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // Pattern ensures no nested divs before trigger text
+  const pattern = new RegExp(
+    `<div[^>]*>\\s*<div>([^<]*${escapedTrigger}[^<]*)</div>\\s*</div>`,
+    'gi',
+  );
   return html.replace(pattern, replacement);
 };
 

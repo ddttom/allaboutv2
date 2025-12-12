@@ -485,14 +485,15 @@ describe('replacePicturePlaceholder', () => {
     expect(result).not.toContain('Picture Here');
   });
 
-  test('handles case sensitivity (case-sensitive by default)', () => {
+  test('handles case insensitivity (matches "picture here", "PICTURE HERE", etc.)', () => {
     const html = '<div><div>picture here</div></div>';
     const result = replacePicturePlaceholder(html);
 
-    // Should NOT match (case-sensitive)
-    expect(result).toBe(html);
-    expect(result).toContain('picture here');
-    expect(result).not.toContain('<img');
+    // Should match (case-insensitive)
+    expect(result).not.toBe(html);
+    expect(result).not.toContain('picture here');
+    expect(result).toContain('<img');
+    expect(result).toContain(PICTURE_PLACEHOLDER_CONFIG.IMAGE_URL);
   });
 
   test('includes correct image URL and alt text in replacement', () => {
@@ -691,8 +692,8 @@ describe('handleRequest Integration', () => {
 
     const response = await worker.fetch(request, env);
 
-    // Verify version header still present and shows 1.1.0
+    // Verify version header still present and shows 1.1.1
     expect(response.headers.get('cfw')).toBe(WORKER_VERSION);
-    expect(WORKER_VERSION).toBe('1.1.0');
+    expect(WORKER_VERSION).toBe('1.1.1');
   });
 });
