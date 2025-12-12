@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12ae] - Security: Fix npm audit vulnerabilities
+
+### Security
+- **package-lock.json**: Fixed 2 security vulnerabilities via `npm audit fix`
+  - `glob` 10.2.0-10.4.5: High severity - Command injection via -c/--cmd (GHSA-5j98-mcp5-4vw2)
+  - `js-yaml` 4.0.0-4.1.0: Moderate severity - Prototype pollution in merge (GHSA-mh29-5h37-fv8m)
+  - Updated 32 packages, removed 7 packages, changed 16 packages
+  - All vulnerabilities resolved - 0 vulnerabilities remaining
+
 ## [2025-12-12ad] - Fix ESLint Max Line Length Error
 
 ### Fixed
