@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12ad] - Fix ESLint Max Line Length Error
+
+### Fixed
+- **cloudflare/files/cloudflare-worker.test.js**: Fixed ESLint max-len error on line 684
+  - Split long HTML string into multiple lines using string concatenation
+  - Line length reduced from 146 to compliant format (< 100 chars per line)
+  - No functional change to test - only formatting for linting compliance
+
 ## [2025-12-12ac] - Cloudflare Worker: Add Speculation Rules API v1.1.5
 
 ### Added

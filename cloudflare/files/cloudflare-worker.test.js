@@ -681,7 +681,10 @@ describe('injectSpeculationRules', () => {
 
   test('handles multiple injections correctly', () => {
     // HTML with metadata to trigger JSON-LD generation
-    const html = '<html><head><meta name="jsonld" content="article"><meta property="og:title" content="Test Article"></head><body></body></html>';
+    const html = '<html><head>'
+      + '<meta name="jsonld" content="article">'
+      + '<meta property="og:title" content="Test Article">'
+      + '</head><body></body></html>';
     const afterJsonLd = injectJsonLd(html, 'example.com');
     const result = injectSpeculationRules(afterJsonLd);
 
