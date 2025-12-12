@@ -298,6 +298,26 @@ Active hooks that enhance development workflow:
 - Runs after file edits (Edit, MultiEdit, Write)
 - Lightweight bash script
 
+**cloudflare-worker-test-regenerate.sh** (Enhanced with AI Test Automation)
+- **Trigger:** After Edit, MultiEdit, or Write operations on `cloudflare/files/cloudflare-worker.js`
+- **Purpose:** Intelligent test automation system with auto-generation and coverage reporting
+- **Implementation:** Calls `cloudflare-test-automation.js` for complete test lifecycle management
+- **Features:**
+  - Detects changes via git diff (new/modified/deleted functions)
+  - Auto-generates test stubs for new functions
+  - Auto-updates test expectations for modified functions
+  - Creates timestamped backups in `cloudflare/backups/` directory (gitignored)
+  - Runs all tests (npm test + test:local)
+  - Generates comprehensive coverage report
+  - Rollback capability if tests fail
+- **Benefits:**
+  - Ensures tests stay synchronized with worker code
+  - Reduces manual test writing effort
+  - Provides immediate validation of changes
+  - Comprehensive audit trail via coverage reports
+  - Safe with backup/rollback mechanism
+- **See:** `.claude/hooks/cloudflare-test-automation.README.md` for complete documentation
+
 **pre-commit-changelog.sh** (Git Hook)
 - **REQUIRED:** Validates CHANGELOG.md is included in commits (blocks commit if missing)
 - **Simple Check:** Verifies CHANGELOG.md is staged before allowing commit

@@ -26,6 +26,10 @@ This project uses a **minimal hooks setup** optimized for EDS development. The a
           {
             "type": "command",
             "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/post-tool-use-tracker.sh"
+          },
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/cloudflare-worker-test-regenerate.sh"
           }
         ]
       }
@@ -45,6 +49,26 @@ This project uses a **minimal hooks setup** optimized for EDS development. The a
 - **Trigger:** After Edit, MultiEdit, or Write operations
 - **Purpose:** Track modified files for session context
 - **Implementation:** Bash script with minimal overhead
+
+**cloudflare-worker-test-regenerate.sh** (Enhanced with AI Test Automation)
+- **Trigger:** After Edit, MultiEdit, or Write operations on `cloudflare/files/cloudflare-worker.js`
+- **Purpose:** Intelligent test automation system with auto-generation and coverage reporting
+- **Implementation:** Calls `cloudflare-test-automation.js` for complete test lifecycle management
+- **Features:**
+  - Detects changes via git diff (new/modified/deleted functions)
+  - Auto-generates test stubs for new functions
+  - Auto-updates test expectations for modified functions
+  - Creates timestamped backups before making changes
+  - Runs all tests (npm test + test:local)
+  - Generates comprehensive coverage report
+  - Rollback capability if tests fail
+- **Benefits:**
+  - Ensures tests stay synchronized with worker code
+  - Reduces manual test writing effort
+  - Provides immediate validation of changes
+  - Comprehensive audit trail via coverage reports
+  - Safe with backup/rollback mechanism
+- **See:** `.claude/hooks/cloudflare-test-automation.README.md` for complete documentation
 
 **pre-commit-changelog.sh** (Git Hook)
 - **Trigger:** Before `git commit` operations

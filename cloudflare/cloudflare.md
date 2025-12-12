@@ -179,11 +179,24 @@ Adobe Edge Delivery Services uses Fastly's SSL certificates. These certificates 
 
 **Automated Testing:**
 - Single unified test file: `cloudflare/files/cloudflare-worker.test.js`
-- 45 tests covering unit and integration testing (includes version header validation)
+- 83 tests covering unit and integration testing (includes version header validation)
 - Test approach: Pure functions + mocked HTMLRewriter
 - Run tests: `cd cloudflare/files && npm test`
+- Local HTML test: `cd cloudflare/files && npm run test:local`
 - Coverage report: `npm run test:coverage`
 - Documentation: See `cloudflare/files/TESTING.md`
+
+**Test Automation System:**
+- **Intelligent automation** for worker changes (`cloudflare-test-automation.js`)
+- **Git diff detection** - Identifies new/modified/deleted functions automatically
+- **Auto-generates test stubs** for new functions with inferred types
+- **Auto-updates test markers** for modified functions
+- **Backup system** - Creates timestamped backups in `cloudflare/backups/` (gitignored)
+- **Complete test suite** - Runs npm test + test:local automatically
+- **Coverage reporting** - Generates comprehensive markdown report
+- **Rollback capability** - Restore from backups if tests fail
+- **Hook integration** - Triggers automatically on worker.js edits
+- Documentation: See `.claude/hooks/cloudflare-test-automation.README.md`
 
 **Production Validation:**
 - Adobe CDN validator: https://www.aem.live/tools/cdn-validator
@@ -192,7 +205,7 @@ Adobe Edge Delivery Services uses Fastly's SSL certificates. These certificates 
 - View real-time logs: Dashboard → Workers & Pages → aem-worker → Logs
 
 **Test Strategy:**
-The worker uses a two-file approach: one production file (`cloudflare-worker.js`) and one test file (`cloudflare-worker.test.js`). The test suite combines unit tests for helper functions with integration tests for the complete request flow, using lightweight mocks instead of complex E2E infrastructure. This ensures reliable testing without the overhead of local dev servers or port management.
+The worker uses a two-file approach: one production file (`cloudflare-worker.js`) and one test file (`cloudflare-worker.test.js`). The test suite combines unit tests for helper functions with integration tests for the complete request flow, using lightweight mocks instead of complex E2E infrastructure. This ensures reliable testing without the overhead of local dev servers or port management. An intelligent test automation system monitors changes and keeps tests synchronized with worker code.
 
 ### Environment Variables
 
@@ -1057,9 +1070,9 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 
 **Owner:** Tom Cranstoun
 **Created:** 9 December 2025
-**Last Updated:** 9 December 2025
+**Last Updated:** 12 December 2025
 **Review Schedule:** Quarterly or after significant changes
-**Version:** 1.1
+**Version:** 1.2
 
 **Update this document when:**
 - Configuration changes made
@@ -1073,6 +1086,40 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 ---
 
 ## Change Log
+
+### 2025-12-12 - Added Intelligent Test Automation System (Version 1.2)
+**Enhanced worker testing with automated test generation and synchronization**
+
+**New test automation features:**
+- ✅ **Git diff-based change detection** - Automatically identifies new/modified/deleted functions
+- ✅ **Intelligent test stub generation** - Creates test stubs with inferred function types
+- ✅ **Automatic test synchronization** - Marks modified functions for review
+- ✅ **Backup system with dedicated folder** - Creates timestamped backups in `cloudflare/backups/` (gitignored)
+- ✅ **Complete test suite execution** - Runs npm test + test:local automatically
+- ✅ **Comprehensive coverage reporting** - Generates markdown reports with function coverage
+- ✅ **Rollback capability** - Restore from backups if tests fail
+- ✅ **Hook integration** - Triggers automatically on worker.js edits via PostToolUse hook
+
+**Documentation updates:**
+- Added Test Automation System section (lines 189-199) with complete feature list
+- Updated Automated Testing section (line 182) to reflect 83 tests (up from 45)
+- Added Local HTML test documentation (line 185)
+- Updated Test Strategy section (line 207-208) to mention automation system
+- Updated version to 1.2 and last updated date to 12 December 2025
+
+**Configuration notes:**
+- Automation script: `.claude/hooks/cloudflare-test-automation.js`
+- Hook script: `.claude/hooks/cloudflare-worker-test-regenerate.sh`
+- Backup location: `cloudflare/backups/` (gitignored except README.md)
+- Coverage reports: `cloudflare/test-coverage-report.md`
+- Complete documentation: `.claude/hooks/cloudflare-test-automation.README.md`
+
+**Why this matters:**
+- Keeps tests synchronized with worker code automatically
+- Reduces manual test writing effort significantly
+- Provides immediate validation of changes with full test suite
+- Creates comprehensive audit trail via coverage reports
+- Safe development with backup/rollback mechanism
 
 ### 2025-12-09 - Upgraded to Cloudflare Pro Plan (Version 1.1)
 **Major upgrade from Free to Pro plan ($20/month)**

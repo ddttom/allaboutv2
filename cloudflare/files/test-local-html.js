@@ -15,6 +15,7 @@ import {
   removeHtmlComments,
   removeNonSocialMetadata,
   injectJsonLd,
+  injectSpeculationRules,
   PICTURE_PLACEHOLDER_CONFIG,
 } from './cloudflare-worker.js';
 
@@ -137,6 +138,7 @@ async function runTests() {
     let processedHtml = originalHtml;
     processedHtml = replacePicturePlaceholder(processedHtml);
     processedHtml = injectJsonLd(processedHtml, 'allabout.network');
+    processedHtml = injectSpeculationRules(processedHtml);
     processedHtml = removeNonSocialMetadata(processedHtml);
     processedHtml = removeHtmlComments(processedHtml);
 
@@ -145,6 +147,7 @@ async function runTests() {
     const placeholderReplaced = !processedHtml.includes('<div>Picture Here</div>');
     const imageInserted = processedHtml.includes(PICTURE_PLACEHOLDER_CONFIG.IMAGE_URL);
     const jsonLdInjected = processedHtml.includes('<script type="application/ld+json">');
+    const speculationRulesInjected = processedHtml.includes('<script type="speculationrules">');
     const metadataRemoved = !processedHtml.includes('<meta name="author-url"')
       && !processedHtml.includes('<meta name="publication-date"')
       && !processedHtml.includes('<meta name="modified-date"')
@@ -154,7 +157,7 @@ async function runTests() {
     if (testResult(
       'All transformations applied',
       commentsRemoved && placeholderReplaced && imageInserted
-        && jsonLdInjected && metadataRemoved,
+        && jsonLdInjected && speculationRulesInjected && metadataRemoved,
     )) {
       passedTests += 1;
     }
@@ -246,9 +249,34 @@ async function runTests() {
     // eslint-disable-next-line no-console
     console.log();
 
-    // Test 6: Output Analysis
+    // Test 6: Speculation Rules
     // eslint-disable-next-line no-console
-    console.log(`${BLUE}6️⃣  Output Analysis${NC}`);
+    console.log(`${BLUE}6️⃣  Speculation Rules${NC}`);
+
+    totalTests += 1;
+    const hasSpeculationScript = processedHtml.includes('<script type="speculationrules">');
+    if (testResult('Speculation rules script injected', hasSpeculationScript)) {
+      passedTests += 1;
+    }
+
+    totalTests += 1;
+    const hasPrerender = processedHtml.includes('"prerender"');
+    const hasPrefetch = processedHtml.includes('"prefetch"');
+    if (testResult('Rules contain prerender and prefetch', hasPrerender && hasPrefetch)) {
+      passedTests += 1;
+    }
+
+    totalTests += 1;
+    const hasEagerness = processedHtml.includes('"eagerness": "moderate"');
+    if (testResult('Rules have moderate eagerness', hasEagerness)) {
+      passedTests += 1;
+    }
+    // eslint-disable-next-line no-console
+    console.log();
+
+    // Test 7: Output Analysis
+    // eslint-disable-next-line no-console
+    console.log(`${BLUE}7️⃣  Output Analysis${NC}`);
 
     totalTests += 1;
     const originalSize = originalHtml.length;

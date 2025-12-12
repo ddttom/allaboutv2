@@ -72,3 +72,11 @@ GEMINI.md
 .agents/workflows
 cloudflare/test-rendered.html
 .claude/tsc-cache/
+
+# ========================================
+# Cloudflare Test Automation
+# ========================================
+# Backup files created by test automation system
+cloudflare/backups/*.backup-*
+# Keep the backup directory README
+!cloudflare/backups/README.md

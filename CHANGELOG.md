@@ -7,6 +7,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12ai] - Add Cloudflare Worker Intelligent Test Automation System
+
+### Added
+- **Intelligent test automation system** for Cloudflare worker development
+  - **Git diff-based change detection**: Automatically identifies new/modified/deleted functions
+  - **Auto-generates test stubs**: Creates test stubs with inferred function types (inject/remove/replace/extract/build/utility)
+  - **Automatic test synchronization**: Marks modified functions for review
+  - **Backup system with dedicated folder**: Creates timestamped backups in `cloudflare/backups/` (gitignored)
+  - **Complete test suite execution**: Runs npm test + test:local automatically
+  - **Comprehensive coverage reporting**: Generates `cloudflare/test-coverage-report.md` with function coverage
+  - **Rollback capability**: Restore from backups if tests fail
+  - **Hook integration**: Triggers automatically on worker.js edits via PostToolUse hook
+
+- **Files added**:
+  - `.claude/hooks/cloudflare-test-automation.js` (500+ lines) - Main automation orchestrator
+  - `.claude/hooks/cloudflare-test-automation.README.md` - Complete documentation
+  - `.claude/hooks/cloudflare-worker-test-regenerate.sh` - PostToolUse hook script
+  - `.claude/hooks/cloudflare-worker-test-regenerate.README.md` - Hook documentation
+  - `cloudflare/backups/README.md` - Backup folder documentation
+  - `cloudflare/test-coverage-report.md` - Auto-generated coverage report
+
+- **Configuration added**:
+  - `.gitignore`: Added `cloudflare/backups/*.backup-*` pattern with `!cloudflare/backups/README.md` negation
+  - `.claude/settings.json`: Added PostToolUse hook for cloudflare-worker-test-regenerate.sh
+
+### Changed
+- **cloudflare/files/test-local-html.js**: Added speculation rules injection
+  - Added `injectSpeculationRules` import (line 18)
+  - Added function call in processing order (line 140)
+  - Added 3 validation tests for speculation rules (Test 6, lines 249-272)
+  - Total tests increased from 20 to 23
+  - Renumbered Output Analysis section to Test 7
+
+- **Documentation updates**:
+  - `CLAUDE.md`: Added cloudflare-worker-test-regenerate.sh hook documentation (lines 301-319)
+  - `cloudflare/cloudflare.md`: Updated to Version 1.2
+    - Added Test Automation System section (lines 189-199)
+    - Updated test count from 45 to 83 tests
+    - Added changelog entry for Version 1.2 (lines 1090-1122)
+    - Updated last modified date to 12 December 2025
+  - `.claude/hooks/CONFIG.md`: Added automation system documentation (lines 49-67)
+
+### Fixed
+- **Speculation rules now appear in test-rendered.html**
+  - test-local-html.js now calls `injectSpeculationRules()` function
+  - Ensures local test output matches production worker behavior
+  - Speculation rules script injected after JSON-LD, before metadata cleanup
+
 ## [2025-12-12ah] - Fix Cloudflare worker package.json to use ES modules
 
 ### Fixed
