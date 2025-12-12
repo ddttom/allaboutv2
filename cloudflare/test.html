@@ -349,13 +349,55 @@
 
     <div class="footer">
       <p><strong>Cloudflare Worker Deployment Test</strong></p>
-      <p>Version 1.1.0 • Digital Domain Technologies Ltd</p>
+      <p>Version 1.1.3 • Digital Domain Technologies Ltd</p>
     </div>
   </div>
 
   <script>
+    // Detect if running locally (file:// protocol or localhost)
+    function isRunningLocally() {
+      return window.location.protocol === 'file:'
+        || window.location.hostname === 'localhost'
+        || window.location.hostname === '127.0.0.1';
+    }
+
     async function runAllTests() {
       console.log('Starting Cloudflare Worker tests...');
+
+      const isLocal = isRunningLocally();
+
+      if (isLocal) {
+        // Show alert and stop tests
+        alert('⚠️ LOCAL FILE DETECTED\n\n' +
+          'This test page requires the Cloudflare Worker to process the HTML.\n\n' +
+          'Please access via:\n' +
+          'https://allabout.network/cloudflare/test.html\n\n' +
+          'Opening the file locally will NOT run worker transformations:\n' +
+          '• JSON-LD injection\n' +
+          '• Metadata cleanup\n' +
+          '• Picture placeholder replacement\n' +
+          '• CORS headers\n\n' +
+          'Tests cancelled.');
+
+        console.error('⚠️ Tests cancelled - file opened locally without Cloudflare Worker processing');
+
+        // Mark all tests as error with explanation
+        setTestResult('version', 'error', '⚠️ Cannot test - file opened locally (needs Cloudflare CDN)');
+        setTestResult('cors-origin', 'error', '⚠️ Cannot test - file opened locally (needs Cloudflare CDN)');
+        setTestResult('cors-methods', 'error', '⚠️ Cannot test - file opened locally (needs Cloudflare CDN)');
+        setTestResult('cors-headers', 'error', '⚠️ Cannot test - file opened locally (needs Cloudflare CDN)');
+        setTestResult('jsonld-presence', 'error', '⚠️ Cannot test - file opened locally (needs Cloudflare CDN)');
+        setTestResult('jsonld-structure', 'error', '⚠️ Cannot test - file opened locally (needs Cloudflare CDN)');
+        setTestResult('jsonld-fields', 'error', '⚠️ Cannot test - file opened locally (needs Cloudflare CDN)');
+        setTestResult('jsonld-dates', 'error', '⚠️ Cannot test - file opened locally (needs Cloudflare CDN)');
+        setTestResult('meta-removed', 'error', '⚠️ Cannot test - file opened locally (needs Cloudflare CDN)');
+        setTestResult('meta-kept', 'error', '⚠️ Cannot test - file opened locally (needs Cloudflare CDN)');
+        setTestResult('placeholder-replaced', 'error', '⚠️ Cannot test - file opened locally (needs Cloudflare CDN)');
+        setTestResult('placeholder-non-match', 'error', '⚠️ Cannot test - file opened locally (needs Cloudflare CDN)');
+        setTestResult('jsonld-display', 'error', '⚠️ Cannot test - file opened locally (needs Cloudflare CDN)');
+
+        return; // Stop test execution
+      }
 
       // Test 1: Version Header
       await testVersionHeader();
@@ -388,7 +430,8 @@
             setTestResult('version', 'error', `✗ Invalid version format: ${version}`);
           }
         } else {
-          setTestResult('version', 'error', '✗ Version header (cfw) not found');
+          // Version header not found - provide helpful message
+          setTestResult('version', 'error', '⚠️ Version header not found. Headers are added by Cloudflare Worker at request time (not embedded in HTML). View this page via https://allabout.network/cloudflare/test.html to test worker headers.');
         }
       } catch (error) {
         setTestResult('version', 'error', `✗ Error: ${error.message}`);
@@ -404,7 +447,7 @@
         if (origin === '*') {
           setTestResult('cors-origin', 'success', `✓ Present: ${origin}`);
         } else {
-          setTestResult('cors-origin', 'error', `✗ Missing or incorrect: ${origin}`);
+          setTestResult('cors-origin', 'error', '⚠️ CORS header not found. Headers are added by Cloudflare Worker at request time (not embedded in HTML). View this page via https://allabout.network/cloudflare/test.html to test CORS headers.');
         }
 
         // Test Access-Control-Allow-Methods
@@ -412,7 +455,7 @@
         if (methods && methods.includes('GET') && methods.includes('POST')) {
           setTestResult('cors-methods', 'success', `✓ Present: ${methods}`);
         } else {
-          setTestResult('cors-methods', 'error', `✗ Missing or incorrect: ${methods}`);
+          setTestResult('cors-methods', 'error', '⚠️ CORS methods header not found. Headers are added by Cloudflare Worker at request time (not embedded in HTML). View this page via https://allabout.network/cloudflare/test.html to test CORS headers.');
         }
 
         // Test Access-Control-Allow-Headers
@@ -420,7 +463,7 @@
         if (headers && headers.includes('Content-Type')) {
           setTestResult('cors-headers', 'success', `✓ Present: ${headers}`);
         } else {
-          setTestResult('cors-headers', 'error', `✗ Missing or incorrect: ${headers}`);
+          setTestResult('cors-headers', 'error', '⚠️ CORS headers not found. Headers are added by Cloudflare Worker at request time (not embedded in HTML). View this page via https://allabout.network/cloudflare/test.html to test CORS headers.');
         }
       } catch (error) {
         setTestResult('cors-origin', 'error', `✗ Error: ${error.message}`);

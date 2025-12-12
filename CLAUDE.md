@@ -690,7 +690,7 @@ When a notebook has a `repo` metadata attribute, all `.md` file links are automa
 
 ## Cloudflare Custom Worker Implementation
 
-**Custom Adobe EDS worker with enhanced features (v1.1.1)** - see `cloudflare/files/`
+**Custom Adobe EDS worker with enhanced features (v1.1.3)** - see `cloudflare/files/`
 
 **What it does:**
 - Adds CORS headers to all responses
@@ -700,18 +700,21 @@ When a notebook has a `repo` metadata attribute, all `.md` file links are automa
 - Author metadata preservation: Keeps author meta tag for attribution (like LinkedIn)
 - Author URL with LinkedIn fallback: Uses LinkedIn meta as fallback when author-url not provided
 - Removes EDS error tags and non-social metadata (except author and LinkedIn)
+- Removes all HTML comments from HTML responses
 - Maintains all standard Adobe EDS functionality
 
 **Key files:**
 - `cloudflare/files/README.md` - Complete implementation guide and deployment instructions
+- `cloudflare/files/TESTING.md` - Two-file testing system and pure function approach
 - `cloudflare/files/cloudflare-worker.js` - Worker code (Apache License 2.0)
 
 **Documentation references:**
 - General Cloudflare config: `cloudflare/cloudflare.md`
 - Custom worker implementation: `cloudflare/files/README.md`
+- Testing methodology: `cloudflare/files/TESTING.md`
 
 **Critical metadata pattern:**
-Add `| json-ld | article |` to EDS metadata to trigger JSON-LD generation. The worker uses a clever authoring error workaround to detect this trigger.
+Add `| jsonld | article |` to EDS metadata to trigger JSON-LD generation. The worker uses a clever authoring error workaround to detect this trigger.
 
 **Date formatting:**
 Authors can enter dates in any format (10/12/2024, 10 December 2024, Dec 10 2024). The worker automatically converts them to ISO 8601 format for search engines.
@@ -721,11 +724,19 @@ Add `| author-url | https://yoursite.com |` or rely on LinkedIn meta tag fallbac
 
 **Deployment:** Follow `cloudflare/files/README.md` steps for prerequisites, environment variables, and deployment workflow.
 
-**Deployment Testing:**
-- Comprehensive test page: `cloudflare/test.html`
-- Access at: `https://allabout.network/cloudflare/test.html`
-- Auto-tests: version header, CORS, JSON-LD, metadata cleanup
-- Visual feedback with status indicators
+**Testing:**
+- **Automated tests**: `npm test` in `cloudflare/files/` - 63 tests covering all functionality
+- **Local HTML test**: `npm run test:local` - processes test.html through pure functions, outputs test-rendered.html
+- **Visual testing**: Open `cloudflare/test-rendered.html` locally to inspect transformed HTML
+  - HTML transformations work (JSON-LD, metadata cleanup, placeholder replacement, comment removal)
+  - CORS/header tests show "⚠️ Requires Cloudflare Worker (headers added at request time, not in HTML)"
+- **Production test page**: `https://allabout.network/cloudflare/test.html` - comprehensive live tests
+
+**Two-File Testing Rule:**
+- **File 1**: `cloudflare-worker.js` - Production worker code
+- **File 2**: `cloudflare-worker.test.js` - Single unified test file (unit + integration)
+- **Core Principle**: All functionality as pure JavaScript functions (string → string) testable without Cloudflare runtime
+- See `cloudflare/files/TESTING.md` for complete details
 
 **Developer Notes:**
 - `robots.txt` - SEO configuration with sitemap directive

@@ -734,10 +734,29 @@ npm run test:local
 
 **What it does:**
 1. Reads actual `cloudflare/test.html` file
-2. Processes through `replacePicturePlaceholder()` function
-3. Processes through `removeHtmlComments()` function
-4. Validates all transformations with 13 comprehensive tests
-5. Writes processed output to `cloudflare/test-rendered.html`
+2. Processes through all pure string functions in correct order:
+   - `replacePicturePlaceholder()` - replaces "Picture Here" text
+   - `injectJsonLd()` - generates JSON-LD from metadata
+   - `removeNonSocialMetadata()` - removes non-social meta tags
+   - `removeHtmlComments()` - removes HTML comments
+3. Validates all transformations with 20 comprehensive tests
+4. Writes processed output to `cloudflare/test-rendered.html`
+
+**Visual Testing with test-rendered.html:**
+
+The generated `test-rendered.html` file serves as a **visual test artifact** that shows exactly how the worker transforms HTML. Open it locally (file://) to inspect:
+
+- **HTML Transformation Tests** (Sections 3-6): Show the actual transformed content
+  - ✓ JSON-LD script injected
+  - ✓ Metadata cleaned up
+  - ✓ Picture placeholders replaced
+  - ✓ Comments removed
+
+- **CORS/Header Tests** (Sections 1-2): Show helpful message when opened locally
+  - ⚠️ "Requires Cloudflare Worker (headers added at request time, not in HTML)"
+  - These tests only work when served via Cloudflare CDN (not in local file)
+
+This makes it easy to visually verify that worker transformations are working correctly without deploying to Cloudflare.
 
 **Test coverage:**
 - HTML comment removal (3 tests)

@@ -129,6 +129,52 @@ export default {
 
 **Key insight:** Pure string functions run BEFORE HTMLRewriter, making them testable.
 
+### ⚠️ CRITICAL: Processing Order
+
+**Transformations (ADD content) MUST happen BEFORE removals (DELETE content).**
+
+**Why this matters:**
+- Removal operations might delete trigger mechanisms needed by transformations
+- Comments or metadata might contain signals that transformations rely on
+- Incorrect order causes transformations to fail silently
+
+**Correct Order:**
+
+```javascript
+if (contentType && contentType.includes('text/html')) {
+  let htmlText = await resp.text();
+
+  // Phase 1: TRANSFORM (ADD content) - Order matters!
+  htmlText = replacePicturePlaceholder(htmlText);  // 1. Add images
+  htmlText = injectJsonLd(htmlText, hostname);     // 2. Add structured data
+
+  // Phase 2: CLEAN (DELETE content) - Must be LAST
+  htmlText = removeHtmlComments(htmlText);         // 3. Remove comments
+
+  resp = new Response(htmlText, {
+    status: resp.status,
+    statusText: resp.statusText,
+    headers: resp.headers,
+  });
+}
+```
+
+**Production Bug Example:**
+
+```javascript
+// ❌ WRONG - Removing comments first breaks JSON-LD injection
+htmlText = removeHtmlComments(htmlText);  // Deletes trigger comment!
+htmlText = injectJsonLd(htmlText);        // Can't find trigger - fails
+
+// ✅ CORRECT - Inject JSON-LD first, then remove comments
+htmlText = injectJsonLd(htmlText);        // Finds trigger, injects JSON-LD
+htmlText = removeHtmlComments(htmlText);  // Now safe to remove
+```
+
+**Rule of thumb:**
+- **ADD operations first** (inject, replace, insert)
+- **DELETE operations last** (remove, strip, clean)
+
 ### Test Structure Requirements
 
 **All tests must follow this structure in `cloudflare-worker.test.js`:**
@@ -254,6 +300,66 @@ npm test
   ✓ Handler Functions
   ✓ Integration Tests
 ```
+
+### Local HTML Processing Test
+
+Run the local HTML processing test:
+
+```bash
+npm run test:local
+# Or directly:
+node test-local-html.js
+```
+
+**What it does:**
+1. Reads `cloudflare/test.html` (source file with all metadata)
+2. Processes through all pure string functions in correct order:
+   - `replacePicturePlaceholder()` - replaces "Picture Here" text
+   - `injectJsonLd()` - generates JSON-LD from metadata
+   - `removeNonSocialMetadata()` - removes non-social meta tags
+   - `removeHtmlComments()` - removes HTML comments
+3. Validates all transformations with 20 comprehensive tests
+4. Writes processed output to `cloudflare/test-rendered.html`
+
+**Output:**
+```
+✓ ALL TESTS PASSED
+Tests: 20/20 passed
+✓ Processed HTML written to: test-rendered.html
+```
+
+### Visual Testing with test-rendered.html
+
+The generated `test-rendered.html` file serves as a **visual test artifact** showing exactly how the worker transforms HTML.
+
+**How to use:**
+1. Run `npm run test:local` to generate the file
+2. Open `cloudflare/test-rendered.html` in a browser (file:// protocol is fine)
+3. Inspect the test results
+
+**What you'll see when opened locally (file://):**
+
+- **HTML Transformation Tests** (Sections 3-6): ✓ Show actual transformed content
+  - JSON-LD script injected
+  - Metadata cleaned up (author-url, publication-date, etc. removed)
+  - Picture placeholders replaced with images
+  - HTML comments removed
+
+- **CORS/Header Tests** (Sections 1-2): ⚠️ Show helpful explanatory message
+  - "Requires Cloudflare Worker (headers added at request time, not in HTML)"
+  - These tests only work when served via Cloudflare CDN (https://allabout.network/cloudflare/test.html)
+  - Headers are added by the worker at request time, not embedded in HTML
+
+**Why this matters:**
+- `test-rendered.html` is the **transformed version** of `test.html`
+- Shows exactly what the worker produces
+- Validates HTML transformations work correctly
+- Makes it easy to visually inspect worker output
+- No need to deploy to Cloudflare for basic validation
+
+**Comparison:**
+- `test.html` = Source file with all metadata and trigger comments
+- `test-rendered.html` = Transformed file showing worker output
 
 ## Strategy
 

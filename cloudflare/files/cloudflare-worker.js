@@ -191,160 +191,6 @@ export const buildJsonLd = (article, hostname) => {
   return jsonLd;
 };
 
-// --- HTMLRewriter Handlers ---
-// These functions encapsulates the logic for each element type
-// They modify the 'article' state object or the 'element' itself
-
-export const handleJsonLdErrorScript = (e, article) => {
-  const error = e.getAttribute('data-error');
-  if (error && error.includes('"article"')) {
-    article.shouldGenerateJsonLd = true;
-  }
-  e.remove();
-};
-
-export const handleJsonLdMeta = (e, article) => {
-  const value = e.getAttribute('content');
-  if (value === 'article') {
-    article.shouldGenerateJsonLd = true;
-  }
-  e.remove();
-};
-
-export const handleLegacyJsonLdScript = (e, article) => {
-  article.shouldGenerateJsonLd = true;
-  e.remove();
-};
-
-export const handleOgTitle = (e, article, DEBUG) => {
-  const content = e.getAttribute('content');
-  article.title = content;
-  if (DEBUG) {
-    // eslint-disable-next-line no-console
-    console.log('og:title extracted:', { content, hasContent: !!content });
-  }
-};
-
-export const handleOgDescription = (e, article) => {
-  if (!article.description) {
-    article.description = e.getAttribute('content');
-  }
-};
-
-export const handleLongDescription = (e, article) => {
-  article.description = e.getAttribute('content');
-  e.remove();
-};
-
-export const handleOgUrl = (e, article) => {
-  article.url = e.getAttribute('content');
-};
-
-export const handleOgImage = (e, article) => {
-  if (!article.image) {
-    article.image = e.getAttribute('content');
-  }
-};
-
-export const handleOgImageAlt = (e, article) => {
-  article.imageAlt = e.getAttribute('content');
-};
-
-export const handleDescription = (e, article) => {
-  if (!article.description) {
-    article.description = e.getAttribute('content');
-  }
-  e.remove();
-};
-
-export const handleAuthor = (e, article) => {
-  article.author = e.getAttribute('content');
-  // Keep author meta tag for attribution (like LinkedIn) - don't remove
-};
-
-export const handleAuthorUrl = (e, article) => {
-  if (!article.authorUrl) {
-    article.authorUrl = e.getAttribute('content');
-  }
-  e.remove();
-};
-
-export const handleLinkedIn = (e, article) => {
-  // Use LinkedIn as fallback for author URL if not already set
-  if (!article.authorUrl) {
-    article.authorUrl = e.getAttribute('content');
-  }
-  // Keep LinkedIn meta tag for social media (don't remove)
-};
-
-export const handlePublicationDate = (e, article) => {
-  if (!article.publishDate) {
-    article.publishDate = e.getAttribute('content');
-  }
-  e.remove();
-};
-
-export const handleModifiedDate = (e, article) => {
-  if (!article.modifiedDate) {
-    article.modifiedDate = e.getAttribute('content');
-  }
-  e.remove();
-};
-
-/**
- * Handles JSON-LD injection at the end of <head> tag
- * This runs after all meta tags have been processed, ensuring all data is collected
- * @param {Object} element - HTMLRewriter element (head closing tag)
- * @param {Object} article - Article metadata collected from meta tags
- * @param {URL} requestUrl - Request URL object
- * @param {boolean} DEBUG - Debug mode flag
- */
-export const handleJsonLdInjection = (element, article, requestUrl, DEBUG) => {
-  if (DEBUG) {
-    // eslint-disable-next-line no-console
-    console.log('JSON-LD injection at </head>:', {
-      shouldGenerate: article.shouldGenerateJsonLd,
-      hasTitle: !!article.title,
-      title: article.title,
-    });
-  }
-
-  // Only generate JSON-LD if triggered by json-ld meta tag and we have title
-  if (!article.shouldGenerateJsonLd || !article.title) {
-    if (DEBUG) {
-      // eslint-disable-next-line no-console
-      console.log('JSON-LD skipped:', {
-        reason: !article.shouldGenerateJsonLd ? 'no trigger' : 'no title',
-      });
-    }
-    return;
-  }
-
-  const jsonLd = buildJsonLd(article, requestUrl.hostname);
-
-  try {
-    const script = `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>`;
-    element.prepend(script, { html: true });
-
-    if (DEBUG) {
-      // eslint-disable-next-line no-console
-      console.log('JSON-LD generated successfully:', {
-        url: requestUrl.pathname,
-        fields: Object.keys(jsonLd),
-        hasAuthor: !!article.author,
-        hasImage: !!article.image,
-      });
-    }
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error('JSON-LD serialization failed:', {
-      error: err.message,
-      url: requestUrl.pathname,
-      title: article.title,
-    });
-  }
-};
-
 /**
  * Replaces picture placeholder pattern in HTML content
  * Detects <div><div>Picture Here</div></div> and replaces with author image
@@ -380,6 +226,117 @@ export const removeHtmlComments = (html) => (
   html.replace(/<!--[\s\S]*?-->/g, '')
 );
 
+/**
+ * Removes non-social metadata tags from HTML
+ * Keeps author and linkedin meta tags for social sharing
+ * Removes: author-url, publication-date, modified-date, longdescription, jsonld
+ * Pure string replacement - fully testable without Cloudflare Workers runtime
+ * @param {string} html - HTML content to process
+ * @returns {string} Processed HTML with non-social metadata removed
+ */
+export const removeNonSocialMetadata = (html) => {
+  // List of meta tag names to remove (keeps author and linkedin)
+  const tagsToRemove = [
+    'author-url',
+    'publication-date',
+    'published-date',
+    'modified-date',
+    'last-modified',
+    'longdescription',
+    'jsonld',
+  ];
+
+  let result = html;
+
+  // Remove each non-social meta tag
+  tagsToRemove.forEach((tagName) => {
+    // Match meta tag with name="tagName" and any attributes
+    // Pattern: <meta name="tagName"...> including multiline
+    const pattern = new RegExp(`\\s*<meta\\s+name="${tagName}"[^>]*>\\s*`, 'gi');
+    result = result.replace(pattern, '');
+  });
+
+  return result;
+};
+
+/**
+ * Extracts meta tag content using regex
+ * @param {string} html - HTML content
+ * @param {string} selector - Meta tag selector (e.g., 'name="jsonld"', 'property="og:title"')
+ * @returns {string|null} Content attribute value or null
+ */
+export const extractMetaContent = (html, selector) => {
+  // Build regex pattern for meta tag with the given selector
+  const pattern = new RegExp(`<meta\\s+${selector}\\s+content="([^"]*)"`, 'i');
+  const match = html.match(pattern);
+  return match ? match[1] : null;
+};
+
+/**
+ * Checks if JSON-LD generation should be triggered
+ * Looks for meta tag or error script that indicates JSON-LD is needed
+ * @param {string} html - HTML content
+ * @returns {boolean} True if JSON-LD should be generated
+ */
+export const shouldGenerateJsonLd = (html) => {
+  // Check for meta tag trigger
+  if (html.includes('<meta name="jsonld"') && html.includes('content="article"')) {
+    return true;
+  }
+  // Check for error script trigger (authoring error workaround)
+  if (html.includes('type="application/ld+json"') && html.includes('data-error')) {
+    return true;
+  }
+  return false;
+};
+
+/**
+ * Injects JSON-LD structured data into HTML
+ * Pure string function - parses meta tags with regex and injects JSON-LD script
+ * Fully testable without Cloudflare Workers runtime
+ * @param {string} html - HTML content to process
+ * @param {string} hostname - Publisher hostname for JSON-LD
+ * @returns {string} Processed HTML with JSON-LD injected
+ */
+export const injectJsonLd = (html, hostname) => {
+  // Check if JSON-LD generation is triggered
+  if (!shouldGenerateJsonLd(html)) {
+    return html;
+  }
+
+  // Extract article metadata from meta tags using regex
+  const article = {
+    title: extractMetaContent(html, 'property="og:title"'),
+    description: extractMetaContent(html, 'property="og:description"')
+      || extractMetaContent(html, 'name="description"')
+      || extractMetaContent(html, 'name="longdescription"'),
+    url: extractMetaContent(html, 'property="og:url"'),
+    image: extractMetaContent(html, 'property="og:image"'),
+    imageAlt: extractMetaContent(html, 'property="og:image:alt"'),
+    author: extractMetaContent(html, 'name="author"'),
+    authorUrl: extractMetaContent(html, 'name="author-url"')
+      || extractMetaContent(html, 'name="linkedin"'),
+    publishDate: extractMetaContent(html, 'name="publication-date"')
+      || extractMetaContent(html, 'name="published-date"'),
+    modifiedDate: extractMetaContent(html, 'name="modified-date"')
+      || extractMetaContent(html, 'name="last-modified"'),
+  };
+
+  // Must have title to generate JSON-LD
+  if (!article.title) {
+    return html;
+  }
+
+  // Build JSON-LD object
+  const jsonLd = buildJsonLd(article, hostname);
+
+  // Create script tag
+  const jsonLdScript = `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>`;
+
+  // Inject before </head> closing tag
+  return html.replace('</head>', `${jsonLdScript}\n</head>`);
+};
+
 const handleRequest = async (request, env, _ctx) => {
   // Validate required environment variables
   if (!env.ORIGIN_HOSTNAME) {
@@ -388,9 +345,6 @@ const handleRequest = async (request, env, _ctx) => {
       headers: { 'Content-Type': 'text/plain' },
     });
   }
-
-  // Optional debug logging (set DEBUG=true in environment variables)
-  const DEBUG = env.DEBUG === 'true';
 
   const url = new URL(request.url);
 
@@ -477,14 +431,24 @@ const handleRequest = async (request, env, _ctx) => {
     },
   });
 
-  // Only process HTML responses for JSON-LD injection and picture replacement
+  // Only process HTML responses for content transformations
   const contentType = resp.headers.get('content-type');
   if (contentType && contentType.includes('text/html')) {
-    // First, get the HTML text for picture replacement
+    // Get HTML text for pure string processing
     let htmlText = await resp.text();
 
-    // Apply pure string operations (TESTABLE)
+    // CRITICAL ORDER: Apply transformations (ADD content) FIRST
+    // 1. Transform: Replace picture placeholders
     htmlText = replacePicturePlaceholder(htmlText);
+
+    // 2. Transform: Inject JSON-LD structured data
+    htmlText = injectJsonLd(htmlText, url.hostname);
+
+    // CRITICAL ORDER: Apply removals (DELETE content) LAST
+    // 3. Clean: Remove non-social metadata tags
+    htmlText = removeNonSocialMetadata(htmlText);
+
+    // 4. Clean: Remove HTML comments (must be last to preserve triggers for transforms)
     htmlText = removeHtmlComments(htmlText);
 
     // Create new response with processed HTML
@@ -493,81 +457,6 @@ const handleRequest = async (request, env, _ctx) => {
       statusText: resp.statusText,
       headers: resp.headers,
     });
-
-    // Now apply HTMLRewriter for JSON-LD injection
-    const article = {
-      title: null,
-      description: null,
-      image: null,
-      imageAlt: null,
-      url: null,
-      author: null,
-      authorUrl: null,
-      publishDate: null,
-      modifiedDate: null,
-      shouldGenerateJsonLd: false,
-    };
-
-    // eslint-disable-next-line no-undef
-    resp = new HTMLRewriter()
-      .on('script[type="application/ld+json"][data-error]', {
-        element: (e) => handleJsonLdErrorScript(e, article),
-      })
-      .on('meta[name="jsonld"]', {
-        element: (e) => handleJsonLdMeta(e, article),
-      })
-      .on('script[type="application/ld+json"]:not([data-error])', {
-        element: (e) => handleLegacyJsonLdScript(e, article),
-      })
-      .on('meta[data-error]', {
-        element(e) { e.remove(); },
-      })
-      .on('meta[property="og:title"]', {
-        element: (e) => handleOgTitle(e, article, DEBUG),
-      })
-      .on('meta[property="og:description"]', {
-        element: (e) => handleOgDescription(e, article),
-      })
-      .on('meta[name="longdescription"]', {
-        element: (e) => handleLongDescription(e, article),
-      })
-      .on('meta[property="og:url"]', {
-        element: (e) => handleOgUrl(e, article),
-      })
-      .on('meta[property="og:image"]', {
-        element: (e) => handleOgImage(e, article),
-      })
-      .on('meta[property="og:image:alt"]', {
-        element: (e) => handleOgImageAlt(e, article),
-      })
-      .on('meta[name="description"]', {
-        element: (e) => handleDescription(e, article),
-      })
-      .on('meta[name="author"]', {
-        element: (e) => handleAuthor(e, article),
-      })
-      .on('meta[name="author-url"]', {
-        element: (e) => handleAuthorUrl(e, article),
-      })
-      .on('meta[name="linkedin"]', {
-        element: (e) => handleLinkedIn(e, article),
-      })
-      .on('meta[name="publication-date"], meta[name="published-date"]', {
-        element: (e) => handlePublicationDate(e, article),
-      })
-      .on('meta[name="modified-date"], meta[name="last-modified"]', {
-        element: (e) => handleModifiedDate(e, article),
-      })
-      .on('head', {
-        element: () => {
-          // Do nothing on opening <head> tag
-        },
-        comments: () => {}, // Ignore comments
-        text: () => {}, // Ignore text
-        // Inject JSON-LD right before </head> closes (after all meta tags processed)
-        element_end: (e) => handleJsonLdInjection(e, article, new URL(request.url), DEBUG),
-      })
-      .transform(resp);
   }
 
   // Create new Response for header modifications
