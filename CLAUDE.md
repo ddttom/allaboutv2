@@ -1013,4 +1013,4 @@ The reports are created by https://github.com/ddttom/my-pa11y-project
 
 6. **Automated Tests** - CI/CD integration
    - Jest/Mocha for regression testing
-   - Future implementation
+   - Future implementation 
