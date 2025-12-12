@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Browser support: Chrome 108+, Edge 108+
 - **cloudflare/files/cloudflare-worker.js**: `injectSpeculationRules()` pure function
 - **cloudflare/files/cloudflare-worker.test.js**: 8 unit tests + 1 integration test for speculation rules
-- **cloudflare/files/CHANGELOG.md**: NEW FILE with complete release history
+- **cloudflare/files/CHANGELOG.md**: Accidentally created in subdirectory (removed - should be at root only)
 
 ### Changed
 - **cloudflare/files/package.json**: Version bumped 1.1.4 → 1.1.5 (MINOR semantic version)

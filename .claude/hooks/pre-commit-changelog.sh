@@ -58,6 +58,36 @@ if echo "$STAGED_FILES" | grep -q "^CHANGELOG.md$"; then
     exit 0
 fi
 
+# Check if user accidentally created CHANGELOG in subdirectory
+SUBDIR_CHANGELOG=$(echo "$STAGED_FILES" | grep -E "^.+/CHANGELOG\.md$" || echo "")
+if [[ -n "$SUBDIR_CHANGELOG" ]]; then
+    echo -e "${RED}❌ CHANGELOG.md: Found in subdirectory${NC}"
+    echo ""
+    echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "${RED}❌ ERROR: Wrong Location${NC}"
+    echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo ""
+    echo -e "${RED}Found CHANGELOG.md in subdirectory:${NC}"
+    echo -e "  ${SUBDIR_CHANGELOG}"
+    echo ""
+    echo -e "${YELLOW}⚠️  CHANGELOG.md must be at repository root, not in subdirectories${NC}"
+    echo ""
+    echo -e "${BLUE}💡 Correct location:${NC}"
+    echo -e "  $PROJECT_ROOT/CHANGELOG.md"
+    echo ""
+    echo -e "${BLUE}💡 Next steps:${NC}"
+    echo -e "  1. Remove subdirectory CHANGELOG: git rm ${SUBDIR_CHANGELOG}"
+    echo -e "  2. Update root CHANGELOG: edit $PROJECT_ROOT/CHANGELOG.md"
+    echo -e "  3. Stage root CHANGELOG: git add CHANGELOG.md"
+    echo -e "  4. Amend this commit: git commit --amend --no-edit"
+    echo ""
+    echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "${RED}❌ COMMIT BLOCKED${NC}"
+    echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo ""
+    exit 1
+fi
+
 # CHANGELOG.md is not being committed - warn the user
 echo -e "${YELLOW}⚠️  CHANGELOG.md: Not included in this commit${NC}"
 echo ""
@@ -66,6 +96,9 @@ echo -e "${YELLOW}⚠️  WARNING${NC}"
 echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""
 echo -e "${YELLOW}You are committing code changes without updating CHANGELOG.md${NC}"
+echo ""
+echo -e "${BLUE}💡 Location:${NC}"
+echo -e "  $PROJECT_ROOT/CHANGELOG.md (must be at repository root)"
 echo ""
 echo -e "${BLUE}💡 Next steps:${NC}"
 echo -e "  1. Update CHANGELOG.md with your changes"
