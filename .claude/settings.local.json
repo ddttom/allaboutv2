@@ -114,7 +114,8 @@
       "Bash(./compare-responses.sh:*)",
       "Bash(git push:*)",
       "Bash(npx wrangler deploy:*)",
-      "Bash(SKIP_DOC_CHECK=1 git push:*)"
+      "Bash(SKIP_DOC_CHECK=1 git push:*)",
+      "Bash(npm run test:local:*)"
     ],
     "deny": [],
     "ask": []
