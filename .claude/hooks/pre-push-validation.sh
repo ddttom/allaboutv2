@@ -1,6 +1,7 @@
 #!/bin/bash
 # Pre-push validation hook for Claude Code
-# Ensures CLAUDE.md, README.md, and CHANGELOG.md are updated before pushing
+# Ensures CHANGELOG.md is updated before pushing
+# Suggests considering updates to CLAUDE.md and README.md
 #
 # This hook runs before git push operations to validate documentation is current
 #
@@ -28,11 +29,15 @@ NC='\033[0m' # No Color
 # Get project root
 PROJECT_ROOT="${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"
 
-# Files to check
-CRITICAL_FILES=(
+# Files that MUST be updated (will block push if not updated)
+REQUIRED_FILES=(
+    "CHANGELOG.md"
+)
+
+# Files that SHOULD be considered for updates (suggestions only, won't block)
+SUGGESTED_FILES=(
     "CLAUDE.md"
     "README.md"
-    "CHANGELOG.md"
 )
 
 # Function to check if file has uncommitted changes
@@ -104,25 +109,27 @@ echo ""
 
 VALIDATION_FAILED=0
 WARNINGS=()
+SUGGESTIONS=()
 
-for file in "${CRITICAL_FILES[@]}"; do
+# Check REQUIRED files (will block push)
+for file in "${REQUIRED_FILES[@]}"; do
     LAST_MODIFIED=$(get_last_modified "$file")
 
     if [[ "$LAST_MODIFIED" == "missing" ]]; then
-        echo -e "${RED}❌ $file: File not found${NC}"
+        echo -e "${RED}❌ $file: File not found (REQUIRED)${NC}"
         VALIDATION_FAILED=1
         continue
     fi
 
     if [[ "$LAST_MODIFIED" == "never" ]]; then
-        echo -e "${RED}❌ $file: Never committed${NC}"
+        echo -e "${RED}❌ $file: Never committed (REQUIRED)${NC}"
         VALIDATION_FAILED=1
         continue
     fi
 
     # Check if file has changes since oldest unpushed commit
     if [[ "$LAST_MODIFIED" < "$OLDEST_UNPUSHED_DATE" ]]; then
-        echo -e "${RED}❌ $file: Not updated since ${OLDEST_UNPUSHED_DATE:0:10}${NC}"
+        echo -e "${RED}❌ $file: Not updated since ${OLDEST_UNPUSHED_DATE:0:10} (REQUIRED)${NC}"
         echo -e "${RED}   Last modified: ${LAST_MODIFIED:0:10}${NC}"
         VALIDATION_FAILED=1
     else
@@ -135,8 +142,25 @@ for file in "${CRITICAL_FILES[@]}"; do
             echo -e "${YELLOW}⚠️  $file: Has staged but uncommitted changes${NC}"
             WARNINGS+=("$file has staged changes")
         else
-            echo -e "${GREEN}✓ $file: Updated ${LAST_MODIFIED:0:10}${NC}"
+            echo -e "${GREEN}✓ $file: Updated ${LAST_MODIFIED:0:10} (REQUIRED)${NC}"
         fi
+    fi
+done
+
+# Check SUGGESTED files (won't block push, just suggestions)
+for file in "${SUGGESTED_FILES[@]}"; do
+    LAST_MODIFIED=$(get_last_modified "$file")
+
+    if [[ "$LAST_MODIFIED" == "missing" ]] || [[ "$LAST_MODIFIED" == "never" ]]; then
+        continue
+    fi
+
+    # Check if file has changes since oldest unpushed commit
+    if [[ "$LAST_MODIFIED" < "$OLDEST_UNPUSHED_DATE" ]]; then
+        echo -e "${BLUE}ℹ️  $file: Consider updating (last modified ${LAST_MODIFIED:0:10})${NC}"
+        SUGGESTIONS+=("Consider updating $file (last modified ${LAST_MODIFIED:0:10})")
+    else
+        echo -e "${GREEN}✓ $file: Updated ${LAST_MODIFIED:0:10}${NC}"
     fi
 done
 
@@ -148,8 +172,8 @@ if [[ $VALIDATION_FAILED -eq 1 ]]; then
     echo -e "${RED}❌ VALIDATION FAILED${NC}"
     echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
     echo ""
-    echo -e "${YELLOW}Please update the following files before pushing:${NC}"
-    for file in "${CRITICAL_FILES[@]}"; do
+    echo -e "${YELLOW}Please update the following REQUIRED files before pushing:${NC}"
+    for file in "${REQUIRED_FILES[@]}"; do
         LAST_MODIFIED=$(get_last_modified "$file")
         if [[ "$LAST_MODIFIED" < "$OLDEST_UNPUSHED_DATE" ]] || [[ "$LAST_MODIFIED" == "never" ]] || [[ "$LAST_MODIFIED" == "missing" ]]; then
             echo -e "  • ${file}"
@@ -158,13 +182,12 @@ if [[ $VALIDATION_FAILED -eq 1 ]]; then
     echo ""
     echo -e "${YELLOW}💡 Tips:${NC}"
     echo -e "  1. Update CHANGELOG.md with your changes"
-    echo -e "  2. Update README.md if project structure changed"
-    echo -e "  3. Update CLAUDE.md if AI instructions changed"
-    echo -e "  4. Commit your documentation updates"
-    echo -e "  5. Push again"
+    echo -e "  2. Use 'git add .' to stage ALL user-edited files (not just current session files)"
+    echo -e "  3. Commit your documentation updates: git commit -m 'docs: Update CHANGELOG'"
+    echo -e "  4. Push again"
     echo ""
     echo -e "${YELLOW}To bypass this check (NOT RECOMMENDED):${NC}"
-    echo -e "  git push --no-verify"
+    echo -e "  SKIP_DOC_CHECK=1 git push"
     echo ""
     exit 1
 fi
@@ -183,9 +206,27 @@ if [[ ${#WARNINGS[@]} -gt 0 ]]; then
     echo ""
 fi
 
+# Display suggestions but don't block
+if [[ ${#SUGGESTIONS[@]} -gt 0 ]]; then
+    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "${BLUE}ℹ️  SUGGESTIONS${NC}"
+    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo ""
+    for suggestion in "${SUGGESTIONS[@]}"; do
+        echo -e "${BLUE}  • $suggestion${NC}"
+    done
+    echo ""
+    echo -e "${BLUE}💡 These files are optional but recommended to keep up-to-date${NC}"
+    echo ""
+fi
+
 echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo -e "${GREEN}✓ VALIDATION PASSED${NC}"
 echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+if [[ ${#SUGGESTIONS[@]} -gt 0 ]]; then
+    echo -e "${GREEN}  All required documentation is up-to-date${NC}"
+    echo -e "${BLUE}  (See suggestions above for optional improvements)${NC}"
+fi
 echo ""
 
 exit 0

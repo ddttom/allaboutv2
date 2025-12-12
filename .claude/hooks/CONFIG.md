@@ -48,10 +48,13 @@ This project uses a **minimal hooks setup** optimized for EDS development. The a
 
 **pre-push-validation.sh** (Git Hook)
 - **Trigger:** Before `git push` operations
-- **Purpose:** Validate CLAUDE.md, README.md, and CHANGELOG.md are updated before push
+- **Purpose:**
+  - **REQUIRED:** Validates CHANGELOG.md is updated before push (blocks push if not updated)
+  - **SUGGESTED:** Recommends updating CLAUDE.md and README.md (won't block push)
 - **Implementation:** Bash script with git integration
 - **Usage:** Runs automatically via git hooks, or manually with `/validate-docs` command
-- **Bypass:** Use `git push --no-verify` (not recommended for main branches)
+- **Bypass:** Use `SKIP_DOC_CHECK=1 git push` (not recommended for main branches)
+- **Workflow:** After validation fails, use `git add .` to stage ALL user-edited files (not just current session)
 
 ## Quick Start Configuration
 

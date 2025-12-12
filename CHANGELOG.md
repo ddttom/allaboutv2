@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12h] - Pre-Push Validation Requirement Changes
+
+### Changed
+- **Pre-Push Validation Hook**: Changed required vs suggested documentation files
+  - **REQUIRED (blocks push)**: CHANGELOG.md only
+  - **SUGGESTED (won't block)**: CLAUDE.md and README.md
+  - Rationale: CHANGELOG.md is critical for tracking changes; other docs can lag slightly
+  - Removed overly strict validation that blocked pushes for README/CLAUDE updates
+
+### Modified
+- **Files updated**:
+  - `.claude/hooks/pre-push-validation.sh`:
+    - Split `CRITICAL_FILES` into `REQUIRED_FILES` (CHANGELOG.md) and `SUGGESTED_FILES` (README.md, CLAUDE.md)
+    - Added suggestions display section with blue info messages
+    - Updated failure messages to only list REQUIRED files
+    - Enhanced success message to mention suggestions when present
+    - Updated tips section to reference `git add .` workflow
+  - `.claude/hooks/CONFIG.md`: Updated pre-push-validation.sh documentation
+  - `CLAUDE.md`: Updated hooks section to reflect new REQUIRED vs SUGGESTED distinction
+
+### Improved
+- **Developer experience**: No more push failures for README/CLAUDE.md being slightly out of date
+- **Flexibility**: Can push critical fixes without being blocked by documentation lag
+- **Guidance**: Still reminds developers to consider updating docs, just doesn't block
+
 ## [2025-12-12g] - Cloudflare Worker Picture Placeholder Fix
 
 ### Fixed
