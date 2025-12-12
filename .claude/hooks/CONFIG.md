@@ -49,12 +49,19 @@ This project uses a **minimal hooks setup** optimized for EDS development. The a
 **pre-push-validation.sh** (Git Hook)
 - **Trigger:** Before `git push` operations
 - **Purpose:**
+  - **INTERACTIVE:** Prompts for CHANGELOG.md entry if outdated, automatically adds it
   - **REQUIRED:** Validates CHANGELOG.md is updated before push (blocks push if not updated)
   - **SUGGESTED:** Recommends updating CLAUDE.md and README.md (won't block push)
-- **Implementation:** Bash script with git integration
+- **Implementation:** Bash script with git integration and interactive prompts
 - **Usage:** Runs automatically via git hooks, or manually with `/validate-docs` command
 - **Bypass:** Use `SKIP_DOC_CHECK=1 git push` (not recommended for main branches)
-- **Workflow:** After validation fails, use `git add .` to stage ALL user-edited files (not just current session)
+- **Interactive Workflow:**
+  1. Hook detects CHANGELOG.md needs updating
+  2. Prompts: "What changed in this commit/push?"
+  3. User provides summary (e.g., "Added HTML comment removal")
+  4. Hook automatically inserts entry into CHANGELOG.md
+  5. Push blocked with instructions to review, commit, and push again
+  6. User reviews, commits CHANGELOG.md, and pushes successfully
 
 ## Quick Start Configuration
 

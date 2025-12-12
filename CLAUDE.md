@@ -299,12 +299,18 @@ Active hooks that enhance development workflow:
 - Lightweight bash script
 
 **pre-push-validation.sh** (Git Hook)
+- **INTERACTIVE:** Prompts for CHANGELOG.md entry if outdated, automatically adds it to the file
 - **REQUIRED:** Validates CHANGELOG.md is updated before push (blocks push if not updated)
 - **SUGGESTED:** Recommends updating CLAUDE.md and README.md (won't block push, only suggests)
+- **Workflow:**
+  1. Run `git push` → Hook detects CHANGELOG.md needs updating
+  2. Prompts: "What changed in this commit/push?"
+  3. You provide summary (e.g., "Added HTML comment removal")
+  4. Hook automatically inserts entry into CHANGELOG.md
+  5. Push blocked → Review CHANGELOG.md, commit it, and push again
 - Auto-triggers on `git push` operations
 - Use `/validate-docs` for manual validation
 - **Bypass:** Use `SKIP_DOC_CHECK=1 git push` if docs truly don't need updating
-- **IMPORTANT**: When validation fails and you update docs, use `git add .` to include all user-edited files, not just the files from the current chat session
 
 See `.claude/hooks/CONFIG.md` for configuration and customization.
 

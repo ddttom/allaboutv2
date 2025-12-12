@@ -7,6 +7,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12j] - Interactive Pre-Push CHANGELOG Update
+
+### Changed
+- **Pre-Push Validation Hook**: Now proactively prompts for CHANGELOG.md updates BEFORE blocking push
+  - **Interactive Workflow**: When CHANGELOG.md needs updating, hook prompts "What changed in this commit/push?"
+  - **Automatic Entry Creation**: User provides summary, hook automatically inserts formatted entry into CHANGELOG.md
+  - **Smart Insertion**: Places new entry after `## [Unreleased]` section or at top of changelog
+  - **Date Stamping**: Automatically adds current date in format `## [YYYY-MM-DD] - Summary`
+  - **Guided Next Steps**: After creating entry, displays clear instructions to review, commit, and push
+  - **No More Manual Updates**: Eliminates need to manually format CHANGELOG entries
+  - **Previous Behavior**: Hook would block push and require manual CHANGELOG.md editing
+  - **New Behavior**: Hook creates the CHANGELOG entry for you, just needs review and commit
+
+### Technical Details
+- **Function Added**: `prompt_for_changelog_entry()` - Interactive prompt and automatic entry insertion
+- **Entry Format**:
+  ```
+  ## [YYYY-MM-DD] - User Summary
+
+  ### Changed
+  - User Summary
+  ```
+- **AWK-Based Insertion**: Uses `awk` to insert entry after `## [Unreleased]` or before first `##` heading
+- **Input Validation**: Requires non-empty summary, returns error if skipped
+- **Exit Code 1**: Still blocks push after creating entry to ensure review and commit
+
+### Files Modified
+1. `.claude/hooks/pre-push-validation.sh` - Added interactive prompt function (70 lines)
+2. `.claude/hooks/CONFIG.md` - Updated documentation with interactive workflow
+3. `CLAUDE.md` - Updated hooks section with 5-step interactive workflow
+
+### Rationale
+Transforms the pre-push hook from a "blocker that requires manual work" into an "assistant that does the work for you." Users no longer need to manually edit CHANGELOG.md - the hook creates properly formatted entries automatically. This reduces friction while maintaining documentation discipline.
+
+### User Request
+> "if you type git push, it runs the command, gets a fail then updates changelog, i want a hook that update @CHANGELOG.md before trying git push"
+
 ## [2025-12-12i] - Cloudflare Worker HTML Comment Removal
 
 ### Added

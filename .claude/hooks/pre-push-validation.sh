@@ -1,9 +1,10 @@
 #!/bin/bash
 # Pre-push validation hook for Claude Code
-# Ensures CHANGELOG.md is updated before pushing
+# Proactively helps update CHANGELOG.md before pushing
 # Suggests considering updates to CLAUDE.md and README.md
 #
-# This hook runs before git push operations to validate documentation is current
+# This hook runs before git push operations to ensure documentation is current
+# If CHANGELOG.md needs updating, it will prompt for an entry before allowing push
 #
 # To bypass validation when docs don't need updating:
 #   SKIP_DOC_CHECK=1 git push
@@ -28,6 +29,7 @@ NC='\033[0m' # No Color
 
 # Get project root
 PROJECT_ROOT="${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"
+CHANGELOG_FILE="$PROJECT_ROOT/CHANGELOG.md"
 
 # Files that MUST be updated (will block push if not updated)
 REQUIRED_FILES=(
@@ -64,9 +66,76 @@ get_last_modified() {
     fi
 }
 
-# Function to get last commit date
-get_last_commit_date() {
-    git log -1 --format="%ci" 2>/dev/null || echo "never"
+# Function to prompt for CHANGELOG entry
+prompt_for_changelog_entry() {
+    echo ""
+    echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "${YELLOW}📝 CHANGELOG.md NEEDS UPDATING${NC}"
+    echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo ""
+    echo -e "${BLUE}What changed in this commit/push?${NC}"
+    echo -e "${BLUE}Please provide a brief summary:${NC}"
+    echo ""
+
+    # Read user input
+    read -p "Summary: " SUMMARY
+
+    if [[ -z "$SUMMARY" ]]; then
+        echo -e "${RED}❌ No summary provided${NC}"
+        return 1
+    fi
+
+    # Get current date in format [YYYY-MM-DD]
+    CURRENT_DATE=$(date +"%Y-%m-%d")
+
+    # Create CHANGELOG entry
+    CHANGELOG_ENTRY="## [$CURRENT_DATE] - $SUMMARY
+
+### Changed
+- $SUMMARY
+
+"
+
+    # Check if "## [Unreleased]" section exists
+    if grep -q "## \[Unreleased\]" "$CHANGELOG_FILE"; then
+        # Insert after [Unreleased] section
+        # Use a temporary file for the insertion
+        awk -v entry="$CHANGELOG_ENTRY" '
+            /## \[Unreleased\]/ {
+                print;
+                print "";
+                print entry;
+                next;
+            }
+            { print }
+        ' "$CHANGELOG_FILE" > "$CHANGELOG_FILE.tmp"
+        mv "$CHANGELOG_FILE.tmp" "$CHANGELOG_FILE"
+    else
+        # Insert at the top of the changelog (after header)
+        # Find the first "##" line and insert before it
+        awk -v entry="$CHANGELOG_ENTRY" '
+            !inserted && /^## / {
+                print entry;
+                inserted=1;
+            }
+            { print }
+        ' "$CHANGELOG_FILE" > "$CHANGELOG_FILE.tmp"
+        mv "$CHANGELOG_FILE.tmp" "$CHANGELOG_FILE"
+    fi
+
+    echo ""
+    echo -e "${GREEN}✓ CHANGELOG.md updated with entry:${NC}"
+    echo -e "${BLUE}  $CURRENT_DATE - $SUMMARY${NC}"
+    echo ""
+    echo -e "${YELLOW}💡 Next steps:${NC}"
+    echo -e "  1. Review the CHANGELOG.md entry (it's been added automatically)"
+    echo -e "  2. Edit if needed: \$EDITOR CHANGELOG.md"
+    echo -e "  3. Stage the changes: git add CHANGELOG.md"
+    echo -e "  4. Commit: git commit -m 'docs: Update CHANGELOG'"
+    echo -e "  5. Push again: git push"
+    echo ""
+
+    return 0
 }
 
 echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
@@ -110,6 +179,7 @@ echo ""
 VALIDATION_FAILED=0
 WARNINGS=()
 SUGGESTIONS=()
+NEEDS_CHANGELOG_UPDATE=0
 
 # Check REQUIRED files (will block push)
 for file in "${REQUIRED_FILES[@]}"; do
@@ -129,9 +199,15 @@ for file in "${REQUIRED_FILES[@]}"; do
 
     # Check if file has changes since oldest unpushed commit
     if [[ "$LAST_MODIFIED" < "$OLDEST_UNPUSHED_DATE" ]]; then
-        echo -e "${RED}❌ $file: Not updated since ${OLDEST_UNPUSHED_DATE:0:10} (REQUIRED)${NC}"
-        echo -e "${RED}   Last modified: ${LAST_MODIFIED:0:10}${NC}"
-        VALIDATION_FAILED=1
+        echo -e "${YELLOW}⚠️  $file: Not updated since ${OLDEST_UNPUSHED_DATE:0:10}${NC}"
+        echo -e "${YELLOW}   Last modified: ${LAST_MODIFIED:0:10}${NC}"
+
+        # Special handling for CHANGELOG.md - offer to update it now
+        if [[ "$file" == "CHANGELOG.md" ]]; then
+            NEEDS_CHANGELOG_UPDATE=1
+        else
+            VALIDATION_FAILED=1
+        fi
     else
         # Check if file has uncommitted changes
         if ! has_uncommitted_changes "$file"; then
@@ -166,6 +242,23 @@ done
 
 echo ""
 
+# If CHANGELOG needs updating, prompt for entry
+if [[ $NEEDS_CHANGELOG_UPDATE -eq 1 ]]; then
+    if prompt_for_changelog_entry; then
+        echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+        echo -e "${RED}⏸️  PUSH PAUSED${NC}"
+        echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+        echo ""
+        echo -e "${YELLOW}CHANGELOG.md has been updated with your entry.${NC}"
+        echo -e "${YELLOW}Please review, commit, and push again.${NC}"
+        echo ""
+        exit 1
+    else
+        echo -e "${RED}❌ Failed to update CHANGELOG.md${NC}"
+        VALIDATION_FAILED=1
+    fi
+fi
+
 # Display validation results
 if [[ $VALIDATION_FAILED -eq 1 ]]; then
     echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
@@ -181,9 +274,9 @@ if [[ $VALIDATION_FAILED -eq 1 ]]; then
     done
     echo ""
     echo -e "${YELLOW}💡 Tips:${NC}"
-    echo -e "  1. Update CHANGELOG.md with your changes"
-    echo -e "  2. Use 'git add .' to stage ALL user-edited files (not just current session files)"
-    echo -e "  3. Commit your documentation updates: git commit -m 'docs: Update CHANGELOG'"
+    echo -e "  1. Update required files with your changes"
+    echo -e "  2. Use 'git add .' to stage ALL user-edited files"
+    echo -e "  3. Commit your documentation updates: git commit -m 'docs: Update documentation'"
     echo -e "  4. Push again"
     echo ""
     echo -e "${YELLOW}To bypass this check (NOT RECOMMENDED):${NC}"
