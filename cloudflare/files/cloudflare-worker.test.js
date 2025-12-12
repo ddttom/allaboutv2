@@ -5,7 +5,7 @@
  * Run with: npm test (requires vitest or jest)
  */
 
-/* eslint-disable max-classes-per-file */
+/* eslint-disable max-classes-per-file, import/no-unresolved */
 // Multiple mock classes needed for testing
 
 import {
