@@ -23,6 +23,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Addresses issue where AI assistants would create `.claude/` in wrong directory
   - Includes red flags, correct protocol, and project root path reference
   - Ensures all file creation workflows verify location first
+- **Pre-Push Validation Skip Option**: Added `SKIP_DOC_CHECK` environment variable
+  - Use `SKIP_DOC_CHECK=1 git push` to bypass validation when docs don't need updating
+  - Useful when modifying skills/hooks that don't require CLAUDE.md/README.md changes
+  - Added to `.claude/hooks/pre-push-validation.sh` with usage examples in comments
+  - Displays warning message when check is skipped for transparency
 
 ## [2025-12-11c] - Cloudflare Worker Author Metadata Preservation
 

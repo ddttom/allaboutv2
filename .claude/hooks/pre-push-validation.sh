@@ -3,8 +3,20 @@
 # Ensures CLAUDE.md, README.md, and CHANGELOG.md are updated before pushing
 #
 # This hook runs before git push operations to validate documentation is current
+#
+# To bypass validation when docs don't need updating:
+#   SKIP_DOC_CHECK=1 git push
+# Or set environment variable:
+#   export SKIP_DOC_CHECK=1
+#   git push
 
 set -euo pipefail
+
+# Check if validation should be skipped
+if [[ "${SKIP_DOC_CHECK:-0}" == "1" ]]; then
+    echo -e "\033[1;33m⚠️  Documentation check skipped (SKIP_DOC_CHECK=1)\033[0m"
+    exit 0
+fi
 
 # ANSI color codes
 RED='\033[0;31m'
