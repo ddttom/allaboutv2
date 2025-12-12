@@ -20,7 +20,7 @@ This Worker extends Adobe's standard EDS Cloudflare Worker template to:
 The worker includes a version header in all responses:
 - **Header name**: `cfw` (CloudflareWorker)
 - **Format**: Semantic versioning (MAJOR.MINOR.PATCH)
-- **Current version**: `1.1.3`
+- **Current version**: `1.1.4`
 - **Usage**: Track deployed worker version for debugging and monitoring
 
 **Version Management:**

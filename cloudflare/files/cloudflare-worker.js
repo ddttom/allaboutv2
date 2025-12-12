@@ -12,11 +12,11 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  *
- * @version 1.1.3
+ * @version 1.1.4
  */
 
 // Worker version - increment using semantic versioning for all changes
-export const WORKER_VERSION = '1.1.3';
+export const WORKER_VERSION = '1.1.4';
 
 // Picture placeholder configuration
 export const PICTURE_PLACEHOLDER_CONFIG = {

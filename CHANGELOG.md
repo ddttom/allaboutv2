@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [2025-12-12s] - Cloudflare Worker: Fix JSON-LD Publisher Organization Hostname
+## [2025-12-12s] - Cloudflare Worker v1.1.4: Fix JSON-LD Publisher Organization Hostname
 
 ### Fixed
 - **JSON-LD Publisher Organization**: Publisher name now uses public-facing domain instead of EDS origin
@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **After**: `"publisher": {"@type": "Organization", "name": "allabout.network"}`
   - Ensures search engines see the correct canonical domain for the publisher
   - `ORIGIN_HOSTNAME` still used for fetching content (unchanged behavior)
+- **Version**: Worker version bumped from `1.1.3` → `1.1.4` (patch release)
 
 ### Changed
 - **cloudflare-worker.js**:
