@@ -7,6 +7,71 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12b] - Fix Cloudflare Worker JSON Import Syntax Error
+
+### Fixed
+- **Cloudflare Worker JSON import compatibility**
+  - Changed from `import pkg from './package.json' with { type: 'json' }` to hardcoded version string
+  - Fixes SyntaxError when deploying to Cloudflare Workers
+  - Maintains compatibility with both Node.js v25 and Cloudflare Workers runtime
+  - Version now hardcoded as `'1.1.5'` in `cloudflare-worker.js` line 20
+  - Updated comment to remind developers to update version manually
+
+### Changed
+- **cloudflare/files/cloudflare-worker.js** (line 18-20):
+  - Removed problematic JSON import statement
+  - Replaced with `export const WORKER_VERSION = '1.1.5';`
+  - All 83 unit tests still passing
+  - All 23 local HTML tests still passing
+
+- **cloudflare/test.html** (line 395):
+  - Updated footer version from 1.1.3 to 1.1.5
+
+- **.claude/hooks/pre-tool-use-version-check.sh**:
+  - Updated version increment instructions to reference hardcoded version
+  - Added reminder to update four version locations:
+    1. WORKER_VERSION constant (line 20)
+    2. @version comment (line 15)
+    3. package.json version field
+    4. cloudflare/test.html footer (line 395)
+  - Improved version change confirmation message
+
+- **.claude/hooks/CONFIG.md**:
+  - Added documentation for pre-tool-use-version-check.sh hook
+  - Documented version synchronization requirements (four locations)
+  - Noted hardcoded version approach for Cloudflare compatibility
+
+## [2025-12-12] - Add Speculation Rules Testing to Production Test Page
+
+### Added
+- **Speculation Rules API test section** in production test page (`cloudflare/test.html`)
+  - New Section 6: "Speculation Rules API" with 4 comprehensive test cases
+  - Tests validate: script tag presence, JSON structure, prerender/prefetch rules, placement in `<head>`
+  - JavaScript function `testSpeculationRules()` for automated validation
+  - Visual indicators (✓/✗) for test results
+  - Integration with existing `runAllTests()` flow
+
+### Changed
+- **cloudflare/test.html**:
+  - Added Section 6: "Speculation Rules API" (lines 349-379)
+  - Renumbered existing Section 6 "JSON-LD Output" to Section 7 (line 382)
+  - Added `testSpeculationRules()` function (lines 664-724)
+  - Updated `runAllTests()` to call speculation rules tests (line 461)
+  - Added speculation rules test IDs to local file error handling (lines 440-443)
+  - Updated alert message to include "Speculation Rules injection" (line 420)
+
+- **Documentation updates**:
+  - `cloudflare/files/README.md`: Added speculation rules to test page list (line 906)
+  - `cloudflare/files/TESTING.md`:
+    - Updated test count from 20/20 to 23/23 (line 348)
+    - Added `injectSpeculationRules()` to processing list (line 341)
+    - Updated HTML Transformation Tests to Sections 3-7 (line 363)
+    - Added speculation rules to transformation list (line 367)
+
+### Fixed
+- Completed implementation of speculation rules testing claimed in commit 947956f0
+- Test page now validates all worker transformations including speculation rules injection
+
 ## [2025-12-12ai] - Add Cloudflare Worker Intelligent Test Automation System
 
 ### Added

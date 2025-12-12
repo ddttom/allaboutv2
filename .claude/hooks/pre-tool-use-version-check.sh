@@ -227,11 +227,14 @@ Version increment rules:
   PATCH (1.0.x) - Bug fixes, refactoring, documentation
 
 How to increment version:
-  1. Use command: /increment-cfw-version [MAJOR|MINOR|PATCH]
-  2. Or manually update WORKER_VERSION in cloudflare-worker.js
-  3. Then run tests: cd cloudflare/files && npm test
+  1. Update WORKER_VERSION constant in cloudflare-worker.js (line 20)
+  2. Update @version comment in file header (line 15)
+  3. Update version in package.json to keep in sync
+  4. Update version in cloudflare/test.html footer (line 395)
+  5. Run tests: cd cloudflare/files && npm test
 
-For more info, see: .claude/skills/cfw-version-monitor/SKILL.md
+Note: Version is hardcoded for Cloudflare Workers compatibility.
+Update all four locations when changing version.
 
 EOF
     # Don't block the operation, just warn
@@ -246,10 +249,13 @@ EOF
 Previous version: $previous_version
 New version:      $current_version
 
-Remember to:
-  1. Run tests: cd cloudflare/files && npm test
-  2. Update CHANGELOG.md with changes
-  3. Update documentation if needed
+Remember to update all four version locations:
+  1. WORKER_VERSION constant (line 20) - ✓ Already done
+  2. @version comment (line 15) - Check this!
+  3. package.json version field - Check this!
+  4. cloudflare/test.html footer (line 395) - Check this!
+  5. Run tests: cd cloudflare/files && npm test
+  6. Update CHANGELOG.md with changes
 
 EOF
 

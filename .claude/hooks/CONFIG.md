@@ -50,6 +50,26 @@ This project uses a **minimal hooks setup** optimized for EDS development. The a
 - **Purpose:** Track modified files for session context
 - **Implementation:** Bash script with minimal overhead
 
+**pre-tool-use-version-check.sh** (Cloudflare Worker Version Monitor)
+- **Trigger:** Before Edit, MultiEdit, or Write operations on `cloudflare/files/cloudflare-worker.js`
+- **Purpose:** Monitor and enforce version increments for worker changes
+- **Implementation:** Bash script with git version comparison
+- **Features:**
+  - Detects version changes by comparing with git HEAD
+  - Warns if WORKER_VERSION not incremented
+  - Validates two-file rule (only cloudflare-worker.test.js allowed)
+  - Reminds developers to update four version locations:
+    1. WORKER_VERSION constant (line 20)
+    2. @version comment in file header (line 15)
+    3. package.json version field
+    4. cloudflare/test.html footer (line 395)
+- **Benefits:**
+  - Enforces semantic versioning discipline
+  - Prevents accidental deployment with stale version
+  - Maintains version consistency across files
+  - Catches two-file rule violations early
+- **Note:** Version is hardcoded for Cloudflare Workers compatibility (no JSON import)
+
 **cloudflare-worker-test-regenerate.sh** (Enhanced with AI Test Automation)
 - **Trigger:** After Edit, MultiEdit, or Write operations on `cloudflare/files/cloudflare-worker.js`
 - **Purpose:** Intelligent test automation system with auto-generation and coverage reporting

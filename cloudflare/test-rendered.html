@@ -345,7 +345,39 @@
       </div>
 
       <div class="test-section">
-        <h2>6️⃣ JSON-LD Output</h2>
+        <h2>6️⃣ Speculation Rules API</h2>
+        <div class="test-item">
+          <span class="icon pending" id="speculation-presence-icon">⏳</span>
+          <div class="content">
+            <strong>Speculation Rules Script Tag Presence</strong>
+            <div class="test-result" id="speculation-presence-result">Waiting for test...</div>
+          </div>
+        </div>
+        <div class="test-item">
+          <span class="icon pending" id="speculation-structure-icon">⏳</span>
+          <div class="content">
+            <strong>Valid JSON Structure</strong>
+            <div class="test-result" id="speculation-structure-result">Waiting for test...</div>
+          </div>
+        </div>
+        <div class="test-item">
+          <span class="icon pending" id="speculation-rules-icon">⏳</span>
+          <div class="content">
+            <strong>Prerender & Prefetch Rules</strong>
+            <div class="test-result" id="speculation-rules-result">Waiting for test...</div>
+          </div>
+        </div>
+        <div class="test-item">
+          <span class="icon pending" id="speculation-placement-icon">⏳</span>
+          <div class="content">
+            <strong>Script Placement (before &lt;/head&gt;)</strong>
+            <div class="test-result" id="speculation-placement-result">Waiting for test...</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="test-section">
+        <h2>7️⃣ JSON-LD Output</h2>
         <div class="test-item">
           <span class="icon pending" id="jsonld-display-icon">⏳</span>
           <div class="content">
@@ -358,7 +390,7 @@
 
     <div class="footer">
       <p><strong>Cloudflare Worker Deployment Test</strong></p>
-      <p>Version 1.1.3 • Digital Domain Technologies Ltd</p>
+      <p>Version 1.1.5 • Digital Domain Technologies Ltd</p>
     </div>
   </div>
 
@@ -383,6 +415,7 @@
           'https://allabout.network/cloudflare/test.html\n\n' +
           'Opening the file locally will NOT run worker transformations:\n' +
           '• JSON-LD injection\n' +
+          '• Speculation Rules injection\n' +
           '• Metadata cleanup\n' +
           '• Picture placeholder replacement\n' +
           '• CORS headers\n\n' +
@@ -403,6 +436,10 @@
         setTestResult('meta-kept', 'error', '⚠️ Cannot test - file opened locally (needs Cloudflare CDN)');
         setTestResult('placeholder-replaced', 'error', '⚠️ Cannot test - file opened locally (needs Cloudflare CDN)');
         setTestResult('placeholder-non-match', 'error', '⚠️ Cannot test - file opened locally (needs Cloudflare CDN)');
+        setTestResult('speculation-presence', 'error', '⚠️ Cannot test - file opened locally (needs Cloudflare CDN)');
+        setTestResult('speculation-structure', 'error', '⚠️ Cannot test - file opened locally (needs Cloudflare CDN)');
+        setTestResult('speculation-rules', 'error', '⚠️ Cannot test - file opened locally (needs Cloudflare CDN)');
+        setTestResult('speculation-placement', 'error', '⚠️ Cannot test - file opened locally (needs Cloudflare CDN)');
         setTestResult('jsonld-display', 'error', '⚠️ Cannot test - file opened locally (needs Cloudflare CDN)');
 
         return; // Stop test execution
@@ -422,6 +459,9 @@
 
       // Test 5: Picture Placeholder Replacement
       testPicturePlaceholder();
+
+      // Test 6: Speculation Rules API
+      await testSpeculationRules();
 
       console.log('All tests completed!');
     }
@@ -624,6 +664,68 @@
         setTestResult('placeholder-non-match', 'error', '✗ Non-matching text was incorrectly replaced with image');
       } else {
         setTestResult('placeholder-non-match', 'error', '✗ Test element not found or structure changed');
+      }
+    }
+
+    async function testSpeculationRules() {
+      // Find speculation rules script tag
+      const speculationScript = document.querySelector('script[type="speculationrules"]');
+
+      if (!speculationScript) {
+        setTestResult('speculation-presence', 'error', '✗ No speculation rules script tag found');
+        setTestResult('speculation-structure', 'error', '✗ Cannot test structure without script');
+        setTestResult('speculation-rules', 'error', '✗ Cannot test rules without script');
+        setTestResult('speculation-placement', 'error', '✗ Cannot test placement without script');
+        return;
+      }
+
+      setTestResult('speculation-presence', 'success', '✓ Speculation rules script tag found');
+
+      try {
+        const rules = JSON.parse(speculationScript.textContent);
+
+        // Test valid JSON structure
+        if (rules && typeof rules === 'object') {
+          setTestResult('speculation-structure', 'success', '✓ Valid JSON structure');
+        } else {
+          setTestResult('speculation-structure', 'error', '✗ Invalid JSON structure');
+        }
+
+        // Test prerender and prefetch rules
+        const hasPrerender = rules.prerender && Array.isArray(rules.prerender);
+        const hasPrefetch = rules.prefetch && Array.isArray(rules.prefetch);
+
+        if (hasPrerender && hasPrefetch) {
+          const prerenderRule = rules.prerender[0];
+          const prefetchRule = rules.prefetch[0];
+
+          if (prerenderRule?.where?.href_matches === '/*' &&
+              prefetchRule?.where?.href_matches === '/*') {
+            setTestResult('speculation-rules', 'success',
+              '✓ Prerender and prefetch rules configured for /* with moderate eagerness');
+          } else {
+            setTestResult('speculation-rules', 'error',
+              '✗ Rules exist but incorrect configuration');
+          }
+        } else {
+          setTestResult('speculation-rules', 'error',
+            `✗ Missing rules: prerender=${hasPrerender}, prefetch=${hasPrefetch}`);
+        }
+
+        // Test placement (should be in head)
+        const inHead = document.head.contains(speculationScript);
+        if (inHead) {
+          setTestResult('speculation-placement', 'success',
+            '✓ Script correctly placed in <head>');
+        } else {
+          setTestResult('speculation-placement', 'error',
+            '✗ Script not in <head> element');
+        }
+
+      } catch (error) {
+        setTestResult('speculation-structure', 'error', `✗ JSON parse error: ${error.message}`);
+        setTestResult('speculation-rules', 'error', '✗ Cannot test rules (parse error)');
+        setTestResult('speculation-placement', 'error', '✗ Cannot test placement (parse error)');
       }
     }
 

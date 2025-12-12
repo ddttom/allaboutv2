@@ -902,6 +902,8 @@ A complete test page is available at `/cloudflare/test.html` that validates all 
 - ✅ JSON-LD generation and schema structure
 - ✅ Date formatting (ISO 8601)
 - ✅ Metadata cleanup (non-social tags removed)
+- ✅ Picture placeholder replacement (Picture Here → author image)
+- ✅ Speculation Rules API injection (prerender & prefetch)
 
 **Manual JSON-LD test**:
 1. Deploy worker to Cloudflare

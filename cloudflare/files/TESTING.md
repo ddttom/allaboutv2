@@ -338,13 +338,14 @@ node test-local-html.js
    - `injectJsonLd()` - generates JSON-LD from metadata
    - `removeNonSocialMetadata()` - removes non-social meta tags
    - `removeHtmlComments()` - removes HTML comments
-3. Validates all transformations with 20 comprehensive tests
+   - `injectSpeculationRules()` - injects speculation rules for prerender/prefetch
+3. Validates all transformations with 23 comprehensive tests
 4. Writes processed output to `cloudflare/test-rendered.html`
 
 **Output:**
 ```
 ✓ ALL TESTS PASSED
-Tests: 20/20 passed
+Tests: 23/23 passed
 ✓ Processed HTML written to: test-rendered.html
 ```
 
@@ -359,10 +360,11 @@ The generated `test-rendered.html` file serves as a **visual test artifact** sho
 
 **What you'll see when opened locally (file://):**
 
-- **HTML Transformation Tests** (Sections 3-6): ✓ Show actual transformed content
+- **HTML Transformation Tests** (Sections 3-7): ✓ Show actual transformed content
   - JSON-LD script injected
   - Metadata cleaned up (author-url, publication-date, etc. removed)
   - Picture placeholders replaced with images
+  - Speculation Rules API injected (prerender & prefetch)
   - HTML comments removed
 
 - **CORS/Header Tests** (Sections 1-2): ⚠️ Show helpful explanatory message

@@ -12,14 +12,12 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  *
- * @version 1.1.4
+ * @version 1.1.5
  */
 
-// Worker version - imported from package.json for single source of truth
-// eslint-disable-next-line import/extensions
-import pkg from './package.json' with { type: 'json' };
-
-export const WORKER_VERSION = pkg.version;
+// Worker version - hardcoded for compatibility
+// Update this when package.json version changes
+export const WORKER_VERSION = '1.1.5';
 
 // Picture placeholder configuration
 export const PICTURE_PLACEHOLDER_CONFIG = {
