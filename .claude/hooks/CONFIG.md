@@ -53,6 +53,8 @@ This project uses a **minimal hooks setup** optimized for EDS development. The a
   - **REQUIRED:** Validates CHANGELOG.md is updated before push (blocks push if not updated)
   - **SUGGESTED:** Recommends updating CLAUDE.md and README.md (won't block push)
 - **Implementation:** Bash script with git integration and interactive prompts
+  - **CRITICAL FIX:** Uses `/dev/tty` for user input to avoid reading git push refs from stdin
+  - Git hooks receive push information on stdin (refs), so `read` must redirect from terminal
 - **Usage:** Runs automatically via git hooks, or manually with `/validate-docs` command
 - **Bypass:** Use `SKIP_DOC_CHECK=1 git push` (not recommended for main branches)
 - **Interactive Workflow:**

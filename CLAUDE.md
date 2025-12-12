@@ -302,6 +302,7 @@ Active hooks that enhance development workflow:
 - **INTERACTIVE:** Prompts for CHANGELOG.md entry if outdated, automatically adds it to the file
 - **REQUIRED:** Validates CHANGELOG.md is updated before push (blocks push if not updated)
 - **SUGGESTED:** Recommends updating CLAUDE.md and README.md (won't block push, only suggests)
+- **Implementation Note:** Uses `/dev/tty` for user input to avoid reading git push refs from stdin
 - **Workflow:**
   1. Run `git push` → Hook detects CHANGELOG.md needs updating
   2. Prompts: "What changed in this commit/push?"

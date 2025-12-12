@@ -77,8 +77,9 @@ prompt_for_changelog_entry() {
     echo -e "${BLUE}Please provide a brief summary:${NC}"
     echo ""
 
-    # Read user input
-    read -p "Summary: " SUMMARY
+    # Read user input from terminal (not from stdin which contains git push refs)
+    # This is CRITICAL - git hooks receive push refs on stdin, so we must read from /dev/tty
+    read -p "Summary: " SUMMARY </dev/tty
 
     if [[ -z "$SUMMARY" ]]; then
         echo -e "${RED}❌ No summary provided${NC}"
