@@ -25,8 +25,8 @@
   <!-- Article metadata (author preserved, others removed by worker) -->
   <meta name="author" content="Tom Cranstoun">
   <meta name="author-url" content="https://allabout.network">
-  <meta name="publication-date" content="11 December 2024">
-  <meta name="modified-date" content="11/12/2024">
+  <meta name="publication-date" content="11 December 2025">
+  <meta name="modified-date" content="12/12/2025">
   <meta name="longdescription" content="This comprehensive test page validates all features of the custom Cloudflare worker including CORS header injection, JSON-LD structured data generation from page metadata, metadata cleanup, and version header tracking. The worker should convert this page's metadata into proper schema.org Article JSON-LD format.">
 
   <!-- LinkedIn (should be kept as fallback) -->
@@ -322,6 +322,17 @@
             <strong>Non-Matching Text Preserved</strong>
             <div class="test-result" id="placeholder-non-match-result">Waiting for test...</div>
           </div>
+        </div>
+
+        <!-- Visible Example: This will be replaced by the worker -->
+        <div style="margin-top: 1rem; padding: 1rem; background: white; border-radius: 8px; text-align: center;">
+          <p style="margin-bottom: 1rem; color: #667eea; font-weight: bold;">📸 Live Picture Replacement Example:</p>
+          <div>
+            <div>Picture Here</div>
+          </div>
+          <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">
+            ↑ The text above should be replaced with an author image when processed by the worker
+          </p>
         </div>
       </div>
 

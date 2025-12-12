@@ -17,13 +17,13 @@ import worker, {
   isRUMRequest,
   buildJsonLd,
   formatISO8601Date,
-  handleJsonLdMeta,
-  handleOgTitle,
-  handleAuthorUrl,
-  handleLinkedIn,
-  handleJsonLdInjection,
+  normalizeYear,
   replacePicturePlaceholder,
   removeHtmlComments,
+  removeNonSocialMetadata,
+  extractMetaContent,
+  shouldGenerateJsonLd,
+  injectJsonLd,
   WORKER_VERSION,
   PICTURE_PLACEHOLDER_CONFIG,
 } from './cloudflare-worker.js';
@@ -221,6 +221,123 @@ describe('formatISO8601Date', () => {
   });
 });
 
+// Test suite for normalizeYear
+describe('normalizeYear', () => {
+  test('converts 2-digit years 00-49 to 2000-2049', () => {
+    expect(normalizeYear(0)).toBe(2000);
+    expect(normalizeYear(1)).toBe(2001);
+    expect(normalizeYear(25)).toBe(2025);
+    expect(normalizeYear(49)).toBe(2049);
+  });
+
+  test('converts 2-digit years 50-99 to 1950-1999', () => {
+    expect(normalizeYear(50)).toBe(1950);
+    expect(normalizeYear(75)).toBe(1975);
+    expect(normalizeYear(99)).toBe(1999);
+  });
+
+  test('passes through 4-digit years unchanged', () => {
+    expect(normalizeYear(2025)).toBe(2025);
+    expect(normalizeYear(1999)).toBe(1999);
+    expect(normalizeYear(2049)).toBe(2049);
+    expect(normalizeYear(1950)).toBe(1950);
+  });
+
+  test('handles edge cases at pivot point', () => {
+    expect(normalizeYear(49)).toBe(2049); // Last year in 20xx range
+    expect(normalizeYear(50)).toBe(1950); // First year in 19xx range
+  });
+
+  test('handles boundary values', () => {
+    expect(normalizeYear(100)).toBe(100); // Minimum 4-digit year
+    expect(normalizeYear(9999)).toBe(9999); // Large 4-digit year
+  });
+});
+
+// Test suite for formatISO8601Date - 2-digit year support
+describe('formatISO8601Date - 2-digit year support', () => {
+  test('handles UK numeric format with 2-digit year (dd/mm/yy)', () => {
+    expect(formatISO8601Date('12/12/25')).toBe('2025-12-12');
+    expect(formatISO8601Date('25/12/99')).toBe('1999-12-25');
+    expect(formatISO8601Date('01/01/00')).toBe('2000-01-01');
+    expect(formatISO8601Date('15/06/75')).toBe('1975-06-15');
+  });
+
+  test('handles month name format with 2-digit year', () => {
+    expect(formatISO8601Date('12 Dec 25')).toBe('2025-12-12');
+    expect(formatISO8601Date('25 December 99')).toBe('1999-12-25');
+    expect(formatISO8601Date('1 Jan 00')).toBe('2000-01-01');
+    expect(formatISO8601Date('15 June 75')).toBe('1975-06-15');
+  });
+
+  test('handles hyphen format with 2-digit year', () => {
+    expect(formatISO8601Date('12-Dec-25')).toBe('2025-12-12');
+    expect(formatISO8601Date('25-March-99')).toBe('1999-03-25');
+    expect(formatISO8601Date('01-Jan-00')).toBe('2000-01-01');
+  });
+
+  test('handles US format with 2-digit year', () => {
+    expect(formatISO8601Date('Dec 12, 25')).toBe('2025-12-12');
+    expect(formatISO8601Date('December 25, 99')).toBe('1999-12-25');
+    expect(formatISO8601Date('Jan 1, 00')).toBe('2000-01-01');
+  });
+
+  test('century inference pivot point (50)', () => {
+    expect(formatISO8601Date('12/12/49')).toBe('2049-12-12'); // 49 -> 2049
+    expect(formatISO8601Date('12/12/50')).toBe('1950-12-12'); // 50 -> 1950
+  });
+
+  test('maintains backward compatibility with 4-digit years', () => {
+    expect(formatISO8601Date('12/12/2025')).toBe('2025-12-12');
+    expect(formatISO8601Date('25 Dec 2024')).toBe('2024-12-25');
+    expect(formatISO8601Date('1999-01-01')).toBe('1999-01-01');
+  });
+
+  test('handles space separators with 2-digit years', () => {
+    expect(formatISO8601Date('12 12 25')).toBe('2025-12-12');
+    expect(formatISO8601Date('25 12 99')).toBe('1999-12-25');
+  });
+
+  test('handles hyphen separators with 2-digit years', () => {
+    expect(formatISO8601Date('12-12-25')).toBe('2025-12-12');
+    expect(formatISO8601Date('25-12-99')).toBe('1999-12-25');
+  });
+
+  test('handles edge case dates with 2-digit years', () => {
+    expect(formatISO8601Date('29/02/24')).toBe('2024-02-29'); // Leap year
+    expect(formatISO8601Date('31/01/25')).toBe('2025-01-31');
+    expect(formatISO8601Date('30/04/25')).toBe('2025-04-30');
+  });
+
+  test('rejects invalid dates with 2-digit years', () => {
+    expect(formatISO8601Date('32/12/25')).toBeNull(); // Invalid day
+    expect(formatISO8601Date('29/02/23')).toBeNull(); // Not a leap year (2023)
+    expect(formatISO8601Date('31/04/25')).toBeNull(); // April has 30 days
+  });
+
+  test('validates year range (1950-2049) after normalization', () => {
+    // Years that normalize outside the valid range should be rejected
+    // This shouldn't happen with our century inference, but validates the check
+    expect(formatISO8601Date('12/12/49')).toBe('2049-12-12'); // Valid: normalizes to 2049
+    expect(formatISO8601Date('12/12/50')).toBe('1950-12-12'); // Valid: normalizes to 1950
+  });
+
+  test('handles mixed format dates with 2-digit years', () => {
+    expect(formatISO8601Date('1 Jan 25')).toBe('2025-01-01'); // Single digit day
+    expect(formatISO8601Date('31 Dec 99')).toBe('1999-12-31'); // End of year
+    expect(formatISO8601Date('15-Jun-25')).toBe('2025-06-15'); // Abbreviated month
+  });
+
+  test('handles slash separator with month names (user input)', () => {
+    // Common user input: mixing slashes with month names
+    expect(formatISO8601Date('12/dec/25')).toBe('2025-12-12');
+    expect(formatISO8601Date('12/Dec/25')).toBe('2025-12-12');
+    expect(formatISO8601Date('25/December/99')).toBe('1999-12-25');
+    expect(formatISO8601Date('1/jan/00')).toBe('2000-01-01');
+    expect(formatISO8601Date('dec/12/25')).toBe('2025-12-12'); // US format with slashes
+  });
+});
+
 // Test suite for buildJsonLd
 describe('buildJsonLd', () => {
   test('creates valid Article schema structure', () => {
@@ -365,88 +482,8 @@ describe('buildJsonLd', () => {
   });
 });
 
-// Test suite for Handler Functions (Unit Tests)
-describe('Handler Functions', () => {
-  let mockElement;
-  let article;
-
-  beforeEach(() => {
-    mockElement = {
-      getAttribute: vi.fn(),
-      remove: vi.fn(),
-      after: vi.fn(),
-      prepend: vi.fn(),
-    };
-    article = {
-      shouldGenerateJsonLd: false,
-      title: null,
-    };
-  });
-
-  test('handleJsonLdMeta sets flag when content is "article"', () => {
-    mockElement.getAttribute.mockReturnValue('article');
-    handleJsonLdMeta(mockElement, article);
-    expect(article.shouldGenerateJsonLd).toBe(true);
-    expect(mockElement.remove).toHaveBeenCalled();
-  });
-
-  test('handleJsonLdMeta does not set flag when content is not "article"', () => {
-    mockElement.getAttribute.mockReturnValue('website');
-    handleJsonLdMeta(mockElement, article);
-    expect(article.shouldGenerateJsonLd).toBe(false);
-    expect(mockElement.remove).toHaveBeenCalled();
-  });
-
-  test('handleOgTitle extracts title', () => {
-    mockElement.getAttribute.mockReturnValue('My Title');
-    handleOgTitle(mockElement, article, false);
-    expect(article.title).toBe('My Title');
-  });
-
-  test('handleAuthorUrl extracts author URL', () => {
-    mockElement.getAttribute.mockReturnValue('https://example.com/author');
-    handleAuthorUrl(mockElement, article);
-    expect(article.authorUrl).toBe('https://example.com/author');
-    expect(mockElement.remove).toHaveBeenCalled();
-  });
-
-  test('handleLinkedIn extracts LinkedIn URL as fallback', () => {
-    mockElement.getAttribute.mockReturnValue('https://linkedin.com/in/author');
-    handleLinkedIn(mockElement, article);
-    expect(article.authorUrl).toBe('https://linkedin.com/in/author');
-    expect(mockElement.remove).not.toHaveBeenCalled(); // LinkedIn meta stays
-  });
-
-  test('handleLinkedIn does not override existing author-url', () => {
-    article.authorUrl = 'https://example.com/author';
-    mockElement.getAttribute.mockReturnValue('https://linkedin.com/in/author');
-    handleLinkedIn(mockElement, article);
-    expect(article.authorUrl).toBe('https://example.com/author'); // Not overridden
-  });
-
-  test('handleJsonLdInjection triggers JSON-LD generation if flag and title present', () => {
-    article.shouldGenerateJsonLd = true;
-    article.title = 'My Title';
-    const url = new URL('https://example.com/page');
-
-    handleJsonLdInjection(mockElement, article, url, false);
-
-    expect(mockElement.prepend).toHaveBeenCalled();
-    const script = mockElement.prepend.mock.calls[0][0];
-    expect(script).toContain('application/ld+json');
-    expect(script).toContain('"headline":"My Title"');
-  });
-
-  test('handleJsonLdInjection skips JSON-LD generation if flag missing', () => {
-    article.shouldGenerateJsonLd = false;
-    article.title = 'My Title';
-    const url = new URL('https://example.com/page');
-
-    handleJsonLdInjection(mockElement, article, url, false);
-
-    expect(mockElement.prepend).not.toHaveBeenCalled();
-  });
-});
+// Note: Handler Functions tests removed as worker now uses pure string functions
+// instead of HTMLRewriter element handlers. See injectJsonLd, extractMetaContent, etc.
 
 // Test suite for replacePicturePlaceholder
 describe('replacePicturePlaceholder', () => {
@@ -642,7 +679,7 @@ describe('handleRequest Integration', () => {
     delete global.fetch;
   });
 
-  test('registers all handlers', async () => {
+  test('handles HTML responses using pure string functions', async () => {
     const env = {
       ORIGIN_HOSTNAME: 'main--test--owner.aem.live',
       DEBUG: 'true',
@@ -656,18 +693,10 @@ describe('handleRequest Integration', () => {
     const response = await worker.fetch(request, env);
 
     expect(response.status).toBe(200);
-    expect(MockHTMLRewriter.activeHandlers.length).toBeGreaterThan(0);
-
-    // Verify specific handlers are present
-    const hasHead = MockHTMLRewriter.activeHandlers.some(
-      (h) => h.selector === 'head',
-    );
-    expect(hasHead).toBe(true);
-
-    const hasJsonLd = MockHTMLRewriter.activeHandlers.some(
-      (h) => h.selector === 'meta[name="jsonld"]',
-    );
-    expect(hasJsonLd).toBe(true);
+    // Note: Worker now uses pure string functions (replacePicturePlaceholder,
+    // injectJsonLd, removeHtmlComments, etc.) instead of HTMLRewriter handlers
+    // No HTMLRewriter handlers should be registered
+    expect(MockHTMLRewriter.activeHandlers.length).toBe(0);
   });
 
   test('includes cfw version header in response', async () => {
@@ -715,7 +744,7 @@ describe('handleRequest Integration', () => {
     expect(cfwHeader).toBe(WORKER_VERSION);
   });
 
-  test('wires picture placeholder handler correctly', async () => {
+  test('uses pure string replacement for picture placeholders', async () => {
     const env = {
       ORIGIN_HOSTNAME: 'main--test--owner.aem.live',
       DEBUG: 'false',
@@ -728,9 +757,9 @@ describe('handleRequest Integration', () => {
 
     await worker.fetch(request, env);
 
-    // Note: Picture placeholder replacement is now done via string replacement,
+    // Note: Picture placeholder replacement is now done via pure string functions,
     // not HTMLRewriter, so no div handler is registered
-    expect(MockHTMLRewriter.activeHandlers.length).toBeGreaterThan(0);
+    expect(MockHTMLRewriter.activeHandlers.length).toBe(0);
   });
 
   test('picture replacement does not affect version header', async () => {

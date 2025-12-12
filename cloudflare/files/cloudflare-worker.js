@@ -38,8 +38,21 @@ export const isMediaRequest = (url) => (
 export const isRUMRequest = (url) => /\/\.(rum|optel)\/.*/.test(url.pathname);
 
 /**
+ * Converts 2-digit year to 4-digit year using century inference
+ * Years 00-49 -> 2000-2049, Years 50-99 -> 1950-1999
+ * @param {number} year - 2 or 4-digit year
+ * @returns {number} 4-digit year
+ */
+export const normalizeYear = (year) => {
+  if (year >= 100) return year; // Already 4-digit
+  if (year <= 49) return 2000 + year; // 00-49 -> 2000-2049
+  return 1900 + year; // 50-99 -> 1950-1999
+};
+
+/**
  * Formats a date string to ISO 8601 format (YYYY-MM-DD)
- * Handles UK date format (dd/mm/yyyy) as default and month names (Dec, December)
+ * Handles UK date format (dd/mm/yyyy or dd/mm/yy) as default and month names (Dec, December)
+ * Supports both 2-digit and 4-digit years with century inference
  * @param {string} dateString - Date string in various formats
  * @returns {string|null} ISO 8601 formatted date or null if invalid
  */
@@ -87,33 +100,33 @@ export const formatISO8601Date = (dateString) => {
   let year;
 
   // Try to parse dates with month names first
-  // Patterns: "10 December 2024", "December 10, 2024"
+  // Patterns: "10 December 2024", "December 10, 2024", "10 Dec 25", "12/dec/25"
   // eslint-disable-next-line max-len
-  const monthNamePattern = /(\d{1,2})[\s-]*([a-zA-Z]+)[\s,-]*(\d{4})|([a-zA-Z]+)[\s-]*(\d{1,2})[\s,-]*(\d{4})/i;
+  const monthNamePattern = /(\d{1,2})[\s/-]*([a-zA-Z]+)[\s,/-]*(\d{2,4})|([a-zA-Z]+)[\s/-]*(\d{1,2})[\s,/-]*(\d{2,4})/i;
   const monthMatch = trimmed.match(monthNamePattern);
 
   if (monthMatch) {
     if (monthMatch[1]) {
-      // Pattern: day month year (10 December 2024, 10-Dec-2024)
+      // Pattern: day month year (10 December 2024, 10-Dec-2024, 10 Dec 25, 12/dec/25)
       day = parseInt(monthMatch[1], 10);
       month = months[monthMatch[2].toLowerCase()];
-      year = parseInt(monthMatch[3], 10);
+      year = normalizeYear(parseInt(monthMatch[3], 10));
     } else {
-      // Pattern: month day year (December 10 2024, Dec 10 2024)
+      // Pattern: month day year (December 10 2024, Dec 10 2024, Dec 10 25, dec/10/25)
       month = months[monthMatch[4].toLowerCase()];
       day = parseInt(monthMatch[5], 10);
-      year = parseInt(monthMatch[6], 10);
+      year = normalizeYear(parseInt(monthMatch[6], 10));
     }
   } else {
-    // Try numeric format: assume UK format (dd/mm/yyyy) by default
-    const numericPattern = /(\d{1,2})[/\s-](\d{1,2})[/\s-](\d{4})/;
+    // Try numeric format: assume UK format (dd/mm/yyyy or dd/mm/yy) by default
+    const numericPattern = /(\d{1,2})[/\s-](\d{1,2})[/\s-](\d{2,4})/;
     const numericMatch = trimmed.match(numericPattern);
 
     if (numericMatch) {
-      // UK format: day/month/year
+      // UK format: day/month/year (supports 2 or 4-digit year)
       day = parseInt(numericMatch[1], 10);
       month = parseInt(numericMatch[2], 10) - 1; // Convert to 0-indexed
-      year = parseInt(numericMatch[3], 10);
+      year = normalizeYear(parseInt(numericMatch[3], 10));
     } else {
       // Unable to parse
       return null;
@@ -123,7 +136,7 @@ export const formatISO8601Date = (dateString) => {
   // Validate parsed values
   if (month === undefined || month < 0 || month > 11) return null;
   if (!day || day < 1 || day > 31) return null;
-  if (!year || year < 1900 || year > 2100) return null;
+  if (!year || year < 1950 || year > 2049) return null;
 
   // Create date object and validate it's a real date
   const date = new Date(year, month, day);

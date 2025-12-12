@@ -114,11 +114,26 @@ Extracts metadata from your EDS pages and creates schema.org Article structured 
 The JSON-LD script is inserted into the page `<head>`.
 
 **Date formatting:**
-Dates are automatically converted to ISO 8601 format (YYYY-MM-DD). Supports multiple input formats:
+Dates are automatically converted to ISO 8601 format (YYYY-MM-DD). Supports multiple input formats with both 2-digit and 4-digit years:
+
+**4-digit years (recommended):**
 - ISO 8601: `2024-12-10` (passed through unchanged)
 - UK numeric: `10/12/2024` (day/month/year)
 - Month names: `10 December 2024`, `Dec 10 2024`, `10-Dec-2024`
-- Invalid dates are omitted from JSON-LD rather than causing errors
+
+**2-digit years (with century inference):**
+- UK numeric: `12/12/25` → `2025-12-12`, `25/12/99` → `1999-12-25`
+- Month names: `12 Dec 25` → `2025-12-12`, `25 December 99` → `1999-12-25`
+- Hyphen format: `12-Dec-25` → `2025-12-12`, `25-March-99` → `1999-03-25`
+- Slash with month names: `12/dec/25` → `2025-12-12`, `25/December/99` → `1999-12-25` *(user-friendly)*
+- US format: `Dec 12, 25` → `2025-12-12`, `dec/12/25` → `2025-12-12`
+
+**Century inference rules:**
+- Years `00-49` → `2000-2049` (e.g., `25` → `2025`, `00` → `2000`)
+- Years `50-99` → `1950-1999` (e.g., `99` → `1999`, `50` → `1950`)
+- Valid range: `1950-2049` (dates outside this range are rejected)
+
+**Note:** Invalid dates are omitted from JSON-LD rather than causing errors
 
 ### Metadata Cleanup
 

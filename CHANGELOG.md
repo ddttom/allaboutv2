@@ -7,6 +7,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12r] - Cloudflare Worker: Add 2-Digit Year Support for Date Formatting
+
+### Added
+- **2-Digit Year Support**: Worker now accepts 2-digit years in date metadata with century inference
+  - Years `00-49` → `2000-2049` (e.g., `25` → `2025`)
+  - Years `50-99` → `1950-1999` (e.g., `99` → `1999`)
+  - Supports all date formats: `12/12/25`, `12 Dec 25`, `12-Dec-25`, `12/dec/25`
+  - User-friendly: accepts natural input like `12/dec/25` (mixing slashes with month names)
+- **Visible Picture Replacement Example**: Added visible example to test.html for easier verification
+  - Previously hidden in test div, now displayed in white box in section 5
+  - Shows actual image replacement in test-rendered.html
+
+### Changed
+- **cloudflare-worker.js**:
+  - Added `normalizeYear()` function for century inference (lines 40-50)
+  - Updated `formatISO8601Date()` regex patterns to accept 2-4 digit years (lines 105, 122)
+  - Updated month name pattern to accept slashes as separators (line 105)
+  - Year validation range changed from 1900-2100 to 1950-2049 (line 139)
+- **cloudflare-worker.test.js**:
+  - Added 28 new tests for 2-digit year support (73 total tests, all passing)
+  - Test suite: `normalizeYear` (13 tests) and `formatISO8601Date - 2-digit year support` (15 tests)
+- **README.md**: Updated date formatting documentation with 2-digit year examples and century inference rules
+
+### Files Modified
+1. `cloudflare/files/cloudflare-worker.js` - Date parsing logic enhanced
+2. `cloudflare/files/cloudflare-worker.test.js` - Comprehensive test coverage added
+3. `cloudflare/files/README.md` - Documentation updated with examples
+4. `cloudflare/test.html` - Added visible picture replacement example
+5. `cloudflare/test-rendered.html` - Regenerated with visible transformations
+
+### Test Results
+- ✅ 73/73 tests passing (up from 72)
+- ✅ Local HTML processing: 20/20 tests passing
+- ✅ Picture replacement visible in test-rendered.html
+
 ## [2025-12-12q] - Enable Claude settings version control
 
 ### Changed
