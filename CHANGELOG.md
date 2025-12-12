@@ -10,10 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2025-12-12g] - Cloudflare Worker Picture Placeholder Fix
 
 ### Fixed
-- **Cloudflare Worker v1.1.1**: Picture placeholder replacement now matches divs with attributes
-  - **Issue**: Regex pattern only matched bare `<div>` tags without attributes
-  - **Fix**: Changed pattern from `<div>` to `<div[^>]*>` to allow attributes (style, id, class, etc.)
-  - **Example**: Now matches `<div style="display: none;">` and `<div id="test-placeholder-match">`
+- **Cloudflare Worker v1.1.1**: Picture placeholder replacement now preserves outer div structure
+  - **Issue**: Pattern was replacing both outer and inner divs, losing ID and other attributes
+  - **Fix**: Simplified pattern to replace only inner `<div>Picture Here</div>`, preserving outer div
+  - **Before**: `<div id="test"><div>Picture Here</div></div>` → `<div><img></div>` (lost ID)
+  - **After**: `<div id="test"><div>Picture Here</div></div>` → `<div id="test"><img></div>` (kept ID)
+  - **Result**: Test page JavaScript can now find elements by `getElementById()`
 
 ### Changed
 - **Case-insensitive matching**: "Picture Here" comparison now case-insensitive
