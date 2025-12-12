@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **robots.txt**: Added sitemap directive pointing to `https://allabout.network/sitemap.xml`
+  - Improves SEO by helping search engines discover the complete sitemap
+  - Standard best practice for search engine optimization
+  - Follows robots.txt protocol specifications
+
 ## [2025-12-11c] - Cloudflare Worker Author Metadata Preservation
 
 ### Changed

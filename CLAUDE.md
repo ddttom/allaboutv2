@@ -525,6 +525,9 @@ Add `| author-url | https://yoursite.com |` or rely on LinkedIn meta tag fallbac
 - Visual feedback with status indicators
 
 **Developer Notes:**
+- `robots.txt` - SEO configuration with sitemap directive
+  - Points search engines to `https://allabout.network/sitemap.xml`
+  - Standard SEO best practice for search engine optimization
 - `todo.txt` - Reference example of Cloudflare worker for robots.txt handling
   - Demonstrates intercepting specific paths (`/robots.txt`)
   - Shows custom response generation
