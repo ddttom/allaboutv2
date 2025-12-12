@@ -315,6 +315,52 @@ Active hooks that enhance development workflow:
 
 See `.claude/hooks/CONFIG.md` for configuration and customization.
 
+## CI/CD (GitHub Actions)
+
+The project uses GitHub Actions for continuous integration and deployment.
+
+### Workflows
+
+**ci.yml** - Main CI Pipeline (runs on push to main, all PRs)
+- **CHANGELOG Validation**: Ensures CHANGELOG.md updated (blocks merge if missing)
+  - Skip with `[skip changelog]` in commit message
+- **Linting**: JavaScript (ESLint) and CSS (Stylelint)
+- **Testing**: Cloudflare worker tests (unit + integration + local HTML)
+- **Security**: npm audit and secret scanning
+- **Structure Validation**: Required files and JSON syntax checks
+- **Build Verification**: Tests build/ directories if present
+
+**deploy-cloudflare.yml** - Cloudflare Worker Deployment
+- **Triggers**: Pushes to main affecting cloudflare/files/, or manual workflow dispatch
+- **Pre-deployment**: Runs all worker tests
+- **Deployment**: Uses Wrangler to deploy to Cloudflare
+- **Post-deployment**: Smoke tests (site response, CORS headers, worker version)
+- **Environments**: Supports staging and production via workflow dispatch
+
+**pr-checks.yml** - Enhanced PR Validation
+- **PR Title**: Validates conventional commit format (feat/fix/docs/chore)
+- **Issue Links**: Checks for linked issues (Fixes/Closes/Resolves #123)
+- **Documentation**: Warns if large code changes lack doc updates
+- **Block Structure**: Validates blocks have required files (JS, CSS, README)
+- **File Sizes**: Warns on files >500KB
+- **Code Quality**: Detects TODO/console.log/debugger in diffs
+- **Change Summary**: Generates detailed PR summary in GitHub UI
+
+### Enforcement Strategy
+
+**Two-Level Enforcement:**
+1. **Local (Git Hooks)**: Pre-commit validation - catches issues before commit
+2. **CI/CD (GitHub Actions)**: Validates on push/PR - prevents breaking main
+
+### Required Secrets
+
+To enable Cloudflare deployment, add to GitHub repository secrets:
+- `CLOUDFLARE_API_TOKEN` - API token for Wrangler deployment
+
+### Workflow Status
+
+View workflow runs at: `https://github.com/ddttom/allaboutv2/actions`
+
 ## Code Style
 - **JS**: Follows Airbnb style guide (eslint-config-airbnb-base)
 - **CSS**: Follows stylelint-config-standard

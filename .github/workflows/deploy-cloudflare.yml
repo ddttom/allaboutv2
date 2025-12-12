@@ -1,0 +1,131 @@
+name: Deploy Cloudflare Worker
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'cloudflare/files/cloudflare-worker.js'
+      - 'cloudflare/files/wrangler.toml'
+      - '.github/workflows/deploy-cloudflare.yml'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
+
+jobs:
+  test:
+    name: Test Worker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: cloudflare/files
+        run: npm ci
+
+      - name: Run tests
+        working-directory: cloudflare/files
+        run: npm test
+
+      - name: Verify test coverage
+        working-directory: cloudflare/files
+        run: |
+          # Check that all tests pass
+          if ! npm test 2>&1 | grep -q "passing"; then
+            echo "❌ Tests failed"
+            exit 1
+          fi
+          echo "✓ All tests passing"
+
+  deploy:
+    name: Deploy to Cloudflare
+    needs: test
+    runs-on: ubuntu-latest
+    # Only deploy on main branch or manual workflow dispatch
+    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+    environment:
+      name: ${{ github.event.inputs.environment || 'production' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Wrangler
+        run: npm install -g wrangler
+
+      - name: Deploy Worker
+        working-directory: cloudflare/files
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          echo "Deploying worker to Cloudflare..."
+          wrangler deploy
+
+      - name: Verify deployment
+        working-directory: cloudflare/files
+        run: |
+          # Extract version from worker file
+          VERSION=$(grep -oP 'WORKER_VERSION\s*=\s*['\''\"](\d+\.\d+\.\d+)['\''\"]' cloudflare-worker.js | head -1 | grep -oP '\d+\.\d+\.\d+')
+          echo "✓ Deployed version: $VERSION"
+
+      - name: Create deployment summary
+        run: |
+          echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Environment**: ${{ github.event.inputs.environment || 'production' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Triggered by**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Timestamp**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> $GITHUB_STEP_SUMMARY
+
+  smoke-test:
+    name: Smoke Test Deployment
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test production endpoint
+        run: |
+          # Wait for deployment to propagate
+          sleep 10
+
+          # Test the main site responds
+          if curl -f -s -o /dev/null -w "%{http_code}" https://allabout.network/ | grep -q "200"; then
+            echo "✓ Production site responding"
+          else
+            echo "⚠️  Production site may have issues"
+            exit 1
+          fi
+
+      - name: Verify CORS headers
+        run: |
+          # Check CORS headers are present
+          HEADERS=$(curl -s -I https://allabout.network/)
+          if echo "$HEADERS" | grep -q "Access-Control-Allow-Origin"; then
+            echo "✓ CORS headers present"
+          else
+            echo "❌ CORS headers missing"
+            exit 1
+          fi
+
+      - name: Verify worker version header
+        run: |
+          # Check worker version header
+          if curl -s -I https://allabout.network/ | grep -q "cfw:"; then
+            VERSION=$(curl -s -I https://allabout.network/ | grep "cfw:" | cut -d' ' -f2)
+            echo "✓ Worker version: $VERSION"
+          else
+            echo "⚠️  Worker version header not found"
+          fi

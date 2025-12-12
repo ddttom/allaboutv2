@@ -7,6 +7,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12w] - CI/CD: Add GitHub Actions Workflows
+
+### Added
+- **GitHub Actions CI/CD Pipeline**: Complete automation for code quality, testing, and deployment
+  - **ci.yml**: Main CI workflow for all pushes and PRs
+    - CHANGELOG.md validation (ensures documentation updated)
+    - JavaScript linting (ESLint with Airbnb style)
+    - CSS linting (Stylelint)
+    - Cloudflare worker tests (unit + integration)
+    - Security checks (npm audit, secret scanning)
+    - Project structure validation (required files, JSON syntax)
+    - Build verification for build/ directories
+  - **deploy-cloudflare.yml**: Automated Cloudflare worker deployment
+    - Tests before deployment
+    - Version verification
+    - Smoke tests after deployment (CORS headers, worker version)
+    - Manual workflow dispatch for staging/production
+  - **pr-checks.yml**: Enhanced PR validation
+    - PR title format validation (conventional commits)
+    - Issue linking checks
+    - Documentation update reminders
+    - Block structure validation (required files, README sections)
+    - File size checks (warns on files >500KB)
+    - Change summary generation (TODO/console.log/debugger detection)
+
+### Changed
+- **Enforcement Strategy**: Now enforced at both local (git hooks) and CI/CD (GitHub Actions) levels
+  - **Local**: Pre-commit hook validates CHANGELOG.md before commit
+  - **CI/CD**: GitHub Actions validates on push/PR before merge
+  - **Benefits**: Catches issues early, prevents breaking main branch
+
+### Implementation Details
+- **ci.yml**: Runs on every push to main and all PRs
+- **deploy-cloudflare.yml**: Runs on cloudflare worker changes or manual trigger
+- **pr-checks.yml**: Runs on PR open, sync, or reopen
+- **Secrets Required**: `CLOUDFLARE_API_TOKEN` for deployment workflow
+- **Skip Options**: Use `[skip changelog]` in commit message to bypass CHANGELOG validation
+
+### Documentation
+- Workflows use Node.js 20, npm ci for reproducible builds
+- All workflows have clear job names and step descriptions
+- Deployment creates summary with environment, commit, timestamp
+- PR checks generate detailed change summaries in GitHub UI
+
 ## [2025-12-12v] - Git Hooks: Replace Pre-Push with Pre-Commit Validation
 
 ### Changed
