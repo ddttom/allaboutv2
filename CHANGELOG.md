@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12p] - Add tsc-cache to gitignore
+
+### Changed
+- **Git Ignore**: Added `.claude/tsc-cache/` to `.gitignore`
+  - TypeScript compiler cache directory excluded from version control
+  - Prevents build artifacts from being committed
+  - Keeps repository clean
+
+### Files Modified
+1. `.gitignore` - Added tsc-cache directory pattern
+
 ## [2025-12-12o] - Pre-Push Validation Hook Critical Bug Fix
 
 ### Fixed
