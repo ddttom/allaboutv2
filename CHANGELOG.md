@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12c] - Fix HTMLRewriter API Usage
+
+### Fixed
+- **Cloudflare Worker**: Corrected HTMLRewriter element handler pattern in `handlePicturePlaceholder`
+  - Fixed element.ontext() and element.onendtag() implementation
+  - Simplified to use closure-based text buffering instead of external state
+  - Removed unnecessary state parameter and element ID tracking
+  - Each handler creates its own textBuffer in closure scope for proper isolation
+- **Tests**: Updated all 6 unit tests to match simplified function signature
+  - Removed state parameter from test calls
+  - All 53 tests passing
+
+### Technical Details
+- **Problem**: Original implementation passed state object but each element handler needs isolated scope
+- **Solution**: Leverage JavaScript closures to capture textBuffer within each handler invocation
+- **Result**: Simpler, more correct implementation that properly isolates text between div elements
+
+**Files Modified:**
+1. `cloudflare/files/cloudflare-worker.js` - Simplified handlePicturePlaceholder (13 lines removed)
+2. `cloudflare/files/cloudflare-worker.test.js` - Updated test calls
+
+**Total: 2 files modified, 29 lines removed, 13 lines added**
+
 ## [2025-12-12b] - Picture Placeholder Test Coverage
 
 ### Added
