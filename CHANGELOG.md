@@ -7,6 +7,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12d] - Refactor Picture Placeholder to Pure String Replacement
+
+### Changed
+- **Cloudflare Worker**: Complete rewrite of picture placeholder feature
+  - Replaced `handlePicturePlaceholder()` with `replacePicturePlaceholder()`
+  - Changed from HTMLRewriter element handlers to pure regex string replacement
+  - Pattern: `/<div>\s*<div>([^<]*Picture Here[^<]*)<\/div>\s*<\/div>/g`
+  - Processes HTML text BEFORE HTMLRewriter (JSON-LD still uses HTMLRewriter)
+  - Fully testable without Cloudflare Workers runtime
+- **Processing Flow**: Fetch → String replace → HTMLRewriter (JSON-LD) → Headers
+- **Tests**: Completely rewrote 8 picture placeholder tests as pure unit tests
+  - Tests now directly call function with HTML strings
+  - Added mock `Response.text()` method for integration tests
+  - All 55 tests passing (was 55, restructured)
+
+### Benefits
+- **Simpler**: No complex element tracking or state management
+- **Testable**: Pure functions with string input/output (no Workers runtime needed)
+- **Maintainable**: Standard regex pattern, easy to understand and modify
+- **Correct**: No HTMLRewriter API misuse (element.ontext doesn't exist)
+- **Fast**: Single regex pass over HTML content
+
+### Technical Details
+- Regex `[^<]*` prevents matching nested HTML tags
+- Preserves outer `<div>` wrapper as required by EDS structure
+- Case-sensitive by default (configurable via PICTURE_PLACEHOLDER_CONFIG)
+- Handles whitespace around text content automatically
+
+**Files Modified:**
+1. `cloudflare/files/cloudflare-worker.js` - Rewrote picture placeholder implementation
+2. `cloudflare/files/cloudflare-worker.test.js` - Rewrote all picture placeholder tests
+
+**Total: 2 files modified, 102 lines removed, 105 lines added**
+
 ## [2025-12-12c] - Fix HTMLRewriter API Usage
 
 ### Fixed
