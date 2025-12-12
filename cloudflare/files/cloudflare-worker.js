@@ -345,17 +345,17 @@ export const handleViewport = (element, article, requestUrl, DEBUG) => {
  * @returns {string} Processed HTML with placeholders replaced
  */
 export const replacePicturePlaceholder = (html) => {
-  // Build replacement: <div><img src="..." alt="..."></div>
-  const replacement = `<div><img src="${PICTURE_PLACEHOLDER_CONFIG.IMAGE_URL}" `
-    + `alt="${PICTURE_PLACEHOLDER_CONFIG.IMAGE_ALT}"></div>`;
+  // Build replacement: just the img tag (preserves outer div)
+  const replacement = `<img src="${PICTURE_PLACEHOLDER_CONFIG.IMAGE_URL}" `
+    + `alt="${PICTURE_PLACEHOLDER_CONFIG.IMAGE_ALT}">`;
 
   // Case-insensitive comparison using trigger text from config
   // Escape special regex characters in trigger text
   const escapedTrigger = PICTURE_PLACEHOLDER_CONFIG.TRIGGER_TEXT
     .replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  // Pattern ensures no nested divs before trigger text
+  // Pattern matches only the inner div content, preserves outer div structure
   const pattern = new RegExp(
-    `<div[^>]*>\\s*<div>([^<]*${escapedTrigger}[^<]*)</div>\\s*</div>`,
+    `<div>([^<]*${escapedTrigger}[^<]*)</div>`,
     'gi',
   );
   return html.replace(pattern, replacement);
