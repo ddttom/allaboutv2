@@ -7,6 +7,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12i] - Cloudflare Worker HTML Comment Removal
+
+### Added
+- **Cloudflare Worker v1.1.2**: HTML comment removal feature
+  - **Function**: `removeHtmlComments(html)` - Pure function removes all HTML comments
+  - **Pattern**: Uses regex `<!--[\s\S]*?-->/g` for non-greedy comment matching
+  - **Integration**: Applied during HTML text processing alongside picture placeholder replacement
+  - **Benefits**:
+    - Reduces HTML payload size
+    - Removes development/debugging comments from production
+    - Cleans up author-left comments
+    - Improves HTML cleanliness for scrapers and bots
+
+### Changed
+- **Worker version**: 1.1.1 → 1.1.2 (PATCH bump for new feature)
+- **Processing order**: HTML text operations now include comment removal before HTMLRewriter
+- **Test coverage**: 53 → 63 tests (added 8 unit tests for comment removal)
+
+### Testing
+- **All 63 tests passing** ✅
+- **No linting errors** ✅
+- **Edge cases covered**:
+  - Simple comments
+  - Multiple comments per page
+  - Multiline comments
+  - Nested-looking comments (HTML spec behavior)
+  - Empty strings
+  - HTML without comments
+  - Special characters in comments
+
+### Documentation
+- **Updated files**:
+  - `cloudflare/files/README.md`: Added HTML Comment Removal section with examples
+  - `cloudflare/files/TESTING.md`: Added `removeHtmlComments` to pure function examples
+  - Updated test count and version references throughout
+
 ## [2025-12-12h] - Pre-Push Validation Requirement Changes
 
 ### Changed
