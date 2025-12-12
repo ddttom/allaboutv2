@@ -5,7 +5,7 @@
 
 ## Overview
 
-This project is built for Adobe Edge Delivery Services (EDS) with a focus on simplicity, performance, and modern web standards. The project intentionally avoids TypeScript and build-heavy frameworks to maintain simplicity and reduce build complexity. Enhanced with a custom Cloudflare worker that adds CORS headers, JSON-LD structured data generation, and preserves author metadata for proper attribution. Includes [robots.txt](robots.txt) with sitemap directive for optimal search engine indexing.
+This project is built for Adobe Edge Delivery Services (EDS) with a focus on simplicity, performance, and modern web standards. The project intentionally avoids TypeScript and build-heavy frameworks to maintain simplicity and reduce build complexity. Enhanced with a custom Cloudflare worker (v1.1.0) that adds CORS headers, JSON-LD structured data generation, picture placeholder replacement, and preserves author metadata for proper attribution. Includes [robots.txt](robots.txt) with sitemap directive for optimal search engine indexing.
 
 ### Homepage
 
@@ -326,13 +326,14 @@ The site audit is created with https://github.com/ddttom/my-pa11y-project
   - API token security audit checklist
   - Operational procedures for publishing and cache management
   - Target: AI assistants, DevOps, system administrators
-- **[Custom Cloudflare Worker](cloudflare/files/README.md)** - Enhanced Adobe EDS worker implementation
-  - **Custom Features**: Version header (`cfw`), CORS headers, JSON-LD structured data generation, intelligent date formatting, metadata cleanup
+- **[Custom Cloudflare Worker](cloudflare/files/README.md)** - Enhanced Adobe EDS worker implementation (v1.1.0)
+  - **Custom Features**: Version header (`cfw`), CORS headers, JSON-LD structured data generation, picture placeholder replacement, intelligent date formatting, metadata cleanup
   - Extends Adobe's standard worker template (Apache License 2.0)
   - **Quick Start**: [cloudflare/files/SETUP.md](cloudflare/files/SETUP.md) for daily development workflow
   - **Production Status**: 0% error rate, production-ready with comprehensive testing
   - **Key Capabilities**:
     - Version tracking header for deployment monitoring (semantic versioning)
+    - Picture placeholder replacement: "Picture Here" → author image (server-side)
     - Adds `Access-Control-Allow-Origin: *` to all responses
     - Generates schema.org Article JSON-LD from page metadata
     - Intelligent date formatting: UK format (dd/mm/yyyy), month names (Dec/December), ISO 8601
@@ -341,7 +342,7 @@ The site audit is created with https://github.com/ddttom/my-pa11y-project
     - Optional debug logging with `DEBUG=true` flag
     - Environment variable validation
   - **Development**: Wrangler CLI for local testing (localhost:8787) and deployment
-  - **Testing**: 45 automated tests with 100% pass rate (includes version validation)
+  - **Testing**: 53 automated tests with 100% pass rate (includes picture placeholder tests)
   - **Deployment Testing**: [cloudflare/test.html](cloudflare/test.html) - Comprehensive test page validates all worker features
   - **Documentation**: 520+ line implementation guide with examples and troubleshooting
   - **Read-Only Testing**: Complete test infrastructure treating worker as production code (10:1 test-to-code ratio)

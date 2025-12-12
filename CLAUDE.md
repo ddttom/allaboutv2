@@ -551,11 +551,12 @@ When a notebook has a `repo` metadata attribute, all `.md` file links are automa
 
 ## Cloudflare Custom Worker Implementation
 
-**Custom Adobe EDS worker with enhanced features** - see `cloudflare/files/`
+**Custom Adobe EDS worker with enhanced features (v1.1.0)** - see `cloudflare/files/`
 
 **What it does:**
 - Adds CORS headers to all responses
 - Generates JSON-LD structured data from page metadata
+- Picture placeholder replacement: Detects "Picture Here" text and replaces with author image server-side
 - Intelligent date formatting: Supports UK format (dd/mm/yyyy), month names (Dec/December), and ISO 8601
 - Author metadata preservation: Keeps author meta tag for attribution (like LinkedIn)
 - Author URL with LinkedIn fallback: Uses LinkedIn meta as fallback when author-url not provided
@@ -830,7 +831,7 @@ const code = 'here';
 - **NEW: Educational notebooks**: `docs/for-ai/explaining-educational-notebooks.md` - Create tutorials, guides, and interactive demos as SPAs
 - **NEW: ipynb-viewer block**: `blocks/ipynb-viewer/README.md` - Display executable notebooks with autorun, paged, and link navigation
 - **Helix Configuration**: `docs/for-ai/helix-config.md` - Complete .helix/config file reference covering CDN integration (Cloudflare), push invalidation, environment configuration, and troubleshooting
-- **Custom Cloudflare Worker**: `cloudflare/files/README.md` - Custom Adobe EDS worker implementation with CORS headers, JSON-LD generation, and metadata cleanup
+- **Custom Cloudflare Worker**: `cloudflare/files/README.md` - Custom Adobe EDS worker implementation (v1.1.0) with CORS headers, JSON-LD generation, picture placeholder replacement, and metadata cleanup
 - Security checklist: `docs/for-ai/guidelines/security-checklist.md`
 - Frontend guidelines: `docs/for-ai/guidelines/frontend-guidelines.md`
 
