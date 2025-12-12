@@ -15,8 +15,10 @@
  * @version 1.1.4
  */
 
-// Worker version - increment using semantic versioning for all changes
-export const WORKER_VERSION = '1.1.4';
+// Worker version - imported from package.json for single source of truth
+import pkg from './package' with { type: 'json' };
+
+export const WORKER_VERSION = pkg.version;
 
 // Picture placeholder configuration
 export const PICTURE_PLACEHOLDER_CONFIG = {

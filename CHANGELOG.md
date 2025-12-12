@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12aa] - Cloudflare Worker: Single Source of Truth for Version
+
+### Changed
+- **cloudflare/files/cloudflare-worker.js**: Import version from package.json instead of hardcoding
+  - **Before**: `export const WORKER_VERSION = '1.1.4';` (hardcoded)
+  - **After**: `import pkg from './package' with { type: 'json' }; export const WORKER_VERSION = pkg.version;`
+  - **Benefit**: Single source of truth - version defined once in package.json
+  - **Impact**: Tests and worker code now reference same version source
+- **cloudflare/files/package.json**: Updated version to 1.1.4 (canonical source)
+
+### Technical Details
+- Used modern `with { type: 'json' }` syntax (not deprecated `assert`)
+- Followed ESLint rules (blank line after import, no file extension)
+- All 74 tests pass with new version import pattern
+
 ## [2025-12-12z] - CI/CD: Fix Package.json Local Dependency Issue
 
 ### Fixed
