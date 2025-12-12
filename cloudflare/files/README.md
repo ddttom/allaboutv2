@@ -594,13 +594,56 @@ This blog documents:
 
 ## Testing
 
+### ⚠️ CRITICAL: The Two-File Rule
+
+**This project MUST follow the two-file testing system** - this is non-negotiable.
+
+**File 1:** `cloudflare-worker.js` - Production worker code
+**File 2:** `cloudflare-worker.test.js` - Unified test file (unit + integration)
+
+**Core Principle:** All worker functionality must be implemented as **pure JavaScript functions** that can be tested without Cloudflare Workers runtime.
+
+**Why this matters:**
+- Cloudflare Workers runtime provides APIs (like `HTMLRewriter`) that don't exist in Node.js
+- Using runtime-specific APIs for core logic makes code untestable
+- Pure functions (string input → string output) are fully testable
+
+**Example of correct approach:**
+```javascript
+// ✅ CORRECT - Pure function, fully testable
+export const replacePicturePlaceholder = (html) => {
+  const pattern = /<div>\s*<div>([^<]*Picture Here[^<]*)<\/div>\s*<\/div>/g;
+  return html.replace(pattern, replacement);
+};
+
+// Can be tested in Node.js without Cloudflare runtime
+test('replaces Picture Here with image', () => {
+  const result = replacePicturePlaceholder('<div><div>Picture Here</div></div>');
+  expect(result).toContain('<img');
+});
+```
+
+**Example of incorrect approach:**
+```javascript
+// ❌ WRONG - Requires Cloudflare runtime, untestable
+export const handlePicturePlaceholder = (element) => {
+  element.ontext((text) => {...});  // TypeError in Node.js tests
+};
+```
+
+**See `TESTING.md` for complete two-file rule documentation.**
+
 ### Simple, Robust Testing
 
 The project uses a single test file `cloudflare-worker.test.js` that covers both:
-1. **Unit Tests**: Verifies individual handler functions (`handleJsonLdMeta`, `handleViewport`, etc.) using mock elements.
-2. **Integration Tests**: Verifies the entire `fetch` flow using a mocked `HTMLRewriter` to ensure handlers are wired correctly using request/result mocks.
+1. **Unit Tests**: Verifies pure functions with string input/output (no runtime needed)
+2. **Integration Tests**: Verifies the entire `fetch` flow using mocked Cloudflare APIs
 
-This approach allows comprehensive testing of the worker logic locally without needing a complex dev server setup or port redirects.
+This two-file approach ensures:
+- ✅ All core logic is testable without Cloudflare runtime
+- ✅ Pure functions can be tested with simple string operations
+- ✅ Integration tests verify correct wiring with mocked APIs
+- ✅ No separate test files or complex test infrastructure needed
 
 ### Quick Test Commands
 

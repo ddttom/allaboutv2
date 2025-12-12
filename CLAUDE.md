@@ -109,6 +109,137 @@ All `.claude/` operations, block creation, slash commands, and documentation upd
 
 **See:** Smart link handling in `blocks/ipynb-viewer/ipynb-viewer.js` for proper client-side URL resolution
 
+## ⚠️ CRITICAL: Cloudflare Worker Two-File Testing System
+
+**The Cloudflare worker MUST follow the two-file testing system** - this is non-negotiable.
+
+### The Two-File Rule
+
+**File 1:** `cloudflare/files/cloudflare-worker.js` - Production worker code
+**File 2:** `cloudflare/files/cloudflare-worker.test.js` - Unified test file (unit + integration)
+
+**CRITICAL PRINCIPLE:** All worker functionality must be implemented as **pure JavaScript functions** that can be tested without Cloudflare Workers runtime.
+
+### Why This Matters
+
+The Cloudflare Workers runtime provides APIs like `HTMLRewriter` that are NOT available in Node.js test environments. If you use runtime-specific APIs for core logic, **your code becomes untestable**.
+
+**Production Bug Example (2025-12-12):**
+```javascript
+// ❌ WRONG - This breaks in tests
+export const handlePicturePlaceholder = (element) => {
+  element.ontext((text) => {...});  // TypeError: element.ontext is not a function
+  element.onendtag(() => {...});    // These methods don't exist in tests
+};
+```
+
+This code worked in Cloudflare but threw `TypeError: element.ontext is not a function` because HTMLRewriter element handlers can't be tested in Node.js.
+
+### Correct Approach: Pure Functions
+
+**Core logic must be pure JavaScript that takes strings and returns strings:**
+
+```javascript
+// ✅ CORRECT - Pure function, fully testable
+export const replacePicturePlaceholder = (html) => {
+  const pattern = /<div>\s*<div>([^<]*Picture Here[^<]*)<\/div>\s*<\/div>/g;
+  const replacement = `<div><img src="${CONFIG.IMAGE_URL}" alt="${CONFIG.ALT}"></div>`;
+  return html.replace(pattern, replacement);
+};
+
+// Test in Node.js (no Cloudflare runtime needed)
+test('replaces Picture Here with image', () => {
+  const input = '<div><div>Picture Here</div></div>';
+  const output = replacePicturePlaceholder(input);
+  expect(output).toContain('<img');
+  expect(output).not.toContain('Picture Here');
+});
+```
+
+### Processing Flow Pattern
+
+**Correct order for worker that needs both string operations and HTMLRewriter:**
+
+```javascript
+// 1. Fetch response from origin
+let resp = await fetch(request);
+
+// 2. Extract HTML text (consumes body)
+let htmlText = await resp.text();
+
+// 3. Apply pure string operations (TESTABLE)
+htmlText = replacePicturePlaceholder(htmlText);
+
+// 4. Create new Response with processed text
+resp = new Response(htmlText, {
+  status: resp.status,
+  statusText: resp.statusText,
+  headers: resp.headers,
+});
+
+// 5. NOW apply HTMLRewriter for runtime-specific features
+resp = new HTMLRewriter()
+  .on('meta[property="og:title"]', handleOgTitle)
+  .transform(resp);
+
+// 6. Add headers and return
+return new Response(resp.body, resp);
+```
+
+**Key insight:** Pure functions run BEFORE HTMLRewriter, making them testable.
+
+### Testing Requirements
+
+**All tests must be in cloudflare-worker.test.js:**
+
+```javascript
+describe('Pure Functions (Unit Tests)', () => {
+  test('replacePicturePlaceholder replaces exact match', () => {
+    const html = '<div><div>Picture Here</div></div>';
+    const result = replacePicturePlaceholder(html);
+    expect(result).toContain('<img');
+  });
+});
+
+describe('Integration Tests', () => {
+  test('handleRequest processes HTML responses', async () => {
+    // Mock fetch, Response, HTMLRewriter
+    const response = await handleRequest(mockRequest, mockEnv);
+    expect(response.headers.get('Access-Control-Allow-Origin')).toBe('*');
+  });
+});
+```
+
+**Test structure:**
+- **Unit tests**: Test pure functions with string input/output
+- **Integration tests**: Test request flow with mocked Cloudflare APIs
+- **NO separate test files**: Everything in one unified test file
+
+### Red Flags (Violations of Two-File Rule)
+
+❌ Using HTMLRewriter element handlers for core logic
+❌ Creating separate test files (unit.test.js, integration.test.js)
+❌ Code that can't be tested without Cloudflare runtime
+❌ Skipping tests because "it needs the runtime"
+
+✅ Pure functions for all transformations
+✅ Single unified test file (cloudflare-worker.test.js)
+✅ HTMLRewriter only for features that require it
+✅ 100% test coverage of pure functions
+
+### Enforcement
+
+**Before modifying worker files, always:**
+1. Read `cloudflare/files/TESTING.md` for complete testing guide
+2. Read `cloudflare/files/README.md` for implementation patterns
+3. Use `/check-cloudflare-tests` command to validate test structure
+4. Run `npm test` in `cloudflare/files/` before committing
+
+**See also:**
+- Complete testing guide: `cloudflare/files/TESTING.md`
+- Implementation patterns: `cloudflare/files/README.md`
+- Production test page: `cloudflare/test.html`
+
 ### Slash Commands (Claude Code)
 **Block Development:**
 - `/new-block <name>` - Create a new EDS block following Content Driven Development process
