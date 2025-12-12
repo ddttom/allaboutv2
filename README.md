@@ -343,7 +343,7 @@ The site audit is created with https://github.com/ddttom/my-pa11y-project
     - Environment variable validation
   - **Development**: Wrangler CLI for local testing (localhost:8787) and deployment
   - **Testing**: 53 automated tests with 100% pass rate (includes picture placeholder tests)
-  - **Deployment Testing**: [cloudflare/test.html](cloudflare/test.html) - Comprehensive test page validates all worker features
+  - **Deployment Testing**: [cloudflare/test.html](cloudflare/test.html) - Comprehensive test page with 13 automated checks (validates version header, CORS, JSON-LD, metadata cleanup, picture placeholder replacement)
   - **Documentation**: 520+ line implementation guide with examples and troubleshooting
   - **Read-Only Testing**: Complete test infrastructure treating worker as production code (10:1 test-to-code ratio)
   - **Blog Post**: [cloudflare/blog.md](cloudflare/blog.md) - Journey from challenge to production-ready deployment
