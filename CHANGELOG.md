@@ -7,6 +7,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12e] - Cloudflare Worker Two-File Testing System Documentation
+
+### Added
+- **CLAUDE.md**: New "⚠️ CRITICAL: Cloudflare Worker Two-File Testing System" section
+  - Documents two-file rule: cloudflare-worker.js + cloudflare-worker.test.js
+  - Explains pure function requirement (string input → string output)
+  - Production bug example: TypeError: element.ontext is not a function (2025-12-12)
+  - Correct pattern: Pure functions before HTMLRewriter
+  - Processing flow pattern and test structure examples
+- **cloudflare/files/README.md**: "⚠️ CRITICAL: The Two-File Rule" section
+  - Correct vs incorrect implementation patterns
+  - References TESTING.md for complete documentation
+- **cloudflare/files/TESTING.md**: Comprehensive two-file rule documentation (200+ lines)
+  - Production bug example with TypeError details
+  - Pure function approach with examples
+  - Processing flow pattern
+  - Test structure requirements
+  - Red flags, violations, and enforcement checklist
+- **.claude/commands/check-cloudflare-tests.md**: New validation command
+  - 6 automated checks: file structure, pure functions, exports, test coverage
+  - Report format with pass/fail status
+  - Common issues and fixes with code examples
+
+### Changed
+- **.claude/hooks/pre-tool-use-version-check.sh**: Enhanced for two-file rule enforcement
+  - Renamed to "Cloudflare Worker Validation"
+  - Added `check_two_file_rule()` - blocks creation of extra test files (exit 1)
+  - Added `warn_about_pure_functions()` - shows correct vs incorrect patterns
+  - Monitors all cloudflare/files/ modifications, not just version changes
+  - Maintains existing version check functionality
+
+### Why This Matters
+- **Problem**: HTMLRewriter element handlers (element.ontext, element.onendtag) don't exist in Node.js
+- **Solution**: Pure functions (string → string) are testable without Cloudflare Workers runtime
+- **Enforcement**: Hook blocks creation of additional test files, warns about patterns
+- **Validation**: `/check-cloudflare-tests` command verifies compliance
+- **Documentation**: Complete guidance prevents future violations
+
+### User Requirement
+> "it is extremely important that this rule id followed and the worker is tested by the two file rule"
+
 ## [2025-12-12d] - Refactor Picture Placeholder to Pure String Replacement
 
 ### Changed
