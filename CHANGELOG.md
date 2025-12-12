@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12ag] - CI: Fix lint job to install Cloudflare worker dependencies
+
+### Fixed
+- **.github/workflows/ci.yml**: Added step to install cloudflare/files dependencies before linting
+  - Fixes ESLint import/no-unresolved error for vitest import
+  - CI lint job now installs dependencies in both root and cloudflare/files directories
+  - Ensures ESLint can resolve imports in cloudflare/files/cloudflare-worker.test.js
+
 ## [2025-12-12af] - Security: Fix esbuild vulnerability in Cloudflare worker
 
 ### Security
