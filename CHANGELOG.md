@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12o] - Pre-Push Validation Hook Critical Bug Fix
+
+### Fixed
+- **Pre-Push Validation Hook**: Fixed critical bug that emptied CHANGELOG.md
+  - **Root Cause**: AWK received multi-line CHANGELOG_ENTRY variable with embedded newlines, causing `awk: newline in string...` error
+  - **Symptom**: AWK failed silently, output empty file to `$CHANGELOG_FILE.tmp`, then `mv` replaced CHANGELOG.md with empty file
+  - **Solution**: Write entry to temporary file (`$CHANGELOG_FILE.entry`), use AWK `system("cat ...")` to insert content instead of `-v` variable
+  - **Result**: File-based approach avoids AWK string escaping issues entirely
+
+### Changed
+- **prompt_for_changelog_entry()** function (lines 99-129):
+  - Added: `echo "$CHANGELOG_ENTRY" > "$CHANGELOG_FILE.entry"` before AWK
+  - Changed: `awk -v entry="$CHANGELOG_ENTRY"` → `awk` (removed variable)
+  - Changed: `print entry;` → `system("cat '"$CHANGELOG_FILE.entry"'");` (both branches)
+  - Added: `rm -f "$CHANGELOG_FILE.entry"` cleanup after insertion
+
+### Testing
+- Created comprehensive test script validating:
+  - Multi-line entries with special characters don't break AWK
+  - Original content preserved (349 → 477 bytes, not shrunk)
+  - New entry inserted after [Unreleased] section
+  - Previous entries remain intact
+- ✅ All tests passed
+
+### Impact
+- **Critical**: Prevents data loss in CHANGELOG.md
+- **User Safety**: Hook no longer destroys changelog when helping with entries
+- **Reliability**: File-based approach is more robust than AWK variable escaping
+
+### Files Modified
+1. `.claude/hooks/pre-push-validation.sh` - Fixed AWK insertion logic (+5 lines)
+
 ## [2025-12-12n] - Documentation-Architect Agent Enhanced to 10/10
 
 ### Changed

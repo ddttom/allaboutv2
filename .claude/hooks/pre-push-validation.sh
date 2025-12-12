@@ -96,15 +96,17 @@ prompt_for_changelog_entry() {
 
 "
 
+    # Write entry to temporary file (avoids AWK newline issues)
+    echo "$CHANGELOG_ENTRY" > "$CHANGELOG_FILE.entry"
+
     # Check if "## [Unreleased]" section exists
     if grep -q "## \[Unreleased\]" "$CHANGELOG_FILE"; then
         # Insert after [Unreleased] section
-        # Use a temporary file for the insertion
-        awk -v entry="$CHANGELOG_ENTRY" '
+        awk '
             /## \[Unreleased\]/ {
                 print;
                 print "";
-                print entry;
+                system("cat '"$CHANGELOG_FILE.entry"'");
                 next;
             }
             { print }
@@ -113,15 +115,18 @@ prompt_for_changelog_entry() {
     else
         # Insert at the top of the changelog (after header)
         # Find the first "##" line and insert before it
-        awk -v entry="$CHANGELOG_ENTRY" '
+        awk '
             !inserted && /^## / {
-                print entry;
+                system("cat '"$CHANGELOG_FILE.entry"'");
                 inserted=1;
             }
             { print }
         ' "$CHANGELOG_FILE" > "$CHANGELOG_FILE.tmp"
         mv "$CHANGELOG_FILE.tmp" "$CHANGELOG_FILE"
     fi
+
+    # Cleanup temporary entry file
+    rm -f "$CHANGELOG_FILE.entry"
 
     echo ""
     echo -e "${GREEN}✓ CHANGELOG.md updated with entry:${NC}"
