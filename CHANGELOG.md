@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12af] - Security: Fix esbuild vulnerability in Cloudflare worker
+
+### Security
+- **cloudflare/files/package-lock.json**: Fixed esbuild vulnerability (Dependabot alert #33)
+  - `esbuild` <=0.24.2: Moderate severity - Development server request vulnerability (GHSA-67mh-4wv8-2f99)
+  - Upgraded vitest 2.1.0 → 4.0.15 (breaking change, all 83 tests pass)
+  - Upgraded @vitest/coverage-v8 to 4.0.15
+  - Added 9 packages, removed 42 packages, changed 18 packages
+  - All vulnerabilities resolved - 0 vulnerabilities remaining
+
 ## [2025-12-12ae] - Security: Fix npm audit vulnerabilities
 
 ### Security
