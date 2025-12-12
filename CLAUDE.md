@@ -683,7 +683,7 @@ When a notebook has a `repo` metadata attribute, all `.md` file links are automa
 
 ## Cloudflare Custom Worker Implementation
 
-**Custom Adobe EDS worker with enhanced features (v1.1.0)** - see `cloudflare/files/`
+**Custom Adobe EDS worker with enhanced features (v1.1.1)** - see `cloudflare/files/`
 
 **What it does:**
 - Adds CORS headers to all responses
