@@ -25,7 +25,7 @@ body.overlay-open {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0 0 0 / 50%);
+  background-color: rgba(0 0 0 / 0.5);
   z-index: 999;
   display: flex;
   align-items: center;
@@ -55,7 +55,7 @@ body.overlay-open {
   max-height: 80vh;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 10px 40px rgba(0 0 0 / 20%);
+  box-shadow: 0 10px 40px rgba(0 0 0 / 0.2);
   transform: scale(0.95);
   transition: transform 0.3s ease-in-out;
 }
@@ -74,7 +74,7 @@ body.overlay-open {
 .overlay-header {
   position: relative;
   padding: 1.5rem 3.5rem 1.5rem 2rem;
-  border-bottom: 1px solid rgba(0 0 0 / 10%);
+  border-bottom: 1px solid rgba(0 0 0 / 0.1);
   flex-shrink: 0;
 }
 
@@ -108,7 +108,7 @@ body.overlay-open {
 
 .overlay-close:hover,
 .overlay-close:focus {
-  background-color: rgba(0 0 0 / 10%);
+  background-color: rgba(0 0 0 / 0.1);
   transform: rotate(90deg);
   outline: 2px solid var(--link-color);
   outline-offset: 2px;
@@ -161,7 +161,7 @@ body.overlay-open {
 }
 
 /* Responsive adjustments - Tablet and Mobile (768px and below) */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .overlay-backdrop {
     padding: 0.5rem;
   }
@@ -194,7 +194,7 @@ body.overlay-open {
 }
 
 /* Small mobile (480px and below) */
-@media (max-width: 480px) {
+@media (width <= 480px) {
   .overlay-modal {
     max-height: 95vh;
     border-radius: 8px;
@@ -230,17 +230,17 @@ body.overlay-open {
 }
 
 .overlay-content::-webkit-scrollbar-track {
-  background: rgba(0 0 0 / 5%);
+  background: rgba(0 0 0 / 0.05);
   border-radius: 4px;
 }
 
 .overlay-content::-webkit-scrollbar-thumb {
-  background: rgba(0 0 0 / 20%);
+  background: rgba(0 0 0 / 0.2);
   border-radius: 4px;
 }
 
 .overlay-content::-webkit-scrollbar-thumb:hover {
-  background: rgba(0 0 0 / 30%);
+  background: rgba(0 0 0 / 0.3);
 }
 
 /* Focus styles for accessibility */

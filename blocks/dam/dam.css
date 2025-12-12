@@ -41,7 +41,7 @@
 
 /* Responsive Design
    ============================================ */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .dam .dam-code {
     font-size: var(--dam-font-size);
     padding: calc(var(--dam-padding) / 2);

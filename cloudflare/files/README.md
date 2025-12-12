@@ -8,10 +8,11 @@ This Worker extends Adobe's standard EDS Cloudflare Worker template to:
 
 1. Add CORS headers to all responses
 2. Generate Article schema JSON-LD from page metadata
-3. Remove EDS error tags and non-social metadata after processing
-4. Replace "Picture Here" placeholders with author images
-5. Remove all HTML comments from HTML responses
-6. Maintain all standard Adobe EDS functionality
+3. Inject Speculation Rules for near-instant navigation
+4. Remove EDS error tags and non-social metadata after processing
+5. Replace "Picture Here" placeholders with author images
+6. Remove all HTML comments from HTML responses
+7. Maintain all standard Adobe EDS functionality
 
 ## Features
 
@@ -20,7 +21,7 @@ This Worker extends Adobe's standard EDS Cloudflare Worker template to:
 The worker includes a version header in all responses:
 - **Header name**: `cfw` (CloudflareWorker)
 - **Format**: Semantic versioning (MAJOR.MINOR.PATCH)
-- **Current version**: `1.1.4`
+- **Current version**: `1.1.5`
 - **Usage**: Track deployed worker version for debugging and monitoring
 
 **Version Management (Single Source of Truth):**
@@ -37,7 +38,7 @@ The worker includes a version header in all responses:
 **Check deployed version:**
 ```bash
 curl -I https://allabout.network/ | grep cfw
-# Output: cfw: 1.1.4
+# Output: cfw: 1.1.5
 ```
 
 ### Trigger Mechanisms
@@ -242,6 +243,47 @@ Automatically removes all HTML comments from HTML responses for cleaner output a
 - Clean up comments left by content authors
 - Improve HTML cleanliness for scrapers and bots
 
+### Speculation Rules API
+
+Injects Chrome's Speculation Rules API for near-instant page navigation via prerendering and prefetching.
+
+**Browser Support**: Chrome 108+, Edge 108+ (other browsers gracefully ignore)
+
+**Injected Script:**
+```html
+<script type="speculationrules">
+  {
+    "prerender": [{ "where": { "href_matches": "/*" }, "eagerness": "moderate" }],
+    "prefetch": [{ "where": { "href_matches": "/*" }, "eagerness": "moderate" }]
+  }
+</script>
+```
+
+**Features:**
+- **Prerendering**: Fully renders pages in background before user navigates
+- **Prefetching**: Downloads resources for faster subsequent loads
+- **Moderate Eagerness**: Balances performance with resource usage
+- **Wildcard Pattern**: Applies to all internal links (`/*`)
+- **Graceful Degradation**: Ignored by browsers that don't support it
+
+**Benefits:**
+- Near-instant navigation for Chrome/Edge users
+- No configuration required (automatic for all pages)
+- Zero impact on unsupported browsers
+- Improved Core Web Vitals (LCP, FID)
+
+**Behavior:**
+- Automatically injected into all HTML responses
+- Appears in `<head>` before closing tag
+- No conditional logic (always enabled)
+- Pure string function (fully testable)
+
+**Use Cases:**
+- Improve page navigation speed for supported browsers
+- Enhance user experience with instant page loads
+- Boost Core Web Vitals scores (LCP, FID)
+- Progressive enhancement (no impact on older browsers)
+
 ## Getting Started
 
 ### Local Development Setup
@@ -328,18 +370,16 @@ curl -I https://yourdomain.com | grep -i access-control
 4. Forwards request to EDS origin
 5. For HTML responses:
    - Extracts HTML text from response body
-   - Applies pure string operations:
-     - Replaces picture placeholders with author images
-     - Removes all HTML comments
+   - **Phase 1: Transformations (ADD content)**
+     1. Replaces picture placeholders with author images
+     2. Injects JSON-LD structured data (if triggered)
+     3. Injects Speculation Rules for near-instant navigation
+   - **Phase 2: Cleanup (DELETE content)**
+     4. Removes non-social metadata tags
+     5. Removes all HTML comments
    - Creates new Response with processed HTML
-   - HTMLRewriter processes the response stream:
-     - Detects malformed error script containing "article" (authoring error workaround)
-     - Removes error scripts and error meta tags
-     - Extracts metadata from meta tags (triggers, titles, dates, authors, etc.)
-     - When `</head>` closing tag is reached, generates and inserts JSON-LD (if triggered)
-     - Removes non-social meta tags during extraction
 6. Creates new Response object for header modifications
-7. Adds CORS headers
+7. Adds CORS headers and version header (`cfw: 1.1.5`)
 8. Returns response
 
 ### Critical Implementation Detail

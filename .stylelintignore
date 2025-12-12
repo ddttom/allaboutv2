@@ -1,0 +1,12 @@
+# Build directories
+build/
+
+# Third-party code
+plusplus/
+
+# Static bundled files
+static/
+
+# Blocks using external component libraries
+blocks/spectrum-card/
+blocks/shoelace/

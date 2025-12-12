@@ -38,7 +38,7 @@
     border-top: 1px solid #ccc;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (width <= 600px) {
     .bloglist {
         grid-template-columns: 1fr;
     }

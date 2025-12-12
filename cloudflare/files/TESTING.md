@@ -63,7 +63,18 @@ export const removeHtmlComments = (html) => (
   html.replace(/<!--[\s\S]*?-->/g, '')
 );
 
-// Both functions work perfectly in Node.js - no runtime needed
+// ✅ CORRECT - Speculation Rules injection
+export const injectSpeculationRules = (html) => {
+  const speculationScript = `<script type="speculationrules">
+  {
+    "prerender": [{ "where": { "href_matches": "/*" }, "eagerness": "moderate" }],
+    "prefetch": [{ "where": { "href_matches": "/*" }, "eagerness": "moderate" }]
+  }
+</script>`;
+  return html.replace('</head>', `${speculationScript}\n</head>`);
+};
+
+// All functions work perfectly in Node.js - no runtime needed
 test('replaces Picture Here with image', () => {
   const html = '<div><div>Picture Here</div></div>';
   const result = replacePicturePlaceholder(html);
@@ -77,6 +88,15 @@ test('removes HTML comments', () => {
   const html = '<div><!-- comment --></div>';
   const result = removeHtmlComments(html);
   expect(result).toBe('<div></div>');
+});
+
+test('injects speculation rules into head', () => {
+  const html = '<html><head><title>Test</title></head><body></body></html>';
+  const result = injectSpeculationRules(html);
+
+  expect(result).toContain('speculationrules');
+  expect(result).toContain('"prerender"');
+  expect(result).toContain('"prefetch"');
 });
 ```
 
@@ -417,12 +437,13 @@ curl -s https://allabout.network/blog/article | grep -i "application/ld+json"
 
 ## Test Coverage
 
-**Status:** ✅ All 63 tests passing
+**Status:** ✅ All 71 tests passing (was 63, added 8 for speculation rules + 1 integration test = 9 new tests)
 
-- **Functions:** 100% coverage of exported helpers (including `removeHtmlComments`)
+- **Functions:** 100% coverage of exported helpers (including `removeHtmlComments`, `injectSpeculationRules`)
 - **Handlers:** 100% coverage of extracted handlers
 - **Integration:** Core flow covered by mock integration test
 - **HTML Comment Removal:** 8 unit tests covering all edge cases
+- **Speculation Rules Injection:** 8 unit tests + 1 integration test covering all scenarios
 
 ## Troubleshooting
 

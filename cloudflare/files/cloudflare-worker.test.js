@@ -20,6 +20,8 @@ import worker, {
   normalizeYear,
   replacePicturePlaceholder,
   removeHtmlComments,
+  injectSpeculationRules,
+  injectJsonLd,
   WORKER_VERSION,
   PICTURE_PLACEHOLDER_CONFIG,
 } from './cloudflare-worker.js';
@@ -630,6 +632,108 @@ describe('removeHtmlComments', () => {
   });
 });
 
+// Test suite for injectSpeculationRules
+describe('injectSpeculationRules', () => {
+  test('injects speculation rules script into head', () => {
+    const html = '<html><head><title>Test</title></head><body></body></html>';
+    const result = injectSpeculationRules(html);
+
+    expect(result).toContain('<script type="speculationrules">');
+    expect(result).toContain('"prerender"');
+    expect(result).toContain('"prefetch"');
+    expect(result).toContain('"href_matches": "/*"');
+    expect(result).toContain('"eagerness": "moderate"');
+  });
+
+  test('script appears before </head> closing tag', () => {
+    const html = '<html><head><meta name="test"></head><body></body></html>';
+    const result = injectSpeculationRules(html);
+
+    const headCloseIndex = result.indexOf('</head>');
+    const scriptStartIndex = result.indexOf('<script type="speculationrules">');
+
+    expect(scriptStartIndex).toBeLessThan(headCloseIndex);
+  });
+
+  test('valid JSON structure in speculation rules', () => {
+    const html = '<html><head></head><body></body></html>';
+    const result = injectSpeculationRules(html);
+
+    // Extract JSON from script tag
+    const scriptMatch = result.match(/<script type="speculationrules">\s*([\s\S]*?)\s*<\/script>/);
+    expect(scriptMatch).toBeTruthy();
+
+    // Validate JSON structure
+    const json = JSON.parse(scriptMatch[1]);
+    expect(json.prerender).toBeDefined();
+    expect(json.prefetch).toBeDefined();
+    expect(json.prerender[0].where.href_matches).toBe('/*');
+    expect(json.prerender[0].eagerness).toBe('moderate');
+  });
+
+  test('preserves existing head content', () => {
+    const html = '<html><head><meta name="test"><title>My Title</title></head><body></body></html>';
+    const result = injectSpeculationRules(html);
+
+    expect(result).toContain('<meta name="test">');
+    expect(result).toContain('<title>My Title</title>');
+  });
+
+  test('handles multiple injections correctly', () => {
+    const html = '<html><head></head><body></body></html>';
+    const afterJsonLd = injectJsonLd(html, 'example.com');
+    const result = injectSpeculationRules(afterJsonLd);
+
+    // Both scripts should be present
+    expect(result).toContain('application/ld+json');
+    expect(result).toContain('speculationrules');
+
+    // Speculation rules should appear before </head>
+    const headCloseIndex = result.indexOf('</head>');
+    const speculationIndex = result.indexOf('speculationrules');
+    expect(speculationIndex).toBeLessThan(headCloseIndex);
+  });
+
+  test('handles HTML without head tag gracefully', () => {
+    const html = '<html><body>content</body></html>';
+    const result = injectSpeculationRules(html);
+
+    // Should return unchanged (no </head> to replace)
+    expect(result).toBe(html);
+    expect(result).not.toContain('speculationrules');
+  });
+
+  test('preserves HTML structure', () => {
+    const html = '<html><head><meta charset="utf-8"></head><body><p>Test</p></body></html>';
+    const result = injectSpeculationRules(html);
+
+    expect(result).toContain('<p>Test</p>');
+    expect(result).toContain('<meta charset="utf-8">');
+    expect(result).toContain('</body></html>');
+  });
+
+  test('works with real-world EDS HTML structure', () => {
+    const html = `<html>
+<head>
+<meta name="viewport" content="width=device-width">
+<meta property="og:title" content="Test Page">
+<title>Test Page</title>
+</head>
+<body>
+<main><div>Content</div></main>
+</body>
+</html>`;
+
+    const result = injectSpeculationRules(html);
+
+    expect(result).toContain('speculationrules');
+    // Should appear after meta tags but before </head>
+    const speculationIndex = result.indexOf('speculationrules');
+    const headCloseIndex = result.indexOf('</head>');
+    expect(speculationIndex).toBeLessThan(headCloseIndex);
+  });
+});
+
 // Mock HTMLRewriter for integration testing
 class MockHTMLRewriter {
   static activeHandlers = [];
@@ -786,8 +890,32 @@ describe('handleRequest Integration', () => {
 
     const response = await worker.fetch(request, env);
 
-    // Verify version header still present and shows 1.1.4
+    // Verify version header still present and shows 1.1.5
     expect(response.headers.get('cfw')).toBe(WORKER_VERSION);
-    expect(WORKER_VERSION).toBe('1.1.4');
+    expect(WORKER_VERSION).toBe('1.1.5');
+  });
+
+  test('includes speculation rules in HTML responses', async () => {
+    const env = {
+      ORIGIN_HOSTNAME: 'main--test--owner.aem.live',
+    };
+    const request = {
+      url: 'https://allabout.network/article',
+      method: 'GET',
+      headers: new Map(),
+    };
+
+    // Mock fetch to return HTML with head tag
+    global.fetch = vi.fn().mockResolvedValue(new Response(
+      '<html><head><title>Test</title></head><body></body></html>',
+      { headers: { 'content-type': 'text/html' } },
+    ));
+
+    const response = await worker.fetch(request, env);
+    const html = await response.text();
+
+    expect(html).toContain('speculationrules');
+    expect(html).toContain('"prerender"');
+    expect(html).toContain('"prefetch"');
   });
 });

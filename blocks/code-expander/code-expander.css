@@ -1,7 +1,7 @@
 :root {
   /* Core colors */
   --code-expander-button-bg: #4a90e2;
-  --code-expander-button-text: #ffffff;
+  --code-expander-button-text: #fff;
   --code-expander-button-border: #3a7bc8;
   --code-expander-button-hover-bg: #3a7bc8;
   --code-expander-code-bg: #f8f8f8;
@@ -12,13 +12,13 @@
   --code-expander-pre-border-color: #e1e4e8;
   --code-expander-pre-border-width: 1px;
   --code-expander-border-radius: 6px;
-  --code-expander-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  --code-expander-box-shadow: 0 2px 6px rgb(0 0 0 / 0.05);
   
   /* Typography */
   --code-expander-font-size-small: 0.8rem;
   --code-expander-font-size-normal: 0.9rem;
   --code-expander-font-size-large: 1rem;
-  --code-expander-font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  --code-expander-font-family: 'SFMono-Regular', consolas, 'Liberation Mono', menlo, monospace;
   --code-expander-line-height: 1.5;
   
   /* Layout */
@@ -26,7 +26,7 @@
   --code-expander-button-width: 80px;
   
   /* Modal */
-  --code-expander-modal-bg: rgba(0, 0, 0, 0.5);
+  --code-expander-modal-bg: rgb(0 0 0 / 0.5);
   --code-expander-modal-content-bg: #fff;
   --code-expander-modal-border: #ccc;
   --code-expander-input-border: #ddd;
@@ -35,33 +35,32 @@
   /* Tooltip */
   --code-expander-tooltip-bg: #fff;
   --code-expander-tooltip-border: #ddd;
-  --code-expander-tooltip-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --code-expander-tooltip-shadow: 0 2px 8px rgb(0 0 0 / 0.15);
   --code-expander-tooltip-text: #333;
   --code-expander-tooltip-title-bg: #f5f5f5;
 
   /* Syntax highlighting */
-  --code-expander-css-property: #ff0000;
-  --code-expander-css-value: #0000ff;
+  --code-expander-css-property: #f00;
+  --code-expander-css-value: #00f;
   --code-expander-css-selector: #800000;
   --code-expander-css-comment: #008000;
   --code-expander-js-string: #a31515;
-  --code-expander-js-keyword: #0000ff;
+  --code-expander-js-keyword: #00f;
   --code-expander-json-string: #a31515;
   --code-expander-json-key: #0451a5;
-  --code-expander-json-boolean: #0000ff;
+  --code-expander-json-boolean: #00f;
   --code-expander-json-number: #098658;
-  --code-expander-terminal-command: #000000;
+  --code-expander-terminal-command: #000;
   --code-expander-terminal-comment: #008000;
-  --code-expander-terminal-output: #000000;
+  --code-expander-terminal-output: #000;
 
   /* Markdown syntax highlighting */
-  --code-expander-markdown-heading: #0000FF;
+  --code-expander-markdown-heading: #00F;
   --code-expander-markdown-list-item: #008000;
   --code-expander-markdown-blockquote: #808080;
   --code-expander-markdown-code: #D2691E;
   --code-expander-markdown-link: #1E90FF;
-
-  --code-expander-json-null: #0000FF;
+  --code-expander-json-null: #00F;
 }
 
 /* Main wrapper styles */
@@ -144,7 +143,7 @@
   font-size: var(--code-expander-font-size-small);
   cursor: pointer;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.1);
   white-space: nowrap;
   min-width: var(--code-expander-button-width);
   text-align: center;
@@ -277,7 +276,7 @@ pre[class^="language-"].expanded {
   background-color: var(--code-expander-modal-content-bg);
   padding: 20px;
   border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.2);
   width: 80%;
   max-width: 400px;
 }
@@ -301,7 +300,7 @@ pre[class^="language-"].expanded {
 .code-expander-filename-input:focus {
   outline: none;
   border-color: var(--code-expander-input-focus-border);
-  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+  box-shadow: 0 0 0 2px rgb(74 144 226 / 0.2);
 }
 
 .code-expander-filename-buttons {
@@ -393,7 +392,7 @@ pre[class^="language-"].expanded {
 .link { color: #032f62; }
 
 /* Mobile responsiveness */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .code-expander-wrapper pre {
     font-size: 12px;
   }
@@ -454,7 +453,7 @@ pre[class^="language-"].expanded {
 }
 
 /* For very small screens */
-@media (max-width: 480px) {
+@media (width <= 480px) {
   .code-expander-wrapper pre {
     font-size: 11px;
   }

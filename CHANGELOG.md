@@ -10,9 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2025-12-12ab] - Fix Linting
 
 ### Fixed
-- Fixed all linting errors across entire project (7,632 → 0 errors)
+- Fixed all JavaScript linting errors across entire project (7,632 → 0 errors)
+- Fixed all CSS linting errors (283 → 0 errors) with auto-fix and configuration
 - Fixed vitest import resolution in cloudflare-worker.test.js
 - Fixed package.json import path and extension in cloudflare-worker.js
+- Removed invalid text-fill-color property from ipynb-viewer.css
+
+### Added
+- Created .stylelintignore to exclude build/, plusplus/, static/, and external library blocks
+- Updated .stylelintrc.json to disable overly strict rules for legacy CSS
 
 ## [2025-12-12aa] - Cloudflare Worker: Single Source of Truth for Version
 
