@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12y] - Cloudflare Test Page: Clarify Auto-Run Behavior
+
+### Changed
+- **cloudflare/test.html**: Updated instructions to clarify that tests run automatically on first page load
+  - Line 217: Added "(runs auto first time)" to test instructions
+  - Improves user experience by explaining the 1-second auto-run delay
+
 ## [2025-12-12x] - CI/CD: Change Cloudflare Deployment to Manual Only
 
 ### Changed
