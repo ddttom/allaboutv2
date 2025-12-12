@@ -20,6 +20,14 @@ if [[ "${SKIP_DOC_CHECK:-0}" == "1" ]]; then
     exit 0
 fi
 
+# Check if running under Claude Code (detected by CLAUDECODE environment variable)
+# Skip validation since Claude Code doesn't have TTY access for interactive prompts
+if [[ "${CLAUDECODE:-0}" == "1" ]]; then
+    echo -e "\033[1;33m⚠️  Claude Code detected - validation skipped\033[0m"
+    echo -e "\033[1;33m   (Update CHANGELOG.md manually when pushing from Claude Code)\033[0m"
+    exit 0
+fi
+
 # Check if running in non-interactive environment (no TTY available)
 # This typically means the hook is being called by an IDE or automated tool
 if [[ ! -t 0 ]] && [[ ! -r /dev/tty ]]; then
