@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-12s] - Cloudflare Worker: Fix JSON-LD Publisher Organization Hostname
+
+### Fixed
+- **JSON-LD Publisher Organization**: Publisher name now uses public-facing domain instead of EDS origin
+  - **Before**: `"publisher": {"@type": "Organization", "name": "main--allaboutv2--ddttom.aem.live"}`
+  - **After**: `"publisher": {"@type": "Organization", "name": "allabout.network"}`
+  - Ensures search engines see the correct canonical domain for the publisher
+  - `ORIGIN_HOSTNAME` still used for fetching content (unchanged behavior)
+
+### Changed
+- **cloudflare-worker.js**:
+  - Line 363: Added `publicHostname` variable to capture request hostname before override
+  - Line 459: Changed `injectJsonLd()` to use `publicHostname` instead of `url.hostname`
+- **cloudflare-worker.test.js**:
+  - Added test case verifying publisher uses public-facing hostname (lines 484-498)
+  - All 74 tests passing
+
+### Documentation
+- **cloudflare/files/README.md**:
+  - Added clarification that publisher uses public-facing hostname from request
+  - Updated "Limitations" section to specify publisher derives from public hostname
+  - Clarified `ORIGIN_HOSTNAME` is for content fetching, not JSON-LD metadata
+
+### Test Results
+- ✅ 74/74 tests passing (up from 73)
+- ✅ Local HTML processing: 20/20 tests passing
+- ✅ Publisher organization verified: `"name": "allabout.network"`
+
 ## [2025-12-12r] - Cloudflare Worker: Add 2-Digit Year Support for Date Formatting
 
 ### Added

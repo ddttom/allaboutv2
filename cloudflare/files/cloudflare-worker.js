@@ -360,6 +360,7 @@ const handleRequest = async (request, env, _ctx) => {
   }
 
   const url = new URL(request.url);
+  const publicHostname = url.hostname; // Store public-facing domain for JSON-LD
 
   // Handle CORS preflight OPTIONS requests
   if (request.method === 'OPTIONS') {
@@ -455,7 +456,7 @@ const handleRequest = async (request, env, _ctx) => {
     htmlText = replacePicturePlaceholder(htmlText);
 
     // 2. Transform: Inject JSON-LD structured data
-    htmlText = injectJsonLd(htmlText, url.hostname);
+    htmlText = injectJsonLd(htmlText, publicHostname);
 
     // CRITICAL ORDER: Apply removals (DELETE content) LAST
     // 3. Clean: Remove non-social metadata tags

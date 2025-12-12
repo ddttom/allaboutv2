@@ -480,6 +480,22 @@ describe('buildJsonLd', () => {
     // Should use author-url, not LinkedIn
     expect(jsonLd.author.url).toBe('https://example.com/author/john-doe');
   });
+
+  test('publisher uses public-facing hostname not origin hostname', () => {
+    const article = {
+      title: 'Test Article',
+      author: 'Test Author',
+    };
+    const publicHostname = 'allabout.network';
+
+    const result = buildJsonLd(article, publicHostname);
+
+    expect(result.publisher).toBeDefined();
+    expect(result.publisher['@type']).toBe('Organization');
+    expect(result.publisher.name).toBe('allabout.network');
+    // Verify it's NOT using the origin hostname
+    expect(result.publisher.name).not.toBe('main--allaboutv2--ddttom.aem.live');
+  });
 });
 
 // Note: Handler Functions tests removed as worker now uses pure string functions

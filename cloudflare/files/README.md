@@ -110,6 +110,9 @@ Extracts metadata from your EDS pages and creates schema.org Article structured 
 - `author-url` → author (Person url) - optional (falls back to `linkedin` meta if not provided)
 - `publication-date` or `published-date` → datePublished (auto-formatted to ISO 8601)
 - `modified-date` or `last-modified` → dateModified (auto-formatted to ISO 8601)
+- **Publisher organization** → Uses the public-facing hostname from the request (e.g., `allabout.network`), not the EDS origin
+
+**Note:** The `ORIGIN_HOSTNAME` environment variable is used to fetch content from the EDS origin, but the JSON-LD publisher organization always uses the public-facing domain from the incoming request. This ensures search engines see the correct canonical domain.
 
 The JSON-LD script is inserted into the page `<head>`.
 
@@ -505,7 +508,7 @@ Modified by Digital Domain Technologies Ltd
 - Currently works around an authoring error that generates malformed JSON-LD scripts
 - Requires at least `og:title` to generate JSON-LD
 - Dates are automatically converted to ISO 8601; invalid dates are omitted
-- Publisher name is derived from hostname
+- Publisher name is derived from the public-facing request hostname (e.g., `allabout.network`)
 - Author URL is optional and not validated (schema.org handles validation)
 
 ## Debugging and Error Handling
