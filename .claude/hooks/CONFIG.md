@@ -47,7 +47,7 @@ This project uses a **minimal hooks setup** optimized for EDS development. The a
 - **Implementation:** Bash script with minimal overhead
 
 **pre-push-validation.sh** (Git Hook)
-- **Trigger:** Before `git push` operations
+- **Trigger:** Before `git push` operations (interactive terminal only)
 - **Purpose:**
   - **INTERACTIVE:** Prompts for CHANGELOG.md entry if outdated, automatically adds it
   - **REQUIRED:** Validates CHANGELOG.md is updated before push (blocks push if not updated)
@@ -55,7 +55,11 @@ This project uses a **minimal hooks setup** optimized for EDS development. The a
 - **Implementation:** Bash script with git integration and interactive prompts
   - **CRITICAL FIX:** Uses `/dev/tty` for user input to avoid reading git push refs from stdin
   - Git hooks receive push information on stdin (refs), so `read` must redirect from terminal
-- **Usage:** Runs automatically via git hooks, or manually with `/validate-docs` command
+  - **Auto-skips** in non-interactive environments (IDEs, CI/CD) where TTY is unavailable
+- **Usage:**
+  - Runs automatically when pushing from terminal: `git push`
+  - Skips automatically when pushing from Claude Code or other IDEs
+  - Manual validation: use `/validate-docs` command
 - **Bypass:** Use `SKIP_DOC_CHECK=1 git push` (not recommended for main branches)
 - **Interactive Workflow:**
   1. Hook detects CHANGELOG.md needs updating

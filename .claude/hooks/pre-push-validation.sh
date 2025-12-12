@@ -20,6 +20,14 @@ if [[ "${SKIP_DOC_CHECK:-0}" == "1" ]]; then
     exit 0
 fi
 
+# Check if running in non-interactive environment (no TTY available)
+# This typically means the hook is being called by an IDE or automated tool
+if [[ ! -t 0 ]] && [[ ! -r /dev/tty ]]; then
+    echo -e "\033[1;33m⚠️  Non-interactive environment detected - validation skipped\033[0m"
+    echo -e "\033[1;33m   (Run 'git push' from terminal for interactive CHANGELOG prompts)\033[0m"
+    exit 0
+fi
+
 # ANSI color codes
 RED='\033[0;31m'
 GREEN='\033[0;32m'

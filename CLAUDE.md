@@ -303,13 +303,15 @@ Active hooks that enhance development workflow:
 - **REQUIRED:** Validates CHANGELOG.md is updated before push (blocks push if not updated)
 - **SUGGESTED:** Recommends updating CLAUDE.md and README.md (won't block push, only suggests)
 - **Implementation Note:** Uses `/dev/tty` for user input to avoid reading git push refs from stdin
-- **Workflow:**
-  1. Run `git push` → Hook detects CHANGELOG.md needs updating
+- **Auto-skips** when pushing from Claude Code or other IDEs (no TTY available)
+- **Workflow (terminal only):**
+  1. Run `git push` from terminal → Hook detects CHANGELOG.md needs updating
   2. Prompts: "What changed in this commit/push?"
   3. You provide summary (e.g., "Added HTML comment removal")
   4. Hook automatically inserts entry into CHANGELOG.md
   5. Push blocked → Review CHANGELOG.md, commit it, and push again
-- Auto-triggers on `git push` operations
+- Auto-triggers on `git push` from terminal
+- Skips validation when pushing from Claude Code (use CHANGELOG.md manually)
 - Use `/validate-docs` for manual validation
 - **Bypass:** Use `SKIP_DOC_CHECK=1 git push` if docs truly don't need updating
 
