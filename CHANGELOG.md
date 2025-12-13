@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-13] - Additional CSS Lint Cleanup
+
+### Changed
+- **Removed remaining CSS top-of-file lint suppressions**
+  - Removed `stylelint-disable-next-line` from plusplus/src/samples/blocks/text/text.css
+  - File now empty (was suppressing no-empty-source warning)
+  - Completes CSS lint suppression cleanup across entire project
+
 ## [2025-12-13] - Remove Top-of-File Lint Disable Comments & Fix Linting Tools
 
 ### Changed
