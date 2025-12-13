@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-use-before-define */
 export default function decorate(block) {
   // Global Selector is INTENTIONAL - used for Document access
   // This block scans ALL page headings to build table of contents

@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved, max-len */
 import { toClassName } from '../../scripts/aem.js';
 
 function hasWrapper(el) {

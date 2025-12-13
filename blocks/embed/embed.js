@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define, max-len, no-plusplus, no-console, no-restricted-syntax, no-continue, no-loop-func, radix, no-lonely-if, no-restricted-globals, no-alert, prefer-destructuring, brace-style, no-param-reassign, no-return-assign, no-await-in-loop, no-shadow, no-nested-ternary, func-names, no-void, no-sequences, no-unused-expressions, no-useless-escape */
 /*
  * Embed Block
  * Show videos and social posts directly on your page

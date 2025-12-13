@@ -1,4 +1,3 @@
-/* eslint-disable no-promise-executor-return, max-len, no-console, no-use-before-define, no-shadow */
 /**
  * IPYNB Helper Functions for Browser Testing
  *
@@ -84,7 +83,11 @@ export async function showPreview(blockName, innerHTML = '') {
 
   // Wait for DOM to be ready before checking for paged overlay
   // This fixes timing issues where the paged overlay hasn't fully rendered yet
-  await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  await new Promise((resolve) => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(resolve);
+    });
+  });
 
   // Check if we're in notebook mode
   const pagedOverlay = document.querySelector('.ipynb-paged-overlay[data-notebook-mode="true"]');

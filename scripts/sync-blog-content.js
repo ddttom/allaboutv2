@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-/* eslint-disable no-console, max-len, no-restricted-globals, prefer-destructuring, no-unused-vars, radix, no-plusplus, no-restricted-syntax, no-await-in-loop */
 /**
  * Sync Blog Content Utility
  *

@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import { defineConfig } from 'vite';
 
 export default defineConfig({

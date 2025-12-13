@@ -1,4 +1,3 @@
-/* eslint-disable no-console, no-plusplus, no-restricted-syntax, no-await-in-loop, no-use-before-define, max-len, no-continue, no-loop-func, radix, no-lonely-if, no-restricted-globals, no-alert, prefer-destructuring */
 /**
  * IPynb Viewer Block
  * Displays Jupyter notebook (.ipynb) files with interactive JavaScript execution

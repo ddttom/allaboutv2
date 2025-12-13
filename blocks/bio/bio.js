@@ -1,6 +1,6 @@
-/* eslint-disable import/no-unresolved */
-/* eslint-disable import/no-absolute-path */
-import { renderExpressions } from '/plusplus/plugins/expressions/src/expressions.js';
+// External dependency from sibling repository
+// eslint-disable-next-line import/no-unresolved, import/no-absolute-path
+import { renderExpressions } from '../../../../../../../plusplus/plugins/expressions/src/expressions.js';
 
 const BIO_CONFIG = {
   DEFAULT_ALT_TEXT: 'Bio image',

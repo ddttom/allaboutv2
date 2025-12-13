@@ -1,10 +1,11 @@
-/* eslint-disable function-paren-newline, import/extensions, no-alert, no-unused-vars, import/no-unresolved, import/no-self-import, max-len */
-
 import { createOptimizedPicture } from '../../scripts/aem.js';
+// External dependencies from sibling repository
+/* eslint-disable import/no-unresolved */
 import {
   a, div, li, p, h3, span, ul,
 } from '../../../../../../../plusplus/block-party/dom-helpers.js';
 import ffetch from '../../../../../../../plusplus/block-party/ffetch.js';
+/* eslint-enable import/no-unresolved */
 
 export default async function decorate(block) {
 // Use the block parameter directly
@@ -45,8 +46,7 @@ export default async function decorate(block) {
   // Filter content to exclude paths containing '/template' and the current page path
   const filteredContent = content.filter((card) => !card.path.includes('/template') && !card.path.includes('/test')
   && card.path !== window.location.pathname // Dynamically exclude the current page path
-  && targetNames.some((target) => card.path.includes(`/${target}/`)),
-  );
+  && targetNames.some((target) => card.path.includes(`/${target}/`)));
 
   // Sort the filtered content by 'lastModified' in descending order
   const sortedContent = filteredContent.sort((adate, b) => {
@@ -61,12 +61,15 @@ export default async function decorate(block) {
   block.append(
     ul(
       ...sortedContent.slice(0, maxReturnNumber).map((card) => li(
-        div({ class: 'card-image' },
-          a({ href: card.path }, // Link wrapping the image
+        div(
+          { class: 'card-image' },
+          a(
+            { href: card.path }, // Link wrapping the image
             createOptimizedPicture(card.image, card.headline, false, [{ width: '750' }]),
           ),
         ),
-        div({ class: 'cards-card-body' },
+        div(
+          { class: 'cards-card-body' },
           span({ class: 'card-tag' }, card.service),
           span({ class: 'card-tag alt' }, card.resource),
           h3((card.headline)),

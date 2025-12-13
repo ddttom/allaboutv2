@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define, max-len, no-plusplus, prefer-destructuring, brace-style, no-param-reassign, no-return-assign */
 /**
  * Digital Presentation System (DPS) Block
  * A block for creating and displaying interactive presentations
