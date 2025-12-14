@@ -7,6 +7,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2025-12-14] - Universal Service Provider Management System Planning
+
+### Added
+- **Complete Implementation Plan**: `complete-plan.md` - Comprehensive 8-week plan for universal service provider platform
+  - Multi-tenant architecture supporting both physical contractors and service professionals
+  - Module-based feature system (photos, suppliers, materials, location, certifications)
+  - Template-based workflows using markdown definitions
+  - Command-line onboarding for Tom-only admin
+  - 4 implementation phases with acceptance criteria
+  - Database schemas for tenants and jobs tables
+  - Example workflow templates (electrical-contractor, software-developer)
+  - Tenant configuration service design
+  - 6 industry templates (electrical, software, plumber, builder, architect, web designer)
+  - Success metrics and testing procedures
+- **Actionable Next Steps**: `plan-next-steps.md` - Week 1 breakdown with daily tasks
+  - Day 1-2: Database foundation with SQL CREATE TABLE statements
+  - Day 3: Workflow templates in markdown format
+  - Day 4: Tenant configuration service implementation
+  - Day 5: Command-line onboarding script
+  - Testing procedures for 2 test tenants (Bright Sparks, DevFlow)
+  - Resources needed and questions to answer before starting
+  - Complete Week 1 acceptance criteria
+
+### Changed
+- **Project Scope**: Expanded from electrician-focused system to universal service provider platform
+  - Supports physical contractors (electricians, plumbers, builders)
+  - Supports service professionals (software developers, architects, web designers, hairdressers, dog walkers)
+  - All previously mandatory features now optional and configurable per tenant
+  - Greenfield development approach (no migrations or breaking changes)
+
+### Technical Details
+- **Architecture**: Greenfield multi-tenant system with tenant_id filtering on all queries
+- **Configuration**: JSON-based module toggles and markdown workflow templates
+- **Onboarding**: Bash script with command-line arguments for rapid tenant setup
+- **Pricing Models**: Hourly, day rate, fixed price, appointment, retainer
+- **Optional Fields**: Fixed set initially (github_repo, deployment_url, test_coverage)
+- **Timeline**: 8 weeks (3 weeks foundation, 2 weeks dynamic UI, 1 week templates, 2 weeks polish)
+
 ## [2025-12-13] - Additional CSS Lint Cleanup
 
 ### Changed
