@@ -159,9 +159,22 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
       return `<span class="ipynb-external-link" title="${url}">${text} <code>${url}</code></span>`;
     }
 
-    // Hash links - keep as-is for internal navigation
+    // Hash links - normalize href to match h2 ID generation (strip emojis/special chars)
     if (url.startsWith('#')) {
-      return `<a href="${url}">${text}</a>`;
+      // Remove the # prefix
+      let hash = url.substring(1);
+
+      // Normalize the hash to match how h2 IDs are generated (line 83-89)
+      // Remove special characters (including emojis), lowercase, replace spaces with hyphens
+      const normalizedHash = hash
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, '') // Remove special characters except word chars, spaces, hyphens
+        .replace(/\s+/g, '-')      // Replace spaces with hyphens
+        .replace(/-+/g, '-')       // Replace multiple hyphens with single hyphen
+        .replace(/^-+|-+$/g, '')   // Remove leading and trailing hyphens
+        .trim();
+
+      return `<a href="#${normalizedHash}">${text}</a>`;
     }
 
     // Other file types (.html, .htm, images, etc.) - display as non-clickable text
@@ -2083,9 +2096,13 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
 
     // Re-resolve ALL links with hash="#" in the current page (action cards, tables, lists, etc.)
     const allHashLinks = cellContentArea.querySelectorAll('a[href="#"]');
+    console.log(`🔗 Found ${allHashLinks.length} links with href="#" to resolve`);
+
     allHashLinks.forEach(link => {
       // Re-resolve the link by finding matching heading
       const linkText = link.textContent.trim();
+      const searchText = linkText.replace(/[^\w\s]/g, '').toLowerCase();
+      console.log(`   Resolving link: "${linkText}" → search: "${searchText}"`);
 
       // Search through ALL cells in the notebook (not just current page)
       const allCells = cellsContainer.querySelectorAll('.ipynb-cell');
@@ -2096,9 +2113,9 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
         const headings = cell.querySelectorAll('h1, h2, h3, h4, h5, h6');
         headings.forEach((heading) => {
           const headingText = heading.textContent.trim().replace(/[^\w\s]/g, '').toLowerCase();
-          const searchText = linkText.replace(/[^\w\s]/g, '').toLowerCase();
 
           if (headingText.includes(searchText)) {
+            console.log(`      ✅ Match found: "${heading.textContent.trim()}" (cell ${cell.dataset.cellIndex})`);
             targetCell = cell;
             if (!heading.id && cell.dataset.cellIndex) {
               heading.id = `cell-${cell.dataset.cellIndex}`;
@@ -2110,6 +2127,9 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       // Update the link
       if (targetCell && targetCell.dataset.cellIndex) {
         link.href = `#cell-${targetCell.dataset.cellIndex}`;
+        console.log(`      → Updated href to: #cell-${targetCell.dataset.cellIndex}`);
+      } else {
+        console.warn(`      ❌ No match found for: "${linkText}"`);
       }
     });
 
