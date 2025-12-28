@@ -2117,17 +2117,29 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
           if (headingText.includes(searchText)) {
             console.log(`      ✅ Match found: "${heading.textContent.trim()}" (cell ${cell.dataset.cellIndex})`);
             targetCell = cell;
-            if (!heading.id && cell.dataset.cellIndex) {
-              heading.id = `cell-${cell.dataset.cellIndex}`;
+            // Create ID from heading text instead of cell index
+            if (!heading.id) {
+              const headingId = heading.textContent.trim()
+                .toLowerCase()
+                .replace(/[^\w\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-')
+                .replace(/^-+|-+$/g, '');
+              heading.id = headingId;
             }
           }
         });
       });
 
-      // Update the link
-      if (targetCell && targetCell.dataset.cellIndex) {
-        link.href = `#cell-${targetCell.dataset.cellIndex}`;
-        console.log(`      → Updated href to: #cell-${targetCell.dataset.cellIndex}`);
+      // Update the link to point to the heading ID
+      if (targetCell) {
+        const matchedHeading = targetCell.querySelector('h1, h2, h3, h4, h5, h6');
+        if (matchedHeading && matchedHeading.id) {
+          link.href = `#${matchedHeading.id}`;
+          console.log(`      → Updated href to: #${matchedHeading.id}`);
+        } else {
+          console.warn(`      ❌ Heading found but no ID: "${linkText}"`);
+        }
       } else {
         console.warn(`      ❌ No match found for: "${linkText}"`);
       }
