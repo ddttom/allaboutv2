@@ -4,19 +4,22 @@
  * https://www.aem.live/developer/block-collection/fragment
  */
 
+// External dependencies from sibling repository
+// eslint-disable-next-line import/no-unresolved
 import {
   decorateMain,
-} from '/scripts/scripts.js';
+} from '../../../../../../../scripts/scripts.js';
 
+// eslint-disable-next-line import/no-unresolved
 import {
   loadBlocks,
-} from '/scripts/aem.js';
+} from '../../../../../../../scripts/aem.js';
 
 /**
  * Loads a fragment.
  * @param {string} path The path to the fragment
  * @returns {HTMLElement} The root element of the fragment
- */
+ no-unused-vars, import/no-unresolved, import/no-self-import */
 export async function loadFragment(path) {
   if (path && path.startsWith('/')) {
     const resp = await fetch(`${path}.plain.html`);

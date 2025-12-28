@@ -125,10 +125,10 @@ export default function decorate(block) {
     // Get initial value from the first cell of the table
     const cells = Array.from(block.children);
     const initialValue = cells[0]?.textContent.trim();
-    
+
     // Create and configure counter before clearing block
     const counter = document.createElement('counter-element');
-    
+
     if (initialValue) {
       const parsedValue = parseInt(initialValue, 10);
       if (Number.isNaN(parsedValue)) {
@@ -136,7 +136,7 @@ export default function decorate(block) {
       }
       // Set the initial value attribute
       counter.setAttribute('initial-value', parsedValue.toString());
-      
+
       // Force a re-render of the counter with the new value
       counter.count = parsedValue;
       if (counter.shadowRoot) {
@@ -156,10 +156,9 @@ export default function decorate(block) {
       // eslint-disable-next-line no-console
       console.log('Count changed:', event.detail.count);
     });
-
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Error initializing counter:', error);
     block.textContent = error.message;
   }
-} 
+}

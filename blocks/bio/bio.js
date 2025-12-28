@@ -1,38 +1,49 @@
-/* eslint-disable import/no-unresolved */
-/* eslint-disable import/no-absolute-path */
-import { renderExpressions } from '/plusplus/plugins/expressions/src/expressions.js';
+// External dependency from sibling repository
+// eslint-disable-next-line import/no-unresolved, import/no-absolute-path
+import { renderExpressions } from '../../../../../../../plusplus/plugins/expressions/src/expressions.js';
+
+const BIO_CONFIG = {
+  DEFAULT_ALT_TEXT: 'Bio image',
+  IMAGE_EXTENSIONS: ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'],
+};
 
 // eslint-disable-next-line no-unused-vars
-export default function decorate(block) {
+export default async function decorate(block) {
   // Check the current block, not a global selector
   if (!block.classList.contains('hide-author')) {
-    // Check if the first cell contains a link to an image and replace it with the actual image
-    const firstCell = block.querySelector('div > div:first-child');
-    if (firstCell) {
-      const link = firstCell.querySelector('a');
-      if (link && link.href) {
-        // Check if the link points to an image file
-        const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
-        const isImageLink = imageExtensions.some(ext => 
-          link.href.toLowerCase().includes(ext)
-        );
-        
-        if (isImageLink) {
-          // Create an img element to replace the link
-          const img = document.createElement('img');
-          img.src = link.href;
+    // Get all divs in the first row and find the actual first cell
+    const firstRow = block.querySelector('div > div:first-child');
+    if (!firstRow) return;
 
-          // Check if link text is a URL (not a proper author name)
-          const linkText = link.textContent || '';
-          const isLinkTextUrl = linkText.startsWith('http://') || linkText.startsWith('https://');
+    // Get all immediate child divs (cells) in the first row
+    const cells = Array.from(firstRow.querySelectorAll(':scope > div'));
+    if (cells.length === 0) return;
 
-          // Only use link text as alt if it's NOT a URL
-          // If it's a URL, leave alt empty - author name will be extracted from meta tag
-          img.alt = isLinkTextUrl ? '' : linkText || 'Bio image';
+    const firstCell = cells[0];
 
-          // Replace the link with the image (atomic operation)
-          link.replaceWith(img);
-        }
+    // Check if the first cell contains a link to an image
+    const link = firstCell.querySelector('a');
+    if (link && link.href) {
+      // Check if the link points to an image file
+      const isImageLink = BIO_CONFIG.IMAGE_EXTENSIONS.some(
+        (ext) => link.href.toLowerCase().includes(ext),
+      );
+
+      if (isImageLink) {
+        // Create an img element to replace the link
+        const img = document.createElement('img');
+        img.src = link.href;
+
+        // Check if link text is a URL (not a proper author name)
+        const linkText = link.textContent || '';
+        const isLinkTextUrl = linkText.startsWith('http://') || linkText.startsWith('https://');
+
+        // Only use link text as alt if it's NOT a URL
+        // If it's a URL, leave alt empty - author name will be extracted from meta tag
+        img.alt = isLinkTextUrl ? '' : linkText || 'Bio image';
+
+        // Replace the link with the image (atomic operation)
+        link.replaceWith(img);
       }
     }
     // Find the <img> element within the current block

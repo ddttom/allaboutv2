@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unresolved
 import { toClassName } from '../../scripts/aem.js';
 
 function hasWrapper(el) {

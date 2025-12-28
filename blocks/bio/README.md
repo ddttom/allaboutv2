@@ -67,6 +67,50 @@ The block intelligently detects image links in the first cell and converts them 
 - Consistent image handling across all bio instances
 - Proper semantic HTML in production
 
+### "Picture Here" Placeholder Text (Handled by Cloudflare Worker)
+
+**Important:** The "Picture Here" placeholder functionality has been moved to the Cloudflare worker (v1.1.0+) for global HTML transformation. This block no longer handles placeholder replacement.
+
+**How it works:**
+1. Type "Picture Here" (case-sensitive) in the first cell in Google Docs/markdown
+2. EDS transforms to: `<div><div>Picture Here</div></div>`
+3. Cloudflare worker automatically replaces with author image before page delivery
+4. Bio block receives already-replaced `<img>` tag
+
+**Replacement performed by:**
+- **Cloudflare Worker** (v1.1.0+) - Server-side HTML transformation
+- Configuration: `cloudflare/files/cloudflare-worker.js`
+- Image URL: `https://allabout.network/dam/media_126e99d56f06caf788bee715aff92281d2e31a206.png`
+- Alt text: "Author: Tom Cranstoun"
+
+**Example usage:**
+
+`Bio with Placeholder`
+`| bio                                    |                                                           |`
+`|----------------------------------------|-----------------------------------------------------------|`
+`| Picture Here                           | Web development doesn't need complex tooling...           |`
+
+**What the block receives:**
+```html
+<div class="bio">
+  <div>
+    <div><img src="..." alt="Author: Tom Cranstoun"></div>
+    <div>Web development doesn't need complex tooling...</div>
+  </div>
+</div>
+```
+
+**Why this changed:**
+- Centralized placeholder handling across all blocks (not just bio)
+- Eliminated duplicate logic and config management
+- Consistent behavior site-wide
+- Worker-level transformation more efficient than per-block JavaScript
+
+**For developers:**
+- The bio block's `getProfileImage()`, `getConfigValue()`, and `nameToSlug()` functions have been removed (v3.1)
+- Placeholder matching logic removed from decorate function
+- Block now focuses solely on image link conversion and author name extraction
+
 ### Author Name Extraction
 
 The block automatically adds the author's name in a `<strong>` element below the bio:
@@ -264,16 +308,26 @@ To prevent URLs from appearing as author names:
 
 ### Block Configuration Object
 
-While the bio block doesn't use an explicit `BIO_CONFIG` object, it follows configuration patterns through:
+The bio block uses a `BIO_CONFIG` object for centralized JavaScript configuration:
 
-**Supported Image Extensions (Constant Array):**
+`BIO_CONFIG Object`
+`const BIO_CONFIG = {`
+`  DEFAULT_ALT_TEXT: 'Bio image',`
+`  IMAGE_EXTENSIONS: ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'],`
+`};`
 
-`Image Extension Configuration`
-`const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];`
+**Configuration options:**
 
-**Extension points:**
-- Add new image formats by extending the array
-- Modify detection logic in `imageExtensions.some()`
+| Option | Default | Purpose |
+|--------|---------|---------|
+| `DEFAULT_ALT_TEXT` | `'Bio image'` | Alt text for images when author name not available |
+| `IMAGE_EXTENSIONS` | `['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg']` | Supported image file extensions for link detection |
+
+**Customization:**
+- Add new formats to `IMAGE_EXTENSIONS` array for additional image type support
+- Modify `DEFAULT_ALT_TEXT` if different fallback alt text needed
+
+**Note:** "Picture Here" placeholder configuration has moved to the Cloudflare worker. See the ["Picture Here" Placeholder Text](#picture-here-placeholder-text-handled-by-cloudflare-worker) section above.
 
 ### Expression Plugin Integration
 
@@ -802,6 +856,42 @@ This is a code-level issue. The current implementation correctly uses `block.que
 
 ---
 
+### Issue: "Picture Here" placeholder not working
+
+**Symptoms:**
+- Text "Picture Here" remains visible instead of showing image
+- No image replacement occurring
+
+**Cause:**
+- Cloudflare worker not deployed or not running correctly
+- Worker v1.1.0+ required for placeholder replacement
+
+**Solutions:**
+1. **Verify worker deployment:**
+   ```bash
+   curl -I https://allabout.network | grep cfw
+   # Should show: cfw: 1.1.0 or higher
+   ```
+
+2. **Check worker configuration:**
+   - Worker must be deployed to Cloudflare Dashboard
+   - Route must match your domain pattern
+   - Environment variables must be set (`ORIGIN_HOSTNAME`)
+
+3. **Test in production:**
+   - Placeholder replacement only works on pages served through Cloudflare
+   - Local development (localhost:3000) will show "Picture Here" text
+   - Use production URL for testing: `https://allabout.network/your-page`
+
+**For local development:**
+- Placeholder text will remain visible (expected)
+- Use actual image URLs instead of "Picture Here"
+- Or test on production/staging environment
+
+**See also:** [Cloudflare Worker Documentation](../../cloudflare/files/README.md#picture-placeholder-replacement)
+
+---
+
 ## Related Documentation
 
 ### Internal Documentation
@@ -834,12 +924,31 @@ This is a code-level issue. The current implementation correctly uses `block.que
 
 ## Version History
 
-**Current version:** 2.0 (2024-11-26)
+**Current version:** 3.1 (2025-12-12)
 
 **Recent changes:**
+- **BREAKING:** Removed "Picture Here" placeholder logic (now handled by Cloudflare worker v1.1.0+)
+- Removed `getProfileImage()` function (no longer needed)
+- Removed `getConfigValue()` function (no longer needed)
+- Removed `nameToSlug()` function (no longer needed)
+- Removed `PLACEHOLDER_TEXT` and `CONFIG_URL` from BIO_CONFIG
+- Simplified block to focus on image link conversion and author name extraction
+- Updated documentation to reflect Cloudflare worker integration
+
+**Previous version:** 3.0 (2025-12-08)
+- Added intelligent profile image fetching from author profiles
+- Moved default image URL to centralized config (`/config/defaults.json`)
+- Added `getProfileImage()` function for automatic author image lookup
+- Added `nameToSlug()` function for URL slug generation
+- Fixed case-insensitive placeholder matching (Test Case 10)
+- Improved cell selection to avoid multi-cell text content issues
+- Added config caching for improved performance
+- Enhanced fallback chain: Profile → Config → Error
+
+**Previous version:** 2.0 (2024-11-26)
 - Added URL detection to prevent URLs as author names
 - Improved image link conversion with `.replaceWith()`
-- Enhanced test suite with 8 comprehensive test cases
+- Enhanced test suite with 11 comprehensive test cases
 - Added expressions plugin integration
 - Improved responsive design (768px, 480px breakpoints)
 
@@ -847,6 +956,7 @@ This is a code-level issue. The current implementation correctly uses `block.que
 - Expressions plugin requires production environment
 - No built-in lazy loading (manual implementation needed)
 - IE11 requires polyfills for `object-fit` and `replaceWith()`
+- "Picture Here" placeholder replacement requires Cloudflare worker v1.1.0+ (not available in local development)
 
 ---
 

@@ -5,6 +5,7 @@ This document shows how to create bio blocks in Google Docs. The bio block displ
 ## Table of Contents
 - [Basic Example](#basic-example)
 - [Example with Image Link](#example-with-image-link)
+- [Example with "Picture Here" Placeholder](#example-with-picture-here-placeholder)
 - [Example with Direct Image](#example-with-direct-image)
 - [Variations](#variations)
 - [Best Practices](#best-practices)
@@ -57,6 +58,62 @@ The bio block automatically converts image links to actual images:
 - .gif
 - .webp
 - .svg
+
+---
+
+## Example with "Picture Here" Placeholder
+
+**Important:** The "Picture Here" placeholder functionality is now handled by the Cloudflare worker (v1.1.0+), not by the bio block. This provides site-wide placeholder replacement for all blocks.
+
+```
+| bio                                    |                                                           |
+|----------------------------------------|-----------------------------------------------------------|
+| Picture Here                           | Web development doesn't need complex tooling - this       |
+|                                        | framework proves you can build production-ready Adobe     |
+|                                        | Edge Delivery Services components with nothing but       |
+|                                        | vanilla JavaScript and precise documentation.             |
+```
+
+**How it works:**
+1. Type "Picture Here" (case-sensitive) in the first cell in Google Docs
+2. EDS converts to: `<div><div>Picture Here</div></div>`
+3. **Cloudflare worker** detects this pattern and replaces with author image (server-side)
+4. Bio block receives the already-transformed HTML with `<img>` tag
+5. Author name is extracted from the image alt attribute or page's `<meta name="author">` tag
+
+**Replacement image:**
+The worker uses this configured image:
+```
+https://allabout.network/dam/media_126e99d56f06caf788bee715aff92281d2e31a206.png
+Alt text: "Author: Tom Cranstoun"
+```
+
+**When to use this:**
+- 🚀 **Quick prototyping**: Create multiple bios quickly without sourcing images
+- 📝 **Content-first workflow**: Focus on bio text first, add specific images later
+- 👥 **Team pages**: Use consistent placeholder during development
+- 🔄 **Review phases**: Easy to identify which bios need final images
+
+**Important notes:**
+- **Case-sensitive**: Must be exactly "Picture Here" (not "picture here" or "PICTURE HERE")
+- **Production only**: Placeholder replacement only works on pages served through Cloudflare worker
+- **Local development**: The text "Picture Here" will remain visible when testing on localhost:3000
+- **Testing**: Use production URL (https://allabout.network/your-page) to see replacement in action
+
+**Configuration:**
+The default image is configured in the Cloudflare worker at `cloudflare/files/cloudflare-worker.js`:
+
+```javascript
+export const PICTURE_PLACEHOLDER_CONFIG = {
+  TRIGGER_TEXT: 'Picture Here',
+  IMAGE_URL: 'https://allabout.network/dam/media_126e99d56f06caf788bee715aff92281d2e31a206.png',
+  IMAGE_ALT: 'Author: Tom Cranstoun',
+  MATCH_CASE_SENSITIVE: true,
+  TRIM_WHITESPACE: true,
+};
+```
+
+**💡 TIP:** This is perfect for creating multiple bios in bulk - just use "Picture Here" in all of them, then come back and replace with specific images once you have them ready! Remember to test on production/staging, not localhost.
 
 ---
 

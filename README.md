@@ -5,7 +5,45 @@
 
 ## Overview
 
-This project is built for Adobe Edge Delivery Services (EDS) with a focus on simplicity, performance, and modern web standards. The project intentionally avoids TypeScript and build-heavy frameworks to maintain simplicity and reduce build complexity.
+This project is built for Adobe Edge Delivery Services (EDS) with a focus on simplicity, performance, and modern web standards. The project intentionally avoids TypeScript and build-heavy frameworks to maintain simplicity and reduce build complexity. Enhanced with a custom Cloudflare worker (v1.1.1) that adds CORS headers, JSON-LD structured data generation, picture placeholder replacement (with case-insensitive matching), and preserves author metadata for proper attribution. Includes [robots.txt](robots.txt) with sitemap directive for optimal search engine indexing.
+
+### Homepage
+
+The site features a blog-focused homepage ([index.html](index.html)) that showcases the latest content:
+
+- **Hero Section**: Eye-catching gradient banner with site branding and CTAs
+- **Featured Articles**: Handpicked posts displayed using the Cards block
+- **Category Navigation**: Interactive tabs for filtering posts by category (All Posts, EDS & Integrations, AI/LLM Topics)
+- **Dynamic Blog Listings**: Uses the Blogroll block with client-side filtering for instant category switching
+- **86+ Blog Posts**: Comprehensive collection organized across `/blogs/ddt/`, `/blogs/ddt/ai/`, and `/blogs/ddt/integrations/`
+
+The homepage follows EDS best practices:
+- Full EDS block integration (header, footer, cards, blogroll)
+- Responsive design with mobile-first approach
+- No inline CSS - all styling in [styles/homepage.css](styles/homepage.css)
+- Pure vanilla JavaScript for tab switching ([scripts/homepage-tabs.js](scripts/homepage-tabs.js))
+- Accessible keyboard navigation and ARIA attributes
+
+## Project Statistics
+
+*Statistics generated using [scc](https://github.com/boyter/scc)*
+
+- **Total Files**: 867
+- **Lines of Code**: 227,477 (excluding blanks and comments)
+- **Codebase Size**: 10.78 MB
+
+### Language Breakdown
+
+| Language   | Files | Lines of Code | % of Total |
+|------------|-------|---------------|------------|
+| Markdown   | 314   | 98,472        | 43.3%      |
+| JavaScript | 108   | 22,396        | 9.8%       |
+| CSS        | 75    | 13,398        | 5.9%       |
+| Python     | 61    | 11,889        | 5.2%       |
+| HTML       | 62    | 25,086        | 11.0%      |
+| Other      | 247   | 19,816        | 8.7%       |
+
+*This is a documentation-first project with comprehensive guides for AI-assisted development (see [docs/for-ai/](docs/for-ai/))*
 
 ## Development Requirements
 
@@ -17,6 +55,16 @@ This project is built for Adobe Edge Delivery Services (EDS) with a focus on sim
 - Minimal dependencies and build steps
 
 ## Quick Start
+
+### Environment Setup
+
+Run the setup script to configure symlinks for AI agents (Gemini/Claude):
+
+```bash
+./agentsetup.sh
+```
+
+**Important for AI Assistants**: Always verify your working directory (`pwd`) before creating files or folders. See the "Working Directory Verification" section in [CLAUDE.md](CLAUDE.md) and [.claude/README.md](.claude/README.md) for critical instructions on preventing directory confusion.
 
 ### Development Server
 
@@ -82,6 +130,15 @@ Access your tests at: `http://localhost:3000/blocks/your-block/test.html`
 ├── blocks/                 # EDS blocks and components
 │   ├── ipynb-viewer/      # NEW: Interactive Jupyter notebook viewer block
 │   └── ...                # Other blocks
+├── cloudflare/            # NEW: Cloudflare Worker infrastructure
+│   ├── test.html          # NEW: Comprehensive deployment test page
+│   └── files/             # Custom Adobe EDS worker (CORS, JSON-LD)
+│       ├── cloudflare-worker.js  # Worker code with custom enhancements
+│       ├── cloudflare-worker.test.js  # Unit tests (45 test cases)
+│       ├── wrangler.toml  # Wrangler configuration
+│       ├── package.json   # Worker dependencies and scripts
+│       ├── README.md      # Complete implementation guide (520+ lines)
+│       └── SETUP.md       # Quick reference for daily workflow
 ├── notebooks/             # NEW: Shareable .ipynb files for end users
 │   └── example.ipynb      # Example interactive notebook
 ├── docs-navigation.ipynb  # NEW: Interactive documentation navigator (88/100 validation score)
@@ -98,16 +155,28 @@ Access your tests at: `http://localhost:3000/blocks/your-block/test.html`
 │   └── ...                # Other scripts
 ├── styles/                # Global styles
 ├── test.ipynb             # NEW: Context-aware testing notebook
+├── todo.txt               # Developer utility notes and reference examples
 ├── server.js              # Development server
 └── package.json           # Project configuration
 ```
 
 ## Available Scripts
 
+### Main Project
 - `npm run debug` - Start development server on port 3000
 - `npm run lint` - Run ESLint and Stylelint
 - `npm run lint:js` - Run ESLint on JavaScript files
 - `npm run lint:css` - Run Stylelint on CSS files
+
+### Cloudflare Worker (from `cloudflare/files/`)
+- `npm run dev` - Start local Cloudflare Worker dev server (localhost:8787)
+- `npm run deploy` - Deploy worker to Cloudflare production
+- `npm run tail` - View live logs from deployed worker
+- `npm test` - Run worker unit tests
+- `npm run test:watch` - Run tests in watch mode
+- `npm run test:coverage` - Generate test coverage report
+
+See [cloudflare/files/SETUP.md](cloudflare/files/SETUP.md) for complete Cloudflare worker development workflow.
 
 ## Claude Code Integration
 
@@ -118,6 +187,7 @@ This project includes a complete Claude Code configuration for AI-assisted devel
 - `/test-block <name>` - Run tests for a specific block
 - `/create-notebook` - Create educational/interactive Jupyter notebooks with auto-wrapping support
 - `/validate-notebook <name>` - Validate notebook for production readiness (smart links, structure, transitions, part flow)
+- `/validate-docs` - Validate CLAUDE.md, README.md, and CHANGELOG.md are current before push
 - `/check-block <name>` - Review block architecture and suggest improvements
 - `/deploy-block <name>` - Deploy a block from build/ to blocks/
 - `/lint-all` - Run all linting checks
@@ -130,6 +200,8 @@ See [`.claude/README.md`](.claude/README.md) for complete command reference.
 ### Skills
 Auto-activating skills provide inline guidance for:
 - **building-blocks** - Creating and modifying EDS blocks
+- **block-collection-and-party** - Reference implementations from Block Collection and Block Party repositories, with block structure fetching
+- **block-inventory** - Survey available blocks from local project and Block Collection to understand authoring options
 - **content-driven-development** - CDD workflow patterns
 - **content-modeling** - Author-friendly content structures
 - **testing-blocks** - Block testing strategies
@@ -140,6 +212,8 @@ Auto-activating skills provide inline guidance for:
 - **jupyter-educational-notebook** - Create educational notebooks with auto-wrapping (pure markdown) or manual HTML styling
 - **ipynb-validator** - Validate Jupyter notebooks for production readiness (smart links, structure, transitions, part flow)
 - **create-presentation** - Create presentation notebooks (non-interactive) with auto-wrapping or custom styling
+- **response-timestamps** - Automatic timestamp and execution duration tracking for all Claude responses
+- **pre-push-validation** - Ensures CLAUDE.md, README.md, and CHANGELOG.md are updated before git push (uses `git add .` to include all user edits)
 - **skill-developer** - Managing Claude Code skills
 
 All skills are tailored specifically for EDS vanilla JavaScript development.
@@ -196,6 +270,14 @@ Each block should include:
 
 ## Documentation
 
+### Project Instructions for AI Assistants
+
+**📋 CLAUDE.md** - Compact project guide for AI assistants
+- Quick reference guide covering essential patterns and workflows
+- References comprehensive documentation in `docs/for-ai/` (26+ guides)
+- Recently compacted (48 lines reduced) by extracting ipynb details to dedicated docs
+- Single source of truth approach: critical patterns here, comprehensive details in linked docs
+
 ### Navigation & Getting Started
 
 **🗺️ Documentation Navigator** - Start here!
@@ -206,12 +288,72 @@ Each block should include:
   - Features auto-wrapping (90% less code), hamburger TOC, and pure markdown authoring
   - View with ipynb-viewer in notebook mode for best experience
 
+### Site Remediation & SEO
+
+The site audit is created with https://github.com/ddttom/my-pa11y-project
+
+
+**📊 EDS Site Remediation Strategy**
+- **[Executive Summary](docs/remediation/files/00-executive-summary.md)** - Complete overview of site audit findings and remediation plan
+  - Comprehensive 121-page SEO/accessibility/performance audit analysis
+  - 6 prioritized remediation strategies with ROI calculations
+  - $5,000 investment, $120,000 annual benefit, 1,969% ROI
+  - Key discovery: EDS automatically handles lazy loading and responsive images
+  - **Note**: Jupyter notebook pages (.ipynb files) excluded from analysis
+- **[report-layout.md](docs/remediation/files/report-layout.md)** - Complete audit report documentation including EDS-specific limitations and notebook exclusion policy
+- **Priority Documents**:
+  - 🔴 [Critical Accessibility Fixes](docs/remediation/files/01-critical-accessibility-fixes.md) - WCAG compliance (~~3 pages~~ → 1 page, ~~2-4 hours~~ → 1 hour) - notebook pages excluded
+  - 🔴 [Image Optimization Strategy](docs/remediation/files/02-image-optimization-strategy.md) - Alt text remediation (12 hours, $1,200) - excludes notebooks
+  - 🟠 [Security Headers Implementation](docs/remediation/files/03-security-headers-implementation.md) - CSP, X-Frame-Options (30-60 min quick win!)
+  - 🟠 [Content Freshness Dates](docs/remediation/files/04-content-freshness-dates.md) - Last-modified dates (12 hours) - excludes notebooks
+  - 🟡 [Metadata Optimization](docs/remediation/files/05-metadata-optimization.md) - Titles & descriptions (8 hours) - excludes notebooks
+  - 🟡 [Content Quality Improvements](docs/remediation/files/06-content-quality-improvements.md) - Bottom 10 pages (21 hours) - excludes notebooks
+
 ### Core Documentation
 - [Development Server Guide](docs/Server-README.md) - Comprehensive server documentation
 - [Block Debugging Guide](docs/debug.md) - Step-by-step debugging guide for AI assistants
 - [Fast EDS Development Tutorial](docs/blog.md) - Complete tutorial with real-world examples
 - [EDS Development Guide](docs/eds.md) - Complete EDS development reference
 - [EDS Best Practices](docs/eds-appendix.md) - Advanced patterns and techniques
+
+### Infrastructure & Operations
+- **[Cloudflare Configuration Reference](cloudflare/cloudflare.md)** - Complete infrastructure documentation (Version 1.1 - Pro Plan)
+  - **Plan**: Cloudflare Pro ($20/month) - Upgraded from Free plan (2025-12-09)
+  - **Key Features**: Surgical cache purging, WAF rules, rate limiting, image optimization
+  - Double-CDN architecture (Cloudflare → Adobe Fastly → Adobe EDS)
+  - Worker setup (10M requests/month), push invalidation, DNS/SSL/TLS configuration
+  - Health check automation scripts and monitoring guidance
+  - API token security audit checklist
+  - Operational procedures for publishing and cache management
+  - Target: AI assistants, DevOps, system administrators
+- **[Custom Cloudflare Worker](cloudflare/files/README.md)** - Enhanced Adobe EDS worker implementation (v1.1.0)
+  - **Custom Features**: Version header (`cfw`), CORS headers, JSON-LD structured data generation, picture placeholder replacement, intelligent date formatting, metadata cleanup
+  - Extends Adobe's standard worker template (Apache License 2.0)
+  - **Quick Start**: [cloudflare/files/SETUP.md](cloudflare/files/SETUP.md) for daily development workflow
+  - **Production Status**: 0% error rate, production-ready with comprehensive testing
+  - **Key Capabilities**:
+    - Version tracking header for deployment monitoring (semantic versioning)
+    - Picture placeholder replacement: "Picture Here" → author image (server-side)
+    - Adds `Access-Control-Allow-Origin: *` to all responses
+    - Generates schema.org Article JSON-LD from page metadata
+    - Intelligent date formatting: UK format (dd/mm/yyyy), month names (Dec/December), ISO 8601
+    - Author URL with LinkedIn fallback for Person objects
+    - Removes EDS error tags and non-social metadata
+    - Optional debug logging with `DEBUG=true` flag
+    - Environment variable validation
+  - **Development**: Wrangler CLI for local testing (localhost:8787) and deployment
+  - **Testing**: Two-file testing system (cloudflare-worker.js + cloudflare-worker.test.js)
+    - 53 automated tests with 100% pass rate (unit + integration)
+    - Pure function pattern: All core logic testable without Cloudflare runtime
+    - `/check-cloudflare-tests` command validates test structure
+    - Pre-tool-use hook enforces two-file rule (blocks extra test files)
+  - **Deployment Testing**: [cloudflare/test.html](cloudflare/test.html) - Comprehensive test page with 13 automated checks (validates version header, CORS, JSON-LD, metadata cleanup, picture placeholder replacement)
+  - **Documentation**:
+    - [cloudflare/files/TESTING.md](cloudflare/files/TESTING.md) - Two-file rule and pure function requirements
+    - [cloudflare/files/README.md](cloudflare/files/README.md) - 520+ line implementation guide
+    - [CLAUDE.md](CLAUDE.md) - Critical testing system section for AI assistants
+  - **Read-Only Testing**: Complete test infrastructure treating worker as production code (10:1 test-to-code ratio)
+  - **Blog Post**: [cloudflare/blog.md](cloudflare/blog.md) - Journey from challenge to production-ready deployment
 
 ### Testing & Documentation
 - [Jupyter Notebook Testing Guide](docs/for-ai/explaining-jupyter.md) - Context-aware interactive testing with live preview, includes:
@@ -256,3 +398,4 @@ When contributing to this project:
 - Do not use placeholders in markdown documents
 - All code should be production-ready and well-documented
 - Focus on solving real problems with simple, effective solutions
+ 

@@ -56,7 +56,7 @@ html {
   padding: 1rem;
   background: var(--background-color, #fff);
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
 }
 
 /* Header */
@@ -68,7 +68,7 @@ html {
 }
 
 .ipynb-viewer-title {
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.5rem;
   font-size: 1.8rem;
   color: var(--text-color, #333);
   font-family: var(--heading-font-family, inherit);
@@ -85,7 +85,7 @@ html {
 }
 
 .ipynb-viewer-author {
-  margin: 0.5rem 0 0.25rem 0;
+  margin: 0.5rem 0 0.25rem;
   font-size: 1rem;
   color: var(--text-color, #666);
   font-family: var(--body-font-family, inherit);
@@ -94,14 +94,14 @@ html {
 
 .ipynb-viewer-date,
 .ipynb-viewer-creation-date {
-  margin: 0.25rem 0 0 0;
+  margin: 0.25rem 0 0;
   font-size: 0.9rem;
   color: var(--text-color, #999);
   font-family: var(--body-font-family, inherit);
 }
 
 .ipynb-viewer-version {
-  margin: 0.25rem 0 0 0;
+  margin: 0.25rem 0 0;
   font-size: 0.85rem;
   color: var(--text-color, #888);
   font-family: var(--body-font-family, inherit);
@@ -109,7 +109,7 @@ html {
 }
 
 .ipynb-viewer-last-modified {
-  margin: 0.25rem 0 0 0;
+  margin: 0.25rem 0 0;
   font-size: 0.85rem;
   color: var(--text-color, #888);
   font-family: var(--body-font-family, inherit);
@@ -151,7 +151,7 @@ html {
 
 /* Tags */
 .ipynb-viewer-tags {
-  margin: 0.75rem 0 0 0;
+  margin: 0.75rem 0 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -171,7 +171,7 @@ html {
 
 /* License */
 .ipynb-viewer-license {
-  margin: 0.75rem 0 0 0;
+  margin: 0.75rem 0 0;
   font-size: 0.8rem;
   color: var(--text-color, #888);
   font-family: var(--body-font-family, inherit);
@@ -194,7 +194,7 @@ html {
 }
 
 .ipynb-cell:hover {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
 }
 
 /* Markdown Cells */
@@ -232,8 +232,9 @@ html {
 
 @keyframes highlight-flash {
   0% {
-    background-color: rgba(255, 235, 59, 0.4);
+    background-color: rgb(255 235 59 / 0.4);
   }
+
   100% {
     background-color: transparent;
   }
@@ -301,7 +302,7 @@ html {
 }
 
 .ipynb-markdown-cell tr:nth-child(even) {
-  background: rgba(0, 0, 0, 0.02);
+  background: rgb(0 0 0 / 0.02);
 }
 
 .ipynb-markdown-cell a {
@@ -328,12 +329,11 @@ html {
 /* Hero / Title Sections */
 .ipynb-hero-cell {
   background: linear-gradient(135deg, var(--ipynb-card-gradient-start), var(--ipynb-card-gradient-end));
-  color: white;
   border-radius: 16px;
   padding: 48px;
   text-align: left;
   margin: 0;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 8px 20px rgb(0 0 0 / 0.25);
   color: var(--ipynb-card-text-dark);
 }
 
@@ -372,7 +372,7 @@ html {
 .ipynb-action-cards {
   list-style: none;
   padding: 0;
-  margin: 8px 0 0 0;
+  margin: 8px 0 0;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -383,12 +383,12 @@ html {
   border-radius: 8px;
   padding: 12px 16px;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
 }
 
 .ipynb-action-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
 }
 
 .ipynb-action-card a {
@@ -462,7 +462,7 @@ html {
 
 .ipynb-icon-list-item {
   padding: 12px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgb(0 0 0 / 0.08);
   font-size: 16px;
   display: flex;
   align-items: center;
@@ -748,7 +748,7 @@ html {
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .ipynb-viewer-container {
     padding: 0.5rem;
     margin: 1rem;
@@ -774,7 +774,7 @@ html {
   }
 }
 
-@media (max-width: 480px) {
+@media (width <= 480px) {
   .ipynb-viewer-container {
     margin: 0.5rem;
   }
@@ -883,13 +883,13 @@ html {
   font-size: 1.1rem;
   font-weight: 600;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgb(0 0 0 / 0.1);
 }
 
 .ipynb-paged-start-button:hover {
   background: var(--primary-hover-color, #0056b3);
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 12px rgb(0 0 0 / 0.15);
 }
 
 .ipynb-paged-start-button:active {
@@ -910,7 +910,7 @@ html {
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 12px 12px 0 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.15);
   min-height: 60px;
   flex-shrink: 0;
   position: relative;
@@ -952,8 +952,8 @@ html {
 .ipynb-overlay-button {
   width: 36px;
   height: 36px;
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgb(255 255 255 / 0.2);
+  border: 1px solid rgb(255 255 255 / 0.3);
   border-radius: 8px;
   cursor: pointer;
   font-size: 1.25rem;
@@ -967,9 +967,9 @@ html {
 }
 
 .ipynb-overlay-button:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgb(255 255 255 / 0.3);
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.2);
 }
 
 .ipynb-overlay-button:active {
@@ -977,7 +977,7 @@ html {
 }
 
 .ipynb-overlay-button:focus {
-  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline: 2px solid rgb(255 255 255 / 0.5);
   outline-offset: 2px;
 }
 
@@ -986,21 +986,18 @@ html {
 .ipynb-overlay-button.ipynb-help-button,
 button.ipynb-help-button {
   color: white !important;
+
   /* Override any inherited color from emoji rendering */
   -webkit-text-fill-color: white !important;
-  text-fill-color: white !important;
 }
 
 /* Full-screen overlay for paged mode */
 .ipynb-paged-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.95);
+  background: rgb(0 0 0 / 0.95);
   z-index: 10000;
   animation: fadeIn 0.3s ease;
 }
@@ -1009,6 +1006,7 @@ button.ipynb-help-button {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -1016,10 +1014,7 @@ button.ipynb-help-button {
 
 .ipynb-paged-overlay-content {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   width: 100vw;
   height: 100vh;
   background: var(--background-color, #fff);
@@ -1038,23 +1033,29 @@ button.ipynb-help-button {
 }
 
 /* History button (notebook mode only) */
+
 /* History button now uses .ipynb-overlay-button base styles */
 .ipynb-history-button {
   /* All styling comes from .ipynb-overlay-button */
+
   /* This class kept for backwards compatibility but adds no additional styles */
 }
 
 /* Hamburger menu (notebook mode only) */
+
 /* Hamburger menu now uses .ipynb-overlay-button base styles */
 .ipynb-hamburger-menu {
   /* All styling comes from .ipynb-overlay-button */
+
   /* This class kept for backwards compatibility but adds no additional styles */
 }
 
 /* Home button (notebook mode only) */
+
 /* Home button now uses .ipynb-overlay-button base styles */
 .ipynb-home-button {
   /* All styling comes from .ipynb-overlay-button */
+
   /* This class kept for backwards compatibility but adds no additional styles */
 }
 
@@ -1066,7 +1067,7 @@ button.ipynb-help-button {
   background: white;
   border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
   max-height: 400px;
   overflow-y: auto;
   min-width: 280px;
@@ -1119,7 +1120,7 @@ button.ipynb-help-button {
   background: white;
   border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
   max-height: 400px;
   overflow-y: auto;
   min-width: 320px;
@@ -1171,7 +1172,7 @@ button.ipynb-help-button {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: rgba(255, 0, 0, 0.1);
+  background: rgb(255 0 0 / 0.1);
   color: #d32f2f;
   font-size: 1.2rem;
   line-height: 1;
@@ -1180,14 +1181,14 @@ button.ipynb-help-button {
 }
 
 .ipynb-bookmark-remove:hover {
-  background: rgba(255, 0, 0, 0.2);
+  background: rgb(255 0 0 / 0.2);
   transform: scale(1.1);
 }
 
 .ipynb-bookmark-add {
   display: block;
   width: calc(100% - 1rem);
-  margin: 0.5rem 0.5rem;
+  margin: 0.5rem;
   padding: 0.5rem 1rem;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
@@ -1201,7 +1202,7 @@ button.ipynb-help-button {
 
 .ipynb-bookmark-add:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.2);
 }
 
 .ipynb-bookmark-add:active {
@@ -1211,7 +1212,7 @@ button.ipynb-help-button {
 .ipynb-bookmark-clear-all {
   display: block;
   width: calc(100% - 1rem);
-  margin: 0.5rem 0.5rem;
+  margin: 0.5rem;
   padding: 0.4rem 1rem;
   background: #f5f5f5;
   color: #d32f2f;
@@ -1243,7 +1244,7 @@ button.ipynb-help-button {
   background: white;
   border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
   max-height: 400px;
   overflow-y: auto;
   min-width: 250px;
@@ -1291,10 +1292,7 @@ button.ipynb-help-button {
 /* Cell content area - simple approach with calculated height */
 .ipynb-paged-cell-area {
   position: absolute;
-  top: 60px;
-  left: 0;
-  right: 0;
-  bottom: 80px;
+  inset: 60px 0 80px;
   overflow: hidden;
   padding: 0;
 }
@@ -1304,8 +1302,10 @@ button.ipynb-help-button {
   box-shadow: none;
   margin: 0 !important;
   padding: 0 !important;
+
   /* Ensure consistent font inheritance for all content */
   font-family: inherit;
+
   /* Fill 100% of cell area height */
   width: 100%;
   height: 100%;
@@ -1316,15 +1316,15 @@ button.ipynb-help-button {
   width: 100% !important;
   height: 100% !important;
   margin: 0 !important;
-  padding: 4rem 2rem 2rem 2rem !important;
+  padding: 4rem 2rem 2rem !important;
   box-sizing: border-box !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
+  overflow: hidden auto !important;
 }
 
 /* No-topbar variation: Extend cell area to top when top bar is hidden */
 .ipynb-viewer.no-topbar .ipynb-paged-cell-area {
   top: 0;
+
   /* Cell area extends from top (0) to bottom pagination bar (80px) */
 }
 
@@ -1422,7 +1422,7 @@ button.ipynb-help-button {
 }
 
 /* On small screens, pagination should span full width (tree hidden) */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .ipynb-paged-overlay .ipynb-pagination {
     left: 0;
   }
@@ -1444,7 +1444,7 @@ button.ipynb-help-button {
 .ipynb-pagination-button:hover:not(:disabled) {
   background: var(--primary-hover-color, #0056b3);
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.2);
 }
 
 .ipynb-pagination-button:active:not(:disabled) {
@@ -1472,7 +1472,7 @@ button.ipynb-help-button {
 }
 
 /* Responsive Overlay */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .ipynb-paged-overlay-content {
     width: 95vw;
     height: 95vh !important;
@@ -1506,7 +1506,7 @@ button.ipynb-help-button {
 
   .ipynb-paged-cell-area {
     top: 60px;
-    padding: 0 1.5rem 1.5rem 1.5rem;
+    padding: 0 1.5rem 1.5rem;
   }
 
   .ipynb-paged-overlay .ipynb-pagination {
@@ -1526,7 +1526,7 @@ button.ipynb-help-button {
   }
 }
 
-@media (max-width: 480px) {
+@media (width <= 480px) {
   .ipynb-paged-overlay-content {
     width: 100vw;
     height: 100vh !important;
@@ -1562,7 +1562,7 @@ button.ipynb-help-button {
 
   .ipynb-paged-cell-area {
     top: 50px;
-    padding: 0 1rem 1rem 1rem;
+    padding: 0 1rem 1rem;
   }
 
   .ipynb-paged-overlay .ipynb-pagination {
@@ -1604,13 +1604,13 @@ button.ipynb-help-button {
   font-size: 1.1rem;
   font-weight: 600;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgb(0 0 0 / 0.1);
 }
 
 .ipynb-manual-button:hover {
   background: var(--secondary-hover-color, #5a6268);
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 12px rgb(0 0 0 / 0.15);
 }
 
 .ipynb-manual-button:active {
@@ -1633,7 +1633,7 @@ button.ipynb-help-button {
 
 .ipynb-github-md-link:hover {
   border-bottom-style: solid;
-  background-color: rgba(0, 123, 255, 0.1);
+  background-color: rgb(0 123 255 / 0.1);
 }
 
 /* Manual overlay - similar to paged overlay */
@@ -1643,7 +1643,7 @@ button.ipynb-help-button {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.95);
+  background: rgb(0 0 0 / 0.95);
   z-index: 10001;
   display: none;
   align-items: center;
@@ -1673,16 +1673,13 @@ button.ipynb-help-button {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 20px 60px rgb(0 0 0 / 0.5);
 }
 
 /* GitHub overlay with paged content (full viewport with tree) */
 .ipynb-github-md-overlay .ipynb-paged-overlay-content {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   width: 100vw;
   height: 100vh;
   max-width: none;
@@ -1695,10 +1692,7 @@ button.ipynb-help-button {
 /* Main content wrapper in GitHub overlay - offset by tree width */
 .ipynb-github-md-overlay .ipynb-overlay-main-content {
   position: absolute;
-  top: 80px; /* Below top bar */
-  left: 280px; /* Tree width */
-  right: 0;
-  bottom: 0;
+  inset: 80px 0 0 280px; /* Below top bar */ /* Tree width */
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -1713,10 +1707,11 @@ button.ipynb-help-button {
 }
 
 /* Responsive: hide tree on small screens */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .ipynb-github-md-overlay .ipynb-overlay-main-content {
     left: 0;
   }
+
   .ipynb-github-md-overlay .ipynb-nav-tree-panel {
     display: none;
   }
@@ -1741,7 +1736,7 @@ button.ipynb-help-button {
 .ipynb-manual-content-area h1 {
   font-size: 2rem;
   font-weight: 700;
-  margin: 0.75rem 0 0.75rem 0;
+  margin: 0.75rem 0;
   color: var(--text-color, #333);
   border-bottom: 2px solid var(--light-color, #e9ecef);
   padding-bottom: 0.5rem;
@@ -1755,14 +1750,14 @@ button.ipynb-help-button {
 .ipynb-manual-content-area h2 {
   font-size: 1.6rem;
   font-weight: 600;
-  margin: 1rem 0 0.5rem 0;
+  margin: 1rem 0 0.5rem;
   color: var(--text-color, #333);
 }
 
 .ipynb-manual-content-area h3 {
   font-size: 1.3rem;
   font-weight: 600;
-  margin: 0.75rem 0 0.5rem 0;
+  margin: 0.75rem 0 0.5rem;
   color: var(--text-color, #333);
 }
 
@@ -1834,7 +1829,7 @@ button.ipynb-help-button {
 }
 
 /* Responsive styles for manual overlay */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .ipynb-button-container {
     flex-direction: column;
     gap: 1rem;
@@ -1867,7 +1862,7 @@ button.ipynb-help-button {
   }
 }
 
-@media (max-width: 480px) {
+@media (width <= 480px) {
   .ipynb-manual-overlay-content {
     width: 100vw;
     height: 100vh;
@@ -1900,14 +1895,15 @@ button.ipynb-help-button {
   flex-shrink: 0;
   width: 280px;
   background: #1a1a1a; /* Solid dark background, not transparent */
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
-  overflow-y: auto;
-  overflow-x: hidden;
+  border-right: 1px solid rgb(255 255 255 / 0.1);
+  overflow: hidden auto;
   padding: 1rem 0;
   color: white;
+
   /* Use flexbox positioning instead of absolute */
   position: relative;
   height: 100%;
+
   /* Smooth transition when hiding/showing */
   transition: width 0.3s ease, opacity 0.3s ease;
 }
@@ -1925,10 +1921,7 @@ button.ipynb-help-button {
 .ipynb-overlay-main .ipynb-paged-cell-area {
   flex: 1;
   position: relative;
-  top: auto;
-  left: auto;
-  right: auto;
-  bottom: auto;
+  inset: auto;
 }
 
 /* Tree item styling */
@@ -1940,22 +1933,22 @@ button.ipynb-help-button {
   padding-left: calc(1rem + var(--level, 0) * 1.25rem);
   cursor: pointer;
   transition: all 0.2s ease;
-  -webkit-user-select: none;
   user-select: none;
-  color: rgba(255, 255, 255, 0.85);
+  user-select: none;
+  color: rgb(255 255 255 / 0.85);
   font-size: 0.9rem;
   line-height: 1.3;
 }
 
 /* Hover state */
 .ipynb-nav-tree-item:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgb(255 255 255 / 0.1);
   color: white;
 }
 
 /* Active/selected state */
 .ipynb-nav-tree-item.active {
-  background: rgba(103, 126, 234, 0.4);
+  background: rgb(103 126 234 / 0.4);
   color: white;
   font-weight: 600;
   border-left: 3px solid #667eea;
@@ -1966,20 +1959,20 @@ button.ipynb-help-button {
   font-weight: 700;
   font-size: 1rem;
   color: white;
-  background: rgba(255, 255, 255, 0.05);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgb(255 255 255 / 0.05);
+  border-bottom: 1px solid rgb(255 255 255 / 0.1);
   margin-bottom: 0.25rem;
   padding-left: 1rem;
 }
 
 .ipynb-nav-tree-item[data-type="root"]:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgb(255 255 255 / 0.1);
 }
 
 /* Folder nodes - directory containers */
 .ipynb-nav-tree-item[data-type="folder"] {
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgb(255 255 255 / 0.9);
 }
 
 .ipynb-nav-tree-item[data-type="folder"]::after {
@@ -1993,7 +1986,7 @@ button.ipynb-help-button {
 /* Part nodes - section containers */
 .ipynb-nav-tree-item[data-type="part"] {
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.95);
+  color: rgb(255 255 255 / 0.95);
   font-size: 0.95rem;
 }
 
@@ -2014,7 +2007,7 @@ button.ipynb-help-button {
   align-items: center;
   justify-content: center;
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgb(255 255 255 / 0.6);
   transition: transform 0.2s ease;
 }
 
@@ -2033,7 +2026,7 @@ button.ipynb-help-button {
 
 /* Leaf nodes (actual navigation targets) - lighter color when not selected */
 .ipynb-nav-tree-item[data-leaf="true"]:not(.active) {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgb(255 255 255 / 0.7);
 }
 
 .ipynb-nav-tree-item[data-leaf="true"]:hover {
@@ -2064,16 +2057,16 @@ button.ipynb-help-button {
 }
 
 .ipynb-nav-tree::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgb(0 0 0 / 0.3);
 }
 
 .ipynb-nav-tree::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgb(255 255 255 / 0.2);
   border-radius: 4px;
 }
 
 .ipynb-nav-tree::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgb(255 255 255 / 0.3);
 }
 
 /* Non-clickable links for documentation purposes */
@@ -2094,7 +2087,7 @@ button.ipynb-help-button {
 }
 
 /* Responsive: Hide tree at small viewport widths */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .ipynb-nav-tree {
     display: none;
   }

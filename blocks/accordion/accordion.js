@@ -5,7 +5,8 @@
  */
 
 function hasWrapper(el) {
-  return !!el.firstElementChild && window.getComputedStyle(el.firstElementChild).display === 'block';
+  const firstChild = el.firstElementChild;
+  return !!firstChild && window.getComputedStyle(firstChild).display === 'block';
 }
 
 export default function decorate(block) {

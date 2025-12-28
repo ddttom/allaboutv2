@@ -6,7 +6,7 @@ export default defineConfig({
     port: 5173,
     strictPort: true,
     open: true,
-    host: true
+    host: true,
   },
   build: {
     lib: {

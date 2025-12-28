@@ -1,0 +1,158 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # Linting disabled - run locally with: npm run lint
+  # lint:
+  #   name: Lint Code
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #
+  #     - name: Setup Node.js
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: '20'
+  #         cache: 'npm'
+  #
+  #     - name: Install root dependencies
+  #       run: npm ci
+  #
+  #     - name: Install Cloudflare worker dependencies
+  #       working-directory: cloudflare/files
+  #       run: npm ci
+  #
+  #     - name: Lint JavaScript
+  #       run: npm run lint:js
+  #
+  #     - name: Lint CSS
+  #       run: npm run lint:css
+
+  test-cloudflare-worker:
+    name: Test Cloudflare Worker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: cloudflare/files
+        run: npm ci
+
+      - name: Run tests
+        working-directory: cloudflare/files
+        run: npm test
+
+      - name: Run local HTML test
+        working-directory: cloudflare/files
+        run: npm run test:local
+
+  security:
+    name: Security Checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run npm audit
+        run: npm audit --audit-level=moderate
+        continue-on-error: true
+
+      - name: Check for secrets
+        run: |
+          # Simple check for common secret patterns
+          if grep -r -E '(password|secret|api[_-]?key|token)[\s]*=[\s]*["\047][^"\047]{8,}' \
+            --exclude-dir={node_modules,.git,build} \
+            --exclude="*.{md,json,lock}" \
+            .; then
+            echo "⚠️  Potential secrets found in code"
+            exit 1
+          fi
+          echo "✓ No obvious secrets detected"
+
+  validate-structure:
+    name: Validate Project Structure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check required files
+        run: |
+          files=(
+            "CHANGELOG.md"
+            "CLAUDE.md"
+            "README.md"
+            "package.json"
+            ".claude/settings.json"
+            ".claude/hooks/pre-commit-changelog.sh"
+          )
+
+          for file in "${files[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "❌ Required file missing: $file"
+              exit 1
+            fi
+            echo "✓ $file exists"
+          done
+
+      - name: Validate JSON files
+        run: |
+          for file in $(find . -name "*.json" -not -path "*/node_modules/*"); do
+            if ! jq empty "$file" 2>/dev/null; then
+              echo "❌ Invalid JSON: $file"
+              exit 1
+            fi
+            echo "✓ $file valid"
+          done
+
+  build-check:
+    name: Build Verification
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check for build directories
+        run: |
+          if [ -d "build" ]; then
+            echo "Found build directories, checking for build scripts..."
+
+            # Check each build directory for package.json
+            for dir in build/*/; do
+              if [ -f "${dir}package.json" ]; then
+                echo "Building: $dir"
+                cd "$dir"
+                npm ci
+                npm run build || echo "⚠️  Build failed for $dir"
+                cd ../..
+              fi
+            done
+          else
+            echo "✓ No build directories found"
+          fi

@@ -9,7 +9,7 @@ This directory contains Claude Code configuration, custom skills, and slash comm
 ├── README.md                    # This file
 ├── agents_README.md             # Agent documentation
 ├── settings.json                # Claude Code configuration
-├── commands/                    # Slash commands (19 total)
+├── commands/                    # Slash commands (20 total)
 │   ├── new-block.md            # Create new EDS block with CDD
 │   ├── start-cdd.md            # Start Content Driven Development
 │   ├── test-block.md           # Test a specific block
@@ -24,7 +24,8 @@ This directory contains Claude Code configuration, custom skills, and slash comm
 │   ├── create-presentation.md  # Create presentation notebooks
 │   ├── validate-notebook.md    # Validate notebook quality
 │   ├── dev-docs.md             # Create strategic plans
-│   └── dev-docs-update.md      # Update dev documentation
+│   ├── dev-docs-update.md      # Update dev documentation
+│   └── increment-cfw-version.md # Increment Cloudflare worker version
 ├── agents/                      # Autonomous agents (6 total)
 │   ├── code-architecture-reviewer.md
 │   ├── code-refactor-master.md
@@ -34,11 +35,13 @@ This directory contains Claude Code configuration, custom skills, and slash comm
 │   └── web-research-specialist.md
 ├── hooks/                       # Development workflow automation
 │   ├── CONFIG.md               # Hook configuration guide
-│   ├── skill-activation-prompt.sh
+│   ├── skill-activation-prompt.sh  # Auto-suggest relevant skills
 │   ├── skill-activation-prompt.ts
-│   ├── post-tool-use-tracker.sh
+│   ├── post-tool-use-tracker.sh    # Track modified files
+│   ├── pre-tool-use-version-check.sh  # Cloudflare worker version monitoring
+│   ├── pre-push-validation.sh  # Documentation validation (git hook)
 │   └── package.json            # TypeScript dependencies
-└── skills/                      # Extended capabilities (26 total)
+└── skills/                      # Extended capabilities (27 total)
     ├── building-blocks/         # Create/modify EDS blocks
     ├── content-driven-development/  # CDD process orchestration
     ├── content-modeling/        # Design author-friendly content models
@@ -50,6 +53,7 @@ This directory contains Claude Code configuration, custom skills, and slash comm
     ├── block-collection-and-party/  # Find reference implementations
     ├── docs-search/             # Search aem.live documentation
     ├── llms-txt-manager/        # Manage llms.txt and my-blog.json
+    ├── cfw-version-monitor/     # Cloudflare worker version monitoring
     ├── eds-block-development/   # EDS block development patterns
     ├── eds-block-testing/       # EDS block testing
     ├── eds-performance-debugging/ # Performance optimization
@@ -58,6 +62,66 @@ This directory contains Claude Code configuration, custom skills, and slash comm
     ├── skill-creator/           # Skill creation toolkit
     └── [other general skills]   # Theme factory, web testing, etc.
 ```
+
+## ⚠️ CRITICAL: Working Directory Verification
+
+**ALWAYS verify your working directory before creating files or folders that you expect to exist.**
+
+### The Problem
+
+When Claude cannot find an expected file or folder (like `.claude/`, `blocks/`, `docs/`, etc.), it may be tempting to create it. However, the issue is often that you're **in the wrong directory**, not that the file/folder doesn't exist.
+
+### Required Check Before Creating
+
+Before creating ANY file or folder that should already exist in the project:
+
+1. **Check current working directory**:
+   ```bash
+   pwd
+   ```
+
+2. **Verify project root markers**:
+   ```bash
+   ls -la | grep -E "(\.claude|blocks|package\.json|CLAUDE\.md)"
+   ```
+
+3. **If markers are missing**, navigate to project root:
+   ```bash
+   cd /Users/tomcranstoun/Documents/GitHub/allaboutV2
+   ```
+
+### Red Flags That Indicate Wrong Directory
+
+- Cannot find `.claude/` directory
+- Cannot find `blocks/` directory
+- Cannot find `CLAUDE.md` or `README.md`
+- Cannot find `package.json`
+- Path includes `/blocks/`, `/docs/`, or other subdirectories in `pwd` output
+
+### Examples of Incorrect Behavior
+
+❌ **WRONG**:
+```
+Cannot find .claude/ directory. I will create it.
+mkdir .claude
+```
+
+✅ **CORRECT**:
+```
+Cannot find .claude/ directory. Let me verify my working directory first.
+pwd
+# Output: /Users/tomcranstoun/Documents/GitHub/allaboutV2/blocks/hero
+# This is a subdirectory! Navigate to project root.
+cd /Users/tomcranstoun/Documents/GitHub/allaboutV2
+# Now verify .claude/ exists
+ls -la .claude
+```
+
+### Project Root Path
+
+The project root is: `/Users/tomcranstoun/Documents/GitHub/allaboutV2`
+
+All `.claude/` operations, block creation, and documentation updates should happen from this directory.
 
 ## Quick Start
 
@@ -182,6 +246,7 @@ These skills are available but not EDS-specific:
 | `/validate-notebook` | Validate notebook for production readiness (smart links, structure, quality) | `/validate-notebook` |
 | `/dev-docs` | Create comprehensive strategic plan with structured task breakdown | `/dev-docs refactor auth` |
 | `/dev-docs-update` | Update dev documentation before context compaction | `/dev-docs-update` |
+| `/increment-cfw-version` | Increment Cloudflare worker version following semantic versioning | `/increment-cfw-version PATCH` |
 
 ## Agents
 
@@ -222,9 +287,21 @@ Active hooks that enhance the development workflow:
 - **Purpose:** Tracks modified files for session context
 - **Implementation:** Lightweight bash script
 
+### pre-tool-use-version-check.sh
+- **Trigger:** Before file edits to `cloudflare/files/cloudflare-worker.js`
+- **Purpose:** Warns if `WORKER_VERSION` not incremented when modifying worker
+- **Implementation:** Compares current version with git HEAD
+- **Action:** Warning only (never blocks operations)
+
+### pre-push-validation.sh (Git Hook)
+- **Trigger:** Before `git push` operations
+- **Purpose:** Validates CLAUDE.md, README.md, and CHANGELOG.md are current
+- **Implementation:** Git pre-push hook
+- **Action:** Blocks push if documentation is stale
+
 ### Configuration
 
-Hooks are configured in [.claude/settings.json](.claude/settings.json:0:0-0:0). For advanced customization, see [hooks/CONFIG.md](hooks/CONFIG.md).
+Hooks are configured in [.claude/settings.json](.claude/settings.json). For advanced customization, see [hooks/CONFIG.md](hooks/CONFIG.md).
 
 ## Documentation
 

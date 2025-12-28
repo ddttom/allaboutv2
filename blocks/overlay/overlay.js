@@ -9,7 +9,7 @@
  *
  * Note: EDS processes the header row before the decorate function runs,
  * so extractedRows[0] contains Row 2 (button text) and extractedRows[1] contains Row 3 (content)
- */
+ no-unused-vars, import/no-unresolved, import/no-self-import */
 
 // Configuration
 const CONFIG = {
@@ -25,7 +25,7 @@ const CONFIG = {
  * @param {string} title - The header title for the overlay
  * @param {HTMLElement} contentElement - The content to display in the overlay
  * @returns {HTMLElement} The overlay container element
- */
+ no-unused-vars, import/no-unresolved, import/no-self-import */
 function createOverlay(title, contentElement) {
   // Create overlay container (backdrop)
   const overlayContainer = document.createElement('div');
@@ -74,7 +74,7 @@ function createOverlay(title, contentElement) {
  * Shows the overlay with animation
  * @param {HTMLElement} overlay - The overlay element to show
  * @param {HTMLElement} triggerButton - The button that triggered the overlay (for focus return)
- */
+ no-unused-vars, import/no-unresolved, import/no-self-import */
 function showOverlay(overlay, triggerButton) {
   // Add to DOM
   document.body.appendChild(overlay);
@@ -99,7 +99,7 @@ function showOverlay(overlay, triggerButton) {
 /**
  * Closes the overlay with animation
  * @param {HTMLElement} overlay - The overlay element to close
- */
+ no-unused-vars, import/no-unresolved, import/no-self-import */
 function closeOverlay(overlay) {
   // Start exit animation
   overlay.classList.remove('overlay-backdrop--visible');
@@ -121,7 +121,7 @@ function closeOverlay(overlay) {
 /**
  * Sets up event handlers for the overlay
  * @param {HTMLElement} overlay - The overlay element
- */
+ no-unused-vars, import/no-unresolved, import/no-self-import */
 function setupOverlayEventHandlers(overlay) {
   const closeButton = overlay.querySelector('.overlay-close');
   const modal = overlay.querySelector('.overlay-modal');
@@ -187,7 +187,7 @@ function setupOverlayEventHandlers(overlay) {
  * Variations:
  * - Default: Shows trigger button, clicking opens overlay with close button
  * - Notebook (.notebook): Same as default - shows trigger button, close button visible
- */
+ no-unused-vars, import/no-unresolved, import/no-self-import */
 export default function decorate(block) {
   try {
     // Detect variations (currently notebook variation behaves same as default)

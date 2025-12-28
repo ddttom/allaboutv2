@@ -46,6 +46,29 @@ Test EDS blocks rapidly with Jupyter notebooks using **browser execution**:
 
 ## Quick Start
 
+### 0. Verify Working Directory
+
+**⚠️ CRITICAL: Before creating or modifying notebook files:**
+
+Verify you're in the project root:
+
+```bash
+pwd
+# Should output: /Users/tomcranstoun/Documents/GitHub/allaboutV2
+```
+
+If in a subdirectory, navigate to project root:
+```bash
+cd /Users/tomcranstoun/Documents/GitHub/allaboutV2
+```
+
+Verify project markers:
+```bash
+ls -la | grep -E "(\.claude|blocks|package\.json|CLAUDE\.md)"
+```
+
+All four must exist. If not, you're in the wrong directory!
+
 ### 1. Create or Open Notebook
 
 **Option A: Copy existing template**

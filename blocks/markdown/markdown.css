@@ -30,13 +30,13 @@
 
 /* Syntax highlighting colors */
 .markdown-content .string { color: #a31515; }
-.markdown-content .keyword { color: #0000ff; }
+.markdown-content .keyword { color: #00f; }
 .markdown-content .comment { color: #008000; }
 .markdown-content .number { color: #09885a; }
 .markdown-content .function { color: #795e26; }
 
 /* Responsive design */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .markdown-content {
     padding: calc(var(--markdown-padding) / 2);
   }

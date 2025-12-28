@@ -1,5 +1,5 @@
 export default async function decorate(block) {
-  const supportsWebP = window.createImageBitmap && window.createImageBitmap.toString().includes("native code");
+  const supportsWebP = window.createImageBitmap && window.createImageBitmap.toString().includes('native code');
 
   async function fetchSlideHtml(path) {
     try {
@@ -15,9 +15,9 @@ export default async function decorate(block) {
   }
 
   async function fetchSlides() {
-    const response = await fetch("/slides/query-index.json");
+    const response = await fetch('/slides/query-index.json');
     const json = await response.json();
-    
+
     const slides = [];
     for (const slide of json.data) {
       if (window.innerWidth > 799) {
@@ -34,12 +34,12 @@ export default async function decorate(block) {
     if (!html) return null;
 
     const parser = new DOMParser();
-    const doc = parser.parseFromString(html, "text/html");
+    const doc = parser.parseFromString(html, 'text/html');
 
-    const h2 = doc.querySelector("h2");
-    let firstParagraph = h2 ? h2.nextElementSibling : doc.querySelector("p");
+    const h2 = doc.querySelector('h2');
+    let firstParagraph = h2 ? h2.nextElementSibling : doc.querySelector('p');
 
-    while (firstParagraph && firstParagraph.tagName.toLowerCase() !== "p") {
+    while (firstParagraph && firstParagraph.tagName.toLowerCase() !== 'p') {
       firstParagraph = firstParagraph.nextElementSibling;
     }
 
@@ -56,7 +56,7 @@ export default async function decorate(block) {
 
     img.onload = () => {
       slideItem.style.backgroundImage = `url(${finalImageUrl})`;
-      slideItem.classList.add("loaded");
+      slideItem.classList.add('loaded');
     };
 
     img.onerror = () => {
@@ -65,11 +65,11 @@ export default async function decorate(block) {
   }
 
   async function createPanel(slideData) {
-    let html = slideData.html;
+    let { html } = slideData;
     if (!html) {
       html = await fetchSlideHtml(slideData.path);
       if (!html) {
-        console.error("Failed to fetch HTML content for this slide");
+        console.error('Failed to fetch HTML content for this slide');
         return;
       }
     }
@@ -83,7 +83,7 @@ export default async function decorate(block) {
       <button class="slide-panel-close" aria-label="Close panel">&times;</button>
     `;
     panel.querySelector('.slide-panel-body').innerHTML = html;
-    
+
     const closeButton = panel.querySelector('.slide-panel-close');
     closeButton.addEventListener('click', () => {
       panel.remove();
@@ -99,13 +99,15 @@ export default async function decorate(block) {
   }
 
   async function createSlideItem(slideData, index) {
-    const { image, title, description, path } = slideData;
-    const imageUrl = image.split("?")[0];
+    const {
+      image, title, description, path,
+    } = slideData;
+    const imageUrl = image.split('?')[0];
 
-    const slideItem = document.createElement("div");
-    slideItem.classList.add("slide-builder-item");
-    slideItem.setAttribute("data-bg", imageUrl);
-    slideItem.setAttribute("data-slidenum", index + 1);
+    const slideItem = document.createElement('div');
+    slideItem.classList.add('slide-builder-item');
+    slideItem.setAttribute('data-bg', imageUrl);
+    slideItem.setAttribute('data-slidenum', index + 1);
 
     slideItem.innerHTML = `
       <div class="text-container">
@@ -114,7 +116,7 @@ export default async function decorate(block) {
       </div>
     `;
 
-    slideItem.addEventListener("click", () => createPanel(slideData));
+    slideItem.addEventListener('click', () => createPanel(slideData));
 
     // Fetch and append supporting text if available
     if (!slideData.html && window.innerWidth <= 799) {
@@ -148,7 +150,7 @@ export default async function decorate(block) {
         }
       });
     },
-    { rootMargin: "100px" }
+    { rootMargin: '100px' },
   );
 
   for (let i = 0; i < slides.length; i++) {

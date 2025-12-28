@@ -1,12 +1,14 @@
 # CSS Naming Convention Style Guide
 
-*Related: [Frontend Guidelines](guidelines/frontend-guidelines.md) | [EDS Appendix](eds-appendix.md) | [Block Architecture Standards](implementation/block-architecture-standards.md)*
+*Related: [Frontend Guidelines](frontend-guidelines.md) | [Design System](design-system.md) | [Block Architecture Standards](../implementation/block-architecture-standards.md)*
 
 ## Overview
 
 This style guide establishes consistent CSS selector naming conventions for EDS (Edge Delivery Services) blocks and components. Following these conventions ensures maintainable, predictable, and conflict-free styling across all components.
 
-*See also: [Design Philosophy Guide](implementation/design-philosophy-guide.md) for EDS principles | [EDS Architecture Standards](implementation/eds-architecture-standards.md) for architectural patterns*
+**For visual design standards** (colors, typography, spacing, components), see [design-system.md](design-system.md).
+
+*See also: [Design Philosophy Guide](../implementation/design-philosophy-guide.md) for EDS principles | [EDS Architecture Standards](../implementation/eds-architecture-standards.md) for architectural patterns*
 
 ## Core Principles
 

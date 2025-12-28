@@ -48,15 +48,15 @@ function dismissAlert(overlay, originalBlock) {
     if (modal) {
       const sparkles = modal.querySelectorAll('.floating-alert-sparkle');
       sparkles.forEach((el) => el.remove());
-      
+
       // Return the content back to the original block structure
       const contentWrapper = modal.querySelector('.floating-alert-content');
       if (contentWrapper && originalBlock) {
         console.log('Floating Alert: Restoring content to original block');
-        
+
         // Find or recreate the EDS block structure for content restoration
         let contentTarget = originalBlock;
-        
+
         // Check if we need to recreate the nested div structure
         const firstDiv = originalBlock.querySelector('div');
         if (firstDiv) {
@@ -74,7 +74,7 @@ function dismissAlert(overlay, originalBlock) {
           originalBlock.appendChild(newFirstDiv);
           contentTarget = newSecondDiv;
         }
-        
+
         // Move all content back to the target
         while (contentWrapper.firstChild) {
           contentTarget.appendChild(contentWrapper.firstChild);
@@ -93,34 +93,34 @@ function dismissAlert(overlay, originalBlock) {
 function processContentWithHeadings(contentSource) {
   const container = document.createElement('div');
   const headings = contentSource.querySelectorAll('h1, h2, h3, h4, h5, h6');
-  
+
   if (headings.length > 0) {
     // Extract the first heading as the alert title
     const firstHeading = headings[0];
     const headingText = firstHeading.textContent.trim();
-    
+
     console.log('Floating Alert: Found heading:', headingText);
-    
+
     // Create title element
     const titleElement = document.createElement('h2');
     titleElement.className = 'floating-alert-title';
     titleElement.textContent = headingText;
     container.appendChild(titleElement);
-    
+
     // Add horizontal rule
     const hr = document.createElement('hr');
     hr.className = 'floating-alert-separator';
     console.log('Floating Alert: Created HR element:', hr);
     container.appendChild(hr);
     console.log('Floating Alert: HR element added to container');
-    
+
     // Clone all content and remove the first heading from the clone
     const contentClone = contentSource.cloneNode(true);
     const headingInClone = contentClone.querySelector('h1, h2, h3, h4, h5, h6');
     if (headingInClone) {
       headingInClone.remove();
     }
-    
+
     // Move remaining content
     while (contentClone.firstChild) {
       container.appendChild(contentClone.firstChild);
@@ -132,7 +132,7 @@ function processContentWithHeadings(contentSource) {
       container.appendChild(contentSource.firstChild);
     }
   }
-  
+
   return container;
 }
 
@@ -163,7 +163,7 @@ export default async function decorate(block) {
   // Add debug logging
   console.log('Floating Alert: decorate function called', block);
   console.log('Floating Alert: localStorage check:', localStorage.getItem(FLOATING_ALERT_CONFIG.STORAGE_KEY));
-  
+
   if (localStorage.getItem(FLOATING_ALERT_CONFIG.STORAGE_KEY) === 'true') {
     console.log('Floating Alert: Already dismissed, returning early');
     return;
@@ -187,10 +187,10 @@ export default async function decorate(block) {
   // Extract content from EDS block structure
   // EDS creates nested divs, so we need to find the actual content
   console.log('Floating Alert: Block structure before extraction:', block.innerHTML);
-  
+
   // Find the deepest content container - EDS typically nests content in div > div structure
   let contentSource = block;
-  
+
   // Navigate through EDS wrapper divs to find actual content
   const firstDiv = block.querySelector('div');
   if (firstDiv) {
@@ -205,14 +205,14 @@ export default async function decorate(block) {
       console.log('Floating Alert: Using first div as content source');
     }
   }
-  
+
   console.log('Floating Alert: Content source selected:', contentSource);
   console.log('Floating Alert: Content source innerHTML:', contentSource.innerHTML);
 
   // Process content and handle headings
   const processedContent = processContentWithHeadings(contentSource);
   contentWrapper.appendChild(processedContent);
-  
+
   console.log('Floating Alert: Content processed and moved to wrapper:', contentWrapper.innerHTML);
 
   // Create close button
@@ -260,7 +260,7 @@ export default async function decorate(block) {
   });
   console.log('Floating Alert: Click outside listener added');
   console.log('Floating Alert: Modal setup complete - should be visible now');
-  
+
   // Additional debugging - check if modal is visible
   setTimeout(() => {
     const overlayInDOM = document.querySelector('.floating-alert-overlay');
@@ -303,19 +303,19 @@ window.floatingAlertDebug = {
     const blocks = document.querySelectorAll('.floating-alert.block');
     if (blocks.length > 0) {
       console.log('Floating Alert: Found', blocks.length, 'floating-alert blocks, re-decorating...');
-      blocks.forEach(block => {
+      blocks.forEach((block) => {
         // Clear existing overlays
         const existingOverlay = document.querySelector('.floating-alert-overlay');
         if (existingOverlay) {
           existingOverlay.remove();
         }
         // Re-import and run the decorate function
-        import('./floating-alert.js').then(module => {
+        import('./floating-alert.js').then((module) => {
           module.default(block);
         });
       });
     } else {
       console.log('Floating Alert: No floating-alert blocks found on page');
     }
-  }
+  },
 };

@@ -36,7 +36,7 @@ async function fetchQueryIndex() {
     console.log(`✅ Fetched ${data.data?.length || 0} entries\n`);
     return data.data || [];
   } catch (error) {
-    console.error(`❌ Failed to fetch query-index.json:`, error);
+    console.error('❌ Failed to fetch query-index.json:', error);
     throw error;
   }
 }
@@ -61,7 +61,7 @@ function extractLlmsTxtDate(content) {
 
   return {
     lastUpdated,
-    version: versionMatch ? versionMatch[1] : '1.0'
+    version: versionMatch ? versionMatch[1] : '1.0',
   };
 }
 
@@ -90,7 +90,7 @@ function filterByContext(entries, context, filePath) {
   }
 
   // Filter entries that match the URL path
-  return entries.filter(entry => entry.path.includes(`/${context}/`));
+  return entries.filter((entry) => entry.path.includes(`/${context}/`));
 }
 
 /**
@@ -102,7 +102,7 @@ function filterNewEntries(entries, afterDate) {
     ? Math.floor(new Date(afterDate).getTime() / 1000)
     : parseInt(afterDate);
 
-  return entries.filter(entry => {
+  return entries.filter((entry) => {
     if (!entry.lastModified) return false;
     // lastModified in query-index.json is a Unix timestamp (string)
     const entryTimestamp = parseInt(entry.lastModified);
@@ -119,7 +119,7 @@ function createLlmsTxtFromBlogJson(blogJsonPath, context) {
   const lines = [];
 
   // Header
-  lines.push(`# ${context === 'site-wide' ? 'Adobe Edge Delivery Services & AI Development Resources' : context.charAt(0).toUpperCase() + context.slice(1) + ' Resources'}`);
+  lines.push(`# ${context === 'site-wide' ? 'Adobe Edge Delivery Services & AI Development Resources' : `${context.charAt(0).toUpperCase() + context.slice(1)} Resources`}`);
   lines.push('');
   lines.push('Technical documentation and educational resources.');
   lines.push('');
@@ -130,13 +130,13 @@ function createLlmsTxtFromBlogJson(blogJsonPath, context) {
   // Access Guidelines (optional, can be added if needed)
 
   // Build organized sections from my-blog.json
-  blogJson.categories.forEach(category => {
+  blogJson.categories.forEach((category) => {
     if (category.posts && category.posts.length > 0) {
       lines.push('');
       lines.push(`## ${category.name}`);
       lines.push('');
 
-      category.posts.forEach(post => {
+      category.posts.forEach((post) => {
         const url = post.url.startsWith('http') ? post.url : `https://allabout.network${post.url}`;
         if (post.description) {
           lines.push(`- [${post.title}](${url}): ${post.description}`);
@@ -162,7 +162,7 @@ async function updateLlmsTxt(filePath, queryIndex) {
   let isNewFile = false;
 
   if (!fs.existsSync(filePath)) {
-    console.log(`   ⚠️  File not found - will create new llms.txt`);
+    console.log('   ⚠️  File not found - will create new llms.txt');
 
     // Check for corresponding my-blog.json
     const dir = path.dirname(filePath);
@@ -190,24 +190,24 @@ async function updateLlmsTxt(filePath, queryIndex) {
   const context = getFolderContext(filePath);
   console.log(`   Folder context: ${context || 'site-wide'}`);
 
-  let filteredEntries = filterByContext(queryIndex, context, filePath);
+  const filteredEntries = filterByContext(queryIndex, context, filePath);
   const newEntries = filterNewEntries(filteredEntries, metadata.lastUpdated);
 
   console.log(`   New posts found: ${newEntries.length}`);
 
   if (newEntries.length === 0 && !isNewFile) {
-    console.log(`   ✅ Already up to date`);
+    console.log('   ✅ Already up to date');
     return;
   }
 
   if (isNewFile && newEntries.length === 0) {
     // New file with no new entries beyond what's already in my-blog.json
-    console.log(`   ✅ Created new file from my-blog.json`);
+    console.log('   ✅ Created new file from my-blog.json');
   }
 
   // List new posts that will be added
   console.log(`   📝 Adding ${newEntries.length} new posts:`);
-  newEntries.slice(0, 5).forEach(entry => {
+  newEntries.slice(0, 5).forEach((entry) => {
     console.log(`      - ${entry.title}`);
   });
   if (newEntries.length > 5) {
@@ -234,7 +234,7 @@ async function updateLlmsTxt(filePath, queryIndex) {
   }
 
   // Update the version date in the header
-  const updatedContent = lines.map(line => {
+  const updatedContent = lines.map((line) => {
     if (line.startsWith('**Last updated:**')) {
       const now = new Date();
       const monthYear = now.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
@@ -247,7 +247,7 @@ async function updateLlmsTxt(filePath, queryIndex) {
   fs.writeFileSync(filePath, updatedContent, 'utf-8');
 
   if (isNewFile) {
-    console.log(`   ✅ Created new file from my-blog.json with all content`);
+    console.log('   ✅ Created new file from my-blog.json with all content');
   } else {
     console.log(`   ✅ Updated with ${newEntries.length} new posts`);
   }
@@ -260,45 +260,45 @@ function createEmptyBlogJson(scope = '') {
   return {
     metadata: {
       'last-updated': '2020-01-01',
-      ...(scope && { scope })
+      ...(scope && { scope }),
     },
     categoryMap: [
       {
         id: 'eds-integrations',
         name: 'EDS & Integrations',
         count: 0,
-        description: 'Adobe Edge Delivery Services integrations and framework implementations'
+        description: 'Adobe Edge Delivery Services integrations and framework implementations',
       },
       {
         id: 'core-ai-llm',
         name: 'Core AI/LLM Topics',
         count: 0,
-        description: 'AI fundamentals, language processing, and machine learning concepts'
+        description: 'AI fundamentals, language processing, and machine learning concepts',
       },
       {
         id: 'aem-cms',
         name: 'AEM / CMS Focus',
         count: 0,
-        description: 'Adobe Experience Manager and content management systems'
+        description: 'Adobe Experience Manager and content management systems',
       },
       {
         id: 'developer-guide-series',
         name: 'Developer Guide Series',
         count: 0,
-        description: 'Comprehensive EDS development tutorials'
+        description: 'Comprehensive EDS development tutorials',
       },
       {
         id: 'content-creator-guide',
         name: 'Content Creator Guide',
         count: 0,
-        description: 'Resources for content authors and editors'
+        description: 'Resources for content authors and editors',
       },
       {
         id: 'general-blog',
         name: 'General Blog & Tools',
         count: 0,
-        description: 'General development topics, tools, and best practices'
-      }
+        description: 'General development topics, tools, and best practices',
+      },
     ],
     categories: [
       { id: 'eds-integrations', name: 'EDS & Integrations', posts: [] },
@@ -306,8 +306,8 @@ function createEmptyBlogJson(scope = '') {
       { id: 'aem-cms', name: 'AEM / CMS Focus', posts: [] },
       { id: 'developer-guide-series', name: 'Developer Guide Series', posts: [] },
       { id: 'content-creator-guide', name: 'Content Creator Guide', posts: [] },
-      { id: 'general-blog', name: 'General Blog & Tools', posts: [] }
-    ]
+      { id: 'general-blog', name: 'General Blog & Tools', posts: [] },
+    ],
   };
 }
 
@@ -322,7 +322,7 @@ async function updateMyBlogJson(filePath, queryIndex) {
   let isNewFile = false;
 
   if (!fs.existsSync(filePath)) {
-    console.log(`   ⚠️  File not found - creating new my-blog.json`);
+    console.log('   ⚠️  File not found - creating new my-blog.json');
     const context = getFolderContext(filePath);
     data = createEmptyBlogJson(context || 'site-wide');
     lastUpdated = '2020-01-01';
@@ -339,25 +339,25 @@ async function updateMyBlogJson(filePath, queryIndex) {
   const context = getFolderContext(filePath);
   console.log(`   Folder context: ${context || 'site-wide'}`);
 
-  let filteredEntries = filterByContext(queryIndex, context, filePath);
+  const filteredEntries = filterByContext(queryIndex, context, filePath);
   const newEntries = filterNewEntries(filteredEntries, lastUpdated);
 
   console.log(`   New posts found: ${newEntries.length}`);
 
   if (newEntries.length === 0 && !isNewFile) {
-    console.log(`   ✅ Already up to date`);
+    console.log('   ✅ Already up to date');
     return;
   }
 
   if (isNewFile && newEntries.length === 0) {
-    console.log(`   ⚠️  No entries found in query-index to populate new file`);
-    console.log(`   Creating empty structure anyway...`);
+    console.log('   ⚠️  No entries found in query-index to populate new file');
+    console.log('   Creating empty structure anyway...');
   }
 
   // List new posts that will be added
   if (newEntries.length > 0) {
     console.log(`   📝 Adding ${newEntries.length} new posts to categories:`);
-    newEntries.slice(0, 5).forEach(entry => {
+    newEntries.slice(0, 5).forEach((entry) => {
       console.log(`      - ${entry.title}`);
     });
     if (newEntries.length > 5) {
@@ -369,7 +369,7 @@ async function updateMyBlogJson(filePath, queryIndex) {
   const categorizePosts = (entries) => {
     const categoryMap = new Map();
 
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       let categoryId = 'general-blog'; // default category
 
       // Simple categorization based on path
@@ -398,7 +398,7 @@ async function updateMyBlogJson(filePath, queryIndex) {
 
   // Add new posts to appropriate categories
   categorizedEntries.forEach((entries, categoryId) => {
-    let category = data.categories.find(cat => cat.id === categoryId);
+    let category = data.categories.find((cat) => cat.id === categoryId);
 
     // Create category if it doesn't exist
     if (!category) {
@@ -420,7 +420,7 @@ async function updateMyBlogJson(filePath, queryIndex) {
     }
 
     // Add new posts to category
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       const newPost = {
         title: entry.title,
         url: entry.path,
@@ -433,8 +433,8 @@ async function updateMyBlogJson(filePath, queryIndex) {
 
   // Update category counts in categoryMap
   if (data.categoryMap) {
-    data.categoryMap.forEach(mapEntry => {
-      const category = data.categories.find(cat => cat.id === mapEntry.id);
+    data.categoryMap.forEach((mapEntry) => {
+      const category = data.categories.find((cat) => cat.id === mapEntry.id);
       if (category && category.posts) {
         mapEntry.count = category.posts.length;
       }
@@ -486,10 +486,10 @@ function findFiles(filename, dir = '.') {
  */
 async function main() {
   const args = process.argv.slice(2);
-  const targetArg = args.find(arg => arg.startsWith('--target='));
+  const targetArg = args.find((arg) => arg.startsWith('--target='));
   const target = targetArg ? targetArg.split('=')[1] : 'all';
 
-  console.log(`🚀 Sync Blog Content Utility`);
+  console.log('🚀 Sync Blog Content Utility');
   console.log(`📋 Target: ${target}\n`);
 
   // Fetch query index
@@ -503,7 +503,7 @@ async function main() {
 
   // Update llms.txt files
   if (target === 'llms' || target === 'all') {
-    console.log('\n' + '='.repeat(60));
+    console.log(`\n${'='.repeat(60)}`);
     console.log('📄 Updating llms.txt files');
     console.log('='.repeat(60));
 
@@ -537,7 +537,7 @@ async function main() {
 
   // Update my-blog.json files
   if (target === 'blog' || target === 'all') {
-    console.log('\n' + '='.repeat(60));
+    console.log(`\n${'='.repeat(60)}`);
     console.log('📄 Updating my-blog.json files');
     console.log('='.repeat(60));
 
@@ -569,13 +569,13 @@ async function main() {
     }
   }
 
-  console.log('\n' + '='.repeat(60));
+  console.log(`\n${'='.repeat(60)}`);
   console.log('✅ Sync complete!');
-  console.log('='.repeat(60) + '\n');
+  console.log(`${'='.repeat(60)}\n`);
 }
 
 // Run main function
-main().catch(error => {
+main().catch((error) => {
   console.error('\n❌ Fatal error:', error);
   process.exit(1);
 });

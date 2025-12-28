@@ -455,6 +455,120 @@
                     "\"last-updated\""
                 ]
             }
+        },
+        "response-timestamps": {
+            "type": "guardrail",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "Automatically adds timestamps and execution duration to all responses",
+            "promptTriggers": {
+                "keywords": [
+                    "*"
+                ]
+            }
+        },
+        "block-collection-and-party": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "Find reference implementations from Block Collection and Block Party repositories. Search for existing blocks, code patterns, integration examples, and best practices.",
+            "promptTriggers": {
+                "keywords": [
+                    "block collection",
+                    "block party",
+                    "reference block",
+                    "example block",
+                    "similar block",
+                    "existing block",
+                    "find block",
+                    "search block",
+                    "block structure",
+                    "block example",
+                    "Adobe blocks",
+                    "community blocks",
+                    "block reference",
+                    "block pattern",
+                    "how other blocks",
+                    "block implementation",
+                    "block code",
+                    "get-block-structure"
+                ],
+                "intentPatterns": [
+                    "(find|search|look for).*?(block|example|reference)",
+                    "(how|what).*?other.*?block",
+                    "(similar|existing).*?block",
+                    "(block collection|block party).*?(search|find|example)",
+                    "reference.*?implementation",
+                    "(code|pattern|example).*?block",
+                    "(before|first).*?(create|build).*?block",
+                    "(structure|HTML).*?block.*?(before|expect)",
+                    "pre-decoration.*?(HTML|structure)"
+                ]
+            }
+        },
+        "block-inventory": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "medium",
+            "description": "Survey available blocks from local project and Block Collection to understand block palette for authoring and content modeling decisions.",
+            "promptTriggers": {
+                "keywords": [
+                    "block inventory",
+                    "available blocks",
+                    "list blocks",
+                    "block palette",
+                    "block options",
+                    "what blocks",
+                    "which blocks",
+                    "block library",
+                    "survey blocks",
+                    "block catalog",
+                    "page import",
+                    "content structure",
+                    "authoring options",
+                    "block choices"
+                ],
+                "intentPatterns": [
+                    "(what|which|list).*?blocks.*?(available|exist|have)",
+                    "(survey|catalog|inventory).*?block",
+                    "(available|existing).*?block.*?(option|palette|library)",
+                    "(page|content).*?(import|migration|structure)",
+                    "(start|plan|begin).*?(page|import|migration)",
+                    "(author|content).*?(option|choice|library)",
+                    "understand.*?block.*?(available|option|palette)"
+                ]
+            }
+        },
+        "pre-push-validation": {
+            "type": "workflow",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "Ensures CLAUDE.md, README.md, and CHANGELOG.md are updated before git push. Validates documentation currency before pushing changes.",
+            "promptTriggers": {
+                "keywords": [
+                    "git push",
+                    "push changes",
+                    "ready to push",
+                    "before push",
+                    "validate docs",
+                    "check documentation",
+                    "commit push",
+                    "pushing",
+                    "documentation current",
+                    "update docs",
+                    "changelog",
+                    "readme",
+                    "claude.md"
+                ],
+                "intentPatterns": [
+                    "(git|ready|about to).*?push",
+                    "push.*?(change|commit|code)",
+                    "(validate|check|verify).*?(doc|documentation)",
+                    "(before|prior to).*?push",
+                    "(update|check).*?(changelog|readme|claude)",
+                    "documentation.*?(current|updated|ready)"
+                ]
+            }
         }
     },
     "notes": {

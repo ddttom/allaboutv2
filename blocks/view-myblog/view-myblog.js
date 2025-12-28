@@ -225,7 +225,7 @@ function createCategorySection(category) {
   } else if (category.posts) {
     // Regular category with blog posts
     // Sort posts based on sortOrder metadata
-    let posts = [...category.posts];
+    const posts = [...category.posts];
     if (category.sortOrder === 'oldest-first') {
       // Sort by lastModified date ascending (oldest first)
       posts.sort((a, b) => {
@@ -285,7 +285,7 @@ export default async function decorate(block) {
   // Configuration
   const config = {
     dataUrl,
-    errorMessage: 'Unable to load blog content. Please try again later.'
+    errorMessage: 'Unable to load blog content. Please try again later.',
   };
 
   try {
@@ -310,7 +310,7 @@ export default async function decorate(block) {
     if (data.categories) {
       data.categories.forEach((category) => {
         if (category.posts) {
-          const nonIndexPosts = category.posts.filter(post => !isIndexPage(post.url));
+          const nonIndexPosts = category.posts.filter((post) => !isIndexPage(post.url));
           if (nonIndexPosts.length > 0) {
             activeCategoryCount++;
           }
@@ -334,20 +334,20 @@ export default async function decorate(block) {
 
     // Add Latest Posts section only if there are multiple active categories
     if (activeCategoryCount > 1 && data.latestPosts && data.latestPosts.length > 0) {
-      const filteredLatest = data.latestPosts.filter(post => !isIndexPage(post.url));
+      const filteredLatest = data.latestPosts.filter((post) => !isIndexPage(post.url));
       if (filteredLatest.length > 0) {
         featuredContainer.appendChild(
-          createFeaturedSection('Latest Posts', filteredLatest, 'latest')
+          createFeaturedSection('Latest Posts', filteredLatest, 'latest'),
         );
       }
     }
 
     // Add Most Visited section (filter out index pages)
     if (data.mostVisited && data.mostVisited.length > 0) {
-      const filteredVisited = data.mostVisited.filter(post => !isIndexPage(post.url));
+      const filteredVisited = data.mostVisited.filter((post) => !isIndexPage(post.url));
       if (filteredVisited.length > 0) {
         featuredContainer.appendChild(
-          createFeaturedSection('Most Visited', filteredVisited, 'popular')
+          createFeaturedSection('Most Visited', filteredVisited, 'popular'),
         );
       }
     }
@@ -357,15 +357,15 @@ export default async function decorate(block) {
     // Add Category Map (recalculate counts, filter empty categories, only show if > 1 active)
     if (data.categoryMap && data.categoryMap.length > 1) {
       // Filter out categories that would have 0 posts after index page filtering
-      const activeCategoryMap = data.categoryMap.map(cat => {
+      const activeCategoryMap = data.categoryMap.map((cat) => {
         // Find matching category to check actual post count
-        const matchingCategory = data.categories?.find(c => c.id === cat.id);
+        const matchingCategory = data.categories?.find((c) => c.id === cat.id);
         if (matchingCategory?.posts) {
-          const filteredCount = matchingCategory.posts.filter(post => !isIndexPage(post.url)).length;
+          const filteredCount = matchingCategory.posts.filter((post) => !isIndexPage(post.url)).length;
           return { ...cat, count: filteredCount };
         }
         return cat;
-      }).filter(cat => cat.count > 0); // Remove categories with 0 posts
+      }).filter((cat) => cat.count > 0); // Remove categories with 0 posts
 
       // Only show map if there's still more than one active category
       if (activeCategoryMap.length > 1) {
@@ -381,7 +381,7 @@ export default async function decorate(block) {
       data.categories.forEach((category) => {
         // Filter out index pages from category posts
         if (category.posts) {
-          const filteredPosts = category.posts.filter(post => !isIndexPage(post.url));
+          const filteredPosts = category.posts.filter((post) => !isIndexPage(post.url));
 
           // Only render category section if it has posts after filtering
           if (filteredPosts.length > 0) {
@@ -402,7 +402,6 @@ export default async function decorate(block) {
 
     // Append to block
     block.appendChild(container);
-
   } catch (error) {
     console.error('View MyBlog block failed:', error);
     block.innerHTML = `<p class="view-myblog-error">${config.errorMessage}</p>`;

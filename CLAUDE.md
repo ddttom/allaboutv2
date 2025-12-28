@@ -4,18 +4,84 @@
 
 ### For AI Assistants
 - **Comprehensive Documentation**: See `docs/for-ai/` directory (26 detailed guides)
-- **Claude Code Tools**: See `.claude/` directory (19 commands, 26 skills, 6 agents, 2 hooks)
+- **Claude Code Tools**: See `.claude/` directory (17 commands, 27 skills, 6 agents, 2 hooks)
 - **Start Here**: `docs/for-ai/index.md` for complete navigation
 - **Agents**: See `.claude/agents_README.md` for autonomous task handlers
 
 ### Common Workflows
 - **Create new block**: Use `/new-block <name>` command (follows Content Driven Development)
+- **Find reference blocks**: Use `block-collection-and-party` skill to search Block Collection and Block Party
+- **Survey available blocks**: Use `block-inventory` skill to understand block palette for authoring
 - **Test a block**: Use `/test-block <name>` command or open `test.ipynb` in JSLab
 - **Interactive testing**: Use Jupyter notebooks with context-aware execution
 - **Create educational notebook**: Use `/create-notebook` for tutorials, guides, and demos
 - **Share executable demos**: Use ipynb-viewer block for end-user interaction
 - **Review documentation**: Use `/review-docs` command
 - **Run all linting**: Use `/lint-all` command or `npm run lint`
+- **Deploy custom Cloudflare worker**: See `cloudflare/files/` for CORS and JSON-LD worker
+
+## ⚠️ CRITICAL: Working Directory Verification
+
+**ALWAYS verify your working directory before creating files or folders that you expect to exist.**
+
+### The Problem
+
+When AI assistants cannot find an expected file or folder (like `.claude/`, `blocks/`, `docs/`, etc.), the instinct may be to create it. However, the issue is often that you're **in the wrong directory**, not that the file/folder doesn't exist.
+
+### Required Protocol
+
+Before creating ANY file or folder that should already exist in this project:
+
+1. **Check current working directory**:
+   ```bash
+   pwd
+   ```
+
+2. **Verify you're in project root** by checking for these markers:
+   ```bash
+   ls -la | grep -E "(\.claude|blocks|package\.json|CLAUDE\.md)"
+   ```
+   All four should exist in project root.
+
+3. **If markers are missing**, you're in the wrong directory:
+   ```bash
+   cd /Users/tomcranstoun/Documents/GitHub/allaboutV2
+   ```
+
+### Red Flags (Wrong Directory)
+
+- Cannot find `.claude/` directory
+- Cannot find `blocks/` directory
+- Cannot find `CLAUDE.md` or `README.md`
+- Cannot find `package.json`
+- `pwd` output shows you're inside `/blocks/`, `/docs/`, or other subdirectory
+
+### Correct Behavior
+
+❌ **WRONG**:
+```
+Error: .claude/ directory not found
+Solution: Creating .claude/ directory...
+mkdir .claude
+```
+
+✅ **CORRECT**:
+```
+Error: .claude/ directory not found
+Solution: Verify working directory first
+pwd
+# Output: /Users/tomcranstoun/Documents/GitHub/allaboutV2/blocks/hero
+# I'm in a subdirectory! Navigate to project root.
+cd /Users/tomcranstoun/Documents/GitHub/allaboutV2
+# Verify .claude/ exists
+ls -la .claude
+```
+
+### Project Root
+
+**Absolute path**: `/Users/tomcranstoun/Documents/GitHub/allaboutV2`
+
+All `.claude/` operations, block creation, slash commands, and documentation updates require being in this directory.
 
 ## Commands
 
@@ -43,6 +109,137 @@
 
 **See:** Smart link handling in `blocks/ipynb-viewer/ipynb-viewer.js` for proper client-side URL resolution
 
+## ⚠️ CRITICAL: Cloudflare Worker Two-File Testing System
+
+**The Cloudflare worker MUST follow the two-file testing system** - this is non-negotiable.
+
+### The Two-File Rule
+
+**File 1:** `cloudflare/files/cloudflare-worker.js` - Production worker code
+**File 2:** `cloudflare/files/cloudflare-worker.test.js` - Unified test file (unit + integration)
+
+**CRITICAL PRINCIPLE:** All worker functionality must be implemented as **pure JavaScript functions** that can be tested without Cloudflare Workers runtime.
+
+### Why This Matters
+
+The Cloudflare Workers runtime provides APIs like `HTMLRewriter` that are NOT available in Node.js test environments. If you use runtime-specific APIs for core logic, **your code becomes untestable**.
+
+**Production Bug Example (2025-12-12):**
+```javascript
+// ❌ WRONG - This breaks in tests
+export const handlePicturePlaceholder = (element) => {
+  element.ontext((text) => {...});  // TypeError: element.ontext is not a function
+  element.onendtag(() => {...});    // These methods don't exist in tests
+};
+```
+
+This code worked in Cloudflare but threw `TypeError: element.ontext is not a function` because HTMLRewriter element handlers can't be tested in Node.js.
+
+### Correct Approach: Pure Functions
+
+**Core logic must be pure JavaScript that takes strings and returns strings:**
+
+```javascript
+// ✅ CORRECT - Pure function, fully testable
+export const replacePicturePlaceholder = (html) => {
+  const pattern = /<div>\s*<div>([^<]*Picture Here[^<]*)<\/div>\s*<\/div>/g;
+  const replacement = `<div><img src="${CONFIG.IMAGE_URL}" alt="${CONFIG.ALT}"></div>`;
+  return html.replace(pattern, replacement);
+};
+
+// Test in Node.js (no Cloudflare runtime needed)
+test('replaces Picture Here with image', () => {
+  const input = '<div><div>Picture Here</div></div>';
+  const output = replacePicturePlaceholder(input);
+  expect(output).toContain('<img');
+  expect(output).not.toContain('Picture Here');
+});
+```
+
+### Processing Flow Pattern
+
+**Correct order for worker that needs both string operations and HTMLRewriter:**
+
+```javascript
+// 1. Fetch response from origin
+let resp = await fetch(request);
+
+// 2. Extract HTML text (consumes body)
+let htmlText = await resp.text();
+
+// 3. Apply pure string operations (TESTABLE)
+htmlText = replacePicturePlaceholder(htmlText);
+
+// 4. Create new Response with processed text
+resp = new Response(htmlText, {
+  status: resp.status,
+  statusText: resp.statusText,
+  headers: resp.headers,
+});
+
+// 5. NOW apply HTMLRewriter for runtime-specific features
+resp = new HTMLRewriter()
+  .on('meta[property="og:title"]', handleOgTitle)
+  .transform(resp);
+
+// 6. Add headers and return
+return new Response(resp.body, resp);
+```
+
+**Key insight:** Pure functions run BEFORE HTMLRewriter, making them testable.
+
+### Testing Requirements
+
+**All tests must be in cloudflare-worker.test.js:**
+
+```javascript
+describe('Pure Functions (Unit Tests)', () => {
+  test('replacePicturePlaceholder replaces exact match', () => {
+    const html = '<div><div>Picture Here</div></div>';
+    const result = replacePicturePlaceholder(html);
+    expect(result).toContain('<img');
+  });
+});
+
+describe('Integration Tests', () => {
+  test('handleRequest processes HTML responses', async () => {
+    // Mock fetch, Response, HTMLRewriter
+    const response = await handleRequest(mockRequest, mockEnv);
+    expect(response.headers.get('Access-Control-Allow-Origin')).toBe('*');
+  });
+});
+```
+
+**Test structure:**
+- **Unit tests**: Test pure functions with string input/output
+- **Integration tests**: Test request flow with mocked Cloudflare APIs
+- **NO separate test files**: Everything in one unified test file
+
+### Red Flags (Violations of Two-File Rule)
+
+❌ Using HTMLRewriter element handlers for core logic
+❌ Creating separate test files (unit.test.js, integration.test.js)
+❌ Code that can't be tested without Cloudflare runtime
+❌ Skipping tests because "it needs the runtime"
+
+✅ Pure functions for all transformations
+✅ Single unified test file (cloudflare-worker.test.js)
+✅ HTMLRewriter only for features that require it
+✅ 100% test coverage of pure functions
+
+### Enforcement
+
+**Before modifying worker files, always:**
+1. Read `cloudflare/files/TESTING.md` for complete testing guide
+2. Read `cloudflare/files/README.md` for implementation patterns
+3. Use `/check-cloudflare-tests` command to validate test structure
+4. Run `npm test` in `cloudflare/files/` before committing
+
+**See also:**
+- Complete testing guide: `cloudflare/files/TESTING.md`
+- Implementation patterns: `cloudflare/files/README.md`
+- Production test page: `cloudflare/test.html`
+
 ### Slash Commands (Claude Code)
 **Block Development:**
 - `/new-block <name>` - Create a new EDS block following Content Driven Development process
@@ -63,8 +260,13 @@
 - `/review-docs` - Review and understand the EDS documentation structure in docs/for-AI
 - `/dev-docs` - Create comprehensive strategic plan with structured task breakdown
 - `/find-block-content` - Find pages in the site that use a specific block
+- `/validate-docs` - Validate CLAUDE.md, README.md, and CHANGELOG.md are current before push
 
-See `.claude/README.md` for complete slash command reference (19 total).
+**Content Management:**
+- `/update-llms` - Find and update all llms.txt files in the project
+- `/update-my-blog` - Find and update all my-blog.json files in the project
+
+See `.claude/README.md` for complete slash command reference (17 total).
 
 ### Agents (Claude Code)
 For complex, multi-step tasks, use autonomous agents:
@@ -96,7 +298,89 @@ Active hooks that enhance development workflow:
 - Runs after file edits (Edit, MultiEdit, Write)
 - Lightweight bash script
 
+**cloudflare-worker-test-regenerate.sh** (Enhanced with AI Test Automation)
+- **Trigger:** After Edit, MultiEdit, or Write operations on `cloudflare/files/cloudflare-worker.js`
+- **Purpose:** Intelligent test automation system with auto-generation and coverage reporting
+- **Implementation:** Calls `cloudflare-test-automation.js` for complete test lifecycle management
+- **Features:**
+  - Detects changes via git diff (new/modified/deleted functions)
+  - Auto-generates test stubs for new functions
+  - Auto-updates test expectations for modified functions
+  - Creates timestamped backups in `cloudflare/backups/` directory (gitignored)
+  - Runs all tests (npm test + test:local)
+  - Generates comprehensive coverage report
+  - Rollback capability if tests fail
+- **Benefits:**
+  - Ensures tests stay synchronized with worker code
+  - Reduces manual test writing effort
+  - Provides immediate validation of changes
+  - Comprehensive audit trail via coverage reports
+  - Safe with backup/rollback mechanism
+- **See:** `.claude/hooks/cloudflare-test-automation.README.md` for complete documentation
+
+**pre-commit-changelog.sh** (Git Hook)
+- **REQUIRED:** Validates CHANGELOG.md is included in commits (blocks commit if missing)
+- **Simple Check:** Verifies CHANGELOG.md is staged before allowing commit
+- **Works with Claude Code:** No TTY issues - just checks staged files
+- **Workflow:**
+  1. Make code changes
+  2. Update CHANGELOG.md with your changes
+  3. Stage both: `git add . CHANGELOG.md`
+  4. Commit: `git commit -m "your message"`
+  5. Hook validates CHANGELOG.md is included, allows commit
+- **If CHANGELOG.md missing:**
+  - Commit blocked with clear instructions
+  - Add CHANGELOG.md and amend commit, or use `git commit --amend --no-edit`
+- **Bypass:** Use `SKIP_DOC_CHECK=1 git commit -m "message"` if docs truly don't need updating
+
 See `.claude/hooks/CONFIG.md` for configuration and customization.
+
+## CI/CD (GitHub Actions)
+
+The project uses GitHub Actions for continuous integration and deployment.
+
+### Workflows
+
+**ci.yml** - Main CI Pipeline (runs on push to main, all PRs)
+- **CHANGELOG Validation**: Ensures CHANGELOG.md updated (blocks merge if missing)
+  - Skip with `[skip changelog]` in commit message
+- **Linting**: JavaScript (ESLint) and CSS (Stylelint)
+- **Testing**: Cloudflare worker tests (unit + integration + local HTML)
+- **Security**: npm audit and secret scanning
+- **Structure Validation**: Required files and JSON syntax checks
+- **Build Verification**: Tests build/ directories if present
+
+**deploy-cloudflare.yml** - Cloudflare Worker Deployment
+- **Trigger**: Manual only (workflow_dispatch)
+- **Pre-deployment**: Runs all worker tests
+- **Deployment**: Uses Wrangler to deploy to Cloudflare
+- **Post-deployment**: Smoke tests (site response, CORS headers, worker version)
+- **Environments**: Supports staging and production
+- **How to deploy**: Go to Actions → Deploy Cloudflare Worker → Run workflow
+
+**pr-checks.yml** - Enhanced PR Validation
+- **PR Title**: Validates conventional commit format (feat/fix/docs/chore)
+- **Issue Links**: Checks for linked issues (Fixes/Closes/Resolves #123)
+- **Documentation**: Warns if large code changes lack doc updates
+- **Block Structure**: Validates blocks have required files (JS, CSS, README)
+- **File Sizes**: Warns on files >500KB
+- **Code Quality**: Detects TODO/console.log/debugger in diffs
+- **Change Summary**: Generates detailed PR summary in GitHub UI
+
+### Enforcement Strategy
+
+**Two-Level Enforcement:**
+1. **Local (Git Hooks)**: Pre-commit validation - catches issues before commit
+2. **CI/CD (GitHub Actions)**: Validates on push/PR - prevents breaking main
+
+### Required Secrets
+
+To enable Cloudflare deployment, add to GitHub repository secrets:
+- `CLOUDFLARE_API_TOKEN` - API token for Wrangler deployment
+
+### Workflow Status
+
+View workflow runs at: `https://github.com/ddttom/allaboutv2/actions`
 
 ## Code Style
 - **JS**: Follows Airbnb style guide (eslint-config-airbnb-base)
@@ -181,6 +465,25 @@ Add comments that explain the "why" and "how", not just the "what":
   - `https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png`
 
 When AI assistants create block examples or documentation, they should reference these pre-defined resources rather than inventing new URLs.
+
+### Design System Standards
+
+**Comprehensive design language:** See `docs/for-ai/guidelines/design-system.md`
+
+**Key Design Tokens:**
+- Colors, typography, spacing extracted from allabout.network
+- CSS custom properties reference (`styles/styles.css`)
+- Component design patterns (buttons, links, borders)
+- Responsive breakpoints (600px, 900px)
+- Implementation guidelines for blocks
+- Accessibility standards (WCAG 2.1 AA)
+
+**Essential Values:**
+- Primary color: `--link-color: #035fe6`
+- Font family: `--body-font-family: roboto, roboto-fallback`
+- Most common spacing: `22px` (aligns with body font size)
+- Button border-radius: `30px` (distinctive pill shape)
+- 8px base spacing system
 
 ### Block-Level BLOCKNAME_CONFIG
 
@@ -402,24 +705,18 @@ Variations use additional classes, not separate files:
 
 ## ⚠️ CRITICAL: Event Listeners and DOM Cloning
 
-**Event listeners are NOT copied when using `cloneNode()`** - see [DOM Manipulation Best Practices](docs/for-ai/guidelines/frontend-guidelines.md#dom-manipulation) for general guidance.
-
-When working with the ipynb-viewer block or similar components that clone DOM elements:
+**Event listeners are NOT copied when using `cloneNode()`**
 
 **The Problem:**
 ```javascript
-// Original element has event listener
 element.addEventListener('click', handler);
-
-// Clone does NOT have the event listener
 const clone = element.cloneNode(true);  // ❌ Event listener lost!
 ```
 
 **The Solution:**
-Always re-attach event listeners after cloning elements:
+Always re-attach event listeners after cloning:
 
 ```javascript
-// After cloning cells in updatePageDisplay()
 const clonedCell = cell.cloneNode(true);
 container.appendChild(clonedCell);
 
@@ -430,64 +727,102 @@ links.forEach(link => {
 });
 ```
 
-**In ipynb-viewer specifically:**
-- Smart links (hash `#` navigation) - handlers re-attached in `updatePageDisplay()`
-- GitHub markdown links (`.md` files) - handlers re-attached in `updatePageDisplay()`
-- Run buttons on code cells - handlers re-attached in `updatePageDisplay()`
+**ipynb-viewer implementation:** See [ipynb-viewer.js](blocks/ipynb-viewer/ipynb-viewer.js):
+- Run buttons (lines 1292-1303)
+- Smart links (lines 1347-1388)
+- GitHub links (lines 1390-1400)
 
-**See:** `blocks/ipynb-viewer/ipynb-viewer.js` lines 1292-1303 (run buttons), 1347-1388 (hash links), 1390-1400 (GitHub links)
+**General guidance:** See [DOM Manipulation Best Practices](docs/for-ai/guidelines/frontend-guidelines.md#dom-manipulation)
 
 ## ⚠️ CRITICAL: ipynb-viewer Smart Link Pattern
 
 **All `.md` links in ipynb-viewer are treated as smart links using the repository URL pattern.**
 
-When a notebook has a `repo` metadata attribute (e.g., `"repo": "https://github.com/user/repo"`), all `.md` file links are automatically converted to GitHub URLs and opened in overlays:
+When a notebook has a `repo` metadata attribute, all `.md` file links are automatically converted to GitHub URLs and opened in overlays.
 
-**How it works:**
-1. Markdown links like `[docs](docs/help.md)` are detected
-2. Converted to full GitHub URL: `https://github.com/user/repo/blob/main/docs/help.md`
-3. Stored in `data-md-url` attribute with `href="#"` to prevent prefetch
-4. Click handler fetches from GitHub raw URL and displays in overlay
-
-**CRITICAL: Smart links ALWAYS use GitHub repo URLs**
+**CRITICAL Rules:**
 - ✅ **DO** use ONLY the GitHub repo URL from notebook metadata
 - ✅ **DO** fetch from `raw.githubusercontent.com` (converted from blob URL)
-- ✅ **DO** rely on the smart link pattern for consistency
 - ❌ **DON'T** try local paths before GitHub
-- ❌ **DON'T** bypass smart links by fetching local files directly
 - ❌ **DON'T** hardcode local paths like `/docs/help.md`
 
 **Why this matters:**
 - The `repo` attribute in notebook metadata is the single source of truth
-- Local development server proxies missing files to production (including GitHub raw URLs)
+- Local development server proxies missing files to production
 - Smart links work identically in development and production
-- No special-casing for local vs production environments
 
-**Example - Regular .md link in cell:**
-```javascript
-// ✅ CORRECT: Uses repo metadata
-const cleanPath = 'docs/guide.md';
-const fullUrl = `${repoUrl}/blob/main/${cleanPath}`;
-const overlay = createGitHubMarkdownOverlay(fullUrl, 'Guide');
-```
+**Complete details:** See [ipynb-viewer README](blocks/ipynb-viewer/README.md) sections on:
+- Smart Links and GitHub Integration (Section 3: Enhanced Markdown Rendering)
+- Help Button and Metadata (Section 6: Three Types of Overlays)
+- Link Navigation Implementation (Section 4: Interactive Features)
 
-**Help button uses separate `help-repo` metadata:**
-- Notebooks have two repo attributes: `repo` (for content) and `help-repo` (for help docs)
-- `help-repo` fallback: help-repo → repo → allaboutV2 default
-- This keeps viewer help documentation separate from notebook content
-- Example: notebook might be from `user/my-project` but help comes from `ddttom/allaboutV2`
+## Cloudflare Custom Worker Implementation
 
-```javascript
-// Help button implementation
-const helpRepoUrl = notebook.metadata?.['help-repo'] ||
-                    notebook.metadata?.repo ||
-                    'https://github.com/ddttom/allaboutV2';
-const fullUrl = `${helpRepoUrl}/blob/main/docs/help.md`;
-```
+**Custom Adobe EDS worker with enhanced features (v1.1.4)** - see `cloudflare/files/`
 
-**See:**
-- Help button: `blocks/ipynb-viewer/ipynb-viewer.js` line 1210-1219
-- Metadata handling: `blocks/ipynb-viewer/ipynb-viewer.js` line 1991-1999, 2122-2126
+**What it does:**
+- Adds CORS headers to all responses
+- Generates JSON-LD structured data from page metadata
+- Picture placeholder replacement: Detects "Picture Here" text and replaces with author image server-side
+- Intelligent date formatting: Supports UK format (dd/mm/yyyy), month names (Dec/December), and ISO 8601
+- Author metadata preservation: Keeps author meta tag for attribution (like LinkedIn)
+- Author URL with LinkedIn fallback: Uses LinkedIn meta as fallback when author-url not provided
+- Removes EDS error tags and non-social metadata (except author and LinkedIn)
+- Removes all HTML comments from HTML responses
+- Maintains all standard Adobe EDS functionality
+
+**Version Management:**
+- Version defined once in `cloudflare/files/package.json` (single source of truth)
+- Worker imports version: `import pkg from './package' with { type: 'json' }`
+- Wrangler/esbuild inlines version at build time
+- Tests validate version automatically
+- Check deployed version: `curl -I https://allabout.network/ | grep cfw`
+
+**Key files:**
+- `cloudflare/files/README.md` - Complete implementation guide and deployment instructions
+- `cloudflare/files/TESTING.md` - Two-file testing system and pure function approach
+- `cloudflare/files/cloudflare-worker.js` - Worker code (Apache License 2.0)
+- `cloudflare/files/package.json` - Version source of truth
+
+**Documentation references:**
+- General Cloudflare config: `cloudflare/cloudflare.md`
+- Custom worker implementation: `cloudflare/files/README.md`
+- Testing methodology: `cloudflare/files/TESTING.md`
+
+**Critical metadata pattern:**
+Add `| jsonld | article |` to EDS metadata to trigger JSON-LD generation. The worker uses a clever authoring error workaround to detect this trigger.
+
+**Date formatting:**
+Authors can enter dates in any format (10/12/2024, 10 December 2024, Dec 10 2024). The worker automatically converts them to ISO 8601 format for search engines.
+
+**Author URL:**
+Add `| author-url | https://yoursite.com |` or rely on LinkedIn meta tag fallback. The worker preserves LinkedIn for social media while using it for JSON-LD.
+
+**Deployment:** Follow `cloudflare/files/README.md` steps for prerequisites, environment variables, and deployment workflow.
+
+**Testing:**
+- **Automated tests**: `npm test` in `cloudflare/files/` - 63 tests covering all functionality
+- **Local HTML test**: `npm run test:local` - processes test.html through pure functions, outputs test-rendered.html
+- **Visual testing**: Open `cloudflare/test-rendered.html` locally to inspect transformed HTML
+  - HTML transformations work (JSON-LD, metadata cleanup, placeholder replacement, comment removal)
+  - CORS/header tests show "⚠️ Requires Cloudflare Worker (headers added at request time, not in HTML)"
+- **Production test page**: `https://allabout.network/cloudflare/test.html` - comprehensive live tests
+
+**Two-File Testing Rule:**
+- **File 1**: `cloudflare-worker.js` - Production worker code
+- **File 2**: `cloudflare-worker.test.js` - Single unified test file (unit + integration)
+- **Core Principle**: All functionality as pure JavaScript functions (string → string) testable without Cloudflare runtime
+- See `cloudflare/files/TESTING.md` for complete details
+
+**Developer Notes:**
+- `robots.txt` - SEO configuration with sitemap directive
+  - Points search engines to `https://allabout.network/sitemap.xml`
+  - Standard SEO best practice for search engine optimization
+- `todo.txt` - Reference example of Cloudflare worker for robots.txt handling
+  - Demonstrates intercepting specific paths (`/robots.txt`)
+  - Shows custom response generation
+  - Example of forwarding other requests to origin
+  - Useful template for future worker implementations
 
 ## ⚠️ CRITICAL: EDS Reserved Class Names
 
@@ -683,6 +1018,22 @@ const code = 'here';
 [Testing strategy and validation approach]
 ```
 
+## Response Timestamps
+
+**All Claude responses must include timestamps and execution duration.**
+
+**Format**:
+- **Start**: Begin response with timestamp: `🕒 Response Started: [YYYY-MM-DD HH:MM:SS TIMEZONE]`
+- **End**: Conclude response with timestamp and duration:
+  ```
+  🕒 Response Completed: [YYYY-MM-DD HH:MM:SS TIMEZONE]
+  ⏱️  Execution Duration: [X minutes Y seconds]
+  ```
+
+**Purpose**: Track response timing for accountability and performance monitoring.
+
+**Implementation**: Automatically handled by `response-timestamps` skill (`.claude/skills/response-timestamps/`).
+
 ## Documentation
 
 ### Primary Documentation
@@ -695,7 +1046,7 @@ const code = 'here';
 - **`.claude/README.md`** - Complete overview (commands, skills, agents, hooks)
 - **`.claude/agents_README.md`** - Agent documentation (6 autonomous agents)
 - **`.claude/commands/`** - Slash commands for common tasks (19 total)
-- **`.claude/skills/`** - Extended capabilities for EDS development (26 total)
+- **`.claude/skills/`** - Extended capabilities for EDS development (27 total)
 - **`.claude/hooks/`** - Development workflow automation (2 active hooks)
   - `CONFIG.md` - Hook configuration and customization guide
 
@@ -705,46 +1056,55 @@ const code = 'here';
 - **NEW: Jupyter testing**: `docs/for-ai/explaining-jupyter.md` - Context-aware interactive testing with `initialize()` function (96% smaller Cell 1) and unified API
 - **NEW: Educational notebooks**: `docs/for-ai/explaining-educational-notebooks.md` - Create tutorials, guides, and interactive demos as SPAs
 - **NEW: ipynb-viewer block**: `blocks/ipynb-viewer/README.md` - Display executable notebooks with autorun, paged, and link navigation
+- **Helix Configuration**: `docs/for-ai/helix-config.md` - Complete .helix/config file reference covering CDN integration (Cloudflare), push invalidation, environment configuration, and troubleshooting
+- **Custom Cloudflare Worker**: `cloudflare/files/README.md` - Custom Adobe EDS worker implementation (v1.1.4) with CORS headers, JSON-LD generation, picture placeholder replacement, and metadata cleanup. Version managed via package.json single source of truth.
 - Security checklist: `docs/for-ai/guidelines/security-checklist.md`
 - Frontend guidelines: `docs/for-ai/guidelines/frontend-guidelines.md`
+
+### Site Remediation & SEO Strategy
+
+The reports are created by https://github.com/ddttom/my-pa11y-project
+
+- **Executive Summary**: `docs/remediation/files/00-executive-summary.md` - Complete 121-page audit analysis with 6 prioritized remediation strategies
+  - **Note**: Jupyter notebook pages (.ipynb files) excluded from analysis
+- **Report Documentation**: `docs/remediation/files/report-layout.md` - Audit report structure, EDS-specific limitations, and notebook exclusion policy
+- **Critical Priority** (🔴):
+  - `docs/remediation/files/01-critical-accessibility-fixes.md` - WCAG compliance (~~3 pages~~ → 1 page, ~~2-4 hours~~ → 1 hour, notebook pages excluded)
+  - `docs/remediation/files/02-image-optimization-strategy.md` - Alt text for 200+ images (12 hours, $1,200, excludes notebooks)
+- **High Priority** (🟠):
+  - `docs/remediation/files/03-security-headers-implementation.md` - CSP & security headers (30-60 min quick win!)
+  - `docs/remediation/files/04-content-freshness-dates.md` - Last-modified dates (12 hours, excludes notebooks)
+- **Medium Priority** (🟡):
+  - `docs/remediation/files/05-metadata-optimization.md` - Titles & descriptions for 30 pages (8 hours, excludes notebooks)
+  - `docs/remediation/files/06-content-quality-improvements.md` - Bottom 10 pages (21 hours, excludes notebooks)
+- **Key Discovery**: EDS automatically handles lazy loading and responsive images - audit tool reported false positives
 
 ### Testing & Documentation Approaches
 
 **Multiple approaches available:** See [EDS Testing Guide](docs/for-ai/testing/EDS-Architecture-and-Testing-Guide.md) for comprehensive testing strategy.
 
 1. **Traditional test.html** - Browser-based visual testing
-   - Full EDS core integration
-   - Real browser rendering
-   - User interaction testing
+   - Full EDS core integration, real browser rendering, user interaction testing
 
-2. **Jupyter Testing Notebooks (JSLab)** - Interactive development testing
-   - Context-aware (Node.js and browser modes)
-   - jsdom virtual DOM for block decoration
-   - Live preview HTML generation with iframe controls
-   - Cell-by-cell execution with inline documentation
+2. **Jupyter Testing Notebooks** - Interactive block development
+   - See: [Explaining Jupyter](docs/for-ai/explaining-jupyter.md)
+   - Context-aware execution, jsdom virtual DOM, live preview with iframe controls
    - File: `test.ipynb`
-   - Focus: Testing EDS blocks
 
-3. **Educational Jupyter Notebooks** - Interactive tutorials and documentation
-   - Create tutorials, guides, blog posts as SPAs
-   - Transform text into engaging interactive content
-   - Progressive learning with demonstrations
-   - **Visual block demonstrations** using `showPreview()` for beautiful overlays
-   - Available blocks: accordion, cards, tabs, hero, quote (use existing blocks only)
-   - **Note:** `showPreview()` now works correctly in notebook mode (fixed 2025-11-21)
+3. **Educational Notebooks** - Interactive tutorials and documentation
+   - See: [Educational Notebooks Guide](docs/for-ai/explaining-educational-notebooks.md)
+   - Create SPAs for teaching/tutorials/blogs with visual block demonstrations
    - Use `/create-notebook` command
-   - Files: `education.ipynb`, `docs-navigation.ipynb`, `blog.ipynb`
-   - Focus: Teaching and explaining concepts with visual engagement
 
-4. **ipynb-viewer Block** - Display notebooks on EDS pages
-   - Display .ipynb files on EDS pages
-   - Interactive JavaScript execution in browser
-   - Multiple display modes: basic, paged, autorun, notebook
-   - Link navigation between pages with hash targets
-   - Perfect for sharing tutorials, demos, documentation
-   - Location: `blocks/ipynb-viewer/`
+4. **Presentation Notebooks** - Client demos and showcases
+   - See: [Presentation Notebooks Guide](docs/for-ai/explaining-presentation-notebooks.md)
+   - Embedded HTML/JS with EDS blocks, auto-wrapping and action cards
 
-5. **Automated Tests** - CI/CD integration
+5. **ipynb-viewer Block** - Display notebooks on EDS pages
+   - See: [ipynb-viewer README](blocks/ipynb-viewer/README.md)
+   - Interactive JavaScript execution, multiple modes (basic, paged, autorun, notebook)
+   - Link navigation with hash targets
+
+6. **Automated Tests** - CI/CD integration
    - Jest/Mocha for regression testing
-   - Coverage reports
-   - Future implementation
+   - Future implementation 

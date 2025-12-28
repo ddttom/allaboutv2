@@ -11,7 +11,7 @@ function extractSeriesInfo(title, path) {
   return {
     name: match ? match[1].trim() : title,
     part: match ? parseInt(match[2], 10) : null,
-    basePath
+    basePath,
   };
 }
 // Function to group and sort blog posts based on configuration
@@ -19,7 +19,7 @@ function groupAndSortPosts(posts, config) {
   // Destructure configuration, providing default empty arrays if undefined
   const { acceptList = [], pathFilters = [], currentDirFilter = null } = config || {};
   // console.log('groupAndSortPosts - config:', config);
-  //console.log('groupAndSortPosts - initial posts length:', posts.length);
+  // console.log('groupAndSortPosts - initial posts length:', posts.length);
 
   let filteredPosts = [...posts]; // Start with all posts
   let usedPathFilter = false; // Flag to track if path=* or path= filters were applied
@@ -28,11 +28,12 @@ function groupAndSortPosts(posts, config) {
   // *** Priority 1: Handle currentDirFilter (path=*) if it exists ***
   if (currentDirFilter) {
     // console.log('Applying current directory filter (path=*):', currentDirFilter);
-    filteredPosts = posts.filter(post => {
+    filteredPosts = posts.filter((post) => {
       // Check if post.path is a string and starts with the current directory path
-      const match = typeof post.path === 'string' && post.path.startsWith(currentDirFilter);
+      const match = typeof post.path === 'string'
+        && post.path.startsWith(currentDirFilter);
       if (match) {
-      //   console.log(`Current directory match found: "${currentDirFilter}" starts path "${post.path}"`);
+      //   console.log(`Current directory match found: "${currentDirFilter}"`);
       }
       return match;
     });
@@ -41,32 +42,29 @@ function groupAndSortPosts(posts, config) {
 
     // If no posts were found with this specific filter, the result is empty for path=*
     if (filteredPosts.length === 0) {
-     // console.log('No matches found using current directory filter (path=*).');
+      // console.log('No matches found using current directory filter (path=*).');
       // We don't attempt title fallback for path=*
     }
-  }
   // *** Priority 2: Handle regular pathFilters only if path=* wasn't used ***
-  else if (pathFilters.length > 0) {
-   // console.log('Applying regular path filters:', pathFilters);
+  } else if (pathFilters.length > 0) {
+    // console.log('Applying regular path filters:', pathFilters);
 
     // Attempt to filter by path first
-    const pathFilteredPosts = posts.filter(post => {
-      // Check if post.path is a string and includes any of the pathFilters
-      return pathFilters.some(pathFilter => typeof post.path === 'string' && post.path.includes(pathFilter));
-    });
+    const pathFilteredPosts = posts.filter((post) => pathFilters.some(
+      (pathFilter) => typeof post.path === 'string' && post.path.includes(pathFilter),
+    ));
 
-    //console.log(`Found ${pathFilteredPosts.length} posts matching path filters`);
+    // console.log(`Found ${pathFilteredPosts.length} posts matching path filters`);
 
     if (pathFilteredPosts.length > 0) {
       filteredPosts = pathFilteredPosts;
       usedPathFilter = true; // Mark that a path-based filter was used
     } else {
       // If no path matches, attempt to filter by title as a fallback
-     // console.log('No path matches found for path filters, trying title filtering');
-      const titleFilteredPosts = posts.filter(post => {
-        // Check if post.title is a string and includes any of the pathFilters
-        return pathFilters.some(pathFilter => typeof post.title === 'string' && post.title.includes(pathFilter));
-      });
+      // console.log('No path matches found for path filters, trying title filtering');
+      const titleFilteredPosts = posts.filter((post) => pathFilters.some(
+        (pathFilter) => typeof post.title === 'string' && post.title.includes(pathFilter),
+      ));
 
       // console.log(`Found ${titleFilteredPosts.length} posts matching title filters`);
 
@@ -75,42 +73,43 @@ function groupAndSortPosts(posts, config) {
         usedTitleFilter = true; // Mark that title fallback filter was used
       } else {
         // If neither path nor title matched, the result is empty for these filters
-       //  console.log('No matches found in either path or title using path filters.');
+        //  console.log('No matches found in either path or title using path filters.');
         filteredPosts = [];
       }
     }
   }
 
-  // *** Priority 3: Apply regular acceptList filtering only if NO path or title filters were successfully applied ***
+  // Priority 3: Apply regular acceptList filtering only if NO path or title
+  // filters were successfully applied
   if (!usedPathFilter && !usedTitleFilter && acceptList.length > 0) {
+    // eslint-disable-next-line no-console
     console.log('Applying regular acceptList filtering:', acceptList);
-    filteredPosts = filteredPosts.filter(post => {
-      return acceptList.some(term => {
-        // Case-insensitive check for terms containing 'guide' (backward compatibility)
-        if (term === term.toLowerCase() && term.includes('guide')) {
-          // Check if post.path is a string before calling toLowerCase()
-          return typeof post.path === 'string' && post.path.toLowerCase().includes(term);
-        }
-        // Case-sensitive check otherwise
-        // Check if post.path is a string before calling includes()
-        return typeof post.path === 'string' && post.path.includes(term);
-      });
-    });
+    filteredPosts = filteredPosts.filter((post) => acceptList.some((term) => {
+      // Case-insensitive check for terms containing 'guide' (backward compatibility)
+      if (term === term.toLowerCase() && term.includes('guide')) {
+        // Check if post.path is a string before calling toLowerCase()
+        return typeof post.path === 'string' && post.path.toLowerCase().includes(term);
+      }
+      // Case-sensitive check otherwise
+      // Check if post.path is a string before calling includes()
+      return typeof post.path === 'string' && post.path.includes(term);
+    }));
+    // eslint-disable-next-line no-console
     console.log(`Found ${filteredPosts.length} posts after acceptList filtering.`);
   }
 
   // If after all filtering attempts, filteredPosts is empty, return immediately.
   if (filteredPosts.length === 0) {
-   //  console.log('Returning empty array because filteredPosts is empty after all filtering attempts');
+    // console.log('Returning empty array - filteredPosts is empty after filtering');
     return []; // Return an empty array directly
   }
 
   // *** Grouping and Sorting Logic (only runs if filteredPosts is not empty) ***
- // console.log('Grouping and sorting filtered posts. Count:', filteredPosts.length);
+  // console.log('Grouping and sorting filtered posts. Count:', filteredPosts.length);
   const seriesMap = new Map();
 
   // Group the remaining filtered posts
-  filteredPosts.forEach(post => {
+  filteredPosts.forEach((post) => {
     // Ensure title and path are strings before processing
     const title = typeof post.title === 'string' ? post.title : '';
     const path = typeof post.path === 'string' ? post.path : '';
@@ -144,12 +143,15 @@ function groupAndSortPosts(posts, config) {
   // Sort the series themselves based on the number of posts (descending)
   return Array.from(seriesMap.entries())
     .sort((a, b) => b[1].length - a[1].length) // Sort series by number of posts descending
-    .map(([key, postsInSeries]) => {
-        // Extract a representative series name (e.g., from the first post's title before " - Part")
-        // Ensure the first post and its title exist
-        const firstPostTitle = postsInSeries[0] && typeof postsInSeries[0].title === 'string' ? postsInSeries[0].title : '';
-        const seriesName = firstPostTitle.includes(' - Part') ? firstPostTitle.split(' - Part')[0] : firstPostTitle;
-        return [seriesName, postsInSeries];
+    .map(([_key, postsInSeries]) => {
+      // Extract a representative series name (e.g., from the first post's title before " - Part")
+      // Ensure the first post and its title exist
+      const firstPostTitle = postsInSeries[0]
+        && typeof postsInSeries[0].title === 'string'
+        ? postsInSeries[0].title : '';
+      const seriesName = firstPostTitle.includes(' - Part')
+        ? firstPostTitle.split(' - Part')[0] : firstPostTitle;
+      return [seriesName, postsInSeries];
     }); // Return array of [seriesName, sortedPostsArray]
 }
 // Configuration function
@@ -166,10 +168,13 @@ function getConfig(block) {
   const rows = [...block.children];
   if (rows.length > 0) {
     // Process the first row which contains the filter terms
-    const firstRow = rows.shift(); // Removes the first row (header) if it exists, assumes filters are in subsequent rows. Check if this is the intended logic or if filters are in the *first* data row. If filters are in the first row, just use rows[0].
+    // Removes the first row (header) if it exists, assumes filters are in subsequent rows.
+    // Check if this is the intended logic or if filters are in the *first* data row.
+    // If filters are in the first row, just use rows[0].
+    const firstRow = rows.shift();
 
     // Iterate over cells in the filter row
-    [...firstRow.children].forEach(cell => {
+    [...firstRow.children].forEach((cell) => {
       const text = cell.textContent.trim();
       if (text === '') return; // Skip empty cells
 
@@ -200,8 +205,10 @@ function getConfig(block) {
         }
       } else {
         // Process regular filter terms (non-path filters)
-        // Only convert to lowercase if it contains 'guide' (case insensitive for backward compatibility)
-        const processedText = text.toLowerCase().includes('guide') ? text.toLowerCase() : text;
+        // Only convert to lowercase if it contains 'guide'
+        // (case insensitive for backward compatibility)
+        const processedText = text.toLowerCase().includes('guide')
+          ? text.toLowerCase() : text;
         config.acceptList.push(processedText);
       }
     });
@@ -209,7 +216,9 @@ function getConfig(block) {
 
   // Fallback mechanism: Set default path=* when no configuration is present
   // If all filter arrays are empty and no currentDirFilter is set, apply path=* as default
-  if (config.acceptList.length === 0 && config.pathFilters.length === 0 && !config.currentDirFilter) {
+  if (config.acceptList.length === 0
+    && config.pathFilters.length === 0
+    && !config.currentDirFilter) {
     const currentPath = window.location.pathname;
     // console.log('No configuration detected, applying default path=* behavior');
     // console.log('Current pathname for default fallback:', currentPath);
@@ -226,65 +235,35 @@ function getConfig(block) {
   }
 
   // Default filter for compact mode if no other filters are specified
-  // If both acceptList and pathFilters are empty AND currentDirFilter is not set AND it's compact mode, set default path
-  if (config.acceptList.length === 0 && config.pathFilters.length === 0 && !config.currentDirFilter && config.isCompact) {
+  // If both acceptList and pathFilters are empty AND currentDirFilter is not set
+  // AND it's compact mode, set default path
+  if (config.acceptList.length === 0
+    && config.pathFilters.length === 0
+    && !config.currentDirFilter
+    && config.isCompact) {
     const currentPath = window.location.pathname.toLowerCase();
     const pathParts = currentPath.split('/');
     // Remove potential part number suffix (e.g., -part-1) from the page name
     const lastPart = pathParts[pathParts.length - 1].replace(/-part-\d+$/, '');
     const folderPath = pathParts.slice(0, -1).join('/');
     // Add the inferred folder/page path to the acceptList for default filtering
-    config.acceptList.push(folderPath + '/' + lastPart);
-   // console.log('Compact mode default filter applied:', config.acceptList);
+    config.acceptList.push(`${folderPath}/${lastPart}`);
+    // console.log('Compact mode default filter applied:', config.acceptList);
   }
 
   // Return the final configuration object
   return config;
 }
-// Function to create the compact blogroll panel
-function createCompactBlogrollPanel(groupedPosts, originalPosts, config) {
-  const panel = document.createElement('div');
-  panel.className = 'blogroll-panel';
-  
-  const panelHeader = document.createElement('div');
-  panelHeader.className = 'blogroll-panel-header';
-  
-  const panelTitle = document.createElement('div');
-  panelTitle.className = 'blogroll-panel-title';
-  panelTitle.textContent = 'Blogroll';
-  panelHeader.appendChild(panelTitle);
-  
-  const closeButton = document.createElement('button');
-  closeButton.innerHTML = '&times;'; // This creates a × symbol
-  closeButton.className = 'blogroll-panel-close';
-  closeButton.setAttribute('aria-label', 'Close blogroll panel');
-  closeButton.addEventListener('click', () => panel.classList.remove('open'));
-  panelHeader.appendChild(closeButton);
-  
-  panel.appendChild(panelHeader);
 
-  const blogrollContent = document.createElement('div');
-  blogrollContent.className = 'blogroll-panel-content';
-
-  //console.log('In createCompactBlogrollPanel, groupedPosts:', groupedPosts);
-  //console.log('In createCompactBlogrollPanel, groupedPosts type:', typeof groupedPosts);
-  //console.log('In createCompactBlogrollPanel, groupedPosts length:', groupedPosts.length);
-  //console.log('In createCompactBlogrollPanel, is array?', Array.isArray(groupedPosts));
-  
-  updatePanelContent(blogrollContent, groupedPosts);
-
-  panel.appendChild(blogrollContent);
-
-  return panel;
-}
+// Helper function to update panel content
 function updatePanelContent(container, groupedPosts) {
   container.innerHTML = ''; // Clear existing content
-  
-  //console.log('In updatePanelContent, groupedPosts:', groupedPosts);
-  //console.log('In updatePanelContent, groupedPosts type:', typeof groupedPosts);
-  //console.log('In updatePanelContent, groupedPosts length:', groupedPosts.length);
-  //console.log('In updatePanelContent, is array?', Array.isArray(groupedPosts));
-  
+
+  // console.log('In updatePanelContent, groupedPosts:', groupedPosts);
+  // console.log('In updatePanelContent, groupedPosts type:', typeof groupedPosts);
+  // console.log('In updatePanelContent, groupedPosts length:', groupedPosts.length);
+  // console.log('In updatePanelContent, is array?', Array.isArray(groupedPosts));
+
   // If groupedPosts is not an array or is empty, show a message
   if (!Array.isArray(groupedPosts) || groupedPosts.length === 0) {
     const noPostsMessage = document.createElement('p');
@@ -292,8 +271,7 @@ function updatePanelContent(container, groupedPosts) {
     container.appendChild(noPostsMessage);
     return;
   }
-  
-  
+
   groupedPosts.forEach(([seriesName, posts]) => {
     const seriesContainer = document.createElement('div');
     seriesContainer.className = 'blogroll-series';
@@ -303,18 +281,18 @@ function updatePanelContent(container, groupedPosts) {
     seriesContainer.appendChild(seriesTitle);
 
     const postList = document.createElement('ul');
-    posts.forEach(post => {
+    posts.forEach((post) => {
       const listItem = document.createElement('li');
       listItem.className = 'blogroll-entry'; // Add this line to apply the new class
-      
+
       const postLink = document.createElement('a');
       postLink.href = post.path;
       postLink.textContent = post.title;
-      
+
       const postDate = document.createElement('span');
       postDate.className = 'blogroll-date';
       postDate.textContent = formatDate(post.lastModified);
-      
+
       listItem.appendChild(postLink);
       listItem.appendChild(postDate);
 
@@ -326,16 +304,53 @@ function updatePanelContent(container, groupedPosts) {
   });
 }
 
+// Function to create the compact blogroll panel
+function createCompactBlogrollPanel(groupedPosts, _originalPosts, _config) {
+  const panel = document.createElement('div');
+  panel.className = 'blogroll-panel';
+
+  const panelHeader = document.createElement('div');
+  panelHeader.className = 'blogroll-panel-header';
+
+  const panelTitle = document.createElement('div');
+  panelTitle.className = 'blogroll-panel-title';
+  panelTitle.textContent = 'Blogroll';
+  panelHeader.appendChild(panelTitle);
+
+  const closeButton = document.createElement('button');
+  closeButton.innerHTML = '&times;'; // This creates a × symbol
+  closeButton.className = 'blogroll-panel-close';
+  closeButton.setAttribute('aria-label', 'Close blogroll panel');
+  closeButton.addEventListener('click', () => panel.classList.remove('open'));
+  panelHeader.appendChild(closeButton);
+
+  panel.appendChild(panelHeader);
+
+  const blogrollContent = document.createElement('div');
+  blogrollContent.className = 'blogroll-panel-content';
+
+  // console.log('In createCompactBlogrollPanel, groupedPosts:', groupedPosts);
+  // console.log('In createCompactBlogrollPanel, groupedPosts type:', typeof groupedPosts);
+  // console.log('In createCompactBlogrollPanel, groupedPosts length:', groupedPosts.length);
+  // console.log('In createCompactBlogrollPanel, is array?', Array.isArray(groupedPosts));
+
+  updatePanelContent(blogrollContent, groupedPosts);
+
+  panel.appendChild(blogrollContent);
+
+  return panel;
+}
+
 export default async function decorate(block) {
   // console.log('Decorating blogroll block:', block);
   const config = getConfig(block);
-  //console.log('Blogroll config:', config);
-  //console.log('Path filters:', config.pathFilters);
-  //console.log('Accept list:', config.acceptList);
-  
+  // console.log('Blogroll config:', config);
+  // console.log('Path filters:', config.pathFilters);
+  // console.log('Accept list:', config.acceptList);
+
   // Add loading state
   block.textContent = 'Loading blog posts...';
-  
+
   try {
     const response = await fetch('/query-index.json');
     if (!response.ok) {
@@ -376,18 +391,18 @@ export default async function decorate(block) {
           seriesContainer.appendChild(seriesTitle);
 
           const postList = document.createElement('ul');
-          posts.forEach(post => {
+          posts.forEach((post) => {
             const listItem = document.createElement('li');
             listItem.className = 'blogroll-entry'; // Add this line to apply the new class
-            
+
             const postLink = document.createElement('a');
             postLink.href = post.path;
             postLink.textContent = post.title;
-            
+
             const postDate = document.createElement('span');
             postDate.className = 'blogroll-date';
             postDate.textContent = formatDate(post.lastModified);
-            
+
             listItem.appendChild(postLink);
             listItem.appendChild(postDate);
 
@@ -446,7 +461,9 @@ export default async function decorate(block) {
 
       // Add click event to document to close panel when clicking outside
       document.addEventListener('click', (e) => {
-        if (panel.classList.contains('open') && !panel.contains(e.target) && e.target !== iconContainer) {
+        if (panel.classList.contains('open')
+          && !panel.contains(e.target)
+          && e.target !== iconContainer) {
           closePanel();
         }
       });

@@ -221,6 +221,62 @@
         </div>
     </div>
 
+    <!-- Test Case 9: "Picture Here" Placeholder Text -->
+    <div class="test-section">
+        <h2>Test Case 9: "Picture Here" Placeholder (New Feature)</h2>
+        <p class="test-description">
+            ✅ Tests the "Picture Here" placeholder text feature<br>
+            ✅ Should detect text "Picture Here" (case-insensitive)<br>
+            ✅ Should replace with configured default image<br>
+            ✅ Should extract author name from meta tag
+        </p>
+
+        <div class="bio-wrapper">
+            <div class="bio">
+                <div>
+                    <div>Picture Here</div>
+                    <div>Web development doesn't need complex tooling - this framework proves you can build production-ready Adobe Edge Delivery Services components with nothing but vanilla JavaScript and precise documentation, allowing AI assistants to work with you.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Case 10: "Picture Here" Placeholder (Lowercase) -->
+    <div class="test-section">
+        <h2>Test Case 10: "picture here" Lowercase Placeholder</h2>
+        <p class="test-description">
+            ✅ Tests case-insensitive matching<br>
+            ✅ Should handle lowercase "picture here"
+        </p>
+
+        <div class="bio-wrapper">
+            <div class="bio">
+                <div>
+                    <div>picture here</div>
+                    <div>Testing case-insensitive placeholder matching.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Case 11: "Picture Here" Placeholder (Uppercase) -->
+    <div class="test-section">
+        <h2>Test Case 11: "PICTURE HERE" Uppercase Placeholder</h2>
+        <p class="test-description">
+            ✅ Tests case-insensitive matching<br>
+            ✅ Should handle uppercase "PICTURE HERE"
+        </p>
+
+        <div class="bio-wrapper">
+            <div class="bio">
+                <div>
+                    <div>PICTURE HERE</div>
+                    <div>Testing uppercase placeholder matching.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script type="module">
         import { loadBlock } from '/scripts/aem.js';
 
@@ -254,10 +310,15 @@
                 // Check for image link before decoration
                 const imageLink = block.querySelector('a[href*=".jpg"], a[href*=".jpeg"], a[href*=".png"], a[href*=".gif"], a[href*=".webp"], a[href*=".svg"]');
                 const hasHideAuthor = block.classList.contains('hide-author');
+                const firstCellText = block.querySelector('div > div:first-child')?.textContent.trim().toLowerCase();
+                const hasPlaceholder = firstCellText === 'picture here';
 
                 if (imageLink) {
                     console.log('📸 Image link found:', imageLink.href);
                     console.log('   Link text:', imageLink.textContent);
+                } else if (hasPlaceholder) {
+                    console.log('🖼️  "Picture Here" placeholder detected');
+                    console.log('   Will be replaced with default image');
                 }
 
                 // Add .block class and set blockName (mimics EDS decorateBlock)
@@ -291,6 +352,16 @@
                     // hide-author should NOT convert links or add author
                     if (!linkAfter || authorName) {
                         console.error('❌ FAILED: hide-author should preserve links and not add author');
+                        passed = false;
+                    }
+                } else if (hasPlaceholder && !hasHideAuthor) {
+                    // Placeholder should be replaced with image
+                    if (!imgAfter) {
+                        console.error('❌ FAILED: "Picture Here" placeholder was not replaced with image');
+                        passed = false;
+                    }
+                    if (imgAfter && !imgAfter.src.includes('https://allabout.network/blogs/ddt/media_145e13ea388af99109b4e34d2c57d40f5fc22d9c9.jpg')) {
+                        console.error('❌ FAILED: Image src does not match configured default URL');
                         passed = false;
                     }
                 } else if (imageLink && !hasHideAuthor) {

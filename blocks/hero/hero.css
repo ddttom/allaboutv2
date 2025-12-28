@@ -24,10 +24,7 @@ main .hero {
 main .hero picture {
     position: absolute;
     z-index: -1;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+    inset: 0;
     object-fit: cover;
     box-sizing: border-box;
 }
@@ -38,6 +35,7 @@ main .hero img {
     width: 100%;
     height: 100%;
 }
+
 body.techem .hero-wrapper, .hero-wrapper * {
     color: white;
 }
@@ -51,6 +49,7 @@ body.techem hero-wrapper a {
 .hero-wrapper .hero.manual {
     color: white; /* Text color */
     padding-top: 100px; /* Top padding */
+
     /* Additional styles for .hero.Manual */
 }
 
@@ -67,6 +66,7 @@ body.techem hero-wrapper a {
     margin-top: 5rem;
     margin-inline: auto;
 }
+
 .hero-wrapper .hero {
     display: flex;
     justify-content: center;

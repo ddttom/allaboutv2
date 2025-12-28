@@ -30,7 +30,7 @@
 /* Featured sections container */
 .view-myblog-featured {
   margin-top: 0;
-  padding: 1.5rem 1.5rem 0 1.5rem;
+  padding: 1.5rem 1.5rem 0;
   width: 100%;
   position: relative;
   z-index: 2;
@@ -42,7 +42,7 @@
   border-radius: 8px;
   padding: 1rem;
   margin-bottom: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
   width: 100%;
   box-sizing: border-box;
 }
@@ -71,7 +71,7 @@
   font-size: 1.4rem;
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 3px solid currentColor;
+  border-bottom: 3px solid currentcolor;
 }
 
 /* Blog entries */
@@ -80,7 +80,7 @@
   padding: 0.75rem;
   border-radius: 8px;
   margin-bottom: 0.75rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
   width: 100%;
   box-sizing: border-box;
 }
@@ -132,8 +132,8 @@
   background: white;
   border-radius: 8px;
   padding: 1.25rem;
-  margin: 0 1.5rem 1.5rem 1.5rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin: 0 1.5rem 1.5rem;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
   width: calc(100% - 3rem);
   box-sizing: border-box;
 }
@@ -208,7 +208,7 @@
 }
 
 /* Mobile responsive */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .view-myblog-header h1 {
     font-size: 1.6rem;
   }
@@ -218,7 +218,7 @@
   }
 
   .view-myblog-header {
-    margin: 0 0 1.5rem 0;
+    margin: 0 0 1.5rem;
     padding: 1.5rem 1rem;
   }
 
@@ -243,7 +243,7 @@
   }
 
   .view-myblog-category-map {
-    margin: 0 0.75rem 1.5rem 0.75rem;
+    margin: 0 0.75rem 1.5rem;
     padding: 1rem;
     width: calc(100% - 1.5rem);
   }

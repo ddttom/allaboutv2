@@ -11,8 +11,8 @@ const DPS_CONFIG = {
   PRESENTER_NOTES_VISIBLE: false,
   // Error messages
   ERROR_MESSAGES: {
-    LOAD_FAILURE: "Failed to load presentation data",
-    INVALID_DATA: "Invalid presentation data format",
+    LOAD_FAILURE: 'Failed to load presentation data',
+    INVALID_DATA: 'Invalid presentation data format',
   },
 };
 
@@ -31,7 +31,7 @@ let hasStartedTimer = false;
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;
-  return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
+  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
 }
 
 /**
@@ -40,20 +40,20 @@ function formatTime(seconds) {
  */
 export default async function decorate(block) {
   // Add dps-block class to the container
-  block.classList.add("dps-block");
+  block.classList.add('dps-block');
 
   // Force full viewport mode by removing existing page elements
-  const existingHeader = document.querySelector("header");
-  const existingFooter = document.querySelector("footer");
-  const existingMain = document.querySelector("main");
+  const existingHeader = document.querySelector('header');
+  const existingFooter = document.querySelector('footer');
+  const existingMain = document.querySelector('main');
 
-  if (existingHeader) existingHeader.style.display = "none";
-  if (existingFooter) existingFooter.style.display = "none";
+  if (existingHeader) existingHeader.style.display = 'none';
+  if (existingFooter) existingFooter.style.display = 'none';
   if (existingMain) {
-    existingMain.style.padding = "0";
-    existingMain.style.margin = "0";
-    existingMain.style.width = "100%";
-    existingMain.style.maxWidth = "100%";
+    existingMain.style.padding = '0';
+    existingMain.style.margin = '0';
+    existingMain.style.width = '100%';
+    existingMain.style.maxWidth = '100%';
   }
 
   // Extract rows from the block (each row was a table row in the Google Doc)
@@ -61,8 +61,7 @@ export default async function decorate(block) {
 
   // Validate minimum content requirements
   if (rows.length < 2) {
-    block.innerHTML =
-      '<div class="dps-error">Error: DPS block requires at least a configuration row and one slide row.</div>';
+    block.innerHTML = '<div class="dps-error">Error: DPS block requires at least a configuration row and one slide row.</div>';
     return;
   }
 
@@ -70,19 +69,19 @@ export default async function decorate(block) {
   const presentationData = parseRows(rows);
 
   // Create presentation container
-  const presentationContainer = document.createElement("div");
-  presentationContainer.className = "dps-wrapper";
+  const presentationContainer = document.createElement('div');
+  presentationContainer.className = 'dps-wrapper';
 
   // Create header with title and subtitle
   const header = createHeader(
     presentationData.title,
-    presentationData.subtitle
+    presentationData.subtitle,
   );
 
   // Create slides container
-  const slidesContainer = document.createElement("div");
-  slidesContainer.className = "slides-container";
-  slidesContainer.id = "slides-container";
+  const slidesContainer = document.createElement('div');
+  slidesContainer.className = 'slides-container';
+  slidesContainer.id = 'slides-container';
 
   // Create presenter notes container
   const presenterNotesContainer = createPresenterNotesContainer();
@@ -97,7 +96,7 @@ export default async function decorate(block) {
   presentationContainer.appendChild(footer);
 
   // Replace the block content with our presentation
-  block.textContent = "";
+  block.textContent = '';
   block.appendChild(presentationContainer);
 
   // Build slides from the parsed content
@@ -107,8 +106,7 @@ export default async function decorate(block) {
   setupNavigationSystem();
 
   // Initialize the timer duration
-  remainingTime =
-    presentationData.timerDuration * 60 || DPS_CONFIG.DEFAULT_TIMER_DURATION;
+  remainingTime = presentationData.timerDuration * 60 || DPS_CONFIG.DEFAULT_TIMER_DURATION;
 
   // Set up the presenter toggle button
   setupPresenterToggle();
@@ -120,7 +118,7 @@ export default async function decorate(block) {
   setupMobileHandling();
 
   // Force fullscreen mode immediately
-  document.body.classList.add("dps-fullscreen");
+  document.body.classList.add('dps-fullscreen');
   window.scrollTo(0, 0);
 
   // Show the first slide
@@ -245,7 +243,7 @@ function parseRows(rows) {
       // Split by list items and paragraphs
       const matches = bulletContent.match(/<li[^>]*>.*?<\/li>|<p[^>]*>.*?<\/p>|[^<>]+/gi) || [];
 
-      matches.forEach(item => {
+      matches.forEach((item) => {
         const trimmedItem = item.trim();
         if (trimmedItem) {
           const isPlainText = !trimmedItem.includes('<li');
@@ -254,7 +252,7 @@ function parseRows(rows) {
           bulletPoints.push({
             text: trimmedItem,
             isPlainText,
-            isHTML
+            isHTML,
           });
         }
       });
@@ -273,27 +271,27 @@ function parseRows(rows) {
       introText,
       bulletPoints,
       illustration,
-      presenterNotes
+      presenterNotes,
     });
   }
 
   const qrCodeUrl = generateQRCode(subtitleUrl);
-  
+
   // Add a Q&A slide at the end
   slides.push({
-    type: "qanda",
-    title: "Close",
-    subtitle: "Your feedback and questions are valuable",
+    type: 'qanda',
+    title: 'Close',
+    subtitle: 'Your feedback and questions are valuable',
     thankYouText:
       `<img src = "${qrCodeUrl}" alt="QR Code for ${subtitleUrl}"><br> <strong>${subtitleUrl}</strong><br>Thank You For Your Attention`,
-    subtitleUrl: subtitleUrl, // Add the extracted URL from presentation subtitle
+    subtitleUrl, // Add the extracted URL from presentation subtitle
   });
 
   return {
     title,
     subtitle,
     timerDuration,
-    slides
+    slides,
   };
 }
 
@@ -322,13 +320,12 @@ function parseIllustration(cell) {
   if (items.length === 1) {
     // Single illustration
     return items[0];
-  } else {
-    // Multiple illustrations - sequence
-    return {
-      type: 'sequence',
-      items: items
-    };
   }
+  // Multiple illustrations - sequence
+  return {
+    type: 'sequence',
+    items,
+  };
 }
 
 /**
@@ -360,102 +357,102 @@ function extractIllustrationItems(content, cell) {
   // This selector aims to capture relevant elements while respecting DOM order
   const potentialElements = cell.querySelectorAll('picture, iframe, svg, img, span.icon, a[href], p');
 
-  potentialElements.forEach(el => {
+  potentialElements.forEach((el) => {
     let item = null;
     let identifier = null;
-    let added = false;
 
     // Skip if element is nested inside another already processed element (like img in picture)
     if (processedIdentifiers.has(el.closest('picture')?.querySelector('img')?.getAttribute('src')) && el.tagName === 'IMG') return;
     if (processedIdentifiers.has(el.closest('iframe')?.getAttribute('src')) && el.tagName !== 'IFRAME') return; // Avoid processing content within an already added iframe
 
-
     // Determine element type and identifier
     if (el.tagName === 'PICTURE') {
-        const img = el.querySelector('img');
-        identifier = img ? img.getAttribute('src') : el.innerHTML.substring(0, 100);
-        if (identifier){ // Ensure picture has content before adding
-             item = { type: 'picture', content: el.outerHTML };
-             added = addUniqueItem(item, identifier);
-        }
+      const img = el.querySelector('img');
+      identifier = img ? img.getAttribute('src') : el.innerHTML.substring(0, 100);
+      if (identifier) { // Ensure picture has content before adding
+        item = { type: 'picture', content: el.outerHTML };
+        addUniqueItem(item, identifier);
+      }
     } else if (el.tagName === 'IFRAME') {
-        identifier = el.getAttribute('src');
-        if (identifier){
-            item = { type: 'iframe', url: identifier, content: el.outerHTML };
-            added = addUniqueItem(item, identifier);
-        }
+      identifier = el.getAttribute('src');
+      if (identifier) {
+        item = { type: 'iframe', url: identifier, content: el.outerHTML };
+        addUniqueItem(item, identifier);
+      }
     } else if (el.tagName === 'SVG') {
-        identifier = 'svg:' + el.innerHTML.substring(0, 100);
-        item = { type: 'svg', content: el.outerHTML };
-        added = addUniqueItem(item, identifier);
+      identifier = `svg:${el.innerHTML.substring(0, 100)}`;
+      item = { type: 'svg', content: el.outerHTML };
+      addUniqueItem(item, identifier);
     } else if (el.tagName === 'IMG') {
-        // Only process if not inside a picture (already handled)
-        if (!el.closest('picture')) {
-            identifier = el.getAttribute('src');
-            if (identifier){
-                item = { type: 'image', content: identifier, alt: el.getAttribute('alt') || '' };
-                added = addUniqueItem(item, identifier);
-            }
+      // Only process if not inside a picture (already handled)
+      if (!el.closest('picture')) {
+        identifier = el.getAttribute('src');
+        if (identifier) {
+          item = { type: 'image', content: identifier, alt: el.getAttribute('alt') || '' };
+          addUniqueItem(item, identifier);
         }
+      }
     } else if (el.tagName === 'SPAN' && el.classList.contains('icon')) {
-        const iconClass = Array.from(el.classList).find(cls => cls.startsWith('icon-'));
-        if (iconClass) {
-            const iconName = iconClass.replace('icon-', '');
-            identifier = `/icons/${iconName}.svg`;
-            item = { type: 'icon', iconName: iconName, content: identifier, alt: `${iconName} Illustration` };
-            added = addUniqueItem(item, identifier);
-        }
+      const iconClass = Array.from(el.classList).find((cls) => cls.startsWith('icon-'));
+      if (iconClass) {
+        const iconName = iconClass.replace('icon-', '');
+        identifier = `/icons/${iconName}.svg`;
+        item = {
+          type: 'icon', iconName, content: identifier, alt: `${iconName} Illustration`,
+        };
+        addUniqueItem(item, identifier);
+      }
     } else if (el.tagName === 'A' && el.hasAttribute('href')) {
-        identifier = el.getAttribute('href');
-        if (isImageUrl(identifier)) {
-            item = { type: 'image', content: identifier, alt: el.textContent || '' };
-            added = addUniqueItem(item, identifier);
-        } else if (identifier.match(/^https?:\/\//)) {
-            // Treat other http(s) links as potential iframes
-            item = { type: 'iframe', url: identifier, content: `<iframe src="${identifier}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>` };
-            added = addUniqueItem(item, identifier);
-        }
+      identifier = el.getAttribute('href');
+      if (isImageUrl(identifier)) {
+        item = { type: 'image', content: identifier, alt: el.textContent || '' };
+        addUniqueItem(item, identifier);
+      } else if (identifier.match(/^https?:\/\//)) {
+        // Treat other http(s) links as potential iframes
+        item = { type: 'iframe', url: identifier, content: `<iframe src="${identifier}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>` };
+        addUniqueItem(item, identifier);
+      }
     } else if (el.tagName === 'P') {
-        // Check paragraph content specifically for "iframe URL" patterns
-        // This handles cases where the pattern isn't wrapped in other elements
-        const textContent = el.textContent || '';
-        const iframeMatch = textContent.trim().match(/^iframe\s+(https?:\/\/[^\s"'<>]+)$/i);
-        if (iframeMatch) {
-            identifier = iframeMatch[1];
-            item = { type: 'iframe', url: identifier, content: `<iframe src="${identifier}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>` };
-            added = addUniqueItem(item, identifier);
-        }
-         // Also check for plain image URLs in paragraphs
-         else if (isImageUrl(textContent.trim())) {
-             identifier = textContent.trim();
-             item = { type: 'image', content: identifier, alt: '' };
-             added = addUniqueItem(item, identifier);
-         }
+      // Check paragraph content specifically for "iframe URL" patterns
+      // This handles cases where the pattern isn't wrapped in other elements
+      const textContent = el.textContent || '';
+      const iframeMatch = textContent.trim().match(/^iframe\s+(https?:\/\/[^\s"'<>]+)$/i);
+      if (iframeMatch) {
+        identifier = iframeMatch[1];
+        item = { type: 'iframe', url: identifier, content: `<iframe src="${identifier}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>` };
+        addUniqueItem(item, identifier);
+      }
+      // Also check for plain image URLs in paragraphs
+      else if (isImageUrl(textContent.trim())) {
+        identifier = textContent.trim();
+        item = { type: 'image', content: identifier, alt: '' };
+        addUniqueItem(item, identifier);
+      }
     }
   });
 
   // Final check for basic 'iframe URL' or plain image URL if nothing else was found
   // This catches cases where the URL is the *only* thing in the cell
   if (items.length === 0 && content) {
-       const trimmedContent = content.trim();
-       const iframeMatch = trimmedContent.match(/^iframe\s+(https?:\/\/[^\s"'<>]+)$/i);
-       const imageMatch = isImageUrl(trimmedContent);
+    const trimmedContent = content.trim();
+    const iframeMatch = trimmedContent.match(/^iframe\s+(https?:\/\/[^\s"'<>]+)$/i);
+    const imageMatch = isImageUrl(trimmedContent);
 
-       if (iframeMatch) {
-           const identifier = iframeMatch[1];
-            addUniqueItem({
-             type: 'iframe',
-             url: identifier,
-             content: `<iframe src="${identifier}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`
-           }, identifier);
-       } else if (imageMatch) {
-            const identifier = trimmedContent;
-             addUniqueItem({
-                 type: 'image',
-                 content: identifier,
-                 alt: ''
-           }, identifier);
-       }
+    if (iframeMatch) {
+      const identifier = iframeMatch[1];
+      addUniqueItem({
+        type: 'iframe',
+        url: identifier,
+        content: `<iframe src="${identifier}" loading="lazy" title="Embedded Content" allowfullscreen></iframe>`,
+      }, identifier);
+    } else if (imageMatch) {
+      const identifier = trimmedContent;
+      addUniqueItem({
+        type: 'image',
+        content: identifier,
+        alt: '',
+      }, identifier);
+    }
   }
 
   return items; // Return the uniquely identified items in DOM order
@@ -487,7 +484,7 @@ function buildSlides(slides, container) {
 
     if (slide.type === 'qanda') {
       // Use the URL from the presentation subtitle if available
-      let subtitleContent = slide.subtitle;
+      const subtitleContent = slide.subtitle;
       let linkHtml = '';
 
       // If we have a URL from the presentation subtitle, create a link
@@ -509,7 +506,7 @@ function buildSlides(slides, container) {
                 <text x="100" y="85" text-anchor="middle" fill="white" font-size="50" font-weight="bold">Close</text>
               </svg>
             </div><br>
-            <p class="thank-you-text">${slide.thankYouText || "Thank You."}</p>
+            <p class="thank-you-text">${slide.thankYouText || 'Thank You.'}</p>
           </div>
         </div>
       `;
@@ -611,7 +608,6 @@ function createSequenceHTML(items) {
   // Process each illustration item
   items.forEach((item, index) => {
     const isActive = index === 0;
-    const typeLabel = item.type.charAt(0).toUpperCase() + item.type.slice(1);
 
     // Create container for this item
     html += `<div class="sequence-item-container ${isActive ? 'active' : ''}" data-sequence-id="${index}">`;
@@ -652,7 +648,7 @@ function showSlide(index) {
   }
 
   // Hide all slides
-  slides.forEach(slide => {
+  slides.forEach((slide) => {
     slide.style.display = 'none';
     slide.classList.remove('active');
   });
@@ -752,7 +748,7 @@ function updatePresenterNotes(slideIndex, forceNormalMode = false, isPresenterTo
  */
 function handleSequenceNavigation(direction) {
   // Get the current slide
-  const slide = document.querySelector(`.slide.active`);
+  const slide = document.querySelector('.slide.active');
   if (!slide) return false;
 
   // Get the image sequence in this slide
@@ -794,12 +790,12 @@ function handleSequenceNavigation(direction) {
  */
 function updateSequence(items, activeIndex) {
   // Hide all items
-  items.forEach(item => {
+  items.forEach((item) => {
     item.classList.remove('active');
 
     // Hide all images in this item
     const images = item.querySelectorAll('.sequence-image');
-    images.forEach(img => {
+    images.forEach((img) => {
       img.classList.remove('active');
     });
   });
@@ -810,7 +806,7 @@ function updateSequence(items, activeIndex) {
 
     // Show all images in this item
     const images = items[activeIndex].querySelectorAll('.sequence-image');
-    images.forEach(img => {
+    images.forEach((img) => {
       img.classList.add('active');
     });
   }
@@ -840,7 +836,7 @@ function setupNavigationSystem() {
   if (nextButton) {
     nextButton.addEventListener('click', () => {
       // Check if we're navigating within a sequence
-      const slide = document.querySelector(`.slide.active`);
+      const slide = document.querySelector('.slide.active');
       if (slide) {
         const sequence = slide.querySelector('.image-sequence');
         if (sequence) {
@@ -877,11 +873,10 @@ function setupNavigationSystem() {
 
       // Otherwise navigate to previous slide
       showSlide(currentSlideIndex - 1);
-    }
-    else if (event.key === 'ArrowRight') {
+    } else if (event.key === 'ArrowRight') {
       event.preventDefault();
       // Check if we're navigating within a sequence
-      const slide = document.querySelector(`.slide.active`);
+      const slide = document.querySelector('.slide.active');
       if (slide) {
         const sequence = slide.querySelector('.image-sequence');
         if (sequence) {
@@ -896,23 +891,18 @@ function setupNavigationSystem() {
 
       // Otherwise navigate to next slide
       showSlide(currentSlideIndex + 1);
-    }
-    else if (event.key === 'Escape') {
+    } else if (event.key === 'Escape') {
       const navBar = document.querySelector('.dps-navigation');
       if (navBar) {
         navBar.style.display = navBar.style.display === 'none' ? 'flex' : 'none';
       }
-    }
-    else if (event.key === 'p' || event.key === 'P') {
+    } else if (event.key === 'p' || event.key === 'P') {
       togglePresenterMode();
-    }
-    else if (event.key === '+' || event.key === '=') {
+    } else if (event.key === '+' || event.key === '=') {
       showPresenterNotes();
-    }
-    else if (event.key === '-' || event.key === '_') {
+    } else if (event.key === '-' || event.key === '_') {
       hidePresenterNotes();
-    }
-    else if (event.key === ' ' && hasStartedTimer) {
+    } else if (event.key === ' ' && hasStartedTimer) {
       event.preventDefault();
       toggleTimer();
     }
@@ -927,7 +917,7 @@ function setupPresenterToggle() {
   if (presenterToggleButton) {
     presenterToggleButton.addEventListener('click', togglePresenterMode);
   }
-  
+
   // Add click handler for the close icon
   const closeIcon = document.querySelector('.presenter-notes .close-icon');
   if (closeIcon) {
@@ -1026,7 +1016,6 @@ function togglePresenterMode() {
 
   const isPresenterMode = presenterNotes.classList.contains('presenter-mode');
   const header = document.querySelector('.dps-header');
-  const footer = document.querySelector('.dps-footer');
   const slides = document.querySelectorAll('.slide');
   const currentSlide = slides[currentSlideIndex];
   const presenterButton = document.querySelector('.presenter-toggle');
@@ -1038,7 +1027,7 @@ function togglePresenterMode() {
     // Hide header and slides but keep footer
     if (header) header.style.display = 'none';
     if (slides.length > 0) {
-      slides.forEach(slide => slide.style.display = 'none');
+      slides.forEach((slide) => slide.style.display = 'none');
       if (currentSlide) currentSlide.style.display = 'none';
     }
 
@@ -1065,7 +1054,7 @@ function togglePresenterMode() {
     // Restore normal view
     if (header) header.style.display = '';
     if (slides.length > 0) {
-      slides.forEach(slide => slide.style.display = '');
+      slides.forEach((slide) => slide.style.display = '');
       if (currentSlide) currentSlide.style.display = 'block';
     }
 
@@ -1144,30 +1133,32 @@ function setupResizeHandler() {
 /**
  * Set up touch handling for mobile devices
  */
+// Touch tracking variables for swipe detection
+let touchStartX = 0;
+let touchEndX = 0;
+
 function setupMobileHandling() {
   const slidesContainer = document.getElementById('slides-container');
-  let touchStartX = 0;
-  let touchEndX = 0;
-  
+
   // Detect if device is likely a mobile/touch device
   const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  
+
   if (isTouchDevice) {
     // Add mobile class to body for CSS targeting
     document.body.classList.add('mobile-device');
-    
+
     // Setup swipe detection for slide navigation
     if (slidesContainer) {
-      slidesContainer.addEventListener('touchstart', e => {
+      slidesContainer.addEventListener('touchstart', (e) => {
         touchStartX = e.changedTouches[0].screenX;
       }, { passive: true });
-      
-      slidesContainer.addEventListener('touchend', e => {
+
+      slidesContainer.addEventListener('touchend', (e) => {
         touchEndX = e.changedTouches[0].screenX;
         handleSwipe();
       }, { passive: true });
     }
-    
+
     // Make presenter notes more mobile-friendly by default
     adjustPresenterNotesForMobile();
   }
@@ -1178,7 +1169,7 @@ function setupMobileHandling() {
  */
 function handleSwipe() {
   const swipeThreshold = 50; // Minimum swipe distance in pixels
-  
+
   if (touchEndX - touchStartX > swipeThreshold) {
     // Swipe right - go to previous slide
     if (currentSequenceIndex > 0) {
@@ -1211,10 +1202,10 @@ function handleSwipe() {
 function adjustPresenterNotesForMobile() {
   const presenterNotes = document.querySelector('.presenter-notes');
   if (!presenterNotes) return;
-  
+
   // Make presenter notes initially hidden on mobile
   presenterNotes.classList.add('hidden');
-  
+
   // Add a floating button to show/hide presenter notes
   const notesToggleButton = document.createElement('button');
   notesToggleButton.className = 'mobile-notes-toggle';
@@ -1224,7 +1215,7 @@ function adjustPresenterNotesForMobile() {
     </svg>
   `;
   document.body.appendChild(notesToggleButton);
-  
+
   // Add click handler for the mobile notes button
   notesToggleButton.addEventListener('click', () => {
     if (presenterNotes.classList.contains('hidden')) {
@@ -1239,10 +1230,10 @@ function generateQRCode(url, options = {}) {
   // Default options
   const defaults = {
     size: 250,
-    errorCorrectionLevel: "L",
+    errorCorrectionLevel: 'L',
     margin: 4,
-    color: "000000",
-    backgroundColor: "FFFFFF",
+    color: '000000',
+    backgroundColor: 'FFFFFF',
   };
 
   // Merge provided options with defaults
@@ -1253,14 +1244,13 @@ function generateQRCode(url, options = {}) {
 
   // Use QR Server API instead of the deprecated Google Chart API
   // QR Server accepts similar parameters but with different naming
-  const qrServerUrl =
-    `https://api.qrserver.com/v1/create-qr-code/?` +
-    `size=${settings.size}x${settings.size}&` +
-    `data=${encodedUrl}&` +
-    `ecc=${settings.errorCorrectionLevel}&` +
-    `margin=${settings.margin}&` +
-    `color=${settings.color}&` +
-    `bgcolor=${settings.backgroundColor}`;
+  const qrServerUrl = 'https://api.qrserver.com/v1/create-qr-code/?'
+    + `size=${settings.size}x${settings.size}&`
+    + `data=${encodedUrl}&`
+    + `ecc=${settings.errorCorrectionLevel}&`
+    + `margin=${settings.margin}&`
+    + `color=${settings.color}&`
+    + `bgcolor=${settings.backgroundColor}`;
 
   return qrServerUrl;
 }
@@ -2038,7 +2028,6 @@ function addStyles() {
 
   document.head.appendChild(style);
 }
-
 
 // Call addStyles when this file is loaded
 addStyles();

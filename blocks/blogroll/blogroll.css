@@ -1,15 +1,14 @@
 :root {
-  --blogroll-font-family: Arial, sans-serif;
+  --blogroll-font-family: arial, sans-serif;
   --blogroll-max-width: 800px;
   --blogroll-padding: 20px;
   --blogroll-title-color: #333;
   --blogroll-border-color: #ddd;
-  --blogroll-link-color: #0066cc;
+  --blogroll-link-color: #06c;
   --blogroll-date-color: #666;
   --blogroll-text-color: #444;
   --blogroll-panel-bg-color: #f0f4f8; /* Light blue-gray background */
   --blogroll-panel-text-color: #333; /* Dark gray text for contrast */
-  
   --blogroll-icon-size: 40px;
   --blogroll-icon-bg-color: #007bff;
   --blogroll-icon-color: white;
@@ -68,10 +67,11 @@
 .blogroll-series p {
   font-size: 16px;
   color: var(--blogroll-text-color);
-  margin: 5px 0 0 0;
+  margin: 5px 0 0;
 }
 
 /* Remove these styles completely as they're no longer needed */
+
 /* .blogroll-container.compact .blogroll-series li,
 .blogroll-container.compact .blogroll-series a,
 .blogroll-container.compact .blogroll-date {
@@ -101,7 +101,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgb(0 0 0 / 0.2);
 }
 
 .blogroll-icon-text {
@@ -129,7 +129,7 @@
   width: var(--blogroll-panel-width);
   height: 100vh;
   background-color: var(--blogroll-panel-bg-color);
-  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  box-shadow: 2px 0 5px rgb(0 0 0 / 0.1);
   transition: left 0.3s ease;
   z-index: 1001;
   overflow-y: auto;
@@ -222,10 +222,13 @@
 .blogroll-entry {
   /* Add a thin outline */
   border: 1px solid var(--blogroll-entry-border-color, #e0e0e0);
+
   /* Add some padding to prevent content from touching the border */
   padding: 10px;
+
   /* Add some margin between entries */
   margin-bottom: 15px;
+
   /* Optional: add a subtle border radius for a softer look */
   border-radius: 4px;
 }

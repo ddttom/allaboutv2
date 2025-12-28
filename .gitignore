@@ -1,16 +1,82 @@
+# ========================================
+# Adobe Helix/EDS Specific
+# ========================================
 .hlx/*
-coverage/*
-logs/*
-node_modules/*
-.vscode/*
 helix-importer-ui
-.DS_Store
+
+# ========================================
+# Build Artifacts & Dependencies
+# ========================================
+node_modules/
+build/*/dist/
+build/*/.parcel-cache/
+coverage/
+
+# ========================================
+# IDE & Editor Configuration
+# ========================================
+.vscode/
+.cursor/
+.idea/
+.codegpt
+
+# ========================================
+# Linter & TypeScript Caches
+# ========================================
+.eslintcache
+.stylelintcache
+
+# ========================================
+# Environment & Secrets
+# ========================================
+.env
+.env.local
+.env.*.local
+.secrets/
+
+# ========================================
+# Editor Temporary Files
+# ========================================
+*.swp
+*.swo
+*~
 *.bak
-.idea
-scrap/*
-.vscode/*
+*.tmp
+
+# ========================================
+# Logs
+# ========================================
+logs/
+*.log
+
+# ========================================
+# Jupyter Notebooks
+# ========================================
+.ipynb_checkpoints/
+
+# ========================================
+# Operating System Files
+# ========================================
+.DS_Store
+Thumbs.db
+
+# ========================================
+# Project Specific
+# ========================================
+scrap/
+# Remediation: Ignore audit results but keep strategy documents
+docs/remediation/files/results/**
 bifrost.json
 promptloc/
+GEMINI.md
+.agents/workflows
+cloudflare/test-rendered.html
+.claude/tsc-cache/
 
-.codegpt
-node_modules
+# ========================================
+# Cloudflare Test Automation
+# ========================================
+# Backup files created by test automation system
+cloudflare/backups/*.backup-*
+# Keep the backup directory README
+!cloudflare/backups/README.md

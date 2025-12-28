@@ -101,7 +101,22 @@
       "Bash(for file in /Users/tomcranstoun/Documents/GitHub/allaboutV2/my-blog.json /Users/tomcranstoun/Documents/GitHub/allaboutV2/blogs/ddt/my-blog.json /Users/tomcranstoun/Documents/GitHub/allaboutV2/blogs/ddt/integrations/my-blog.json /Users/tomcranstoun/Documents/GitHub/allaboutV2/blogs/ddt/ai/my-blog.json)",
       "Bash(do)",
       "Bash(comm:*)",
-      "Bash(wc:*)"
+      "Bash(wc:*)",
+      "Bash(pip3 install:*)",
+      "Bash(source .venv/bin/activate)",
+      "Bash(pip install:*)",
+      "Bash(python -m playwright:*)",
+      "Bash(python:*)",
+      "Bash(npm test:*)",
+      "Bash(npm run test:integration:*)",
+      "Bash(npm run test:all:*)",
+      "Bash(npm run test:server:*)",
+      "Bash(./compare-responses.sh:*)",
+      "Bash(git push:*)",
+      "Bash(npx wrangler deploy:*)",
+      "Bash(SKIP_DOC_CHECK=1 git push:*)",
+      "Bash(npm run test:local:*)",
+      "Bash(npm audit:*)"
     ],
     "deny": [],
     "ask": []

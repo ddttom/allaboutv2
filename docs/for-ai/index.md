@@ -91,6 +91,29 @@ This index provides structured access to all documentation within the `docs/for-
   - Build vs deployment environment clarification
   - Target: All developers, especially those new to the project structure
 
+### Infrastructure and Operations
+- **[`cloudflare/cloudflare.md`](../../cloudflare/cloudflare.md)**
+  - Complete Cloudflare CDN configuration reference
+  - Adobe Edge Delivery Services integration with Cloudflare Worker
+  - Push invalidation setup and troubleshooting
+  - Double-CDN architecture (Cloudflare → Adobe Fastly → EDS)
+  - SSL/TLS configuration, DNS setup, and monitoring
+  - Operational procedures for publishing, cache management, and updates
+  - Health check automation scripts and performance metrics
+  - API token security audit checklist
+  - Target: AI assistants, DevOps, system administrators managing allabout.network
+
+- **Custom Worker Implementation**: `cloudflare/files/README.md` - Modified Adobe EDS worker with CORS headers, JSON-LD structured data generation, and metadata cleanup. Deployment guide and implementation details.
+
+- **[`helix-config.md`](helix-config.md)**
+  - Complete .helix/config file reference and configuration guide
+  - CDN integration setup with Cloudflare (production environment)
+  - Push invalidation credentials and authentication
+  - Environment hostname configuration (preview, live, production)
+  - Double-CDN architecture explanation and security best practices
+  - Configuration validation checklist and troubleshooting guide
+  - Target: AI assistants, DevOps, system administrators configuring EDS projects
+
 ### Comprehensive Development Guide
 - **[`eds.md`](eds.md)**
   - Complete EDS development guide (1,937 lines)
@@ -224,6 +247,13 @@ This index provides structured access to all documentation within the `docs/for-
   - HTML, CSS, and JavaScript guidelines
   - Performance, accessibility, and browser compatibility
   - Target: Frontend developers and code reviewers
+
+- **[`guidelines/design-system.md`](guidelines/design-system.md)**
+  - Complete visual design language for allabout.network
+  - Colors, typography, spacing, component patterns
+  - CSS custom properties reference and implementation guidelines
+  - Responsive breakpoints and accessibility standards
+  - Target: Developers, designers, and AI assistants creating blocks
 
 ### Project Management and Requirements
 - **[`guidelines/prd.md`](guidelines/prd.md)**

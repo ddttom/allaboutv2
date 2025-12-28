@@ -26,6 +26,10 @@ This project uses a **minimal hooks setup** optimized for EDS development. The a
           {
             "type": "command",
             "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/post-tool-use-tracker.sh"
+          },
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/cloudflare-worker-test-regenerate.sh"
           }
         ]
       }
@@ -45,6 +49,69 @@ This project uses a **minimal hooks setup** optimized for EDS development. The a
 - **Trigger:** After Edit, MultiEdit, or Write operations
 - **Purpose:** Track modified files for session context
 - **Implementation:** Bash script with minimal overhead
+
+**pre-tool-use-version-check.sh** (Cloudflare Worker Version Monitor)
+- **Trigger:** Before Edit, MultiEdit, or Write operations on `cloudflare/files/cloudflare-worker.js`
+- **Purpose:** Monitor and enforce version increments for worker changes
+- **Implementation:** Bash script with git version comparison
+- **Features:**
+  - Detects version changes by comparing with git HEAD
+  - Warns if WORKER_VERSION not incremented
+  - Validates two-file rule (only cloudflare-worker.test.js allowed)
+  - Reminds developers to update four version locations:
+    1. WORKER_VERSION constant (line 20)
+    2. @version comment in file header (line 15)
+    3. package.json version field
+    4. cloudflare/test.html footer (line 395)
+- **Benefits:**
+  - Enforces semantic versioning discipline
+  - Prevents accidental deployment with stale version
+  - Maintains version consistency across files
+  - Catches two-file rule violations early
+- **Note:** Version is hardcoded for Cloudflare Workers compatibility (no JSON import)
+
+**cloudflare-worker-test-regenerate.sh** (Enhanced with AI Test Automation)
+- **Trigger:** After Edit, MultiEdit, or Write operations on `cloudflare/files/cloudflare-worker.js`
+- **Purpose:** Intelligent test automation system with auto-generation and coverage reporting
+- **Implementation:** Calls `cloudflare-test-automation.js` for complete test lifecycle management
+- **Features:**
+  - Detects changes via git diff (new/modified/deleted functions)
+  - Auto-generates test stubs for new functions
+  - Auto-updates test expectations for modified functions
+  - Creates timestamped backups before making changes
+  - Runs all tests (npm test + test:local)
+  - Generates comprehensive coverage report
+  - Rollback capability if tests fail
+- **Benefits:**
+  - Ensures tests stay synchronized with worker code
+  - Reduces manual test writing effort
+  - Provides immediate validation of changes
+  - Comprehensive audit trail via coverage reports
+  - Safe with backup/rollback mechanism
+- **See:** `.claude/hooks/cloudflare-test-automation.README.md` for complete documentation
+
+**pre-commit-changelog.sh** (Git Hook)
+- **Trigger:** Before `git commit` operations
+- **Purpose:**
+  - **REQUIRED:** Validates CHANGELOG.md is included in commits (blocks commit if missing)
+  - **Simple Check:** Verifies CHANGELOG.md is staged before allowing commit
+  - **Works with Claude Code:** No TTY issues - just checks staged files
+- **Implementation:** Bash script with staged file detection
+  - Uses `git diff --cached --name-only` to check for CHANGELOG.md
+  - No interactive prompts - just validates file is staged
+  - Works seamlessly in all environments (terminal, IDE, CI/CD)
+- **Usage:**
+  - Runs automatically before every commit: `git commit -m "message"`
+  - Blocks commit if CHANGELOG.md not staged
+  - Provides clear instructions on next steps
+- **Bypass:** Use `SKIP_DOC_CHECK=1 git commit -m "message"` (only if CHANGELOG truly doesn't need updating)
+- **Workflow:**
+  1. Make code changes
+  2. Update CHANGELOG.md with your changes
+  3. Stage both: `git add . CHANGELOG.md`
+  4. Commit: `git commit -m "your message"`
+  5. Hook validates CHANGELOG.md is included, allows commit
+  6. Push: `git push` (no validation hook on push)
 
 ## Quick Start Configuration
 

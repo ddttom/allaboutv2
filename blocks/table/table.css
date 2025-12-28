@@ -1,10 +1,12 @@
 .table {
   width: 100%;
   overflow-x: auto;
+
   /* Define pale blue color for first-line styling */
   --table-first-line-bg: #e6f2ff;
+
   /* define background color for striped tables */
-  --overlay-background-color: rgba(0, 0, 0, 0.05);
+  --overlay-background-color: rgb(0 0 0 / 0.05);
 }
 
 .table table {
