@@ -9,7 +9,8 @@
     "resolveJsonModule": true,
     "moduleResolution": "node",
     "allowJs": true,
-    "noEmit": true
+    "noEmit": true,
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["**/*.js", "**/*.ts"],
   "exclude": ["node_modules"]
