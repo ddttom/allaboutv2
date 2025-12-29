@@ -2248,13 +2248,22 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
 
   // Tree navigation handler
   function handleTreeNodeClick(node) {
-    // Root nodes, folder nodes, and part nodes: do nothing on node click (only icon should toggle)
-    if (node.type === 'root' || node.type === 'folder' || node.type === 'part') {
+    // Root nodes and folder nodes: do nothing on node click (only icon should toggle)
+    if (node.type === 'root' || node.type === 'folder') {
       return;
     }
 
-    // Cell nodes: navigate to the page containing that cell
-    if (node.type === 'cell' && node.cellIndex !== null) {
+    // Part nodes with cellIndex: navigate to that cell (they're also content cells)
+    // Part nodes without cellIndex: do nothing (they're just containers)
+    if (node.type === 'part') {
+      if (node.cellIndex === null) {
+        return; // Container part, don't navigate
+      }
+      // Fall through to navigation logic below if it has a cellIndex
+    }
+
+    // Cell nodes or navigable part nodes: navigate to the page containing that cell
+    if ((node.type === 'cell' || node.type === 'part') && node.cellIndex !== null) {
       // Find the page that contains this cell
       for (let i = 0; i < pages.length; i++) {
         const page = pages[i];
