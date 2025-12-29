@@ -1162,8 +1162,8 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl) {
     level: 0,
   };
 
-  // 2. First pass: Check if there are any Part headings at all
-  const partRegex = /^Part\s+\d+/i; // Matches "Part 1", "Part 2", etc.
+  // 2. First pass: Check if there are any Part or Chapter headings at all
+  const partRegex = /^(Part|Chapter)\s+\d+/i; // Matches "Part 1", "Chapter 1", etc.
   const completedRegex = /completed.*final|final.*completed/i; // Matches both "completed" and "final" in any order
 
   let hasPartHeadings = false;
@@ -1176,9 +1176,9 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl) {
     }
   });
 
-  console.log(`🌲 Building tree - notebook has Part headings: ${hasPartHeadings}`);
+  console.log(`🌲 Building tree - notebook has Part/Chapter headings: ${hasPartHeadings}`);
 
-  // 3. Add cells based on whether Part headings exist
+  // 3. Add cells based on whether Part/Chapter headings exist
   let currentPartNode = null;
   let frontmatterNode = null;
   let summaryNode = null;
@@ -1190,9 +1190,9 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl) {
         const headingText = heading.text.trim();
 
         if (hasPartHeadings) {
-          // WITH Part headings: Use Frontmatter/Parts/Summary structure
+          // WITH Part/Chapter headings: Use Frontmatter/Parts/Summary structure
 
-          // Check if this marks the end of Parts (completion cell)
+          // Check if this marks the end of Parts/Chapters (completion cell)
           if (completedRegex.test(headingText) && currentPartNode) {
             // Create Summary node and switch to collecting there
             summaryNode = {
@@ -1220,7 +1220,7 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl) {
               level: 2,
             });
           } else if (summaryNode) {
-            // After Parts ended, add to Summary
+            // After Parts/Chapters ended, add to Summary
             summaryNode.children.push({
               id: `cell-${index}`,
               label: headingText,
@@ -1232,7 +1232,7 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl) {
               level: 2,
             });
           } else if (partRegex.test(headingText)) {
-            // Check if this is a Part heading
+            // Check if this is a Part/Chapter heading
             currentPartNode = {
               id: `part-${index}`,
               label: headingText,
@@ -1240,12 +1240,12 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl) {
               path: null,
               cellIndex: index,
               children: [],
-              expanded: false, // Parts start collapsed
+              expanded: false, // Parts/Chapters start collapsed
               level: 1,
             };
             notebookNode.children.push(currentPartNode);
           } else if (currentPartNode) {
-            // Add cell to current Part
+            // Add cell to current Part/Chapter
             currentPartNode.children.push({
               id: `cell-${index}`,
               label: headingText,
@@ -1257,9 +1257,9 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl) {
               level: 2,
             });
           } else {
-            // No Part yet - add to Frontmatter
+            // No Part/Chapter yet - add to Frontmatter
             if (!frontmatterNode) {
-              // Create Frontmatter node on first pre-Part cell
+              // Create Frontmatter node on first pre-Part/Chapter cell
               frontmatterNode = {
                 id: 'frontmatter',
                 label: 'Frontmatter',
@@ -1286,7 +1286,7 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl) {
             });
           }
         } else {
-          // WITHOUT Part headings: Add cells directly under Notebook node
+          // WITHOUT Part/Chapter headings: Add cells directly under Notebook node
           notebookNode.children.push({
             id: `cell-${index}`,
             label: headingText,
