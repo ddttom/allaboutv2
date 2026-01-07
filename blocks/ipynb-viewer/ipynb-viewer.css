@@ -204,8 +204,26 @@ html {
 
 .ipynb-markdown-cell .ipynb-cell-content {
   font-family: var(--body-font-family, sans-serif);
-  line-height: 1.5;
+  line-height: 1.6;
   color: var(--text-color, #333);
+}
+
+/* Reduce excessive spacing from br tags */
+.ipynb-markdown-cell .ipynb-cell-content br {
+  line-height: 0.5;
+}
+
+/* Tighten spacing for paragraphs */
+.ipynb-markdown-cell .ipynb-cell-content p {
+  margin: 0.75em 0;
+}
+
+.ipynb-markdown-cell .ipynb-cell-content p:first-child {
+  margin-top: 0;
+}
+
+.ipynb-markdown-cell .ipynb-cell-content p:last-child {
+  margin-bottom: 0;
 }
 
 .ipynb-markdown-cell h1,

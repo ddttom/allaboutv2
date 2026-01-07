@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPynb Viewer  - Notebook Variation</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+    <link rel="stylesheet" href="/styles/fonts.css">
+</head>
+<body>
+    <main>
+        <!-- IPynb Viewer Block - Index Variation (Auto-opens) -->
+        <div class="ipynb-viewer notebook index block"
+             id="test-notebook"
+             data-block-name="ipynb-viewer"
+             data-block-status="initialized">
+            <div>
+                <div>/docs-navigation.ipynb</div>
+            </div>
+        </div>
+    </main>
+
+
+
+    <!-- EDS Core Scripts -->
+    <script type="module">
+        import { sampleRUM, loadBlock } from '/scripts/aem.js';
+
+        // Initialize RUM 
+        sampleRUM('top');
+        window.addEventListener('load', () => sampleRUM('load'));
+
+        // Load the notebook block
+        const block = document.querySelector('#test-notebook');
+
+        try {
+            // Load block (will fetch /docs-navigation.ipynb)
+            await loadBlock(block);
+        } catch (error) {
+            console.error('❌ Block failed to load:', error);
+            block.innerHTML = `<p style="color: red; padding: 2rem;">Failed to load block: ${error.message}</p>`;
+        }
+    </script>
+    <script>document.body.classList.add('appear');</script>
+</body>
+</html>

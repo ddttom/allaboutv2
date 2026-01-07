@@ -3,6 +3,11 @@
  * Displays Jupyter notebook (.ipynb) files with interactive JavaScript execution
  */
 
+/* eslint-disable no-use-before-define */
+// Note: This file uses function hoisting patterns where functions call each other
+// before their definitions. This is valid JavaScript and the functions are properly
+// hoisted. The complex nested structure makes reordering impractical.
+
 /**
  * Parse markdown text to HTML (enhanced implementation)
  * @param {string} markdown - Markdown text
@@ -33,40 +38,44 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
   const processedLines = [];
   let inTable = false;
   let tableRows = [];
+  let tableRowCount = 0;
 
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
+  // Helper function to create a table row (defined outside loop to avoid closure issues)
+  const createTableRow = (tableCells, isFirstRow) => {
+    const tag = isFirstRow ? 'th' : 'td';
+    return `<tr>${tableCells.map((cell) => `<${tag}>${cell.trim()}</${tag}>`).join('')}</tr>`;
+  };
 
+  lines.forEach((line) => {
     // Check if line is a table row
     if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
       // Skip separator rows (|---|---|) - must include | in character class
       if (/^\|[\s\-:|]+\|$/.test(line.trim())) {
-        continue;
+        return; // Skip this iteration (equivalent to continue)
       }
 
       if (!inTable) {
         inTable = true;
         tableRows = [];
+        tableRowCount = 0;
       }
 
-      const cells = line.split('|').filter((cell) => cell.trim());
-      const row = `<tr>${cells.map((cell, _idx) => {
-        // First row is header
-        const tag = tableRows.length === 0 ? 'th' : 'td';
-        return `<${tag}>${cell.trim()}</${tag}>`;
-      }).join('')}</tr>`;
+      const tableCells = line.split('|').filter((cell) => cell.trim());
+      const row = createTableRow(tableCells, tableRowCount === 0);
       tableRows.push(row);
+      tableRowCount += 1;
     } else {
       // Not a table row
       if (inTable) {
         // End of table, flush accumulated rows
         processedLines.push(`<table>${tableRows.join('')}</table>`);
         tableRows = [];
+        tableRowCount = 0;
         inTable = false;
       }
       processedLines.push(line);
     }
-  }
+  });
 
   // Flush any remaining table
   if (inTable && tableRows.length > 0) {
@@ -120,7 +129,7 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
         const urlParts = url.replace(/^\.\//, '').split('/'); // Remove leading ./ if present
 
         // Process each part of the URL
-        for (const part of urlParts) {
+        urlParts.forEach((part) => {
           if (part === '..') {
             // Go up one directory
             if (parts.length > 0) {
@@ -130,7 +139,7 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
             // Add directory or filename
             parts.push(part);
           }
-        }
+        });
 
         cleanPath = parts.join('/');
         console.log('   ✅ Resolved to:', cleanPath);
@@ -181,7 +190,7 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
   const listStack = []; // Track nested list state: [{type: 'ol'|'ul', indent: number}]
   let lastIndent = -1;
 
-  for (const line of linesWithLists) {
+  linesWithLists.forEach((line) => {
     // Match list items with indentation
     const ulMatch = line.match(/^(\s*)[-*] (.+)$/);
     const olMatch = line.match(/^(\s*)\d+\. (.+)$/);
@@ -249,7 +258,7 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
       processedWithLists.push(line);
       lastIndent = -1;
     }
-  }
+  });
 
   // Close any remaining open lists
   while (listStack.length > 0) {
@@ -264,7 +273,7 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
   const processedWithBlockquotes = [];
   let inBlockquote = false;
 
-  for (const line of linesWithBlockquotes) {
+  linesWithBlockquotes.forEach((line) => {
     // Match lines starting with > (raw character, before any HTML encoding)
     const blockquoteMatch = line.match(/^>\s?(.*)$/);
 
@@ -283,7 +292,7 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
       }
       processedWithBlockquotes.push(line);
     }
-  }
+  });
 
   // Close any remaining open blockquote
   if (inBlockquote) processedWithBlockquotes.push('</blockquote>');
@@ -295,8 +304,10 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
     html = html.replace(`__CODEBLOCK_${index}__`, codeBlock);
   });
 
-  // Line breaks (convert remaining newlines to <br>)
-  html = html.replace(/\n/g, '<br>');
+  // Line breaks - only convert double newlines to paragraph breaks
+  // Single newlines within block elements are already handled by HTML structure
+  html = html.replace(/\n\n+/g, '<br><br>'); // Double+ newlines become paragraph breaks
+  html = html.replace(/\n/g, ' '); // Single newlines become spaces (natural flow)
 
   return html;
 }
@@ -706,7 +717,7 @@ function createPageGroups(cells) {
         && groupedCells.filter((c) => c.classList.contains('ipynb-code-cell')).length < MAX_CODE_GROUP_SIZE
       ) {
         groupedCells.push(cells[j]);
-        j++;
+        j += 1;
       }
 
       pages.push({
@@ -720,7 +731,7 @@ function createPageGroups(cells) {
         type: 'single',
         cells: [cell],
       });
-      i++;
+      i += 1;
     }
   }
 
@@ -900,7 +911,7 @@ function extractHeading(cell) {
 
   return {
     text: heading.textContent.trim(),
-    level: parseInt(heading.tagName.substring(1)),
+    level: parseInt(heading.tagName.substring(1), 10),
   };
 }
 
@@ -1061,11 +1072,9 @@ function buildFileTree(paths, helpPath) {
       if (!parentNode.children.includes(folderNode)) {
         parentNode.children.push(folderNode);
       }
-    } else {
+    } else if (!tree.includes(folderNode)) {
       // Top-level folder - add to tree root
-      if (!tree.includes(folderNode)) {
-        tree.push(folderNode);
-      }
+      tree.push(folderNode);
     }
 
     return folderNode;
@@ -1162,8 +1171,8 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl) {
     level: 0,
   };
 
-  // 2. First pass: Check if there are any Part headings at all
-  const partRegex = /^Part\s+\d+/i; // Matches "Part 1", "Part 2", etc.
+  // 2. First pass: Check if there are any Part or Chapter headings at all
+  const partRegex = /^(Part|Chapter)\s+\d+/i; // Matches "Part 1", "Chapter 1", etc.
   const completedRegex = /completed.*final|final.*completed/i; // Matches both "completed" and "final" in any order
 
   let hasPartHeadings = false;
@@ -1176,9 +1185,9 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl) {
     }
   });
 
-  console.log(`🌲 Building tree - notebook has Part headings: ${hasPartHeadings}`);
+  console.log(`🌲 Building tree - notebook has Part/Chapter headings: ${hasPartHeadings}`);
 
-  // 3. Add cells based on whether Part headings exist
+  // 3. Add cells based on whether Part/Chapter headings exist
   let currentPartNode = null;
   let frontmatterNode = null;
   let summaryNode = null;
@@ -1190,9 +1199,9 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl) {
         const headingText = heading.text.trim();
 
         if (hasPartHeadings) {
-          // WITH Part headings: Use Frontmatter/Parts/Summary structure
+          // WITH Part/Chapter headings: Use Frontmatter/Parts/Summary structure
 
-          // Check if this marks the end of Parts (completion cell)
+          // Check if this marks the end of Parts/Chapters (completion cell)
           if (completedRegex.test(headingText) && currentPartNode) {
             // Create Summary node and switch to collecting there
             summaryNode = {
@@ -1220,7 +1229,7 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl) {
               level: 2,
             });
           } else if (summaryNode) {
-            // After Parts ended, add to Summary
+            // After Parts/Chapters ended, add to Summary
             summaryNode.children.push({
               id: `cell-${index}`,
               label: headingText,
@@ -1232,7 +1241,7 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl) {
               level: 2,
             });
           } else if (partRegex.test(headingText)) {
-            // Check if this is a Part heading
+            // Check if this is a Part/Chapter heading
             currentPartNode = {
               id: `part-${index}`,
               label: headingText,
@@ -1240,12 +1249,12 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl) {
               path: null,
               cellIndex: index,
               children: [],
-              expanded: false, // Parts start collapsed
+              expanded: false, // Parts/Chapters start collapsed
               level: 1,
             };
             notebookNode.children.push(currentPartNode);
           } else if (currentPartNode) {
-            // Add cell to current Part
+            // Add cell to current Part/Chapter
             currentPartNode.children.push({
               id: `cell-${index}`,
               label: headingText,
@@ -1257,9 +1266,9 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl) {
               level: 2,
             });
           } else {
-            // No Part yet - add to Frontmatter
+            // No Part/Chapter yet - add to Frontmatter
             if (!frontmatterNode) {
-              // Create Frontmatter node on first pre-Part cell
+              // Create Frontmatter node on first pre-Part/Chapter cell
               frontmatterNode = {
                 id: 'frontmatter',
                 label: 'Frontmatter',
@@ -1286,7 +1295,7 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl) {
             });
           }
         } else {
-          // WITHOUT Part headings: Add cells directly under Notebook node
+          // WITHOUT Part/Chapter headings: Add cells directly under Notebook node
           notebookNode.children.push({
             id: `cell-${index}`,
             label: headingText,
@@ -1530,9 +1539,22 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   console.log('=================================\n');
 
   // Tree state management (shared across overlays)
+  // Also expand first-level folders under Repository for better UX
+  const initiallyExpanded = new Set(['notebook', 'repository']);
+
+  // Find Repository node and expand its first-level folders
+  const repoNode = navigationTree.find((node) => node.id === 'repository');
+  if (repoNode && repoNode.children) {
+    repoNode.children.forEach((child) => {
+      if (child.type === 'folder') {
+        initiallyExpanded.add(child.id);
+      }
+    });
+  }
+
   const treeState = {
     tree: navigationTree,
-    expandedNodes: new Set(['notebook', 'repository']), // Start with root nodes expanded
+    expandedNodes: initiallyExpanded, // Start with root nodes and first-level folders expanded
     selectedNode: null,
   };
 
@@ -1652,15 +1674,12 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
           if (entry.type === 'cell' && entry.cellIndex !== null) {
             // Navigate to cell page
             // Find page containing this cell
-            for (let i = 0; i < pages.length; i++) {
-              const pageContainsCell = pages[i].cells.some(
-                (cell) => parseInt(cell.dataset.cellIndex) === entry.cellIndex,
-              );
-              if (pageContainsCell) {
-                paginationState.currentPage = i;
-                updatePageDisplay();
-                break;
-              }
+            const pageIndex = pages.findIndex((page) => page.cells.some(
+              (cell) => parseInt(cell.dataset.cellIndex, 10) === entry.cellIndex,
+            ));
+            if (pageIndex !== -1) {
+              paginationState.currentPage = pageIndex;
+              updatePageDisplay();
             }
           } else if (entry.type === 'markdown' && entry.url) {
             // Re-open GitHub markdown overlay
@@ -1881,7 +1900,8 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
         clearAllBtn.className = 'ipynb-bookmark-clear-all';
         clearAllBtn.textContent = 'Clear All Bookmarks';
         clearAllBtn.addEventListener('click', () => {
-          if (confirm('Are you sure you want to clear all bookmarks?')) {
+          // eslint-disable-next-line no-alert
+          if (window.confirm('Are you sure you want to clear all bookmarks?')) {
             clearAllBookmarks(notebookId);
             updateBookmarkDropdown();
           }
@@ -2057,33 +2077,42 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
         const heading = content.querySelector('h1, h2, h3');
         if (heading) {
           const title = heading.textContent.trim();
-          const cellIndex = parseInt(firstCell.dataset.cellIndex);
+          const cellIndex = parseInt(firstCell.dataset.cellIndex, 10);
           addToHistory(navigationHistory, title, 'cell', cellIndex);
         }
       }
     }
 
     // Clone and append all cells in this page
-    for (const cell of currentPage.cells) {
+    const clonedCells = currentPage.cells.map((cell) => {
       const clonedCell = cell.cloneNode(true);
       clonedCell.classList.add('active');
       cellContentArea.appendChild(clonedCell);
+      return clonedCell;
+    });
 
-      // Re-attach run button handlers if it's a code cell
-      if (clonedCell.classList.contains('ipynb-code-cell')) {
+    // Re-attach run button handlers for code cells
+    // Use Promise.all to handle async execution in autorun mode
+    const autorunPromises = clonedCells
+      .filter((clonedCell) => clonedCell.classList.contains('ipynb-code-cell'))
+      .map((clonedCell) => {
         const runButton = clonedCell.querySelector('.ipynb-run-button');
 
         // In autorun mode, automatically execute the cell
         if (paginationState.autorun) {
-          await executeCodeCell(clonedCell);
-        } else if (runButton) {
-          // Otherwise, attach click handler
+          return executeCodeCell(clonedCell);
+        }
+        // Otherwise, attach click handler
+        if (runButton) {
           runButton.addEventListener('click', () => {
             executeCodeCell(clonedCell);
           });
         }
-      }
-    }
+        return Promise.resolve();
+      });
+
+    // Wait for all autorun executions to complete
+    await Promise.all(autorunPromises);
 
     // Re-resolve ALL links with hash="#" in the current page (action cards, tables, lists, etc.)
     const allHashLinks = cellContentArea.querySelectorAll('a[href="#"]');
@@ -2184,7 +2213,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       }
 
       // Add spacing between consecutive code cells
-      for (let i = 1; i < allCells.length - 1; i++) {
+      for (let i = 1; i < allCells.length - 1; i += 1) {
         if (allCells[i].classList.contains('ipynb-code-cell')) {
           allCells[i].style.marginBottom = '1rem';
         }
@@ -2198,22 +2227,24 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
 
     // Update tree selection to match current page
     if (currentPage && currentPage.cells.length > 0) {
-      const firstCellIndex = parseInt(currentPage.cells[0].dataset.cellIndex);
+      const firstCellIndex = parseInt(currentPage.cells[0].dataset.cellIndex, 10);
       const notebookRoot = navigationTree.find((root) => root.id === 'notebook');
 
       // Search for cell in notebook tree (might be nested in Parts)
       let cellNode = null;
       const searchChildren = (nodes) => {
-        for (const node of nodes) {
+        // Use reduce to find first matching node (avoids for...of)
+        const result = nodes.reduce((found, node) => {
+          if (found) return found;
           if (node.cellIndex === firstCellIndex) {
             return node;
           }
           if (node.children && node.children.length > 0) {
-            const found = searchChildren(node.children);
-            if (found) return found;
+            return searchChildren(node.children);
           }
-        }
-        return null;
+          return null;
+        }, null);
+        return result;
       };
 
       if (notebookRoot) {
@@ -2232,14 +2263,14 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   // Navigation handlers
   function goToNextPage() {
     if (paginationState.currentPage < totalPages - 1) {
-      paginationState.currentPage++;
+      paginationState.currentPage += 1;
       updatePageDisplay();
     }
   }
 
   function goToPrevPage() {
     if (paginationState.currentPage > 0) {
-      paginationState.currentPage--;
+      paginationState.currentPage -= 1;
       updatePageDisplay();
     }
   }
@@ -2248,27 +2279,35 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
 
   // Tree navigation handler
   function handleTreeNodeClick(node) {
-    // Root nodes, folder nodes, and part nodes: do nothing on node click (only icon should toggle)
-    if (node.type === 'root' || node.type === 'folder' || node.type === 'part') {
+    // Root nodes and folder nodes: do nothing on node click (only icon should toggle)
+    if (node.type === 'root' || node.type === 'folder') {
       return;
     }
 
-    // Cell nodes: navigate to the page containing that cell
-    if (node.type === 'cell' && node.cellIndex !== null) {
+    // Part nodes with cellIndex: navigate to that cell (they're also content cells)
+    // Part nodes without cellIndex: do nothing (they're just containers)
+    if (node.type === 'part') {
+      if (node.cellIndex === null) {
+        return; // Container part, don't navigate
+      }
+      // Fall through to navigation logic below if it has a cellIndex
+    }
+
+    // Cell nodes or navigable part nodes: navigate to the page containing that cell
+    if ((node.type === 'cell' || node.type === 'part') && node.cellIndex !== null) {
       // Find the page that contains this cell
-      for (let i = 0; i < pages.length; i++) {
-        const page = pages[i];
-        const hasCell = page.cells.some((cell) => parseInt(cell.dataset.cellIndex) === node.cellIndex);
+      const pageIndex = pages.findIndex((page) => page.cells.some(
+        (cell) => parseInt(cell.dataset.cellIndex, 10) === node.cellIndex,
+      ));
 
-        if (hasCell) {
-          // Navigate to this page
-          paginationState.currentPage = i;
-          updatePageDisplay();
+      if (pageIndex !== -1) {
+        // Navigate to this page
+        paginationState.currentPage = pageIndex;
+        updatePageDisplay();
 
-          // Select this node in tree
-          selectTreeNode(node.id, treeState, navTreePanel, handleTreeNodeClick);
-          return;
-        }
+        // Select this node in tree
+        selectTreeNode(node.id, treeState, navTreePanel, handleTreeNodeClick);
+        return;
       }
     }
 
@@ -2309,21 +2348,23 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     // Auto-select current page in tree
     const currentPage = pages[paginationState.currentPage];
     if (currentPage && currentPage.cells.length > 0) {
-      const firstCellIndex = parseInt(currentPage.cells[0].dataset.cellIndex);
+      const firstCellIndex = parseInt(currentPage.cells[0].dataset.cellIndex, 10);
       const notebookRoot = navigationTree.find((root) => root.id === 'notebook');
 
       // Search for cell in notebook tree (might be nested in Parts)
       const searchChildren = (nodes) => {
-        for (const node of nodes) {
+        // Use reduce to find first matching node (avoids for...of)
+        const result = nodes.reduce((found, node) => {
+          if (found) return found;
           if (node.cellIndex === firstCellIndex) {
             return node;
           }
           if (node.children && node.children.length > 0) {
-            const found = searchChildren(node.children);
-            if (found) return found;
+            return searchChildren(node.children);
           }
-        }
-        return null;
+          return null;
+        }, null);
+        return result;
       };
 
       let cellNode = null;
@@ -2408,36 +2449,31 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     }
 
     // Search through all pages to find the one containing the target ID
-    for (let i = 0; i < pages.length; i++) {
-      const page = pages[i];
+    const pageIndex = pages.findIndex((page) => page.cells.some((cell) => {
+      // Use both querySelector and textContent search for robustness
+      const hasId = cell.querySelector(`#${targetId}`) !== null;
 
-      // Check if any cell in this page contains the target ID
-      const hasTarget = page.cells.some((cell) => {
-        // Use both querySelector and textContent search for robustness
-        const hasId = cell.querySelector(`#${targetId}`) !== null;
-
-        // Also check if cell contains an h2 that would generate this ID
-        const headers = cell.querySelectorAll('h2');
-        const hasMatchingHeader = Array.from(headers).some((h2) => {
-          const generatedId = h2.textContent
-            .toLowerCase()
-            .replace(/[^\w\s-]/g, '')
-            .replace(/\s+/g, '-')
-            .replace(/-+/g, '-')
-            .replace(/^-+|-+$/g, '')
-            .trim();
-          return generatedId === targetId || h2.id === targetId;
-        });
-
-        return hasId || hasMatchingHeader;
+      // Also check if cell contains an h2 that would generate this ID
+      const headers = cell.querySelectorAll('h2');
+      const hasMatchingHeader = Array.from(headers).some((h2) => {
+        const generatedId = h2.textContent
+          .toLowerCase()
+          .replace(/[^\w\s-]/g, '')
+          .replace(/\s+/g, '-')
+          .replace(/-+/g, '-')
+          .replace(/^-+|-+$/g, '')
+          .trim();
+        return generatedId === targetId || h2.id === targetId;
       });
 
-      if (hasTarget) {
-        // Navigate to this page
-        paginationState.currentPage = i;
-        updatePageDisplay();
-        return;
-      }
+      return hasId || hasMatchingHeader;
+    }));
+
+    if (pageIndex !== -1) {
+      // Navigate to this page
+      paginationState.currentPage = pageIndex;
+      updatePageDisplay();
+      return;
     }
 
     console.log(`Navigation target not found: ${targetId}`);
@@ -2874,14 +2910,14 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
         // Extract file path
         const pathMatch = githubUrl.match(/\/blob\/[^/]+\/(.+)$/);
         if (pathMatch) {
-          currentFilePath = pathMatch[1]; // Extract path after /blob/branch/
+          [, currentFilePath] = pathMatch; // Extract path after /blob/branch/
           console.log('📍 Current file path for relative resolution:', currentFilePath);
         }
 
         // Extract repo URL (everything before /blob/)
         const repoMatch = githubUrl.match(/^(https:\/\/github\.com\/[^/]+\/[^/]+)\/blob\//);
         if (repoMatch) {
-          currentRepoUrl = repoMatch[1]; // Extract https://github.com/user/repo
+          [, currentRepoUrl] = repoMatch; // Extract https://github.com/user/repo
           console.log('📍 Current repo URL:', currentRepoUrl);
         }
       } else {
@@ -3277,11 +3313,9 @@ export default async function decorate(block) {
               executeCodeCell(cellElement);
             });
           }
-        } else {
+        } else if (!isPaged && !isNotebook) {
           // In autorun mode, execute immediately in default view
-          if (!isPaged && !isNotebook) {
-            await executeCodeCell(cellElement);
-          }
+          await executeCodeCell(cellElement);
         }
       }
 

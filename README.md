@@ -142,6 +142,7 @@ Access your tests at: `http://localhost:3000/blocks/your-block/test.html`
 ├── notebooks/             # NEW: Shareable .ipynb files for end users
 │   └── example.ipynb      # Example interactive notebook
 ├── docs-navigation.ipynb  # NEW: Interactive documentation navigator (88/100 validation score)
+├── invisible-users.ipynb  # NEW: Interactive book companion (100/100 validation score)
 ├── ipynb-tests/           # NEW: Generated HTML previews from JSLab
 ├── docs/                   # Documentation
 │   ├── for-ai/            # Comprehensive AI-focused development guides
@@ -287,6 +288,16 @@ Each block should include:
   - Validated at 88/100 production readiness score
   - Features auto-wrapping (90% less code), hamburger TOC, and pure markdown authoring
   - View with ipynb-viewer in notebook mode for best experience
+
+**📖 The Invisible Users** - Book companion notebook
+- **[invisible-users.ipynb](invisible-users.ipynb)** - Interactive exploration of AI agents and modern web design
+  - Companion to "The Invisible Users" book by Tom Cranstoun
+  - 10 parts covering all book chapters with interactive demonstrations
+  - 36 cells including 9 interactive JavaScript visualizations
+  - Validated at 100/100 production readiness score
+  - Complete metadata (title, description, author)
+  - Links to full manuscript at [github.com/ddttom/invisible-users](https://github.com/ddttom/invisible-users)
+  - 60-75 minutes to complete
 
 ### Site Remediation & SEO
 
