@@ -1,10 +1,51 @@
-# Adobe Edge Delivery Services & AI Development Resources
+# Digital Domain Technologies (DDT)
+
+> Expert Adobe Edge Delivery Services consulting and AI integration resources by Tom Cranstoun ("The AEM Guy")
+
+## About the Author & Consultancy
+
+**Tom Cranstoun** is a seasoned Adobe Experience Manager (AEM) expert and Principal Consultant at Digital Domain Technologies (DDT). With over 15 years of experience in enterprise content management, he specializes in Adobe Edge Delivery Services (EDS), document-based authoring, and AI-native development.
+
+**Key Achievements:**
+
+- Global Architecture Director for Nissan/Renault Helios initiative (200+ global sites)
+- Lead Strategist for EE (UK Telecom) and Twitter enterprise CMS implementations
+- Pioneer in LLM context delivery and Model Context Protocol (MCP) integration
+- Known in the industry as "The AEM Guy"
+
+
+**Authors:** Tom Cranstoun, Cate Nisbet
+**LinkedIn:** [https://www.linkedin.com/in/tom-cranstoun/](https://www.linkedin.com/in/tom-cranstoun/)
+
+**Site Type:** Document-Centric, Technical Documentation, Educational Resource
+**Purpose:** Developer Education, Content Author Training, AI Integration Guidance
+**Technology Stack:** Adobe Edge Delivery Services, Document-Based Architecture
+
+## Access Guidelines
+
+- Base Rate: 100 requests per hour per IP
+- Cache Retention: 24 hour maximum
+- Content Usage: Attribution required
+- Commercial Use: Requires written permission
+- Training Usage: Permitted for public documentation only
+- Attribution Format: "Source: Digital Domain Technologies (allabout.network)"
+
+
+**Digital Domain Technologies** is a specialized consultancy focused on digital transformation through modern web standards. We help organizations migrate from legacy CMS platforms to high-performance, AI-ready architectures using Adobe EDS and vanilla JavaScript.
+
+**Contact & Services:**
+
+- **Email**: <info@digitaldomaintechnologies.com>
+- **LinkedIn**: <https://www.linkedin.com/in/tom-cranstoun/>
+- **GitHub**: <https://github.com/digitaldomaintech>
+- **Services**: Strategic Architecture, AI Integration Workshops, Team Mentoring, EDS Block Development
+
+## Adobe Edge Delivery Services & AI Development Resources
 
 Technical documentation and educational resources for Adobe Edge Delivery Services development, AI integration, and modern web architecture. Comprehensive guides covering EDS block development, framework integrations, AI/LLM fundamentals, and content management systems.
 
 **Last updated:** December 2025
 **Authors:** Tom Cranstoun, Cate Nisbet
-**LinkedIn:** [https://www.linkedin.com/in/tom-cranstoun/](https://www.linkedin.com/in/tom-cranstoun/)
 
 **Site Type:** Document-Centric, Technical Documentation, Educational Resource
 **Purpose:** Developer Education, Content Author Training, AI Integration Guidance
@@ -167,13 +208,6 @@ Looking for the full interactive experience?
 - **Agency Services:** [https://allabout.network/](https://allabout.network/)
 - **About llms.txt:** [https://llmstxt.org](https://llmstxt.org)
 - **Integrations Focus:** [https://allabout.network/blogs/ddt/integrations/llms.txt](https://allabout.network/blogs/ddt/integrations/llms.txt)
-
-
-
-
-
-
-
 
 ## Version Information
 
