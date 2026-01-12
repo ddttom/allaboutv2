@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Tom Cranstoun">
+  <meta name="description" content="Frequently asked questions about The Invisible Users book - AI agents, web design, implementation guidance, and identity delegation">
+
+  <!-- AI-specific meta tags (proposed pattern from Chapter 10) -->
+  <meta name="ai-preferred-access" content="html">
+  <meta name="ai-content-policy" content="summaries-allowed, full-extraction-allowed">
+  <meta name="ai-freshness" content="monthly">
+  <meta name="ai-structured-data" content="json-ld">
+  <meta name="ai-attribution" content="required">
+
+  <link rel="canonical" href="https://allabout.network/invisible-users/faq.html">
+
+  <title>Frequently Asked Questions | The Invisible Users</title>
+
+  <!-- Schema.org structured data for FAQ page -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "name": "The Invisible Users - Frequently Asked Questions",
+    "description": "Common questions about The Invisible Users book, AI agent compatibility, implementation guidance, and identity delegation infrastructure",
+    "author": {
+      "@type": "Person",
+      "name": "Tom Cranstoun",
+      "email": "tom.cranstoun@gmail.com",
+      "url": "https://allabout.network"
+    },
+    "inLanguage": "en-GB",
+    "about": {
+      "@type": "Thing",
+      "name": "AI-friendly web design and implementation"
+    },
+    "keywords": ["AI agents", "web design", "accessibility", "Schema.org", "semantic HTML", "llms.txt", "identity delegation", "agent-mediated commerce"],
+    "isPartOf": {
+      "@type": "Book",
+      "name": "The Invisible Users",
+      "url": "https://allabout.network/invisible-users"
+    },
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is The Invisible Users about?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The Invisible Users: Designing the Web for AI Agents and Everyone Else examines how modern web design optimised for human users fails for AI agents, and how fixing this benefits everyone. The book provides practical guidance for making websites accessible to both humans and AI agents through semantic HTML, explicit state management, and structured data.",
+          "dateCreated": "2026-01-11",
+          "author": {
+            "@type": "Person",
+            "name": "Tom Cranstoun"
+          },
+          "upvoteCount": 0
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Who should read this book?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The book targets four primary audiences: Web Professionals (developers, designers, accessibility specialists), Agent System Developers (building AI agents that browse websites), Business Leaders (CTOs, product owners making strategic decisions), and Partners & Investors (evaluating opportunities in the agent-mediated commerce space).",
+          "dateCreated": "2026-01-11",
+          "author": {
+            "@type": "Person",
+            "name": "Tom Cranstoun"
+          },
+          "upvoteCount": 0
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are AI agents in the context of this book?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "AI agents are autonomous software systems that browse websites on behalf of users. These include CLI agents (command-line tools), browser automation agents (using tools like Playwright), server-based agents accessing websites remotely, and browser extension assistants. The book addresses universal compatibility across all agent types.",
+          "dateCreated": "2026-01-11",
+          "author": {
+            "@type": "Person",
+            "name": "Tom Cranstoun"
+          },
+          "upvoteCount": 0
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is this different from accessibility?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Whilst there's overlap with accessibility best practices (semantic HTML, clear structure, explicit feedback), AI agent compatibility has distinct requirements. Agents need explicit state attributes, structured data for machine reading, and clear feedback that persists in the DOM. The book shows how these patterns benefit both agents and humans.",
+          "dateCreated": "2026-01-11",
+          "author": {
+            "@type": "Person",
+            "name": "Tom Cranstoun"
+          },
+          "upvoteCount": 0
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the Web Audit Suite?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The Web Audit Suite is a comprehensive Node.js tool that analyses websites for AI agent compatibility, SEO performance, accessibility compliance, and security headers. It implements the patterns described in the book and generates detailed reports. The tool is available as a separate purchase or professional audit service.",
+          "dateCreated": "2026-01-11",
+          "author": {
+            "@type": "Person",
+            "name": "Tom Cranstoun"
+          },
+          "upvoteCount": 0
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where can I find the appendices?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "All ten appendices are available online at https://allabout.network/invisible-users/web/appendix-index.html. They provide implementation cookbooks, quick references, battle-tested lessons, and real-world case studies. Each appendix is freely accessible and follows the AI-friendly patterns described in the book.",
+          "dateCreated": "2026-01-11",
+          "author": {
+            "@type": "Person",
+            "name": "Tom Cranstoun"
+          },
+          "upvoteCount": 0
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I get started with implementation?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Start with Appendix F (Implementation Roadmap) which provides priority-based guidance. Priority 1 quick wins include adding semantic HTML, implementing proper form field naming, and adding Schema.org structured data. Appendix A (Implementation Cookbook) provides code examples for common patterns.",
+          "dateCreated": "2026-01-11",
+          "author": {
+            "@type": "Person",
+            "name": "Tom Cranstoun"
+          },
+          "upvoteCount": 0
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are the patterns in this book standardised?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The book distinguishes between established standards (Schema.org, semantic HTML, ARIA), emerging conventions (llms.txt from llmstxt.org), and proposed patterns (ai-* meta tags, data-agent-visible). All proposed patterns are forward-compatible and won't break if agents don't recognise them.",
+          "dateCreated": "2026-01-11",
+          "author": {
+            "@type": "Person",
+            "name": "Tom Cranstoun"
+          },
+          "upvoteCount": 0
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I contact the author?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Contact Tom Cranstoun at tom.cranstoun@gmail.com for questions, professional web audits, collaboration opportunities, or to discuss the identity delegation project. LinkedIn: https://www.linkedin.com/in/tom-cranstoun/",
+          "dateCreated": "2026-01-11",
+          "author": {
+            "@type": "Person",
+            "name": "Tom Cranstoun"
+          },
+          "upvoteCount": 0
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much does the Web Audit Suite cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The Web Audit Suite is available as a separate purchase or professional audit service. Pricing varies based on your needs and the size of your website. Contact tom.cranstoun@gmail.com for detailed pricing information tailored to your specific requirements.",
+          "dateCreated": "2026-01-12",
+          "author": {
+            "@type": "Person",
+            "name": "Tom Cranstoun"
+          },
+          "upvoteCount": 0
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What programming languages are the examples in?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The book uses simple JavaScript for code examples with minimal dependencies, ensuring they're accessible to developers across all frameworks. Examples focus on fundamental patterns that work with any technology stack, from vanilla JavaScript to React, Vue, Angular, and server-rendered HTML.",
+          "dateCreated": "2026-01-12",
+          "author": {
+            "@type": "Person",
+            "name": "Tom Cranstoun"
+          },
+          "upvoteCount": 0
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does this work for my CMS/framework?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The patterns in this book are framework-agnostic and work with any CMS or framework including WordPress, Drupal, React, Vue, Angular, Next.js, and more. The book focuses on HTML output and browser behaviour, not specific implementation technologies. If your system generates HTML, these patterns apply.",
+          "dateCreated": "2026-01-12",
+          "author": {
+            "@type": "Person",
+            "name": "Tom Cranstoun"
+          },
+          "upvoteCount": 0
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does implementation take?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Implementation is priority-based rather than time-based. Priority 1 quick wins (semantic HTML, form field naming, Schema.org) can be implemented immediately. Priority 2-4 improvements build systematically on foundations. Appendix F (Implementation Roadmap) provides detailed priority-based guidance for phased rollout.",
+          "dateCreated": "2026-01-12",
+          "author": {
+            "@type": "Person",
+            "name": "Tom Cranstoun"
+          },
+          "upvoteCount": 0
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What's the difference between served and rendered HTML?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Served HTML is the static HTML sent from the server before JavaScript execution - what CLI agents and server-based agents see. Rendered HTML is the dynamic state after JavaScript runs - what browser-based agents see. Different agents operate in different modes, so the book addresses both states for universal compatibility.",
+          "dateCreated": "2026-01-12",
+          "author": {
+            "@type": "Person",
+            "name": "Tom Cranstoun"
+          },
+          "upvoteCount": 0
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need to know JavaScript?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Basic web development knowledge is helpful but not required. Many patterns involve HTML attributes and structured data that don't require JavaScript. The book explains concepts clearly with practical examples, making implementation accessible to web professionals of all backgrounds, from designers to backend developers.",
+          "dateCreated": "2026-01-12",
+          "author": {
+            "@type": "Person",
+            "name": "Tom Cranstoun"
+          },
+          "upvoteCount": 0
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use these patterns with React/Vue/Angular?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. Modern frameworks like React, Vue, and Angular all generate HTML as final output. The patterns apply to that HTML regardless of how it's generated. The book shows framework-agnostic patterns that work universally - add data attributes to JSX components, include Schema.org in your head section, use semantic HTML in your templates.",
+          "dateCreated": "2026-01-12",
+          "author": {
+            "@type": "Person",
+            "name": "Tom Cranstoun"
+          },
+          "upvoteCount": 0
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I validate my implementation?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use the Web Audit Suite to analyse your implementation and generate detailed reports. Additionally, use Google's Structured Data Testing Tool for Schema.org validation, browser DevTools to inspect HTML attributes, and Pa11y for accessibility compliance. The book provides validation guidance in Appendix C and Chapter 10.",
+          "dateCreated": "2026-01-12",
+          "author": {
+            "@type": "Person",
+            "name": "Tom Cranstoun"
+          },
+          "upvoteCount": 0
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What's the ROI of implementing these patterns?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The field is too new for validated ROI data, but benefits include improved accessibility for all users, better SEO performance, reduced support costs through clearer error messages, and competitive advantage in agent-mediated commerce. Many patterns overlap with accessibility best practices, providing immediate user experience improvements whilst future-proofing for agent traffic.",
+          "dateCreated": "2026-01-12",
+          "author": {
+            "@type": "Person",
+            "name": "Tom Cranstoun"
+          },
+          "upvoteCount": 0
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I test for AI agent compatibility?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The Web Audit Suite provides comprehensive AI agent compatibility testing through LLM suitability metrics. Test both served HTML (view page source) and rendered HTML (browser DevTools). Check for semantic structure, explicit state attributes, Schema.org data, and clear feedback. Appendix C provides detailed testing procedures and validation criteria.",
+          "dateCreated": "2026-01-12",
+          "author": {
+            "@type": "Person",
+            "name": "Tom Cranstoun"
+          },
+          "upvoteCount": 0
+        }
+      }
+    ],
+    "datePublished": "2026-01-11",
+    "dateModified": "2026-01-12",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://allabout.network/invisible-users/web/faq.html"
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://allabout.network/invisible-users/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "FAQ",
+          "item": "https://allabout.network/invisible-users/web/faq.html"
+        }
+      ]
+    },
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": [".faq-item"]
+    },
+    "potentialAction": {
+      "@type": "AskAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "mailto:tom.cranstoun@gmail.com?subject=Question about The Invisible Users",
+        "actionPlatform": [
+          "http://schema.org/DesktopWebPlatform",
+          "http://schema.org/MobileWebPlatform"
+        ]
+      }
+    }
+  }
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: #1f2937;
+      background: #ffffff;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+      color: white;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    header p {
+      font-size: 1.25rem;
+      opacity: 0.95;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    .faq-section {
+      margin-bottom: 3rem;
+    }
+
+    .faq-section h2 {
+      font-size: 1.75rem;
+      color: #1e40af;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #3b82f6;
+    }
+
+    .faq-item {
+      background: #f9fafb;
+      border-left: 4px solid #3b82f6;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: box-shadow 0.2s;
+    }
+
+    .faq-item:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .faq-item h3 {
+      font-size: 1.25rem;
+      color: #1f2937;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .faq-item p {
+      color: #4b5563;
+      margin-bottom: 0.75rem;
+    }
+
+    .faq-item p:last-child {
+      margin-bottom: 0;
+    }
+
+    a:not(.floating-home-button):not(.floating-top-button) {
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    a:not(.floating-home-button):not(.floating-top-button):hover {
+      text-decoration: underline;
+    }
+
+    .cta-box {
+      background: #eff6ff;
+      border: 2px solid #3b82f6;
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 3rem 0;
+      text-align: center;
+    }
+
+    .cta-box h3 {
+      margin-top: 0;
+      color: #1f2937;
+      margin-bottom: 1rem;
+    }
+
+    .cta-box p {
+      color: #374151;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #2563eb;
+      color: white !important;
+      padding: 0.75rem 2rem;
+      border-radius: 6px;
+      font-weight: 600;
+      text-decoration: none !important;
+      transition: background 0.2s;
+      margin: 0.5rem;
+    }
+
+    .btn:hover {
+      background: #1d4ed8;
+      color: white !important;
+      text-decoration: none !important;
+    }
+
+    footer {
+      background: #f9fafb;
+      border-top: 1px solid #e5e7eb;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 4rem;
+    }
+
+    footer p {
+      color: #6b7280;
+      margin: 0.25rem 0;
+    }
+
+    .contact-links {
+      margin: 1.5rem 0;
+    }
+
+    .contact-links a {
+      margin: 0 1rem;
+    }
+
+    /* Floating navigation buttons */
+    .floating-home-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: #0066cc;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .floating-home-button:hover {
+      background-color: #003d7a;
+      color: white;
+      box-shadow: 0 6px 16px rgba(0, 102, 204, 0.4);
+      transform: translateY(-2px);
+    }
+    .floating-home-button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
+    }
+    .floating-home-button svg {
+      fill: white;
+    }
+    .floating-top-button {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #0066cc;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+    .floating-top-button:hover {
+      background-color: #003d7a;
+      color: white;
+      box-shadow: 0 6px 16px rgba(0, 102, 204, 0.4);
+      transform: translateY(-2px);
+    }
+    .floating-top-button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
+    }
+    .floating-top-button svg {
+      fill: white;
+    }
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      header p {
+        font-size: 1rem;
+      }
+      .floating-home-button {
+        top: 15px;
+        left: 15px;
+        padding: 10px 16px;
+        font-size: 0.85rem;
+      }
+      .floating-top-button {
+        bottom: 15px;
+        left: 15px;
+        padding: 10px 16px;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Frequently Asked Questions</h1>
+    <p>Common questions about The Invisible Users book and project</p>
+  </header>
+
+  <main class="container" role="main" data-load-state="complete">
+
+    <section class="faq-section" data-section-type="about-book">
+      <h2>About the Book</h2>
+
+      <article class="faq-item">
+        <h3>What is The Invisible Users about?</h3>
+        <div>
+          <p><strong>The Invisible Users: Designing the Web for AI Agents and Everyone Else</strong> examines how modern web design optimised for human users fails for AI agents, and how fixing this benefits everyone. The book provides practical guidance for making websites accessible to both humans and AI agents through semantic HTML, explicit state management, and structured data.</p>
+        </div>
+      </article>
+
+      <article class="faq-item">
+        <h3>Who should read this book?</h3>
+        <div>
+          <p>The book targets four primary audiences:</p>
+          <ul>
+            <li><strong>Web Professionals</strong> - developers, designers, accessibility specialists looking to future-proof their websites</li>
+            <li><strong>Agent System Developers</strong> - engineers building AI agents that need to browse websites reliably</li>
+            <li><strong>Business Leaders</strong> - CTOs and product owners making strategic decisions about agent-mediated commerce</li>
+            <li><strong>Partners & Investors</strong> - evaluating opportunities in the emerging agent economy</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="faq-item">
+        <h3>What format is the book available in?</h3>
+        <div>
+          <p>The book is published in Kindle format (6"×9" paperback dimensions) with a planned publication in Q1 2026. All ten appendices are freely available online at <a href="https://allabout.network/invisible-users/web/appendix-index.html">https://allabout.network/invisible-users/web/appendix-index.html</a>.</p>
+        </div>
+      </article>
+
+    </section>
+
+    <section class="faq-section" data-section-type="technical">
+      <h2>Technical Concepts</h2>
+
+      <article class="faq-item">
+        <h3>What are AI agents in the context of this book?</h3>
+        <div>
+          <p>AI agents are autonomous software systems that browse websites on behalf of users. The book addresses a diverse ecosystem:</p>
+          <ul>
+            <li><strong>CLI agents</strong> - Command-line tools running locally (e.g., Claude Code, Cline)</li>
+            <li><strong>Browser automation agents</strong> - Using tools like Playwright or Selenium</li>
+            <li><strong>Server-based agents</strong> - Cloud-hosted agents accessing websites remotely</li>
+            <li><strong>Browser extension assistants</strong> - In-browser AI tools</li>
+            <li><strong>IDE-integrated browser controls</strong> - Development environments with browser integration</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="faq-item">
+        <h3>How is this different from accessibility?</h3>
+        <div>
+          <p>Whilst there's significant overlap with accessibility best practices (semantic HTML, clear structure, explicit feedback), AI agent compatibility has distinct requirements:</p>
+          <ul>
+            <li>Agents need explicit state attributes (data-state, data-validation-state)</li>
+            <li>Structured data for machine reading (Schema.org JSON-LD)</li>
+            <li>Clear feedback that persists in the DOM (not transient animations)</li>
+            <li>Form field naming conventions (email, firstName, lastName vs custom names)</li>
+          </ul>
+          <p>The book demonstrates how these patterns benefit both agents and humans, creating a universally accessible web.</p>
+        </div>
+      </article>
+
+      <article class="faq-item">
+        <h3>Are the patterns in this book standardised?</h3>
+        <div>
+          <p>The book carefully distinguishes between different maturity levels:</p>
+          <ul>
+            <li><strong>Established Standards</strong> - Schema.org, semantic HTML, ARIA (use with confidence)</li>
+            <li><strong>Emerging Conventions</strong> - llms.txt from <a href="https://llmstxt.org">llmstxt.org</a> (early adoption phase)</li>
+            <li><strong>Proposed Patterns</strong> - ai-* meta tags, data-agent-visible (not yet standardised)</li>
+          </ul>
+          <p>All proposed patterns are forward-compatible and won't break if agents don't recognise them.</p>
+        </div>
+      </article>
+
+
+    </section>
+
+    <section class="faq-section" data-section-type="implementation">
+      <h2>Implementation and Resources</h2>
+
+      <article class="faq-item">
+        <h3>Where can I find the appendices?</h3>
+        <div>
+          <p>All ten appendices are available online at <a href="https://allabout.network/invisible-users/web/appendix-index.html">https://allabout.network/invisible-users/web/appendix-index.html</a>. They include:</p>
+          <ul>
+            <li><strong>Appendix A</strong> - Implementation Cookbook (quick-reference recipes)</li>
+            <li><strong>Appendix B</strong> - Battle-Tested Lessons (production learnings)</li>
+            <li><strong>Appendix C</strong> - Web Audit Suite User Guide</li>
+            <li><strong>Appendix D</strong> - AI-Friendly HTML Guide (comprehensive patterns)</li>
+            <li><strong>Appendix E</strong> - AI Patterns Quick Reference</li>
+            <li><strong>Appendix F</strong> - Implementation Roadmap</li>
+            <li><strong>Appendix G</strong> - Resource Directory (150+ curated resources)</li>
+            <li><strong>Appendix H</strong> - Example llms.txt File</li>
+            <li><strong>Appendix I</strong> - Pipeline Failure Case Study</li>
+            <li><strong>Appendix J</strong> - Industry Developments</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="faq-item">
+        <h3>How do I get started with implementation?</h3>
+        <div>
+          <p>Start with <a href="https://allabout.network/invisible-users/web/appendix-f.html">Appendix F (Implementation Roadmap)</a> which provides priority-based guidance:</p>
+          <ul>
+            <li><strong>Priority 1: Critical Quick Wins</strong> - Semantic HTML, form field naming, Schema.org structured data</li>
+            <li><strong>Priority 2: Essential Improvements</strong> - Error handling, state attributes, llms.txt file</li>
+            <li><strong>Priority 3: Core Infrastructure</strong> - Platform-wide patterns and consistency</li>
+            <li><strong>Priority 4: Advanced Features</strong> - Comprehensive long-term enhancements</li>
+          </ul>
+          <p><a href="https://allabout.network/invisible-users/web/appendix-a.html">Appendix A (Implementation Cookbook)</a> provides code examples for common patterns.</p>
+        </div>
+      </article>
+
+      <article class="faq-item">
+        <h3>What is the Web Audit Suite?</h3>
+        <div>
+          <p>The Web Audit Suite is a comprehensive Node.js tool that analyses websites for:</p>
+          <ul>
+            <li>AI agent compatibility (LLM suitability metrics)</li>
+            <li>SEO performance</li>
+            <li>Accessibility compliance (WCAG 2.1)</li>
+            <li>Performance metrics</li>
+            <li>Security headers</li>
+          </ul>
+          <p>The tool implements the patterns described in the book and generates detailed reports. It's available as a separate purchase or professional audit service. See <a href="https://allabout.network/invisible-users/web/appendix-c.html">Appendix C</a> for complete documentation.</p>
+        </div>
+      </article>
+
+      <article class="faq-item">
+        <h3>Where can I find code examples?</h3>
+        <div>
+          <p>Code examples are available in multiple locations:</p>
+          <ul>
+            <li><strong>Implementation Cookbook</strong> (<a href="https://allabout.network/invisible-users/web/appendix-a.html">Appendix A</a>) - Quick-reference code snippets</li>
+            <li><strong>AI-Friendly HTML Guide</strong> (<a href="https://allabout.network/invisible-users/web/appendix-d.html">Appendix D</a>) - Comprehensive patterns with examples</li>
+            <li><strong>This Website</strong> - View the source of any page to see the patterns in action</li>
+          </ul>
+        </div>
+      </article>
+
+    </section>
+
+    <section class="faq-section" data-section-type="getting-started">
+      <h2>Getting Started</h2>
+
+      <article class="faq-item">
+        <h3>How much does the Web Audit Suite cost?</h3>
+        <div>
+          <p>The Web Audit Suite is available as a separate purchase or professional audit service. Pricing varies based on your needs and the size of your website. Contact <a href="mailto:tom.cranstoun@gmail.com">tom.cranstoun@gmail.com</a> for detailed pricing information tailored to your specific requirements.</p>
+        </div>
+      </article>
+
+      <article class="faq-item">
+        <h3>What programming languages are the examples in?</h3>
+        <div>
+          <p>The book uses simple JavaScript for code examples with minimal dependencies, ensuring they're accessible to developers across all frameworks. Examples focus on fundamental patterns that work with any technology stack, from vanilla JavaScript to React, Vue, Angular, and server-rendered HTML.</p>
+        </div>
+      </article>
+
+      <article class="faq-item">
+        <h3>Does this work for my CMS/framework?</h3>
+        <div>
+          <p>Yes. The patterns in this book are framework-agnostic and work with any CMS or framework including WordPress, Drupal, React, Vue, Angular, Next.js, and more. The book focuses on HTML output and browser behaviour, not specific implementation technologies. If your system generates HTML, these patterns apply.</p>
+        </div>
+      </article>
+
+      <article class="faq-item">
+        <h3>How long does implementation take?</h3>
+        <div>
+          <p>Implementation is priority-based rather than time-based. Priority 1 quick wins (semantic HTML, form field naming, Schema.org) can be implemented immediately. Priority 2-4 improvements build systematically on foundations. <a href="https://allabout.network/invisible-users/web/appendix-f.html">Appendix F (Implementation Roadmap)</a> provides detailed priority-based guidance for phased rollout.</p>
+        </div>
+      </article>
+
+      <article class="faq-item">
+        <h3>What's the difference between served and rendered HTML?</h3>
+        <div>
+          <p>Served HTML is the static HTML sent from the server before JavaScript execution - what CLI agents and server-based agents see. Rendered HTML is the dynamic state after JavaScript runs - what browser-based agents see. Different agents operate in different modes, so the book addresses both states for universal compatibility.</p>
+        </div>
+      </article>
+
+      <article class="faq-item">
+        <h3>Do I need to know JavaScript?</h3>
+        <div>
+          <p>Basic web development knowledge is helpful but not required. Many patterns involve HTML attributes and structured data that don't require JavaScript. The book explains concepts clearly with practical examples, making implementation accessible to web professionals of all backgrounds, from designers to backend developers.</p>
+        </div>
+      </article>
+
+      <article class="faq-item">
+        <h3>Can I use these patterns with React/Vue/Angular?</h3>
+        <div>
+          <p>Absolutely. Modern frameworks like React, Vue, and Angular all generate HTML as final output. The patterns apply to that HTML regardless of how it's generated. The book shows framework-agnostic patterns that work universally - add data attributes to JSX components, include Schema.org in your head section, use semantic HTML in your templates.</p>
+        </div>
+      </article>
+
+      <article class="faq-item">
+        <h3>How do I validate my implementation?</h3>
+        <div>
+          <p>Use the Web Audit Suite to analyse your implementation and generate detailed reports. Additionally, use Google's Structured Data Testing Tool for Schema.org validation, browser DevTools to inspect HTML attributes, and Pa11y for accessibility compliance. The book provides validation guidance in <a href="https://allabout.network/invisible-users/web/appendix-c.html">Appendix C</a> and Chapter 10.</p>
+        </div>
+      </article>
+
+      <article class="faq-item">
+        <h3>What's the ROI of implementing these patterns?</h3>
+        <div>
+          <p>The field is too new for validated ROI data, but benefits include improved accessibility for all users, better SEO performance, reduced support costs through clearer error messages, and competitive advantage in agent-mediated commerce. Many patterns overlap with accessibility best practices, providing immediate user experience improvements whilst future-proofing for agent traffic.</p>
+        </div>
+      </article>
+
+      <article class="faq-item">
+        <h3>How do I test for AI agent compatibility?</h3>
+        <div>
+          <p>The Web Audit Suite provides comprehensive AI agent compatibility testing through LLM suitability metrics. Test both served HTML (view page source) and rendered HTML (browser DevTools). Check for semantic structure, explicit state attributes, Schema.org data, and clear feedback. <a href="https://allabout.network/invisible-users/web/appendix-c.html">Appendix C</a> provides detailed testing procedures and validation criteria.</p>
+        </div>
+      </article>
+
+    </section>
+
+    <div class="cta-box" role="complementary">
+      <h3>Have More Questions?</h3>
+      <p>Can't find what you're looking for? Get in touch with the author.</p>
+      <a href="mailto:tom.cranstoun@gmail.com?subject=Question about The Invisible Users" class="btn">Contact Tom Cranstoun</a>
+      <a href="https://allabout.network/invisible-users" class="btn">Visit Book Website</a>
+    </div>
+
+    <section aria-labelledby="related-pages">
+      <h2 id="related-pages" style="margin: 3rem 0 1rem; color: #1f2937;">Related Pages</h2>
+      <ul style="margin: 1rem 0 1rem 2rem; color: #4b5563;">
+        <li><a href="index.html">Book Homepage</a></li>
+        <li><a href="appendix-index.html">All Appendices</a></li>
+        <li><a href="news.html">Project News</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer role="contentinfo">
+    <div class="contact-links">
+      <a href="mailto:tom.cranstoun@gmail.com">Email</a>
+      <a href="https://allabout.network">Website</a>
+      <a href="https://www.linkedin.com/in/tom-cranstoun/">LinkedIn</a>
+    </div>
+    <p>&copy; 2026 Tom Cranstoun. All rights reserved.</p>
+    <p>Last updated: January 2026</p>
+  </footer>
+
+  <!-- Floating home button (top-left) -->
+  <a href="index.html" class="floating-home-button" aria-label="Back to Home">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 0L0 8h3v8h10V8h3L8 0zm0 2.5L13.5 8H11v6H5V8H2.5L8 2.5z"/>
+    </svg>
+    Home
+  </a>
+  <!-- Floating back to top button (bottom-left) -->
+  <a href="#" class="floating-top-button" aria-label="Back to Top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 3.5l-5.5 5.5L4 10.5l3-3v8.5h2V7.5l3 3L13.5 9z"/>
+    </svg>
+    Top
+  </a>
+</body>
+</html>

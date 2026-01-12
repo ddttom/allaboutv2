@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Tom Cranstoun" />
+  <meta name="description" content="Practical guidance from The Invisible Users book on designing AI agent-friendly websites" />
+  <title>Appendix C: Web Audit Suite User Guide</title>
+  
+
+  <link rel="canonical" href="https://allabout.network/invisible-users/appendix-c.html">
+  <!-- AI-specific meta tags (proposed pattern from Chapter 10) -->
+  <meta name="ai-preferred-access" content="html">
+  <meta name="ai-content-policy" content="summaries-allowed, full-extraction-allowed">
+  <meta name="ai-freshness" content="monthly">
+  <meta name="ai-structured-data" content="json-ld">
+  <meta name="ai-attribution" content="required" text="Source: The Invisible Users by Tom Cranstoun, https://allabout.network/invisible-users/">
+  <meta name="llms-txt" content="/llms.txt">
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "name": "Appendix C: Web Audit Suite User Guide",
+    "description": "Practical guidance from The Invisible Users book on designing AI agent-friendly websites",
+    "author": {
+      "@type": "Person",
+      "name": "Tom Cranstoun",
+      "email": "tom.cranstoun@gmail.com",
+      "url": "https://allabout.network"
+    },
+    "inLanguage": "en-GB",
+    "datePublished": "2026-01-10",
+    "dateModified": "2026-01-10",
+    "isPartOf": {
+      "@type": "Book",
+      "name": "The Invisible Users",
+      "author": {
+        "@type": "Person",
+        "name": "Tom Cranstoun"
+      },
+      "url": "https://allabout.network/invisible-users"
+    },
+    "position": "3"
+  }
+  </script>
+  <link rel="stylesheet" href="appendix.css">
+</head>
+<body>
+<nav class="appendix-navigation" role="navigation" aria-label="Appendix Navigation">
+    <p><a href="appendix-index.html">← Back to Appendices Index</a></p>
+    <p>Quick navigation:
+        <a href="appendix-a.html">A</a> |
+        <a href="appendix-b.html">B</a> |
+        <a href="appendix-c.html">C</a> |
+        <a href="appendix-d.html">D</a> |
+        <a href="appendix-e.html">E</a> |
+        <a href="appendix-f.html">F</a> |
+        <a href="appendix-g.html">G</a> |
+        <a href="appendix-h.html">H</a> |
+        <a href="appendix-i.html">I</a> |
+        <a href="appendix-j.html">J</a> |
+        <a href="appendix-k.html">K</a> |
+        <a href="appendix-l.html">L</a>
+    </p>
+</nav>
+<hr>
+<header id="title-block-header">
+<h1 class="title">Appendix C: Web Audit Suite User Guide</h1>
+<p class="subtitle">The Invisible Users</p>
+<p class="author">Tom Cranstoun</p>
+<p class="date">January 2026</p>
+</header>
+<nav id="TOC" role="navigation" aria-label="Table of Contents">
+<ul>
+<li><a href="#appendix-c-web-audit-suite-user-guide"
+id="toc-appendix-c-web-audit-suite-user-guide">Appendix C: Web Audit
+Suite User Guide</a>
+<ul>
+<li><a href="#installation" id="toc-installation">Installation</a></li>
+<li><a href="#basic-usage" id="toc-basic-usage">Basic Usage</a></li>
+<li><a href="#understanding-your-reports"
+id="toc-understanding-your-reports">Understanding Your Reports</a></li>
+<li><a href="#prioritizing-improvements"
+id="toc-prioritizing-improvements">Prioritizing Improvements</a></li>
+<li><a href="#tracking-progress" id="toc-tracking-progress">Tracking
+Progress</a></li>
+<li><a href="#common-scenarios" id="toc-common-scenarios">Common
+Scenarios</a></li>
+<li><a href="#advanced-usage" id="toc-advanced-usage">Advanced
+Usage</a></li>
+<li><a href="#interpreting-specific-issues"
+id="toc-interpreting-specific-issues">Interpreting Specific
+Issues</a></li>
+<li><a href="#getting-help" id="toc-getting-help">Getting Help</a></li>
+<li><a href="#summary-workflow" id="toc-summary-workflow">Summary
+Workflow</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="appendix-c-web-audit-suite-user-guide">Appendix C: Web Audit
+Suite User Guide</h1>
+<p>Complete guide to auditing your website for AI agent compatibility
+using Web Audit Suite.</p>
+<h2 id="installation">Installation</h2>
+<div class="sourceCode" id="cb1" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ddttom/invisible-users.git</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> invisible-users/packages/web-audit-suite</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span></code></pre></div>
+<h2 id="basic-usage">Basic Usage</h2>
+<h3 id="single-page-audit">Single Page Audit</h3>
+<div class="sourceCode" id="cb2" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Audit your homepage</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com <span class="at">-c</span> 10</span></code></pre></div>
+<h3 id="full-site-audit">Full Site Audit</h3>
+<div class="sourceCode" id="cb3" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Audit from sitemap (unlimited pages)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com/sitemap.xml <span class="at">-c</span> <span class="at">-1</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Audit specific number of pages</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com/sitemap.xml <span class="at">-c</span> 50</span></code></pre></div>
+<h3 id="complete-audit-with-all-reports">Complete Audit with All
+Reports</h3>
+<div class="sourceCode" id="cb4" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com <span class="dt">\</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--enable-history</span> <span class="dt">\</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--generate-dashboard</span> <span class="dt">\</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--generate-executive-summary</span></span></code></pre></div>
+<h2 id="understanding-your-reports">Understanding Your Reports</h2>
+<h3 id="core-reports-15-files">Core Reports (15 files)</h3>
+<h4 id="llm-general-suitability-llm_general_suitability.csv">1. LLM
+General Suitability (<code>llm_general_suitability.csv</code>)</h4>
+<p><strong>Purpose:</strong> Overall AI agent compatibility score</p>
+<p><strong>Key Columns:</strong></p>
+<ul>
+<li><code>url</code>: Page URL</li>
+<li><code>served_score</code>: Score for served HTML (0-100) - works for
+ALL agents</li>
+<li><code>rendered_score</code>: Score for rendered HTML (0-100) - works
+for browser agents</li>
+<li><code>overall_score</code>: Weighted average emphasizing served
+HTML</li>
+<li><code>issues_found</code>: Number of compatibility issues
+detected</li>
+</ul>
+<p><strong>Interpreting Scores:</strong></p>
+<table>
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 19%" />
+<col style="width: 17%" />
+<col style="width: 36%" />
+</colgroup>
+<thead>
+<tr>
+<th>Score Range</th>
+<th>Category</th>
+<th>Meaning</th>
+<th>Action Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0-40</td>
+<td>Low</td>
+<td>Critical issues, agents fail frequently</td>
+<td>Immediate action needed</td>
+</tr>
+<tr>
+<td>41-60</td>
+<td>Moderate-low</td>
+<td>Basic functionality, many problems</td>
+<td>Systematic improvements required</td>
+</tr>
+<tr>
+<td>61-80</td>
+<td>Moderate-high</td>
+<td>Good implementation, minor gaps</td>
+<td>Refinement and optimization</td>
+</tr>
+<tr>
+<td>81-100</td>
+<td>High</td>
+<td>Excellent, professional-grade</td>
+<td>Maintain and monitor</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Priority Fixes Based on Score:</strong></p>
+<ul>
+<li><strong>Served score &lt;40</strong>: Focus immediately on:
+<ul>
+<li>Add structured data (JSON-LD)</li>
+<li>Make pricing complete and visible</li>
+<li>Ensure state is in HTML attributes</li>
+<li>Fix error message persistence</li>
+</ul></li>
+<li><strong>Rendered score &lt;60</strong>: Focus on:
+<ul>
+<li>Add explicit state attributes</li>
+<li>Implement inline validation</li>
+<li>Add loading state indicators</li>
+<li>Make dynamic content semantic</li>
+</ul></li>
+</ul>
+<h4 id="robots.txt-quality-report-robots_txt_quality.csv">2. robots.txt
+Quality Report (<code>robots_txt_quality.csv</code>)</h4>
+<p><strong>Purpose:</strong> Evaluates robots.txt file for AI agent
+readiness</p>
+<p><strong>Key Columns:</strong></p>
+<ul>
+<li><code>score</code>: Overall quality (0-100)</li>
+<li><code>has_ai_user_agents</code>: Declares AI bot user agents
+(boolean)</li>
+<li><code>ai_user_agent_count</code>: Number of AI agents declared</li>
+<li><code>has_sitemap</code>: Includes sitemap declaration
+(boolean)</li>
+<li><code>has_sensitive_path_protection</code>: Protects admin/account
+paths (boolean)</li>
+<li><code>protected_path_count</code>: Number of protected paths</li>
+<li><code>has_llms_txt_reference</code>: References llms.txt file
+(boolean)</li>
+<li><code>has_helpful_comments</code>: Includes explanatory comments
+(boolean)</li>
+</ul>
+<p><strong>Scoring Breakdown:</strong></p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 37%" />
+<col style="width: 29%" />
+</colgroup>
+<thead>
+<tr>
+<th>Component</th>
+<th>Max Points</th>
+<th>Criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI User Agents</td>
+<td>30</td>
+<td>3+ agents = 30pts, 1-2 agents = 15pts, 0 agents = 0pts</td>
+</tr>
+<tr>
+<td>Sitemap Declaration</td>
+<td>20</td>
+<td>Present = 20pts, Missing = 0pts</td>
+</tr>
+<tr>
+<td>Path Protection</td>
+<td>25</td>
+<td>3+ paths = 25pts, 1-2 paths = 15pts, 0 paths = 0pts</td>
+</tr>
+<tr>
+<td>llms.txt Reference</td>
+<td>15</td>
+<td>Present = 15pts, Missing = 0pts</td>
+</tr>
+<tr>
+<td>Helpful Comments</td>
+<td>10</td>
+<td>3+ comments = 10pts, 1-2 = 5pts, 0 = 0pts</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Priority Fixes:</strong></p>
+<ol type="1">
+<li><strong>Score &lt;50</strong>: Add sitemap declaration and 2-3 AI
+user agents immediately</li>
+<li><strong>Score 50-70</strong>: Add protected paths and llms.txt
+reference</li>
+<li><strong>Score 70-85</strong>: Add more AI user agents and helpful
+comments</li>
+<li><strong>Score 85-100</strong>: Maintain and monitor</li>
+</ol>
+<h4 id="llms.txt-quality-report-llms_txt_quality.csv">3. llms.txt
+Quality Report (<code>llms_txt_quality.csv</code>)</h4>
+<p><strong>Purpose:</strong> Evaluates llms.txt file quality</p>
+<p><strong>Key Columns:</strong></p>
+<ul>
+<li><code>score</code>: Overall quality (0-105, includes bonuses)</li>
+<li><code>has_title</code>: Site title present (boolean)</li>
+<li><code>has_description</code>: Description present (boolean)</li>
+<li><code>has_contact</code>: Contact information present (boolean)</li>
+<li><code>section_count</code>: Number of major sections</li>
+<li><code>has_access_guidelines</code>: Access policies declared
+(boolean)</li>
+<li><code>has_rate_limits</code>: Rate limits specified (boolean)</li>
+<li><code>has_api_info</code>: API information provided (boolean)</li>
+</ul>
+<p><strong>Scoring Breakdown:</strong></p>
+<table>
+<colgroup>
+<col style="width: 39%" />
+<col style="width: 26%" />
+<col style="width: 34%" />
+</colgroup>
+<thead>
+<tr>
+<th>Component</th>
+<th>Points</th>
+<th>Criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Core Elements</td>
+<td>40</td>
+<td>Title (10), Description (10), Contact (10), Last Updated (10)</td>
+</tr>
+<tr>
+<td>Sections</td>
+<td>30</td>
+<td>5+ sections (30), 3-4 sections (20), 1-2 sections (10)</td>
+</tr>
+<tr>
+<td>Content Length</td>
+<td>15</td>
+<td>Substantial content (15), Moderate (10), Minimal (5)</td>
+</tr>
+<tr>
+<td>External Links</td>
+<td>10</td>
+<td>3+ links (10), 1-2 links (5), None (0)</td>
+</tr>
+<tr>
+<td>Specificity</td>
+<td>5</td>
+<td>Detailed policies (5), Basic (3), Generic (0)</td>
+</tr>
+<tr>
+<td>Bonus Points</td>
+<td>5</td>
+<td>Rate limits, API docs, attribution requirements</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Priority Fixes:</strong></p>
+<ol type="1">
+<li><strong>No file</strong>: Create basic llms.txt with title,
+description, contact</li>
+<li><strong>Score &lt;40</strong>: Add access guidelines and rate
+limits</li>
+<li><strong>Score 40-70</strong>: Add API information and external
+links</li>
+<li><strong>Score 70-90</strong>: Increase detail and specificity</li>
+<li><strong>Score 90-105</strong>: Comprehensive, maintain and
+update</li>
+</ol>
+<h4 id="seo-reports-seo_report.csv-seo_scores.csv">4. SEO Reports
+(<code>seo_report.csv</code>, <code>seo_scores.csv</code>)</h4>
+<p><strong>Purpose:</strong> SEO factors that also benefit AI agents</p>
+<p><strong>Key Factors:</strong></p>
+<ul>
+<li>Meta descriptions present and adequate length</li>
+<li>Title tags optimized</li>
+<li>Heading hierarchy (H1, H2, H3)</li>
+<li>Image alt text</li>
+<li>Internal linking structure</li>
+<li>Canonical URLs</li>
+</ul>
+<p><strong>Agent Relevance:</strong></p>
+<p>SEO best practices align with agent needs:</p>
+<ul>
+<li>Clear titles help agents understand page purpose</li>
+<li>Structured headings provide content hierarchy</li>
+<li>Alt text makes images interpretable</li>
+<li>Internal links show relationships</li>
+</ul>
+<h4 id="accessibility-report-accessibility_report.csv-wcag_report.md">5.
+Accessibility Report (<code>accessibility_report.csv</code>,
+<code>wcag_report.md</code>)</h4>
+<p><strong>Purpose:</strong> WCAG compliance (benefits agents and
+humans)</p>
+<p><strong>Key Factors:</strong></p>
+<ul>
+<li>ARIA labels and roles</li>
+<li>Form field associations</li>
+<li>Semantic HTML structure</li>
+<li>Keyboard navigation</li>
+<li>Focus management</li>
+</ul>
+<p><strong>Agent Benefits:</strong></p>
+<ul>
+<li>ARIA labels provide context</li>
+<li>Semantic structure aids parsing</li>
+<li>Form associations clarify relationships</li>
+<li>Role attributes indicate purpose</li>
+</ul>
+<h3 id="enhanced-reports-optional">Enhanced Reports (Optional)</h3>
+<h4
+id="executive-summary-executive_summary.md-executive_summary.json">Executive
+Summary (<code>executive_summary.md</code>,
+<code>executive_summary.json</code>)</h4>
+<p><strong>Generated with:</strong>
+<code>--generate-executive-summary</code></p>
+<p><strong>Contains:</strong></p>
+<ul>
+<li>High-level overview of site health</li>
+<li>Critical issues requiring immediate attention</li>
+<li>Recommended priorities</li>
+<li>Score trends (if history enabled)</li>
+</ul>
+<p><strong>Use for:</strong> Stakeholder communication, quick status
+checks</p>
+<h4 id="dashboard-dashboard.html">Dashboard
+(<code>dashboard.html</code>)</h4>
+<p><strong>Generated with:</strong>
+<code>--generate-dashboard</code></p>
+<p><strong>Contains:</strong></p>
+<ul>
+<li>Visual score representations</li>
+<li>Historical trends (if history enabled)</li>
+<li>Comparative analysis</li>
+<li>Actionable recommendations</li>
+</ul>
+<p><strong>Use for:</strong> Regular monitoring, team reviews, progress
+tracking</p>
+<h2 id="prioritizing-improvements">Prioritizing Improvements</h2>
+<h3 id="step-1-run-initial-audit">Step 1: Run Initial Audit</h3>
+<div class="sourceCode" id="cb5" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com/sitemap.xml <span class="at">-c</span> <span class="at">-1</span> <span class="dt">\</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--enable-history</span> <span class="dt">\</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--generate-dashboard</span> <span class="dt">\</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--generate-executive-summary</span></span></code></pre></div>
+<h3 id="step-2-review-executive-summary">Step 2: Review Executive
+Summary</h3>
+<p>Focus on:</p>
+<ul>
+<li>Overall LLM suitability score</li>
+<li>Critical issues flagged</li>
+<li>Quick wins identified</li>
+</ul>
+<h3 id="step-3-categorize-issues-by-priority">Step 3: Categorize Issues
+by Priority</h3>
+<p><strong>Critical (Fix Immediately):</strong></p>
+<ul>
+<li>Served HTML score &lt;40</li>
+<li>robots.txt score &lt;30</li>
+<li>No structured data</li>
+<li>Errors vanish/non-persistent</li>
+<li>Incomplete pricing</li>
+</ul>
+<p><strong>High Priority (Fix This Quarter):</strong></p>
+<ul>
+<li>Served HTML score 40-60</li>
+<li>robots.txt score 30-60</li>
+<li>Limited structured data</li>
+<li>Inconsistent state attributes</li>
+<li>Complex form validation issues</li>
+</ul>
+<p><strong>Medium Priority (Fix This Year):</strong></p>
+<ul>
+<li>Rendered HTML score &lt;60</li>
+<li>llms.txt missing or basic</li>
+<li>SEO issues affecting discoverability</li>
+<li>Accessibility improvements needed</li>
+</ul>
+<p><strong>Low Priority (Ongoing):</strong></p>
+<ul>
+<li>Score optimization above 80</li>
+<li>Advanced features</li>
+<li>Competitive differentiation</li>
+</ul>
+<h3 id="step-4-create-action-plan">Step 4: Create Action Plan</h3>
+<p>Based on your scores:</p>
+<div class="sourceCode" id="cb6" data-role="code-container"><pre
+class="sourceCode markdown"><code class="sourceCode markdown" data-role="code-content"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Action Plan: [Your Site]</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>**Audit Date:** <span class="co">[</span><span class="ot">Date</span><span class="co">]</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>**Overall Score:** <span class="co">[</span><span class="ot">Score</span><span class="co">]</span>/100</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>**Priority:** <span class="co">[</span><span class="ot">Critical/High/Medium/Low</span><span class="co">]</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">### Immediate Actions (This Week)</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="co">[</span><span class="ot">Issue from served HTML score</span><span class="co">]</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span><span class="co">[</span><span class="ot">Issue from robots.txt</span><span class="co">]</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span><span class="co">[</span><span class="ot">Issue from error persistence</span><span class="co">]</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="fu">### Short Term (This Month)</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="co">[</span><span class="ot">Structured data additions</span><span class="co">]</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span><span class="co">[</span><span class="ot">State attribute improvements</span><span class="co">]</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span><span class="co">[</span><span class="ot">Form validation fixes</span><span class="co">]</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="fu">### Medium Term (This Quarter)</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="co">[</span><span class="ot">robots.txt enhancement</span><span class="co">]</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span><span class="co">[</span><span class="ot">llms.txt creation/improvement</span><span class="co">]</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span><span class="co">[</span><span class="ot">Comprehensive structured data</span><span class="co">]</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="fu">### Long Term (This Year)</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="co">[</span><span class="ot">Advanced features</span><span class="co">]</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span><span class="co">[</span><span class="ot">API development</span><span class="co">]</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span><span class="co">[</span><span class="ot">Monitoring and analytics</span><span class="co">]</span></span></code></pre></div>
+<h2 id="tracking-progress">Tracking Progress</h2>
+<h3 id="run-monthly-audits">Run Monthly Audits</h3>
+<div class="sourceCode" id="cb7" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Monthly audit with history</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com/sitemap.xml <span class="at">-c</span> <span class="at">-1</span> <span class="dt">\</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--enable-history</span> <span class="dt">\</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--generate-dashboard</span></span></code></pre></div>
+<h3 id="view-dashboard">View Dashboard</h3>
+<div class="sourceCode" id="cb8" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">open</span> results/dashboard.html</span></code></pre></div>
+<p><strong>Dashboard shows:</strong></p>
+<ul>
+<li>Score trends over time</li>
+<li>Issue resolution tracking</li>
+<li>Improvement velocity</li>
+<li>Regression detection</li>
+</ul>
+<h3 id="key-metrics-to-monitor">Key Metrics to Monitor</h3>
+<ol type="1">
+<li><strong>Overall Score Trend</strong>
+<ul>
+<li>Target: Steady upward trend</li>
+<li>Warning: Declining or flat trend</li>
+</ul></li>
+<li><strong>Issue Count</strong>
+<ul>
+<li>Target: Decreasing over time</li>
+<li>Warning: Increasing or stagnant</li>
+</ul></li>
+<li><strong>Served HTML Score</strong>
+<ul>
+<li>Target: &gt;80 within 6 months</li>
+<li>Critical: &lt;40 requires immediate action</li>
+</ul></li>
+<li><strong>robots.txt Quality</strong>
+<ul>
+<li>Target: &gt;70 within 3 months</li>
+<li>Warning: &lt;50 indicates gaps</li>
+</ul></li>
+</ol>
+<h2 id="common-scenarios">Common Scenarios</h2>
+<h3 id="scenario-1-e-commerce-site-low-score">Scenario 1: E-commerce
+Site (Low Score)</h3>
+<p><strong>Initial Audit Results:</strong></p>
+<ul>
+<li>Overall: 42/100</li>
+<li>Served: 38/100</li>
+<li>Rendered: 52/100</li>
+<li>robots.txt: 25/100</li>
+</ul>
+<p><strong>Action Plan:</strong></p>
+<p>Week 1:</p>
+<ul>
+<li>Add JSON-LD structured data to product pages</li>
+<li>Make pricing complete and visible</li>
+<li>Create comprehensive robots.txt</li>
+</ul>
+<p>Month 1:</p>
+<ul>
+<li>Fix error message persistence</li>
+<li>Add state attributes to cart</li>
+<li>Implement inline form validation</li>
+</ul>
+<p>Quarter 1:</p>
+<ul>
+<li>Create llms.txt file</li>
+<li>Add structured data to all pages</li>
+<li>Implement API endpoints</li>
+</ul>
+<p><strong>Expected Results After Quarter 1:</strong></p>
+<ul>
+<li>Overall: 75-80/100</li>
+<li>Served: 70-75/100</li>
+<li>Rendered: 75-80/100</li>
+<li>robots.txt: 80-85/100</li>
+</ul>
+<h3 id="scenario-2-content-publisher-medium-score">Scenario 2: Content
+Publisher (Medium Score)</h3>
+<p><strong>Initial Audit Results:</strong></p>
+<ul>
+<li>Overall: 65/100</li>
+<li>Served: 72/100</li>
+<li>Rendered: 61/100</li>
+<li>robots.txt: 55/100</li>
+<li>llms.txt: Missing</li>
+</ul>
+<p><strong>Action Plan:</strong></p>
+<p>Week 1:</p>
+<ul>
+<li>Create llms.txt with attribution requirements</li>
+<li>Enhance robots.txt with AI user agents</li>
+</ul>
+<p>Month 1:</p>
+<ul>
+<li>Add article structured data</li>
+<li>Improve meta descriptions</li>
+<li>Fix heading hierarchy</li>
+</ul>
+<p>Quarter 1:</p>
+<ul>
+<li>Optimize content extraction policies</li>
+<li>Implement rate limiting headers</li>
+<li>Add API documentation</li>
+</ul>
+<p><strong>Expected Results After Quarter 1:</strong></p>
+<ul>
+<li>Overall: 80-85/100</li>
+<li>Served: 85-88/100</li>
+<li>Rendered: 75-80/100</li>
+<li>robots.txt: 80-85/100</li>
+<li>llms.txt: 75-80/105</li>
+</ul>
+<h3 id="scenario-3-saas-application-high-score-maintenance">Scenario 3:
+SaaS Application (High Score, Maintenance)</h3>
+<p><strong>Initial Audit Results:</strong></p>
+<ul>
+<li>Overall: 82/100</li>
+<li>Served: 85/100</li>
+<li>Rendered: 80/100</li>
+<li>robots.txt: 85/100</li>
+<li>llms.txt: 78/105</li>
+</ul>
+<p><strong>Action Plan:</strong></p>
+<p>Monthly:</p>
+<ul>
+<li>Run audits to detect regressions</li>
+<li>Monitor for new issues</li>
+<li>Update AI user agent list</li>
+</ul>
+<p>Quarterly:</p>
+<ul>
+<li>Optimize low-scoring pages</li>
+<li>Review and update llms.txt</li>
+<li>Benchmark against competitors</li>
+</ul>
+<p>Annually:</p>
+<ul>
+<li>Comprehensive review</li>
+<li>Implement advanced features</li>
+<li>Update documentation</li>
+</ul>
+<p><strong>Maintenance Goals:</strong></p>
+<ul>
+<li>Keep scores above 80</li>
+<li>Detect regressions immediately</li>
+<li>Stay current with standards</li>
+</ul>
+<h2 id="advanced-usage">Advanced Usage</h2>
+<h3 id="custom-configuration">Custom Configuration</h3>
+<p>Create <code>.web-audit-config.json</code>:</p>
+<div class="sourceCode" id="cb9" data-role="code-container"><pre
+class="sourceCode json"><code class="sourceCode json" data-role="code-content"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;concurrency&quot;</span><span class="fu">:</span> <span class="dv">10</span><span class="fu">,</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;timeout&quot;</span><span class="fu">:</span> <span class="dv">30000</span><span class="fu">,</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;userAgent&quot;</span><span class="fu">:</span> <span class="st">&quot;Web-Audit-Suite/2.0&quot;</span><span class="fu">,</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;viewport&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;width&quot;</span><span class="fu">:</span> <span class="dv">1920</span><span class="fu">,</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;height&quot;</span><span class="fu">:</span> <span class="dv">1080</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;thresholds&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;llm_suitability&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;low&quot;</span><span class="fu">:</span> <span class="dv">40</span><span class="fu">,</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;medium&quot;</span><span class="fu">:</span> <span class="dv">60</span><span class="fu">,</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;high&quot;</span><span class="fu">:</span> <span class="dv">80</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h3 id="cicd-integration">CI/CD Integration</h3>
+<p>Add to <code>.github/workflows/audit.yml</code>:</p>
+<div class="sourceCode" id="cb10" data-role="code-container"><pre
+class="sourceCode yaml"><code class="sourceCode yaml" data-role="code-content"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Web Audit</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">schedule</span><span class="kw">:</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">cron</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;0 0 * * 0&#39;</span><span class="co">  # Weekly on Sunday</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">workflow_dispatch</span><span class="kw">:</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">audit</span><span class="kw">:</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v3</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Setup Node</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/setup-node@v3</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">node-version</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;18&#39;</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install Web Audit Suite</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>          git clone https://github.com/ddttom/invisible-users.git</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>          cd invisible-users/packages/web-audit-suite</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>          npm install</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Run Audit</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>          cd invisible-users/packages/web-audit-suite</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>          npm start -- -s https://example.com/sitemap.xml -c -1 \</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>            --enable-history \</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>            --generate-dashboard</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Check Thresholds</span></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>          # Fail if score drops below threshold</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>          SCORE=$(jq &#39;.overall_score&#39; results/executive_summary.json)</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>          if (( $(echo &quot;$SCORE &lt; 70&quot; | bc -l) )); then</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>            echo &quot;Score $SCORE below threshold 70&quot;</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>            exit 1</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>          fi</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Upload Results</span></span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/upload-artifact@v3</span></span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">name</span><span class="kw">:</span><span class="at"> audit-results</span></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">path</span><span class="kw">:</span><span class="at"> invisible-users/packages/web-audit-suite/results/</span></span></code></pre></div>
+<h2 id="interpreting-specific-issues">Interpreting Specific Issues</h2>
+<h3 id="served-html-score-significantly-lower-than-rendered">“Served
+HTML score significantly lower than rendered”</h3>
+<p><strong>Meaning:</strong> Your site relies heavily on JavaScript for
+critical content</p>
+<p><strong>Impact:</strong> Most agents (CLI, API-based) cannot access
+your content</p>
+<p><strong>Fix:</strong></p>
+<ol type="1">
+<li>Server-side render critical content</li>
+<li>Use progressive enhancement</li>
+<li>Ensure HTML contains data before JavaScript runs</li>
+</ol>
+<h3 id="error-messages-non-persistent">“Error messages
+non-persistent”</h3>
+<p><strong>Meaning:</strong> Errors vanish or are only shown briefly</p>
+<p><strong>Impact:</strong> Agents miss errors, retry without fixing
+issues</p>
+<p><strong>Fix:</strong></p>
+<ol type="1">
+<li>Remove toast notifications</li>
+<li>Add persistent error summary at top of forms</li>
+<li>Keep errors visible until user corrects them</li>
+</ol>
+<h3 id="missing-structured-data">“Missing structured data”</h3>
+<p><strong>Meaning:</strong> No JSON-LD, microdata, or schema.org
+markup</p>
+<p><strong>Impact:</strong> Agents cannot reliably extract
+product/article information</p>
+<p><strong>Fix:</strong></p>
+<ol type="1">
+<li>Add JSON-LD script tags to pages</li>
+<li>Use schema.org vocabulary</li>
+<li>Start with Product, Article, or LocalBusiness types</li>
+</ol>
+<h3 id="incomplete-pricing-information">“Incomplete pricing
+information”</h3>
+<p><strong>Meaning:</strong> Shows “From £99” but actual price is
+hidden</p>
+<p><strong>Impact:</strong> Agents compare wrong prices, users surprised
+at checkout</p>
+<p><strong>Fix:</strong></p>
+<ol type="1">
+<li>Display total price upfront</li>
+<li>Include VAT status</li>
+<li>Show delivery costs</li>
+<li>Use structured data for machine-readable prices</li>
+</ol>
+<h2 id="getting-help">Getting Help</h2>
+<ul>
+<li><strong>Documentation:</strong> <a
+href="https://github.com/ddttom/invisible-users/blob/main/web-audit-suite/README.md"
+class="uri">https://github.com/ddttom/invisible-users/blob/main/web-audit-suite/README.md</a></li>
+<li><strong>Issues:</strong> <a
+href="https://github.com/ddttom/invisible-users/issues"
+class="uri">https://github.com/ddttom/invisible-users/issues</a></li>
+<li><strong>Examples:</strong> See <code>web-audit-suite/examples</code>
+directory in repository</li>
+</ul>
+<h2 id="summary-workflow">Summary Workflow</h2>
+<ol type="1">
+<li><strong>Initial Audit</strong>: Run full site audit with all
+reports</li>
+<li><strong>Review Dashboard</strong>: Understand current state</li>
+<li><strong>Prioritize Issues</strong>: Critical → High → Medium →
+Low</li>
+<li><strong>Implement Fixes</strong>: Start with highest impact, lowest
+effort</li>
+<li><strong>Re-audit</strong>: Verify improvements</li>
+<li><strong>Monitor</strong>: Monthly audits to track progress and catch
+regressions</li>
+<li><strong>Maintain</strong>: Keep scores above thresholds</li>
+</ol>
+<p><strong>Target Timeline:</strong></p>
+<ul>
+<li>Week 1: Critical issues fixed</li>
+<li>Month 1: High priority issues addressed</li>
+<li>Quarter 1: Medium priority improvements complete</li>
+<li>Year 1: Comprehensive AI agent readiness achieved</li>
+</ul>
+<hr />
+<p>Web Audit Suite provides the measurement framework. The
+Implementation Cookbook (Appendix A) provides the fixes. Together, they
+transform your site from theory to measurable AI agent
+compatibility.</p>
+<hr>
+<nav class="appendix-navigation" role="navigation" aria-label="Appendix Navigation">
+    <p><a href="appendix-index.html">← Back to Appendices Index</a></p>
+    <p>Quick navigation:
+        <a href="appendix-a.html">A</a> |
+        <a href="appendix-b.html">B</a> |
+        <a href="appendix-c.html">C</a> |
+        <a href="appendix-d.html">D</a> |
+        <a href="appendix-e.html">E</a> |
+        <a href="appendix-f.html">F</a> |
+        <a href="appendix-g.html">G</a> |
+        <a href="appendix-h.html">H</a> |
+        <a href="appendix-i.html">I</a> |
+        <a href="appendix-j.html">J</a> |
+        <a href="appendix-k.html">K</a> |
+        <a href="appendix-l.html">L</a>
+    </p>
+</nav>
+
+  <!-- Floating home button (top-left) -->
+  <a href="index.html" class="floating-home-button" aria-label="Back to Home">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 0L0 8h3v8h10V8h3L8 0zm0 2.5L13.5 8H11v6H5V8H2.5L8 2.5z"/>
+    </svg>
+    Home
+  </a>
+  <!-- Floating back to top button (bottom-left) -->
+  <a href="#" class="floating-top-button" aria-label="Back to Top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 3.5l-5.5 5.5L4 10.5l3-3v8.5h2V7.5l3 3L13.5 9z"/>
+    </svg>
+    Top
+  </a>
+
+  <script>
+    // Add copy buttons to all code blocks
+    document.addEventListener('DOMContentLoaded', function() {
+      // Find both wrapped code blocks (div.sourceCode) and standalone pre blocks
+      const wrappedBlocks = document.querySelectorAll('div.sourceCode');
+      const standaloneBlocks = document.querySelectorAll('pre[data-role="code-block"]:not(.sourceCode)');
+
+      // Process wrapped code blocks (HTML, JavaScript, etc.)
+      wrappedBlocks.forEach(function(block) {
+        addCopyButton(block, function(block) {
+          const codeElement = block.querySelector('code');
+          let text = '';
+          const spans = codeElement.querySelectorAll('span[id^="cb"]');
+          spans.forEach(function(span) {
+            const nodes = Array.from(span.childNodes);
+            nodes.forEach(function(node) {
+              if (node.nodeType === Node.TEXT_NODE) {
+                text += node.textContent;
+              } else if (node.nodeName !== 'A') {
+                text += node.textContent;
+              }
+            });
+          });
+          return text;
+        });
+      });
+
+      // Process standalone pre blocks (text, robots.txt, etc.)
+      standaloneBlocks.forEach(function(block) {
+        addCopyButton(block, function(block) {
+          const codeElement = block.querySelector('code');
+          return codeElement ? codeElement.textContent : block.textContent;
+        });
+      });
+
+      // Helper function to add copy button to any block
+      function addCopyButton(block, extractTextFn) {
+        const button = document.createElement('button');
+        button.className = 'copy-button';
+        button.textContent = 'Copy';
+        button.setAttribute('aria-label', 'Copy code to clipboard');
+
+        button.addEventListener('click', function() {
+          const text = extractTextFn(block);
+
+          navigator.clipboard.writeText(text).then(function() {
+            button.textContent = 'Copied';
+            button.classList.add('copied');
+            setTimeout(function() {
+              button.textContent = 'Copy';
+              button.classList.remove('copied');
+            }, 2000);
+          }).catch(function(err) {
+            console.error('Failed to copy:', err);
+            button.textContent = 'Failed';
+            setTimeout(function() {
+              button.textContent = 'Copy';
+            }, 2000);
+          });
+        });
+
+        block.insertBefore(button, block.firstChild);
+      }
+    });
+  </script>
+</body>
+</html>

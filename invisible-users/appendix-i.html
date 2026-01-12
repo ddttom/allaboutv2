@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Tom Cranstoun" />
+  <meta name="description" content="Practical guidance from The Invisible Users book on designing AI agent-friendly websites" />
+  <title>Appendix I: Pipeline Failure Case Study</title>
+  
+
+  <link rel="canonical" href="https://allabout.network/invisible-users/appendix-i.html">
+  <!-- AI-specific meta tags (proposed pattern from Chapter 10) -->
+  <meta name="ai-preferred-access" content="html">
+  <meta name="ai-content-policy" content="summaries-allowed, full-extraction-allowed">
+  <meta name="ai-freshness" content="monthly">
+  <meta name="ai-structured-data" content="json-ld">
+  <meta name="ai-attribution" content="required" text="Source: The Invisible Users by Tom Cranstoun, https://allabout.network/invisible-users/">
+  <meta name="llms-txt" content="/llms.txt">
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "name": "Appendix I: Pipeline Failure Case Study",
+    "description": "Practical guidance from The Invisible Users book on designing AI agent-friendly websites",
+    "author": {
+      "@type": "Person",
+      "name": "Tom Cranstoun",
+      "email": "tom.cranstoun@gmail.com",
+      "url": "https://allabout.network"
+    },
+    "inLanguage": "en-GB",
+    "datePublished": "2026-01-10",
+    "dateModified": "2026-01-10",
+    "isPartOf": {
+      "@type": "Book",
+      "name": "The Invisible Users",
+      "author": {
+        "@type": "Person",
+        "name": "Tom Cranstoun"
+      },
+      "url": "https://allabout.network/invisible-users"
+    },
+    "position": "9"
+  }
+  </script>
+  <link rel="stylesheet" href="appendix.css">
+</head>
+<body>
+<nav class="appendix-navigation" role="navigation" aria-label="Appendix Navigation">
+    <p><a href="appendix-index.html">← Back to Appendices Index</a></p>
+    <p>Quick navigation:
+        <a href="appendix-a.html">A</a> |
+        <a href="appendix-b.html">B</a> |
+        <a href="appendix-c.html">C</a> |
+        <a href="appendix-d.html">D</a> |
+        <a href="appendix-e.html">E</a> |
+        <a href="appendix-f.html">F</a> |
+        <a href="appendix-g.html">G</a> |
+        <a href="appendix-h.html">H</a> |
+        <a href="appendix-i.html">I</a> |
+        <a href="appendix-j.html">J</a> |
+        <a href="appendix-k.html">K</a> |
+        <a href="appendix-l.html">L</a>
+    </p>
+</nav>
+<hr>
+<header id="title-block-header">
+<h1 class="title">Appendix I: Pipeline Failure Case Study</h1>
+<p class="subtitle">The Invisible Users</p>
+<p class="author">Tom Cranstoun</p>
+<p class="date">January 2026</p>
+</header>
+<nav id="TOC" role="navigation" aria-label="Table of Contents">
+<ul>
+<li><a href="#appendix-i---pipeline-failure-case-study"
+id="toc-appendix-i---pipeline-failure-case-study">Appendix I - Pipeline
+Failure Case Study</a>
+<ul>
+<li><a href="#the-203000-cruise-pricing-error"
+id="toc-the-203000-cruise-pricing-error">The £203,000 Cruise Pricing
+Error</a></li>
+<li><a href="#error-summary" id="toc-error-summary">Error
+Summary</a></li>
+<li><a href="#error-chain-analysis" id="toc-error-chain-analysis">Error
+Chain Analysis</a></li>
+<li><a href="#error-classification" id="toc-error-classification">Error
+Classification</a></li>
+<li><a href="#why-this-error-matters"
+id="toc-why-this-error-matters">Why This Error Matters</a></li>
+<li><a href="#prevention-strategies"
+id="toc-prevention-strategies">Prevention Strategies</a></li>
+<li><a href="#technical-root-cause"
+id="toc-technical-root-cause">Technical Root Cause</a></li>
+<li><a href="#lessons-learned" id="toc-lessons-learned">Lessons
+Learned</a></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="appendix-i---pipeline-failure-case-study">Appendix I - Pipeline
+Failure Case Study</h1>
+<h2 id="the-203000-cruise-pricing-error">The £203,000 Cruise Pricing
+Error</h2>
+<p>A detailed analysis of a real-world AI pipeline failure and the
+validation layers that should have prevented it.</p>
+<hr />
+<h2 id="error-summary">Error Summary</h2>
+<p><strong>Source of Error:</strong> This analysis is based on output
+from the author’s AI assistant (Claude for Chrome, early beta version)
+when researching cruise options in December 2024. The agent was asked to
+find Danube cruises ending in Budapest in May 2026.</p>
+<p><strong>The Error:</strong> The AI-generated cruise itinerary
+incorrectly listed one luxury river cruise operator’s pricing as
+<strong>£203,000-£402,000</strong> when the actual pricing was likely
+<strong>£2,030-£4,020</strong> per person.</p>
+<p>This represents a <strong>100x multiplication error</strong> - two
+extra zeros added to the correct price.</p>
+<p><strong>Note on Anonymization:</strong> Operator names have been
+anonymized in this appendix. The error occurred in the agent’s reasoning
+and data extraction, not due to any fault by the cruise operators
+themselves. All operators mentioned in the original output (Saga
+Cruises, Uniworld River Cruises, Viking River Cruises) provide
+legitimate services with accurate pricing on their websites.</p>
+<p>This appendix provides the complete error analysis that informed
+Chapter 12’s discussion of pipeline failures, validation layers, and
+confidence scoring. It demonstrates why agent creators must build
+guardrails into their systems.</p>
+<hr />
+<h2 id="error-chain-analysis">Error Chain Analysis</h2>
+<h3 id="stage-1-user-query">Stage 1: User Query</h3>
+<p><strong>Input:</strong> Request for cruise itinerary information
+(Germany → Budapest → Rovinj, May 2026)</p>
+<p><strong>AI Task:</strong> Research multiple cruise operators, gather
+pricing, dates, and details</p>
+<h3 id="agents-actual-output-anonymized">Agent’s Actual Output
+(Anonymized)</h3>
+<p>The agent provided comparative information for three operators:</p>
+<h4 id="operator-a---scenic-river-journey">Operator A - “Scenic River
+Journey”</h4>
+<ul>
+<li>Route: Vienna to Budapest (7 nights)</li>
+<li>Departs: ~10-12 May 2026</li>
+<li>Pricing: Not specified (all-inclusive package)</li>
+<li>Features: All-inclusive (drinks, dining, excursions)</li>
+<li>Rating: 4.5/5 stars</li>
+<li>Suited for: All-inclusive comfort</li>
+</ul>
+<h4 id="operator-b---delightful-cruise-experience">Operator B -
+“Delightful Cruise Experience”</h4>
+<ul>
+<li>Route: Various starting points to Budapest</li>
+<li>Departs: Early May 2026</li>
+<li><strong>Pricing: £203,000-£402,000</strong> ← ERROR</li>
+<li>Ship: Luxury vessel</li>
+<li>Suited for: Luxury, boutique experience</li>
+</ul>
+<h4 id="operator-c---classic-river-route">Operator C - “Classic River
+Route”</h4>
+<ul>
+<li>Route: Multiple options ending in Budapest</li>
+<li>Departs: Early-mid May 2026</li>
+<li>Pricing: Not specified</li>
+<li>Features: Elegant design, frequent departures</li>
+<li>Suited for: First-timers</li>
+</ul>
+<p><strong>Critical observation</strong>: The agent provided pricing for
+only one of three operators. Operators A and C showed “not specified” or
+were presented without price data. Only Operator B included pricing -
+and that pricing was erroneous.</p>
+<p><strong>What comparative analysis should have revealed</strong>: Even
+without pricing for all operators, Operator B’s £203,000-£402,000 is
+100x higher than typical river cruise pricing (£2,000-£6,000). This
+extreme outlier should have triggered immediate validation flags,
+especially given the absence of pricing data for peer operators with
+which to compare.</p>
+<h3 id="stage-2-information-retrieval">Stage 2: Information
+Retrieval</h3>
+<p><strong>AI Action:</strong> Web search or database query for “luxury
+Danube cruise pricing 2026”</p>
+<p><strong>Data Source Encountered:</strong> Likely one of:</p>
+<ul>
+<li>Travel booking website with pricing tables</li>
+<li>PDF brochure with formatted prices</li>
+<li>Comparison site with multiple currency formats</li>
+<li>Cached or indexed data from previous years</li>
+</ul>
+<h3 id="stage-3-data-parsing-error-critical-failure-point">Stage 3: Data
+Parsing Error (Critical Failure Point)</h3>
+<p>This is where the error occurred. Four possible scenarios:</p>
+<h4 id="scenario-a-decimal-separator-confusion">Scenario A: Decimal
+Separator Confusion</h4>
+<pre class="text" data-role="code-block" data-language="text"><code>Original Source: €2.030,00 - €4.020,00 (European format)
+AI Interpretation: 2.030 = 2030 (treating period as decimal)
+Plus conversion: 2030 × 100 = 203,000 (incorrect zero addition)</code></pre>
+<p>European number formatting uses periods as thousands separators and
+commas for decimals. If the agent parsed European format as British
+format, it would misread the number by 100x.</p>
+<h4 id="scenario-b-number-concatenation">Scenario B: Number
+Concatenation</h4>
+<pre class="text" data-role="code-block" data-language="text"><code>Original Source:
+  Early Booking: £2,030
+  Standard Rate: £4,020
+
+AI Misread:
+  Concatenated without separators: 20304020
+  Split incorrectly: 203,040 and 402,000
+  Formatted: £203,000-£402,000</code></pre>
+<p>HTML might present pricing across multiple elements without clear
+separators. Incorrect concatenation produces magnitude errors.</p>
+<h4 id="scenario-c-wrong-data-field">Scenario C: Wrong Data Field</h4>
+<pre class="text" data-role="code-block" data-language="text"><code>Original Table:
+| Cruise      | Per Person | Total Revenue | Fleet Value |
+|-------------|-----------|---------------|-------------|
+| Operator X  | £2,030    | £203,000      | £4.02M     |
+
+AI Selected: Total Revenue column instead of Per Person column</code></pre>
+<p>The agent extracted the wrong field entirely. The table showed
+multiple price points - per person, total voyage revenue, fleet
+valuation. Selecting the wrong column produced the error.</p>
+<h4 id="scenario-d-htmlcss-parsing-error">Scenario D: HTML/CSS Parsing
+Error</h4>
+<div class="sourceCode" id="cb4" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;price&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;currency&quot;</span><span class="dt">&gt;</span>£<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;thousands&quot;</span><span class="dt">&gt;</span>2<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;hundreds&quot;</span><span class="dt">&gt;</span>030<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>AI Read: Concatenated spans without proper separators</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>Result: £2030 → reformatted with UK thousands separator → £203,000</span></code></pre></div>
+<p>CSS formatting might visually separate elements that are adjacent in
+HTML. Parsing without CSS awareness produces concatenation errors.</p>
+<h3 id="stage-4-validation-failure-missing-guardrails">Stage 4:
+Validation Failure (Missing Guardrails)</h3>
+<p><strong>Missing Sanity Check:</strong></p>
+<p>The agent should have flagged this as anomalous because:</p>
+<ul>
+<li>£203,000 per person = £406,000 per couple for one week</li>
+<li>This exceeds typical round-the-world luxury cruise pricing</li>
+<li>Luxury river cruise operators typically price £3,000-£8,000</li>
+<li>No contextual warnings about “ultra-luxury” or “suite-only”
+pricing</li>
+</ul>
+<p><strong>Why Validation Failed:</strong></p>
+<ul>
+<li>No price range boundaries set in agent parameters</li>
+<li>Luxury cruise market has high variance (£500-£50,000+ exists)</li>
+<li>Agent lacked real-time market context for 2026 pricing</li>
+<li>No comparative check against other operators’ pricing</li>
+</ul>
+<p><strong>This is the critical failure</strong>: Not the parsing error
+(which is understandable), but the absence of validation layers that
+should have caught it before output.</p>
+<h3 id="stage-5-output-generation">Stage 5: Output Generation</h3>
+<p><strong>AI Action:</strong> Formatted information into structured
+document</p>
+<p><strong>Error Propagation:</strong></p>
+<ul>
+<li>Incorrect price passed through without correction</li>
+<li>Presented alongside accurate information (dates, routes,
+ratings)</li>
+<li>Mixed with legitimate high-end pricing from other operators</li>
+<li>No caveats or verification notes added</li>
+</ul>
+<p><strong>Format creates false confidence</strong>: Professional
+formatting and detailed presentation mask underlying data quality
+issues. Structure != accuracy.</p>
+<h3 id="stage-6-human-detection">Stage 6: Human Detection</h3>
+<p><strong>User Query:</strong> “Does the pasted document really quote
+203,000?”</p>
+<p><strong>Recognition Point:</strong> Human domain knowledge identified
+impossibility</p>
+<ul>
+<li>Immediate recognition that price was absurd</li>
+<li>Context awareness (river cruises don’t cost £200k)</li>
+<li>Comparative reasoning (other operators priced reasonably)</li>
+</ul>
+<p><strong>This reveals the gap</strong>: The human had validation
+layers (domain knowledge, comparative context, scepticism) that the
+agent lacked.</p>
+<hr />
+<h2 id="error-classification">Error Classification</h2>
+<h3 id="type-data-transformation-error">Type: Data Transformation
+Error</h3>
+<p>Specifically: Numerical parsing and formatting mistake during
+extraction phase</p>
+<h3 id="severity-high">Severity: High</h3>
+<ul>
+<li>Factually incorrect by factor of 100</li>
+<li>Could mislead users about affordability</li>
+<li>Undermines trust in other accurate data</li>
+<li>Creates false confidence through professional formatting</li>
+</ul>
+<h3 id="detectability-high-for-humans">Detectability: High (for
+humans)</h3>
+<ul>
+<li>Obvious to domain experts</li>
+<li>Detectable through comparison with other prices</li>
+<li>Fails basic reasonableness test</li>
+</ul>
+<h3 id="detectability-low-for-agents-without-validation">Detectability:
+Low (for agents without validation)</h3>
+<ul>
+<li>No automated flags or warnings</li>
+<li>Presented with same confidence as verified data</li>
+<li>No comparative analysis performed</li>
+<li>No cross-referencing against structured data</li>
+</ul>
+<hr />
+<h2 id="why-this-error-matters">Why This Error Matters</h2>
+<h3 id="compounding-trust-issues">1. Compounding Trust Issues</h3>
+<p>When AI presents detailed, formatted information with specific
+numbers, users assume verification has occurred. Mixing accurate data
+(dates, routes, ratings) with incorrect data (pricing) creates false
+confidence.</p>
+<p><strong>The danger</strong>: Users trust the agent because 90% of the
+information is correct. The 10% that’s wrong (pricing) is precisely the
+critical decision point.</p>
+<h3 id="silent-failure">2. Silent Failure</h3>
+<p>No warning flags, caveats, or uncertainty indicators accompanied the
+incorrect price. The agent presented it with the same confidence as
+verified information.</p>
+<p><strong>Missing elements</strong>:</p>
+<ul>
+<li>No “unverified - recommend checking operator site” caveat</li>
+<li>No confidence score (e.g., “40% confidence due to data
+conflicts”)</li>
+<li>No comparative context (e.g., “significantly above market
+average”)</li>
+<li>No source attribution (e.g., “extracted from TourRadar.com, January
+2026”)</li>
+</ul>
+<h3 id="human-expertise-required">3. Human Expertise Required</h3>
+<p>Detection required:</p>
+<ul>
+<li>Domain knowledge (cruise pricing norms)</li>
+<li>Contextual reasoning (comparative analysis)</li>
+<li>Scepticism (questioning presented facts)</li>
+</ul>
+<p><strong>The problem</strong>: Most users lack domain expertise for
+every category where they use agents. You might know cruise pricing but
+not insurance rates, legal fees, or medical costs. The agent should
+provide validation, not require it.</p>
+<h3 id="systematic-weakness">4. Systematic Weakness</h3>
+<p>This type of error reveals:</p>
+<ul>
+<li>Insufficient validation rules</li>
+<li>No cross-referencing mechanisms</li>
+<li>Limited real-world knowledge boundaries</li>
+<li>Absence of “common sense” filters</li>
+</ul>
+<p><strong>The implication</strong>: If an obvious 100x error passes
+through, subtler errors (20% too high, wrong dates, incorrect
+inclusions) likely pass through unchallenged.</p>
+<hr />
+<h2 id="prevention-strategies">Prevention Strategies</h2>
+<h3 id="for-ai-systems-agent-creators">For AI Systems (Agent
+Creators)</h3>
+<h4 id="range-validation">1. Range Validation</h4>
+<div class="sourceCode" id="cb5" data-role="code-container"><pre
+class="sourceCode javascript"><code class="sourceCode javascript" data-role="code-content"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Example validation logic</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> PriceValidator {</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">validate</span>(price<span class="op">,</span> category) {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> ranges <span class="op">=</span> {</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>      <span class="st">&#39;river-cruise&#39;</span><span class="op">:</span> { <span class="dt">max</span><span class="op">:</span> <span class="dv">15000</span><span class="op">,</span> <span class="dt">typical</span><span class="op">:</span> <span class="dv">5000</span> }<span class="op">,</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">&#39;ocean-cruise&#39;</span><span class="op">:</span> { <span class="dt">max</span><span class="op">:</span> <span class="dv">50000</span><span class="op">,</span> <span class="dt">typical</span><span class="op">:</span> <span class="dv">8000</span> }</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    }<span class="op">;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> range <span class="op">=</span> ranges[category]<span class="op">;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (price <span class="op">&gt;</span> range<span class="op">.</span><span class="at">max</span>) {</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> {</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="dt">valid</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        <span class="dt">confidence</span><span class="op">:</span> <span class="dv">20</span><span class="op">,</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        <span class="dt">warning</span><span class="op">:</span> <span class="vs">`Price (£</span><span class="sc">${</span>price<span class="sc">}</span><span class="vs">) exceeds typical maximum (£</span><span class="sc">${</span>range<span class="op">.</span><span class="at">max</span><span class="sc">}</span><span class="vs">)`</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>      }<span class="op">;</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> { <span class="dt">valid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">confidence</span><span class="op">:</span> <span class="dv">95</span> }<span class="op">;</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>This would have caught the error</strong>: £203,000 &gt;
+£15,000 maximum → flagged for review</p>
+<h4 id="comparative-checks">2. Comparative Checks</h4>
+<div class="sourceCode" id="cb6" data-role="code-container"><pre
+class="sourceCode javascript"><code class="sourceCode javascript" data-role="code-content"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Compare against other operators</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">validateAgainstPeers</span>(price<span class="op">,</span> competitorPrices) {</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> avgPrice <span class="op">=</span> <span class="fu">calculateAverage</span>(competitorPrices)<span class="op">;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> ratio <span class="op">=</span> price <span class="op">/</span> avgPrice<span class="op">;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (ratio <span class="op">&gt;</span> <span class="dv">10</span>) {</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">valid</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">confidence</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">warning</span><span class="op">:</span> <span class="vs">`Price </span><span class="sc">${</span>ratio<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="sc">}</span><span class="vs">x higher than market average (£</span><span class="sc">${</span>avgPrice<span class="sc">}</span><span class="vs">)`</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    }<span class="op">;</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> { <span class="dt">valid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">confidence</span><span class="op">:</span> <span class="dv">90</span> }<span class="op">;</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">// Usage</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="fu">validateAgainstPeers</span>(<span class="dv">203000</span><span class="op">,</span> [<span class="dv">2030</span><span class="op">,</span> <span class="dv">3450</span><span class="op">,</span> <span class="dv">5200</span><span class="op">,</span> <span class="dv">2800</span>])<span class="op">;</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co">// Returns: { valid: false, confidence: 10, warning: &quot;Price 58.8x higher...&quot; }</span></span></code></pre></div>
+<p><strong>This would have caught the error</strong>: £203,000 is 58x
+higher than peer average → obvious anomaly</p>
+<h4 id="structured-data-cross-reference">3. Structured Data
+Cross-Reference</h4>
+<div class="sourceCode" id="cb7" data-role="code-container"><pre
+class="sourceCode javascript"><code class="sourceCode javascript" data-role="code-content"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Check HTML against JSON-LD</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">crossReferencePrice</span>(htmlPrice<span class="op">,</span> jsonLDPrice) {</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>jsonLDPrice) {</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> { <span class="dt">confidence</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span> <span class="dt">warning</span><span class="op">:</span> <span class="st">&#39;No structured data for verification&#39;</span> }<span class="op">;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> difference <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(htmlPrice <span class="op">-</span> jsonLDPrice)<span class="op">;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> percentDiff <span class="op">=</span> (difference <span class="op">/</span> jsonLDPrice) <span class="op">*</span> <span class="dv">100</span><span class="op">;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (percentDiff <span class="op">&gt;</span> <span class="dv">5</span>) {</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">confidence</span><span class="op">:</span> <span class="dv">30</span><span class="op">,</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>      <span class="dt">warning</span><span class="op">:</span> <span class="vs">`HTML price (£</span><span class="sc">${</span>htmlPrice<span class="sc">}</span><span class="vs">) conflicts with structured data (£</span><span class="sc">${</span>jsonLDPrice<span class="sc">}</span><span class="vs">)`</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    }<span class="op">;</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> { <span class="dt">confidence</span><span class="op">:</span> <span class="dv">95</span><span class="op">,</span> <span class="dt">note</span><span class="op">:</span> <span class="st">&#39;Verified across multiple sources&#39;</span> }<span class="op">;</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>This would have caught the error</strong>: If website had
+JSON-LD showing £2,030 but HTML parsing returned £203,000, the conflict
+would be flagged</p>
+<h4 id="confidence-scoring">4. Confidence Scoring</h4>
+<div class="sourceCode" id="cb8" data-role="code-container"><pre
+class="sourceCode javascript"><code class="sourceCode javascript" data-role="code-content"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Aggregate validation results</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">calculateConfidence</span>(validations) {</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> confidence <span class="op">=</span> <span class="dv">100</span><span class="op">;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  validations<span class="op">.</span><span class="fu">forEach</span>(v <span class="kw">=&gt;</span> {</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="op">!</span>v<span class="op">.</span><span class="at">valid</span>) {</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>      confidence <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(confidence<span class="op">,</span> v<span class="op">.</span><span class="at">confidence</span>)<span class="op">;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (confidence <span class="op">&lt;</span> <span class="dv">50</span>) {</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>      <span class="dt">action</span><span class="op">:</span> <span class="st">&#39;REQUIRE_VERIFICATION&#39;</span><span class="op">,</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">message</span><span class="op">:</span> <span class="st">&#39;Price data unreliable. Verify at operator website before booking.&#39;</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    }<span class="op">;</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> { <span class="dt">action</span><span class="op">:</span> <span class="st">&#39;PROCEED&#39;</span><span class="op">,</span> confidence }<span class="op">;</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>This would have prevented output</strong>: Confidence score
+of 10-30% would trigger “require verification” response instead of
+presenting the price as fact</p>
+<h3 id="for-users-readers-of-this-book">For Users (Readers of This
+Book)</h3>
+<h4 id="spot-check-critical-data">1. Spot-Check Critical Data</h4>
+<p>Always verify:</p>
+<ul>
+<li>Prices (especially if surprisingly high or low)</li>
+<li>Dates and times</li>
+<li>Contact information</li>
+<li>Legal or financial details</li>
+</ul>
+<p><strong>Why this matters</strong>: Agents are good at gathering
+information but inconsistent at validation. Critical decisions require
+human verification.</p>
+<h4 id="cross-reference">2. Cross-Reference</h4>
+<p>Compare AI-provided information against:</p>
+<ul>
+<li>Official operator websites</li>
+<li>Multiple booking platforms</li>
+<li>Recent reviews or forums</li>
+</ul>
+<p><strong>The £203k error would have been caught immediately</strong>:
+A 30-second check of the operator’s website would show £2,030, not
+£203,000.</p>
+<h4 id="question-anomalies">3. Question Anomalies</h4>
+<p>If something seems wrong:</p>
+<ul>
+<li>Ask the agent to verify</li>
+<li>Request source information</li>
+<li>Check multiple sources independently</li>
+</ul>
+<p><strong>Trust but verify</strong>: The agent is a research assistant,
+not an authoritative source.</p>
+<h4 id="domain-knowledge">4. Domain Knowledge</h4>
+<p>Maintain basic awareness of:</p>
+<ul>
+<li>Typical price ranges for services</li>
+<li>Industry norms and standards</li>
+<li>Red flags for errors or scams</li>
+</ul>
+<p><strong>You don’t need expertise, just rough ranges</strong>: Knowing
+that river cruises cost £2k-£8k (not £200k) is sufficient to catch this
+error.</p>
+<hr />
+<h2 id="technical-root-cause">Technical Root Cause</h2>
+<h3 id="the-challenge-of-number-parsing">The Challenge of Number
+Parsing</h3>
+<p>Large language models process text, not structured data. When
+encountering numbers:</p>
+<h4 id="no-inherent-concept-of-magnitude">1. No Inherent Concept of
+Magnitude</h4>
+<ul>
+<li>“203000” and “2030” are just token sequences</li>
+<li>No built-in understanding that one is 100x the other</li>
+<li>Models learn statistical patterns, not mathematical properties</li>
+</ul>
+<h4 id="format-ambiguity">2. Format Ambiguity</h4>
+<ul>
+<li>£2,030 vs £2.030 vs £2030.00</li>
+<li>Different regional conventions (UK vs European vs US)</li>
+<li>HTML/PDF formatting artifacts</li>
+<li>Currency symbols, thousands separators, decimal points</li>
+</ul>
+<h4 id="context-dependent-interpretation">3. Context-Dependent
+Interpretation</h4>
+<ul>
+<li>Same number might mean price, quantity, date, reference number</li>
+<li>AI must infer meaning from surrounding text</li>
+<li>Ambiguous HTML structure complicates extraction</li>
+</ul>
+<h4 id="transformation-errors-compound">4. Transformation Errors
+Compound</h4>
+<pre class="text" data-role="code-block" data-language="text"><code>Original source → OCR/parsing → AI interpretation → formatting → output</code></pre>
+<p>Each step can introduce errors. No checksums or validation between
+steps. By the time the error reaches output, it’s treated as validated
+data.</p>
+<h3 id="why-this-specific-error-pattern">Why This Specific Error
+Pattern</h3>
+<p>The <strong>100x multiplication</strong> (adding two zeros)
+suggests:</p>
+<ul>
+<li>Decimal point treated as thousands separator</li>
+<li>Two-stage conversion (format + currency) applied incorrectly</li>
+<li>Copy-paste error in training data or retrieval source</li>
+<li>Systematic parsing rule misapplied to European number format</li>
+</ul>
+<p><strong>The key insight</strong>: This wasn’t a reasoning failure.
+The agent didn’t think £203,000 was reasonable. It never had the chance
+to reason about the data because validation layers were absent.</p>
+<hr />
+<h2 id="lessons-learned">Lessons Learned</h2>
+<h3 id="data-pipeline-failures-not-reasoning-failures">1. Data Pipeline
+Failures, Not Reasoning Failures</h3>
+<p>The error occurred in <strong>extraction and parsing</strong>, not in
+understanding that £203,000 is unreasonable. An AI doing comparative
+analysis would reject this outlier immediately.</p>
+<p><strong>Implication for agent creators</strong>: Focus on data
+quality and validation layers, not just better reasoning models.</p>
+<h3 id="isolated-processing-creates-blind-spots">2. Isolated Processing
+Creates Blind Spots</h3>
+<p>Processing each operator independently without cross-referencing
+allowed bad data to propagate. Comparative validation would have caught
+this.</p>
+<p><strong>The incomplete data problem</strong>: The agent retrieved
+pricing for only one of three operators. This itself should have
+triggered a warning: “Unable to provide comparative pricing - only 1 of
+3 operators returned price data. Confidence: low. Recommend manual
+verification.”</p>
+<p><strong>Best practice</strong>: Never process data in isolation.
+Always maintain context and comparison points. When comparative data is
+incomplete, flag it explicitly and reduce confidence scores.</p>
+<h3 id="single-source-extraction-is-fragile">3. Single-Source Extraction
+is Fragile</h3>
+<p>Relying on one data source without verification against official
+operator sites creates vulnerability to parsing errors, formatting
+issues, or outdated information.</p>
+<p><strong>Best practice</strong>: Multi-source verification. HTML +
+JSON-LD + API responses. When sources conflict, flag it.</p>
+<h3 id="validation-layers-are-essential">4. Validation Layers Are
+Essential</h3>
+<p>Critical data needs multiple checkpoints:</p>
+<ul>
+<li>Range validation (is this within expected bounds?)</li>
+<li>Comparative validation (how does this compare to alternatives?)</li>
+<li>Source verification (does this match the official site?)</li>
+<li>Cross-referencing (do multiple sources agree?)</li>
+</ul>
+<p><strong>This is the core lesson of Chapter 12</strong>: Build these
+checkpoints into your agent systems. They’re not optional extras;
+they’re essential guardrails.</p>
+<h3 id="format-creates-false-confidence">5. Format Creates False
+Confidence</h3>
+<p>Professional formatting and detailed presentation mask underlying
+data quality issues. Structure != accuracy.</p>
+<p><strong>The danger</strong>: Users trust well-formatted output more
+than plain text, even when data quality is identical.</p>
+<h3 id="detection-methods-matter">6. Detection Methods Matter</h3>
+<p>This error was caught through:</p>
+<ul>
+<li>Human domain knowledge (cruises don’t cost £200k)</li>
+<li>Contextual comparison (other operators were £2k-£6k)</li>
+<li>Questioning anomalies (asking “does this really say £203,000?”)</li>
+</ul>
+<p>Not through:</p>
+<ul>
+<li>AI self-correction</li>
+<li>Automated validation</li>
+<li>System warnings</li>
+</ul>
+<p><strong>The gap</strong>: Humans have these validation mechanisms
+built in. Agents need them explicitly implemented.</p>
+<h3 id="obvious-errors-reveal-systemic-issues">7. Obvious Errors Reveal
+Systemic Issues</h3>
+<p>If an obvious 100x error passes through, subtler errors (20% too
+high, wrong dates, incorrect inclusions) likely pass through
+unchallenged.</p>
+<p><strong>The real concern</strong>: The £203k error was caught because
+it was absurd. How many plausible-but-wrong errors propagate without
+detection?</p>
+<hr />
+<h2 id="conclusion">Conclusion</h2>
+<p>This £203,000 pricing error illustrates a different failure mode than
+initially appears. The error likely occurred during <strong>initial data
+retrieval or parsing</strong> - not during decision-making.</p>
+<h3 id="the-real-failure-point">The Real Failure Point</h3>
+<p>An AI agent doing comparison shopping would <strong>reject or
+flag</strong> this price as an outlier when comparing:</p>
+<ul>
+<li>Operator A: £2,000-£4,000</li>
+<li>Operator B: £3,500-£6,500</li>
+<li>Operator C: £203,000-£402,000 ← Obvious anomaly</li>
+<li>Operator D: £2,800-£5,200</li>
+</ul>
+<p>The actual failure was probably:</p>
+<ol type="1">
+<li><strong>Bad data retrieval</strong> - Wrong field extracted from
+source</li>
+<li><strong>No comparative validation</strong> - Each operator
+researched in isolation</li>
+<li><strong>No sanity checking</strong> - Price accepted without
+cross-referencing</li>
+<li><strong>Single-source reliance</strong> - No verification against
+official operator site</li>
+</ol>
+<h3 id="what-this-reveals">What This Reveals</h3>
+<p>This wasn’t an AI “not understanding that £203,000 is expensive” - it
+was a <strong>data pipeline failure</strong>:</p>
+<ul>
+<li>Wrong data extracted from source (most likely)</li>
+<li>Incorrect parsing of number format (possible)</li>
+<li>No comparative analysis performed (systemic)</li>
+<li>No validation against known ranges (missing safeguard)</li>
+</ul>
+<h3 id="application-to-chapter-12">Application to Chapter 12</h3>
+<p>This case study informed the validation framework presented in
+Chapter 12:</p>
+<ul>
+<li><strong>Range validation</strong>: £203,000 &gt; £15,000 maximum →
+flag</li>
+<li><strong>Comparative analysis</strong>: 58x higher than peers →
+flag</li>
+<li><strong>Structured data cross-reference</strong>: HTML != JSON-LD →
+flag</li>
+<li><strong>Confidence scoring</strong>: Multiple failures → very low
+confidence</li>
+<li><strong>Graceful degradation</strong>: Low confidence → require
+verification</li>
+</ul>
+<h3 id="key-takeaway">Key Takeaway</h3>
+<p>The failure wasn’t in AI reasoning about prices, but in data
+extraction and validation. Even sophisticated AI systems need robust
+data pipelines with cross-referencing and sanity checks, not just better
+reasoning capabilities.</p>
+<p><strong>For agent creators</strong>: Build validation layers. Don’t
+assume your extraction is correct. Cross-reference. Score confidence.
+Require verification for low-confidence data. These guardrails are the
+difference between a reliable agent and one that propagates £203k
+pricing errors.</p>
+<p><strong>For users</strong>: Verify critical data. Agents are powerful
+research tools but inconsistent validators. When making important
+decisions (bookings, purchases, financial commitments), always check
+multiple sources.</p>
+<p>The error was instructive because it was obviously wrong to human
+domain knowledge. More concerning are errors that fall within plausible
+ranges - where comparative analysis and validation become the only
+defence against propagating incorrect data.</p>
+<hr />
+<p><strong>Cross-reference</strong>: See Chapter 12 for implementation
+patterns based on this case study.</p>
+<hr>
+<nav class="appendix-navigation" role="navigation" aria-label="Appendix Navigation">
+    <p><a href="appendix-index.html">← Back to Appendices Index</a></p>
+    <p>Quick navigation:
+        <a href="appendix-a.html">A</a> |
+        <a href="appendix-b.html">B</a> |
+        <a href="appendix-c.html">C</a> |
+        <a href="appendix-d.html">D</a> |
+        <a href="appendix-e.html">E</a> |
+        <a href="appendix-f.html">F</a> |
+        <a href="appendix-g.html">G</a> |
+        <a href="appendix-h.html">H</a> |
+        <a href="appendix-i.html">I</a> |
+        <a href="appendix-j.html">J</a> |
+        <a href="appendix-k.html">K</a> |
+        <a href="appendix-l.html">L</a>
+    </p>
+</nav>
+
+  <!-- Floating home button (top-left) -->
+  <a href="index.html" class="floating-home-button" aria-label="Back to Home">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 0L0 8h3v8h10V8h3L8 0zm0 2.5L13.5 8H11v6H5V8H2.5L8 2.5z"/>
+    </svg>
+    Home
+  </a>
+  <!-- Floating back to top button (bottom-left) -->
+  <a href="#" class="floating-top-button" aria-label="Back to Top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 3.5l-5.5 5.5L4 10.5l3-3v8.5h2V7.5l3 3L13.5 9z"/>
+    </svg>
+    Top
+  </a>
+
+  <script>
+    // Add copy buttons to all code blocks
+    document.addEventListener('DOMContentLoaded', function() {
+      // Find both wrapped code blocks (div.sourceCode) and standalone pre blocks
+      const wrappedBlocks = document.querySelectorAll('div.sourceCode');
+      const standaloneBlocks = document.querySelectorAll('pre[data-role="code-block"]:not(.sourceCode)');
+
+      // Process wrapped code blocks (HTML, JavaScript, etc.)
+      wrappedBlocks.forEach(function(block) {
+        addCopyButton(block, function(block) {
+          const codeElement = block.querySelector('code');
+          let text = '';
+          const spans = codeElement.querySelectorAll('span[id^="cb"]');
+          spans.forEach(function(span) {
+            const nodes = Array.from(span.childNodes);
+            nodes.forEach(function(node) {
+              if (node.nodeType === Node.TEXT_NODE) {
+                text += node.textContent;
+              } else if (node.nodeName !== 'A') {
+                text += node.textContent;
+              }
+            });
+          });
+          return text;
+        });
+      });
+
+      // Process standalone pre blocks (text, robots.txt, etc.)
+      standaloneBlocks.forEach(function(block) {
+        addCopyButton(block, function(block) {
+          const codeElement = block.querySelector('code');
+          return codeElement ? codeElement.textContent : block.textContent;
+        });
+      });
+
+      // Helper function to add copy button to any block
+      function addCopyButton(block, extractTextFn) {
+        const button = document.createElement('button');
+        button.className = 'copy-button';
+        button.textContent = 'Copy';
+        button.setAttribute('aria-label', 'Copy code to clipboard');
+
+        button.addEventListener('click', function() {
+          const text = extractTextFn(block);
+
+          navigator.clipboard.writeText(text).then(function() {
+            button.textContent = 'Copied';
+            button.classList.add('copied');
+            setTimeout(function() {
+              button.textContent = 'Copy';
+              button.classList.remove('copied');
+            }, 2000);
+          }).catch(function(err) {
+            console.error('Failed to copy:', err);
+            button.textContent = 'Failed';
+            setTimeout(function() {
+              button.textContent = 'Copy';
+            }, 2000);
+          });
+        });
+
+        block.insertBefore(button, block.firstChild);
+      }
+    });
+  </script>
+</body>
+</html>

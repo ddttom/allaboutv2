@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Tom Cranstoun">
+  <meta name="description" content="The Invisible Users: Designing the Web for AI Agents and Everyone Else - A practical guide to making websites work for both humans and AI agents">
+
+  <!-- AI-specific meta tags (proposed pattern from Chapter 10) -->
+  <meta name="ai-preferred-access" content="html">
+  <meta name="ai-content-policy" content="summaries-allowed, full-extraction-allowed">
+  <meta name="ai-freshness" content="weekly">
+  <meta name="ai-structured-data" content="json-ld">
+  <meta name="ai-attribution" content="required" text="Source: The Invisible Users by Tom Cranstoun, https://allabout.network/invisible-users/">
+  <meta name="llms-txt" content="/llms.txt">
+
+  <link rel="canonical" href="https://allabout.network/invisible-users/index.html">
+
+  <title>The Invisible Users - Designing the Web for AI Agents and Everyone Else</title>
+
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Book",
+    "name": "The Invisible Users: Designing the Web for AI Agents and Everyone Else",
+    "description": "A practical guide examining how modern web design optimized for human users fails for AI agents, and how fixing this benefits everyone",
+    "author": {
+      "@type": "Person",
+      "name": "Tom Cranstoun",
+      "email": "tom.cranstoun@gmail.com",
+      "url": "https://allabout.network"
+    },
+    "inLanguage": "en-GB",
+    "datePublished": "2026-01-10",
+    "dateModified": "2026-01-10",
+    "numberOfPages": "300",
+    "bookFormat": "https://schema.org/EBook",
+    "genre": ["Technology", "Web Design", "Artificial Intelligence", "Accessibility"],
+    "keywords": "AI agents, web design, accessibility, agent-mediated commerce, semantic HTML, structured data, browser automation",
+    "offers": {
+      "@type": "Offer",
+      "availability": "https://schema.org/InStock",
+      "price": "0",
+      "priceCurrency": "GBP"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "All About Network"
+    }
+  }
+  </script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: #1f2937;
+      background: #ffffff;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    header .subtitle {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      font-weight: 400;
+      color: #ffffff;
+    }
+
+    header .tagline {
+      font-size: 1.125rem;
+      max-width: 800px;
+      margin: 0 auto;
+      color: #e0e7ff;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    .intro-section {
+      background: #f9fafb;
+      border-left: 4px solid #3b82f6;
+      border-radius: 8px;
+      padding: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .intro-section h2 {
+      color: #1f2937;
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .intro-section p {
+      color: #4b5563;
+      margin-bottom: 1rem;
+      font-size: 1.125rem;
+    }
+
+    h2 {
+      font-size: 2rem;
+      color: #1f2937;
+      margin: 3rem 0 1.5rem;
+      font-weight: 700;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      color: #374151;
+      margin: 2rem 0 1rem;
+      font-weight: 600;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      color: #4b5563;
+    }
+
+    ul {
+      margin: 1rem 0 1rem 2rem;
+      color: #4b5563;
+    }
+
+    li {
+      margin-bottom: 0.75rem;
+    }
+
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .resource-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 2rem;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .resource-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-color: #3b82f6;
+    }
+
+    .resource-card h3 {
+      margin-top: 0;
+      color: #1e40af;
+      font-size: 1.25rem;
+    }
+
+    .resource-card p {
+      color: #6b7280;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .resource-card a {
+      display: inline-block;
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+      margin-top: 0.5rem;
+    }
+
+    .resource-card a:hover {
+      text-decoration: underline;
+    }
+
+    .cta-section {
+      background: #eff6ff;
+      border: 2px solid #3b82f6;
+      border-radius: 12px;
+      padding: 3rem;
+      margin: 3rem 0;
+      text-align: center;
+    }
+
+    .cta-section h2 {
+      margin-top: 0;
+      color: #1e40af;
+    }
+
+    .cta-section p {
+      font-size: 1.125rem;
+      color: #1e40af;
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #2563eb;
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+      margin: 0.5rem;
+    }
+
+    .btn:hover {
+      background: #1d4ed8;
+      text-decoration: none;
+    }
+
+    .btn-secondary {
+      background: #6b7280;
+    }
+
+    .btn-secondary:hover {
+      background: #4b5563;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .stat-card {
+      background: #f9fafb;
+      padding: 1.5rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #1e40af;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: #6b7280;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      background: #f9fafb;
+      border-top: 1px solid #e5e7eb;
+      padding: 3rem 2rem;
+      text-align: center;
+      margin-top: 4rem;
+    }
+
+    footer p {
+      color: #6b7280;
+      margin: 0.5rem 0;
+    }
+
+    .contact-links {
+      margin: 2rem 0;
+    }
+
+    .contact-links a {
+      margin: 0 1rem;
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    .contact-links a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      header .subtitle {
+        font-size: 1.25rem;
+      }
+
+      .resources-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    /* Floating navigation buttons */
+    .floating-top-button {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #0066cc;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+    .floating-top-button:hover {
+      background-color: #003d7a;
+      color: white;
+      box-shadow: 0 6px 16px rgba(0, 102, 204, 0.4);
+      transform: translateY(-2px);
+    }
+    .floating-top-button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
+    }
+    .floating-top-button svg {
+      fill: white;
+    }
+    @media (max-width: 768px) {
+      .floating-top-button {
+        bottom: 15px;
+        left: 15px;
+        padding: 10px 16px;
+        font-size: 0.85rem;
+      }
+    }
+
+    /* Floating reviewer badge */
+    .floating-reviewer-badge {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      animation: gentle-pulse 2s ease-in-out infinite;
+    }
+    @keyframes gentle-pulse {
+      0%, 100% {
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+      }
+      50% {
+        box-shadow: 0 6px 16px rgba(220, 38, 38, 0.5);
+      }
+    }
+    .floating-reviewer-badge::before {
+      content: "📋";
+      font-size: 1.2rem;
+    }
+    @media (max-width: 768px) {
+      .floating-reviewer-badge {
+        top: 15px;
+        right: 15px;
+        padding: 8px 16px;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- For Reviewers badge -->
+  <div class="floating-reviewer-badge" role="status" aria-label="Review Copy">
+    For Reviewers - Q1 2026
+  </div>
+
+  <header role="banner">
+    <h1>The Invisible Users</h1>
+    <p class="subtitle">Designing the Web for AI Agents and Everyone Else</p>
+    <p class="tagline">A practical guide to making websites work for both humans and AI agents</p>
+  </header>
+
+  <main class="container" role="main" data-load-state="complete">
+    <div class="intro-section" role="region" aria-labelledby="intro-heading">
+      <h2 id="intro-heading">About This Book</h2>
+      <p>Modern websites work beautifully for humans but fail completely for AI agents. This book examines how interfaces optimized for human visual browsing break for automated visitors — and shows that fixing this benefits everyone.</p>
+      <p>The patterns that break AI agents also break humans. Toast notifications that vanish, pagination hiding content, single-page applications with invisible state changes — these have been creating accessibility problems for years. Now AI agents are struggling with the same patterns, and there's commercial pressure to fix them.</p>
+      <p><strong>January 2026 changed everything.</strong> In seven days, Amazon, Microsoft, and Google launched AI agent commerce systems. The shift from future concern to present reality happened faster than anyone expected. This book examines the collision between agent capabilities and web design conventions — and provides practical solutions for adapting to the platform race.</p>
+    </div>
+
+    <section aria-labelledby="book-stats">
+      <h2 id="book-stats">Complete Coverage</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-number">12</span>
+          <span class="stat-label">Chapters</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">11</span>
+          <span class="stat-label">Appendices</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">57,000+</span>
+          <span class="stat-label">Words</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">150+</span>
+          <span class="stat-label">Resources</span>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="who-for">
+      <h2 id="who-for">Who This Is For</h2>
+      <div class="resources-grid">
+        <div class="resource-card" data-audience="developers">
+          <h3>Web Professionals & Engineers</h3>
+          <p>The full digital team: developers, system architects, product owners, project managers, UX designers, content strategists, and QA engineers. Find technical patterns, code examples, prioritisation frameworks, and testing approaches for agent compatibility.</p>
+        </div>
+        <div class="resource-card" data-audience="product-owners">
+          <h3>Product Owners</h3>
+          <p>Balance business objectives with technical implementation realities. Chapters 1-5, 9, and 10 provide decision frameworks, ROI analysis, and prioritisation guidance with concrete failure pattern examples for building your business case.</p>
+        </div>
+        <div class="resource-card" data-audience="content-managers">
+          <h3>Content Managers & Strategists</h3>
+          <p>Learn how agent-friendly content structure differs from human-optimised content. Focus on Schema.org structured data, semantic HTML, llms.txt files, and agent-friendly authoring patterns in Chapters 1, 2, 3, 5, 10, and 11.</p>
+        </div>
+        <div class="resource-card" data-audience="agent-developers">
+          <h3>Agent System Developers</h3>
+          <p>Developers building AI agents, browser extensions, and agentic systems that interact with websites. Chapter 12 provides validation frameworks, confidence scoring patterns, and guardrails that prevent pipeline failures.</p>
+        </div>
+        <div class="resource-card" data-audience="business">
+          <h3>Business Leaders & Decision Makers</h3>
+          <p>CTOs, CMOs, and executives who need to understand the strategic shift and why "silent conversion failures" are happening. Chapters 4, 5, and 9 provide decision frameworks and implementation guidance.</p>
+        </div>
+        <div class="resource-card" data-audience="partners">
+          <h3>Partners & Investors</h3>
+          <p>Agencies looking to offer new services and investors evaluating the next phase of web evolution. This methodology creates a new category of professional services—audit, remediation, and certification.</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="resources-heading">
+      <h2 id="resources-heading">Book Resources</h2>
+      <div class="resources-grid">
+        <div class="resource-card">
+          <h3>Online Appendices</h3>
+          <p>11 comprehensive appendices covering implementation guides, quick references, and case studies. All available as individual web pages.</p>
+          <a href="appendix-index.html">View Appendices →</a>
+        </div>
+        <div class="resource-card">
+          <h3>Web Audit Suite</h3>
+          <p>Production-ready Node.js analysis tool implementing the book's patterns. Available as separate purchase or professional audit service. Contact for access details.</p>
+        </div>
+        <div class="resource-card">
+          <h3>Code Examples</h3>
+          <p>Production-ready implementations for Apache, Nginx, Next.js, WordPress, and static sites. Copy-paste solutions with validation scripts included with the book.</p>
+        </div>
+        <div class="resource-card">
+          <h3>Frequently Asked Questions</h3>
+          <p>Common questions about the book, AI agents, technical concepts, and implementation guidance.</p>
+          <a href="faq.html">View FAQ →</a>
+        </div>
+        <div class="resource-card">
+          <h3>Project News</h3>
+          <p>Latest updates about the book and industry developments in AI agents, web design, and agent-mediated commerce.</p>
+          <a href="news.html">Read Updates →</a>
+        </div>
+        <div class="resource-card">
+          <h3>Resource Directory</h3>
+          <p>Curated collection of 150+ resources: standards, tools, articles, and communities kept up-to-date with latest developments.</p>
+          <a href="appendix-g.html">Browse Resources →</a>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="chapters-heading">
+      <h2 id="chapters-heading">Chapter Overview</h2>
+      <h3>Part I: Understanding the Problem</h3>
+      <ul>
+        <li><strong>Chapter 1 - What You Will Learn:</strong> Introduction to AI agents and why web compatibility matters</li>
+        <li><strong>Chapter 2 - The Invisible Failure:</strong> How modern web design patterns break for AI agents</li>
+        <li><strong>Chapter 3 - The Architectural Conflict:</strong> Technical reasons why current architectures fail agents</li>
+      </ul>
+
+      <h3>Part II: Business and Societal Impact</h3>
+      <ul>
+        <li><strong>Chapter 4 - The Business Reality:</strong> Commercial implications and market forces</li>
+        <li><strong>Chapter 5 - The Content Creator's Dilemma:</strong> How agent access affects publishers</li>
+        <li><strong>Chapter 6 - The Security Maze:</strong> Authentication, authorization, and session inheritance</li>
+        <li><strong>Chapter 7 - The Legal Landscape:</strong> Regulatory considerations and accessibility law</li>
+        <li><strong>Chapter 8 - The Human Cost:</strong> How fixing agent problems helps humans</li>
+      </ul>
+
+      <h3>Part III: The Platform Race</h3>
+      <ul>
+        <li><strong>Chapter 9 - The Platform Race:</strong> January 2026 platform launches and commercial urgency</li>
+      </ul>
+
+      <h3>Part IV: Practical Solutions</h3>
+      <ul>
+        <li><strong>Chapter 10 - Designing for Both:</strong> Universal design principles</li>
+        <li><strong>Chapter 11 - Technical Advice:</strong> Concrete implementation patterns and code examples</li>
+        <li><strong>Chapter 12 - What Agent Creators Must Build:</strong> Validation frameworks and confidence scoring</li>
+      </ul>
+    </section>
+
+    <div class="cta-section" role="complementary">
+      <h2>Get Started</h2>
+      <p>Explore the book resources and begin implementing AI agent-friendly patterns today.</p>
+      <a href="appendix-index.html" class="btn">View Appendices</a>
+      <a href="faq.html" class="btn btn-secondary">Read FAQ</a>
+    </div>
+
+    <section aria-labelledby="key-themes">
+      <h2 id="key-themes">Key Themes</h2>
+
+      <h3>Agent Diversity and Universal Patterns</h3>
+      <p>The book addresses a diverse ecosystem of AI agents with varying capabilities:</p>
+      <ul>
+        <li><strong>CLI agents:</strong> Command-line tools running locally (Claude Code, Cline)</li>
+        <li><strong>Local (SMOL) agents:</strong> Lightweight agents on user devices</li>
+        <li><strong>Server-based agents:</strong> Cloud-hosted agents accessing remotely</li>
+        <li><strong>Browser agents:</strong> Full browser automation (Playwright, Selenium)</li>
+        <li><strong>Browser extension assistants:</strong> In-browser AI tools</li>
+        <li><strong>IDE-integrated browser controls:</strong> Development environments with browser integration</li>
+      </ul>
+
+      <h3>Universal Compatibility Patterns</h3>
+      <p>The patterns aim for universal compatibility:</p>
+      <ul>
+        <li><strong>Semantic HTML:</strong> Works for all agents, regardless of JavaScript execution</li>
+        <li><strong>Explicit state attributes:</strong> Visible in DOM for any parser</li>
+        <li><strong>Structured data:</strong> Machine-readable regardless of agent architecture</li>
+        <li><strong>Clear feedback:</strong> Persistent and unambiguous for all interaction models</li>
+      </ul>
+
+      <h3>Session Inheritance Problem</h3>
+      <p>Key security insight from Chapter 6: In-browser agents inherit authenticated sessions rather than failing to authenticate. Banks cannot detect AI involvement because agents inherit proof-of-humanity tokens from the authenticated user's session.</p>
+
+      <h3>The Platform Race</h3>
+      <p>January 2026 brought unprecedented urgency to AI agent compatibility:</p>
+      <ul>
+        <li><strong>Seven-day acceleration:</strong> Amazon (Alexa+), Microsoft (Copilot Checkout), and Google (UCP/Business Agent) launched agent commerce systems within one week</li>
+        <li><strong>Open vs closed protocols:</strong> Google's Universal Commerce Protocol (UCP) and OpenAI's Agentic Commerce Protocol (ACP) compete against Microsoft's proprietary system</li>
+        <li><strong>Commercial urgency:</strong> Timeline compressed from "12-18 months" to "happening now"</li>
+        <li><strong>Competitive landscape:</strong> Platforms betting billions that AI agents will mediate how humans shop online</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="standards-classification">
+      <h2 id="standards-classification">Standards Classification</h2>
+      <p>All technical patterns are clearly labeled by maturity status:</p>
+      <ul>
+        <li><strong>Established Standards:</strong> Schema.org, semantic HTML, ARIA - use with confidence</li>
+        <li><strong>Emerging Conventions:</strong> llms.txt - early adoption phase</li>
+        <li><strong>Proposed Patterns:</strong> ai-* meta tags, data-agent-visible - not yet standardized</li>
+        <li><strong>Speculative:</strong> Future possibilities, clearly marked as such</li>
+      </ul>
+      <p>All proposed patterns are forward-compatible (won't break if agents don't recognize them).</p>
+    </section>
+  </main>
+
+  <footer role="contentinfo">
+    <div class="contact-links">
+      <a href="mailto:tom.cranstoun@gmail.com">Email</a>
+      <a href="https://allabout.network">Website</a>
+      <a href="faq.html">FAQ</a>
+      <a href="news.html">News</a>
+    </div>
+    <p><strong>Author:</strong> Tom Cranstoun</p>
+    <p><strong>Contact:</strong> tom.cranstoun@gmail.com</p>
+    <p><strong>Website:</strong> <a href="https://allabout.network">allabout.network</a></p>
+    <p>&copy; 2026 Tom Cranstoun. All rights reserved.</p>
+    <p>Last updated: January 2026</p>
+  </footer>
+
+  <!-- Floating back to top button -->
+  <a href="#" class="floating-top-button" aria-label="Back to Top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 3.5l-5.5 5.5L4 10.5l3-3v8.5h2V7.5l3 3L13.5 9z"/>
+    </svg>
+    Top
+  </a>
+</body>
+</html>

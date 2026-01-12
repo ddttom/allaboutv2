@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Tom Cranstoun">
+  <meta name="description" content="Information for reviewers of The Invisible Users book - acknowledgment policy, feedback instructions, and download access with NDA agreement.">
+
+  <!-- AI-specific meta tags (proposed pattern from Chapter 10) -->
+  <meta name="ai-preferred-access" content="html">
+  <meta name="ai-content-policy" content="summaries-allowed, full-extraction-allowed">
+  <meta name="ai-freshness" content="monthly">
+  <meta name="ai-structured-data" content="json-ld">
+  <meta name="ai-attribution" content="required" text="Source: The Invisible Users by Tom Cranstoun, https://allabout.network/invisible-users/">
+
+  <title>For Reviewers | The Invisible Users</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: #1f2937;
+      background: #ffffff;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    header p {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      font-weight: 400;
+      color: #ffffff;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    h2 {
+      font-size: 2rem;
+      color: #1f2937;
+      margin: 3rem 0 1.5rem;
+      font-weight: 700;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      color: #374151;
+      margin: 2rem 0 1rem;
+      font-weight: 600;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      color: #4b5563;
+    }
+
+    a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    ul {
+      margin: 1rem 0 1rem 2rem;
+      color: #4b5563;
+    }
+
+    li {
+      margin-bottom: 0.75rem;
+    }
+
+    strong {
+      color: #1f2937;
+      font-weight: 600;
+    }
+
+    .highlight-box {
+      background: #f9fafb;
+      border-left: 4px solid #3b82f6;
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .highlight-box h3 {
+      margin-top: 0;
+      color: #1e40af;
+    }
+
+    .nda-section {
+      margin: 3rem 0;
+    }
+
+    .nda-box {
+      background: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .nda-box h3 {
+      margin-top: 0;
+      color: #92400e;
+    }
+
+    .nda-box p {
+      color: #78350f;
+    }
+
+    .nda-box ul {
+      color: #78350f;
+    }
+
+    .download-section {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #2563eb;
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+      margin: 0.5rem;
+    }
+
+    .btn:hover {
+      background: #1d4ed8;
+      text-decoration: none;
+    }
+
+    .contact-info {
+      margin-top: 3rem;
+      padding: 2rem;
+      background: #f9fafb;
+      border-radius: 8px;
+      border-left: 4px solid #3b82f6;
+    }
+
+    .contact-info h3 {
+      margin-top: 0;
+      color: #1e40af;
+    }
+
+    footer {
+      background: #f9fafb;
+      border-top: 1px solid #e5e7eb;
+      padding: 3rem 2rem;
+      text-align: center;
+      margin-top: 4rem;
+    }
+
+    footer p {
+      color: #6b7280;
+      margin: 0.5rem 0;
+    }
+
+    .contact-links {
+      margin: 2rem 0;
+    }
+
+    .contact-links a {
+      margin: 0 1rem;
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    .contact-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* Floating navigation buttons */
+    .floating-home-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: #0066cc;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .floating-home-button:hover {
+      background-color: #003d7a;
+      color: white;
+      box-shadow: 0 6px 16px rgba(0, 102, 204, 0.4);
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+
+    .floating-home-button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
+    }
+
+    .floating-home-button svg {
+      fill: white;
+    }
+
+    .floating-top-button {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #0066cc;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .floating-top-button:hover {
+      background-color: #003d7a;
+      color: white;
+      box-shadow: 0 6px 16px rgba(0, 102, 204, 0.4);
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+
+    .floating-top-button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
+    }
+
+    .floating-top-button svg {
+      fill: white;
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      header p {
+        font-size: 1.25rem;
+      }
+
+      .floating-home-button,
+      .floating-top-button {
+        padding: 10px 16px;
+        font-size: 0.85rem;
+      }
+
+      .floating-home-button {
+        top: 15px;
+        left: 15px;
+      }
+
+      .floating-top-button {
+        bottom: 15px;
+        left: 15px;
+      }
+    }
+  </style>
+
+  <!-- Schema.org structured data for reviewer information page -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "For Reviewers: The Invisible Users Book Review Process",
+    "description": "Information and guidelines for reviewers of The Invisible Users book, including acknowledgment policy, feedback instructions, and NDA agreement",
+    "datePublished": "2026-01-12",
+    "dateModified": "2026-01-12",
+    "author": {
+      "@type": "Person",
+      "name": "Tom Cranstoun",
+      "email": "tom.cranstoun@gmail.com",
+      "url": "https://allabout.network",
+      "image": "https://allabout.network/images/tom-cranstoun.jpg"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Digital Domain Technologies Ltd",
+      "url": "https://allabout.network"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://allabout.network/invisible-users/web/for-reviewers.html"
+    },
+    "articleSection": "Book Review Process",
+    "keywords": "book review, reviewer acknowledgment, feedback, NDA agreement",
+    "inLanguage": "en-GB",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://allabout.network/invisible-users/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "For Reviewers",
+          "item": "https://allabout.network/invisible-users/web/for-reviewers.html"
+        }
+      ]
+    },
+    "image": "https://allabout.network/images/for-reviewers.jpg"
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <h1>For Reviewers</h1>
+    <p>Thank You for Your Support</p>
+  </header>
+
+  <main class="container" role="main" data-load-state="complete">
+    <article data-article-type="reviewer-information">
+
+      <section data-section-type="introduction">
+        <h2>Thank You for Agreeing to Review</h2>
+        <p>
+          Thank you for agreeing to review <em>The Invisible Users</em>. Your feedback is important to this project, and I appreciate your time and expertise. As someone who understands web design, accessibility, or AI agent systems, your perspective will help ensure this book serves its intended audience effectively.
+        </p>
+      </section>
+
+      <section data-section-type="acknowledgment-policy">
+        <h2>Reviewer Acknowledgment</h2>
+        <p>
+          All reviewers will be acknowledged in the final published book. Your contribution matters, and I want to recognize your help publicly. You will be listed in the acknowledgments section of the book, regardless of whether your specific feedback suggestions are incorporated.
+        </p>
+        <div class="highlight-box" data-content-type="important-note">
+          <h3>Important Note About Feedback</h3>
+          <p>
+            Whilst I value all feedback, it's possible that some suggestions may not align with the book's direction or planned structure. If this occurs, you will still receive full acknowledgment in the final copy, though the specific suggestions might not be incorporated into the manuscript.
+          </p>
+          <p>
+            This is not a reflection on the quality of your feedback—it simply means that particular suggestions didn't fit the book's intended scope or approach. Your input remains valuable, and your contribution will be recognized.
+          </p>
+        </div>
+      </section>
+
+      <section data-section-type="feedback-instructions">
+        <h2>How to Submit Feedback</h2>
+        <p>
+          Please send your feedback to <a href="mailto:tom.cranstoun@gmail.com">tom.cranstoun@gmail.com</a>. Any format is welcome—structured comments, inline PDF annotations, bullet points, or general impressions.
+        </p>
+        <h3>What Kind of Feedback Is Helpful</h3>
+        <ul>
+          <li><strong>Technical accuracy:</strong> Errors, outdated information, or incorrect technical descriptions</li>
+          <li><strong>Clarity:</strong> Sections that are confusing, unclear, or need better explanation</li>
+          <li><strong>Structure:</strong> Organization issues, flow problems, or missing context</li>
+          <li><strong>Practical applicability:</strong> Examples that don't work, patterns that need refinement</li>
+          <li><strong>Audience fit:</strong> Content that doesn't serve the intended readers effectively</li>
+          <li><strong>Missing content:</strong> Important topics that should be covered but aren't</li>
+        </ul>
+        <h3>Publication Timeline</h3>
+        <p>
+          The book is targeting publication in <strong>Q1 2026</strong>. Feedback received before mid-February 2026 will have the best chance of being incorporated into the final manuscript, though later feedback is still welcome and appreciated.
+        </p>
+      </section>
+
+      <section data-section-type="nda-agreement" class="nda-section">
+        <h2>Non-Disclosure Agreement</h2>
+        <div class="highlight-box nda-box" data-content-type="nda-terms">
+          <h3>Review Copy - Confidential</h3>
+          <p>
+            This is a review copy subject to an informal non-disclosure agreement. By downloading this manuscript, you agree to the following terms:
+          </p>
+          <ul>
+            <li><strong>Do Not Share Publicly:</strong> This manuscript should not be distributed outside your organisation</li>
+            <li><strong>Do Not Publish:</strong> Do not post excerpts, summaries, or reviews publicly before the official publication date</li>
+            <li><strong>Internal Sharing:</strong> You may share with colleagues in your organisation, provided they also agree to these confidentiality terms</li>
+          </ul>
+          <p>
+            If someone outside your organisation wants to review the book, please direct them to contact me directly at <a href="mailto:tom.cranstoun@gmail.com">tom.cranstoun@gmail.com</a>.
+          </p>
+          <p style="margin-top: 1.5rem; font-weight: 600; text-align: center;">
+            <strong>By downloading this manuscript, you agree to these terms.</strong>
+          </p>
+        </div>
+        <div class="download-section" data-download-type="review-copy" style="text-align: center; margin-top: 2rem;">
+          <p style="font-size: 1.125rem; margin-bottom: 1.5rem; color: #1f2937;">
+            If you agree to the terms above, you may download the review copy:
+          </p>
+          <a href="#download-link" class="btn" data-action="download" style="font-size: 1.125rem; padding: 1.25rem 3rem;">
+            Download Review Copy (PDF)
+          </a>
+          <p style="margin-top: 1rem; color: #6b7280; font-size: 0.95rem;">
+            Note: The download link will be provided separately by the author
+          </p>
+        </div>
+      </section>
+
+      <section data-section-type="closing">
+        <h2>Thank You Again</h2>
+        <p>
+          Your willingness to review this book is genuinely appreciated. The time and expertise you're contributing will help make this a better resource for web professionals, developers, and anyone working to make websites more accessible to both humans and AI agents.
+        </p>
+        <p>
+          If you have any questions about the review process, feedback expectations, or the NDA terms, please don't hesitate to contact me.
+        </p>
+        <p style="margin-top: 2rem; font-weight: 600;">
+          Thank you again,<br>
+          Tom Cranstoun
+        </p>
+      </section>
+
+    </article>
+
+    <div class="contact-info" style="margin-top: 3rem; padding: 2rem; background: #f9fafb; border-radius: 8px; border-left: 4px solid #3b82f6;">
+      <h3 style="margin-top: 0; color: #1e40af;">Contact Information</h3>
+      <p><strong>Email:</strong> <a href="mailto:tom.cranstoun@gmail.com">tom.cranstoun@gmail.com</a></p>
+      <p><strong>Website:</strong> <a href="https://allabout.network">allabout.network</a></p>
+      <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/tom-cranstoun/">linkedin.com/in/tom-cranstoun</a></p>
+    </div>
+
+  </main>
+
+  <footer role="contentinfo">
+    <div class="contact-links">
+      <a href="mailto:tom.cranstoun@gmail.com">Email</a>
+      <a href="https://allabout.network">Website</a>
+      <a href="https://www.linkedin.com/in/tom-cranstoun/">LinkedIn</a>
+    </div>
+    <p>&copy; 2026 Tom Cranstoun. All rights reserved.</p>
+    <p>Last updated: January 2026</p>
+  </footer>
+
+  <a href="index.html" class="floating-home-button" aria-label="Back to Home">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 0L0 8h3v8h10V8h3L8 0zm0 2.5L13.5 8H11v6H5V8H2.5L8 2.5z"/>
+    </svg>
+    Home
+  </a>
+
+  <a href="#" class="floating-top-button" aria-label="Back to Top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 3.5l-5.5 5.5L4 10.5l3-3v8.5h2V7.5l3 3L13.5 9z"/>
+    </svg>
+    Top
+  </a>
+</body>
+</html>
