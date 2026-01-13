@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Tom Cranstoun">
+  <meta name="description" content="Why AI agents struggle with modern web forms - and how semantic HTML, explicit state attributes, and persistent error messages create better experiences for both humans and agents.">
+
+  <!-- AI-specific meta tags (PROPOSED - see Appendix L) -->
+  <meta name="ai-preferred-access" content="html">
+  <meta name="ai-content-policy" content="summaries-allowed, full-extraction-allowed">
+  <meta name="ai-freshness" content="monthly">
+  <meta name="ai-structured-data" content="json-ld">
+  <meta name="ai-attribution" content="required" text="Source: The Invisible Users by Tom Cranstoun, https://allabout.network/invisible-users/">
+
+  <title>Why Modern Forms Break AI Agents (And How to Fix Them) | The Invisible Users</title>
+
+  <!-- Schema.org structured data for blog post -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Why Modern Forms Break AI Agents (And How to Fix Them)",
+    "description": "Examining how modern web forms fail for AI agents and providing practical patterns for forms that work for both humans and machines.",
+    "datePublished": "2026-01-11",
+    "dateModified": "2026-01-11",
+    "author": {
+      "@type": "Person",
+      "name": "Tom Cranstoun",
+      "email": "tom.cranstoun@gmail.com",
+      "url": "https://allabout.network/tom-cranstoun.html",
+      "image": "https://allabout.network/images/tom-cranstoun.jpg"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Digital Domain Technologies Ltd",
+      "url": "https://allabout.network"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://allabout.network/invisible-users/blog/forms-and-agents.html"
+    },
+    "articleSection": "Web Development, AI Agents, Accessibility",
+    "keywords": "AI agents, web forms, semantic HTML, form validation, accessibility",
+    "wordCount": "1200",
+    "inLanguage": "en-GB",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "The Invisible Users Blog"
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://allabout.network/invisible-users/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog Post",
+          "item": "https://allabout.network/invisible-users/web/blog-post.html"
+        }
+      ]
+    },
+    "image": "https://allabout.network/images/blog-post.jpg"
+  }
+  </script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Why Modern Forms Break AI Agents (And How to Fix Them)</h1>
+    <div class="article-meta" data-published="2026-01-11" data-modified="2026-01-11" data-reading-time="6 minutes">
+      <time datetime="2026-01-11">Published: 11 January 2026</time>
+      <span>•</span>
+      <span>6 min read</span>
+      <span>•</span>
+      <span>Tom Cranstoun</span>
+    </div>
+  </header>
+
+  <main class="container" role="main">
+    <article data-article-type="blog-post" data-word-count="1200">
+
+      <p>
+        Modern web forms are beautifully designed for humans. Inline validation highlights errors as you type. Submit buttons disable until the form is complete. Error messages appear in elegant toast notifications. But these same patterns create insurmountable problems for AI agents — and, it turns out, for many humans too.
+      </p>
+
+      <h2>The Problem: Visual-Only Feedback</h2>
+
+      <p>
+        When a form field has an error, humans see it visually: a red border, an error icon, maybe a background colour change. But these visual cues exist only in CSS. The underlying HTML remains unchanged. An AI agent parsing the DOM sees a perfectly normal input field with no indication that something is wrong.
+      </p>
+
+      <p>Consider this common pattern:</p>
+
+      <pre><code>&lt;input type="email" class="error"&gt;
+&lt;div class="error-message"&gt;Invalid email address&lt;/div&gt;</code></pre>
+
+      <p>
+        The <code>class="error"</code> attribute means nothing to an agent. It's purely a styling hook. The agent has no way to determine which fields are valid and which need correction. The error message might be visible to humans, but agents can't reliably connect it to the specific field that failed.
+      </p>
+
+      <h2>The Solution: Explicit State in Attributes</h2>
+
+      <p>
+        Making forms agent-friendly requires putting state directly in the DOM where machines can read it. This means using proper ARIA attributes and data attributes to expose validation state:
+      </p>
+
+      <pre><code>&lt;input type="email"
+       id="email"
+       name="email"
+       aria-invalid="true"
+       aria-describedby="email-error"
+       data-validation-state="invalid"&gt;
+&lt;div id="email-error" role="alert"&gt;
+  Enter a valid email address (example: name@company.com)
+&lt;/div&gt;</code></pre>
+
+      <p>
+        Now an agent can query the DOM and immediately understand: this field is invalid (<code>aria-invalid="true"</code>), the error message is persistent and connected (<code>aria-describedby</code>), and the validation state is explicit (<code>data-validation-state="invalid"</code>).
+      </p>
+
+      <div class="highlight-box">
+        <p><strong>Key insight:</strong> The patterns that help AI agents also improve accessibility for humans. Screen reader users benefit from <code>aria-invalid</code> and <code>role="alert"</code>. Keyboard navigators benefit from persistent error messages. Everyone benefits from explicit, unambiguous feedback.</p>
+      </div>
+
+      <h2>The Vanishing Error Problem</h2>
+
+      <p>
+        Toast notifications are elegant. They slide in, display a message, then fade away after a few seconds. Perfect for humans who can read quickly. Catastrophic for AI agents processing hundreds of forms per hour.
+      </p>
+
+      <p>
+        By the time an agent finishes analysing one field and moves to the next, the toast has disappeared. The error information is gone. The agent has no way to retrieve it. The form submission fails, but the agent doesn't know why.
+      </p>
+
+      <p>The solution is simple: make errors persistent. Keep them visible until they're fixed. Connect them to their fields with <code>aria-describedby</code>. Provide an error summary at the top of the form listing every problem.</p>
+
+      <h2>Form Field Naming Matters</h2>
+
+      <p>
+        AI agents recognise common field names: <code>email</code>, <code>firstName</code>, <code>lastName</code>, <code>phone</code>. When you use standard names, agents can fill forms accurately without custom training for your specific site.
+      </p>
+
+      <p>
+        Using <code>user_email_address_field</code> instead of <code>email</code> might seem more descriptive, but it breaks agent compatibility. The agent doesn't know that your custom name means "email" — it's looking for a field literally named <code>email</code>.
+      </p>
+
+      <p>Stick to conventions:</p>
+
+      <ul>
+        <li><code>email</code> not <code>e-mail</code>, <code>emailAddress</code>, or <code>user_email</code></li>
+        <li><code>firstName</code> not <code>fname</code>, <code>givenName</code>, or <code>first_name</code></li>
+        <li><code>phone</code> not <code>tel</code>, <code>phoneNumber</code>, or <code>mobile</code></li>
+        <li><code>postcode</code> not <code>zip</code>, <code>zipCode</code>, or <code>postalCode</code> (for UK sites)</li>
+      </ul>
+
+      <h2>Implementation Checklist</h2>
+
+      <p>To make your forms work for both humans and AI agents:</p>
+
+      <ol>
+        <li>Add <code>aria-invalid</code> and <code>aria-describedby</code> to all validated fields</li>
+        <li>Make error messages persistent (no vanishing toasts)</li>
+        <li>Connect each error to its field with proper IDs</li>
+        <li>Use standard field names (<code>email</code>, <code>firstName</code>, <code>phone</code>)</li>
+        <li>Add an error summary at the top of the form with links to each invalid field</li>
+        <li>Disable the submit button only if you explain why it's disabled</li>
+        <li>Validate on blur, not just on submit</li>
+        <li>Add explicit state attributes (<code>data-validation-state</code>, <code>data-errors</code>)</li>
+      </ol>
+
+      <h2>The Broader Principle</h2>
+
+      <p>
+        Forms are just one example of a universal principle: visual design affects only humans, not AI agents. Agents parse HTML directly. They don't see colours, fonts, animations, or visual styling. They read the underlying structure.
+      </p>
+
+      <p>
+        This means fixing visual design problems (like low-contrast error messages) helps humans but doesn't affect agents. Fixing structural problems (like missing ARIA attributes and implicit state) helps both.
+      </p>
+
+      <p>
+        When you build with semantic HTML, explicit state, and structured data, you create interfaces that work universally — for CLI agents running locally, for browser automation agents using Playwright, and for humans using screen readers or keyboards.
+      </p>
+
+      <p>Better patterns for agents mean better experiences for everyone. Neither humans nor machines should have to guess what's happening on your website.</p>
+
+    </article>
+
+    <div class="author-bio" data-author="tom-cranstoun">
+      <h3>About the Author</h3>
+      <p>
+        <strong>Tom Cranstoun</strong> is a software consultant and the author of "The Invisible Users: Designing the Web for AI Agents and Everyone Else". He specialises in building web systems that work reliably for both humans and AI agents.
+      </p>
+      <p>
+        Contact: <a href="mailto:tom.cranstoun@gmail.com">tom.cranstoun@gmail.com</a> |
+        <a href="https://www.linkedin.com/in/tom-cranstoun/">LinkedIn</a> |
+        <a href="https://github.com/Digital-Domain-Technologies-Ltd">GitHub</a>
+      </p>
+    </div>
+
+    <div class="related-posts">
+      <h3>Related Reading</h3>
+      <ul>
+        <li><a href="appendix-d.html">Appendix D: AI-Friendly HTML Guide</a> — Comprehensive patterns for agent-compatible forms</li>
+        <li><a href="appendix-a.html">Appendix A: Implementation Cookbook</a> — Quick-reference recipes for common patterns</li>
+        <li><a href="appendix-f.html">Appendix F: Implementation Roadmap</a> — Priority-based implementation guidance</li>
+      </ul>
+    </div>
+
+  </main>
+
+  <footer role="contentinfo">
+    <div class="contact-links">
+      <a href="mailto:tom.cranstoun@gmail.com">Email</a>
+      <a href="https://allabout.network">Website</a>
+      <a href="https://www.linkedin.com/in/tom-cranstoun/">LinkedIn</a>
+      <a href="https://github.com/Digital-Domain-Technologies-Ltd/invisible-users-manuscript">GitHub</a>
+    </div>
+    <p>&copy; 2026 Tom Cranstoun. All rights reserved.</p>
+    <p>Last updated: January 2026</p>
+  </footer>
+
+  <a href="index.html" class="floating-home-button" aria-label="Back to Home">Home</a>
+  <a href="#" class="floating-top-button" aria-label="Back to Top">Top</a>
+  <script src="js/common.js"></script>
+</body>
+</html>

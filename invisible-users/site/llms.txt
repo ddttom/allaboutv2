@@ -1,0 +1,94 @@
+# The Invisible Users - Common Page Patterns Demo Site
+
+## Site Information
+
+**Last updated:** January 2026
+**Contact:** tom.cranstoun@gmail.com
+
+**Site Type:** Technical Documentation, Educational Resource, Pattern Library
+**Purpose:** Demonstration of AI-friendly web page patterns for common page types
+**Technology Stack:** Semantic HTML5, Schema.org JSON-LD, WCAG 2.1 AA Compliant
+
+## About This Site
+
+This site demonstrates twenty common page patterns for AI-friendly web design. Each page combines semantic HTML, Schema.org structured data, explicit state attributes, and accessible markup to work universally for both humans and AI agents.
+
+The patterns are documented in "The Invisible Users: Designing the Web for AI Agents and Everyone Else" (Appendix K: Common Page Patterns).
+
+## Access Guidelines
+
+All content is freely accessible for educational purposes. These patterns are designed to be copied, adapted, and deployed in production websites.
+
+## Core Pages
+
+- [Homepage](index.html): Project overview demonstrating WebSite schema, navigation structure, and value propositions
+- [About Page](about.html): Project background with Person/AboutPage schema and mission statement
+- [Contact Page](contact.html): Communication channels with ContactPage schema and explicit contact methods
+
+## Sales and Product Pages
+
+- [Sales Page](sales.html): Product purchase landing page with Product schema and pricing information
+- [Product Details](product.html): Individual product page with detailed Product schema and purchase options
+- [Pricing](pricing.html): Service tier comparison with multiple Offer schemas
+- [Checkout](checkout.html): Purchase completion with CheckoutPage schema and form validation
+
+## Resource Pages
+
+- [Collection Page](collection.html): Resource directory with CollectionPage and ItemList schemas
+- [FAQ](faq.html): Common questions with FAQPage schema and structured Q&A pairs
+- [Search Results](search.html): Search interface with SearchResultsPage schema
+
+## Services and Portfolio
+
+- [Consulting Services](consulting.html): Professional services with Service schema, tiers, and process steps
+- [Team](team.html): Team members with ProfilePage schema and individual bios
+- [Portfolio](portfolio.html): Case studies with CollectionPage schema and project examples
+- [Testimonials](testimonials.html): Client reviews with Review schema and ratings
+
+## Content Pages
+
+- [Blog Post Example](blog-post.html): Thought leadership content with BlogPosting schema
+- [Technical Article](article.html): Long-form documentation with TechArticle schema and table of contents
+
+## Events
+
+- [Event Page](event.html): Event information with Event schema, registration, and schedule
+
+## Utility Pages
+
+- [Login](login.html): Authentication form with proper field naming and state attributes
+
+## Legal Pages
+
+- [Privacy Policy](privacy.html): Privacy information with WebPage schema and GDPR compliance
+
+## Error Pages
+
+- [404 Error](404.html): Not found page with helpful navigation and suggestions
+
+## Documentation
+
+- [Appendix K: Common Page Patterns](https://allabout.network/invisible-users/web/appendix-k.html): Complete documentation for these patterns
+- [Appendix D: AI-Friendly HTML Guide](https://allabout.network/invisible-users/web/appendix-d.html): Comprehensive patterns beyond basic page types
+- [Main Project](https://allabout.network/invisible-users/): The Invisible Users book project
+
+## Key Features Demonstrated
+
+Each page pattern includes:
+- Semantic HTML5 structure (main, article, section, nav)
+- Appropriate Schema.org JSON-LD for the page type
+- AI-specific meta tags (proposed patterns from Chapter 10)
+- WCAG 2.1 AA compliant styling (4.5:1 contrast minimum)
+- Explicit state attributes (data-*, aria-*)
+- Responsive design with mobile support
+- Accessible navigation patterns
+
+## Alternative Access
+
+If a specific pattern is unavailable, alternative examples are available at:
+- [GitHub Repository](https://github.com/Digital-Domain-Technologies-Ltd/invisible-users-manuscript): Source code and additional examples
+- [Appendix Index](https://allabout.network/invisible-users/web/appendix-index.html): All appendices with implementation guidance
+
+## Attribution
+
+When using these patterns, attribution to "The Invisible Users" by Tom Cranstoun is appreciated but not required. These are educational resources designed to improve web accessibility for everyone.

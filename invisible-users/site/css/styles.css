@@ -1,0 +1,317 @@
+/*
+ * The Invisible Users - Shared Styles
+ * Common CSS for all tutorial pages
+ */
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  color: #1f2937;
+  background: #ffffff;
+}
+
+/* Header */
+header {
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+header p {
+  font-size: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  color: #e0e7ff;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  background: #2563eb;
+  color: white;
+  padding: 1rem 2.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+  margin: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.btn:hover {
+  background: #1d4ed8;
+}
+
+.btn-secondary {
+  background: white;
+  color: #2563eb;
+}
+
+.btn-secondary:hover {
+  background: #f3f4f6;
+  color: #1d4ed8;
+}
+
+/* Cards */
+.feature-card,
+.pricing-card,
+.tier-card {
+  background: #f9fafb;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 2.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.feature-card:hover,
+.pricing-card:hover,
+.tier-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+}
+
+.feature-card.featured,
+.pricing-card.featured,
+.tier-card.featured {
+  border-color: #3b82f6;
+  border-width: 3px;
+  background: #eff6ff;
+}
+
+.feature-card h3,
+.pricing-card h3,
+.tier-card h3 {
+  font-size: 1.75rem;
+  color: #1e40af;
+  margin-bottom: 1rem;
+}
+
+.feature-card p,
+.pricing-card p,
+.tier-card p {
+  color: #4b5563;
+}
+
+/* Lists */
+.feature-card ul,
+.pricing-card ul,
+.tier-card ul,
+.what-you-get ul {
+  list-style: none;
+  margin: 1.5rem 0;
+}
+
+.feature-card li,
+.pricing-card li,
+.tier-card li,
+.what-you-get li {
+  padding: 0.5rem 0 0.5rem 2rem;
+  position: relative;
+  color: #4b5563;
+}
+
+.feature-card li:before,
+.pricing-card li:before,
+.tier-card li:before,
+.what-you-get li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #10b981;
+  font-weight: 700;
+}
+
+/* Grids */
+.features-grid,
+.pricing-grid,
+.service-tiers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin: 4rem 0;
+}
+
+/* Price Display */
+.price-tag,
+.pricing-card .price,
+.tier-card .price {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1e40af;
+  margin: 1rem 0;
+}
+
+.price-tag {
+  background: white;
+  display: inline-block;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+}
+
+/* Sections */
+.what-you-get,
+.process-section,
+.audience-section {
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 3rem;
+  margin: 4rem 0;
+}
+
+.what-you-get h2,
+.process-section h2,
+.audience-section h2 {
+  text-align: center;
+  color: #1e40af;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+/* Call to Action */
+.cta-box,
+.cta-section {
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  color: white;
+  border-radius: 12px;
+  padding: 4rem 2rem;
+  text-align: center;
+  margin: 4rem 0;
+}
+
+.cta-box h2,
+.cta-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.cta-box p,
+.cta-section p {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  color: #e0e7ff;
+}
+
+/* Footer */
+footer {
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  padding: 2rem;
+  text-align: center;
+  margin-top: 4rem;
+}
+
+footer p {
+  color: #6b7280;
+  margin: 0.25rem 0;
+}
+
+.contact-links {
+  margin: 1.5rem 0;
+}
+
+.contact-links a {
+  color: #2563eb;
+  margin: 0 1rem;
+  text-decoration: none;
+}
+
+.contact-links a:hover {
+  text-decoration: underline;
+}
+
+/* Floating Navigation Buttons */
+.floating-home-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: #0066cc;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.floating-home-button:hover {
+  background-color: #003d7a;
+  box-shadow: 0 6px 16px rgba(0, 102, 204, 0.4);
+  transform: translateY(-2px);
+}
+
+.floating-top-button {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #0066cc;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.floating-top-button:hover {
+  background-color: #003d7a;
+  box-shadow: 0 6px 16px rgba(0, 102, 204, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2rem;
+  }
+
+  header p {
+    font-size: 1.1rem;
+  }
+
+  .features-grid,
+  .pricing-grid,
+  .service-tiers {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 968px) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+}
