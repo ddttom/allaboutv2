@@ -1,0 +1,114 @@
+# Project State
+
+## Current Status (2026-01-13)
+
+The project is in active development with a focus on educational content delivery through Jupyter notebooks and the ipynb-viewer block.
+
+## Recent Accomplishments
+
+### invisible-users.ipynb Notebook (2026-01-13)
+- **Status**: ✅ Completed major synchronization with manuscript v2.0
+- **Changes implemented**:
+  - Updated from 10 to 12 chapters (added Chapter 9: The Platform Race, Chapter 12: What Agent Creators Must Build)
+  - Updated from five to six types of invisible failure (added "Loading States")
+  - Added January 2026 platform launch context (Amazon, Microsoft, Google)
+  - Updated GitHub repository URL to Digital-Domain-Technologies-Ltd organization
+  - Added copyright notice for review purposes
+  - Fixed smart link pattern: relative paths instead of full GitHub URLs
+  - Updated all chapter cross-references and word counts (~58,000 words)
+
+### Documentation Improvements (2026-01-13)
+- **LEARNINGS.md**: Created new file documenting the ipynb-viewer smart links pattern mistake
+  - Captures real-world error: using full GitHub URLs breaks smart link feature
+  - Documents correct pattern: relative paths with repo metadata
+  - Provides actionable guidance for future AI assistants
+- **CLAUDE.md**: Updated to acknowledge LEARNINGS.md
+  - Added reference in Quick Reference section
+  - Added detailed Critical Learnings section in Documentation area
+  - Ensures AI assistants are aware of documented mistakes
+
+## Active Features
+
+### Jupyter Notebook Integration
+- **ipynb-viewer block**: Fully functional for displaying executable notebooks
+  - Smart links with GitHub markdown overlay
+  - Multiple display modes (basic, paged, autorun, notebook)
+  - Link navigation with hash targets
+  - Interactive JavaScript execution
+
+### Educational Content
+- **invisible-users.ipynb**: Interactive companion to "The Invisible Users" manuscript
+  - 37 cells covering preface, 12 chapters, and appendices
+  - JavaScript visualizations for failure types
+  - Smart links to GitHub-hosted manuscript files
+  - Copyright-protected review copy
+
+## Core Functionality
+
+### EDS Architecture
+- **Blocks**: 40+ production-ready blocks in `/blocks/` directory
+- **Build System**: Vite-based build pipeline for complex blocks in `/build/`
+- **Cloudflare Worker**: Custom v1.1.4 with CORS, JSON-LD, metadata cleanup
+
+### Development Tools
+- **Claude Code Integration**: 17 commands, 27 skills, 6 agents, 4 hooks
+- **CI/CD**: GitHub Actions for linting, testing, security scanning
+- **Testing**: Multiple approaches (test.html, Jupyter notebooks, automated tests)
+
+## Known Issues
+
+### None Critical
+All recent issues have been resolved:
+- ✅ Smart links in ipynb-viewer now working correctly (fixed 2026-01-13)
+- ✅ Chapter references synchronized with manuscript (fixed 2026-01-13)
+- ✅ Metadata updated with correct repository URL (fixed 2026-01-13)
+
+## Next Focus Areas
+
+### Documentation
+- Continue documenting mistakes in LEARNINGS.md as they occur
+- Expand educational notebook collection
+- Create more presentation notebooks for client demos
+
+### Content Quality
+- Monitor smart link functionality in production
+- Validate notebook rendering on allabout.network
+- Ensure manuscript synchronization remains current
+
+### Performance
+- Optimize ipynb-viewer block loading for large notebooks
+- Improve JavaScript execution performance in notebooks
+- Monitor CDN cache hit rates
+
+## Project Health
+
+- **Git Status**: Clean working directory, all changes committed and pushed
+- **Build Status**: All blocks building successfully
+- **Test Status**: Cloudflare worker tests passing (63 tests)
+- **Documentation**: Up to date with CLAUDE.md, CHANGELOG.md, LEARNINGS.md synchronized
+- **Dependencies**: No security vulnerabilities reported
+
+## Recent Commits (Last 5)
+
+1. `84faa52e` - docs: add LEARNINGS.md reference to CLAUDE.md
+2. `7b51f3e6` - docs: document ipynb-viewer smart links pattern in LEARNINGS.md
+3. `6df1eeb2` - fix: revert all smart links to relative paths for ipynb-viewer compatibility
+4. `b80e2aca` - docs: update invisible-users notebook metadata with Digital-Domain-Technologies-Ltd repo
+5. `4ddf97bd` - Enhance FAQ page with UI improvements and extract CSS to separate file
+
+## Branch Status
+
+- **Current Branch**: main
+- **Status**: Up to date with origin/main
+- **Untracked Files**:
+  - `.claude/commands/md-fix.md`
+  - `.claude/commands/step-commit.md`
+  - `.claude/hooks/pre-commit.sh`
+  - `.claude/hooks/pre-push.sh`
+  - `.claude/prompt-master/`
+  - `.claude/skills/md-fix.json`
+  - `.claude/skills/step-commit.json`
+
+---
+
+**Last Updated**: 2026-01-13 by Claude Sonnet 4.5
