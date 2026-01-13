@@ -44,10 +44,12 @@ Perfect for side-by-side content layouts:
 | Right column content with complementary details |
 
 **Result:**
+
 - Mobile: Single column (stacked)
 - Desktop (992px+): Two equal-width columns
 
 **Best for:**
+
 - Comparison layouts
 - Text with image combinations
 - Feature pairs
@@ -68,6 +70,7 @@ Display partner, client, or technology logos in a responsive grid:
 | ![Partner 5](https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png) |
 
 **Result:**
+
 - Mobile: 1 column
 - Small tablet (576px+): 3 columns
 - Desktop (992px+): 5 columns
@@ -75,6 +78,7 @@ Display partner, client, or technology logos in a responsive grid:
 - Section has top and bottom borders
 
 **Best for:**
+
 - Partner/client logos
 - Technology stack showcases
 - Sponsor displays
@@ -103,6 +107,7 @@ Feature grid with icons, headings, and descriptions:
 | Enterprise-grade security with 99.99% uptime guarantee |
 
 **Result:**
+
 - Mobile: 1 column
 - Small tablet (576px+): 2 columns
 - Tablet (768px+): 2 columns
@@ -113,6 +118,7 @@ Feature grid with icons, headings, and descriptions:
 - Icons displayed in rotated diamond containers
 
 **Best for:**
+
 - Feature grids
 - Service offerings
 - Product benefits
@@ -133,12 +139,14 @@ Grid layout with icon bullets:
 | :check: Feature four with additional context |
 
 **Result:**
+
 - Icons displayed as bullets on the left
 - Content flows next to icons
 - Flexible layout adapting to content
 - Icon takes 8.33% width (1/12 of grid)
 
 **Best for:**
+
 - Feature lists
 - Checklist layouts
 - Benefit lists
@@ -250,6 +258,7 @@ List features or benefits with checkmarks:
 ### Logo Grid Requirements
 
 **Logo Images:**
+
 - Format: PNG with transparent background (recommended)
 - Dimensions: 200-400px wide, any height
 - File size: < 50KB per logo
@@ -257,12 +266,14 @@ List features or benefits with checkmarks:
 - Display size: Maximum 50px height, width auto
 
 **Why this matters:**
+
 - Logos are centered in 57px tall containers
 - Maximum display height is 50px
 - Width automatically adjusts to maintain aspect ratio
 - Transparent backgrounds work best for visual consistency
 
 **Logo preparation tips:**
+
 1. Use high-quality source files
 2. Crop excess whitespace
 3. Ensure sufficient padding in logo itself
@@ -274,6 +285,7 @@ List features or benefits with checkmarks:
 ### Icon Cards Requirements
 
 **Icons:**
+
 - Use standard icon syntax: `:icon-name:`
 - Common icons: `:star:`, `:check:`, `:lightning:`, `:shield:`, `:rocket:`
 - Icons display in diamond-shaped containers
@@ -281,12 +293,14 @@ List features or benefits with checkmarks:
 - Icon rotates to counter diamond rotation
 
 **Headings:**
+
 - Length: 2-5 words
 - Use H5 styling (from design system)
 - Centered text alignment
 - Semi-bold font weight
 
 **Body Text:**
+
 - Length: 1-2 sentences (aim for 50-150 characters)
 - Centered text alignment
 - Avoid overly long descriptions
@@ -297,12 +311,14 @@ List features or benefits with checkmarks:
 ### Two-Column Grid Requirements
 
 **Content Balance:**
+
 - Keep columns roughly equal in length
 - Avoid one column significantly longer than other
 - Use similar content types in each column
 - Consider visual balance (text vs images)
 
 **Column Content:**
+
 - Each column is one table row
 - Can include text, headings, images, lists
 - Maintain consistent formatting
@@ -313,12 +329,14 @@ List features or benefits with checkmarks:
 ### Bulleted Grid Requirements
 
 **Icon Bullets:**
+
 - Use consistent icon throughout list
 - Common choice: `:check:` for checkmarks
 - Icons appear on left side
 - Icons take 8.33% of width
 
 **Content:**
+
 - Keep items concise
 - Start with strong keywords
 - Use parallel structure (all start with verb, noun, etc.)
@@ -331,6 +349,7 @@ List features or benefits with checkmarks:
 ### Logo Grid Styling
 
 **Automatic styling:**
+
 - Section borders: Top and bottom separators
 - Container height: 57px per logo
 - Logo max height: 50px
@@ -338,6 +357,7 @@ List features or benefits with checkmarks:
 - Alignment: Centered horizontally and vertically
 
 **Visual consistency:**
+
 - All logos same max height
 - Proportional widths
 - Consistent spacing
@@ -348,6 +368,7 @@ List features or benefits with checkmarks:
 ### Icon Cards Styling
 
 **Automatic styling:**
+
 - Card padding: Extra large (from design system)
 - Card shadow: Medium drop shadow
 - Border radius: Default (from design system)
@@ -356,11 +377,13 @@ List features or benefits with checkmarks:
 - Icon size: XL
 
 **Hover effects:**
+
 - Background changes to primary color
 - Text changes to on-primary color
 - Smooth transition
 
 **Responsive behavior:**
+
 - Mobile: Full-width cards, vertical stack
 - Tablet: 2 columns
 - Desktop: 3 columns
@@ -371,12 +394,14 @@ List features or benefits with checkmarks:
 ### Two-Column Grid Styling
 
 **Automatic styling:**
+
 - Equal-width columns on desktop
 - Single column on mobile
 - Gap spacing: Large (from design system)
 - Breakpoint: 992px
 
 **Content styling:**
+
 - Inherits standard text styles
 - Maintains heading hierarchy
 - Supports images, text, lists
@@ -389,18 +414,21 @@ List features or benefits with checkmarks:
 ### Logo Grid Best Practices
 
 **1. Logo consistency**
+
 - Use logos of similar visual weight
 - Maintain consistent color treatment (all color or all monochrome)
 - Ensure similar padding/whitespace in logo files
 - Test visibility on your background color
 
 **2. Optimal logo count**
+
 - Mobile: 3-5 logos (displays as single column)
 - Tablet: 6-9 logos (displays as 3 columns)
 - Desktop: 10+ logos (displays as 5 columns)
 - Avoid too many logos (overwhelming)
 
 **3. Logo quality**
+
 - Use vector formats when possible (SVG)
 - Provide high-DPI versions for Retina displays
 - Optimize file sizes (< 50KB)
@@ -419,24 +447,28 @@ Wrap logos in links if needed:
 ### Icon Cards Best Practices
 
 **1. Icon selection**
+
 - Use meaningful icons that represent the feature
 - Be consistent with icon style (all outline or all filled)
 - Choose recognizable icons (avoid obscure symbols)
 - Limit icon variety (use design system icons)
 
 **2. Content balance**
+
 - Keep headings similar length (2-5 words)
 - Write descriptions of similar length
 - Aim for 3-6 cards per section (not too many)
 - Group related features together
 
 **3. Feature prioritization**
+
 - Put most important features first
 - Use visual hierarchy (icon + heading + description)
 - Front-load key benefits
 - Be specific and concrete
 
 **4. Avoid common pitfalls**
+
 - Don't use overly technical jargon
 - Avoid vague descriptions ("great features")
 - Don't mix benefit types (functional vs emotional)
@@ -447,18 +479,21 @@ Wrap logos in links if needed:
 ### Two-Column Grid Best Practices
 
 **1. Content pairing**
+
 - Pair related content (image + text, before + after)
 - Maintain logical left-to-right flow
 - Keep columns balanced in length
 - Use parallel structure
 
 **2. Visual hierarchy**
+
 - Use headings to introduce each column
 - Maintain consistent formatting
 - Consider image placement carefully
 - Test on mobile (stacks vertically)
 
 **3. Common uses**
+
 - Text + image combinations
 - Before/after comparisons
 - Feature comparisons
@@ -469,18 +504,21 @@ Wrap logos in links if needed:
 ### Bulleted Grid Best Practices
 
 **1. List structure**
+
 - Use consistent icon (usually `:check:`)
 - Start items with strong keywords
 - Use parallel grammatical structure
 - Keep items concise (1-2 lines)
 
 **2. Content organization**
+
 - Group related items together
 - Prioritize most important items first
 - Use 3-8 items (not too few, not too many)
 - Consider numbered lists for steps
 
 **3. Writing style**
+
 - Be specific and concrete
 - Use active voice
 - Avoid redundancy
@@ -497,6 +535,7 @@ Wrap logos in links if needed:
 **Cause:** Viewport width doesn't match breakpoints.
 
 **Solution:**
+
 - Check viewport width:
   - < 576px: 1 column
   - 576px - 991px: 3 columns
@@ -675,16 +714,19 @@ Discover what makes our platform exceptional.
 For specific branding needs, work with your developer to customize:
 
 **Grayscale logos with color on hover:**
+
 - Logos display in grayscale by default
 - Color appears on hover
 - Creates elegant, professional look
 
 **Larger logos:**
+
 - Increase max-height to 70px or 80px
 - Adjust container height accordingly
 - Maintain aspect ratios
 
 **Different column counts:**
+
 - Custom breakpoints
 - Fixed column counts
 - Specific layout requirements
@@ -694,17 +736,20 @@ For specific branding needs, work with your developer to customize:
 ### Responsive Content Strategy
 
 **Mobile-first approach:**
+
 1. Design for mobile first (single column)
 2. Ensure content works vertically stacked
 3. Add complexity for larger screens
 4. Test on actual devices
 
 **Content adaptation:**
+
 - Mobile: Shorter descriptions, larger touch targets
 - Tablet: Balanced content, 2-3 columns
 - Desktop: Full details, maximum columns
 
 **Visual hierarchy:**
+
 - Most important content first
 - Progressive disclosure
 - Clear call-to-action
@@ -715,6 +760,7 @@ For specific branding needs, work with your developer to customize:
 ### Accessibility Considerations
 
 **Alt text for logos:**
+
 | Grid (logo-grid) |
 |------------------|
 | ![Adobe - Creative Cloud Partner](logo.png) |
@@ -725,12 +771,14 @@ For specific branding needs, work with your developer to customize:
 - Be concise but descriptive
 
 **Icon cards accessibility:**
+
 - Icons are decorative (text provides meaning)
 - Ensure sufficient color contrast
 - Text should work without icons
 - Test with screen readers
 
 **Keyboard navigation:**
+
 - All links in natural tab order
 - Focus indicators visible
 - No keyboard traps
@@ -779,6 +827,7 @@ After creating grid in Google Docs:
 ### Browser Testing
 
 Test in multiple browsers:
+
 - Chrome/Edge (last 2 versions)
 - Firefox (last 2 versions)
 - Safari (last 2 versions)
@@ -794,12 +843,14 @@ Test in multiple browsers:
 ### Logo Grid Optimization
 
 **Image optimization:**
+
 1. Compress logo files to < 50KB
 2. Use PNG with transparency
 3. Consider SVG for vector logos
 4. Provide appropriate dimensions (200-400px wide)
 
 **Loading strategy:**
+
 - Logos load with page (not lazy-loaded)
 - Keep file sizes small
 - Use image CDN if available
@@ -810,12 +861,14 @@ Test in multiple browsers:
 ### Icon Cards Performance
 
 **Lightweight by default:**
+
 - Icons from icon font (small file size)
 - No external dependencies
 - CSS-only hover effects
 - Hardware-accelerated transforms
 
 **Content strategy:**
+
 - Limit to 6-8 cards per section
 - Keep descriptions concise
 - Use appropriate heading levels
@@ -826,11 +879,13 @@ Test in multiple browsers:
 ## Related Blocks
 
 **Similar functionality:**
+
 - **Cards** - Grid of content cards with images
 - **Columns** - Multi-column text layouts
 - **Hero** - Large banner with image and text
 
 **Complementary blocks:**
+
 - **Quote** - Testimonials between grid sections
 - **Tabs** - Organize multiple grids in tabs
 - **Accordion** - Collapsible sections with grids

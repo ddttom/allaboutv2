@@ -5,6 +5,7 @@
 The Raw block enables safe insertion of unprocessed HTML content directly into EDS pages while maintaining security through content sanitization and validation. It's designed for use cases requiring custom HTML structures, embedded widgets, or trusted iframe content that cannot be easily achieved through standard EDS blocks.
 
 **Key Features:**
+
 - Sanitized HTML content insertion with XSS prevention
 - Automatic HTML entity decoding
 - Quote-wrapped content handling
@@ -15,6 +16,7 @@ The Raw block enables safe insertion of unprocessed HTML content directly into E
 ## 2. Use Cases
 
 **Primary Use Cases:**
+
 - Embedding third-party widgets and iframes from trusted domains (e.g., video players, presentation tools)
 - Inserting custom HTML structures not supported by standard blocks
 - Displaying pre-formatted HTML content from external systems
@@ -22,6 +24,7 @@ The Raw block enables safe insertion of unprocessed HTML content directly into E
 - Embedding multimedia content with custom controls
 
 **Example Scenarios:**
+
 - Embedding presentation tools (mmhmm, Loom, etc.)
 - Inserting complex data visualizations
 - Adding custom forms or interactive elements
@@ -36,10 +39,12 @@ The Raw block uses a single-cell content model:
 | HTML content here |
 
 **Content Model Details:**
+
 - **Row 1**: Block identifier "Raw"
 - **Row 2**: Raw HTML content (can be quote-wrapped, may contain HTML entities)
 
 **Content Structure:**
+
 - Single cell containing the HTML string
 - Supports quoted content: `"<div>content</div>"`
 - Handles encoded entities: `&lt;div&gt;` becomes `<div>`
@@ -80,6 +85,7 @@ Embed iframes from trusted domains:
 | `<iframe src="https://ooo.mmhmm.app/embed/xyz" width="640" height="360" frameborder="0" allowfullscreen></iframe>` |
 
 **Author Checklist:**
+
 - Ensure HTML is well-formed (matching opening/closing tags)
 - Use trusted sources only for iframe embeds
 - Avoid inline JavaScript (will be removed by sanitization)
@@ -100,20 +106,24 @@ Embed iframes from trusted domains:
 ### Security Measures
 
 **Removed Elements:**
+
 - `<script>` tags (JavaScript execution)
 - `<object>` tags (embedded objects)
 - `<embed>` tags (plugin content)
 
 **Removed Attributes:**
+
 - `onerror`, `onload`, `onclick`, `onmouseover` (event handlers)
 - Any other `on*` event attributes
 
 **Iframe Handling:**
+
 - Whitelist-based domain validation
 - Only specific attributes allowed: `src`, `width`, `height`, `frameborder`, `allowfullscreen`, `allow`
 - Source URL must match trusted domains list
 
 **Current Trusted Domains:**
+
 - `ooo.mmhmm.app` (mmhmm presentation tool)
 
 ### Code Architecture
@@ -121,19 +131,23 @@ Embed iframes from trusted domains:
 The block uses four helper functions:
 
 **`decodeHTMLEntities(text)`**
+
 - Decodes HTML entities using textarea element
 - Converts `&lt;` to `<`, `&amp;` to `&`, etc.
 
 **`sanitizeHTML(html)`**
+
 - Removes harmful elements and attributes
 - Validates iframe sources against trusted domains
 - Returns cleaned HTML string
 
 **`isValidHTML(html)`**
+
 - Uses DOMParser to check HTML structure
 - Returns false if parser errors detected
 
 **`reportIssue(type, details)`**
+
 - Logs issues to console
 - Hook for custom reporting/monitoring integration
 
@@ -143,10 +157,11 @@ The block uses minimal CSS as it displays raw HTML content that should bring its
 
 `Default Styling`
 `.raw {`
-`  /* Add any specific styling for the raw block if needed */`
+`/* Add any specific styling for the raw block if needed */`
 `}`
 
 **Styling Recommendations:**
+
 - Keep block-level styles minimal to avoid conflicts
 - Let inserted HTML control its own presentation
 - Add container constraints only if needed (max-width, etc.)
@@ -155,9 +170,11 @@ The block uses minimal CSS as it displays raw HTML content that should bring its
 ## 7. Dependencies
 
 **Core Dependencies:**
+
 - `/scripts/aem.js` - EDS core library (imported but `createOptimizedPicture` currently unused)
 
 **Browser APIs:**
+
 - `DOMParser` - HTML structure validation
 - `document.createElement` - HTML entity decoding
 - `insertAdjacentHTML` - Safe HTML insertion
@@ -167,16 +184,19 @@ The block uses minimal CSS as it displays raw HTML content that should bring its
 ## 8. Browser Compatibility
 
 **Supported Browsers:**
+
 - Chrome/Edge 90+ (DOMParser, insertAdjacentHTML)
 - Firefox 88+ (DOMParser, insertAdjacentHTML)
 - Safari 14+ (DOMParser, insertAdjacentHTML)
 
 **Compatibility Notes:**
+
 - DOMParser is universally supported in modern browsers
 - insertAdjacentHTML has excellent compatibility (IE11+)
 - No polyfills required for target browser versions
 
 **Testing Recommendations:**
+
 - Test complex HTML structures in target browsers
 - Verify iframe embed behavior across platforms
 - Check mobile rendering for embedded content
@@ -184,17 +204,20 @@ The block uses minimal CSS as it displays raw HTML content that should bring its
 ## 9. Performance Considerations
 
 **Performance Optimizations:**
+
 - Minimal DOM manipulation (single insertAdjacentHTML call)
 - No network requests (unless embedded iframes)
 - Lightweight sanitization process
 - No external library overhead
 
 **Loading Behavior:**
+
 - Block content renders synchronously
 - Embedded iframes load asynchronously
 - No blocking operations
 
 **Best Practices:**
+
 - Keep raw HTML concise for faster parsing
 - Avoid deeply nested structures
 - Consider lazy loading for iframe content
@@ -205,6 +228,7 @@ The block uses minimal CSS as it displays raw HTML content that should bring its
 **Accessibility Considerations:**
 
 **Author Responsibility:**
+
 - Authors must ensure inserted HTML follows WCAG 2.1 guidelines
 - Semantic HTML structure required
 - Proper heading hierarchy
@@ -212,16 +236,19 @@ The block uses minimal CSS as it displays raw HTML content that should bring its
 - ARIA labels where appropriate
 
 **Block-Level Support:**
+
 - No automatic accessibility enhancements
 - Preserves author-provided semantic markup
 - Does not modify ARIA attributes
 
 **Testing Requirements:**
+
 - Run automated accessibility audits on pages with Raw blocks
 - Manual keyboard navigation testing
 - Screen reader compatibility verification
 
 **Common Issues:**
+
 - Custom HTML may lack proper ARIA roles
 - Embedded iframes may need title attributes
 - Interactive elements need keyboard accessibility
@@ -231,27 +258,32 @@ The block uses minimal CSS as it displays raw HTML content that should bring its
 **Security Architecture:**
 
 **XSS Prevention:**
+
 - Script tag removal (no inline JavaScript)
 - Event handler attribute removal (no inline event handlers)
 - Object/embed tag removal (no plugin content)
 
 **Iframe Security:**
+
 - Whitelist-based domain validation
 - Attribute filtering (only safe attributes allowed)
 - Source URL validation against trusted domains
 
 **Content Validation:**
+
 - HTML structure validation before insertion
 - Malformed HTML rejected with console warnings
 - Error reporting for debugging
 
 **Security Best Practices:**
+
 - Only use Raw block for trusted content sources
 - Regularly review trusted domains list
 - Monitor console for security warnings
 - Avoid user-generated content without additional validation
 
 **Limitations:**
+
 - Cannot safely execute JavaScript in embedded content
 - Iframes limited to pre-approved domains
 - Some HTML5 features may be restricted
@@ -267,11 +299,13 @@ The block uses minimal CSS as it displays raw HTML content that should bring its
 5. **No EDS Processing**: Content bypasses EDS image optimization and link handling
 
 **Known Issues:**
+
 - Complex nested structures may encounter sanitization edge cases
 - Very large HTML strings may impact page performance
 - Embedded iframe resize behavior depends on source implementation
 
 **Workarounds:**
+
 - For JavaScript needs, consider separate custom blocks
 - Request trusted domain additions through code updates
 - Test complex HTML in isolation before page integration
@@ -288,16 +322,19 @@ The block uses minimal CSS as it displays raw HTML content that should bring its
 **Testing Scenarios:**
 
 **Basic HTML Insertion:**
+
 - Simple div/span structures
 - Headings and paragraphs
 - Lists and tables
 
 **Security Testing:**
+
 - Script tags (should be removed)
 - Event handlers (should be removed)
 - Malicious iframes (should be blocked)
 
 **Edge Cases:**
+
 - Quote-wrapped content
 - HTML entity encoding
 - Malformed HTML structure
@@ -305,6 +342,7 @@ The block uses minimal CSS as it displays raw HTML content that should bring its
 - Very large HTML strings
 
 **Testing Tools:**
+
 - Browser DevTools console (monitor warnings/errors)
 - Network tab (verify iframe loading)
 - Accessibility auditors (aXe, Lighthouse)
@@ -344,6 +382,7 @@ The block uses minimal CSS as it displays raw HTML content that should bring its
 ---
 
 **Block Metadata:**
+
 - **Version**: 1.0
 - **Last Updated**: 2025-11-28
 - **Author**: Tom Cranstoun

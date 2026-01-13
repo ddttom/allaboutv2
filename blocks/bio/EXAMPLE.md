@@ -3,6 +3,7 @@
 This document shows how to create bio blocks in Google Docs. The bio block displays author information with an image and bio text.
 
 ## Table of Contents
+
 - [Basic Example](#basic-example)
 - [Example with Image Link](#example-with-image-link)
 - [Example with "Picture Here" Placeholder](#example-with-picture-here-placeholder)
@@ -24,6 +25,7 @@ Create a simple two-column table in Google Docs:
 ```
 
 **Result:**
+
 - First column: Image (will be converted from link to `<img>` element)
 - Second column: Bio text
 - Author name: Extracted from image alt text or fallback to page meta tag
@@ -42,6 +44,7 @@ The bio block automatically converts image links to actual images:
 ```
 
 **How it works:**
+
 1. The block detects the link points to an image (.jpg, .jpeg, .png, .gif, .webp, .svg)
 2. Converts the link to an `<img>` element using `replaceWith()`
 3. The original `<a>` tag is completely removed from the DOM
@@ -49,10 +52,12 @@ The bio block automatically converts image links to actual images:
 5. If link text is a URL, ignores it and uses the page's `<meta name="author">` tag
 
 **💡 TIP:** For best results, use the author name as the link text in Google Docs:
+
 - ✅ **Best**: Hyperlink text "Tom Cranstoun" → URL "https://example.com/photo.jpg"
 - ✅ **Also works**: Hyperlink text "https://example.com/photo.jpg" → URL "https://example.com/photo.jpg" (will use meta tag)
 
 **Supported image extensions:**
+
 - .jpg / .jpeg
 - .png
 - .gif
@@ -75,6 +80,7 @@ The bio block automatically converts image links to actual images:
 ```
 
 **How it works:**
+
 1. Type "Picture Here" (case-sensitive) in the first cell in Google Docs
 2. EDS converts to: `<div><div>Picture Here</div></div>`
 3. **Cloudflare worker** detects this pattern and replaces with author image (server-side)
@@ -83,18 +89,21 @@ The bio block automatically converts image links to actual images:
 
 **Replacement image:**
 The worker uses this configured image:
+
 ```
 https://allabout.network/dam/media_126e99d56f06caf788bee715aff92281d2e31a206.png
 Alt text: "Author: Tom Cranstoun"
 ```
 
 **When to use this:**
+
 - 🚀 **Quick prototyping**: Create multiple bios quickly without sourcing images
 - 📝 **Content-first workflow**: Focus on bio text first, add specific images later
 - 👥 **Team pages**: Use consistent placeholder during development
 - 🔄 **Review phases**: Easy to identify which bios need final images
 
 **Important notes:**
+
 - **Case-sensitive**: Must be exactly "Picture Here" (not "picture here" or "PICTURE HERE")
 - **Production only**: Placeholder replacement only works on pages served through Cloudflare worker
 - **Local development**: The text "Picture Here" will remain visible when testing on localhost:3000
@@ -129,6 +138,7 @@ You can also paste images directly into Google Docs:
 ```
 
 **Note:** When you paste an image in Google Docs, add alt text by:
+
 1. Right-click the image
 2. Select "Alt text"
 3. Enter the author name
@@ -165,6 +175,7 @@ Don't display the author name (only show image and bio):
 ```
 
 **Result:**
+
 - Image link is NOT converted (remains as link)
 - No author name is added to the block
 - Use this for contributor bios where names are already in the text
@@ -176,6 +187,7 @@ Don't display the author name (only show image and bio):
 ### 1. Image Requirements
 
 **Recommended image specifications:**
+
 - Format: JPG, PNG, or WebP
 - Dimensions: 200×200px (square)
 - File size: < 50KB for optimal performance
@@ -187,8 +199,10 @@ Don't display the author name (only show image and bio):
 ### 2. Author Name Priority
 
 The block determines the author name in this order:
+
 1. **Image alt text** (highest priority)
 2. **Meta tag author** (fallback if no alt text)
+
    ```html
    <meta name="author" content="Author Name">
    ```
@@ -198,6 +212,7 @@ The block determines the author name in this order:
 ### 3. Bio Text Length
 
 **Recommended:**
+
 - Desktop: 2-3 sentences (100-150 words)
 - Mobile: 1-2 sentences (50-100 words)
 
@@ -206,12 +221,16 @@ The bio block is responsive and will stack vertically on mobile devices.
 ### 4. Image Link Format
 
 When using image links:
+
 - ✅ **DO:** Use direct links to image files
+
   ```
   https://example.com/images/author.jpg
   https://cdn.site.com/photos/profile.png
   ```
+
 - ❌ **DON'T:** Use page URLs or non-image links
+
   ```
   https://example.com/profile  (won't be converted)
   https://site.com/about.html   (won't be converted)
@@ -220,12 +239,14 @@ When using image links:
 ### 5. Mobile Considerations
 
 The bio block automatically adjusts for mobile:
+
 - Layout changes from horizontal to vertical stack (≤768px)
 - Image size reduces (60px on tablet, 50px on mobile)
 - Text becomes centered
 - Gap between elements adjusts for better spacing
 
 **Test your content:**
+
 - Keep bio text concise for mobile readability
 - Ensure images look good at small sizes (50px)
 - Check that author names aren't too long
@@ -276,6 +297,7 @@ The bio block automatically adjusts for mobile:
 ## Styling Notes
 
 The bio block includes:
+
 - **Desktop (>768px):**
   - Horizontal layout with flexbox
   - Image: 80×80px, circular
@@ -324,6 +346,7 @@ After creating your bio in Google Docs:
 ### Issue: Image link not converting
 
 **Possible causes:**
+
 - Link doesn't point to an image file (must end in .jpg, .png, etc.)
 - Using the `hide-author` class (intentionally skips conversion)
 - Link is malformed or broken
@@ -333,13 +356,16 @@ After creating your bio in Google Docs:
 ### Issue: No author name appears
 
 **Possible causes:**
+
 - Image has no alt text
 - No meta tag with author in page head
 - Using `hide-author` class
 
 **Solution:**
+
 1. Add alt text to the image in Google Docs
 2. Or add a meta tag to your page:
+
    ```html
    <meta name="author" content="Your Name">
    ```
@@ -364,6 +390,7 @@ The bio block supports the expressions plugin. You can use dynamic variables in 
 ```
 
 **Requirements:**
+
 - `$system:enableprofilevariables$` must be set to 'y'
 - Profile variables must be defined
 

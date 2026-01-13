@@ -882,6 +882,7 @@ export default async function decorate(block) {
 ```
 
 **Why Single File Architecture:**
+
 - **Maintainability**: All logic for a block is in one place
 - **EDS Convention**: The system expects one JS file per block
 - **Performance**: Avoids loading multiple files for the same block
@@ -890,10 +891,12 @@ export default async function decorate(block) {
 
 **Real-World Example:**
 A blog block with an AI filter variation should have:
+
 - ✅ `view-myblog.js` - Single file with both standard and AI filtering logic
 - ❌ NOT `view-myblog.js` + `view-myblog-ai.js` - Two files is incorrect
 
 The JavaScript detects the variation and applies appropriate logic:
+
 ```javascript
 export default async function decorate(block) {
   const isAIVariation = block.classList.contains('ai');
@@ -1514,11 +1517,11 @@ How content is structured in documents significantly impacts both authoring expe
 
 - **Minimize Blocks**: "Blocks are not great for authoring... It is definitely an anti-pattern to have things that are represented natively as default content and put them into a block." Use blocks only when necessary for specialized components.
 
-* **No Nested Blocks**: "Nested blocks are definitely a lot worse" for authoring experience. Keep block structure flat for easier authoring.
+- **No Nested Blocks**: "Nested blocks are definitely a lot worse" for authoring experience. Keep block structure flat for easier authoring.
 
 - **Use Full URLs**: "Authors (and most humans) often think of a URL as an opaque token... It is always advisable to just let authors work with fully qualified URLs." Don't try to normalize or transform URLs unnecessarily.
 
-* **Reuse Standards**: "The EDS Block Collection is a great source for well designed content models." Don't reinvent the wheel—use existing patterns when possible.
+- **Reuse Standards**: "The EDS Block Collection is a great source for well designed content models." Don't reinvent the wheel—use existing patterns when possible.
 
 - **Progressive Enhancement**: Start with the simplest possible implementation and enhance as needed, rather than building complex solutions from the start.
 
@@ -1992,24 +1995,28 @@ By following these principles, you'll create websites that achieve the rare comb
 ## See Also
 
 ### Essential Development Guides
+
 - **[Block Architecture Standards](implementation/block-architecture-standards.md)** - Comprehensive standards for EDS block development including naming conventions, file structure, and coding patterns
 - **[Raw EDS Blocks Guide](implementation/raw-eds-blocks-guide.md)** - Step-by-step guide to creating simple EDS blocks using vanilla JavaScript and minimal dependencies
 - **[Complex EDS Blocks Guide](implementation/complex-eds-blocks-guide.md)** - Advanced block development with build tools, external dependencies, and sophisticated patterns
 - **[Project Structure](project-structure.md)** - Understanding the overall EDS project organization and file conventions
 
 ### Implementation & Testing
+
 - **[Debug Guide](testing/debug.md)** - Comprehensive debugging strategies for EDS blocks and common troubleshooting scenarios
 - **[Testing Strategies](testing-strategies.md)** - Testing approaches for EDS blocks including unit tests and integration testing
 - **[Performance Optimization](performance-optimization.md)** - Techniques for optimizing EDS block performance and loading
 - **[Browser Compatibility](browser-compatibility.md)** - Ensuring cross-browser compatibility for EDS implementations
 
 ### Advanced Topics
+
 - **[Web Components with EDS](web-components-with-eds.md)** - Integrating modern web components within the EDS framework
 - **[CSS Patterns](css-patterns.md)** - Common CSS patterns and styling approaches for EDS blocks
 - **[JavaScript Patterns](javascript-patterns.md)** - Reusable JavaScript patterns for EDS block development
 - **[Block Examples](block-examples.md)** - Real-world examples of successful EDS block implementations
 
 ### Content & Authoring
+
 - **[Content Authoring Guide](content-authoring-guide.md)** - Best practices for content authors working with EDS
 - **[Document Structure Guide](document-structure-guide.md)** - Guidelines for structuring documents for optimal EDS transformation
 - **[Metadata Management](metadata-management.md)** - Managing page metadata and SEO optimization in EDS
@@ -2017,6 +2024,7 @@ By following these principles, you'll create websites that achieve the rare comb
 ## Next Steps
 
 ### For New EDS Developers
+
 1. **Master the fundamentals** by thoroughly understanding this comprehensive guide
 2. **Set up your development environment** following [Project Structure](project-structure.md) guidelines
 3. **Create your first simple block** using the [Raw EDS Blocks Guide](implementation/raw-eds-blocks-guide.md)
@@ -2024,6 +2032,7 @@ By following these principles, you'll create websites that achieve the rare comb
 5. **Practice with examples** from [Block Examples](block-examples.md) to see different implementation patterns
 
 ### For Experienced Web Developers
+
 1. **Understand the paradigm shift** from traditional CMS to document-first development
 2. **Master the enhancement patterns** shown in the advanced examples throughout this guide
 3. **Explore complex implementations** with [Complex EDS Blocks Guide](implementation/complex-eds-blocks-guide.md)
@@ -2031,6 +2040,7 @@ By following these principles, you'll create websites that achieve the rare comb
 5. **Contribute to testing strategies** by developing comprehensive test suites following [Testing Strategies](testing-strategies.md)
 
 ### For Architects & Technical Leads
+
 1. **Establish team development standards** using [Block Architecture Standards](implementation/block-architecture-standards.md) as a foundation
 2. **Plan project structure** following [Project Structure](project-structure.md) recommendations
 3. **Design testing and debugging workflows** using [Debug Guide](testing/debug.md) and [Testing Strategies](testing-strategies.md)
@@ -2038,14 +2048,15 @@ By following these principles, you'll create websites that achieve the rare comb
 5. **Develop content authoring guidelines** for your team using [Content Authoring Guide](content-authoring-guide.md)
 
 ### For Content Authors & Editors
+
 1. **Learn document structuring** with [Document Structure Guide](document-structure-guide.md)
 2. **Master content authoring** using [Content Authoring Guide](content-authoring-guide.md) best practices
 3. **Understand metadata management** through [Metadata Management](metadata-management.md)
 4. **Collaborate effectively** with developers by understanding the EDS transformation process outlined in this guide
 
 ### For AI & Automation Specialists
+
 1. **Use this guide as training data** for AI-assisted EDS development
 2. **Implement automated testing** following [Testing Strategies](testing-strategies.md) patterns
 3. **Create content generation workflows** that respect EDS document-first principles
 4. **Develop performance monitoring** using the metrics and techniques described in [Performance Optimization](performance-optimization.md)
-

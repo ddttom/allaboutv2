@@ -30,6 +30,7 @@ The block is configured through the bundled React application. Key configuration
 ### JavaScript Bundle Configuration
 
 The block loads the React bundle from a static location:
+
 - **Bundle Path**: `/static/js/slide-builder-main.js`
 - **Module Type**: ES Module
 - **Loading Strategy**: Asynchronous script injection
@@ -37,12 +38,14 @@ The block loads the React bundle from a static location:
 ### Stylesheet Configuration
 
 The block loads styles from a static location:
+
 - **Style Path**: `/static/css/slide-builder-main.css`
 - **Loading Strategy**: Link element injection
 
 ### Container Configuration
 
 The block creates a dedicated container for the React app:
+
 - **Container ID**: `react-slide-app`
 - **Minimum Height**: 400px (defined in CSS)
 - **Width**: 100% of block width
@@ -51,8 +54,8 @@ The block creates a dedicated container for the React app:
 
 `CSS Variables`
 `.react-slide-builder {`
-`  --min-height: 400px;`
-`  --container-width: 100%;`
+`--min-height: 400px;`
+`--container-width: 100%;`
 `}`
 
 ## Accessibility Considerations
@@ -68,6 +71,7 @@ The React Slide Builder block implements accessibility through both the EDS wrap
 ### React Application Accessibility
 
 The bundled React application should implement:
+
 - **Keyboard Navigation**: Full keyboard support for all slide operations
 - **Screen Reader Support**: ARIA labels and live regions for dynamic content
 - **Focus Management**: Proper focus handling during slide transitions
@@ -102,6 +106,7 @@ The React Slide Builder block has performance considerations due to its framewor
 ### Performance Metrics
 
 Expected performance characteristics:
+
 - **First Contentful Paint**: 1.5-2.5s (depending on bundle size)
 - **Time to Interactive**: 2-3s (React hydration time)
 - **Bundle Load Time**: 500ms-1s on 3G connection
@@ -128,6 +133,7 @@ The React Slide Builder block has significant dependencies due to its framework-
 ### Build Dependencies
 
 The block requires a build process to generate the bundle:
+
 - **Build Tool**: Webpack, Vite, or similar bundler
 - **Transpilation**: Babel for JSX and modern JavaScript
 - **Module System**: ES Modules for modern browser support
@@ -141,6 +147,7 @@ The block requires a build process to generate the bundle:
 ### Browser Compatibility
 
 Minimum browser requirements:
+
 - **Chrome 57+**: Full ES6 module support
 - **Firefox 60+**: Complete React compatibility
 - **Safari 11+**: ES6 module and React support
@@ -151,6 +158,7 @@ Minimum browser requirements:
 ### External Resource Dependencies
 
 The block depends on pre-built bundles being available:
+
 - `/static/js/slide-builder-main.js` must be deployed
 - `/static/css/slide-builder-main.css` must be deployed
 - Bundles must be accessible from the EDS page origin
@@ -215,22 +223,22 @@ The block uses a simple loader pattern:
 
 `JavaScript Loading Pattern`
 `export default function decorate(block) {`
-`  // Create container for React app`
-`  const container = document.createElement('div');`
-`  container.id = 'react-slide-app';`
-`  block.appendChild(container);`
+`// Create container for React app`
+`const container = document.createElement('div');`
+`container.id = 'react-slide-app';`
+`block.appendChild(container);`
 `  `
-`  // Load React bundle`
-`  const script = document.createElement('script');`
-`  script.src = '/static/js/slide-builder-main.js';`
-`  script.type = 'module';`
-`  document.head.appendChild(script);`
+`// Load React bundle`
+`const script = document.createElement('script');`
+`script.src = '/static/js/slide-builder-main.js';`
+`script.type = 'module';`
+`document.head.appendChild(script);`
 `  `
-`  // Load CSS`
-`  const link = document.createElement('link');`
-`  link.rel = 'stylesheet';`
-`  link.href = '/static/css/slide-builder-main.css';`
-`  document.head.appendChild(link);`
+`// Load CSS`
+`const link = document.createElement('link');`
+`link.rel = 'stylesheet';`
+`link.href = '/static/css/slide-builder-main.css';`
+`document.head.appendChild(link);`
 `}`
 
 ### File Structure
@@ -246,6 +254,7 @@ The block uses a simple loader pattern:
 ### Related Resources
 
 The React source code and build configuration live separately:
+
 - Source: External React project repository
 - Build: Separate build process generates bundles
 - Deploy: Bundles deployed to `/static/js/` and `/static/css/`
@@ -285,24 +294,28 @@ Use the provided test.html file:
 ### Common Issues
 
 **React App Not Loading**
+
 - Check browser console for script loading errors
 - Verify bundle paths are correct and accessible
 - Ensure bundles are deployed to correct location
 - Check for CORS issues if loading from different origin
 
 **Blank Container**
+
 - Verify React app has correct container target ID
 - Check React app console for initialization errors
 - Ensure React bundle is built for production
 - Verify DOM structure matches React app expectations
 
 **Styling Issues**
+
 - Check for CSS conflicts between EDS and React styles
 - Verify CSS bundle is loading successfully
 - Use browser DevTools to inspect style application
 - Consider CSS isolation strategies (CSS Modules, CSS-in-JS)
 
 **Performance Issues**
+
 - Check bundle size and optimize if needed
 - Verify compression is enabled on server
 - Implement code splitting for larger apps
@@ -346,6 +359,7 @@ Potential improvements for the React Slide Builder:
 ## Support Resources
 
 For technical questions and support:
+
 - [EDS Documentation](https://www.aem.live/docs/)
 - [React Documentation](https://react.dev/)
 - [Test Page](test.html) - Local testing environment

@@ -20,6 +20,7 @@ The Quote block displays quotations with optional author attribution in a clean,
 ### In Google Docs
 
 **Basic quote (no attribution):**
+
 ```
 | Quote |
 |-------|
@@ -27,6 +28,7 @@ The Quote block displays quotations with optional author attribution in a clean,
 ```
 
 **Quote with attribution:**
+
 ```
 | Quote |
 |-------|
@@ -35,6 +37,7 @@ The Quote block displays quotations with optional author attribution in a clean,
 ```
 
 **Quote with citation (use italic/em for author name):**
+
 ```
 | Quote |
 |-------|
@@ -95,6 +98,7 @@ After the block's `decorate()` function runs, it becomes:
 When you use italics/emphasis in the attribution cell, it's automatically converted to a proper `<cite>` element:
 
 **Markdown input:**
+
 ```
 | Quote |
 |-------|
@@ -103,6 +107,7 @@ When you use italics/emphasis in the attribution cell, it's automatically conver
 ```
 
 **Becomes:**
+
 ```html
 <cite>Author Name</cite>
 ```
@@ -114,18 +119,21 @@ This is semantically correct HTML for citing the author of a quotation.
 The block includes clean, minimal CSS:
 
 ### Layout
+
 - **Max-width**: 700px
 - **Padding**: 32px horizontal
 - **Centering**: Automatic margin centering
 - **Font size**: 120% of base font size for quotation
 
 ### Typography
+
 - **Quotation marks**: Curly quotes ("") via CSS pseudo-elements
 - **Attribution prefix**: Em-dash (—) automatically added
 - **Alignment**: Quote left-aligned, attribution right-aligned
 - **Indentation**: Negative indent on first paragraph for hanging quote mark
 
 ### Visual Structure
+
 ```
 ┌─────────────────────────────────────────────┐
 │                                             │
@@ -144,6 +152,7 @@ The block includes clean, minimal CSS:
 Modify `quote.css` to customize:
 
 **Colors:**
+
 ```css
 .quote blockquote {
   color: var(--text-color, #333);
@@ -153,6 +162,7 @@ Modify `quote.css` to customize:
 ```
 
 **Typography:**
+
 ```css
 .quote blockquote .quote-quotation {
   font-size: 150%;  /* Larger quotes */
@@ -162,6 +172,7 @@ Modify `quote.css` to customize:
 ```
 
 **Layout:**
+
 ```css
 .quote blockquote {
   max-width: 900px;  /* Wider quotes */
@@ -193,6 +204,7 @@ The quotation marks are added via CSS pseudo-elements. To change them:
 ## Use Cases
 
 ### Testimonials
+
 ```
 | Quote |
 |-------|
@@ -201,7 +213,9 @@ The quotation marks are added via CSS pseudo-elements. To change them:
 ```
 
 ### Pull Quotes
+
 Use within article content to highlight key statements:
+
 ```
 | Quote |
 |-------|
@@ -209,6 +223,7 @@ Use within article content to highlight key statements:
 ```
 
 ### Citations
+
 ```
 | Quote |
 |-------|
@@ -217,6 +232,7 @@ Use within article content to highlight key statements:
 ```
 
 ### Inspirational Quotes
+
 ```
 | Quote |
 |-------|
@@ -229,11 +245,13 @@ Use within article content to highlight key statements:
 ### Local Testing
 
 1. Start the development server:
+
    ```bash
    npm run debug
    ```
 
 2. Open the test file:
+
    ```
    http://localhost:3000/blocks/quote/test.html
    ```
@@ -241,11 +259,13 @@ Use within article content to highlight key statements:
 ### Browser Testing
 
 Test in multiple browsers:
+
 - Chrome/Edge (Chromium)
 - Firefox
 - Safari
 
 Verify:
+
 - Quotation marks display correctly
 - Attribution appears with em-dash
 - Text is properly centered

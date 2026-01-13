@@ -26,6 +26,7 @@ A simple, lightweight layout block for centering content vertically and horizont
 The centreblock transforms markdown content into a centered layout section with vertical spacing. It's designed to be a lightweight, reusable component for content that needs visual emphasis through central positioning.
 
 **Primary Use Cases:**
+
 - Hero sections with centered headlines
 - Feature highlights and announcements
 - Call-to-action sections
@@ -38,6 +39,7 @@ The centreblock transforms markdown content into a centered layout section with 
 **Location:** `/blocks/centreblock/`
 
 **Files:**
+
 - `centreblock.js` - Core decoration logic (minimal implementation)
 - `centreblock.css` - Centered layout styles with vertical spacing
 - `README.md` - Technical documentation (this file)
@@ -90,10 +92,11 @@ The `centreblock.js` file exports a minimal default function:
 
 `Empty initialization function`
 `export default function init() {`
-`  // empty function`
+`// empty function`
 `}`
 
 **Why empty function?**
+
 - EDS requires each block to export a default function
 - Centreblock requires no DOM manipulation
 - All functionality handled purely through CSS
@@ -104,11 +107,13 @@ The `centreblock.js` file exports a minimal default function:
 The centreblock uses minimal CSS for maximum efficiency:
 
 **Block-level styling:**
+
 - `.centreblock > div` - Direct child divs get centered text alignment
 - `text-align: center` - Horizontally centers all inline content
 - `margin: 100px 0` - Provides generous vertical spacing (top/bottom)
 
 **Heading styling:**
+
 - `.centreblock > div h3` - Targets h3 elements within block
 - `display: inline-block` - Allows padding to work properly
 - `padding: 0.5rem` - Adds visual breathing room around heading
@@ -182,6 +187,7 @@ In Google Docs, create a table with the block name in the header row:
 ### Integration Points
 
 **With other blocks:**
+
 - Works perfectly as hero section
 - Can follow header or navigation
 - Great as section divider
@@ -189,6 +195,7 @@ In Google Docs, create a table with the block name in the header row:
 - No conflicts with any other blocks
 
 **Content Model:**
+
 - Single table row after header
 - One cell contains all content
 - Content can include multiple elements
@@ -229,6 +236,7 @@ The CSS automatically styles the structure:
 When you include headings and text:
 
 **Input:**
+
 ```html
 <div class="centreblock block">
   <div>
@@ -241,6 +249,7 @@ When you include headings and text:
 ```
 
 **Rendered result:**
+
 - H3 gets `display: inline-block` and `padding: 0.5rem`
 - All content inherits `text-align: center`
 - 100px vertical margins create visual separation
@@ -254,6 +263,7 @@ When you include headings and text:
 The centreblock does not use CSS variables. All styling is hardcoded for simplicity and performance.
 
 **Default values:**
+
 - Vertical margin: `100px`
 - H3 padding: `0.5rem`
 - Text alignment: `center`
@@ -263,6 +273,7 @@ The centreblock does not use CSS variables. All styling is hardcoded for simplic
 Override default styles in your project's CSS:
 
 **Adjust vertical spacing:**
+
 ```css
 .centreblock > div {
   margin: 50px 0; /* Less vertical space */
@@ -270,6 +281,7 @@ Override default styles in your project's CSS:
 ```
 
 **Change heading padding:**
+
 ```css
 .centreblock > div h3 {
   padding: 1rem; /* More padding around heading */
@@ -277,6 +289,7 @@ Override default styles in your project's CSS:
 ```
 
 **Add background color:**
+
 ```css
 .centreblock > div {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -286,6 +299,7 @@ Override default styles in your project's CSS:
 ```
 
 **Limit content width:**
+
 ```css
 .centreblock > div {
   max-width: 800px;
@@ -294,6 +308,7 @@ Override default styles in your project's CSS:
 ```
 
 **Add border or shadow:**
+
 ```css
 .centreblock > div {
   border: 2px solid #e0e0e0;
@@ -308,6 +323,7 @@ Override default styles in your project's CSS:
 The centreblock currently has **no built-in variations**. All customization is done through CSS overrides.
 
 **Future variation ideas:**
+
 - `centreblock (compact)` - Reduced vertical margins (50px instead of 100px)
 - `centreblock (wide)` - Full-width centered content
 - `centreblock (hero)` - Extra large text and spacing
@@ -326,6 +342,7 @@ The centreblock currently has **no built-in variations**. All customization is d
 - Long text wraps appropriately
 
 **Recommended adjustments:**
+
 ```css
 @media (max-width: 600px) {
   .centreblock > div {
@@ -354,6 +371,7 @@ The centreblock currently has **no built-in variations**. All customization is d
 - Consider max-width for readability
 
 **Recommended enhancement:**
+
 ```css
 @media (min-width: 1024px) {
   .centreblock > div {
@@ -380,12 +398,14 @@ The centreblock currently has **no built-in variations**. All customization is d
 The centreblock maintains semantic HTML structure:
 
 **Heading hierarchy:**
+
 - Use proper heading levels (h1-h6)
 - Don't skip heading levels
 - Maintain logical document outline
 - Screen readers navigate by headings
 
 **Text alternatives:**
+
 - Provide alt text for any images
 - Use descriptive text, not just "Click here"
 - Avoid image-only content
@@ -393,12 +413,14 @@ The centreblock maintains semantic HTML structure:
 ### Screen Reader Support
 
 **What works well:**
+
 - Content read in natural order
 - Headings announced properly
 - Text centering doesn't affect reading
 - No ARIA attributes needed (semantic HTML is sufficient)
 
 **Screen reader flow:**
+
 1. Block content read top-to-bottom
 2. Headings announced with proper level
 3. Visual centering doesn't affect audio order
@@ -407,6 +429,7 @@ The centreblock maintains semantic HTML structure:
 ### Keyboard Navigation
 
 **No interactive elements:**
+
 - Centreblock is purely presentational
 - No keyboard interaction needed
 - If links included, they work normally
@@ -415,12 +438,14 @@ The centreblock maintains semantic HTML structure:
 ### Color Contrast
 
 **Default implementation:**
+
 - Uses inherited text colors
 - No custom colors defined
 - Follows site-wide color scheme
 - Ensure sufficient contrast (4.5:1 minimum)
 
 **Custom styling considerations:**
+
 - If adding background colors, verify contrast
 - Test with color contrast tools
 - Support high contrast mode
@@ -441,18 +466,21 @@ The centreblock maintains semantic HTML structure:
 ### JavaScript Execution
 
 **Initial decoration:**
+
 - Empty function called (instant execution)
 - Zero DOM manipulation
 - No event listeners
 - No ongoing overhead
 
 **Runtime performance:**
+
 - Zero JavaScript overhead
 - Pure CSS-based rendering
 - No performance impact
 - Instant paint
 
 **Optimization advantages:**
+
 - No JavaScript to download (except empty function)
 - No execution time
 - No memory footprint
@@ -461,12 +489,14 @@ The centreblock maintains semantic HTML structure:
 ### Memory Footprint
 
 **Per centreblock:**
+
 - No JavaScript objects created
 - No event listeners registered
 - No dynamic state
 - Zero memory overhead beyond DOM itself
 
 **Typical usage:**
+
 - 1-3 centreblocks per page
 - < 50 bytes JavaScript (minified)
 - < 200 bytes CSS (minified)
@@ -474,6 +504,7 @@ The centreblock maintains semantic HTML structure:
 ### Network Efficiency
 
 **Initial load:**
+
 - centreblock.js: ~60 bytes (minified) - just the empty function
 - centreblock.css: ~150 bytes (minified)
 - No external dependencies
@@ -481,6 +512,7 @@ The centreblock maintains semantic HTML structure:
 - Extremely efficient
 
 **Runtime:**
+
 - No additional network requests
 - No dynamic content loading
 - All content loaded upfront
@@ -489,6 +521,7 @@ The centreblock maintains semantic HTML structure:
 ### Loading Strategy
 
 Centreblock loads as part of EDS's default loading pattern:
+
 - CSS loads with page styles (non-blocking)
 - JavaScript loads but does nothing
 - No render-blocking resources
@@ -497,12 +530,14 @@ Centreblock loads as part of EDS's default loading pattern:
 ### Lighthouse Impact
 
 Expected Lighthouse scores with centreblock:
+
 - Performance: 100 (no impact)
 - Accessibility: 95-100 (depends on content)
 - Best Practices: 100
 - SEO: 100
 
 **Why perfect scores?**
+
 - No JavaScript overhead
 - Minimal CSS
 - No network requests
@@ -534,15 +569,18 @@ Expected Lighthouse scores with centreblock:
 ### Progressive Enhancement
 
 **Base experience:**
+
 - Centered text with vertical spacing
 - Works in all browsers
 - No fallback needed
 
 **Enhanced experience:**
+
 - Same as base experience
 - No enhancements to progressively add
 
 **Degraded experience:**
+
 - If CSS fails to load (extremely rare)
 - Content still readable, just not centered
 - Graceful degradation built-in
@@ -554,6 +592,7 @@ Expected Lighthouse scores with centreblock:
 ### Issue: Content not centered
 
 **Symptoms:**
+
 - Content appears left-aligned
 - No centering visible
 - Default text alignment
@@ -581,6 +620,7 @@ Expected Lighthouse scores with centreblock:
 ### Issue: No vertical spacing
 
 **Symptoms:**
+
 - Content appears cramped
 - No space above/below block
 - Runs into adjacent content
@@ -598,6 +638,7 @@ Expected Lighthouse scores with centreblock:
    - Verify no conflicting styles
 
 3. **Test margin explicitly:**
+
    ```css
    /* Add temporarily to test */
    .centreblock > div {
@@ -609,6 +650,7 @@ Expected Lighthouse scores with centreblock:
 ### Issue: H3 styling not applied
 
 **Symptoms:**
+
 - H3 doesn't have padding
 - H3 doesn't appear inline-block
 - H3 looks like default heading
@@ -626,6 +668,7 @@ Expected Lighthouse scores with centreblock:
    - Ensure proper nesting
 
 3. **Test rule directly:**
+
    ```css
    /* Add temporarily */
    .centreblock h3 {
@@ -638,6 +681,7 @@ Expected Lighthouse scores with centreblock:
 ### Issue: Content overflows on mobile
 
 **Symptoms:**
+
 - Horizontal scrolling on mobile
 - Content cut off at screen edges
 - Text too wide for viewport
@@ -645,6 +689,7 @@ Expected Lighthouse scores with centreblock:
 **Solutions:**
 
 1. **Add responsive padding:**
+
    ```css
    @media (max-width: 600px) {
      .centreblock > div {
@@ -654,6 +699,7 @@ Expected Lighthouse scores with centreblock:
    ```
 
 2. **Reduce vertical margins on mobile:**
+
    ```css
    @media (max-width: 600px) {
      .centreblock > div {
@@ -670,6 +716,7 @@ Expected Lighthouse scores with centreblock:
 ### Issue: Block appears empty
 
 **Symptoms:**
+
 - Nothing visible where block should be
 - Empty space in page
 - Block element exists but looks blank
@@ -698,6 +745,7 @@ Expected Lighthouse scores with centreblock:
 ### Manual Testing (test.html)
 
 1. **Open test file:**
+
    ```
    http://localhost:3000/blocks/centreblock/test.html
    ```
@@ -729,6 +777,7 @@ Expected Lighthouse scores with centreblock:
 ### DevTools Inspection
 
 **Check applied styles:**
+
 ```javascript
 // In console
 const block = document.querySelector('.centreblock > div');
@@ -747,6 +796,7 @@ if (h3) {
 ```
 
 **Verify DOM structure:**
+
 ```javascript
 // Check block exists
 document.querySelectorAll('.centreblock.block').length
@@ -760,12 +810,14 @@ console.log('Has content:', content.textContent.length > 0);
 ### Automated Testing
 
 **Future implementation:**
+
 - Jest tests for CSS presence
 - Visual regression tests with Playwright
 - Accessibility tests with axe-core
 - Responsive layout tests
 
 **Example test cases:**
+
 ```javascript
 describe('Centreblock', () => {
   test('applies centered text alignment', () => {
@@ -848,6 +900,7 @@ describe('Centreblock', () => {
 ### Contributing
 
 To propose enhancements:
+
 1. Create test content in Google Docs
 2. Implement feature in CSS (keep JavaScript minimal)
 3. Add test cases to test.html
@@ -880,6 +933,7 @@ To propose enhancements:
 ## Support
 
 For issues or questions:
+
 1. Check [Troubleshooting](#troubleshooting) section
 2. Review [EXAMPLE.md](./EXAMPLE.md) for usage examples
 3. Test with [test.html](./test.html)

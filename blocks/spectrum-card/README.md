@@ -17,6 +17,7 @@ The Spectrum Card block uses EDS table structure to define card content:
 `| Learn More |`
 
 Each row after the block name defines:
+
 - Row 1: Image URL (required)
 - Row 2: Card title (required)
 - Row 3: Description text (required)
@@ -48,6 +49,7 @@ The Spectrum Card block supports content-based and styling variations:
 ### Spectrum Variant Styles
 
 The block uses the `standard` card variant by default, which ensures footer and action buttons are always visible. Other Spectrum card variants include:
+
 - **standard**: Full card with footer (default)
 - **gallery**: Image-focused cards
 - **quiet**: Minimal styling without borders
@@ -59,6 +61,7 @@ The Spectrum Card block is configured through both the source build and EDS cont
 ### Build Configuration
 
 Located in `/build/spectrum-card/`:
+
 - **Package.json**: Defines Spectrum dependencies and build scripts
 - **Vite.config.js**: Configures bundling and optimization
 - **Build Output**: Single JS file with all CSS injected
@@ -73,6 +76,7 @@ Located in `/build/spectrum-card/`:
 ### Spectrum Theme Configuration
 
 The block automatically injects Spectrum theme context:
+
 - **Theme**: Light theme by default
 - **Scale**: Medium scale for optimal readability
 - **Color**: Lightest color scheme
@@ -117,6 +121,7 @@ The Spectrum Card block provides enterprise-grade accessibility through Adobe Sp
 ### Modal Accessibility (Dynamic Content Mode)
 
 When loading from query-index.json:
+
 - **Focus Trapping**: Focus contained within modal
 - **ESC Key Support**: Close modals with ESC key
 - **Return Focus**: Focus returns to trigger element
@@ -145,6 +150,7 @@ The Spectrum Card block has specific performance characteristics due to Spectrum
 ### Performance Metrics
 
 Expected performance characteristics:
+
 - **Bundle Download**: 150-200KB gzipped
 - **First Contentful Paint**: 1.5-2.5s (including Spectrum initialization)
 - **Time to Interactive**: 2-3s (custom element registration)
@@ -174,6 +180,7 @@ The Spectrum Card block has significant dependencies due to Adobe Spectrum integ
 ### Build Dependencies
 
 The block requires a build process:
+
 - **Vite**: Modern build tool and bundler (v5.2.0+)
 - **Node.js**: 14+ for build process
 - **npm**: Package management
@@ -187,6 +194,7 @@ The block requires a build process:
 ### Browser Compatibility
 
 Minimum browser requirements:
+
 - **Chrome 67+**: Full Web Components support
 - **Firefox 63+**: Complete custom elements support
 - **Safari 12.1+**: Web Components and Shadow DOM
@@ -339,30 +347,35 @@ When updating Spectrum components:
 ### Common Issues
 
 **Cards Not Displaying**
+
 - Check browser console for Web Components support errors
 - Verify bundle loaded successfully (check Network tab)
 - Ensure content structure matches expected format
 - Check that custom elements registered (look for `<sp-card>` in DOM)
 
 **Styling Not Applied**
+
 - Verify `<sp-theme>` wrapper exists in DOM
 - Check that CSS is injected (inspect Shadow DOM)
 - Ensure Spectrum theme imports are correct
 - Verify no conflicting global styles
 
 **Images Not Loading**
+
 - Check image URLs are absolute and accessible
 - Verify proper image formats (WebP, PNG, JPEG)
 - Ensure lazy loading attributes are correct
 - Check browser console for CORS errors
 
 **Action Buttons Not Visible**
+
 - Verify using `standard` card variant (not `quiet`)
 - Check that button text is provided in content
 - Inspect Shadow DOM to see if button rendered
 - Verify Spectrum button component loaded
 
 **Performance Issues**
+
 - Check bundle size and network conditions
 - Verify images are optimized
 - Monitor memory usage with many cards
@@ -408,6 +421,7 @@ Potential improvements for the Spectrum Card block:
 ## Support Resources
 
 For technical questions and support:
+
 - [EDS Documentation](https://www.aem.live/docs/)
 - [Spectrum Web Components](https://opensource.adobe.com/spectrum-web-components/)
 - [Build Source](../../build/spectrum-card/) - Source code and build config

@@ -18,7 +18,6 @@ code-expander - Documented INTENTIONAL globals (already had CONFIG)
 dfs - Documented INTENTIONAL globals, deferred inline CSS refactoring
 tags - Added TAGS_CONFIG, fixed global selector
 
-
 MEDIUM PRIORITY (single-violation blocks)
 text, dynamic, bloglist, embed, modal, slide-builder, footer
 Then: Phases 4-5 to add CONFIG objects to remaining 25-50 blocks
@@ -26,7 +25,6 @@ Then: Phases 4-5 to add CONFIG objects to remaining 25-50 blocks
 INTENTIONAL Global Selectors - Legitimate uses:
 Document-level components (header, index, showcaser)
 Meta tags (document <head> elements)
-
 
 Modals/tooltips (document body positioning)
 Reserved Class Patterns - Never use:

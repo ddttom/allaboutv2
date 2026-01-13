@@ -228,17 +228,20 @@ List contacts, team members, or directory information:
 ### Header Requirements
 
 **Recommended:**
+
 - Clear, descriptive column names
 - Keep headers concise (1-3 words)
 - Use title case (capitalize first letter)
 - Make headers meaningful
 
 **Good headers:**
+
 - Product, Price, Quantity
 - Name, Email, Role
 - Date, Time, Location
 
 **Avoid:**
+
 - Generic headers (Column 1, Column 2)
 - Very long headers (wrap poorly on mobile)
 - Special characters (may cause display issues)
@@ -246,6 +249,7 @@ List contacts, team members, or directory information:
 ### Cell Content Requirements
 
 **Content types supported:**
+
 - Plain text
 - Numbers (with or without formatting)
 - Currency values ($, €, £)
@@ -254,12 +258,14 @@ List contacts, team members, or directory information:
 - Short phrases
 
 **Content length:**
+
 - Keep cell content concise
 - Aim for 1-5 words per cell
 - Use abbreviations when appropriate
 - Long text may wrap or truncate
 
 **Formatting tips:**
+
 1. Keep numbers aligned (right-aligned looks best)
 2. Use consistent date formats
 3. Include units where applicable (GB, lbs, inches)
@@ -268,11 +274,13 @@ List contacts, team members, or directory information:
 ### Row Requirements
 
 **Minimum requirements:**
+
 - At least 1 header row + 1 data row
 - All rows should have same number of columns
 - Empty cells are okay (just leave blank)
 
 **Recommended:**
+
 - 2-15 data rows (optimal readability)
 - More than 20 rows may need pagination
 - Keep column count to 3-8 for mobile
@@ -284,12 +292,14 @@ List contacts, team members, or directory information:
 ### Visual Consistency
 
 **Default table appearance:**
+
 - Header row: Bold text, top and bottom borders
 - Data rows: Regular text, bottom borders only
 - Cell padding: 8px 16px
 - Font size: Responsive (smaller on mobile)
 
 **Variations enhance appearance:**
+
 - **Striped**: Adds alternating row backgrounds
 - **Bordered**: Adds borders around all cells
 - **First-line**: Highlights first data row
@@ -298,22 +308,26 @@ List contacts, team members, or directory information:
 ### Responsive Behavior
 
 **Mobile (< 600px):**
+
 - Tables scroll horizontally if too wide
 - Font size reduced for readability
 - Touch-friendly scrolling
 - Cell padding maintained
 
 **Tablet (600px - 899px):**
+
 - Increased font size
 - Most tables fit without scrolling
 - Comfortable reading experience
 
 **Desktop (≥ 900px):**
+
 - Largest font size
 - Tables typically fit full width
 - Optimal readability
 
 **How it works:**
+
 - Wide tables scroll horizontally (don't wrap)
 - Table structure maintained at all sizes
 - No column hiding or stacking (preserves data)
@@ -321,11 +335,13 @@ List contacts, team members, or directory information:
 ### Color and Theming
 
 **Default colors:**
+
 - Striped rows: Light gray (rgba(0, 0, 0, 0.05))
 - First-line: Pale blue (#e6f2ff)
 - Borders: Inherit from site theme
 
 **Customization:**
+
 - Colors controlled via CSS variables
 - Can be customized per site theme
 - Supports dark mode with custom CSS
@@ -337,24 +353,28 @@ List contacts, team members, or directory information:
 ### Content Strategy
 
 **1. Organize logically**
+
 - Put most important data in first columns
 - Order rows by importance or logical flow
 - Group related information together
 - Consider sort order (alphabetical, numerical, chronological)
 
 **2. Keep headers concise**
+
 - 1-3 words per header
 - Clear and descriptive
 - Avoid abbreviations unless widely known
 - Use consistent naming conventions
 
 **3. Balance data density**
+
 - Not too sparse (wastes space)
 - Not too dense (hard to read)
 - Aim for scannable content
 - Use white space effectively
 
 **4. Consider mobile users**
+
 - Limit columns (3-5 ideal for mobile)
 - Keep cell content short
 - Test horizontal scrolling
@@ -363,23 +383,27 @@ List contacts, team members, or directory information:
 ### Accessibility First
 
 **1. Always include headers**
+
 - Use default table (not no-header) when possible
 - Headers provide context for screen readers
 - Column headers help users understand data
 
 **2. Write clear headers**
+
 - Descriptive, not generic
 - "Product Name" not "Name"
 - "Monthly Price" not "Price"
 - Clear context for all users
 
 **3. Keep content readable**
+
 - Plain language in cells
 - Avoid jargon or abbreviations
 - Spell out units (GB not G)
 - Use consistent formats
 
 **4. Test with screen readers**
+
 - Headers announced before cell content
 - Row and column navigation works
 - Cell relationships clear
@@ -387,12 +411,14 @@ List contacts, team members, or directory information:
 ### Performance Optimization
 
 **Keep tables manageable:**
+
 - Under 100 rows (no performance issues)
 - Under 10 columns (mobile friendly)
 - Avoid huge tables (use pagination)
 - Split large datasets into multiple tables
 
 **Content loading:**
+
 - All table data loaded with page
 - No lazy loading needed for small tables
 - Fast rendering (minimal JavaScript)
@@ -400,12 +426,14 @@ List contacts, team members, or directory information:
 ### When NOT to Use Tables
 
 **Avoid tables for:**
+
 - Single-row data (use list or paragraph)
 - Non-tabular content (use appropriate block)
 - Complex hierarchies (use nested lists)
 - Visual layout only (use CSS grid/flexbox)
 
 **Better alternatives:**
+
 - **Cards** - For visual content browsing
 - **List** - For simple sequential data
 - **Accordion** - For expandable content sections
@@ -420,6 +448,7 @@ List contacts, team members, or directory information:
 **Problem:** Table extends beyond screen on mobile devices.
 
 **Solution:**
+
 - This is expected behavior for wide tables
 - Users can scroll horizontally to view all columns
 - Consider reducing columns for mobile version
@@ -432,6 +461,7 @@ List contacts, team members, or directory information:
 **Cause:** Variation not specified in markdown.
 
 **Solution:**
+
 - Ensure first cell says `Table (striped)`
 - Check spacing: `Table (striped)` not `Table(striped)`
 - Verify no typos in variation name
@@ -443,6 +473,7 @@ List contacts, team members, or directory information:
 **Cause:** Using no-header variation or missing header row.
 
 **Solutions:**
+
 1. Remove `(no-header)` if used by mistake
 2. Ensure first row is intended as headers
 3. Check if first row was accidentally marked as data
@@ -454,6 +485,7 @@ List contacts, team members, or directory information:
 **Cause:** Variation not specified correctly.
 
 **Solution:**
+
 - Use `Table (bordered)` in first cell
 - Check spelling and spacing
 - Verify CSS is loaded
@@ -463,6 +495,7 @@ List contacts, team members, or directory information:
 **Problem:** Long header text wraps to multiple lines on mobile.
 
 **Solutions:**
+
 1. **Shorten headers** (best solution):
    - "Product Name" → "Product"
    - "Monthly Price" → "Price"
@@ -482,6 +515,7 @@ List contacts, team members, or directory information:
 **Problem:** Empty cells look different from filled cells.
 
 **Solution:**
+
 - This is normal behavior
 - Empty cells are valid
 - If needed, use dash (-) or "N/A" as placeholder
@@ -502,6 +536,7 @@ For wide tables with many columns:
 | 003 | Bob Wilson | bob@example.com | 555-0103 | Sales | Chicago | Active | Alice |
 
 **Tips:**
+
 - Prioritize important columns first (left to right)
 - Accept horizontal scrolling on mobile
 - Consider splitting into multiple tables
@@ -538,6 +573,7 @@ Tables work well for numeric data:
 | Customers | 450 | 562 | 674 | 786 |
 
 **Tips:**
+
 - Use consistent number formatting
 - Include currency symbols ($, €)
 - Include percentage signs (%)
@@ -619,6 +655,7 @@ After creating table in Google Docs:
 ### Browser Testing
 
 Test in multiple browsers:
+
 - Chrome/Edge (last 2 versions)
 - Firefox (last 2 versions)
 - Safari (last 2 versions)
@@ -677,10 +714,12 @@ Test in multiple browsers:
 ## Related Blocks
 
 **Similar functionality:**
+
 - **List** - Simple sequential data
 - **Columns** - Side-by-side content layout
 
 **Complementary blocks:**
+
 - **Hero** - Large introductory section before table
 - **Section** - Organize tables into page sections
 - **Quote** - Highlight key data points

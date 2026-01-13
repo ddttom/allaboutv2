@@ -19,12 +19,14 @@ This Worker extends Adobe's standard EDS Cloudflare Worker template to:
 ### Version Header
 
 The worker includes a version header in all responses:
+
 - **Header name**: `cfw` (CloudflareWorker)
 - **Format**: Semantic versioning (MAJOR.MINOR.PATCH)
 - **Current version**: `1.1.5`
 - **Usage**: Track deployed worker version for debugging and monitoring
 
 **Version Management (Single Source of Truth):**
+
 - **Version location**: `package.json` version field (canonical source)
 - **Worker imports**: `import pkg from './package' with { type: 'json' };`
 - **At build time**: Wrangler/esbuild inlines the version from package.json into the worker bundle
@@ -36,6 +38,7 @@ The worker includes a version header in all responses:
 - Version is validated by automated tests (test imports from worker, worker imports from package.json)
 
 **Check deployed version:**
+
 ```bash
 curl -I https://allabout.network/ | grep cfw
 # Output: cfw: 1.1.5
@@ -54,6 +57,7 @@ The Worker supports **three trigger mechanisms** for JSON-LD generation:
 ```
 
 Generates clean HTML:
+
 ```html
 <meta name="jsonld" content="article">
 ```
@@ -83,6 +87,7 @@ The Worker regenerates from fresh metadata to ensure consistency.
 #### How All Three Work
 
 Regardless of trigger:
+
 1. Worker detects the trigger element
 2. Extracts current metadata from page (og:title, author, description, etc.)
 3. Generates fresh JSON-LD from that metadata
@@ -94,6 +99,7 @@ This ensures **always using latest metadata**, never stale JSON-LD.
 ### CORS Headers
 
 Adds these headers to all responses:
+
 - `Access-Control-Allow-Origin: *`
 - `Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS`
 - `Access-Control-Allow-Headers: Content-Type`
@@ -105,6 +111,7 @@ Handles OPTIONS preflight requests properly.
 Extracts metadata from your EDS pages and creates schema.org Article structured data:
 
 **Metadata sources:**
+
 - `og:title` → headline
 - `og:description` or `longdescription` → description
 - `og:url` → url
@@ -123,11 +130,13 @@ The JSON-LD script is inserted into the page `<head>`.
 Dates are automatically converted to ISO 8601 format (YYYY-MM-DD). Supports multiple input formats with both 2-digit and 4-digit years:
 
 **4-digit years (recommended):**
+
 - ISO 8601: `2024-12-10` (passed through unchanged)
 - UK numeric: `10/12/2024` (day/month/year)
 - Month names: `10 December 2024`, `Dec 10 2024`, `10-Dec-2024`
 
 **2-digit years (with century inference):**
+
 - UK numeric: `12/12/25` → `2025-12-12`, `25/12/99` → `1999-12-25`
 - Month names: `12 Dec 25` → `2025-12-12`, `25 December 99` → `1999-12-25`
 - Hyphen format: `12-Dec-25` → `2025-12-12`, `25-March-99` → `1999-03-25`
@@ -135,6 +144,7 @@ Dates are automatically converted to ISO 8601 format (YYYY-MM-DD). Supports mult
 - US format: `Dec 12, 25` → `2025-12-12`, `dec/12/25` → `2025-12-12`
 
 **Century inference rules:**
+
 - Years `00-49` → `2000-2049` (e.g., `25` → `2025`, `00` → `2000`)
 - Years `50-99` → `1950-1999` (e.g., `99` → `1999`, `50` → `1950`)
 - Valid range: `1950-2049` (dates outside this range are rejected)
@@ -144,6 +154,7 @@ Dates are automatically converted to ISO 8601 format (YYYY-MM-DD). Supports mult
 ### Metadata Cleanup
 
 **Removes these elements after extraction:**
+
 - `<script type="application/ld+json" data-error>` (EDS error scripts)
 - `<meta data-error>` (any meta tags with errors)
 - `name="description"`
@@ -153,6 +164,7 @@ Dates are automatically converted to ISO 8601 format (YYYY-MM-DD). Supports mult
 - `name="modified-date"` / `name="last-modified"`
 
 **Keeps these for social media & attribution:**
+
 - All `og:*` properties
 - All `twitter:*` properties
 - `name="linkedin"` (used as fallback for author-url)
@@ -166,6 +178,7 @@ The `author` tag is kept in the HTML for proper attribution and accessibility, s
 Automatically replaces placeholder text with author images in HTML content.
 
 **Pattern Detection:**
+
 ```html
 <!-- Input HTML -->
 <div>
@@ -179,6 +192,7 @@ Automatically replaces placeholder text with author images in HTML content.
 ```
 
 **Behavior:**
+
 - Detects all `<div>` elements containing exactly "Picture Here" text
 - Replaces matching divs with author image tag
 - Case-sensitive matching with whitespace trimming
@@ -188,6 +202,7 @@ Automatically replaces placeholder text with author images in HTML content.
 
 **Configuration:**
 The feature is configured via `PICTURE_PLACEHOLDER_CONFIG` constant in the worker:
+
 ```javascript
 {
   TRIGGER_TEXT: 'Picture Here',
@@ -199,6 +214,7 @@ The feature is configured via `PICTURE_PLACEHOLDER_CONFIG` constant in the worke
 ```
 
 **Use Cases:**
+
 - Placeholder images in blog posts
 - Author profile pictures in article templates
 - Consistent author branding across pages
@@ -209,6 +225,7 @@ The feature is configured via `PICTURE_PLACEHOLDER_CONFIG` constant in the worke
 Automatically removes all HTML comments from HTML responses for cleaner output and reduced page size.
 
 **Behavior:**
+
 - Removes all `<!-- comment -->` patterns from HTML
 - Handles multiline comments
 - Handles multiple comments per page
@@ -216,6 +233,7 @@ Automatically removes all HTML comments from HTML responses for cleaner output a
 - Does not affect JavaScript `//` or `/* */` comments
 
 **Example:**
+
 ```html
 <!-- Input HTML -->
 <html>
@@ -238,6 +256,7 @@ Automatically removes all HTML comments from HTML responses for cleaner output a
 ```
 
 **Use Cases:**
+
 - Reduce HTML payload size
 - Remove development/debugging comments from production
 - Clean up comments left by content authors
@@ -250,6 +269,7 @@ Injects Chrome's Speculation Rules API for near-instant page navigation via prer
 **Browser Support**: Chrome 108+, Edge 108+ (other browsers gracefully ignore)
 
 **Injected Script:**
+
 ```html
 <script type="speculationrules">
   {
@@ -260,6 +280,7 @@ Injects Chrome's Speculation Rules API for near-instant page navigation via prer
 ```
 
 **Features:**
+
 - **Prerendering**: Fully renders pages in background before user navigates
 - **Prefetching**: Downloads resources for faster subsequent loads
 - **Moderate Eagerness**: Balances performance with resource usage
@@ -267,18 +288,21 @@ Injects Chrome's Speculation Rules API for near-instant page navigation via prer
 - **Graceful Degradation**: Ignored by browsers that don't support it
 
 **Benefits:**
+
 - Near-instant navigation for Chrome/Edge users
 - No configuration required (automatic for all pages)
 - Zero impact on unsupported browsers
 - Improved Core Web Vitals (LCP, FID)
 
 **Behavior:**
+
 - Automatically injected into all HTML responses
 - Appears in `<head>` before closing tag
 - No conditional logic (always enabled)
 - Pure string function (fully testable)
 
 **Use Cases:**
+
 - Improve page navigation speed for supported browsers
 - Enhance user experience with instant page loads
 - Boost Core Web Vitals scores (LCP, FID)
@@ -289,6 +313,7 @@ Injects Chrome's Speculation Rules API for near-instant page navigation via prer
 ### Local Development Setup
 
 **Install dependencies**:
+
 ```bash
 cd cloudflare/files
 npm install
@@ -337,6 +362,7 @@ Set these in your Cloudflare Worker settings (Dashboard):
 5. Click **"Save and Deploy"**
 
 **Configure Environment Variables** (in Dashboard):
+
 - Settings → Variables → Add variable
 - `ORIGIN_HOSTNAME` = `main--allaboutv2--ddttom.aem.page` (Required)
 - `DEBUG` = `true` (Optional - enables logging)
@@ -344,11 +370,13 @@ Set these in your Cloudflare Worker settings (Dashboard):
 - `PUSH_INVALIDATION` = `disabled` (Optional)
 
 **Configure Routes** (in Dashboard):
+
 - Settings → Triggers → Add Route
 - `yourdomain.com/*`
 - `www.yourdomain.com/*`
 
 **Post-Deployment**:
+
 ```bash
 # Test worker is responding
 curl -I https://yourdomain.com
@@ -429,6 +457,7 @@ This ensures all `<head>` metadata is available when generating the JSON-LD scri
 Only HTML responses are processed through HTMLRewriter. Other content types (JSON, images, media) pass through unchanged.
 
 HTMLRewriter processes the response as a stream, which means:
+
 - It must receive the original response from `fetch()`
 - It transforms the HTML as it flows through
 - Elements are processed in the order they appear in the HTML
@@ -436,6 +465,7 @@ HTMLRewriter processes the response as a stream, which means:
 - This allows efficient processing without loading entire pages into memory
 
 The Worker:
+
 - Reads meta tags as they appear in the stream
 - Builds a JSON-LD object from available data
 - Inserts the JSON-LD script right before `</head>` closes (after all meta tags processed)
@@ -560,21 +590,25 @@ Modified by Digital Domain Technologies Ltd
 Enable debug logging to troubleshoot JSON-LD generation:
 
 **Set environment variable**:
+
 ```
 DEBUG=true
 ```
 
 **View logs**:
+
 1. Cloudflare Dashboard → Workers & Pages → aem-worker
 2. Click "Logs" tab
 3. Watch real-time logs or use `wrangler tail`
 
 **Debug output includes**:
+
 - JSON-LD generation success with field details
 - Trigger detection failures (e.g., "trigger active but no title found")
 - URL pathname for each generated JSON-LD
 
 **Example debug log**:
+
 ```json
 {
   "message": "JSON-LD generated successfully",
@@ -590,15 +624,18 @@ DEBUG=true
 The worker includes robust error handling:
 
 **Environment Variable Validation**:
+
 - Returns 500 error if `ORIGIN_HOSTNAME` is missing
 - Clear error message: "Configuration Error: Missing ORIGIN_HOSTNAME environment variable"
 
 **JSON Serialization Protection**:
+
 - Wrapped in try/catch to prevent worker crashes
 - Logs errors to Cloudflare with context (URL, title, error message)
 - Continues serving page even if JSON-LD generation fails
 
 **Error log example**:
+
 ```json
 {
   "message": "JSON-LD serialization failed",
@@ -613,6 +650,7 @@ The worker includes robust error handling:
 The worker modifies response headers to handle edge cases in the double-CDN architecture (Cloudflare → Adobe Fastly → Adobe EDS):
 
 **CSP Header Removal on 304 Responses**:
+
 ```javascript
 if (resp.status === 304) {
   resp.headers.delete('Content-Security-Policy');
@@ -624,6 +662,7 @@ if (resp.status === 304) {
 - **Solution**: Remove CSP header from 304 responses to keep headers clean
 
 **Age Header Removal**:
+
 ```javascript
 resp.headers.delete('age');
 ```
@@ -635,6 +674,7 @@ resp.headers.delete('age');
 - **Solution**: Remove Adobe's `age` header so browsers don't receive misleading cache timing
 
 **x-robots-tag Header Removal**:
+
 ```javascript
 resp.headers.delete('x-robots-tag');
 ```
@@ -669,6 +709,7 @@ If you see the error script in the source but no JSON-LD, the Worker isn't proce
 ### Metadata not being removed
 
 Check the meta tag names match exactly - the Worker removes:
+
 - `name="description"` (not `property="description"`)
 - `name="author"`
 - `name="publication-date"` or `name="published-date"`
@@ -683,6 +724,7 @@ Check the meta tag names match exactly - the Worker removes:
 **[Building a Production-Ready Cloudflare Worker for Adobe EDS](../blog.md)** (450+ lines)
 
 This blog documents:
+
 - **The Challenge**: Building a worker that enhances EDS with CORS, JSON-LD, and metadata cleanup
 - **The Approach**: Read-only testing philosophy that treats production code as sacred
 - **The Implementation**: Four key worker enhancements with code examples
@@ -692,6 +734,7 @@ This blog documents:
 - **Lessons Learned**: Four key insights about read-only testing, developer experience, documentation as testing, and production safety
 
 **Key Metrics from the Journey:**
+
 - 42 automated tests (100% passing)
 - 3,000 lines of test infrastructure for 300-line worker (10:1 ratio)
 - Zero technical debt
@@ -711,11 +754,13 @@ This blog documents:
 **Core Principle:** All worker functionality must be implemented as **pure JavaScript functions** that can be tested without Cloudflare Workers runtime.
 
 **Why this matters:**
+
 - Cloudflare Workers runtime provides APIs (like `HTMLRewriter`) that don't exist in Node.js
 - Using runtime-specific APIs for core logic makes code untestable
 - Pure functions (string input → string output) are fully testable
 
 **Example of correct approach:**
+
 ```javascript
 // ✅ CORRECT - Pure function, fully testable
 export const replacePicturePlaceholder = (html) => {
@@ -731,6 +776,7 @@ test('replaces Picture Here with image', () => {
 ```
 
 **Example of incorrect approach:**
+
 ```javascript
 // ❌ WRONG - Requires Cloudflare runtime, untestable
 export const handlePicturePlaceholder = (element) => {
@@ -743,10 +789,12 @@ export const handlePicturePlaceholder = (element) => {
 ### Simple, Robust Testing
 
 The project uses a single test file `cloudflare-worker.test.js` that covers both:
+
 1. **Unit Tests**: Verifies pure functions with string input/output (no runtime needed)
 2. **Integration Tests**: Verifies the entire `fetch` flow using mocked Cloudflare APIs
 
 This two-file approach ensures:
+
 - ✅ All core logic is testable without Cloudflare runtime
 - ✅ Pure functions can be tested with simple string operations
 - ✅ Integration tests verify correct wiring with mocked APIs
@@ -765,6 +813,7 @@ npm run test:coverage
 ### Test Coverage
 
 **Tests cover:**
+
 - Worker version validation (2 tests)
 - Helper functions (19+ tests)
 - Environment validation
@@ -788,11 +837,13 @@ For complete testing details, see [TESTING.md](TESTING.md).
 The `test-local-html.js` script reads the actual `cloudflare/test.html` file and processes it through the worker's pure string handling functions to ensure HTML is properly transformed.
 
 **Run the test:**
+
 ```bash
 npm run test:local
 ```
 
 **What it does:**
+
 1. Reads actual `cloudflare/test.html` file
 2. Processes through all pure string functions in correct order:
    - `replacePicturePlaceholder()` - replaces "Picture Here" text
@@ -819,6 +870,7 @@ The generated `test-rendered.html` file serves as a **visual test artifact** tha
 This makes it easy to visually verify that worker transformations are working correctly without deploying to Cloudflare.
 
 **Test coverage:**
+
 - HTML comment removal (3 tests)
 - Picture placeholder replacement (3 tests)
 - Combined processing (1 test)
@@ -826,6 +878,7 @@ This makes it easy to visually verify that worker transformations are working co
 - Output analysis and size reduction (1 test)
 
 **Example output:**
+
 ```
 🧪 LOCAL HTML PROCESSING TEST
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -867,6 +920,7 @@ Tests: 13/13 passed
 ```
 
 **Why this test matters:**
+
 - Validates string operations work correctly in isolation
 - Tests with real production HTML (not mocked data)
 - No Cloudflare runtime dependency (runs in Node.js)
@@ -874,6 +928,7 @@ Tests: 13/13 passed
 - Complements unit tests by using actual test file
 
 **Compare output:**
+
 ```bash
 # View original HTML
 cat cloudflare/test.html
@@ -897,6 +952,7 @@ A complete test page is available at `/cloudflare/test.html` that validates all 
 4. Tests auto-run and display results with visual indicators
 
 **Tests performed:**
+
 - ✅ Version header (`cfw`) with semantic versioning
 - ✅ CORS headers (Access-Control-Allow-*)
 - ✅ JSON-LD generation and schema structure
@@ -906,6 +962,7 @@ A complete test page is available at `/cloudflare/test.html` that validates all 
 - ✅ Speculation Rules API injection (prerender & prefetch)
 
 **Manual JSON-LD test**:
+
 1. Deploy worker to Cloudflare
 2. Create test page with metadata: `| json-ld | article |`
 3. View page source and verify `<script type="application/ld+json">`
@@ -913,6 +970,7 @@ A complete test page is available at `/cloudflare/test.html` that validates all 
 5. Validate schema.org compliance
 
 **Test CORS headers**:
+
 ```bash
 # Check CORS headers are present
 curl -I https://yourdomain.com | grep -i access-control
@@ -924,8 +982,8 @@ curl -X OPTIONS https://yourdomain.com \
 ```
 
 **Test environment variable validation**:
+
 1. Remove `ORIGIN_HOSTNAME` from worker settings
 2. Request any page
 3. Should return 500 with clear error message
 4. Re-add `ORIGIN_HOSTNAME` and verify recovery
- 

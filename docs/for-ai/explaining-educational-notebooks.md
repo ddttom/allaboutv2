@@ -67,6 +67,7 @@ The `/create-notebook` command provides guided creation:
 ```
 
 You'll be asked:
+
 1. What topic or content to cover
 2. Who the target audience is
 3. What notebook type to create
@@ -83,6 +84,7 @@ Use the jupyter-educational-notebook skill to help me create a tutorial about [t
 ```
 
 The skill provides:
+
 - Complete creation guidelines
 - Content organization strategies
 - Templates and examples
@@ -93,36 +95,43 @@ The skill provides:
 Here are example prompts that trigger the educational notebook skill:
 
 **Blog post creation:**
+
 ```
 Create an educational notebook as a blog post explaining how EDS blocks work
 ```
 
 **Tutorial creation:**
+
 ```
 I want to create an interactive tutorial notebook teaching JavaScript array methods
 ```
 
 **Transforming existing content:**
+
 ```
 Transform this article about React hooks into an interactive notebook with examples
 ```
 
 **Concept explanation:**
+
 ```
 Create a notebook that explains the decorator pattern with live demonstrations
 ```
 
 **Reference guide:**
+
 ```
 Build a reference notebook documenting all the helper functions with examples
 ```
 
 **Interactive demo:**
+
 ```
 Make an interactive demo notebook showcasing the tabs block capabilities
 ```
 
 **From text content:**
+
 ```
 I have a long document about CSS grid. Help me turn it into an engaging notebook.
 ```
@@ -134,12 +143,14 @@ I have a long document about CSS grid. Help me turn it into an engaging notebook
 **Best for:** Engaging content optimized for shareability
 
 **Characteristics:**
+
 - 30-45 cells total
 - 65% markdown, 35% code
 - Professional and polished
 - Call-to-action at the end
 
 **Structure:**
+
 ```markdown
 Cell 1: Title, hook, "what is this?"
 Cell 2: Table of Contents
@@ -150,6 +161,7 @@ Cell 41: Call-to-action, contact information
 **Example:** `blog.ipynb` - Interactive blog post about ipynb-viewer
 
 **When to use:**
+
 - Publishing thought leadership
 - Showcasing product features
 - Sharing tutorials publicly
@@ -160,12 +172,14 @@ Cell 41: Call-to-action, contact information
 **Best for:** Step-by-step learning with practice
 
 **Characteristics:**
+
 - 20-30 cells total
 - 70% markdown, 30% code
 - Clear learning objectives
 - Exercises and solutions
 
 **Structure:**
+
 ```markdown
 Cell 1: Tutorial header, objectives, prerequisites
 Cell 2: Table of Contents
@@ -177,6 +191,7 @@ Summary: Recap, next steps, resources
 ```
 
 **When to use:**
+
 - Teaching new skills
 - Onboarding team members
 - Training materials
@@ -187,12 +202,14 @@ Summary: Recap, next steps, resources
 **Best for:** Deep technical dives
 
 **Characteristics:**
+
 - 15-25 cells total
 - 55% markdown, 45% code
 - Problem/solution framing
 - Technical depth
 
 **Structure:**
+
 ```markdown
 Cell 1: Concept introduction
 Cells 2-3: Problem statement
@@ -205,6 +222,7 @@ Cells 21-25: Summary and applications
 **Example:** `explain.ipynb` - System architecture explanation
 
 **When to use:**
+
 - Explaining complex systems
 - Architectural documentation
 - Technical deep dives
@@ -215,12 +233,14 @@ Cells 21-25: Summary and applications
 **Best for:** API documentation and quick lookup
 
 **Characteristics:**
+
 - 25-40 cells total
 - 40% markdown, 60% code
 - Comprehensive coverage
 - Organized by feature
 
 **Structure:**
+
 ```markdown
 Cell 1: Reference header, quick reference table
 Cell 2: Table of Contents
@@ -229,6 +249,7 @@ Cells 36-40: Common patterns, summary
 ```
 
 **When to use:**
+
 - API documentation
 - Function libraries
 - Command references
@@ -239,12 +260,14 @@ Cells 36-40: Common patterns, summary
 **Best for:** Quick capability showcasing
 
 **Characteristics:**
+
 - 15-20 cells total
 - 30% markdown, 70% code
 - Minimal explanation
 - Maximum demonstration
 
 **Structure:**
+
 ```markdown
 Cell 1: Demo introduction
 Cells 2-15: Rapid demonstrations (mostly code)
@@ -253,6 +276,7 @@ Cells 19-20: Next steps, links
 ```
 
 **When to use:**
+
 - Product demos
 - Feature showcases
 - Quick proofs of concept
@@ -263,6 +287,7 @@ Cells 19-20: Next steps, links
 ### Step 1: Define Your Goal
 
 Ask yourself:
+
 - **What** do I want to teach or explain?
 - **Who** is my target audience?
 - **Why** should they care about this?
@@ -271,6 +296,7 @@ Ask yourself:
 ### Step 2: Choose Your Notebook Type
 
 Based on your goal, select:
+
 - **Blog** → Engaging, shareable content
 - **Tutorial** → Step-by-step learning
 - **Explanation** → Deep technical dive
@@ -280,12 +306,14 @@ Based on your goal, select:
 ### Step 3: Organize Your Content
 
 **If starting from text:**
+
 1. Identify 3-5 main topics
 2. Find natural section breaks
 3. Spot opportunities for code examples
 4. Group related content into parts
 
 **If creating from scratch:**
+
 1. Outline your key points
 2. Order from simple to complex
 3. Plan demonstrations for each point
@@ -294,6 +322,7 @@ Based on your goal, select:
 ### Step 4: Structure Your Notebook
 
 **Always include:**
+
 - ✅ Title cell with hook
 - ✅ Table of Contents
 - ✅ Clear part/section headers
@@ -301,6 +330,7 @@ Based on your goal, select:
 - ✅ Summary and next steps
 
 **Content balance:**
+
 - 60% markdown / 40% code (typical)
 - Adjust based on notebook type
 - Pair explanations with demonstrations
@@ -309,6 +339,7 @@ Based on your goal, select:
 ### Step 5: Write Engaging Content
 
 **Markdown best practices:**
+
 - Use emojis in headers (sparingly)
 - Create tables for comparisons
 - Use lists for key points
@@ -316,6 +347,7 @@ Based on your goal, select:
 - Include links for navigation
 
 **Code best practices:**
+
 - Clear, explanatory comments
 - console.log() for visibility
 - Return meaningful values
@@ -327,6 +359,7 @@ Based on your goal, select:
 Transform static content into interactive experiences:
 
 **Strategy 1: Use Visual Block Demonstrations (RECOMMENDED)**
+
 ```javascript
 // Import showPreview to display beautiful overlays
 const { showPreview } = await import('/scripts/ipynb-helpers.js');
@@ -341,6 +374,7 @@ return '✓ Beautiful visual demonstration';
 ```
 
 **Available blocks for engagement:**
+
 - **accordion** - Collapsible comparisons, Q&A
 - **cards** - Feature showcases, categories
 - **tabs** - Multiple options, step-by-step
@@ -367,6 +401,7 @@ Learn the fundamentals step by step.
 ```
 
 **Features:**
+
 - ✅ Pure markdown - no HTML required
 - ✅ Works in any cell type (hero, content, intro)
 - ✅ **Smart link resolution** - Automatically finds matching headings at runtime
@@ -376,6 +411,7 @@ Learn the fundamentals step by step.
 - ✅ Perfect for navigation in hero cells
 
 **How it works:**
+
 1. Add `<!-- action-cards -->` HTML comment in your markdown cell
 2. Follow with a markdown list of links using `(#)` as placeholder
 3. Write link text that matches heading text somewhere in your notebook
@@ -385,17 +421,20 @@ Learn the fundamentals step by step.
 **Important:** The `<!-- action-cards -->` marker only applies to the **first list** that follows it. Any subsequent lists in the same cell will remain as normal bullet lists.
 
 **Example matching:**
+
 - `[Installation](#)` finds heading containing "Installation" (like "## Installation" or "### Installation Guide")
 - `[Basic Concepts](#)` finds heading containing "Basic Concepts" (like "## Part 1: Basic Concepts")
 - Link text doesn't need exact match - searches for headings that *contain* your link text
 
 **Best Practices:**
+
 - ✅ Use specific link text: `[Part 1: Introduction](#)` instead of just `[Introduction](#)`
 - ✅ Make link text unique to avoid ambiguity
 - ⚠️ If multiple headings match, it picks the **first one found** (in cell order)
 - 💡 Tip: Use part numbers or descriptive prefixes to ensure unique matches
 
 **When to use action cards:**
+
 - Hero cells with navigation options
 - Section introductions with links
 - Quick reference sections
@@ -411,6 +450,7 @@ Educational notebooks use two independent link systems for different purposes:
 Smart linking works for **any link with `(#)` as the href**, not just action cards. This makes internal navigation resilient to notebook changes.
 
 **How it works:**
+
 - Use `(#)` as href placeholder: `[Topic Name](#)`
 - JavaScript searches all cells for headings matching the link text
 - Matching is case-insensitive and ignores emojis/special characters
@@ -418,6 +458,7 @@ Smart linking works for **any link with `(#)` as the href**, not just action car
 - No hardcoded cell IDs - links adapt when cells are reordered
 
 **Examples in educational content:**
+
 ```markdown
 # Table of Contents
 - [📖 Introduction](#)
@@ -436,6 +477,7 @@ Continue to [Next Lesson](#) or go back to [Previous Lesson](#).
 ```
 
 **Best practices for educational content:**
+
 - Use clear, descriptive heading text that students can understand
 - Include emojis in headings for visual learning (they're ignored in matching)
 - Create natural "next" and "previous" navigation flows
@@ -447,12 +489,14 @@ Continue to [Next Lesson](#) or go back to [Previous Lesson](#).
 Links ending in `.md` automatically convert to GitHub URLs using the notebook's `repo` metadata. Perfect for linking to comprehensive documentation while keeping the notebook focused.
 
 **How it works:**
+
 - Link to `.md` files: `[guide.md](docs/guide.md)`
 - ipynb-viewer reads `repo` from notebook metadata
 - Converts to: `{repo}/blob/main/docs/guide.md`
 - Opens in new tab with GitHub's markdown renderer
 
 **Setup in notebook metadata:**
+
 ```json
 {
   "metadata": {
@@ -462,6 +506,7 @@ Links ending in `.md` automatically convert to GitHub URLs using the notebook's 
 ```
 
 **Educational examples:**
+
 ```markdown
 # 📚 Additional Resources
 
@@ -474,6 +519,7 @@ For troubleshooting, see [FAQ.md](docs/FAQ.md)
 ```
 
 **When to use repository links in educational content:**
+
 - Link to comprehensive documentation
 - Reference external tutorials
 - Point to API documentation
@@ -504,12 +550,14 @@ Try implementing what you learned, then [check the solution](#).   <!-- Smart li
 ```
 
 **Benefits for learners:**
+
 - **Smart links** keep them in the learning flow (same page, instant navigation)
 - **Repo links** provide optional deep dives (new tab, comprehensive docs)
 - Clear separation between tutorial content and reference material
 - Students can explore at their own pace
 
 **Strategy 2: Add "try it yourself" moments**
+
 ```javascript
 // Try changing these values!
 const yourName = 'World';  // <-- Change this!
@@ -522,6 +570,7 @@ return greeting;
 ```
 
 **Strategy 3: Combine interactivity with visual display**
+
 ```javascript
 const { showPreview } = await import('/scripts/ipynb-helpers.js');
 
@@ -536,6 +585,7 @@ return 'Try changing the title and description!';
 ```
 
 **Strategy 4: Include edge case testing**
+
 ```javascript
 // Test different scenarios
 const testCases = [
@@ -553,6 +603,7 @@ testCases.forEach(test => {
 ### Step 7: Test and Refine
 
 **Before publishing:**
+
 1. ✅ Run all code cells to verify they work
 2. ✅ Check markdown formatting renders correctly
 3. ✅ Verify Table of Contents links work
@@ -606,6 +657,7 @@ return '✓ Check the overlay preview!';
 | Long code | `code-expander` | Complete examples |
 
 **Example - Using cards for pro tips:**
+
 ```javascript
 const { showPreview } = await import('/scripts/ipynb-helpers.js');
 
@@ -739,12 +791,14 @@ Navigation notebooks with numbered parts MUST include action cards in transition
 
 **What are transition cells?**
 Cells that appear between major parts or lessons with this structure:
+
 - Part/Lesson X heading (e.g., `### Lesson 2: Advanced Concepts`)
 - Progress indicator with dots (e.g., `**Progress: 2 of 5** 🔵🔵⚪⚪⚪`)
 - Reading time estimate (e.g., `**Reading time: 4 minutes**`)
 - Contextual text explaining what's coming next
 
 **Required format:**
+
 ```markdown
 ### Lesson 2: Intermediate Patterns
 **Progress: 2 of 5** 🔵🔵⚪⚪⚪
@@ -761,12 +815,14 @@ Now that you've mastered the basics, let's explore more advanced patterns...
 ```
 
 **Validation checks:**
+
 - ✅ Every transition cell MUST have `<!-- action-cards -->` marker
 - ✅ Must have 3-6 action card links (markdown list)
 - ✅ Each link must use `(#)` placeholder pattern
 - ✅ Links must resolve to actual headings in the notebook
 
 **Common failure:**
+
 ```markdown
 ### Lesson 2: Intermediate Patterns
 **Progress: 2 of 5** 🔵🔵⚪⚪⚪
@@ -777,6 +833,7 @@ Now that you've mastered the basics...
 ```
 
 **Before deployment, run validation:**
+
 ```bash
 /validate-notebook your-tutorial.ipynb
 ```
@@ -784,6 +841,7 @@ Now that you've mastered the basics...
 Expected score: ≥90/100 for production ready
 
 **See also:**
+
 - `.claude/skills/ipynb-validator/SKILL.md` - Complete validation guide
 - `.claude/commands/validate-notebook.md` - Validation command details
 - `docs/for-ai/templates/ipynb/README.md` - Template structure and validation
@@ -793,11 +851,13 @@ Expected score: ≥90/100 for production ready
 Run `/validate-notebook` for multi-part educational notebooks with numbered lessons or sections before deployment. For simple tutorials without parts, validation may not be necessary.
 
 **Multi-part tutorials have:**
+
 - Numbered lessons/parts (Lesson 1, Part 2, etc.)
 - Transition cells between major sections
 - Multi-lesson structure with progress tracking
 
 **Simple tutorials have:**
+
 - Single-flow content without numbered parts
 - No transition cells
 - No progress indicators
@@ -807,6 +867,7 @@ Run `/validate-notebook` for multi-part educational notebooks with numbered less
 While validation focuses on transition cells, action cards can enhance any educational content. Use them in hero cells, section introductions, or anywhere you want to provide clear navigation options.
 
 **Example in hero cell:**
+
 ```markdown
 # 🎓 JavaScript Mastery Tutorial
 
@@ -865,12 +926,14 @@ Summary Section
 ### Common Cell Ordering Mistakes
 
 ❌ **WRONG:** Code before explanation
+
 ```markdown
 Cell 5: [CODE] Complex implementation
 Cell 6: [MARKDOWN] What this code does ← Explanation comes too late
 ```
 
 ✅ **CORRECT:** Explain, then demonstrate
+
 ```markdown
 Cell 5: [MARKDOWN] We'll use map() to transform arrays
 Cell 6: [CODE] const doubled = [1,2,3].map(x => x * 2);
@@ -878,12 +941,14 @@ Cell 7: [MARKDOWN] Notice how map() returns a new array
 ```
 
 ❌ **WRONG:** Advanced before basics
+
 ```markdown
 Cell 3: [CODE] Advanced async/await patterns
 Cell 10: [CODE] Basic Promise syntax ← Should come first
 ```
 
 ✅ **CORRECT:** Progressive complexity
+
 ```markdown
 Cell 3: [CODE] Basic Promise syntax
 Cell 5: [CODE] Promise.then() chains
@@ -891,6 +956,7 @@ Cell 8: [CODE] async/await patterns
 ```
 
 ❌ **WRONG:** Summary in the middle
+
 ```markdown
 Cell 15: Summary of Part 1
 Cell 16: More Part 1 content ← Out of order
@@ -898,6 +964,7 @@ Cell 17: Part 2 starts
 ```
 
 ✅ **CORRECT:** Summary at end of section
+
 ```markdown
 Cell 15: Last Part 1 content
 Cell 16: Summary of Part 1 ← Proper ending
@@ -966,6 +1033,7 @@ Summary
 ### Validation Before Publishing
 
 Check learning progression:
+
 1. ✅ Concepts build logically (simple → complex)
 2. ✅ Each code cell has preceding explanation
 3. ✅ "What just happened?" follows demonstrations
@@ -974,6 +1042,7 @@ Check learning progression:
 6. ✅ No orphaned or out-of-sequence cells
 
 Test the learning flow:
+
 ```python
 # Ask yourself:
 # - Can a beginner follow this order?
@@ -1031,43 +1100,51 @@ To display a notebook on your EDS site:
 The ipynb-viewer block supports multiple display modes:
 
 **1. Basic Mode (default)**
+
 ```
 | IPynb Viewer |
 |--------------|
 | /notebook.ipynb |
 ```
+
 - All cells visible, scroll through content
 - Manual Run buttons on code cells
 - Good for reference guides and quick scanning
 
 **2. Paged Mode**
+
 ```
 | IPynb Viewer (paged) |
 |----------------------|
 | /notebook.ipynb |
 ```
+
 - Full-screen overlay with Start Reading button
 - Previous/Next navigation with smart cell grouping
 - Keyboard shortcuts (arrows, ESC)
 - Good for tutorials and presentations
 
 **3. Autorun Mode (NEW)**
+
 ```
 | IPynb Viewer (autorun) |
 |------------------------|
 | /notebook.ipynb |
 ```
+
 - Code cells execute automatically when displayed
 - No Run buttons (cleaner, presentation-focused interface)
 - Output visible by default
 - Good for live demonstrations and pre-validated content
 
 **4. Notebook Mode (NEW)**
+
 ```
 | IPynb Viewer (notebook) |
 |--------------------------|
 | /notebook.ipynb |
 ```
+
 - Complete educational experience
 - Combines paged overlay + autorun functionality
 - Start Reading button opens paged mode with automatic execution
@@ -1075,11 +1152,13 @@ The ipynb-viewer block supports multiple display modes:
 - Good for complete tutorials and courses with built-in help system
 
 **5. Index Mode (NEW)**
+
 ```
 | IPynb Viewer (index) |
 |----------------------|
 | /notebook.ipynb |
 ```
+
 - **Auto-opens immediately** - No "Start Reading" button required
 - Full-screen overlay launches on page load
 - Perfect for landing pages and documentation hubs
@@ -1087,6 +1166,7 @@ The ipynb-viewer block supports multiple display modes:
 - Good for immediate engagement and zero-click access
 
 **When to Use Index:**
+
 - ✅ Landing pages that should open immediately
 - ✅ Documentation hub homepages
 - ✅ Tutorial entry points
@@ -1104,11 +1184,13 @@ The ipynb-viewer block supports multiple display modes:
 | `no-topbar` | Depends on mode | Depends on mode | Immersive, distraction-free |
 
 **6. No-Topbar Variation (NEW)**
+
 ```
 | IPynb Viewer (paged no-topbar) |
 |---------------------------------|
 | /notebook.ipynb |
 ```
+
 - **Hides top bar** - No title, buttons, or navigation tree toggle visible
 - **Hides navigation tree** - Tree automatically hidden (no toggle available)
 - **Maximum content area** - Content extends from top to pagination controls
@@ -1117,17 +1199,21 @@ The ipynb-viewer block supports multiple display modes:
 - **Perfect for immersive learning** - Minimal UI for focused content consumption
 
 **Combinations:**
+
 ```
 | IPynb Viewer (index no-topbar) |
 ```
+
 Auto-opens with no UI - perfect for immersive tutorial landing pages.
 
 ```
 | IPynb Viewer (autorun no-topbar) |
 ```
+
 Auto-executes with no distractions - ideal for recorded demos or kiosk displays.
 
 **When to Use No-Topbar:**
+
 - ✅ Immersive, distraction-free learning experiences
 - ✅ Kiosk displays or public installations
 - ✅ Embedded tutorials in other applications
@@ -1145,6 +1231,7 @@ All paged, notebook, and index modes include a **navigation tree panel** for hie
 The navigation tree has two main sections:
 
 **1. Notebook Section** - Shows your tutorial's structure:
+
 ```
 📓 Notebook
 ├── Frontmatter (if Part headings exist)
@@ -1160,12 +1247,14 @@ The navigation tree has two main sections:
 ```
 
 **Structure Rules:**
+
 - **Frontmatter** - Cells before first "Part" heading (only when Parts exist)
 - **Parts** - Major sections with "Part" in heading text
 - **Summary** - Heading containing BOTH "completed" AND "final"
 - **Direct cells** - When no Parts exist, cells appear directly under Notebook node
 
 **2. Repository Section** - Shows linked documentation:
+
 ```
 📁 Repository
 ├── 📁 docs/
@@ -1175,6 +1264,7 @@ The navigation tree has two main sections:
 ```
 
 **Features:**
+
 - Automatically discovers all `.md` links in notebook cells
 - Opens markdown files in GitHub-styled overlay
 - Organizes by directory structure
@@ -1199,6 +1289,7 @@ The navigation tree has two main sections:
 ```
 
 **Best Practices:**
+
 - Structure tutorials with clear "Part" headings for tree organization
 - Link to relevant `.md` documentation files for reference
 - Use meaningful section titles (they appear in tree)
@@ -1220,6 +1311,7 @@ See also: [Error Handling](#error-handling) | [Best Practices](#best-practices)
 ```
 
 **How it works:**
+
 - Click links with `#target` to jump between pages
 - Automatically finds and navigates to the page containing the target
 - Hash IDs are auto-generated from h2 headers
@@ -1228,12 +1320,14 @@ See also: [Error Handling](#error-handling) | [Best Practices](#best-practices)
 
 **ID Generation Rules:**
 All `## h2` headers automatically get IDs:
+
 1. Convert to lowercase
 2. Remove special characters (emojis, punctuation)
 3. Replace spaces with hyphens
 4. Remove leading/trailing hyphens
 
 **Examples:**
+
 - `## 🚀 Getting Started` → `#getting-started`
 - `## Part 1: Introduction` → `#part-1-introduction`
 - `## Resources & Next Steps` → `#resources-next-steps`
@@ -1256,6 +1350,7 @@ Before deploying:
 ### Content Quality
 
 ✅ **Do:**
+
 - Start with a strong hook
 - Use clear, accessible language
 - Build complexity progressively
@@ -1265,6 +1360,7 @@ Before deploying:
 - Credit sources and inspiration
 
 ❌ **Don't:**
+
 - Use jargon without explanation
 - Jump complexity levels abruptly
 - Show code without context
@@ -1275,6 +1371,7 @@ Before deploying:
 ### Structure
 
 ✅ **Do:**
+
 - Always include Table of Contents
 - Use clear part/section headers
 - Maintain consistent cell order
@@ -1282,6 +1379,7 @@ Before deploying:
 - Group related content
 
 ❌ **Don't:**
+
 - Create notebooks without structure
 - Mix unrelated topics in one part
 - Skip section introductions
@@ -1291,6 +1389,7 @@ Before deploying:
 ### Code Examples
 
 ✅ **Do:**
+
 - Write clear, explanatory comments
 - Use console.log() for visibility
 - Return meaningful values
@@ -1298,6 +1397,7 @@ Before deploying:
 - Start simple, add complexity
 
 ❌ **Don't:**
+
 - Write cryptic, uncommented code
 - Assume the code is self-explanatory
 - Use complex examples first
@@ -1307,6 +1407,7 @@ Before deploying:
 ### Engagement
 
 ✅ **Do:**
+
 - Tell a story
 - Ask rhetorical questions
 - Use emojis strategically
@@ -1314,6 +1415,7 @@ Before deploying:
 - Make content interactive
 
 ❌ **Don't:**
+
 - Write dry, academic prose
 - Overuse emojis (looks unprofessional)
 - Make it one-way (read-only)
@@ -1327,6 +1429,7 @@ Before deploying:
 **Scenario:** You have a 2000-word technical document that needs to be more engaging.
 
 **Approach:**
+
 1. Use `/create-notebook` command
 2. Choose "Tutorial" or "Explanation" type
 3. Extract main topics from document
@@ -1341,6 +1444,7 @@ Before deploying:
 **Scenario:** You need to demonstrate product capabilities to a client.
 
 **Approach:**
+
 1. Choose "Interactive Demo" type
 2. Focus on quick, impressive demonstrations
 3. Minimal explanation, maximum showing
@@ -1354,6 +1458,7 @@ Before deploying:
 **Scenario:** New developers need to learn your codebase patterns.
 
 **Approach:**
+
 1. Choose "Tutorial" type
 2. Progressive learning (simple → advanced)
 3. Hands-on exercises
@@ -1367,6 +1472,7 @@ Before deploying:
 **Scenario:** You want to publish a blog post with live examples.
 
 **Approach:**
+
 1. Choose "Blog Post" type
 2. Engaging hook and introduction
 3. Mix of explanation and demonstration
@@ -1380,6 +1486,7 @@ Before deploying:
 **Scenario:** You need comprehensive API documentation with examples.
 
 **Approach:**
+
 1. Choose "Reference Guide" type
 2. Document each function/method
 3. Include runnable examples for each
@@ -1393,21 +1500,25 @@ Before deploying:
 ### Skill and Command Files
 
 **Main skill documentation:**
+
 - [SKILL.md](file://../.claude/skills/jupyter-educational-notebook/SKILL.md) - Complete guidance
 - [EXAMPLES.md](file://../.claude/skills/jupyter-educational-notebook/EXAMPLES.md) - Real patterns
 - [TEMPLATES.md](file://../.claude/skills/jupyter-educational-notebook/TEMPLATES.md) - Copy-paste templates
 - [CONTENT_PATTERNS.md](file://../.claude/skills/jupyter-educational-notebook/CONTENT_PATTERNS.md) - Organization strategies
 
 **Slash command:**
+
 - [create-notebook.md](file://../.claude/commands/create-notebook.md) - Guided creation
 
 ### Example Notebooks
 
 **In project root:**
+
 - [blog.ipynb](file://../../blog.ipynb) - Blog post example (41 cells)
 - [explain.ipynb](file://../../explain.ipynb) - System explanation example
 
 **ipynb-viewer block:**
+
 - [blocks/ipynb-viewer/README.md](file://../../blocks/ipynb-viewer/README.md) - Display documentation
 
 ### Templates
@@ -1430,6 +1541,7 @@ Ready-to-use notebook templates are available:
 ### Triggering the Skill
 
 **Keywords that activate:**
+
 - educational notebook, tutorial notebook, blog notebook
 - interactive guide, interactive tutorial
 - explain topic, illustrate concept, teach interactively
@@ -1437,6 +1549,7 @@ Ready-to-use notebook templates are available:
 - SPA notebook, learning notebook
 
 **Prompts that work:**
+
 - "Create an educational notebook about [topic]"
 - "Transform this text into an interactive tutorial"
 - "Make a blog post notebook explaining [concept]"
@@ -1473,6 +1586,7 @@ Summary Cell (markdown): Recap, next steps
 **Problem:** The skill doesn't activate when expected.
 
 **Solution:**
+
 - Use explicit keywords: "educational notebook", "tutorial", "interactive guide"
 - Try the slash command instead: `/create-notebook`
 - Manually invoke: "Use the jupyter-educational-notebook skill"
@@ -1482,6 +1596,7 @@ Summary Cell (markdown): Recap, next steps
 **Problem:** Testing skill activates instead of educational skill.
 
 **Solution:**
+
 - Avoid testing keywords: "test block", "debug", "jsdom"
 - Use clear educational keywords: "tutorial", "explain", "teach"
 - Be specific: "Create an educational notebook" not just "create notebook"
@@ -1491,6 +1606,7 @@ Summary Cell (markdown): Recap, next steps
 **Problem:** Not sure how to organize content.
 
 **Solution:**
+
 - Review EXAMPLES.md for real patterns
 - Use TEMPLATES.md for copy-paste structure
 - Consult CONTENT_PATTERNS.md for organization strategies
@@ -1501,6 +1617,7 @@ Summary Cell (markdown): Recap, next steps
 **Problem:** Notebook feels too much like developer documentation.
 
 **Solution:**
+
 - Remember your audience (end users, not developers)
 - Use accessible language, define technical terms
 - Increase markdown ratio (60% MD / 40% code)
@@ -1512,6 +1629,7 @@ Summary Cell (markdown): Recap, next steps
 **Problem:** Content feels dry or boring.
 
 **Solution:**
+
 - Start with a strong hook
 - Tell a story or solve a problem
 - Add "try it yourself" moments
@@ -1533,6 +1651,7 @@ Educational Jupyter notebooks transform static content into interactive learning
 ✅ End with actionable next steps
 
 **Get started:**
+
 1. Use `/create-notebook` for guided creation
 2. Or invoke the skill for comprehensive guidance
 3. Choose your notebook type based on goal
@@ -1551,12 +1670,14 @@ Happy notebook creating! 📓✨
 **CRITICAL**: Every line in a Jupyter notebook cell's source array must end with `\n` (newline character) except the last line. This is essential for proper rendering in VSCode outline and all notebook viewers.
 
 **Why it matters:**
+
 - VSCode outline parser requires proper line breaks to detect headings
 - Educational notebooks with parts/sections need proper outline structure for navigation
 - Without newlines, users can't see sub-sections when expanding parts in the outline sidebar
 - Affects learning experience and navigation in educational content
 
 **Problem:**
+
 ```python
 # ❌ WRONG - Content as single string breaks outline
 "source": [
@@ -1565,6 +1686,7 @@ Happy notebook creating! 📓✨
 ```
 
 **Solution:**
+
 ```python
 # ✅ CORRECT - Proper line breaks for outline parsing
 "source": [
@@ -1581,12 +1703,14 @@ Happy notebook creating! 📓✨
 ```
 
 **Key rules:**
+
 - Every line ends with `\n` except the last line
 - Headings need newlines before and after
 - Horizontal rules: `"---\n"` followed by `"\n"`
 - Blank lines between sections: `"\n"`
 
 **For educational notebooks:**
+
 - Proper newlines enable VSCode outline navigation
 - Students can navigate via outline sidebar
 - Part structure remains visible and navigable

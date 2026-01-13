@@ -30,6 +30,7 @@ The block is configured through the bundled Vue application. Key configuration a
 ### JavaScript Bundle Configuration
 
 The block loads the Vue bundle from the assets directory:
+
 - **Bundle Path**: `/assets/index-UbQ-77Ai.js` (hash-based filename from Vite build)
 - **Module Type**: ES Module
 - **Loading Strategy**: Asynchronous script injection
@@ -37,12 +38,14 @@ The block loads the Vue bundle from the assets directory:
 ### Stylesheet Configuration
 
 The block loads styles from the assets directory:
+
 - **Style Path**: `/assets/index-DMC9YjsP.css` (hash-based filename from Vite build)
 - **Loading Strategy**: Link element injection
 
 ### Container Configuration
 
 The block creates a dedicated container for the Vue app:
+
 - **Container ID**: `vue-slide-app`
 - **Minimum Height**: 400px (defined in CSS)
 - **Width**: 100% of block width
@@ -51,13 +54,14 @@ The block creates a dedicated container for the Vue app:
 
 `CSS Variables`
 `.vue-slide-builder {`
-`  --min-height: 400px;`
-`  --container-width: 100%;`
+`--min-height: 400px;`
+`--container-width: 100%;`
 `}`
 
 ### Build Configuration
 
 The Vue application is built using Vite:
+
 - **Build Tool**: Vite (modern build tool for Vue.js)
 - **Output Format**: ES Modules with hash-based filenames
 - **Asset Directory**: `/assets/` for all built resources
@@ -75,6 +79,7 @@ The Vue Slide Builder block implements accessibility through both the EDS wrappe
 ### Vue Application Accessibility
 
 The bundled Vue application should implement:
+
 - **Keyboard Navigation**: Full keyboard support for all slide operations
 - **Screen Reader Support**: ARIA labels and live regions for dynamic content
 - **Focus Management**: Proper focus handling during slide transitions
@@ -118,6 +123,7 @@ The Vue Slide Builder block has performance considerations due to its framework-
 ### Performance Metrics
 
 Expected performance characteristics:
+
 - **First Contentful Paint**: 1.2-2.0s (depending on bundle size)
 - **Time to Interactive**: 1.8-2.5s (Vue initialization time)
 - **Bundle Load Time**: 400ms-800ms on 3G connection
@@ -145,6 +151,7 @@ The Vue Slide Builder block has significant dependencies due to its framework-ba
 ### Build Dependencies
 
 The block requires a build process to generate the bundle:
+
 - **Build Tool**: Vite (fast modern build tool)
 - **Transpilation**: Built-in Vite transpilation for modern browsers
 - **Module System**: ES Modules for modern browser support
@@ -159,6 +166,7 @@ The block requires a build process to generate the bundle:
 ### Browser Compatibility
 
 Minimum browser requirements:
+
 - **Chrome 64+**: Full ES6 module support
 - **Firefox 67+**: Complete Vue.js compatibility
 - **Safari 12+**: ES6 module and Vue.js support
@@ -169,6 +177,7 @@ Minimum browser requirements:
 ### External Resource Dependencies
 
 The block depends on pre-built bundles being available:
+
 - `/assets/index-UbQ-77Ai.js` must be deployed
 - `/assets/index-DMC9YjsP.css` must be deployed
 - Hash-based filenames change with each build
@@ -177,6 +186,7 @@ The block depends on pre-built bundles being available:
 ### Build-Time Dependencies
 
 Development and build process requires:
+
 - Node.js 14+ for Vite
 - npm or yarn for package management
 - Vite configuration for Vue.js
@@ -245,22 +255,22 @@ The block uses a simple loader pattern:
 
 `JavaScript Loading Pattern`
 `export default function decorate(block) {`
-`  // Create container for Vue.js app`
-`  const container = document.createElement('div');`
-`  container.id = 'vue-slide-app';`
-`  block.appendChild(container);`
+`// Create container for Vue.js app`
+`const container = document.createElement('div');`
+`container.id = 'vue-slide-app';`
+`block.appendChild(container);`
 `  `
-`  // Load Vue.js bundle (hash-based filename from Vite)`
-`  const script = document.createElement('script');`
-`  script.src = '/assets/index-UbQ-77Ai.js';`
-`  script.type = 'module';`
-`  document.head.appendChild(script);`
+`// Load Vue.js bundle (hash-based filename from Vite)`
+`const script = document.createElement('script');`
+`script.src = '/assets/index-UbQ-77Ai.js';`
+`script.type = 'module';`
+`document.head.appendChild(script);`
 `  `
-`  // Load CSS (hash-based filename from Vite)`
-`  const link = document.createElement('link');`
-`  link.rel = 'stylesheet';`
-`  link.href = '/assets/index-DMC9YjsP.css';`
-`  document.head.appendChild(link);`
+`// Load CSS (hash-based filename from Vite)`
+`const link = document.createElement('link');`
+`link.rel = 'stylesheet';`
+`link.href = '/assets/index-DMC9YjsP.css';`
+`document.head.appendChild(link);`
 `}`
 
 ### File Structure
@@ -276,6 +286,7 @@ The block uses a simple loader pattern:
 ### Build Output Structure
 
 Vite generates assets in the `/assets/` directory:
+
 - `/assets/index-[hash].js` - Vue application bundle
 - `/assets/index-[hash].css` - Application styles
 - Hash changes with each build for cache busting
@@ -283,6 +294,7 @@ Vite generates assets in the `/assets/` directory:
 ### Related Resources
 
 The Vue source code and build configuration live separately:
+
 - Source: External Vue project repository
 - Build: Vite build process generates bundles with hash-based names
 - Deploy: Bundles deployed to `/assets/` directory
@@ -344,30 +356,35 @@ For development with hot module replacement:
 ### Common Issues
 
 **Vue App Not Loading**
+
 - Check browser console for script loading errors
 - Verify bundle paths match generated hash-based filenames
 - Ensure bundles are deployed to correct location
 - Check for CORS issues if loading from different origin
 
 **Hash Mismatch Errors**
+
 - Verify hash in block code matches built bundle hash
 - Rebuild Vue app and update paths in block code
 - Clear browser cache and CDN cache
 - Check that correct build artifacts were deployed
 
 **Blank Container**
+
 - Verify Vue app has correct container target ID
 - Check Vue app console for initialization errors
 - Ensure Vue bundle is built for production
 - Verify DOM structure matches Vue app expectations
 
 **Styling Issues**
+
 - Check for CSS conflicts between EDS and Vue styles
 - Verify CSS bundle is loading successfully
 - Use scoped styles in Vue components
 - Use browser DevTools to inspect style application
 
 **Performance Issues**
+
 - Check bundle size and optimize if needed
 - Verify compression is enabled on server
 - Implement code splitting for larger apps
@@ -424,6 +441,7 @@ Potential improvements for the Vue Slide Builder:
 ## Support Resources
 
 For technical questions and support:
+
 - [EDS Documentation](https://www.aem.live/docs/)
 - [Vue.js Documentation](https://vuejs.org/)
 - [Vite Documentation](https://vitejs.dev/)

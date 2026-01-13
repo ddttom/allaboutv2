@@ -591,30 +591,35 @@ export const healthRoutes = {
 ## See Also
 
 ### Core Guidelines & Architecture
+
 - **[Tech Stack Guidelines](tech-stack.md)** - Technology selection and implementation guidelines for EDS projects
 - **[Security Checklist](security-checklist.md)** - Comprehensive security requirements and implementation guidelines
 - **[App Flow Guidelines](app-flow.md)** - Application flow and user journey design patterns
 - **[Frontend Guidelines](frontend-guidelines.md)** - Frontend development standards and best practices
 
 ### EDS Foundation & Development
+
 - **[Design Philosophy Guide](../design-philosophy-guide.md)** - Understanding the philosophical principles behind EDS architecture decisions
 - **[EDS Overview](../eds.md)** - Complete introduction to Edge Delivery Services architecture and core concepts
 - **[Server README](../../Server-README.md)** - Development server setup and configuration for EDS block development and testing
 - **[Performance Optimization](../performance-optimization.md)** - Techniques for optimizing EDS block performance and loading
 
 ### Development Standards & Patterns
+
 - **[Block Architecture Standards](../block-architecture-standards.md)** - Comprehensive standards for EDS block development and architectural patterns
 - **[EDS Architecture Standards](../eds-architecture-standards.md)** - Architectural patterns and standards for EDS-native block development
 - **[JavaScript Patterns](../javascript-patterns.md)** - Reusable JavaScript patterns for EDS block development
 - **[Error Handling Patterns](../error-handling-patterns.md)** - Comprehensive error handling strategies for EDS blocks
 
 ### Testing & Quality Assurance
+
 - **[EDS Native Testing Standards](../eds-native-testing-standards.md)** - Testing standards specifically for EDS-native pattern components
 - **[EDS Architecture and Testing Guide](../eds-architecture-and-testing-guide.md)** - Advanced testing workflows and file replacement strategies
 - **[Debug Guide](../debug.md)** - Complete debugging policy and approval requirements for development troubleshooting
 - **[Investigation](../investigation.md)** - Advanced investigation techniques and analysis methods
 
 ### Advanced Topics & Reference Materials
+
 - **[EDS Appendix](../eds-appendix.md)** - Comprehensive development reference guide with patterns and best practices
 - **[Instrumentation Guide](../instrumentation-how-it-works.md)** - Advanced instrumentation techniques and performance monitoring
 - **[Browser Compatibility](../browser-compatibility.md)** - Ensuring cross-browser compatibility for EDS implementations
@@ -623,6 +628,7 @@ export const healthRoutes = {
 ## Next Steps
 
 ### For Backend Developers & API Engineers
+
 1. **Master the server architecture patterns** including Node.js development server setup and proxy configuration for EDS development
 2. **Implement the API design principles** following RESTful patterns and EDS-compatible data structures for seamless frontend integration
 3. **Apply the data layer patterns** including clean service architecture, validation, and database abstraction for maintainable backend code
@@ -630,6 +636,7 @@ export const healthRoutes = {
 5. **Establish monitoring and logging practices** using structured logging and health checks for reliable backend services
 
 ### For DevOps & Infrastructure Engineers
+
 1. **Understand the configuration management patterns** including environment variables and application configuration for scalable deployments
 2. **Implement the error handling strategies** including centralized error handling and async error management for robust applications
 3. **Set up monitoring infrastructure** that supports the structured logging and health check patterns outlined
@@ -637,6 +644,7 @@ export const healthRoutes = {
 5. **Create deployment procedures** that maintain the backend structure guidelines in production environments
 
 ### For QA Engineers & Test Specialists
+
 1. **Learn the error handling patterns** to create comprehensive test scenarios that validate backend resilience and error recovery
 2. **Understand the API design principles** to create effective integration tests that validate backend-frontend communication
 3. **Test the security implementations** including input validation, rate limiting, and error handling for comprehensive security validation
@@ -644,6 +652,7 @@ export const healthRoutes = {
 5. **Create automated testing workflows** that can validate adherence to the backend structure guidelines
 
 ### For Team Leads & Project Managers
+
 1. **Understand the backend architecture patterns** and how they support EDS development workflows and team productivity
 2. **Plan development timelines** that account for proper backend structure implementation including security and monitoring
 3. **Establish development standards** based on the comprehensive backend guidelines for consistent team practices
@@ -651,6 +660,7 @@ export const healthRoutes = {
 5. **Create governance processes** that ensure ongoing compliance with backend structure and security standards
 
 ### For Security & Compliance Teams
+
 1. **Review the security implementation patterns** including input validation, rate limiting, and error handling for comprehensive security coverage
 2. **Assess the configuration management approach** to ensure secure handling of environment variables and sensitive configuration
 3. **Evaluate the logging and monitoring strategies** to ensure they meet security and compliance requirements for audit trails
@@ -658,6 +668,7 @@ export const healthRoutes = {
 5. **Monitor compliance** with the documented security practices and ensure they align with organizational security policies
 
 ### For System Administrators & Infrastructure Teams
+
 1. **Understand the server architecture requirements** including Node.js setup, proxy configuration, and database management
 2. **Configure monitoring systems** that support the structured logging and health check patterns outlined
 3. **Implement the caching strategies** and database abstraction patterns for optimal backend performance
@@ -665,6 +676,7 @@ export const healthRoutes = {
 5. **Create maintenance procedures** for backend services, monitoring infrastructure, and security updates
 
 ### For AI Assistants & Automation
+
 1. **Master the backend structure patterns** for creating well-architected backend services that support EDS development
 2. **Understand the API design principles** and data management patterns for generating consistent and maintainable backend code
 3. **Apply the security and error handling guidelines** when creating or reviewing backend code for EDS projects

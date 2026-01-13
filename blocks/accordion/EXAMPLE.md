@@ -157,18 +157,21 @@ Accordion items with formatted content:
 ### Label (Question/Heading) Requirements
 
 **Recommended:**
+
 - Length: 3-12 words
 - Format: Plain text or simple formatting
 - Style: Clear, descriptive, question-based or topic-based
 - Structure: Use consistent capitalization
 
 **Why this matters:**
+
 - Labels are always visible and guide users
 - They should be scannable at a glance
 - Clear labels improve accessibility
 - Consistent formatting looks professional
 
 **Label best practices:**
+
 1. Start with strong keywords
 2. Use questions for FAQs (What, How, Why)
 3. Use topics for documentation (Installation, Setup)
@@ -178,18 +181,21 @@ Accordion items with formatted content:
 ### Body (Answer/Content) Requirements
 
 **Recommended:**
+
 - Length: 1-5 sentences (50-300 characters)
 - Format: Paragraphs, lists, or formatted text
 - Structure: Can include links, bold, italic
 - Images: Supported but use sparingly
 
 **Why this matters:**
+
 - Body content is hidden until expanded
 - Users expect concise, relevant answers
 - Longer content should be in regular sections
 - Progressive disclosure works best with brief content
 
 **Body content tips:**
+
 1. Answer the question directly
 2. Front-load important information
 3. Use formatting for readability
@@ -199,6 +205,7 @@ Accordion items with formatted content:
 ### Accessibility Requirements
 
 **Always provide:**
+
 - Descriptive labels that make sense out of context
 - Clear, concise body content
 - Sufficient color contrast (handled by CSS)
@@ -212,12 +219,14 @@ Accordion items with formatted content:
 ### Visual Appearance
 
 **Accordion Item:**
+
 - 1px border using `--dark-color` CSS variable
 - 16px vertical spacing between items
 - Smooth expand/collapse animation
 - Animated chevron indicator
 
 **Label (Summary):**
+
 - Padding: 0 16px (with 48px right padding for icon)
 - Background: Transparent (default)
 - Background: `--light-color` (when open)
@@ -226,6 +235,7 @@ Accordion items with formatted content:
 - Animated chevron rotates 180° when open
 
 **Body Content:**
+
 - Padding: 0 16px
 - Border-top: 1px solid `--dark-color` (when open)
 - Background: `--background-color` (when open)
@@ -235,24 +245,28 @@ Accordion items with formatted content:
 ### Interactive States
 
 **Closed State:**
+
 - Border around item
 - Chevron points down (↓)
 - Content hidden
 - Label clickable
 
 **Open State:**
+
 - Border around item
 - Chevron points up (↑)
 - Content visible with border-top
 - Background color applied
 
 **Hover State:**
+
 - Dark background color
 - Visual feedback on mouse over
 - Applies to label only
 - Smooth transition (0.2s)
 
 **Focus State:**
+
 - Same as hover (for keyboard navigation)
 - Clear focus indicator
 - Accessible tab order
@@ -264,9 +278,9 @@ The accordion uses these CSS variables (define in your theme):
 
 `CSS Variable Configuration`
 `:root {`
-`  --dark-color: #333;         /* Borders, hover background */`
-`  --light-color: #f5f5f5;     /* Open state background */`
-`  --background-color: #fff;   /* Body content background */`
+`--dark-color: #333;         /* Borders, hover background */`
+`--light-color: #f5f5f5;     /* Open state background */`
+`--background-color: #fff;   /* Body content background */`
 `}`
 
 ---
@@ -276,6 +290,7 @@ The accordion uses these CSS variables (define in your theme):
 ### Content Strategy
 
 **1. Use accordion for the right content**
+
 - FAQs and help documentation ✓
 - Step-by-step instructions ✓
 - Optional/supplementary information ✓
@@ -283,6 +298,7 @@ The accordion uses these CSS variables (define in your theme):
 - Long lists of related items ✓
 
 **2. Avoid accordion for:**
+
 - Critical information users must see ✗
 - Very short content (doesn't need hiding) ✗
 - Primary navigation ✗
@@ -290,6 +306,7 @@ The accordion uses these CSS variables (define in your theme):
 - Content better suited to tabs ✗
 
 **3. Structure your accordion items**
+
 - Order by importance (most common first)
 - Group related items together
 - Limit to 5-10 items per accordion
@@ -297,6 +314,7 @@ The accordion uses these CSS variables (define in your theme):
 - Consider search functionality for many items
 
 **4. Write effective labels**
+
 - Use question format for FAQs
 - Use topic format for documentation
 - Front-load keywords for scanning
@@ -306,6 +324,7 @@ The accordion uses these CSS variables (define in your theme):
 ### Performance Optimization
 
 **Native HTML Benefits:**
+
 - No JavaScript required for basic functionality
 - Browser-optimized expand/collapse
 - Hardware-accelerated CSS transitions
@@ -313,6 +332,7 @@ The accordion uses these CSS variables (define in your theme):
 - Excellent performance on mobile
 
 **CSS Best Practices:**
+
 - Uses efficient CSS Grid and Flexbox
 - Smooth transitions (0.2s duration)
 - No layout thrashing
@@ -322,6 +342,7 @@ The accordion uses these CSS variables (define in your theme):
 ### Accessibility First
 
 **Native details/summary advantages:**
+
 - WAI-ARIA compliant by default
 - Keyboard accessible (Enter/Space to toggle)
 - Screen reader support built-in
@@ -329,6 +350,7 @@ The accordion uses these CSS variables (define in your theme):
 - Semantic HTML structure
 
 **Additional accessibility:**
+
 - Clear focus indicators on keyboard navigation
 - Sufficient color contrast ratios
 - No motion for users with motion preferences
@@ -338,6 +360,7 @@ The accordion uses these CSS variables (define in your theme):
 ### When NOT to Use Accordion
 
 **Avoid accordion for:**
+
 - **Critical information** - Users might not expand items and miss important content
 - **Short content** - If everything fits on screen comfortably, don't hide it
 - **Navigation** - Use proper nav elements instead
@@ -345,6 +368,7 @@ The accordion uses these CSS variables (define in your theme):
 - **Images galleries** - Better suited to lightbox/modal patterns
 
 **Better alternatives:**
+
 - **Tabs block** - For mutually exclusive content sections
 - **Modal block** - For focused overlays and dialogs
 - **Columns block** - For side-by-side content
@@ -357,6 +381,7 @@ The accordion uses these CSS variables (define in your theme):
 ### Keyboard Navigation
 
 **Built-in keyboard support (native HTML):**
+
 - **Tab** - Navigate between accordion items
 - **Shift + Tab** - Navigate backwards
 - **Enter** - Toggle accordion item open/closed
@@ -367,12 +392,14 @@ The accordion uses these CSS variables (define in your theme):
 ### Screen Reader Support
 
 **Semantic HTML structure:**
+
 - `<details>` element announces as "disclosure widget" or "expandable section"
 - `<summary>` element announces as button with "collapsed" or "expanded" state
 - Content revealed when expanded
 - Natural reading order maintained
 
 **ARIA attributes:**
+
 - No ARIA needed - native HTML semantics provide full accessibility
 - Browser handles state announcements
 - Focus management automatic
@@ -380,6 +407,7 @@ The accordion uses these CSS variables (define in your theme):
 ### Motion and Animation
 
 **Respects user preferences:**
+
 - Smooth transitions for visual users
 - Can be disabled via CSS `prefers-reduced-motion`
 - No essential information conveyed through motion
@@ -387,17 +415,18 @@ The accordion uses these CSS variables (define in your theme):
 
 `Reduce Motion Support`
 `@media (prefers-reduced-motion: reduce) {`
-`  .accordion details summary {`
-`    transition: none;`
-`  }`
-`  .accordion details summary::after {`
-`    transition: none;`
-`  }`
+`.accordion details summary {`
+`transition: none;`
+`}`
+`.accordion details summary::after {`
+`transition: none;`
+`}`
 `}`
 
 ### Color Contrast
 
 **Meets WCAG AA standards:**
+
 - Border colors provide sufficient contrast
 - Hover/focus states clearly visible
 - Text remains readable in all states
@@ -441,9 +470,9 @@ The accordion uses these CSS variables (define in your theme):
 1. **Define CSS variables in your theme:**
    `CSS Variable Definitions`
    `:root {`
-   `  --dark-color: #333333;`
-   `  --light-color: #f5f5f5;`
-   `  --background-color: #ffffff;`
+   `--dark-color: #333333;`
+   `--light-color: #f5f5f5;`
+   `--background-color: #ffffff;`
    `}`
 
 2. **Verify CSS file loaded:**
@@ -453,7 +482,7 @@ The accordion uses these CSS variables (define in your theme):
 
 3. **Override styles directly if needed:**
    `.accordion details {`
-   `  border: 1px solid #333;`
+   `border: 1px solid #333;`
    `}`
 
 ### Issue: Multiple accordions interfering
@@ -485,7 +514,7 @@ The accordion uses these CSS variables (define in your theme):
 
 1. **Check overflow CSS:**
    `.accordion details .accordion-item-body {`
-   `  overflow: visible; /* Should be visible, not hidden */`
+   `overflow: visible; /* Should be visible, not hidden */`
    `}`
 
 2. **Remove height restrictions:**
@@ -517,12 +546,12 @@ The accordion uses these CSS variables (define in your theme):
 
 3. **Override chevron styling:**
    `.accordion details summary::after {`
-   `  content: "";`
-   `  display: block;`
-   `  width: 9px;`
-   `  height: 9px;`
-   `  border: 2px solid currentColor;`
-   `  border-width: 2px 2px 0 0;`
+   `content: "";`
+   `display: block;`
+   `width: 9px;`
+   `height: 9px;`
+   `border: 2px solid currentColor;`
+   `border-width: 2px 2px 0 0;`
    `}`
 
 ### Issue: Accordion not responsive
@@ -545,8 +574,8 @@ The accordion uses these CSS variables (define in your theme):
 
 3. **Check label overflow:**
    `.accordion details summary {`
-   `  overflow: auto; /* Allows text to wrap */`
-   `  word-wrap: break-word;`
+   `overflow: auto; /* Allows text to wrap */`
+   `word-wrap: break-word;`
    `}`
 
 ---
@@ -566,8 +595,8 @@ Then style with CSS:
 
 `Featured Accordion Variation`
 `.accordion.featured details {`
-`  border: 2px solid #0066cc;`
-`  border-left-width: 5px;`
+`border: 2px solid #0066cc;`
+`border-left-width: 5px;`
 `}`
 
 ### Nested Accordions
@@ -659,6 +688,7 @@ After creating accordion in Google Docs:
 ### Browser Testing
 
 Test in multiple browsers:
+
 - Chrome/Edge (last 2 versions) ✓
 - Firefox (last 2 versions) ✓
 - Safari (last 2 versions) ✓
@@ -674,12 +704,14 @@ Test in multiple browsers:
 ### Expected Performance
 
 **Rendering metrics:**
+
 - JavaScript execution: < 5ms (minimal decoration)
 - CSS parsing: < 2ms
 - DOM transformation: < 10ms per item
 - Total render: < 20ms for typical accordion
 
 **Animation performance:**
+
 - Transitions: Hardware-accelerated CSS
 - Frame rate: 60fps on modern devices
 - No layout thrashing
@@ -688,6 +720,7 @@ Test in multiple browsers:
 ### Lighthouse Scores
 
 With properly implemented accordion:
+
 - **Performance:** 95-100 ✓
 - **Accessibility:** 100 ✓
 - **Best Practices:** 100 ✓
@@ -696,18 +729,21 @@ With properly implemented accordion:
 ### Optimization Tips
 
 **1. Content efficiency:**
+
 - Limit to 10-15 items per accordion
 - Keep body content concise
 - Avoid large images in accordion items
 - Use lazy loading for media
 
 **2. CSS optimization:**
+
 - Use CSS variables for theming
 - Avoid complex selectors
 - Minimize animation complexity
 - Use hardware-accelerated properties
 
 **3. Accessibility optimization:**
+
 - Use semantic HTML (done by default)
 - Ensure proper heading hierarchy
 - Test with keyboard only
@@ -773,11 +809,13 @@ Follow accordion with CTA:
 ## Related Blocks
 
 **Similar functionality:**
+
 - **Tabs** - Mutually exclusive content sections
 - **Modal** - Overlay dialogs for focused content
 - **Cards** - Grid layout for scannable content
 
 **Complementary blocks:**
+
 - **Hero** - Prominent introduction before accordion
 - **Quote** - Testimonials or highlights between sections
 - **Text** - Regular content sections

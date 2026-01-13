@@ -9,6 +9,7 @@
 **⚠️ EXCLUSION NOTICE**: Jupyter notebook pages are **EXCLUDED** from this remediation per project policy. See [report-layout.md](report-layout.md#%EF%B8%8F-exclusion-policy-jupyter-notebooks-ipynb-files).
 
 **Pages excluded** (no longer require fixes):
+
 - `/blogs/ddt/creating-an-llms-txt` (uses ipynb-viewer block)
 - `/blogs/ddt/integrations/ipynbviewer` (notebook documentation)
 
@@ -23,6 +24,7 @@
 **Note**: The original audit identified 3 pages, but 2 pages with notebook content are now excluded from remediation scope per project policy.
 
 **Business Impact:**
+
 - Legal risk: WCAG AA non-compliance
 - User exclusion: Screen reader users cannot navigate
 - SEO penalty: Search engines factor accessibility into rankings
@@ -58,11 +60,13 @@
 **Problem**: Jupyter notebook content rendered via the ipynb-viewer block creates complex DOM structures that violate heading hierarchy and semantic HTML rules.
 
 **Evidence from audit**:
+
 - 50 WCAG AA violations on llms-txt page (all notebook content)
 - 8 WCAG AA violations on ipynbviewer page (notebook documentation)
 - All violations clustered around interactive cells and code blocks
 
 **Technical cause**:
+
 - Notebook markdown cells may contain raw HTML
 - Cell execution output creates deeply nested structures
 - Code blocks missing proper `<code>` semantic wrappers
@@ -73,11 +77,13 @@
 **Problem**: Heading elements skip levels or use multiple H1 tags, confusing screen readers and breaking document outline.
 
 **Evidence**:
+
 - 5 WCAG AA violations all related to headings
 - Multiple H1 elements detected (should only have one per page)
 - Heading levels skip (e.g., H1 → H3, missing H2)
 
 **Technical cause**:
+
 - Content imported from external sources without validation
 - Manual heading markup overriding expected structure
 - No automated heading hierarchy checks
@@ -91,12 +97,14 @@
 #### Fix 1: `/blogs/ddt/creating-an-llms-txt`
 
 **Action Steps**:
+
 1. **Validate notebook structure**:
    - Open the source `.ipynb` file
    - Check Cell 1 for proper heading hierarchy (should start with H1, then H2, H3 in order)
    - Ensure no raw HTML in markdown cells
 
 2. **Fix heading hierarchy**:
+
    ```markdown
    # Main Title (H1 - only one per page)
    ## Section 1 (H2)
@@ -117,11 +125,13 @@
 #### Fix 2: `/blogs/ddt/integrations/ipynbviewer`
 
 **Action Steps**:
+
 1. **Review ipynb-viewer block implementation**:
    - Check `blocks/ipynb-viewer/ipynb-viewer.js` for semantic HTML generation
    - Ensure proper heading level management in `renderNotebook()` function
 
 2. **Add ARIA landmarks**:
+
    ```javascript
    // In ipynb-viewer.js renderNotebook()
    const notebookContainer = document.createElement('article');
@@ -130,6 +140,7 @@
    ```
 
 3. **Fix code cell semantics**:
+
    ```javascript
    // Wrap code output in semantic elements
    const codeBlock = document.createElement('pre');
@@ -147,9 +158,11 @@
 #### Fix 3: `/notes/cursorrules`
 
 **Action Steps**:
+
 1. **Open source document** (likely Google Doc or Markdown file)
 
 2. **Audit existing headings**:
+
    ```bash
    # Use this to check current heading structure
    grep -E "^#{1,6} " cursorrules.md
@@ -161,6 +174,7 @@
    - No heading level skips (H1→H2→H3, never H1→H3)
 
 4. **Example fix**:
+
    ```markdown
    # Cursor Rules for EDS Development (H1 - page title)
 
@@ -180,6 +194,7 @@
 ### Automated Testing
 
 **1. Use Pa11y CI for validation**:
+
 ```bash
 # Install Pa11y
 npm install -g pa11y-ci
@@ -193,6 +208,7 @@ pa11y https://allabout.network/notes/cursorrules
 ```
 
 **2. WAVE Browser Extension**:
+
 - Install WAVE extension (Chrome/Firefox/Edge)
 - Navigate to each fixed page
 - Verify zero errors, warnings acceptable
@@ -200,6 +216,7 @@ pa11y https://allabout.network/notes/cursorrules
 ### Manual Testing
 
 **1. Keyboard Navigation**:
+
 ```
 Tab through page → All interactive elements accessible
 Shift+Tab → Reverse navigation works
@@ -209,6 +226,7 @@ Enter/Space → Activates buttons/links
 **2. Screen Reader Testing**:
 
 **VoiceOver (Mac)**:
+
 ```
 Cmd+F5 → Start VoiceOver
 VO+Cmd+H → Navigate by headings
@@ -217,6 +235,7 @@ Verify: Logical reading order, no confusing jumps
 ```
 
 **NVDA (Windows)**:
+
 ```
 Ctrl+Alt+N → Start NVDA
 H → Navigate by headings
@@ -224,6 +243,7 @@ Verify: All content accessible, proper landmarks
 ```
 
 **3. Heading Structure Validation**:
+
 - Use HeadingsMap browser extension
 - Verify visual outline makes sense
 - Check for single H1, logical hierarchy
@@ -233,11 +253,13 @@ Verify: All content accessible, proper landmarks
 ## Implementation Checklist
 
 ### Pre-Implementation
+
 - [ ] Create backup copies of all three documents
 - [ ] Document current state with screenshots
 - [ ] Set up Pa11y for automated testing
 
 ### Page 1: `/blogs/ddt/creating-an-llms-txt` (Most Critical - 0% score)
+
 - [ ] Open source `.ipynb` file
 - [ ] Audit all markdown cells for heading hierarchy
 - [ ] Fix heading levels (ensure H1→H2→H3 order)
@@ -250,6 +272,7 @@ Verify: All content accessible, proper landmarks
 **Expected outcome**: 0% → 90-100% accessibility score
 
 ### Page 2: `/blogs/ddt/integrations/ipynbviewer` (High Priority - 20% score)
+
 - [ ] Review source notebook structure
 - [ ] Fix heading hierarchy in markdown cells
 - [ ] Add ARIA landmarks to interactive elements
@@ -261,6 +284,7 @@ Verify: All content accessible, proper landmarks
 **Expected outcome**: 20% → 90-100% accessibility score
 
 ### Page 3: `/notes/cursorrules` (Medium Priority - 50% score)
+
 - [ ] Open source document (Google Doc or MD)
 - [ ] Map current heading structure
 - [ ] Reorganize headings (single H1, logical hierarchy)
@@ -272,6 +296,7 @@ Verify: All content accessible, proper landmarks
 **Expected outcome**: 50% → 100% accessibility score
 
 ### Post-Implementation
+
 - [ ] Run full site accessibility audit (all 121 pages)
 - [ ] Verify no regressions on previously passing pages
 - [ ] Document fixes for future notebook content
@@ -284,6 +309,7 @@ Verify: All content accessible, proper landmarks
 ### 1. **Prevent Future Violations**
 
 **Create Notebook Accessibility Guidelines**:
+
 ```markdown
 # Jupyter Notebook Accessibility Checklist
 
@@ -306,6 +332,7 @@ Verify: All content accessible, proper landmarks
 ```
 
 **Add to**:
+
 - `.claude/skills/jupyter-notebook-testing/SKILL.md`
 - `docs/for-ai/explaining-jupyter.md`
 - Block README files
@@ -331,6 +358,7 @@ jobs:
 ```
 
 **Local development check**:
+
 ```bash
 # Add to package.json scripts
 "scripts": {
@@ -341,12 +369,14 @@ jobs:
 ### 3. **Content Author Training**
 
 **Update documentation**:
+
 - Add accessibility section to content creator guides
 - Include heading hierarchy examples
 - Show common mistakes and fixes
 - Link to WCAG 2.1 AA guidelines
 
 **Key resources to update**:
+
 - `docs/for-ai/getting-started-guide.md` (add accessibility section)
 - Block README files (add accessibility requirements)
 - `/create-notebook` command (add validation step)
@@ -391,12 +421,14 @@ function validateNotebookAccessibility(notebook) {
 ## Success Metrics
 
 ### Immediate Goals (After Fixes)
+
 - ✅ All 3 critical pages achieve 90-100% accessibility scores
 - ✅ Zero WCAG AA violations on fixed pages
 - ✅ 100% of site (121 pages) passes WCAG AA
 - ✅ Screen reader testing passes on all fixed pages
 
 ### Long-Term Goals (1-3 months)
+
 - ✅ Automated accessibility testing in CI/CD
 - ✅ Content author training completed
 - ✅ Accessibility guidelines documented
@@ -428,17 +460,20 @@ curl -s URL | grep -E "<h[1-6]"
 ## Resources
 
 ### WCAG 2.1 Guidelines
+
 - [WCAG 2.1 Level AA](https://www.w3.org/WAI/WCAG21/quickref/?versions=2.1&levels=aa)
 - [Heading Hierarchy](https://www.w3.org/WAI/tutorials/page-structure/headings/)
 - [Semantic HTML](https://www.w3.org/WAI/WCAG21/Understanding/info-and-relationships.html)
 
 ### Testing Tools
+
 - [Pa11y](https://pa11y.org/) - Automated accessibility testing
 - [WAVE](https://wave.webaim.org/) - Browser extension
 - [HeadingsMap](https://github.com/dzc34/headingsMap) - Heading structure visualizer
 - [axe DevTools](https://www.deque.com/axe/devtools/) - Browser extension
 
 ### Screen Readers
+
 - [VoiceOver](https://support.apple.com/guide/voiceover/welcome/mac) - Mac (built-in)
 - [NVDA](https://www.nvaccess.org/) - Windows (free)
 - [JAWS](https://www.freedomscientific.com/products/software/jaws/) - Windows (commercial)
@@ -448,12 +483,14 @@ curl -s URL | grep -E "<h[1-6]"
 ## Contact & Support
 
 **Questions?**
+
 - Review EDS accessibility documentation
 - Check WCAG 2.1 AA requirements
 - Test with Pa11y before deploying
 - Use screen reader for validation
 
 **After completion:**
+
 - Document fixes in this file
 - Update content creation guidelines
 - Share learnings with team

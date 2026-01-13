@@ -18,8 +18,8 @@ Combine the reset with custom CSS to control icon sizes:
 
 `Custom Icon Classes`
 `.icon.small {`
-`  height: 16px;`
-`  width: 16px;`
+`height: 16px;`
+`width: 16px;`
 `}`
 ``
 `.icon.medium {`
@@ -28,8 +28,8 @@ Combine the reset with custom CSS to control icon sizes:
 `}`
 ``
 `.icon.large {`
-`  height: 48px;`
-`  width: 48px;`
+`height: 48px;`
+`width: 48px;`
 `}`
 
 ## With Icon Blocks
@@ -54,8 +54,8 @@ Create icons that scale with viewport size:
 
 `Responsive Icon Pattern`
 `.icon.responsive {`
-`  height: 1.5rem;`
-`  width: 1.5rem;`
+`height: 1.5rem;`
+`width: 1.5rem;`
 `}`
 ``
 `@media (min-width: 768px) {`
@@ -66,10 +66,10 @@ Create icons that scale with viewport size:
 `}`
 ``
 `@media (min-width: 1024px) {`
-`  .icon.responsive {`
-`    height: 3rem;`
-`    width: 3rem;`
-`  }`
+`.icon.responsive {`
+`height: 3rem;`
+`width: 3rem;`
+`}`
 `}`
 
 ## Multiple Icons with Different Sizes
@@ -87,8 +87,8 @@ Demonstrate various icon sizes on the same page:
 
 `Target Specific Icons`
 `.icon:nth-child(1) {`
-`  height: 24px;`
-`  width: 24px;`
+`height: 24px;`
+`width: 24px;`
 `}`
 ``
 `.icon:nth-child(2) {`
@@ -97,8 +97,8 @@ Demonstrate various icon sizes on the same page:
 `}`
 ``
 `.icon:nth-child(3) {`
-`  height: 48px;`
-`  width: 48px;`
+`height: 48px;`
+`width: 48px;`
 `}`
 
 ## SVG Icons with Natural Sizing
@@ -110,9 +110,9 @@ Let SVG icons use their viewBox attributes:
 
 `SVG Example`
 `<span class="icon">`
-`  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">`
-`    <circle cx="50" cy="50" r="40" fill="blue" />`
-`  </svg>`
+`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">`
+`<circle cx="50" cy="50" r="40" fill="blue" />`
+`</svg>`
 `</span>`
 
 ## Contextual Icon Sizing
@@ -126,8 +126,8 @@ Icons sized based on their container context:
 
 `Container Query Pattern`
 `.card .icon {`
-`  height: 2em;`
-`  width: 2em;`
+`height: 2em;`
+`width: 2em;`
 `}`
 ``
 `.sidebar .icon {`
@@ -136,8 +136,8 @@ Icons sized based on their container context:
 `}`
 ``
 `.hero .icon {`
-`  height: 4em;`
-`  width: 4em;`
+`height: 4em;`
+`width: 4em;`
 `}`
 
 ## Inline Icons with Text
@@ -149,16 +149,16 @@ Icons that flow naturally with text:
 
 `Inline Icon Pattern`
 `<p>`
-`  Click the <span class="icon">⚙️</span> settings icon to configure.`
+`Click the <span class="icon">⚙️</span> settings icon to configure.`
 `</p>`
 
 ### Text-Relative Sizing
 
 `Em-Based Sizing`
 `.icon.inline {`
-`  height: 1em;`
-`  width: 1em;`
-`  vertical-align: middle;`
+`height: 1em;`
+`width: 1em;`
+`vertical-align: middle;`
 `}`
 
 ## Icon Grid with Uniform Sizing
@@ -172,14 +172,14 @@ Create a grid of icons with consistent dimensions:
 
 `Icon Grid Layout`
 `.icon-grid {`
-`  display: grid;`
-`  grid-template-columns: repeat(4, 1fr);`
-`  gap: 1rem;`
+`display: grid;`
+`grid-template-columns: repeat(4, 1fr);`
+`gap: 1rem;`
 `}`
 ``
 `.icon-grid .icon {`
-`  height: 64px;`
-`  width: 64px;`
+`height: 64px;`
+`width: 64px;`
 `}`
 
 ## Accessibility Example
@@ -191,14 +191,14 @@ Icons with proper accessibility attributes:
 
 `Accessible Icon Pattern`
 `<span class="icon" role="img" aria-label="Settings">`
-`  <img src="settings.svg" alt="Settings">`
+`<img src="settings.svg" alt="Settings">`
 `</span>`
 ``
 `<button>`
-`  <span class="icon" aria-hidden="true">`
-`    <img src="save.svg" alt="">`
-`  </span>`
-`  Save`
+`<span class="icon" aria-hidden="true">`
+`<img src="save.svg" alt="">`
+`</span>`
+`Save`
 `</button>`
 
 ---

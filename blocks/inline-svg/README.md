@@ -26,6 +26,7 @@ A versatile block for embedding SVG content directly in EDS pages, supporting bo
 The inline-svg block handles SVG icons and content in a standardized way, converting various input formats into consistent, responsive SVG elements. It supports both icon library references (via icon spans) and direct SVG markup embedding.
 
 **Primary Use Cases:**
+
 - Embedding decorative SVG icons from the `/icons/` directory
 - Displaying inline SVG graphics and illustrations
 - Adding scalable vector content to pages
@@ -37,6 +38,7 @@ The inline-svg block handles SVG icons and content in a standardized way, conver
 **Location:** `/blocks/inline-svg/`
 
 **Files:**
+
 - `inline-svg.js` - SVG processing and decoration logic
 - `inline-svg.css` - Responsive layout and sizing
 - `README.md` - Technical documentation (this file)
@@ -86,6 +88,7 @@ The inline-svg block handles SVG icons and content in a standardized way, conver
 The `decorate()` function processes SVG content through two pathways:
 
 **Path 1: Icon Span Processing**
+
 1. Searches for `span[class^="icon icon-"]` elements
 2. Extracts icon name from class (e.g., `icon-arrow` → `arrow`)
 3. Clears block content
@@ -94,6 +97,7 @@ The `decorate()` function processes SVG content through two pathways:
 6. Appends image and empty paragraph to block
 
 **Path 2: Inline SVG Processing**
+
 1. Checks block text content for `<svg` opening tag
 2. Creates temporary container for SVG parsing
 3. Extracts SVG element via `querySelector('svg')`
@@ -105,6 +109,7 @@ The `decorate()` function processes SVG content through two pathways:
 The inline-svg block uses flexbox for centering and responsive sizing:
 
 **Container (.inline-svg):**
+
 - `width: 100%` - Full container width
 - `max-width: 100%` - Prevents overflow
 - `display: flex` - Flexbox layout
@@ -112,11 +117,13 @@ The inline-svg block uses flexbox for centering and responsive sizing:
 - `align-items: center` - Vertical centering
 
 **SVG Element (.inline-svg svg):**
+
 - `width: 100%` - Scales to container
 - `height: auto` - Maintains aspect ratio
 - `max-width: 100%` - Prevents overflow
 
 **Full-Width Wrapper (.inline-svg-wrapper):**
+
 - `width: 100vw` - Full viewport width
 - `margin-left: calc(50% - 50vw)` - Breaks out of container
 - `margin-right: calc(50% - 50vw)` - Edge-to-edge display
@@ -233,19 +240,19 @@ Override default styles in your site's CSS:
 
 `Custom SVG Sizing`
 `.inline-svg {`
-`  max-width: 600px;`
-`  margin: 2rem auto;`
+`max-width: 600px;`
+`margin: 2rem auto;`
 `}`
 
 `Custom SVG Colors (via CSS)`
 `.inline-svg svg {`
-`  fill: var(--color-primary);`
-`  stroke: var(--color-secondary);`
+`fill: var(--color-primary);`
+`stroke: var(--color-secondary);`
 `}`
 
 `Add Shadow Effects`
 `.inline-svg svg {`
-`  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));`
+`filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));`
 `}`
 
 ### Animation Support
@@ -254,11 +261,11 @@ Add CSS animations to SVG elements:
 
 `Rotate Animation`
 `.inline-svg svg {`
-`  animation: rotate 3s linear infinite;`
+`animation: rotate 3s linear infinite;`
 `}`
 `@keyframes rotate {`
-`  from { transform: rotate(0deg); }`
-`  to { transform: rotate(360deg); }`
+`from { transform: rotate(0deg); }`
+`to { transform: rotate(360deg); }`
 `}`
 
 ---
@@ -266,17 +273,20 @@ Add CSS animations to SVG elements:
 ## Responsive Behavior
 
 ### Desktop (> 900px)
+
 - SVG scales to container width
 - Maintains aspect ratio
 - Centers horizontally and vertically
 - Full-width option available via wrapper
 
 ### Tablet (600px - 899px)
+
 - Same behavior as desktop
 - SVG adapts to available width
 - Flexbox centering maintained
 
 ### Mobile (< 600px)
+
 - SVG scales to mobile container
 - Maintains full responsiveness
 - No horizontal scrolling
@@ -303,11 +313,13 @@ This breaks out of content containers for full-width SVG banners.
 ### Current Implementation
 
 **Icon Images:**
+
 - Alt text automatically generated: `{icon-name} illustration`
 - Semantic img elements for icon references
 - Screen reader compatible
 
 **Inline SVG:**
+
 - SVG elements preserve original attributes
 - Title and desc elements respected if present
 - ARIA attributes maintained from source
@@ -315,11 +327,13 @@ This breaks out of content containers for full-width SVG banners.
 ### Recommended Enhancements
 
 For decorative SVGs:
+
 ```html
 <svg aria-hidden="true" role="img">...</svg>
 ```
 
 For meaningful SVGs:
+
 ```html
 <svg role="img" aria-labelledby="title">
   <title id="title">Descriptive title</title>
@@ -341,11 +355,13 @@ For meaningful SVGs:
 ### Loading Strategy
 
 **Icon Images:**
+
 - Browser handles image loading
 - Can leverage browser caching for repeated icons
 - No JavaScript required after initial processing
 
 **Inline SVG:**
+
 - No external requests (embedded in HTML)
 - Immediate rendering
 - Larger initial HTML payload for complex SVGs
@@ -389,6 +405,7 @@ For meaningful SVGs:
 ### SVG Feature Support
 
 All modern browsers support:
+
 - Inline SVG rendering
 - SVG as img source
 - CSS styling of SVG
@@ -398,6 +415,7 @@ All modern browsers support:
 ### Fallback Behavior
 
 For older browsers:
+
 - Icon images degrade gracefully (img element)
 - Inline SVG renders with basic support
 - Flexbox fallback to block layout in IE11
@@ -411,11 +429,13 @@ For older browsers:
 **Symptoms:** Empty space where icon should appear
 
 **Causes:**
+
 1. Icon file missing from `/icons/` directory
 2. Incorrect icon name in class
 3. SVG file corrupted or invalid
 
 **Solutions:**
+
 - Verify file exists: `/icons/{name}.svg`
 - Check icon class: `icon-{name}` matches filename
 - Test SVG file directly in browser
@@ -426,11 +446,13 @@ For older browsers:
 **Symptoms:** SVG extends beyond block boundaries
 
 **Causes:**
+
 1. Missing `width` and `height` attributes
 2. Invalid `viewBox` in SVG
 3. CSS conflicts with parent elements
 
 **Solutions:**
+
 - Verify SVG has `viewBox` attribute
 - Check CSS: `.inline-svg { max-width: 100%; }`
 - Inspect computed styles in DevTools
@@ -441,11 +463,13 @@ For older browsers:
 **Symptoms:** Blank space, no error messages
 
 **Causes:**
+
 1. Invalid SVG markup
 2. Missing closing tags
 3. Namespace issues in SVG
 
 **Solutions:**
+
 - Validate SVG markup in online validator
 - Check for matching open/close tags
 - Ensure SVG includes `xmlns="http://www.w3.org/2000/svg"`
@@ -456,11 +480,13 @@ For older browsers:
 **Symptoms:** CSS styles don't affect SVG
 
 **Causes:**
+
 1. Inline styles in SVG override CSS
 2. Specificity issues
 3. SVG CSS properties differ from HTML
 
 **Solutions:**
+
 - Remove inline `style` attributes from SVG
 - Use higher specificity: `.inline-svg svg path { }`
 - Use SVG-specific properties: `fill`, `stroke`, not `background-color`
@@ -481,21 +507,25 @@ The block includes a `test.html` file for visual testing:
 ### Manual Test Cases
 
 **Test 1: Icon Reference**
+
 - Create block with `:icon-name:` syntax
 - Verify image loads from `/icons/` directory
 - Check alt text is properly set
 
 **Test 2: Inline SVG**
+
 - Embed simple SVG markup
 - Verify SVG renders correctly
 - Check width/height set to 100%
 
 **Test 3: Complex SVG**
+
 - Embed multi-element SVG
 - Verify all elements render
 - Check responsive scaling
 
 **Test 4: Error Handling**
+
 - Use invalid icon name
 - Use malformed SVG markup
 - Verify console error messages
@@ -539,6 +569,7 @@ The block includes a `test.html` file for visual testing:
 ### Icon Library Dependency
 
 The block expects SVG icon files to be present in:
+
 ```
 /icons/{name}.svg
 ```
@@ -638,6 +669,7 @@ For issues, questions, or contributions:
 ---
 
 **Related Blocks:**
+
 - [Icon Block](../icon/) - Dedicated icon display
 - [Image Block](../image/) - Raster image handling
 - [Embed Block](../embed/) - External content embedding

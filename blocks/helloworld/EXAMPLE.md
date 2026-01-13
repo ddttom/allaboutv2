@@ -25,6 +25,7 @@ Create the simplest block in Google Docs:
 **Result:** A styled gray box displaying "Hello World" in bold centered text.
 
 **What happens:**
+
 1. EDS sees the "HelloWorld" table
 2. Creates a `<div class="helloworld block">` element
 3. Calls the decorate function
@@ -45,6 +46,7 @@ The absolute simplest block:
 **Output:** Gray box with "Hello World" text, centered and bold.
 
 **Technical details:**
+
 - Creates one div element
 - Text: "Hello World" (hardcoded)
 - Background: Light gray (#f0f0f0)
@@ -131,21 +133,25 @@ Combine Hello World with other EDS blocks:
 ### Block Name Requirements
 
 **Required:**
+
 - Table header must contain "HelloWorld" (case-sensitive)
 - Spelling must be exact
 - No spaces or special characters
 
 **Why this matters:**
+
 - EDS converts table header to CSS class
 - "HelloWorld" becomes `.helloworld`
 - Class name triggers JavaScript decoration
 - Wrong spelling = block won't work
 
 **Correct:**
+
 | HelloWorld |
 |------------|
 
 **Incorrect:**
+
 - "Hello World" (space) - Won't work
 - "helloworld" (wrong case) - Won't work
 - "HelloWold" (typo) - Won't work
@@ -153,15 +159,18 @@ Combine Hello World with other EDS blocks:
 ### Content Requirements
 
 **Current implementation:**
+
 - No content required (any content is replaced)
 - Table can be empty or have content
 - Content is cleared by decoration function
 
 **Example with empty table:**
+
 | HelloWorld |
 |------------|
 
 **Example with content (ignored):**
+
 | HelloWorld |
 |------------|
 | Any text here |
@@ -187,12 +196,14 @@ Combine Hello World with other EDS blocks:
 ### Default Visual Appearance
 
 **Container styling:**
+
 - Background: Light gray (#f0f0f0)
 - Padding: 20px on all sides
 - Border radius: 5px (slightly rounded corners)
 - Text alignment: Center
 
 **Text styling:**
+
 - Font size: 24px (large, prominent)
 - Font weight: Bold
 - Color: Dark gray (#333)
@@ -201,6 +212,7 @@ Combine Hello World with other EDS blocks:
 ### Visual Examples
 
 **On page, the block appears as:**
+
 ```
 ┌─────────────────────────────┐
 │                             │
@@ -210,6 +222,7 @@ Combine Hello World with other EDS blocks:
 ```
 
 **Styled box with:**
+
 - Gray background
 - Centered bold text
 - Comfortable padding
@@ -218,16 +231,19 @@ Combine Hello World with other EDS blocks:
 ### Responsive Behavior
 
 **Mobile (< 600px):**
+
 - Same styling as desktop
 - Text remains 24px (readable on mobile)
 - Padding maintains comfortable spacing
 - No layout changes needed
 
 **Tablet (600px - 1024px):**
+
 - Identical to mobile
 - No breakpoint-specific changes
 
 **Desktop (> 1024px):**
+
 - Same as tablet/mobile
 - Block width controlled by parent container
 
@@ -240,18 +256,21 @@ Combine Hello World with other EDS blocks:
 ### Content Strategy
 
 **1. Use for learning**
+
 - First block for new EDS developers
 - Understand decorate function pattern
 - See markdown to HTML transformation
 - Learn block decoration pipeline
 
 **2. Use for testing**
+
 - Test EDS setup and configuration
 - Verify block decoration works
 - Debug CSS and JavaScript loading
 - Confirm build pipeline functions
 
 **3. Use as template**
+
 - Copy structure for new blocks
 - Understand file organization
 - See minimal viable implementation
@@ -260,18 +279,21 @@ Combine Hello World with other EDS blocks:
 ### Development Best Practices
 
 **1. Keep it simple**
+
 - This block is intentionally minimal
 - Only 6 lines of JavaScript
 - Basic CSS styling
 - Easy to understand
 
 **2. Follow patterns**
+
 - Export default decorate function
 - Receive block element as parameter
 - Modify DOM in place
 - No return value needed
 
 **3. Document thoroughly**
+
 - README.md for technical details
 - EXAMPLE.md for content authors
 - test.html for validation
@@ -280,12 +302,14 @@ Combine Hello World with other EDS blocks:
 ### When NOT to Use
 
 **Avoid this block for:**
+
 - Production websites (it's a learning tool)
 - Real content display (text is hardcoded)
 - Complex interactions (no functionality)
 - Dynamic data (no API integration)
 
 **Better alternatives for production:**
+
 - Create custom blocks for real use cases
 - Use this as a starting template only
 - Build on these fundamentals
@@ -300,12 +324,14 @@ Combine Hello World with other EDS blocks:
 **Problem:** You don't see "Hello World" on the page.
 
 **Check these:**
+
 1. **Correct spelling:** Table header must be "HelloWorld" exactly
 2. **JavaScript loaded:** Check browser console (F12) for errors
 3. **CSS loaded:** Verify helloworld.css loads in Network tab
 4. **EDS working:** Check other blocks work on the page
 
 **Common mistakes:**
+
 - "Hello World" with space - Won't work
 - "helloworld" lowercase - Won't work
 - Missing files - JavaScript or CSS not found
@@ -315,12 +341,14 @@ Combine Hello World with other EDS blocks:
 **Problem:** "Hello World" appears but has no gray background or styling.
 
 **Causes:**
+
 - CSS file not loaded
 - Wrong class name on element
 - CSS cache issue
 - Selector not matching
 
 **Solutions:**
+
 1. Check Network tab for `helloworld.css` (200 status)
 2. Inspect element - should have `.helloworld` class
 3. Clear browser cache (Cmd/Ctrl + Shift + R)
@@ -331,11 +359,13 @@ Combine Hello World with other EDS blocks:
 **Problem:** Original markdown content shows instead of "Hello World".
 
 **This means:**
+
 - JavaScript decoration not running
 - Decorate function not called
 - JavaScript error preventing execution
 
 **Solutions:**
+
 1. Check console for JavaScript errors
 2. Verify decorate function exports correctly
 3. Add console.log to test if function runs
@@ -346,11 +376,13 @@ Combine Hello World with other EDS blocks:
 **Problem:** "Hello World" displays more than once unexpectedly.
 
 **Causes:**
+
 - Multiple HelloWorld tables in content
 - Decoration called multiple times
 - Multiple script includes
 
 **Solutions:**
+
 1. Count HelloWorld blocks in your content
 2. Verify only one decoration per block
 3. Check for duplicate script loads
@@ -366,11 +398,11 @@ Modify JavaScript to use the table content instead of "Hello World":
 
 `Modified decorate function`
 `export default function decorate(block) {`
-`  const message = block.textContent.trim() || 'Hello World';`
-`  block.textContent = '';`
-`  const greeting = document.createElement('div');`
-`  greeting.textContent = message;`
-`  block.appendChild(greeting);`
+`const message = block.textContent.trim() || 'Hello World';`
+`block.textContent = '';`
+`const greeting = document.createElement('div');`
+`greeting.textContent = message;`
+`block.appendChild(greeting);`
 `}`
 
 **Then you can use:**
@@ -387,25 +419,26 @@ Add CSS for variations and detect them in JavaScript:
 
 **CSS for variations:**
 `.helloworld.large {`
-`  font-size: 36px;`
-`  padding: 40px;`
+`font-size: 36px;`
+`padding: 40px;`
 `}`
 
 `.helloworld.blue {`
-`  background-color: #e3f2fd;`
-`  color: #1565c0;`
+`background-color: #e3f2fd;`
+`color: #1565c0;`
 `}`
 
 **Detect variation in JavaScript:**
 `export default function decorate(block) {`
-`  const isLarge = block.classList.contains('large');`
-`  const greeting = document.createElement('div');`
-`  greeting.textContent = isLarge ? 'HELLO WORLD!' : 'Hello World';`
-`  block.textContent = '';`
-`  block.appendChild(greeting);`
+`const isLarge = block.classList.contains('large');`
+`const greeting = document.createElement('div');`
+`greeting.textContent = isLarge ? 'HELLO WORLD!' : 'Hello World';`
+`block.textContent = '';`
+`block.appendChild(greeting);`
 `}`
 
 **Usage:**
+
 | HelloWorld (large, blue) |
 |--------------------------|
 
@@ -415,24 +448,24 @@ Include an icon with the greeting:
 
 `Enhanced decorate function`
 `export default function decorate(block) {`
-`  block.textContent = '';`
+`block.textContent = '';`
 `  `
-`  const icon = document.createElement('span');`
-`  icon.textContent = '👋';`
-`  icon.className = 'greeting-icon';`
+`const icon = document.createElement('span');`
+`icon.textContent = '👋';`
+`icon.className = 'greeting-icon';`
 `  `
-`  const greeting = document.createElement('div');`
-`  greeting.textContent = 'Hello World';`
+`const greeting = document.createElement('div');`
+`greeting.textContent = 'Hello World';`
 `  `
-`  block.appendChild(icon);`
-`  block.appendChild(greeting);`
+`block.appendChild(icon);`
+`block.appendChild(greeting);`
 `}`
 
 **CSS for icon:**
 `.helloworld .greeting-icon {`
-`  font-size: 48px;`
-`  display: block;`
-`  margin-bottom: 10px;`
+`font-size: 48px;`
+`display: block;`
+`margin-bottom: 10px;`
 `}`
 
 **Result:** Wave emoji above "Hello World" text
@@ -443,18 +476,18 @@ Make the greeting fade in:
 
 **CSS animation:**
 `.helloworld {`
-`  animation: fadeIn 0.5s ease-in;`
+`animation: fadeIn 0.5s ease-in;`
 `}`
 
 `@keyframes fadeIn {`
-`  from {`
-`    opacity: 0;`
-`    transform: translateY(-10px);`
-`  }`
-`  to {`
-`    opacity: 1;`
-`    transform: translateY(0);`
-`  }`
+`from {`
+`opacity: 0;`
+`transform: translateY(-10px);`
+`}`
+`to {`
+`opacity: 1;`
+`transform: translateY(0);`
+`}`
 `}`
 
 **Result:** Block fades in smoothly when page loads
@@ -465,21 +498,21 @@ Support internationalization:
 
 `Internationalized decorate function`
 `const MESSAGES = {`
-`  en: 'Hello World',`
-`  es: 'Hola Mundo',`
-`  fr: 'Bonjour le Monde',`
-`  de: 'Hallo Welt',`
-`  ja: 'こんにちは世界'`
+`en: 'Hello World',`
+`es: 'Hola Mundo',`
+`fr: 'Bonjour le Monde',`
+`de: 'Hallo Welt',`
+`ja: 'こんにちは世界'`
 `};`
 
 `export default function decorate(block) {`
-`  const lang = document.documentElement.lang || 'en';`
-`  const message = MESSAGES[lang] || MESSAGES.en;`
+`const lang = document.documentElement.lang || 'en';`
+`const message = MESSAGES[lang] || MESSAGES.en;`
 `  `
-`  const greeting = document.createElement('div');`
-`  greeting.textContent = message;`
-`  block.textContent = '';`
-`  block.appendChild(greeting);`
+`const greeting = document.createElement('div');`
+`greeting.textContent = message;`
+`block.textContent = '';`
+`block.appendChild(greeting);`
 `}`
 
 **Result:** Shows greeting in page language
@@ -503,6 +536,7 @@ After adding Hello World to a page:
 ### Browser Testing
 
 Test in multiple browsers:
+
 - Chrome/Edge: Latest version ✓
 - Firefox: Latest version ✓
 - Safari: Latest version ✓
@@ -512,6 +546,7 @@ Test in multiple browsers:
 ### Responsive Testing
 
 Test at different viewport widths:
+
 - Mobile (375px): Readable and styled ✓
 - Tablet (768px): Proper display ✓
 - Desktop (1440px): Correct appearance ✓
@@ -519,6 +554,7 @@ Test at different viewport widths:
 ### Developer Testing
 
 Check technical implementation:
+
 - Console: No JavaScript errors ✓
 - Network: JS and CSS files load ✓
 - Elements: Correct DOM structure ✓
@@ -533,6 +569,7 @@ Check technical implementation:
 **Task:** Change "Hello World" to your name.
 
 **Steps:**
+
 1. Open `helloworld.js`
 2. Find `greeting.textContent = 'Hello World';`
 3. Change to `greeting.textContent = 'Hello [Your Name]';`
@@ -545,6 +582,7 @@ Check technical implementation:
 **Task:** Change the background color to blue.
 
 **Steps:**
+
 1. Open `helloworld.css`
 2. Find `background-color: #f0f0f0;`
 3. Change to `background-color: #e3f2fd;`
@@ -559,11 +597,14 @@ Check technical implementation:
 **Task:** Make the block display content from the markdown table.
 
 **Steps:**
+
 1. Implement the code from Technique 1 above
 2. Create markdown with content:
+
    | HelloWorld |
    |------------|
    | Custom message here! |
+
 3. Test and verify custom message displays
 
 **Expected result:** Block shows your custom message
@@ -573,6 +614,7 @@ Check technical implementation:
 **Task:** Create a "large" variation with bigger text.
 
 **Steps:**
+
 1. Add CSS for `.helloworld.large` class
 2. Test with: | HelloWorld (large) |
 3. Verify larger font size and padding
@@ -584,6 +626,7 @@ Check technical implementation:
 **Task:** Use Hello World as a template to create a new block.
 
 **Steps:**
+
 1. Copy helloworld directory
 2. Rename to your block name (e.g., "greeting")
 3. Update all references from "helloworld" to "greeting"
@@ -597,12 +640,14 @@ Check technical implementation:
 ## Related Documentation
 
 **For developers:**
+
 - [README.md](./README.md) - Complete technical documentation
 - [test.html](./test.html) - Browser-based testing file
 - [Block Architecture Standards](../../docs/for-ai/implementation/block-architecture-standards.md)
 - [EDS Fundamentals Guide](../../docs/for-ai/eds.md)
 
 **For learning:**
+
 - [Design Philosophy Guide](../../docs/for-ai/implementation/design-philosophy-guide.md)
 - [Getting Started Guide](../../docs/for-ai/getting-started-guide.md)
 - [Content Driven Development](../../docs/for-ai/implementation/design-philosophy-guide.md)
@@ -622,11 +667,13 @@ Check technical implementation:
 ## Additional Resources
 
 **Code examples:**
+
 - [JavaScript file](./helloworld.js) - 6 lines of code
 - [CSS file](./helloworld.css) - 9 style declarations
 - [Test file](./test.html) - Browser-based validation
 
 **Community:**
+
 - Share your variations and improvements
 - Help others learning EDS development
 - Contribute documentation enhancements

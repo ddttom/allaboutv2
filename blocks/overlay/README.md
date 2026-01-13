@@ -17,6 +17,7 @@ The Overlay block allows you to display additional information without navigatin
 ### When to Use This Block
 
 **Perfect for:**
+
 - Terms and conditions or privacy policies
 - Additional product information
 - Contact details or location information
@@ -25,6 +26,7 @@ The Overlay block allows you to display additional information without navigatin
 - "Learn More" content that doesn't need its own page
 
 **Not recommended for:**
+
 - Primary navigation
 - Critical information that should always be visible
 - Long-form content better suited to a dedicated page
@@ -69,6 +71,7 @@ The Overlay block supports a "notebook" variation that works identically to the 
 | This is notebook content with the close button (×) visible in the top right corner. |
 
 **Behavior:**
+
 - ✅ Displays a trigger button (no autorun)
 - ✅ Close button (×) is visible in the overlay
 - ✅ User must click the button to open the overlay
@@ -111,11 +114,13 @@ You can have multiple overlay blocks on the same page - each will work independe
 ### Content Best Practices
 
 #### Button Text
+
 - **Keep it short:** 1-3 words is ideal (e.g., "Learn More", "View Details", "Contact Us")
 - **Make it descriptive:** Users should understand what they'll see when clicking
 - **Use action verbs:** "View", "Read", "Learn", "Contact", "See"
 
 #### Overlay Content
+
 - **Be concise:** While the overlay scrolls, shorter content provides better UX
 - **Use formatting:** Bold, lists, and headings help organize information
 - **Include links sparingly:** Links work, but overlays shouldn't be primary navigation
@@ -142,22 +147,27 @@ The Overlay block uses your site's global styles:
 ### Technical Details
 
 #### Maximum Width & Height
+
 The overlay modal has a maximum width of 800px on desktop for optimal readability. On tablet and mobile devices (768px and below), the width adjusts to 100% with appropriate padding.
 
 **Responsive behavior:**
+
 - **Desktop:** max-width: 800px, max-height: 80vh
 - **Tablet/Mobile (≤768px):** max-width: 100%, max-height: 90vh
 - **Small Mobile (≤480px):** max-width: 100%, max-height: 95vh
 
 #### Animation Duration
+
 - **Overlay fade-in/fade-out:** 0.3 seconds (300ms)
 - **Modal scale transition:** 0.3 seconds (300ms)
 - **Close button rotation:** 0.2 seconds (200ms) on hover/focus
 
 #### Z-Index
+
 The overlay appears above all other content (z-index: 999).
 
 #### Scrolling
+
 - When the overlay is open, the page body scroll is locked
 - If overlay content exceeds viewport height, the content area becomes scrollable
 
@@ -181,23 +191,27 @@ blocks/overlay/
 The Overlay block uses a **document-level pattern** that differs from typical EDS blocks:
 
 **Standard EDS blocks:**
+
 - Operate within their own `<div>` container
 - Scoped to the block element
 - Do not affect document body
 
 **Overlay block (document-level):**
+
 - Appends overlay to `document.body` (not the block container)
 - Adds `overlay-open` class to `document.body` to prevent scrolling
 - Uses fixed positioning at high z-index (999) to appear above all content
 - Manages global keyboard events (ESC key)
 
 **Why document-level?**
+
 1. **Full viewport coverage:** Fixed positioning relative to viewport, not parent container
 2. **Backdrop layer:** Needs to cover entire page including header, nav, footer
 3. **Scroll lock:** Must prevent body scroll while overlay is open
 4. **Z-index stacking:** Appears above all other page content consistently
 
 **Technical implications:**
+
 - Block decoration happens in block container, but overlay DOM is appended to body
 - Event listeners attached to document for ESC key handling
 - Body class manipulation for scroll locking
@@ -208,6 +222,7 @@ The Overlay block uses a **document-level pattern** that differs from typical ED
 #### decorate(block)
 
 Main decoration function that:
+
 1. Detects block variations (e.g., `.notebook` class)
 2. Extracts button text from row 2 (row 1 is the block name "Overlay")
 3. Extracts overlay content from row 3
@@ -215,6 +230,7 @@ Main decoration function that:
 5. Handles overlay creation and event management
 
 **Variations:**
+
 - **Default:** Trigger button opens overlay, close button visible
 - **Notebook (`.notebook`):** Same behavior as default - trigger button, close button visible, no autorun
 
@@ -235,12 +251,14 @@ const CONFIG = {
 ### Key Functions
 
 **createOverlay(title, contentElement)**
+
 - Builds the overlay DOM structure with close button (always visible)
 - Creates backdrop, modal, header, title, close button, and content area
 - Sets up ARIA attributes for accessibility
 - Returns the complete overlay container element
 
 **showOverlay(overlay, triggerButton)**
+
 - Appends overlay to `document.body` (document-level operation)
 - Adds `overlay-open` class to body to lock scroll
 - Triggers CSS animations using `requestAnimationFrame`
@@ -249,6 +267,7 @@ const CONFIG = {
 - Calls `setupOverlayEventHandlers()` to attach event listeners
 
 **closeOverlay(overlay)**
+
 - Removes visibility class and adds dismissing class for exit animation
 - Waits for animation duration (300ms) before cleanup
 - Returns focus to trigger button
@@ -256,6 +275,7 @@ const CONFIG = {
 - Removes `overlay-open` class from body to restore scroll
 
 **setupOverlayEventHandlers(overlay)**
+
 - Attaches close button click handler
 - Attaches backdrop click handler (click outside to close)
 - Attaches ESC key handler to document
@@ -287,18 +307,21 @@ body.overlay-open {
 ```
 
 **Key CSS patterns:**
+
 1. **Fixed positioning:** Overlay uses `position: fixed` to cover entire viewport
 2. **High z-index:** Ensures overlay appears above all page content
 3. **Flexbox centering:** Modal centered both horizontally and vertically
 4. **Viewport units:** `100vw` and `100vh` for full coverage
 
 #### Custom Properties Used
+
 - `--background-color` - Modal background
 - `--text-color` - Text color
 - `--link-color` - Link and focus outline color
 - `--link-hover-color` - Link hover state
 
 #### Key Classes
+
 - `.overlay-trigger` - The button that opens the overlay
 - `.overlay-backdrop` - Full-viewport backdrop (document-level)
 - `.overlay-modal` - The modal window
@@ -308,17 +331,20 @@ body.overlay-open {
 - `.overlay-content` - Scrollable content area
 
 #### State Classes
+
 - `.overlay-backdrop--visible` - Fades in the overlay
 - `.overlay-backdrop--dismissing` - Fades out the overlay
 - `body.overlay-open` - Prevents body scroll when overlay is active (document-level)
 
 #### Responsive Breakpoints
+
 - **≤768px (Tablet/Mobile):** Adjusted padding, border-radius (12px), max-height (90vh)
 - **≤480px (Small Mobile):** Further optimized spacing, border-radius (8px), max-height (95vh)
 
 #### Animation Strategy
 
 **CSS Transitions:**
+
 ```css
 .overlay-backdrop {
   opacity: 0;
@@ -340,6 +366,7 @@ body.overlay-open {
 ```
 
 **Animation sequence:**
+
 1. Overlay appended to body with `opacity: 0` and `scale(0.95)`
 2. `requestAnimationFrame` triggers adding `--visible` class
 3. CSS transitions animate opacity to 1 and scale to 1
@@ -362,11 +389,13 @@ body.overlay-open {
 ### Event Handling
 
 **Document-level events:**
+
 1. **ESC key** - Attached to `document` to close overlay from anywhere
 2. **Backdrop click** - Click outside modal to close
 3. **Tab trapping** - Keyboard events on modal to keep focus within
 
 **Cleanup:**
+
 - ESC key handler is removed when overlay closes
 - Overlay DOM removed from body
 - Body class removed to restore scroll
@@ -374,12 +403,14 @@ body.overlay-open {
 ### Error Handling
 
 If the block structure is invalid:
+
 - Logs detailed error to console for debugging
 - Displays a user-friendly error message in place of the block (visible to authors)
 - Prevents JavaScript errors from breaking the page
 - Example error: "Overlay block requires at least 2 rows with content"
 
 Common validation checks:
+
 - Verifies minimum 2 content rows exist (button text and overlay content)
 - Ensures content is not empty
 - Validates DOM structure before decoration
@@ -395,6 +426,7 @@ Common validation checks:
 Test with `blocks/overlay/test.html` or use the examples in `/drafts/overlay-examples/index.html`
 
 #### Testing Checklist
+
 - ✅ Button displays correctly
 - ✅ Overlay opens with animation
 - ✅ Content displays properly
@@ -409,6 +441,7 @@ Test with `blocks/overlay/test.html` or use the examples in `/drafts/overlay-exa
 - ✅ Screen reader compatibility
 
 **Document-level testing:**
+
 - ✅ Overlay appends to `document.body` (not block container)
 - ✅ Body gets `overlay-open` class when open
 - ✅ Body scroll is locked (test by trying to scroll page)
@@ -425,6 +458,7 @@ Test with `blocks/overlay/test.html` or use the examples in `/drafts/overlay-exa
 - No external dependencies
 
 **Document-level performance:**
+
 - Only one overlay can be active at a time per trigger
 - Overlay is removed from DOM when closed (not just hidden)
 - Body class manipulation is lightweight
@@ -433,27 +467,32 @@ Test with `blocks/overlay/test.html` or use the examples in `/drafts/overlay-exa
 ### Common Issues
 
 #### Overlay doesn't appear
+
 - Check browser console for errors
 - Ensure block has exactly 3 rows: row 1 = "Overlay", row 2 = button text, row 3 = content
 - Verify JavaScript is loading
 - Check that overlay is being appended to body (inspect DOM)
 
 #### Content is cut off
+
 - Long content automatically becomes scrollable
 - Check for CSS conflicts
 - Verify `max-height: 80vh` is appropriate
 
 #### Button styling looks wrong
+
 - Check global button styles in `styles/styles.css`
 - Verify CSS custom properties are defined
 - Check for CSS specificity conflicts
 
 #### Body scroll not locked
+
 - Verify `body.overlay-open` class is added when overlay opens
 - Check CSS rule for `body.overlay-open { overflow: hidden; }`
 - Inspect body element in DevTools to confirm class is present
 
 #### Overlay appears behind other content
+
 - Verify z-index is 999 on `.overlay-backdrop`
 - Check for conflicting z-index values on other elements
 - Confirm overlay is appended to body (not nested in container with z-index)
@@ -503,11 +542,13 @@ If your project has both overlay and modal blocks, here's how they differ:
 | **Backdrop** | Full viewport | Depends on implementation |
 
 **When to use Overlay:**
+
 - Need to cover entire page including header/footer
 - Critical information that requires user attention
 - Legal notices, terms, privacy policies
 
 **When to use Modal:**
+
 - Contextual information within a section
 - Less critical content
 - Multiple modals on same page without conflicts

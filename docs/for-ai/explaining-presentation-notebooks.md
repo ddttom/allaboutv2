@@ -7,6 +7,7 @@ Presentation notebooks are Jupyter notebooks designed for **viewing and presenta
 > **📚 Notebook Types Reference:** For complete classification of all three notebook types (Testing, Educational, Presentation), see [Explaining Jupyter - Notebook Types Reference](explaining-jupyter.md#notebook-types-reference).
 
 **Key Distinction:**
+
 - **Testing Notebooks** - Interactive browser execution for testing EDS blocks
 - **Educational Notebooks** - Interactive, executable, for learning and tutorials
 - **Presentation Notebooks** (this guide) - Non-executable, for presenting, showcasing, and client demos
@@ -14,6 +15,7 @@ Presentation notebooks are Jupyter notebooks designed for **viewing and presenta
 ## Purpose
 
 Create stunning visual presentations using Jupyter notebooks that:
+
 - Display content beautifully with inline HTML/CSS styling
 - Embed interactive EDS blocks directly in markdown
 - Present information without user-executable code
@@ -22,7 +24,8 @@ Create stunning visual presentations using Jupyter notebooks that:
 
 ## When to Use Presentation Notebooks
 
-### Perfect For:
+### Perfect For
+
 - **Client presentations** - Professional demos without code execution risk
 - **Product showcases** - Feature highlights with beautiful visuals
 - **Documentation presentations** - Navigable guides with interactive elements
@@ -30,7 +33,8 @@ Create stunning visual presentations using Jupyter notebooks that:
 - **Training slides** - Non-technical presentations with interactivity
 - **Status reports** - Visual updates with data displays
 
-### NOT For:
+### NOT For
+
 - Developer testing (use `test.ipynb` instead)
 - Interactive tutorials where users run code (use educational notebooks)
 - Live code demonstrations (use educational notebooks with `autorun`)
@@ -63,6 +67,7 @@ Content with **formatting** and [links](url)
 **When using the notebook variation** (`| IPynb Viewer (notebook) |`), you can write **pure markdown** without HTML wrappers! The viewer automatically detects cell types and applies styling:
 
 **Pure Markdown (Auto-Wrapped):**
+
 ```markdown
 # 🎯 Presentation Title
 
@@ -70,6 +75,7 @@ Content with **formatting** and [links](url)
 ```
 
 Automatically becomes:
+
 ```html
 <div class="ipynb-hero-cell">
   <h1>🎯 Presentation Title</h1>
@@ -78,12 +84,14 @@ Automatically becomes:
 ```
 
 **Detection Rules:**
-- **Hero Cell**: First cell with `# ` heading → `ipynb-hero-cell`
-- **Intro Cell**: Early cells (index ≤ 2) with `## ` heading → `ipynb-content-card` (thick border)
+
+- **Hero Cell**: First cell with `#` heading → `ipynb-hero-cell`
+- **Intro Cell**: Early cells (index ≤ 2) with `##` heading → `ipynb-content-card` (thick border)
 - **Transition Cell**: Short cells (≤3 lines) without headers → `ipynb-transition-card`
 - **Content Cell**: All other cells → `ipynb-content-card-thin` (thin border)
 
 **Benefits:**
+
 - ✅ **90% less code** - Just write markdown
 - ✅ **Cleaner notebooks** - Easier to read and edit
 - ✅ **Version control friendly** - Smaller diffs
@@ -108,6 +116,7 @@ Discover our revolutionary new features.
 ```
 
 **How it works:**
+
 1. Add `<!-- action-cards -->` HTML comment in your markdown cell
 2. Follow with a markdown list of links using `(#)` as placeholder
 3. Write link text that matches heading text somewhere in your notebook
@@ -117,17 +126,20 @@ Discover our revolutionary new features.
 **Important:** The `<!-- action-cards -->` marker only applies to the **first list** that follows it. Any subsequent lists in the same cell will remain as normal bullet lists.
 
 **Example matching:**
+
 - `[Overview](#)` finds heading containing "Overview" (like "## Overview" or "### 📊 Overview Section")
 - `[Key Features](#)` finds heading containing "Key Features" (like "## Section 2: Key Features")
 - Link text doesn't need exact match - searches for headings that *contain* your link text
 
 **Best Practices:**
+
 - ✅ Use specific link text: `[Section 1: Overview](#)` instead of just `[Overview](#)`
 - ✅ Make link text unique to avoid ambiguity
 - ⚠️ If multiple headings match, it picks the **first one found** (in cell order)
 - 💡 Tip: Use section numbers or descriptive prefixes to ensure unique matches
 
 **Features:**
+
 - ✅ Pure markdown - no HTML required
 - ✅ Works in any cell type (hero, content, intro, transition)
 - ✅ **Smart link resolution** - No hardcoded cell IDs needed
@@ -137,6 +149,7 @@ Discover our revolutionary new features.
 - ✅ Perfect for presentation navigation
 
 **When to use action cards:**
+
 - Hero cells with section navigation
 - Agenda or table of contents
 - Call-to-action sections
@@ -144,6 +157,7 @@ Discover our revolutionary new features.
 - Quick reference menus
 
 **Example in presentation:**
+
 ```markdown
 # 📊 Quarterly Review
 
@@ -163,6 +177,7 @@ The ipynb-viewer block supports two independent link systems, each serving diffe
 Smart linking activates for **any link with `(#)` as the href**, not just action cards. The JavaScript automatically finds matching headings in the notebook and resolves the link at runtime.
 
 **How it works:**
+
 - Link uses `(#)` as placeholder: `[Section Name](#)`
 - JavaScript searches all cells for headings matching the link text
 - Matching is case-insensitive and ignores emojis/special characters
@@ -170,6 +185,7 @@ Smart linking activates for **any link with `(#)` as the href**, not just action
 - No hardcoded cell IDs needed - links adapt if cells are reordered
 
 **Examples:**
+
 ```markdown
 # Navigation Links (anywhere in the notebook)
 [Introduction](#)
@@ -184,6 +200,7 @@ Smart linking activates for **any link with `(#)` as the href**, not just action
 ```
 
 **Best practices:**
+
 - Use descriptive heading text that matches link text
 - Include emojis in headings for visual appeal (they're ignored in matching)
 - Keep link text concise but unique enough to match correctly
@@ -194,12 +211,14 @@ Smart linking activates for **any link with `(#)` as the href**, not just action
 Links ending in `.md` automatically convert to full GitHub URLs using the notebook's `repo` metadata. This system is completely separate from smart linking.
 
 **How it works:**
+
 - Link to any `.md` file: `[index.md](docs/for-ai/index.md)`
 - ipynb-viewer reads `repo` from notebook metadata
 - Converts to: `{repo}/blob/main/docs/for-ai/index.md`
 - Opens in new tab with GitHub's markdown viewer
 
 **Setup:**
+
 ```json
 {
   "metadata": {
@@ -209,6 +228,7 @@ Links ending in `.md` automatically convert to full GitHub URLs using the notebo
 ```
 
 **Examples:**
+
 ```markdown
 # Repository Links
 [Main Documentation](docs/for-ai/index.md)
@@ -217,6 +237,7 @@ Links ending in `.md` automatically convert to full GitHub URLs using the notebo
 ```
 
 **When to use repository links:**
+
 - Link to external documentation files
 - Reference README files
 - Point to comprehensive guides
@@ -277,6 +298,7 @@ Embed fully functional EDS blocks directly:
 Transform existing educational notebooks:
 
 **Educational (Code Cell):**
+
 ```javascript
 const { testBlock } = await import('/scripts/ipynb-helpers.js');
 const block = await testBlock('accordion', content);
@@ -284,6 +306,7 @@ return block.outerHTML;
 ```
 
 **Presentation (Markdown Cell):**
+
 ```markdown
 ### Code Example: Testing Accordion Block
 
@@ -572,6 +595,7 @@ Your success content here
 All blocks from the EDS system work in presentation notebooks:
 
 ### Visual Layout Blocks
+
 - **accordion** - Collapsible sections (FAQs, features)
 - **cards** - Grid card layouts (features, team, products)
 - **tabs** - Tabbed content (organize related info)
@@ -580,12 +604,14 @@ All blocks from the EDS system work in presentation notebooks:
 - **table** - Data tables (pricing, comparisons)
 
 ### Content Blocks
+
 - **quote** - Pull quotes (testimonials, highlights)
 - **columns** - Multi-column layouts (side-by-side content)
 - **modal** - Dialog overlays (detailed info on demand)
 - **video** - Embedded videos (demos, tutorials)
 
 ### Interactive Blocks
+
 - **code-expander** - Expandable code snippets
 - **counter** - Animated counters (statistics)
 - **floating-alert** - Dismissible alerts (notifications)
@@ -740,12 +766,14 @@ Navigation notebooks with numbered parts MUST include action cards in transition
 
 **What are transition cells?**
 Cells that appear between major parts with this structure:
+
 - Part X heading (e.g., `### Part 2: By Your Role`)
 - Progress indicator with dots (e.g., `**Progress: 2 of 7** 🔵🔵⚪⚪⚪⚪⚪`)
 - Reading time estimate (e.g., `**Reading time: 3 minutes**`)
 - Contextual text explaining what's next
 
 **Required format:**
+
 ```markdown
 ### Part 2: By Your Role
 **Progress: 2 of 7** 🔵🔵⚪⚪⚪⚪⚪
@@ -761,12 +789,14 @@ Now that you understand the structure, let's explore paths based on YOUR role...
 ```
 
 **Validation checks:**
+
 - ✅ Every transition cell MUST have `<!-- action-cards -->` marker
 - ✅ Must have 3-6 action card links (markdown list)
 - ✅ Each link must use `(#)` placeholder pattern
 - ✅ Links must resolve to actual headings in the notebook
 
 **Common failure:**
+
 ```markdown
 ### Part 2: By Your Role
 **Progress: 2 of 7** 🔵🔵⚪⚪⚪⚪⚪
@@ -777,6 +807,7 @@ Now that you understand the structure...
 ```
 
 **Before deployment, run validation:**
+
 ```bash
 /validate-notebook your-notebook.ipynb
 ```
@@ -784,6 +815,7 @@ Now that you understand the structure...
 Expected score: ≥90/100 for production ready
 
 **See also:**
+
 - `.claude/skills/ipynb-validator/SKILL.md` - Complete validation guide
 - `.claude/commands/validate-notebook.md` - Validation command details
 - `docs/for-ai/templates/ipynb/README.md` - Template structure and validation
@@ -793,11 +825,13 @@ Expected score: ≥90/100 for production ready
 Run `/validate-notebook` for all navigation notebooks before deployment. For simple presentation notebooks without numbered parts, validation may not be necessary.
 
 **Navigation notebooks have:**
+
 - Numbered parts (Part 1, Part 2, etc.)
 - Transition cells between parts
 - Multi-section structure with progress tracking
 
 **Simple presentations have:**
+
 - No numbered parts
 - Single-flow content
 - No progress indicators
@@ -834,12 +868,14 @@ Final Cell: Conclusion/Call to Action
 ### Common Cell Ordering Mistakes
 
 ❌ **WRONG:** Multiple topics in one cell
+
 ```markdown
 Cell 3: Features + Pricing + Demo
 <!-- Too much content in one cell -->
 ```
 
 ✅ **CORRECT:** One topic per cell
+
 ```markdown
 Cell 3: Features (with cards block)
 Cell 4: Pricing (with table block)
@@ -847,6 +883,7 @@ Cell 5: Demo (with video or accordion)
 ```
 
 ❌ **WRONG:** Conclusion in the middle
+
 ```markdown
 Cell 5: Conclusion
 Cell 6: Additional Features  ← Out of place
@@ -854,6 +891,7 @@ Cell 7: Contact
 ```
 
 ✅ **CORRECT:** Conclusion at end
+
 ```markdown
 Cell 5: Additional Features
 Cell 6: Advanced Topics
@@ -863,6 +901,7 @@ Cell 7: Conclusion + Call to Action
 ### Validation Before Deployment
 
 Check presentation flow:
+
 1. ✅ Hero header is first cell
 2. ✅ One clear topic per cell
 3. ✅ Logical progression (simple → complex)
@@ -870,6 +909,7 @@ Check presentation flow:
 5. ✅ No orphaned or misplaced cells
 
 Test in paged mode:
+
 ```bash
 # Navigate through all cells
 # Verify smooth transitions
@@ -950,27 +990,32 @@ Every presentation notebook should have proper metadata:
 ### Recommended Cell Flow
 
 **Cell 0: Hero Header**
+
 - Large gradient background
 - Main title with emoji
 - Compelling subtitle
 
 **Cell 1: What You'll Learn / Overview**
+
 - Key takeaways
 - Icon-enhanced list
 - Sets expectations
 
 **Cell 2: Table of Contents**
+
 - Interactive navigation
 - Hash links to sections
 - Hover effects
 
 **Cells 3+: Content Sections**
+
 - One topic per cell
 - Mix of content cards and EDS blocks
 - Clear section headers
 - Proper spacing
 
 **Final Cell: Conclusion / Call to Action**
+
 - Summary of key points
 - Next steps
 - Contact information or links
@@ -980,6 +1025,7 @@ Every presentation notebook should have proper metadata:
 ### Visual Design
 
 ✅ **DO:**
+
 - Use emojis for section headers (🎯, 📊, 🚀, ✨, 💡)
 - Break content into digestible chunks (3-5 paragraphs per card)
 - Use EDS blocks for interactive elements
@@ -989,6 +1035,7 @@ Every presentation notebook should have proper metadata:
 - **NEW:** Use pure markdown with auto-wrapping in notebook mode to reduce code by 90%
 
 ❌ **DON'T:**
+
 - Overcrowd cells with too much content
 - Use more than 3 blocks per cell
 - Mix too many colors or fonts
@@ -998,6 +1045,7 @@ Every presentation notebook should have proper metadata:
 ### Content Organization
 
 ✅ **DO:**
+
 - Start with title and overview
 - Include table of contents for presentations >10 cells
 - Group related content in blocks
@@ -1006,6 +1054,7 @@ Every presentation notebook should have proper metadata:
 - Add "Back to top" links in long presentations
 
 ❌ **DON'T:**
+
 - Put multiple unrelated topics in one cell
 - Create overly deep section hierarchies
 - Skip section headers
@@ -1014,6 +1063,7 @@ Every presentation notebook should have proper metadata:
 ### Performance
 
 ✅ **DO:**
+
 - Limit to 1-3 blocks per cell
 - Use simple inline scripts
 - Keep markdown cells focused (one topic per cell)
@@ -1021,6 +1071,7 @@ Every presentation notebook should have proper metadata:
 - Check loading times on slower connections
 
 ❌ **DON'T:**
+
 - Embed heavy libraries in inline scripts
 - Create overly complex DOM structures
 - Use high-resolution images without optimization
@@ -1029,6 +1080,7 @@ Every presentation notebook should have proper metadata:
 ### Accessibility
 
 ✅ **DO:**
+
 - Use semantic HTML in blocks
 - Provide alt text for images
 - Maintain clear heading hierarchy (H1 → H2 → H3)
@@ -1037,6 +1089,7 @@ Every presentation notebook should have proper metadata:
 - Ensure proper color contrast (WCAG AA minimum)
 
 ❌ **DON'T:**
+
 - Skip heading levels (H1 → H3)
 - Use color alone to convey meaning
 - Create keyboard traps
@@ -1055,6 +1108,7 @@ Every presentation notebook should have proper metadata:
 ```
 
 The command will:
+
 1. Create properly structured notebook
 2. Add metadata
 3. Apply inline styling to all cells (or use auto-wrapping in notebook mode)
@@ -1166,6 +1220,7 @@ The working result is embedded directly in the presentation.
 ### Step 1: Plan Structure
 
 Identify:
+
 - **Main topic and title** - What's the core message?
 - **Key sections** (3-7 sections ideal for presentations)
 - **Which blocks fit each section** - accordion, cards, tabs?
@@ -1174,6 +1229,7 @@ Identify:
 ### Step 2: Create Metadata
 
 Set up notebook metadata with:
+
 - Title
 - Description
 - Author
@@ -1184,6 +1240,7 @@ Set up notebook metadata with:
 ### Step 3: Build Cells
 
 For each section:
+
 1. Markdown header (## or ###)
 2. Content explanation with inline styling
 3. Embedded EDS block (if needed)
@@ -1199,6 +1256,7 @@ For each section:
 ### Step 5: Apply Styling
 
 Use design system consistently:
+
 - Hero header at top
 - Content cards for sections
 - EDS block wrappers for blocks
@@ -1242,12 +1300,14 @@ The **index variation** is perfect for presentation landing pages that should ca
 ```
 
 **Key Features:**
+
 - ✅ **Auto-opens immediately** - No "Start Reading" button needed
 - ✅ **Perfect for landing pages** - Immediate visual impact
 - ✅ **Full navigation** - Includes navigation tree and all features
 - ✅ **Professional UX** - Zero clicks to engagement
 
 **When to Use Index:**
+
 - Product showcase landing pages
 - Marketing presentation entry points
 - Documentation hub homepages
@@ -1255,6 +1315,7 @@ The **index variation** is perfect for presentation landing pages that should ca
 - Any presentation where immediate viewing is desired
 
 **Implementation:**
+
 ```html
 <!-- Standard paged presentation -->
 <div class="ipynb-viewer paged block">
@@ -1270,6 +1331,7 @@ The **index variation** is perfect for presentation landing pages that should ca
 ```
 
 **Best Practices:**
+
 - Use index variation for high-impact landing pages
 - Ensure first cell (hero) is visually compelling
 - Keep load times fast (optimize images)
@@ -1301,6 +1363,7 @@ Shows your presentation's internal structure:
 ```
 
 **Structure Rules:**
+
 - **Frontmatter** - Cells before first "Part" heading (only when Parts exist)
 - **Parts** - Major sections with "Part" in heading text
 - **Summary** - Section with heading containing BOTH "completed" AND "final"
@@ -1318,6 +1381,7 @@ Shows linked markdown files discovered in your presentation:
 ```
 
 **Features:**
+
 - Automatically discovers `.md` links in cells
 - Opens markdown files in GitHub-styled overlay
 - Organizes by directory structure
@@ -1326,17 +1390,20 @@ Shows linked markdown files discovered in your presentation:
 #### Tree Features
 
 **Toggle Visibility:**
+
 - Click arrow button (◄/►) in top bar to hide/show tree
 - Useful for focusing on content or wide displays
 - Smooth transition animation
 
 **Smart Navigation:**
+
 - Click any notebook section to jump there
 - Click `.md` files to view documentation
 - Expansion state maintained across navigation
 - Visual indicator shows current location
 
 **State Management:**
+
 - Single shared tree state across all overlays
 - Expansion preferences preserved
 - Seamless switching between notebook and markdown views
@@ -1344,6 +1411,7 @@ Shows linked markdown files discovered in your presentation:
 #### Using the Navigation Tree in Presentations
 
 **For Multi-Section Presentations:**
+
 ```markdown
 # When viewers navigate your presentation
 # 1. Tree shows all sections in sidebar
@@ -1353,6 +1421,7 @@ Shows linked markdown files discovered in your presentation:
 ```
 
 **Best Practices:**
+
 - Structure presentations with clear "Part" headings
 - Link to relevant markdown documentation
 - Use meaningful section titles (shown in tree)
@@ -1360,6 +1429,7 @@ Shows linked markdown files discovered in your presentation:
 - Hide tree for focused content viewing
 
 **Navigation Workflow:**
+
 ```
 Viewer opens presentation →
   Tree shows all sections →
@@ -1384,6 +1454,7 @@ The **no-topbar variation** removes the top bar completely for a distraction-fre
 ```
 
 **Key Features:**
+
 - ✅ **Hidden top bar** - No title, buttons, or navigation controls visible
 - ✅ **Hidden navigation tree** - Tree is automatically hidden (no toggle button available)
 - ✅ **Maximum content area** - Content extends from top to bottom pagination
@@ -1391,6 +1462,7 @@ The **no-topbar variation** removes the top bar completely for a distraction-fre
 - ✅ **Combines with any mode** - Works with `paged`, `notebook`, `autorun`, or `index`
 
 **Use Cases:**
+
 - Formal presentations without UI distraction
 - Kiosk displays or public installations
 - Embedded presentations in other apps
@@ -1406,6 +1478,7 @@ The **no-topbar variation** removes the top bar completely for a distraction-fre
   <div><div>product-showcase.ipynb</div></div>
 </div>
 ```
+
 Opens immediately with zero UI - perfect for landing pages and showcases.
 
 ```html
@@ -1414,6 +1487,7 @@ Opens immediately with zero UI - perfect for landing pages and showcases.
   <div><div>quarterly-review.ipynb</div></div>
 </div>
 ```
+
 Full presentation experience without any visual clutter.
 
 ```html
@@ -1422,9 +1496,11 @@ Full presentation experience without any visual clutter.
   <div><div>interactive-demo.ipynb</div></div>
 </div>
 ```
+
 Auto-executing demo with minimal UI - perfect for trade shows.
 
 **When to Use:**
+
 - ✅ Formal presentations or client meetings
 - ✅ Public kiosks or digital signage
 - ✅ Embedded content in other applications
@@ -1434,6 +1510,7 @@ Auto-executing demo with minimal UI - perfect for trade shows.
 - ❌ Don't use if users need access to help, history, or bookmarks
 
 **Navigation Without Top Bar:**
+
 - Use arrow keys or pagination controls at bottom
 - ESC key closes overlay
 - Backdrop click closes overlay
@@ -1446,6 +1523,7 @@ Presentation notebooks work perfectly with the ipynb-viewer block:
 ### Display Modes
 
 **Paged Mode (Recommended for Presentations):**
+
 ```markdown
 <div class="ipynb-viewer block" data-mode="paged">
   <div>
@@ -1455,12 +1533,14 @@ Presentation notebooks work perfectly with the ipynb-viewer block:
 ```
 
 Benefits:
+
 - "Start Reading" button
 - Page-by-page navigation
 - Smooth transitions
 - Focus on one section at a time
 
 **Basic Mode (For Full Scrolling):**
+
 ```markdown
 <div class="ipynb-viewer block">
   <div>
@@ -1470,6 +1550,7 @@ Benefits:
 ```
 
 Benefits:
+
 - See entire presentation at once
 - Scroll through content
 - Better for quick reference
@@ -1483,6 +1564,7 @@ Benefits:
 **Real example:** `docs-navigation-presentation-enhanced.ipynb`
 
 This notebook demonstrates:
+
 - Hero header with gradient and large typography
 - Interactive table of contents with hover effects
 - Content cards with consistent styling
@@ -1553,6 +1635,7 @@ Content explanation before the block
 **Problem:** EDS blocks show as plain HTML
 
 **Solution:**
+
 ```javascript
 // Check script tag is present and correct
 <script type="module">
@@ -1569,6 +1652,7 @@ Content explanation before the block
 **Problem:** Inline styles not showing
 
 **Solution:**
+
 - Check for unclosed HTML tags
 - Verify style attribute syntax: `style="property: value;"`
 - Ensure quotes are properly escaped in nested HTML
@@ -1578,6 +1662,7 @@ Content explanation before the block
 **Problem:** Hash links don't navigate
 
 **Solution:**
+
 - Use proper markdown heading IDs: `## My Section` becomes `#my-section`
 - Or add explicit IDs: `<h2 id="custom-id">My Section</h2>`
 - Test in ipynb-viewer on actual page (not just VS Code)
@@ -1587,6 +1672,7 @@ Content explanation before the block
 **Problem:** "Start Reading" button doesn't appear
 
 **Solution:**
+
 - Ensure `data-mode="paged"` attribute is set on ipynb-viewer block
 - Check notebook has multiple cells (paged mode needs >1 cell)
 - Verify ipynb-viewer block JavaScript is loading
@@ -1596,11 +1682,13 @@ Content explanation before the block
 **Problem:** Hover effects with `onmouseover`/`onmouseout` don't work in production
 
 **Solution:**
+
 - **Never use inline JavaScript event handlers** - They're blocked by browser security
 - **Use CSS `:hover` pseudo-class** - Safe and reliable
 - **Define classes with `<style>` tags** - Reusable and maintainable
 
 **Example:**
+
 ```html
 <!-- ❌ WRONG - Blocked by security -->
 <a href="#section" onmouseover="this.style.background='#f5f5f5'">Link</a>
@@ -1621,12 +1709,14 @@ Content explanation before the block
 **Problem:** Heading sizes change between slides, making text appear larger or smaller
 
 **Solution:**
+
 - The ipynb-viewer now respects inline font-size styles in overlay mode (fixed in v3, Jan 2025)
 - Headings with inline styles (e.g., `style="font-size: 26px"`) display at correct sizes
 - Base CSS heading sizes no longer override inline styles
 - No action needed - this is now handled automatically
 
 **Technical Details:**
+
 ```css
 /* Applied automatically by ipynb-viewer.css */
 .ipynb-paged-overlay .ipynb-markdown-cell h1,
@@ -1644,6 +1734,7 @@ Content explanation before the block
 **Problem:** Overlay resizes or moves vertically when navigating, causing a "jumping" effect
 
 **Solution:**
+
 - Overlay is now completely locked in size and position (fixed in v3, Jan 2025)
 - Vertically centered with fixed 85vh height using `!important` on all properties
 - Content scrolls inside cell area, overlay container never resizes
@@ -1651,6 +1742,7 @@ Content explanation before the block
 - No action needed - this is now handled automatically
 
 **Technical Details:**
+
 ```css
 /* Applied automatically by ipynb-viewer.css */
 .ipynb-paged-overlay {
@@ -1678,11 +1770,13 @@ Content explanation before the block
 **Problem:** Overlay appears duplicated or behaves unpredictably after page refresh or re-rendering
 
 **Solution:**
+
 - ipynb-viewer now removes existing overlays before creating new ones (fixed in v3, Jan 2025)
 - Prevents overlay multiplication on page re-renders or block re-decoration
 - No action needed - cleanup is automatic
 
 **Technical Details:**
+
 ```javascript
 // Applied automatically in ipynb-viewer.js
 const existingOverlays = document.querySelectorAll('.ipynb-paged-overlay');
@@ -1747,12 +1841,14 @@ Ready-to-use notebook templates are available:
 **CRITICAL**: Every line in a Jupyter notebook cell's source array must end with `\n` (newline character) except the last line. This ensures proper rendering in VSCode outline and maintains professional presentation structure.
 
 **Why it matters for presentations:**
+
 - VSCode outline shows presentation structure and navigation
 - Clients/viewers can navigate via outline sidebar during presentations
 - Section organization remains clear and professional
 - Proper structure enhances presentation flow
 
 **Problem:**
+
 ```python
 # ❌ WRONG - Single string breaks outline navigation
 "source": [
@@ -1761,6 +1857,7 @@ Ready-to-use notebook templates are available:
 ```
 
 **Solution:**
+
 ```python
 # ✅ CORRECT - Professional structure with outline support
 "source": [
@@ -1777,12 +1874,14 @@ Ready-to-use notebook templates are available:
 ```
 
 **For presentations:**
+
 - Proper newlines enable outline-based navigation during demos
 - Stakeholders can jump between sections via outline
 - Professional appearance in VSCode and other viewers
 - Maintains slide structure integrity
 
 **Key formatting rules:**
+
 1. Every line ends with `\n` except the last line
 2. Slide titles (headings) need newlines before and after
 3. Horizontal rules (slide breaks): `"---\n"` followed by `"\n"`

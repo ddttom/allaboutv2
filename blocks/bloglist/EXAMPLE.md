@@ -3,6 +3,7 @@
 This document shows how to use the bloglist block in Google Docs. The bloglist block automatically displays a curated list of blog posts from the site's query-index.json.
 
 ## Table of Contents
+
 - [Basic Example](#basic-example)
 - [How It Works](#how-it-works)
 - [Display Format](#display-format)
@@ -54,6 +55,7 @@ Each blog item is displayed as a card with:
   - Example: "Last Modified: 15/November/2024"
 
 The list uses a responsive grid layout:
+
 - **Desktop**: Auto-fit columns with minimum 300px width
 - **Mobile**: Single column layout (≤600px)
 
@@ -66,6 +68,7 @@ The list uses a responsive grid layout:
 The bloglist block has **no variations** - it provides one consistent display format.
 
 All styling and behavior are handled automatically:
+
 - Filter: Hardcoded to "developer-guide" path
 - Limit: Hardcoded to 4 items
 - Sort: Always by lastModified (newest first)
@@ -74,6 +77,7 @@ All styling and behavior are handled automatically:
 ### Future Enhancements
 
 If you need different filters or limits, consider:
+
 - Creating a variation: `Bloglist (recent-5)` for 5 items
 - Creating a variation: `Bloglist (category-tech)` for tech category
 - Adding configuration support via block config
@@ -85,12 +89,14 @@ If you need different filters or limits, consider:
 ### 1. Page Placement
 
 **Where to use the bloglist block:**
+
 - ✅ Blog post pages (shows related articles)
 - ✅ Landing pages (shows recent content)
 - ✅ Category pages (shows category articles)
 - ✅ About/profile pages (shows author's articles)
 
 **Where NOT to use:**
+
 - ❌ Article list pages (use dedicated article-list block)
 - ❌ Search results pages (conflicts with search functionality)
 - ❌ Homepage (may want more control over featured content)
@@ -98,6 +104,7 @@ If you need different filters or limits, consider:
 ### 2. Content Requirements
 
 **For the block to work, ensure:**
+
 1. Your site has `/query-index.json` file (EDS automatically generates this)
 2. Blog posts have "developer-guide" in their path
 3. Blog posts have required metadata:
@@ -110,6 +117,7 @@ If you need different filters or limits, consider:
 ### 3. Performance Considerations
 
 The block fetches data client-side:
+
 - **Fast**: query-index.json is cached by EDS
 - **Lightweight**: JSON file is typically <500KB
 - **No server load**: All processing happens in browser
@@ -119,6 +127,7 @@ The block fetches data client-side:
 ### 4. Mobile Responsiveness
 
 The block automatically adjusts for mobile:
+
 - Grid changes to single column (≤600px)
 - Card layout remains the same
 - Images maintain aspect ratio
@@ -170,6 +179,7 @@ Create this in Google Docs:
 The bloglist block includes:
 
 ### Desktop Layout (>600px)
+
 - **Grid**: Auto-fit columns, minimum 300px per column
 - **Gap**: 20px between cards
 - **Card Padding**: 20px inside each card
@@ -177,11 +187,13 @@ The bloglist block includes:
 - **Border**: 1px solid #ccc around each card
 
 ### Mobile Layout (≤600px)
+
 - **Grid**: Single column
 - **Same styling** as desktop (no size adjustments)
 - **Touch-friendly**: Cards easy to tap
 
 ### Date Separator
+
 - Top border above "Last Modified" date
 - Extends beyond card padding (left: -20px, right: -20px)
 - Creates visual separation from description
@@ -223,11 +235,13 @@ After adding the block to your page:
 ### Issue: No blog items appear
 
 **Possible causes:**
+
 - `/query-index.json` file not found (404 error)
 - No blog posts with "developer-guide" in path
 - JavaScript error in browser console
 
 **Solution:**
+
 1. Open DevTools Console and check for errors
 2. Verify `/query-index.json` exists and loads
 3. Check that blog posts have "developer-guide" in their path
@@ -236,10 +250,12 @@ After adding the block to your page:
 ### Issue: Wrong blog posts appear
 
 **Possible causes:**
+
 - Filter is hardcoded to "developer-guide" in path
 - Blog posts don't have expected path structure
 
 **Solution:**
+
 1. Check the path structure of your blog posts
 2. Verify they contain "developer-guide" substring
 3. If you need different filtering, modify `bloglist.js` line 12-13
@@ -249,6 +265,7 @@ After adding the block to your page:
 **This should not happen** - the block explicitly excludes the current page.
 
 **If it does happen:**
+
 1. Check `window.location.pathname` in DevTools Console
 2. Verify it matches the `path` value in query-index.json
 3. File a bug report (this is a serious issue)
@@ -258,6 +275,7 @@ After adding the block to your page:
 **The block is hardcoded to show 4 items** (line 22 in bloglist.js).
 
 **If you need a different number:**
+
 1. Modify line 22: `const limitedBlogItems = sortedBlogItems.slice(0, 4);`
 2. Change `4` to your desired number
 3. Consider creating a variation for different limits
@@ -267,6 +285,7 @@ After adding the block to your page:
 **Expected format**: DD/Month/YYYY (e.g., "15/November/2024")
 
 **If dates are wrong:**
+
 1. Check that `lastModified` in query-index.json is a Unix timestamp (seconds)
 2. Verify browser console for date parsing errors
 3. The block multiplies timestamp by 1000 (line 36) for JavaScript Date object
@@ -274,11 +293,13 @@ After adding the block to your page:
 ### Issue: Images don't load
 
 **Possible causes:**
+
 - Image URLs are invalid or broken
 - Images are blocked by CORS policy
 - Missing `image` field in query-index.json
 
 **Solution:**
+
 1. Check image URLs in query-index.json
 2. Verify images are accessible (try opening in new tab)
 3. Check DevTools Network tab for failed image requests
@@ -292,22 +313,23 @@ For reference, the expected structure of `/query-index.json`:
 
 `Expected Structure`
 `{`
-`  "total": 10,`
-`  "offset": 0,`
-`  "limit": 10,`
-`  "data": [`
-`    {`
-`      "path": "/blogs/developer-guide/my-article",`
-`      "title": "My Article Title",`
-`      "image": "/media/image.jpg",`
-`      "description": "Brief summary of the article",`
-`      "lastModified": "1700000000"`
-`    }`
-`  ],`
-`  "type": "sheet"`
+`"total": 10,`
+`"offset": 0,`
+`"limit": 10,`
+`"data": [`
+`{`
+`"path": "/blogs/developer-guide/my-article",`
+`"title": "My Article Title",`
+`"image": "/media/image.jpg",`
+`"description": "Brief summary of the article",`
+`"lastModified": "1700000000"`
+`}`
+`],`
+`"type": "sheet"`
 `}`
 
 **Required fields for each data item:**
+
 - `path` (string) - URL path, must contain "developer-guide"
 - `title` (string) - Article title
 - `image` (string) - Featured image URL
@@ -325,6 +347,7 @@ The bloglist block works well with:
 - **Overlay Block**: Link to articles in overlay mode
 
 **Avoid combining with:**
+
 - Multiple bloglist blocks on same page (creates confusion)
 - Article-list blocks (redundant functionality)
 
@@ -354,6 +377,7 @@ The bloglist block is SEO-friendly:
 - ✅ No duplicate content issues (only shows excerpts)
 
 **Note**: Content is fetched client-side, so:
+
 - Search engines may not see the list in initial HTML
 - Consider using server-side rendering for critical SEO pages
 - Or use static HTML for main navigation/sitemaps

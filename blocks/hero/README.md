@@ -28,6 +28,7 @@ This approach allows authors to visually see both images in the authoring enviro
 ### DOM Structure
 
 **Input (from EDS):**
+
 ```html
 <div class="hero">
   <div>
@@ -50,6 +51,7 @@ This approach allows authors to visually see both images in the authoring enviro
 ```
 
 **Output (after decorate):**
+
 ```html
 <div class="hero">
   <div>
@@ -109,6 +111,7 @@ Use the `manual` variation for custom styling with white text and increased top 
 ```
 
 **Features:**
+
 - White text color
 - 100px top padding
 - Custom line height (69px) for h2 elements
@@ -128,6 +131,7 @@ Use the `techem` variation for centered text layout:
 ```
 
 **Features:**
+
 - Center-aligned text
 - Maximum width constraint (77pc)
 - Large h3 font size (3rem)
@@ -148,6 +152,7 @@ Use the `embolden` variation for bold text emphasis:
 ```
 
 **Features:**
+
 - Bolder font weight for all text
 - Combines with other variations
 
@@ -246,12 +251,14 @@ This combines the manual variation's padding and line heights with embolden's bo
 ### Image Selection
 
 **Mobile Image (First):**
+
 - Portrait orientation recommended
 - Focus subject in center
 - Minimum width: 375px
 - Optimized file size for mobile bandwidth
 
 **Desktop Image (Second):**
+
 - Landscape orientation recommended
 - Wider field of view
 - Minimum width: 1920px
@@ -296,6 +303,7 @@ main .hero p {
 ### Default Breakpoint
 
 The block respects standard EDS responsive image breakpoints:
+
 - Mobile: `< 768px` uses the first image's source
 - Desktop: `>= 768px` uses the second image's source (merged from second picture)
 
@@ -332,6 +340,7 @@ Always provide meaningful alt text for hero images:
 ```
 
 Alt text should:
+
 - Describe the image content meaningfully
 - Avoid redundant phrases like "image of"
 - Be concise but descriptive
@@ -340,6 +349,7 @@ Alt text should:
 ### Text Contrast
 
 Ensure text has sufficient contrast (WCAG AA minimum 4.5:1 ratio):
+
 - Use high-contrast text colors
 - Add semi-transparent overlays if needed
 - Test with contrast checking tools
@@ -347,6 +357,7 @@ Ensure text has sufficient contrast (WCAG AA minimum 4.5:1 ratio):
 ### Heading Structure
 
 Maintain proper heading hierarchy:
+
 - Use h1 for primary hero message (if it's the page's main heading)
 - Use h2 or h3 for secondary hero text
 - Don't skip heading levels

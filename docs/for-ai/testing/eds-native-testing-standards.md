@@ -605,30 +605,35 @@ testFramework.runAll();
 ## See Also
 
 ### Core Testing & Architecture
+
 - **[EDS Architecture and Testing Guide](eds-architecture-and-testing-guide.md)** - Advanced testing workflows and file replacement strategies for comprehensive EDS testing
 - **[Debug Guide](debug.md)** - Complete debugging policy and approval requirements for advanced debugging operations
 - **[Instrumentation Guide](instrumentation-how-it-works.md)** - Advanced instrumentation techniques and performance monitoring for EDS components
 - **[Testing Strategies](testing-strategies.md)** - Comprehensive testing approaches including unit tests and integration testing
 
 ### Development Standards & Patterns
+
 - **[Block Architecture Standards](../implementation/block-architecture-standards.md)** - Comprehensive standards for EDS block development and architectural patterns
 - **[EDS Architecture Standards](../implementation/eds-architecture-standards.md)** - Architectural patterns and standards specifically for EDS-native block development
 - **[Raw EDS Blocks Guide](../implementation/raw-eds-blocks-guide.md)** - Step-by-step guide for creating simple EDS blocks using vanilla JavaScript
 - **[Complex EDS Blocks Guide](../implementation/complex-eds-blocks-guide.md)** - Advanced block development with build tools and external dependencies
 
 ### EDS Foundation & Philosophy
+
 - **[EDS Overview](../eds.md)** - Complete introduction to Edge Delivery Services architecture and core concepts
 - **[Design Philosophy Guide](../implementation/design-philosophy-guide.md)** - Understanding the philosophical principles behind EDS architecture decisions
 - **[Build Blocks Clarification](../implementation/build-blocks-clarification.md)** - Understanding the dual-directory architecture and development workflows
 - **[Project Structure](../project-structure.md)** - Understanding the overall EDS project organization and file conventions
 
 ### Development Environment & Tools
+
 - **[Server README](../../../Server-README.md)** - Development server setup and configuration for EDS block development and testing
 - **[Performance Optimization](performance-optimization.md)** - Techniques for optimizing EDS block performance and loading
 - **[Browser Compatibility](browser-compatibility.md)** - Ensuring cross-browser compatibility for EDS implementations
 - **[Build Tools Configuration](build-tools-configuration.md)** - Advanced build tool setup and configuration
 
 ### Advanced Topics & Patterns
+
 - **[Investigation](investigation.md)** - Advanced investigation techniques and analysis methods for EDS components
 - **[JavaScript Patterns](javascript-patterns.md)** - Reusable JavaScript patterns for EDS block development
 - **[Error Handling Patterns](error-handling-patterns.md)** - Comprehensive error handling strategies for EDS blocks
@@ -637,6 +642,7 @@ testFramework.runAll();
 ## Next Steps
 
 ### For QA Engineers & Test Specialists
+
 1. **Master the EDS-native testing template** and understand how it differs from build-based testing approaches
 2. **Learn the EDS style integration patterns** including design tokens and dynamic CSS loading
 3. **Implement comprehensive test suites** covering initialization, error handling, accessibility, and performance
@@ -644,6 +650,7 @@ testFramework.runAll();
 5. **Establish cross-browser testing procedures** ensuring compatibility across all major browsers and devices
 
 ### For Frontend Developers & Component Authors
+
 1. **Understand the EDS-native pattern characteristics** and how they differ from traditional build-based components
 2. **Master the test file structure** and learn to create comprehensive test scenarios for your components
 3. **Implement proper error handling** and ensure your components gracefully handle edge cases and failures
@@ -651,6 +658,7 @@ testFramework.runAll();
 5. **Monitor component performance** and ensure no memory leaks or performance degradation
 
 ### For DevOps & Build Engineers
+
 1. **Set up automated testing pipelines** that can execute EDS-native component tests in CI/CD environments
 2. **Configure cross-browser testing infrastructure** for comprehensive compatibility validation
 3. **Implement performance monitoring** to track component loading times and memory usage over time
@@ -658,6 +666,7 @@ testFramework.runAll();
 5. **Establish deployment gates** that prevent components with failing tests from reaching production
 
 ### For Team Leads & Project Managers
+
 1. **Understand the testing requirements** for EDS-native components and plan development timelines accordingly
 2. **Establish testing standards** and ensure all team members follow the documented testing practices
 3. **Monitor test coverage** and ensure comprehensive testing across all component functionality
@@ -665,6 +674,7 @@ testFramework.runAll();
 5. **Track testing metrics** including test execution time, coverage, and defect detection rates
 
 ### For UX/UI Designers & Accessibility Specialists
+
 1. **Learn the EDS design token system** and understand how components should integrate with the overall design system
 2. **Understand accessibility testing requirements** and collaborate with developers to ensure proper implementation
 3. **Create test scenarios** that validate the user experience across different devices and interaction methods
@@ -672,6 +682,7 @@ testFramework.runAll();
 5. **Monitor user interaction patterns** and create tests that validate real-world usage scenarios
 
 ### For Security & Compliance Teams
+
 1. **Review the testing framework** to ensure it meets security and compliance requirements for your organization
 2. **Understand component isolation** and how EDS-native components handle data and external dependencies
 3. **Establish security testing procedures** for components that handle sensitive data or user interactions
@@ -679,6 +690,7 @@ testFramework.runAll();
 5. **Monitor for security vulnerabilities** in component dependencies and testing frameworks
 
 ### For AI Assistants & Automation
+
 1. **Master the EDS-native testing template** and understand how to create comprehensive test files for new components
 2. **Learn the testing requirements** including initialization, error handling, accessibility, and performance testing
 3. **Understand the style integration patterns** and how to properly test component styling and design token usage

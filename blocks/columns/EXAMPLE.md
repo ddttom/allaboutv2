@@ -62,6 +62,7 @@ Perfect for hero sections, feature highlights, and product showcases:
 | ![Product](https://allabout.network/media_1d92670adcfb7a18a062e49fd7967f4e9f76d8a52.jpeg) | **Innovative Design**\n\nOur product combines form and function with an intuitive interface. Built for professionals who demand both power and simplicity in their tools. |
 
 **Use when:**
+
 - Introducing a feature or product
 - Creating visual interest
 - Balancing text with imagery
@@ -75,6 +76,7 @@ Same as Pattern 1 but image on right:
 | **Seamless Integration**\n\nConnect with your existing tools and workflows effortlessly. Our platform supports all major integrations and provides flexible API access for custom solutions. | ![Integration](https://allabout.network/media_1e744525e97292dcd074e9b1c7ab2cf47a048f292.jpeg) |
 
 **Use when:**
+
 - Creating visual rhythm (alternate left/right)
 - Matching reading direction preference
 - Balancing page layout
@@ -88,6 +90,7 @@ Great for feature comparisons or service offerings:
 | **Performance**\n\nOptimized for speed with perfect Lighthouse scores. Edge delivery ensures fast load times globally. | **Authoring**\n\nContent creators use familiar tools. No technical knowledge required. Simple and intuitive. | **Scalability**\n\nHandle unlimited traffic with ease. Built on robust infrastructure for global scale. |
 
 **Use when:**
+
 - Comparing features side-by-side
 - Listing three key benefits
 - Creating balanced layouts
@@ -101,6 +104,7 @@ Traditional multi-column text layout:
 | **Getting Started**\n\nBegin your journey with our comprehensive onboarding guide. We'll walk you through setup, configuration, and your first project in minutes. | **Advanced Features**\n\nUnlock powerful capabilities as you grow. Explore automation, custom integrations, and enterprise-grade features designed for scale. |
 
 **Use when:**
+
 - Dense text content
 - Documentation sections
 - Newsletters or articles
@@ -114,6 +118,7 @@ Showcase multiple features or services:
 | **Fast**\n\nLightning quick delivery | **Simple**\n\nEasy to use | **Secure**\n\nEnterprise ready | **Scalable**\n\nGrows with you |
 
 **Use when:**
+
 - Feature highlights (brief)
 - Icon + label layouts
 - Service offerings
@@ -126,6 +131,7 @@ Showcase multiple features or services:
 ### Markdown Structure
 
 **Basic Format:**
+
 ```
 | Columns |
 |---------|
@@ -133,6 +139,7 @@ Showcase multiple features or services:
 ```
 
 **Rules:**
+
 1. First row must be: `| Columns |`
 2. Second row must be: `|---------|`
 3. Third row contains your column content, separated by `|`
@@ -141,6 +148,7 @@ Showcase multiple features or services:
 ### Supported Content Types
 
 **Text Content:**
+
 - Plain text paragraphs
 - Headings (##, ###, ####)
 - Bold (`**text**`) and italic (`*text*`)
@@ -148,18 +156,21 @@ Showcase multiple features or services:
 - Links (`[text](url)`)
 
 **Image Content:**
+
 - Standard markdown images: `![alt](url)`
 - EDS optimized images
 - Full-width images in columns
 - Picture elements (auto-generated)
 
 **Rich Content:**
+
 - Multiple paragraphs (use `\n\n`)
 - Headings + text combinations
 - Lists within columns
 - Any valid markdown
 
 **Not Supported:**
+
 - Nested columns blocks
 - Tables within columns
 - Other blocks within columns
@@ -171,6 +182,7 @@ Showcase multiple features or services:
 ### Column Width
 
 Columns are automatically equal width on desktop:
+
 - 2 columns = 50% each
 - 3 columns = 33.33% each
 - 4 columns = 25% each
@@ -188,6 +200,7 @@ Columns are automatically equal width on desktop:
 ### Text Formatting
 
 **Headings:** Use `##` or `###` for column titles
+
 - `##` → H2 (larger, more prominent)
 - `###` → H3 (medium size)
 - `####` → H4 (smaller)
@@ -199,6 +212,7 @@ Columns are automatically equal width on desktop:
 ### Image Sizing
 
 **Full-width images:** Automatically applied
+
 - Mobile: 100% of screen width
 - Desktop: 100% of column width
 
@@ -252,11 +266,13 @@ Columns are automatically equal width on desktop:
 ### Issue: Columns not appearing side-by-side
 
 **Possible Causes:**
+
 - Viewing on mobile device (< 900px width)
 - Browser window too narrow
 - CSS not loaded
 
 **Solutions:**
+
 1. Check browser width (must be >= 900px for side-by-side)
 2. Refresh page to ensure CSS loads
 3. Test on desktop browser
@@ -265,10 +281,12 @@ Columns are automatically equal width on desktop:
 ### Issue: Images too small or too large
 
 **Possible Causes:**
+
 - Original image dimensions
 - Display size settings
 
 **Solutions:**
+
 1. Upload higher resolution images (EDS will optimize)
 2. Let images be full-width (default behavior)
 3. Use landscape orientation for side-by-side layouts
@@ -277,10 +295,12 @@ Columns are automatically equal width on desktop:
 ### Issue: Unequal column widths
 
 **Possible Causes:**
+
 - Custom CSS overrides
 - Browser compatibility
 
 **Solutions:**
+
 1. Remove any custom styling
 2. Test in different browser
 3. Check for conflicting CSS
@@ -289,9 +309,11 @@ Columns are automatically equal width on desktop:
 ### Issue: Wrong stacking order on mobile
 
 **Possible Causes:**
+
 - Markdown column order
 
 **Solutions:**
+
 1. Reorder columns in markdown (left to right = top to bottom on mobile)
 2. Image columns automatically appear first (by design)
 3. Test on actual mobile device
@@ -300,10 +322,12 @@ Columns are automatically equal width on desktop:
 ### Issue: Too much or too little spacing
 
 **Possible Causes:**
+
 - Section padding settings
 - Default gap (32px)
 
 **Solutions:**
+
 1. Adjust section padding in Google Docs
 2. Use custom CSS to modify gap (requires developer)
 3. Check surrounding content spacing
@@ -318,11 +342,13 @@ Columns are automatically equal width on desktop:
 Alternate image positions for engaging layouts:
 
 **Row 1 (Image Left):**
+
 | Columns |
 |---------|
 | ![Left](https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png) | Text content here |
 
 **Row 2 (Image Right):**
+
 | Columns |
 |---------|
 | Text content here | ![Right](https://allabout.network/media_14e918fa88c2a9a810fd454fa04f0bd152c01fed2.jpeg) |

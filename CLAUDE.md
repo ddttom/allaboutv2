@@ -3,6 +3,7 @@
 ## Quick Reference
 
 ### For AI Assistants
+
 - **Comprehensive Documentation**: See `docs/for-ai/` directory (26 detailed guides)
 - **Claude Code Tools**: See `.claude/` directory (17 commands, 27 skills, 6 agents, 2 hooks)
 - **Start Here**: `docs/for-ai/index.md` for complete navigation
@@ -10,6 +11,7 @@
 - **Critical Learnings**: See `LEARNINGS.md` for documented mistakes and patterns to avoid
 
 ### Common Workflows
+
 - **Create new block**: Use `/new-block <name>` command (follows Content Driven Development)
 - **Find reference blocks**: Use `block-collection-and-party` skill to search Block Collection and Block Party
 - **Survey available blocks**: Use `block-inventory` skill to understand block palette for authoring
@@ -34,17 +36,21 @@ When AI assistants cannot find an expected file or folder (like `.claude/`, `blo
 Before creating ANY file or folder that should already exist in this project:
 
 1. **Check current working directory**:
+
    ```bash
    pwd
    ```
 
 2. **Verify you're in project root** by checking for these markers:
+
    ```bash
    ls -la | grep -E "(\.claude|blocks|package\.json|CLAUDE\.md)"
    ```
+
    All four should exist in project root.
 
 3. **If markers are missing**, you're in the wrong directory:
+
    ```bash
    cd /Users/tomcranstoun/Documents/GitHub/allaboutV2
    ```
@@ -60,6 +66,7 @@ Before creating ANY file or folder that should already exist in this project:
 ### Correct Behavior
 
 ❌ **WRONG**:
+
 ```
 Error: .claude/ directory not found
 Solution: Creating .claude/ directory...
@@ -67,6 +74,7 @@ mkdir .claude
 ```
 
 ✅ **CORRECT**:
+
 ```
 Error: .claude/ directory not found
 Solution: Verify working directory first
@@ -87,6 +95,7 @@ All `.claude/` operations, block creation, slash commands, and documentation upd
 ## Commands
 
 ### NPM Scripts
+
 - `npm run lint:js` - Lint JavaScript files
 - `npm run lint:css` - Lint CSS files
 - `npm run lint` - Run all linting
@@ -97,12 +106,14 @@ All `.claude/` operations, block creation, slash commands, and documentation upd
 **NEVER modify server.js** - it is a readonly debug tool for local development.
 
 **Why this matters:**
+
 - `server.js` is a simple static file server with proxy fallback
 - It's meant to be a minimal, unchanging debug tool
 - Any URL handling must be done in the application code, not the server
 - The server only does: serve local files → proxy to production if missing
 
 **When you need URL interception:**
+
 - ✅ **DO** handle URL transformations in the application (e.g., ipynb-viewer)
 - ✅ **DO** try multiple fetch strategies in the client code
 - ❌ **DON'T** modify server.js to add custom URL routing
@@ -126,6 +137,7 @@ All `.claude/` operations, block creation, slash commands, and documentation upd
 The Cloudflare Workers runtime provides APIs like `HTMLRewriter` that are NOT available in Node.js test environments. If you use runtime-specific APIs for core logic, **your code becomes untestable**.
 
 **Production Bug Example (2025-12-12):**
+
 ```javascript
 // ❌ WRONG - This breaks in tests
 export const handlePicturePlaceholder = (element) => {
@@ -212,6 +224,7 @@ describe('Integration Tests', () => {
 ```
 
 **Test structure:**
+
 - **Unit tests**: Test pure functions with string input/output
 - **Integration tests**: Test request flow with mocked Cloudflare APIs
 - **NO separate test files**: Everything in one unified test file
@@ -231,18 +244,22 @@ describe('Integration Tests', () => {
 ### Enforcement
 
 **Before modifying worker files, always:**
+
 1. Read `cloudflare/files/TESTING.md` for complete testing guide
 2. Read `cloudflare/files/README.md` for implementation patterns
 3. Use `/check-cloudflare-tests` command to validate test structure
 4. Run `npm test` in `cloudflare/files/` before committing
 
 **See also:**
+
 - Complete testing guide: `cloudflare/files/TESTING.md`
 - Implementation patterns: `cloudflare/files/README.md`
 - Production test page: `cloudflare/test.html`
 
 ### Slash Commands (Claude Code)
+
 **Block Development:**
+
 - `/new-block <name>` - Create a new EDS block following Content Driven Development process
 - `/start-cdd` - Start Content Driven Development process for creating or modifying blocks
 - `/test-block <name>` - Run tests for a specific EDS block
@@ -250,12 +267,14 @@ describe('Integration Tests', () => {
 - `/check-block <name>` - Analyze a block and provide architecture review and improvement suggestions
 
 **Notebooks:**
+
 - `/create-notebook` - Create educational/interactive Jupyter notebooks (tutorials, guides, blogs)
 - `/create-presentation` - Create or update presentation-mode notebooks with embedded HTML/JS blocks
 - `/jupyter-notebook` - Create or edit Jupyter notebooks for testing EDS blocks interactively
 - `/validate-notebook` - Validate notebook for production readiness (smart links, structure, quality)
 
 **Project Utilities:**
+
 - `/lint-all` - Run all linting checks (JavaScript and CSS) across the project
 - `/check-security` - Run security checklist validation based on EDS security guidelines
 - `/review-docs` - Review and understand the EDS documentation structure in docs/for-AI
@@ -264,20 +283,24 @@ describe('Integration Tests', () => {
 - `/validate-docs` - Validate CLAUDE.md, README.md, and CHANGELOG.md are current before push
 
 **Content Management:**
+
 - `/update-llms` - Find and update all llms.txt files in the project
 - `/update-my-blog` - Find and update all my-blog.json files in the project
 
 See `.claude/README.md` for complete slash command reference (17 total).
 
 ### Agents (Claude Code)
+
 For complex, multi-step tasks, use autonomous agents:
 
 **Code Quality & Architecture:**
+
 - `code-architecture-reviewer` - Review block implementations and architectural consistency
 - `code-refactor-master` - Refactor blocks, scripts, and code organization
 - `documentation-architect` - Document blocks, features, and development patterns
 
 **Planning & Research:**
+
 - `plan-reviewer` - Review implementation plans before starting work
 - `refactor-planner` - Plan comprehensive code reorganization
 - `web-research-specialist` - Research EDS patterns and best practices
@@ -287,19 +310,23 @@ For complex, multi-step tasks, use autonomous agents:
 See `.claude/agents_README.md` for complete agent documentation.
 
 ### Hooks (Claude Code)
+
 Active hooks that enhance development workflow:
 
 **skill-activation-prompt.sh**
+
 - Auto-suggests relevant skills based on prompt content
 - Runs when you submit a prompt
 - TypeScript-based pattern matching
 
 **post-tool-use-tracker.sh**
+
 - Tracks modified files for session context
 - Runs after file edits (Edit, MultiEdit, Write)
 - Lightweight bash script
 
 **cloudflare-worker-test-regenerate.sh** (Enhanced with AI Test Automation)
+
 - **Trigger:** After Edit, MultiEdit, or Write operations on `cloudflare/files/cloudflare-worker.js`
 - **Purpose:** Intelligent test automation system with auto-generation and coverage reporting
 - **Implementation:** Calls `cloudflare-test-automation.js` for complete test lifecycle management
@@ -320,6 +347,7 @@ Active hooks that enhance development workflow:
 - **See:** `.claude/hooks/cloudflare-test-automation.README.md` for complete documentation
 
 **pre-commit-changelog.sh** (Git Hook)
+
 - **REQUIRED:** Validates CHANGELOG.md is included in commits (blocks commit if missing)
 - **Simple Check:** Verifies CHANGELOG.md is staged before allowing commit
 - **Works with Claude Code:** No TTY issues - just checks staged files
@@ -343,6 +371,7 @@ The project uses GitHub Actions for continuous integration and deployment.
 ### Workflows
 
 **ci.yml** - Main CI Pipeline (runs on push to main, all PRs)
+
 - **CHANGELOG Validation**: Ensures CHANGELOG.md updated (blocks merge if missing)
   - Skip with `[skip changelog]` in commit message
 - **Linting**: JavaScript (ESLint) and CSS (Stylelint)
@@ -352,6 +381,7 @@ The project uses GitHub Actions for continuous integration and deployment.
 - **Build Verification**: Tests build/ directories if present
 
 **deploy-cloudflare.yml** - Cloudflare Worker Deployment
+
 - **Trigger**: Manual only (workflow_dispatch)
 - **Pre-deployment**: Runs all worker tests
 - **Deployment**: Uses Wrangler to deploy to Cloudflare
@@ -360,6 +390,7 @@ The project uses GitHub Actions for continuous integration and deployment.
 - **How to deploy**: Go to Actions → Deploy Cloudflare Worker → Run workflow
 
 **pr-checks.yml** - Enhanced PR Validation
+
 - **PR Title**: Validates conventional commit format (feat/fix/docs/chore)
 - **Issue Links**: Checks for linked issues (Fixes/Closes/Resolves #123)
 - **Documentation**: Warns if large code changes lack doc updates
@@ -371,12 +402,14 @@ The project uses GitHub Actions for continuous integration and deployment.
 ### Enforcement Strategy
 
 **Two-Level Enforcement:**
+
 1. **Local (Git Hooks)**: Pre-commit validation - catches issues before commit
 2. **CI/CD (GitHub Actions)**: Validates on push/PR - prevents breaking main
 
 ### Required Secrets
 
 To enable Cloudflare deployment, add to GitHub repository secrets:
+
 - `CLOUDFLARE_API_TOKEN` - API token for Wrangler deployment
 
 ### Workflow Status
@@ -384,6 +417,7 @@ To enable Cloudflare deployment, add to GitHub repository secrets:
 View workflow runs at: `https://github.com/ddttom/allaboutv2/actions`
 
 ## Code Style
+
 - **JS**: Follows Airbnb style guide (eslint-config-airbnb-base)
 - **CSS**: Follows stylelint-config-standard
 - **Block Structure**: Each block has its own directory with JS/CSS/README (see complete structure in [Block Development](#block-file-structure))
@@ -398,14 +432,17 @@ View workflow runs at: `https://github.com/ddttom/allaboutv2/actions`
 
 **Function Structure:**
 Structure code in three distinct sections:
+
 1. **decorate** - Main block decoration function (exported as default)
 2. **sub-components** - Reusable component builders
 3. **helpers** - Utility functions
 
 **Function Declarations:**
+
 - Use `function` keyword for pure functions (adds clarity over arrow functions)
 - Favor named exports for functions
 - Example:
+
 ```javascript
 // Pure function with function keyword
 function createCard(data) {
@@ -417,6 +454,7 @@ export { createCard, processData };
 ```
 
 **Code Cleanliness:**
+
 - No TODOs or placeholders in code - resolve before committing
 - Favor iteration and modularization to adhere to DRY principles
 - Avoid code duplication through proper abstraction
@@ -426,6 +464,7 @@ export { createCard, processData };
 Add comments that explain the "why" and "how", not just the "what":
 
 **What to comment:**
+
 - Purpose of functions or code blocks
 - How complex algorithms or logic work
 - Assumptions or limitations in the code
@@ -433,6 +472,7 @@ Add comments that explain the "why" and "how", not just the "what":
 - Potential edge cases or error handling
 
 **Comment style:**
+
 - Use clear and concise language
 - Avoid stating the obvious (don't just restate what the code does)
 - Use single-line comments for brief explanations
@@ -446,17 +486,20 @@ Add comments that explain the "why" and "how", not just the "what":
 **Note:** These standards are defined as instruction context for AI assistants.
 
 **Project Information:**
+
 - Developer: Tom Cranstoun
 - Company: tom
 - Blocks Directory: `/blocks`
 
 **Code Standards:**
+
 - Style Guide: Airbnb (eslint-config-airbnb-base)
 - CSS Naming: kebab-case
 - JS Modules: ESM
 - Markdown: GitHub Flavored Markdown (GFM)
 
 **Sample Resources** (for AI to use when creating examples):
+
 - **Profile Image**: `https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png`
 - **Sample Images**:
   - `https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png`
@@ -472,6 +515,7 @@ When AI assistants create block examples or documentation, they should reference
 **Comprehensive design language:** See `docs/for-ai/guidelines/design-system.md`
 
 **Key Design Tokens:**
+
 - Colors, typography, spacing extracted from allabout.network
 - CSS custom properties reference (`styles/styles.css`)
 - Component design patterns (buttons, links, borders)
@@ -480,6 +524,7 @@ When AI assistants create block examples or documentation, they should reference
 - Accessibility standards (WCAG 2.1 AA)
 
 **Essential Values:**
+
 - Primary color: `--link-color: #035fe6`
 - Font family: `--body-font-family: roboto, roboto-fallback`
 - Most common spacing: `22px` (aligns with body font size)
@@ -516,6 +561,7 @@ export default async function decorate(block) {
 ```
 
 **Why this matters:**
+
 - All configuration in one place at the top of the file
 - Easy to find and modify settings
 - Facilitates translation and localization
@@ -569,6 +615,7 @@ async function loadData() {
 When AI assistants create block examples or demos, use these pre-defined sample images:
 
 **Available Resources:**
+
 - **Profile Image**: `https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png`
 - **Sample Images**:
   - `https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png`
@@ -578,11 +625,13 @@ When AI assistants create block examples or demos, use these pre-defined sample 
   - `https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png`
 
 **Usage:**
+
 - In `example.json`, `example.csv`, or demo content, use these pre-defined URLs
 - Ensures examples work immediately without broken image links
 - Maintains consistency across all block documentation
 
 ## Architecture
+
 - Project follows Adobe Helix/Franklin (EDS - Edge Delivery Services) architecture
 - Blocks are independent web components with isolated functionality
 - Configuration in /config directory with environment-specific variables
@@ -591,11 +640,13 @@ When AI assistants create block examples or demos, use these pre-defined sample 
 **Complete architecture details:** See [EDS Architecture Standards](docs/for-ai/implementation/eds-architecture-standards.md)
 
 ### Dual-Directory Pattern
+
 - **`/blocks/`** - Production-ready EDS blocks (simple components or deployed build output)
 - **`/build/`** - Development workspace for complex components with external dependencies
 - See `docs/for-ai/implementation/build-blocks-clarification.md` for details
 
 ## Conventions
+
 - Keep code DRY, simple, and accessible
 - Add README for each new block with usage examples (see [Documentation Files](#documentation-files) for complete structure)
 - Responsive design throughout all components
@@ -613,12 +664,14 @@ When AI assistants create block examples or demos, use these pre-defined sample 
 **Never use inline CSS in JavaScript files** - always create CSS in CSS files.
 
 **Why this matters:**
+
 - Separates concerns (structure, presentation, behavior)
 - Maintains CSS cacheability
 - Enables style reuse
 - Follows EDS best practices
 
 **Wrong:**
+
 ```javascript
 // ❌ Don't do this
 element.style.color = 'red';
@@ -626,6 +679,7 @@ element.style.display = 'flex';
 ```
 
 **Correct:**
+
 ```javascript
 // ✅ Do this - add classes and style in CSS
 element.classList.add('highlighted');
@@ -673,6 +727,7 @@ Variations use additional classes, not separate files:
 **In markdown:** `BlockName (bold)` becomes `blockname bold` classes
 
 **CSS pattern:**
+
 ```css
 /* Base block styles */
 .blockname {
@@ -691,6 +746,7 @@ Variations use additional classes, not separate files:
 ```
 
 **Why this matters:**
+
 - One CSS file per block (matches JS pattern)
 - Easy to combine variations: `BlockName (bold, large)`
 - Maintainability and consistency
@@ -709,6 +765,7 @@ Variations use additional classes, not separate files:
 **Event listeners are NOT copied when using `cloneNode()`**
 
 **The Problem:**
+
 ```javascript
 element.addEventListener('click', handler);
 const clone = element.cloneNode(true);  // ❌ Event listener lost!
@@ -729,6 +786,7 @@ links.forEach(link => {
 ```
 
 **ipynb-viewer implementation:** See [ipynb-viewer.js](blocks/ipynb-viewer/ipynb-viewer.js):
+
 - Run buttons (lines 1292-1303)
 - Smart links (lines 1347-1388)
 - GitHub links (lines 1390-1400)
@@ -742,17 +800,20 @@ links.forEach(link => {
 When a notebook has a `repo` metadata attribute, all `.md` file links are automatically converted to GitHub URLs and opened in overlays.
 
 **CRITICAL Rules:**
+
 - ✅ **DO** use ONLY the GitHub repo URL from notebook metadata
 - ✅ **DO** fetch from `raw.githubusercontent.com` (converted from blob URL)
 - ❌ **DON'T** try local paths before GitHub
 - ❌ **DON'T** hardcode local paths like `/docs/help.md`
 
 **Why this matters:**
+
 - The `repo` attribute in notebook metadata is the single source of truth
 - Local development server proxies missing files to production
 - Smart links work identically in development and production
 
 **Complete details:** See [ipynb-viewer README](blocks/ipynb-viewer/README.md) sections on:
+
 - Smart Links and GitHub Integration (Section 3: Enhanced Markdown Rendering)
 - Help Button and Metadata (Section 6: Three Types of Overlays)
 - Link Navigation Implementation (Section 4: Interactive Features)
@@ -762,6 +823,7 @@ When a notebook has a `repo` metadata attribute, all `.md` file links are automa
 **Custom Adobe EDS worker with enhanced features (v1.1.4)** - see `cloudflare/files/`
 
 **What it does:**
+
 - Adds CORS headers to all responses
 - Generates JSON-LD structured data from page metadata
 - Picture placeholder replacement: Detects "Picture Here" text and replaces with author image server-side
@@ -773,6 +835,7 @@ When a notebook has a `repo` metadata attribute, all `.md` file links are automa
 - Maintains all standard Adobe EDS functionality
 
 **Version Management:**
+
 - Version defined once in `cloudflare/files/package.json` (single source of truth)
 - Worker imports version: `import pkg from './package' with { type: 'json' }`
 - Wrangler/esbuild inlines version at build time
@@ -780,12 +843,14 @@ When a notebook has a `repo` metadata attribute, all `.md` file links are automa
 - Check deployed version: `curl -I https://allabout.network/ | grep cfw`
 
 **Key files:**
+
 - `cloudflare/files/README.md` - Complete implementation guide and deployment instructions
 - `cloudflare/files/TESTING.md` - Two-file testing system and pure function approach
 - `cloudflare/files/cloudflare-worker.js` - Worker code (Apache License 2.0)
 - `cloudflare/files/package.json` - Version source of truth
 
 **Documentation references:**
+
 - General Cloudflare config: `cloudflare/cloudflare.md`
 - Custom worker implementation: `cloudflare/files/README.md`
 - Testing methodology: `cloudflare/files/TESTING.md`
@@ -802,6 +867,7 @@ Add `| author-url | https://yoursite.com |` or rely on LinkedIn meta tag fallbac
 **Deployment:** Follow `cloudflare/files/README.md` steps for prerequisites, environment variables, and deployment workflow.
 
 **Testing:**
+
 - **Automated tests**: `npm test` in `cloudflare/files/` - 63 tests covering all functionality
 - **Local HTML test**: `npm run test:local` - processes test.html through pure functions, outputs test-rendered.html
 - **Visual testing**: Open `cloudflare/test-rendered.html` locally to inspect transformed HTML
@@ -810,12 +876,14 @@ Add `| author-url | https://yoursite.com |` or rely on LinkedIn meta tag fallbac
 - **Production test page**: `https://allabout.network/cloudflare/test.html` - comprehensive live tests
 
 **Two-File Testing Rule:**
+
 - **File 1**: `cloudflare-worker.js` - Production worker code
 - **File 2**: `cloudflare-worker.test.js` - Single unified test file (unit + integration)
 - **Core Principle**: All functionality as pure JavaScript functions (string → string) testable without Cloudflare runtime
 - See `cloudflare/files/TESTING.md` for complete details
 
 **Developer Notes:**
+
 - `robots.txt` - SEO configuration with sitemap directive
   - Points search engines to `https://allabout.network/sitemap.xml`
   - Standard SEO best practice for search engine optimization
@@ -828,6 +896,7 @@ Add `| author-url | https://yoursite.com |` or rely on LinkedIn meta tag fallbac
 ## ⚠️ CRITICAL: EDS Reserved Class Names
 
 **NEVER use these class name patterns in blocks:**
+
 - `.{blockname}-container` - EDS automatically adds this to parent `<section>` elements
 - `.{blockname}-wrapper` - EDS automatically adds this to block parent `<div>` wrappers
 
@@ -836,6 +905,7 @@ Add `| author-url | https://yoursite.com |` or rely on LinkedIn meta tag fallbac
 **Production bug example:** Using `.overlay-container` with `position: fixed; opacity: 0;` made pages blank because EDS added the class to the section element.
 
 **Safe suffixes to use instead:**
+
 - `-backdrop`, `-modal`, `-panel`, `-inner`, `-grid`, `-list`, `-content`
 
 **See:** `.claude/skills/eds-block-development/SKILL.md` for complete details, `PROBLEM.md` for the bug report, and [CSS Styling Standards](docs/for-ai/implementation/block-architecture-standards.md#3-css-styling-standards) for naming conventions.
@@ -843,6 +913,7 @@ Add `| author-url | https://yoursite.com |` or rely on LinkedIn meta tag fallbac
 ## Development Workflow
 
 ### Content Driven Development (Required)
+
 When creating or modifying blocks, ALWAYS use Content Driven Development:
 
 1. **Use slash command**: `/new-block <name>` or `/start-cdd`
@@ -850,6 +921,7 @@ When creating or modifying blocks, ALWAYS use Content Driven Development:
 3. **Process**: Content model → Test content → Implementation → Testing
 
 **Never skip CDD.** It ensures:
+
 - Author-friendly content models
 - Test content exists before coding
 - Better PRs with validation links
@@ -860,11 +932,13 @@ When creating or modifying blocks, ALWAYS use Content Driven Development:
 ### Simple vs Complex Blocks
 
 **Simple Blocks** (EDS-Native):
+
 - Develop directly in `/blocks/<name>/`
 - Vanilla JavaScript, no build process
 - For: Text blocks, banners, simple cards
 
 **Complex Blocks** (Build-Enhanced):
+
 - Develop in `/build/<name>/`
 - Uses Vite bundler, external libraries allowed
 - Deploy to `/blocks/<name>/` when ready
@@ -913,6 +987,7 @@ When creating or modifying blocks, ALWAYS use Content Driven Development:
 **DO NOT use triple backticks** - this is an EDS requirement for proper code block rendering.
 
 **Format:**
+
 ```
 `Title of Code Snippet`
 `const example = 'code here';`
@@ -920,11 +995,13 @@ When creating or modifying blocks, ALWAYS use Content Driven Development:
 ```
 
 **Rules:**
+
 - Each pair of single backticks = separate code snippet
 - First line within backticks = title of the snippet
 - This is a special signal to EDS for code rendering
 
 **Wrong:**
+
 ````markdown
 ```javascript
 const code = 'here';
@@ -932,6 +1009,7 @@ const code = 'here';
 ````
 
 **Correct:**
+
 ```
 `JavaScript Example`
 `const code = 'here';`
@@ -976,16 +1054,19 @@ const code = 'here';
 - **Better UX**: Authors familiar with base block can easily use variations
 
 **When to use variations:**
+
 - Similar functionality with different styling
 - Same data structure, different presentation
 - Related content types (e.g., card, card-large, card-featured)
 
 **When to create new block:**
+
 - Completely different data structure
 - Unrelated functionality
 - Would require too many conditionals in single block
 
 **Process:**
+
 1. After creating blocks, reiterate to identify variation opportunities
 2. Ask: "Could this be a variation of an existing block?"
 3. Refactor if yes - consolidate logic, add variation styles
@@ -1024,8 +1105,10 @@ const code = 'here';
 **All Claude responses must include timestamps and execution duration.**
 
 **Format**:
+
 - **Start**: Begin response with timestamp: `🕒 Response Started: [YYYY-MM-DD HH:MM:SS TIMEZONE]`
 - **End**: Conclude response with timestamp and duration:
+
   ```
   🕒 Response Completed: [YYYY-MM-DD HH:MM:SS TIMEZONE]
   ⏱️  Execution Duration: [X minutes Y seconds]
@@ -1038,12 +1121,14 @@ const code = 'here';
 ## Documentation
 
 ### Primary Documentation
+
 - **`docs/for-ai/`** - Comprehensive EDS development guides (26 files)
   - Start: `docs/for-ai/index.md` - Complete navigation
   - Learn: `docs/for-ai/getting-started-guide.md` - Role-based paths
   - Core: `docs/for-ai/eds.md` - EDS fundamentals (1,937 lines)
 
 ### Claude Code Configuration
+
 - **`.claude/README.md`** - Complete overview (commands, skills, agents, hooks)
 - **`.claude/agents_README.md`** - Agent documentation (6 autonomous agents)
 - **`.claude/commands/`** - Slash commands for common tasks (19 total)
@@ -1052,6 +1137,7 @@ const code = 'here';
   - `CONFIG.md` - Hook configuration and customization guide
 
 ### Critical Learnings
+
 - **`LEARNINGS.md`** - Documented mistakes and patterns to avoid
   - **Purpose**: Captures real-world errors made during development to prevent repetition
   - **Current learnings**: ipynb-viewer smart links pattern (use relative paths, not full URLs)
@@ -1060,6 +1146,7 @@ const code = 'here';
   - **Read this file**: Before working with Jupyter notebooks, ipynb-viewer block, or similar features
 
 ### Quick Links
+
 - Architecture standards: `docs/for-ai/implementation/block-architecture-standards.md`
 - Testing standards: `docs/for-ai/testing/eds-native-testing-standards.md`
 - **NEW: Jupyter testing**: `docs/for-ai/explaining-jupyter.md` - Context-aware interactive testing with `initialize()` function (96% smaller Cell 1) and unified API
@@ -1116,4 +1203,4 @@ The reports are created by https://github.com/ddttom/my-pa11y-project
 
 6. **Automated Tests** - CI/CD integration
    - Jest/Mocha for regression testing
-   - Future implementation 
+   - Future implementation

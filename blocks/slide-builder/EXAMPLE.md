@@ -87,25 +87,26 @@ The block expects `/slides/query-index.json` to contain:
 
 `query-index.json Structure`
 `{`
-`  "data": [`
-`    {`
-`      "path": "/slides/york-minster",`
-`      "title": "York Minster",`
-`      "description": "A magnificent Gothic cathedral",`
-`      "image": "https://allabout.network/media_123.png",`
-`      "lastModified": 1234567890`
-`    },`
-`    {`
-`      "path": "/slides/the-shambles",`
-`      "title": "The Shambles",`
-`      "description": "A picturesque medieval street",`
-`      "image": "https://allabout.network/media_456.jpeg",`
-`      "lastModified": 1234567891`
-`    }`
-`  ]`
+`"data": [`
+`{`
+`"path": "/slides/york-minster",`
+`"title": "York Minster",`
+`"description": "A magnificent Gothic cathedral",`
+`"image": "https://allabout.network/media_123.png",`
+`"lastModified": 1234567890`
+`},`
+`{`
+`"path": "/slides/the-shambles",`
+`"title": "The Shambles",`
+`"description": "A picturesque medieval street",`
+`"image": "https://allabout.network/media_456.jpeg",`
+`"lastModified": 1234567891`
+`}`
+`]`
 `}`
 
 Each slide page (e.g., `/slides/york-minster.md`) should contain:
+
 - An `<h2>` heading
 - At least one paragraph after the h2 (becomes "supporting text")
 - Full content to display in the panel overlay
@@ -115,11 +116,13 @@ Each slide page (e.g., `/slides/york-minster.md`) should contain:
 ## Responsive Behavior
 
 ### Desktop (width > 799px)
+
 - All slide HTML content is pre-fetched on page load
 - Supporting text (first paragraph) is visible below description
 - Panel opens instantly when clicked
 
 ### Mobile (width ≤ 799px)
+
 - HTML content is fetched on-demand when slide is clicked
 - Supporting text is hidden for cleaner layout
 - Panel opens with slight delay while content loads
@@ -203,6 +206,7 @@ Each slide page (e.g., `/slides/york-minster.md`) should contain:
 `- **Location**: Eye of York, York YO1 9RY`
 
 **Result:**
+
 - **Title in grid**: "Castle Museum"
 - **Description in grid**: "A fascinating journey through Victorian life"
 - **Supporting text in grid**: "Step back in time at York Castle Museum..."
@@ -215,11 +219,13 @@ Each slide page (e.g., `/slides/york-minster.md`) should contain:
 ### No Slides Appearing
 
 **Check these files:**
+
 1. Does `/slides/query-index.json` exist?
 2. Is the JSON valid?
 3. Are there items in the `data` array?
 
 **Console errors to look for:**
+
 - `Failed to fetch` - JSON file doesn't exist or is inaccessible
 - `Unexpected token` - JSON syntax error
 - CORS errors - Server configuration issue
@@ -229,11 +235,13 @@ Each slide page (e.g., `/slides/york-minster.md`) should contain:
 ### Images Not Loading
 
 **Possible causes:**
+
 1. Image URLs in query-index.json are broken
 2. CORS headers missing on image server
 3. WebP not supported (should fall back to original)
 
 **Debug steps:**
+
 1. Check browser console for image errors
 2. Verify image URL works when opened directly
 3. Test in different browsers (check WebP support)
@@ -243,11 +251,13 @@ Each slide page (e.g., `/slides/york-minster.md`) should contain:
 ### Panel Content Not Showing
 
 **Possible causes:**
+
 1. `.plain.html` file doesn't exist for slide path
 2. Path in query-index.json has trailing slash (shouldn't)
 3. Fetch error (check console)
 
 **Debug steps:**
+
 1. Check if `{path}.plain.html` exists (e.g., `/slides/york-minster.plain.html`)
 2. Verify path format: `/slides/slide-name` (no trailing slash)
 3. Test fetch URL manually in browser
@@ -274,12 +284,12 @@ To change image optimization parameters, modify lines 50-52 in `slide-builder.js
 
 `Current Settings`
 `const finalImageUrl = supportsWebP`
-`  ? \`\${imageUrl}?width=2000&format=webply&optimize=medium\``
+`? \`\${imageUrl}?width=2000&format=webply&optimize=medium\``
 `  : imageUrl;`
 
 `High Quality Settings`
 `const finalImageUrl = supportsWebP`
-`  ? \`\${imageUrl}?width=3000&format=webply&optimize=high\``
+`? \`\${imageUrl}?width=3000&format=webply&optimize=high\``
 `  : imageUrl;`
 
 ---
@@ -287,16 +297,19 @@ To change image optimization parameters, modify lines 50-52 in `slide-builder.js
 ## Performance Notes
 
 ### Desktop Performance
+
 - **Initial load**: Fetches query-index.json + all slide HTML (parallel)
 - **Image loading**: Lazy loaded via IntersectionObserver
 - **Panel display**: Instant (HTML already cached)
 
 ### Mobile Performance
+
 - **Initial load**: Fetches only query-index.json
 - **Image loading**: Lazy loaded via IntersectionObserver
 - **Panel display**: Slight delay (fetches HTML on-demand)
 
 ### Recommendations
+
 - Keep slide HTML content under 50KB for fast mobile loading
 - Optimize images before upload (don't rely solely on query params)
 - Limit number of slides to 20-30 for best performance
@@ -307,11 +320,13 @@ To change image optimization parameters, modify lines 50-52 in `slide-builder.js
 ## Accessibility Considerations
 
 ### Current Features
+
 - Close button has `aria-label="Close panel"`
 - Semantic HTML structure (h2, p tags)
 - High contrast text overlays
 
 ### Recommended Enhancements
+
 1. Add keyboard navigation (Escape key to close)
 2. Add focus trap when panel is open
 3. Add `role="dialog"` to panel
@@ -323,6 +338,7 @@ To change image optimization parameters, modify lines 50-52 in `slide-builder.js
 ## Related Examples
 
 ### Cards Block
+
 Similar grid layout but with simpler content model:
 
 | Cards |
@@ -333,6 +349,7 @@ Similar grid layout but with simpler content model:
 | Description 2 |
 
 ### Carousel Block
+
 Alternative presentation with navigation:
 
 | Carousel |
@@ -341,6 +358,7 @@ Alternative presentation with navigation:
 | Slide 2 content |
 
 ### Gallery Block
+
 Image-focused alternative:
 
 | Gallery |

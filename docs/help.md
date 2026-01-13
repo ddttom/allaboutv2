@@ -1,7 +1,9 @@
 # Viewer - User Guide
 
 Welcome to the **Documentation Viewer** interactive help guide! This document will help you understand all the features and how to use them effectively.
+
 ## Table of Contents
+
 [Getting Started](#getting-started)
 [Navigation Controls](#navigation-controls)
 [Overlay Types](#overlay-types)
@@ -11,13 +13,19 @@ Welcome to the **Documentation Viewer** interactive help guide! This document wi
 [Keyboard Shortcuts](#keyboard-shortcuts)
 [Tips & Tricks](#tips--tricks)
 ---
+
 ## Getting Started
+
 The Viewer displays Jupyter notebooks (.ipynb files) directly in your browser with interactive features. You can read through cells, execute code, and navigate seamlessly between content.
+
 ### Opening a Notebook
+
 Click the **"Start Reading"** button to open the paged overlay
 Use **Previous/Next** buttons to navigate between pages
 Each page may contain one or more cells (markdown or code)
+
 ### Understanding the Interface
+
 The overlay has several key areas:
 **Top Bar** -Header with notebook title and control buttons
 **Content Area** - Displays the current page's cells
@@ -32,6 +40,7 @@ The overlay has several key areas:
 A powerful new navigation panel appears on the left side of the overlay:
 
 **Features:**
+
 - **Notebook Section** - Shows all cells organized by Parts (or flat structure if no Parts)
 - **Repository Section** - Lists all linked markdown files from the repository
 - **Expandable/Collapsible** - Click triangles (▶) to expand folders and sections
@@ -40,12 +49,14 @@ A powerful new navigation panel appears on the left side of the overlay:
 - **Toggle Visibility** - Use the tree toggle button (◄/►) to hide/show the panel
 
 **Structure:**
+
 - **Frontmatter** - Cells before first Part (only if Parts exist)
 - **Part N** - Each numbered Part with its cells
 - **Summary** - Cells after completion (only if Parts exist)
 - **Repository** - All .md files referenced in the notebook (auto-hidden if empty)
 
 ### Top Bar Buttons
+
 The top bar contains all your navigation and utility controls:
 
 | Button | Icon | Position | Function |
@@ -59,6 +70,7 @@ The top bar contains all your navigation and utility controls:
 | **Close** | × | Right | Close the overlay |
 
 **Tree Toggle Button:**
+
 - **◄ (Left Arrow)** - Tree is visible, click to hide
 - **► (Right Arrow)** - Tree is hidden, click to show
 - Content area automatically expands when tree is hidden
@@ -96,6 +108,7 @@ Page indicator shows progress
 **How to open:** Click any .md file link in markdown cells
 
 **Features:**
+
 - Fetches markdown from GitHub
 - Displays in overlay without leaving the app
 - Full markdown rendering
@@ -108,6 +121,7 @@ Page indicator shows progress
 **How to open:** Click "Run" on code cells that use `showPreview()`
 
 **Features:**
+
 - Displays visual output from code execution
 - Responsive testing buttons (Mobile, Tablet, Desktop)
 - Shows rendered HTML/CSS
@@ -123,6 +137,7 @@ Page indicator shows progress
 ### Overview
 
 The Navigation Tree appears on the left side of the overlay and provides:
+
 - **Hierarchical view** of all notebook cells and linked files
 - **Quick navigation** - click any item to jump directly to it
 - **Visual organization** - see the complete structure at a glance
@@ -131,18 +146,22 @@ The Navigation Tree appears on the left side of the overlay and provides:
 ### Tree Structure
 
 #### Notebook Section
+
 Shows all cells in the notebook:
 
 **With Part Headings:**
+
 - **Frontmatter** - Cells before the first "Part N" heading
 - **Part 1, Part 2, etc.** - Grouped cells under each Part
 - **Summary** - Cells after a heading containing "completed" and "final"
 
 **Without Part Headings:**
+
 - Cells are listed directly under "Notebook" (flat structure)
 - No Frontmatter or Summary sections created
 
 #### Repository Section
+
 Shows all markdown files linked in the notebook:
 
 - **Automatically populated** from .md links in cells
@@ -154,17 +173,20 @@ Shows all markdown files linked in the notebook:
 ### Using the Tree
 
 **Expand/Collapse Sections:**
+
 - Click the triangle icon (▶) next to folders or sections
 - Expanded state: ▼ (downward triangle)
 - Collapsed state: ▶ (right-pointing triangle)
 - Tree state persists when switching between overlays
 
 **Navigate to Content:**
+
 - Click any cell item to jump to that page
 - Click any .md file to open it in GitHub overlay
 - Currently selected item is highlighted
 
 **Toggle Visibility:**
+
 - Click the tree toggle button (◄/►) in top-left
 - Hidden state gives more reading space
 - Content area expands to fill available width
@@ -172,18 +194,21 @@ Shows all markdown files linked in the notebook:
 ### Tree Features
 
 **Smart Detection:**
+
 - Automatically finds Part headings (pattern: `Part \d+`)
 - Detects Summary section (contains "completed" AND "final")
 - Extracts all .md links from notebook cells
 - Resolves relative paths (../, ./, same directory)
 
 **Visual Feedback:**
+
 - Selected item has highlight
 - Hover effect on clickable items
 - Indentation shows hierarchy level
 - Icons indicate node type (folder/file)
 
 **State Management:**
+
 - Expansion state shared across both overlays
 - Tree structure updates when new .md links discovered
 - Duplicate files automatically filtered out
@@ -224,11 +249,13 @@ Shows all markdown files linked in the notebook:
 ### Bookmark Storage
 
 Bookmarks are stored in your browser's localStorage using the pattern:
+
 ```
 ipynb-bookmarks-{notebook-path}
 ```
 
 This means:
+
 - Bookmarks persist across browser sessions
 - Each notebook has its own bookmark list
 - Bookmarks are specific to your browser
@@ -315,6 +342,7 @@ Make navigation faster with keyboard shortcuts:
 ### Workflow Examples
 
 **Learning a Tutorial:**
+
 - Use Navigation Tree to see overall structure
 - Read sequentially with Previous/Next
 - Bookmark key concepts for review
@@ -322,6 +350,7 @@ Make navigation faster with keyboard shortcuts:
 - Collapse Parts in tree you've completed
 
 **Using as Reference:**
+
 - Keep Navigation Tree open to see all sections
 - Click tree items to jump directly to content
 - Bookmark frequently used sections
@@ -329,6 +358,7 @@ Make navigation faster with keyboard shortcuts:
 - Toggle tree (►) when deep reading
 
 **Exploring Documentation:**
+
 - Click .md links to open related docs in overlay
 - Navigation Tree shows all linked markdown files
 - Click files in Repository section to view them
@@ -351,6 +381,7 @@ Make navigation faster with keyboard shortcuts:
 ### Link Navigation
 
 Click links with hash targets to jump between pages:
+
 ```markdown
 [Go to Installation](#installation)
 ```
@@ -358,6 +389,7 @@ Click links with hash targets to jump between pages:
 ### Action Cards
 
 In notebook mode, markdown lists with emojis automatically become beautiful action cards:
+
 ```markdown
 <!-- action-cards -->
 - 🎯 **Getting Started** - Learn the basics
@@ -368,6 +400,7 @@ In notebook mode, markdown lists with emojis automatically become beautiful acti
 ### GitHub Integration
 
 When `repo` metadata is set, .md links automatically:
+
 - Convert to full GitHub URLs
 - Open in overlay instead of navigating away
 - Fetch and render markdown beautifully

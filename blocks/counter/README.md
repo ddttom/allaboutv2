@@ -5,6 +5,7 @@
 The Counter block provides an interactive numeric counter component using modern Web Components technology. It displays a number with increment and decrement buttons, allowing users to interactively adjust values. The block is built with Shadow DOM for encapsulation and style isolation, making it highly reusable and maintainable.
 
 **Key Features:**
+
 - Interactive increment/decrement controls
 - Configurable initial value
 - Web Component architecture with Shadow DOM
@@ -54,6 +55,7 @@ The Counter block uses a simple single-cell table structure:
 | 1 | Initial value | No | Integer (default: 0) |
 
 **Example Structure:**
+
 ```
 | Counter |
 |---------|
@@ -69,16 +71,19 @@ The block automatically parses the initial value and creates an interactive coun
 The Counter block leverages the Web Components API with the following architecture:
 
 **Custom Element:** `counter-element`
+
 - Extends HTMLElement
 - Uses Shadow DOM for encapsulation
 - Lifecycle: constructor → connectedCallback → render → setupEventListeners
 
 **State Management:**
+
 - Internal `count` property tracks current value
 - Updates via increment/decrement button clicks
 - Dispatches custom events for external integration
 
 **Event System:**
+
 - Emits `count-change` custom event on value changes
 - Event detail includes current count: `{ count: number }`
 - Allows parent components to react to counter changes
@@ -89,19 +94,19 @@ The block uses a centralized `COUNTER_CONFIG` object:
 
 `Configuration Structure`
 `const COUNTER_CONFIG = {`
-`  CLASS_NAMES: {`
-`    COUNTER: 'counter-component',`
-`    BUTTON: 'counter-button',`
-`    DISPLAY: 'counter-display',`
-`  },`
-`  ARIA_LABELS: {`
-`    INCREMENT: 'Increment counter',`
-`    DECREMENT: 'Decrement counter',`
-`    DISPLAY: 'Current count',`
-`  },`
-`  ERROR_MESSAGES: {`
-`    INVALID_INITIAL: 'Invalid initial value provided',`
-`  },`
+`CLASS_NAMES: {`
+`COUNTER: 'counter-component',`
+`BUTTON: 'counter-button',`
+`DISPLAY: 'counter-display',`
+`},`
+`ARIA_LABELS: {`
+`INCREMENT: 'Increment counter',`
+`DECREMENT: 'Decrement counter',`
+`DISPLAY: 'Current count',`
+`},`
+`ERROR_MESSAGES: {`
+`INVALID_INITIAL: 'Invalid initial value provided',`
+`},`
 `};`
 
 ## Styling and Theming
@@ -112,10 +117,10 @@ The Counter block supports extensive theming through CSS variables:
 
 `CSS Variable Customization`
 `:host {`
-`  --counter-button-bg: var(--color-primary, #007bff);`
-`  --counter-button-color: var(--color-text-inverse, #ffffff);`
-`  --counter-display-bg: var(--color-background, #f8f9fa);`
-`  --counter-display-color: var(--color-text, #212529);`
+`--counter-button-bg: var(--color-primary, #007bff);`
+`--counter-button-color: var(--color-text-inverse, #ffffff);`
+`--counter-display-bg: var(--color-background, #f8f9fa);`
+`--counter-display-color: var(--color-text, #212529);`
 `}`
 
 ### Customization Example
@@ -124,10 +129,10 @@ Override default styles by setting CSS variables in your page styles:
 
 `Custom Theme`
 `counter-element {`
-`  --counter-button-bg: #28a745;`
-`  --counter-button-color: white;`
-`  --counter-display-bg: #e9ecef;`
-`  --counter-display-color: #495057;`
+`--counter-button-bg: #28a745;`
+`--counter-button-color: white;`
+`--counter-display-bg: #e9ecef;`
+`--counter-display-color: #495057;`
 `}`
 
 ### Shadow DOM Styling
@@ -141,13 +146,16 @@ All styles are encapsulated within the Shadow DOM, preventing style leakage and 
 The Counter block includes comprehensive ARIA support:
 
 **Button Labels:**
+
 - Increment button: `aria-label="Increment counter"`
 - Decrement button: `aria-label="Decrement counter"`
 
 **Display Label:**
+
 - Counter display: `aria-label="Current count"`
 
 **Keyboard Support:**
+
 - Standard button keyboard interaction (Space/Enter to activate)
 - Focus visible indicators with outline styling
 - Tab navigation support
@@ -158,8 +166,8 @@ The block implements visible focus indicators:
 
 `Focus Styling`
 `.counter-button:focus-visible {`
-`  outline: 2px solid var(--counter-button-bg);`
-`  outline-offset: 2px;`
+`outline: 2px solid var(--counter-button-bg);`
+`outline-offset: 2px;`
 `}`
 
 ### Screen Reader Support
@@ -192,6 +200,7 @@ The Counter block requires support for Web Components and Shadow DOM:
 ### Polyfill Considerations
 
 For older browsers, consider using Web Components polyfills:
+
 - `@webcomponents/webcomponentsjs` for legacy support
 - Note: EDS typically targets modern browsers, polyfills may not be necessary
 
@@ -200,11 +209,13 @@ For older browsers, consider using Web Components polyfills:
 ### Rendering Performance
 
 **Initial Render:**
+
 - Web Component registration: ~1ms
 - Shadow DOM creation: ~2ms
 - Event listener setup: <1ms
 
 **Interaction Performance:**
+
 - Button click response: <16ms (60fps)
 - State update and re-render: <5ms
 - Event dispatch: <1ms
@@ -267,10 +278,10 @@ Listen for count changes to integrate with other components:
 `Event Integration`
 `const counter = document.querySelector('counter-element');`
 `counter.addEventListener('count-change', (event) => {`
-`  console.log('New count:', event.detail.count);`
-`  // Update other UI elements`
-`  // Save to localStorage`
-`  // Send to analytics`
+`console.log('New count:', event.detail.count);`
+`// Update other UI elements`
+`// Save to localStorage`
+`// Send to analytics`
 `});`
 
 ### Programmatic Control
@@ -356,6 +367,7 @@ Create test cases in `test.html`:
 ### Browser Testing
 
 Test in multiple browsers to ensure Web Components support:
+
 - Chrome/Edge (Chromium)
 - Firefox
 - Safari
@@ -366,6 +378,7 @@ Test in multiple browsers to ensure Web Components support:
 ### EDS Core
 
 The Counter block requires EDS core library (`scripts/aem.js`):
+
 - Block decoration lifecycle
 - Content model transformation
 - CSS loading
@@ -373,6 +386,7 @@ The Counter block requires EDS core library (`scripts/aem.js`):
 ### Web Platform APIs
 
 Built on standard Web APIs:
+
 - Custom Elements API
 - Shadow DOM API
 - CustomEvent API
@@ -384,11 +398,13 @@ Built on standard Web APIs:
 
 **Symptom:** Block shows empty or raw content
 **Causes:**
+
 - Browser doesn't support Web Components
 - JavaScript error during registration
 - EDS core not loaded
 
 **Solutions:**
+
 - Check browser compatibility
 - Review console for errors
 - Verify EDS core is loaded before block
@@ -397,11 +413,13 @@ Built on standard Web APIs:
 
 **Symptom:** Clicking buttons doesn't change count
 **Causes:**
+
 - Event listeners not attached
 - Shadow DOM rendering failed
 - JavaScript error in event handler
 
 **Solutions:**
+
 - Check console for errors
 - Verify Shadow DOM is created
 - Test in different browser
@@ -410,11 +428,13 @@ Built on standard Web APIs:
 
 **Symptom:** Counter has no styling or wrong colors
 **Causes:**
+
 - Shadow DOM styles not rendering
 - CSS variable inheritance issues
 - Browser doesn't support Shadow DOM
 
 **Solutions:**
+
 - Inspect Shadow DOM in DevTools
 - Verify CSS variables are set
 - Check browser compatibility
@@ -423,11 +443,13 @@ Built on standard Web APIs:
 
 **Symptom:** External code not receiving count-change events
 **Causes:**
+
 - Event listener attached before component creation
 - Wrong event name
 - Event bubbling issues
 
 **Solutions:**
+
 - Attach listener after component is rendered
 - Use exact event name: 'count-change'
 - Add listener directly to counter-element

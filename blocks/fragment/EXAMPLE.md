@@ -56,19 +56,23 @@ You can also use a link in the fragment block:
 ### Step-by-Step Guide
 
 **1. Create Fragment Directory**
+
 - Create a folder called `fragments` in your site (if it doesn't exist)
 - This can be done in Google Drive or your content management system
 
 **2. Create Fragment Page**
+
 - Create a new Google Doc in the `/fragments/` folder
 - Name it descriptively (e.g., `disclaimer.docx`, `announcement.docx`)
 - Add your content using normal EDS formatting
 
 **3. Publish Fragment**
+
 - Publish the fragment page like any other EDS page
 - Verify the page is accessible at: `https://yoursite.com/fragments/pagename`
 
 **4. Reference Fragment**
+
 - Add a fragment block to parent pages
 - Use path: `/fragments/pagename`
 - Fragment content will be embedded automatically
@@ -78,6 +82,7 @@ You can also use a link in the fragment block:
 **File:** `/fragments/disclaimer.docx` in Google Drive
 
 **Content:**
+
 ```
 ## Legal Disclaimer
 
@@ -230,17 +235,20 @@ Fragments can contain other EDS blocks:
 ### Fragment Path Requirements
 
 **Required format:**
+
 - Must start with `/`
 - Path must exist on your site
 - Fragment page must be published
 
 **Good fragment paths:**
+
 - `/fragments/disclaimer`
 - `/fragments/contact-info`
 - `/fragments/announcement`
 - `/support/common-questions`
 
 **Avoid:**
+
 - Relative paths: `fragments/disclaimer` (missing leading `/`)
 - External URLs: `https://example.com/fragments/disclaimer` (unless intentional cross-site reference)
 - Invalid paths: `/fragments/nonexistent` (page doesn't exist)
@@ -248,6 +256,7 @@ Fragments can contain other EDS blocks:
 ### Fragment Content Requirements
 
 **Content types supported:**
+
 - Plain text and paragraphs
 - Rich text (bold, italic, links)
 - Headings (H2, H3, etc.)
@@ -257,6 +266,7 @@ Fragments can contain other EDS blocks:
 - Multiple sections
 
 **Important notes:**
+
 1. **Images in fragments:**
    - Use images uploaded to fragment page
    - EDS will automatically resolve image paths
@@ -298,28 +308,33 @@ Fragments can contain other EDS blocks:
 ### Content Strategy
 
 **1. Identify reusable content**
+
 - Look for content that appears on multiple pages
 - Find content that changes frequently
 - Identify content requiring consistency
 
 **Good candidates for fragments:**
+
 - Legal disclaimers (appears on many pages)
 - Contact information (frequent updates)
 - Announcements (time-sensitive, changes often)
 - Common CTAs (consistent messaging)
 
 **Poor candidates for fragments:**
+
 - Unique page content
 - Rarely updated content
 - Page-specific information
 - Content with many variations
 
 **2. Organize fragments logically**
+
 - Use clear, descriptive names
 - Group related fragments
 - Maintain fragment directory structure
 
 **Example organization:**
+
 ```
 /fragments/
 ├── legal/
@@ -337,12 +352,14 @@ Fragments can contain other EDS blocks:
 ```
 
 **3. Version fragments for major changes**
+
 - Breaking changes? Create new fragment
 - Use versioned names: `cta-signup-v2`
 - Migrate parent pages gradually
 - Keep old fragment until migration complete
 
 **4. Monitor fragment usage**
+
 - Track which pages use each fragment
 - Document fragment dependencies
 - Plan updates considering impact
@@ -351,22 +368,26 @@ Fragments can contain other EDS blocks:
 ### Performance Optimization
 
 **1. Keep fragments small**
+
 - Aim for < 5KB HTML per fragment
 - Large fragments slow page load
 - Split large content into multiple fragments if needed
 
 **2. Limit fragments per page**
+
 - 1-3 fragments per page recommended
 - Too many fragments = many HTTP requests
 - Consider inline content for rarely updated sections
 
 **3. Optimize fragment content**
+
 - Compress images in fragments
 - Use appropriate image dimensions
 - Minimize blocks within fragments
 - Remove unnecessary formatting
 
 **4. Cache fragments effectively**
+
 - Fragments are cached by browser
 - Stable content = long cache TTL
 - Frequent updates? Shorter cache TTL
@@ -375,24 +396,28 @@ Fragments can contain other EDS blocks:
 ### Maintenance Best Practices
 
 **1. Test fragments independently**
+
 - Open fragment page directly: `https://yoursite.com/fragments/name`
 - Verify content displays correctly
 - Check images and links work
 - Test any blocks within fragment
 
 **2. Test fragments on parent pages**
+
 - Preview parent page on staging
 - Verify fragment embeds correctly
 - Check section styling
 - Test responsive behavior
 
 **3. Document fragment usage**
+
 - List pages using each fragment
 - Note fragment dependencies
 - Document update procedures
 - Maintain fragment changelog
 
 **4. Handle errors gracefully**
+
 - Test with invalid paths (404 errors)
 - Verify page doesn't break if fragment fails
 - Consider fallback content for critical fragments
@@ -406,6 +431,7 @@ Fragments can contain other EDS blocks:
 **Problem:** You added a fragment block but content doesn't show.
 
 **Possible causes:**
+
 1. Fragment path is incorrect
 2. Fragment page not published
 3. Fragment page doesn't exist
@@ -413,6 +439,7 @@ Fragments can contain other EDS blocks:
 **Solutions:**
 
 **Check fragment path:**
+
 | Fragment |
 |----------|
 | /fragments/disclaimer |
@@ -422,11 +449,13 @@ Fragments can contain other EDS blocks:
 - No trailing slashes
 
 **Verify fragment page published:**
+
 1. Open fragment URL directly: `https://yoursite.com/fragments/disclaimer`
 2. If page loads, fragment exists
 3. If 404 error, fragment not published
 
 **Test .plain.html version:**
+
 1. Try: `https://yoursite.com/fragments/disclaimer.plain.html`
 2. This is what fragment block fetches
 3. Should show plain HTML version
@@ -440,11 +469,13 @@ Fragments can contain other EDS blocks:
 **Solution:**
 
 **In fragment page, images should be:**
+
 - Uploaded to fragment page in Google Docs
 - EDS automatically creates relative paths
 - Fragment block resolves paths to absolute URLs
 
 **Don't manually edit image paths:**
+
 - Let EDS handle image uploads
 - Images appear in fragment directory automatically
 - Fragment block fixes paths when embedding
@@ -620,6 +651,7 @@ Support multiple languages with separate fragments:
 | /fragments/fr/disclaimer |
 
 **Requires:**
+
 - Separate fragment pages per language
 - Language detection logic (or manual page creation)
 - Consistent fragment naming convention
@@ -689,6 +721,7 @@ After creating a fragment:
 ### Browser Testing
 
 Test fragments in multiple browsers:
+
 - Chrome/Edge (last 2 versions)
 - Firefox (last 2 versions)
 - Safari (last 2 versions)
@@ -706,6 +739,7 @@ Test fragments in multiple browsers:
 | /fragments/disclaimer |
 
 **Fragment content:**
+
 ```
 *This information is provided for educational purposes only and should
 not be considered professional advice. Consult an expert before taking
@@ -719,6 +753,7 @@ action based on this content.*
 | /fragments/company-info |
 
 **Fragment content:**
+
 ```
 ### About Our Company
 
@@ -738,6 +773,7 @@ and services to our customers worldwide.
 | /fragments/team-intro |
 
 **Fragment content:**
+
 ```
 ## Meet Our Team
 
@@ -774,12 +810,14 @@ Get to know the people behind the brand.
 ## Related Blocks
 
 **Complementary functionality:**
+
 - **Section Metadata** - Control section-level styling around fragments
 - **Columns** - Arrange fragments in multi-column layouts
 - **Accordion** - Collapsible sections (can use fragments inside)
 - **Tabs** - Tabbed content (can use fragments inside tab panels)
 
 **When to use fragments vs other approaches:**
+
 - **Use fragments:** Content appears on multiple pages, needs consistent updates
 - **Use sections:** Unique content per page, no reuse needed
 - **Use blocks:** Interactive components, not just content embedding

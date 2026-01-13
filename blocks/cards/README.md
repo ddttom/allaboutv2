@@ -26,6 +26,7 @@ A flexible, responsive grid component for displaying content cards with images, 
 The cards block transforms markdown table content into a responsive grid of cards, each containing an optional image, heading, and body text. It automatically handles image optimization and maintains a consistent layout across different screen sizes.
 
 **Primary Use Cases:**
+
 - Blog post listings with featured images
 - Product catalogs and showcases
 - Feature grids with icons/images
@@ -38,6 +39,7 @@ The cards block transforms markdown table content into a responsive grid of card
 **Location:** `/blocks/cards/`
 
 **Files:**
+
 - `cards.js` - Core decoration logic
 - `cards.css` - Grid layout and card styling
 - `README.md` - Technical documentation (this file)
@@ -98,17 +100,20 @@ The `decorate()` function performs the following transformations:
 The cards block uses a mobile-first approach with grid-based layout:
 
 **Grid System:**
+
 - `display: grid`
 - `grid-template-columns: repeat(auto-fill, minmax(278px, 1fr))`
 - `grid-gap: 16px`
 
 **Card Structure:**
+
 - Border: `1px solid var(--dark-color)`
 - Background: `var(--background-color)`
 - Image: Full-width, 4:3 aspect ratio
 - Body: 16px margin on all sides
 
 **Responsive Behavior:**
+
 - 1 column on mobile (< 278px wide)
 - 2 columns on tablets (~600px)
 - 3-4 columns on desktop (> 900px)
@@ -154,6 +159,7 @@ In Google Docs, create a table with the block name in the header row:
 ### Content Patterns
 
 **Pattern 1: Image + Heading + Body (Recommended)**
+
 ```
 | Cards |
 |-------|
@@ -163,6 +169,7 @@ In Google Docs, create a table with the block name in the header row:
 ```
 
 **Pattern 2: Text-Only Cards**
+
 ```
 | Cards |
 |-------|
@@ -171,6 +178,7 @@ In Google Docs, create a table with the block name in the header row:
 ```
 
 **Pattern 3: Multiple Content Elements**
+
 ```
 | Cards |
 |-------|
@@ -186,6 +194,7 @@ In Google Docs, create a table with the block name in the header row:
 The cards block does NOT automatically fetch data - it works with static content only. For dynamic blog listings, use the `bloglist` block instead.
 
 **With other blocks:**
+
 - Can be preceded by hero or header blocks
 - Works well after intro text sections
 - Compatible with any block structure
@@ -304,6 +313,7 @@ Override default styles in your project's CSS:
 The cards block currently has **no built-in variations**. All customization is done through CSS overrides.
 
 **Future variation ideas:**
+
 - `cards (compact)` - Smaller cards with reduced spacing
 - `cards (featured)` - Larger first card for emphasis
 - `cards (grid-2)` - Fixed 2-column layout
@@ -365,12 +375,14 @@ The cards block uses proper semantic markup:
 ### Screen Reader Support
 
 **What works well:**
+
 - List is announced as "list with N items"
 - Each card is a distinct list item
 - Headings are navigable via heading shortcuts
 - Images have alt attributes (from markdown)
 
 **Best practices for authors:**
+
 1. Always provide alt text for images
 2. Use descriptive headings
 3. Keep body text concise and clear
@@ -394,6 +406,7 @@ The cards block uses proper semantic markup:
 ### Image Optimization
 
 The block uses `createOptimizedPicture()` which:
+
 - Generates responsive srcset attributes
 - Targets 750px width for optimization
 - Uses webp format where supported (via aem.js)
@@ -402,11 +415,13 @@ The block uses `createOptimizedPicture()` which:
 ### Network Efficiency
 
 **Per card:**
+
 - 1 image request (optimized)
 - No external API calls
 - No additional resource loading
 
 **Total overhead:**
+
 - JavaScript: ~500 bytes (minified)
 - CSS: ~300 bytes (minified)
 - Images: Depends on number of cards
@@ -414,6 +429,7 @@ The block uses `createOptimizedPicture()` which:
 ### Loading Strategy
 
 Cards block loads as part of EDS's default loading pattern:
+
 - Blocks are decorated on page load
 - Images use lazy loading (via aem.js)
 - No render-blocking resources
@@ -421,6 +437,7 @@ Cards block loads as part of EDS's default loading pattern:
 ### Lighthouse Impact
 
 Expected Lighthouse scores with cards block:
+
 - Performance: 95-100 (depends on image optimization)
 - Accessibility: 100
 - Best Practices: 100
@@ -441,6 +458,7 @@ Expected Lighthouse scores with cards block:
 ### CSS Grid Support
 
 Requires CSS Grid support (all modern browsers):
+
 - Chrome 57+ (March 2017)
 - Firefox 52+ (March 2017)
 - Safari 10.1+ (March 2017)
@@ -464,6 +482,7 @@ The `createOptimizedPicture()` function handles format fallbacks automatically.
 ### Issue: Cards not appearing
 
 **Symptoms:**
+
 - Blank space where cards should be
 - Original table structure still visible
 - Console errors
@@ -488,6 +507,7 @@ The `createOptimizedPicture()` function handles format fallbacks automatically.
 ### Issue: Images not displaying
 
 **Symptoms:**
+
 - Cards show text but no images
 - Broken image icons
 - Alt text visible but no image
@@ -513,6 +533,7 @@ The `createOptimizedPicture()` function handles format fallbacks automatically.
 ### Issue: Grid layout not working
 
 **Symptoms:**
+
 - Cards stack vertically even on desktop
 - No grid columns appearing
 - Cards too narrow or too wide
@@ -537,6 +558,7 @@ The `createOptimizedPicture()` function handles format fallbacks automatically.
 ### Issue: Card aspect ratio broken
 
 **Symptoms:**
+
 - Images stretched or squashed
 - Inconsistent image heights
 - Aspect ratio not maintained
@@ -560,6 +582,7 @@ The `createOptimizedPicture()` function handles format fallbacks automatically.
 ### Issue: Cards have no spacing
 
 **Symptoms:**
+
 - Cards touching each other
 - No gaps between rows/columns
 - Cramped layout
@@ -582,6 +605,7 @@ The `createOptimizedPicture()` function handles format fallbacks automatically.
 ### Manual Testing (test.html)
 
 1. **Open test file:**
+
    ```
    http://localhost:3000/blocks/cards/test.html
    ```
@@ -622,6 +646,7 @@ getComputedStyle(document.querySelector('.cards > ul'))
 ### Automated Testing
 
 **Future implementation:**
+
 - Jest tests for DOM transformation
 - Visual regression tests with Playwright
 - Accessibility tests with axe-core
@@ -687,6 +712,7 @@ getComputedStyle(document.querySelector('.cards > ul'))
 ### Contributing
 
 To propose enhancements:
+
 1. Create test content in Google Docs
 2. Implement variation in CSS/JS
 3. Add test cases to test.html
@@ -716,6 +742,7 @@ To propose enhancements:
 ## Support
 
 For issues or questions:
+
 1. Check [Troubleshooting](#troubleshooting) section
 2. Review [EXAMPLE.md](./EXAMPLE.md) for usage examples
 3. Test with [test.html](./test.html)

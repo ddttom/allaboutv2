@@ -17,6 +17,7 @@ This document defines the complete visual design language for the AllAboutV2 pro
 ### Relationship to EDS Blocks
 
 All EDS blocks should reference these design standards through:
+
 - CSS custom properties defined in `styles/styles.css`
 - Block-level CONFIG objects for component-specific values
 - Consistent naming conventions from [style-guide.md](style-guide.md)
@@ -29,21 +30,25 @@ All EDS blocks should reference these design standards through:
 ### Primary Color Palette
 
 **Primary Blue** - `#035fe6` / `rgb(3, 95, 230)`
+
 - **Usage**: Links, buttons, primary interactive elements
 - **CSS Variable**: `--link-color`
 - **Confidence**: High (extracted from multiple sources: hero, button)
 
 **Hover Blue** - `#136ff6` / `rgb(19, 111, 246)`
+
 - **Usage**: Hover and focus states for interactive elements
 - **CSS Variable**: `--link-hover-color`
 - **Confidence**: Medium (hover/focus contexts)
 
 **White** - `#ffffff` / `rgb(255, 255, 255)`
+
 - **Usage**: Background, button text, emphasized content
 - **CSS Variable**: `--background-color`
 - **Confidence**: High (29 instances across hero and buttons)
 
 **Black** - `#000000` / `black`
+
 - **Usage**: Primary text color, high-contrast elements
 - **CSS Variable**: `--text-color`
 - **Confidence**: High (default text color)
@@ -51,11 +56,13 @@ All EDS blocks should reference these design standards through:
 ### Neutral Colors
 
 **Light Gray** - `#eeeeee` / `#eee`
+
 - **Usage**: Light backgrounds, subtle separators, code blocks
 - **CSS Variable**: `--light-color`
 - **Usage Example**: Background for `<pre>` code blocks
 
 **Dark Gray** - `#cccccc` / `#ccc`
+
 - **Usage**: Borders, subtle dividers, disabled states
 - **CSS Variable**: `--dark-color`
 - **Confidence**: Low (4 instances, primarily borders)
@@ -79,6 +86,7 @@ All colors are defined in `styles/styles.css` (lines 13-20):
 ### Color Usage Guidelines
 
 **Links and Interactive Elements:**
+
 ```css
 a:any-link {
   color: var(--link-color);  /* Primary blue */
@@ -90,6 +98,7 @@ a:hover {
 ```
 
 **Buttons:**
+
 ```css
 .button {
   background-color: var(--link-color);
@@ -102,6 +111,7 @@ a:hover {
 ```
 
 **Backgrounds and Borders:**
+
 ```css
 .component {
   background-color: var(--background-color);
@@ -116,6 +126,7 @@ a:hover {
 ### Accessibility
 
 **Color Contrast Ratios** (WCAG 2.1 Level AA):
+
 - Primary blue (#035fe6) on white: **4.74:1** ✅ (Passes for large text)
 - Black text on white: **21:1** ✅ (Passes AAA)
 - White text on primary blue: **4.74:1** ✅ (Passes for large text)
@@ -129,6 +140,7 @@ a:hover {
 ### Font Families
 
 **Primary Font** - Roboto
+
 - **CSS Variable**: `--body-font-family: roboto, roboto-fallback`
 - **Loading**: Self-hosted from `/fonts/` directory
 - **Weights Available**:
@@ -137,21 +149,25 @@ a:hover {
 - **Note**: Font weight 600 (Semibold) used in CSS is rendered as 700 (Bold)
 
 **Fallback Font** - roboto-fallback
+
 - **Purpose**: Local Arial with size-adjust for minimal layout shift
 - **Configuration**: `size-adjust: 100.06%`, `ascent-override: 95%`
 - **Source**: `local('Arial')`
 
 **Heading Font** - Same as body
+
 - **CSS Variable**: `--heading-font-family: var(--body-font-family)`
 - **Philosophy**: Unified typography system
 
 **Fixed-Width Font** - Roboto Mono
+
 - **CSS Variable**: `--fixed-font-family: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace`
 - **Usage**: Code blocks, technical content
 
 ### Font Sizes
 
 **Body Sizes:**
+
 ```css
 --body-font-size-m: 22px;   /* Primary body text */
 --body-font-size-s: 18px;   /* Secondary text, code blocks */
@@ -159,6 +175,7 @@ a:hover {
 ```
 
 **Heading Sizes (Mobile < 900px):**
+
 ```css
 --heading-font-size-xxl: 48px;  /* h1 - Page titles */
 --heading-font-size-xl: 40px;   /* h2 - Major sections */
@@ -169,6 +186,7 @@ a:hover {
 ```
 
 **Heading Sizes (Desktop ≥ 900px):**
+
 ```css
 --heading-font-size-xxl: 60px;  /* h1 - Larger on desktop */
 --heading-font-size-xl: 48px;   /* h2 */
@@ -193,6 +211,7 @@ a:hover {
 ### Typography Usage
 
 **Body Text:**
+
 ```css
 body {
   font-size: var(--body-font-size-m);
@@ -202,6 +221,7 @@ body {
 ```
 
 **Headings:**
+
 ```css
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--heading-font-family);
@@ -216,6 +236,7 @@ h3 { font-size: var(--heading-font-size-l) }
 ```
 
 **Code:**
+
 ```css
 code, pre {
   font-family: var(--fixed-font-family);
@@ -249,6 +270,7 @@ Typography scales automatically via media query at 900px breakpoint:
 ### Base System
 
 **Scale Type**: 8px base system
+
 - **Philosophy**: Consistent spacing increments for visual rhythm
 - **Application**: Margins, padding, gaps, element sizing
 
@@ -289,15 +311,18 @@ Listed by usage frequency (from `allabout.network.json`):
 ### Layout-Specific Values
 
 **Navigation Height:**
+
 ```css
 --nav-height: 64px;
 ```
+
 - Fixed height for main navigation
 - Used for scroll-margin calculations: `scroll-margin: calc(var(--nav-height) + 1em);`
 
 ### Spacing Implementation
 
 **In CSS:**
+
 ```css
 .component {
   padding: 16px;  /* Base unit */
@@ -314,6 +339,7 @@ Listed by usage frequency (from `allabout.network.json`):
 ```
 
 **In Block CONFIG Objects:**
+
 ```javascript
 const BLOCKNAME_CONFIG = {
   SPACING: {
@@ -333,6 +359,7 @@ const BLOCKNAME_CONFIG = {
 **Primary Button Style** (extracted with medium confidence):
 
 **Default State:**
+
 ```css
 button, a.button {
   /* Colors */
@@ -363,6 +390,7 @@ button, a.button {
 ```
 
 **Hover State:**
+
 ```css
 button:hover, a.button:hover {
   color: var(--link-hover-color);
@@ -371,6 +399,7 @@ button:hover, a.button:hover {
 ```
 
 **Focus State:**
+
 ```css
 button:focus, a.button:focus {
   background-color: var(--link-hover-color);
@@ -378,6 +407,7 @@ button:focus, a.button:focus {
 ```
 
 **Implementation Notes:**
+
 - Pill shape (30px border-radius) is a distinctive design element
 - 5px vertical padding keeps buttons compact
 - 30px horizontal padding provides generous click target
@@ -388,6 +418,7 @@ button:focus, a.button:focus {
 **Two Link Variants Detected:**
 
 **Regular Links:**
+
 ```css
 a:any-link {
   color: rgb(3, 95, 230);  /* var(--link-color) */
@@ -404,6 +435,7 @@ a:hover {
 ```
 
 **Emphasized Links** (white text, typically in dark backgrounds):
+
 ```css
 a.emphasized {
   color: rgb(255, 255, 255);
@@ -422,6 +454,7 @@ a.emphasized:hover {
 ### Borders
 
 **Standard Border Pattern** (medium confidence):
+
 ```css
 .bordered-element {
   border: 1px solid rgb(204, 204, 204);  /* var(--dark-color) */
@@ -429,6 +462,7 @@ a.emphasized:hover {
 ```
 
 **Common Usage:**
+
 - List item separators: `li { border-bottom: 1px solid var(--dark-color); }`
 - Card boundaries
 - Form element outlines
@@ -436,11 +470,13 @@ a.emphasized:hover {
 ### Border Radius
 
 **Primary Value**: `30px` (pill shape)
+
 - **Usage**: Buttons only (low confidence - limited extraction)
 - **Count**: 2 instances detected
 - **Philosophy**: Distinctive rounded buttons, otherwise minimal rounding
 
 **Other Uses** (from actual implementation):
+
 - Code blocks: `0.25em` - Subtle rounding
 - Most components: No border-radius (flat design)
 
@@ -453,18 +489,21 @@ a.emphasized:hover {
 **Mobile-First Approach** with two primary breakpoints:
 
 **Small Screens** (Mobile)
+
 - **Range**: 0px - 599px
 - **Typography**: Smaller heading sizes (48px max)
 - **Layout**: Single column, full-width components
 - **Spacing**: Reduced padding for screen real estate
 
 **Medium Screens** (Tablet)
+
 - **Range**: 600px - 899px
 - **Typography**: Same as mobile (transitions at 900px)
 - **Layout**: Can introduce multi-column layouts
 - **Spacing**: Moderate padding increases
 
 **Large Screens** (Desktop)
+
 - **Range**: 900px and up
 - **Typography**: Larger heading sizes (60px max)
 - **Layout**: Full multi-column layouts, wider containers
@@ -473,6 +512,7 @@ a.emphasized:hover {
 ### Responsive Implementation
 
 **CSS Media Query Pattern:**
+
 ```css
 /* Mobile-first default styles */
 .component {
@@ -511,6 +551,7 @@ a.emphasized:hover {
 ### Shadows
 
 **Current Design**: **No shadows** detected
+
 - **Philosophy**: Flat design aesthetic
 - **Approach**: Minimal depth cues, clean surfaces
 - **Exception**: May exist in individual blocks (not in global styles)
@@ -518,6 +559,7 @@ a.emphasized:hover {
 ### Transitions
 
 **Standard Transition** (from global styles):
+
 ```css
 .element {
   transition: color 0.3s, background-color 0.3s;
@@ -525,6 +567,7 @@ a.emphasized:hover {
 ```
 
 **Common Patterns:**
+
 - Color transitions on hover (links, buttons)
 - Background color transitions on interactive elements
 - No transform or complex animations in base styles
@@ -532,6 +575,7 @@ a.emphasized:hover {
 ### Visual Hierarchy
 
 Achieved through:
+
 1. **Typography scale** - Clear size differences between heading levels
 2. **Font weight** - Bold headings (600), regular body (400)
 3. **Color contrast** - Primary blue for emphasis, black for content
@@ -594,6 +638,7 @@ Achieved through:
 ### Usage Patterns
 
 **In Block Stylesheets:**
+
 ```css
 .my-block {
   background-color: var(--background-color);
@@ -633,11 +678,13 @@ Individual blocks can define their own CSS variables for local theming:
 ### Override Guidelines
 
 **DO:**
+
 - Use CSS variables from global styles
 - Create block-specific variables for local configuration
 - Override via CSS classes for variations
 
 **DON'T:**
+
 - Override root CSS variables globally (affects entire site)
 - Use inline styles instead of CSS variables
 - Hardcode color/size values when variables exist
@@ -691,12 +738,14 @@ const BLOCKNAME_CONFIG = {
 ### When to Extend vs. Use Existing Patterns
 
 **Use Existing:**
+
 - Standard buttons → Use global button styles
 - Text links → Use default link styles
 - Common spacing → Use documented values (especially 22px)
 - Typography → Use heading/body size variables
 
 **Extend/Customize:**
+
 - Brand-specific components → Add block-level variables
 - Unique interactive elements → Create variation classes
 - Special layout needs → Document in block README
@@ -775,15 +824,18 @@ const BLOCKNAME_CONFIG = {
 ### Color Contrast
 
 **WCAG 2.1 Level AA Requirements:**
+
 - Normal text (< 18px): 4.5:1 minimum contrast ratio
 - Large text (≥ 18px or ≥ 14px bold): 3:1 minimum contrast ratio
 
 **Design System Compliance:**
+
 - Black on white (body text): **21:1** ✅ Exceeds AAA
 - Primary blue (#035fe6) on white: **4.74:1** ✅ Passes for large text (buttons, large links)
 - White on primary blue: **4.74:1** ✅ Passes for large text (button text)
 
 **Testing Required:**
+
 - Any new color combinations
 - Custom background colors with text overlays
 - Interactive element states (hover, focus, disabled)
@@ -804,6 +856,7 @@ const BLOCKNAME_CONFIG = {
 ### Font Size Minimums
 
 **Design system defaults:**
+
 - Minimum body text: 16px (--body-font-size-xs)
 - Standard body text: 22px (--body-font-size-m)
 - Code text: 18px (--body-font-size-s)
@@ -815,11 +868,13 @@ const BLOCKNAME_CONFIG = {
 **Touch target minimum:** 44x44 CSS pixels (iOS), 48x48dp (Android)
 
 **Button implementation:**
+
 - Height from 5px vertical padding + 22px font-size + line-height ≈ 44px ✅
 - Width from 30px horizontal padding + text width (varies) - ensure adequate
 - Border provides visual boundary within touch target
 
 **Links in body text:**
+
 - Font size 22px with line-height 1.6 = 35.2px height
 - May need additional padding for comfortable touch targets
 
@@ -830,11 +885,13 @@ const BLOCKNAME_CONFIG = {
 ### Source Data
 
 **Design Language Source:**
+
 - Extracted from: https://allabout.network/
 - Extraction Date: 2025-12-07
 - Source File: `docs/for-ai/allabout.network.json`
 
 **Verification:**
+
 - CSS variables verified against `styles/styles.css` (lines 12-41)
 - Font files verified in `/fonts/` directory
 - Component patterns extracted with confidence levels (high/medium/low)
@@ -842,12 +899,14 @@ const BLOCKNAME_CONFIG = {
 ### Design Philosophy
 
 **Flat Design, Minimal Effects**
+
 - No shadows in global styles
 - Clean, uncluttered layouts
 - Color and typography create hierarchy
 - Self-hosted fonts (no external dependencies)
 
 **Key Characteristics:**
+
 - Pill-shaped buttons (30px border-radius) - Distinctive element
 - 22px spacing as most common value - Consistent rhythm
 - Roboto typography - Clean, modern sans-serif
@@ -866,6 +925,7 @@ const BLOCKNAME_CONFIG = {
 7. **Document breaking changes** in CHANGELOG
 
 **Files to Update:**
+
 - `docs/for-ai/allabout.network.json` - Raw extraction data
 - `docs/for-ai/guidelines/design-system.md` - This file
 - `styles/styles.css` - If adding new CSS variables
@@ -874,11 +934,13 @@ const BLOCKNAME_CONFIG = {
 ### Related Documentation
 
 **Core Design Standards:**
+
 - [Frontend Guidelines](frontend-guidelines.md) - Implementation patterns for EDS blocks
 - [Style Guide](style-guide.md) - CSS naming conventions and code organization
 - [Block Architecture Standards](../implementation/block-architecture-standards.md) - JavaScript and CSS architecture for blocks
 
 **Implementation Guides:**
+
 - [Raw EDS Blocks Guide](../implementation/raw-eds-blocks-guide.md) - Creating simple EDS blocks
 - [Complex EDS Blocks Guide](../implementation/complex-eds-blocks-guide.md) - Advanced block development
 - [Design Philosophy Guide](../implementation/design-philosophy-guide.md) - Architectural decision framework
@@ -896,6 +958,7 @@ The AllAboutV2 design system emphasizes:
 5. **Maintainability** - Centralized design tokens, clear documentation
 
 **Key Design Elements:**
+
 - **Primary blue** (#035fe6) for interactive elements
 - **Roboto typography** (400/700 weights) self-hosted
 - **22px spacing** as primary rhythm value
@@ -903,6 +966,7 @@ The AllAboutV2 design system emphasizes:
 - **Mobile-first responsive** with 600px/900px breakpoints
 
 **For Developers:**
+
 - Always use CSS custom properties from `styles/styles.css`
 - Follow spacing patterns (especially 22px for consistency)
 - Reference this document when creating new blocks
@@ -910,6 +974,7 @@ The AllAboutV2 design system emphasizes:
 - Document variations that extend the design system
 
 **For Designers:**
+
 - This document reflects production site design
 - Changes should update both JSON and documentation
 - Maintain flat design philosophy

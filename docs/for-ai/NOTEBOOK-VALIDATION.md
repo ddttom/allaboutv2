@@ -15,6 +15,7 @@ python3 validate_notebook.py <notebook-path>
 ```
 
 **Example:**
+
 ```bash
 python3 validate_notebook.py docs-navigation.ipynb
 ```
@@ -59,16 +60,19 @@ Overall = (SmartLinks × 0.30) + (Structure × 0.25) + (Transitions × 0.20)
 ### 1. Smart Links (30% weight)
 
 **Checks:**
+
 - All smart links `[text](#)` have matching headings
 - Link text matches heading text (case-insensitive, emoji-agnostic)
 - No broken or orphaned links
 
 **Example:**
+
 ```markdown
 [Getting Started](#)  →  Must find heading: ## Getting Started
 ```
 
 **Scoring:**
+
 ```python
 score = (valid_links / total_links) × 100
 ```
@@ -76,36 +80,42 @@ score = (valid_links / total_links) × 100
 ### 2. Structure (25% weight)
 
 **Checks:**
+
 - Has introduction section (first 2-5 cells)
 - Has conclusion section (last 10 cells)
 - Logical cell organization
 - No gaps or missing sections
 
 **Deductions:**
+
 - -20 points: Missing introduction
 - -10 points: Missing conclusion
 
 ### 3. Transitions (20% weight)
 
 **Checks:**
+
 - Transition cells exist between major sections
 - Each transition has `<!-- action-cards -->` marker
 - Action cards have 3-6 links (recommended range)
 - Links are properly formatted
 
 **Deductions:**
+
 - -5 points per transition with < 3 or > 6 links
 - -10 points per transition missing action cards
 
 ### 4. Part Flow (15% weight)
 
 **Checks:**
+
 - Parts numbered sequentially (1, 2, 3, ...)
 - No duplicate part numbers
 - No gaps in sequence
 - Part summaries appear after content
 
 **Deductions:**
+
 - -25 points per gap or duplicate
 
 **Known Limitation:** Table of contents references may trigger false positives.
@@ -113,12 +123,14 @@ score = (valid_links / total_links) × 100
 ### 5. Metadata (10% weight)
 
 **Checks:**
+
 - Has `title` field (required)
 - Has `description` field (recommended)
 - Has `author` field (recommended)
 - Has `repo` URL (recommended)
 
 **Deductions:**
+
 - -30 points: Missing title
 - -10 points: Missing description
 - -10 points: Missing repo URL
@@ -170,12 +182,14 @@ NOTEBOOK VALIDATION REPORT: docs-navigation.ipynb
 **Problem:** Link text doesn't match any heading
 
 **Example:**
+
 ```markdown
 Link: [Getting Started](#)
 Heading: ### Getting Started Guide
 ```
 
 **Fix:** Make link text match heading exactly:
+
 ```markdown
 Link: [Getting Started Guide](#)
 ```
@@ -185,6 +199,7 @@ Link: [Getting Started Guide](#)
 **Problem:** Transition has < 3 or > 6 action card links
 
 **Fix:** Add or remove links to be in 3-6 range:
+
 ```markdown
 <!-- action-cards -->
 

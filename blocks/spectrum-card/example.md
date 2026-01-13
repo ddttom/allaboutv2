@@ -16,6 +16,7 @@ The simplest way to create a Spectrum card:
 | Learn More |
 
 This creates a single card with:
+
 - Product image at the top
 - Bold title text
 - Descriptive paragraph
@@ -30,6 +31,7 @@ Load multiple cards from a data source:
 | /products/query-index.json |
 
 This will:
+
 - Fetch card data from the query-index.json endpoint
 - Render multiple cards automatically
 - Apply numbered badges to each card
@@ -140,9 +142,9 @@ For dynamic card loading, create a query-index.xlsx file:
 `├── phone-max.md`
 `├── query-index.xlsx`
 `└── media/`
-`    ├── laptop.jpg`
-`    ├── tablet.jpg`
-`    └── phone.jpg`
+`├── laptop.jpg`
+`├── tablet.jpg`
+`└── phone.jpg`
 
 ## Content Guidelines
 
@@ -161,11 +163,13 @@ For dynamic card loading, create a query-index.xlsx file:
 **Action**: Use compelling language
 
 **Good Examples**:
+
 - "Professional Laptop"
 - "Expert Consulting"
 - "Customer Success Story"
 
 **Avoid**:
+
 - Very long titles that wrap multiple lines
 - ALL CAPS text
 - Special characters that may not display
@@ -178,11 +182,13 @@ For dynamic card loading, create a query-index.xlsx file:
 **Grammar**: Proper punctuation and spelling
 
 **Good Examples**:
+
 - "High-performance computing for demanding workflows with all-day battery life"
 - "Expert guidance to transform your digital presence and drive growth"
 - "300% increase in productivity using our integrated solution"
 
 **Avoid**:
+
 - Very long paragraphs
 - Technical jargon without context
 - Vague or generic descriptions
@@ -194,6 +200,7 @@ For dynamic card loading, create a query-index.xlsx file:
 **Clarity**: Clear what happens when clicked
 
 **Good Examples**:
+
 - "Learn More"
 - "View Specs"
 - "Get Started"
@@ -201,6 +208,7 @@ For dynamic card loading, create a query-index.xlsx file:
 - "See Details"
 
 **Avoid**:
+
 - Generic "Click Here"
 - Very long button text
 - Unclear actions
@@ -270,6 +278,7 @@ Organize content by category:
 | /shop/products/query-index.json |
 
 **Query Index Content**:
+
 | path | title | description | image | buttonText |
 |------|-------|-------------|-------|------------|
 | /shop/laptop-pro | Laptop Pro 16 | Professional laptop with M3 chip and 32GB RAM | /shop/media/laptop.jpg | Buy Now |
@@ -282,6 +291,7 @@ Organize content by category:
 | /portfolio/projects/query-index.json |
 
 **Query Index Content**:
+
 | path | title | description | image | buttonText |
 |------|-------|-------------|-------|------------|
 | /portfolio/website-redesign | Website Redesign | Modern responsive design for Fortune 500 client | /portfolio/media/web.jpg | View Project |
@@ -294,6 +304,7 @@ Organize content by category:
 | /help/articles/query-index.json |
 
 **Query Index Content**:
+
 | path | title | description | image | buttonText |
 |------|-------|-------------|-------|------------|
 | /help/getting-started | Getting Started | Learn the basics in under 10 minutes | /help/media/start.jpg | Read Guide |
@@ -304,6 +315,7 @@ Organize content by category:
 ### Professional Appearance
 
 Spectrum cards provide:
+
 - **Consistent Design**: Adobe's design system ensures visual coherence
 - **Enterprise Quality**: Professional appearance suitable for corporate sites
 - **Brand Alignment**: Matches Adobe products and services
@@ -312,6 +324,7 @@ Spectrum cards provide:
 ### Accessibility Built-in
 
 Spectrum components include:
+
 - **Keyboard Navigation**: Full keyboard support out of the box
 - **Screen Reader Support**: Tested with NVDA, JAWS, VoiceOver
 - **ARIA Attributes**: Comprehensive accessibility markup
@@ -320,6 +333,7 @@ Spectrum components include:
 ### Responsive Design
 
 Cards automatically adapt to:
+
 - **Desktop**: Full-width cards in grid layout
 - **Tablet**: Responsive grid with appropriate spacing
 - **Mobile**: Single column stacked layout
@@ -330,6 +344,7 @@ Cards automatically adapt to:
 ### Cards Not Displaying
 
 If cards don't appear:
+
 1. Check that the block syntax is correct
 2. Verify image URLs are absolute and accessible
 3. Ensure all required rows are present
@@ -338,6 +353,7 @@ If cards don't appear:
 ### Images Not Showing
 
 If images don't load:
+
 1. Verify image URLs are correct
 2. Check that images are published
 3. Ensure proper file formats (WebP, PNG, JPEG)
@@ -346,6 +362,7 @@ If images don't load:
 ### Formatting Issues
 
 If cards look incorrect:
+
 1. Check that table structure is correct
 2. Verify no extra blank rows
 3. Ensure proper markdown syntax
@@ -354,6 +371,7 @@ If cards look incorrect:
 ### Dynamic Loading Issues
 
 If query-index cards don't load:
+
 1. Verify query-index.xlsx is published
 2. Check that all required columns are present
 3. Ensure paths are absolute and correct
@@ -394,6 +412,7 @@ If query-index cards don't load:
 ### Browser Requirements
 
 Works best on:
+
 - Chrome 67+
 - Firefox 63+
 - Safari 12.1+
@@ -419,6 +438,7 @@ Works best on:
 ## Support
 
 For questions about using Spectrum Card:
+
 - See [Block Documentation](README.md) for technical details
 - Check browser console for error messages
 - Verify content structure matches examples
@@ -429,6 +449,7 @@ For questions about using Spectrum Card:
 ### Why Spectrum?
 
 The Spectrum Card block uses Adobe Spectrum for:
+
 - **Professional Design**: Enterprise-grade design system
 - **Accessibility**: Built-in accessibility features
 - **Consistency**: Matches Adobe product ecosystem
@@ -438,6 +459,7 @@ The Spectrum Card block uses Adobe Spectrum for:
 ### Author Benefits
 
 As a content author, you benefit from:
+
 - **Easy Creation**: Simple table structure
 - **Professional Appearance**: High-quality design
 - **Accessibility**: Built-in for all users

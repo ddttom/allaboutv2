@@ -26,6 +26,7 @@ A fully accessible tabbed interface component for organizing related content int
 The tabs block transforms markdown table content into an accessible tabbed interface using WAI-ARIA standards. Each row in the markdown table becomes a separate tab panel, with tab buttons automatically generated from the first cell of each row.
 
 **Primary Use Cases:**
+
 - Product feature comparisons
 - Multi-section content organization
 - FAQ sections with categorized questions
@@ -38,6 +39,7 @@ The tabs block transforms markdown table content into an accessible tabbed inter
 **Location:** `/blocks/tabs/`
 
 **Files:**
+
 - `tabs.js` - Core decoration logic with ARIA implementation
 - `tabs.css` - Tab styling and panel visibility
 - `README.md` - Technical documentation (this file)
@@ -105,6 +107,7 @@ The `decorate()` function performs these transformations:
 
 **hasWrapper(el)**
 Checks if element has a block-level wrapper:
+
 ```javascript
 function hasWrapper(el) {
   return !!el.firstElementChild &&
@@ -119,17 +122,20 @@ function hasWrapper(el) {
 The tabs block uses flexbox for tab list layout and aria-hidden for panel visibility:
 
 **Tab List:**
+
 - `display: flex` - Horizontal tab arrangement
 - `gap: 8px` - Space between tabs
 - `overflow-x: auto` - Horizontal scrolling on mobile
 
 **Tab Buttons:**
+
 - `border: 1px solid var(--dark-color)`
 - `background-color: var(--light-color)` (unselected)
 - `background-color: var(--background-color)` (selected)
 - `border-bottom: 1px solid var(--background-color)` (selected, creates seamless connection)
 
 **Tab Panels:**
+
 - `border: 1px solid var(--dark-color)`
 - `margin-top: -1px` - Overlaps with tab list for seamless appearance
 - `display: none` when `aria-hidden="true"`
@@ -181,6 +187,7 @@ In Google Docs, create a table with the block name in the header row:
 ### Content Patterns
 
 **Pattern 1: Simple Text Tabs (Recommended)**
+
 ```
 | Tabs |
 |------|
@@ -193,6 +200,7 @@ In Google Docs, create a table with the block name in the header row:
 ```
 
 **Pattern 2: Tabs with Rich Content**
+
 ```
 | Tabs |
 |------|
@@ -205,6 +213,7 @@ In Google Docs, create a table with the block name in the header row:
 ```
 
 **Pattern 3: Multi-Paragraph Content**
+
 ```
 | Tabs |
 |------|
@@ -217,12 +226,14 @@ In Google Docs, create a table with the block name in the header row:
 ### Integration Points
 
 **With other blocks:**
+
 - Can follow hero or header blocks
 - Works well with intro text sections
 - Compatible within sections or columns
 - No conflicts with other blocks
 
 **Content Model:**
+
 - Each table row = one tab
 - First cell of row = tab button label
 - Second cell of row = tab panel content
@@ -298,6 +309,7 @@ The `decorate()` function transforms it into:
 ### ID Generation
 
 Tab and panel IDs are generated using `toClassName()` from aem.js:
+
 - Converts to lowercase
 - Replaces spaces with hyphens
 - Removes special characters
@@ -362,6 +374,7 @@ Override default styles in your project's CSS:
 The tabs block currently has **no built-in variations**. All customization is done through CSS overrides.
 
 **Future variation ideas:**
+
 - `tabs (vertical)` - Vertical tab list on left side
 - `tabs (pills)` - Pill-style tab buttons
 - `tabs (minimal)` - Borderless, underline-only style
@@ -396,6 +409,7 @@ The tabs block currently has **no built-in variations**. All customization is do
 ### Horizontal Scrolling
 
 When tabs exceed container width:
+
 - Tab list becomes horizontally scrollable
 - No wrap or stacking of tabs
 - Smooth scroll behavior
@@ -418,17 +432,20 @@ When tabs exceed container width:
 The tabs block follows WAI-ARIA Authoring Practices for tabs:
 
 **Role Attributes:**
+
 - `role="tablist"` - Container for tab buttons
 - `role="tab"` - Each tab button
 - `role="tabpanel"` - Each content panel
 
 **State Attributes:**
+
 - `aria-selected="true|false"` - Indicates selected tab
 - `aria-hidden="true|false"` - Controls panel visibility
 - `aria-controls` - Links tab to its panel
 - `aria-labelledby` - Links panel to its tab
 
 **Element Types:**
+
 - `<button type="button">` - Proper semantic element for tabs
 - Unique IDs for all tabs and panels
 - Logical DOM order (tablist before panels)
@@ -436,12 +453,14 @@ The tabs block follows WAI-ARIA Authoring Practices for tabs:
 ### Screen Reader Support
 
 **What works well:**
+
 - Tab list announced as "tab list"
 - Each tab announces role and selection state
 - Panel content associated with active tab
 - Navigation between tabs clearly communicated
 
 **Screen reader flow:**
+
 1. "Tab list with N tabs"
 2. "Tab 1 Title, tab, selected" (for first tab)
 3. "Tab 2 Title, tab, not selected" (for other tabs)
@@ -450,6 +469,7 @@ The tabs block follows WAI-ARIA Authoring Practices for tabs:
 ### Keyboard Navigation
 
 **Supported keys:**
+
 - **Tab** - Move focus to/from tab list
 - **Enter/Space** - Activate focused tab (show panel)
 - **Click** - Activate tab (mouse/touch)
@@ -457,6 +477,7 @@ The tabs block follows WAI-ARIA Authoring Practices for tabs:
 **Note:** Arrow key navigation (Left/Right/Up/Down) is NOT implemented. This is a deliberate decision to keep the implementation simple. Full arrow key support can be added if needed.
 
 **Focus Management:**
+
 - Focus remains on clicked tab
 - Visible focus indicators (inherited from global styles)
 - No keyboard traps
@@ -465,12 +486,14 @@ The tabs block follows WAI-ARIA Authoring Practices for tabs:
 ### ARIA Best Practices
 
 **What this implementation includes:**
+
 - Proper role attributes
 - State management (aria-selected, aria-hidden)
 - Relationship attributes (aria-controls, aria-labelledby)
 - Semantic button elements
 
 **What could be enhanced:**
+
 - Arrow key navigation between tabs
 - Home/End key support (jump to first/last tab)
 - Automatic panel focus on tab activation
@@ -483,17 +506,20 @@ The tabs block follows WAI-ARIA Authoring Practices for tabs:
 ### JavaScript Execution
 
 **Initial decoration:**
+
 - One-time setup on page load
 - Minimal DOM manipulation
 - No ongoing event listeners (delegated to buttons)
 
 **Per interaction:**
+
 - Query all panels (`querySelectorAll`)
 - Set aria-hidden on all panels
 - Set aria-selected on all buttons
 - Show selected panel
 
 **Optimization opportunities:**
+
 - Store panel/button references (avoid repeated queries)
 - Use event delegation on tab list
 - Batch DOM updates
@@ -501,12 +527,14 @@ The tabs block follows WAI-ARIA Authoring Practices for tabs:
 ### Memory Footprint
 
 **Per tabs block:**
+
 - N button elements (N = number of tabs)
 - N panel elements
 - N event listeners (one per button)
 - Minimal memory overhead
 
 **Typical usage:**
+
 - 3-6 tabs per block
 - < 1KB JavaScript (minified)
 - < 500 bytes CSS (minified)
@@ -514,12 +542,14 @@ The tabs block follows WAI-ARIA Authoring Practices for tabs:
 ### Network Efficiency
 
 **Initial load:**
+
 - tabs.js: ~1.5KB (minified)
 - tabs.css: ~500 bytes (minified)
 - No external dependencies
 - No API calls
 
 **Runtime:**
+
 - No additional network requests
 - All content loaded upfront
 - Fast interaction (no loading states)
@@ -527,6 +557,7 @@ The tabs block follows WAI-ARIA Authoring Practices for tabs:
 ### Loading Strategy
 
 Tabs block loads as part of EDS's default loading pattern:
+
 - Blocks decorated on page load
 - No render-blocking resources
 - JavaScript executes after DOM ready
@@ -535,6 +566,7 @@ Tabs block loads as part of EDS's default loading pattern:
 ### Lighthouse Impact
 
 Expected Lighthouse scores with tabs block:
+
 - Performance: 95-100
 - Accessibility: 95-100 (depends on content)
 - Best Practices: 100
@@ -565,6 +597,7 @@ Expected Lighthouse scores with tabs block:
 ### Internet Explorer 11
 
 **Partial support with polyfills:**
+
 - Flexbox: ✓ (with autoprefixer)
 - Array.from: Requires polyfill
 - Arrow functions: Requires transpilation
@@ -579,6 +612,7 @@ Expected Lighthouse scores with tabs block:
 ### Issue: Tabs not appearing
 
 **Symptoms:**
+
 - No tab buttons visible
 - Original table structure still visible
 - Console errors
@@ -603,6 +637,7 @@ Expected Lighthouse scores with tabs block:
 ### Issue: Clicking tabs doesn't switch panels
 
 **Symptoms:**
+
 - Tab buttons visible but not interactive
 - No panel content changes on click
 - Console errors when clicking
@@ -620,6 +655,7 @@ Expected Lighthouse scores with tabs block:
    - Check if `aria-hidden` attribute changes
 
 3. **Test button functionality:**
+
    ```javascript
    // In browser console
    document.querySelectorAll('.tabs-tab').forEach(btn => {
@@ -630,6 +666,7 @@ Expected Lighthouse scores with tabs block:
 ### Issue: All panels visible at once
 
 **Symptoms:**
+
 - Multiple tab panels showing simultaneously
 - No panel hiding when tabs clicked
 - Vertical stacking of all content
@@ -646,6 +683,7 @@ Expected Lighthouse scores with tabs block:
    - Verify all but one have `aria-hidden="true"`
 
 3. **Test CSS rule:**
+
    ```css
    /* Add to page temporarily */
    .tabs .tabs-panel[aria-hidden="true"] {
@@ -656,6 +694,7 @@ Expected Lighthouse scores with tabs block:
 ### Issue: Tab buttons overflow container
 
 **Symptoms:**
+
 - Tabs wrap to multiple lines
 - Tab list too wide for container
 - Broken layout
@@ -667,6 +706,7 @@ Expected Lighthouse scores with tabs block:
    - Verify CSS: `.tabs .tabs-list { overflow-x: auto; }`
 
 2. **Reduce tab padding:**
+
    ```css
    .tabs .tabs-list button {
      padding: 6px 12px; /* Smaller */
@@ -681,6 +721,7 @@ Expected Lighthouse scores with tabs block:
 ### Issue: Panel content cut off
 
 **Symptoms:**
+
 - Content not fully visible in panel
 - No scrollbar appears
 - Text truncated
@@ -697,6 +738,7 @@ Expected Lighthouse scores with tabs block:
    - This enables scrolling when content exceeds container
 
 3. **Test with fixed height:**
+
    ```css
    .tabs .tabs-panel {
      min-height: 200px;
@@ -708,6 +750,7 @@ Expected Lighthouse scores with tabs block:
 ### Issue: IDs not unique (duplicate tab labels)
 
 **Symptoms:**
+
 - Multiple tabs with same label
 - Clicking one tab affects wrong panel
 - Console warnings about duplicate IDs
@@ -719,6 +762,7 @@ Expected Lighthouse scores with tabs block:
    - Even slight differences work: "Overview" vs "Overview 2"
 
 2. **Check generated IDs:**
+
    ```javascript
    // In console
    document.querySelectorAll('[id]').forEach(el => {
@@ -737,6 +781,7 @@ Expected Lighthouse scores with tabs block:
 ### Manual Testing (test.html)
 
 1. **Open test file:**
+
    ```
    http://localhost:3000/blocks/tabs/test.html
    ```
@@ -795,6 +840,7 @@ getEventListeners(document.querySelector('.tabs-tab'))
 ### Automated Testing
 
 **Future implementation:**
+
 - Jest tests for DOM transformation
 - Test ARIA attribute correctness
 - Test panel switching logic
@@ -803,6 +849,7 @@ getEventListeners(document.querySelector('.tabs-tab'))
 - Visual regression tests with Playwright
 
 **Example test cases:**
+
 ```javascript
 describe('Tabs Block', () => {
   test('creates tab list with correct number of tabs', () => {});
@@ -881,6 +928,7 @@ describe('Tabs Block', () => {
 ### Contributing
 
 To propose enhancements:
+
 1. Create test content in Google Docs
 2. Implement feature in JavaScript/CSS
 3. Add test cases to test.html
@@ -913,6 +961,7 @@ To propose enhancements:
 ## Support
 
 For issues or questions:
+
 1. Check [Troubleshooting](#troubleshooting) section
 2. Review [EXAMPLE.md](./EXAMPLE.md) for usage examples
 3. Test with [test.html](./test.html)

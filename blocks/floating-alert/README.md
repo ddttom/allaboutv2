@@ -26,6 +26,7 @@ A modern, accessible document-level floating alert system that displays importan
 The floating-alert block is a document-level component that creates modal overlay notifications with automatic heading extraction, sparkle animations, and persistent dismissal state. Unlike typical blocks that render inline, this block transforms content into a fixed-position modal that overlays the entire page.
 
 **Primary Use Cases:**
+
 - Important announcements or notices
 - Privacy policy updates
 - Scheduled maintenance notifications
@@ -41,6 +42,7 @@ The floating-alert block is a document-level component that creates modal overla
 **Version:** 1.3 (with heading processing and horizontal rule separator)
 
 **Files:**
+
 - `floating-alert.js` - Core modal decoration logic with localStorage persistence
 - `floating-alert.css` - Glassmorphic styling and animations
 - `README.md` - Technical documentation (this file)
@@ -113,10 +115,10 @@ The block follows a three-section organization pattern:
 
 `Configuration Object`
 `const FLOATING_ALERT_CONFIG = {`
-`  STORAGE_KEY: 'floating-alert-dismissed',`
-`  ANIMATION_DURATION: 300,`
-`  SPARKLE_INTERVAL: 2000,`
-`  SPARKLE_DURATION: 1000,`
+`STORAGE_KEY: 'floating-alert-dismissed',`
+`ANIMATION_DURATION: 300,`
+`SPARKLE_INTERVAL: 2000,`
+`SPARKLE_DURATION: 1000,`
 `};`
 
 All timing and localStorage keys are centralized for easy modification.
@@ -138,6 +140,7 @@ All timing and localStorage keys are centralized for easy modification.
 #### 3. Helper Functions
 
 **processContentWithHeadings(contentSource)**
+
 - Extracts first heading element (h1-h6)
 - Creates title element with class `floating-alert-title`
 - Adds horizontal rule separator
@@ -145,6 +148,7 @@ All timing and localStorage keys are centralized for easy modification.
 - Returns structured container
 
 **dismissAlert(overlay, originalBlock)**
+
 - Adds dismissing class for animation
 - Clears sparkle interval
 - Removes keyboard event listener
@@ -153,16 +157,19 @@ All timing and localStorage keys are centralized for easy modification.
 - Sets localStorage dismissed state
 
 **createSparkle()**
+
 - Creates sparkle div element
 - Randomizes position (0-100%)
 - Returns configured sparkle element
 
 **addSparkleEffect(container)**
+
 - Sets up interval for sparkle creation
 - Returns interval ID for cleanup
 - Auto-removes sparkles after duration
 
 **handleKeyboard(event, modal, overlay, originalBlock)**
+
 - Handles Escape key for dismissal
 - Implements focus trap for Tab key
 - Cycles focus between focusable elements
@@ -190,10 +197,10 @@ The block navigates EDS's nested div structure to find actual content:
 `let contentSource = block;`
 `const firstDiv = block.querySelector('div');`
 `if (firstDiv) {`
-`  const secondDiv = firstDiv.querySelector('div');`
-`  if (secondDiv && secondDiv.children.length > 0) {`
-`    contentSource = secondDiv; // Use deepest div with content`
-`  }`
+`const secondDiv = firstDiv.querySelector('div');`
+`if (secondDiv && secondDiv.children.length > 0) {`
+`contentSource = secondDiv; // Use deepest div with content`
+`}`
 `}`
 
 ### Debug Utilities
@@ -225,6 +232,7 @@ Exposed on `window.floatingAlertDebug` for development:
 `| ## Important Notice<br>Your message content here. |`
 
 When a heading is included, it will be:
+
 - Extracted as the alert title
 - Displayed prominently at the top
 - Followed by a horizontal rule separator
@@ -254,15 +262,15 @@ The markdown table is transformed by EDS into nested divs, then the block create
 
 `HTML Output Structure`
 `<div class="floating-alert-overlay">`
-`  <div class="floating-alert" role="alert" aria-live="polite">`
-`    <div class="floating-alert-content">`
-`      <h2 class="floating-alert-title">Important Notice</h2>`
-`      <hr class="floating-alert-separator">`
-`      <p>Your message content here.</p>`
-`    </div>`
-`    <button class="floating-alert-close" aria-label="Dismiss alert">×</button>`
-`    <!-- Sparkle elements added dynamically -->`
-`  </div>`
+`<div class="floating-alert" role="alert" aria-live="polite">`
+`<div class="floating-alert-content">`
+`<h2 class="floating-alert-title">Important Notice</h2>`
+`<hr class="floating-alert-separator">`
+`<p>Your message content here.</p>`
+`</div>`
+`<button class="floating-alert-close" aria-label="Dismiss alert">×</button>`
+`<!-- Sparkle elements added dynamically -->`
+`</div>`
 `</div>`
 
 ### Content Flow
@@ -287,16 +295,16 @@ All styling is controlled via CSS custom properties:
 
 `Core Variables`
 `:root {`
-`  --alert-bg-color: rgba(255, 165, 0, 0.15);`
-`  --alert-border-color: rgba(255, 165, 0, 0.3);`
-`  --alert-text-color: #333;`
-`  --alert-shadow-color: rgba(0, 0, 0, 0.1);`
-`  --alert-sparkle-color: rgba(255, 255, 255, 0.8);`
-`  --alert-transition-duration: 0.3s;`
-`  --alert-border-radius: 12px;`
-`  --alert-max-width: 600px;`
-`  --alert-padding: 1.5rem;`
-`  --alert-backdrop-blur: 10px;`
+`--alert-bg-color: rgba(255, 165, 0, 0.15);`
+`--alert-border-color: rgba(255, 165, 0, 0.3);`
+`--alert-text-color: #333;`
+`--alert-shadow-color: rgba(0, 0, 0, 0.1);`
+`--alert-sparkle-color: rgba(255, 255, 255, 0.8);`
+`--alert-transition-duration: 0.3s;`
+`--alert-border-radius: 12px;`
+`--alert-max-width: 600px;`
+`--alert-padding: 1.5rem;`
+`--alert-backdrop-blur: 10px;`
 `}`
 
 ### Customization Examples
@@ -305,26 +313,26 @@ All styling is controlled via CSS custom properties:
 
 `Custom Blue Theme`
 `.floating-alert {`
-`  --alert-bg-color: rgba(59, 130, 246, 0.15);`
-`  --alert-border-color: rgba(59, 130, 246, 0.3);`
-`  --alert-text-color: #1e40af;`
+`--alert-bg-color: rgba(59, 130, 246, 0.15);`
+`--alert-border-color: rgba(59, 130, 246, 0.3);`
+`--alert-text-color: #1e40af;`
 `}`
 
 **Red Alert Theme:**
 
 `Custom Red Theme`
 `.floating-alert {`
-`  --alert-bg-color: rgba(239, 68, 68, 0.15);`
-`  --alert-border-color: rgba(239, 68, 68, 0.3);`
-`  --alert-text-color: #991b1b;`
+`--alert-bg-color: rgba(239, 68, 68, 0.15);`
+`--alert-border-color: rgba(239, 68, 68, 0.3);`
+`--alert-text-color: #991b1b;`
 `}`
 
 **No Blur Effect:**
 
 `Disable Backdrop Blur`
 `.floating-alert {`
-`  --alert-backdrop-blur: 0px;`
-`  --alert-bg-color: rgba(255, 165, 0, 0.9);`
+`--alert-backdrop-blur: 0px;`
+`--alert-bg-color: rgba(255, 165, 0, 0.9);`
 `}`
 
 ### Animation Customization
@@ -333,15 +341,15 @@ All styling is controlled via CSS custom properties:
 
 `Faster Transitions`
 `.floating-alert {`
-`  --alert-transition-duration: 0.15s;`
+`--alert-transition-duration: 0.15s;`
 `}`
 
 **More Sparkles:**
 
 `Increase Sparkle Frequency`
 `const FLOATING_ALERT_CONFIG = {`
-`  SPARKLE_INTERVAL: 1000, // Every 1 second`
-`  SPARKLE_DURATION: 500,  // Faster fade`
+`SPARKLE_INTERVAL: 1000, // Every 1 second`
+`SPARKLE_DURATION: 500,  // Faster fade`
 `};`
 
 ---
@@ -354,8 +362,8 @@ The block automatically adjusts for smaller screens:
 
 `Mobile Styles (max-width: 480px)`
 `.floating-alert {`
-`  --alert-padding: 1rem;      // Reduced padding`
-`  --alert-max-width: 90%;     // Narrower width`
+`--alert-padding: 1rem;      // Reduced padding`
+`--alert-max-width: 90%;     // Narrower width`
 `}`
 
 ### Viewport Considerations
@@ -377,8 +385,8 @@ The modal remains centered regardless of device orientation. No special handling
 
 `ARIA Attributes`
 `<div class="floating-alert" role="alert" aria-live="polite" tabindex="0">`
-`  <div class="floating-alert-content">...</div>`
-`  <button class="floating-alert-close" aria-label="Dismiss alert">×</button>`
+`<div class="floating-alert-content">...</div>`
+`<button class="floating-alert-close" aria-label="Dismiss alert">×</button>`
 `</div>`
 
 - **role="alert"**: Identifies content as an alert
@@ -416,6 +424,7 @@ The modal remains centered regardless of device orientation. No special handling
 ### Color Contrast
 
 Default colors meet WCAG AA standards:
+
 - Text color `#333` on `rgba(255, 165, 0, 0.15)` background
 - Border provides additional visual separation
 - Close button has sufficient contrast
@@ -462,6 +471,7 @@ Default colors meet WCAG AA standards:
 ### Lighthouse Considerations
 
 The block is designed to have minimal impact on Core Web Vitals:
+
 - **LCP**: No impact (modal is interactive element)
 - **FID**: Minimal JavaScript execution time
 - **CLS**: No layout shift (fixed positioning)
@@ -474,6 +484,7 @@ The block is designed to have minimal impact on Core Web Vitals:
 ### Modern Browsers
 
 Fully supported in:
+
 - Chrome 90+ (latest)
 - Firefox 88+ (latest)
 - Safari 14+ (latest)
@@ -482,6 +493,7 @@ Fully supported in:
 ### Mobile Browsers
 
 Fully supported in:
+
 - iOS Safari 14+
 - Chrome Mobile 90+
 - Samsung Internet 14+
@@ -490,6 +502,7 @@ Fully supported in:
 ### Graceful Degradation
 
 For older browsers:
+
 - Backdrop blur may not work (falls back to solid background)
 - CSS animations still function
 - All functionality remains intact
@@ -498,6 +511,7 @@ For older browsers:
 ### Feature Detection
 
 The block uses standard features with excellent support:
+
 - `localStorage` (IE 8+)
 - CSS `backdrop-filter` (with `-webkit-` prefix)
 - CSS `transform` and `opacity` (IE 9+)
@@ -518,12 +532,14 @@ The block uses standard features with excellent support:
 **Symptom**: Modal doesn't show on page load
 
 **Checks**:
+
 1. Open browser console and run: `window.floatingAlertDebug.checkStatus()`
 2. If dismissed: `window.floatingAlertDebug.reset()` then refresh
 3. Verify block exists: `window.floatingAlertDebug.checkDOM()`
 4. Check for JavaScript errors in console
 
 **Common Causes**:
+
 - localStorage has `floating-alert-dismissed: true`
 - JavaScript errors preventing execution
 - Block not properly placed in document
@@ -539,12 +555,14 @@ The block uses standard features with excellent support:
 **Symptom**: Close button, ESC key, or click outside doesn't work
 
 **Checks**:
+
 1. Verify overlay has correct background (rgba(0, 0, 0, 0.3))
 2. Check for z-index conflicts with other elements
 3. Inspect event listeners in DevTools
 4. Look for `pointer-events` CSS interference
 
 **Common Causes**:
+
 - Another element covering overlay
 - Event propagation stopped by other scripts
 - CSS preventing interaction
@@ -560,12 +578,14 @@ The block uses standard features with excellent support:
 **Symptom**: Content appears empty or malformed
 
 **Checks**:
+
 1. Inspect EDS block structure in DevTools
 2. Verify markdown table format is correct
 3. Check for nested div structure
 4. Look at console logs for content extraction
 
 **Common Causes**:
+
 - Malformed markdown table
 - EDS transformation issues
 - Content in unexpected div structure
@@ -581,12 +601,14 @@ The block uses standard features with excellent support:
 **Symptom**: Janky or stuttering animations
 
 **Checks**:
+
 1. Open Performance tab in DevTools
 2. Record during animation
 3. Check for layout thrashing
 4. Verify GPU acceleration
 
 **Common Causes**:
+
 - Heavy scripts running simultaneously
 - CSS conflicts forcing reflows
 - Browser performance issues
@@ -596,7 +618,7 @@ The block uses standard features with excellent support:
 `Reduce animation complexity`
 `// In CSS:`
 `.floating-alert {`
-`  --alert-transition-duration: 0s; // Disable animation`
+`--alert-transition-duration: 0s; // Disable animation`
 `}`
 `// In JS:`
 `modal._sparkleIntervalId = null; // Disable sparkles`
@@ -606,12 +628,14 @@ The block uses standard features with excellent support:
 **Symptom**: Heading appears in content instead of as title
 
 **Checks**:
+
 1. Verify heading element type (h1-h6)
 2. Check console for "Found heading:" log
 3. Inspect `.floating-alert-title` element
 4. Verify horizontal rule separator exists
 
 **Common Causes**:
+
 - Heading not recognized (wrong tag)
 - Content extraction finding wrong element
 - Heading in unexpected location
@@ -629,12 +653,14 @@ The block uses standard features with excellent support:
 **Symptom**: Alert reappears after dismissal and page refresh
 
 **Checks**:
+
 1. Verify localStorage is enabled in browser
 2. Check for private browsing mode
 3. Inspect localStorage in DevTools
 4. Look for storage quota issues
 
 **Common Causes**:
+
 - Private/incognito browsing mode
 - localStorage disabled by browser settings
 - Storage quota exceeded
@@ -657,20 +683,20 @@ Create a test.html file with EDS core integration:
 `<!DOCTYPE html>`
 `<html lang="en">`
 `<head>`
-`  <!-- EDS core scripts -->`
-`  <script type="module" src="/scripts/aem.js"></script>`
-`  <link rel="stylesheet" href="/styles/styles.css">`
-`  <link rel="stylesheet" href="floating-alert.css">`
+`<!-- EDS core scripts -->`
+`<script type="module" src="/scripts/aem.js"></script>`
+`<link rel="stylesheet" href="/styles/styles.css">`
+`<link rel="stylesheet" href="floating-alert.css">`
 `</head>`
 `<body>`
-`  <main>`
-`    <div class="floating-alert block">`
-`      <div><div>`
-`        <h2>Test Heading</h2>`
-`        <p>Test content with <a href="#">link</a>.</p>`
-`      </div></div>`
-`    </div>`
-`  </main>`
+`<main>`
+`<div class="floating-alert block">`
+`<div><div>`
+`<h2>Test Heading</h2>`
+`<p>Test content with <a href="#">link</a>.</p>`
+`</div></div>`
+`</div>`
+`</main>`
 `</body>`
 `</html>`
 
@@ -735,6 +761,7 @@ Use these commands for testing:
 ### Automated Testing
 
 Future enhancement: Playwright or Puppeteer tests for:
+
 - Modal appearance verification
 - Dismissal behavior validation
 - localStorage persistence testing
@@ -748,6 +775,7 @@ Future enhancement: Playwright or Puppeteer tests for:
 ### No External Dependencies
 
 The floating-alert block has zero external dependencies:
+
 - No JavaScript libraries
 - No CSS frameworks
 - No icon fonts
@@ -756,6 +784,7 @@ The floating-alert block has zero external dependencies:
 ### EDS Core Integration
 
 Relies only on EDS core functionality:
+
 - `aem.js` for block decoration
 - Standard EDS markdown-to-HTML transformation
 - EDS styles.css for base styling
@@ -764,6 +793,7 @@ Relies only on EDS core functionality:
 ### Browser APIs
 
 Uses standard browser APIs with excellent support:
+
 - `localStorage` for state persistence
 - `document.querySelector` for DOM queries
 - `addEventListener` for event handling
@@ -816,6 +846,7 @@ Uses standard browser APIs with excellent support:
 ### Contributing
 
 To suggest enhancements or report issues:
+
 1. Test thoroughly with existing functionality
 2. Ensure backward compatibility
 3. Follow EDS best practices
@@ -827,6 +858,7 @@ To suggest enhancements or report issues:
 ## Version History
 
 **v1.3** (Current)
+
 - Added automatic heading processing
 - Implemented horizontal rule separator
 - Enhanced visual hierarchy
@@ -834,16 +866,19 @@ To suggest enhancements or report issues:
 - Improved debugging utilities
 
 **v1.2**
+
 - Fixed DOM cleanup issues
 - Enhanced event listener management
 - Improved content restoration
 
 **v1.1**
+
 - Added sparkle effect
 - Improved keyboard navigation
 - Enhanced accessibility
 
 **v1.0**
+
 - Initial release
 - Basic modal functionality
 - localStorage persistence

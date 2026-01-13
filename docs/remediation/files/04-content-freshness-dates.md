@@ -15,11 +15,13 @@
 **Every single page on the site scores 0.00 for Content Freshness** because no last-modified dates are visible or tracked. This severely impacts overall content quality scores (reducing them by 20-25 points) and signals to search engines that content may be stale.
 
 **Current State**:
+
 - Content Freshness Score: **0.00 on all 121 pages**
 - Last-Modified metadata: Missing or "Unknown" on all pages
 - Overall Content Score impact: -20 to -25 points per page
 
 **Business Impact**:
+
 - **SEO Rankings**: Google prioritizes fresh, updated content
 - **User Trust**: Readers don't know if content is current (especially critical for AI/tech topics)
 - **Content Strategy**: No visibility into which pages need updating
@@ -32,6 +34,7 @@
 ### Content Freshness Scores from Audit
 
 From `content_quality.csv`:
+
 ```csv
 URL,Word Count,Content Freshness Score,Content Uniqueness Score,Grammar Score,Media Richness Score,Overall Content Score
 https://allabout.network/,651,0.00,100.00,100.00,30.00,64.50
@@ -43,17 +46,20 @@ https://allabout.network/blogs/ddt/creating-an-llms-txt,3850,0.00,100.00,100.00,
 ### Impact on Overall Content Score
 
 **Formula**:
+
 ```
 Overall Content Score = (Word Count × 0.2) + (Freshness × 0.2) +
                         (Uniqueness × 0.25) + (Grammar × 0.15) + (Media × 0.2)
 ```
 
 **With 0% freshness**:
+
 - Lose 20 points out of 100 immediately
 - Best possible score: 80/100 (even with perfect other metrics)
 - Typical scores: 45-65/100 (poor to fair)
 
 **Example calculation** (homepage):
+
 ```
 Word Count Score: Good content (651 words) = ~20 points
 Freshness Score: 0.00 = 0 points ← MISSING 20 POINTS!
@@ -70,6 +76,7 @@ Overall would be: 64.50 + 16 = 80.50/100 (Good)
 ### Pages Most Affected
 
 **Lowest Content Quality Scores** (bottom 10):
+
 | URL | Overall Score | Freshness | Missing Points |
 |-----|---------------|-----------|----------------|
 | `/blogs/ddt/integrations/spectrum-component` | 40.50 | 0.00 | -20 |
@@ -90,6 +97,7 @@ Overall would be: 64.50 + 16 = 80.50/100 (Good)
 ### Why Content Freshness is Zero
 
 **1. Missing Last-Modified Headers**:
+
 ```bash
 # Check HTTP headers
 curl -I https://allabout.network/ | grep -i "last-modified"
@@ -97,6 +105,7 @@ curl -I https://allabout.network/ | grep -i "last-modified"
 ```
 
 **2. Missing Meta Tags**:
+
 ```html
 <!-- Current page source -->
 <head>
@@ -107,6 +116,7 @@ curl -I https://allabout.network/ | grep -i "last-modified"
 ```
 
 **3. No Structured Data Dates**:
+
 ```html
 <!-- Missing JSON-LD dates -->
 <script type="application/ld+json">
@@ -120,6 +130,7 @@ curl -I https://allabout.network/ | grep -i "last-modified"
 ```
 
 **4. No Visual Date Display**:
+
 - No "Last Updated" text visible on pages
 - No "Published on" dates shown
 - Readers have no way to know content age
@@ -127,17 +138,20 @@ curl -I https://allabout.network/ | grep -i "last-modified"
 ### Why This Matters
 
 **Search Engine Perspective**:
+
 - Google's Freshness Algorithm weights recent updates
 - Stale content ranks lower than fresh content (all else equal)
 - Missing dates = assumed stale = lower rankings
 
 **User Trust Perspective**:
+
 - AI/tech content ages rapidly (tools, APIs, best practices change)
 - Without dates, readers don't know if advice is current
 - Trust degradation on evergreen content
 - Higher bounce rates ("Is this still relevant?")
 
 **Content Management Perspective**:
+
 - No visibility into which content needs updating
 - Can't prioritize refresh efforts
 - Can't demonstrate content maintenance
@@ -167,6 +181,7 @@ curl -I https://allabout.network/ | grep -i "last-modified"
 ```
 
 **If missing**, add to CDN/edge configuration:
+
 ```yaml
 # In EDS configuration
 headers:
@@ -177,6 +192,7 @@ headers:
 #### Option B: Custom Server Configuration
 
 **Nginx** (`/etc/nginx/sites-available/allabout.network`):
+
 ```nginx
 server {
     location ~* \.(html|php)$ {
@@ -188,6 +204,7 @@ server {
 ```
 
 **Apache** (`.htaccess` or VirtualHost):
+
 ```apache
 <FilesMatch "\.(html|php)$">
     # Enable Last-Modified headers
@@ -207,6 +224,7 @@ server {
 **File**: `/scripts/scripts.js` or dedicated metadata decorator
 
 **Add JSON-LD structured data**:
+
 ```javascript
 export function addArticleStructuredData() {
   // Get page metadata
@@ -269,6 +287,7 @@ export async function decorateMain(main) {
 | Author | Tom Cranstoun |
 
 **EDS will convert this to HTML meta tags**:
+
 ```html
 <meta property="article:published_time" content="2024-12-01">
 <meta property="article:modified_time" content="2024-12-07">
@@ -369,6 +388,7 @@ export default async function decorate(block) {
 ```
 
 **CSS** (`/blocks/article-meta/article-meta.css`):
+
 ```css
 .article-meta-container {
   display: flex;
@@ -416,12 +436,14 @@ export default async function decorate(block) {
 ```
 
 **Usage in Google Docs**:
+
 ```
 | Article Meta |
 |--------------|
 ```
 
 **Result on page**:
+
 ```
 By Tom Cranstoun | 📅 Published: Dec 01, 2024 | 🔄 Last updated: 3 days ago
 ```
@@ -485,6 +507,7 @@ injectDateMetadata();
 ```
 
 **Run as part of build process**:
+
 ```json
 // package.json
 {
@@ -504,6 +527,7 @@ injectDateMetadata();
    - Authors required to update Last Modified when making changes
 
 2. **Automated Reminder System**:
+
    ```javascript
    // Script to check stale content
    // File: scripts/check-stale-content.js
@@ -530,6 +554,7 @@ injectDateMetadata();
 ### Week 1: Quick Wins (Server Headers + Structured Data)
 
 #### Day 1: Enable Last-Modified Headers
+
 - [ ] Check if EDS automatically provides Last-Modified headers
 - [ ] If not, configure server/CDN to send headers
 - [ ] Test on 5+ sample pages with cURL
@@ -538,6 +563,7 @@ injectDateMetadata();
 **Expected result**: All pages now have Last-Modified headers
 
 #### Day 2-3: Add JSON-LD Structured Data
+
 - [ ] Add `addArticleStructuredData()` function to `/scripts/scripts.js`
 - [ ] Test on local development server
 - [ ] Verify JSON-LD appears in page source
@@ -549,6 +575,7 @@ injectDateMetadata();
 ### Week 2: Metadata & Visual Dates
 
 #### Day 4-5: Add Metadata to Existing Documents
+
 - [ ] Create list of all pages (121 pages)
 - [ ] For each page, determine:
   - Initial publication date (use git history or estimate)
@@ -559,6 +586,7 @@ injectDateMetadata();
 **Efficiency tip**: Batch process similar pages (e.g., all developer guide parts share similar dates)
 
 #### Day 6-7: Create Article Meta Block
+
 - [ ] Create `/blocks/article-meta/` directory
 - [ ] Add `article-meta.js` with date display logic
 - [ ] Add `article-meta.css` with styling
@@ -570,6 +598,7 @@ injectDateMetadata();
 ### Week 3: Automation
 
 #### Day 8-10: Build Automation System
+
 - [ ] Create git-based date injection script
 - [ ] Test on subset of pages
 - [ ] Integrate into build process
@@ -591,6 +620,7 @@ injectDateMetadata();
 ### Automated Testing
 
 **1. Verify HTTP Headers**:
+
 ```bash
 # Check Last-Modified header
 curl -I https://allabout.network/ | grep -i "last-modified"
@@ -606,6 +636,7 @@ done
 ```
 
 **2. Verify Structured Data**:
+
 ```bash
 # Use Google Rich Results Test
 open "https://search.google.com/test/rich-results?url=https://allabout.network/blogs/ddt/creating-an-llms-txt"
@@ -614,6 +645,7 @@ open "https://search.google.com/test/rich-results?url=https://allabout.network/b
 ```
 
 **3. Validate JSON-LD**:
+
 ```javascript
 // In browser console
 const jsonLd = document.querySelector('script[type="application/ld+json"]');
@@ -626,12 +658,14 @@ console.log('Modified:', data.dateModified);
 ### Manual Testing
 
 **1. Visual Date Display**:
+
 - Navigate to any blog post
 - Verify "Last updated" text visible near top
 - Check date formatting is correct
 - Verify relative dates ("3 days ago") work
 
 **2. Meta Tag Validation**:
+
 ```html
 <!-- View page source, check for: -->
 <meta property="article:published_time" content="2024-12-01T00:00:00Z">
@@ -639,6 +673,7 @@ console.log('Modified:', data.dateModified);
 ```
 
 **3. Search Console Preview**:
+
 - Submit URL to Google Search Console
 - Request re-indexing
 - Check "Coverage" report after 24-48 hours
@@ -695,24 +730,28 @@ console.log('Modified:', data.dateModified);
 ### Return on Investment
 
 **SEO Benefit**:
+
 - Freshness is a ranking factor (especially for queries deserving freshness)
 - Expected traffic increase: +15-25%
 - Featured snippet eligibility: +20-30%
 - Click-through rate improvement: +5-10% (dates visible in SERPs)
 
 **User Trust Benefit**:
+
 - Reduced bounce rate: -5-10%
 - Increased time on page: +10-15%
 - Higher conversion rate: +3-5%
 - Improved brand perception
 
 **Content Management Benefit**:
+
 - Visibility into stale content
 - Data-driven refresh priorities
 - Demonstrates active maintenance
 - Competitive advantage
 
 **ROI Calculation**:
+
 ```
 Investment: $3,700
 SEO traffic increase: +15-25% = +$1,500-$2,500/month (if $10k baseline)
@@ -731,7 +770,9 @@ ROI: 548-1,035% in year 1
 ### Quarterly Content Freshness Review
 
 **Process**:
+
 1. **Generate Stale Content Report**:
+
    ```javascript
    // Script to find pages >6 months old
    const stalePages = pages.filter(p => {
@@ -759,12 +800,14 @@ ROI: 548-1,035% in year 1
 ### Content Refresh Guidelines
 
 **When to update**:
+
 - New information available (tools, APIs, techniques)
 - Broken links or outdated screenshots
 - Reader feedback indicating confusion
 - Competitor content is fresher
 
 **How to update**:
+
 1. Add new section with latest information
 2. Update examples and code snippets
 3. Add "Updated [Date]" note at top
@@ -772,6 +815,7 @@ ROI: 548-1,035% in year 1
 5. Re-publish through EDS
 
 **Signal freshness in content**:
+
 ```markdown
 > **Updated December 2024**: Added new information about Claude 4.5 and updated examples.
 ```
@@ -817,16 +861,19 @@ git log --name-only --before="6 months ago" --format="" | sort -u
 ## Resources
 
 ### Structured Data
+
 - [Google Structured Data Guidelines](https://developers.google.com/search/docs/appearance/structured-data/article)
 - [Schema.org Article Type](https://schema.org/Article)
 - [Rich Results Test](https://search.google.com/test/rich-results)
 
 ### SEO Freshness
+
 - [Google Freshness Algorithm](https://moz.com/blog/google-fresh-factor)
 - [Query Deserves Freshness (QDF)](https://searchengineland.com/what-qdf-google-real-time-search-55011)
 - [Last-Modified HTTP Header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Last-Modified)
 
 ### Testing Tools
+
 - [Google Search Console](https://search.google.com/search-console)
 - [Schema Markup Validator](https://validator.schema.org/)
 - [Structured Data Testing Tool](https://search.google.com/test/rich-results)
@@ -836,6 +883,7 @@ git log --name-only --before="6 months ago" --format="" | sort -u
 ## Conclusion
 
 Adding content freshness dates is a **high-impact, medium-effort** remediation task:
+
 - 📈 Boosts overall content scores by 15-20 points (30-40%)
 - 🔍 Major SEO benefit (freshness is a ranking factor)
 - 👥 Builds user trust (especially for technical content)

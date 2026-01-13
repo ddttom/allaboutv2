@@ -7,6 +7,7 @@ Build a **truly universal service provider platform** from scratch supporting bo
 **Core Principle**: Everything is optional and configurable per tenant through simple markdown templates and feature toggles.
 
 **Development Context**:
+
 - ✅ Greenfield project (no existing system to migrate)
 - ✅ No breaking changes or migrations
 - ✅ Tom-only admin (simple onboarding workflow)
@@ -27,6 +28,7 @@ Build a **truly universal service provider platform** from scratch supporting bo
 **When**: 8 weeks (2 months)
 
 **Key Simplifications**:
+
 - ✅ Tom-only admin (command-line onboarding script, not web UI)
 - ✅ Fixed optional fields (github_repo, deployment_url, etc. - no custom field builder)
 - ✅ Markdown workflow templates (not drag-and-drop visual builder)
@@ -34,12 +36,14 @@ Build a **truly universal service provider platform** from scratch supporting bo
 - ✅ Greenfield project (no migrations, no breaking changes)
 
 **Critical Architecture**:
+
 - Multi-tenant database with tenant_id on ALL queries
 - Module toggles (photos, suppliers, materials, location, certifications)
 - Configurable pricing models (hourly, day rate, fixed price, appointment, retainer)
 - Workflow templates in markdown (electrical-contractor.md, software-developer.md, etc.)
 
 **Success Metrics**:
+
 - 10 test tenants from different industries operational
 - Tom can onboard new tenant in <5 minutes using template
 - Zero hardcoded trade-specific logic
@@ -50,6 +54,7 @@ Build a **truly universal service provider platform** from scratch supporting bo
 ## Current State Analysis
 
 ### Hard-Coded Assumptions (Lines from plan.md)
+
 1. **Photos mandatory** (lines 513-517) - "Before photos required to start job timer"
 2. **Supplier tracking** (lines 533-562) - Email monitoring, invoice extraction assumed
 3. **Materials tracking** (line 508-509) - BOM and 20% markup hardcoded
@@ -555,6 +560,7 @@ ALTER TABLE tenants ADD COLUMN time_rounding VARCHAR(20) DEFAULT 'half_hour';
 **Goal**: Build configurable tenant system from scratch with feature toggles
 
 **Key Decisions (Simplified)**:
+
 - ✅ No custom field builder - use fixed optional fields instead
 - ✅ No drag-and-drop workflow builder - use markdown template selection
 - ✅ Tom-only admin during onboarding (no tenant self-service UI)
@@ -563,6 +569,7 @@ ALTER TABLE tenants ADD COLUMN time_rounding VARCHAR(20) DEFAULT 'half_hour';
 **Tasks**:
 
 1. **Database Schema** (Simple multi-tenant structure)
+
 ```sql
 -- Core tenant table with embedded config (JSON)
 CREATE TABLE tenants (
@@ -625,7 +632,8 @@ CREATE TABLE jobs (
 );
 ```
 
-2. **Workflow Templates** (Markdown definitions in `/config/workflows/`)
+1. **Workflow Templates** (Markdown definitions in `/config/workflows/`)
+
 ```markdown
 <!-- /config/workflows/electrical-contractor.md -->
 # Electrical Contractor Workflow
@@ -671,7 +679,8 @@ CREATE TABLE jobs (
 - Invoiced → Email invoice
 ```
 
-3. **Tenant Configuration Service** (`/src/services/tenant-config.js`)
+1. **Tenant Configuration Service** (`/src/services/tenant-config.js`)
+
 ```javascript
 // Simple tenant config loader
 export async function getTenantConfig(tenantId) {
@@ -709,7 +718,8 @@ export async function getTenantConfig(tenantId) {
 }
 ```
 
-4. **Tom's Onboarding Script** (Command-line tool)
+1. **Tom's Onboarding Script** (Command-line tool)
+
 ```bash
 # /scripts/onboard-tenant.sh
 # Tom runs this when onboarding new client
@@ -738,6 +748,7 @@ export async function getTenantConfig(tenantId) {
 ```
 
 **Acceptance Criteria**:
+
 - [ ] Tenant config table created
 - [ ] 5 workflow templates created (markdown files)
 - [ ] Tenant config service loads config correctly
@@ -753,6 +764,7 @@ export async function getTenantConfig(tenantId) {
 **Tasks**:
 
 1. **Dynamic Form Component** (`/src/components/DynamicForm.jsx`)
+
 ```javascript
 // Forms check tenant config and hide/show fields
 export function JobForm({ tenantConfig }) {
@@ -789,7 +801,8 @@ export function JobForm({ tenantConfig }) {
 }
 ```
 
-2. **Workflow Status Component** (`/src/components/WorkflowStatus.jsx`)
+1. **Workflow Status Component** (`/src/components/WorkflowStatus.jsx`)
+
 ```javascript
 // Status dropdown uses tenant's workflow template
 export function WorkflowStatusDropdown({ tenantConfig, currentStatus }) {
@@ -807,7 +820,8 @@ export function WorkflowStatusDropdown({ tenantConfig, currentStatus }) {
 }
 ```
 
-3. **Invoice Calculator** (`/src/services/invoice-calculator.js`)
+1. **Invoice Calculator** (`/src/services/invoice-calculator.js`)
+
 ```javascript
 // Invoice calculation adapts to pricing model
 export function calculateInvoice(job, tenantConfig) {
@@ -835,6 +849,7 @@ export function calculateInvoice(job, tenantConfig) {
 ```
 
 **Acceptance Criteria**:
+
 - [ ] Job form hides fields based on tenant config
 - [ ] Workflow dropdown shows correct stages
 - [ ] Invoice calculator uses correct pricing model
@@ -850,6 +865,7 @@ export function calculateInvoice(job, tenantConfig) {
 **Tasks**:
 
 1. **Template Directory** (`/config/templates/`)
+
 ```javascript
 // /config/templates/electrical-contractor.json
 {
@@ -908,7 +924,8 @@ export function calculateInvoice(job, tenantConfig) {
 }
 ```
 
-2. **Updated Onboarding Script**
+1. **Updated Onboarding Script**
+
 ```bash
 # Tom selects template during onboarding
 ./onboard-tenant.sh \
@@ -925,13 +942,15 @@ export function calculateInvoice(job, tenantConfig) {
   --hourly-rate=200  # Override template default
 ```
 
-3. **Additional Templates**
+1. **Additional Templates**
+
 - Plumber template (like electrician but different job types)
 - Builder template (day rate pricing model)
 - Architect template (project-based pricing)
 - Web designer template (hourly + hosting expenses)
 
 **Acceptance Criteria**:
+
 - [ ] 6 templates created (JSON files)
 - [ ] Onboarding script accepts --template parameter
 - [ ] Template values can be overridden during onboarding
@@ -978,6 +997,7 @@ export function calculateInvoice(job, tenantConfig) {
    - Optional fields reference
 
 **Acceptance Criteria**:
+
 - [ ] 10 diverse test tenants operational
 - [ ] All tenant types tested end-to-end
 - [ ] Performance targets met
@@ -989,12 +1009,14 @@ export function calculateInvoice(job, tenantConfig) {
 ## Critical Files to Modify
 
 ### Configuration Logic
+
 1. `src/config/tenant-config.js` - Tenant configuration loader (NEW)
 2. `src/services/pricing-service.js` - Pricing calculation logic (REFACTOR)
 3. `src/services/workflow-service.js` - Workflow stage management (NEW)
 4. `src/services/field-service.js` - Dynamic field rendering (NEW)
 
 ### UI Components
+
 1. `src/components/admin/ModuleManager.jsx` - Module enable/disable (NEW)
 2. `src/components/admin/FieldConfigurator.jsx` - Field visibility (NEW)
 3. `src/components/admin/WorkflowBuilder.jsx` - Workflow stages (NEW)
@@ -1002,11 +1024,13 @@ export function calculateInvoice(job, tenantConfig) {
 5. `src/components/admin/CustomFieldBuilder.jsx` - Custom fields (NEW)
 
 ### Form Components
+
 1. `src/components/jobs/JobForm.jsx` - Dynamic form based on config (REFACTOR)
 2. `src/components/customers/CustomerForm.jsx` - Dynamic form (REFACTOR)
 3. `src/components/invoices/InvoiceForm.jsx` - Dynamic form (REFACTOR)
 
 ### Backend
+
 1. `cloudflare/workers/tenant-config.js` - Load tenant config from DB (NEW)
 2. `cloudflare/workers/admin-api.js` - Admin settings CRUD (NEW)
 3. `database/migrations/` - All new tables (NEW)
@@ -1016,6 +1040,7 @@ export function calculateInvoice(job, tenantConfig) {
 ## Success Metrics
 
 ### Phase 1 (Foundation - Week 1-3)
+
 - [ ] Zero hardcoded business logic in codebase
 - [ ] Tenant config system operational
 - [ ] 5 workflow templates created (markdown)
@@ -1023,24 +1048,28 @@ export function calculateInvoice(job, tenantConfig) {
 - [ ] Two test tenants: Bright Sparks + DevFlow (end-to-end tested)
 
 ### Phase 2 (Dynamic UI - Week 4-5)
+
 - [ ] Forms adapt to tenant config (show/hide fields)
 - [ ] Workflow dropdown uses tenant-specific stages
 - [ ] Invoice calculator uses correct pricing model
 - [ ] Both tenants work with appropriate UI
 
 ### Phase 3 (Templates - Week 6)
+
 - [ ] 6 onboarding templates created (JSON)
 - [ ] Template-based onboarding working
 - [ ] Tom can onboard tenant in <5 minutes
 - [ ] All 6 templates tested
 
 ### Phase 4 (Polish - Week 7-8)
+
 - [ ] 10 test tenants operational
 - [ ] End-to-end testing complete
 - [ ] Performance targets met
 - [ ] Documentation complete for Tom
 
 ### Launch Criteria
+
 - [ ] 10 test tenants from different industries working
 - [ ] Tom confident onboarding without assistance
 - [ ] Page load <2 seconds
@@ -1063,6 +1092,7 @@ export function calculateInvoice(job, tenantConfig) {
 | Markdown syntax errors in workflows | Low | Medium | Validation script, template examples, documentation |
 
 **Key Risk: Tenant Isolation**
+
 - EVERY database query MUST filter by tenant_id
 - Automated tests verify no cross-tenant data access
 - Code review checklist enforces tenant isolation
@@ -1081,6 +1111,7 @@ export function calculateInvoice(job, tenantConfig) {
 | **Phase 4: Polish** | 2 weeks | Medium | 10 test tenants, documentation, performance testing |
 
 **Assumptions**:
+
 - Tom working full-time on project
 - No major blockers or scope changes
 - Database technology chosen (e.g., PostgreSQL + Cloudflare Workers)
@@ -1090,9 +1121,11 @@ export function calculateInvoice(job, tenantConfig) {
 ## Post-Launch Expansion
 
 ### Phase 5 (Future): Self-Service Admin UI
+
 **When**: After 10+ paying customers (validate market first)
 
 **What**:
+
 - Web-based tenant admin (replace command-line tool)
 - Module toggle interface
 - Workflow template editor (visual or markdown)
@@ -1100,21 +1133,25 @@ export function calculateInvoice(job, tenantConfig) {
 - Connector configuration wizard
 
 **Why wait**:
+
 - Validate product-market fit first
 - Tom onboarding ensures quality control early
 - Self-service adds complexity (authentication, authorization, UI)
 - Can charge premium for self-service ($50/month extra)
 
 ### Phase 6 (Future): Custom Field Builder
+
 **When**: After 50+ customers request it
 
 **What**:
+
 - Visual field builder (drag-and-drop)
 - Custom field types (text, number, date, etc.)
 - Field validation rules
 - Position/reorder fields
 
 **Why wait**:
+
 - Fixed optional fields sufficient for most use cases
 - Custom fields add significant complexity
 - Can charge enterprise tier ($100/month extra)
@@ -1126,18 +1163,21 @@ export function calculateInvoice(job, tenantConfig) {
 ### Pricing Tiers
 
 **Starter** - £99/month
+
 - 1 user, 100 jobs/month
 - All core features (scheduling, invoicing, CRM)
 - Standard connectors (Xero, Google Calendar)
 - 5GB storage
 
 **Professional** - £199/month (Bright Sparks tier)
+
 - 5 users, 500 jobs/month
 - All features + premium connectors
 - 25GB storage
 - WhatsApp automation
 
 **Enterprise** - £399/month
+
 - Unlimited users/jobs
 - Custom domain, priority support
 - 100GB storage
@@ -1146,17 +1186,21 @@ export function calculateInvoice(job, tenantConfig) {
 ### Revenue Projections
 
 **Conservative (Year 1)**:
+
 - 50 customers @ £150 avg = £7,500/month = **£90,000/year**
 
 **Realistic (Year 2)**:
+
 - 200 customers @ £150 avg = £30,000/month = **£360,000/year**
 
 **Optimistic (Year 3)**:
+
 - 1,000 customers @ £150 avg = £150,000/month = **£1.8M/year**
 
 ### Market Opportunity
 
 **UK Service Businesses**: 910,000+ across all trades
+
 - Electricians: 250,000
 - Plumbers: 150,000
 - Builders: 200,000
@@ -1170,12 +1214,14 @@ export function calculateInvoice(job, tenantConfig) {
 ## Next Steps
 
 ### Immediate Actions (This Week)
+
 1. ✅ **Review plan** with Tom (technical feasibility)
 2. ✅ **Confirm database choice** (PostgreSQL, MySQL, or Turso)
 3. ✅ **Set up project structure** (repo, environments)
 4. ✅ **Create Phase 1 task breakdown** (detailed sprint planning)
 
 ### Week 1 Priorities
+
 1. Database schema implementation
 2. Tenant config service (loading/parsing)
 3. First workflow template (electrical-contractor.md)
@@ -1183,6 +1229,7 @@ export function calculateInvoice(job, tenantConfig) {
 5. Test tenant creation: Bright Sparks
 
 ### Bright Sparks Involvement
+
 - **Week 1**: Provide business requirements (job types, pricing, workflow stages)
 - **Week 3**: Review tenant config and test job creation
 - **Week 5**: UAT with real data (5-10 jobs)
@@ -1198,6 +1245,7 @@ export function calculateInvoice(job, tenantConfig) {
 | 2.0 | 2024-12-14 | Claude | Simplified - Greenfield, Tom-only admin, template-based workflows |
 
 **Approval Required**:
+
 - [ ] Tom (Developer) - Technical feasibility review
 - [ ] Frankie (Business Owner) - No impact on current operations
 - [ ] User (Requestor) - Meets requirements for all service types

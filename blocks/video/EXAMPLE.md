@@ -86,6 +86,7 @@ Perfect for educational content and how-to guides:
 **Best for:** Tutorial pages, documentation, learning centers
 
 **Why use a poster:**
+
 - Custom thumbnail more attractive than YouTube default
 - Consistent branding across all videos
 - Control over what users see before playing
@@ -169,21 +170,25 @@ Create a video gallery or playlist:
 ### Video URL Requirements
 
 **YouTube Formats (all supported):**
+
 - `https://www.youtube.com/watch?v=VIDEO_ID`
 - `https://youtu.be/VIDEO_ID`
 - `https://www.youtube.com/embed/VIDEO_ID`
 
 **Vimeo Formats (all supported):**
+
 - `https://vimeo.com/VIDEO_ID`
 - `https://player.vimeo.com/video/VIDEO_ID`
 
 **MP4 Requirements:**
+
 - Must be a direct link to `.mp4` file
 - File must be accessible (no authentication required)
 - Recommended codecs: H.264 for maximum compatibility
 - Hosted on same domain OR CORS headers configured
 
 **Not supported:**
+
 - Facebook videos
 - Instagram videos
 - TikTok videos
@@ -193,6 +198,7 @@ Create a video gallery or playlist:
 ### Poster Image Requirements
 
 **Recommended Specifications:**
+
 - Aspect ratio: 16:9 (e.g., 1920x1080, 1280x720, 800x450)
 - File format: JPEG or PNG (WebP also supported)
 - File size: < 200KB (will be optimized automatically)
@@ -200,12 +206,14 @@ Create a video gallery or playlist:
 - Maximum width: 1920px
 
 **Why this matters:**
+
 - Videos display at 16:9 aspect ratio
 - Matching poster prevents layout shift
 - Smaller files load faster
 - EDS optimization improves performance further
 
 **Image optimization tips:**
+
 1. Crop images to 16:9 before upload
 2. Compress images (use TinyPNG, ImageOptim, etc.)
 3. Use appropriate dimensions (don't upload 4K images)
@@ -214,6 +222,7 @@ Create a video gallery or playlist:
 ### Alt Text Best Practices
 
 **Good alt text patterns:**
+
 ```markdown
 ![Product launch keynote video](poster.jpg)
 ![Tutorial: Getting Started with EDS video](poster.jpg)
@@ -222,6 +231,7 @@ Create a video gallery or playlist:
 ```
 
 **Bad alt text patterns:**
+
 ```markdown
 ![](poster.jpg)                    ❌ Empty alt text
 ![video](poster.jpg)                ❌ Generic, not descriptive
@@ -230,6 +240,7 @@ Create a video gallery or playlist:
 ```
 
 **Why this matters:**
+
 - Screen readers announce alt text to users
 - Helps users decide whether to play video
 - Improves SEO and content discoverability
@@ -242,6 +253,7 @@ Create a video gallery or playlist:
 ### Visual Appearance
 
 **Default Behavior:**
+
 - Videos centered on page
 - Maximum width: 800px
 - 32px vertical margin above and below
@@ -249,12 +261,14 @@ Create a video gallery or playlist:
 - Full-width on mobile devices
 
 **Poster Image Display:**
+
 - Custom image fills video area
 - Play button overlay in center
 - Clickable anywhere on poster
 - Smooth transition to video on click
 
 **Lazy Loading Indicator:**
+
 - Space reserved before video loads
 - Prevents page jumping during load
 - Improves Core Web Vitals scores
@@ -263,6 +277,7 @@ Create a video gallery or playlist:
 ### Responsive Behavior
 
 **Mobile Phones (< 600px):**
+
 - Full-width videos
 - Respects parent container width
 - 16:9 aspect ratio maintained
@@ -270,12 +285,14 @@ Create a video gallery or playlist:
 - Inline playback (no fullscreen takeover)
 
 **Tablets (600px - 1024px):**
+
 - Centered with max-width: 800px
 - Proper spacing and margins
 - Comfortable viewing size
 - Supports landscape and portrait
 
 **Desktop (> 1024px):**
+
 - Same behavior as tablets
 - Maximum 800px width
 - Centered layout
@@ -284,6 +301,7 @@ Create a video gallery or playlist:
 ### Autoplay Styling
 
 **Visual Differences:**
+
 - No play button overlay
 - Video loads when scrolled into view
 - Begins playing automatically (muted)
@@ -291,6 +309,7 @@ Create a video gallery or playlist:
 - Loops continuously
 
 **Use cases for autoplay:**
+
 - Hero section backgrounds
 - Ambient atmospheric videos
 - Product demos (muted showcase)
@@ -303,6 +322,7 @@ Create a video gallery or playlist:
 ### Choosing the Right Video Platform
 
 **Use YouTube when:**
+
 - You want video analytics
 - Need comment sections
 - Want suggested videos
@@ -310,6 +330,7 @@ Create a video gallery or playlist:
 - Free hosting with unlimited bandwidth
 
 **Use Vimeo when:**
+
 - Professional presentation needed
 - Privacy and control important
 - Cleaner embed (no ads)
@@ -317,6 +338,7 @@ Create a video gallery or playlist:
 - Brand-focused content
 
 **Use MP4 when:**
+
 - Short clips (< 5MB)
 - Need offline capability
 - No platform dependency
@@ -326,58 +348,67 @@ Create a video gallery or playlist:
 ### Performance Optimization
 
 **1. Always use poster images for above-the-fold videos**
-   - Faster perceived load time
-   - User controls when video loads
-   - Reduces initial bandwidth usage
-   - Better Core Web Vitals scores
+
+- Faster perceived load time
+- User controls when video loads
+- Reduces initial bandwidth usage
+- Better Core Web Vitals scores
 
 **2. Optimize poster images before upload**
-   - Compress to < 200KB
-   - Use correct dimensions (800-1920px wide)
-   - Choose JPEG for photos, PNG for graphics
-   - Crop to 16:9 aspect ratio
+
+- Compress to < 200KB
+- Use correct dimensions (800-1920px wide)
+- Choose JPEG for photos, PNG for graphics
+- Crop to 16:9 aspect ratio
 
 **3. Limit autoplay videos**
-   - One autoplay video per page maximum
-   - Place below the fold when possible
-   - Consider user experience and bandwidth
-   - Always provide manual alternative
+
+- One autoplay video per page maximum
+- Place below the fold when possible
+- Consider user experience and bandwidth
+- Always provide manual alternative
 
 **4. Keep MP4 files small**
-   - Compress before hosting (HandBrake, FFmpeg)
-   - Use H.264 codec for compatibility
-   - Target 720p or 1080p (not 4K)
-   - Consider streaming platforms for longer videos
+
+- Compress before hosting (HandBrake, FFmpeg)
+- Use H.264 codec for compatibility
+- Target 720p or 1080p (not 4K)
+- Consider streaming platforms for longer videos
 
 ### Accessibility Guidelines
 
 **1. Provide descriptive alt text**
-   - Describe video content specifically
-   - Include "video" keyword for context
-   - Help users decide whether to watch
-   - Required for WCAG compliance
+
+- Describe video content specifically
+- Include "video" keyword for context
+- Help users decide whether to watch
+- Required for WCAG compliance
 
 **2. Enable captions when possible**
-   - YouTube: Upload caption files
-   - Vimeo: Add subtitles in settings
-   - MP4: Include WebVTT caption tracks
-   - Consider auto-generated captions as baseline
+
+- YouTube: Upload caption files
+- Vimeo: Add subtitles in settings
+- MP4: Include WebVTT caption tracks
+- Consider auto-generated captions as baseline
 
 **3. Avoid autoplay with sound**
-   - Browser policies block this anyway
-   - Disruptive to user experience
-   - Accessibility issue for screen reader users
-   - Autoplay in video block is always muted
+
+- Browser policies block this anyway
+- Disruptive to user experience
+- Accessibility issue for screen reader users
+- Autoplay in video block is always muted
 
 **4. Test keyboard navigation**
-   - Play button focusable with Tab
-   - Activates with Enter or Space
-   - Video player controls keyboard accessible
-   - Fullscreen mode keyboard accessible
+
+- Play button focusable with Tab
+- Activates with Enter or Space
+- Video player controls keyboard accessible
+- Fullscreen mode keyboard accessible
 
 ### Content Strategy
 
 **Video Length Guidelines:**
+
 - Hero videos: 10-30 seconds (looping background)
 - Product demos: 1-3 minutes (key features only)
 - Tutorials: 3-10 minutes (focused, single topic)
@@ -385,6 +416,7 @@ Create a video gallery or playlist:
 - Webinars: 30-60 minutes (archived for reference)
 
 **When NOT to Use Video Block:**
+
 - Audio-only content (use audio player instead)
 - Live streams (use platform-specific embed)
 - Complex playlists (consider blog post with multiple blocks)
@@ -418,6 +450,7 @@ Create a video gallery or playlist:
 **Check these common causes:**
 
 1. **Image order incorrect**
+
    ```
    ✅ Correct:
    | Video |
@@ -447,6 +480,7 @@ Create a video gallery or playlist:
 **Check these requirements:**
 
 1. **Variation class missing**
+
    ```
    ✅ Correct:
    | Video (autoplay) |
@@ -509,6 +543,7 @@ Create a video gallery or playlist:
 For non-standard aspect ratios (requires CSS):
 
 **Vertical Video (9:16):**
+
 ```css
 .video.vertical {
   aspect-ratio: 9 / 16;
@@ -519,6 +554,7 @@ For non-standard aspect ratios (requires CSS):
 Then use: `Video (vertical)` in markdown
 
 **Square Video (1:1):**
+
 ```css
 .video.square {
   aspect-ratio: 1 / 1;
@@ -682,6 +718,7 @@ Before publishing:
 ### Browser Testing
 
 Test in multiple browsers:
+
 - Chrome (Desktop and Mobile)
 - Safari (Desktop and iOS)
 - Firefox (Desktop)
@@ -690,18 +727,21 @@ Test in multiple browsers:
 ### Platform-Specific Testing
 
 **YouTube:**
+
 - [ ] Video plays correctly
 - [ ] Controls visible and functional
 - [ ] Fullscreen mode works
 - [ ] Quality settings accessible
 
 **Vimeo:**
+
 - [ ] Video plays correctly
 - [ ] Controls visible (or hidden for autoplay)
 - [ ] Fullscreen mode works
 - [ ] Branding appropriate
 
 **MP4:**
+
 - [ ] Video plays in all browsers
 - [ ] Controls visible and functional
 - [ ] Buffering indicator shows
@@ -712,12 +752,14 @@ Test in multiple browsers:
 ## Related Blocks
 
 **Complementary blocks:**
+
 - **Hero** - Large introductory section before video
 - **Quote** - Pull quotes or testimonials between videos
 - **Columns** - Side-by-side content with video
 - **Tabs** - Organize multiple videos in tab interface
 
 **Alternative blocks:**
+
 - **Embed** - Generic iframe embed (if video platform not supported)
 - **Modal** - Video in popup overlay (future enhancement)
 

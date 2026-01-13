@@ -26,6 +26,7 @@ A universal content embedding component for seamlessly integrating third-party m
 The embed block transforms simple URL links into rich media embeds using provider-specific APIs and optimized iframe configurations. It features intelligent provider detection, lazy loading via Intersection Observer, and optional click-to-play placeholders with custom preview images.
 
 **Primary Use Cases:**
+
 - Video content from YouTube and Vimeo
 - Social media posts from Twitter
 - Third-party widgets and interactive content
@@ -37,6 +38,7 @@ The embed block transforms simple URL links into rich media embeds using provide
 **Location:** `/blocks/embed/`
 
 **Files:**
+
 - `embed.js` - Provider detection, lazy loading, and embed generation
 - `embed.css` - Responsive aspect ratio, placeholder styling
 - `README.md` - Technical documentation (this file)
@@ -98,14 +100,15 @@ Array of provider definitions with match patterns and embed functions:
 
 `Provider Configuration`
 `const EMBEDS_CONFIG = [`
-`  { match: ['youtube', 'youtu.be'], embed: embedYoutube },`
-`  { match: ['vimeo'], embed: embedVimeo },`
-`  { match: ['twitter'], embed: embedTwitter },`
+`{ match: ['youtube', 'youtu.be'], embed: embedYoutube },`
+`{ match: ['vimeo'], embed: embedVimeo },`
+`{ match: ['twitter'], embed: embedTwitter },`
 `];`
 
 **2. Embed Functions**
 
 Each provider has a dedicated embed function:
+
 - `embedYoutube(url, autoplay)` - YouTube iframe with video ID extraction
 - `embedVimeo(url, autoplay)` - Vimeo player iframe
 - `embedTwitter(url)` - Twitter blockquote with widget script
@@ -114,12 +117,14 @@ Each provider has a dedicated embed function:
 **3. Loading Strategies**
 
 **With Placeholder (Click-to-Play):**
+
 - Display custom preview image
 - Overlay play button
 - Click event triggers `loadEmbed()` with autoplay
 - Replaces placeholder with iframe
 
 **Without Placeholder (Lazy Loading):**
+
 - Intersection Observer watches block
 - Loads embed when entering viewport
 - Disconnects observer after loading
@@ -133,12 +138,12 @@ Dynamically loads external JavaScript (Twitter widgets):
 
 `Load External Script`
 `const loadScript = (url, callback, type) => {`
-`  const head = document.querySelector('head');`
-`  const script = document.createElement('script');`
-`  script.src = url;`
-`  if (type) script.setAttribute('type', type);`
-`  script.onload = callback;`
-`  head.append(script);`
+`const head = document.querySelector('head');`
+`const script = document.createElement('script');`
+`script.src = url;`
+`if (type) script.setAttribute('type', type);`
+`script.onload = callback;`
+`head.append(script);`
 `};`
 
 **Purpose:** Loads Twitter widget.js for tweet rendering
@@ -146,6 +151,7 @@ Dynamically loads external JavaScript (Twitter widgets):
 **loadEmbed(block, link, autoplay)**
 
 Core loading function that:
+
 1. Checks if embed already loaded (prevents duplicate loading)
 2. Matches URL against provider configs
 3. Generates provider-specific embed HTML
@@ -155,6 +161,7 @@ Core loading function that:
 **decorate(block)**
 
 Main decoration function that:
+
 1. Extracts link URL from block
 2. Checks for placeholder image
 3. Sets up click-to-play if placeholder exists
@@ -166,16 +173,19 @@ Main decoration function that:
 The embed block uses responsive CSS with aspect ratio preservation:
 
 **Aspect Ratio Container:**
+
 - `padding-bottom: 56.25%` - Creates 16:9 aspect ratio (9/16 = 0.5625)
 - `position: relative` - Enables absolute positioning of iframe
 - `height: 0` - Collapses container (padding creates height)
 
 **Iframe Positioning:**
+
 - `position: absolute` - Overlays padding-based container
 - `inset: 0` - Fills entire container (top, right, bottom, left = 0)
 - `width: 100%` and `height: 100%` - Responsive sizing
 
 **Placeholder Styling:**
+
 - Absolute positioning fills container
 - Play button centered with flexbox
 - CSS triangle for play icon
@@ -295,6 +305,7 @@ Result: Generic 16:9 iframe with default settings.
 ### Integration Points
 
 **With other blocks:**
+
 - Embed video after hero sections
 - Use in columns layout for side-by-side videos
 - Combine with text sections for tutorials
@@ -302,6 +313,7 @@ Result: Generic 16:9 iframe with default settings.
 - No conflicts with other blocks
 
 **Content Model:**
+
 - Two-cell table: Block name + Link URL
 - Optional: Picture element for placeholder
 - Link must be valid URL
@@ -316,6 +328,7 @@ Result: Generic 16:9 iframe with default settings.
 The EDS pipeline converts markdown table into this initial DOM structure:
 
 **Without Placeholder:**
+
 ```html
 <div class="embed block">
   <div>
@@ -329,6 +342,7 @@ The EDS pipeline converts markdown table into this initial DOM structure:
 ```
 
 **With Placeholder:**
+
 ```html
 <div class="embed block">
   <div>
@@ -348,6 +362,7 @@ The EDS pipeline converts markdown table into this initial DOM structure:
 ### Output Structure (After Decoration)
 
 **YouTube Embed (After Loading):**
+
 ```html
 <div class="block embed embed-youtube embed-is-loaded">
   <div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
@@ -365,6 +380,7 @@ The EDS pipeline converts markdown table into this initial DOM structure:
 ```
 
 **With Placeholder (Before Click):**
+
 ```html
 <div class="embed block">
   <div class="embed-placeholder">
@@ -379,6 +395,7 @@ The EDS pipeline converts markdown table into this initial DOM structure:
 ```
 
 **Twitter Embed:**
+
 ```html
 <div class="block embed embed-twitter embed-is-loaded">
   <blockquote class="twitter-tweet">
@@ -392,16 +409,19 @@ Note: Twitter widget.js transforms the blockquote into full tweet display.
 ### URL Parsing
 
 **YouTube:**
+
 - Standard: `youtube.com/watch?v=VIDEO_ID`
 - Short: `youtu.be/VIDEO_ID`
 - Embed: `youtube.com/embed/VIDEO_ID`
 - Video ID extracted from query param or path
 
 **Vimeo:**
+
 - Standard: `vimeo.com/VIDEO_ID`
 - Video ID extracted from pathname
 
 **Twitter:**
+
 - Post: `twitter.com/USER/status/TWEET_ID`
 - Full URL used as-is in blockquote
 
@@ -425,38 +445,38 @@ Override default styles in your project's CSS:
 
 `Custom max-width`
 `.embed {`
-`  max-width: 1200px; /* Larger max width */`
-`  margin: 48px auto; /* More vertical spacing */`
+`max-width: 1200px; /* Larger max width */`
+`margin: 48px auto; /* More vertical spacing */`
 `}`
 
 **Custom Play Button:**
 
 `Styled play button`
 `.embed .embed-placeholder-play button {`
-`  background: rgba(255, 0, 0, 0.8); /* Red background */`
-`  border: none;`
-`  border-radius: 50%;`
-`  width: 60px;`
-`  height: 60px;`
+`background: rgba(255, 0, 0, 0.8); /* Red background */`
+`border: none;`
+`border-radius: 50%;`
+`width: 60px;`
+`height: 60px;`
 `}`
 `.embed .embed-placeholder-play button::before {`
-`  border-left-color: white; /* White triangle */`
+`border-left-color: white; /* White triangle */`
 `}`
 
 **Different Aspect Ratio:**
 
 `4:3 aspect ratio`
 `.embed.embed-4-3 > div {`
-`  padding-bottom: 75%; /* 3/4 = 0.75 */`
+`padding-bottom: 75%; /* 3/4 = 0.75 */`
 `}`
 
 **Dark Background for Twitter:**
 
 `Dark theme for embeds`
 `.embed.embed-twitter {`
-`  background: #15202b; /* Twitter dark mode */`
-`  padding: 2rem;`
-`  border-radius: 8px;`
+`background: #15202b; /* Twitter dark mode */`
+`padding: 2rem;`
+`border-radius: 8px;`
 `}`
 
 ### Variations
@@ -464,6 +484,7 @@ Override default styles in your project's CSS:
 The embed block currently has **no built-in variations**. All customization is done through CSS overrides.
 
 **Future variation ideas:**
+
 - `embed (square)` - 1:1 aspect ratio for Instagram
 - `embed (vertical)` - 9:16 aspect ratio for TikTok/Stories
 - `embed (minimal)` - No max-width constraint
@@ -500,12 +521,14 @@ The embed block currently has **no built-in variations**. All customization is d
 All embeds maintain 16:9 aspect ratio using CSS padding-bottom technique:
 
 **How it works:**
+
 1. Container has `padding-bottom: 56.25%` (9/16 = 0.5625)
 2. Padding is calculated relative to width
 3. As width changes, height scales proportionally
 4. Iframe positioned absolutely to fill padding-created space
 
 **Benefits:**
+
 - No layout shift (CLS = 0)
 - Responsive without JavaScript
 - Browser-native behavior
@@ -528,16 +551,19 @@ All embeds maintain 16:9 aspect ratio using CSS padding-bottom technique:
 The embed block uses proper semantic elements:
 
 **Iframe Embeds:**
+
 - `<iframe>` with descriptive `title` attribute
 - `allowfullscreen` attribute for full-screen support
 - `allow` attribute for feature permissions
 
 **Play Button:**
+
 - `<button type="button">` for placeholder interaction
 - `title` attribute for screen reader context
 - Keyboard accessible (Enter/Space)
 
 **Twitter Embeds:**
+
 - `<blockquote>` semantic container
 - Link to original tweet (fallback)
 - Twitter widget provides full accessibility
@@ -545,12 +571,14 @@ The embed block uses proper semantic elements:
 ### Screen Reader Support
 
 **What works well:**
+
 - Iframe title announces embed content type
 - Play button title announces "Play"
 - Link to source URL available as fallback
 - Twitter blockquote has proper semantic structure
 
 **Screen reader flow:**
+
 1. "Embed region" or "Content from YouTube"
 2. Play button: "Play, button"
 3. After loading: "Frame, Content from YouTube"
@@ -558,11 +586,13 @@ The embed block uses proper semantic elements:
 ### Keyboard Navigation
 
 **Supported keys:**
+
 - **Tab** - Move focus to play button or iframe
 - **Enter/Space** - Activate play button (load video)
 - **Iframe content** - Focus enters iframe (video controls accessible)
 
 **Focus Management:**
+
 - Visible focus indicators on play button
 - Iframe gains focus after loading
 - No keyboard traps
@@ -571,11 +601,13 @@ The embed block uses proper semantic elements:
 ### ARIA Attributes
 
 **Current implementation:**
+
 - No custom ARIA attributes
 - Relies on semantic HTML (`<iframe>`, `<button>`)
 - iframe `title` provides accessible name
 
 **Potential enhancements:**
+
 - `aria-label` on play button for more context
 - `role="region"` with `aria-label` on container
 - `aria-live` to announce loading state
@@ -584,6 +616,7 @@ The embed block uses proper semantic elements:
 ### Alternative Content
 
 **Fallback patterns:**
+
 - Twitter: Link to tweet if widget fails
 - Generic embeds: URL visible if iframe blocked
 - Placeholder: Image visible if embed fails
@@ -595,18 +628,21 @@ The embed block uses proper semantic elements:
 ### JavaScript Execution
 
 **Initial decoration:**
+
 - Single setup on page load
 - Minimal DOM manipulation
 - Lightweight provider detection
 - No ongoing event listeners (except placeholder click or observer)
 
 **Per interaction:**
+
 - Click handler loads embed (with placeholder)
 - Intersection Observer triggers load (without placeholder)
 - URL parsing and HTML string generation
 - One-time iframe injection
 
 **Optimization benefits:**
+
 - No embed loaded until needed (lazy loading)
 - No external scripts for YouTube/Vimeo
 - Twitter script loaded only for Twitter embeds
@@ -615,12 +651,14 @@ The embed block uses proper semantic elements:
 ### Memory Footprint
 
 **Per embed block:**
+
 - Event listener (click or intersection)
 - URL string and provider config lookup
 - Minimal memory overhead
 - Observer disconnects after loading
 
 **Typical usage:**
+
 - 1-3 embeds per page
 - < 2KB JavaScript (minified)
 - < 500 bytes CSS (minified)
@@ -629,22 +667,26 @@ The embed block uses proper semantic elements:
 ### Network Efficiency
 
 **Initial load:**
+
 - embed.js: ~2KB (minified)
 - embed.css: ~500 bytes (minified)
 - No external dependencies (except Twitter widget.js if needed)
 - No API calls
 
 **With Placeholder:**
+
 - Placeholder image loaded (content-dependent size)
 - Video loads only on click
 - User controls data usage
 
 **Without Placeholder:**
+
 - Embed loads when entering viewport
 - `loading="lazy"` on iframe (additional browser optimization)
 - No wasted bandwidth for off-screen embeds
 
 **Twitter Performance:**
+
 - Widget.js: ~50KB (external, loaded only for Twitter embeds)
 - Multiple requests for tweet rendering
 - Slowest of all embed types
@@ -652,12 +694,14 @@ The embed block uses proper semantic elements:
 ### Loading Strategy
 
 **Lazy Loading Benefits:**
+
 - Reduces initial page weight
 - Improves Time to Interactive (TTI)
 - Defers non-critical resources
 - Prioritizes above-the-fold content
 
 **Placeholder Strategy:**
+
 - Best for Core Web Vitals optimization
 - User initiates loading (perceived performance)
 - Reduces Largest Contentful Paint (LCP)
@@ -668,18 +712,21 @@ The embed block uses proper semantic elements:
 Expected Lighthouse scores with embed block:
 
 **With Placeholder (Best):**
+
 - Performance: 95-100
 - Accessibility: 90-100 (depends on image alt text)
 - Best Practices: 100
 - SEO: 90-100 (depends on content)
 
 **Without Placeholder (Lazy Loading):**
+
 - Performance: 90-95 (slight delay for Intersection Observer)
 - Accessibility: 90-100
 - Best Practices: 100
 - SEO: 90-100
 
 **Twitter Embeds:**
+
 - Performance: 70-85 (widget.js overhead)
 - Accessibility: 95-100 (Twitter provides good a11y)
 - Best Practices: 95-100
@@ -711,6 +758,7 @@ Expected Lighthouse scores with embed block:
 ### Internet Explorer 11
 
 **Partial support with polyfills:**
+
 - Intersection Observer: Requires polyfill
 - URLSearchParams: Requires polyfill
 - Arrow functions: Requires transpilation
@@ -721,21 +769,25 @@ Expected Lighthouse scores with embed block:
 ### Provider Compatibility
 
 **YouTube:**
+
 - All modern browsers ✓
 - Mobile browsers ✓
 - Fullscreen API varies by browser
 
 **Vimeo:**
+
 - All modern browsers ✓
 - Mobile browsers ✓
 - Consistent experience
 
 **Twitter:**
+
 - All modern browsers ✓
 - Mobile browsers ✓
 - Widget.js handles compatibility
 
 **Generic Embeds:**
+
 - Depends on embed provider
 - Iframe sandboxing varies by browser
 - Test specific use cases
@@ -747,6 +799,7 @@ Expected Lighthouse scores with embed block:
 ### Issue: Embed not appearing
 
 **Symptoms:**
+
 - Empty block where embed should be
 - No iframe visible
 - Console errors
@@ -774,6 +827,7 @@ Expected Lighthouse scores with embed block:
 ### Issue: Lazy loading not triggering
 
 **Symptoms:**
+
 - Embed never loads when scrolling
 - Block remains empty
 - No embed-is-loaded class
@@ -781,6 +835,7 @@ Expected Lighthouse scores with embed block:
 **Solutions:**
 
 1. **Check Intersection Observer support:**
+
    ```javascript
    // In browser console
    'IntersectionObserver' in window
@@ -800,6 +855,7 @@ Expected Lighthouse scores with embed block:
 ### Issue: Placeholder click not working
 
 **Symptoms:**
+
 - Click on play button does nothing
 - Video doesn't load
 - No console errors
@@ -807,6 +863,7 @@ Expected Lighthouse scores with embed block:
 **Solutions:**
 
 1. **Check event listener:**
+
    ```javascript
    // In DevTools, inspect play button element
    getEventListeners($0)
@@ -826,6 +883,7 @@ Expected Lighthouse scores with embed block:
 ### Issue: YouTube video not playing
 
 **Symptoms:**
+
 - Iframe loads but video doesn't play
 - Black screen or error message
 - Video blocked or unavailable
@@ -833,6 +891,7 @@ Expected Lighthouse scores with embed block:
 **Solutions:**
 
 1. **Check video ID extraction:**
+
    ```javascript
    // Test URL parsing
    const url = new URL('https://www.youtube.com/watch?v=VIDEO_ID');
@@ -853,6 +912,7 @@ Expected Lighthouse scores with embed block:
 ### Issue: Twitter embed not rendering
 
 **Symptoms:**
+
 - Blockquote visible but no tweet design
 - Just a link to tweet
 - Widget.js not loading
@@ -877,6 +937,7 @@ Expected Lighthouse scores with embed block:
 ### Issue: Generic embed blocked by CORS
 
 **Symptoms:**
+
 - Console error about CORS
 - Iframe refuses to load
 - X-Frame-Options or CSP errors
@@ -901,6 +962,7 @@ Expected Lighthouse scores with embed block:
 ### Issue: Aspect ratio not maintained
 
 **Symptoms:**
+
 - Embed too tall or too short
 - Layout shifting on resize
 - Incorrect proportions
@@ -929,6 +991,7 @@ Expected Lighthouse scores with embed block:
 ### Manual Testing (test.html)
 
 1. **Open test file:**
+
    ```
    http://localhost:3000/blocks/embed/test.html
    ```
@@ -1006,6 +1069,7 @@ Expected Lighthouse scores with embed block:
 ### Performance Testing
 
 **Lighthouse Audit:**
+
 1. Open DevTools (F12)
 2. Go to Lighthouse tab
 3. Select categories (Performance, Accessibility, Best Practices)
@@ -1013,6 +1077,7 @@ Expected Lighthouse scores with embed block:
 5. Verify scores meet expectations
 
 **Network Waterfall:**
+
 1. Open Network tab in DevTools
 2. Reload page
 3. Observe when embeds load
@@ -1020,6 +1085,7 @@ Expected Lighthouse scores with embed block:
 5. Check placeholder images load early
 
 **Core Web Vitals:**
+
 1. Use PageSpeed Insights or Lighthouse
 2. Check Largest Contentful Paint (LCP) < 2.5s
 3. Verify Cumulative Layout Shift (CLS) < 0.1
@@ -1028,6 +1094,7 @@ Expected Lighthouse scores with embed block:
 ### Automated Testing
 
 **Future implementation:**
+
 - Jest tests for provider detection
 - Test URL parsing (YouTube, Vimeo, Twitter)
 - Test embed HTML generation
@@ -1039,16 +1106,16 @@ Expected Lighthouse scores with embed block:
 
 `Embed Block Tests`
 `describe('Embed Block', () => {`
-`  test('detects YouTube provider from URL', () => {});`
-`  test('detects Vimeo provider from URL', () => {});`
-`  test('detects Twitter provider from URL', () => {});`
-`  test('falls back to generic embed for unknown provider', () => {});`
-`  test('creates placeholder with play button if image present', () => {});`
-`  test('sets up Intersection Observer if no placeholder', () => {});`
-`  test('generates correct YouTube embed HTML', () => {});`
-`  test('generates correct Vimeo embed HTML', () => {});`
-`  test('generates correct Twitter blockquote', () => {});`
-`  test('marks block as loaded after embed created', () => {});`
+`test('detects YouTube provider from URL', () => {});`
+`test('detects Vimeo provider from URL', () => {});`
+`test('detects Twitter provider from URL', () => {});`
+`test('falls back to generic embed for unknown provider', () => {});`
+`test('creates placeholder with play button if image present', () => {});`
+`test('sets up Intersection Observer if no placeholder', () => {});`
+`test('generates correct YouTube embed HTML', () => {});`
+`test('generates correct Vimeo embed HTML', () => {});`
+`test('generates correct Twitter blockquote', () => {});`
+`test('marks block as loaded after embed created', () => {});`
 `});`
 
 ---
@@ -1129,6 +1196,7 @@ Expected Lighthouse scores with embed block:
 ### Contributing
 
 To propose enhancements:
+
 1. Create test content in Google Docs
 2. Implement feature in JavaScript/CSS
 3. Add test cases to test.html
@@ -1152,6 +1220,7 @@ To propose enhancements:
 ### Content Security Policy (CSP)
 
 **Embed block requires CSP allowances:**
+
 - `frame-src` - YouTube, Vimeo, Twitter domains
 - `script-src` - Twitter widget.js domain
 - `img-src` - Placeholder images, Twitter avatars
@@ -1166,11 +1235,13 @@ To propose enhancements:
 ### Iframe Sandboxing
 
 **Default iframe permissions:**
+
 - `allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope"`
 - No `sandbox` attribute (full permissions)
 - Embeds can: run scripts, access cookies, submit forms
 
 **Security implications:**
+
 - YouTube and Vimeo are trusted providers
 - Generic embeds inherit full permissions
 - Consider adding `sandbox` attribute for unknown providers
@@ -1179,18 +1250,20 @@ To propose enhancements:
 
 `Sandboxed iframe for unknown providers`
 `<iframe`
-`  sandbox="allow-scripts allow-same-origin"`
-`  src="https://untrusted-provider.com/embed"`
+`sandbox="allow-scripts allow-same-origin"`
+`src="https://untrusted-provider.com/embed"`
 `></iframe>`
 
 ### XSS Prevention
 
 **URL sanitization:**
+
 - URLs are not sanitized in current implementation
 - Potential XSS if attacker controls URL
 - EDS should sanitize links before decoration
 
 **Mitigation:**
+
 - Trust only author-provided URLs
 - Validate URL format before embedding
 - Consider allowlist of domains
@@ -1198,11 +1271,13 @@ To propose enhancements:
 ### Privacy Considerations
 
 **Third-party tracking:**
+
 - YouTube, Vimeo, Twitter may track users
 - Cookies set by embed providers
 - User IP addresses shared with providers
 
 **Privacy-enhanced mode:**
+
 - YouTube: Use `youtube-nocookie.com` domain
 - Consider privacy-focused embed alternatives
 - Inform users of tracking in privacy policy
@@ -1224,6 +1299,7 @@ To propose enhancements:
 ## Support
 
 For issues or questions:
+
 1. Check [Troubleshooting](#troubleshooting) section
 2. Review [EXAMPLE.md](./EXAMPLE.md) for usage examples
 3. Test with [test.html](./test.html)

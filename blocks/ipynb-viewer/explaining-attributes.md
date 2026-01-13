@@ -17,6 +17,7 @@ Complete guide to all metadata attributes supported by the ipynb-viewer block an
 The ipynb-viewer block uses metadata from your `.ipynb` file to display rich information about your notebook. All attributes are defined in the notebook's `metadata` object.
 
 **Basic structure:**
+
 ```json
 {
   "cells": [...],
@@ -32,6 +33,7 @@ The ipynb-viewer block uses metadata from your `.ipynb` file to display rich inf
 ## Required Attributes
 
 ### `title`
+
 - **Type:** String
 - **Display:** Header title (large heading at top)
 - **Example:** `"EDS Documentation Navigator"`
@@ -51,6 +53,7 @@ The ipynb-viewer block uses metadata from your `.ipynb` file to display rich inf
 These attributes display in the header section, below the title.
 
 ### `description`
+
 - **Type:** String
 - **Display:** Subtitle/description text
 - **Example:** `"Complete guide to navigating EDS documentation"`
@@ -66,6 +69,7 @@ These attributes display in the header section, below the title.
 ```
 
 ### `author`
+
 - **Type:** String
 - **Display:** `"By {author}"` format
 - **Example:** `"Tom Cranstoun"`
@@ -81,6 +85,7 @@ These attributes display in the header section, below the title.
 ```
 
 ### `creation-date`
+
 - **Type:** String (recommended format: YYYY-MM-DD)
 - **Display:** `"Created: {date}"` format
 - **Example:** `"2025-01-19"`
@@ -99,6 +104,7 @@ These attributes display in the header section, below the title.
 **Note:** The older `date` attribute is still supported for backward compatibility but `creation-date` is preferred for clarity.
 
 ### `version`
+
 - **Type:** String
 - **Display:** `"Version {version}"` format
 - **Example:** `"1.0.0"`
@@ -114,6 +120,7 @@ These attributes display in the header section, below the title.
 ```
 
 ### `last-modified`
+
 - **Type:** String (recommended format: YYYY-MM-DD)
 - **Display:** `"Last modified: {date}"` format
 - **Example:** `"2025-11-23"`
@@ -134,6 +141,7 @@ These attributes display in the header section, below the title.
 These attributes display as colored badges in a horizontal row.
 
 ### `category`
+
 - **Type:** String
 - **Display:** Colored badge pill
 - **Example:** `"presentation"`, `"tutorial"`, `"reference"`
@@ -156,6 +164,7 @@ These attributes display as colored badges in a horizontal row.
 ```
 
 ### `difficulty`
+
 - **Type:** String
 - **Display:** Colored badge pill
 - **Example:** `"beginner"`, `"intermediate"`, `"advanced"`
@@ -174,6 +183,7 @@ These attributes display as colored badges in a horizontal row.
 ```
 
 ### `duration`
+
 - **Type:** String
 - **Display:** Badge pill with clock icon (⏱️)
 - **Example:** `"15 minutes"`, `"1 hour"`, `"30-45 min"`
@@ -189,6 +199,7 @@ These attributes display as colored badges in a horizontal row.
 ```
 
 ### `tags`
+
 - **Type:** Array of strings
 - **Display:** Multiple gray badge pills
 - **Example:** `["documentation", "navigation", "EDS"]`
@@ -208,6 +219,7 @@ These attributes display as colored badges in a horizontal row.
 These attributes control behavior rather than display.
 
 ### `repo`
+
 - **Type:** String (GitHub repository URL)
 - **Display:** Not directly displayed
 - **Example:** `"https://github.com/ddttom/allaboutV2"`
@@ -215,6 +227,7 @@ These attributes control behavior rather than display.
 - **Where used:** Link resolution in markdown cells
 
 **How it works:**
+
 - When you write `[guide](docs/help.md)` in a markdown cell
 - The viewer converts it to `https://github.com/ddttom/allaboutV2/blob/main/docs/help.md`
 - Clicking opens the GitHub markdown overlay
@@ -228,6 +241,7 @@ These attributes control behavior rather than display.
 ```
 
 ### `help-repo`
+
 - **Type:** String (GitHub repository URL)
 - **Display:** Not directly displayed
 - **Purpose:** Separate repository for help documentation
@@ -245,6 +259,7 @@ These attributes control behavior rather than display.
 ```
 
 ### `github-branch`
+
 - **Type:** String (GitHub branch name)
 - **Display:** Not directly displayed
 - **Default:** `"main"` if not specified
@@ -253,6 +268,7 @@ These attributes control behavior rather than display.
 - **Typical use:** When working in a feature branch and need to load markdown files from that branch instead of main
 
 **How it works:**
+
 - When clicking help button or any .md link in the notebook, files are loaded from the specified branch
 - Without this attribute, all files default to loading from the `main` branch
 - Useful during development when files exist in feature branches but not yet in main
@@ -268,6 +284,7 @@ These attributes control behavior rather than display.
 ```
 
 **Common use cases:**
+
 - Development: Load docs from your feature branch while testing
 - Staging: Point to a staging branch for preview
 - Versioning: Use specific release branches for different notebook versions
@@ -275,6 +292,7 @@ These attributes control behavior rather than display.
 ## Examples
 
 ### Complete Tutorial Notebook
+
 ```json
 {
   "metadata": {
@@ -296,6 +314,7 @@ These attributes control behavior rather than display.
 ```
 
 ### Minimal Presentation
+
 ```json
 {
   "metadata": {
@@ -307,6 +326,7 @@ These attributes control behavior rather than display.
 ```
 
 ### Reference Documentation
+
 ```json
 {
   "metadata": {
@@ -362,6 +382,7 @@ Each attribute has a corresponding CSS class for custom styling:
 ## Best Practices
 
 ### 1. Always Include Title
+
 Every notebook should have a title. It's the only truly required attribute.
 
 ```json
@@ -373,6 +394,7 @@ Every notebook should have a title. It's the only truly required attribute.
 ```
 
 ### 2. Use Description for Context
+
 Help users understand what the notebook covers before diving in.
 
 ```json
@@ -384,6 +406,7 @@ Help users understand what the notebook covers before diving in.
 ```
 
 ### 3. Date Format Consistency
+
 Use ISO 8601 format (YYYY-MM-DD) for dates and prefer `creation-date` over `date`:
 
 ```json
@@ -398,6 +421,7 @@ Use ISO 8601 format (YYYY-MM-DD) for dates and prefer `creation-date` over `date
 ```
 
 ### 4. Meaningful Categories
+
 Choose categories that help users find content:
 
 ```json
@@ -410,6 +434,7 @@ Choose categories that help users find content:
 ```
 
 ### 5. Realistic Duration
+
 Estimate reading/completion time accurately:
 
 ```json
@@ -422,6 +447,7 @@ Estimate reading/completion time accurately:
 ```
 
 ### 6. Track Modifications
+
 Use `creation-date` and `last-modified` to show content lifecycle:
 
 ```json
@@ -434,6 +460,7 @@ Use `creation-date` and `last-modified` to show content lifecycle:
 ```
 
 ### 7. Relevant Tags
+
 Use 4-8 specific tags that aid discovery:
 
 ```json
@@ -446,6 +473,7 @@ Use 4-8 specific tags that aid discovery:
 ```
 
 ### 8. Separate Help Repos
+
 When your notebook is from one project but uses viewer help docs:
 
 ```json
@@ -460,6 +488,7 @@ When your notebook is from one project but uses viewer help docs:
 ## Common Patterns
 
 ### Educational Content
+
 ```json
 {
   "title": "...",
@@ -474,6 +503,7 @@ When your notebook is from one project but uses viewer help docs:
 ```
 
 ### Reference Material
+
 ```json
 {
   "title": "...",
@@ -486,6 +516,7 @@ When your notebook is from one project but uses viewer help docs:
 ```
 
 ### Presentation/Demo
+
 ```json
 {
   "title": "...",
@@ -505,20 +536,24 @@ When your notebook is from one project but uses viewer help docs:
 ## Troubleshooting
 
 **Attributes not displaying?**
+
 - Check JSON syntax in metadata object
 - Verify attribute names are spelled correctly (case-sensitive!)
 - Check browser console for errors
 
 **Badges not showing correct colors?**
+
 - Verify category/difficulty values match expected keywords
 - Check spelling ("beginner" not "beginnner")
 
 **Links not resolving?**
+
 - Ensure `repo` attribute is a full GitHub URL
 - Check that .md files exist in repository
 - Verify relative paths in markdown links
 
 **Help button not working?**
+
 - Check `help-repo` is specified (or `repo` as fallback)
 - Ensure help.md exists at `docs/help.md` in repository
 - Open GitHub overlay to test

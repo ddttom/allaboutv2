@@ -22,6 +22,7 @@ This directory contains templates for creating different types of Jupyter notebo
 **Purpose:** Create visually consistent presentation notebooks for client demos, showcases, and documentation.
 
 **Features:**
+
 - ✅ Complete visual consistency with established standards
 - ✅ Blue gradient backgrounds on all cells
 - ✅ HTML headings with explicit colors (`#0d47a1`)
@@ -31,6 +32,7 @@ This directory contains templates for creating different types of Jupyter notebo
 - ✅ Interactive table of contents with hash links
 
 **Use When:**
+
 - Creating client presentations
 - Building product showcases
 - Creating documentation presentations
@@ -38,12 +40,14 @@ This directory contains templates for creating different types of Jupyter notebo
 - Building training slides
 
 **Structure:**
+
 - 8 ready-to-use cells
 - Hero title, introduction, table of contents
 - Example sections with cards, accordion, and tabs blocks
 - Conclusion with key takeaways
 
 **See Also:**
+
 - [docs/for-ai/explaining-presentation-notebooks.md](../../explaining-presentation-notebooks.md)
 - [.claude/skills/create-presentation/SKILL.md](../../../../.claude/skills/create-presentation/SKILL.md)
 - [.claude/commands/create-presentation.md](../../../../.claude/commands/create-presentation.md)
@@ -55,6 +59,7 @@ This directory contains templates for creating different types of Jupyter notebo
 **Purpose:** Create interactive educational notebooks for tutorials, guides, and teaching materials.
 
 **Features:**
+
 - ✅ Clear learning objectives and prerequisites
 - ✅ Step-by-step progressive structure
 - ✅ Executable code cells for hands-on practice
@@ -63,6 +68,7 @@ This directory contains templates for creating different types of Jupyter notebo
 - ✅ Advanced topics for deeper learning
 
 **Use When:**
+
 - Creating tutorials for learners
 - Building interactive courses
 - Writing educational blog posts
@@ -70,6 +76,7 @@ This directory contains templates for creating different types of Jupyter notebo
 - Teaching technical concepts
 
 **Structure:**
+
 - Introduction with learning objectives
 - Basic concepts with examples
 - Hands-on exercises
@@ -77,6 +84,7 @@ This directory contains templates for creating different types of Jupyter notebo
 - Conclusion with next steps
 
 **See Also:**
+
 - [docs/for-ai/explaining-educational-notebooks.md](../../explaining-educational-notebooks.md)
 - [.claude/skills/jupyter-educational-notebook/SKILL.md](../../../../.claude/skills/jupyter-educational-notebook/SKILL.md)
 - [.claude/commands/create-notebook.md](../../../../.claude/commands/create-notebook.md)
@@ -88,6 +96,7 @@ This directory contains templates for creating different types of Jupyter notebo
 **Purpose:** Create basic notebooks without custom styling for quick prototyping and testing.
 
 **Features:**
+
 - ✅ Simple markdown and code cells
 - ✅ Basic structure with table of contents
 - ✅ No custom styling (uses default rendering)
@@ -95,6 +104,7 @@ This directory contains templates for creating different types of Jupyter notebo
 - ✅ Quick to customize
 
 **Use When:**
+
 - Quick prototyping and experimentation
 - Testing EDS blocks without styling
 - Creating internal documentation
@@ -102,12 +112,14 @@ This directory contains templates for creating different types of Jupyter notebo
 - Rapid iteration
 
 **Structure:**
+
 - Simple title and description
 - Table of contents
 - Content sections with markdown and code
 - Basic conclusion
 
 **See Also:**
+
 - [test.ipynb](../../../../test.ipynb) - Example testing notebook
 - [docs/for-ai/explaining-jupyter.md](../../explaining-jupyter.md)
 
@@ -118,6 +130,7 @@ This directory contains templates for creating different types of Jupyter notebo
 **Purpose:** Create comprehensive navigation notebooks for complex documentation systems using multi-paradigm navigation.
 
 **Features:**
+
 - ✅ Multi-paradigm navigation (role + task + workflow + category)
 - ✅ Progressive disclosure with part summaries
 - ✅ Emergency navigation for urgent problems
@@ -129,6 +142,7 @@ This directory contains templates for creating different types of Jupyter notebo
 - ✅ Universal patterns for applying to other projects
 
 **Use When:**
+
 - Documenting complex systems (20+ documents)
 - Creating navigation for multiple audiences (4+ roles)
 - Building documentation hubs
@@ -137,6 +151,7 @@ This directory contains templates for creating different types of Jupyter notebo
 - Teaching documentation architecture patterns
 
 **Structure (30 cells):**
+
 - Hero cell with main navigation table
 - Emergency navigation (quick fixes)
 - Essential bookmarks highlight
@@ -173,24 +188,28 @@ This directory contains templates for creating different types of Jupyter notebo
 - Closing cell with thank you message
 
 **Navigation Paradigms:**
+
 1. **Role-Based** - "I'm a [Developer/Architect/PM/etc.]"
 2. **Task-Based** - "I need to build/test/deploy X"
 3. **Workflow-Based** - "I'm in the [planning/development/testing] phase"
 4. **Category-Based** - "Browse all [implementation/testing/guidelines] docs"
 
 **Living Documentation Principles:**
+
 - Executable truth (validated links and structure)
 - Self-verification (action cards validate headings exist)
 - Multi-audience design (6+ distinct roles)
 - Multi-modal navigation (4 ways to find information)
 
 **When NOT to Use:**
+
 - Simple documentation (< 10 documents)
 - Single-audience documentation
 - Linear learning paths
 - Quick reference guides
 
 **Best Practices:**
+
 - ✅ **CRITICAL: Add `<!-- action-cards -->` to ALL transition cells** (required for validation)
 - ✅ Include emergency navigation section for urgent problems
 - ✅ Add progress indicators (🔵🔵🔵⚪⚪⚪) and reading time estimates
@@ -222,12 +241,14 @@ The [navigation-template.ipynb](navigation-template.ipynb) follows production-re
 3. **Use [docs-navigation.ipynb](../../../../docs-navigation.ipynb) as the advanced reference** - 75 cells with 8 complete parts
 
 **See Also:**
+
 - [docs-navigation.ipynb](../../../../docs-navigation.ipynb) - **REFERENCE EXAMPLE** (75 cells, 8 parts, production-ready structure)
 - [docs/for-ai/document-relationship-mapping.md](../../document-relationship-mapping.md) - Cross-reference strategy
 - [docs/for-ai/navigation-flows.md](../../navigation-flows.md) - Decision trees
 - [docs/for-ai/explaining-educational-notebooks.md](../../explaining-educational-notebooks.md) - Notebook creation guide
 
 **How to Adapt:**
+
 1. Define your documentation domains and categories
 2. Identify 4-6 distinct user roles
 3. Map 5-8 common tasks
@@ -284,6 +305,7 @@ Final Wrap-Up
 ### Common Cell Ordering Mistakes
 
 ❌ **WRONG:** Completion cell BEFORE part content
+
 ```
 Part 8 Completion Cell (index 69)
 Part 8 START Cell (index 70)
@@ -291,6 +313,7 @@ Part 8 Content...
 ```
 
 ✅ **CORRECT:** Completion cell AFTER all part content
+
 ```
 Part 8 START Cell (index 63)
 Part 8 Content Cells (indices 64-71)
@@ -298,6 +321,7 @@ Part 8 Completion Cell (index 72)
 ```
 
 ❌ **WRONG:** Reference cells BETWEEN parts
+
 ```
 Part 6 Completion
 Resources & Quick Reference ← Interrupts flow
@@ -306,6 +330,7 @@ Part 7 Transition
 ```
 
 ✅ **CORRECT:** Reference cells at END of notebook
+
 ```
 Part 6 Completion
 Part 7 Transition (immediately adjacent)
@@ -318,6 +343,7 @@ Final Wrap-Up
 ```
 
 ❌ **WRONG:** Technical detail cells orphaned outside their section
+
 ```
 Part 7 Content
 Code Examples ← Orphaned
@@ -327,6 +353,7 @@ Part 8 START
 ```
 
 ✅ **CORRECT:** Technical cells within their parent section
+
 ```
 Part 8 START
 Performance Stats
@@ -364,6 +391,7 @@ Use the validation command to check structure:
 ```
 
 This checks:
+
 - ✅ Cell ordering and adjacency
 - ✅ Completion cell placement
 - ✅ Reference cell location
@@ -373,6 +401,7 @@ This checks:
 ### Real-World Example
 
 See [docs-navigation.ipynb](../../../../docs-navigation.ipynb) for perfect cell ordering:
+
 - 75 cells total
 - 8 parts sequentially numbered
 - All completions after content
@@ -393,6 +422,7 @@ See [docs-navigation.ipynb](../../../../docs-navigation.ipynb) for perfect cell 
 5. **Attributes the system** - Footer line crediting the documentation system
 
 **Example Structure:**
+
 ```markdown
 ## 📖 End of Documentation Navigator
 
@@ -417,6 +447,7 @@ You've completed the full journey through [System Name]. You now have:
 ```
 
 **Why This Matters:**
+
 - ✅ Provides psychological closure
 - ✅ Reinforces key takeaways when fresh in memory
 - ✅ Encourages bookmarking essential resources
@@ -424,6 +455,7 @@ You've completed the full journey through [System Name]. You now have:
 - ✅ Creates sense of completion and achievement
 
 **See Examples:**
+
 - [docs-navigation.ipynb](../../../../docs-navigation.ipynb) - Cell at end after "Remember - This IS Living Documentation"
 - [navigation-template.ipynb](navigation-template.ipynb) - Includes example closing cell
 
@@ -446,6 +478,7 @@ Learn step by step through these topics.
 ```
 
 **How it works:**
+
 1. Add `<!-- action-cards -->` HTML comment in your markdown cell
 2. Follow with a markdown list of links using `(#)` as placeholder
 3. Write link text that matches heading text somewhere in your notebook
@@ -455,6 +488,7 @@ Learn step by step through these topics.
 **Important:** The `<!-- action-cards -->` marker only applies to the **first list** that follows it. Any subsequent lists in the same cell will remain as normal bullet lists.
 
 **Example:**
+
 ```markdown
 <!-- In hero cell -->
 - [Installation](#)  <!-- Will find "## Installation" or "### Installation Guide" -->
@@ -464,12 +498,14 @@ Learn step by step through these topics.
 The link text doesn't need to match exactly - it searches for headings that *contain* your link text.
 
 **Best Practices:**
+
 - ✅ Use specific link text: `[Part 1: Introduction](#)` instead of just `[Introduction](#)`
 - ✅ Make link text unique to avoid ambiguity
 - ⚠️ If multiple headings match, it picks the **first one found** (in cell order)
 - 💡 Tip: Use part numbers or descriptive prefixes to ensure unique matches
 
 **Features:**
+
 - ✅ Pure markdown - no HTML required
 - ✅ Works in any cell type (hero, content, intro, transition)
 - ✅ **Smart link resolution** - No hardcoded cell IDs needed
@@ -478,6 +514,7 @@ The link text doesn't need to match exactly - it searches for headings that *con
 - ✅ Perfect for hero cells and section navigation
 
 **When to use:**
+
 - Hero cells with navigation options
 - Section introductions linking to parts
 - Tutorial navigation between chapters
@@ -489,6 +526,7 @@ The link text doesn't need to match exactly - it searches for headings that *con
 **REQUIRED for Navigation Notebooks:** Every transition cell between parts MUST include action cards.
 
 **Transition Cell Pattern:**
+
 ```markdown
 ### Part 7: Universal Patterns
 
@@ -505,12 +543,14 @@ Contextual text explaining what's next...
 ```
 
 **Validation Requirements:**
+
 - ✅ Transition cells MUST have `<!-- action-cards -->` marker
 - ✅ Must include 3-6 action card links
 - ✅ Links must use `(#)` placeholder pattern
 - ✅ Links must resolve to existing headings
 
 **Common Failure:**
+
 ```markdown
 # ❌ FAILS VALIDATION - Missing action cards
 ### Part 7: Universal Patterns
@@ -534,17 +574,20 @@ These patterns work everywhere...
 ```
 
 **Why This Matters:**
+
 - This is the #1 validation failure (80% of issues)
 - Action cards provide visual navigation between parts
 - Maintains consistent user experience
 - Critical for multi-part navigation notebooks
 
 **Validation Check:**
+
 ```bash
 /validate-notebook your-notebook.ipynb
 ```
 
 Will report:
+
 ```
 TRANSITIONS: ❌ FAIL
   ✗ Part 7 transition (cell 45) missing <!-- action-cards --> marker
@@ -552,6 +595,7 @@ TRANSITIONS: ❌ FAIL
 ```
 
 **See Also:**
+
 - [.claude/skills/ipynb-validator/SKILL.md](../../../../.claude/skills/ipynb-validator/SKILL.md) - Complete validation guide
 - [.claude/commands/validate-notebook.md](../../../../.claude/commands/validate-notebook.md) - Validation command
 
@@ -578,11 +622,13 @@ cp docs/for-ai/templates/ipynb/unstyled-template.ipynb my-notebook.ipynb
 ### Option 2: Use Slash Commands
 
 **For presentations:**
+
 ```
 /create-presentation "Your Topic"
 ```
 
 **For educational notebooks:**
+
 ```
 /create-notebook
 ```
@@ -590,11 +636,13 @@ cp docs/for-ai/templates/ipynb/unstyled-template.ipynb my-notebook.ipynb
 ### Option 3: Use Skills Directly
 
 **For presentations:**
+
 ```
 Use the create-presentation skill to create a presentation about [topic]
 ```
 
 **For educational notebooks:**
+
 ```
 Use the jupyter-educational-notebook skill to create a tutorial about [topic]
 ```
@@ -606,23 +654,27 @@ Use the jupyter-educational-notebook skill to create a tutorial about [topic]
 **CRITICAL:** All presentation notebooks MUST follow these standards:
 
 ### Colors
+
 - **Headings:** `#0d47a1` (dark blue)
 - **Text:** `#212121` (dark grey)
 - **Border:** `#0288d1` (blue)
 - **Background:** `linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)`
 
 ### Typography
+
 - **H2:** `color: #0d47a1; font-size: 28px; font-weight: 700; margin-bottom: 24px;`
 - **H3:** `color: #0d47a1; font-size: 26px; font-weight: 700; margin-bottom: 16px;`
 - **Body:** `color: #212121;`
 
 ### Layout
+
 - **Margins:** `margin: 0 0;` (no vertical gaps)
 - **Padding:** `padding: 32px;`
 - **Border radius:** `border-radius: 12px;`
 - **Border:** `border-left: 6px solid #0288d1;`
 
 ### Critical Rules
+
 1. ✅ Use HTML headings, NOT markdown (`##`, `###`)
 2. ✅ Wrap EDS blocks INSIDE styled containers
 3. ✅ Include `color: #212121` on all gradient divs
@@ -655,13 +707,16 @@ Use the jupyter-educational-notebook skill to create a tutorial about [topic]
 ## Example Notebooks
 
 **Presentation Examples:**
+
 - [docs-navigation-v3.ipynb](../../../../docs-navigation-v3.ipynb) - Perfect visual consistency example
 
 **Educational Examples:**
+
 - [blog.ipynb](../../../../blog.ipynb) - Educational blog post (41 cells)
 - [education.ipynb](../../../../education.ipynb) - Tutorial notebook
 
 **Unstyled Examples:**
+
 - [test.ipynb](../../../../test.ipynb) - Testing notebook for EDS blocks
 
 ---
@@ -679,16 +734,19 @@ Use the jupyter-educational-notebook skill to create a tutorial about [topic]
 ## Getting Help
 
 ### Commands
+
 - `/create-presentation` - Create styled presentation notebook
 - `/create-notebook` - Create interactive educational notebook
 - `/jupyter-notebook` - Create testing notebook
 
 ### Skills
+
 - `create-presentation` - Presentation creation assistance
 - `jupyter-educational-notebook` - Educational notebook guidance
 - `jupyter-notebook-testing` - Testing notebook help
 
 ### Documentation
+
 - See `docs/for-ai/` directory for comprehensive guides
 - See `.claude/skills/` for detailed skill documentation
 - See `.claude/commands/` for slash command references
@@ -704,6 +762,7 @@ Use the jupyter-educational-notebook skill to create a tutorial about [topic]
 All templates follow best practices for cell ordering:
 
 ✅ **navigation-template.ipynb**
+
 - **30 cells** with production-ready structure
 - ✅ All transition cells have action cards (cells 11, 14, 17, 20, 23)
 - ✅ Proper Part X headings with progress indicators
@@ -713,11 +772,13 @@ All templates follow best practices for cell ordering:
 - ✅ Ready for `/validate-notebook` testing
 
 ✅ **educational-template.ipynb**
+
 - Progressive learning structure
 - Exercises after concepts
 - Summary at end
 
 ✅ **presentation-template.ipynb**
+
 - Visual consistency throughout
 - Logical slide flow
 - Closing slide at end
@@ -739,6 +800,7 @@ Run validation to ensure structure integrity:
 ```
 
 Expected output for proper structure:
+
 - Overall Score: ≥ 90/100
 - All smart links resolve
 - Cell ordering correct
@@ -748,6 +810,7 @@ Expected output for proper structure:
 ---
 
 **Last Updated:** 2025-01-21
+
 - Rebuilt navigation-template.ipynb with proper transition cells
 - All transition cells now have required action cards format
 - Template is 100% validation-compliant (30 cells, 6 transition cells)

@@ -1,4 +1,5 @@
 # EDS Component Design Philosophy
+
 ## Bridging Simplicity and Sophistication
 
 **Related Documentation:** [EDS Overview](../eds.md) | [EDS Architecture Standards](eds-architecture-standards.md) | [Build Blocks Clarification](build-blocks-clarification.md) | [Block Architecture Standards](block-architecture-standards.md)
@@ -6,12 +7,14 @@
 ### The Fundamental Tension
 
 Adobe Edge Delivery Services (EDS) champions a philosophy of **radical simplicity** (see [EDS Overview](../eds.md) for comprehensive implementation examples):
+
 - Vanilla JavaScript with minimal dependencies
 - Direct DOM manipulation
 - Performance-first architecture
 - Files you can edit directly
 
 But modern web development demands **sophisticated capabilities**:
+
 - Rich design systems
 - Complex interactions
 - Advanced UI components
@@ -26,7 +29,9 @@ This guide establishes a **conscious architectural approach** that respects both
 EDS processes HTML in two distinct states, and understanding this is crucial for block development:
 
 #### **Served HTML** (Pre-EDS Processing)
+
 **What CMS/authoring delivers to EDS:**
+
 ```html
 <!-- Minimal structure from content management -->
 <div class="shoelace-card">
@@ -34,8 +39,10 @@ EDS processes HTML in two distinct states, and understanding this is crucial for
 </div>
 ```
 
-#### **Rendered HTML** (Post-EDS Processing) 
+#### **Rendered HTML** (Post-EDS Processing)
+
 **What EDS creates after transformation:**
+
 ```html
 <!-- Full structure after EDS scripts process it -->
 <div class="shoelace-card block" data-block-name="shoelace-card" data-block-status="initialized">
@@ -65,11 +72,13 @@ Some complex blocks include both test files to validate different scenarios:
 ```
 
 **`test.html` (Rendered HTML Testing):**
+
 - Tests component with full EDS structure
 - Standard testing approach for block decoration
 - What your `decorate` function actually receives
 
 **`test2.html` (Served HTML Testing):**
+
 - Tests component with minimal/raw HTML structure  
 - Validates EDS processing works correctly
 - Catches edge cases in content extraction
@@ -81,6 +90,7 @@ Some complex blocks include both test files to validate different scenarios:
 **EDS automatically generates file paths from HTML class names.** This is a fundamental architectural constraint that affects all development decisions.
 
 When EDS encounters this HTML:
+
 ```html
 <div class="my-component">Content here</div>
 ```
@@ -88,17 +98,20 @@ When EDS encounters this HTML:
 EDS **automatically and dynamically**:
 
 1. **Transforms the element**:
+
    ```html
    <div class="my-component block" data-block-name="my-component" data-block-status="initialized">
    ```
 
 2. **Constructs import paths** (in `scripts/aem.js`):
+
    ```javascript
    // This path is generated automatically - you cannot change it
    const mod = await import(`${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.js`);
    ```
 
 3. **Requires EXACT file structure**:
+
    ```
    /blocks/my-component/my-component.js   ← MUST match class name exactly
    /blocks/my-component/my-component.css  ← MUST match class name exactly
@@ -107,12 +120,14 @@ EDS **automatically and dynamically**:
 ### **What This Means for Development**
 
 ❌ **You CANNOT:**
+
 - Use different file names than your class name
 - Redirect imports to different files
 - Have "prettier" or more descriptive file names
 - Use aliases or alternative paths
 
 ✅ **You MUST:**
+
 - Match file names exactly to HTML class names
 - Accept EDS's rigid naming requirements
 - Design your architecture within these constraints
@@ -139,26 +154,31 @@ The build process acts as a "translator" between flexible development and rigid 
 ## Core Principles {#core-principles}
 
 ### 1. **Conscious Complexity**
+>
 > Never drift into complexity - choose it deliberately.
 
 Every complex component should answer: **"What capability does this complexity enable that justifies the cost?"**
 
 **Cost of Complexity:**
+
 - Larger bundle sizes (130KB vs 10KB)
 - Build process dependencies
 - External library maintenance
 - Debugging complexity
 
 **Benefits of Complexity:**
+
 - Professional design system consistency
 - Advanced user interactions
 - Rich component ecosystems
 - Modern development tooling
 
 ### 2. **Enhancement Over Replacement**
+>
 > Preserve content, enhance experience.
 
 **EDS-Native Pattern (Preferred):**
+
 ```javascript
 // ✅ Enhance existing content
 export default function decorate(block) {
@@ -172,6 +192,7 @@ export default function decorate(block) {
 ```
 
 **Replacement Pattern (When Necessary):**
+
 ```javascript
 // ⚠️ Replace only when enhancement is impossible
 export default async function decorate(block) {
@@ -188,6 +209,7 @@ export default async function decorate(block) {
 ```
 
 ### 3. **Fail Safely**
+>
 > If enhancement fails, preserve the original experience.
 
 ```javascript
@@ -207,6 +229,7 @@ export default async function decorate(block) {
 ### When to Choose Simple (EDS-Native) Pattern
 
 **Choose Simple When:**
+
 - ✅ Vanilla JavaScript suffices
 - ✅ Basic styling meets requirements
 - ✅ No external dependencies needed
@@ -215,6 +238,7 @@ export default async function decorate(block) {
 - ✅ Team prefers minimal tooling
 
 **Examples:**
+
 - Text formatters
 - Basic cards
 - Content blocks
@@ -224,6 +248,7 @@ export default async function decorate(block) {
 ### When to Choose Complex (Build-Enhanced) Pattern
 
 **Choose Complex When:**
+
 - ✅ Design system consistency is business-critical
 - ✅ Rich interactions provide real user value
 - ✅ Component has 5+ interactive elements
@@ -232,6 +257,7 @@ export default async function decorate(block) {
 - ✅ Maintenance overhead is acceptable
 
 **Examples:**
+
 - Data visualization components
 - Rich media galleries
 - Advanced form components
@@ -262,6 +288,7 @@ export default function decorate(block) {
 ## Implementation Patterns {#implementation-patterns}
 
 ### Pattern 1: EDS-Native (Simple)
+
 ```
 /blocks/component-name/
 ├── component-name.js       # Vanilla JavaScript
@@ -272,12 +299,14 @@ export default function decorate(block) {
 ```
 
 **Characteristics:**
+
 - No build process
 - Direct file editing
 - Zero external dependencies
 - Works immediately in EDS
 
 ### Pattern 2: Build-Enhanced (Complex)
+
 ```
 /build/component-name/      # Development workspace
 ├── component-name.js       # Source with imports
@@ -297,6 +326,7 @@ export default function decorate(block) {
 ```
 
 **Characteristics:**
+
 - Modern development workflow
 - External dependencies bundled
 - Build process required
@@ -309,6 +339,7 @@ export default function decorate(block) {
 The build-enhanced pattern uses **two proxy systems** to enable development with real production data:
 
 **Development Phase (Vite Proxy):**
+
 ```javascript
 // vite.config.js
 proxy: {
@@ -319,12 +350,14 @@ proxy: {
 ```
 
 **EDS Integration Phase (Server.js Proxy):**
+
 ```javascript
 // Built into EDS debug server
 // Automatically proxies missing assets to production site
 ```
 
 **Benefits:**
+
 - **Real data during development** - no complex mocking required
 - **Production assets during testing** - images, fonts, content work immediately  
 - **Seamless workflow** - from development to integration with consistent data
@@ -334,6 +367,7 @@ proxy: {
 ### All Components Must
 
 **Technical Requirements:**
+
 - ✅ Export `decorate` function as default
 - ✅ Accept block element as parameter
 - ✅ Maintain EDS attributes (`data-block-name`, `data-block-status`)
@@ -341,6 +375,7 @@ proxy: {
 - ✅ Include comprehensive error handling
 
 **User Experience Requirements:**
+
 - ✅ Provide loading states for async operations
 - ✅ Graceful degradation on failure
 - ✅ Accessible keyboard navigation
@@ -348,6 +383,7 @@ proxy: {
 - ✅ Mobile-responsive design
 
 **Documentation Requirements:**
+
 - ✅ Clear installation/usage instructions
 - ✅ Content structure examples
 - ✅ Configuration options
@@ -367,12 +403,14 @@ proxy: {
 ### Code Review Checklist
 
 **For Simple Components:**
+
 - [ ] No external dependencies
 - [ ] Direct DOM enhancement only
 - [ ] Preserves original content on failure
 - [ ] Follows EDS naming conventions
 
 **For Complex Components:**
+
 - [ ] Complexity is justified by clear benefits
 - [ ] Build process is documented
 - [ ] Bundle size is acceptable
@@ -403,6 +441,7 @@ For every component, document:
 ### Migration Paths
 
 **Simple → Complex (When Requirements Grow):**
+
 1. Create `/build/component-name/` directory
 2. Set up build process
 3. Migrate code to build environment
@@ -410,6 +449,7 @@ For every component, document:
 5. Update documentation
 
 **Complex → Simple (When Simplifying):**
+
 1. Evaluate if external dependencies are still needed
 2. Inline essential functionality
 3. Remove build process
@@ -418,6 +458,7 @@ For every component, document:
 ### Continuous Evaluation
 
 **Quarterly Review Questions:**
+
 - Are complex components still providing value proportional to their cost?
 - Can any complex components be simplified?
 - Are simple components missing critical functionality?
@@ -428,6 +469,7 @@ For every component, document:
 ### When Simple Works Best
 
 **Example: Text Highlighter Block**
+
 ```javascript
 export default function decorate(block) {
   const text = block.textContent.trim();
@@ -437,6 +479,7 @@ export default function decorate(block) {
 ```
 
 **Why It Works:**
+
 - Clear, single purpose
 - No external dependencies
 - Immediate functionality
@@ -445,12 +488,14 @@ export default function decorate(block) {
 ### When Complex Is Justified
 
 **Example: Data Visualization Dashboard**
+
 - Requires charting library (D3, Chart.js)
 - Complex data processing
 - Rich interactions
 - Real-time updates
 
 **Justification:**
+
 - Would take months to build from scratch
 - Library provides tested, accessible components
 - Business value significantly exceeds complexity cost
@@ -468,6 +513,7 @@ The goal isn't to avoid complexity - it's to **choose complexity consciously** a
 ## See Also
 
 ### Core Philosophy & Architecture
+
 - **[EDS Overview](../eds.md)** - Complete introduction to Edge Delivery Services architecture and core concepts
 - **[EDS Architecture Standards](eds-architecture-standards.md)** - Architectural patterns and standards for EDS-native block development
 - **[Build Blocks Clarification](build-blocks-clarification.md)** - Understanding the dual-directory architecture and when to use each approach
@@ -475,24 +521,28 @@ The goal isn't to avoid complexity - it's to **choose complexity consciously** a
 - **[CSS Naming Convention Style Guide](../guidelines/style-guide.md)** - CSS naming conventions and standards for EDS blocks and components
 
 ### Implementation Guides
+
 - **[Raw EDS Blocks Guide](raw-eds-blocks-guide.md)** - Step-by-step guide for implementing the simple/EDS-native pattern
 - **[Complex EDS Blocks Guide](complex-eds-blocks-guide.md)** - Detailed implementation guide for the build-enhanced pattern with external dependencies
 - **[Build Component Template](build-component-template.md)** - Template and scaffolding for creating new build-based EDS components
 - **[Project Structure](../project-structure.md)** - Understanding the overall EDS project organization and file conventions
 
 ### Development & Testing
+
 - **[Debug Guide](../testing/debug.md)** - Comprehensive debugging strategies for both simple and complex EDS blocks
 - **[Testing Strategies](testing-strategies.md)** - Testing approaches for both architectural patterns
 - **[EDS Native Testing Standards](../testing/eds-native-testing-standards.md)** - Testing approaches specifically designed for EDS-native components
 - **[Performance Optimization](performance-optimization.md)** - Techniques for optimizing both simple and complex EDS blocks
 
 ### Development Environment & Tools
+
 - **[Server README](../../../Server-README.md)** - Development server setup and configuration for both development patterns
 - **[Browser Compatibility](browser-compatibility.md)** - Ensuring cross-browser compatibility for both architectural approaches
 - **[Build Tools Configuration](build-tools-configuration.md)** - Advanced build tool setup and configuration for complex EDS blocks
 - **[Deployment Strategies](deployment-strategies.md)** - Best practices for deploying both types of EDS blocks to production
 
 ### Advanced Topics & Patterns
+
 - **[Web Components with EDS](web-components-with-eds.md)** - Integrating modern web components within both architectural patterns
 - **[JavaScript Patterns](javascript-patterns.md)** - Reusable JavaScript patterns for both simple and complex EDS development
 - **[CSS Patterns](css-patterns.md)** - Common CSS patterns and styling approaches for both development types
@@ -501,6 +551,7 @@ The goal isn't to avoid complexity - it's to **choose complexity consciously** a
 ## Next Steps
 
 ### For New EDS Developers
+
 1. **Internalize the philosophy** by understanding the tension between simplicity and sophistication
 2. **Learn the constraints** by studying the EDS fixed block names and dual-directory architecture
 3. **Start with simple patterns** using [Raw EDS Blocks Guide](raw-eds-blocks-guide.md) to understand EDS-native development
@@ -508,6 +559,7 @@ The goal isn't to avoid complexity - it's to **choose complexity consciously** a
 5. **Study the standards** in [Block Architecture Standards](block-architecture-standards.md) and [EDS Architecture Standards](eds-architecture-standards.md)
 
 ### For Experienced Developers
+
 1. **Master the decision framework** for choosing between simple and complex patterns
 2. **Understand the trade-offs** deeply by implementing both patterns and measuring their impact
 3. **Develop architectural judgment** by practicing the conscious complexity principle
@@ -515,6 +567,7 @@ The goal isn't to avoid complexity - it's to **choose complexity consciously** a
 5. **Contribute to the philosophy** by documenting your experiences and learnings
 
 ### For Architects & Technical Leads
+
 1. **Establish team decision criteria** using the architectural decision framework from this guide
 2. **Create component strategy** that balances simplicity and sophistication based on business needs
 3. **Design governance processes** that ensure complexity is chosen consciously, not accidentally
@@ -522,6 +575,7 @@ The goal isn't to avoid complexity - it's to **choose complexity consciously** a
 5. **Monitor architectural health** by tracking the ratio of simple vs. complex components and their maintenance costs
 
 ### For Product Managers & Stakeholders
+
 1. **Understand the cost implications** of choosing complex patterns for component development
 2. **Learn to evaluate trade-offs** between development speed, maintenance costs, and user experience
 3. **Appreciate the philosophy** of conscious complexity and how it affects project timelines and budgets
@@ -529,6 +583,7 @@ The goal isn't to avoid complexity - it's to **choose complexity consciously** a
 5. **Plan feature requirements** with awareness of how they map to simple vs. complex implementation patterns
 
 ### For QA Engineers & Testers
+
 1. **Understand both testing approaches** for simple EDS-native and complex build-enhanced components
 2. **Learn the dual proxy architecture** to effectively test complex components during development
 3. **Master the served vs. rendered HTML concept** to create comprehensive test scenarios
@@ -536,6 +591,7 @@ The goal isn't to avoid complexity - it's to **choose complexity consciously** a
 5. **Create quality gates** that ensure components meet the quality standards regardless of complexity
 
 ### For DevOps & Build Engineers
+
 1. **Understand the dual-directory workflow** to create appropriate CI/CD pipelines for both patterns
 2. **Set up build environments** that support the conscious complexity approach
 3. **Implement monitoring** for both simple and complex components to track their performance impact
@@ -543,6 +599,7 @@ The goal isn't to avoid complexity - it's to **choose complexity consciously** a
 5. **Plan infrastructure** that supports the evolution from simple to complex patterns
 
 ### For UI/UX Designers
+
 1. **Understand the constraints** of EDS fixed block names and how they affect component design
 2. **Learn the capabilities** of both simple and complex patterns to design appropriate experiences
 3. **Consider the philosophy** of enhancement over replacement when designing component interactions

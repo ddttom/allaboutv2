@@ -26,6 +26,7 @@ A dynamic blog viewer that fetches and displays blog content from a structured J
 The view-myblog block dynamically loads and displays blog content from a JSON data source (typically `my-blog.json`). It intelligently organizes content into featured sections (Latest Posts, Most Visited), provides category navigation, and displays categorized blog posts with descriptions and metadata.
 
 **Primary Use Cases:**
+
 - Blog landing pages with featured content
 - Multi-category content hubs
 - Documentation portals with organized sections
@@ -38,6 +39,7 @@ The view-myblog block dynamically loads and displays blog content from a JSON da
 **Location:** `/blocks/view-myblog/`
 
 **Files:**
+
 - `view-myblog.js` - Data fetching and content rendering
 - `view-myblog.css` - Layout, styling, and responsive design
 - `README.md` - Technical documentation (this file)
@@ -113,6 +115,7 @@ The view-myblog block dynamically loads and displays blog content from a JSON da
 The block follows a modular function-based architecture with helper functions for each component type:
 
 **Main Flow:**
+
 1. `decorate(block)` - Entry point, fetches data and orchestrates rendering
 2. `generateLatestPosts()` - Creates latest posts from categories
 3. `isIndexPage()` - Filters index page URLs
@@ -127,11 +130,12 @@ The block uses inline configuration within the decorate function:
 
 `Configuration Object`
 `const config = {`
-`  dataUrl: blockContent || '/my-blog.json',`
-`  errorMessage: 'Unable to load blog content. Please try again later.'`
+`dataUrl: blockContent || '/my-blog.json',`
+`errorMessage: 'Unable to load blog content. Please try again later.'`
 `};`
 
 **Configuration Values:**
+
 - `dataUrl` - JSON feed location (default: `/my-blog.json`)
 - `errorMessage` - User-friendly error text
 
@@ -141,14 +145,15 @@ The `isIndexPage()` function filters out index pages that should not appear in b
 
 `Index Page Patterns`
 `function isIndexPage(url) {`
-`  const urlPath = url.toLowerCase();`
-`  return urlPath.endsWith('/') ||`
-`         urlPath.endsWith('/index') ||`
-`         urlPath.endsWith('/index.html') ||`
-`         urlPath.endsWith('/index.htm');`
+`const urlPath = url.toLowerCase();`
+`return urlPath.endsWith('/') ||`
+`urlPath.endsWith('/index') ||`
+`urlPath.endsWith('/index.html') ||`
+`urlPath.endsWith('/index.htm');`
 `}`
 
 **Why this matters:**
+
 - Index pages are navigation pages, not content
 - Prevents duplicate listings
 - Improves content quality
@@ -160,25 +165,26 @@ The `generateLatestPosts()` function creates a latest posts section when not pro
 
 `Latest Posts Generation`
 `function generateLatestPosts(categories) {`
-`  const allPosts = [];`
-`  categories.forEach((category) => {`
-`    if (category.posts) {`
-`      category.posts.forEach((post) => {`
-`        if (!isIndexPage(post.url)) {`
-`          allPosts.push(post);`
-`        }`
-`      });`
-`    }`
-`  });`
-`  allPosts.sort((a, b) => {`
-`    const dateA = new Date(a.lastModified || '1970-01-01');`
-`    const dateB = new Date(b.lastModified || '1970-01-01');`
-`    return dateB - dateA;`
-`  });`
-`  return allPosts.slice(0, 3);`
+`const allPosts = [];`
+`categories.forEach((category) => {`
+`if (category.posts) {`
+`category.posts.forEach((post) => {`
+`if (!isIndexPage(post.url)) {`
+`allPosts.push(post);`
+`}`
+`});`
+`}`
+`});`
+`allPosts.sort((a, b) => {`
+`const dateA = new Date(a.lastModified || '1970-01-01');`
+`const dateB = new Date(b.lastModified || '1970-01-01');`
+`return dateB - dateA;`
+`});`
+`return allPosts.slice(0, 3);`
 `}`
 
 **Algorithm:**
+
 1. Collect all posts from all categories
 2. Filter out index pages
 3. Sort by lastModified (newest first)
@@ -191,19 +197,20 @@ The block counts active categories to determine display mode:
 `Active Category Counting`
 `let activeCategoryCount = 0;`
 `data.categories.forEach((category) => {`
-`  if (category.posts) {`
-`    const nonIndexPosts = category.posts.filter(`
-`      post => !isIndexPage(post.url)`
-`    );`
-`    if (nonIndexPosts.length > 0) {`
-`      activeCategoryCount++;`
-`    }`
-`  } else if (category.links) {`
-`    activeCategoryCount++;`
-`  }`
+`if (category.posts) {`
+`const nonIndexPosts = category.posts.filter(`
+`post => !isIndexPage(post.url)`
+`);`
+`if (nonIndexPosts.length > 0) {`
+`activeCategoryCount++;`
+`}`
+`} else if (category.links) {`
+`activeCategoryCount++;`
+`}`
 `});`
 
 **Display Logic:**
+
 - `activeCategoryCount === 1` - Hide Latest Posts and Category Map
 - `activeCategoryCount > 1` - Show all navigation features
 
@@ -214,14 +221,15 @@ Categories can specify sort order via metadata:
 `Category Sort Order`
 `let posts = [...category.posts];`
 `if (category.sortOrder === 'oldest-first') {`
-`  posts.sort((a, b) => {`
-`    const dateA = new Date(a.lastModified || '1970-01-01');`
-`    const dateB = new Date(b.lastModified || '1970-01-01');`
-`    return dateA - dateB;`
-`  });`
+`posts.sort((a, b) => {`
+`const dateA = new Date(a.lastModified || '1970-01-01');`
+`const dateB = new Date(b.lastModified || '1970-01-01');`
+`return dateA - dateB;`
+`});`
 `}`
 
 **Options:**
+
 - `newest-first` (default) - No sorting needed
 - `oldest-first` - Ascending date sort
 
@@ -231,20 +239,21 @@ The block handles link-based categories differently from post categories:
 
 `Link-Based Category Rendering`
 `if (category.links) {`
-`  const linksList = document.createElement('ul');`
-`  category.links.forEach((link) => {`
-`    const li = document.createElement('li');`
-`    const a = document.createElement('a');`
-`    a.href = link.url;`
-`    a.textContent = link.title;`
-`    a.target = '_blank';`
-`    a.rel = 'noopener noreferrer';`
-`    li.appendChild(a);`
-`    linksList.appendChild(li);`
-`  });`
+`const linksList = document.createElement('ul');`
+`category.links.forEach((link) => {`
+`const li = document.createElement('li');`
+`const a = document.createElement('a');`
+`a.href = link.url;`
+`a.textContent = link.title;`
+`a.target = '_blank';`
+`a.rel = 'noopener noreferrer';`
+`li.appendChild(a);`
+`linksList.appendChild(li);`
+`});`
 `}`
 
 **Security Attributes:**
+
 - `target="_blank"` - Opens in new tab
 - `rel="noopener noreferrer"` - Security headers
 
@@ -254,19 +263,20 @@ The block uses try-catch with user-friendly error states:
 
 `Error Handling Pattern`
 `try {`
-`  block.innerHTML = '<p class="view-myblog-loading">Loading...</p>';`
-`  const response = await fetch(config.dataUrl);`
-`  if (!response.ok) {`
-`    throw new Error('HTTP ' + response.status);`
-`  }`
-`  const data = await response.json();`
+`block.innerHTML = '<p class="view-myblog-loading">Loading...</p>';`
+`const response = await fetch(config.dataUrl);`
+`if (!response.ok) {`
+`throw new Error('HTTP ' + response.status);`
+`}`
+`const data = await response.json();`
 `} catch (error) {`
-`  console.error('View MyBlog block failed:', error);`
-`  block.innerHTML = '<p class="view-myblog-error">' +`
-`    config.errorMessage + '</p>';`
+`console.error('View MyBlog block failed:', error);`
+`block.innerHTML = '<p class="view-myblog-error">' +`
+`config.errorMessage + '</p>';`
 `}`
 
 **Error Flow:**
+
 1. Show loading state immediately
 2. Fetch data with error checking
 3. On error, log to console and show user message
@@ -277,18 +287,21 @@ The block uses try-catch with user-friendly error states:
 The block uses a comprehensive styling system with section-specific treatments:
 
 **Base Layout:**
+
 - `.view-myblog` - Base container with light gray background
 - `.view-myblog-content` - Max-width 1400px, centered
 - `.view-myblog-featured` - Featured sections container
 - `.view-myblog-categories` - Category sections container
 
 **Featured Section Styling:**
+
 - `.view-myblog-section--latest` - Blue gradient background
 - `.view-myblog-section--popular` - Orange gradient background
 - Colored left borders (4px)
 - Matching title colors
 
 **Category Map:**
+
 - `.view-myblog-category-map` - White card with shadow
 - `.view-myblog-category-table` - Full-width responsive table
 - Blue header background
@@ -296,6 +309,7 @@ The block uses a comprehensive styling system with section-specific treatments:
 - Hover effects on links
 
 **Blog Entries:**
+
 - `.view-myblog-entry` - White cards with shadows
 - `.view-myblog-entry-title` - Blue links with hover effects
 - `.view-myblog-entry-description` - Gray descriptive text
@@ -329,12 +343,14 @@ The block will fetch from the specified path instead of the default.
 ### Block Parameters
 
 **Content Table Structure:**
+
 - **Row 1:** Block name (`View MyBlog`)
 - **Row 2:** Optional data URL (defaults to `/my-blog.json`)
 
 ### Placement Guidelines
 
 **Best Practices:**
+
 - Use as main content block on blog landing pages
 - Place near top of page for visibility
 - Avoid multiple instances per page (single viewer recommended)
@@ -361,82 +377,89 @@ The block expects a JSON feed with the following structure:
 
 `Complete JSON Structure`
 `{`
-`  "metadata": {`
-`    "last-updated": "2025-11-26"`
-`  },`
-`  "latestPosts": [`
-`    {`
-`      "title": "Article Title",`
-`      "url": "https://example.com/article",`
-`      "description": "Article summary text",`
-`      "lastModified": "2025-11-19"`
-`    }`
-`  ],`
-`  "mostVisited": [`
-`    {`
-`      "title": "Popular Article",`
-`      "url": "https://example.com/popular",`
-`      "description": "Popular content summary"`
-`    }`
-`  ],`
-`  "categoryMap": [`
-`    {`
-`      "id": "category-id",`
-`      "name": "Category Name",`
-`      "count": 10,`
-`      "description": "Category focus area"`
-`    }`
-`  ],`
-`  "categories": [`
-`    {`
-`      "id": "category-id",`
-`      "name": "Category Name",`
-`      "sortOrder": "newest-first",`
-`      "posts": [`
-`        {`
-`          "title": "Post Title",`
-`          "url": "/path/to/post",`
-`          "description": "Post description",`
-`          "lastModified": "2025-11-15"`
-`        }`
-`      ]`
-`    }`
-`  ]`
+`"metadata": {`
+`"last-updated": "2025-11-26"`
+`},`
+`"latestPosts": [`
+`{`
+`"title": "Article Title",`
+`"url": "https://example.com/article",`
+`"description": "Article summary text",`
+`"lastModified": "2025-11-19"`
+`}`
+`],`
+`"mostVisited": [`
+`{`
+`"title": "Popular Article",`
+`"url": "https://example.com/popular",`
+`"description": "Popular content summary"`
+`}`
+`],`
+`"categoryMap": [`
+`{`
+`"id": "category-id",`
+`"name": "Category Name",`
+`"count": 10,`
+`"description": "Category focus area"`
+`}`
+`],`
+`"categories": [`
+`{`
+`"id": "category-id",`
+`"name": "Category Name",`
+`"sortOrder": "newest-first",`
+`"posts": [`
+`{`
+`"title": "Post Title",`
+`"url": "/path/to/post",`
+`"description": "Post description",`
+`"lastModified": "2025-11-15"`
+`}`
+`]`
+`}`
+`]`
 `}`
 
 ### Required Fields
 
 **Post Objects:**
+
 - `title` (string) - Post title
 - `url` (string) - Post URL
 - `description` (string) - Post summary
 
 **Optional Fields:**
+
 - `lastModified` (string) - ISO date string
 
 **Category Objects:**
+
 - `id` (string) - Unique identifier for anchors
 - `name` (string) - Display name
 - `posts` (array) - Array of post objects
 - `sortOrder` (string) - Optional: "oldest-first" or "newest-first"
 
 **Link-Based Categories:**
+
 - `id` (string) - Category identifier
 - `name` (string) - Category name
 - `links` (array) - Array of link objects
 
 **Link Objects:**
+
 - `title` (string) - Link text
 - `url` (string) - Link destination
 
 ### Auto-Generated Fields
 
 **latestPosts:**
+
 - If not provided or empty, automatically generated
 - Top 3 posts by lastModified across all categories
 - Index pages filtered out
 
 **categoryMap counts:**
+
 - Recalculated after index page filtering
 - Empty categories removed from map
 
@@ -464,16 +487,19 @@ The block uses hardcoded colors that could be refactored to CSS variables:
 ### Customization Points
 
 **Color Scheme:**
+
 - Featured section gradients (`.view-myblog-section--latest`, `.view-myblog-section--popular`)
 - Link colors (`.view-myblog-entry-title a`)
 - Category table header (`.view-myblog-category-table thead`)
 
 **Spacing:**
+
 - Section margins and padding
 - Entry card spacing
 - Mobile responsive adjustments
 
 **Typography:**
+
 - Font sizes for titles and descriptions
 - Line heights and letter spacing
 - Font weights
@@ -483,6 +509,7 @@ The block uses hardcoded colors that could be refactored to CSS variables:
 The block currently does not support variations. All instances use the same styling.
 
 **Potential Variations (Future):**
+
 - Compact view (smaller cards, less spacing)
 - Grid layout (multi-column category display)
 - Timeline view (chronological with date headers)
@@ -498,23 +525,26 @@ The block uses a single mobile breakpoint:
 
 `Mobile Breakpoint`
 `@media (max-width: 768px) {`
-`  /* Mobile styles */`
+`/* Mobile styles */`
 `}`
 
 ### Mobile Adaptations
 
 **Layout Changes:**
+
 - Reduced padding on all sections (1.5rem to 0.75rem)
 - Smaller font sizes for titles
 - Reduced table cell padding
 - Adjusted margins for tighter spacing
 
 **Typography:**
+
 - Section titles: 1.4rem to 1.2rem
 - Entry titles: 1.05rem to 1rem
 - Table text: default to 0.85rem
 
 **Spacing:**
+
 - Featured section padding: 1.5rem to 0.75rem
 - Category map padding: 1.25rem to 1rem
 - Category map margins adjusted for narrower viewports
@@ -522,6 +552,7 @@ The block uses a single mobile breakpoint:
 ### Desktop Experience
 
 **Optimal Viewing:**
+
 - Max-width 1400px with centered layout
 - Generous padding for readability
 - Full-size category navigation table
@@ -534,6 +565,7 @@ The block uses a single mobile breakpoint:
 ### Semantic HTML
 
 **Structure:**
+
 - `<article>` for blog entries
 - `<section>` for category groups
 - `<nav>` for category map
@@ -546,13 +578,14 @@ The block uses a single mobile breakpoint:
 
 `Navigation Landmark`
 `<nav class="view-myblog-category-map"`
-`     aria-label="Category navigation">`
+`aria-label="Category navigation">`
 
 This identifies the category table as a navigation landmark for screen readers.
 
 ### Keyboard Navigation
 
 **Interactive Elements:**
+
 - All links are keyboard accessible (tab navigation)
 - Focus indicators on links (browser default)
 - No keyboard traps
@@ -561,10 +594,12 @@ This identifies the category table as a navigation landmark for screen readers.
 ### Link Accessibility
 
 **External Links:**
+
 - `target="_blank"` - Opens in new tab
 - `rel="noopener noreferrer"` - Security headers
 
 **Screen Reader Context:**
+
 - Link text clearly describes destination
 - Article titles are wrapped in heading elements
 - Categories announced as navigation
@@ -572,11 +607,13 @@ This identifies the category table as a navigation landmark for screen readers.
 ### Color Contrast
 
 **Current Implementation:**
+
 - Blue links (#667eea) on white background
 - High contrast for readability
 - Hover states darken links (#764ba2)
 
 **Recommendations:**
+
 - Verify WCAG AA compliance (4.5:1 minimum)
 - Test gradient backgrounds for text readability
 - Ensure metadata text (#999) meets contrast requirements
@@ -584,6 +621,7 @@ This identifies the category table as a navigation landmark for screen readers.
 ### Loading States
 
 **User Feedback:**
+
 - "Loading blog content..." shown during fetch
 - Clear error messages on failure
 - No silent failures
@@ -595,11 +633,13 @@ This identifies the category table as a navigation landmark for screen readers.
 ### Loading Strategy
 
 **Lazy Loading:**
+
 - Block uses EDS delayed loading by default
 - Content loads when scrolled into viewport
 - Reduces initial page load time
 
 **Data Fetching:**
+
 - Single fetch request for all blog data
 - JSON response cached by browser
 - No multiple API calls per category
@@ -607,11 +647,13 @@ This identifies the category table as a navigation landmark for screen readers.
 ### Rendering Optimization
 
 **DOM Construction:**
+
 - Elements created once and appended
 - No repeated DOM queries
 - Efficient `forEach` loops for rendering
 
 **Index Page Filtering:**
+
 - Filter operations performed once on data load
 - Cached results used for all sections
 - No repeated filtering during rendering
@@ -619,12 +661,14 @@ This identifies the category table as a navigation landmark for screen readers.
 ### Bundle Size
 
 **JavaScript:**
+
 - ~13KB unminified
 - No external dependencies
 - Pure vanilla JavaScript
 - Minimal runtime overhead
 
 **CSS:**
+
 - ~5KB unminified
 - Self-contained styles
 - No CSS framework dependencies
@@ -632,11 +676,13 @@ This identifies the category table as a navigation landmark for screen readers.
 ### Network Considerations
 
 **Single Request:**
+
 - One JSON fetch for all content
 - Browser caching applies
 - CDN-friendly static JSON
 
 **Image Loading:**
+
 - No images loaded by block itself
 - Linked pages load their own assets
 - Reduces initial page weight
@@ -648,12 +694,14 @@ This identifies the category table as a navigation landmark for screen readers.
 ### Modern Browsers
 
 **Full Support:**
+
 - Chrome 90+
 - Firefox 88+
 - Safari 14+
 - Edge 90+
 
 **Features Used:**
+
 - ES6 async/await
 - Template literals
 - Arrow functions
@@ -664,21 +712,25 @@ This identifies the category table as a navigation landmark for screen readers.
 ### Polyfill Requirements
 
 **Not Required:**
+
 - No polyfills needed for modern browsers
 - All features widely supported
 
 **Legacy Browser Support:**
+
 - IE11: Not supported (uses ES6+ syntax)
 - Older browsers require transpilation
 
 ### Progressive Enhancement
 
 **Graceful Degradation:**
+
 - Error states show friendly messages
 - Failed fetches display error UI
 - No silent failures
 
 **No JavaScript:**
+
 - Without JavaScript, block shows loading state
 - EDS decorates blocks via JavaScript (required)
 - Consider fallback static content
@@ -692,11 +744,13 @@ This identifies the category table as a navigation landmark for screen readers.
 **Issue: Blog content not loading**
 
 Symptoms:
+
 - Loading spinner stays visible
 - Error message appears
 - Console shows fetch errors
 
 Solutions:
+
 1. Verify JSON data URL is correct and accessible
 2. Check browser console for network errors
 3. Ensure JSON is valid (use JSON validator)
@@ -706,10 +760,12 @@ Solutions:
 **Issue: No latest posts appearing**
 
 Symptoms:
+
 - Latest Posts section is empty
 - Only category sections visible
 
 Solutions:
+
 1. Verify categories contain posts with lastModified dates
 2. Check that posts are not all index pages
 3. Ensure at least 3 non-index posts exist across categories
@@ -718,10 +774,12 @@ Solutions:
 **Issue: Category Map not showing**
 
 Symptoms:
+
 - Category navigation table missing
 - Jump-to-category links not available
 
 Solutions:
+
 1. Check if only one active category exists (map hidden in single-category mode)
 2. Verify categoryMap array exists in JSON
 3. Ensure categories have non-zero post counts after filtering
@@ -730,10 +788,12 @@ Solutions:
 **Issue: Empty categories displaying**
 
 Symptoms:
+
 - Category sections with no posts
 - Blank category areas
 
 Solutions:
+
 1. Verify posts array is not empty in JSON
 2. Check if all posts are index pages (filtered out)
 3. Ensure post objects have required fields (title, url, description)
@@ -741,10 +801,12 @@ Solutions:
 **Issue: Links not working**
 
 Symptoms:
+
 - Clicking links does nothing
 - Console shows errors
 
 Solutions:
+
 1. Verify post URLs are valid and complete
 2. Check for JavaScript errors in console
 3. Ensure `target="_blank"` and `rel` attributes are correct
@@ -753,11 +815,13 @@ Solutions:
 **Issue: Styling looks broken**
 
 Symptoms:
+
 - Layout is misaligned
 - Colors are wrong
 - Responsive design not working
 
 Solutions:
+
 1. Clear browser cache and reload
 2. Check view-myblog.css is loading (Network tab)
 3. Verify no CSS conflicts with global styles
@@ -772,6 +836,7 @@ Solutions:
 
 **Test File:**
 `test.html` provides a local testing environment with:
+
 - EDS core integration (`aem.js`)
 - Sample blog data
 - Isolated block testing
@@ -807,6 +872,7 @@ Solutions:
 ### Manual Testing Checklist
 
 **Visual Testing:**
+
 - Latest Posts section displays top 3 articles
 - Most Visited section shows popular content
 - Category Map renders with correct counts
@@ -817,6 +883,7 @@ Solutions:
 - Links change color on hover
 
 **Functional Testing:**
+
 - JSON data loads successfully
 - Index pages filtered from all sections
 - Category Map links jump to correct sections
@@ -826,6 +893,7 @@ Solutions:
 - Single-category mode hides Latest Posts and Map
 
 **Responsive Testing:**
+
 - Mobile layout applies at 768px
 - Table remains readable on mobile
 - Padding and margins adjust correctly
@@ -833,6 +901,7 @@ Solutions:
 - Touch targets are adequately sized
 
 **Accessibility Testing:**
+
 - Screen reader announces sections correctly
 - Tab navigation works through all links
 - ARIA labels present on navigation
@@ -840,6 +909,7 @@ Solutions:
 - Color contrast meets WCAG standards
 
 **Performance Testing:**
+
 - Single JSON fetch occurs
 - No layout shifts during load
 - Rendering completes quickly (<100ms)
@@ -865,6 +935,7 @@ Navigate to: `http://localhost:3000/blocks/view-myblog/test.html`
 ### EDS Core Integration
 
 **Required:**
+
 - `/scripts/aem.js` - Core EDS decoration system
 - `/scripts/scripts.js` - Global script initialization
 
@@ -874,11 +945,13 @@ Blocks are automatically discovered and decorated by EDS core. No manual registr
 ### Browser APIs Used
 
 **Fetch API:**
+
 - `fetch()` - JSON data retrieval
 - `Response.ok` - HTTP status checking
 - `Response.json()` - JSON parsing
 
 **DOM API:**
+
 - `document.createElement()` - Element creation
 - `Element.appendChild()` - DOM manipulation
 - `Element.classList` - Class management
@@ -886,6 +959,7 @@ Blocks are automatically discovered and decorated by EDS core. No manual registr
 - `Element.setAttribute()` - Attribute management
 
 **JavaScript Built-ins:**
+
 - `Array.forEach()` - Iteration
 - `Array.filter()` - Filtering
 - `Array.sort()` - Sorting
@@ -951,22 +1025,26 @@ Blocks are automatically discovered and decorated by EDS core. No manual registr
 ### Refactoring Opportunities
 
 **CSS Variables Implementation:**
+
 - Replace hardcoded colors with CSS variables
 - Centralize spacing values
 - Create themeable color system
 
 **Configuration Object Enhancement:**
+
 - Move all configuration to top of file
 - Support runtime configuration
 - Enable per-instance customization
 
 **Performance Optimizations:**
+
 - Implement virtual scrolling for long lists
 - Lazy load category images if added
 - Debounce search input if added
 - Optimize sort operations
 
 **Code Organization:**
+
 - Extract helper functions to shared utilities
 - Create separate modules for rendering
 - Implement component-based architecture
@@ -977,11 +1055,13 @@ Blocks are automatically discovered and decorated by EDS core. No manual registr
 ## Related Blocks
 
 **Similar Blocks:**
+
 - `blog-listing` - Alternative blog listing implementation
 - `content-hub` - Multi-source content aggregation
 - `resource-library` - Document and resource organization
 
 **Complementary Blocks:**
+
 - `search` - Add search capability to blog
 - `tags` - Tag filtering system
 - `author-bio` - Author information display
@@ -992,6 +1072,7 @@ Blocks are automatically discovered and decorated by EDS core. No manual registr
 ## Changelog
 
 **v1.0.0 (Initial Release)**
+
 - Dynamic JSON data loading
 - Auto-generated latest posts
 - Index page filtering
@@ -1014,6 +1095,7 @@ This block is part of the AllAboutV2 EDS project and follows the project's licen
 ## Support
 
 For issues, questions, or contributions:
+
 - Create an issue in the project repository
 - Review test.html for implementation examples
 - Consult EDS documentation for core concepts

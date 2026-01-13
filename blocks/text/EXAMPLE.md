@@ -11,6 +11,7 @@ The text block enables dynamic text rendering with template expressions. Simply 
 | Your content here with optional expressions |
 
 The block will automatically:
+
 - Render all standard text content
 - Process any template expressions found in the text
 - Expand variables from `window.siteConfig`
@@ -23,6 +24,7 @@ Template expressions use double curly braces with this format:
 `{{expressionName, arguments}}`
 
 **Available Expressions:**
+
 - `{{expand, $NAMESPACE:VARIABLE$}}` - Expand a single variable
 - `{{expandlist, $VAR1$, $VAR2$, $VAR3$}}` - Expand multiple variables as a list
 - `{{expandprofile, $name$; $title$; $bio$; $linkedinurl$; $linkedintitle$}}` - Create a formatted profile
@@ -38,6 +40,7 @@ Template expressions use double curly braces with this format:
 **Expected Output:**
 
 If `window.siteConfig` contains:
+
 - `$page:title$` = "My Website"
 - `$meta:category$` = "Documentation"
 
@@ -222,6 +225,7 @@ Category: Tutorial
 **Problem:** Template expressions appear as literal text
 
 **Solutions:**
+
 - Verify syntax: `{{expressionName, args}}` (no spaces around commas in expression name)
 - Check variable exists in `window.siteConfig`
 - Ensure expression name is registered (expand, expandlist, expandprofile)
@@ -232,6 +236,7 @@ Category: Tutorial
 **Problem:** `$variable$` appears instead of value
 
 **Solutions:**
+
 - Variable doesn't exist in `window.siteConfig`
 - Check variable spelling and namespace
 - Verify config files are loading (check /config/variables.json)
@@ -242,6 +247,7 @@ Category: Tutorial
 **Problem:** Profile expansion creates unexpected HTML
 
 **Solutions:**
+
 - Use semicolons (`;`) to separate profile arguments
 - Provide all 5 arguments: name, title, bio, linkedinurl, linkedintitle
 - Ensure each variable exists in siteConfig
@@ -252,6 +258,7 @@ Category: Tutorial
 **Problem:** Expandlist shows items inline instead of separate lines
 
 **Solutions:**
+
 - This is expected behavior - list items are separated by `<br>` tags
 - Use comma-separated variable list
 - Each item will be on a new line in the rendered output
@@ -265,13 +272,14 @@ Add new expressions in `/plusplus/src/clientExpressions.js`:
 `Custom Expression Example`
 `import { createExpression } from '/plusplus/plugins/expressions/src/expressions.js';`
 `createExpression('myExpression', ({ args }) => {`
-`  // Process args and return string or HTMLElement`
-`  return \`Processed: \${args}\`;`
+`// Process args and return string or HTMLElement`
+`return \`Processed: \${args}\`;`
 `});`
 
 ### Expression Renderer API
 
 Renderers receive an object with:
+
 - `name` - Expression name
 - `args` - Argument string after expression name
 - `parent` - Parent DOM node
@@ -279,6 +287,7 @@ Renderers receive an object with:
 - `context` - Optional context data
 
 Renderers can return:
+
 - `HTMLElement` - Inserted into DOM with expression name as class
 - `string` - Inserted as text node
 - `undefined` - Nothing inserted (preserves original text)
@@ -304,9 +313,9 @@ The block processes text nodes recursively:
 
 `Text Processing`
 `<div class="text block">`
-`  <!-- Original text with {{expressions}} -->`
-`  <!-- Becomes: -->`
-`  Text before <span class="expand">expanded value</span> text after`
+`<!-- Original text with {{expressions}} -->`
+`<!-- Becomes: -->`
+`Text before <span class="expand">expanded value</span> text after`
 `</div>`
 
 ## Advanced Usage
@@ -325,9 +334,9 @@ While expressions don't support conditionals directly, you can create custom exp
 
 `Conditional Expression Example`
 `createExpression('ifCategory', ({ args }) => {`
-`  const [category, text] = args.split(',').map(s => s.trim());`
-`  const pageCategory = window.siteConfig?.['$meta:category$'];`
-`  return pageCategory === category ? text : '';`
+`const [category, text] = args.split(',').map(s => s.trim());`
+`const pageCategory = window.siteConfig?.['$meta:category$'];`
+`return pageCategory === category ? text : '';`
 `});`
 
 **Usage:**
@@ -350,10 +359,10 @@ Configure locale-specific variables in `/config/variables.json`:
 
 `i18n Variables`
 `{`
-`  "data": [`
-`    { "Item": "$i18n:welcome$", "Value": "Welcome" },`
-`    { "Item": "$i18n:readmore$", "Value": "Read More" }`
-`  ]`
+`"data": [`
+`{ "Item": "$i18n:welcome$", "Value": "Welcome" },`
+`{ "Item": "$i18n:readmore$", "Value": "Read More" }`
+`]`
 `}`
 
 **Usage:**

@@ -14,6 +14,7 @@
 ### Result
 
 Displays a full-width hero image that:
+
 - Shows the first image on mobile devices (< 768px)
 - Shows the second image on desktop devices (>= 768px)
 - Overlays the heading and text on top of the image
@@ -23,6 +24,7 @@ Displays a full-width hero image that:
 ### Technical Note
 
 The block merges the two picture elements by:
+
 1. Taking the mobile source from the first picture
 2. Taking the desktop source from the second picture
 3. Creating a single responsive picture element
@@ -44,6 +46,7 @@ The block merges the two picture elements by:
 ### Result
 
 Displays a hero with manual variation styling:
+
 - **White text color** for high contrast
 - **100px top padding** for increased vertical spacing
 - **Custom line height** (69px) for h2 headings
@@ -54,6 +57,7 @@ Displays a hero with manual variation styling:
 ### Use Case
 
 Perfect for hero sections that need:
+
 - High-contrast white text
 - Extra spacing at the top
 - Professional business presentations
@@ -75,6 +79,7 @@ Perfect for hero sections that need:
 ### Result
 
 Displays a centered hero with techem styling:
+
 - **Center-aligned text** for symmetrical layout
 - **Maximum width constraint** (77pc) for readability
 - **Large h3 headings** (3rem font size, 4rem line height)
@@ -85,6 +90,7 @@ Displays a centered hero with techem styling:
 ### Use Case
 
 Ideal for:
+
 - Corporate landing pages
 - Technology company homepages
 - Centered marketing messages
@@ -106,6 +112,7 @@ Ideal for:
 ### Result
 
 Displays a hero with bold text emphasis:
+
 - **Bolder font weight** applied to all text
 - Standard hero layout (left-aligned, vertically centered)
 - Full-width responsive images
@@ -114,6 +121,7 @@ Displays a hero with bold text emphasis:
 ### Use Case
 
 Perfect for:
+
 - Strong calls-to-action
 - Brand statements
 - Attention-grabbing headlines
@@ -135,6 +143,7 @@ Perfect for:
 ### Result
 
 Combines multiple variation effects:
+
 - **Bold font weight** (from embolden)
 - **White text color** (from manual)
 - **100px top padding** (from manual)
@@ -145,6 +154,7 @@ Combines multiple variation effects:
 ### Use Case
 
 Ideal for:
+
 - Premium product launches
 - High-impact statements
 - Luxury brand messaging
@@ -165,6 +175,7 @@ Ideal for:
 ### Result
 
 Minimal hero with single heading:
+
 - Full-width responsive images
 - Single heading overlaid on image
 - Vertically centered, left-aligned
@@ -174,6 +185,7 @@ Minimal hero with single heading:
 ### Use Case
 
 Best for:
+
 - Minimalist design
 - Simple landing pages
 - Focus on imagery with subtle text
@@ -196,6 +208,7 @@ Best for:
 ### Result
 
 Hero with multiple text elements:
+
 - Full-width responsive images
 - Heading followed by two paragraphs
 - All text vertically centered and left-aligned
@@ -205,6 +218,7 @@ Hero with multiple text elements:
 ### Use Case
 
 Suitable for:
+
 - Detailed value propositions
 - Service descriptions
 - Multi-point messaging
@@ -217,6 +231,7 @@ Suitable for:
 ### Image Requirements
 
 **Mobile Image (First):**
+
 - Aspect ratio: 4:3 or 3:4 (portrait)
 - Minimum width: 768px
 - Recommended width: 768px - 1024px
@@ -224,6 +239,7 @@ Suitable for:
 - File size: < 200KB (optimized)
 
 **Desktop Image (Second):**
+
 - Aspect ratio: 16:9 or 21:9 (landscape)
 - Minimum width: 1920px
 - Recommended width: 1920px - 2560px
@@ -265,6 +281,7 @@ Suitable for:
 ### Height Behavior
 
 The hero block uses flexible height:
+
 - **Default**: `min-height: 1000px`
 - **Override**: Can be customized via CSS
 - **Responsive**: Height adjusts based on content when content exceeds min-height
@@ -330,6 +347,7 @@ The hero block uses flexible height:
 ### Pattern 1: Homepage Hero
 
 `
+
 | Hero (techem) |
 |---------------|
 | ![Mobile homepage](mobile-home.jpg) |
@@ -341,6 +359,7 @@ The hero block uses flexible height:
 ### Pattern 2: Product Launch
 
 `
+
 | Hero (manual, embolden) |
 |-------------------------|
 | ![Mobile product](mobile-product.jpg) |
@@ -352,6 +371,7 @@ The hero block uses flexible height:
 ### Pattern 3: Service Overview
 
 `
+
 | Hero |
 |------|
 | ![Mobile service](mobile-service.jpg) |
@@ -363,6 +383,7 @@ The hero block uses flexible height:
 ### Pattern 4: Campaign Landing
 
 `
+
 | Hero (embolden) |
 |-----------------|
 | ![Mobile campaign](mobile-campaign.jpg) |
@@ -419,11 +440,13 @@ main .hero {
 ### Alt Text Examples
 
 **Good Alt Text:**
+
 - "Mountain landscape at sunset with hiker silhouette"
 - "Modern office space with collaborative workspace"
 - "Close-up of product packaging on wooden surface"
 
 **Bad Alt Text:**
+
 - "image1.jpg"
 - "hero image"
 - "picture of something"
@@ -446,6 +469,7 @@ The hero block is non-interactive and doesn't require keyboard navigation. If yo
 
 **Solution:** Ensure exactly two picture elements are in the content:
 `
+
 | Hero |
 |------|
 | ![First image](mobile.jpg) |

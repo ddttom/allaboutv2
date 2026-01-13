@@ -77,6 +77,7 @@ Add a preview image for improved performance:
 All three formats work identically. The block automatically extracts the video ID and creates an optimized embed.
 
 **Features:**
+
 - Lazy loading (loads when scrolled into view)
 - Fullscreen support
 - Autoplay when clicked (if placeholder used)
@@ -89,6 +90,7 @@ All three formats work identically. The block automatically extracts the video I
 | https://vimeo.com/123456789 |
 
 **Features:**
+
 - Clean player interface
 - Fullscreen support
 - Autoplay on click (if placeholder used)
@@ -101,6 +103,7 @@ All three formats work identically. The block automatically extracts the video I
 | https://twitter.com/username/status/1234567890123456789 |
 
 **Features:**
+
 - Full tweet rendering (text, images, links)
 - Twitter branding and styling
 - Interactive elements (like, retweet, reply)
@@ -119,6 +122,7 @@ For providers not specifically supported:
 **Result:** Generic 16:9 iframe with standard settings. Works for any embeddable content but requires the provider to allow iframe embedding.
 
 **Limitations:**
+
 - Provider must allow iframe embedding (no X-Frame-Options restrictions)
 - No provider-specific optimizations
 - Standard permissions only
@@ -130,6 +134,7 @@ For providers not specifically supported:
 ### Why Use Placeholders?
 
 **Benefits:**
+
 - Improved page load performance
 - Better Lighthouse scores (95-100)
 - User controls when video loads
@@ -137,6 +142,7 @@ For providers not specifically supported:
 - Lower Cumulative Layout Shift (CLS)
 
 **When to use:**
+
 - Above-the-fold videos
 - Multiple embeds on same page
 - Mobile-first content
@@ -147,6 +153,7 @@ For providers not specifically supported:
 **Step 1: Get a preview image**
 
 Use a video thumbnail or custom image:
+
 - YouTube: `https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg`
 - Custom image: Any image file (recommended 800x450px for 16:9)
 
@@ -162,12 +169,14 @@ Use a video thumbnail or custom image:
 ### Placeholder Best Practices
 
 **Image sizing:**
+
 - Recommended: 800x450px (16:9 ratio)
 - Minimum: 400x225px
 - Maximum: 1600x900px
 - Format: WebP preferred, JPEG/PNG acceptable
 
 **Image optimization:**
+
 - Compress images (aim for < 50KB)
 - Use appropriate dimensions
 - Provide descriptive alt text
@@ -180,6 +189,7 @@ Use a video thumbnail or custom image:
 ### URL Requirements
 
 **Required format:**
+
 - Full URL including protocol: `https://example.com`
 - Valid domain name
 - For YouTube: Must include video ID
@@ -189,17 +199,21 @@ Use a video thumbnail or custom image:
 **Supported URL patterns:**
 
 **YouTube:**
+
 - `https://www.youtube.com/watch?v=VIDEO_ID`
 - `https://youtu.be/VIDEO_ID`
 - `https://www.youtube.com/embed/VIDEO_ID`
 
 **Vimeo:**
+
 - `https://vimeo.com/123456789`
 
 **Twitter:**
+
 - `https://twitter.com/username/status/1234567890`
 
 **Invalid URLs:**
+
 - Missing protocol: `www.youtube.com/watch?v=VIDEO_ID` ✗
 - Incomplete: `youtube.com` ✗
 - Wrong domain: `youtube.co/VIDEO_ID` ✗
@@ -224,6 +238,7 @@ Use a video thumbnail or custom image:
 ```
 
 **Common mistakes:**
+
 - Forgetting "Embed" in header row
 - Missing pipe characters
 - Multiple URLs in one row (use separate tables)
@@ -261,6 +276,7 @@ Use a video thumbnail or custom image:
 **4. Avoid Twitter embeds when possible**
 
 Twitter embeds load slowest due to external script dependency (~50KB). Consider:
+
 - Screenshot with link as alternative
 - Blockquote with manual styling
 - Dedicated Twitter feed plugin
@@ -303,6 +319,7 @@ Poor placeholder: Generic play button or blank image
 **1. Surround with relevant content**
 
 Search engines can't index video content. Provide:
+
 - Text description of video topic
 - Key points covered in video
 - Relevant keywords in surrounding text
@@ -319,6 +336,7 @@ For YouTube videos, ensure they're in your video sitemap for better discoverabil
 ### When NOT to Use Embeds
 
 **Avoid embeds for:**
+
 - Critical content (provide text alternative)
 - Privacy-sensitive pages (third-party tracking)
 - Extremely performance-critical pages
@@ -326,6 +344,7 @@ For YouTube videos, ensure they're in your video sitemap for better discoverabil
 - Regulatory-compliant content (GDPR considerations)
 
 **Better alternatives:**
+
 - Self-hosted videos (for full control)
 - Video links (let users choose to visit provider)
 - Screenshots with links (for previews)
@@ -347,11 +366,13 @@ For YouTube videos, ensure they're in your video sitemap for better discoverabil
    - Test URL in browser directly
 
 2. **Verify table structure:**
+
    ```
    | Embed |
    |-------|
    | URL |
    ```
+
    - Header must say "Embed"
    - Use pipe characters correctly
    - One URL per table
@@ -373,12 +394,14 @@ For YouTube videos, ensure they're in your video sitemap for better discoverabil
    - Ensure image loads successfully
 
 2. **Verify URL on next row:**
+
    ```
    | Embed |
    |-------|
    | ![Preview](IMAGE.jpg) |
    | https://youtube.com/watch?v=ID |
    ```
+
    - Video URL must be on separate row
    - Don't combine image and URL in one cell
 
@@ -419,6 +442,7 @@ For YouTube videos, ensure they're in your video sitemap for better discoverabil
 **Solutions:**
 
 1. **Add placeholders** - Especially for above-fold videos
+
    ```
    | Embed |
    |-------|
@@ -464,6 +488,7 @@ Final thoughts and summary...
 | https://www.youtube.com/watch?v=VIDEO3 |
 
 **Best practices:**
+
 - Use placeholder for first video (above fold)
 - Let subsequent videos lazy load
 - Space embeds with meaningful content between
@@ -508,19 +533,19 @@ Override default styles in your project's CSS:
 
 `Larger embed max-width`
 `.embed {`
-`  max-width: 1200px;`
-`  margin: 48px auto;`
+`max-width: 1200px;`
+`margin: 48px auto;`
 `}`
 
 `Custom play button color`
 `.embed .embed-placeholder-play button {`
-`  background: rgba(255, 0, 0, 0.8);`
-`  border-radius: 50%;`
+`background: rgba(255, 0, 0, 0.8);`
+`border-radius: 50%;`
 `}`
 
 `Different aspect ratio`
 `.embed.embed-4-3 > div {`
-`  padding-bottom: 75%; /* 4:3 ratio */`
+`padding-bottom: 75%; /* 4:3 ratio */`
 `}`
 
 Then apply by adding CSS to your project's stylesheet.
@@ -592,6 +617,7 @@ After adding embeds to your page:
 ### Browser Testing
 
 Test in multiple browsers:
+
 - Chrome (Windows, Mac, Android)
 - Firefox (Windows, Mac)
 - Safari (Mac, iOS)
@@ -599,6 +625,7 @@ Test in multiple browsers:
 - Samsung Internet (Android)
 
 **Expected behavior:**
+
 - Consistent appearance across browsers
 - Video playback works everywhere
 - Placeholder click works on all platforms
@@ -722,10 +749,12 @@ That idea grew into what you see today...
 ## Related Blocks
 
 **Similar functionality:**
+
 - **Video** - Self-hosted video player (no third-party dependency)
 - **Image** - Static image display (alternative to video thumbnail)
 
 **Complementary blocks:**
+
 - **Hero** - Large introductory section before embed
 - **Columns** - Side-by-side layout with embeds
 - **Cards** - Grid of video thumbnails with embeds
@@ -735,15 +764,18 @@ That idea grew into what you see today...
 ## Provider Documentation
 
 ### YouTube
+
 - Embed guidelines: https://support.google.com/youtube/answer/171780
 - Player parameters: https://developers.google.com/youtube/player_parameters
 - Privacy mode: Use `youtube-nocookie.com` domain
 
 ### Vimeo
+
 - Embed documentation: https://developer.vimeo.com/player/sdk/embed
 - Player parameters: https://vimeo.zendesk.com/hc/en-us/articles/360001494447
 
 ### Twitter
+
 - Embed documentation: https://developer.twitter.com/en/docs/twitter-for-websites/embedded-tweets/overview
 - Widget options: https://developer.twitter.com/en/docs/twitter-for-websites/javascript-api/overview
 

@@ -120,18 +120,21 @@ Very short label for space-saving:
 ### Button Text Guidelines
 
 **Recommended text:**
+
 - Length: 1-3 words maximum
 - Clear and descriptive
 - Universal symbols (↑, ⬆️, ^)
 - Action words ("Top", "Back")
 
 **Why this matters:**
+
 - Button text becomes the visible label
 - Displays in fixed position (limited space)
 - Should be immediately recognizable
 - Works across all screen sizes
 
 **Good button labels:**
+
 - "↑ Top" (icon + text)
 - "Back to Top" (descriptive)
 - "↑" (minimal)
@@ -139,6 +142,7 @@ Very short label for space-saving:
 - "^ Top" (ASCII symbol)
 
 **Avoid:**
+
 - Long sentences ("Click here to scroll back to top")
 - Multiple lines (breaks button layout)
 - Complex formatting (not supported)
@@ -147,12 +151,14 @@ Very short label for space-saving:
 ### Placement Requirements
 
 **Where to place:**
+
 - At the end of page (after all content)
 - One per page (document-level block)
 - Can be on any page type
 - Works with all other blocks
 
 **Page structure example:**
+
 ```
 | Hero |
 |------|
@@ -170,6 +176,7 @@ More content...
 ### When to Use This Block
 
 **Effective on:**
+
 - Long articles (> 2 screen heights)
 - Multi-section landing pages
 - Documentation with many topics
@@ -178,6 +185,7 @@ More content...
 - Product pages with detailed descriptions
 
 **Not needed on:**
+
 - Short pages (< 2 screen heights)
 - Single-screen landing pages
 - Modal dialogs or popups
@@ -190,6 +198,7 @@ More content...
 ### Visual Appearance
 
 **Button characteristics:**
+
 - Fixed position (always visible when active)
 - Bottom-left corner (20px from edges)
 - Blue background (#007BFF)
@@ -198,6 +207,7 @@ More content...
 - Hover effect (darker blue)
 
 **Visibility behavior:**
+
 - Hidden on page load
 - Appears after scrolling down 100 pixels
 - Disappears when scrolling back to top (< 100px)
@@ -206,12 +216,14 @@ More content...
 ### Scroll Threshold
 
 **Default behavior:**
+
 - Button appears when scrollY > 100px
 - 100 pixels = approximately 1-2 scroll wheel clicks
 - Prevents button from appearing on slight scroll
 - Gives users room to see content first
 
 **Why 100 pixels?**
+
 - Common industry standard
 - Balances visibility vs. intrusion
 - Works well on most page types
@@ -220,12 +232,14 @@ More content...
 ### Button Positioning
 
 **Default position (bottom-left):**
+
 ```css
 bottom: 20px
 left: 20px
 ```
 
 **Can be customized to:**
+
 - Bottom-right corner
 - Bottom-center
 - Different offsets from edges
@@ -238,24 +252,28 @@ left: 20px
 ### Content Strategy
 
 **1. Use on appropriate pages**
+
 - Only on pages with significant scroll
 - Not needed on short pages
 - Consider user experience
 - Don't overuse on every page
 
 **2. Keep button text concise**
+
 - 1-3 words maximum
 - Use universal symbols
 - Clear action ("Top", "Back")
 - Avoid complete sentences
 
 **3. Place at end of content**
+
 - After all page content
 - One per page
 - Consistent placement across site
 - Easy for users to predict location
 
 **4. Test on mobile devices**
+
 - Ensure button doesn't block content
 - Touch target large enough (44px minimum)
 - Positioned where thumb can reach
@@ -264,24 +282,28 @@ left: 20px
 ### Accessibility First
 
 **1. Semantic meaning**
+
 - Button text describes action
 - "Top" or "Back to Top" is clear
 - Avoid ambiguous labels
 - Consider screen reader users
 
 **2. Keyboard accessible**
+
 - Tab key moves to button
 - Enter/Space activates button
 - Visible focus indicator
 - Logical tab order maintained
 
 **3. Visual clarity**
+
 - High contrast (blue on white)
 - Clear button boundaries
 - Visible hover state
 - Sufficient size for clicking
 
 **4. Motion preferences**
+
 - Smooth scrolling respects user settings
 - Falls back to instant scroll if needed
 - Respects prefers-reduced-motion
@@ -290,12 +312,14 @@ left: 20px
 ### Performance Optimization
 
 **Efficient implementation:**
+
 - Lightweight JavaScript (~500 bytes)
 - Minimal CSS (~300 bytes)
 - No external dependencies
 - No API calls or network requests
 
 **Scroll performance:**
+
 - Event listener is lightweight
 - Minimal CPU impact
 - No DOM queries in scroll handler
@@ -304,12 +328,14 @@ left: 20px
 ### When NOT to Use Return to Top
 
 **Avoid on:**
+
 - Short pages (< 2 screen heights)
 - Single-section landing pages
 - Modal dialogs or overlays
 - Pages with sticky navigation (redundant)
 
 **Better alternatives:**
+
 - **Sticky header** - For persistent navigation
 - **Anchor links** - For jumping to specific sections
 - **Table of contents** - For structured navigation
@@ -326,6 +352,7 @@ left: 20px
 **Cause:** Page might not be scrolling enough, or JavaScript not loaded.
 
 **Solution:**
+
 1. Scroll down more than 100 pixels (about 2-3 scroll wheel clicks)
 2. Check that page content is long enough to scroll
 3. Verify JavaScript is enabled in browser
@@ -338,6 +365,7 @@ left: 20px
 **Cause:** CSS not loaded properly, or initial scroll position is > 100px.
 
 **Solution:**
+
 1. Check that CSS file is loaded (Network tab in DevTools)
 2. Verify page loads at top (scrollY = 0)
 3. Clear browser cache and reload
@@ -350,6 +378,7 @@ left: 20px
 **Cause:** Browser doesn't support smooth scrolling, or user has reduced motion enabled.
 
 **Solution:**
+
 1. **This is expected behavior in some cases:**
    - IE11 doesn't support smooth scrolling (works but no animation)
    - Users with prefers-reduced-motion get instant scroll (accessibility)
@@ -364,6 +393,7 @@ left: 20px
 **Cause:** Button position conflicts with page layout.
 
 **Solutions:**
+
 1. **Change button position** (requires CSS customization):
    - Move to bottom-right corner
    - Adjust offset from edges
@@ -380,6 +410,7 @@ left: 20px
 **Cause:** Block was added multiple times in Google Docs.
 
 **Solution:**
+
 1. Check Google Docs content
 2. Remove duplicate returntotop blocks
 3. Keep only one instance (usually at end of page)
@@ -392,6 +423,7 @@ left: 20px
 **Cause:** Touch target too small, or JavaScript error on mobile.
 
 **Solutions:**
+
 1. Check browser console on mobile device
 2. Verify button is large enough for touch (44px minimum)
 3. Test with different mobile browsers
@@ -502,6 +534,7 @@ Closing thoughts...
    - No API calls or resources
 
 **Testing on mobile:**
+
 - Use real devices when possible
 - Test with both hands (left/right)
 - Try different screen sizes
@@ -513,32 +546,32 @@ Closing thoughts...
 
 `Change button position to bottom-right`
 `.returntotop {`
-`  left: auto;`
-`  right: 20px;`
+`left: auto;`
+`right: 20px;`
 `}`
 
 `Circular button style`
 `.returntotop {`
-`  width: 50px;`
-`  height: 50px;`
-`  border-radius: 50%;`
-`  padding: 0;`
-`  display: flex;`
-`  align-items: center;`
-`  justify-content: center;`
+`width: 50px;`
+`height: 50px;`
+`border-radius: 50%;`
+`padding: 0;`
+`display: flex;`
+`align-items: center;`
+`justify-content: center;`
 `}`
 
 `Green accent color`
 `.returntotop {`
-`  background-color: #28a745;`
+`background-color: #28a745;`
 `}`
 `.returntotop:hover {`
-`  background-color: #218838;`
+`background-color: #218838;`
 `}`
 
 `Add shadow for depth`
 `.returntotop {`
-`  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);`
+`box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);`
 `}`
 
 Then apply by adding CSS to your project's styles.css file.
@@ -585,6 +618,7 @@ After creating the returntotop block in Google Docs:
 ### Browser Testing
 
 Test in multiple browsers:
+
 - Chrome/Edge (last 2 versions)
 - Firefox (last 2 versions)
 - Safari (last 2 versions)
@@ -592,6 +626,7 @@ Test in multiple browsers:
 - Android Chrome (last 2 versions)
 
 **Expected behavior:**
+
 - Smooth scrolling in modern browsers ✓
 - Instant scroll in IE11 (fallback) ✓
 - Works consistently across browsers ✓
@@ -687,16 +722,19 @@ Extensive product information...
 ## Related Blocks
 
 **Similar functionality:**
+
 - **Sticky Header** - Persistent navigation at top
 - **Anchor Links** - Jump to specific sections
 - **Table of Contents** - Structured navigation
 
 **Complementary blocks:**
+
 - **Hero** - Large introductory section at page top
 - **Sections** - Long-form content organization
 - **Footer** - Page-level navigation and info
 
 **When to use what:**
+
 - **Return to Top** - For general page navigation
 - **Sticky Header** - For persistent access to navigation
 - **Anchor Links** - For jumping to specific content

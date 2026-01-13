@@ -26,6 +26,7 @@ A specialized block for extracting and displaying digital asset metadata in stru
 The DAM block transforms structured tabular data about digital assets into a formatted JSON display. It extracts image paths from URLs, processes metadata fields, and presents the information in a readable, monospace code block format.
 
 **Primary Use Cases:**
+
 - Digital asset metadata documentation
 - Content inventory and auditing
 - Asset catalog generation
@@ -38,6 +39,7 @@ The DAM block transforms structured tabular data about digital assets into a for
 **Location:** `/blocks/dam/`
 
 **Files:**
+
 - `dam.js` - Core decoration logic with JSON generation
 - `dam.css` - Code display styling with monospace font
 - `README.md` - Technical documentation (this file)
@@ -105,17 +107,17 @@ Extracts the pathname from image or link elements:
 
 `Purpose: Extract Path`
 `function extractPath(element) {`
-`  const img = element.querySelector('img');`
-`  const link = element.querySelector('a');`
-`  if (img) {`
-`    const url = new URL(img.src);`
-`    return url.pathname;`
-`  }`
-`  if (link) {`
-`    const url = new URL(link.href);`
-`    return url.pathname;`
-`  }`
-`  return '';`
+`const img = element.querySelector('img');`
+`const link = element.querySelector('a');`
+`if (img) {`
+`const url = new URL(img.src);`
+`return url.pathname;`
+`}`
+`if (link) {`
+`const url = new URL(link.href);`
+`return url.pathname;`
+`}`
+`return '';`
 `}`
 
 **createDamJson(block)**
@@ -123,19 +125,19 @@ Converts block rows to JSON array:
 
 `Purpose: Create JSON`
 `function createDamJson(block) {`
-`  const rows = Array.from(block.children).slice(1);`
-`  const damData = rows.map((row) => {`
-`    const [, note, description, classification, tag, imageCell, additionalInfo] = Array.from(row.children);`
-`    return {`
-`      note: note?.textContent?.trim() || '',`
-`      description: description?.textContent?.trim() || '',`
-`      classification: classification?.textContent?.trim() || '',`
-`      tag: tag?.textContent?.trim() || '',`
-`      path: extractPath(imageCell),`
-`      additionalInfo: additionalInfo?.textContent?.trim() || '',`
-`    };`
-`  });`
-`  return JSON.stringify(damData, null, 2);`
+`const rows = Array.from(block.children).slice(1);`
+`const damData = rows.map((row) => {`
+`const [, note, description, classification, tag, imageCell, additionalInfo] = Array.from(row.children);`
+`return {`
+`note: note?.textContent?.trim() || '',`
+`description: description?.textContent?.trim() || '',`
+`classification: classification?.textContent?.trim() || '',`
+`tag: tag?.textContent?.trim() || '',`
+`path: extractPath(imageCell),`
+`additionalInfo: additionalInfo?.textContent?.trim() || '',`
+`};`
+`});`
+`return JSON.stringify(damData, null, 2);`
 `}`
 
 **createCodeDisplay(jsonString)**
@@ -143,15 +145,15 @@ Creates the visual code display element:
 
 `Purpose: Create Display`
 `function createCodeDisplay(jsonString) {`
-`  const pre = document.createElement('pre');`
-`  const code = document.createElement('code');`
-`  pre.setAttribute('role', 'region');`
-`  pre.setAttribute('aria-label', 'DAM metadata JSON output');`
-`  pre.setAttribute('tabindex', '0');`
-`  code.textContent = jsonString;`
-`  pre.appendChild(code);`
-`  pre.className = 'dam-code';`
-`  return pre;`
+`const pre = document.createElement('pre');`
+`const code = document.createElement('code');`
+`pre.setAttribute('role', 'region');`
+`pre.setAttribute('aria-label', 'DAM metadata JSON output');`
+`pre.setAttribute('tabindex', '0');`
+`code.textContent = jsonString;`
+`pre.appendChild(code);`
+`pre.className = 'dam-code';`
+`return pre;`
 `}`
 
 ### CSS Architecture
@@ -159,6 +161,7 @@ Creates the visual code display element:
 The dam block uses CSS variables for theming and responsive monospace display:
 
 **CSS Variables:**
+
 - `--dam-background` - Background color for code display (default: #f5f5f5)
 - `--dam-text-color` - Text color for code (default: #333)
 - `--dam-border-color` - Border color for container (default: #ddd)
@@ -170,6 +173,7 @@ The dam block uses CSS variables for theming and responsive monospace display:
 - `--dam-border-radius` - Border radius (default: 4px)
 
 **Code Display:**
+
 - `overflow-x: auto` - Horizontal scrolling for long lines
 - `border-radius` - Rounded corners for modern appearance
 - `border: 1px solid` - Subtle border for definition
@@ -203,25 +207,26 @@ The `DAM_CONFIG` object centralizes all configuration:
 
 `Configuration Object`
 `const DAM_CONFIG = {`
-`  ERROR_MESSAGES: {`
-`    MISSING_IMAGE: 'Image element is missing or invalid',`
-`    JSON_PARSE: 'Error parsing DAM data',`
-`    INVALID_BLOCK: 'Invalid DAM block structure',`
-`  },`
-`  SELECTORS: {`
-`    IMAGE: 'img',`
-`    LINK: 'a',`
-`  },`
-`  CLASS_NAMES: {`
-`    CODE_WRAPPER: 'dam-code',`
-`  },`
-`  ARIA_LABELS: {`
-`    CODE_SECTION: 'DAM metadata JSON output',`
-`    ERROR_MESSAGE: 'Error in DAM block',`
-`  },`
+`ERROR_MESSAGES: {`
+`MISSING_IMAGE: 'Image element is missing or invalid',`
+`JSON_PARSE: 'Error parsing DAM data',`
+`INVALID_BLOCK: 'Invalid DAM block structure',`
+`},`
+`SELECTORS: {`
+`IMAGE: 'img',`
+`LINK: 'a',`
+`},`
+`CLASS_NAMES: {`
+`CODE_WRAPPER: 'dam-code',`
+`},`
+`ARIA_LABELS: {`
+`CODE_SECTION: 'DAM metadata JSON output',`
+`ERROR_MESSAGE: 'Error in DAM block',`
+`},`
 `};`
 
 **Why this pattern:**
+
 - All configuration in one place at the top
 - Easy to find and modify settings
 - Facilitates translation and localization
@@ -254,22 +259,22 @@ The block generates a JSON array like this:
 
 `JSON Output`
 `[`
-`  {`
-`    "note": "Profile Image",`
-`    "description": "Professional headshot",`
-`    "classification": "Portrait",`
-`    "tag": "Profile",`
-`    "path": "/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png",`
-`    "additionalInfo": "Main profile photo"`
-`  },`
-`  {`
-`    "note": "Sample Art",`
-`    "description": "Abstract artwork",`
-`    "classification": "Art",`
-`    "tag": "Gallery",`
-`    "path": "/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png",`
-`    "additionalInfo": "Featured piece"`
-`  }`
+`{`
+`"note": "Profile Image",`
+`"description": "Professional headshot",`
+`"classification": "Portrait",`
+`"tag": "Profile",`
+`"path": "/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png",`
+`"additionalInfo": "Main profile photo"`
+`},`
+`{`
+`"note": "Sample Art",`
+`"description": "Abstract artwork",`
+`"classification": "Art",`
+`"tag": "Gallery",`
+`"path": "/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png",`
+`"additionalInfo": "Featured piece"`
+`}`
 `]`
 
 ---
@@ -322,12 +327,12 @@ Override default styles by setting CSS variables:
 
 `Custom Styling`
 `.dam {`
-`  --dam-background: #2d2d2d;`
-`  --dam-text-color: #f8f8f2;`
-`  --dam-border-color: #555;`
-`  --dam-font-family: 'Fira Code', monospace;`
-`  --dam-font-size: 16px;`
-`  --dam-border-radius: 8px;`
+`--dam-background: #2d2d2d;`
+`--dam-text-color: #f8f8f2;`
+`--dam-border-color: #555;`
+`--dam-font-family: 'Fira Code', monospace;`
+`--dam-font-size: 16px;`
+`--dam-border-radius: 8px;`
 `}`
 
 ### Dark Mode Support
@@ -336,11 +341,11 @@ Create a dark theme variant:
 
 `Dark Mode`
 `@media (prefers-color-scheme: dark) {`
-`  .dam {`
-`    --dam-background: #1e1e1e;`
-`    --dam-text-color: #d4d4d4;`
-`    --dam-border-color: #3e3e3e;`
-`  }`
+`.dam {`
+`--dam-background: #1e1e1e;`
+`--dam-text-color: #d4d4d4;`
+`--dam-border-color: #3e3e3e;`
+`}`
 `}`
 
 ### Custom Code Styling
@@ -349,12 +354,12 @@ Add syntax highlighting or custom formatting:
 
 `Syntax Highlighting`
 `.dam-code code {`
-`  /* Add custom code styling */`
-`  font-weight: 400;`
-`  letter-spacing: 0.5px;`
+`/* Add custom code styling */`
+`font-weight: 400;`
+`letter-spacing: 0.5px;`
 `}`
 `.dam-code code::selection {`
-`  background: rgba(100, 149, 237, 0.3);`
+`background: rgba(100, 149, 237, 0.3);`
 `}`
 
 ---
@@ -494,26 +499,31 @@ No polyfills required for supported browsers. For older browsers:
 ### Common Issues
 
 **Issue: "Invalid DAM block structure" error**
+
 - **Cause**: Missing table rows or invalid HTML structure
 - **Solution**: Ensure markdown table has header row and at least one data row
 - **Check**: Verify table syntax in markdown source
 
 **Issue: Image paths not extracted**
+
 - **Cause**: Image URL not in recognized format
 - **Solution**: Use direct URL, markdown link, or image element
 - **Check**: Inspect cell in browser DevTools to verify image element exists
 
 **Issue: JSON not displaying**
+
 - **Cause**: JavaScript error during decoration
 - **Solution**: Check browser console for error messages
 - **Check**: Verify block has class "dam" and proper structure
 
 **Issue: Styling not applied**
+
 - **Cause**: CSS file not loaded or variables not defined
 - **Solution**: Verify dam.css is loaded in page head
 - **Check**: Inspect element to see computed styles
 
 **Issue: Text wrapping incorrectly**
+
 - **Cause**: Long unbroken strings in JSON
 - **Solution**: Use `word-break` CSS property
 - **Check**: Add custom CSS for specific fields
@@ -589,10 +599,10 @@ For CI/CD integration:
 `// Unit test example`
 `import decorate from './dam.js';`
 `test('extracts image path from URL', () => {`
-`  const mockBlock = createMockBlock();`
-`  decorate(mockBlock);`
-`  const json = JSON.parse(mockBlock.textContent);`
-`  expect(json[0].path).toBe('/media_test.png');`
+`const mockBlock = createMockBlock();`
+`decorate(mockBlock);`
+`const json = JSON.parse(mockBlock.textContent);`
+`expect(json[0].path).toBe('/media_test.png');`
 `});`
 
 ---

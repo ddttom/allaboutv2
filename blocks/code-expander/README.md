@@ -109,6 +109,7 @@ Add the `text` class to the code-expander block to force all code blocks to be d
 | ------------------ |
 
 This variation:
+
 - Skips language detection
 - Displays all code as plain text with a "TEXT" label
 - Disables syntax highlighting

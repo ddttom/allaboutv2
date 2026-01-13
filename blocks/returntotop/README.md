@@ -26,6 +26,7 @@ A lightweight, accessible scroll-to-top button that appears after scrolling down
 The return to top block provides a fixed-position button that appears when users scroll down more than 100 pixels. Clicking the button smoothly scrolls the page back to the top. This is a document-level utility block that enhances navigation on long pages.
 
 **Primary Use Cases:**
+
 - Long-form articles and blog posts
 - Documentation pages with multiple sections
 - Product pages with extensive descriptions
@@ -38,6 +39,7 @@ The return to top block provides a fixed-position button that appears when users
 **Location:** `/blocks/returntotop/`
 
 **Files:**
+
 - `returntotop.js` - Scroll detection and button behavior
 - `returntotop.css` - Fixed positioning and button styling
 - `README.md` - Technical documentation (this file)
@@ -96,6 +98,7 @@ The `decorate()` function sets up scroll detection and click handling:
 ### Key Implementation Details
 
 **Scroll Threshold:**
+
 ```javascript
 if (window.scrollY > 100) {
   returnToTopButton.style.display = 'block';
@@ -105,12 +108,14 @@ if (window.scrollY > 100) {
 ```
 
 **Why 100 pixels?**
+
 - Prevents button from appearing immediately on slight scroll
 - Gives users enough room to see page content first
 - Common threshold for scroll-to-top buttons
 - Can be adjusted via configuration constant
 
 **Smooth Scrolling:**
+
 ```javascript
 window.scrollTo({
   top: 0,
@@ -127,11 +132,13 @@ window.scrollTo({
 The current implementation uses inline styles (`element.style.display`), which violates EDS best practices. This should be refactored to use CSS classes:
 
 **Current (not recommended):**
+
 ```javascript
 returnToTopButton.style.display = 'block';
 ```
 
 **Recommended approach:**
+
 ```javascript
 // Add/remove class instead
 returnToTopButton.classList.add('visible');
@@ -139,6 +146,7 @@ returnToTopButton.classList.remove('visible');
 ```
 
 **CSS would then handle visibility:**
+
 ```css
 .returntotop {
   display: none;
@@ -150,6 +158,7 @@ returnToTopButton.classList.remove('visible');
 ```
 
 **Why this matters:**
+
 - Separates concerns (structure, presentation, behavior)
 - Maintains CSS cacheability
 - Enables CSS transitions
@@ -160,22 +169,26 @@ returnToTopButton.classList.remove('visible');
 The returntotop block uses fixed positioning with blue accent styling:
 
 **Button Positioning:**
+
 - `position: fixed` - Stays visible during scroll
 - `bottom: 20px; left: 20px` - Bottom-left corner
 - `z-index` implicit (should be explicit for layering)
 
 **Button Styling:**
+
 - `background-color: #007BFF` - Blue accent
 - `color: white` - High contrast text
 - `border-radius: 5px` - Rounded corners
 - `padding: 10px 20px` - Touch-friendly target
 
 **Hover State:**
+
 - `background-color: #0056b3` - Darker blue on hover
 - Provides visual feedback
 - Indicates interactivity
 
 **Initial State:**
+
 - `display: none` - Hidden by default
 - JavaScript toggles display property
 - Should use class-based approach instead
@@ -189,12 +202,14 @@ const returnToTopButton = document.querySelector('.returntotop');
 ```
 
 **Why this is acceptable:**
+
 - Only one return-to-top button per page
 - Document-level utility (not reusable component)
 - Global scroll behavior affects entire page
 - Similar to header/footer blocks
 
 **Contrast with regular blocks:**
+
 - Regular blocks receive `block` parameter
 - Multiple instances per page expected
 - Use `block.querySelector()` for isolation
@@ -247,6 +262,7 @@ In Google Docs, create a simple table:
 ### Content Patterns
 
 **Pattern 1: Simple Arrow Symbol**
+
 ```
 | ReturnToTop |
 |-------------|
@@ -254,6 +270,7 @@ In Google Docs, create a simple table:
 ```
 
 **Pattern 2: Text Label**
+
 ```
 | ReturnToTop |
 |-------------|
@@ -261,6 +278,7 @@ In Google Docs, create a simple table:
 ```
 
 **Pattern 3: Icon + Text**
+
 ```
 | ReturnToTop |
 |-------------|
@@ -268,6 +286,7 @@ In Google Docs, create a simple table:
 ```
 
 **Pattern 4: Emoji Icon**
+
 ```
 | ReturnToTop |
 |-------------|
@@ -277,12 +296,14 @@ In Google Docs, create a simple table:
 ### Placement Guidelines
 
 **Best practices:**
+
 - Place at end of page (after all content)
 - One per page (document-level block)
 - Can be used on any page type
 - Works with all other blocks
 
 **Page structure example:**
+
 ```
 | Hero |
 |------|
@@ -300,6 +321,7 @@ In Google Docs, create a simple table:
 ### Integration Points
 
 **Works well with:**
+
 - Long articles and blog posts
 - Multi-section landing pages
 - Documentation pages
@@ -307,6 +329,7 @@ In Google Docs, create a simple table:
 - FAQ pages
 
 **Considerations:**
+
 - Only effective on pages with significant scroll
 - Not needed on short pages (< 2 screen heights)
 - Consider UX: Does page need this feature?
@@ -345,12 +368,14 @@ The `decorate()` function uses the existing button element:
 ### Button Content
 
 **Recommended content:**
+
 - Short text (1-3 words)
 - Arrow symbols (↑, ⬆️, ^)
 - Icon + text combination
 - Universal symbols users recognize
 
 **Avoid:**
+
 - Long descriptive text
 - Multiple lines
 - Complex formatting
@@ -430,6 +455,7 @@ Override default styles in your project's CSS:
 ### Position Variations
 
 **Bottom-left (default):**
+
 ```css
 .returntotop {
   bottom: 20px;
@@ -438,6 +464,7 @@ Override default styles in your project's CSS:
 ```
 
 **Bottom-right:**
+
 ```css
 .returntotop {
   bottom: 20px;
@@ -447,6 +474,7 @@ Override default styles in your project's CSS:
 ```
 
 **Top-right:**
+
 ```css
 .returntotop {
   top: 20px;
@@ -491,6 +519,7 @@ Add smooth transitions (requires class-based approach):
 The returntotop block currently has **no built-in variations**. All customization is done through CSS overrides.
 
 **Future variation ideas:**
+
 - `returntotop (circular)` - Circular button with icon
 - `returntotop (minimal)` - Text-only, no background
 - `returntotop (right)` - Positioned bottom-right
@@ -508,6 +537,7 @@ The returntotop block currently has **no built-in variations**. All customizatio
 - Consider larger padding for mobile
 
 **Recommended mobile adjustments:**
+
 ```css
 @media (max-width: 600px) {
   .returntotop {
@@ -535,6 +565,7 @@ The returntotop block currently has **no built-in variations**. All customizatio
 ### Scroll Threshold Adjustments
 
 **For long pages (> 5 screen heights):**
+
 ```javascript
 // Consider higher threshold
 if (window.scrollY > 300) {
@@ -543,6 +574,7 @@ if (window.scrollY > 300) {
 ```
 
 **For shorter pages (2-3 screen heights):**
+
 ```javascript
 // Keep current threshold
 if (window.scrollY > 100) {
@@ -566,16 +598,19 @@ if (window.scrollY > 100) {
 ### Semantic HTML
 
 **Current implementation:**
+
 ```html
 <div class="returntotop block">...</div>
 ```
 
 **Accessibility concerns:**
+
 - Should be a `<button>` element, not a `<div>`
 - Missing role="button" if div is used
 - No ARIA label describing action
 
 **Recommended structure:**
+
 ```html
 <button class="returntotop block"
         type="button"
@@ -587,11 +622,13 @@ if (window.scrollY > 100) {
 ### Keyboard Support
 
 **Current support:**
+
 - Click event works with Enter/Space (if button element)
 - Tab key moves focus to button
 - Visible focus indicator (inherited from global styles)
 
 **Best practices:**
+
 - Use semantic `<button>` element
 - Ensure visible focus indicator
 - No keyboard traps
@@ -600,16 +637,19 @@ if (window.scrollY > 100) {
 ### Screen Reader Support
 
 **What works well:**
+
 - Button content announces ("Top", "Back to Top")
 - Click action is clear
 - Focus management works
 
 **Improvements needed:**
+
 - Add `aria-label="Return to top of page"` for clarity
 - Consider `aria-live` region for visibility changes
 - Ensure role="button" if using div
 
 **Screen reader flow:**
+
 1. User tabs to button (if visible)
 2. Screen reader announces: "Return to top of page, button"
 3. User presses Enter/Space
@@ -619,10 +659,12 @@ if (window.scrollY > 100) {
 ### Focus Management
 
 **Current behavior:**
+
 - Focus remains on button after click
 - Page scrolls to top but focus doesn't move
 
 **Enhanced behavior (recommended):**
+
 ```javascript
 returnToTopButton.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -642,6 +684,7 @@ returnToTopButton.addEventListener('click', () => {
 ### Motion Preferences
 
 **Respecting prefers-reduced-motion:**
+
 ```css
 @media (prefers-reduced-motion: reduce) {
   * {
@@ -651,6 +694,7 @@ returnToTopButton.addEventListener('click', () => {
 ```
 
 **JavaScript approach:**
+
 ```javascript
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -665,12 +709,14 @@ returnToTopButton.addEventListener('click', () => {
 ### ARIA Best Practices
 
 **What this implementation should include:**
+
 - `<button type="button">` - Proper semantic element
 - `aria-label="Return to top of page"` - Clear description
 - Visible text content - "Top" or "Back to Top"
 - No aria-hidden (button must be accessible)
 
 **What to avoid:**
+
 - Using div without role="button"
 - Missing keyboard support
 - No visible focus indicator
@@ -683,18 +729,21 @@ returnToTopButton.addEventListener('click', () => {
 ### JavaScript Execution
 
 **Scroll event listener:**
+
 - Fired on every scroll event
 - Minimal logic (one conditional check)
 - No DOM queries inside listener (cached reference)
 - Inline style manipulation (fast but not ideal)
 
 **Performance characteristics:**
+
 - ~0.1ms per scroll event
 - Negligible CPU impact
 - No throttling/debouncing needed
 - Efficient implementation
 
 **Optimization opportunities:**
+
 - Use Intersection Observer API instead of scroll listener
 - Throttle scroll events (fire every 100ms instead of constantly)
 - Use CSS classes instead of inline styles
@@ -703,12 +752,14 @@ returnToTopButton.addEventListener('click', () => {
 ### Memory Footprint
 
 **Per page:**
+
 - 1 button element
 - 1 scroll event listener
 - 1 click event listener
 - Minimal memory overhead (< 1KB)
 
 **No memory leaks:**
+
 - Event listeners attached once
 - No interval/timeout accumulation
 - Button reference cached (no repeated queries)
@@ -716,12 +767,14 @@ returnToTopButton.addEventListener('click', () => {
 ### Network Efficiency
 
 **Initial load:**
+
 - returntotop.js: ~500 bytes (minified)
 - returntotop.css: ~300 bytes (minified)
 - No external dependencies
 - No API calls
 
 **Runtime:**
+
 - No additional network requests
 - All functionality local
 - Fast interaction (no loading states)
@@ -729,12 +782,14 @@ returnToTopButton.addEventListener('click', () => {
 ### Scroll Performance
 
 **Considerations:**
+
 - Scroll listener fires frequently (60fps)
 - Current implementation is lightweight
 - No forced reflow/repaint inside listener
 - Smooth scrolling uses browser native implementation
 
 **Recommended optimization:**
+
 ```javascript
 // Throttle scroll events
 let scrollTimeout;
@@ -751,12 +806,14 @@ window.addEventListener('scroll', () => {
 ### Lighthouse Impact
 
 Expected Lighthouse scores with returntotop block:
+
 - Performance: 95-100 (minimal impact)
 - Accessibility: 90-95 (semantic HTML improvements needed)
 - Best Practices: 95-100
 - SEO: 100 (no impact)
 
 **Performance budget:**
+
 - JavaScript: ~500 bytes (negligible)
 - CSS: ~300 bytes (negligible)
 - Runtime: < 1ms per scroll event
@@ -786,12 +843,14 @@ Expected Lighthouse scores with returntotop block:
 ### Smooth Scrolling Support
 
 **Native support:**
+
 - Chrome 61+ ✓
 - Firefox 36+ ✓
 - Safari 15.4+ ✓
 - Edge 79+ ✓
 
 **Fallback for older browsers:**
+
 - Instant scroll (still functional)
 - No animation (behavior: 'smooth' ignored)
 - Polyfills available if needed
@@ -799,6 +858,7 @@ Expected Lighthouse scores with returntotop block:
 ### Internet Explorer 11
 
 **Partial support:**
+
 - `window.scrollY` - ✓ Supported
 - `window.scrollTo()` - ✓ Supported (without smooth)
 - `addEventListener()` - ✓ Supported
@@ -813,6 +873,7 @@ Expected Lighthouse scores with returntotop block:
 ### Issue: Button not appearing
 
 **Symptoms:**
+
 - Scroll down page but button never appears
 - No console errors
 - Button exists in DOM
@@ -820,6 +881,7 @@ Expected Lighthouse scores with returntotop block:
 **Solutions:**
 
 1. **Check scroll threshold:**
+
    ```javascript
    // In browser console
    window.addEventListener('scroll', () => {
@@ -834,6 +896,7 @@ Expected Lighthouse scores with returntotop block:
    - Verify 200 status code
 
 3. **Check button element exists:**
+
    ```javascript
    // In browser console
    const btn = document.querySelector('.returntotop');
@@ -849,6 +912,7 @@ Expected Lighthouse scores with returntotop block:
 ### Issue: Button appears immediately
 
 **Symptoms:**
+
 - Button visible on page load
 - No scroll required
 - Button should be hidden initially
@@ -856,6 +920,7 @@ Expected Lighthouse scores with returntotop block:
 **Solutions:**
 
 1. **Check CSS initial state:**
+
    ```css
    /* Ensure this rule exists */
    .returntotop {
@@ -869,6 +934,7 @@ Expected Lighthouse scores with returntotop block:
    - Ensure file is accessible
 
 3. **Inspect computed styles:**
+
    ```javascript
    // In browser console
    const btn = document.querySelector('.returntotop');
@@ -878,6 +944,7 @@ Expected Lighthouse scores with returntotop block:
 ### Issue: Click does nothing
 
 **Symptoms:**
+
 - Button visible and clickable
 - Click has no effect
 - No scroll to top occurs
@@ -886,6 +953,7 @@ Expected Lighthouse scores with returntotop block:
 **Solutions:**
 
 1. **Check event listener attached:**
+
    ```javascript
    // In browser console
    const btn = document.querySelector('.returntotop');
@@ -894,6 +962,7 @@ Expected Lighthouse scores with returntotop block:
    ```
 
 2. **Test scrollTo directly:**
+
    ```javascript
    // In browser console
    window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -908,6 +977,7 @@ Expected Lighthouse scores with returntotop block:
 ### Issue: Scroll not smooth
 
 **Symptoms:**
+
 - Button works but scroll is instant
 - No smooth animation
 - Jumps to top immediately
@@ -920,6 +990,7 @@ Expected Lighthouse scores with returntotop block:
    - Verify browser version
 
 2. **Test CSS scroll-behavior:**
+
    ```css
    html {
      scroll-behavior: smooth;
@@ -934,6 +1005,7 @@ Expected Lighthouse scores with returntotop block:
 ### Issue: Button blocks content
 
 **Symptoms:**
+
 - Button covers important page content
 - Can't click elements behind button
 - Button z-index too high
@@ -941,6 +1013,7 @@ Expected Lighthouse scores with returntotop block:
 **Solutions:**
 
 1. **Adjust position:**
+
    ```css
    .returntotop {
      bottom: 20px;
@@ -949,6 +1022,7 @@ Expected Lighthouse scores with returntotop block:
    ```
 
 2. **Reduce size:**
+
    ```css
    .returntotop {
      padding: 8px 16px;
@@ -957,6 +1031,7 @@ Expected Lighthouse scores with returntotop block:
    ```
 
 3. **Add explicit z-index:**
+
    ```css
    .returntotop {
      z-index: 100; /* Lower than modals but higher than content */
@@ -966,6 +1041,7 @@ Expected Lighthouse scores with returntotop block:
 ### Issue: Multiple buttons on page
 
 **Symptoms:**
+
 - More than one return-to-top button
 - Buttons conflict with each other
 - Unexpected behavior
@@ -989,6 +1065,7 @@ Expected Lighthouse scores with returntotop block:
 ### Manual Testing (test.html)
 
 1. **Open test file:**
+
    ```
    http://localhost:3000/blocks/returntotop/test.html
    ```
@@ -1059,6 +1136,7 @@ getEventListeners(window);
 ### Automated Testing
 
 **Future implementation:**
+
 - Jest tests for scroll detection logic
 - Test visibility threshold (100px)
 - Test scrollTo with smooth behavior
@@ -1067,6 +1145,7 @@ getEventListeners(window);
 - Visual regression tests with Playwright
 
 **Example test cases:**
+
 ```javascript
 describe('ReturnToTop Block', () => {
   test('button hidden on page load', () => {});
@@ -1082,6 +1161,7 @@ describe('ReturnToTop Block', () => {
 ### Performance Testing
 
 **Scroll event frequency:**
+
 ```javascript
 let scrollCount = 0;
 window.addEventListener('scroll', () => {
@@ -1095,6 +1175,7 @@ window.addEventListener('scroll', () => {
 ```
 
 **Memory leak testing:**
+
 ```javascript
 // Monitor memory usage
 console.log('Initial memory:', performance.memory.usedJSHeapSize);
@@ -1136,6 +1217,7 @@ console.log('After scrolling:', performance.memory.usedJSHeapSize);
 ### CSS Dependencies
 
 **Optional CSS variables (recommended):**
+
 ```css
 :root {
   --rtt-bg-color: #007BFF;
@@ -1197,6 +1279,7 @@ Currently hardcoded, should be refactored to use variables.
 ### Contributing
 
 To propose enhancements:
+
 1. Create test content in Google Docs
 2. Implement feature in JavaScript/CSS
 3. Add test cases to test.html
@@ -1225,6 +1308,7 @@ To propose enhancements:
   - Blue accent styling
 
 **Known limitations:**
+
 - Uses inline styles (violates EDS best practices)
 - Missing configuration constants
 - No ARIA labels
@@ -1236,6 +1320,7 @@ To propose enhancements:
 ## Support
 
 For issues or questions:
+
 1. Check [Troubleshooting](#troubleshooting) section
 2. Review [EXAMPLE.md](./EXAMPLE.md) for usage examples
 3. Test with [test.html](./test.html)

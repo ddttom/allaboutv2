@@ -26,6 +26,7 @@ A code display component that formats and syntax-highlights code content within 
 The markdown block transforms plain text content into syntax-highlighted code displays with automatic formatting and visual styling. It processes JavaScript syntax with keyword highlighting, string highlighting, comment styling, number formatting, and function name detection.
 
 **Primary Use Cases:**
+
 - Code snippet displays
 - JavaScript examples and tutorials
 - API documentation with code samples
@@ -38,6 +39,7 @@ The markdown block transforms plain text content into syntax-highlighted code di
 **Location:** `/blocks/markdown/`
 
 **Files:**
+
 - `markdown.js` - Core syntax highlighting and decoration logic
 - `markdown.css` - Styled container and syntax highlighting colors
 - `README.md` - Technical documentation (this file)
@@ -104,6 +106,7 @@ The `decorate()` function performs these transformations:
 
 **processContent(content)**
 Processes raw content for display:
+
 - Splits content into lines
 - Trims each line individually
 - Joins lines back together
@@ -111,17 +114,18 @@ Processes raw content for display:
 
 `JavaScript Function`
 `function processContent(content) {`
-`  return content`
-`    .split('\n')`
-`    .map(line => line.trim())`
-`    .join('\n')`
-`    .replace(/``/g, '\`\n\`');`
+`return content`
+`.split('\n')`
+`.map(line => line.trim())`
+`.join('\n')`
+`.replace(/``/g, '\`\n\`');`
 `}`
 
 **Purpose:** Normalizes whitespace and handles backtick formatting
 
 **escapeHtml(unsafe)**
 Escapes HTML special characters for security:
+
 - Converts & to &amp;
 - Converts < to &lt;
 - Converts > to &gt;
@@ -130,18 +134,19 @@ Escapes HTML special characters for security:
 
 `JavaScript Function`
 `function escapeHtml(unsafe) {`
-`  return unsafe`
-`    .replace(/&/g, "&amp;")`
-`    .replace(/</g, "&lt;")`
-`    .replace(/>/g, "&gt;")`
-`    .replace(/"/g, "&quot;")`
-`    .replace(/'/g, "&#039;");`
+`return unsafe`
+`.replace(/&/g, "&amp;")`
+`.replace(/</g, "&lt;")`
+`.replace(/>/g, "&gt;")`
+`.replace(/"/g, "&quot;")`
+`.replace(/'/g, "&#039;");`
 `}`
 
 **Purpose:** Prevents XSS attacks and ensures safe HTML rendering
 
 **addSyntaxHighlighting(code)**
 Applies syntax highlighting to escaped code:
+
 - Highlights string literals in red
 - Highlights keywords in blue
 - Highlights comments in green
@@ -150,12 +155,12 @@ Applies syntax highlighting to escaped code:
 
 `JavaScript Function`
 `function addSyntaxHighlighting(code) {`
-`  return escapeHtml(code)`
-`    .replace(/(["'])(.*?)\1/g, '<span class="string">$&</span>')`
-`    .replace(/\b(const|let|var|function|return|if|else|for|while|class)\b/g, '<span class="keyword">$&</span>')`
-`    .replace(/(\/\/.*|\/\*[\s\S]*?\*\/)/g, '<span class="comment">$&</span>')`
-`    .replace(/\b(\d+)\b/g, '<span class="number">$&</span>')`
-`    .replace(/(\w+)(?=\s*\()/g, '<span class="function">$&</span>');`
+`return escapeHtml(code)`
+`.replace(/(["'])(.*?)\1/g, '<span class="string">$&</span>')`
+`.replace(/\b(const|let|var|function|return|if|else|for|while|class)\b/g, '<span class="keyword">$&</span>')`
+`.replace(/(\/\/.*|\/\*[\s\S]*?\*\/)/g, '<span class="comment">$&</span>')`
+`.replace(/\b(\d+)\b/g, '<span class="number">$&</span>')`
+`.replace(/(\w+)(?=\s*\()/g, '<span class="function">$&</span>');`
 `}`
 
 **Purpose:** Adds semantic HTML spans with classes for CSS styling
@@ -166,11 +171,12 @@ The block follows EDS standards with MARKDOWN_CONFIG object:
 
 `Configuration Object`
 `const MARKDOWN_CONFIG = {`
-`  CONTAINER_CLASS: 'markdown-content',`
-`  ERROR_MESSAGE: 'Error processing markdown content.',`
+`CONTAINER_CLASS: 'markdown-content',`
+`ERROR_MESSAGE: 'Error processing markdown content.',`
 `};`
 
 **Benefits:**
+
 - Centralized configuration
 - Easy maintenance
 - Clear error messaging
@@ -181,12 +187,14 @@ The block follows EDS standards with MARKDOWN_CONFIG object:
 The markdown block uses CSS variables for theming:
 
 **Block-Level Variables:**
+
 - `--markdown-bg-color` - Container background color (default: #e6f3ff)
 - `--markdown-border-color` - Border color (default: #4a90e2)
 - `--markdown-border-radius` - Corner rounding (default: 8px)
 - `--markdown-padding` - Internal spacing (default: 20px)
 
 **Syntax Highlighting Colors:**
+
 - `.string` - String literals (red: #a31515)
 - `.keyword` - JavaScript keywords (blue: #0000ff)
 - `.comment` - Code comments (green: #008000)
@@ -197,19 +205,19 @@ The markdown block uses CSS variables for theming:
 
 `Content Flow Diagram`
 `Markdown Table`
-`    ↓`
+`↓`
 `EDS Initial DOM (block.textContent)`
-`    ↓`
+`↓`
 `decorate() function`
-`    ↓`
+`↓`
 `processContent() - Line trimming, backtick handling`
-`    ↓`
+`↓`
 `addSyntaxHighlighting() - Keyword detection, span insertion`
-`    ↓`
+`↓`
 `DOM Creation - Pre element with highlighted HTML`
-`    ↓`
+`↓`
 `Block Update - Replace original content`
-`    ↓`
+`↓`
 `Final Rendered Code Display`
 
 ---
@@ -262,12 +270,14 @@ In Google Docs, create a table with the block name in the header row:
 ### Integration Points
 
 **With other blocks:**
+
 - Can follow text or heading blocks
 - Works well after hero sections
 - Compatible within documentation layouts
 - No conflicts with other EDS blocks
 
 **Content Model:**
+
 - Each table cell = one line of code (or entire code block)
 - First row must contain "Markdown"
 - Subsequent cells contain code content
@@ -283,12 +293,12 @@ The EDS pipeline converts a markdown table into this initial DOM structure:
 
 `Initial DOM Structure`
 `<div class="markdown block">`
-`  <div>`
-`    <div>const x = 10;</div>`
-`  </div>`
-`  <div>`
-`    <div>console.log(x);</div>`
-`  </div>`
+`<div>`
+`<div>const x = 10;</div>`
+`</div>`
+`<div>`
+`<div>console.log(x);</div>`
+`</div>`
 `</div>`
 
 ### Output Structure (After Decoration)
@@ -297,37 +307,42 @@ The `decorate()` function transforms it into:
 
 `Final DOM Structure`
 `<div class="markdown block">`
-`  <div class="markdown-content">`
-`    <pre>`
-`      <span class="keyword">const</span> x = <span class="number">10</span>;`
-`      <span class="function">console</span>.<span class="function">log</span>(x);`
-`    </pre>`
-`  </div>`
+`<div class="markdown-content">`
+`<pre>`
+`<span class="keyword">const</span> x = <span class="number">10</span>;`
+`<span class="function">console</span>.<span class="function">log</span>(x);`
+`</pre>`
+`</div>`
 `</div>`
 
 ### Syntax Highlighting Patterns
 
 **String Detection:**
+
 - Matches single or double quoted strings
 - Pattern: `/(["'])(.*?)\1/g`
 - Class: `.string`
 
 **Keyword Detection:**
+
 - Matches common JavaScript keywords
 - Pattern: `/\b(const|let|var|function|return|if|else|for|while|class)\b/g`
 - Class: `.keyword`
 
 **Comment Detection:**
-- Matches single-line (//) and multi-line (/* */) comments
+
+- Matches single-line (//) and multi-line (/**/) comments
 - Pattern: `/(\/\/.*|\/\*[\s\S]*?\*\/)/g`
 - Class: `.comment`
 
 **Number Detection:**
+
 - Matches numeric literals
 - Pattern: `/\b(\d+)\b/g`
 - Class: `.number`
 
 **Function Detection:**
+
 - Matches function names (word followed by parenthesis)
 - Pattern: `/(\w+)(?=\s*\()/g`
 - Class: `.function`
@@ -342,10 +357,10 @@ Customize the markdown block through CSS variables:
 
 `Theme Customization`
 `:root {`
-`  --markdown-bg-color: #e6f3ff;      /* Light blue background */`
-`  --markdown-border-color: #4a90e2;  /* Blue border */`
-`  --markdown-border-radius: 8px;     /* Rounded corners */`
-`  --markdown-padding: 20px;          /* Internal spacing */`
+`--markdown-bg-color: #e6f3ff;      /* Light blue background */`
+`--markdown-border-color: #4a90e2;  /* Blue border */`
+`--markdown-border-radius: 8px;     /* Rounded corners */`
+`--markdown-padding: 20px;          /* Internal spacing */`
 `}`
 
 ### Custom Styling
@@ -354,33 +369,33 @@ Override default styles in your project's CSS:
 
 `Custom Container Styling`
 `.markdown {`
-`  --markdown-bg-color: #f8f9fa;      /* Light gray */`
-`  --markdown-border-color: #dee2e6;  /* Darker gray border */`
-`  --markdown-border-radius: 4px;     /* Less rounding */`
-`  --markdown-padding: 16px;          /* Tighter spacing */`
+`--markdown-bg-color: #f8f9fa;      /* Light gray */`
+`--markdown-border-color: #dee2e6;  /* Darker gray border */`
+`--markdown-border-radius: 4px;     /* Less rounding */`
+`--markdown-padding: 16px;          /* Tighter spacing */`
 `}`
 
 `Custom Syntax Colors`
 `.markdown-content .string {`
-`  color: #e91e63;  /* Pink strings */`
+`color: #e91e63;  /* Pink strings */`
 `}`
 `.markdown-content .keyword {`
-`  color: #9c27b0;  /* Purple keywords */`
+`color: #9c27b0;  /* Purple keywords */`
 `}`
 `.markdown-content .comment {`
-`  color: #607d8b;  /* Blue-gray comments */`
+`color: #607d8b;  /* Blue-gray comments */`
 `}`
 
 `Dark Theme Example`
 `.markdown.dark {`
-`  --markdown-bg-color: #1e1e1e;`
-`  --markdown-border-color: #3e3e3e;`
+`--markdown-bg-color: #1e1e1e;`
+`--markdown-border-color: #3e3e3e;`
 `}`
 `.markdown.dark .markdown-content {`
-`  color: #d4d4d4;`
+`color: #d4d4d4;`
 `}`
 `.markdown.dark .markdown-content .keyword {`
-`  color: #569cd6;  /* VS Code blue */`
+`color: #569cd6;  /* VS Code blue */`
 `}`
 
 ### Typography Customization
@@ -389,10 +404,10 @@ Adjust code font and sizing:
 
 `Font Customization`
 `.markdown-content pre {`
-`  font-family: 'Fira Code', 'Monaco', monospace;`
-`  font-size: 16px;`
-`  line-height: 1.6;`
-`  letter-spacing: 0.5px;`
+`font-family: 'Fira Code', 'Monaco', monospace;`
+`font-size: 16px;`
+`line-height: 1.6;`
+`letter-spacing: 0.5px;`
 `}`
 
 ### Variations
@@ -400,6 +415,7 @@ Adjust code font and sizing:
 The markdown block currently has **no built-in variations**. All customization is done through CSS overrides.
 
 **Future variation ideas:**
+
 - `markdown (dark)` - Dark theme syntax highlighting
 - `markdown (compact)` - Reduced padding and spacing
 - `markdown (bordered)` - Heavier border emphasis
@@ -434,6 +450,7 @@ The markdown block currently has **no built-in variations**. All customization i
 ### Horizontal Scrolling
 
 When code lines exceed container width:
+
 - Pre element allows horizontal scroll
 - Browser provides scrollbar
 - Code formatting preserved
@@ -454,6 +471,7 @@ When code lines exceed container width:
 ### Semantic HTML
 
 The markdown block uses semantic HTML elements:
+
 - `<pre>` - Preformatted text element
 - `<span>` - Inline semantic highlighting
 - `<div>` - Container structure
@@ -462,12 +480,14 @@ The markdown block uses semantic HTML elements:
 ### Screen Reader Support
 
 **What works well:**
+
 - Pre element announces code block
 - Content read line by line
 - Syntax highlighting spans don't interfere with reading
 - Plain text content remains accessible
 
 **Screen reader flow:**
+
 1. "Code block" or "Preformatted text" announced
 2. Content read sequentially
 3. Syntax highlighting ignored (visual only)
@@ -476,6 +496,7 @@ The markdown block uses semantic HTML elements:
 ### Keyboard Navigation
 
 **No interactive elements:**
+
 - Block is display-only (no buttons or controls)
 - No keyboard traps
 - Standard page navigation works
@@ -484,6 +505,7 @@ The markdown block uses semantic HTML elements:
 ### Color Contrast
 
 **Syntax highlighting colors meet WCAG standards:**
+
 - String color (#a31515) on light blue background: 7.2:1 contrast ratio
 - Keyword color (#0000ff) on light blue background: 8.5:1 contrast ratio
 - Comment color (#008000) on light blue background: 6.1:1 contrast ratio
@@ -495,6 +517,7 @@ The markdown block uses semantic HTML elements:
 ### Best Practices
 
 **Content authors should:**
+
 - Provide context before code blocks
 - Use descriptive headings for code sections
 - Include explanatory text with examples
@@ -508,6 +531,7 @@ The markdown block uses semantic HTML elements:
 ### JavaScript Execution
 
 **Initial decoration:**
+
 - One-time setup on page load
 - Single DOM manipulation pass
 - Regex-based syntax highlighting (fast)
@@ -515,6 +539,7 @@ The markdown block uses semantic HTML elements:
 - Minimal memory footprint
 
 **Processing overhead:**
+
 - Content extraction: O(1)
 - Line trimming: O(n) where n = number of lines
 - HTML escaping: O(m) where m = content length
@@ -522,6 +547,7 @@ The markdown block uses semantic HTML elements:
 - DOM insertion: O(1)
 
 **Optimization opportunities:**
+
 - Combine regex passes (single pass syntax highlighting)
 - Cache processed content (avoid reprocessing)
 - Lazy load syntax highlighting for below-fold blocks
@@ -529,6 +555,7 @@ The markdown block uses semantic HTML elements:
 ### Memory Footprint
 
 **Per markdown block:**
+
 - 1 container div
 - 1 pre element
 - N span elements (N = number of highlighted tokens)
@@ -536,6 +563,7 @@ The markdown block uses semantic HTML elements:
 - Minimal memory overhead
 
 **Typical usage:**
+
 - 10-50 lines of code
 - < 1KB JavaScript (minified)
 - < 500 bytes CSS (minified)
@@ -544,6 +572,7 @@ The markdown block uses semantic HTML elements:
 ### Network Efficiency
 
 **Initial load:**
+
 - markdown.js: ~1.5KB (minified)
 - markdown.css: ~500 bytes (minified)
 - No external dependencies
@@ -551,6 +580,7 @@ The markdown block uses semantic HTML elements:
 - No image assets
 
 **Runtime:**
+
 - No additional network requests
 - All processing client-side
 - No lazy loading needed
@@ -558,6 +588,7 @@ The markdown block uses semantic HTML elements:
 ### Loading Strategy
 
 Markdown block loads as part of EDS's default loading pattern:
+
 - Blocks decorated on page load
 - No render-blocking resources
 - JavaScript executes after DOM ready
@@ -567,6 +598,7 @@ Markdown block loads as part of EDS's default loading pattern:
 ### Lighthouse Impact
 
 Expected Lighthouse scores with markdown block:
+
 - Performance: 95-100
 - Accessibility: 90-95 (depends on content contrast)
 - Best Practices: 100
@@ -597,6 +629,7 @@ Expected Lighthouse scores with markdown block:
 ### Internet Explorer 11
 
 **Partial support with polyfills:**
+
 - Regular expressions: ✓ (native support)
 - String methods: ✓ (native support)
 - CSS variables: NOT supported (fallback needed)
@@ -607,6 +640,7 @@ Expected Lighthouse scores with markdown block:
 ### Fallback Behavior
 
 If JavaScript fails:
+
 - Original table content remains visible
 - No syntax highlighting applied
 - Content still readable
@@ -619,6 +653,7 @@ If JavaScript fails:
 ### Issue: Code not highlighting
 
 **Symptoms:**
+
 - Code displays in plain text
 - No color highlighting
 - Original table structure visible
@@ -643,6 +678,7 @@ If JavaScript fails:
 ### Issue: Incorrect syntax highlighting
 
 **Symptoms:**
+
 - Wrong colors applied
 - Keywords not highlighted
 - Strings not recognized
@@ -652,7 +688,7 @@ If JavaScript fails:
 1. **Check supported syntax:**
    - Only JavaScript keywords supported
    - Strings must be quoted (single or double)
-   - Comments must use // or /* */ format
+   - Comments must use // or /**/ format
 
 2. **Verify content format:**
    - Code should be plain text
@@ -669,6 +705,7 @@ If JavaScript fails:
 ### Issue: Container styling missing
 
 **Symptoms:**
+
 - No background color
 - No border
 - Plain white container
@@ -688,13 +725,14 @@ If JavaScript fails:
 
 `Temporary Fix`
 `.markdown {`
-`  --markdown-bg-color: #e6f3ff !important;`
-`  --markdown-border-color: #4a90e2 !important;`
+`--markdown-bg-color: #e6f3ff !important;`
+`--markdown-border-color: #4a90e2 !important;`
 `}`
 
 ### Issue: Long code lines overflow
 
 **Symptoms:**
+
 - Code extends beyond container
 - Horizontal scrollbar not appearing
 - Text cut off at edge
@@ -708,11 +746,11 @@ If JavaScript fails:
 
 `Add Scrolling`
 `.markdown-content pre {`
-`  overflow-x: auto;`
-`  white-space: pre;`
+`overflow-x: auto;`
+`white-space: pre;`
 `}`
 
-3. **Use shorter lines:**
+1. **Use shorter lines:**
    - Break long lines in source
    - Keep code lines under 80 characters
    - Consider line breaks for readability
@@ -720,6 +758,7 @@ If JavaScript fails:
 ### Issue: Error message displayed
 
 **Symptoms:**
+
 - "Error processing markdown content." message
 - No code displayed
 - Console errors
@@ -754,33 +793,33 @@ If JavaScript fails:
 `Test URL`
 `http://localhost:3000/blocks/markdown/test.html`
 
-2. **Visual checks:**
+1. **Visual checks:**
    - Code displays in light blue container
    - Syntax highlighting colors visible
    - Border and rounded corners present
    - Font is monospace
 
-3. **Syntax verification:**
+2. **Syntax verification:**
    - Keywords highlighted in blue
    - Strings highlighted in red
    - Comments highlighted in green
    - Numbers highlighted in teal
    - Function names highlighted in brown
 
-4. **Responsive testing:**
+3. **Responsive testing:**
    - Resize browser to mobile width (< 768px)
    - Verify padding reduces to 10px
    - Check code remains readable
    - Test horizontal scrolling
 
-5. **Content testing:**
+4. **Content testing:**
    - Single-line code blocks
    - Multi-line code blocks
    - Code with comments
    - Code with strings and numbers
    - Mixed content
 
-6. **Browser testing:**
+5. **Browser testing:**
    - Test in Chrome, Firefox, Safari
    - Verify consistent appearance
    - Check for browser-specific issues
@@ -810,6 +849,7 @@ If JavaScript fails:
 ### Automated Testing
 
 **Future implementation:**
+
 - Jest tests for processContent() function
 - Test escapeHtml() security
 - Test addSyntaxHighlighting() patterns
@@ -820,14 +860,14 @@ If JavaScript fails:
 
 `Test Suite`
 `describe('Markdown Block', () => {`
-`  test('escapes HTML special characters', () => {});`
-`  test('highlights JavaScript keywords', () => {});`
-`  test('highlights string literals', () => {});`
-`  test('highlights comments', () => {});`
-`  test('highlights numbers', () => {});`
-`  test('highlights function names', () => {});`
-`  test('handles empty content', () => {});`
-`  test('handles error cases', () => {});`
+`test('escapes HTML special characters', () => {});`
+`test('highlights JavaScript keywords', () => {});`
+`test('highlights string literals', () => {});`
+`test('highlights comments', () => {});`
+`test('highlights numbers', () => {});`
+`test('highlights function names', () => {});`
+`test('handles empty content', () => {});`
+`test('handles error cases', () => {});`
 `});`
 
 ---
@@ -907,6 +947,7 @@ If JavaScript fails:
 ### Contributing
 
 To propose enhancements:
+
 1. Create test content in Google Docs
 2. Implement feature in JavaScript/CSS
 3. Add test cases to test.html
@@ -939,6 +980,7 @@ To propose enhancements:
 ## Support
 
 For issues or questions:
+
 1. Check [Troubleshooting](#troubleshooting) section
 2. Review [EXAMPLE.md](./EXAMPLE.md) for usage examples
 3. Test with [test.html](./test.html)

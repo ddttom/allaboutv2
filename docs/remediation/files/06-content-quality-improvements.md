@@ -15,11 +15,13 @@
 **10-15 pages have significantly low content quality scores (40-55)**, primarily due to zero content freshness, low media richness, and thin content. These pages drag down site averages and represent missed SEO opportunities.
 
 **Current State**:
+
 - Worst performing page: 40.50/100 overall content score
 - Average of bottom 10: 45.5/100
 - Primary issues: 0% freshness, 0-10% media richness, thin content
 
 **Business Impact**:
+
 - Lower search rankings for affected pages
 - Higher bounce rates
 - Reduced time on page
@@ -52,6 +54,7 @@ From `content_quality.csv` and `seo_scores.csv`:
 ## Root Causes
 
 ### 1. Zero Content Freshness (All Pages)
+
 - **Impact**: -20 points per page
 - **Fix**: Add last-modified dates (see Document 04)
 - **Effort**: Covered in separate remediation document
@@ -59,6 +62,7 @@ From `content_quality.csv` and `seo_scores.csv`:
 ### 2. Low Media Richness (Primary Issue)
 
 **Pages with 0-5% Media Richness**:
+
 - `/blogs/ddt/ai/the-tokenization-trap...`: 3,983 words, 0% media
 - `/blogs/ddt/ai/why-modern-web...`: 4,377 words, 0% media
 - `/blogs/ddt/integrations/llms`: 467 words, 0% media
@@ -68,6 +72,7 @@ From `content_quality.csv` and `seo_scores.csv`:
 **Problem**: Text-only content, especially on technical topics that benefit from visual aids.
 
 **Media Richness Calculation**:
+
 ```
 Media Richness = (Images + Videos + Diagrams + Interactive Elements) / Content Blocks
 Score heavily penalized for long-form content without visuals
@@ -76,6 +81,7 @@ Score heavily penalized for long-form content without visuals
 ### 3. Thin/Stub Content
 
 **Pages <500 words**:
+
 - `/blogs/ddt/integrations/spectrum-component`: 80 words (stub)
 - `/blogs/ddt/integrations/vue-js-version`: 79 words (stub)
 - `/blogs/ddt/five-things-to-do-in-york`: 370 words (thin)
@@ -93,15 +99,18 @@ Score heavily penalized for long-form content without visuals
 **Target**: Pages >2000 words with 0% media richness
 
 #### Page: `/blogs/ddt/ai/the-tokenization-trap-how-ai-actually-processes-german`
+
 - **Current**: 3,983 words, 0% media, 40.50 score
 - **Issue**: Complex technical topic without visual aids
 
 **Recommended Additions**:
+
 1. **Diagram**: Tokenization process flowchart
    - Show: German text → Tokenizer → Token IDs → Model processing
    - Tool: Mermaid diagram, Excalidraw, or hand-drawn scan
 
 2. **Comparison Table**: English vs. German tokenization
+
    | Text | Tokens | Token Count | Efficiency |
    |------|--------|-------------|------------|
    | "Hello world" | ["Hello", " world"] | 2 | 100% |
@@ -112,6 +121,7 @@ Score heavily penalized for long-form content without visuals
    - Capture: Side-by-side English vs. German comparison
 
 4. **Code Block Visual**: Highlighted tokenization output
+
    ```python
    # Tokenization comparison
    en_tokens = tokenizer("Hello world")  # [15496, 995]
@@ -122,9 +132,11 @@ Score heavily penalized for long-form content without visuals
 **Effort**: 1-2 hours
 
 #### Page: `/blogs/ddt/ai/why-modern-web-architecture-confuses-ai`
+
 - **Current**: 4,377 words, 0% media, 44.25 score
 
 **Recommended Additions**:
+
 1. **Architecture Diagrams**:
    - Traditional MPA architecture (AI-friendly)
    - Modern SPA architecture (AI-confused)
@@ -135,6 +147,7 @@ Score heavily penalized for long-form content without visuals
    - View Source: React SPA (minimal HTML, JavaScript bundle)
 
 3. **Flowchart**: How AI crawlers process different architectures
+
    ```
    Traditional HTML → Parse → Extract content → Index ✓
    SPA → Parse → Find <div id="root"></div> → No content → Fail ✗
@@ -150,10 +163,12 @@ Score heavily penalized for long-form content without visuals
 **Target**: Pages <500 words
 
 #### Page: `/blogs/ddt/integrations/spectrum-component` (80 words - STUB)
+
 - **Current**: 80 words, 0% media, 40.50 score
 - **SEO Score**: 60/100
 
 **Expansion Strategy**:
+
 1. **Add Introduction** (150 words):
    - What is Adobe Spectrum?
    - Why use Spectrum in EDS?
@@ -180,10 +195,12 @@ Score heavily penalized for long-form content without visuals
 **Effort**: 2-3 hours
 
 #### Page: `/blogs/ddt/five-things-to-do-in-york` (370 words - THIN)
+
 - **Current**: 370 words, 0% media, 45.75 score
 - **Note**: Non-technical content (travel guide)
 
 **Expansion Strategy**:
+
 1. **Expand Each Section** (100-150 words each):
    - Thing #1: More detail, history, practical tips
    - Thing #2-5: Similarly expand
@@ -215,10 +232,12 @@ Score heavily penalized for long-form content without visuals
 **Target**: Pages demonstrating blocks without visuals
 
 #### Page: `/blogs/ddt/blogroll-block-demo` (2,679 words, 0% media)
+
 - **Current**: 2,679 words, 0% media, 54.00 score
 - **Issue**: Demo page without screenshots of the demo!
 
 **Recommended Additions**:
+
 1. **Live Demo Screenshot**: Blogroll block in action
 2. **Before/After**: Raw markdown → Rendered block
 3. **Variations**: Different configurations shown visually
@@ -235,6 +254,7 @@ Score heavily penalized for long-form content without visuals
 ### Phase 1: Quick Wins (Media Addition to Existing Content)
 
 #### Week 1: Add Visual Elements
+
 - [ ] `/blogs/ddt/ai/the-tokenization-trap...`: Add diagrams and comparison table
 - [ ] `/blogs/ddt/ai/why-modern-web...`: Add architecture diagrams
 - [ ] `/blogs/ddt/blogroll-block-demo`: Add demo screenshots
@@ -246,6 +266,7 @@ Score heavily penalized for long-form content without visuals
 ### Phase 2: Expand Stub Content
 
 #### Week 2: Content Development
+
 - [ ] `/blogs/ddt/integrations/spectrum-component`: Expand to 800-1000 words + media
 - [ ] `/blogs/ddt/integrations/vue-js-version`: Expand to 800-1000 words + media
 - [ ] `/blogs/ddt/integrations/llms`: Expand to 800-1000 words + diagrams
@@ -256,6 +277,7 @@ Score heavily penalized for long-form content without visuals
 ### Phase 3: Enhance Thin Content
 
 #### Week 3: Content Enrichment
+
 - [ ] `/blogs/ddt/five-things-to-do-in-york`: Expand to 1200-1500 words + photos
 - [ ] `/blogs/ddt/faq`: Expand with more Q&A + images
 - [ ] `/blogs/adobe-franklin-revolutionizing...`: Add media + restructure
@@ -270,6 +292,7 @@ Score heavily penalized for long-form content without visuals
 ### Adding Effective Visuals
 
 **1. Diagrams for Technical Concepts**:
+
 ```
 Tools: Mermaid (code-based), Excalidraw (drawing), Lucidchart (professional)
 Format: PNG or SVG (vector preferred)
@@ -278,6 +301,7 @@ Alt text: Descriptive (covered in Document 02)
 ```
 
 **2. Screenshots for UI/UX**:
+
 ```
 Tools: macOS Screenshot (Cmd+Shift+4), Windows Snipping Tool
 Format: PNG (lossless)
@@ -286,6 +310,7 @@ Size: Full-width or 1200px max
 ```
 
 **3. Code Examples**:
+
 ```
 Use EDS code-expander block for long snippets
 Inline syntax highlighting for short examples
@@ -293,6 +318,7 @@ Always include language identifier: ```javascript
 ```
 
 **4. Comparison Tables**:
+
 ```
 Use EDS table block or HTML <table>
 Clear headers, visual hierarchy
@@ -302,6 +328,7 @@ Use color coding for differences (green/red)
 ### Writing Quality Content
 
 **Expand Thin Content**:
+
 1. **Introduction** (10-15% of total):
    - Hook reader
    - State problem/opportunity
@@ -319,6 +346,7 @@ Use color coding for differences (green/red)
    - Related resources
 
 **Target Word Counts**:
+
 - Technical tutorials: 1200-2000 words
 - Concept explainers: 800-1500 words
 - Quick guides: 600-1000 words
@@ -372,17 +400,20 @@ Use color coding for differences (green/red)
 ### Return on Investment
 
 **SEO Benefit**:
+
 - Better content quality = higher rankings
 - Each improved page moves up 5-15 positions (estimated)
 - 10 pages × average 500 monthly impressions = 5,000 impressions
 - At 20% CTR improvement: +1,000 clicks/month
 
 **User Engagement Benefit**:
+
 - Lower bounce rate: -20% average
 - Higher time on page: +25% average
 - More conversions: +10% on improved pages
 
 **ROI Calculation**:
+
 ```
 Investment: $2,100
 Traffic increase: +1,000 clicks/month
@@ -399,12 +430,14 @@ ROI: 757% in year 1
 ## Quick Reference
 
 ### Content Quality Formula
+
 ```
 Overall Score = (Word Count × 0.2) + (Freshness × 0.2) +
                 (Uniqueness × 0.25) + (Grammar × 0.15) + (Media × 0.2)
 ```
 
 ### Target Scores by Content Type
+
 | Type | Min Words | Min Media % | Target Score |
 |------|-----------|-------------|--------------|
 | Tutorial | 1200 | 20% | 70-85 |
@@ -413,6 +446,7 @@ Overall Score = (Word Count × 0.2) + (Freshness × 0.2) +
 | Quick Tip | 400 | 10% | 60-70 |
 
 ### Visual Content Ratios
+
 - **Technical content**: 1 visual per 300-500 words
 - **Tutorial content**: 1 visual per 200-400 words
 - **Conceptual content**: 1 visual per 400-600 words
@@ -422,12 +456,14 @@ Overall Score = (Word Count × 0.2) + (Freshness × 0.2) +
 ## Resources
 
 ### Content Creation Tools
+
 - **Diagrams**: [Excalidraw](https://excalidraw.com/), [Mermaid](https://mermaid.js.org/)
 - **Screenshots**: macOS Screenshot, [CleanShot X](https://cleanshot.com/)
 - **Image Optimization**: [ImageOptim](https://imageoptim.com/), [TinyPNG](https://tinypng.com/)
 - **Grammar**: [Grammarly](https://grammarly.com/), [Hemingway Editor](https://hemingwayapp.com/)
 
 ### Content Guidelines
+
 - [Google Quality Rater Guidelines](https://static.googleusercontent.com/media/guidelines.raterhub.com/en//searchqualityevaluatorguidelines.pdf)
 - [Yoast Content SEO](https://yoast.com/content-seo/)
 - [Nielsen Norman Group: Writing for the Web](https://www.nngroup.com/articles/how-users-read-on-the-web/)
@@ -437,6 +473,7 @@ Overall Score = (Word Count × 0.2) + (Freshness × 0.2) +
 ## Conclusion
 
 Content quality improvements offer **targeted, high-impact gains**:
+
 - 🎯 Focuses on bottom 10 pages (biggest opportunities)
 - 📈 Average improvement: +20-25 points per page
 - 💰 Moderate investment ($2,100), strong ROI (757%)

@@ -26,6 +26,7 @@ A content reuse component that enables embedding shared content from one page in
 The fragment block enables content reuse across multiple pages by fetching and embedding content from a separate fragment document. This allows maintaining a single source of truth for shared content - update once, reflect everywhere.
 
 **Primary Use Cases:**
+
 - Reusable disclaimers or legal notices
 - Site-wide announcements or banners
 - Standardized contact information sections
@@ -39,6 +40,7 @@ The fragment block enables content reuse across multiple pages by fetching and e
 **Location:** `/blocks/fragment/`
 
 **Files:**
+
 - `fragment.js` - Core decoration logic with fragment loading
 - `fragment.css` - Minimal section padding suppression
 - `README.md` - Technical documentation (this file)
@@ -117,7 +119,7 @@ Fetches and prepares fragment content:
 
 `Resolve relative media paths`
 `main.querySelectorAll('img[src^="./media_"]').forEach(elem => {`
-`  elem.src = new URL(elem.getAttribute('src'), new URL(path, window.location)).href;`
+`elem.src = new URL(elem.getAttribute('src'), new URL(path, window.location)).href;`
 `});`
 
 `Decorate and load blocks`
@@ -159,11 +161,13 @@ Seamless Content Integration
 The fragment block has minimal CSS focused on padding suppression:
 
 **Section Padding Removal:**
+
 - `.fragment-wrapper > .section` - Removes left/right padding
 - `.fragment-wrapper > .section:first-of-type` - Removes top padding from first section
 - `.fragment-wrapper > .section:last-of-type` - Removes bottom padding from last section
 
 **Why this matters:**
+
 - Fragment content should blend seamlessly with parent page
 - Section padding would create visual gaps
 - Parent section controls overall spacing
@@ -172,11 +176,13 @@ The fragment block has minimal CSS focused on padding suppression:
 ### Path Resolution Strategy
 
 **Media paths in fragments use relative syntax:**
+
 - Fragment at `/fragments/disclaimer`
 - Media in fragment: `./media_abc123.png`
 - Resolved to: `/fragments/media_abc123.png`
 
 **How it works:**
+
 1. Fragment HTML contains relative paths (`./media_*`)
 2. `resetAttributeBase()` finds all media elements
 3. Creates absolute URL using fragment path as base
@@ -201,6 +207,7 @@ In Google Docs, create a table with the block name and fragment path:
 ### Fragment Path Formats
 
 **Absolute path (recommended):**
+
 ```
 | Fragment |
 |----------|
@@ -208,6 +215,7 @@ In Google Docs, create a table with the block name and fragment path:
 ```
 
 **With link:**
+
 ```
 | Fragment |
 |----------|
@@ -215,6 +223,7 @@ In Google Docs, create a table with the block name and fragment path:
 ```
 
 **Plain text path:**
+
 ```
 | Fragment |
 |----------|
@@ -244,6 +253,7 @@ Get 50% off all products this week only. Use code SAVE50 at checkout.
 ### Content Patterns
 
 **Pattern 1: Simple Text Fragment**
+
 ```
 | Fragment |
 |----------|
@@ -251,12 +261,14 @@ Get 50% off all products this week only. Use code SAVE50 at checkout.
 ```
 
 **Fragment content (/fragments/disclaimer):**
+
 ```
 *Legal disclaimer: This content is for informational purposes only.
 Consult a professional for specific advice.*
 ```
 
 **Pattern 2: Rich Content Fragment**
+
 ```
 | Fragment |
 |----------|
@@ -264,6 +276,7 @@ Consult a professional for specific advice.*
 ```
 
 **Fragment content (/fragments/contact-info):**
+
 ```
 ### Contact Us
 
@@ -274,6 +287,7 @@ Office Hours: Monday-Friday, 9am-5pm EST
 ```
 
 **Pattern 3: Complex Fragment with Blocks**
+
 ```
 | Fragment |
 |----------|
@@ -281,6 +295,7 @@ Office Hours: Monday-Friday, 9am-5pm EST
 ```
 
 **Fragment content (/fragments/feature-comparison) - contains cards block:**
+
 ```
 | Cards |
 |-------|
@@ -295,12 +310,14 @@ Office Hours: Monday-Friday, 9am-5pm EST
 ### Integration Points
 
 **With other blocks:**
+
 - Can appear anywhere on page
 - Works within sections
 - Compatible with all other blocks
 - Fragment can contain any EDS blocks
 
 **Content Model:**
+
 - Single-cell table with fragment path
 - Path must start with `/`
 - Fragment page must exist at path
@@ -339,6 +356,7 @@ The EDS pipeline converts markdown into this initial DOM structure:
 The fragment block is replaced with the actual fragment content:
 
 **Before decoration:**
+
 ```html
 <section class="fragment-container">
   <div class="fragment-wrapper">
@@ -352,6 +370,7 @@ The fragment block is replaced with the actual fragment content:
 ```
 
 **After decoration:**
+
 ```html
 <section class="fragment-container announcement-section">
   <!-- Fragment block replaced with fragment content -->
@@ -378,6 +397,7 @@ The fragment block is replaced with the actual fragment content:
 ```
 
 **Fragment content can include:**
+
 - Plain text and paragraphs
 - Headings and formatting
 - Images with relative paths
@@ -445,6 +465,7 @@ The fragment block uses minimal styling. Fragment content inherits styles from p
 4. Parent section now styled with fragment's section classes
 
 **This enables:**
+
 - Fragment defines its own styling context
 - Parent page respects fragment styling
 - Seamless visual integration
@@ -498,11 +519,13 @@ Different fragment pages = different variations.
 ### Responsive Strategy
 
 **Fragment block itself has no responsive CSS** - responsive behavior comes from:
+
 - Fragment content blocks (cards, tabs, etc. respond naturally)
 - Parent section styling (controls overall layout)
 - Global site styles (typography, spacing, colors)
 
 **Testing responsive fragments:**
+
 1. Test fragment page in isolation first
 2. Verify blocks within fragment respond correctly
 3. Test parent page with embedded fragment
@@ -518,12 +541,14 @@ Different fragment pages = different variations.
 The fragment block preserves semantic HTML from fragment content:
 
 **Fragment content structure maintained:**
+
 - Heading hierarchy preserved
 - Landmark roles maintained (if present)
 - Link text and alt text carried over
 - Semantic markup from blocks retained
 
 **Accessibility attributes:**
+
 - All ARIA attributes from fragment preserved
 - Role attributes maintained
 - State attributes (aria-expanded, etc.) functional
@@ -532,12 +557,14 @@ The fragment block preserves semantic HTML from fragment content:
 ### Screen Reader Support
 
 **What works well:**
+
 - Fragment content read in natural order
 - Headings announced with correct level
 - Blocks within fragment fully accessible
 - Links and interactive elements functional
 
 **Screen reader flow:**
+
 1. Encounters fragment content seamlessly
 2. No indication content came from fragment (good!)
 3. All content read as if native to page
@@ -546,12 +573,14 @@ The fragment block preserves semantic HTML from fragment content:
 ### Keyboard Navigation
 
 **Supported interaction:**
+
 - All interactive elements in fragment accessible via keyboard
 - Tab order preserved from fragment content
 - No keyboard traps created
 - Focus management maintained
 
 **Focus order:**
+
 - Fragment content inserted into document flow
 - Tab order follows visual order
 - No focus disruption at fragment boundaries
@@ -559,12 +588,14 @@ The fragment block preserves semantic HTML from fragment content:
 ### ARIA Best Practices
 
 **Fragment block implementation:**
+
 - No ARIA attributes added by fragment block itself
 - Fragment content ARIA preserved completely
 - Section-level roles maintained
 - Landmark regions carried over from fragment
 
 **Why this matters:**
+
 - Fragment content appears native to page
 - No accessibility seams or boundaries
 - Screen readers announce content naturally
@@ -577,12 +608,14 @@ The fragment block preserves semantic HTML from fragment content:
 ### JavaScript Execution
 
 **Initial decoration:**
+
 - One fetch request per fragment
 - `.plain.html` format loads quickly
 - Full block decoration applied to fragment
 - Async/await pattern prevents blocking
 
 **Loading sequence:**
+
 1. Page loads with fragment block placeholder
 2. Fragment path extracted from block
 3. Async fetch initiated for fragment HTML
@@ -591,6 +624,7 @@ The fragment block preserves semantic HTML from fragment content:
 6. Parent section classes updated
 
 **Performance impact:**
+
 - One additional HTTP request per fragment
 - Fragment content cached by browser
 - Subsequent page loads faster (cached fragment)
@@ -599,12 +633,14 @@ The fragment block preserves semantic HTML from fragment content:
 ### Memory Footprint
 
 **Per fragment block:**
+
 - One fetch request (fragment HTML)
 - Fragment DOM tree (size varies by content)
 - Block decoration overhead (depends on blocks in fragment)
 - Minimal additional memory (<1KB per fragment)
 
 **Typical usage:**
+
 - 1-3 fragments per page
 - Fragment size: 1-10KB HTML
 - Total overhead: <50KB per page
@@ -612,12 +648,14 @@ The fragment block preserves semantic HTML from fragment content:
 ### Network Efficiency
 
 **Initial load:**
+
 - fragment.js: ~1.5KB (minified)
 - fragment.css: ~200 bytes (minified)
 - Fragment HTML: 1-10KB per fragment (cached)
 - No external dependencies
 
 **Runtime:**
+
 - One fetch per unique fragment path
 - Browser caching applied to `.plain.html`
 - Subsequent loads use cached fragment
@@ -626,12 +664,14 @@ The fragment block preserves semantic HTML from fragment content:
 ### Caching Strategy
 
 **Fragment caching:**
+
 - `.plain.html` content cached by browser
 - Standard HTTP cache headers apply
 - Fragment updates require cache invalidation
 - Consider cache TTL for frequently updated fragments
 
 **Best practices:**
+
 - Use fragments for stable content
 - Frequent updates? Consider inline content
 - Cache-busting query params for urgent updates: `/fragments/announcement?v=2`
@@ -640,12 +680,14 @@ The fragment block preserves semantic HTML from fragment content:
 ### Loading Strategy
 
 Fragment block loads as part of EDS's default loading pattern:
+
 - Blocks decorated on page load
 - Fragment fetch during decoration (async)
 - No render-blocking resources
 - Progressive enhancement friendly
 
 **Loading indicators:**
+
 - Fragment block replaced after loading
 - No built-in loading spinner
 - Content appears when ready
@@ -654,12 +696,14 @@ Fragment block loads as part of EDS's default loading pattern:
 ### Lighthouse Impact
 
 Expected Lighthouse scores with fragment block:
+
 - Performance: 90-100 (depends on fragment content)
 - Accessibility: 95-100 (depends on fragment content)
 - Best Practices: 100
 - SEO: 100 (fragment content indexed with parent page)
 
 **Performance optimization tips:**
+
 - Keep fragments small (< 10KB HTML)
 - Optimize images in fragments
 - Limit blocks within fragments
@@ -691,6 +735,7 @@ Expected Lighthouse scores with fragment block:
 ### Internet Explorer 11
 
 **Not supported** - Fragment block requires:
+
 - Fetch API (NOT supported in IE11)
 - URL API (NOT supported in IE11)
 - Async/await (requires transpilation)
@@ -704,6 +749,7 @@ Expected Lighthouse scores with fragment block:
 ### Issue: Fragment not appearing
 
 **Symptoms:**
+
 - Empty space where fragment should be
 - Fragment block placeholder visible
 - No content loaded
@@ -729,6 +775,7 @@ Expected Lighthouse scores with fragment block:
 ### Issue: Fragment media not loading
 
 **Symptoms:**
+
 - Broken image icons
 - Missing media in fragment content
 - 404 errors for media files
@@ -756,6 +803,7 @@ Expected Lighthouse scores with fragment block:
 ### Issue: Fragment styles not applied
 
 **Symptoms:**
+
 - Fragment content unstyled or poorly styled
 - Different appearance than fragment page
 - Missing colors, fonts, or layout
@@ -780,6 +828,7 @@ Expected Lighthouse scores with fragment block:
 ### Issue: Fragment blocks not working
 
 **Symptoms:**
+
 - Blocks within fragment not decorated
 - Cards/tabs/accordion not functional
 - Plain HTML visible instead of decorated blocks
@@ -805,6 +854,7 @@ Expected Lighthouse scores with fragment block:
 ### Issue: Multiple fragments slow page load
 
 **Symptoms:**
+
 - Page loads slowly
 - Multiple fragment fetch requests
 - Lighthouse performance score drops
@@ -835,6 +885,7 @@ Expected Lighthouse scores with fragment block:
 ### Issue: Fragment content causes layout shift
 
 **Symptoms:**
+
 - Content jumps when fragment loads
 - Layout shift visible to users
 - Poor CLS (Cumulative Layout Shift) score
@@ -846,7 +897,7 @@ Expected Lighthouse scores with fragment block:
    `Reserve minimum height`
    `/* In parent page styles */`
    `.fragment-wrapper {`
-   `  min-height: 200px; /* Approximate fragment height */`
+   `min-height: 200px; /* Approximate fragment height */`
    `}`
 
 2. **Use skeleton/placeholder:**
@@ -866,6 +917,7 @@ Expected Lighthouse scores with fragment block:
 ### Manual Testing (test.html)
 
 1. **Open test file:**
+
    ```
    http://localhost:3000/blocks/fragment/test.html
    ```
@@ -908,8 +960,8 @@ Expected Lighthouse scores with fragment block:
 `Verify media resolution`
 `const imgs = document.querySelectorAll('img[src*="media_"]');`
 `imgs.forEach(img => {`
-`  console.log('Image src:', img.src);`
-`  console.log('Is absolute?', img.src.startsWith('http'));`
+`console.log('Image src:', img.src);`
+`console.log('Is absolute?', img.src.startsWith('http'));`
 `});`
 
 `Check section class transfer`
@@ -920,6 +972,7 @@ Expected Lighthouse scores with fragment block:
 ### Automated Testing
 
 **Future implementation:**
+
 - Jest tests for loadFragment() function
 - Test media path resolution logic
 - Test section class transfer
@@ -930,41 +983,46 @@ Expected Lighthouse scores with fragment block:
 **Example test cases:**
 `Fragment Block Tests`
 `describe('Fragment Block', () => {`
-`  test('loads fragment from valid path', async () => {});`
-`  test('resolves relative media paths to absolute', async () => {});`
-`  test('transfers section classes to parent', async () => {});`
-`  test('decorates blocks within fragment', async () => {});`
-`  test('handles 404 gracefully', async () => {});`
-`  test('handles empty fragment', async () => {});`
+`test('loads fragment from valid path', async () => {});`
+`test('resolves relative media paths to absolute', async () => {});`
+`test('transfers section classes to parent', async () => {});`
+`test('decorates blocks within fragment', async () => {});`
+`test('handles 404 gracefully', async () => {});`
+`test('handles empty fragment', async () => {});`
 `});`
 
 ### Testing Checklist
 
 **Fragment creation:**
+
 - [ ] Create test fragment page in `/fragments/`
 - [ ] Add content with images and blocks
 - [ ] Publish fragment page
 - [ ] Verify `.plain.html` is accessible
 
 **Fragment embedding:**
+
 - [ ] Add fragment block to test page
 - [ ] Use correct fragment path
 - [ ] Publish parent page
 - [ ] Test on staging site
 
 **Visual testing:**
+
 - [ ] Fragment content appears correctly
 - [ ] Media loads from fragment directory
 - [ ] Styling matches fragment page
 - [ ] Blocks within fragment work
 
 **Technical testing:**
+
 - [ ] Check Network tab for fragment fetch
 - [ ] Verify 200 status for `.plain.html`
 - [ ] Inspect media URLs (absolute paths)
 - [ ] Check section classes transferred
 
 **Error scenarios:**
+
 - [ ] Test with non-existent fragment path
 - [ ] Test with invalid path format
 - [ ] Test with empty fragment
@@ -1005,6 +1063,7 @@ Expected Lighthouse scores with fragment block:
 ### Fragment Page Dependencies
 
 **Fragment pages may have their own dependencies:**
+
 - Blocks used within fragment (cards, tabs, etc.)
 - Block-specific CSS and JS files
 - Media assets in fragment directory
@@ -1063,6 +1122,7 @@ Expected Lighthouse scores with fragment block:
 ### Contributing
 
 To propose enhancements:
+
 1. Create test fragment page
 2. Implement feature in fragment.js
 3. Add test cases to test.html
@@ -1095,6 +1155,7 @@ To propose enhancements:
 ## Support
 
 For issues or questions:
+
 1. Check [Troubleshooting](#troubleshooting) section
 2. Review [EXAMPLE.md](./EXAMPLE.md) for usage examples
 3. Test with [test.html](./test.html)

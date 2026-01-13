@@ -12,6 +12,7 @@ The simplest way to use the React Slide Builder block:
 | :----------------- |
 
 This will:
+
 - Load the React slide builder application
 - Render the full slide creation interface
 - Enable interactive slide building features
@@ -244,6 +245,7 @@ Add supporting information:
 ### Block Not Displaying
 
 If the block doesn't appear:
+
 1. Check that you've published the page
 2. Verify the block syntax is correct
 3. Ensure your browser is up to date
@@ -252,6 +254,7 @@ If the block doesn't appear:
 ### Slow Loading
 
 If the application loads slowly:
+
 1. Check your internet connection
 2. Try on a faster network
 3. Close unnecessary browser tabs
@@ -260,6 +263,7 @@ If the application loads slowly:
 ### Functionality Issues
 
 If features don't work:
+
 1. Ensure JavaScript is enabled
 2. Check browser compatibility
 3. Try a different browser
@@ -270,6 +274,7 @@ If features don't work:
 ### Browser Requirements
 
 Best experience on:
+
 - Chrome 57+
 - Firefox 60+
 - Safari 11+
@@ -278,11 +283,13 @@ Best experience on:
 ### Device Recommendations
 
 Optimal use on:
+
 - Desktop computers
 - Laptop computers
 - Tablets (landscape orientation)
 
 Limited functionality on:
+
 - Mobile phones (small screen)
 - Older devices (performance)
 
@@ -298,16 +305,16 @@ Limited functionality on:
 ### With EDS Sections
 
 `Section Integration`
-`--- `
+`---`
 `# Hero Section`
 `| hero |`
 `| :---- |`
 `| Create Presentations | Get Started Now |`
-`--- `
+`---`
 `# Builder Section`
 `| react-slide-builder |`
 `| :----------------- |`
-`--- `
+`---`
 `# Footer Section`
 `| footer |`
 `| :----- |`
@@ -330,6 +337,7 @@ Limited functionality on:
 ## Support
 
 For questions about using React Slide Builder:
+
 - See [Block Documentation](README.md) for technical details
 - Contact support for functionality questions
 - Check browser console for error messages

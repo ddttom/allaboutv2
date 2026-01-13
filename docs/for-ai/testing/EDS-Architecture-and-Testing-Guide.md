@@ -4,7 +4,7 @@
 
 ## 🚨 **DEEP DEBUGGING POLICY NOTICE**
 
-> **📋 Policy Requirement**: The advanced debugging techniques described in this document (file replacement, instrumentation, core file modifications) require **explicit user request** per the [debugging policy](debug.md#deep-debugging-request-policy). 
+> **📋 Policy Requirement**: The advanced debugging techniques described in this document (file replacement, instrumentation, core file modifications) require **explicit user request** per the [debugging policy](debug.md#deep-debugging-request-policy).
 >
 > **⚠️ DO NOT PROCEED** with file replacement operations, instrumentation setup, or advanced testing workflows without explicit approval from the user.
 >
@@ -17,6 +17,7 @@
 The EDS (Edge Delivery Services) block architecture employs a sophisticated dynamic loading system that presents unique challenges for advanced performance testing and instrumentation. This guide examines the system's architecture and provides tested strategies for comprehensive block analysis while maintaining code integrity.
 
 **Prerequisites for this guide:**
+
 - ✅ Explicit user request received for advanced debugging
 - ✅ Understanding of [standard debugging approaches](debug.md#standard-debugging-workflow)
 - ✅ Familiarity with EDS block structure and constraints
@@ -36,6 +37,7 @@ The EDS block loading system follows a specific sequence:
 ### Example: Columns Block Loading
 
 For a columns block in HTML:
+
 ```html
 <div class="columns">
   <!-- block content -->
@@ -43,6 +45,7 @@ For a columns block in HTML:
 ```
 
 The system will:
+
 1. Detect the `columns` class
 2. Load `/blocks/columns/columns.css`
 3. Import `/blocks/columns/columns.js`
@@ -62,16 +65,19 @@ const mod = await import(`${window.hlx.codeBasePath}/blocks/${blockName}/${block
 ### Constraints and Limitations
 
 #### 1. **Path Resolution**
+
 - Block paths are constructed dynamically using the block name
 - The system always looks for `{blockName}.js` in `/blocks/{blockName}/`
 - Cannot be easily redirected to instrumented versions
 
 #### 2. **Module Caching**
+
 - ES modules are cached by the browser
 - Once loaded, subsequent imports return the cached version
 - Requires page reload to load different versions
 
 #### 3. **Import Timing**
+
 - Blocks are loaded on-demand when encountered in the DOM
 - Loading happens during the decoration phase
 - Cannot be intercepted without modifying core AEM.js
@@ -98,6 +104,7 @@ import { instrumentedDecorate } from './columns-instrumented.js';
 Given the constraints of the dynamic injection system, the most effective testing strategy is **temporary file replacement**:
 
 #### Core Principle
+
 Replace the original block file with the instrumented version during testing, then restore the original file afterward.
 
 #### Why This Approach Works
@@ -135,12 +142,14 @@ rm blocks/columns/columns-original-backup.js
 ### Phase 1: Preparation
 
 #### 1. Create Instrumented Block Version
+
 ```bash
 # Ensure instrumented version exists
 ls blocks/columns/columns-instrumented.js
 ```
 
 #### 2. Verify Server is Running
+
 ```bash
 # Start the development server (standardized port)
 npm run debug
@@ -148,6 +157,7 @@ npm run debug
 ```
 
 #### 3. Backup Original File
+
 ```bash
 # Create backup of original block
 cp blocks/columns/columns.js blocks/columns/columns-original-backup.js
@@ -156,18 +166,21 @@ cp blocks/columns/columns.js blocks/columns/columns-original-backup.js
 ### Phase 2: Testing Execution
 
 #### 4. Deploy Instrumented Version
+
 ```bash
 # Replace original with instrumented version
 cp blocks/columns/columns-instrumented.js blocks/columns/columns.js
 ```
 
 #### 5. Execute Test
+
 ```bash
 # Open browser to test page
 # http://localhost:3000/eds-test-instrumented.html
 ```
 
 #### 6. Collect Performance Data
+
 ```javascript
 // In browser console
 window.getInstrumentationReport()
@@ -177,12 +190,14 @@ window.exportInstrumentationData()
 ### Phase 3: Restoration
 
 #### 7. Restore Original File
+
 ```bash
 # Restore original block file
 cp blocks/columns/columns-original-backup.js blocks/columns/columns.js
 ```
 
 #### 8. Verify Restoration
+
 ```bash
 # Confirm original file is restored
 git status
@@ -190,6 +205,7 @@ git status
 ```
 
 #### 9. Clean Up
+
 ```bash
 # Remove backup file
 rm blocks/columns/columns-original-backup.js
@@ -222,21 +238,25 @@ git status
 ### Why File Replacement is Optimal
 
 #### 1. **Minimal System Impact**
+
 - No modifications to core EDS architecture
 - Preserves all existing functionality
 - Maintains performance characteristics
 
 #### 2. **Complete Instrumentation Coverage**
+
 - Full access to block execution flow
 - Captures all function calls and performance metrics
 - Maintains original execution context
 
 #### 3. **Development Workflow Integration**
+
 - Compatible with existing development processes
 - Works with any version control system
 - Supports automated testing pipelines
 
 #### 4. **Debugging Capabilities**
+
 - Real-time performance monitoring
 - Detailed execution traces
 - Memory usage analysis
@@ -244,6 +264,7 @@ git status
 ### Comparison with Alternative Approaches
 
 #### Approach 1: Import Redirection (Not Feasible)
+
 ```javascript
 // Problems:
 // - Cannot modify dynamic import paths
@@ -252,6 +273,7 @@ git status
 ```
 
 #### Approach 2: Proxy/Wrapper Functions (Complex)
+
 ```javascript
 // Problems:
 // - Requires intercepting module loading
@@ -260,6 +282,7 @@ git status
 ```
 
 #### Approach 3: File Replacement (Recommended)
+
 ```javascript
 // Benefits:
 // - Simple and reliable
@@ -271,12 +294,14 @@ git status
 ### Performance Considerations
 
 #### Instrumentation Overhead
+
 - **Function Wrapping**: ~0.1ms per function call
 - **Memory Monitoring**: ~50KB additional memory usage
 - **Data Collection**: ~1-2% CPU overhead
 - **Storage Impact**: ~100KB per test session
 
 #### Testing Impact
+
 - **Page Load Time**: <5% increase with instrumentation
 - **Block Loading**: <10% increase in decoration time
 - **Memory Usage**: ~10% increase during testing
@@ -287,12 +312,14 @@ git status
 ### Code Integrity Management
 
 #### 1. **Always Use Backups**
+
 ```bash
 # Create timestamped backups
 cp blocks/columns/columns.js blocks/columns/columns-backup-$(date +%Y%m%d-%H%M%S).js
 ```
 
 #### 2. **Verify File States**
+
 ```bash
 # Check file differences
 diff blocks/columns/columns.js blocks/columns/columns-instrumented.js
@@ -302,6 +329,7 @@ git diff blocks/columns/columns.js
 ```
 
 #### 3. **Automated Restoration**
+
 ```bash
 # Use trap for automatic cleanup
 trap 'git restore blocks/columns/columns.js' EXIT
@@ -312,6 +340,7 @@ trap 'git restore blocks/columns/columns.js' EXIT
 > **📋 Policy Note**: Automated scripts still require explicit user approval for file replacement operations.
 
 #### 1. **Scripted Testing**
+
 ```bash
 #!/bin/bash
 # test-instrumented-block.sh
@@ -341,6 +370,7 @@ echo "Testing complete, original file restored"
 ```
 
 #### 2. **CI/CD Integration**
+
 ```yaml
 # .github/workflows/instrumentation-test.yml
 name: Block Instrumentation Testing
@@ -366,16 +396,19 @@ jobs:
 ### Performance Testing Guidelines
 
 #### 1. **Baseline Measurements**
+
 - Test original block performance first
 - Establish baseline metrics
 - Document expected performance characteristics
 
 #### 2. **Instrumentation Validation**
+
 - Verify instrumented version produces same output
 - Check for performance regression
 - Validate data collection accuracy
 
 #### 3. **Data Analysis**
+
 - Focus on execution time patterns
 - Analyze memory usage trends
 - Identify performance bottlenecks
@@ -383,6 +416,7 @@ jobs:
 ### Error Handling and Recovery
 
 #### 1. **Graceful Degradation**
+
 ```javascript
 // In instrumented blocks
 try {
@@ -396,6 +430,7 @@ try {
 ```
 
 #### 2. **Automatic Recovery**
+
 ```bash
 # Recovery script
 if [ ! -f "blocks/columns/columns-backup.js" ]; then
@@ -405,6 +440,7 @@ fi
 ```
 
 #### 3. **Validation Checks**
+
 ```bash
 # Validate file integrity
 if ! node -c blocks/columns/columns.js; then
@@ -420,6 +456,7 @@ fi
 ### Multi-Block Testing
 
 #### 1. **Sequential Block Testing**
+
 ```bash
 # Test multiple blocks in sequence
 for block in columns hero carousel; do
@@ -431,6 +468,7 @@ done
 ```
 
 #### 2. **Parallel Block Testing**
+
 ```bash
 # Test multiple blocks simultaneously
 cp blocks/columns/columns-instrumented.js blocks/columns/columns.js
@@ -442,6 +480,7 @@ git restore blocks/*/
 ### Performance Regression Testing
 
 #### 1. **Automated Performance Comparison**
+
 ```javascript
 // Performance comparison script
 const originalMetrics = await runTest('original');
@@ -457,6 +496,7 @@ console.log('Performance Impact:', performanceImpact);
 ```
 
 #### 2. **Threshold-Based Validation**
+
 ```javascript
 // Validate performance thresholds
 const thresholds = {
@@ -501,30 +541,35 @@ This approach enables comprehensive performance analysis of EDS blocks while res
 ## See Also
 
 ### Core Testing & Debugging
+
 - **[Debug Guide](debug.md)** - Complete debugging policy and standard approaches that do not require approval
 - **[instrumentation-how-it-works](instrumentation-how-it-works.md)** - Technical details of the instrumentation system and performance monitoring
 - **[EDS Native Testing Standards](eds-native-testing-standards.md)** - Testing approaches specifically designed for EDS-native components
 - **[Testing Strategies](testing-strategies.md)** - Comprehensive testing approaches for EDS blocks including unit tests and integration testing
 
 ### Architecture & Development Standards
+
 - **[Block Architecture Standards](../implementation/block-architecture-standards.md)** - Development architecture guidelines and comprehensive standards for EDS block development
 - **[EDS Architecture Standards](../implementation/eds-architecture-standards.md)** - Architectural patterns and standards for EDS-native block development
 - **[EDS Overview](../eds.md)** - Complete introduction to Edge Delivery Services architecture and core concepts
 - **[Design Philosophy Guide](../implementation/design-philosophy-guide.md)** - Understanding the philosophical principles behind EDS architecture decisions
 
 ### Implementation Guides
+
 - **[Raw EDS Blocks Guide](../implementation/raw-eds-blocks-guide.md)** - Step-by-step guide for creating simple EDS blocks using vanilla JavaScript
 - **[Complex EDS Blocks Guide](../implementation/complex-eds-blocks-guide.md)** - Advanced block development with build tools and external dependencies
 - **[Build Blocks Clarification](../implementation/build-blocks-clarification.md)** - Understanding the dual-directory architecture and development workflows
 - **[Project Structure](../project-structure.md)** - Understanding the overall EDS project organization and file conventions
 
 ### Development Environment & Tools
+
 - **[Server README](../../../Server-README.md)** - Development server setup and configuration for EDS block development
 - **[Performance Optimization](performance-optimization.md)** - Techniques for optimizing EDS block performance and loading
 - **[Browser Compatibility](browser-compatibility.md)** - Ensuring cross-browser compatibility for EDS implementations
 - **[Build Tools Configuration](build-tools-configuration.md)** - Advanced build tool setup and configuration
 
 ### Advanced Topics
+
 - **[Investigation](investigation.md)** - Advanced investigation techniques and analysis methods
 - **[JavaScript Patterns](javascript-patterns.md)** - Reusable JavaScript patterns for EDS block development
 - **[Error Handling Patterns](error-handling-patterns.md)** - Comprehensive error handling strategies for EDS blocks
@@ -533,6 +578,7 @@ This approach enables comprehensive performance analysis of EDS blocks while res
 ## Next Steps
 
 ### For QA Engineers & Testers
+
 1. **Master the debugging policy** by understanding when explicit approval is required for advanced testing
 2. **Learn standard debugging approaches** from [Debug Guide](debug.md) before attempting advanced techniques
 3. **Understand the file replacement workflow** for testing instrumented versions of blocks safely
@@ -540,6 +586,7 @@ This approach enables comprehensive performance analysis of EDS blocks while res
 5. **Implement automated testing scripts** following the patterns shown in this guide
 
 ### For Performance Engineers
+
 1. **Study the instrumentation system** through [instrumentation-how-it-works](instrumentation-how-it-works.md)
 2. **Master the performance testing guidelines** including baseline measurements and threshold validation
 3. **Implement comprehensive monitoring** using the performance testing scenarios outlined here
@@ -547,6 +594,7 @@ This approach enables comprehensive performance analysis of EDS blocks while res
 5. **Establish performance budgets** based on the overhead metrics documented in this guide
 
 ### For DevOps & Build Engineers
+
 1. **Understand the EDS dynamic loading constraints** to create appropriate CI/CD pipelines
 2. **Implement the file replacement workflow** in automated testing environments
 3. **Create backup and restoration procedures** that maintain code integrity during testing
@@ -554,6 +602,7 @@ This approach enables comprehensive performance analysis of EDS blocks while res
 5. **Design recovery procedures** for handling testing failures and file corruption
 
 ### For Senior Developers & Architects
+
 1. **Master the technical rationale** behind the file replacement approach vs. alternative methods
 2. **Understand the EDS architecture constraints** that necessitate this testing approach
 3. **Design testing strategies** that balance comprehensive analysis with system integrity
@@ -561,6 +610,7 @@ This approach enables comprehensive performance analysis of EDS blocks while res
 5. **Establish governance processes** for managing instrumented testing workflows
 
 ### For Team Leads & Project Managers
+
 1. **Understand the policy requirements** for advanced debugging and testing operations
 2. **Plan testing timelines** that account for the approval process and file replacement workflows
 3. **Establish approval processes** for team members requesting advanced debugging capabilities
@@ -568,6 +618,7 @@ This approach enables comprehensive performance analysis of EDS blocks while res
 5. **Create documentation standards** for recording testing results and decisions
 
 ### For AI Assistants & Automation
+
 1. **Understand the explicit approval requirement** for all advanced debugging operations in this guide
 2. **Master the standard debugging approaches** that can be used without special approval
 3. **Learn to identify** when advanced testing techniques are necessary vs. standard approaches

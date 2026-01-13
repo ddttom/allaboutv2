@@ -26,6 +26,7 @@ A versatile component for displaying blog post listings with intelligent filteri
 The blogroll block displays curated lists of blog posts with advanced filtering capabilities. It automatically groups posts into series, sorts them intelligently, and offers both full-page and compact floating panel display modes.
 
 **Primary Use Cases:**
+
 - Blog post listings with series grouping
 - Related content sections
 - Navigation panels for blog archives
@@ -37,6 +38,7 @@ The blogroll block displays curated lists of blog posts with advanced filtering 
 **Location:** `/blocks/blogroll/`
 
 **Files:**
+
 - `blogroll.js` - Core decoration logic with filtering and grouping
 - `blogroll.css` - Responsive styles and panel animations
 - `README.md` - Technical documentation (this file)
@@ -96,6 +98,7 @@ The block consists of several key functions:
 #### 1. Configuration Parsing (`getConfig`)
 
 Extracts filtering configuration from block content:
+
 - Parses `path=value` filters for path-based matching
 - Handles `path=*` wildcard for current directory filtering
 - Processes regular keyword filters
@@ -118,6 +121,7 @@ Detects series naming patterns:
 `const match = title.match(/^(.*?)\s*-?\s*Part\s*(\d+)$/i);`
 
 Returns:
+
 - `name`: Series name (without "Part N")
 - `part`: Part number (or null if not detected)
 - `basePath`: Directory path for grouping
@@ -131,6 +135,7 @@ Applies filters in priority order:
 **Priority 3**: Keyword filters (acceptList)
 
 Groups posts by series and sorts:
+
 - Series with most posts appear first
 - Posts within series sorted by part number
 - Alphabetical fallback for non-numbered posts
@@ -138,6 +143,7 @@ Groups posts by series and sorts:
 #### 5. Compact Panel Creation (`createCompactBlogrollPanel`)
 
 Builds floating panel structure:
+
 - Panel container with slide animation
 - Sticky header with title and close button
 - Scrollable content area
@@ -146,6 +152,7 @@ Builds floating panel structure:
 #### 6. Main Decoration (`decorate`)
 
 Orchestrates block initialization:
+
 - Fetches data from `/query-index.json`
 - Applies configuration and filtering
 - Renders either full view or compact panel
@@ -156,12 +163,14 @@ Orchestrates block initialization:
 The blogroll block uses CSS variables for theming and fixed positioning for compact mode:
 
 **Full Mode Layout:**
+
 - Max width: 800px
 - Centered with auto margins
 - Vertical list layout
 - Entry borders for separation
 
 **Compact Mode Layout:**
+
 - Fixed position icon (top-left: 20px)
 - Panel width: 300px (customizable)
 - Full height slide-out panel
@@ -169,6 +178,7 @@ The blogroll block uses CSS variables for theming and fixed positioning for comp
 - Z-index layering for proper stacking
 
 **Responsive Behavior:**
+
 - Mobile-friendly with flexible width
 - Touch-friendly click targets
 - Readable font sizes across devices
@@ -304,14 +314,14 @@ The EDS pipeline converts a markdown table into this initial DOM structure:
 
 `HTML Structure Before Decoration`
 `<div class="blogroll block">`
-`  <!-- Row 1: Filter term -->`
-`  <div>`
-`    <div>path=/blogs/tech</div>`
-`  </div>`
-`  <!-- Row 2: Another filter -->`
-`  <div>`
-`    <div>guide</div>`
-`  </div>`
+`<!-- Row 1: Filter term -->`
+`<div>`
+`<div>path=/blogs/tech</div>`
+`</div>`
+`<!-- Row 2: Another filter -->`
+`<div>`
+`<div>guide</div>`
+`</div>`
 `</div>`
 
 ### Output Structure (After Decoration)
@@ -320,20 +330,20 @@ The EDS pipeline converts a markdown table into this initial DOM structure:
 
 `Full Mode HTML Structure`
 `<div class="blogroll block">`
-`  <div class="blogroll-container">`
-`    <div class="blogroll-series">`
-`      <h2>Series Name</h2>`
-`      <ul>`
-`        <li class="blogroll-entry">`
-`          <a href="/path/to/post">Post Title - Part 1</a>`
-`          <span class="blogroll-date">25/11/2025</span>`
-`          <p>Post description text</p>`
-`        </li>`
-`        <!-- More entries... -->`
-`      </ul>`
-`    </div>`
-`    <!-- More series... -->`
-`  </div>`
+`<div class="blogroll-container">`
+`<div class="blogroll-series">`
+`<h2>Series Name</h2>`
+`<ul>`
+`<li class="blogroll-entry">`
+`<a href="/path/to/post">Post Title - Part 1</a>`
+`<span class="blogroll-date">25/11/2025</span>`
+`<p>Post description text</p>`
+`</li>`
+`<!-- More entries... -->`
+`</ul>`
+`</div>`
+`<!-- More series... -->`
+`</div>`
 `</div>`
 
 #### Compact Mode Output
@@ -341,19 +351,19 @@ The EDS pipeline converts a markdown table into this initial DOM structure:
 `Compact Mode HTML Structure`
 `<!-- Icon Container (Fixed Position) -->`
 `<div class="blogroll-icon-container">`
-`  <div class="blogroll-icon">📚</div>`
-`  <span class="blogroll-icon-text">Blogroll</span>`
+`<div class="blogroll-icon">📚</div>`
+`<span class="blogroll-icon-text">Blogroll</span>`
 `</div>`
 
 `<!-- Slide-out Panel -->`
 `<div class="blogroll-panel">`
-`  <div class="blogroll-panel-header">`
-`    <div class="blogroll-panel-title">Blogroll</div>`
-`    <button class="blogroll-panel-close" aria-label="Close blogroll panel">&times;</button>`
-`  </div>`
-`  <div class="blogroll-panel-content">`
-`    <!-- Series and entries structure same as full mode -->`
-`  </div>`
+`<div class="blogroll-panel-header">`
+`<div class="blogroll-panel-title">Blogroll</div>`
+`<button class="blogroll-panel-close" aria-label="Close blogroll panel">&times;</button>`
+`</div>`
+`<div class="blogroll-panel-content">`
+`<!-- Series and entries structure same as full mode -->`
+`</div>`
 `</div>`
 
 ### Filter Configuration Object
@@ -362,10 +372,10 @@ The `getConfig()` function returns:
 
 `JavaScript Configuration Object`
 `{`
-`  acceptList: ['keyword1', 'keyword2'],        // Keyword filters`
-`  pathFilters: ['/path1', '/path2'],          // Path filters`
-`  currentDirFilter: '/current/path/' || null, // Path=* filter`
-`  isCompact: true || false                    // Compact mode flag`
+`acceptList: ['keyword1', 'keyword2'],        // Keyword filters`
+`pathFilters: ['/path1', '/path2'],          // Path filters`
+`currentDirFilter: '/current/path/' || null, // Path=* filter`
+`isCompact: true || false                    // Compact mode flag`
 `}`
 
 ---
@@ -378,35 +388,35 @@ Customize the blogroll block through CSS variables:
 
 `CSS Variable Configuration`
 `:root {`
-`  /* Container styling */`
-`  --blogroll-font-family: Arial, sans-serif;`
-`  --blogroll-max-width: 800px;`
-`  --blogroll-padding: 20px;`
+`/* Container styling */`
+`--blogroll-font-family: Arial, sans-serif;`
+`--blogroll-max-width: 800px;`
+`--blogroll-padding: 20px;`
 
-`  /* Colors */`
-`  --blogroll-title-color: #333;`
-`  --blogroll-border-color: #ddd;`
-`  --blogroll-link-color: #0066cc;`
-`  --blogroll-date-color: #666;`
-`  --blogroll-text-color: #444;`
+`/* Colors */`
+`--blogroll-title-color: #333;`
+`--blogroll-border-color: #ddd;`
+`--blogroll-link-color: #0066cc;`
+`--blogroll-date-color: #666;`
+`--blogroll-text-color: #444;`
 
-`  /* Compact panel colors */`
-`  --blogroll-panel-bg-color: #f0f4f8;`
-`  --blogroll-panel-text-color: #333;`
-`  --blogroll-panel-link-color: #0056b3;`
-`  --blogroll-panel-date-color: #555;`
-`  --blogroll-panel-header-border-color: #d0d9e1;`
+`/* Compact panel colors */`
+`--blogroll-panel-bg-color: #f0f4f8;`
+`--blogroll-panel-text-color: #333;`
+`--blogroll-panel-link-color: #0056b3;`
+`--blogroll-panel-date-color: #555;`
+`--blogroll-panel-header-border-color: #d0d9e1;`
 
-`  /* Compact icon */`
-`  --blogroll-icon-size: 40px;`
-`  --blogroll-icon-bg-color: #007bff;`
-`  --blogroll-icon-color: white;`
+`/* Compact icon */`
+`--blogroll-icon-size: 40px;`
+`--blogroll-icon-bg-color: #007bff;`
+`--blogroll-icon-color: white;`
 
-`  /* Panel dimensions */`
-`  --blogroll-panel-width: 300px;`
+`/* Panel dimensions */`
+`--blogroll-panel-width: 300px;`
 
-`  /* Entry styling */`
-`  --blogroll-entry-border-color: #e0e0e0;`
+`/* Entry styling */`
+`--blogroll-entry-border-color: #e0e0e0;`
 `}`
 
 ### Custom Styling Examples
@@ -415,47 +425,47 @@ Customize the blogroll block through CSS variables:
 
 `Wider Compact Panel`
 `.blogroll-panel {`
-`  --blogroll-panel-width: 400px;`
+`--blogroll-panel-width: 400px;`
 `}`
 
 **Change Icon Position:**
 
 `Move Icon to Bottom-Right`
 `.blogroll-icon-container {`
-`  top: auto;`
-`  bottom: 20px;`
-`  left: auto;`
-`  right: 20px;`
+`top: auto;`
+`bottom: 20px;`
+`left: auto;`
+`right: 20px;`
 `}`
 
 **Add Hover Effects:**
 
 `Entry Hover Effect`
 `.blogroll-entry {`
-`  transition: background-color 0.2s;`
+`transition: background-color 0.2s;`
 `}`
 
 `.blogroll-entry:hover {`
-`  background-color: #f8f9fa;`
+`background-color: #f8f9fa;`
 `}`
 
 **Custom Entry Borders:**
 
 `Thicker Entry Borders`
 `.blogroll-entry {`
-`  border: 2px solid var(--blogroll-entry-border-color);`
-`  border-radius: 8px;`
+`border: 2px solid var(--blogroll-entry-border-color);`
+`border-radius: 8px;`
 `}`
 
 **Series Title Styling:**
 
 `Colorful Series Titles`
 `.blogroll-series h2 {`
-`  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);`
-`  color: white;`
-`  padding: 0.75rem 1rem;`
-`  border-radius: 8px;`
-`  border-bottom: none;`
+`background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);`
+`color: white;`
+`padding: 0.75rem 1rem;`
+`border-radius: 8px;`
+`border-bottom: none;`
 `}`
 
 ---
@@ -467,17 +477,20 @@ Customize the blogroll block through CSS variables:
 The blogroll block adapts to different screen sizes:
 
 **Mobile (< 600px):**
+
 - Full mode: Single column, full width
 - Compact mode: Icon positioned for thumb reach
 - Panel: Full viewport height
 - Font sizes: Optimized for readability
 
 **Tablet (600px - 1024px):**
+
 - Full mode: Constrained to max-width with margins
 - Compact mode: Panel slides from left
 - Spacing: Comfortable touch targets
 
 **Desktop (> 1024px):**
+
 - Full mode: Centered with max-width constraint
 - Compact mode: Fixed panel width
 - Hover effects: Mouse-optimized interactions
@@ -485,12 +498,14 @@ The blogroll block adapts to different screen sizes:
 ### Touch Interactions
 
 **Compact Mode Touch Support:**
+
 - Tap icon or "Blogroll" text to open panel
 - Tap outside panel to close
 - Tap close button (×) to dismiss
 - No hover dependencies
 
 **Accessibility Considerations:**
+
 - Touch targets minimum 40px × 40px
 - Clear visual feedback on interaction
 - Keyboard navigation fully supported
@@ -502,12 +517,14 @@ The blogroll block adapts to different screen sizes:
 ### Keyboard Navigation
 
 **Compact Mode:**
+
 - **Tab**: Navigate between icon and panel controls
 - **Enter/Space**: Activate icon to open panel
 - **Escape**: Close panel when open
 - **Tab**: Navigate through links within panel
 
 **Full Mode:**
+
 - **Tab**: Navigate through all post links
 - **Enter**: Follow link to post
 - Standard link navigation behavior
@@ -520,11 +537,13 @@ The blogroll block adapts to different screen sizes:
 `<button class="blogroll-panel-close" aria-label="Close blogroll panel">&times;</button>`
 
 **Semantic HTML:**
+
 - Uses proper heading hierarchy (`<h2>` for series)
 - List structure (`<ul>`, `<li>`) for entries
 - Descriptive link text (post titles)
 
 **Focus Management:**
+
 - Focus trapped in panel when open
 - Focus returns to trigger on close
 - Visible focus indicators on all interactive elements
@@ -540,11 +559,13 @@ The blogroll block adapts to different screen sizes:
 ### Visual Accessibility
 
 **Color Contrast:**
+
 - All text meets WCAG AA standards
 - Link color provides sufficient contrast
 - Date text readable against background
 
 **Font Sizing:**
+
 - Base font size: 16px
 - Scalable with browser zoom
 - No fixed pixel heights that break with zoom
@@ -556,12 +577,14 @@ The blogroll block adapts to different screen sizes:
 ### Load Performance
 
 **Initial Load:**
+
 - Single fetch to `/query-index.json`
 - Minimal JavaScript execution (~20KB)
 - CSS loaded once and cached
 - No external dependencies
 
 **Rendering Performance:**
+
 - Synchronous DOM manipulation
 - No layout thrashing
 - Efficient filtering algorithms
@@ -592,11 +615,13 @@ The blogroll block adapts to different screen sizes:
 ### Performance Metrics
 
 **Typical Load Times:**
+
 - First paint: < 100ms
 - Interactive: < 200ms
 - Complete: < 500ms
 
 **Memory Usage:**
+
 - Initial: ~1MB (including data)
 - Steady state: ~1.5MB
 - Compact panel: +500KB
@@ -608,12 +633,14 @@ The blogroll block adapts to different screen sizes:
 ### Supported Browsers
 
 **Modern Browsers (Full Support):**
+
 - Chrome 90+
 - Firefox 88+
 - Safari 14+
 - Edge 90+
 
 **Graceful Degradation:**
+
 - Works in all browsers with ES6 support
 - Falls back gracefully without JavaScript
 - Progressive enhancement approach
@@ -621,6 +648,7 @@ The blogroll block adapts to different screen sizes:
 ### Required Features
 
 **JavaScript Features:**
+
 - ES6 modules
 - Arrow functions
 - Template literals
@@ -630,6 +658,7 @@ The blogroll block adapts to different screen sizes:
 - async/await
 
 **CSS Features:**
+
 - CSS Grid (not required, but enhances layout)
 - CSS Custom Properties (variables)
 - CSS Transforms (for animations)
@@ -638,11 +667,13 @@ The blogroll block adapts to different screen sizes:
 ### Known Limitations
 
 **IE11:**
+
 - Not supported (requires ES6 features)
 - No polyfills provided
 - Use modern browser instead
 
 **Safari < 14:**
+
 - Some CSS variable inheritance issues
 - Date formatting may differ
 - Overall functionality intact
@@ -658,12 +689,14 @@ The blogroll block adapts to different screen sizes:
 **Symptom:** Blogroll shows "No blog posts found."
 
 **Possible Causes:**
+
 - `/query-index.json` file not found
 - Filters too restrictive (no matches)
 - Path filter doesn't match any posts
 - Current directory has no posts (when using `path=*`)
 
 **Solutions:**
+
 - Verify `/query-index.json` exists and is accessible
 - Check browser console for fetch errors
 - Relax filters or use broader path patterns
@@ -674,11 +707,13 @@ The blogroll block adapts to different screen sizes:
 **Symptom:** Clicking icon does nothing.
 
 **Possible Causes:**
+
 - JavaScript error during decoration
 - Event listener not attached
 - Z-index conflict with other elements
 
 **Solutions:**
+
 - Check browser console for JavaScript errors
 - Verify no CSS z-index conflicts
 - Ensure `blogroll.js` loaded successfully
@@ -688,11 +723,13 @@ The blogroll block adapts to different screen sizes:
 **Symptom:** Posts appear ungrouped or in wrong series.
 
 **Possible Causes:**
+
 - Title format doesn't match "- Part N" pattern
 - Path differences preventing grouping
 - Special characters in titles
 
 **Solutions:**
+
 - Ensure consistent naming: "Series Name - Part 1"
 - Check for extra spaces or hyphens
 - Verify posts share same base path
@@ -702,11 +739,13 @@ The blogroll block adapts to different screen sizes:
 **Symptom:** Expected posts not showing up.
 
 **Possible Causes:**
+
 - Case sensitivity issue
 - Path filter syntax error
 - Filter priority conflict
 
 **Solutions:**
+
 - Remember most filters are case-sensitive
 - Use exact `path=value` syntax (no spaces around `=`)
 - Check filter priority order (path filters override keywords)
@@ -716,11 +755,13 @@ The blogroll block adapts to different screen sizes:
 **Symptom:** Blogroll doesn't look right.
 
 **Possible Causes:**
+
 - CSS variables not defined
 - Style conflicts with other blocks
 - Missing CSS file
 
 **Solutions:**
+
 - Verify `/blocks/blogroll/blogroll.css` loaded
 - Check for conflicting styles in DevTools
 - Define missing CSS variables in `:root`
@@ -750,8 +791,8 @@ Add this to browser console:
 
 `Manual Fetch Test`
 `fetch('/query-index.json')`
-`  .then(res => res.json())`
-`  .then(data => console.log('Blog data:', data));`
+`.then(res => res.json())`
+`.then(data => console.log('Blog data:', data));`
 
 ---
 
@@ -765,6 +806,7 @@ Use the included `test.html` file for comprehensive testing:
 `http://localhost:3000/blocks/blogroll/test.html`
 
 **Test Scenarios:**
+
 1. Default mode with no filters
 2. Path-based filtering (`path=/blogs`)
 3. Current directory filtering (`path=*`)
@@ -826,11 +868,13 @@ Test `groupAndSortPosts()` with mock data:
 ### Accessibility Testing
 
 **Keyboard Navigation:**
+
 - Tab through all interactive elements
 - Verify focus indicators visible
 - Test Escape key closes panel
 
 **Screen Reader Testing:**
+
 - Test with NVDA (Windows) or VoiceOver (Mac)
 - Verify ARIA labels announced
 - Check heading hierarchy
@@ -842,18 +886,22 @@ Test `groupAndSortPosts()` with mock data:
 ### Internal Dependencies
 
 **EDS Core Functions:**
+
 - None - block is standalone
 
 **Required Files:**
+
 - `/query-index.json` - Blog post data source
 
 **Optional Integrations:**
+
 - Works alongside any other EDS blocks
 - No conflicts with existing blocks
 
 ### External Dependencies
 
 **None** - The blogroll block has zero external dependencies:
+
 - No npm packages
 - No CDN resources
 - No third-party libraries
@@ -862,6 +910,7 @@ Test `groupAndSortPosts()` with mock data:
 ### Browser APIs Used
 
 **Standard APIs:**
+
 - Fetch API (for `/query-index.json`)
 - DOM API (element creation, manipulation)
 - Event API (click, keydown listeners)
@@ -934,6 +983,7 @@ Based on feedback, these features are under consideration:
 ### Contributing
 
 Suggestions and contributions welcome! Please:
+
 1. Check existing issues in project repository
 2. Propose enhancement with use case
 3. Follow project coding standards
@@ -945,23 +995,27 @@ Suggestions and contributions welcome! Please:
 ## Version History
 
 **v2.1.0** (Current)
+
 - Added automatic fallback mechanism with `path=*` default
 - Improved path filtering with title fallback
 - Enhanced visual separation with entry borders
 - Updated documentation with 14-section structure
 
 **v2.0.0**
+
 - Added compact mode with floating panel
 - Implemented series detection and grouping
 - Added keyboard navigation (Escape key)
 - Improved accessibility with ARIA labels
 
 **v1.5.0**
+
 - Added path-based filtering (`path=value`)
 - Implemented current directory filter (`path=*`)
 - Enhanced filtering priority system
 
 **v1.0.0**
+
 - Initial release
 - Basic blogroll functionality
 - Query-index.json integration

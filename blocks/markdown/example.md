@@ -80,7 +80,7 @@ Document your code examples with inline comments:
 |----------|
 | // This function validates user input |
 | function validateInput(data) { |
-|   /* Check if data exists and is not empty */ |
+|   /*Check if data exists and is not empty*/ |
 |   if (!data || data.trim() === '') { |
 |     return false; |
 |   } |
@@ -140,6 +140,7 @@ Show iteration and data processing:
 ### Code Content Requirements
 
 **Recommended:**
+
 - JavaScript syntax only (other languages not highlighted)
 - One line per table cell (or entire code block in one cell)
 - Plain text only (no HTML tags)
@@ -147,12 +148,14 @@ Show iteration and data processing:
 - Valid JavaScript syntax for best highlighting
 
 **Why this matters:**
+
 - Block processes text for JavaScript keywords
 - Syntax highlighting patterns optimized for JS
 - Other languages will display but without highlighting
 - Invalid syntax may produce unexpected highlighting
 
 **Good code examples:**
+
 - Function declarations and expressions
 - Variable assignments (const, let, var)
 - Control structures (if, else, for, while)
@@ -160,6 +163,7 @@ Show iteration and data processing:
 - String literals and numbers
 
 **Avoid:**
+
 - HTML or CSS code (no highlighting support)
 - Python or other languages (no highlighting support)
 - Very long lines (may require horizontal scrolling)
@@ -168,6 +172,7 @@ Show iteration and data processing:
 ### Content Length
 
 **Content length:**
+
 - No strict limits on lines or characters
 - Container scrolls if content is very long
 - Keep concise for better readability
@@ -175,6 +180,7 @@ Show iteration and data processing:
 - Break very long examples into multiple blocks
 
 **Formatting tips:**
+
 1. Use consistent indentation (2 or 4 spaces)
 2. Keep lines under 80 characters when possible
 3. Add blank lines for readability
@@ -184,12 +190,14 @@ Show iteration and data processing:
 ### Accessibility Requirements
 
 **Always provide:**
+
 - Context before code block (what does it do?)
 - Descriptive heading for code section
 - Explanation of key concepts after code
 - Plain text alternative if code is essential to understanding
 
 **Avoid:**
+
 - Code without context or explanation
 - Critical information only in code comments
 - Assuming all users can read code
@@ -202,12 +210,14 @@ Show iteration and data processing:
 ### Visual Appearance
 
 **Container:**
+
 - Light blue background (#e6f3ff)
 - Blue border (#4a90e2)
 - Rounded corners (8px)
 - Internal padding (20px)
 
 **Code Display:**
+
 - Monospace font (Courier New)
 - Font size: 14px
 - Line height: 1.5
@@ -215,6 +225,7 @@ Show iteration and data processing:
 - Word wrapping enabled
 
 **Syntax Colors:**
+
 - Keywords: Blue (#0000ff)
 - Strings: Red (#a31515)
 - Comments: Green (#008000)
@@ -224,22 +235,26 @@ Show iteration and data processing:
 ### Responsive Behavior
 
 **Mobile (< 768px):**
+
 - Padding reduced to 10px
 - Font size maintains readability
 - Horizontal scrolling for long lines
 - Touch-friendly display
 
 **Tablet (768px - 1024px):**
+
 - Standard padding (20px)
 - No major layout changes
 - Comfortable reading width
 
 **Desktop (> 1024px):**
+
 - Full padding (20px)
 - Optimal code viewing
 - Clear syntax visibility
 
 **How it works:**
+
 - CSS media query adjusts padding at 768px breakpoint
 - Pre element handles long lines with word-wrap
 - Horizontal scrolling available if needed
@@ -252,24 +267,28 @@ Show iteration and data processing:
 ### Content Strategy
 
 **1. Provide context**
+
 - Explain what the code does before showing it
 - Add descriptive headings for code sections
 - Include follow-up explanations after code
 - Link to related documentation
 
 **2. Keep examples focused**
+
 - One concept per code block
 - Avoid mixing unrelated code
 - Show complete, working examples
 - Include necessary imports/setup
 
 **3. Use meaningful names**
+
 - Clear variable names (not x, y, z)
 - Descriptive function names
 - Avoid abbreviated names
 - Follow JavaScript conventions
 
 **4. Add helpful comments**
+
 - Explain why, not just what
 - Document complex logic
 - Note important details
@@ -278,24 +297,28 @@ Show iteration and data processing:
 ### Code Quality
 
 **1. Valid syntax**
+
 - Use proper JavaScript syntax
 - Close all brackets and quotes
 - Match parentheses correctly
 - Valid function declarations
 
 **2. Consistent formatting**
+
 - Use consistent indentation
 - Add spaces around operators
 - Follow style guidelines
 - Maintain readable spacing
 
 **3. Working examples**
+
 - Code should be runnable (if complete)
 - Avoid syntax errors
 - Test examples before publishing
 - Verify logic is correct
 
 **4. Appropriate length**
+
 - Not too short (meaningless snippets)
 - Not too long (overwhelming)
 - Complete enough to understand
@@ -304,24 +327,28 @@ Show iteration and data processing:
 ### Accessibility First
 
 **1. Descriptive context**
+
 - Explain code purpose in plain language
 - Don't assume code speaks for itself
 - Provide text descriptions
 - Include usage examples
 
 **2. Readable formatting**
+
 - Good contrast (default colors meet WCAG AA)
 - Adequate font size
 - Clear spacing
 - Monospace font for clarity
 
 **3. Screen reader friendly**
+
 - Pre element announces as code block
 - Content read line by line
 - Syntax highlighting doesn't interfere
 - Alternative text descriptions provided
 
 **4. Keyboard accessible**
+
 - No interactive elements (display only)
 - Standard page navigation works
 - No keyboard traps
@@ -330,12 +357,14 @@ Show iteration and data processing:
 ### When NOT to Use Markdown Block
 
 **Avoid markdown block for:**
+
 - Non-JavaScript code (no highlighting benefit)
 - HTML or CSS snippets (use different block)
 - Very long code files (use external links)
 - Inline code mentions (use regular text formatting)
 
 **Better alternatives:**
+
 - **Text block** - For prose with inline code mentions
 - **File links** - For complete source files
 - **External docs** - For comprehensive API references
@@ -352,6 +381,7 @@ Show iteration and data processing:
 **Cause:** JavaScript or CSS not loaded properly.
 
 **Solution:**
+
 1. Verify table format in Google Docs is correct
 2. Check that first row has "Markdown" in it
 3. Ensure subsequent rows contain code content
@@ -365,6 +395,7 @@ Show iteration and data processing:
 **Cause:** CSS not loaded or CSS variables not defined.
 
 **Solution:**
+
 1. Verify markdown.css is loaded (check Network tab)
 2. Inspect element to see if styles are applied
 3. Check for CSS conflicts with other blocks
@@ -377,6 +408,7 @@ Show iteration and data processing:
 **Cause:** White space or overflow settings issue.
 
 **Solution:**
+
 1. **Accept horizontal scrolling** (default behavior):
    - Pre element allows horizontal scroll
    - This is the intended design
@@ -397,6 +429,7 @@ Show iteration and data processing:
 **Cause:** Only specific keywords are supported.
 
 **Solution:**
+
 - **Supported keywords:** const, let, var, function, return, if, else, for, while, class
 - **Not supported:** async, await, try, catch, import, export, etc.
 - This is a limitation of the basic syntax highlighter
@@ -409,6 +442,7 @@ Show iteration and data processing:
 **Cause:** Comment format not recognized.
 
 **Solution:**
+
 - Use `//` for single-line comments
 - Use `/* */` for multi-line comments
 - Ensure space after `//` for best recognition
@@ -421,6 +455,7 @@ Show iteration and data processing:
 **Cause:** Line trimming in processContent() function.
 
 **Solution:**
+
 1. **Use consistent spacing** (recommended):
    - Use 2 or 4 spaces per indent level
    - Apply same indentation throughout
@@ -482,7 +517,7 @@ Show try-catch patterns:
 | Markdown |
 |----------|
 | function safeParseJSON(str) { |
-|   /* Safely parse JSON with error handling */ |
+|   /*Safely parse JSON with error handling*/ |
 |   if (!str) { |
 |     return null; |
 |   } |
@@ -517,17 +552,17 @@ Override default styles in your project CSS (advanced):
 
 `Light theme`
 `.markdown {`
-`  --markdown-bg-color: #f8f9fa;`
-`  --markdown-border-color: #dee2e6;`
+`--markdown-bg-color: #f8f9fa;`
+`--markdown-border-color: #dee2e6;`
 `}`
 
 `Dark theme`
 `.markdown.dark {`
-`  --markdown-bg-color: #1e1e1e;`
-`  --markdown-border-color: #3e3e3e;`
+`--markdown-bg-color: #1e1e1e;`
+`--markdown-border-color: #3e3e3e;`
 `}`
 `.markdown.dark .markdown-content {`
-`  color: #d4d4d4;`
+`color: #d4d4d4;`
 `}`
 
 Then apply by adding CSS to your project's styles.
@@ -574,6 +609,7 @@ After creating markdown blocks in Google Docs:
 ### Browser Testing
 
 Test in multiple browsers:
+
 - Chrome/Edge (last 2 versions)
 - Firefox (last 2 versions)
 - Safari (last 2 versions)
@@ -628,7 +664,7 @@ Test in multiple browsers:
 |----------|
 | // Initialize counter |
 | let count = 0; |
-| /* Loop through items */ |
+| /*Loop through items*/ |
 | while (count < 5) { |
 |   count++; |
 | } |
@@ -650,6 +686,7 @@ The `add` function returns the sum of two numbers.
 | } |
 
 **Parameters:**
+
 - `a` - First number
 - `b` - Second number
 
@@ -681,11 +718,13 @@ Add error handling and data processing as needed.
 ## Related Blocks
 
 **Similar functionality:**
+
 - **Code block** (if available) - Alternative code display
 - **Pre block** (if available) - Preformatted text display
 - **Text block** - For inline code mentions
 
 **Complementary blocks:**
+
 - **Hero** - Large introductory section before code
 - **Quote** - Callouts or important notes
 - **Columns** - Create multi-column code layouts

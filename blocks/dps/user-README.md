@@ -123,6 +123,7 @@ Presentation Subtitle - [https://example.com](https://example.com)
 - Create line breaks with physical returns in the text
 - For bullet points in column 3, use single lines with no special formatting
 - For bullet points in columns 5-6, use markdown list format:
+
   ```
   - First point
   - Second point

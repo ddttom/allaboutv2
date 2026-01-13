@@ -49,6 +49,7 @@ The block fetches fortune data from `/data/cookies.json`. The JSON file follows 
 ```
 
 Each fortune consists of:
+
 - `key`: The label displayed before the fortune (typically "Fortune")
 - `value`: The fortune message text
 
@@ -141,6 +142,7 @@ The Fortune Cookie block follows accessibility best practices:
 This block is designed to work in footer sections but can be placed anywhere on an EDS page:
 
 **In Footer:**
+
 ```markdown
 | Fortune Cookie |
 |----------------|
@@ -148,6 +150,7 @@ This block is designed to work in footer sections but can be placed anywhere on 
 ```
 
 **As Standalone:**
+
 ```markdown
 # Daily Inspiration
 
@@ -192,15 +195,18 @@ Common issues and solutions:
 **Data Source:** `/data/cookies.json`
 
 **Implementation:**
+
 - **JavaScript:** `/blocks/footer/fortunecookie/fortunecookie.js`
 - **CSS:** `/blocks/footer/fortunecookie/fortunecookie.css`
 
 **Key Function:**
+
 ```javascript
 export default async function decorate(block)
 ```
 
 The decorate function:
+
 1. Accepts the block element as a parameter
 2. Fetches fortune data asynchronously
 3. Randomly selects one fortune

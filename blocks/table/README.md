@@ -26,6 +26,7 @@ An accessible, responsive table component that enhances standard HTML tables wit
 The table block transforms markdown table content into semantically correct, accessible HTML tables with enhanced ARIA attributes for screen reader support. It supports multiple styling variations that can be combined for flexible visual presentations.
 
 **Primary Use Cases:**
+
 - Data tables with structured information
 - Product or feature comparison tables
 - Pricing plan comparisons
@@ -39,6 +40,7 @@ The table block transforms markdown table content into semantically correct, acc
 **Location:** `/blocks/table/`
 
 **Files:**
+
 - `table.js` - Core decoration logic with ARIA implementation
 - `table.css` - Table styling and variation support
 - `README.md` - Technical documentation (this file)
@@ -108,6 +110,7 @@ The `decorate()` function performs these transformations:
 
 **buildCell(rowIndex)**
 Creates appropriate cell element based on row position:
+
 ```javascript
 function buildCell(rowIndex) {
   const cell = rowIndex ? document.createElement('td') : document.createElement('th');
@@ -125,18 +128,21 @@ function buildCell(rowIndex) {
 The table block uses CSS variables and class-based variations:
 
 **Base Table:**
+
 - `width: 100%` - Full container width
 - `overflow-x: auto` - Horizontal scrolling for wide tables
 - `border-collapse: collapse` - Clean borders without gaps
 - Responsive font sizing via media queries
 
 **Variations:**
+
 - `.table.striped` - Alternating row backgrounds (odd rows)
 - `.table.bordered` - Borders on all cells
 - `.table.first-line` - Pale blue background on first data row
 - `.table.no-header` - Adjusts borders for headerless tables
 
 **Responsive Font Sizes:**
+
 - Mobile (< 600px): `var(--body-font-size-xs)`
 - Tablet (600px - 899px): `var(--body-font-size-s)`
 - Desktop (≥ 900px): `var(--body-font-size-m)`
@@ -184,6 +190,7 @@ In Google Docs, create a table with the block name in the header row:
 ### Variation Syntax
 
 **Striped variation:**
+
 ```
 | Table (striped) |
 |-----------------|
@@ -193,6 +200,7 @@ In Google Docs, create a table with the block name in the header row:
 ```
 
 **Bordered variation:**
+
 ```
 | Table (bordered) |
 |------------------|
@@ -201,6 +209,7 @@ In Google Docs, create a table with the block name in the header row:
 ```
 
 **First-line variation:**
+
 ```
 | Table (first-line) |
 |--------------------|
@@ -210,6 +219,7 @@ In Google Docs, create a table with the block name in the header row:
 ```
 
 **No-header variation:**
+
 ```
 | Table (no-header) |
 |-------------------|
@@ -218,6 +228,7 @@ In Google Docs, create a table with the block name in the header row:
 ```
 
 **Combined variations:**
+
 ```
 | Table (striped, bordered) |
 |---------------------------|
@@ -229,6 +240,7 @@ In Google Docs, create a table with the block name in the header row:
 ### Content Patterns
 
 **Pattern 1: Pricing Table**
+
 ```
 | Table (striped, first-line) |
 |-----------------------------|
@@ -239,6 +251,7 @@ In Google Docs, create a table with the block name in the header row:
 ```
 
 **Pattern 2: Feature Comparison**
+
 ```
 | Table (bordered) |
 |------------------|
@@ -249,6 +262,7 @@ In Google Docs, create a table with the block name in the header row:
 ```
 
 **Pattern 3: Technical Specifications**
+
 ```
 | Table |
 |-------|
@@ -262,12 +276,14 @@ In Google Docs, create a table with the block name in the header row:
 ### Integration Points
 
 **With other blocks:**
+
 - Works seamlessly after hero or section headers
 - Can follow introductory text sections
 - Compatible within columns or grid layouts
 - No conflicts with surrounding blocks
 
 **Content Model:**
+
 - First row becomes table header (unless no-header variation)
 - Each subsequent row becomes data row
 - Each cell in row becomes table cell
@@ -470,6 +486,7 @@ All variations use additional classes on the `.table` element:
 ### Horizontal Scrolling
 
 When table width exceeds container:
+
 - `.table` wrapper provides `overflow-x: auto`
 - Browser renders native scrollbar
 - Touch/trackpad scrolling enabled
@@ -519,20 +536,24 @@ The table block uses CSS media queries for progressive font sizing:
 The table block follows accessibility best practices with comprehensive ARIA attributes:
 
 **Table Element:**
+
 - `role="table"` - Explicitly identifies table structure
 
 **Header Cells:**
+
 - `scope="col"` - Indicates column header
 - `role="columnheader"` - Semantic role for headers
 - `id="header-{index}"` - Unique identifier for each header
 
 **Data Cells:**
+
 - `aria-describedby="header-{index}"` - Links cell to header
 - Associates each cell with corresponding column header
 
 ### Screen Reader Support
 
 **What works well:**
+
 - Table structure announced as "table"
 - Header row announced with column headers
 - Data cells associated with their headers
@@ -540,6 +561,7 @@ The table block follows accessibility best practices with comprehensive ARIA att
 - Navigation between cells clear and logical
 
 **Screen reader flow:**
+
 1. "Table with N rows and M columns"
 2. "Row 1, Header 1, column header" (for each header)
 3. "Row 2, Header 1 column, Data 1" (for data cells)
@@ -548,6 +570,7 @@ The table block follows accessibility best practices with comprehensive ARIA att
 ### Keyboard Navigation
 
 **Supported navigation:**
+
 - **Tab** - Move focus through interactive elements (if any)
 - **Arrow keys** - Screen reader table navigation mode
 - **Screen reader commands** - Navigate by row, column, cell
@@ -557,6 +580,7 @@ The table block follows accessibility best practices with comprehensive ARIA att
 ### Semantic HTML
 
 The block generates proper semantic HTML:
+
 - `<table>` - Table container
 - `<thead>` - Table header section
 - `<tbody>` - Table body section
@@ -569,6 +593,7 @@ This semantic structure ensures maximum compatibility with assistive technologie
 ### ARIA Best Practices
 
 **What this implementation includes:**
+
 - Explicit `role="table"` declaration
 - Proper column header identification with `scope="col"`
 - Cell-to-header associations via `aria-describedby`
@@ -576,6 +601,7 @@ This semantic structure ensures maximum compatibility with assistive technologie
 - Semantic HTML foundation
 
 **Best practices followed:**
+
 - Use native HTML table elements (not div-based tables)
 - Include proper header rows with `<th>` elements
 - Set `scope` attributes on header cells
@@ -589,18 +615,21 @@ This semantic structure ensures maximum compatibility with assistive technologie
 ### JavaScript Execution
 
 **Initial decoration:**
+
 - One-time table transformation on page load
 - DOM manipulation: Create table structure, move content
 - ARIA enhancement: Set attributes on headers and cells
 - No ongoing JavaScript execution after decoration
 
 **Per table block:**
+
 - O(n) complexity where n = number of cells
 - Minimal processing per cell (create element, copy content, set attributes)
 - No event listeners (tables are static displays)
 - No animation or transition effects
 
 **Optimization characteristics:**
+
 - Synchronous execution (completes before page render)
 - No network requests
 - No external dependencies
@@ -609,6 +638,7 @@ This semantic structure ensures maximum compatibility with assistive technologie
 ### Memory Footprint
 
 **Per table block:**
+
 - 1 `<table>` element
 - 1 `<thead>` element (unless no-header)
 - 1 `<tbody>` element
@@ -617,6 +647,7 @@ This semantic structure ensures maximum compatibility with assistive technologie
 - ARIA attributes stored as element properties
 
 **Typical usage:**
+
 - Small table (3x3): ~12 elements, < 500 bytes
 - Medium table (5x10): ~55 elements, < 2KB
 - Large table (10x20): ~210 elements, < 8KB
@@ -624,12 +655,14 @@ This semantic structure ensures maximum compatibility with assistive technologie
 ### Network Efficiency
 
 **Initial load:**
+
 - table.js: ~1KB (minified)
 - table.css: ~500 bytes (minified)
 - No external dependencies
 - No API calls or data fetching
 
 **Runtime:**
+
 - No additional network requests
 - All content loaded with page
 - No lazy loading (tables typically small)
@@ -638,6 +671,7 @@ This semantic structure ensures maximum compatibility with assistive technologie
 ### Loading Strategy
 
 Table blocks load as part of EDS's default loading pattern:
+
 - Blocks decorated on page load
 - JavaScript executes after DOM ready
 - CSS loads with page styles
@@ -646,12 +680,14 @@ Table blocks load as part of EDS's default loading pattern:
 ### Lighthouse Impact
 
 Expected Lighthouse scores with table block:
+
 - Performance: 95-100 (minimal JavaScript)
 - Accessibility: 95-100 (excellent ARIA implementation)
 - Best Practices: 100 (semantic HTML, no issues)
 - SEO: 100 (proper semantic structure)
 
 The table block has negligible performance impact due to:
+
 - Minimal JavaScript (~1KB)
 - One-time execution
 - No event listeners
@@ -684,6 +720,7 @@ The table block has negligible performance impact due to:
 ### Internet Explorer 11
 
 **Partial support:**
+
 - HTML tables: ✓ (full support)
 - ARIA attributes: ✓ (full support)
 - CSS variables: ✗ (NOT supported, requires fallback)
@@ -695,6 +732,7 @@ The table block has negligible performance impact due to:
 ### Cross-Browser Testing
 
 Test in multiple browsers to verify:
+
 - Table structure renders correctly
 - Borders and spacing consistent
 - Responsive font sizing works
@@ -709,6 +747,7 @@ Test in multiple browsers to verify:
 ### Issue: Table not appearing
 
 **Symptoms:**
+
 - Original div structure still visible
 - No table element in DOM
 - Console errors related to table.js
@@ -735,6 +774,7 @@ Test in multiple browsers to verify:
 ### Issue: Headers not styled correctly
 
 **Symptoms:**
+
 - Header row looks like data row
 - No bold font weight on headers
 - No border distinction for header row
@@ -761,6 +801,7 @@ Test in multiple browsers to verify:
 ### Issue: Striped variation not working
 
 **Symptoms:**
+
 - No alternating row backgrounds
 - All rows have same background color
 - Striped class present but no visual effect
@@ -778,6 +819,7 @@ Test in multiple browsers to verify:
    - May need to be defined in `:root` or `.table`
 
 3. **Test CSS rule:**
+
    ```css
    /* Test in browser DevTools */
    .table.striped tbody tr:nth-child(odd) {
@@ -788,6 +830,7 @@ Test in multiple browsers to verify:
 ### Issue: Table too wide on mobile
 
 **Symptoms:**
+
 - Table extends beyond viewport on mobile
 - Horizontal scrolling difficult or not working
 - Content cut off on mobile devices
@@ -813,6 +856,7 @@ Test in multiple browsers to verify:
 ### Issue: ARIA attributes missing
 
 **Symptoms:**
+
 - Screen reader doesn't announce table properly
 - Header associations not working
 - Accessibility testing failures
@@ -831,6 +875,7 @@ Test in multiple browsers to verify:
    - Verify ARIA enhancement code ran
 
 3. **Test programmatically:**
+
    ```javascript
    // In browser console
    const table = document.querySelector('.table table');
@@ -850,6 +895,7 @@ Test in multiple browsers to verify:
 ### Issue: First-line variation not showing
 
 **Symptoms:**
+
 - First data row has no background color
 - Expected pale blue background not visible
 - Variation class present but no effect
@@ -868,6 +914,7 @@ Test in multiple browsers to verify:
    - Check which row should have background
 
 3. **Test color override:**
+
    ```css
    /* Test in browser DevTools */
    .table.first-line table tbody tr:first-child {
@@ -882,6 +929,7 @@ Test in multiple browsers to verify:
 ### Manual Testing (test.html)
 
 1. **Open test file:**
+
    ```
    http://localhost:3000/blocks/table/table-test.html
    ```
@@ -952,6 +1000,7 @@ console.log('Block classes:', Array.from(blockClasses));
 ### Automated Testing
 
 **Future implementation:**
+
 - Jest tests for DOM transformation
 - Test ARIA attribute correctness
 - Test header vs data cell creation
@@ -960,6 +1009,7 @@ console.log('Block classes:', Array.from(blockClasses));
 - Visual regression tests with Playwright
 
 **Example test cases:**
+
 ```javascript
 describe('Table Block', () => {
   test('creates semantic table structure', () => {});
@@ -1061,6 +1111,7 @@ describe('Table Block', () => {
 ### Contributing
 
 To propose enhancements:
+
 1. Create test content in Google Docs
 2. Implement feature in JavaScript/CSS
 3. Add test cases to test.html
@@ -1095,6 +1146,7 @@ To propose enhancements:
 ## Support
 
 For issues or questions:
+
 1. Check [Troubleshooting](#troubleshooting) section
 2. Review [EXAMPLE.md](./EXAMPLE.md) for usage examples
 3. Test with [test.html](./test.html)

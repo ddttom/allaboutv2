@@ -1,4 +1,5 @@
 # Creating Complex EDS Blocks
+
 ## The Build-Enhanced Approach
 
 **Related Documentation:** [Block Architecture Standards](block-architecture-standards.md) | [Raw EDS Blocks Guide](raw-eds-blocks-guide.md) | [EDS Overview](../eds.md) | [Debug Guide](../testing/debug.md)
@@ -10,6 +11,7 @@ This guide demonstrates how to create sophisticated EDS blocks that use **extern
 > **Critical EDS Constraint:** EDS requires exact file name matching - block names in HTML must match JavaScript file names exactly. The build process enables use of external libraries while satisfying this constraint. See [Block Architecture Standards](block-architecture-standards.md#file-naming-conventions) and [Build Blocks Clarification](build-blocks-clarification.md) for complete details.
 
 **Quick summary:** EDS imports `/blocks/shoelace-card/shoelace-card.js` when it sees `<div class="shoelace-card">`. You develop in `/build/` with external dependencies, then bundle to `/blocks/` with exact naming. This dual-directory architecture works within EDS constraints.
+
 ```
 
 **The build process acts as a bridge between development freedom and EDS constraints.**
@@ -30,6 +32,7 @@ This guide demonstrates how to create sophisticated EDS blocks that use **extern
 ### Dual-Directory Architecture
 
 ```
+
 /build/my-component/           # 🔧 Development workspace
 ├── my-component.js            # Source with imports
 ├── my-component.css           # Source styles  
@@ -45,6 +48,7 @@ This guide demonstrates how to create sophisticated EDS blocks that use **extern
 ├── my-component.css           # Stub file (styles in JS)
 ├── README.md                  # User documentation
 └── test.html                  # 🧪 EDS test file (for EDS debug server)
+
 ```
 
 ### **Critical: Why Two Different HTML Test Files?**
@@ -152,20 +156,24 @@ export default defineConfig({
 The development workflow uses **two different proxy systems** for different testing environments:
 
 #### **Vite Proxy (Development Testing)**
+
 - **When**: Using `npm run dev` at `http://localhost:5174/`
 - **Purpose**: Forwards missing assets to your production site during component development
 - **Configuration**: In `vite.config.js` proxy settings
-- **Example**: 
+- **Example**:
+
   ```javascript
   // Request: http://localhost:5174/slides/query-index.json
   // Proxied to: https://allabout.network/slides/query-index.json
   ```
 
 #### **EDS Debug Server Proxy (Integration Testing)**
+
 - **When**: Using `npm run debug` at `http://localhost:3000/`
 - **Purpose**: Forwards missing EDS assets to production during block testing
 - **Configuration**: Built into the EDS debug server (`server.js`)
 - **Example**:
+
   ```javascript
   // Request: http://localhost:3000/media/image.jpg
   // Proxied to: https://allabout.network/media/image.jpg
@@ -174,6 +182,7 @@ The development workflow uses **two different proxy systems** for different test
 #### **Why Two Proxy Systems Are Needed**
 
 **Development Phase (`index.html` with Vite):**
+
 ```
 Local Request → Vite Proxy → Production Site → Data/Assets
      ↓
@@ -181,6 +190,7 @@ Component Development with Real Data
 ```
 
 **EDS Integration Phase (`test.html` with EDS server):**
+
 ```
 Local Request → EDS Proxy → Production Site → EDS Assets
      ↓
@@ -188,6 +198,7 @@ Block Testing with Real EDS Environment
 ```
 
 **This dual proxy system enables:**
+
 - **Real data** during development without complex mocking
 - **Production assets** during EDS testing without local setup
 - **Seamless workflow** from development to integration testing
@@ -1177,6 +1188,7 @@ npm run dev
 ```
 
 **What happens:**
+
 - Vite automatically serves `index.html` at `http://localhost:5174/`
 - **Vite proxy forwards missing assets** to `https://allabout.network`
 - Hot reload for rapid development
@@ -1185,6 +1197,7 @@ npm run dev
 - Unbundled imports (external libraries loaded separately)
 
 **Proxy behavior example:**
+
 ```
 Request: http://localhost:5174/slides/query-index.json
 Proxied: https://allabout.network/slides/query-index.json
@@ -1192,6 +1205,7 @@ Result:  Component gets real production data during development
 ```
 
 **Use for:**
+
 - Rapid component development with real data
 - Styling and interaction testing
 - External library integration debugging
@@ -1209,6 +1223,7 @@ npm run debug  # Start EDS debug server
 ```
 
 **What happens:**
+
 - Navigate manually to `http://localhost:3000/blocks/my-component/test.html`
 - **EDS server proxy forwards missing assets** to `https://allabout.network`
 - Tests bundled, production-ready component
@@ -1217,6 +1232,7 @@ npm run debug  # Start EDS debug server
 - Verifies deployment process worked correctly
 
 **Proxy behavior example:**
+
 ```
 Request: http://localhost:3000/media/hero-image.jpg
 Proxied: https://allabout.network/media/hero-image.jpg
@@ -1224,12 +1240,14 @@ Result:  Block tests with real production images and assets
 ```
 
 **Use for:**
+
 - Final integration testing with real EDS assets
 - EDS compatibility validation
 - Bundle size and performance testing
 - Production deployment verification
 
 **Additional Testing (if test2.html exists):**
+
 ```
 Navigate to: http://localhost:3000/blocks/my-component/test2.html
 Purpose: Test served HTML → rendered HTML transformation
@@ -1301,12 +1319,14 @@ const mod = await import(`${window.hlx.codeBasePath}/blocks/${blockName}/${block
 ```
 
 **Implications:**
+
 - HTML class `shoelace-card` → MUST have file `/blocks/shoelace-card/shoelace-card.js`
 - No aliases, no redirects, no alternative paths
 - Build process must output to these exact paths
 - Component names in HTML directly determine your file structure
 
 **Why build process is the only solution:**
+
 ```javascript
 // ❌ This doesn't work in EDS deployment:
 import '@shoelace-style/shoelace/dist/components/card/card.js';
@@ -1396,6 +1416,7 @@ This approach enables modern development workflows while respecting EDS principl
 ## See Also
 
 ### Essential Foundation
+
 - **[Block Architecture Standards](block-architecture-standards.md)** - Comprehensive standards for EDS block development including naming conventions, file structure, and coding patterns
 - **[Raw EDS Blocks Guide](raw-eds-blocks-guide.md)** - Step-by-step guide to creating simple EDS blocks using vanilla JavaScript and minimal dependencies
 - **[EDS Overview](../eds.md)** - Complete introduction to Edge Delivery Services architecture and core concepts
@@ -1403,18 +1424,21 @@ This approach enables modern development workflows while respecting EDS principl
 - **[CSS Naming Convention Style Guide](../guidelines/style-guide.md)** - CSS naming conventions and standards for EDS blocks and components
 
 ### Development & Testing
+
 - **[Debug Guide](../testing/debug.md)** - Comprehensive debugging strategies for EDS blocks and common troubleshooting scenarios
 - **[Testing Strategies](testing-strategies.md)** - Testing approaches for EDS blocks including unit tests and integration testing
 - **[Performance Optimization](performance-optimization.md)** - Techniques for optimizing EDS block performance and loading
 - **[Browser Compatibility](browser-compatibility.md)** - Ensuring cross-browser compatibility for EDS implementations
 
 ### Advanced Implementation
+
 - **[Web Components with EDS](web-components-with-eds.md)** - Integrating modern web components within the EDS framework
 - **[JavaScript Patterns](javascript-patterns.md)** - Reusable JavaScript patterns for EDS block development
 - **[CSS Patterns](css-patterns.md)** - Common CSS patterns and styling approaches for EDS blocks
 - **[Block Examples](block-examples.md)** - Real-world examples of successful EDS block implementations
 
 ### Build & Deployment
+
 - **[Build Tools Configuration](build-tools-configuration.md)** - Advanced build tool setup and configuration for complex EDS blocks
 - **[Deployment Strategies](deployment-strategies.md)** - Best practices for deploying complex EDS blocks to production
 - **[CI/CD Integration](ci-cd-integration.md)** - Integrating complex EDS block builds into continuous integration pipelines
@@ -1422,6 +1446,7 @@ This approach enables modern development workflows while respecting EDS principl
 ## Next Steps
 
 ### For Developers New to Complex EDS Blocks
+
 1. **Master the fundamentals** by first completing the [Raw EDS Blocks Guide](raw-eds-blocks-guide.md)
 2. **Understand EDS constraints** by thoroughly reading the [EDS Overview](../eds.md) and [Block Architecture Standards](block-architecture-standards.md)
 3. **Set up your first build environment** following the setup instructions in this guide
@@ -1429,6 +1454,7 @@ This approach enables modern development workflows while respecting EDS principl
 5. **Practice the dual-directory workflow** to understand development vs. deployment phases
 
 ### For Experienced EDS Developers
+
 1. **Evaluate the trade-offs** between simple blocks and complex blocks for each use case
 2. **Master the build process** by implementing the Vite configuration and deployment automation
 3. **Optimize bundle sizes** using the techniques described in the bundle optimization section
@@ -1436,6 +1462,7 @@ This approach enables modern development workflows while respecting EDS principl
 5. **Explore advanced external libraries** like charting libraries, design systems, or data visualization tools
 
 ### For Architects & Technical Leads
+
 1. **Establish build standards** for your team using this guide as a foundation
 2. **Create reusable build configurations** that can be shared across multiple complex blocks
 3. **Design testing strategies** that cover both development and EDS integration phases
@@ -1443,6 +1470,7 @@ This approach enables modern development workflows while respecting EDS principl
 5. **Document decision criteria** for when to use complex vs. simple block approaches
 
 ### For DevOps & Build Engineers
+
 1. **Set up CI/CD pipelines** that handle the dual-directory build and deployment process
 2. **Implement automated testing** for both development and EDS integration phases
 3. **Create deployment automation** that handles the build → blocks directory workflow
@@ -1450,6 +1478,7 @@ This approach enables modern development workflows while respecting EDS principl
 5. **Establish rollback procedures** for complex block deployments
 
 ### For Performance Engineers
+
 1. **Analyze bundle impact** on Core Web Vitals and EDS performance scores
 2. **Implement lazy loading strategies** for complex blocks that aren't immediately visible
 3. **Optimize external library usage** by tree-shaking and selective imports
@@ -1457,6 +1486,7 @@ This approach enables modern development workflows while respecting EDS principl
 5. **Create performance budgets** and alerts for complex block deployments
 
 ### For QA & Testing Teams
+
 1. **Understand the dual testing approach** (development vs. EDS integration)
 2. **Create test scenarios** that cover both simple and complex block functionality
 3. **Validate EDS compatibility** using the test.html files and EDS debug server

@@ -158,22 +158,26 @@ Organize related settings into logical groups:
 ### Tab Label Requirements
 
 **Recommended:**
+
 - Length: 1-3 words
 - Clear and descriptive
 - Unique within the tabs block
 - Use title case
 
 **Why this matters:**
+
 - Tab labels become button text
 - Used to generate unique IDs
 - Displayed in horizontal list (limited space on mobile)
 
 **Good tab labels:**
+
 - Overview, Features, Pricing
 - Getting Started, Advanced, API
 - Installation, Configuration, Usage
 
 **Avoid:**
+
 - Very long labels (wrap or get cut off)
 - Duplicate labels (causes ID conflicts)
 - Special characters (may affect ID generation)
@@ -181,6 +185,7 @@ Organize related settings into logical groups:
 ### Panel Content Requirements
 
 **Content types supported:**
+
 - Plain text (automatically wrapped in paragraphs)
 - Rich text (headings, bold, italic, links)
 - Images (inline with text)
@@ -189,12 +194,14 @@ Organize related settings into logical groups:
 - Multiple paragraphs
 
 **Content length:**
+
 - No strict limits
 - Panel scrolls if content exceeds container height
 - Keep concise for better user experience
 - Aim for 1-3 paragraphs per tab
 
 **Formatting tips:**
+
 1. Use headings to structure long content
 2. Keep paragraphs short and scannable
 3. Use lists for multiple points
@@ -204,12 +211,14 @@ Organize related settings into logical groups:
 ### Accessibility Requirements
 
 **Always provide:**
+
 - Descriptive tab labels (not just "Tab 1", "Tab 2")
 - Meaningful content in each panel
 - Alt text for any images
 - Proper heading hierarchy within panels
 
 **Avoid:**
+
 - Empty panels (always include content)
 - Image-only panels (provide text context)
 - Overly technical labels (use plain language)
@@ -221,18 +230,21 @@ Organize related settings into logical groups:
 ### Visual Consistency
 
 **Tab List:**
+
 - Horizontal arrangement
 - 8px gap between tabs
 - Border around each tab
 - Selected tab blends with panel below
 
 **Tab Buttons:**
+
 - Unselected: Light background with border
 - Selected: White background, bottom border blends with panel
 - Hover: Darker background (unselected tabs only)
 - Font weight: Bold
 
 **Tab Panels:**
+
 - White background
 - Border on all sides
 - 16px padding
@@ -241,22 +253,26 @@ Organize related settings into logical groups:
 ### Responsive Behavior
 
 **Mobile (< 600px):**
+
 - Tab list scrolls horizontally
 - Tabs maintain readable size
 - Touch-friendly tap targets
 - Panel content stacks naturally
 
 **Tablet (600px - 1024px):**
+
 - Tabs typically fit on one line
 - Comfortable spacing
 - No major layout changes
 
 **Desktop (> 1024px):**
+
 - Full horizontal tab display
 - Hover states visible
 - Optimal reading width
 
 **How it works:**
+
 - Tabs use flexbox with `flex: 0 0 max-content`
 - No wrapping or stacking
 - Horizontal scrolling when needed
@@ -269,24 +285,28 @@ Organize related settings into logical groups:
 ### Content Strategy
 
 **1. Organize logically**
+
 - Group related content together
 - Order tabs by importance or natural flow
 - Put most important content in first tab
 - Limit to 3-6 tabs (not too many)
 
 **2. Keep labels concise**
+
 - 1-3 words per tab label
 - Use action words when appropriate
 - Maintain consistent labeling style
 - Avoid abbreviations (use full words)
 
 **3. Balance content length**
+
 - Similar content amounts across tabs
 - Not too brief (at least 2-3 sentences)
 - Not too long (use sub-pages if needed)
 - Break up long content with headings
 
 **4. Consider user journey**
+
 - What do users need first?
 - What questions do they have?
 - What actions should they take?
@@ -295,22 +315,26 @@ Organize related settings into logical groups:
 ### Accessibility First
 
 **1. Descriptive labels**
+
 - "Overview" not "Info"
 - "Getting Started" not "Start"
 - "API Reference" not "API"
 
 **2. Keyboard accessible**
+
 - Tab key moves to/from tab list
 - Enter/Space activates tab
 - All functionality available without mouse
 
 **3. Screen reader friendly**
+
 - Tab list announced properly
 - Selection state communicated
 - Panel content associated with tab
 - Logical reading order maintained
 
 **4. Visual clarity**
+
 - Clear selected state
 - Sufficient color contrast
 - Visible focus indicators
@@ -319,12 +343,14 @@ Organize related settings into logical groups:
 ### Performance Optimization
 
 **Content loading:**
+
 - All tabs loaded upfront (no lazy loading)
 - Fast tab switching (no network requests)
 - Minimal JavaScript overhead
 - CSS handles panel visibility
 
 **Image optimization:**
+
 - Compress images before upload
 - Use appropriate image dimensions
 - Provide alt text
@@ -333,12 +359,14 @@ Organize related settings into logical groups:
 ### When NOT to Use Tabs
 
 **Avoid tabs for:**
+
 - Single content item (no need for tabs)
 - Very long content (use separate pages)
 - Complex hierarchies (use nested navigation)
 - Frequently referenced content (users shouldn't have to switch tabs often)
 
 **Better alternatives:**
+
 - **Accordion** - For collapsible content where multiple sections can be open
 - **Sections** - For linear content that should be scanned top-to-bottom
 - **Separate pages** - For distinct topics with deep content
@@ -355,6 +383,7 @@ Organize related settings into logical groups:
 **Cause:** Tabs block not properly decorated or CSS not loaded.
 
 **Solution:**
+
 1. Verify table format in Google Docs is correct
 2. Check that first row has "Tabs" in it
 3. Ensure each subsequent row represents one tab
@@ -367,6 +396,7 @@ Organize related settings into logical groups:
 **Cause:** JavaScript not loaded or errors in console.
 
 **Solution:**
+
 1. Check browser console for errors (F12)
 2. Verify tabs.js is loaded (check Network tab)
 3. Ensure no JavaScript errors on page
@@ -379,6 +409,7 @@ Organize related settings into logical groups:
 **Cause:** Tab labels are too long for horizontal layout.
 
 **Solutions:**
+
 1. **Shorten tab labels** (best solution):
    - "Getting Started" → "Start"
    - "Documentation" → "Docs"
@@ -389,6 +420,7 @@ Organize related settings into logical groups:
    - This is the intended design
 
 3. **Use custom CSS** (advanced):
+
    ```css
    .tabs .tabs-list button {
      font-size: 0.875rem; /* Smaller text */
@@ -403,6 +435,7 @@ Organize related settings into logical groups:
 **Cause:** Tab IDs generated from labels must be unique.
 
 **Solution:**
+
 - Make labels unique: "Overview" and "Overview 2"
 - Or use different labels: "Overview" and "Summary"
 - Check console for duplicate ID warnings
@@ -414,6 +447,7 @@ Organize related settings into logical groups:
 **Cause:** Panel overflow setting or parent container constraints.
 
 **Solutions:**
+
 1. **Check for overflow: auto** (should be default):
    - Tab panels scroll when content is too long
    - This is the intended behavior
@@ -434,6 +468,7 @@ Organize related settings into logical groups:
 **Cause:** JavaScript decoration issue or ARIA attributes not set.
 
 **Solution:**
+
 1. Check browser console for errors
 2. Inspect first tab button in DevTools
 3. Verify `aria-selected="true"` is set
@@ -495,19 +530,19 @@ Override default styles in your project CSS:
 
 `Blue theme tabs`
 `.tabs .tabs-list button[aria-selected="true"] {`
-`  background-color: #007bff;`
-`  color: white;`
-`  border-color: #007bff;`
+`background-color: #007bff;`
+`color: white;`
+`border-color: #007bff;`
 `}`
 
 `Rounded tab corners`
 `.tabs .tabs-list button {`
-`  border-radius: 8px 8px 0 0;`
+`border-radius: 8px 8px 0 0;`
 `}`
 
 `Larger tab padding`
 `.tabs .tabs-list button {`
-`  padding: 12px 24px;`
+`padding: 12px 24px;`
 `}`
 
 Then apply by adding CSS to your project's styles.
@@ -553,6 +588,7 @@ After creating tabs in Google Docs:
 ### Browser Testing
 
 Test in multiple browsers:
+
 - Chrome/Edge (last 2 versions)
 - Firefox (last 2 versions)
 - Safari (last 2 versions)
@@ -639,11 +675,13 @@ Related resources and quick links...
 ## Related Blocks
 
 **Similar functionality:**
+
 - **Accordion** - Collapsible sections (multiple can be open)
 - **Modal** - Overlay content dialogs
 - **Cards** - Grid-based content organization
 
 **Complementary blocks:**
+
 - **Hero** - Large introductory section before tabs
 - **Quote** - Testimonials or highlights between sections
 - **Columns** - Create complex layouts with tabs

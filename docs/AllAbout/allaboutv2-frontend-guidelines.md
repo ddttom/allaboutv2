@@ -7,18 +7,21 @@ These guidelines establish coding standards and best practices for AllAboutV2 fr
 ## Core Principles
 
 ### Simplicity First
+
 - Use vanilla JavaScript over frameworks
 - Avoid unnecessary abstractions
 - Write code that explains itself
 - Keep dependencies minimal
 
 ### Performance Focus
+
 - Prioritise Core Web Vitals
 - Implement progressive enhancement
 - Use lazy loading for non-critical resources
 - Optimise for mobile-first experiences
 
 ### Maintainability
+
 - Write self-documenting code
 - Use consistent naming conventions
 - Implement clear error handling
@@ -29,6 +32,7 @@ These guidelines establish coding standards and best practices for AllAboutV2 fr
 ### Semantic Structure
 
 **Use Semantic Elements**
+
 ```html
 <!-- Good -->
 <article class="blog-post">
@@ -54,6 +58,7 @@ These guidelines establish coding standards and best practices for AllAboutV2 fr
 ```
 
 **Accessibility Requirements**
+
 - Use proper heading hierarchy (h1-h6)
 - Include alt text for all images
 - Provide skip links for navigation
@@ -73,6 +78,7 @@ These guidelines establish coding standards and best practices for AllAboutV2 fr
 ### Block Structure
 
 **EDS Block Pattern**
+
 ```html
 <!-- Block wrapper -->
 <div class="block-name">
@@ -83,6 +89,7 @@ These guidelines establish coding standards and best practices for AllAboutV2 fr
 ```
 
 **Variation Classes**
+
 ```html
 <!-- Block with variations -->
 <div class="hero hero-dark hero-centered">
@@ -95,6 +102,7 @@ These guidelines establish coding standards and best practices for AllAboutV2 fr
 ### Form Best Practices
 
 **Accessible Forms**
+
 ```html
 <form class="contact-form" novalidate>
   <div class="form-group">
@@ -118,6 +126,7 @@ These guidelines establish coding standards and best practices for AllAboutV2 fr
 ### Architecture
 
 **Mobile-First Approach**
+
 ```css
 /* Base styles for mobile */
 .card {
@@ -141,6 +150,7 @@ These guidelines establish coding standards and best practices for AllAboutV2 fr
 ```
 
 **Standard Breakpoints**
+
 - Mobile: Base styles (0-599px)
 - Tablet: 600px and above
 - Desktop: 900px and above
@@ -149,6 +159,7 @@ These guidelines establish coding standards and best practices for AllAboutV2 fr
 ### Naming Conventions
 
 **Block-Element-Modifier (BEM) Style**
+
 ```css
 /* Block */
 .navigation {
@@ -167,6 +178,7 @@ These guidelines establish coding standards and best practices for AllAboutV2 fr
 ```
 
 **CSS Custom Properties**
+
 ```css
 :root {
   /* Colours */
@@ -192,6 +204,7 @@ These guidelines establish coding standards and best practices for AllAboutV2 fr
 ### Performance Optimisation
 
 **Critical CSS**
+
 ```css
 /* Above-the-fold styles */
 .header,
@@ -205,6 +218,7 @@ These guidelines establish coding standards and best practices for AllAboutV2 fr
 ```
 
 **Efficient Selectors**
+
 ```css
 /* Good - specific and efficient */
 .button {
@@ -224,6 +238,7 @@ These guidelines establish coding standards and best practices for AllAboutV2 fr
 ### Layout Patterns
 
 **CSS Grid for Complex Layouts**
+
 ```css
 .grid-container {
   display: grid;
@@ -239,6 +254,7 @@ These guidelines establish coding standards and best practices for AllAboutV2 fr
 ```
 
 **Flexbox for Component Layout**
+
 ```css
 .flex-container {
   display: flex;
@@ -259,6 +275,7 @@ These guidelines establish coding standards and best practices for AllAboutV2 fr
 ### ES Module Structure
 
 **File Organisation**
+
 ```javascript
 // block-name.js
 import { createOptimizedPicture } from '../../scripts/aem.js';
@@ -293,6 +310,7 @@ export default function decorate(block) {
 ### Error Handling
 
 **Graceful Degradation**
+
 ```javascript
 async function loadContent(url) {
   try {
@@ -310,6 +328,7 @@ async function loadContent(url) {
 ```
 
 **User-Friendly Error Messages**
+
 ```javascript
 function displayError(container, message) {
   const errorDiv = div({ class: 'error-message' },
@@ -322,6 +341,7 @@ function displayError(container, message) {
 ### Event Handling
 
 **Delegation Pattern**
+
 ```javascript
 function attachEventListeners(container) {
   container.addEventListener('click', (event) => {
@@ -337,6 +357,7 @@ function attachEventListeners(container) {
 ```
 
 **Debouncing and Throttling**
+
 ```javascript
 function debounce(func, wait) {
   let timeout;
@@ -356,6 +377,7 @@ const debouncedSearch = debounce(handleSearch, 300);
 ### DOM Manipulation
 
 **Use DOM Helpers**
+
 ```javascript
 import { div, p, a, img } from '../../scripts/dom-helpers.js';
 
@@ -370,6 +392,7 @@ const card = div({ class: 'card' },
 ```
 
 **Performance Considerations**
+
 ```javascript
 // Batch DOM updates
 function updateCards(items) {
@@ -387,6 +410,7 @@ function updateCards(items) {
 ### Async/Await Patterns
 
 **Proper Error Handling**
+
 ```javascript
 async function initializeBlock(block) {
   try {
@@ -408,6 +432,7 @@ async function initializeBlock(block) {
 ### ESLint Configuration
 
 **Extended Rules**
+
 ```javascript
 // .eslintrc.js
 module.exports = {
@@ -424,6 +449,7 @@ module.exports = {
 ### JSDoc Comments
 
 **Function Documentation**
+
 ```javascript
 /**
  * Processes query results and creates HTML elements
@@ -443,6 +469,7 @@ function renderItems(items, options = {}) {
 ### Testing Guidelines
 
 **Unit Testing**
+
 ```javascript
 // tests/block-name.test.js
 import { expect } from 'chai';
@@ -459,6 +486,7 @@ describe('Block Name', () => {
 ```
 
 **Integration Testing**
+
 ```javascript
 // Test with actual DOM
 describe('Block Integration', () => {
@@ -483,6 +511,7 @@ describe('Block Integration', () => {
 ### Image Optimisation
 
 **Responsive Images**
+
 ```javascript
 // Use the createOptimizedPicture helper
 const picture = createOptimizedPicture(imageUrl, imageAlt, false, [
@@ -492,6 +521,7 @@ const picture = createOptimizedPicture(imageUrl, imageAlt, false, [
 ```
 
 **Lazy Loading**
+
 ```javascript
 function lazyLoadImages() {
   const images = document.querySelectorAll('img[data-src]');
@@ -514,6 +544,7 @@ function lazyLoadImages() {
 ### Script Loading
 
 **Progressive Enhancement**
+
 ```javascript
 // Load non-critical scripts after page load
 window.addEventListener('load', () => {
@@ -524,6 +555,7 @@ window.addEventListener('load', () => {
 ```
 
 **Conditional Loading**
+
 ```javascript
 // Load features based on user interaction
 function loadFeatureOnDemand() {
@@ -541,6 +573,7 @@ function loadFeatureOnDemand() {
 ### ARIA Implementation
 
 **Screen Reader Support**
+
 ```javascript
 function createAccessibleButton(text, handler) {
   const button = document.createElement('button');
@@ -552,6 +585,7 @@ function createAccessibleButton(text, handler) {
 ```
 
 **Live Regions**
+
 ```javascript
 function announceToScreenReader(message) {
   const announcement = document.createElement('div');
@@ -568,6 +602,7 @@ function announceToScreenReader(message) {
 ### Keyboard Navigation
 
 **Focus Management**
+
 ```javascript
 function initKeyboardNavigation(container) {
   const focusableElements = container.querySelectorAll(
@@ -587,6 +622,7 @@ function initKeyboardNavigation(container) {
 ### Feature Detection
 
 **Progressive Enhancement**
+
 ```javascript
 function initIntersectionObserver() {
   if ('IntersectionObserver' in window) {
@@ -604,6 +640,7 @@ function initIntersectionObserver() {
 ```
 
 **Polyfill Strategy**
+
 ```javascript
 // Load polyfills only when needed
 if (!window.fetch) {
@@ -620,6 +657,7 @@ if (!Array.prototype.includes) {
 ### Code Splitting
 
 **Dynamic Imports**
+
 ```javascript
 // Load components on demand
 async function loadComponent(componentName) {
@@ -636,6 +674,7 @@ async function loadComponent(componentName) {
 ### Environment-Specific Code
 
 **Configuration Management**
+
 ```javascript
 // config/environment.js
 const config = {

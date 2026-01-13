@@ -26,6 +26,7 @@ The header block in its simplest form loads the default navigation from `/nav`:
 To specify a custom navigation document path, use metadata:
 
 ---
+
 nav: /custom-nav
 ---
 
@@ -37,6 +38,7 @@ nav: /custom-nav
 For multi-language or regional sites, specify different navigation documents:
 
 ---
+
 nav: /navigation/en-us
 ---
 
@@ -126,6 +128,7 @@ Specify custom paths via metadata:
 The header automatically adapts to viewport width:
 
 ### Mobile (< 900px)
+
 - Hamburger menu icon appears
 - Full-screen navigation overlay
 - Vertical layout
@@ -133,6 +136,7 @@ The header automatically adapts to viewport width:
 - Body scroll locked when menu is open
 
 ### Desktop (>= 900px)
+
 - Horizontal navigation bar
 - Hover-based dropdown menus
 - Click to open/close dropdowns
@@ -157,6 +161,7 @@ npm run debug
 ```
 
 Then navigate to:
+
 ```
 http://localhost:3000/blocks/header/test.html
 ```
@@ -220,21 +225,25 @@ Navigation document (`/navigation/blog.md`):
 ## Troubleshooting
 
 ### Navigation doesn't appear
+
 - Verify `/nav.md` exists or metadata `nav` path is correct
 - Check browser console for fragment loading errors
 - Ensure navigation document has proper three-column structure
 
 ### Dropdowns don't work
+
 - Desktop: Verify nested list structure in markdown
 - Check that nested items are indented under parent
 - Verify JavaScript is enabled
 
 ### Mobile menu doesn't open
+
 - Check viewport width is below 900px
 - Verify hamburger button is clickable
 - Check browser console for errors
 
 ### Custom navigation path not working
+
 - Verify metadata syntax: `nav: /path` (no quotes, no .md extension)
 - Ensure custom navigation document exists
 - Check that path starts with `/`

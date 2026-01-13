@@ -158,6 +158,7 @@ Sometimes you don't need images:
 ### Image Requirements
 
 **Recommended:**
+
 - Aspect ratio: 4:3 (e.g., 800x600, 1200x900)
 - File format: JPEG or PNG
 - File size: < 500KB per image
@@ -165,11 +166,13 @@ Sometimes you don't need images:
 - Maximum width: 2000px
 
 **Why this matters:**
+
 - Cards automatically resize images to 4:3 aspect ratio
 - Larger images are optimized to 750px width
 - Images use object-fit: cover (may crop edges)
 
 **Image optimization tips:**
+
 1. Use consistent aspect ratios for visual harmony
 2. Optimize images before upload (compress, resize)
 3. Provide descriptive alt text for accessibility
@@ -178,18 +181,21 @@ Sometimes you don't need images:
 ### Text Requirements
 
 **Heading:**
+
 - Length: 2-8 words
 - Use H2, H3, or H4 tags (Google Docs heading styles)
 - Keep concise and descriptive
 - Avoid overly long titles
 
 **Body Text:**
+
 - Length: 1-3 sentences (aim for 50-150 characters)
 - Use plain paragraph style
 - Keep descriptions brief and scannable
 - Highlight key benefits or features
 
 **Accessibility:**
+
 - Always provide alt text for images
 - Use descriptive headings
 - Ensure good color contrast
@@ -202,18 +208,21 @@ Sometimes you don't need images:
 ### Visual Consistency
 
 **Card Layout:**
+
 - Each card has 1px border (uses `--dark-color` CSS variable)
 - White background (uses `--background-color` CSS variable)
 - 16px internal padding
 - 16px gap between cards
 
 **Image Display:**
+
 - Full-width within card
 - 4:3 aspect ratio maintained
 - Object-fit: cover (fills space, may crop)
 - Line-height: 0 (removes gap below image)
 
 **Text Spacing:**
+
 - 16px margin around body content
 - First element margin-top removed
 - Natural vertical rhythm
@@ -221,22 +230,26 @@ Sometimes you don't need images:
 ### Responsive Behavior
 
 **Mobile (< 600px):**
+
 - Single column layout
 - Full-width cards
 - Vertical stack
 - Easy thumb scrolling
 
 **Tablet (600px - 1024px):**
+
 - 2 columns (auto-adjusts based on width)
 - Maintains card proportions
 - Comfortable reading distance
 
 **Desktop (> 1024px):**
+
 - 3-4 columns (based on container width)
 - Maximum information density
 - Consistent grid spacing
 
 **How it works:**
+
 - Grid uses `auto-fill` with `minmax(278px, 1fr)`
 - No fixed breakpoints - adapts to content
 - Cards never get smaller than 278px
@@ -249,24 +262,28 @@ Sometimes you don't need images:
 ### Content Strategy
 
 **1. Keep cards balanced**
+
 - Use similar content lengths across cards
 - Maintain consistent heading lengths
 - Balance text-heavy and image-heavy cards
 - Aim for 3-6 cards per section (not too many)
 
 **2. Optimize for scanning**
+
 - Front-load important information
 - Use strong, descriptive headings
 - Keep body text concise
 - Include clear calls-to-action if needed
 
 **3. Image selection**
+
 - Use high-quality, relevant images
 - Maintain consistent style (photos vs illustrations)
 - Ensure good subject framing (center important elements)
 - Test how images look when cropped to 4:3
 
 **4. Accessibility first**
+
 - Provide meaningful alt text
 - Use semantic heading levels
 - Ensure sufficient color contrast
@@ -275,12 +292,14 @@ Sometimes you don't need images:
 ### Performance Optimization
 
 **Image best practices:**
+
 1. **Compress before upload** - Use tools like TinyPNG or ImageOptim
 2. **Choose appropriate formats** - JPEG for photos, PNG for graphics
 3. **Provide alt text** - Helps SEO and accessibility
 4. **Use consistent dimensions** - Reduces layout shift
 
 **Content loading:**
+
 - Images are lazy-loaded automatically
 - No JavaScript required for basic functionality
 - CSS Grid provides hardware-accelerated layout
@@ -289,12 +308,14 @@ Sometimes you don't need images:
 ### When NOT to Use Cards
 
 **Avoid cards for:**
+
 - Long-form content (use article blocks)
 - Single items (just use regular content)
 - Complex layouts (consider custom blocks)
 - Interactive content (needs custom JavaScript)
 
 **Better alternatives:**
+
 - **Bloglist block** - For dynamic blog post listings from query-index.json
 - **Hero block** - For prominent single feature with large image
 - **Columns block** - For side-by-side content without card styling
@@ -313,6 +334,7 @@ Sometimes you don't need images:
 **Solution:** For multiple cards, you need to either:
 
 **Option 1: Create separate card blocks**
+
 ```
 | Cards |
 |-------|
@@ -350,6 +372,7 @@ Consider using the `bloglist` block if you want dynamic cards from query-index.j
    - Adjust image framing if needed
 
 3. **Override aspect ratio** (advanced):
+
    ```css
    .cards > ul > li img {
      aspect-ratio: 16 / 9; /* Change to 16:9 */
@@ -388,6 +411,7 @@ Consider using the `bloglist` block if you want dynamic cards from query-index.j
 **Solutions:**
 
 1. **Adjust grid gap** (CSS override):
+
    ```css
    .cards > ul {
      grid-gap: 24px; /* Increase from 16px */
@@ -395,6 +419,7 @@ Consider using the `bloglist` block if you want dynamic cards from query-index.j
    ```
 
 2. **Modify card padding:**
+
    ```css
    .cards .cards-card-body {
      margin: 24px; /* Increase from 16px */
@@ -402,6 +427,7 @@ Consider using the `bloglist` block if you want dynamic cards from query-index.j
    ```
 
 3. **Change minimum column width:**
+
    ```css
    .cards > ul {
      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -440,6 +466,7 @@ Consider using the `bloglist` block if you want dynamic cards from query-index.j
 **Solutions:**
 
 1. **Define CSS variables in your theme:**
+
    ```css
    :root {
      --dark-color: #333;
@@ -448,6 +475,7 @@ Consider using the `bloglist` block if you want dynamic cards from query-index.j
    ```
 
 2. **Override card styles directly:**
+
    ```css
    .cards > ul > li {
      border: 1px solid #333;
@@ -465,12 +493,12 @@ Add project-specific styles in your main CSS file:
 
 `Custom hover effects`
 `.cards > ul > li {`
-`  transition: transform 0.2s ease, box-shadow 0.2s ease;`
+`transition: transform 0.2s ease, box-shadow 0.2s ease;`
 `}`
 ``
 `.cards > ul > li:hover {`
-`  transform: translateY(-4px);`
-`  box-shadow: 0 8px 16px rgba(0,0,0,0.1);`
+`transform: translateY(-4px);`
+`box-shadow: 0 8px 16px rgba(0,0,0,0.1);`
 `}`
 
 ### Linking Entire Cards
@@ -506,7 +534,7 @@ Force specific column counts with CSS:
 
 `Two-column layout`
 `.cards > ul {`
-`  grid-template-columns: repeat(2, 1fr);`
+`grid-template-columns: repeat(2, 1fr);`
 `}`
 ``
 `Three-column layout`
@@ -516,7 +544,7 @@ Force specific column counts with CSS:
 ``
 `Four-column layout`
 `.cards.four-col > ul {`
-`  grid-template-columns: repeat(4, 1fr);`
+`grid-template-columns: repeat(4, 1fr);`
 `}`
 
 Then use variation classes in markdown: `Cards (three-col)`
@@ -560,6 +588,7 @@ After creating cards in Google Docs:
 ### Browser Testing
 
 Test in multiple browsers:
+
 - Chrome/Edge (last 2 versions)
 - Firefox (last 2 versions)
 - Safari (last 2 versions)
@@ -575,6 +604,7 @@ Test in multiple browsers:
 ### Expected Load Times
 
 With properly optimized images:
+
 - JavaScript execution: < 10ms
 - CSS parsing: < 5ms
 - Image loading: 100-500ms per image (depends on size)
@@ -583,17 +613,20 @@ With properly optimized images:
 ### Optimization Tips
 
 **1. Image optimization:**
+
 - Compress images to < 200KB each
 - Use appropriate dimensions (600-1200px wide)
 - Choose correct format (JPEG for photos)
 - Provide alt text for SEO
 
 **2. Content strategy:**
+
 - Limit to 6-12 cards per page section
 - Break up large card grids with other content
 - Use lazy loading (automatic with EDS)
 
 **3. Lighthouse scores:**
+
 - Performance: 95-100 ✓
 - Accessibility: 100 ✓
 - Best Practices: 100 ✓
@@ -660,12 +693,14 @@ Create distinct sections with different card groups:
 ## Related Blocks
 
 **Similar functionality:**
+
 - **Bloglist** - Dynamic blog cards from query-index.json
 - **Grid** - Flexible grid layouts without card styling
 - **Columns** - Multi-column content layouts
 - **Showcase** - Featured content with rich media
 
 **Complementary blocks:**
+
 - **Hero** - Large introductory section before cards
 - **Quote** - Testimonials or highlights between card sections
 - **Tabs** - Organize multiple card groups in tabs

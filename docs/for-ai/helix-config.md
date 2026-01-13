@@ -29,12 +29,14 @@ The `.helix/config` file is the **central configuration** for Adobe Edge Deliver
 ## Why Helix Config Matters
 
 ### Without This Configuration
+
 - Custom domains won't work with Adobe EDS
 - Push invalidation won't clear CDN caches on publish
 - Preview and production environments won't be separated
 - Cloudflare CDN integration won't function
 
 ### With Proper Configuration
+
 - ✅ Custom domain (`allabout.network`) works seamlessly
 - ✅ Publishing content automatically clears Cloudflare cache
 - ✅ Preview environment isolated from production
@@ -52,6 +54,7 @@ The `.helix/config` file is the **central configuration** for Adobe Edge Deliver
 | **host** | `allabout.network` | Production hostname displayed in Slack bot info and used for content delivery |
 
 **Why these matter:**
+
 - `name` helps identify the project in Adobe's admin tools
 - `host` defines the primary production domain
 
@@ -66,11 +69,13 @@ The `.helix/config` file is the **central configuration** for Adobe Edge Deliver
 | **cdn.prod.route** | `/` | All routes from root path use Adobe EDS (entire site) |
 
 **Why these matter:**
+
 - `cdn.prod.type` tells Adobe EDS that Cloudflare is in front of their CDN
 - `cdn.prod.host` defines the production domain for custom domain setup
 - `cdn.prod.route = /` means entire site goes through Adobe EDS (not just specific paths)
 
 **Technical note:** This creates a **double CDN architecture**:
+
 ```
 Visitor → Cloudflare CDN → Cloudflare Worker → Adobe Fastly CDN → Adobe EDS Origin
 ```
@@ -85,16 +90,19 @@ Visitor → Cloudflare CDN → Cloudflare Worker → Adobe Fastly CDN → Adobe 
 | **cloudflare.zoneId** | `0d25478d3c5849d527b97777dc7f6b0e` | Cloudflare zone identifier for allabout.network |
 
 **Why these matter:**
+
 - Enable **push invalidation** (automatic cache clearing on publish)
 - Allow Adobe EDS to communicate with Cloudflare API
 - Required for "Purge Everything" functionality to work
 
 **Security:**
+
 - Token has minimum permissions (Cache Purge only)
 - Scoped to specific zone only (not all zones)
 - Should be rotated annually
 
 **How push invalidation works:**
+
 1. Content published via Sidekick
 2. Adobe EDS calls Cloudflare API using these credentials
 3. Cloudflare purges entire site cache (Free plan behavior)
@@ -111,11 +119,13 @@ Visitor → Cloudflare CDN → Cloudflare Worker → Adobe Fastly CDN → Adobe 
 | **cdn.live.host** | `main--allaboutv2--ddttom.aem.live` | Live/published environment on Adobe's CDN |
 
 **Why these matter:**
+
 - **Preview** (`.aem.page`): Draft content visible only to editors before publishing
 - **Live** (`.aem.live`): Published content on Adobe's CDN, proxied through Cloudflare for production
 - Separates authoring workflow from public-facing content
 
 **Environment hierarchy:**
+
 ```
 Preview Environment:     main--allaboutv2--ddttom.aem.page     (Draft)
                                       ↓ [Publish]
@@ -152,14 +162,17 @@ Production Environment:  allabout.network                      (Public via Cloud
 ### CDN Vendor-Specific Keys
 
 **Cloudflare:**
+
 - `cloudflare.apiToken`
 - `cloudflare.zoneId`
 
 **Fastly:**
+
 - `cdn.prod.serviceId`
 - `cdn.prod.authToken`
 
 **Akamai:**
+
 - `cdn.prod.endpoint`
 - `cdn.prod.clientSecret`
 - `cdn.prod.clientToken`
@@ -179,6 +192,7 @@ host = allabout.network
 **Purpose:** Identifies the project in Adobe's systems and defines the primary production domain.
 
 **Impact:**
+
 - Used in admin notifications
 - Displayed in monitoring dashboards
 - Referenced in logs and support tickets
@@ -196,12 +210,14 @@ cdn.prod.route = /
 **Purpose:** Configures Cloudflare as the production CDN in front of Adobe EDS.
 
 **Why this architecture?**
+
 - **Performance:** Cloudflare's 300+ edge locations serve cached content globally
 - **Security:** Cloudflare provides DDoS protection and Web Application Firewall
 - **Control:** You control cache rules, security settings, and DNS
 - **Cost:** Cloudflare Free plan provides unlimited bandwidth
 
 **Double CDN is normal:**
+
 - Cloudflare caches static assets and HTML
 - Adobe Fastly serves as origin CDN
 - Cloudflare Worker rewrites Host header to route to Adobe EDS
@@ -218,16 +234,19 @@ cloudflare.zoneId = [zone ID]
 **Purpose:** Enables automatic cache clearing when content is published.
 
 **Without these:**
+
 - Publishing content wouldn't clear Cloudflare cache
 - Visitors would see stale content until cache expires
 - Manual "Purge Everything" required after each publish
 
 **With these:**
+
 - Publish button clears cache automatically
 - Fresh content appears within 5-10 seconds
 - Seamless authoring workflow
 
 **Security best practices:**
+
 - Token has minimum permissions (Cache Purge only)
 - Token scoped to single zone (not account-wide)
 - Rotate token annually
@@ -245,17 +264,20 @@ cdn.live.host = main--allaboutv2--ddttom.aem.live
 **Purpose:** Separate preview/draft content from published content.
 
 **Preview environment (`.aem.page`):**
+
 - Authors see changes before publishing
 - Not indexed by search engines
 - Requires authentication (if configured)
 - Instant updates without publishing
 
 **Live environment (`.aem.live`):**
+
 - Published content on Adobe's CDN
 - Publicly accessible (unless authentication enabled)
 - Source for production domain via Cloudflare proxy
 
 **Why separate environments matter:**
+
 - Safe testing before going live
 - Multiple authors can preview different branches
 - Production remains stable during development
@@ -271,17 +293,20 @@ cdn.prod.route = /
 **Purpose:** Defines which URL paths use Adobe EDS.
 
 **Options:**
+
 - `/` - Entire site (recommended for most projects)
 - `/blog` - Only blog section
 - `/site` - Only /site/ path
 - Multiple paths can be comma-separated
 
 **Why we use `/`:**
+
 - Entire allabout.network site is built with Adobe EDS
 - No mixed architecture (EDS + other CMS)
 - Simpler configuration and debugging
 
 **When to use specific paths:**
+
 - Migrating from another CMS incrementally
 - Different CMS for different sections
 - Hybrid architecture with multiple backends
@@ -301,11 +326,13 @@ cdn.prod.route = /
 ### Testing Configuration
 
 **Verify CDN integration:**
+
 ```bash
 curl -I https://allabout.network | grep -E "(server|cf-cache-status|x-served-by)"
 ```
 
 **Expected response:**
+
 ```
 server: cloudflare                    (Cloudflare CDN)
 cf-cache-status: HIT                  (Cached by Cloudflare)
@@ -313,6 +340,7 @@ x-served-by: cache-lga21965           (Adobe Fastly backend)
 ```
 
 **Verify push invalidation:**
+
 1. Note current cache status: `curl -I https://allabout.network | grep cf-cache-status`
 2. Publish any content via Sidekick
 3. Wait 10 seconds
@@ -328,11 +356,13 @@ Or use Adobe's validation tool: https://www.aem.live/tools/cdn-validator
 ### Issue 1: Push Invalidation Not Working
 
 **Symptoms:**
+
 - Content doesn't update after publishing
 - Old content still showing hours after publish
 - Manual "Purge Everything" required
 
 **Check:**
+
 ```bash
 # Test if Cloudflare credentials are valid
 curl -X GET "https://api.cloudflare.com/client/v4/zones/0d25478d3c5849d527b97777dc7f6b0e" \
@@ -340,6 +370,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/zones/0d25478d3c5849d527b97777
 ```
 
 **Solutions:**
+
 - Verify `cloudflare.apiToken` is still valid (not expired/revoked)
 - Verify `cloudflare.zoneId` matches your Cloudflare dashboard
 - Ensure config has been published via Sidekick
@@ -350,11 +381,13 @@ curl -X GET "https://api.cloudflare.com/client/v4/zones/0d25478d3c5849d527b97777
 ### Issue 2: Custom Domain Not Working
 
 **Symptoms:**
+
 - `allabout.network` doesn't load
 - Works on `.aem.live` but not custom domain
 - Certificate errors or 521/522 errors
 
 **Check:**
+
 ```bash
 dig allabout.network +short
 # Should return Cloudflare IPs (104.x.x.x or 172.x.x.x)
@@ -364,6 +397,7 @@ curl -I https://allabout.network
 ```
 
 **Solutions:**
+
 - Verify DNS CNAME points to Adobe EDS origin
 - Ensure DNS is proxied (orange cloud) in Cloudflare
 - Check `cdn.prod.host` matches your domain exactly
@@ -374,11 +408,13 @@ curl -I https://allabout.network
 ### Issue 3: Wrong Content Cached
 
 **Symptoms:**
+
 - Homepage shows different application (e.g., AI Chat)
 - Subdirectories work but root doesn't
 - Headers show cached content but wrong origin
 
 **Solutions:**
+
 1. **Purge cache immediately:** Cloudflare Dashboard → Caching → Purge Everything
 2. **Check for conflicting deployments:** Cloudflare Pages deployment on same domain
 3. **Verify worker routes:** Only `aem-worker` should handle `allabout.network/*`
@@ -391,6 +427,7 @@ curl -I https://allabout.network
 ### Security
 
 ✅ **Do:**
+
 - Keep API tokens with minimum necessary permissions
 - Rotate credentials annually
 - Store tokens securely (never in public repos)
@@ -398,6 +435,7 @@ curl -I https://allabout.network
 - Document token creation date and purpose
 
 ❌ **Don't:**
+
 - Share API tokens publicly
 - Use tokens with excessive permissions
 - Hard-code tokens in application code
@@ -408,6 +446,7 @@ curl -I https://allabout.network
 ### Maintenance
 
 ✅ **Do:**
+
 - Document all configuration changes
 - Test changes in preview before publishing
 - Keep backup of working configuration
@@ -415,6 +454,7 @@ curl -I https://allabout.network
 - Review configuration quarterly
 
 ❌ **Don't:**
+
 - Make config changes without testing
 - Skip publishing config after changes
 - Assume changes are instant (allow 1-2 min propagation)
@@ -425,12 +465,14 @@ curl -I https://allabout.network
 ### Performance
 
 ✅ **Do:**
+
 - Use `cdn.prod.route = /` for entire site
 - Enable push invalidation for instant updates
 - Monitor cache hit ratio (aim for 70%+)
 - Keep Cloudflare cache rules simple
 
 ❌ **Don't:**
+
 - Overly complex route patterns
 - Frequent manual cache purging
 - Disable push invalidation
@@ -499,6 +541,7 @@ Create `.helix/redirects` file for URL rewrites:
 Use this checklist to verify configuration is correct:
 
 ### Required Configuration
+
 - [ ] `name` - Project name present
 - [ ] `host` - Production domain set
 - [ ] `cdn.prod.type = cloudflare` - CDN vendor specified
@@ -508,12 +551,14 @@ Use this checklist to verify configuration is correct:
 - [ ] `cdn.preview.host` - Preview environment hostname (`.aem.page`)
 
 ### Optional But Recommended
+
 - [ ] `cdn.prod.route = /` - Explicit route configuration
 - [ ] `cdn.live.host` - Live environment hostname (`.aem.live`)
 - [ ] Config published via Sidekick
 - [ ] Push invalidation tested and working
 
 ### Integration Verification
+
 - [ ] DNS points to Cloudflare (orange cloud enabled)
 - [ ] Cloudflare Worker active on correct routes
 - [ ] Worker has correct `ORIGIN_HOSTNAME` environment variable
@@ -527,6 +572,7 @@ Use this checklist to verify configuration is correct:
 ## Related Configuration Files
 
 ### .helix/headers (Optional)
+
 Custom HTTP headers for security and performance
 
 **Location:** `.helix/headers`
@@ -536,6 +582,7 @@ Custom HTTP headers for security and performance
 ---
 
 ### .helix/redirects (Optional)
+
 URL rewrite and redirect rules
 
 **Location:** `.helix/redirects`
@@ -545,6 +592,7 @@ URL rewrite and redirect rules
 ---
 
 ### helix-sitemap.yaml (Optional)
+
 Sitemap generation configuration
 
 **Location:** `helix-sitemap.yaml` (root directory)
@@ -560,6 +608,7 @@ For programmatic configuration management, use Adobe's Configuration Service API
 **Base URL:** `https://admin.hlx.page/config/{org}/sites/{site}`
 
 **Example: Update CDN Production Config**
+
 ```bash
 curl -X POST https://admin.hlx.page/config/ddttom/sites/allaboutv2/cdn/prod.json \
   -H 'content-type: application/json' \
@@ -573,6 +622,7 @@ curl -X POST https://admin.hlx.page/config/ddttom/sites/allaboutv2/cdn/prod.json
 ```
 
 **When to use:**
+
 - Automated deployments
 - Multiple environment management
 - Configuration as code workflows
@@ -583,17 +633,20 @@ curl -X POST https://admin.hlx.page/config/ddttom/sites/allaboutv2/cdn/prod.json
 ## Troubleshooting Resources
 
 ### Adobe EDS Documentation
+
 - **Configuration Reference:** https://www.aem.live/docs/configuration
 - **Cloudflare Setup Guide:** https://www.aem.live/docs/byo-cdn-cloudflare-worker-setup
 - **Push Invalidation Setup:** https://www.aem.live/docs/setup-byo-cdn-push-invalidation
 - **CDN Validator Tool:** https://www.aem.live/tools/cdn-validator
 
 ### Project Documentation
+
 - **Cloudflare Setup:** [cloudflare/cloudflare.md](../../cloudflare/cloudflare.md)
 - **EDS Architecture:** [docs/for-ai/implementation/eds-architecture-standards.md](implementation/eds-architecture-standards.md)
 - **Security Checklist:** [docs/for-ai/guidelines/security-checklist.md](guidelines/security-checklist.md)
 
 ### Support Channels
+
 - **Adobe EDS Discord:** https://discord.gg/aem-live
 - **Cloudflare Community:** https://community.cloudflare.com/
 - **Adobe Status Page:** https://status.adobe.com/products/503489
@@ -609,6 +662,7 @@ curl -X POST https://admin.hlx.page/config/ddttom/sites/allaboutv2/cdn/prod.json
 **Version:** 1.0
 
 **Update this document when:**
+
 - Configuration keys are added or modified
 - New CDN vendor integrated
 - Push invalidation setup changes
@@ -620,6 +674,7 @@ curl -X POST https://admin.hlx.page/config/ddttom/sites/allaboutv2/cdn/prod.json
 ## Summary
 
 The `.helix/config` file is essential for:
+
 - ✅ Custom domain integration with Adobe EDS
 - ✅ Cloudflare CDN configuration and push invalidation
 - ✅ Environment separation (preview, live, production)

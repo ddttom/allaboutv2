@@ -7,6 +7,7 @@
 This document explains the Jupyter notebook implementation for **interactive testing of EDS blocks using JavaScript in the browser**. Notebooks are executed via the ipynb-viewer block on EDS sites.
 
 **BROWSER-ONLY EXECUTION**: The test.ipynb notebook runs exclusively in the browser with:
+
 - **Simple async pattern** - Direct `await` and `return` statements (no IIFE wrappers)
 - **Direct imports** - Each cell imports what it needs independently (no initialization required)
 - **Helper functions** - `testBlock()` and `showPreview()` via ES6 imports
@@ -23,7 +24,9 @@ This document explains the Jupyter notebook implementation for **interactive tes
 **Jupyter Notebooks in EDS** provide three specialized environments for different use cases:
 
 ### 1. Testing Notebooks (test.ipynb)
+
 Interactive browser-based environment for **testing EDS blocks**:
+
 - **JavaScript** (NOT Python) executed in the browser
 - **Browser execution** via ipynb-viewer block on EDS sites
 - **Native browser APIs** (`document`, `window`, `fetch`)
@@ -35,7 +38,9 @@ Interactive browser-based environment for **testing EDS blocks**:
 - **Interactive execution** - Run code cells individually with click
 
 ### 2. Educational Notebooks (blog.ipynb, tutorial.ipynb)
+
 Interactive learning experiences for **teaching and explaining**:
+
 - Executable JavaScript code cells for hands-on practice
 - Rich markdown documentation with inline examples
 - Progressive learning paths
@@ -44,7 +49,9 @@ Interactive learning experiences for **teaching and explaining**:
 - See [Educational Notebooks Guide](explaining-educational-notebooks.md)
 
 ### 3. Presentation Notebooks (demo.ipynb, showcase.ipynb) (NEW)
+
 Professional presentations with **no executable code**:
+
 - Markdown cells only (no runnable code)
 - Embedded EDS blocks with inline initialization
 - Beautiful visual layouts
@@ -120,12 +127,14 @@ Test EDS blocks interactively in the browser, create engaging educational conten
 ### Why Jupyter Notebooks?
 
 **Traditional test.html approach:**
+
 - Requires development server
 - Browser refresh for each change
 - Manual testing only
 - No inline documentation
 
 **Jupyter notebook approach (browser-only):**
+
 - Interactive cell-by-cell execution in browser
 - Test multiple scenarios in one file
 - Inline documentation with Markdown
@@ -147,6 +156,7 @@ The test.ipynb notebook runs **exclusively in the browser** via the ipynb-viewer
 **Purpose:** Interactive block testing and end-user demonstrations
 
 **Features:**
+
 - Native browser APIs (`document`, `window`, `fetch`)
 - Direct JavaScript execution with async/await support
 - Console output display in cell output
@@ -155,6 +165,7 @@ The test.ipynb notebook runs **exclusively in the browser** via the ipynb-viewer
 - Simple async pattern - write code naturally
 
 **When to use:**
+
 - Testing EDS blocks interactively on EDS sites
 - Sharing executable demos with end users
 - Interactive tutorials and documentation
@@ -173,6 +184,7 @@ return block.outerHTML;
 ```
 
 **Available helper functions:**
+
 - `testBlock(blockName, innerHTML)` - Test block decoration
 - `showPreview(blockName, innerHTML)` - Open overlay preview
 
@@ -189,6 +201,7 @@ The notebook supports **visual overlay previews** in the browser!
 When using `showPreview()`, an overlay appears with the styled block:
 
 **Example:**
+
 ```javascript
 // Test and preview a block
 const { showPreview } = await import('/scripts/ipynb-helpers.js');
@@ -197,6 +210,7 @@ return '✓ Preview overlay opened';
 ```
 
 **Features:**
+
 - Dark themed professional UI
 - Full-screen overlay with backdrop
 - **Responsive preview buttons**: Mobile (375×667), Tablet (768×1024), Desktop (95%×95vh)
@@ -215,6 +229,7 @@ The preview system creates an overlay on the current page with the styled block.
 **How it works:**
 
 1. **Creates overlay with inline styles**:
+
    ```javascript
    const overlay = document.createElement('div');
    overlay.className = 'ipynb-preview-overlay';
@@ -224,6 +239,7 @@ The preview system creates an overlay on the current page with the styled block.
    ```
 
 2. **Minimal DOM structure** (no wrapper interference):
+
    ```html
    <div class="ipynb-preview-overlay">
      <div class="ipynb-preview-container">
@@ -246,6 +262,7 @@ The preview system creates an overlay on the current page with the styled block.
    - Full error handling and console logging
 
 **Key Benefits:**
+
 - ✅ **No popup blockers** - Overlay on same page
 - ✅ **Better UX** - Stays on current page
 - ✅ **Clean DOM structure** - Block decorated properly
@@ -254,6 +271,7 @@ The preview system creates an overlay on the current page with the styled block.
 - ✅ **Perfect JavaScript execution** - Module imports work correctly
 
 **Features:**
+
 - Full-screen overlay with semi-transparent backdrop
 - Dark themed header with responsive preview controls
 - **Responsive preview buttons**:
@@ -268,6 +286,7 @@ The preview system creates an overlay on the current page with the styled block.
 - Compact header styling in mobile view (reduced padding and font sizes)
 
 **Example:**
+
 ```javascript
 // This creates a fully interactive overlay preview
 const { showPreview } = await import('/scripts/ipynb-helpers.js');
@@ -288,28 +307,33 @@ The **ipynb-viewer block** now supports comprehensive markdown rendering when vi
 ### Supported Markdown Features
 
 **Code Blocks (NEW):**
+
 ```javascript
 // Triple backtick code blocks now render properly
 const example = 'with syntax highlighting';
 ```
 
 **Tables (NEW):**
+
 | Feature | JSLab | Browser |
 |---------|-------|---------|
 | DOM Creation | ✅ jsdom | ✅ Native |
 
 **Lists (NEW):**
+
 - Unordered lists with `-` or `*`
 - Ordered lists with `1.`
 - Proper nesting and spacing
 
 **Inline Formatting:**
+
 - **Bold** text with `**text**`
 - *Italic* text with `*text*`
 - `Inline code` with backticks
 - [Links](url) with `[text](url)`
 
 **Headers:**
+
 - `#` H1
 - `##` H2
 - `###` H3
@@ -330,12 +354,14 @@ Helper functions are defined in [scripts/ipynb-helpers.js](../../scripts/ipynb-h
 Tests a block's decoration function with provided content in the browser.
 
 **Parameters:**
+
 - `blockName`: Name of the block (e.g., 'accordion')
 - `innerHTML`: HTML content structure (EDS table format)
 
 **Returns:** The decorated block element
 
 **Example:**
+
 ```javascript
 const { testBlock } = await import('/scripts/ipynb-helpers.js');
 const block = await testBlock('accordion', `
@@ -353,12 +379,14 @@ return block.outerHTML;
 Opens an overlay with the styled, decorated block.
 
 **Parameters:**
+
 - `blockName`: Name of the block
 - `innerHTML`: HTML content structure
 
 **Returns:** Success message
 
 **Example:**
+
 ```javascript
 const { showPreview } = await import('/scripts/ipynb-helpers.js');
 await showPreview('accordion', accordionContent);
@@ -366,6 +394,7 @@ return '✓ Preview overlay opened';
 ```
 
 **What it creates:**
+
 - Full-screen overlay with semi-transparent backdrop
 - Dark themed header with close button
 - Scrollable content area
@@ -406,6 +435,7 @@ project/
 Open [test.ipynb](../../test.ipynb) on an EDS page using the ipynb-viewer block:
 
 **In your Google Doc:**
+
 ```
 | IPynb Viewer |
 |--------------|
@@ -625,6 +655,7 @@ The **ipynb-viewer** EDS block allows you to display and execute Jupyter noteboo
 Add the block to your Google Doc:
 
 **Basic mode (default):**
+
 ```
 | IPynb Viewer |
 |--------------|
@@ -632,6 +663,7 @@ Add the block to your Google Doc:
 ```
 
 **Paged mode:**
+
 ```
 | IPynb Viewer (paged) |
 |----------------------|
@@ -639,21 +671,25 @@ Add the block to your Google Doc:
 ```
 
 **Autorun mode (NEW):**
+
 ```
 | IPynb Viewer (autorun) |
 |------------------------|
 | /notebooks/test.ipynb |
 ```
+
 - Code cells execute automatically when displayed
 - No Run buttons (cleaner interface)
 - Perfect for demonstrations and presentations
 
 **Notebook variation (NEW):**
+
 ```
 | IPynb Viewer (notebook) |
 |--------------------------|
 | /notebooks/test.ipynb |
 ```
+
 - Combines paged overlay + autorun functionality
 - Built-in help button (❓) opens `docs/help.md` from `help-repo` (or defaults to allaboutV2)
 - Complete educational experience with integrated help documentation
@@ -662,6 +698,7 @@ Add the block to your Google Doc:
 ### What Gets Executed
 
 When users click "Run" on a code cell:
+
 - Code executes in the browser using `AsyncFunction` constructor (supports await)
 - Each cell can import helper functions independently
 - Console methods are captured during execution
@@ -756,6 +793,7 @@ When users click "Run" on a code cell:
 ### For End Users and Testing (Browser)
 
 1. **Add ipynb-viewer block** to your EDS page:
+
    ```
    | IPynb Viewer |
    |--------------|
@@ -763,6 +801,7 @@ When users click "Run" on a code cell:
    ```
 
 2. **Test a block** (any cell):
+
    ```javascript
    const { testBlock } = await import('/scripts/ipynb-helpers.js');
    const block = await testBlock('accordion', '<div><div>Q</div><div>A</div></div>');
@@ -770,6 +809,7 @@ When users click "Run" on a code cell:
    ```
 
 3. **Generate preview** (any cell):
+
    ```javascript
    const { showPreview } = await import('/scripts/ipynb-helpers.js');
    await showPreview('accordion', '<div><div>Q</div><div>A</div></div>');
@@ -849,6 +889,7 @@ return '✓ Preview overlay opened';
 ```
 
 The overlay appears with:
+
 - Full block styling (CSS)
 - Interactive JavaScript
 - Close button, ESC key, or backdrop click to close
@@ -889,6 +930,7 @@ return block2.outerHTML;
 **Error:** Cell runs successfully (green checkmark) but output cell is empty
 
 **Solution:** Make sure you're using `return` to display results:
+
 ```javascript
 // ✅ GOOD - Shows output
 const { testBlock } = await import('/scripts/ipynb-helpers.js');
@@ -905,6 +947,7 @@ const block = await testBlock('accordion', content);
 **Error:** Import fails or functions not available
 
 **Solution:** Check the import path and syntax:
+
 ```javascript
 // ✅ GOOD - Correct import
 const { testBlock, showPreview } = await import('/scripts/ipynb-helpers.js');
@@ -918,6 +961,7 @@ const { testBlock } = await import('./scripts/ipynb-helpers.js');
 **Error:** `showPreview()` runs but no overlay appears
 
 **Solution:**
+
 - Check browser console for JavaScript errors
 - Verify block JavaScript file exists: `blocks/blockname/blockname.js`
 - Check that block CSS file exists: `blocks/blockname/blockname.css`
@@ -927,6 +971,7 @@ const { testBlock } = await import('./scripts/ipynb-helpers.js');
 **Error:** Overlay shows unstyled content
 
 **Solution:**
+
 - Check that block CSS file exists: `blocks/blockname/blockname.css`
 - Check browser console for 404 errors
 - Verify CSS loads on the parent page
@@ -944,6 +989,7 @@ The Jupyter notebook testing system integrates with Claude Code through:
 ```
 
 Creates a new notebook for testing the specified block with:
+
 - Pre-configured jsdom setup
 - Helper functions included
 - Example test cases
@@ -952,11 +998,13 @@ Creates a new notebook for testing the specified block with:
 ### Skill Activation
 
 The `jupyter-notebook-testing` skill activates when:
+
 - Working with `.ipynb` files
 - Using keywords: "jupyter", "notebook", "testBlock"
 - Creating interactive tests
 
 This provides:
+
 - Guidance on notebook structure
 - Helper function documentation
 - Troubleshooting tips
@@ -985,6 +1033,7 @@ This provides:
 **Best for:** Full page testing with EDS core, interactions, browser-specific behavior
 
 **Pros:**
+
 - Real browser rendering with full EDS core
 - Full browser APIs available
 - User interaction testing
@@ -992,6 +1041,7 @@ This provides:
 - Multiple blocks on same page
 
 **Cons:**
+
 - Requires development server
 - Manual refresh workflow
 - One scenario per file
@@ -1002,11 +1052,13 @@ This provides:
 **Best for:** Interactive block testing, tutorials, demos, documentation
 
 **Types of notebooks:**
+
 1. **Testing notebooks** (test.ipynb) - Developer-focused, block decoration testing
 2. **Educational notebooks** (blog.ipynb, tutorial.ipynb) - End-user focused, interactive learning
 3. **Presentation notebooks** (demo.ipynb, showcase.ipynb) - Client-facing, no executable code
 
 **Pros:**
+
 - Interactive code execution in browser
 - Multiple scenarios in one file
 - Inline markdown documentation
@@ -1017,6 +1069,7 @@ This provides:
 - Perfect for end-user tutorials
 
 **Cons:**
+
 - Block-only testing (no EDS core context)
 - Requires publishing on EDS page
 - No CI/CD integration
@@ -1026,6 +1079,7 @@ This provides:
 **Best for:** Regression testing, CI/CD, coverage
 
 **Pros:**
+
 - CI/CD integration
 - Regression testing
 - Coverage reports
@@ -1033,6 +1087,7 @@ This provides:
 - Consistent results
 
 **Cons:**
+
 - Setup complexity
 - No visual feedback
 - Not interactive
@@ -1048,6 +1103,7 @@ This provides:
 ### What Are Presentation Notebooks?
 
 Unlike testing or educational notebooks, presentation notebooks:
+
 - ✅ **No executable code cells** - All code converted to informative text
 - ✅ **Embedded EDS blocks** - Beautiful visual layouts in markdown cells
 - ✅ **Inline JavaScript** - Blocks initialized via `<script>` tags in markdown
@@ -1057,6 +1113,7 @@ Unlike testing or educational notebooks, presentation notebooks:
 ### When to Use Presentation Notebooks
 
 **Use presentation notebooks for:**
+
 - 📊 Product demos and showcases
 - 🎯 Client presentations
 - 🚀 Feature announcements
@@ -1065,6 +1122,7 @@ Unlike testing or educational notebooks, presentation notebooks:
 - 📱 Professional slide-like content
 
 **Don't use for:**
+
 - ❌ Interactive code execution (use educational notebooks instead)
 - ❌ Block testing (use test.ipynb instead)
 - ❌ Hands-on tutorials (use educational notebooks instead)
@@ -1085,6 +1143,7 @@ Convert test.ipynb to presentation mode (no runnable code)
 ```
 
 **The skill will:**
+
 1. Create notebooks with markdown cells only
 2. Convert any existing code cells to informative text
 3. Embed EDS blocks with inline initialization scripts
@@ -1094,6 +1153,7 @@ Convert test.ipynb to presentation mode (no runnable code)
 ### Presentation Pattern
 
 **Original code cell (testing):**
+
 ```javascript
 const { testBlock } = await import('/scripts/ipynb-helpers.js');
 const block = await testBlock('accordion', content);
@@ -1101,6 +1161,7 @@ return block.outerHTML;
 ```
 
 **Converted to markdown cell (presentation):**
+
 ```markdown
 ### Accordion Block Example
 
@@ -1139,6 +1200,7 @@ const block = await testBlock('accordion', content);
 All EDS blocks can be embedded in presentation markdown cells:
 
 **Layout blocks:**
+
 - `accordion` - Collapsible sections (FAQs, features)
 - `cards` - Feature showcases, team members
 - `tabs` - Multi-view content, code examples
@@ -1147,12 +1209,14 @@ All EDS blocks can be embedded in presentation markdown cells:
 - `table` - Pricing, comparisons
 
 **Content blocks:**
+
 - `quote` - Testimonials, highlights
 - `columns` - Multi-column layouts
 - `modal` - Dialog overlays
 - `video` - Embedded videos
 
 **Interactive blocks:**
+
 - `counter` - Animated statistics
 - `code-expander` - Expandable code snippets
 - `floating-alert` - Important announcements
@@ -1160,6 +1224,7 @@ All EDS blocks can be embedded in presentation markdown cells:
 ### Presentation Notebook Structure
 
 **Required elements:**
+
 1. Title cell with overview
 2. Table of contents (for 5+ sections)
 3. Content cells with embedded blocks
@@ -1167,6 +1232,7 @@ All EDS blocks can be embedded in presentation markdown cells:
 5. Conclusion or call-to-action
 
 **Metadata example:**
+
 ```json
 {
   "metadata": {
@@ -1185,37 +1251,45 @@ All EDS blocks can be embedded in presentation markdown cells:
 Presentation notebooks work with all ipynb-viewer modes:
 
 **Basic mode:**
+
 ```
 | IPynb Viewer |
 |--------------|
 | /demo.ipynb  |
 ```
+
 Scrollable content, all cells visible
 
 **Paged mode (recommended):**
+
 ```
 | IPynb Viewer (paged) |
 |----------------------|
 | /demo.ipynb          |
 ```
+
 Full-screen overlay with Previous/Next navigation
 
 **Notebook mode:**
+
 ```
 | IPynb Viewer (notebook) |
 |--------------------------|
 | /demo.ipynb              |
 ```
+
 Paged overlay with autorun (blocks initialize automatically)
 
 ### Resources
 
 **Skill documentation:**
+
 - [.claude/skills/create-presentation/SKILL.md](.claude/skills/create-presentation/SKILL.md) - Complete guide
 - [.claude/skills/create-presentation/resources/blocks-reference.md](.claude/skills/create-presentation/resources/blocks-reference.md) - All blocks with examples
 - [.claude/skills/create-presentation/resources/complete-examples.md](.claude/skills/create-presentation/resources/complete-examples.md) - Full presentation templates
 
 **Slash command:**
+
 - [.claude/commands/create-presentation.md](.claude/commands/create-presentation.md) - Command template
 
 ### Key Differences: Educational vs Presentation
@@ -1250,6 +1324,7 @@ The Jupyter notebook system for EDS provides **three specialized environments** 
 ### Three Notebook Types
 
 **1. Testing Notebooks (test.ipynb)**
+
 - Interactive block testing for developers
 - Helper functions: `testBlock()`, `showPreview()`
 - Simple async pattern with direct imports
@@ -1257,6 +1332,7 @@ The Jupyter notebook system for EDS provides **three specialized environments** 
 - Perfect for rapid prototyping and debugging
 
 **2. Educational Notebooks (blog.ipynb, tutorial.ipynb)**
+
 - Interactive learning experiences for end users
 - Executable code cells for hands-on practice
 - Rich markdown documentation
@@ -1264,6 +1340,7 @@ The Jupyter notebook system for EDS provides **three specialized environments** 
 - See [Educational Notebooks Guide](explaining-educational-notebooks.md)
 
 **3. Presentation Notebooks (demo.ipynb, showcase.ipynb)**
+
 - Professional presentations without executable code
 - Embedded EDS blocks with inline JavaScript
 - Beautiful visual layouts
@@ -1273,18 +1350,21 @@ The Jupyter notebook system for EDS provides **three specialized environments** 
 ### Key Benefits
 
 **Browser-Only Execution:**
+
 - Native browser APIs (`document`, `window`, `fetch`)
 - Real DOM manipulation and testing
 - No Node.js setup required
 - Runs on EDS pages via ipynb-viewer block
 
 **Simple Async Pattern (Testing & Educational):**
+
 - Write code naturally with `await` and `return`
 - No complex IIFE wrappers
 - Cell code runs in async context automatically
 - Clean, readable test code
 
 **Overlay Previews:**
+
 - Instant visual feedback with styled blocks
 - Full-screen overlay with backdrop
 - ESC key, backdrop click, or close button to dismiss
@@ -1292,6 +1372,7 @@ The Jupyter notebook system for EDS provides **three specialized environments** 
 - Minimal DOM structure (no wrapper interference)
 
 **Interactive and Shareable:**
+
 - Multiple test scenarios in one file
 - Inline markdown documentation
 - Executable by end users on EDS pages
@@ -1299,6 +1380,7 @@ The Jupyter notebook system for EDS provides **three specialized environments** 
 - No initialization required
 
 **Helper Functions (Testing):**
+
 - `testBlock()` - Test block decoration
 - `showPreview()` - Generate overlay previews
 - Direct ES6 imports - no setup needed
@@ -1306,17 +1388,20 @@ The Jupyter notebook system for EDS provides **three specialized environments** 
 ### Recommended Workflow
 
 **For Block Development:**
+
 1. **Develop** in test.ipynb with `testBlock()` and `showPreview()`
 2. **Preview** with overlays for instant visual feedback
 3. **Validate** in test.html for full EDS core context
 4. **Automate** with Jest/Mocha for CI/CD (future)
 
 **For Content Creation:**
+
 1. **Teach** with educational notebooks (interactive tutorials)
 2. **Present** with presentation notebooks (client demos)
 3. **Share** executable notebooks for end-user interaction
 
 **Choosing the Right Notebook:**
+
 - **Testing?** → test.ipynb with helper functions
 - **Teaching?** → blog.ipynb or tutorial.ipynb (use `/create-notebook`)
 - **Presenting?** → demo.ipynb or showcase.ipynb (use `/create-presentation`)
@@ -1330,12 +1415,14 @@ This approach gives you **speed, simplicity, visual feedback, and shareability**
 **CRITICAL**: Every line in a Jupyter notebook cell's source array must end with `\n` (newline character) except the last line. This ensures proper rendering in VSCode outline and other notebook viewers.
 
 **Why it matters:**
+
 - VSCode outline parser requires proper line breaks to detect headings
 - Cells with content stored as one massive string prevent VSCode from detecting sub-headings (`###`, `####`)
 - Without newlines, VSCode can't build the outline tree structure
 - Users won't see sub-sections when expanding parts in the outline sidebar
 
 **Problem example:**
+
 ```python
 # ❌ WRONG - All content in single string
 "source": [
@@ -1346,6 +1433,7 @@ This approach gives you **speed, simplicity, visual feedback, and shareability**
 ```
 
 **Correct pattern:**
+
 ```python
 # ✅ CORRECT - Each line ends with \n
 "source": [
@@ -1366,6 +1454,7 @@ This approach gives you **speed, simplicity, visual feedback, and shareability**
 ```
 
 **Key formatting rules:**
+
 1. Every line ends with `\n` except the very last line in source array
 2. Headings need newlines before and after
 3. Horizontal rules: `"---\n"` followed by `"\n"`
@@ -1373,10 +1462,12 @@ This approach gives you **speed, simplicity, visual feedback, and shareability**
 5. List items end with newlines
 
 **Common symptoms:**
+
 - Parts appear in VSCode outline but have no sub-sections when expanded
 - Cells with many sub-headings showing as flat content
 - "The parts need more than one sub section in their expansion"
 
 **See also:**
+
 - `LEARNINGS.md` section on "Jupyter Notebook Cell Source Must Use Proper Newlines"
 - `blocks/ipynb-viewer/README.md` section on "Markdown Cells"

@@ -26,6 +26,7 @@ A minimal starter block demonstrating the fundamental structure and patterns for
 The Hello World block is the simplest possible EDS block implementation. It demonstrates the core concepts every block developer needs to understand: the decorate function pattern, DOM manipulation, and CSS styling conventions.
 
 **Primary Use Cases:**
+
 - Learning EDS block development fundamentals
 - Template for creating new simple blocks
 - Testing EDS block decoration workflow
@@ -37,6 +38,7 @@ The Hello World block is the simplest possible EDS block implementation. It demo
 **Location:** `/blocks/helloworld/`
 
 **Files:**
+
 - `helloworld.js` - Minimal decoration function (6 lines)
 - `helloworld.css` - Basic styling demonstration
 - `README.md` - Technical documentation (this file)
@@ -91,13 +93,14 @@ The `decorate()` function performs a simple transformation:
 
 `Default Export Function`
 `export default function decorate(block) {`
-`  const greeting = document.createElement('div');`
-`  greeting.textContent = 'Hello World';`
-`  block.textContent = '';`
-`  block.appendChild(greeting);`
+`const greeting = document.createElement('div');`
+`greeting.textContent = 'Hello World';`
+`block.textContent = '';`
+`block.appendChild(greeting);`
 `}`
 
 **Parameters:**
+
 - `block` (HTMLElement) - The block container element automatically passed by EDS
 
 **Return Value:** None (void function, modifies block in place)
@@ -109,12 +112,14 @@ The `decorate()` function performs a simple transformation:
 The helloworld block uses simple CSS properties for visual presentation:
 
 **Block Container:**
+
 - `background-color: #f0f0f0` - Light gray background
 - `padding: 20px` - Inner spacing
 - `border-radius: 5px` - Rounded corners
 - `text-align: center` - Centered text
 
 **Typography:**
+
 - `font-size: 24px` - Large, readable text
 - `font-weight: bold` - Prominent display
 - `color: #333` - Dark gray text (good contrast)
@@ -122,21 +127,21 @@ The helloworld block uses simple CSS properties for visual presentation:
 ### Data Flow
 
 `Content Authors Create Markdown`
-`    ↓`
+`↓`
 `EDS Pipeline Converts to HTML`
-`    ↓`
+`↓`
 `Block element created with .helloworld class`
-`    ↓`
+`↓`
 `decorate() function called automatically`
-`    ↓`
+`↓`
 `Creates greeting div`
-`    ↓`
+`↓`
 `Clears block content`
-`    ↓`
+`↓`
 `Appends greeting to block`
-`    ↓`
+`↓`
 `CSS applied for visual styling`
-`    ↓`
+`↓`
 `Final rendered "Hello World" display`
 
 **Key Concept:** EDS automatically finds all elements with the `.helloworld` class and calls the `decorate()` function for each one.
@@ -167,28 +172,31 @@ You can add content in the table (though this simple block ignores it):
 ### Markdown to HTML Transformation
 
 **Input (Markdown):**
+
 | HelloWorld |
 |------------|
 
 **Intermediate (EDS Generated):**
 `<div class="helloworld block">`
-`  <!-- Empty or contains table content -->`
+`<!-- Empty or contains table content -->`
 `</div>`
 
 **Final Output (After Decoration):**
 `<div class="helloworld block">`
-`  <div>Hello World</div>`
+`<div>Hello World</div>`
 `</div>`
 
 ### Integration Points
 
 **With other blocks:**
+
 - Can appear anywhere on a page
 - Works before, after, or between other blocks
 - No dependencies on other blocks
 - Completely standalone
 
 **Content Model:**
+
 - Accepts any content (currently ignored)
 - No specific structure required
 - Simple block name in table header
@@ -209,7 +217,7 @@ The simplest possible structure:
 EDS creates this structure automatically:
 
 `<div class="helloworld block">`
-`  <!-- May contain some initial content from markdown -->`
+`<!-- May contain some initial content from markdown -->`
 `</div>`
 
 **Important:** The `.helloworld` class triggers decoration. The `block` class is added by EDS to all blocks.
@@ -219,10 +227,11 @@ EDS creates this structure automatically:
 After the `decorate()` function runs:
 
 `<div class="helloworld block">`
-`  <div>Hello World</div>`
+`<div>Hello World</div>`
 `</div>`
 
 **Styled appearance:**
+
 - Light gray background box
 - Centered bold text reading "Hello World"
 - Comfortable padding around text
@@ -235,12 +244,14 @@ After the `decorate()` function runs:
 ### Default Visual Appearance
 
 **Container:**
+
 - Background: Light gray (#f0f0f0)
 - Padding: 20px all sides
 - Border radius: 5px
 - Text alignment: Center
 
 **Text:**
+
 - Size: 24px (large, prominent)
 - Weight: Bold
 - Color: Dark gray (#333)
@@ -253,9 +264,9 @@ After the `decorate()` function runs:
 Create custom styling by overriding in your site's CSS:
 
 `.helloworld {`
-`  background-color: #e3f2fd;`
-`  color: #1565c0;`
-`  font-size: 32px;`
+`background-color: #e3f2fd;`
+`color: #1565c0;`
+`font-size: 32px;`
 `}`
 
 #### Option 2: Add Variation Classes
@@ -263,16 +274,17 @@ Create custom styling by overriding in your site's CSS:
 Extend the block with variations:
 
 `.helloworld.large {`
-`  font-size: 36px;`
-`  padding: 40px;`
+`font-size: 36px;`
+`padding: 40px;`
 `}`
 
 `.helloworld.colorful {`
-`  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);`
-`  color: white;`
+`background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);`
+`color: white;`
 `}`
 
 **Usage in markdown:**
+
 | HelloWorld (large, colorful) |
 |-------------------------------|
 
@@ -281,10 +293,10 @@ Extend the block with variations:
 Change the greeting text:
 
 `export default function decorate(block) {`
-`  const greeting = document.createElement('div');`
-`  greeting.textContent = 'Welcome to EDS!'; // Changed text`
-`  block.textContent = '';`
-`  block.appendChild(greeting);`
+`const greeting = document.createElement('div');`
+`greeting.textContent = 'Welcome to EDS!'; // Changed text`
+`block.textContent = '';`
+`block.appendChild(greeting);`
 `}`
 
 #### Option 4: Use Original Content
@@ -292,13 +304,13 @@ Change the greeting text:
 Preserve markdown content instead of replacing:
 
 `export default function decorate(block) {`
-`  // Wrap existing content in a styled div`
-`  const wrapper = document.createElement('div');`
-`  wrapper.className = 'greeting-wrapper';`
-`  while (block.firstChild) {`
-`    wrapper.appendChild(block.firstChild);`
-`  }`
-`  block.appendChild(wrapper);`
+`// Wrap existing content in a styled div`
+`const wrapper = document.createElement('div');`
+`wrapper.className = 'greeting-wrapper';`
+`while (block.firstChild) {`
+`wrapper.appendChild(block.firstChild);`
+`}`
+`block.appendChild(wrapper);`
 `}`
 
 ---
@@ -333,6 +345,7 @@ Preserve markdown content instead of replacing:
 ### Semantic HTML
 
 **Current implementation:**
+
 - Uses `<div>` elements (neutral containers)
 - Text content is readable by screen readers
 - No interactive elements (no keyboard navigation needed)
@@ -340,6 +353,7 @@ Preserve markdown content instead of replacing:
 ### Screen Reader Compatibility
 
 **What screen readers announce:**
+
 1. "Hello World" (the text content)
 2. No special roles or labels needed for this simple block
 
@@ -351,11 +365,13 @@ Preserve markdown content instead of replacing:
 ### Visual Accessibility
 
 **Color contrast:**
+
 - Text (#333) on background (#f0f0f0) = 8.59:1 ratio
 - Exceeds WCAG AAA standard (7:1)
 - Excellent readability for all users
 
 **Font size:**
+
 - 24px is larger than minimum recommended (16px)
 - Bold weight improves legibility
 - No accessibility concerns
@@ -363,6 +379,7 @@ Preserve markdown content instead of replacing:
 ### Improvements for Production
 
 **For a real block, consider:**
+
 1. **Semantic markup:** Use `<h2>`, `<p>`, or appropriate element instead of `<div>`
 2. **ARIA labels:** Add context if the block has interactive elements
 3. **Focus management:** Ensure keyboard users can access all functionality
@@ -375,6 +392,7 @@ Preserve markdown content instead of replacing:
 ### Lighthouse Scores
 
 **Expected scores:**
+
 - Performance: 100
 - Accessibility: 100
 - Best Practices: 100
@@ -385,6 +403,7 @@ Preserve markdown content instead of replacing:
 ### Performance Characteristics
 
 **JavaScript:**
+
 - Tiny function (6 lines)
 - Executes in < 1ms
 - No async operations
@@ -392,12 +411,14 @@ Preserve markdown content instead of replacing:
 - No external dependencies
 
 **CSS:**
+
 - Minimal rules (9 declarations)
 - No complex selectors
 - No animations
 - Fast parsing and rendering
 
 **DOM Operations:**
+
 - Creates 1 element
 - Clears block content (fast)
 - Appends 1 element
@@ -418,12 +439,14 @@ This block can use any loading strategy:
 ### Optimization Tips
 
 **Already optimized:**
+
 - No images to compress
 - No fonts to load
 - No JavaScript libraries
 - Minimal CSS and JS payload
 
 **If expanding this block:**
+
 1. Keep JavaScript minimal
 2. Avoid heavy DOM manipulation
 3. Use CSS for animations
@@ -436,6 +459,7 @@ This block can use any loading strategy:
 ### Supported Browsers
 
 **Full support (no polyfills needed):**
+
 - Chrome/Edge 90+ (current - 2 versions)
 - Firefox 88+ (current - 2 versions)
 - Safari 14+ (current - 2 versions)
@@ -447,11 +471,13 @@ This block can use any loading strategy:
 ### API Compatibility
 
 **JavaScript APIs used:**
+
 - `document.createElement()` - Universal support
 - `element.textContent` - Universal support
 - `element.appendChild()` - Universal support
 
 **No issues with:**
+
 - ES6 modules (EDS handles transpilation if needed)
 - Modern JavaScript features
 - CSS properties (all basic, well-supported)
@@ -459,6 +485,7 @@ This block can use any loading strategy:
 ### Internet Explorer 11
 
 **Not officially supported** but would work with EDS transpilation:
+
 - Basic DOM methods work
 - CSS properties supported
 - No ES6 features that can't be transpiled
@@ -472,12 +499,14 @@ This block can use any loading strategy:
 **Problem:** You don't see "Hello World" on the page.
 
 **Possible Causes:**
+
 1. JavaScript file not loaded
 2. CSS file not loaded
 3. Block name mismatch
 4. EDS decoration pipeline issue
 
 **Solutions:**
+
 1. Check browser console (F12) for errors
 2. Verify `/blocks/helloworld/helloworld.js` loads (Network tab)
 3. Verify `/blocks/helloworld/helloworld.css` loads
@@ -491,6 +520,7 @@ This block can use any loading strategy:
 **Cause:** CSS file not loaded or selector not matching.
 
 **Solutions:**
+
 1. Check Network tab for `helloworld.css` (should be 200 status)
 2. Inspect element - verify `.helloworld` class exists
 3. Check browser console for CSS errors
@@ -501,11 +531,13 @@ This block can use any loading strategy:
 **Problem:** Console shows errors related to helloworld block.
 
 **Common errors:**
+
 - "decorate is not a function" - JavaScript file not exporting correctly
 - "Cannot read property 'appendChild'" - Block element undefined
 - "Unexpected token" - Syntax error in JavaScript
 
 **Solutions:**
+
 1. Verify `export default function decorate(block)` syntax
 2. Check for missing semicolons or brackets
 3. Ensure modern browser or proper transpilation
@@ -518,6 +550,7 @@ This block can use any loading strategy:
 **Cause:** JavaScript decoration not running.
 
 **Solutions:**
+
 1. Check that decorate function is called (add console.log)
 2. Verify block has `.helloworld` class
 3. Check EDS pipeline configuration
@@ -530,6 +563,7 @@ This block can use any loading strategy:
 **Cause:** Multiple markdown blocks or decoration called multiple times.
 
 **Solutions:**
+
 1. Check your content - count HelloWorld blocks
 2. Ensure only one table with HelloWorld header
 3. Verify decorate function only called once per block
@@ -579,16 +613,19 @@ Use `test.html` for browser-based testing:
 ### Testing Strategy
 
 **Unit Testing (Future):**
+
 - Test decorate function creates correct DOM
 - Verify text content is "Hello World"
 - Check element structure matches expected output
 
 **Integration Testing:**
+
 - Verify block works within EDS pipeline
 - Test with other blocks on same page
 - Ensure no CSS conflicts
 
 **Visual Regression Testing:**
+
 - Capture screenshots at multiple breakpoints
 - Compare against baseline images
 - Flag any unexpected visual changes
@@ -604,16 +641,19 @@ Use `test.html` for browser-based testing:
 ### Internal Dependencies
 
 **EDS Core:**
+
 - Relies on EDS decoration pipeline
 - Uses standard block naming convention
 - Requires EDS to add `.block` class
 
 **Scripts:**
+
 - No dependency on `/scripts/aem.js` or other utilities
 - No helper functions needed
 - Pure vanilla JavaScript
 
 **Styles:**
+
 - Optional: May reference CSS variables from `/styles/styles.css`
 - No required external styles
 - Fully self-contained CSS
@@ -635,11 +675,11 @@ Use `test.html` for browser-based testing:
 Instead of hardcoding "Hello World", use the content from the markdown table:
 
 `export default function decorate(block) {`
-`  const message = block.textContent.trim() || 'Hello World';`
-`  block.textContent = '';`
-`  const greeting = document.createElement('div');`
-`  greeting.textContent = message;`
-`  block.appendChild(greeting);`
+`const message = block.textContent.trim() || 'Hello World';`
+`block.textContent = '';`
+`const greeting = document.createElement('div');`
+`greeting.textContent = message;`
+`block.appendChild(greeting);`
 `}`
 
 **2. Add Configuration Options**
@@ -655,11 +695,11 @@ Support variations like color themes:
 Fade in or slide in the greeting:
 
 `.helloworld {`
-`  animation: fadeIn 0.5s ease-in;`
+`animation: fadeIn 0.5s ease-in;`
 `}`
 `@keyframes fadeIn {`
-`  from { opacity: 0; }`
-`  to { opacity: 1; }`
+`from { opacity: 0; }`
+`to { opacity: 1; }`
 `}`
 
 **4. Support Multiple Languages**
@@ -667,9 +707,9 @@ Fade in or slide in the greeting:
 Add internationalization:
 
 `const MESSAGES = {`
-`  en: 'Hello World',`
-`  es: 'Hola Mundo',`
-`  fr: 'Bonjour le Monde'`
+`en: 'Hello World',`
+`es: 'Hola Mundo',`
+`fr: 'Bonjour le Monde'`
 `};`
 
 **5. Add Icon or Image**
@@ -693,6 +733,7 @@ This block is intentionally kept simple for learning purposes. If you create an 
 ### Educational Extensions
 
 **For learning:**
+
 1. Add data-attributes for testing
 2. Create multiple variations
 3. Implement error handling
@@ -706,6 +747,7 @@ This block is intentionally kept simple for learning purposes. If you create an 
 ### What This Block Teaches
 
 **Core Concepts:**
+
 1. **Block structure:** Every EDS block needs JS, CSS, and docs
 2. **Decorate pattern:** The main function receives a block element
 3. **DOM manipulation:** Create, clear, and append elements
@@ -713,12 +755,14 @@ This block is intentionally kept simple for learning purposes. If you create an 
 5. **Export pattern:** Default export of decorate function
 
 **EDS Patterns:**
+
 1. **Automatic decoration:** EDS finds and decorates blocks
 2. **Class-based selection:** `.blockname` triggers decoration
 3. **In-place modification:** Change block DOM directly
 4. **No return value:** Decorate modifies element, doesn't return
 
 **Best Practices:**
+
 1. **Minimal code:** Keep blocks as simple as possible
 2. **Clear structure:** Separate JS, CSS, documentation
 3. **Vanilla JavaScript:** No framework dependencies
@@ -727,6 +771,7 @@ This block is intentionally kept simple for learning purposes. If you create an 
 ### Next Steps for Learners
 
 **After understanding this block:**
+
 1. Create your own simple block
 2. Add a variation (color, size, style)
 3. Make it use markdown content
@@ -734,6 +779,7 @@ This block is intentionally kept simple for learning purposes. If you create an 
 5. Explore more complex blocks (tabs, accordion, cards)
 
 **Recommended Reading:**
+
 - [EDS Fundamentals Guide](/docs/for-ai/eds.md)
 - [Block Architecture Standards](/docs/for-ai/implementation/block-architecture-standards.md)
 - [Design Philosophy Guide](/docs/for-ai/implementation/design-philosophy-guide.md)

@@ -91,16 +91,19 @@ This document provides content authoring examples for the Inline SVG block. Use 
 ### Example 10: Icon Set (Multiple Icons)
 
 **Icon 1: Home**
+
 | Inline SVG |
 |:-----------|
 | `:icon-home:` |
 
 **Icon 2: Search**
+
 | Inline SVG |
 |:-----------|
 | `:icon-search:` |
 
 **Icon 3: Menu**
+
 | Inline SVG |
 |:-----------|
 | `:icon-menu:` |
@@ -120,6 +123,7 @@ This document provides content authoring examples for the Inline SVG block. Use 
 **Result:** A dashed circle that can be animated with CSS.
 
 **CSS Required:**
+
 ```css
 .rotating-icon {
   animation: rotate 3s linear infinite;
@@ -149,6 +153,7 @@ This document provides content authoring examples for the Inline SVG block. Use 
 **Result:** A circle that changes color on hover when styled with CSS.
 
 **CSS Required:**
+
 ```css
 .hover-icon .icon-circle {
   transition: fill 0.3s ease;
@@ -195,11 +200,13 @@ This document provides content authoring examples for the Inline SVG block. Use 
 ### Example 17: SVG Not Rendering - Missing ViewBox
 
 **Wrong:**
+
 | Inline SVG |
 |:-----------|
 | `<svg width="100" height="100"><circle cx="50" cy="50" r="40" fill="red"></circle></svg>` |
 
 **Correct:**
+
 | Inline SVG |
 |:-----------|
 | `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="red"></circle></svg>` |
@@ -209,11 +216,13 @@ This document provides content authoring examples for the Inline SVG block. Use 
 ### Example 18: SVG Overflow - Fixed Width/Height
 
 **Wrong:**
+
 | Inline SVG |
 |:-----------|
 | `<svg width="500" height="500"><circle cx="250" cy="250" r="200" fill="blue"></circle></svg>` |
 
 **Correct:**
+
 | Inline SVG |
 |:-----------|
 | `<svg viewBox="0 0 500 500"><circle cx="250" cy="250" r="200" fill="blue"></circle></svg>` |
@@ -225,6 +234,7 @@ This document provides content authoring examples for the Inline SVG block. Use 
 ### Syntax Summary
 
 **Icon Reference (from /icons/ directory):**
+
 ```
 | Inline SVG |
 |:-----------|
@@ -232,6 +242,7 @@ This document provides content authoring examples for the Inline SVG block. Use 
 ```
 
 **Inline SVG Markup:**
+
 ```
 | Inline SVG |
 |:-----------|

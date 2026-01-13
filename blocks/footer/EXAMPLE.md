@@ -26,6 +26,7 @@ The footer block in its simplest form loads the default footer from `/footer`:
 To specify a custom footer document path, use metadata:
 
 ---
+
 footer: /custom-footer
 ---
 
@@ -37,6 +38,7 @@ footer: /custom-footer
 For multi-language or regional sites, specify different footer documents:
 
 ---
+
 footer: /footer/en-us
 ---
 
@@ -248,12 +250,14 @@ Content...
 The footer automatically adapts to viewport width based on your footer document structure:
 
 ### Mobile (< 768px typically)
+
 - Stacks columns vertically
 - Full-width layout
 - Touch-friendly links
 - Readable font sizes
 
 ### Desktop (>= 768px)
+
 - Multi-column layout (if using tables)
 - Horizontal navigation
 - Optimized spacing
@@ -270,6 +274,7 @@ npm run debug
 ```
 
 Then navigate to:
+
 ```
 http://localhost:3000/blocks/footer/test.html
 ```
@@ -349,21 +354,25 @@ Web Developer & Designer
 ## Troubleshooting
 
 ### Footer doesn't appear
+
 - Verify `/footer.md` exists or metadata `footer` path is correct
 - Check browser console for fragment loading errors
 - Ensure footer document is published
 
 ### Wrong footer displays
+
 - Check page metadata for `footer` value
 - Verify path doesn't include `.md` extension
 - Ensure path starts with `/`
 
 ### Footer styling incorrect
+
 - Check that `/blocks/footer/footer.css` is loading
 - Verify global CSS variables are defined
 - Inspect element to check applied classes
 
 ### Footer content truncated
+
 - Verify footer document markdown is valid
 - Check for unclosed tables or malformed markdown
 - Test footer document independently

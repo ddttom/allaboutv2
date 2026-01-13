@@ -16,6 +16,7 @@
 **All worker functionality MUST be implemented as pure JavaScript functions that can be tested without Cloudflare Workers runtime.**
 
 **Why?**
+
 - Cloudflare Workers runtime provides APIs (like `HTMLRewriter`) that don't exist in Node.js
 - Using runtime-specific APIs for core logic makes code **untestable**
 - Pure functions (string input → string output) are **fully testable** in any environment
@@ -154,6 +155,7 @@ export default {
 **Transformations (ADD content) MUST happen BEFORE removals (DELETE content).**
 
 **Why this matters:**
+
 - Removal operations might delete trigger mechanisms needed by transformations
 - Comments or metadata might contain signals that transformations rely on
 - Incorrect order causes transformations to fail silently
@@ -192,6 +194,7 @@ htmlText = removeHtmlComments(htmlText);  // Now safe to remove
 ```
 
 **Rule of thumb:**
+
 - **ADD operations first** (inject, replace, insert)
 - **DELETE operations last** (remove, strip, clean)
 
@@ -259,19 +262,23 @@ describe('Integration Tests', () => {
 ### Red Flags (Violations)
 
 **❌ Creating separate test files:**
+
 - `cloudflare-worker.unit.test.js` ← WRONG
 - `cloudflare-worker.integration.test.js` ← WRONG
 - Only `cloudflare-worker.test.js` is allowed
 
 **❌ Using runtime-specific APIs for core logic:**
+
 - `element.ontext()` ← Untestable
 - `element.onendtag()` ← Untestable
 - `element.replace()` ← Untestable
 
 **❌ Skipping tests because "it needs the runtime":**
+
 - If you can't test it, refactor to pure functions
 
 **✅ Correct patterns:**
+
 - Pure functions for all transformations
 - String operations (regex, replace, substring)
 - Single unified test file
@@ -314,6 +321,7 @@ npm test
 ```
 
 **Output:**
+
 ```
 ✓ cloudflare-worker.test.js (19+ tests)
   ✓ Helper Functions
@@ -332,6 +340,7 @@ node test-local-html.js
 ```
 
 **What it does:**
+
 1. Reads `cloudflare/test.html` (source file with all metadata)
 2. Processes through all pure string functions in correct order:
    - `replacePicturePlaceholder()` - replaces "Picture Here" text
@@ -343,6 +352,7 @@ node test-local-html.js
 4. Writes processed output to `cloudflare/test-rendered.html`
 
 **Output:**
+
 ```
 ✓ ALL TESTS PASSED
 Tests: 23/23 passed
@@ -354,6 +364,7 @@ Tests: 23/23 passed
 The generated `test-rendered.html` file serves as a **visual test artifact** showing exactly how the worker transforms HTML.
 
 **How to use:**
+
 1. Run `npm run test:local` to generate the file
 2. Open `cloudflare/test-rendered.html` in a browser (file:// protocol is fine)
 3. Inspect the test results
@@ -373,6 +384,7 @@ The generated `test-rendered.html` file serves as a **visual test artifact** sho
   - Headers are added by the worker at request time, not embedded in HTML
 
 **Why this matters:**
+
 - `test-rendered.html` is the **transformed version** of `test.html`
 - Shows exactly what the worker produces
 - Validates HTML transformations work correctly
@@ -380,16 +392,20 @@ The generated `test-rendered.html` file serves as a **visual test artifact** sho
 - No need to deploy to Cloudflare for basic validation
 
 **Comparison:**
+
 - `test.html` = Source file with all metadata and trigger comments
 - `test-rendered.html` = Transformed file showing worker output
 
 ## Strategy
 
 ### 1. Unit Tests (Handlers)
+
 We extract individual handler functions (e.g., `handleJsonLdMeta`, `handleOgTitle`) from `cloudflare-worker.js` and test them in isolation. This allows us to pass mock elements and verify that the logic modifies the `article` state or the DOM as expected.
 
 ### 2. Integration Tests (Wiring)
+
 We test the main `fetch` handler by mocking `HTMLRewriter` and `fetch`. This ensures that:
+
 - The worker registers the correct handlers for the correct selectors.
 - The request flow (CORS, URL sanitization) works as expected.
 - The `article` state is correctly built and passed to `buildJsonLd`.
@@ -414,6 +430,7 @@ curl -s https://allabout.network/path/to/page | grep "application/ld+json"
 ### Verify Environment Variables
 
 Test that the worker validates environment variables:
+
 1. Temporarily remove `ORIGIN_HOSTNAME` from Dashboard settings
 2. Request any page - should return 500 with clear error message
 3. Re-add `ORIGIN_HOSTNAME` and verify recovery
@@ -423,6 +440,7 @@ Test that the worker validates environment variables:
 ### View Logs
 
 View logs in Cloudflare Dashboard:
+
 1. Workers & Pages → aem-worker
 2. Click "Logs" tab
 3. View real-time logs with DEBUG=true enabled
@@ -450,9 +468,12 @@ curl -s https://allabout.network/blog/article | grep -i "application/ld+json"
 ## Troubleshooting
 
 ### Tests Failing
+
 If tests fail, check:
+
 1. Did you change a handler logic? Update the unit test.
 2. Did you change a selector? Update the integration test expectations.
 
 ### "No test files found"
+
 Ensure your test file is named `cloudflare-worker.test.js` so Vitest picks it up automatically.

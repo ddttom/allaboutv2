@@ -11,11 +11,13 @@ AllAboutV2 follows a serverless, content-driven architecture using Adobe Edge De
 ### Content Processing Pipeline
 
 **Google Docs → Static Generation**
+
 ```
 Google Docs → Drive API → Content Parser → Static Generator → CDN
 ```
 
 **Processing Steps**:
+
 1. Content authors create documents in Google Docs
 2. Adobe EDS monitors Google Drive for changes
 3. Content parser extracts structure and metadata
@@ -25,12 +27,14 @@ Google Docs → Drive API → Content Parser → Static Generator → CDN
 ### Serverless Functions
 
 **Built-in EDS Functions**
+
 - Content transformation and rendering
 - Image optimisation and resizing
 - Search index generation
 - Performance monitoring
 
 **Custom Functions** (when needed)
+
 - Form processing and validation
 - API integrations
 - Custom data processing
@@ -41,6 +45,7 @@ Google Docs → Drive API → Content Parser → Static Generator → CDN
 ### Google Docs Integration
 
 **Document Structure**
+
 ```
 Document Title
 ==============
@@ -57,6 +62,7 @@ Document Title
 ```
 
 **Metadata Management**
+
 ```
 Document Properties (via Google Docs):
 - Title: Page title
@@ -69,6 +75,7 @@ Document Properties (via Google Docs):
 ### Content Processing
 
 **Automatic Processing**
+
 - Document changes trigger processing
 - HTML generation from Google Docs structure
 - CSS optimisation and minification
@@ -76,6 +83,7 @@ Document Properties (via Google Docs):
 - Image compression and format conversion
 
 **Query Index Generation**
+
 ```json
 {
   "total": 150,
@@ -100,12 +108,14 @@ Document Properties (via Google Docs):
 ### RESTful Endpoints
 
 **Content APIs**
+
 - `GET /query-index.json` - Search and filter content
 - `GET /sitemap.xml` - Site structure for search engines
 - `GET /robots.txt` - Search engine directives
 - `GET /manifest.json` - Progressive Web App manifest
 
 **Dynamic Content APIs**
+
 - `GET /api/search?q={query}` - Full-text search
 - `GET /api/content/{path}` - Dynamic content loading
 - `GET /api/analytics` - Performance metrics
@@ -114,6 +124,7 @@ Document Properties (via Google Docs):
 ### GraphQL Implementation (Optional)
 
 **Schema Definition**
+
 ```graphql
 type Page {
   id: ID!
@@ -144,6 +155,7 @@ type Query {
 ### File-Based Storage
 
 **Static Content**
+
 ```
 /content/
 ├── blog/
@@ -161,6 +173,7 @@ type Query {
 ```
 
 **Generated Assets**
+
 ```
 /dist/
 ├── index.html
@@ -181,12 +194,14 @@ type Query {
 ### Database Alternatives
 
 **Query Index System**
+
 - JSON files for searchable content
 - Generated automatically from content
 - Cached at CDN edge locations
 - Updated on content publication
 
 **Configuration Storage**
+
 ```javascript
 // config/site.js
 export default {
@@ -213,6 +228,7 @@ export default {
 ### Local Development Architecture
 
 **Server Implementation**
+
 ```javascript
 // server.js
 import { createServer } from 'http';
@@ -233,6 +249,7 @@ const server = createServer(async (req, res) => {
 ```
 
 **Key Features**
+
 - Zero external dependencies
 - Local-first serving with remote fallback
 - Automatic MIME type detection
@@ -242,6 +259,7 @@ const server = createServer(async (req, res) => {
 ### Request Handling
 
 **File Serving Logic**
+
 ```javascript
 async function serveLocalFile(filePath, res) {
   try {
@@ -263,6 +281,7 @@ async function serveLocalFile(filePath, res) {
 ```
 
 **Proxy Implementation**
+
 ```javascript
 async function proxyToRemote(req, res) {
   try {
@@ -288,11 +307,13 @@ async function proxyToRemote(req, res) {
 ### Caching Strategy
 
 **Multi-Level Caching**
+
 ```
 Browser Cache → CDN Cache → Origin Cache → Source Data
 ```
 
 **Cache Configuration**
+
 ```javascript
 // Cache policies
 const cacheConfig = {
@@ -314,12 +335,14 @@ const cacheConfig = {
 ### Content Delivery Network
 
 **Global Distribution**
+
 - Edge locations worldwide
 - Automatic failover
 - Performance monitoring
 - Real-time analytics
 
 **Edge Computing**
+
 ```javascript
 // Edge function example
 export default async function handler(request) {
@@ -340,6 +363,7 @@ export default async function handler(request) {
 ### Content Security Policy
 
 **CSP Headers**
+
 ```javascript
 const cspPolicy = {
   'default-src': ["'self'"],
@@ -354,6 +378,7 @@ const cspPolicy = {
 ### Input Validation
 
 **Form Processing**
+
 ```javascript
 function validateInput(data) {
   const schema = {
@@ -377,6 +402,7 @@ function sanitiseInput(input) {
 ### Authentication (When Required)
 
 **JWT Implementation**
+
 ```javascript
 function generateToken(user) {
   return jwt.sign(
@@ -400,6 +426,7 @@ function verifyToken(token) {
 ### Performance Monitoring
 
 **Core Web Vitals Tracking**
+
 ```javascript
 // Real User Monitoring
 function trackWebVitals() {
@@ -427,6 +454,7 @@ function sendToAnalytics(metric) {
 ### Error Tracking
 
 **Centralized Error Handling**
+
 ```javascript
 // Global error handler
 window.addEventListener('error', (event) => {
@@ -454,6 +482,7 @@ window.addEventListener('unhandledrejection', (event) => {
 ### Continuous Integration
 
 **GitHub Actions Workflow**
+
 ```yaml
 name: Deploy to Production
 on:
@@ -480,6 +509,7 @@ jobs:
 ### Environment Management
 
 **Configuration by Environment**
+
 ```javascript
 // config/environments.js
 export default {
@@ -506,6 +536,7 @@ export default {
 ### OpenAPI Specification
 
 **API Schema**
+
 ```yaml
 openapi: 3.0.0
 info:
@@ -546,6 +577,7 @@ paths:
 ### Rate Limiting
 
 **Request Throttling**
+
 ```javascript
 const rateLimit = {
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -571,12 +603,14 @@ function applyRateLimit(req, res, next) {
 ### Load Balancing
 
 **CDN Distribution**
+
 - Global edge locations
 - Automatic failover
 - Traffic routing optimisation
 - Performance monitoring
 
 **Database Scaling**
+
 - File-based storage scales with CDN
 - No database connection limits
 - Distributed content delivery
@@ -585,6 +619,7 @@ function applyRateLimit(req, res, next) {
 ### Performance Budgets
 
 **Resource Limits**
+
 ```javascript
 const performanceBudgets = {
   javascript: '150KB',
@@ -600,6 +635,7 @@ const performanceBudgets = {
 ### Third-Party Services
 
 **Analytics Integration**
+
 ```javascript
 // Google Analytics 4
 function initAnalytics() {
@@ -620,6 +656,7 @@ function trackEvent(action, category, label, value) {
 ```
 
 **Form Integration**
+
 ```javascript
 // Form submission handling
 async function handleFormSubmission(formData) {

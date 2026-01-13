@@ -2,7 +2,7 @@
 
 ## Document Purpose
 
-This document serves as a knowledge base for AI assistants helping with allabout.network. 
+This document serves as a knowledge base for AI assistants helping with allabout.network.
 It contains the complete current Cloudflare CDN configuration, Adobe Edge Delivery Services integration, and operational details.
 
 **Last Updated:** 9 December 2025  
@@ -74,6 +74,7 @@ graph TD
 ```
 
 **Key Points:**
+
 - Double CDN architecture (Cloudflare → Adobe's Fastly)
 - This is normal and expected for Adobe EDS
 - Worker handles the routing between CDNs
@@ -89,6 +90,7 @@ graph TD
 ### Nameservers
 
 **Current:**
+
 - angela.ns.cloudflare.com
 - george.ns.cloudflare.com
 
@@ -104,6 +106,7 @@ graph TD
 | CNAME | www | main--allaboutv2--ddttom.aem.live | Proxied (orange) | Auto | WWW subdomain |
 
 **Critical Settings:**
+
 - Both records MUST be Proxied (orange cloud icon)
 - Both point to same Adobe EDS origin
 - No A records for web traffic (using CNAME)
@@ -126,6 +129,7 @@ graph TD
 Adobe Edge Delivery Services uses Fastly's SSL certificates. These certificates don't specifically cover allabout.network, so Full (strict) mode causes certificate validation errors (HTTP 526).
 
 **Full mode provides:**
+
 - HTTPS encryption: Browser → Cloudflare ✓
 - HTTPS encryption: Cloudflare → Origin ✓
 - Certificate validation: Disabled (necessary for this setup)
@@ -150,6 +154,7 @@ Adobe Edge Delivery Services uses Fastly's SSL certificates. These certificates 
 **Note:** This project uses a **modified version** of the Adobe EDS Cloudflare Worker with additional features.
 
 **Custom features:**
+
 - Version header (`cfw`) in all responses for deployment tracking
 - CORS headers on all responses
 - JSON-LD structured data generation from page metadata
@@ -157,6 +162,7 @@ Adobe Edge Delivery Services uses Fastly's SSL certificates. These certificates 
 - Trigger mechanism via authoring error workaround
 
 **Version Management:**
+
 - Current version: `1.0.0` (semantic versioning)
 - Check deployed version: `curl -I https://allabout.network | grep cfw`
 - **MUST increment** version for ALL changes to worker code
@@ -166,11 +172,13 @@ Adobe Edge Delivery Services uses Fastly's SSL certificates. These certificates 
 **Worker code:** `cloudflare/files/cloudflare-worker.js` (8.9 KB)
 
 **Why custom?**
+
 - Enables cross-origin requests for API integrations
 - Improves SEO with rich structured data
 - Cleans up HTML output (removes error scripts and non-social meta tags)
 
 **Deployment notes:**
+
 - Follow deployment steps in `cloudflare/files/README.md`
 - Uses same environment variables as standard worker (ORIGIN_HOSTNAME, PUSH_INVALIDATION)
 - Additional trigger: Add `| json-ld | article |` to EDS metadata
@@ -178,6 +186,7 @@ Adobe Edge Delivery Services uses Fastly's SSL certificates. These certificates 
 ### Testing & Validation
 
 **Automated Testing:**
+
 - Single unified test file: `cloudflare/files/cloudflare-worker.test.js`
 - 83 tests covering unit and integration testing (includes version header validation)
 - Test approach: Pure functions + mocked HTMLRewriter
@@ -187,6 +196,7 @@ Adobe Edge Delivery Services uses Fastly's SSL certificates. These certificates 
 - Documentation: See `cloudflare/files/TESTING.md`
 
 **Test Automation System:**
+
 - **Intelligent automation** for worker changes (`cloudflare-test-automation.js`)
 - **Git diff detection** - Identifies new/modified/deleted functions automatically
 - **Auto-generates test stubs** for new functions with inferred types
@@ -199,6 +209,7 @@ Adobe Edge Delivery Services uses Fastly's SSL certificates. These certificates 
 - Documentation: See `.claude/hooks/cloudflare-test-automation.README.md`
 
 **Production Validation:**
+
 - Adobe CDN validator: https://www.aem.live/tools/cdn-validator
 - Manual testing via curl (see Troubleshooting section)
 - Monitor worker metrics in Cloudflare Dashboard
@@ -224,6 +235,7 @@ The worker uses a two-file approach: one production file (`cloudflare-worker.js`
 | www.allabout.network/* | allabout.network | Fail closed (block) |
 
 **Route Configuration:**
+
 - Specific routes for apex and www (not wildcard)
 - Wildcard routes (`*.allabout.network/*`) avoided for security and SEO
 - Fail closed means errors block requests rather than bypass worker
@@ -261,7 +273,8 @@ The worker uses a two-file approach: one production file (`cloudflare-worker.js`
 
 **Rule Name:** Adobe Edge Delivery Caching  
 **When:** Hostname contains `allabout.network`  
-**Then:** 
+**Then:**
+
 - Eligible for cache
 - Browser TTL: Respect Origin TTL
 
@@ -270,11 +283,13 @@ The worker uses a two-file approach: one production file (`cloudflare-worker.js`
 ### Cache Behavior
 
 **Static assets (images, CSS, JS):**
+
 - Long cache TTL (hours to days)
 - High cache hit ratio expected
 - Cached at Cloudflare edge
 
 **HTML pages:**
+
 - Shorter cache TTL (minutes to hours)
 - Cache varies by URL
 - Purged on content updates (via push invalidation)
@@ -322,6 +337,7 @@ Use this checklist to verify API token security and compliance:
 - [ ] **Documentation**: Token creation date and purpose documented
 
 **Recommended Actions:**
+
 - Review this checklist quarterly or after any security incidents
 - Rotate token annually as a security best practice
 - Document rotation in the Change Log section
@@ -340,7 +356,6 @@ Configuration stored in Adobe EDS project config file (`.helix/config.xlsx` or `
 | cloudflare.zoneId | [zone ID] | Cloudflare zone identifier |
 | cdn.preview.host | main--allaboutv2--ddttom.aem.page | Preview hostname |
 
-
 ### How Push Invalidation Works
 
 1. **Content published** in Adobe EDS (via Sidekick)
@@ -353,18 +368,21 @@ Configuration stored in Adobe EDS project config file (`.helix/config.xlsx` or `
 ### Pro Plan Behavior (Surgical Cache Purging)
 
 **What happens on publish:**
+
 - **Only changed URLs** are invalidated (not entire site)
 - Unchanged content remains cached and served efficiently
 - Surgical purging targets specific paths/URLs
 - Rest of site cache remains warm and performant
 
 **Performance impact:**
+
 - **Minimal performance impact** - only changed pages need re-caching
 - No cold cache for unchanged pages
 - Near-instant content updates for changed URLs
 - Site-wide performance remains optimal during publishing
 
 **Plan comparison:**
+
 - **Free plan:** Full site purge on every publish (all cache cleared)
 - **Pro plan:** Surgical purging (only changed URLs) - ✅ Current plan
 - **Enterprise:** Surgical purging plus advanced cache analytics
@@ -406,6 +424,7 @@ Or use Adobe's validation tool: https://www.aem.live/tools/cdn-validator
 ### Origin Details
 
 **Format breakdown:**
+
 - `main` = Git branch
 - `allaboutv2` = Repository name
 - `ddttom` = GitHub owner/organisation
@@ -446,15 +465,18 @@ x-served-by: cache-lga21965 [Fastly cache identifier]
 ### Expected Performance
 
 **Cache Hit Ratio:**
+
 - Target: 70-80% for static content
 - After warm-up: 70-80%+
 
 **Response Times:**
+
 - Cached content: 50-150ms (very fast, served from Cloudflare edge)
 - Cache miss: 300-800ms (fetches from Adobe EDS via Fastly)
 - First visit after publish: 300-800ms (cache cleared, fresh fetch)
 
 **Time to First Byte (TTFB):**
+
 - Cache hit: <100ms
 - Cache miss: 200-500ms
 
@@ -514,6 +536,7 @@ x-served-by: cache-lga21965 [Fastly cache identifier]
 ### Cloudflare Analytics
 
 **Available metrics:**
+
 - Requests per day/hour
 - Bandwidth usage
 - Threats blocked
@@ -527,6 +550,7 @@ x-served-by: cache-lga21965 [Fastly cache identifier]
 ### Worker Metrics
 
 **Available metrics:**
+
 - Request count
 - Error rate
 - CPU time
@@ -535,6 +559,7 @@ x-served-by: cache-lga21965 [Fastly cache identifier]
 **Access:** Workers & Pages → aem-worker → Metrics
 
 **Current status:**
+
 - Requests: ~337/day (using <0.01% of Pro plan's 10M/month quota)
 - CPU time: 0.8ms average (very efficient)
 - Errors: 0%
@@ -543,12 +568,14 @@ x-served-by: cache-lga21965 [Fastly cache identifier]
 ### Recommended Monitoring
 
 **Daily checks (first week):**
+
 - Cache hit ratio trending upward
 - Error rates remaining at 0%
 - Worker request count well under limits
 - No certificate errors
 
 **Weekly checks (ongoing):**
+
 - Analytics for traffic patterns
 - Cache performance
 - Any security threats blocked
@@ -599,6 +626,7 @@ echo "=== Health Check Complete ==="
 ```
 
 **Usage:**
+
 ```bash
 chmod +x cloudflare-health-check.sh
 ./cloudflare-health-check.sh
@@ -615,6 +643,7 @@ chmod +x cloudflare-health-check.sh
 #### Site Not Loading
 
 **Check:**
+
 1. DNS propagation complete: `dig allabout.network +short`
 2. Should return Cloudflare IPs (104.x.x.x or 172.x.x.x)
 3. Worker active and deployed
@@ -627,6 +656,7 @@ chmod +x cloudflare-health-check.sh
 **Symptoms:** Browser shows SSL warning
 
 **Common causes:**
+
 - SSL/TLS mode set to Full (strict) instead of Full
 - Certificate still provisioning (takes 5-10 minutes)
 
@@ -637,11 +667,13 @@ chmod +x cloudflare-health-check.sh
 **Symptoms:** HTTP 421 error
 
 **Common causes:**
+
 - Worker not active
 - ORIGIN_HOSTNAME incorrect
 - Routes not configured
 
-**Solution:** 
+**Solution:**
+
 1. Verify worker routes are active
 2. Check ORIGIN_HOSTNAME = main--allaboutv2--ddttom.aem.live
 3. Review worker logs for errors
@@ -651,11 +683,13 @@ chmod +x cloudflare-health-check.sh
 **Symptoms:** Old content still showing after publishing
 
 **Common causes:**
+
 - Push invalidation not configured correctly
 - API token invalid or expired
 - Worker missing PUSH_INVALIDATION=enabled
 
 **Solution:**
+
 1. Test with validation tool: https://www.aem.live/tools/cdn-validator
 2. Verify API token still valid
 3. Check worker has PUSH_INVALIDATION=enabled
@@ -664,13 +698,16 @@ chmod +x cloudflare-health-check.sh
 #### Slow Performance
 
 **Expected during:**
+
 - Immediately after publishing (cache purged)
 
 **Investigate if:**
+
 - Cache hit ratio below 60%
 - TTFB consistently over 1 second
 
 **Check:**
+
 1. Cache hit ratio in analytics
 2. Worker CPU time (should be <5ms)
 3. Adobe EDS origin health
@@ -683,6 +720,7 @@ chmod +x cloudflare-health-check.sh
 ### Publishing Content
 
 **Normal workflow:**
+
 1. Edit content in Adobe EDS (SharePoint/Google Docs)
 2. Use Sidekick extension to preview changes
 3. Click "Publish" in Sidekick
@@ -690,6 +728,7 @@ chmod +x cloudflare-health-check.sh
 5. Content appears live immediately
 
 **What happens:**
+
 - Adobe EDS notifies Cloudflare
 - Cloudflare purges cache (entire site on Free plan)
 - Next visitor gets fresh content
@@ -698,11 +737,13 @@ chmod +x cloudflare-health-check.sh
 ### Manual Cache Purging
 
 **When needed:**
+
 - Push invalidation fails
 - Need to force cache clear
 - Testing cache behavior
 
 **How to purge:**
+
 1. Cloudflare dashboard
 2. Caching → Configuration
 3. Purge Cache → Purge Everything
@@ -713,11 +754,13 @@ chmod +x cloudflare-health-check.sh
 ### Updating Worker Code
 
 **When needed:**
+
 - Adobe releases worker updates
 - Bug fixes
 - New features
 
 **How to update:**
+
 1. Get latest code: https://raw.githubusercontent.com/adobe/aem-cloudflare-prod-worker/main/src/index.mjs
 2. Workers & Pages → aem-worker → Quick Edit
 3. Select all code, delete
@@ -728,11 +771,13 @@ chmod +x cloudflare-health-check.sh
 ### Rotating API Token
 
 **When needed:**
+
 - Token compromised
 - Security policy requires rotation
 - Token expiring
 
 **How to rotate:**
+
 1. Create new API token in Cloudflare
 2. Update Adobe EDS config with new token
 3. Publish config via Sidekick
@@ -742,6 +787,7 @@ chmod +x cloudflare-health-check.sh
 ### DNS Changes
 
 **Adding subdomains:**
+
 1. Add CNAME record in Cloudflare DNS
 2. Point to main--allaboutv2--ddttom.aem.live
 3. Enable Proxy (orange cloud)
@@ -757,6 +803,7 @@ chmod +x cloudflare-health-check.sh
 ### Pro Plan Features (Current - $20/month)
 
 **Active features on Pro plan:**
+
 - ✅ **Surgical cache purging** - Only changed URLs invalidated (major performance win)
 - ✅ **WAF rules** - Custom security rules available (not yet configured)
 - ✅ **Rate limiting** - DDoS and API protection available (not yet configured)
@@ -771,6 +818,7 @@ chmod +x cloudflare-health-check.sh
 - ✅ **Workers** - 10 million requests/month (vs. 100K/day on Free)
 
 **What we gained from Free → Pro upgrade:**
+
 1. **Surgical cache purging** (biggest benefit) - No more full site cache clears
 2. **WAF and rate limiting** - Enhanced security capabilities
 3. **Image optimization** - Reduce bandwidth and improve load times
@@ -779,6 +827,7 @@ chmod +x cloudflare-health-check.sh
 6. **More page rules** - Greater configuration flexibility
 
 **Features not yet configured:**
+
 - WAF custom rules (available but needs configuration)
 - Rate limiting rules (available but needs configuration)
 - Image optimization (Polish) (available but needs enabling)
@@ -801,6 +850,7 @@ chmod +x cloudflare-health-check.sh
 ### Future Upgrade: Enterprise Plan
 
 **Consider Enterprise only if:**
+
 - Very high traffic (millions of requests/day) - not currently needed
 - Need 99.95% uptime SLA - not required for current use case
 - Advanced security requirements - Pro plan adequate for now
@@ -817,12 +867,14 @@ chmod +x cloudflare-health-check.sh
 ### Content Publishing
 
 **Do:**
+
 - Test changes in preview before publishing
 - Use Sidekick for all publishing operations
 - Wait 10-15 seconds after publishing before checking live site
 - Clear browser cache when testing (Cmd+Shift+R)
 
 **Don't:**
+
 - Manually purge Cloudflare cache unless necessary
 - Publish multiple times rapidly (even with surgical purging, give cache time to serve)
 - Worry about publishing performance impact - Pro plan surgical purging is highly efficient
@@ -830,12 +882,14 @@ chmod +x cloudflare-health-check.sh
 ### Worker Management
 
 **Do:**
+
 - Keep worker code updated from Adobe's official repository
 - Monitor worker metrics regularly
 - Keep environment variables secure
 - Document any custom modifications
 
 **Don't:**
+
 - Modify worker code unless necessary (Adobe's code is well-tested)
 - Share API tokens or Zone IDs publicly
 - Delete worker routes accidentally (site will break)
@@ -844,12 +898,14 @@ chmod +x cloudflare-health-check.sh
 ### Security
 
 **Do:**
+
 - Keep API tokens with minimum necessary permissions
 - Rotate tokens periodically (annually minimum)
 - Monitor security analytics for threats
 - Keep SSL/TLS mode at Full (not Flexible)
 
 **Don't:**
+
 - Use Full (strict) SSL mode (causes 526 errors with Adobe EDS)
 - Disable Always Use HTTPS
 - Ignore security warnings in analytics
@@ -858,12 +914,14 @@ chmod +x cloudflare-health-check.sh
 ### Monitoring
 
 **Do:**
+
 - Check analytics weekly
 - Monitor cache hit ratio (aim for 70%+)
 - Review worker error rates
 - Watch for unusual traffic patterns
 
 **Don't:**
+
 - Ignore sustained high error rates
 - Assume everything's fine without checking
 - Wait for users to report issues
@@ -882,6 +940,7 @@ chmod +x cloudflare-health-check.sh
 ### Official Documentation
 
 **Adobe Edge Delivery Services:**
+
 - Documentation: https://www.aem.live/docs/
 - Cloudflare setup: https://www.aem.live/docs/byo-cdn-cloudflare-worker-setup
 - Push invalidation: https://www.aem.live/docs/setup-byo-cdn-push-invalidation
@@ -889,6 +948,7 @@ chmod +x cloudflare-health-check.sh
 - Discord: https://discord.gg/aem-live
 
 **Cloudflare:**
+
 - Dashboard: https://dash.cloudflare.com
 - Workers docs: https://developers.cloudflare.com/workers/
 - DNS docs: https://developers.cloudflare.com/dns/
@@ -897,6 +957,7 @@ chmod +x cloudflare-health-check.sh
 ### Related Project Documentation
 
 **allabout.network Documentation:**
+
 - **EDS Architecture**: `../docs/for-ai/implementation/eds-architecture-standards.md` - Core EDS architecture patterns and standards
 - **Build Process**: `../docs/for-ai/implementation/build-blocks-clarification.md` - Dual-directory pattern for complex components
 - **Security Guidelines**: `../docs/for-ai/guidelines/security-checklist.md` - Security validation checklist
@@ -909,6 +970,7 @@ chmod +x cloudflare-health-check.sh
 ### Quick Reference Commands
 
 **Check DNS:**
+
 ```bash
 dig allabout.network +short
 dig www.allabout.network +short
@@ -916,22 +978,26 @@ dig allabout.network NS +short
 ```
 
 **Check HTTP headers:**
+
 ```bash
 curl -I https://allabout.network
 curl -I https://www.allabout.network
 ```
 
 **Check cache status:**
+
 ```bash
 curl -I https://allabout.network | grep cf-cache-status
 ```
 
 **Check SSL:**
+
 ```bash
 curl -I https://allabout.network | grep -E "(server|ssl|tls)"
 ```
 
 **Check origin resolution:**
+
 ```bash
 dig main--allaboutv2--ddttom.aem.live +short
 ```
@@ -939,16 +1005,19 @@ dig main--allaboutv2--ddttom.aem.live +short
 ### Emergency Contacts
 
 **Cloudflare Issues:**
+
 - Community forum: https://community.cloudflare.com/
 - Status page: https://www.cloudflarestatus.com/
 - Support: Priority support via dashboard (Pro plan: faster response times than Free)
 
 **Adobe EDS Issues:**
+
 - Discord: https://discord.gg/aem-live
 - Status: https://status.adobe.com/products/503489
 - Documentation: https://www.aem.live/docs/
 
 **Domain Registrar (GoDaddy):**
+
 - Only needed for nameserver changes
 - Account: tom.cranstoun@gmail.com
 - Support: https://uk.godaddy.com/contact-us
@@ -960,22 +1029,26 @@ dig main--allaboutv2--ddttom.aem.live +short
 ### Potential Enhancements
 
 **Email Service:**
+
 - Currently no email configured
 - If needed: Add MX, SPF, DKIM records
 - Consider: Google Workspace, Microsoft 365, or Cloudflare Email Routing
 
 **Additional Subdomains:**
+
 - blog.allabout.network (if blog section added)
 - Could point to same Adobe EDS or different service
 - Would need DNS CNAME and worker route
 
 **Performance Optimisation:**
+
 - Auto Minify (available and can be enabled)
 - **Image optimisation** (now available on Pro plan - not yet configured)
 - Additional cache rules (available on Pro, can be configured as needed)
 - Polish image optimization (Pro feature - lossless/lossy compression)
 
 **Security Enhancement:**
+
 - **WAF rules** (now available on Pro plan - not yet configured)
 - **Rate limiting** (now available on Pro plan - not yet configured)
 - Bot management (enhanced features available on Pro)
@@ -984,6 +1057,7 @@ dig main--allaboutv2--ddttom.aem.live +short
 ### Monitoring Improvements
 
 **Recommended additions:**
+
 - Third-party uptime monitoring (e.g., UptimeRobot)
 - Performance monitoring (e.g., WebPageTest scheduled tests)
 - Synthetic monitoring for key user journeys
@@ -993,6 +1067,7 @@ dig main--allaboutv2--ddttom.aem.live +short
 **Current cost:** £16/month (approx. $20/month Cloudflare Pro)
 
 **Upgrade from Free to Pro rationale:**
+
 - Surgical cache purging (only changed URLs invalidated vs. entire site)
 - Significantly improved performance after content publishing
 - WAF rules for enhanced security
@@ -1002,6 +1077,7 @@ dig main--allaboutv2--ddttom.aem.live +short
 - Advanced analytics and insights
 
 **Further upgrade options:**
+
 - Business: $200/month (£160/month) - Advanced security, guaranteed uptime SLA
 - Enterprise: Custom pricing (thousands/month) - Dedicated support, custom solutions
 
@@ -1014,6 +1090,7 @@ dig main--allaboutv2--ddttom.aem.live +short
 Use this checklist to verify configuration if troubleshooting or rebuilding setup:
 
 ### DNS Configuration
+
 - [ ] Nameservers point to Cloudflare (angela.ns.cloudflare.com, george.ns.cloudflare.com)
 - [ ] CNAME @ → main--allaboutv2--ddttom.aem.live (Proxied)
 - [ ] CNAME www → main--allaboutv2--ddttom.aem.live (Proxied)
@@ -1021,6 +1098,7 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 - [ ] DNS propagation complete (dig returns Cloudflare IPs)
 
 ### SSL/TLS Configuration
+
 - [ ] Encryption mode: Full (not Flexible or Full strict)
 - [ ] Always Use HTTPS: Enabled
 - [ ] Minimum TLS version: 1.2 or higher
@@ -1028,6 +1106,7 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 - [ ] No certificate errors when browsing
 
 ### Cache Configuration
+
 - [ ] Caching Level: Standard
 - [ ] Browser Cache TTL: Respect Existing Headers
 - [ ] Cache rule created for hostname
@@ -1035,6 +1114,7 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 - [ ] Cache hit ratio improving over time
 
 ### Worker Configuration
+
 - [ ] Worker name: aem-worker
 - [ ] Code: Latest from Adobe GitHub
 - [ ] Environment variable: ORIGIN_HOSTNAME = main--allaboutv2--ddttom.aem.live
@@ -1045,6 +1125,7 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 - [ ] No errors in worker logs
 
 ### Push Invalidation
+
 - [ ] Adobe EDS config: cdn.prod.type = cloudflare
 - [ ] Adobe EDS config: cdn.prod.host = allabout.network
 - [ ] Adobe EDS config: cloudflare.apiToken = [token]
@@ -1054,6 +1135,7 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 - [ ] Validation tool shows success
 
 ### Verification
+
 - [ ] Site loads at https://allabout.network
 - [ ] Site loads at https://www.allabout.network
 - [ ] HTTP redirects to HTTPS
@@ -1075,6 +1157,7 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 **Version:** 1.2
 
 **Update this document when:**
+
 - Configuration changes made
 - Workers updated
 - DNS records modified
@@ -1088,9 +1171,11 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 ## Change Log
 
 ### 2025-12-12 - Added Intelligent Test Automation System (Version 1.2)
+
 **Enhanced worker testing with automated test generation and synchronization**
 
 **New test automation features:**
+
 - ✅ **Git diff-based change detection** - Automatically identifies new/modified/deleted functions
 - ✅ **Intelligent test stub generation** - Creates test stubs with inferred function types
 - ✅ **Automatic test synchronization** - Marks modified functions for review
@@ -1101,6 +1186,7 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 - ✅ **Hook integration** - Triggers automatically on worker.js edits via PostToolUse hook
 
 **Documentation updates:**
+
 - Added Test Automation System section (lines 189-199) with complete feature list
 - Updated Automated Testing section (line 182) to reflect 83 tests (up from 45)
 - Added Local HTML test documentation (line 185)
@@ -1108,6 +1194,7 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 - Updated version to 1.2 and last updated date to 12 December 2025
 
 **Configuration notes:**
+
 - Automation script: `.claude/hooks/cloudflare-test-automation.js`
 - Hook script: `.claude/hooks/cloudflare-worker-test-regenerate.sh`
 - Backup location: `cloudflare/backups/` (gitignored except README.md)
@@ -1115,6 +1202,7 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 - Complete documentation: `.claude/hooks/cloudflare-test-automation.README.md`
 
 **Why this matters:**
+
 - Keeps tests synchronized with worker code automatically
 - Reduces manual test writing effort significantly
 - Provides immediate validation of changes with full test suite
@@ -1122,9 +1210,11 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 - Safe development with backup/rollback mechanism
 
 ### 2025-12-09 - Upgraded to Cloudflare Pro Plan (Version 1.1)
+
 **Major upgrade from Free to Pro plan ($20/month)**
 
 **Key improvements gained:**
+
 - ✅ **Surgical cache purging** - Only changed URLs invalidated (biggest performance improvement)
 - ✅ **WAF rules** - Custom security rules now available (not yet configured)
 - ✅ **Rate limiting** - DDoS and API protection now available (not yet configured)
@@ -1135,6 +1225,7 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 - ✅ **10M worker requests/month** - Up from 100K/day on Free plan
 
 **Documentation updates:**
+
 - Updated Account Details section (line 87) to reflect Pro plan
 - Rewrote "Upgrade Considerations" as "Current Plan Features and Upgrade Path" (lines 688-744)
 - Updated Cost Analysis (lines 906-923) to show £16/month cost and Pro upgrade rationale
@@ -1150,6 +1241,7 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 - Added comprehensive Free vs. Pro vs. Enterprise comparison table (lines 720-732)
 
 **Configuration notes:**
+
 - Current cost: £16/month (approx. $20/month USD)
 - Worker quotas significantly increased (10M/month vs. 100K/day)
 - Surgical cache purging eliminates full site cache clears on publish
@@ -1157,6 +1249,7 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 - Transform Rules now available as potential Worker alternative (noted for future evaluation)
 
 ### 2025-12-09 - Initial Documentation (Version 1.0)
+
 - Documented complete Cloudflare configuration
 - Added worker setup details (aem-worker with ORIGIN_HOSTNAME and PUSH_INVALIDATION)
 - Included push invalidation configuration with API token setup

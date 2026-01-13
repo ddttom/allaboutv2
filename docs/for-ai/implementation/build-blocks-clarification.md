@@ -12,6 +12,7 @@ The repository uses a **dual-directory architecture** that separates development
 ## Directory Relationship
 
 ### Scenario 1: Complex Component (Build + Blocks)
+
 ```
 Repository Root
 ├── build/                          # 🔧 DEVELOPMENT WORKSPACE
@@ -36,6 +37,7 @@ Repository Root
 ```
 
 ### Scenario 2: Simple Component (Blocks Only)
+
 ```
 Repository Root
 └── blocks/                         # 📝 DIRECT DEVELOPMENT
@@ -52,6 +54,7 @@ Repository Root
 ## Workflow Stages
 
 ### Stage 1: Development (`/build/`)
+
 - **Purpose**: Modern development environment with hot reload, dependency management
 - **Tools**: Vite bundler, npm scripts, ES modules, external libraries
 - **Files**: Source code, development dependencies, build configurations
@@ -64,6 +67,7 @@ npm run dev         # Start development server with hot reload
 ```
 
 ### Stage 2: Build Process (`build/ → build/dist/`)
+
 - **Purpose**: Bundle all dependencies into self-contained files
 - **Process**: Vite bundles external libraries (like Shoelace) into single JS file
 - **Output**: `dist/{component-name}.js` (temporary build artifact)
@@ -73,6 +77,7 @@ npm run build       # Bundles dependencies using Vite
 ```
 
 ### Stage 3: Deployment (`build/dist/ → blocks/`)
+
 - **Purpose**: Copy production-ready files to EDS deployment directory
 - **Process**: `deploy.js` script handles file copying and documentation
 - **Result**: Clean, deployable files ready for EDS projects
@@ -82,6 +87,7 @@ npm run deploy      # Copies built files to ../../blocks/{component-name}/
 ```
 
 ### Stage 4: EDS Integration (`blocks/ → your-eds-project/`)
+
 - **Purpose**: Integrate component into actual EDS project
 - **Process**: Manual copy to maintain version control
 - **Result**: Component available in your EDS website
@@ -119,6 +125,7 @@ git commit -m "Add my-component block"
 ## File Transformation Examples
 
 ### JavaScript Files
+
 ```javascript
 // build/my-component/my-component.js (source)
 import { SlCard } from '@shoelace-style/shoelace';
@@ -137,6 +144,7 @@ export default function decorate(block) {
 ```
 
 ### CSS Files
+
 ```css
 /* build/my-component/my-component.css (full source) */
 .my-component {
@@ -165,11 +173,13 @@ Does a build/{component-name}/ folder exist?
 ### Two Development Patterns
 
 #### Pattern 1: Complex Components (with `/build/` folder)
+
 - **Use Case**: External dependencies, modern JavaScript, bundling needed
 - **Examples**: Shoelace components, data tables, complex forms
 - **Rule**: ❌ Never edit `/blocks/` directly ✅ Always develop in `/build/`
 
 #### Pattern 2: Simple Components (no `/build/` folder)
+
 - **Use Case**: Vanilla JavaScript, minimal CSS, no external dependencies  
 - **Examples**: Basic text formatters, simple layouts, utility blocks
 - **Rule**: ✅ Edit directly in `/blocks/` ❌ No build process needed
@@ -177,12 +187,14 @@ Does a build/{component-name}/ folder exist?
 ## Why This Architecture?
 
 ### Benefits of Build-Based Development
+
 1. **Modern Tooling**: Hot reload, dependency management, bundling
 2. **External Libraries**: Automatic bundling of Shoelace, etc.
 3. **Performance**: Optimized, self-contained output files
 4. **Type Safety**: Modern JavaScript features and validation
 
 ### Benefits of Direct Development
+
 1. **Simplicity**: No build setup for basic components
 2. **Speed**: Immediate changes without build steps
 3. **EDS Native**: Works directly with EDS expectations
@@ -247,6 +259,7 @@ cd blocks/my-component
 ### Component Examples
 
 #### Build-Based Components (`/build/` folder required)
+
 ```javascript
 // Needs external dependencies
 import { SlCard, SlButton } from '@shoelace-style/shoelace';
@@ -262,6 +275,7 @@ export default function decorate(block) {
 ```
 
 #### Direct-Edit Components (`/blocks/` only)
+
 ```javascript
 // Simple vanilla JavaScript
 export default function decorate(block) {
@@ -275,12 +289,14 @@ export default function decorate(block) {
 ### How to Decide?
 
 **Choose Build-Based Development If:**
+
 - ✅ Component uses external libraries (Shoelace, Chart.js, etc.)
 - ✅ You need modern JavaScript features (async/await, imports)
 - ✅ Component is complex and benefits from hot reload
 - ✅ You want bundled, optimized output
 
 **Choose Direct-Edit Development If:**
+
 - ✅ Component uses only vanilla JavaScript
 - ✅ Simple CSS styling without preprocessing
 - ✅ Quick prototyping or learning EDS
@@ -313,6 +329,7 @@ ls build/my-component/
 ### "I Want to Create a New Component"
 
 **Simple Component (recommended starting point):**
+
 ```bash
 # 1. Create directly in blocks/
 mkdir blocks/my-new-component
@@ -325,6 +342,7 @@ touch my-new-component.js my-new-component.css README.md
 ```
 
 **Complex Component (when you need external libraries):**
+
 ```bash
 # 1. Create build workspace
 mkdir build/my-new-component  
@@ -357,12 +375,14 @@ This architecture ensures that developers have modern tools while EDS projects g
 ## See Also
 
 ### Core Architecture & Implementation
+
 - **[Complex EDS Blocks Guide](complex-eds-blocks-guide.md)** - Detailed implementation guide for build-based components with external dependencies
 - **[EDS Architecture Standards](eds-architecture-standards.md)** - Architectural patterns and standards for EDS-native block development
 - **[Design Philosophy Guide](design-philosophy-guide.md)** - Understanding the philosophical principles behind EDS dual-directory architecture
 - **[Build Component Template](build-component-template.md)** - Template and scaffolding for creating new build-based EDS components
 
 ### Development Guides
+
 - **[Raw EDS Blocks Guide](raw-eds-blocks-guide.md)** - Step-by-step guide for creating simple EDS blocks (direct-edit approach)
 - **[Block Architecture Standards](block-architecture-standards.md)** - Comprehensive standards for EDS block development including naming conventions and file structure
 - **[EDS Overview](../eds.md)** - Complete introduction to Edge Delivery Services architecture and core concepts
@@ -370,18 +390,21 @@ This architecture ensures that developers have modern tools while EDS projects g
 - **[CSS Naming Convention Style Guide](../guidelines/style-guide.md)** - CSS naming conventions and standards for EDS blocks and components
 
 ### Development Environment & Tools
+
 - **[Server README](../../../Server-README.md)** - Development server setup and configuration for both build-based and direct-edit workflows
 - **[Debug Guide](../testing/debug.md)** - Comprehensive debugging strategies for both build-based and direct-edit components
 - **[Build Tools Configuration](build-tools-configuration.md)** - Advanced build tool setup and configuration for complex EDS blocks
 - **[Deployment Strategies](deployment-strategies.md)** - Best practices for deploying both types of EDS blocks to production
 
 ### Testing & Quality Assurance
+
 - **[Testing Strategies](testing-strategies.md)** - Testing approaches for both build-based and direct-edit components
 - **[EDS Native Testing Standards](../testing/eds-native-testing-standards.md)** - Testing approaches specifically designed for EDS-native components
 - **[Performance Optimization](performance-optimization.md)** - Techniques for optimizing both build-based and direct-edit components
 - **[Browser Compatibility](browser-compatibility.md)** - Ensuring cross-browser compatibility for both development approaches
 
 ### Advanced Topics
+
 - **[Web Components with EDS](web-components-with-eds.md)** - Integrating modern web components within both architectural approaches
 - **[JavaScript Patterns](javascript-patterns.md)** - Reusable JavaScript patterns for both build-based and direct-edit development
 - **[CSS Patterns](css-patterns.md)** - Common CSS patterns and styling approaches for both development types
@@ -390,6 +413,7 @@ This architecture ensures that developers have modern tools while EDS projects g
 ## Next Steps
 
 ### For New EDS Developers
+
 1. **Understand the dual architecture** by reading this guide thoroughly to grasp when to use each approach
 2. **Start with simple components** using the direct-edit approach in `/blocks/` following [Raw EDS Blocks Guide](raw-eds-blocks-guide.md)
 3. **Learn the standards** from [Block Architecture Standards](block-architecture-standards.md) and [EDS Architecture Standards](eds-architecture-standards.md)
@@ -397,6 +421,7 @@ This architecture ensures that developers have modern tools while EDS projects g
 5. **Set up your environment** using [Server README](../../../Server-README.md) for proper development workflow
 
 ### For Experienced Developers
+
 1. **Master the decision matrix** to quickly determine which approach is appropriate for each component
 2. **Explore build-based development** with [Complex EDS Blocks Guide](complex-eds-blocks-guide.md) when external dependencies are needed
 3. **Understand the build process** by implementing the Vite configuration and deployment automation
@@ -404,6 +429,7 @@ This architecture ensures that developers have modern tools while EDS projects g
 5. **Optimize workflows** by understanding both development patterns and their trade-offs
 
 ### For Architects & Technical Leads
+
 1. **Establish team guidelines** for when to use build-based vs. direct-edit approaches
 2. **Create project standards** that incorporate both architectural patterns appropriately
 3. **Design component libraries** that leverage the strengths of each approach
@@ -411,6 +437,7 @@ This architecture ensures that developers have modern tools while EDS projects g
 5. **Document decision criteria** for your team using the guidelines in this document
 
 ### For DevOps & Build Engineers
+
 1. **Understand both deployment patterns** to create appropriate CI/CD pipelines
 2. **Set up build environments** that support the dual-directory architecture
 3. **Implement automated testing** for both build-based and direct-edit components
@@ -418,6 +445,7 @@ This architecture ensures that developers have modern tools while EDS projects g
 5. **Monitor build processes** and optimize for both development patterns
 
 ### For QA Engineers & Testers
+
 1. **Learn both testing approaches** for build-based and direct-edit components
 2. **Understand the file transformation process** to test components effectively
 3. **Create test scenarios** that cover both development patterns
@@ -425,6 +453,7 @@ This architecture ensures that developers have modern tools while EDS projects g
 5. **Test integration workflows** from development to production for both approaches
 
 ### For Project Managers & Team Leads
+
 1. **Understand the complexity trade-offs** between build-based and direct-edit approaches
 2. **Plan project timelines** accounting for the different development patterns
 3. **Allocate resources** appropriately based on component complexity requirements
@@ -432,6 +461,7 @@ This architecture ensures that developers have modern tools while EDS projects g
 5. **Track component inventory** to understand the distribution of build-based vs. direct-edit components
 
 ### For Content Authors & Editors
+
 1. **Understand that both approaches** produce the same end-user experience in EDS
 2. **Learn the documentation patterns** for both types of components
 3. **Use component examples** regardless of the underlying development approach

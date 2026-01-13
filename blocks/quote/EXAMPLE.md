@@ -99,12 +99,14 @@ You can use multiple paragraphs in the quote cell:
 ### What It Looks Like
 
 **Simple quote:**
+
 ```
     "The best way to predict the future
      is to invent it."
 ```
 
 **Quote with attribution:**
+
 ```
     "Simplicity is the ultimate
      sophistication."
@@ -112,6 +114,7 @@ You can use multiple paragraphs in the quote cell:
 ```
 
 **Quote with citation:**
+
 ```
     "Programs must be written for people
      to read, and only incidentally for

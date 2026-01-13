@@ -90,12 +90,14 @@ This document provides practical examples for content authors using the Dynamic 
 ### iframe Embedding
 
 Use the simplified format for easy embedding:
+
 - `iframe https://example.com/embed/content`
 - No HTML tags needed - just "iframe" followed by URL
 
 ### Icon Usage
 
 Reference icons using span format:
+
 - `<span class="icon icon-methods"></span>`
 - Icon file must exist in `/icons/` directory
 - Filename must match icon name (e.g., `methods.svg`)

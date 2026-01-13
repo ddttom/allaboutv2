@@ -1,4 +1,5 @@
 # Creating Raw EDS Blocks
+
 ## The Simple, EDS-Native Approach
 
 **Related Documentation:** [Block Architecture Standards](block-architecture-standards.md) | [EDS Overview](../eds.md) | [Complex EDS Blocks Guide](complex-eds-blocks-guide.md) | [Debug Guide](../testing/debug.md)
@@ -20,6 +21,7 @@ This guide demonstrates how to create effective EDS blocks using **vanilla JavaS
 ### **Two Test Files (When Needed)**
 
 Complex blocks sometimes include both:
+
 ```
 /blocks/highlight-text/
 ├── test.html              # 🎯 Standard: Tests rendered HTML
@@ -46,6 +48,7 @@ Complex blocks sometimes include both:
 **Why `test.html` and not `index.html`?**
 
 For simple EDS blocks, we use `test.html` because:
+
 - **EDS Testing**: Specifically for testing with EDS debug server (`npm run debug`)
 - **No Auto-Serving**: Must navigate to `http://localhost:3000/blocks/highlight-text/test.html`
 - **EDS Structure**: Tests actual EDS block structure and decoration
@@ -53,6 +56,7 @@ For simple EDS blocks, we use `test.html` because:
 - **No Conflicts**: Doesn't interfere with any build tools that expect `index.html`
 
 **🔄 EDS Server Proxy Benefit:**
+
 ```
 Request: http://localhost:3000/media/image.jpg
 Proxied: https://your-production-site.com/media/image.jpg
@@ -60,6 +64,7 @@ Result:  Your simple blocks can use real production assets during testing
 ```
 
 **Note**: Complex build components use both:
+
 - `index.html` for development (Vite auto-serves with its own proxy)
 - `test.html` for EDS integration testing (EDS server proxy)
 
@@ -436,18 +441,21 @@ Use when testing full EDS integration or when block uses external plugins:
 #### Why These Requirements Matter
 
 **1. Wrapper divs (`.{blockname}-wrapper`)**
+
 - Required if block uses external plugins (expressions, etc.)
 - Plugin queries for wrapper element in production
 - Without wrapper, plugin fails with null pointer errors
 - Pattern: `.bio-wrapper` contains `.bio` block
 
 **2. `block.dataset.blockName`**
+
 - EDS's `loadBlock()` uses this to construct import path
 - Without it: `/blocks/undefined/undefined.js 404` error
 - Must be set BEFORE calling `loadBlock()`
 - Format: `block.dataset.blockName = 'bio';`
 
 **3. `.block` class**
+
 - Indicates block has been processed by EDS
 - Some EDS utilities check for this class
 - Add it manually in test files: `block.classList.add('block');`
@@ -688,11 +696,13 @@ export default function decorate(block) {
 ### Document-Level vs Block-Scoped Operations
 
 **Block-scoped operations** (use `block` parameter):
+
 - Querying elements within the block
 - Checking the block's classes or attributes
 - Modifying the block's content or structure
 
 **Document-level operations** (global selectors are intentional):
+
 - Accessing page metadata (`meta` tags)
 - Controlling document body scroll
 - Global event listeners (keyboard, scroll)
@@ -723,6 +733,7 @@ export default function decorate(block) {
 ```
 
 **What happens:**
+
 1. Page has 3 bio blocks: normal, hide-author, normal
 2. First block is normal (no hide-author)
 3. ALL blocks check first block's classes → ALL blocks process as normal
@@ -816,12 +827,14 @@ export default function decorate(block) {
 **Inside `decorate(block)` function:**
 
 **Block-scoped (use block parameter):**
+
 - ✅ `block.querySelector()` - ALWAYS correct for querying within the block
 - ✅ `block.classList` - ALWAYS correct for block classes
 - ✅ `block.appendChild()` - ALWAYS correct for block DOM manipulation
 - ❌ `document.querySelector('.your-block')` - NEVER correct (use `block` parameter)
 
 **Document-level (global selectors are intentional):**
+
 - ✅ `document.querySelector('meta[name="author"]')` - OK for page metadata
 - ✅ `document.querySelectorAll('h1, h2, h3, h4, h5, h6')` - OK for page-wide queries
 - ✅ `document.querySelector('header')` - OK for document structure
@@ -830,6 +843,7 @@ export default function decorate(block) {
 - ✅ `window.matchMedia()` - OK for responsive behavior
 
 **Defensive documentation:** Always add comments for intentional document-level selectors:
+
 ```javascript
 // Global Selector is INTENTIONAL - used for Document access
 // This block scans ALL page headings to build table of contents
@@ -885,6 +899,7 @@ link.replaceWith(img);
 ```
 
 **Why `.replaceWith()` is better:**
+
 1. **Surgical precision** - Only replaces the target element
 2. **Atomic operation** - Single DOM change instead of clear + append
 3. **Preserves siblings** - Other elements in container remain intact
@@ -955,6 +970,7 @@ export default function decorate(block) {
 #### When to Use Wrappers
 
 Wrapper divs are ONLY needed when:
+
 1. Your block uses external plugins (expressions, etc.)
 2. The plugin needs a parent container for queries
 3. In production, EDS creates this wrapper automatically
@@ -963,6 +979,7 @@ Wrapper divs are ONLY needed when:
 #### Production vs Test Environment
 
 **Production (automatic):**
+
 ```html
 <!-- EDS creates this structure automatically -->
 <section>
@@ -973,6 +990,7 @@ Wrapper divs are ONLY needed when:
 ```
 
 **Test.html (manual):**
+
 ```html
 <!-- You MUST create the wrapper yourself -->
 <div class="bio-wrapper">  <!-- You add this -->
@@ -993,6 +1011,7 @@ export default function decorate(block) {
 ```
 
 **Why this matters:**
+
 - The expressions plugin calls `document.querySelector('.bio-wrapper')`
 - In production, EDS creates the wrapper automatically
 - In test.html, you must create it manually
@@ -1001,6 +1020,7 @@ export default function decorate(block) {
 #### When Wrappers Are NOT Needed
 
 Skip the wrapper if:
+
 - Your block has no external plugin dependencies
 - Your block is fully self-contained
 - You're only using EDS core utilities
@@ -1118,6 +1138,7 @@ window.testBlock = function(blockSelector) {
 ## 🎯 Critical Takeaways: Common Pitfalls to Avoid
 
 ### 1. **NEVER use global selectors in decorate()**
+
 ```javascript
 // ❌ WRONG - Breaks multi-block pages
 const element = document.querySelector('.my-block');
@@ -1127,6 +1148,7 @@ const element = block.querySelector('.some-element');
 ```
 
 ### 2. **ALWAYS set dataset.blockName before loadBlock()**
+
 ```javascript
 // ❌ WRONG - Results in 404 errors
 await loadBlock(block);
@@ -1137,6 +1159,7 @@ await loadBlock(block);
 ```
 
 ### 3. **Use wrapper divs for blocks with external plugins**
+
 ```html
 <!-- ❌ WRONG - Plugin will fail with null errors -->
 <div class="bio">...</div>
@@ -1148,6 +1171,7 @@ await loadBlock(block);
 ```
 
 ### 4. **Use .replaceWith() for element replacement**
+
 ```javascript
 // ❌ WRONG - Destroys all siblings
 element.innerHTML = '';
@@ -1158,6 +1182,7 @@ oldElement.replaceWith(newElement);
 ```
 
 ### 5. **Test with multiple blocks on the page**
+
 ```html
 <!-- Always test with at least 2 blocks to catch selector bugs -->
 <div class="my-block">First instance</div>
@@ -1198,6 +1223,7 @@ These bugs were all found in production and fixed using the patterns above:
 **Root cause:** In Google Docs, the hyperlink text was the image URL, and the code didn't handle this case
 
 **JavaScript fix:** Smart URL detection in bio.js:
+
 ```javascript
 // Check if link text is a URL (not a proper author name)
 const linkText = link.textContent || '';
@@ -1209,6 +1235,7 @@ img.alt = isLinkTextUrl ? '' : linkText || 'Bio image';
 ```
 
 **How it works:**
+
 1. Detects if link text starts with `http://` or `https://`
 2. If it's a URL → sets `alt=""` (empty)
 3. Author name extraction falls back to `<meta name="author">` tag
@@ -1219,22 +1246,26 @@ img.alt = isLinkTextUrl ? '' : linkText || 'Bio image';
 ## See Also
 
 ### Architecture & Standards
+
 - **[Block Architecture Standards](block-architecture-standards.md)** - Comprehensive standards for EDS block development including naming conventions, file structure, and coding patterns
 - **[EDS Overview](../eds.md)** - Complete introduction to Edge Delivery Services architecture and core concepts
 - **[Project Structure](../project-structure.md)** - Understanding the overall EDS project organization and file conventions
 - **[CSS Naming Convention Style Guide](../guidelines/style-guide.md)** - CSS naming conventions and standards for EDS blocks and components
 
 ### Advanced Development
+
 - **[Complex EDS Blocks Guide](complex-eds-blocks-guide.md)** - Building sophisticated blocks with build tools, external dependencies, and advanced patterns
 - **[Web Components with EDS](web-components-with-eds.md)** - Integrating modern web components within the EDS framework
 - **[Performance Optimization](performance-optimization.md)** - Techniques for optimizing EDS block performance and loading
 
 ### Testing & Debugging
+
 - **[Debug Guide](../testing/debug.md)** - Comprehensive debugging strategies for EDS blocks and common troubleshooting scenarios
 - **[Testing Strategies](testing-strategies.md)** - Testing approaches for EDS blocks including unit tests and integration testing
 - **[Browser Compatibility](browser-compatibility.md)** - Ensuring cross-browser compatibility for EDS implementations
 
 ### Implementation Examples
+
 - **[Block Examples](block-examples.md)** - Real-world examples of successful EDS block implementations
 - **[CSS Patterns](css-patterns.md)** - Common CSS patterns and styling approaches for EDS blocks
 - **[JavaScript Patterns](javascript-patterns.md)** - Reusable JavaScript patterns for EDS block development
@@ -1242,6 +1273,7 @@ img.alt = isLinkTextUrl ? '' : linkText || 'Bio image';
 ## Next Steps
 
 ### For New EDS Developers
+
 1. **Start with [EDS Overview](../eds.md)** to understand the fundamental concepts and architecture
 2. **Review [Block Architecture Standards](block-architecture-standards.md)** for essential development guidelines
 3. **Follow this guide** to create your first simple block using the highlight-text example
@@ -1249,12 +1281,14 @@ img.alt = isLinkTextUrl ? '' : linkText || 'Bio image';
 5. **Test your blocks** using [EDS Native Testing Standards](../testing/eds-native-testing-standards.md)
 
 ### For Experienced Developers
+
 1. **Master the enhancement patterns** shown in this guide's advanced counter example
 2. **Explore [Complex EDS Blocks Guide](complex-eds-blocks-guide.md)** for build tool integration and advanced features
 3. **Implement [Performance Optimization](performance-optimization.md)** techniques in your blocks
 4. **Contribute to [Testing Strategies](testing-strategies.md)** by developing comprehensive test suites
 
 ### For Architects & Team Leads
+
 1. **Establish team standards** using [Block Architecture Standards](block-architecture-standards.md) as a foundation
 2. **Plan complex implementations** with guidance from [Complex EDS Blocks Guide](complex-eds-blocks-guide.md)
 3. **Design testing strategies** following [Testing Strategies](testing-strategies.md) recommendations

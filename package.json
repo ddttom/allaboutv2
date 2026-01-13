@@ -7,7 +7,9 @@
   "scripts": {
     "lint:js": "npx eslint .",
     "lint:css": "npx stylelint blocks/**/*.css styles/*.css",
-    "lint": "npm run lint:js && npm run lint:css",
+    "lint:markdown": "npx markdownlint-cli2",
+    "lint:markdown:fix": "npx markdownlint-cli2 --fix",
+    "lint": "npm run lint:js && npm run lint:css && npm run lint:markdown",
     "debug": "node server.js",
     "generate-sitemap:invisible-users": "node scripts/generate-invisible-users-sitemap.js"
   },

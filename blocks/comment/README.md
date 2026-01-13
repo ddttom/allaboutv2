@@ -26,6 +26,7 @@ A special-purpose authoring utility block for adding editorial comments, notes, 
 The comment block is an authoring-only utility that allows content authors to embed notes, reminders, and editorial comments directly within document content. These comments are visible in the authoring interface but automatically hidden from the published website through CSS display rules.
 
 **Primary Use Cases:**
+
 - Editorial notes and reminders for content authors
 - Collaboration comments between team members
 - Content planning and workflow notes
@@ -38,6 +39,7 @@ The comment block is an authoring-only utility that allows content authors to em
 **Location:** `/blocks/comment/`
 
 **Files:**
+
 - `comment.js` - Empty (no JavaScript decoration required)
 - `comment.css` - Single rule hiding block from display
 - `README.md` - Technical documentation (this file)
@@ -95,10 +97,11 @@ The comment block uses a single, simple CSS rule to hide all content:
 
 `CSS Display Rule`
 `.comment {`
-`  display: none;`
+`display: none;`
 `}`
 
 **Why This Works:**
+
 - `display: none` removes element from render tree
 - No space allocated in layout
 - No visibility to screen readers
@@ -114,6 +117,7 @@ The comment block requires no JavaScript decoration:
 `// CSS handles all functionality`
 
 **Why No JavaScript:**
+
 - CSS display rule is sufficient
 - No DOM manipulation needed
 - No event handling required
@@ -146,10 +150,10 @@ When a comment block is processed (but not rendered), it has this structure:
 
 `HTML Structure`
 `<div class="comment">`
-`  <div>`
-`    <!-- Author's comment content -->`
-`    <!-- Never visible in browser -->`
-`  </div>`
+`<div>`
+`<!-- Author's comment content -->`
+`<!-- Never visible in browser -->`
+`</div>`
 `</div>`
 
 ---
@@ -218,6 +222,7 @@ Mark sections for future development:
 The comment block uses standard EDS table syntax:
 
 **Required Elements:**
+
 - Table with single column
 - Header cell: `Comment`
 - Body cells: Any content
@@ -232,6 +237,7 @@ The comment block uses standard EDS table syntax:
 ### Content Guidelines
 
 **What to Include:**
+
 - Editorial notes and reminders
 - Collaboration instructions
 - Workflow status updates
@@ -240,6 +246,7 @@ The comment block uses standard EDS table syntax:
 - Review checklists
 
 **What to Avoid:**
+
 - Sensitive security information (use private channels)
 - Personal data (even hidden, it's in source)
 - Large binary content (markdown only)
@@ -270,7 +277,7 @@ The comment block requires only one CSS rule:
 
 `Required CSS`
 `.comment {`
-`  display: none;`
+`display: none;`
 `}`
 
 **Important:** Do NOT modify this rule. Changing `display: none` to any other value will make internal comments visible to website visitors.
@@ -307,7 +314,7 @@ The comment block requires no responsive CSS rules:
 
 `CSS (Complete)`
 `.comment {`
-`  display: none;`
+`display: none;`
 `}`
 
 This single rule applies universally across all devices and viewport sizes.
@@ -338,11 +345,13 @@ The comment block has no semantic meaning in the published document:
 ### Best Practices
 
 **Do:**
+
 - Use comments freely for authoring notes
 - Include workflow instructions
 - Add collaboration reminders
 
 **Don't:**
+
 - Add content intended for screen reader users (use proper content blocks)
 - Include accessibility instructions (document separately)
 - Rely on comments for user-facing information
@@ -356,18 +365,21 @@ The comment block has no semantic meaning in the published document:
 The comment block has minimal performance impact:
 
 **Zero JavaScript:**
+
 - No script execution
 - No event listeners
 - No DOM manipulation
 - No memory allocation
 
 **Minimal CSS:**
+
 - Single CSS rule (8 bytes gzipped)
 - No layout calculations
 - No paint operations
 - No composite layers
 
 **No Network:**
+
 - No external resources
 - No font loading
 - No image requests
@@ -400,12 +412,14 @@ The comment block has minimal performance impact:
 The comment block works in all browsers supporting CSS:
 
 **Modern Browsers:**
+
 - Chrome/Edge 90+
 - Firefox 88+
 - Safari 14+
 - Opera 76+
 
 **Legacy Browsers:**
+
 - Internet Explorer 6+ (CSS display:none supported since IE 4)
 - Any browser with CSS support
 
@@ -428,6 +442,7 @@ The `display: none` property is universally supported:
 **Cause:** CSS rule not loaded or overridden.
 
 **Solution:**
+
 1. Verify `comment.css` is loaded: Check browser DevTools Network tab
 2. Check CSS rule exists: Search for `.comment { display: none; }`
 3. Check for CSS override: Inspect element for conflicting rules
@@ -446,6 +461,7 @@ The `display: none` property is universally supported:
 **Cause:** Authoring tool may not be rendering blocks correctly.
 
 **Solution:**
+
 1. Check authoring tool documentation
 2. Verify Comment block syntax is correct
 3. Try refreshing authoring interface
@@ -460,6 +476,7 @@ The `display: none` property is universally supported:
 **Cause:** Special characters or markdown syntax causing parser issues.
 
 **Solution:**
+
 1. Escape special characters in comment content
 2. Avoid complex nested structures
 3. Use plain text for problematic content
@@ -474,6 +491,7 @@ The `display: none` property is universally supported:
 ### Manual Testing
 
 **Test Case 1: Basic Visibility**
+
 1. Add comment block to test page
 2. Publish page
 3. Verify comment not visible in browser
@@ -482,6 +500,7 @@ The `display: none` property is universally supported:
 **Expected:** Comment block has no visual presence.
 
 **Test Case 2: Accessibility**
+
 1. Add comment block to test page
 2. Use screen reader (NVDA, JAWS, VoiceOver)
 3. Navigate through page content
@@ -490,6 +509,7 @@ The `display: none` property is universally supported:
 **Expected:** Screen reader skips comment block entirely.
 
 **Test Case 3: Multiple Comments**
+
 1. Add 5-10 comment blocks throughout page
 2. Publish page
 3. Check page performance (Lighthouse)
@@ -502,12 +522,14 @@ The `display: none` property is universally supported:
 Test in multiple browsers to verify universal hiding:
 
 **Desktop:**
+
 - Chrome (Windows/Mac)
 - Firefox (Windows/Mac)
 - Safari (Mac)
 - Edge (Windows)
 
 **Mobile:**
+
 - Safari (iOS)
 - Chrome (Android)
 
@@ -531,6 +553,7 @@ Test in multiple browsers to verify universal hiding:
 **Test File:** `test.html` (included with block)
 
 **Test Coverage:**
+
 - Comment block hidden from view
 - CSS rule properly applied
 - No JavaScript errors
@@ -538,6 +561,7 @@ Test in multiple browsers to verify universal hiding:
 - No performance impact
 
 **Running Tests:**
+
 1. Open `/blocks/comment/test.html` in browser
 2. Open browser DevTools console
 3. Verify all tests pass
@@ -550,15 +574,18 @@ Test in multiple browsers to verify universal hiding:
 ### Core Dependencies
 
 **Required:**
+
 - EDS core library (`/scripts/aem.js`)
 - Standard EDS block decoration system
 
 **CSS Framework:**
+
 - None required
 - Single CSS rule
 - No variables or mixins
 
 **JavaScript Libraries:**
+
 - None required
 - No external dependencies
 - No utility libraries
@@ -568,6 +595,7 @@ Test in multiple browsers to verify universal hiding:
 **Minimum EDS Version:** Any version supporting block decoration
 
 **Required Features:**
+
 - Block class application (`.comment`)
 - CSS loading
 - Standard markdown-to-HTML transformation
@@ -575,9 +603,11 @@ Test in multiple browsers to verify universal hiding:
 ### Browser APIs
 
 **Required APIs:**
+
 - None (CSS only)
 
 **Optional APIs:**
+
 - None
 
 ---
@@ -587,26 +617,31 @@ Test in multiple browsers to verify universal hiding:
 ### Potential Improvements
 
 **1. Authoring-Time Validation**
+
 - Warn when sensitive information in comments
 - Suggest moving configuration to proper files
 - Check for accidental inclusion of production data
 
 **2. Comment Categories**
+
 - Different comment types (TODO, REVIEW, NOTE)
 - Color-coding in authoring environment
 - Filtering and search in authoring tool
 
 **3. Workflow Integration**
+
 - Link comments to task management systems
 - Automatic comment expiration dates
 - Comment resolution tracking
 
 **4. Build-Time Processing**
+
 - Extract comments into separate documentation
 - Generate author notes report
 - Validate comment format and content
 
 **5. Collaboration Features**
+
 - Author attribution
 - Comment threading
 - Timestamp tracking
@@ -639,6 +674,7 @@ The following are explicitly NOT planned:
 **Current Version:** 1.0.0
 
 **Changes:**
+
 - Initial implementation with CSS-only hiding
 - Empty JavaScript file (no decoration needed)
 - Universal browser compatibility
@@ -650,15 +686,18 @@ The following are explicitly NOT planned:
 ## Related Documentation
 
 **EDS Documentation:**
+
 - [EDS Fundamentals Guide](/docs/for-ai/eds.md)
 - [Block Architecture Standards](/docs/for-ai/implementation/block-architecture-standards.md)
 - [Content Driven Development](/docs/for-ai/implementation/design-philosophy-guide.md)
 
 **Testing Documentation:**
+
 - [EDS Testing Guide](/docs/for-ai/testing/EDS-Architecture-and-Testing-Guide.md)
 - [Testing Standards](/docs/for-ai/testing/eds-native-testing-standards.md)
 
 **Author Resources:**
+
 - [EXAMPLE.md](EXAMPLE.md) - Author usage guide
 - [EDS Authoring Documentation](https://www.aem.live/docs/authoring)
 

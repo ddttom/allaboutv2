@@ -314,6 +314,7 @@ Create this file at `/notebooks/complete-tutorial.ipynb`:
 Displays the notebook with:
 
 **Header Section:**
+
 - Title: "JavaScript Testing Tutorial" (large, bold, centered)
 - Description: "Learn JavaScript fundamentals through interactive examples" (italic, gray)
 - Author: "By Tom Cranstoun" (italic, gray)
@@ -324,6 +325,7 @@ Displays the notebook with:
 - License: "MIT" (small, gray)
 
 **Content:**
+
 - Hero cell with title, description, and action cards (auto-wrapped)
 - Content cells with headings and code cells (auto-wrapped)
 - Action cards automatically styled as blue navigation cards
@@ -402,6 +404,7 @@ Create this file at `/notebooks/block-test.ipynb`:
 ### Result
 
 Displays an interactive testing environment where you can:
+
 - Test EDS blocks using the testBlock() helper function
 - View block HTML output directly in the cell output
 - Open full-screen previews using showPreview() helper function
@@ -496,6 +499,7 @@ Create this file at `/notebooks/math-demo.ipynb`:
 ### Result
 
 Displays mathematical demonstrations with:
+
 - Factorial calculation with recursive function
 - Fibonacci sequence generation with iterative loop
 - Statistical calculations (sum, average, min, max)

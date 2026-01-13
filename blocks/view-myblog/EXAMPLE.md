@@ -28,6 +28,7 @@ When you add the View MyBlog block to your page, it displays:
 ### 1. Latest Posts Section
 
 Shows the 3 most recent blog posts automatically:
+
 - Blue gradient background for visual emphasis
 - Post titles as clickable links
 - Brief descriptions
@@ -50,6 +51,7 @@ Shows the 3 most recent blog posts automatically:
 ### 2. Most Visited Section
 
 Highlights your popular content:
+
 - Orange gradient background
 - Manually curated (you control what appears)
 - Perfect for showcasing best content
@@ -69,6 +71,7 @@ Highlights your popular content:
 ### 3. Category Map
 
 Interactive navigation table:
+
 - Shows all your blog categories
 - Article count per category
 - Click to jump to that category section
@@ -88,6 +91,7 @@ Interactive navigation table:
 ### 4. Category Sections
 
 Full blog archive organized by category:
+
 - Each category has its own section
 - All posts with titles, descriptions, dates
 - Posts sorted by date (newest first by default)
@@ -136,10 +140,12 @@ Full blog archive organized by category:
 When your blog has only one category, the block automatically simplifies:
 
 **Hidden:**
+
 - Latest Posts section (no point when all posts are in one category)
 - Category Map (no need to navigate between categories)
 
 **Shown:**
+
 - Most Visited section (if provided)
 - Single category section with all posts
 
@@ -153,25 +159,26 @@ Your blog content lives in a JSON file (typically `/my-blog.json`). Here's what 
 
 `Minimal JSON Example`
 `{`
-`  "categories": [`
-`    {`
-`      "id": "tutorials",`
-`      "name": "Tutorials",`
-`      "posts": [`
-`        {`
-`          "title": "Getting Started",`
-`          "url": "/blog/getting-started",`
-`          "description": "Learn the basics",`
-`          "lastModified": "2025-11-20"`
-`        }`
-`      ]`
-`    }`
-`  ]`
+`"categories": [`
+`{`
+`"id": "tutorials",`
+`"name": "Tutorials",`
+`"posts": [`
+`{`
+`"title": "Getting Started",`
+`"url": "/blog/getting-started",`
+`"description": "Learn the basics",`
+`"lastModified": "2025-11-20"`
+`}`
+`]`
+`}`
+`]`
 `}`
 
 ### Best Practices
 
 **DO:**
+
 - Let the block auto-generate Latest Posts (don't include `latestPosts` in JSON)
 - Manually curate Most Visited to highlight best content
 - Use descriptive category names and descriptions
@@ -179,6 +186,7 @@ Your blog content lives in a JSON file (typically `/my-blog.json`). Here's what 
 - Keep descriptions brief (1-2 sentences)
 
 **DON'T:**
+
 - Don't include index pages in your blog posts
 - Don't manually maintain Latest Posts (let it auto-generate)
 - Don't create empty categories
@@ -189,12 +197,14 @@ Your blog content lives in a JSON file (typically `/my-blog.json`). Here's what 
 ### Auto-Generated Latest Posts
 
 The block automatically creates Latest Posts by:
+
 1. Looking at all posts across all categories
 2. Sorting by lastModified date (newest first)
 3. Taking the top 3 most recent posts
 4. Filtering out index pages
 
 **Why this is great:**
+
 - Always shows your newest content
 - No manual maintenance required
 - Updates automatically when you add posts
@@ -202,11 +212,13 @@ The block automatically creates Latest Posts by:
 ### Index Page Filtering
 
 The block automatically filters out index/landing pages that end with:
+
 - `/` (e.g., `/blog/`)
 - `/index`
 - `/index.html` or `/index.htm`
 
 **Why this matters:**
+
 - Shows only actual blog posts
 - Prevents duplicate navigation pages
 - Keeps content focused
@@ -216,21 +228,23 @@ The block automatically filters out index/landing pages that end with:
 Categories can be sorted two ways:
 
 **Newest First (default):**
+
 - Most recent posts at the top
 - Best for news, updates, announcements
 - No configuration needed
 
 **Oldest First:**
+
 - Earliest posts at the top
 - Perfect for tutorial series (Part 1, Part 2, Part 3...)
 - Add `"sortOrder": "oldest-first"` to category in JSON
 
 `Oldest-First Example`
 `{`
-`  "id": "tutorial-series",`
-`  "name": "Complete Tutorial Series",`
-`  "sortOrder": "oldest-first",`
-`  "posts": [ ... ]`
+`"id": "tutorial-series",`
+`"name": "Complete Tutorial Series",`
+`"sortOrder": "oldest-first",`
+`"posts": [ ... ]`
 `}`
 
 ### Additional Resources
@@ -239,17 +253,18 @@ Special category type for external links:
 
 `External Links Example`
 `{`
-`  "id": "resources",`
-`  "name": "Additional Resources",`
-`  "links": [`
-`    {`
-`      "title": "Official Documentation",`
-`      "url": "https://example.com/docs"`
-`    }`
-`  ]`
+`"id": "resources",`
+`"name": "Additional Resources",`
+`"links": [`
+`{`
+`"title": "Official Documentation",`
+`"url": "https://example.com/docs"`
+`}`
+`]`
 `}`
 
 **Features:**
+
 - Displays as bullet list
 - Opens in new tabs
 - Perfect for external references
@@ -260,16 +275,19 @@ Special category type for external links:
 The block automatically adapts to screen size:
 
 **Desktop:**
+
 - Wide layout with generous spacing
 - Full-width category table
 - Larger text sizes
 
 **Tablet:**
+
 - Medium spacing
 - Responsive table
 - Adjusted margins
 
 **Mobile:**
+
 - Compact spacing
 - Smaller fonts
 - Touch-friendly links
@@ -280,16 +298,19 @@ The block automatically adapts to screen size:
 The block is built with accessibility in mind:
 
 **Screen Readers:**
+
 - Proper heading hierarchy (H2 for sections, H3 for posts)
 - Navigation landmarks
 - Descriptive link text
 
 **Keyboard Users:**
+
 - All links keyboard accessible
 - Logical tab order
 - Focus indicators
 
 **Visual:**
+
 - High contrast text and links
 - Clear color distinctions
 - Readable font sizes
@@ -299,6 +320,7 @@ The block is built with accessibility in mind:
 ### Block Not Showing Content
 
 **Check these:**
+
 1. Is the JSON file accessible at the specified URL?
 2. Is the JSON properly formatted? (Use a JSON validator)
 3. Check browser console for error messages
@@ -307,6 +329,7 @@ The block is built with accessibility in mind:
 ### Latest Posts Not Appearing
 
 **Possible reasons:**
+
 1. Only one category exists (single-category mode hides Latest Posts)
 2. Fewer than 3 posts total
 3. All posts are index pages (filtered out)
@@ -315,6 +338,7 @@ The block is built with accessibility in mind:
 ### Category Map Missing
 
 **Possible reasons:**
+
 1. Only one category exists (map hidden in single-category mode)
 2. All categories are empty after filtering
 3. categoryMap array missing from JSON
@@ -322,6 +346,7 @@ The block is built with accessibility in mind:
 ### Links Not Working
 
 **Check these:**
+
 1. URLs in JSON are complete and correct
 2. URLs don't have typos
 3. External links include https://
@@ -346,6 +371,7 @@ The block is built with accessibility in mind:
 ## Getting Help
 
 If you encounter issues:
+
 1. Check the browser console for error messages
 2. Validate your JSON file syntax
 3. Review the EXAMPLE.md file (this document)
@@ -369,6 +395,7 @@ If you encounter issues:
 ## Version History
 
 **v1.0** - Initial release
+
 - Auto-generated Latest Posts
 - Index page filtering
 - Single category mode

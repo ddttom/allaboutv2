@@ -3,7 +3,9 @@
 ## Quick Start by Experience Level
 
 ### 🚀 New to EDS Block Development
+
 **If you're new to EDS**, start with these beginner-friendly sections:
+
 1. **[Executive Summary](#executive-summary)** - Overview of the two development approaches (5 min read)
 2. **[Pattern Selection Criteria](#pattern-selection-criteria)** - Choose between Simple vs Complex approaches (10 min read)
 3. **[EDS-Native Pattern (Simple Components)](#eds-native-pattern-simple-components)** - Start here for your first component
@@ -12,14 +14,18 @@
 **Recommended Learning Path**: Read the Executive Summary → Choose your pattern → Follow the pattern-specific implementation guide → Apply common standards
 
 ### 💻 Experienced Developer
+
 **If you have development experience but are new to EDS**:
+
 1. **[Architecture Overview](#architecture-overview)** - Understand the decision-making process
 2. **[Pattern Selection Criteria](#pattern-selection-criteria)** - Quick pattern selection guide
 3. **[JavaScript Architecture Standards](#2-javascript-architecture-standards)** - Core implementation patterns
 4. **[Performance Standards](#5-performance-standards)** - Advanced optimization techniques
 
 ### 🏗️ Architect/Technical Lead
+
 **If you're establishing team standards**:
+
 1. **[AI-Assisted Development Philosophy](#ai-assisted-development-philosophy)** - Strategic development approach
 2. **[Multi-Component Assembly Architecture](#multi-component-assembly-architecture)** - Complex system design
 3. **[Implementation Timeline](#implementation-timeline)** - Project planning framework
@@ -36,26 +42,30 @@
 
 > **📋 Style Guide**: For CSS naming conventions and standards, see the [CSS Naming Convention Style Guide](../guidelines/style-guide.md)
 
-> **📚 Related Documentation**: 
+> **📚 Related Documentation**:
+>
 > - [`eds.md`](../eds.md) - Complete EDS development guide and foundational concepts
 > - [`design-philosophy-guide.md`](design-philosophy-guide.md) - Framework for choosing development approaches
 > - [`build-blocks-clarification.md`](build-blocks-clarification.md) - Dual-directory architecture explanation
 > - [`getting-started-guide.md`](../getting-started-guide.md) - Quick reference for progressive learning paths
 
 > **🏗️ Architecture Distinction**: This document covers **two distinct development approaches**:
+>
 > - **Simple Blocks** (outside `/build/` directories): Follow EDS core philosophy of simple JavaScript, no dependencies, no build steps
 > - **Complex Components** (inside `/build/` directories): May use build processes, external dependencies, and modern tooling
-> 
+>
 > The choice between approaches depends on component complexity and requirements.
 
 ## Table of Contents
 
 ### Core Architecture
+
 - [Executive Summary](#executive-summary)
 - [AI-Assisted Development Philosophy](#ai-assisted-development-philosophy)
 - [Architecture Overview](#architecture-overview)
 
 ### File Structure & Naming
+
 - [HTML File Naming Conventions](#html-file-naming-conventions)
   - [Development vs Testing Files](#development-vs-testing-files)
   - [File Structure Example](#file-structure-example)
@@ -63,6 +73,7 @@
   - [Best Practices](#best-practices)
 
 ### Pattern Selection
+
 - [Pattern Selection Criteria](#pattern-selection-criteria)
   - [EDS-Native Pattern (Simple Components)](#eds-native-pattern-simple-components)
   - [External-Library-Enhanced Pattern (Complex Components)](#external-library-enhanced-pattern-complex-components)
@@ -70,6 +81,7 @@
   - [Build & Deploy Commands](#build--deploy-commands)
 
 ### Implementation Standards
+
 - [Common Standards (Both Patterns)](#common-standards-both-patterns)
   - [File Structure](#1-file-structure)
   - [JavaScript Architecture Standards](#2-javascript-architecture-standards)
@@ -78,16 +90,19 @@
   - [Performance Standards](#5-performance-standards)
 
 ### Pattern-Specific Implementation
+
 - [Pattern-Specific Implementation](#pattern-specific-implementation)
   - [EDS-Native Pattern Implementation](#eds-native-pattern-implementation)
   - [External-Library-Enhanced Pattern Implementation](#external-library-enhanced-pattern-implementation)
 
 ### Styling & Design
+
 - [CSS Standards](#css-standards)
   - [CSS Architecture](#1-css-architecture)
   - [Performance CSS Standards](#2-performance-css-standards)
 
 ### Quality Assurance
+
 - [Testing Standards](#testing-standards)
   - [Manual Testing Checklist](#1-manual-testing-checklist)
   - [Automated Testing (Optional)](#2-automated-testing-optional)
@@ -96,11 +111,13 @@
   - [example.md Template](#2-examplemd-template)
 
 ### Project Management
+
 - [Implementation Timeline](#implementation-timeline)
 - [Quality Assurance Checklist](#quality-assurance-checklist)
 - [Generic Debugging and Instrumentation Standards](#generic-debugging-and-instrumentation-standards)
 
 ### Reference
+
 - [Conclusion](#conclusion)
 - [See Also](#see-also)
 - [Next Steps](#next-steps)
@@ -161,6 +178,7 @@ When developing a new component, the architecture follows this structured decisi
 The project uses two distinct HTML file naming patterns for different purposes, addressing the needs of different development tools and testing environments:
 
 #### `index.html` - Development Files
+
 - **Location**: `/build/{component-name}/index.html`
 - **Purpose**: Automatically loaded by development tools (Vite, webpack, Parcel, etc.)
 - **Usage**: Hot reload development and component building
@@ -169,6 +187,7 @@ The project uses two distinct HTML file naming patterns for different purposes, 
 - **Tool Integration**: Expected default entry point for bundlers and dev servers
 
 #### `test.html` - EDS Testing Files  
+
 - **Location**: `/blocks/{component-name}/test.html`
 - **Purpose**: Manual testing within EDS environment
 - **Usage**: User-chosen testing with EDS development server (`npm run debug`)
@@ -321,6 +340,7 @@ import '{external-library}/components/spinner/spinner.js';
 #### Component Coordination Patterns
 
 **1. Hierarchical Component Structure**
+
 ```javascript
 // Primary container: ui-card provides the foundational structure
 function createComponentContainer(componentData) {
@@ -348,6 +368,7 @@ function createComponentContainer(componentData) {
 ```
 
 **2. State Management Across Components**
+
 ```javascript
 // Coordinated state management for multiple components
 class ComponentState {
@@ -824,6 +845,7 @@ When authors create tables in Google Docs, the **first row (header row) is the b
 **Example: How a Google Docs Table Becomes a Block**
 
 Google Docs:
+
 ```
 ┌────────────────┐
 │ overlay        │  ← HEADER ROW (block name) - MUST match /blocks/overlay/
@@ -835,6 +857,7 @@ Google Docs:
 ```
 
 EDS Processing:
+
 1. Detects header row "overlay"
 2. Loads `/blocks/overlay/overlay.js`
 3. Loads `/blocks/overlay/overlay.css`
@@ -843,6 +866,7 @@ EDS Processing:
 6. Calls your `decorate()` function
 
 HTML Output Before Decoration:
+
 ```html
 <div class="overlay block" data-block-name="overlay" data-block-status="initialized">
   <div>
@@ -857,6 +881,7 @@ HTML Output Before Decoration:
 **Common Mistake:**
 
 ❌ **WRONG** - Missing or incorrect header row:
+
 ```
 ┌────────────────┐
 │ Learn More     │  ← No header row, EDS won't recognize this as a block
@@ -864,9 +889,11 @@ HTML Output Before Decoration:
 │ Welcome! ...   │
 └────────────────┘
 ```
+
 Result: Table appears as plain content, no CSS/JS loaded, no decoration
 
 ❌ **WRONG** - Header row doesn't match directory name:
+
 ```
 ┌────────────────┐
 │ Overlay Block  │  ← "Overlay Block" ≠ "overlay" directory
@@ -874,9 +901,11 @@ Result: Table appears as plain content, no CSS/JS loaded, no decoration
 │ Learn More     │
 └────────────────┘
 ```
+
 Result: EDS looks for `/blocks/overlay-block/` which doesn't exist
 
 ✅ **CORRECT** - Header row matches block directory:
+
 ```
 ┌────────────────┐
 │ overlay        │  ← Matches /blocks/overlay/ directory
@@ -1254,6 +1283,7 @@ async function loadOverlayContent(overlayContent, contentPath) {
 ### Design System Reference
 
 Follow the design language documented in [design-system.md](../guidelines/design-system.md) for:
+
 - **Color palette and CSS variables** - Use `--link-color`, `--background-color`, etc. from `styles/styles.css`
 - **Typography scale and font weights** - Use `--body-font-family`, `--heading-font-size-*` variables
 - **Spacing values (8px base system)** - Common values: 5px, 16px, 22px (most common), 24px, 32px, 48px, 64px
@@ -1630,7 +1660,9 @@ You can also customize behavior through data attributes:
 ## Changelog
 
 ### v1.0.0
+
 - Initial release
+
 ```
 
 ### 2. example.md Template {#2-examplemd-template}
@@ -1643,17 +1675,21 @@ This document provides content authors with examples of how to use the Component
 ## Basic Example
 
 ```
+
 Component Name
 Content goes here
+
 ```
 
 ## Advanced Example
 
 ```
+
 Component Name
 Advanced content
 With multiple lines
 And special formatting
+
 ```
 
 ## Content Guidelines
@@ -1675,44 +1711,55 @@ And special formatting
 ### Pattern 1: Simple Content
 
 ```
+
 Component Name
 Simple text content
 Basic information display
+
 ```
 
 ### Pattern 2: Rich Content
 
 ```
+
 Component Name
+
 # Rich Content Example
+
 This content includes **bold text**, *italic text*, and [links](https://example.com).
 
 ## Features
+
 - Feature 1
 - Feature 2
 - Feature 3
+
 ```
 
 ### Pattern 3: Interactive Content
 
 ```
+
 Component Name
 Interactive Demo
 Click to expand details
 Button: Learn More | https://example.com/learn-more
 Button: Contact Us | mailto:contact@example.com
+
 ```
 ```
 
 ## Implementation Timeline {#implementation-timeline}
 
 ### Phase 1: Planning (1-2 days)
+
 - [ ] Analyze requirements and complexity
 - [ ] Choose appropriate pattern (EDS-Native vs Shoelace-Enhanced)
 - [ ] Create technical specification
 - [ ] Set up development environment
 
 ### Phase 2: Core Development (3-5 days)
+
 - [ ] Implement basic functionality
 - [ ] Add error handling
 - [ ] Implement accessibility features
@@ -1720,6 +1767,7 @@ Button: Contact Us | mailto:contact@example.com
 - [ ] Set up test file
 
 ### Phase 3: Enhancement (2-3 days)
+
 - [ ] Add advanced features
 - [ ] Optimize performance
 - [ ] Implement responsive design
@@ -1727,6 +1775,7 @@ Button: Contact Us | mailto:contact@example.com
 - [ ] Polish animations and transitions
 
 ### Phase 4: Testing & Documentation (2-3 days)
+
 - [ ] Manual testing across devices
 - [ ] Accessibility testing
 - [ ] Performance testing
@@ -1734,6 +1783,7 @@ Button: Contact Us | mailto:contact@example.com
 - [ ] Create usage examples
 
 ### Phase 5: Deployment (1 day)
+
 - [ ] Final code review
 - [ ] Deploy to staging
 - [ ] User acceptance testing
@@ -1743,6 +1793,7 @@ Button: Contact Us | mailto:contact@example.com
 ## Quality Assurance Checklist {#quality-assurance-checklist}
 
 ### Code Quality
+
 - [ ] Code follows project conventions
 - [ ] No console errors or warnings
 - [ ] Proper error handling implemented
@@ -1750,6 +1801,7 @@ Button: Contact Us | mailto:contact@example.com
 - [ ] No hardcoded values (use configuration)
 
 ### Performance
+
 - [ ] Component loads in under 2 seconds
 - [ ] No layout shift during loading
 - [ ] Efficient DOM manipulation
@@ -1757,6 +1809,7 @@ Button: Contact Us | mailto:contact@example.com
 - [ ] Minimal bundle size
 
 ### Accessibility
+
 - [ ] WCAG 2.1 AA compliance
 - [ ] Keyboard navigation works
 - [ ] Screen reader compatibility
@@ -1764,6 +1817,7 @@ Button: Contact Us | mailto:contact@example.com
 - [ ] Color contrast meets standards
 
 ### Browser Compatibility
+
 - [ ] Works in Chrome 90+
 - [ ] Works in Firefox 88+
 - [ ] Works in Safari 14+
@@ -1771,6 +1825,7 @@ Button: Contact Us | mailto:contact@example.com
 - [ ] Mobile browsers supported
 
 ### Documentation
+
 - [ ] README.md is complete and accurate
 - [ ] example.md provides clear usage examples
 - [ ] Code is well-documented
@@ -1784,6 +1839,7 @@ Button: Contact Us | mailto:contact@example.com
 All components should implement comprehensive debugging capabilities for development and troubleshooting:
 
 #### **Standard Error Handling Pattern**
+
 ```javascript
 export default async function decorate(block) {
   const componentName = block.dataset.blockName || 'unknown';
@@ -1817,6 +1873,7 @@ export default async function decorate(block) {
 ```
 
 #### **Performance Monitoring Integration**
+
 ```javascript
 // Add to any component for performance monitoring
 export default function decorate(block) {
@@ -1844,6 +1901,7 @@ export default function decorate(block) {
 For testing enhanced or instrumented versions of components:
 
 #### **Generic File Replacement Workflow**
+
 ```bash
 # 1. Backup original component
 cp blocks/your-component/your-component.js blocks/your-component/your-component-backup.js
@@ -1862,6 +1920,7 @@ git restore blocks/your-component/your-component.js
 ```
 
 #### **Automated Testing Script Template**
+
 ```bash
 #!/bin/bash
 # test-enhanced-component.sh
@@ -1986,18 +2045,21 @@ Target performance metrics for components:
 ### Common Debugging Scenarios
 
 #### **Component Not Appearing**
+
 1. Check if component file exists and loads correctly
 2. Verify CSS class names match naming conventions
 3. Ensure proper visibility classes are applied
 4. Check for JavaScript errors in console
 
 #### **Performance Issues**
+
 1. Use instrumentation to identify bottlenecks
 2. Monitor memory usage patterns
 3. Check for excessive DOM mutations
 4. Analyze async operation timing
 
 #### **Integration Conflicts**
+
 1. Verify attribute preservation during DOM manipulation
 2. Check for styling conflicts
 3. Monitor race conditions between processing stages
@@ -2006,6 +2068,7 @@ Target performance metrics for components:
 ### Debug Configuration
 
 #### **Development Mode Settings**
+
 ```javascript
 // Add to development configurations
 const DEBUG_MODE = process.env.DEBUG === 'true' || window.location.search.includes('debug=true');
@@ -2018,6 +2081,7 @@ if (DEBUG_MODE) {
 ```
 
 #### **Browser Debug Configuration**
+
 ```javascript
 // Add to test files for debug mode
 <script>
@@ -2045,6 +2109,7 @@ if (DEBUG_MODE) {
 ### Systematic Debugging Workflow
 
 #### **5-Phase Debugging Process**
+
 1. **Initial Assessment**: Check basic loading and file structure
 2. **Network Analysis**: Monitor resource loading and requests
 3. **DOM and Timing Analysis**: Track DOM changes and processing timing
@@ -2052,6 +2117,7 @@ if (DEBUG_MODE) {
 5. **Error Resolution**: Implement error handling and recovery
 
 #### **Debug Checklist**
+
 - [ ] **Pre-Development Setup**: Debug tools available and configured
 - [ ] **Component Loading**: Files exist and load correctly
 - [ ] **Performance Monitoring**: Timing and memory tracking active
@@ -2086,38 +2152,45 @@ By implementing these standards, development teams can create robust, accessible
 ## See Also {#see-also}
 
 ### Architecture and Design
+
 - [`eds.md`](eds.md) - Complete EDS development guide with foundational concepts and transformation pipeline
 - [`design-philosophy-guide.md`](design-philosophy-guide.md) - Framework for choosing between simple and complex approaches
 - [`build-blocks-clarification.md`](build-blocks-clarification.md) - Detailed explanation of dual-directory architecture (/build/ vs /blocks/)
 - [`eds-architecture-standards.md`](eds-architecture-standards.md) - EDS-native development standards focusing on simplicity
 
 ### Implementation Guides
+
 - [`raw-eds-blocks-guide.md`](raw-eds-blocks-guide.md) - Simple, EDS-native component development patterns
 - [`complex-eds-blocks-guide.md`](complex-eds-blocks-guide.md) - Build-enhanced approach for sophisticated components
 - [`build-component-template.md`](build-component-template.md) - Template and scaffolding for advanced components
 
 ### Testing and Debugging
+
 - [`eds-native-testing-standards.md`](eds-native-testing-standards.md) - Testing standards for EDS-Native pattern components
 - [`debug.md`](debug.md) - Debugging policies and troubleshooting procedures
 - [`eds-architecture-and-testing-guide.md`](eds-architecture-and-testing-guide.md) - Advanced debugging strategies
 
 ### Development Environment
+
 - [`../Server-README.md`](../Server-README.md) - Development server setup and local testing workflows
 
 ## Next Steps {#next-steps}
 
 ### For New Developers
+
 1. **Start with foundations** → Read [`eds.md`](eds.md) for comprehensive EDS understanding
 2. **Choose your approach** → Use [`design-philosophy-guide.md`](design-philosophy-guide.md) to select simple vs complex patterns
 3. **Set up environment** → Follow [`../Server-README.md`](../Server-README.md) for local development setup
 4. **Begin implementation** → Choose [`raw-eds-blocks-guide.md`](raw-eds-blocks-guide.md) or [`complex-eds-blocks-guide.md`](complex-eds-blocks-guide.md)
 
 ### For Experienced Developers
+
 1. **Review architecture decisions** → Study [`build-blocks-clarification.md`](build-blocks-clarification.md) for dual-directory patterns
 2. **Implement testing** → Follow [`eds-native-testing-standards.md`](eds-native-testing-standards.md) for quality assurance
 3. **Handle issues** → Use [`debug.md`](debug.md) for troubleshooting workflows
 
 ### For Architects and Technical Leads
+
 1. **Establish standards** → Implement the patterns defined in this document across your team
 2. **Plan component strategy** → Use [`design-philosophy-guide.md`](design-philosophy-guide.md) for architectural decisions
 3. **Set up advanced debugging** → Review [`eds-architecture-and-testing-guide.md`](eds-architecture-and-testing-guide.md) for comprehensive analysis tools

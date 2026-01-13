@@ -10,6 +10,7 @@ The simplest usage - place the block anywhere on your page:
 |-------|
 
 The block will:
+
 - Scan all headings on the page
 - Generate a collapsible navigation menu
 - Add clickable links with hierarchical indentation
@@ -54,6 +55,7 @@ The index block can be placed in a sidebar layout using EDS section metadata:
 |-------|
 
 Section Metadata:
+
 ```
 style: sidebar-left
 ```
@@ -133,16 +135,19 @@ Content...
 ## How It Works
 
 **Automatic Scanning:**
+
 - The block scans ALL headings on the page using `document.querySelectorAll('h1, h2, h3, h4, h5, h6')`
 - This is document-level functionality (not limited to the block itself)
 - Headings are processed in document order
 
 **ID Generation:**
+
 - Each heading receives a unique ID: `header-0`, `header-1`, `header-2`, etc.
 - IDs are sequential based on document order
 - These IDs enable anchor navigation
 
 **Hierarchical Indentation:**
+
 - h1: 0px indentation
 - h2: 20px indentation
 - h3: 40px indentation
@@ -151,11 +156,13 @@ Content...
 - h6: 100px indentation
 
 **Lazy Building:**
+
 - Index content is built only on first click (not on page load)
 - Improves initial page load performance
 - Content persists after first build
 
 **Collapsible Interface:**
+
 - Click header to expand/collapse
 - Arrow icon rotates to indicate state
 - Content shows/hides smoothly
@@ -163,16 +170,19 @@ Content...
 ## Behavior
 
 **Initial State:**
+
 - Index is collapsed (content hidden)
 - Arrow points down
 
 **First Click:**
+
 - Scans page headings
 - Builds navigation list
 - Expands to show content
 - Arrow rotates up
 
 **Subsequent Clicks:**
+
 - Toggles visibility (expand/collapse)
 - Does not rebuild (uses cached content)
 - Arrow rotates to match state
@@ -180,18 +190,21 @@ Content...
 ## Use Cases
 
 **Long Articles:**
+
 - Blog posts with multiple sections
 - Technical documentation
 - Research papers
 - Tutorial guides
 
 **Documentation:**
+
 - API documentation
 - User guides
 - Knowledge base articles
 - Policy documents
 
 **Reports:**
+
 - Business reports
 - Project documentation
 - Analysis documents
@@ -200,12 +213,14 @@ Content...
 ## Accessibility
 
 **Keyboard Navigation:**
+
 - Tab to focus on header
 - Enter or Space to expand/collapse
 - Tab through navigation links
 - Enter to follow link
 
 **Screen Readers:**
+
 - Semantic HTML structure
 - Proper heading hierarchy
 - Descriptive link text
@@ -214,12 +229,14 @@ Content...
 ## Browser Support
 
 **Modern Browsers:**
+
 - Chrome (last 2 versions)
 - Firefox (last 2 versions)
 - Safari (last 2 versions)
 - Edge (last 2 versions)
 
 **Features Used:**
+
 - `querySelectorAll` (standard DOM API)
 - ES6 modules
 - CSS transforms
@@ -228,12 +245,14 @@ Content...
 ## Tips
 
 **Best Practices:**
+
 - Use semantic heading hierarchy (h1 → h2 → h3, not h1 → h3)
 - Keep heading text concise for better navigation
 - Place index near top of long documents
 - Consider sidebar layout for very long pages
 
 **Avoid:**
+
 - Skipping heading levels (h1 → h3)
 - Using headings for styling only
 - Very long heading text (wraps in navigation)
@@ -242,16 +261,19 @@ Content...
 ## Technical Notes
 
 **Document-Level Operations:**
+
 - This block intentionally uses `document.querySelectorAll()` for page-wide scanning
 - It adds IDs to ALL headings on the page
 - This is required functionality, not a bug
 
 **Single Instance:**
+
 - Works correctly with multiple index blocks on same page
 - Each instance operates independently
 - All instances show the same navigation (same headings)
 
 **Performance:**
+
 - Lazy building (first click only)
 - Minimal DOM manipulation
 - One-time heading scan

@@ -303,11 +303,13 @@ try {
 ### External Services
 
 **Google Services**
+
 - Google Docs API for content retrieval
 - Google Drive API for file management
 - Google Analytics for usage tracking
 
 **Adobe Services**
+
 - Edge Delivery Services for hosting
 - Adobe Analytics for advanced metrics
 - Adobe Target for personalisation
@@ -315,11 +317,13 @@ try {
 ### Third-Party Integrations
 
 **Development Tools**
+
 - GitHub for version control
 - ESLint for code quality
 - Stylelint for CSS standards
 
 **Monitoring Services**
+
 - Performance monitoring tools
 - Error tracking services
 - Uptime monitoring systems

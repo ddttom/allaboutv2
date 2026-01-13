@@ -41,6 +41,7 @@ The simplest dashboard implementation:
 |-----------|
 
 **Output:** Complete content management dashboard with:
+
 - Title, Path, Description columns
 - Last Modified, Review, Expiry date columns
 - Sortable headers (click to sort)
@@ -70,6 +71,7 @@ Monitor site-wide content health and review cycles. Use the filters and sort opt
 The dashboard displays data from `query-index.json` with calculated review and expiry dates:
 
 **Columns:**
+
 1. **Title** - Page title from query-index.json
 2. **Path** - Page URL (clickable link)
 3. **Description** - Page description or summary
@@ -78,6 +80,7 @@ The dashboard displays data from `query-index.json` with calculated review and e
 6. **Expiry** - Calculated expiry date (Last Modified + 365 days default)
 
 **Status Indicators:**
+
 - **Green** - Review/expiry date is 30+ days away (healthy)
 - **Amber** - Review/expiry date is 0-30 days away (warning)
 - **Red** - Review/expiry date has passed (overdue)
@@ -85,16 +88,19 @@ The dashboard displays data from `query-index.json` with calculated review and e
 ### How Dates are Calculated
 
 **Review Date:**
+
 - Formula: `Last Modified + defaultreviewperiod days`
 - Default period: 300 days (10 months)
 - Configurable via site settings
 
 **Expiry Date:**
+
 - Formula: `Last Modified + defaultexpiryperiod days`
 - Default period: 365 days (1 year)
 - Configurable via site settings
 
 **Example:**
+
 - Last Modified: January 1, 2024
 - Review Date: October 27, 2024 (300 days later)
 - Expiry Date: January 1, 2025 (365 days later)
@@ -102,14 +108,17 @@ The dashboard displays data from `query-index.json` with calculated review and e
 ### Status Color Logic
 
 **Green status:**
+
 - Review or Expiry date is more than 30 days in the future
 - Content is healthy and doesn't need immediate attention
 
 **Amber status:**
+
 - Review or Expiry date is 0-30 days in the future
 - Content needs attention soon (warning)
 
 **Red status:**
+
 - Review or Expiry date has passed (negative days)
 - Content is overdue and needs immediate attention
 
@@ -122,18 +131,21 @@ The dashboard displays data from `query-index.json` with calculated review and e
 The dashboard includes a dropdown to filter by status:
 
 **Filter options:**
+
 - **All** - Show all content (default)
 - **Green** - Show only healthy content (30+ days)
 - **Amber** - Show content needing attention soon (0-30 days)
 - **Red** - Show overdue content (past due date)
 
 **How to filter:**
+
 1. Locate "Filter by status:" dropdown at top of dashboard
 2. Click dropdown to see options
 3. Select desired status (All, Green, Amber, Red)
 4. Table updates instantly to show matching rows
 
 **Filter logic:**
+
 - Applies to BOTH review and expiry columns
 - Row shows if EITHER review OR expiry matches selected status
 - Example: Selecting "Red" shows rows where review date OR expiry date is red
@@ -141,18 +153,21 @@ The dashboard includes a dropdown to filter by status:
 ### Filter Use Cases
 
 **Find content needing review:**
+
 1. Select "Amber" from filter dropdown
 2. Review the filtered list
 3. Prioritize pages with amber status
 4. Click path links to update content
 
 **Find overdue content:**
+
 1. Select "Red" from filter dropdown
 2. See all overdue content immediately
 3. Click path links to review and update
 4. Track progress as red items turn amber/green
 
 **Check overall content health:**
+
 1. Select "Green" to see healthy content
 2. Note which pages are in good standing
 3. Use as baseline for content governance
@@ -166,11 +181,13 @@ The dashboard includes a dropdown to filter by status:
 Click any column header to sort by that column:
 
 **Sort behavior:**
+
 - **First click:** Sort ascending (A-Z, earliest-to-latest) - Shows ↑ arrow
 - **Second click:** Sort descending (Z-A, latest-to-earliest) - Shows ↓ arrow
 - **Third click:** Returns to previous sort state
 
 **Sortable columns:**
+
 - Title (alphabetical)
 - Path (alphabetical)
 - Description (alphabetical)
@@ -184,24 +201,28 @@ Dashboard loads sorted by Title (ascending).
 ### Sort Use Cases
 
 **Find oldest content:**
+
 1. Click "Last Modified" header
 2. First click shows oldest content at top (ascending)
 3. Review pages that haven't been updated recently
 4. Plan content refresh strategy
 
 **Find newest content:**
+
 1. Click "Last Modified" header
 2. Second click shows newest content at top (descending)
 3. Review recently updated pages
 4. Verify recent changes
 
 **Find soonest expiry:**
+
 1. Click "Expiry" header
 2. First click shows earliest expiry dates at top
 3. Focus on content expiring soonest
 4. Prioritize updates accordingly
 
 **Alphabetical navigation:**
+
 1. Click "Title" or "Path" header
 2. Navigate content alphabetically
 3. Find specific pages quickly
@@ -216,12 +237,14 @@ Dashboard loads sorted by Title (ascending).
 Hover over any path link to see a preview image (if available):
 
 **Behavior:**
+
 1. Move mouse over a path link (blue underlined text)
 2. If page has an image, popup appears
 3. Popup follows mouse cursor automatically
 4. Move mouse away to hide popup
 
 **Popup features:**
+
 - Appears near mouse cursor (avoids viewport edges)
 - Shows page's preview image from query-index.json
 - Non-intrusive (doesn't block content)
@@ -236,29 +259,31 @@ Popups only appear if the page has an `image` property in `query-index.json`. If
 
 `JSON with image`
 `{`
-`  "data": [`
-`    {`
-`      "title": "Home Page",`
-`      "path": "/",`
-`      "image": "/media_abc123.png"  ← Image popup will show`
-`    },`
-`    {`
-`      "title": "About",`
-`      "path": "/about",`
-`      // No image property → no popup`
-`    }`
-`  ]`
+`"data": [`
+`{`
+`"title": "Home Page",`
+`"path": "/",`
+`"image": "/media_abc123.png"  ← Image popup will show`
+`},`
+`{`
+`"title": "About",`
+`"path": "/about",`
+`// No image property → no popup`
+`}`
+`]`
 `}`
 
 ### Using Image Previews
 
 **Quick content identification:**
+
 - Hover over path links to see page visuals
 - Identify pages by hero images or screenshots
 - Verify correct page before clicking through
 - Useful for visual content audits
 
 **Best practices:**
+
 - Ensure important pages have preview images
 - Use representative images (hero images, featured graphics)
 - Optimize image sizes (<100KB recommended)
@@ -283,8 +308,8 @@ Override defaults by setting `window.siteConfig`:
 
 `Custom periods (6 months review, 2 years expiry)`
 `window.siteConfig = {`
-`  '$co:defaultreviewperiod': 180,  // 6 months`
-`  '$co:defaultexpiryperiod': 730   // 2 years`
+`'$co:defaultreviewperiod': 180,  // 6 months`
+`'$co:defaultexpiryperiod': 730   // 2 years`
 `};`
 
 **Where to set:**
@@ -294,10 +319,10 @@ Add to `head.html` or early in page load (before dashboard block loads).
 
 `head.html configuration`
 `<script>`
-`  window.siteConfig = {`
-`    '$co:defaultreviewperiod': 300,`
-`    '$co:defaultexpiryperiod': 365`
-`  };`
+`window.siteConfig = {`
+`'$co:defaultreviewperiod': 300,`
+`'$co:defaultexpiryperiod': 365`
+`};`
 `</script>`
 
 ### Configuration Use Cases
@@ -306,24 +331,24 @@ Add to `head.html` or early in page load (before dashboard block loads).
 
 `90-day review period`
 `window.siteConfig = {`
-`  '$co:defaultreviewperiod': 90,   // 3 months`
-`  '$co:defaultexpiryperiod': 180   // 6 months`
+`'$co:defaultreviewperiod': 90,   // 3 months`
+`'$co:defaultexpiryperiod': 180   // 6 months`
 `};`
 
 **Long review cycles (evergreen content):**
 
 `Long-term content`
 `window.siteConfig = {`
-`  '$co:defaultreviewperiod': 540,  // 18 months`
-`  '$co:defaultexpiryperiod': 1095  // 3 years`
+`'$co:defaultreviewperiod': 540,  // 18 months`
+`'$co:defaultexpiryperiod': 1095  // 3 years`
 `};`
 
 **Compliance-driven (strict governance):**
 
 `Strict review cycles`
 `window.siteConfig = {`
-`  '$co:defaultreviewperiod': 180,  // 6 months review`
-`  '$co:defaultexpiryperiod': 365   // 1 year expiry`
+`'$co:defaultreviewperiod': 180,  // 6 months review`
+`'$co:defaultexpiryperiod': 365   // 1 year expiry`
 `};`
 
 ---
@@ -342,12 +367,14 @@ Track all content review and expiry dates. Green = healthy, Amber = attention ne
 |-----------|
 
 **Use this for:**
+
 - Content team daily workflow
 - Editorial planning meetings
 - Content governance compliance
 - Review cycle tracking
 
 **Workflow:**
+
 1. Open dashboard daily
 2. Filter by "Amber" to see upcoming reviews
 3. Filter by "Red" to see overdue content
@@ -370,12 +397,14 @@ Complete inventory of all site content with health indicators. Use filters to id
 |-----------|
 
 **Use this for:**
+
 - Quarterly content audits
 - Compliance reporting
 - Content inventory management
 - Stakeholder reports
 
 **Workflow:**
+
 1. Sort by "Last Modified" ascending (oldest first)
 2. Identify stale content (old modification dates)
 3. Review red status items (overdue for update)
@@ -394,12 +423,14 @@ Monitor site-wide content freshness. Filter by status to identify content needin
 |-----------|
 
 **Use this for:**
+
 - Real-time content monitoring
 - Content freshness tracking
 - Proactive content management
 - Team performance metrics
 
 **Workflow:**
+
 1. Check dashboard weekly
 2. Note trend in red/amber/green distribution
 3. Set team goals (e.g., "reduce red items by 50%")
@@ -415,6 +446,7 @@ Administrative overview for site managers:
 Administrative dashboard showing all site content with sortable columns and status indicators.
 
 **Instructions:**
+
 - Click column headers to sort
 - Use filter dropdown to focus on specific statuses
 - Hover over paths to preview page images
@@ -424,6 +456,7 @@ Administrative dashboard showing all site content with sortable columns and stat
 |-----------|
 
 **Use this for:**
+
 - Site administrator daily checks
 - High-level content overview
 - Quick content navigation
@@ -436,6 +469,7 @@ Administrative dashboard showing all site content with sortable columns and stat
 ### Content Governance
 
 **1. Establish review cycles**
+
 - Set appropriate `defaultreviewperiod` for your content type
 - News sites: 90-180 days
 - Marketing sites: 180-365 days
@@ -443,18 +477,21 @@ Administrative dashboard showing all site content with sortable columns and stat
 - Compliance sites: Follow regulatory requirements
 
 **2. Monitor regularly**
+
 - Check dashboard weekly or daily
 - Filter by "Red" status first (most urgent)
 - Then check "Amber" status (upcoming)
 - Plan review cycles proactively
 
 **3. Assign ownership**
+
 - Use dashboard to identify content needing attention
 - Assign content owners for red/amber items
 - Track progress in team meetings
 - Celebrate when items turn green
 
 **4. Set realistic periods**
+
 - Don't set review periods too short (creates overhead)
 - Don't set too long (allows content to become stale)
 - Balance between freshness and team capacity
@@ -463,24 +500,28 @@ Administrative dashboard showing all site content with sortable columns and stat
 ### Dashboard Usage
 
 **1. Use sorting strategically**
+
 - Sort by "Review" or "Expiry" to prioritize by urgency
 - Sort by "Last Modified" to find stale content
 - Sort by "Title" or "Path" for navigation
 - Combine with filters for focused views
 
 **2. Leverage filters effectively**
+
 - Start with "Red" filter (most urgent)
 - Review "Amber" filter (upcoming deadlines)
 - Use "Green" filter to verify healthy content
 - Use "All" for complete overview
 
 **3. Enable image previews**
+
 - Add `image` property to query-index.json entries
 - Use representative images (hero images, screenshots)
 - Helps quickly identify content visually
 - Especially useful for large sites
 
 **4. Responsive usage**
+
 - Desktop: Full table view for detailed analysis
 - Mobile: Card view for quick status checks
 - Touch-friendly interface on mobile
@@ -489,17 +530,20 @@ Administrative dashboard showing all site content with sortable columns and stat
 ### Performance Optimization
 
 **1. Limit data size**
+
 - Keep query-index.json under 100KB
 - Consider pagination for 500+ pages
 - Compress JSON with gzip
 - Use CDN for faster loading
 
 **2. Optimize images**
+
 - Compress preview images (<100KB each)
 - Use appropriate formats (JPEG for photos, PNG for graphics)
 - Consider lazy loading for popups (future enhancement)
 
 **3. Browser caching**
+
 - Set appropriate cache headers for query-index.json
 - Balance between freshness and performance
 - Use versioning or cache-busting for updates
@@ -579,11 +623,11 @@ Administrative dashboard showing all site content with sortable columns and stat
 
 `Increase periods`
 `window.siteConfig = {`
-`  '$co:defaultreviewperiod': 300,`
-`  '$co:defaultexpiryperiod': 365`
+`'$co:defaultreviewperiod': 300,`
+`'$co:defaultexpiryperiod': 365`
 `};`
 
-3. **Update content:**
+1. **Update content:**
    - Review and update old content
    - Modify files to update `lastModified` timestamps
    - Rebuild query-index.json
@@ -691,8 +735,8 @@ Set different review and expiry periods for different content types:
 `Mixed content types`
 `// Default periods for most content`
 `window.siteConfig = {`
-`  '$co:defaultreviewperiod': 300,`
-`  '$co:defaultexpiryperiod': 365`
+`'$co:defaultreviewperiod': 300,`
+`'$co:defaultexpiryperiod': 365`
 `};`
 ``
 `// For news content, use shorter periods`
@@ -706,9 +750,9 @@ Add custom CSS to match your brand:
 
 `Custom dashboard colors`
 `.dashboard h1 {`
-`  color: #2c3e50;`
-`  font-size: 28px;`
-`  font-weight: 700;`
+`color: #2c3e50;`
+`font-size: 28px;`
+`font-weight: 700;`
 `}`
 ``
 `.content-table th {`
@@ -717,7 +761,7 @@ Add custom CSS to match your brand:
 `}`
 ``
 `.content-table tr:hover {`
-`  background-color: #ecf0f1;`
+`background-color: #ecf0f1;`
 `}`
 
 ### Dashboard in Iframe
@@ -726,10 +770,11 @@ Embed dashboard in other pages via iframe:
 
 `Iframe embedding`
 `<iframe src="/admin/dashboard" width="100%" height="800" frameborder="0">`
-`  Your browser doesn't support iframes.`
+`Your browser doesn't support iframes.`
 `</iframe>`
 
 **Use cases:**
+
 - Embed in main admin page
 - Include in editorial workflows
 - Display in content management tools
@@ -806,6 +851,7 @@ After creating the dashboard:
 ### Browser Testing
 
 Test in multiple browsers:
+
 - Chrome/Edge (last 2 versions)
 - Firefox (last 2 versions)
 - Safari (last 2 versions)
@@ -830,6 +876,7 @@ Test with various data scenarios:
 ### Expected Load Times
 
 With typical query-index.json (50KB, 100 rows):
+
 - Initial load: 100-300ms
 - Sort operation: 10-50ms
 - Filter operation: 5-20ms
@@ -838,17 +885,20 @@ With typical query-index.json (50KB, 100 rows):
 ### Optimization Tips
 
 **1. Reduce JSON size:**
+
 - Keep descriptions concise
 - Remove unnecessary metadata
 - Use shorter paths where possible
 - Compress with gzip
 
 **2. Optimize images:**
+
 - Compress preview images (<100KB)
 - Use appropriate formats
 - Consider image sprites (future enhancement)
 
 **3. Limit rows:**
+
 - For 500+ rows, consider pagination
 - Filter data server-side if possible
 - Use virtual scrolling (future enhancement)
@@ -866,6 +916,7 @@ Create admin section with navigation:
 Site administration and content management tools.
 
 **Quick Links:**
+
 - [User Management](/admin/users)
 - [Content Dashboard](/admin/dashboard)
 - [Settings](/admin/settings)
@@ -888,6 +939,7 @@ Add user instructions above dashboard:
 # Content Dashboard
 
 **How to use this dashboard:**
+
 1. **Sort:** Click column headers to sort (click again to reverse)
 2. **Filter:** Use dropdown to show only Red, Amber, or Green statuses
 3. **Preview:** Hover over path links to see page images
@@ -901,11 +953,13 @@ Add user instructions above dashboard:
 ## Related Blocks
 
 **Similar functionality:**
+
 - **Table** - Generic data table (no dashboard features)
 - **Bloglist** - Blog-specific content listing
 - **Navigation** - Site navigation menus
 
 **Complementary blocks:**
+
 - **Hero** - Page header above dashboard
 - **Cards** - Alternative visual layout for content
 - **Tabs** - Organize multiple dashboards in tabs

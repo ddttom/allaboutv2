@@ -5,12 +5,14 @@
 The Remove Icon Styles block is a utility block that overrides default EDS icon styling constraints without modifying core files. It uses CSS specificity to reset the fixed 24x24px sizing constraints placed on elements with the `.icon` class, allowing icons to be sized according to their natural dimensions or through other styling mechanisms.
 
 ### Purpose
+
 - Override default EDS icon size constraints (24x24px)
 - Allow natural icon sizing or custom CSS control
 - Enable flexible icon usage across the page
 - Maintain EDS best practices by not modifying core files
 
 ### Key Features
+
 - Global icon style reset
 - CSS-based approach (no DOM manipulation)
 - Zero visual footprint (invisible block)
@@ -29,7 +31,7 @@ This is a utility block that doesn't require specific content. Simply add the bl
 
 `Rendered HTML`
 `<div class="remove-icon-styles block">`
-`  <div></div>`
+`<div></div>`
 `</div>`
 
 The block makes itself invisible through CSS and adds no visible content to the page.
@@ -44,23 +46,23 @@ The block uses CSS specificity to override default EDS icon styles:
 `body .icon,`
 `main .icon,`
 `.section .icon {`
-`  display: inline;`
-`  height: auto;`
-`  width: auto;`
+`display: inline;`
+`height: auto;`
+`width: auto;`
 `}`
 
 ### Default EDS Icon Styles (Overridden)
 
 `Original Constraints`
 `.icon {`
-`  display: inline-block;`
-`  height: 24px;`
-`  width: 24px;`
+`display: inline-block;`
+`height: 24px;`
+`width: 24px;`
 `}`
 ``
 `.icon img {`
-`  height: 100%;`
-`  width: 100%;`
+`height: 100%;`
+`width: 100%;`
 `}`
 
 ### Reset Approach
@@ -84,9 +86,9 @@ The block operates primarily through its CSS file:
 
 `Minimal Decoration Function`
 `export default function decorate(block) {`
-`  block.style.display = 'none';`
-`  const comment = document.createComment('remove-icon-styles block is active');`
-`  block.appendChild(comment);`
+`block.style.display = 'none';`
+`const comment = document.createComment('remove-icon-styles block is active');`
+`block.appendChild(comment);`
 `}`
 
 **Note**: The JavaScript file exists primarily to fulfill EDS block structure requirements. The actual functionality is implemented in CSS.
@@ -128,8 +130,8 @@ If you need more granular control:
 
 `Custom CSS Class Approach`
 `.my-custom-icon.icon {`
-`  height: 48px;`
-`  width: 48px;`
+`height: 48px;`
+`width: 48px;`
 `}`
 
 This allows selective icon sizing without removing all default constraints.
@@ -149,7 +151,7 @@ When removing icon size constraints, ensure:
 
 `Icon with Proper Alt Text`
 `<span class="icon">`
-`  <img src="icon.svg" alt="Settings">`
+`<img src="icon.svg" alt="Settings">`
 `</span>`
 
 ### ARIA Considerations
@@ -158,7 +160,7 @@ For decorative icons that are purely visual:
 
 `Decorative Icon Pattern`
 `<span class="icon" aria-hidden="true">`
-`  <img src="decorative.svg" alt="">`
+`<img src="decorative.svg" alt="">`
 `</span>`
 
 ## 8. Performance
@@ -190,6 +192,7 @@ For decorative icons that are purely visual:
 ### CSS Features Used
 
 All CSS features used are universally supported:
+
 - `display: inline` - Universal support
 - `height: auto` - Universal support
 - `width: auto` - Universal support
@@ -249,7 +252,7 @@ This single-row table activates the icon style reset for the entire page.
 `| :star: |`
 ``
 `.icon.large {`
-`  font-size: 48px;`
+`font-size: 48px;`
 `}`
 
 ### Example 3: Responsive Icons
@@ -263,10 +266,10 @@ This single-row table activates the icon style reset for the entire page.
 `}`
 ``
 `@media (min-width: 768px) {`
-`  .icon.responsive {`
-`    height: 3rem;`
-`    width: 3rem;`
-`  }`
+`.icon.responsive {`
+`height: 3rem;`
+`width: 3rem;`
+`}`
 `}`
 
 ## 12. Troubleshooting
@@ -275,6 +278,7 @@ This single-row table activates the icon style reset for the entire page.
 
 **Issue**: Icons are still showing at 24x24px
 **Solution**:
+
 - Verify the block is present in the page
 - Check browser DevTools to confirm CSS is loaded
 - Look for more specific CSS rules that might be overriding the reset
@@ -283,6 +287,7 @@ This single-row table activates the icon style reset for the entire page.
 
 **Issue**: Page layout changes after adding the block
 **Solution**:
+
 - Icons now flow inline instead of inline-block
 - Add custom CSS to control icon display behavior
 - Consider using `display: inline-block` on specific icons that need it
@@ -291,6 +296,7 @@ This single-row table activates the icon style reset for the entire page.
 
 **Issue**: SVG icons appear too large or small
 **Solution**:
+
 - Ensure SVG files have viewBox attributes
 - Add width/height attributes to SVG elements
 - Use CSS to control SVG icon dimensions explicitly
@@ -316,6 +322,7 @@ The block's selectors have higher specificity than the default `.icon` selector.
 ### Why Not Use !important?
 
 Using CSS specificity instead of `!important`:
+
 - Allows further customization through even more specific selectors
 - Follows CSS best practices
 - Maintains cascade flexibility
@@ -333,14 +340,17 @@ This helps with debugging and verification in DevTools.
 ## 14. Related Documentation
 
 ### EDS Core Styling
+
 - Default icon styles: `/styles/styles.css`
 - Core EDS documentation: https://www.aem.live/docs/
 
 ### Related Blocks
+
 - **Icon Block**: If you need structured icon displays with labels
 - **Section Metadata**: For section-specific styling overrides
 
 ### Further Reading
+
 - CSS Specificity: https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity
 - EDS Best Practices: https://www.aem.live/developer/block-collection
 - Icon Accessibility: https://www.w3.org/WAI/WCAG21/Understanding/non-text-content.html

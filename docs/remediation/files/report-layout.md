@@ -16,12 +16,14 @@ The SEO Analysis Tool has **false positive detection issues** when analyzing Ado
 ### Image Optimization Report Limitations
 
 **Issue 1: Lazy Loading Detection**
+
 - **What the tool reports**: `Lazy Loaded: false` for all images
 - **Reality**: EDS automatically adds `loading="lazy"` attributes to images
 - **Evidence**: Browser console shows intervention message: `"[Intervention] Images loaded lazily and replaced with placeholders"`
 - **Verification**: Check `/scripts/aem.js` line 350: `img.setAttribute('loading', 'lazy')`
 
 **Issue 2: Responsive Images Detection**
+
 - **What the tool reports**: `Is Responsive: false` for all images
 - **Reality**: EDS automatically creates `<picture>` elements with multiple `<source>` tags for responsive images
 - **Evidence**: DOM inspection shows `<picture>` wrapper with breakpoint-specific sources
@@ -30,6 +32,7 @@ The SEO Analysis Tool has **false positive detection issues** when analyzing Ado
 ### Impact on Analysis
 
 **For EDS sites, these metrics may be incorrectly flagged**:
+
 - ✅ **Lazy Loading**: Likely already working (verify console message)
 - ✅ **Responsive Images**: Likely already working (verify DOM structure)
 - ❌ **Alt Text**: Accurate detection (still requires manual addition)
@@ -46,6 +49,7 @@ The SEO Analysis Tool has **false positive detection issues** when analyzing Ado
 ### Excluded URLs (Pattern Matching)
 
 Ignore all URLs containing Jupyter notebook content:
+
 - Any page ending in `.ipynb`
 - Any page using the `ipynb-viewer` block
 - Blog posts about notebooks: `*jupyter*`, `*notebook*`, `*ipynb*`
@@ -61,6 +65,7 @@ Ignore all URLs containing Jupyter notebook content:
 ### Impact on Reports
 
 When processing this remediation analysis:
+
 - **Exclude notebook pages** from all counts, metrics, and recommendations
 - **Filter out notebook URLs** from CSV data before analysis
 - **Ignore notebook-related violations** in accessibility reports
@@ -374,6 +379,7 @@ https://example.com/page,82.5,90,85,80,75,88,70,95,85,100
 ### Component Score Calculations
 
 **Structural Clarity Score**:
+
 ```
 Score = (Semantic Elements / Total Elements × 40) +
         (Heading Hierarchy Quality × 30) +
@@ -381,6 +387,7 @@ Score = (Semantic Elements / Total Elements × 40) +
 ```
 
 **Content Organization Score**:
+
 ```
 Score = (Paragraph Count > 3 × 30) +
         (List Count > 0 × 20) +
@@ -389,6 +396,7 @@ Score = (Paragraph Count > 3 × 30) +
 ```
 
 **Metadata Quality Score**:
+
 ```
 Score = (Has Structured Data × 50) +
         (OpenGraph Tags Quality × 30) +
@@ -396,6 +404,7 @@ Score = (Has Structured Data × 50) +
 ```
 
 **Text Extractability Score**:
+
 ```
 Score = (Text to Markup Ratio × 60) +
         ((1 - Hidden Content Ratio) × 40)
@@ -471,6 +480,7 @@ https://example.com/error,500,Internal Server Error,2025-12-07T10:32:03.789Z
 **Sort Order**: By Optimization Score (ascending, worst first)
 
 **⚠️ KNOWN LIMITATIONS FOR ADOBE EDS SITES**:
+
 - **`Is Responsive`**: May report `false` when EDS uses `<picture>` elements with multiple `<source>` tags (tool doesn't detect this pattern)
 - **`Lazy Loaded`**: May report `false` when images have `loading="lazy"` attribute (tool may not detect this attribute)
 - **Recommendation**: Manually verify these fields for EDS sites by:
@@ -599,6 +609,7 @@ https://example.com/page,https://example.com/about,About Us,internal,follow,200,
 ### Domain Classification
 
 Resources from ANY domain are included:
+
 - Same-domain resources (e.g., `https://example.com/style.css`)
 - External CDN resources (e.g., `https://cdn.example.com/jquery.js`)
 - Third-party resources (e.g., `https://fonts.googleapis.com/font.woff2`)
@@ -712,6 +723,7 @@ https://example.com/about/team/member-5,5,https://example.com/about/team
 Discovered URLs are preceded by XML comment: `<!-- Discovered during analysis -->`
 
 This allows:
+
 - Visual identification in XML editors
 - Programmatic filtering if needed
 - Clear distinction between original and discovered URLs
@@ -836,12 +848,14 @@ with open('seo_report.csv', 'r', encoding='utf-8') as f:
 ### Common Analysis Queries
 
 **Find slow pages with poor SEO:**
+
 ```
 Filter: Load Time > 3000ms AND Overall SEO Score < 70
 Reports: performance_analysis.csv + seo_scores.csv
 ```
 
 **Find images missing alt text on high-traffic pages:**
+
 ```
 Filter: Alt Text = "" AND Optimization Score < 50
 Reports: image_optimization.csv
@@ -849,6 +863,7 @@ Join: With seo_report.csv to get page context
 ```
 
 **Identify accessibility issues by severity:**
+
 ```
 Filter: Critical Issues > 0
 Reports: accessibility_report.csv
@@ -856,6 +871,7 @@ Sort: By Critical Issues DESC
 ```
 
 **Find most-used external resources:**
+
 ```
 Filter: Resource Type = "javascript" AND Domain ≠ Site Domain
 Reports: all_resources_report.csv
@@ -875,10 +891,12 @@ Sort: By Total Count DESC
 ### Version Compatibility
 
 Results cached with schema version 1.x.y are compatible with:
+
 - Same MAJOR.MINOR version (1.x.y ↔ 1.x.z)
 - **NOT compatible** with different MAJOR or MINOR versions
 
 When schema changes:
+
 - Tool automatically detects incompatibility
 - Forces fresh analysis to regenerate reports
 - Logged as warning with explanation
@@ -916,12 +934,14 @@ When analyzing Adobe Edge Delivery Services sites, use these commands to verify 
 ### Verify Lazy Loading
 
 **Browser Console**:
+
 ```javascript
 // Check for lazy loading intervention message in console
 // Should see: "[Intervention] Images loaded lazily and replaced with placeholders"
 ```
 
 **Command Line**:
+
 ```bash
 # Check for loading attribute in HTML
 curl -s https://allabout.network/ | grep -i 'loading="lazy"'
@@ -933,6 +953,7 @@ curl -s https://allabout.network/scripts/aem.js | grep -i 'loading.*lazy'
 ### Verify Responsive Images
 
 **Browser DevTools**:
+
 ```javascript
 // Inspect DOM for <picture> elements
 document.querySelectorAll('picture').length
@@ -944,6 +965,7 @@ document.querySelectorAll('picture source').length
 ```
 
 **Command Line**:
+
 ```bash
 # Check for <picture> elements in HTML
 curl -s https://allabout.network/ | grep -c '<picture>'
@@ -958,6 +980,7 @@ curl -s https://allabout.network/scripts/aem.js | grep -A 20 'createOptimizedPic
 ### Verify Alt Text (Still Accurate)
 
 **Command Line**:
+
 ```bash
 # Find images without alt attributes (accurate detection)
 curl -s https://allabout.network/ | grep '<img' | grep -v 'alt=' | wc -l
@@ -996,6 +1019,7 @@ echo "   - Found $IMG_NO_ALT images without alt text"
 ```
 
 **Usage**:
+
 ```bash
 chmod +x verify-eds-optimizations.sh
 ./verify-eds-optimizations.sh

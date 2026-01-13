@@ -9,6 +9,7 @@
 > **⚠️ DO NOT IMPLEMENT** instrumentation workflows, create instrumented files, or deploy performance monitoring without explicit approval from the user.
 >
 > **This document covers:**
+>
 > - File replacement operations (require approval)
 > - EDS core file instrumentation (require approval)  
 > - Advanced performance monitoring (require approval)
@@ -23,6 +24,7 @@
 This document provides a comprehensive technical explanation of the JavaScript performance instrumentation system implemented for the EDS (Edge Delivery Services) application. The system captures detailed performance metrics, function call traces, execution timing data, variable scope analysis, memory usage patterns, and program flow information during runtime execution.
 
 **Prerequisites for implementation:**
+
 - ✅ **Explicit user request received** for advanced debugging/instrumentation
 - ✅ Understanding of [standard debugging approaches](debug.md#standard-debugging-workflow)
 - ✅ Familiarity with [file replacement requirements](debug.md#file-replacement-testing-strategy)
@@ -376,6 +378,7 @@ export { sampleRUM, /* other functions */ };
 ```
 
 **Testing Process:**
+
 ```bash
 # 1. Backup original
 cp scripts/aem.js scripts/aem-backup.js
@@ -430,6 +433,7 @@ export default decorate;
 ```
 
 **Block Testing Process:**
+
 ```bash
 # 1. Backup original block
 cp blocks/columns/columns.js blocks/columns/columns-backup.js
@@ -579,6 +583,7 @@ async function loadBlock(block) {
 ```
 
 **Key Points:**
+
 - EDS dynamic imports always use standard filenames (`blocks/columns/columns.js`)
 - Instrumentation works by temporarily replacing these standard files
 - No changes to EDS core loading logic required
@@ -603,6 +608,7 @@ app.get('/blocks/:blockName/:blockName.js', (req, res) => {
 ```
 
 **File Replacement Workflow:**
+
 1. Server continues serving standard filenames
 2. During testing, standard files are temporarily replaced with instrumented versions
 3. EDS loads instrumented code through normal pathways
@@ -749,11 +755,13 @@ The implementation demonstrates how to effectively monitor complex JavaScript ap
 ### File Replacement vs Rename Strategy
 
 **❌ INCORRECT (File Renaming):**
+
 - Creating permanently named `aem-instrumented.js` files
 - Expecting EDS to load instrumented filenames directly
 - Modifying EDS import paths
 
 **✅ CORRECT (File Replacement):**
+
 - Creating `-instrumented.js` development versions
 - Temporarily copying over standard filenames during testing
 - EDS loads standard filenames containing instrumented code
@@ -764,30 +772,35 @@ The implementation demonstrates how to effectively monitor complex JavaScript ap
 ## See Also
 
 ### Core Testing & Debugging
+
 - **[Debug Guide](debug.md)** - Complete debugging policy and approval requirements for advanced debugging operations
 - **[EDS Architecture and Testing Guide](eds-architecture-and-testing-guide.md)** - File replacement testing strategies and advanced testing workflows
 - **[EDS Native Testing Standards](eds-native-testing-standards.md)** - Testing approaches specifically designed for EDS-native components
 - **[Testing Strategies](testing-strategies.md)** - Comprehensive testing approaches for EDS blocks including unit tests and integration testing
 
 ### Architecture & Development Standards
+
 - **[Block Architecture Standards](../implementation/block-architecture-standards.md)** - Standard development approaches and comprehensive standards for EDS block development
 - **[EDS Architecture Standards](../implementation/eds-architecture-standards.md)** - Architectural patterns and standards for EDS-native block development
 - **[EDS Overview](../eds.md)** - Complete introduction to Edge Delivery Services architecture and core concepts
 - **[Design Philosophy Guide](../implementation/design-philosophy-guide.md)** - Understanding the philosophical principles behind EDS architecture decisions
 
 ### Implementation & Development
+
 - **[Raw EDS Blocks Guide](../implementation/raw-eds-blocks-guide.md)** - Step-by-step guide for creating simple EDS blocks using vanilla JavaScript
 - **[Complex EDS Blocks Guide](../implementation/complex-eds-blocks-guide.md)** - Advanced block development with build tools and external dependencies
 - **[Build Blocks Clarification](../implementation/build-blocks-clarification.md)** - Understanding the dual-directory architecture and development workflows
 - **[Project Structure](../project-structure.md)** - Understanding the overall EDS project organization and file conventions
 
 ### Development Environment & Tools
+
 - **[Server README](../../../Server-README.md)** - Development server setup and configuration for EDS block development
 - **[Performance Optimization](performance-optimization.md)** - Techniques for optimizing EDS block performance and loading
 - **[Browser Compatibility](browser-compatibility.md)** - Ensuring cross-browser compatibility for EDS implementations
 - **[Build Tools Configuration](build-tools-configuration.md)** - Advanced build tool setup and configuration
 
 ### Advanced Topics
+
 - **[Investigation](investigation.md)** - Advanced investigation techniques and analysis methods
 - **[JavaScript Patterns](javascript-patterns.md)** - Reusable JavaScript patterns for EDS block development
 - **[Error Handling Patterns](error-handling-patterns.md)** - Comprehensive error handling strategies for EDS blocks
@@ -796,6 +809,7 @@ The implementation demonstrates how to effectively monitor complex JavaScript ap
 ## Next Steps
 
 ### For Performance Engineers & Analysts
+
 1. **Master the policy requirements** by understanding when explicit approval is required for instrumentation
 2. **Study the file replacement workflow** for safely deploying instrumented versions of EDS components
 3. **Learn the instrumentation architecture** including function wrapping, data collection, and metrics storage
@@ -803,6 +817,7 @@ The implementation demonstrates how to effectively monitor complex JavaScript ap
 5. **Implement automated testing scripts** following the patterns shown in this guide
 
 ### For QA Engineers & Testers
+
 1. **Understand the advanced debugging policy** and when instrumentation requires explicit approval
 2. **Master the backup and restoration procedures** for maintaining code integrity during testing
 3. **Learn to interpret performance metrics** captured by the instrumentation system
@@ -810,6 +825,7 @@ The implementation demonstrates how to effectively monitor complex JavaScript ap
 5. **Develop monitoring strategies** for tracking instrumentation overhead and system impact
 
 ### For DevOps & Build Engineers
+
 1. **Understand the file replacement constraints** imposed by EDS dynamic loading architecture
 2. **Implement CI/CD pipelines** that support the instrumentation testing workflow
 3. **Create automated backup and restoration** procedures for safe instrumentation deployment
@@ -817,6 +833,7 @@ The implementation demonstrates how to effectively monitor complex JavaScript ap
 5. **Design recovery procedures** for handling instrumentation failures and file corruption
 
 ### For Senior Developers & Architects
+
 1. **Master the technical architecture** of the instrumentation system and its integration with EDS
 2. **Understand the performance impact** of instrumentation on application execution and memory usage
 3. **Design custom metrics** and extend the instrumentation system for specific monitoring needs
@@ -824,6 +841,7 @@ The implementation demonstrates how to effectively monitor complex JavaScript ap
 5. **Establish governance processes** for managing instrumented testing workflows and data security
 
 ### For Team Leads & Project Managers
+
 1. **Understand the approval requirements** for advanced debugging and instrumentation operations
 2. **Plan testing timelines** that account for the file replacement workflow and restoration procedures
 3. **Establish approval processes** for team members requesting advanced instrumentation capabilities
@@ -831,6 +849,7 @@ The implementation demonstrates how to effectively monitor complex JavaScript ap
 5. **Create documentation standards** for recording instrumentation results and performance insights
 
 ### For Security & Compliance Teams
+
 1. **Review the data collection mechanisms** to ensure compliance with privacy and security requirements
 2. **Understand the file replacement workflow** and its implications for code integrity and audit trails
 3. **Establish data handling procedures** for performance metrics and instrumentation exports
@@ -838,6 +857,7 @@ The implementation demonstrates how to effectively monitor complex JavaScript ap
 5. **Monitor access controls** for advanced debugging capabilities and instrumentation tools
 
 ### For AI Assistants & Automation
+
 1. **Understand the explicit approval requirement** for all instrumentation operations described in this guide
 2. **Master the standard debugging approaches** that can be used without special approval
 3. **Learn to identify** when advanced instrumentation is necessary vs. standard performance monitoring

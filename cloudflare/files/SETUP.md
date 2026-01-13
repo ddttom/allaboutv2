@@ -3,12 +3,14 @@
 ## First Time Setup
 
 ### 1. Install Dependencies
+
 ```bash
 cd cloudflare/files
 npm install
 ```
 
 ### 2. Configure Your Environment
+
 Edit `wrangler.toml` and set your Adobe EDS origin:
 
 ```toml
@@ -18,6 +20,7 @@ DEBUG = "true"
 ```
 
 ### 3. Login to Cloudflare (one-time)
+
 ```bash
 npx wrangler login
 ```
@@ -29,6 +32,7 @@ This opens a browser window for authentication.
 ## Daily Development Workflow
 
 ### Start Local Dev Server
+
 ```bash
 npm run dev
 ```
@@ -36,12 +40,14 @@ npm run dev
 Worker available at: `http://localhost:8787`
 
 **Features**:
+
 - ✅ Hot reload on file changes
 - ✅ Debug logging in terminal
 - ✅ Request/response inspection
 - ✅ Fast iteration
 
 ### Run Tests
+
 ```bash
 # Run all tests
 npm test
@@ -54,6 +60,7 @@ npm run test:coverage
 ```
 
 ### Deploy to Production
+
 ```bash
 # Deploy latest changes
 npm run deploy
@@ -69,11 +76,13 @@ npm run tail
 ### Testing JSON-LD Generation Locally
 
 1. **Start dev server**:
+
    ```bash
    npm run dev
    ```
 
 2. **Create test HTML file** (`test.html`):
+
    ```html
    <!DOCTYPE html>
    <html>
@@ -91,6 +100,7 @@ npm run tail
    ```
 
 3. **Test request**:
+
    ```bash
    curl http://localhost:8787/test.html
    ```
@@ -100,10 +110,12 @@ npm run tail
 ### Viewing Debug Logs
 
 **Local development**:
+
 - Logs appear in terminal running `npm run dev`
 - Look for "JSON-LD generated successfully" messages
 
 **Production**:
+
 ```bash
 npm run tail
 ```
@@ -125,12 +137,14 @@ curl -X OPTIONS http://localhost:8787/ \
 ## Environment Management
 
 ### Development Environment
+
 ```bash
 # Uses development settings from wrangler.toml
 npx wrangler dev --env development
 ```
 
 ### Staging Environment
+
 ```bash
 # Deploy to staging
 npx wrangler deploy --env staging
@@ -140,6 +154,7 @@ npx wrangler tail --env staging
 ```
 
 ### Production Environment
+
 ```bash
 # Deploy to production (default)
 npm run deploy
@@ -177,11 +192,13 @@ npx wrangler secret delete ORIGIN_AUTHENTICATION
 ### Worker Not Starting Locally
 
 **Check**:
+
 1. Port 8787 is available: `lsof -i :8787`
 2. `ORIGIN_HOSTNAME` is set in `wrangler.toml`
 3. Dependencies installed: `npm install`
 
 **Solution**:
+
 ```bash
 # Kill process on port 8787
 lsof -i :8787 | grep LISTEN | awk '{print $2}' | xargs kill -9
@@ -223,10 +240,12 @@ npx wrangler deploy --dry-run
 ### Debug Logs Not Appearing
 
 **Local**:
+
 - Check `DEBUG` is set in `wrangler.toml`
 - Restart dev server: `npm run dev`
 
 **Production**:
+
 1. Set `DEBUG=true` in Cloudflare Worker environment variables
 2. Deploy: `npm run deploy`
 3. Tail logs: `npm run tail`

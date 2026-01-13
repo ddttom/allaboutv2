@@ -172,11 +172,11 @@ On browsers without 3D transform support, the cube will appear as a flat element
 
 `Keyboard Support Implementation`
 `document.addEventListener('keydown', (e) => {`
-`  if (e.key === 'ArrowLeft') rotationY -= 15;`
-`  if (e.key === 'ArrowRight') rotationY += 15;`
-`  if (e.key === 'ArrowUp') rotationX += 15;`
-`  if (e.key === 'ArrowDown') rotationX -= 15;`
-`  cube.style.transform = "rotateX(" + rotationX + "deg) rotateY(" + rotationY + "deg)";`
+`if (e.key === 'ArrowLeft') rotationY -= 15;`
+`if (e.key === 'ArrowRight') rotationY += 15;`
+`if (e.key === 'ArrowUp') rotationX += 15;`
+`if (e.key === 'ArrowDown') rotationX -= 15;`
+`cube.style.transform = "rotateX(" + rotationX + "deg) rotateY(" + rotationY + "deg)";`
 `});`
 
 ## Performance Considerations
@@ -211,10 +211,10 @@ The block does not currently use CSS variables. Consider adding:
 
 `Suggested CSS Variable Pattern`
 `.tdcube {`
-`  --cube-size: 200px;`
-`  --cube-face-opacity: 0.8;`
-`  --cube-transition: 0.5s;`
-`  --cube-perspective: 1000px;`
+`--cube-size: 200px;`
+`--cube-face-opacity: 0.8;`
+`--cube-transition: 0.5s;`
+`--cube-perspective: 1000px;`
 `}`
 
 ### Sizing
@@ -267,8 +267,8 @@ The cube uses BEM naming convention:
 
 `Face Images`
 `.cube__face {`
-`  background-size: cover;`
-`  background-position: center;`
+`background-size: cover;`
+`background-position: center;`
 `}`
 
 ## Dependencies
@@ -332,26 +332,31 @@ The cube uses BEM naming convention:
 ### Common Issues
 
 **Cube appears flat / no 3D effect**
+
 - Check browser support for `transform-style: preserve-3d`
 - Verify parent elements don't have `overflow: hidden`
 - Ensure no conflicting transforms on parent elements
 
 **Images not displaying**
+
 - Verify image paths are correct
 - Check image URLs in browser console
 - Ensure images are accessible (CORS, 404 errors)
 
 **Rotation not working**
+
 - Check JavaScript console for errors
 - Verify mouse event listeners are attached
 - Test with different mouse/trackpad
 
 **Double-click navigation not working**
+
 - Verify links in markdown table
 - Check for JavaScript errors
 - Test double-click timing (may need adjustment)
 
 **Performance issues**
+
 - Reduce image sizes (optimize for web)
 - Check for other JavaScript conflicts
 - Verify hardware acceleration is enabled

@@ -87,6 +87,7 @@ The footer document (e.g., `/footer`) can contain any content structure you need
 ⚠️ **This block uses standard EDS patterns and does not require global selectors.**
 
 This block:
+
 1. **Loads footer content via fragment pattern** - Uses `loadFragment()` from fragment block
 2. **Appends to block element** - Standard EDS block decoration
 3. **No global side effects** - All operations scoped to block element
@@ -108,6 +109,7 @@ footer: /path/to/custom-footer
 ### Styling
 
 The footer uses CSS variables from global styles:
+
 - `--light-color` - Background color (from `/styles/styles.css`)
 - `--body-font-size-s` - Font size (from `/styles/styles.css`)
 

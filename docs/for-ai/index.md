@@ -1,4 +1,5 @@
 # EDS Documentation Index
+
 ## Comprehensive Navigation Guide for Adobe Edge Delivery Services Development
 
 This index provides structured access to all documentation within the `docs/for-ai` directory, organized by development workflow and complexity patterns. The documentation supports both human developers and AI assistants working with Adobe Edge Delivery Services (EDS) applications.
@@ -7,7 +8,8 @@ This index provides structured access to all documentation within the `docs/for-
 
 ## 📋 Quick Reference
 
-### 🚀 New to EDS? Start Here!
+### 🚀 New to EDS? Start Here
+
 - **[`getting-started-guide.md`](getting-started-guide.md)** - **Quick reference for progressive learning paths**
   - Role-based learning paths (New Developer, Experienced Developer, Architect)
   - Quick start by component type (Simple, Interactive, Performance-Critical)
@@ -15,6 +17,7 @@ This index provides structured access to all documentation within the `docs/for-
   - Progressive learning recommendations
 
 ### 📓 Creating Tutorials & Documentation?
+
 - **[`explaining-educational-notebooks.md`](explaining-educational-notebooks.md)** - **Create interactive tutorials as SPAs**
   - Transform text into engaging interactive content
   - Blog posts, tutorials, reference guides, demos
@@ -32,6 +35,7 @@ This index provides structured access to all documentation within the `docs/for-
   - Best practices and common fixes
 
 ### Essential Starting Points
+
 - **New to EDS?** → Start with [`getting-started-guide.md`](getting-started-guide.md) then [`eds.md`](eds.md)
 - **Building Components?** → See [Implementation Guides](#-implementation-guides)
 - **Testing Components?** → Check [Testing and Debugging](#-testing-and-debugging)
@@ -39,6 +43,7 @@ This index provides structured access to all documentation within the `docs/for-
 - **Navigation Strategy?** → Review [`document-relationship-mapping.md`](document-relationship-mapping.md)
 
 ### Development Patterns
+
 - **Simple Components** → [`implementation/raw-eds-blocks-guide.md`](implementation/raw-eds-blocks-guide.md)
 - **Complex Components** → [`implementation/complex-eds-blocks-guide.md`](implementation/complex-eds-blocks-guide.md)
 - **Architecture Decisions** → [`implementation/build-blocks-clarification.md`](implementation/build-blocks-clarification.md)
@@ -48,6 +53,7 @@ This index provides structured access to all documentation within the `docs/for-
 ## 🔧 Implementation Guides
 
 ### Component Development Patterns
+
 - **[`implementation/raw-eds-blocks-guide.md`](implementation/raw-eds-blocks-guide.md)**
   - Simple, EDS-native component development
   - Vanilla JavaScript and minimal dependencies
@@ -67,6 +73,7 @@ This index provides structured access to all documentation within the `docs/for-
   - Target: Developers creating complex, library-dependent components
 
 ### Architecture and Design Philosophy
+
 - **[`implementation/block-architecture-standards.md`](implementation/block-architecture-standards.md)**
   - Comprehensive dual-pattern architecture (EDS-Native vs Build-Enhanced)
   - File naming conventions and quality standards
@@ -92,6 +99,7 @@ This index provides structured access to all documentation within the `docs/for-
   - Target: All developers, especially those new to the project structure
 
 ### Infrastructure and Operations
+
 - **[`cloudflare/cloudflare.md`](../../cloudflare/cloudflare.md)**
   - Complete Cloudflare CDN configuration reference
   - Adobe Edge Delivery Services integration with Cloudflare Worker
@@ -115,6 +123,7 @@ This index provides structured access to all documentation within the `docs/for-
   - Target: AI assistants, DevOps, system administrators configuring EDS projects
 
 ### Comprehensive Development Guide
+
 - **[`eds.md`](eds.md)**
   - Complete EDS development guide (1,937 lines)
   - Document transformation journey and content processing
@@ -127,6 +136,7 @@ This index provides structured access to all documentation within the `docs/for-
 ## 🧪 Testing and Debugging
 
 ### Testing Standards and Frameworks
+
 - **[`testing/eds-native-testing-standards.md`](testing/eds-native-testing-standards.md)**
   - Testing standards for EDS-Native pattern components
   - Test file structure and EDS integration patterns
@@ -159,6 +169,7 @@ This index provides structured access to all documentation within the `docs/for-
   - Target: All developers, essential for debugging workflows
 
 ### Advanced Debugging and Instrumentation
+
 - **[`testing/eds-architecture-and-testing-guide.md`](testing/eds-architecture-and-testing-guide.md)**
   - Advanced debugging strategies and file replacement workflows
   - Performance instrumentation and monitoring techniques
@@ -182,6 +193,7 @@ This index provides structured access to all documentation within the `docs/for-
 ## 📚 Reference Documentation
 
 ### Navigation and Cross-Reference Guides
+
 - **[`document-relationship-mapping.md`](document-relationship-mapping.md)**
   - Cross-reference analysis and bidirectional link strategy
   - User journey pathways and navigation flows
@@ -195,6 +207,7 @@ This index provides structured access to all documentation within the `docs/for-
   - Target: All users seeking efficient entry points into the documentation
 
 ### Comprehensive References
+
 - **[`eds-appendix.md`](eds-appendix.md)**
   - Comprehensive EDS development reference
   - Patterns, best practices, and implementation details
@@ -208,6 +221,7 @@ This index provides structured access to all documentation within the `docs/for-
   - Target: Architects and senior developers
 
 ### Development Environment
+
 - **[`../Server-README.md`](../Server-README.md)**
   - Development server documentation and configuration
   - Local development workflow and proxy setup
@@ -219,6 +233,7 @@ This index provides structured access to all documentation within the `docs/for-
 ## 🐛 Bug Fixes & Known Issues
 
 ### Resolved Issues
+
 - **`showPreview()` Notebook Mode Fix (2025-11-21)**
   - Fixed `showPreview()` not working in ipynb-viewer notebook mode
   - Enhanced error handling with user-friendly messages
@@ -230,6 +245,7 @@ This index provides structured access to all documentation within the `docs/for-
 ## 📋 Project Guidelines
 
 ### Application Architecture
+
 - **[`guidelines/app-flow.md`](guidelines/app-flow.md)**
   - Complete application flow for EDS applications
   - User journeys, conditional paths, and error handling
@@ -256,6 +272,7 @@ This index provides structured access to all documentation within the `docs/for-
   - Target: Developers, designers, and AI assistants creating blocks
 
 ### Project Management and Requirements
+
 - **[`guidelines/prd.md`](guidelines/prd.md)**
   - Product Requirements Document for EDS applications
   - Objectives, features, and technical requirements
@@ -279,6 +296,7 @@ This index provides structured access to all documentation within the `docs/for-
 ## 🎯 Documentation by Target Audience
 
 ### For New Developers
+
 1. [`eds.md`](eds.md) - Start here for comprehensive overview
 2. [`implementation/raw-eds-blocks-guide.md`](implementation/raw-eds-blocks-guide.md) - Simple component development
 3. [`../Server-README.md`](../Server-README.md) - Local development setup
@@ -287,6 +305,7 @@ This index provides structured access to all documentation within the `docs/for-
 6. [`explaining-presentation-notebooks.md`](explaining-presentation-notebooks.md) - Create professional presentations
 
 ### For Experienced Developers
+
 1. [`implementation/block-architecture-standards.md`](implementation/block-architecture-standards.md) - Architecture patterns
 2. [`implementation/complex-eds-blocks-guide.md`](implementation/complex-eds-blocks-guide.md) - Advanced components
 3. [`testing/eds-native-testing-standards.md`](testing/eds-native-testing-standards.md) - Testing frameworks
@@ -294,12 +313,14 @@ This index provides structured access to all documentation within the `docs/for-
 5. [`testing/debug.md`](testing/debug.md) - Debugging workflows
 
 ### For Architects and Technical Leads
+
 1. [`implementation/design-philosophy-guide.md`](implementation/design-philosophy-guide.md) - Design decisions
 2. [`testing/eds-architecture-and-testing-guide.md`](testing/eds-architecture-and-testing-guide.md) - Advanced debugging
 3. [`eds-webcomponents-review.md`](eds-webcomponents-review.md) - Architecture analysis
 4. [`guidelines/backend-structure.md`](guidelines/backend-structure.md) - System architecture
 
 ### For Project Managers and Stakeholders
+
 1. [`guidelines/prd.md`](guidelines/prd.md) - Project requirements
 2. [`guidelines/app-flow.md`](guidelines/app-flow.md) - Application workflows
 3. [`guidelines/tech-stack.md`](guidelines/tech-stack.md) - Technology decisions
@@ -310,26 +331,31 @@ This index provides structured access to all documentation within the `docs/for-
 ## 🔄 Development Workflow Navigation
 
 ### Planning Phase
+
 - [`guidelines/prd.md`](guidelines/prd.md) - Requirements and objectives
 - [`implementation/design-philosophy-guide.md`](implementation/design-philosophy-guide.md) - Approach selection
 - [`implementation/build-blocks-clarification.md`](implementation/build-blocks-clarification.md) - Architecture decisions
 
 ### Development Phase
+
 - [`implementation/block-architecture-standards.md`](implementation/block-architecture-standards.md) - Standards and patterns
 - [`implementation/raw-eds-blocks-guide.md`](implementation/raw-eds-blocks-guide.md) OR [`implementation/complex-eds-blocks-guide.md`](implementation/complex-eds-blocks-guide.md) - Implementation
 - [`../Server-README.md`](../Server-README.md) - Local development
 
 ### Testing Phase
+
 - [`testing/eds-native-testing-standards.md`](testing/eds-native-testing-standards.md) - Testing standards
 - [`explaining-jupyter.md`](explaining-jupyter.md) - Interactive testing with notebooks
 - [`testing/debug.md`](testing/debug.md) - Debugging procedures
 - [`testing/instrumentation-how-it-works.md`](testing/instrumentation-how-it-works.md) - Performance analysis
 
 ### Documentation Phase
+
 - [`explaining-educational-notebooks.md`](explaining-educational-notebooks.md) - Create tutorials and interactive guides
 - Use `/create-notebook` command for guided notebook creation
 
 ### Deployment Phase
+
 - [`guidelines/backend-structure.md`](guidelines/backend-structure.md) - Deployment architecture
 - [`guidelines/security-checklist.md`](guidelines/security-checklist.md) - Security validation
 - [`testing/investigation.md`](testing/investigation.md) - Performance verification
@@ -339,15 +365,19 @@ This index provides structured access to all documentation within the `docs/for-
 ## 🏷️ Documentation Categories
 
 ### **Implementation Guides** (7 documents)
+
 Component development patterns, architecture standards, and practical implementation guides
 
 ### **Testing & Debugging** (7 documents)
+
 Testing frameworks, debugging procedures, performance analysis, and interactive testing with Jupyter notebooks
 
 ### **Project Guidelines** (6 documents)
+
 Project management, requirements, and organizational standards
 
 ### **Reference Materials** (3 documents)
+
 Comprehensive references and detailed analysis documents
 
 ---
@@ -355,23 +385,27 @@ Comprehensive references and detailed analysis documents
 ## 📖 Key Concepts Covered
 
 ### **EDS Core Concepts**
+
 - Document-to-website transformation pipeline
 - Block-based component architecture
 - Content-first development approach
 - Performance optimization (Core Web Vitals)
 
 ### **Development Patterns**
+
 - **EDS-Native Pattern**: Simple vanilla JavaScript components
 - **Build-Enhanced Pattern**: Complex components with external dependencies
 - **Dual-Directory Architecture**: /build/ for development, /blocks/ for deployment
 
 ### **Technical Standards**
+
 - Modern JavaScript (ES modules) without TypeScript
 - Pure CSS without preprocessors
 - Minimal dependencies and build steps
 - Accessibility and performance focus
 
 ### **Testing & Quality**
+
 - Comprehensive testing strategies
 - Interactive testing with Jupyter notebooks
 - Performance instrumentation
@@ -379,6 +413,7 @@ Comprehensive references and detailed analysis documents
 - Code quality standards
 
 ### **Documentation & Tutorials**
+
 - Educational Jupyter notebooks as SPAs
 - Transform text into interactive tutorials
 - Progressive learning with demonstrations
@@ -389,6 +424,7 @@ Comprehensive references and detailed analysis documents
 ## 🚀 Getting Started Recommendations
 
 ### **For AI Assistants**
+
 1. Review [`document-relationship-mapping.md`](document-relationship-mapping.md) for navigation strategy and cross-reference analysis
 2. Use [`getting-started-guide.md`](getting-started-guide.md) for user journey pathways and progressive learning paths
 3. Read [`eds.md`](eds.md) for comprehensive EDS understanding
@@ -398,6 +434,7 @@ Comprehensive references and detailed analysis documents
 7. Use [`testing/debug.md`](testing/debug.md) for troubleshooting workflows
 
 ### **For Human Developers**
+
 1. Start with [`getting-started-guide.md`](getting-started-guide.md) for role-based learning paths
 2. Follow with [`eds.md`](eds.md) for complete overview
 3. Choose implementation guide based on component complexity
@@ -406,6 +443,7 @@ Comprehensive references and detailed analysis documents
 6. Create tutorials and documentation using [`explaining-educational-notebooks.md`](explaining-educational-notebooks.md)
 
 ### **For Project Teams**
+
 1. Review [`guidelines/prd.md`](guidelines/prd.md) for project scope
 2. Establish workflows using [`guidelines/app-flow.md`](guidelines/app-flow.md)
 3. Implement security measures from [`guidelines/security-checklist.md`](guidelines/security-checklist.md)

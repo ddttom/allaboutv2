@@ -5,6 +5,7 @@ This guide shows content authors how to use the Blogroll block in their pages.
 ## What is the Blogroll Block?
 
 The Blogroll block displays a list of your blog posts with smart filtering and organization. It automatically:
+
 - Groups related posts into series
 - Sorts posts by part number or alphabetically
 - Shows post titles, dates, and descriptions
@@ -101,6 +102,7 @@ Shows complete post information including descriptions:
 | path=/guides |
 
 **Features:**
+
 - Post titles as clickable links
 - Publication dates
 - Full descriptions
@@ -108,6 +110,7 @@ Shows complete post information including descriptions:
 - Centered layout with max-width
 
 **Best for:**
+
 - Blog category pages
 - Archive pages
 - Main blog listing pages
@@ -121,6 +124,7 @@ Shows a floating icon with slide-out panel:
 | path=* |
 
 **Features:**
+
 - Fixed floating icon (book emoji)
 - "Blogroll" label next to icon
 - Slide-out panel from left side
@@ -129,6 +133,7 @@ Shows a floating icon with slide-out panel:
 - Escape key to close
 
 **Best for:**
+
 - Sidebar navigation
 - Related posts section
 - Long-form content pages
@@ -189,11 +194,13 @@ The blogroll automatically detects and groups series posts.
 Use this format for series posts:
 
 **Good Examples:**
+
 - "React Tutorial - Part 1"
 - "Getting Started with Vue - Part 2"
 - "Advanced TypeScript - Part 3"
 
 **Bad Examples:**
+
 - "React Tutorial (Part 1)" - Wrong brackets
 - "React Tutorial Part 1" - Missing hyphen
 - "React Tutorial pt 1" - Not recognized
@@ -208,6 +215,7 @@ Use this format for series posts:
 **Example:**
 
 Given these posts:
+
 - "React Basics - Part 1"
 - "React Basics - Part 2"
 - "React Basics - Part 3"
@@ -255,11 +263,13 @@ Compact mode works great for persistent navigation:
 Use specific paths to avoid showing too many posts:
 
 **Too Broad:**
+
 | Blogroll |
 |----------|
 | path=/blogs |
 
 **Better:**
+
 | Blogroll |
 |----------|
 | path=/blogs/javascript/tutorials |
@@ -293,6 +303,7 @@ Preview your page to verify filters work correctly. Adjust as needed.
 **Problem:** Blogroll says "No blog posts found."
 
 **Solutions:**
+
 1. Remove all filters to see if any posts exist
 2. Check if `/query-index.json` is accessible
 3. Verify path filters match actual post paths
@@ -303,6 +314,7 @@ Preview your page to verify filters work correctly. Adjust as needed.
 **Problem:** Seeing unexpected posts.
 
 **Solutions:**
+
 1. Check filter case sensitivity
 2. Verify `path=value` syntax (no spaces)
 3. Remember path filters override keywords
@@ -313,6 +325,7 @@ Preview your page to verify filters work correctly. Adjust as needed.
 **Problem:** Series posts appear separately.
 
 **Solutions:**
+
 1. Verify title format: "Name - Part N"
 2. Check for extra spaces or typos
 3. Ensure consistent naming across series
@@ -323,6 +336,7 @@ Preview your page to verify filters work correctly. Adjust as needed.
 **Problem:** No floating icon visible.
 
 **Solutions:**
+
 1. Verify class is `Blogroll (compact)` not just `Blogroll`
 2. Check for z-index conflicts with other elements
 3. Ensure JavaScript loaded successfully
@@ -376,12 +390,14 @@ To show only other series, use path filtering:
 ### When to Use Each Mode
 
 **Use Full Mode when:**
+
 - Main blog listing page
 - Category landing pages
 - Archive pages
 - Posts need descriptions visible
 
 **Use Compact Mode when:**
+
 - Sidebar navigation needed
 - Page has other primary content
 - Space is limited

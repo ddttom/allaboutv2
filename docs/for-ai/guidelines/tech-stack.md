@@ -15,6 +15,7 @@ This document outlines the technology stack for Edge Delivery Services (EDS) app
 ### Core Languages
 
 **JavaScript (ES2020+)**
+
 - Pure JavaScript without TypeScript
 - ES modules for code organisation
 - Async/await for asynchronous operations
@@ -23,6 +24,7 @@ This document outlines the technology stack for Edge Delivery Services (EDS) app
 *Rationale*: Eliminates build complexity while maintaining modern development practices.
 
 **CSS3**
+
 - Custom properties for theming
 - CSS Grid and Flexbox for layouts
 - Media queries for responsive design
@@ -31,6 +33,7 @@ This document outlines the technology stack for Edge Delivery Services (EDS) app
 *Rationale*: Direct CSS provides clear debugging and eliminates build steps.
 
 **HTML5**
+
 - Semantic markup standards
 - Progressive enhancement approach
 - Accessibility-first structure
@@ -39,6 +42,7 @@ This document outlines the technology stack for Edge Delivery Services (EDS) app
 ### JavaScript Frameworks and Libraries
 
 **None - Vanilla JavaScript**
+
 - No React, Vue, or Angular
 - No UI component libraries
 - Custom DOM helper utilities
@@ -49,12 +53,14 @@ This document outlines the technology stack for Edge Delivery Services (EDS) app
 ### Build Tools
 
 **Minimal Build Process**
+
 - ESLint for code quality
 - Stylelint for CSS standards
 - No bundlers (Webpack, Vite, Rollup)
 - No transpilers (Babel, TypeScript)
 
 *Configuration*:
+
 ```json
 {
   "scripts": {
@@ -69,18 +75,21 @@ This document outlines the technology stack for Edge Delivery Services (EDS) app
 ### Development Tools
 
 **Local Development Server**
+
 - Custom Node.js server
 - Zero external dependencies
 - Local-first with proxy fallback
 - Automatic MIME type detection
 
 *Key Features*:
+
 - Serves local files first
 - Proxies missing assets from production
 - CORS headers for cross-origin requests
 - Comprehensive error logging
 
 **Code Quality Tools**
+
 - ESLint with Airbnb base configuration
 - Stylelint with standard configuration
 - JSDoc for function documentation
@@ -91,12 +100,14 @@ This document outlines the technology stack for Edge Delivery Services (EDS) app
 ### Adobe Edge Delivery Services
 
 **Core Platform**
+
 - Adobe Helix/Franklin architecture
 - Static site generation from Google Docs
 - CDN-first content delivery
 - Automatic performance optimisation
 
 **Content Processing**
+
 - Google Docs as content source
 - Automatic HTML generation
 - Image optimisation pipeline
@@ -105,12 +116,14 @@ This document outlines the technology stack for Edge Delivery Services (EDS) app
 ### Server Infrastructure
 
 **Hosting Platform**
+
 - Adobe Edge Delivery Services
 - Global CDN distribution
 - Automatic scaling
 - Performance monitoring
 
 **Domain Management**
+
 - Custom domain configuration
 - SSL certificate management
 - DNS configuration
@@ -119,12 +132,14 @@ This document outlines the technology stack for Edge Delivery Services (EDS) app
 ### APIs and Services
 
 **Google Workspace Integration**
+
 - Google Docs API for content retrieval
 - Google Drive API for file management
 - Google Sheets API for data sources
 - Real-time collaboration features
 
 **Adobe Services**
+
 - Edge Delivery Services for hosting
 - Adobe Analytics for tracking
 - Adobe Target for personalisation
@@ -135,12 +150,14 @@ This document outlines the technology stack for Edge Delivery Services (EDS) app
 ### Content Storage
 
 **Google Drive**
+
 - Primary content storage
 - Version control through Google Drive history
 - Collaborative editing capabilities
 - Automatic backup and synchronisation
 
 **Static File Generation**
+
 - HTML files generated from Google Docs
 - JSON files for dynamic content queries
 - Optimised images and media assets
@@ -149,12 +166,14 @@ This document outlines the technology stack for Edge Delivery Services (EDS) app
 ### Data Management
 
 **Query Index System**
+
 - Automatically generated from published content
 - JSON format for JavaScript consumption
 - Filtered by content type and metadata
 - Updated on content publication
 
 *Structure*:
+
 ```json
 {
   "total": 150,
@@ -172,6 +191,7 @@ This document outlines the technology stack for Edge Delivery Services (EDS) app
 ```
 
 **No Traditional Database**
+
 - No SQL databases required
 - No NoSQL databases needed
 - File-based data storage
@@ -182,12 +202,14 @@ This document outlines the technology stack for Edge Delivery Services (EDS) app
 ### Content Management
 
 **Google Workspace**
+
 - Google Docs for content authoring
 - Google Drive for file storage
 - Google Sheets for data management
 - Google Analytics for tracking
 
 **Adobe Ecosystem**
+
 - Edge Delivery Services for hosting
 - Adobe Analytics for advanced metrics
 - Adobe Target for personalisation
@@ -196,12 +218,14 @@ This document outlines the technology stack for Edge Delivery Services (EDS) app
 ### Development Services
 
 **Version Control**
+
 - GitHub for code repository
 - Git-based workflow
 - Pull request reviews
 - Automated testing
 
 **Monitoring and Analytics**
+
 - Core Web Vitals monitoring
 - Error tracking and logging
 - Performance metrics collection
@@ -210,12 +234,14 @@ This document outlines the technology stack for Edge Delivery Services (EDS) app
 ### Third-Party Services
 
 **Performance Monitoring**
+
 - Real User Monitoring (RUM)
 - Synthetic testing
 - Core Web Vitals tracking
 - Performance budgets
 
 **Security Services**
+
 - SSL certificate management
 - Content Security Policy
 - DDoS protection
@@ -226,12 +252,14 @@ This document outlines the technology stack for Edge Delivery Services (EDS) app
 ### Local Development Setup
 
 **Requirements**
+
 - Node.js 18+ (for built-in fetch support)
 - Git for version control
 - Modern web browser for testing
 - Text editor with ESLint support
 
 **Setup Process**
+
 ```bash
 # Clone repository
 git clone https://github.com/your-org/your-eds-app.git
@@ -250,6 +278,7 @@ open http://localhost:3000
 ### Development Server Architecture
 
 **Core Components**
+
 ```javascript
 // server.js structure
 import { createServer } from 'http';
@@ -268,6 +297,7 @@ const server = createServer(async (req, res) => {
 ```
 
 **Key Features**
+
 - Zero external dependencies
 - Automatic MIME type detection
 - Comprehensive error handling
@@ -278,6 +308,7 @@ const server = createServer(async (req, res) => {
 ### Block System
 
 **Block Structure**
+
 ```
 blocks/
 ├── block-name/
@@ -287,6 +318,7 @@ blocks/
 ```
 
 **Block Implementation**
+
 ```javascript
 // block-name.js
 export default function decorate(block) {
@@ -303,12 +335,14 @@ export default function decorate(block) {
 ### Content Processing
 
 **Document Structure Recognition**
+
 - Table-based block definition
 - Block name and configuration parsing
 - Content extraction and processing
 - Metadata and SEO handling
 
 **Automatic Optimisation**
+
 - Image compression and format conversion
 - CSS minification and critical path
 - JavaScript optimisation
@@ -319,12 +353,14 @@ export default function decorate(block) {
 ### Build Process
 
 **No Build Required**
+
 - Direct file serving
 - No compilation steps
 - No bundling process
 - No asset optimisation needed
 
 **Quality Assurance**
+
 - ESLint validation
 - Stylelint validation
 - Unit test execution
@@ -333,12 +369,14 @@ export default function decorate(block) {
 ### Deployment Strategy
 
 **Continuous Integration**
+
 - GitHub Actions for automation
 - Automated testing on pull requests
 - Code quality checks
 - Performance regression testing
 
 **EDS Deployment Process**
+
 1. Code review and approval
 2. Merge to main branch
 3. EDS automatic processing
@@ -350,18 +388,21 @@ export default function decorate(block) {
 ### Asset Delivery
 
 **Image Optimisation**
+
 - Automatic WebP conversion
 - Responsive image sizing
 - Lazy loading implementation
 - Progressive enhancement
 
 **CSS Optimisation**
+
 - Critical CSS inlining
 - Non-blocking CSS loading
 - CSS custom properties for theming
 - Minimal CSS footprint
 
 **JavaScript Optimisation**
+
 - ES modules for tree shaking
 - Async loading for non-critical scripts
 - Progressive enhancement
@@ -370,12 +411,14 @@ export default function decorate(block) {
 ### Caching Strategy
 
 **Static Assets**
+
 - Long-term caching with versioning
 - CDN-based distribution
 - Browser caching optimisation
 - Cache invalidation strategies
 
 **Dynamic Content**
+
 - Short-term caching for dynamic data
 - Edge-side includes for personalisation
 - Cache warming strategies
@@ -386,12 +429,14 @@ export default function decorate(block) {
 ### Content Security
 
 **Content Security Policy**
+
 - Strict CSP headers
 - Script source restrictions
 - Style source limitations
 - Image source controls
 
 **HTTPS Enforcement**
+
 - SSL/TLS encryption
 - HTTP to HTTPS redirects
 - Secure cookie configuration
@@ -400,12 +445,14 @@ export default function decorate(block) {
 ### Code Security
 
 **Dependency Management**
+
 - Minimal external dependencies
 - Regular security audits
 - Automated vulnerability scanning
 - Dependency version pinning
 
 **Input Validation**
+
 - Content sanitisation
 - XSS prevention
 - CSRF protection
@@ -416,12 +463,14 @@ export default function decorate(block) {
 ### Performance Monitoring
 
 **Core Web Vitals**
+
 - Largest Contentful Paint (LCP)
 - First Input Delay (FID)
 - Cumulative Layout Shift (CLS)
 - Time to First Byte (TTFB)
 
 **Error Tracking**
+
 - JavaScript error monitoring
 - Network error tracking
 - Performance regression detection
@@ -430,12 +479,14 @@ export default function decorate(block) {
 ### Maintenance Procedures
 
 **Regular Updates**
+
 - Dependency security updates
 - Browser compatibility testing
 - Performance optimisation reviews
 - Code quality improvements
 
 **Backup and Recovery**
+
 - Google Drive automatic backup
 - Git-based version control
 - Disaster recovery procedures
@@ -446,12 +497,14 @@ export default function decorate(block) {
 ### Why Vanilla JavaScript?
 
 **Benefits**
+
 - Eliminates framework dependencies
 - Reduces bundle size significantly
 - Simplifies debugging process
 - Improves long-term maintainability
 
 **Trade-offs**
+
 - More manual DOM manipulation
 - No component lifecycle management
 - Requires more boilerplate code
@@ -460,12 +513,14 @@ export default function decorate(block) {
 ### Why No Build Process?
 
 **Benefits**
+
 - Faster development iterations
 - Eliminates build complexity
 - Reduces deployment time
 - Simplifies debugging
 
 **Trade-offs**
+
 - No automatic optimisations
 - Manual asset management
 - No code splitting
@@ -474,12 +529,14 @@ export default function decorate(block) {
 ### Why Adobe EDS?
 
 **Benefits**
+
 - Excellent performance out-of-the-box
 - Minimal infrastructure management
 - Integrated content management
 - Automatic optimisations
 
 **Trade-offs**
+
 - Platform lock-in
 - Limited customisation options
 - Specific workflow requirements
@@ -490,12 +547,14 @@ export default function decorate(block) {
 ### Content Authoring
 
 **Document Structure**
+
 - Use table-based block definitions
 - Follow semantic HTML principles
 - Implement proper heading hierarchy
 - Include alt text for images
 
 **Block Configuration**
+
 - Use consistent naming conventions
 - Document block variations
 - Implement responsive design
@@ -504,12 +563,14 @@ export default function decorate(block) {
 ### Development Workflow
 
 **Block Development**
+
 - Create comprehensive documentation
 - Implement error handling
 - Test across devices and browsers
 - Follow performance best practices
 
 **Code Quality**
+
 - Use ESLint and Stylelint
 - Write meaningful comments
 - Implement unit tests
@@ -520,12 +581,14 @@ export default function decorate(block) {
 ### Scalability Planning
 
 **Traffic Growth**
+
 - CDN scaling capabilities
 - Performance monitoring thresholds
 - Resource allocation planning
 - Capacity planning procedures
 
 **Feature Expansion**
+
 - New block development
 - Third-party integrations
 - Advanced functionality additions
@@ -534,12 +597,14 @@ export default function decorate(block) {
 ### Technology Evolution
 
 **Web Standards**
+
 - New JavaScript features adoption
 - CSS specification updates
 - HTML5 evolution
 - Browser API improvements
 
 **EDS Platform Updates**
+
 - Adobe EDS feature updates
 - Google Workspace API changes
 - Third-party service updates
@@ -556,18 +621,21 @@ By focusing on web standards and minimal dependencies, the stack provides a soli
 ## See Also
 
 ### Core EDS Architecture & Development
+
 - **[EDS Overview](../eds.md)** - Complete introduction to Edge Delivery Services architecture and core concepts
 - **[Frontend Guidelines](frontend-guidelines.md)** - Coding standards and best practices for EDS frontend development
 - **[Backend Structure](backend-structure.md)** - EDS backend architecture and serverless implementation patterns
 - **[Design Philosophy Guide](../design-philosophy-guide.md)** - Understanding the philosophical principles behind EDS architecture
 
 ### Development Standards & Implementation
+
 - **[Block Architecture Standards](../block-architecture-standards.md)** - Comprehensive standards for EDS block development
 - **[Raw EDS Blocks Guide](../raw-eds-blocks-guide.md)** - Step-by-step guide for creating simple EDS blocks
 - **[Complex EDS Blocks Guide](../complex-eds-blocks-guide.md)** - Advanced block development with build tools
 - **[Server README](../../Server-README.md)** - Development server setup and configuration
 
 ### Quality Assurance & Security
+
 - **[Security Checklist](security-checklist.md)** - Security best practices and compliance requirements
 - **[EDS Native Testing Standards](../eds-native-testing-standards.md)** - Testing standards for EDS components
 - **[Debug Guide](../debug.md)** - Complete debugging policy and approval requirements

@@ -10,6 +10,7 @@ The tags block displays metadata-driven tags that are automatically populated fr
 |------|
 
 The block will automatically:
+
 - Read the page metadata from `window.siteConfig`
 - Display Content Technology tag (if defined)
 - Display Category tag (if defined)
@@ -27,6 +28,7 @@ Tags are populated from page metadata defined at the bottom of your Google Doc:
 | category        | Tutorial                 |
 
 **Supported Metadata Keys:**
+
 - `contenttechnology` - Displayed as primary tag (red border, left position)
 - `category` - Displayed as secondary tag (blue border, right position)
 
@@ -48,6 +50,7 @@ When you use this block with metadata defined, it will render:
 ### Example 1: Both Tags Present
 
 **Google Doc Metadata:**
+
 ```
 | metadata        | value          |
 |:--------------- |:-------------- |
@@ -56,6 +59,7 @@ When you use this block with metadata defined, it will render:
 ```
 
 **Rendered Output:**
+
 ```
 [Edge Delivery]  [Guide]
 ```
@@ -63,6 +67,7 @@ When you use this block with metadata defined, it will render:
 ### Example 2: Only Content Technology
 
 **Google Doc Metadata:**
+
 ```
 | metadata        | value          |
 |:--------------- |:-------------- |
@@ -70,6 +75,7 @@ When you use this block with metadata defined, it will render:
 ```
 
 **Rendered Output:**
+
 ```
 [JavaScript]
 ```
@@ -77,6 +83,7 @@ When you use this block with metadata defined, it will render:
 ### Example 3: Only Category
 
 **Google Doc Metadata:**
+
 ```
 | metadata        | value          |
 |:--------------- |:-------------- |
@@ -84,6 +91,7 @@ When you use this block with metadata defined, it will render:
 ```
 
 **Rendered Output:**
+
 ```
 [Blog Post]
 ```
@@ -152,6 +160,7 @@ Blog post content...
 **Problem:** Block is present but no tags display
 
 **Solutions:**
+
 - Verify metadata table exists at bottom of Google Doc
 - Check spelling: use `contenttechnology` and `category` (lowercase, no spaces)
 - Ensure metadata values are not empty
@@ -162,6 +171,7 @@ Blog post content...
 **Problem:** Tags appear but colors are incorrect
 
 **Solution:**
+
 - Verify CSS variables are defined in your theme
 - Check `--color-heart-red` for primary tag
 - Check `--color-dark-blue` for secondary tag
@@ -171,6 +181,7 @@ Blog post content...
 **Problem:** Changed metadata but tags still show old values
 
 **Solution:**
+
 - Republish the page in Google Docs
 - Clear browser cache
 - Check that `window.siteConfig` is loading correctly
@@ -193,11 +204,11 @@ To customize tag appearance, override these CSS variables:
 
 `CSS Variables`
 `:root {`
-`  --color-heart-red: #e74c3c;`
-`  --color-dark-blue: #2c3e50;`
-`  --spacing-s: 1rem;`
-`  --spacing-xxs: 0.25rem;`
-`  --heading-font-size-xs: 0.875rem;`
+`--color-heart-red: #e74c3c;`
+`--color-dark-blue: #2c3e50;`
+`--spacing-s: 1rem;`
+`--spacing-xxs: 0.25rem;`
+`--heading-font-size-xs: 0.875rem;`
 `}`
 
 ### HTML Structure
@@ -206,8 +217,8 @@ The block generates this structure:
 
 `HTML Output`
 `<div class="tags block">`
-`  <span class="card-tag">Edge Delivery</span>`
-`  <span class="card-tag alt">Tutorial</span>`
+`<span class="card-tag">Edge Delivery</span>`
+`<span class="card-tag alt">Tutorial</span>`
 `</div>`
 
 ## Advanced Usage
@@ -218,12 +229,12 @@ Tags can be used with JavaScript to filter content:
 
 `Filter by Tag Example`
 `const filterByTag = (tag) => {`
-`  const cards = document.querySelectorAll('.card');`
-`  cards.forEach(card => {`
-`    const tagBlock = card.querySelector('.tags');`
-`    const hasTag = tagBlock?.textContent.includes(tag);`
-`    card.style.display = hasTag ? 'block' : 'none';`
-`  });`
+`const cards = document.querySelectorAll('.card');`
+`cards.forEach(card => {`
+`const tagBlock = card.querySelector('.tags');`
+`const hasTag = tagBlock?.textContent.includes(tag);`
+`card.style.display = hasTag ? 'block' : 'none';`
+`});`
 `};`
 
 ### Tag Analytics
@@ -232,12 +243,12 @@ Track which tags are most popular:
 
 `Analytics Example`
 `const trackTags = () => {`
-`  const allTags = document.querySelectorAll('.card-tag');`
-`  allTags.forEach(tag => {`
-`    tag.addEventListener('click', () => {`
-`      console.log('Tag clicked:', tag.textContent);`
-`    });`
-`  });`
+`const allTags = document.querySelectorAll('.card-tag');`
+`allTags.forEach(tag => {`
+`tag.addEventListener('click', () => {`
+`console.log('Tag clicked:', tag.textContent);`
+`});`
+`});`
 `};`
 
 | metadata        |                                                                 |

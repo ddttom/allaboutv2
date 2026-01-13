@@ -559,6 +559,7 @@ export function createResponsiveImage(config) {
 ## See Also
 
 ### Core EDS Foundation & Architecture
+
 - **[EDS Overview](../eds.md)** - Complete introduction to Edge Delivery Services architecture and core concepts
 - **[Block Architecture Standards](../block-architecture-standards.md)** - Comprehensive standards for EDS block development and architectural patterns
 - **[EDS Architecture Standards](../eds-architecture-standards.md)** - Architectural patterns and standards for EDS-native block development
@@ -566,24 +567,28 @@ export function createResponsiveImage(config) {
 - **[CSS Naming Convention Style Guide](style-guide.md)** - Comprehensive CSS naming standards and conventions for EDS block development
 
 ### Implementation Guides & Patterns
+
 - **[Raw EDS Blocks Guide](../raw-eds-blocks-guide.md)** - Step-by-step guide for creating simple EDS blocks using vanilla JavaScript
 - **[Complex EDS Blocks Guide](../complex-eds-blocks-guide.md)** - Advanced block development with build tools and external dependencies
 - **[Build Blocks Clarification](../build-blocks-clarification.md)** - Understanding the dual-directory architecture and development workflows
 - **[Build Component Template](../build-component-template.md)** - Template for advanced build components with external dependencies
 
 ### Development Environment & Tools
+
 - **[Server README](../../Server-README.md)** - Development server setup and configuration for EDS block development and testing
 - **[EDS Native Testing Standards](../eds-native-testing-standards.md)** - Testing standards specifically for EDS-native pattern components
 - **[Performance Optimization](../performance-optimization.md)** - Techniques for optimizing EDS block performance and loading
 - **[JavaScript Patterns](../javascript-patterns.md)** - Reusable JavaScript patterns for EDS block development
 
 ### Testing & Quality Assurance
+
 - **[EDS Architecture and Testing Guide](../eds-architecture-and-testing-guide.md)** - Advanced testing workflows and file replacement strategies
 - **[Debug Guide](../debug.md)** - Complete debugging policy and approval requirements for development troubleshooting
 - **[Investigation](../investigation.md)** - Advanced investigation techniques and analysis methods
 - **[Error Handling Patterns](../error-handling-patterns.md)** - Comprehensive error handling strategies for EDS blocks
 
 ### Advanced Topics & Reference Materials
+
 - **[EDS Appendix](../eds-appendix.md)** - Comprehensive development reference guide with patterns and best practices
 - **[Instrumentation Guide](../instrumentation-how-it-works.md)** - Advanced instrumentation techniques and performance monitoring
 - **[Browser Compatibility](../browser-compatibility.md)** - Ensuring cross-browser compatibility for EDS implementations
@@ -592,6 +597,7 @@ export function createResponsiveImage(config) {
 ## Next Steps
 
 ### For Frontend Developers & Component Authors
+
 1. **Master the JavaScript guidelines** including ES modules, component structure patterns, and error handling for robust EDS block development
 2. **Implement the CSS guidelines** using design system integration, component styling patterns, and performance optimization techniques
 3. **Apply accessibility best practices** including semantic HTML, ARIA attributes, and keyboard navigation for inclusive component design
@@ -599,6 +605,7 @@ export function createResponsiveImage(config) {
 5. **Adopt code quality practices** including proper organization, documentation, and testing for maintainable frontend code
 
 ### For UX/UI Designers & Design System Teams
+
 1. **Understand the CSS guidelines** and how design tokens integrate with EDS component development for consistent visual design
 2. **Learn the accessibility requirements** and ensure designs support semantic HTML, keyboard navigation, and screen reader compatibility
 3. **Collaborate on performance optimization** by designing components that support lazy loading and efficient rendering patterns
@@ -606,6 +613,7 @@ export function createResponsiveImage(config) {
 5. **Establish design validation processes** that ensure components meet both visual and technical requirements outlined in these guidelines
 
 ### For QA Engineers & Test Specialists
+
 1. **Learn the testing guidelines** including unit testing patterns and integration testing approaches for comprehensive component validation
 2. **Understand the accessibility requirements** and create test scenarios that validate semantic HTML, ARIA attributes, and keyboard navigation
 3. **Implement performance testing** that validates lazy loading, resource optimization, and rendering efficiency
@@ -613,6 +621,7 @@ export function createResponsiveImage(config) {
 5. **Establish quality gates** that ensure components meet the code quality standards and best practices documented
 
 ### For Team Leads & Project Managers
+
 1. **Establish development standards** based on the comprehensive guidelines outlined for consistent team practices
 2. **Implement code review processes** that ensure adherence to JavaScript, CSS, accessibility, and performance guidelines
 3. **Plan training programs** that help team members understand and apply the frontend development best practices
@@ -620,6 +629,7 @@ export function createResponsiveImage(config) {
 5. **Create governance processes** that ensure ongoing compliance with the frontend development standards
 
 ### For DevOps & Build Engineers
+
 1. **Understand the performance guidelines** and how they affect build processes, asset optimization, and deployment strategies
 2. **Implement automated testing** that validates adherence to the code quality and performance standards outlined
 3. **Configure development environments** that support the JavaScript and CSS patterns demonstrated in these guidelines
@@ -627,6 +637,7 @@ export function createResponsiveImage(config) {
 5. **Create deployment procedures** that ensure the guidelines and standards are maintained in production environments
 
 ### For Security & Compliance Teams
+
 1. **Review the JavaScript patterns** to ensure they meet security standards for data handling and user interactions
 2. **Assess the accessibility guidelines** for compliance with WCAG standards and organizational accessibility requirements
 3. **Evaluate the performance optimization techniques** to ensure they don't introduce security vulnerabilities
@@ -634,6 +645,7 @@ export function createResponsiveImage(config) {
 5. **Monitor compliance** with the documented best practices and ensure they align with organizational security policies
 
 ### For AI Assistants & Automation
+
 1. **Master the comprehensive guidelines** for creating high-quality frontend code that follows EDS best practices
 2. **Understand the component patterns** including JavaScript structure, CSS organization, and accessibility requirements
 3. **Apply the testing and quality guidelines** when generating or reviewing frontend code for EDS projects

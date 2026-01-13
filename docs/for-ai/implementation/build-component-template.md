@@ -9,6 +9,7 @@
 ## Development Workflow
 
 ### Local Development
+
 ```bash
 cd build/[component-name]
 npm install
@@ -16,6 +17,7 @@ npm run dev  # Start development server with hot reload
 ```
 
 ### Build and Deploy
+
 ```bash
 cd build/[component-name]
 npm run build    # Build component with dependencies
@@ -78,24 +80,28 @@ This separation allows for sophisticated development workflows while maintaining
 ## See Also
 
 ### Core Development & Architecture
+
 - **[Complex EDS Blocks Guide](complex-eds-blocks-guide.md)** - Comprehensive guide for advanced block development with build tools and external dependencies
 - **[Build Blocks Clarification](build-blocks-clarification.md)** - Understanding the dual-directory architecture and development workflows
 - **[Block Architecture Standards](block-architecture-standards.md)** - Comprehensive standards for EDS block development and architectural patterns
 - **[Design Philosophy Guide](design-philosophy-guide.md)** - Understanding the philosophical principles behind EDS architecture decisions
 
 ### Development Environment & Tools
+
 - **[Server README](../../../Server-README.md)** - Development server setup and configuration for EDS block development and testing
 - **[EDS Overview](../eds.md)** - Complete introduction to Edge Delivery Services architecture and core concepts
 - **[EDS Architecture Standards](eds-architecture-standards.md)** - Architectural patterns and standards for EDS-native block development
 - **[Raw EDS Blocks Guide](raw-eds-blocks-guide.md)** - Step-by-step guide for creating simple EDS blocks as an alternative approach
 
 ### Testing & Quality Assurance
+
 - **[EDS Native Testing Standards](../testing/eds-native-testing-standards.md)** - Testing standards specifically for EDS-native pattern components
 - **[EDS Architecture and Testing Guide](../testing/eds-architecture-and-testing-guide.md)** - Advanced testing workflows and file replacement strategies
 - **[Debug Guide](../testing/debug.md)** - Complete debugging policy and approval requirements for development troubleshooting
 - **[Instrumentation Guide](../testing/instrumentation-how-it-works.md)** - Advanced instrumentation techniques and performance monitoring
 
 ### Advanced Topics & Patterns
+
 - **[Investigation](../testing/investigation.md)** - Advanced investigation techniques and analysis methods for complex components
 - **[JavaScript Patterns](javascript-patterns.md)** - Reusable JavaScript patterns for EDS block development
 - **[Error Handling Patterns](error-handling-patterns.md)** - Comprehensive error handling strategies for build components
@@ -104,6 +110,7 @@ This separation allows for sophisticated development workflows while maintaining
 ## Next Steps
 
 ### For Frontend Developers & Component Authors
+
 1. **Master the build workflow** by understanding the development-to-production pipeline and how it differs from simple EDS blocks
 2. **Learn the dual-directory architecture** and when to choose build components over simple blocks for complex functionality
 3. **Set up efficient development environments** using the provided build tools and hot reload capabilities
@@ -111,6 +118,7 @@ This separation allows for sophisticated development workflows while maintaining
 5. **Create comprehensive documentation** for both development workflows and end-user integration
 
 ### For DevOps & Build Engineers
+
 1. **Understand the build and deployment process** including bundling, dependency management, and EDS integration
 2. **Set up CI/CD pipelines** that can handle the build-to-blocks deployment workflow for automated component delivery
 3. **Configure development infrastructure** that supports both simple and complex component development patterns
@@ -118,6 +126,7 @@ This separation allows for sophisticated development workflows while maintaining
 5. **Create backup and recovery procedures** for build artifacts and deployment processes
 
 ### for Team Leads & Project Managers
+
 1. **Understand the complexity trade-offs** between simple EDS blocks and build components for project planning
 2. **Plan development timelines** that account for build processes, testing, and deployment workflows
 3. **Establish component architecture guidelines** that help teams choose between simple and complex development approaches
@@ -125,6 +134,7 @@ This separation allows for sophisticated development workflows while maintaining
 5. **Create governance processes** for approving complex components that require build processes
 
 ### For QA Engineers & Test Specialists
+
 1. **Learn the testing requirements** for build components including both development and production testing scenarios
 2. **Understand the deployment pipeline** and how to validate components at each stage of the build-to-blocks process
 3. **Create comprehensive test suites** that cover both bundled and unbundled versions of components
@@ -132,6 +142,7 @@ This separation allows for sophisticated development workflows while maintaining
 5. **Establish quality gates** that ensure build components meet performance and compatibility standards
 
 ### For System Administrators & Infrastructure Teams
+
 1. **Understand the build tool requirements** including Node.js, npm, and build dependencies for development environments
 2. **Configure build infrastructure** that supports the development-to-production workflow for complex components
 3. **Set up monitoring** for build processes, deployment pipelines, and component performance in production
@@ -139,6 +150,7 @@ This separation allows for sophisticated development workflows while maintaining
 5. **Create maintenance procedures** for build tools, dependencies, and deployment infrastructure
 
 ### For Security & Compliance Teams
+
 1. **Review the build process security** including dependency scanning, vulnerability assessment, and supply chain security
 2. **Assess external dependencies** and ensure they meet organizational security and compliance requirements
 3. **Establish approval processes** for complex components that introduce external dependencies and build processes
@@ -146,6 +158,7 @@ This separation allows for sophisticated development workflows while maintaining
 5. **Create security guidelines** for teams developing build components with external libraries and dependencies
 
 ### For AI Assistants & Automation
+
 1. **Master the build component template** and understand how to create complex components that require sophisticated tooling
 2. **Learn the development workflow** including build processes, dependency management, and deployment procedures
 3. **Understand the architecture decisions** that determine when to use build components vs simple EDS blocks

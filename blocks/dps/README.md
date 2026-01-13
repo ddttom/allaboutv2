@@ -26,6 +26,7 @@ A powerful, full-featured presentation system that transforms structured content
 The Dynamic Presentation System (DPS) block is a comprehensive presentation framework designed for Adobe Edge Delivery Services (EDS). It transforms simple markdown tables into full-screen, interactive presentations with professional features comparable to traditional presentation software.
 
 **Primary Use Cases:**
+
 - Conference presentations and workshops
 - Internal training sessions and webinars
 - Product demonstrations and pitches
@@ -38,6 +39,7 @@ The Dynamic Presentation System (DPS) block is a comprehensive presentation fram
 **Location:** `/blocks/dps/`
 
 **Files:**
+
 - `dps.js` - Core presentation logic (2,044 lines with embedded CSS)
 - `dps.css` - Empty placeholder (styles embedded in JS)
 - `README.md` - Technical documentation (this file)
@@ -47,6 +49,7 @@ The Dynamic Presentation System (DPS) block is a comprehensive presentation fram
 - `test.html` - Browser-based testing
 
 **Key Differentiators:**
+
 - Full-screen immersive presentation mode
 - Multi-image sequences with keyboard navigation
 - Dedicated presenter notes with resizable panel
@@ -145,15 +148,16 @@ The DPS block follows a clear three-section organization pattern:
 
 `DPS_CONFIG Object`
 `const DPS_CONFIG = {`
-`  DEFAULT_TIMER_DURATION: 1800, // 30 minutes in seconds`
-`  PRESENTER_NOTES_VISIBLE: false,`
-`  ERROR_MESSAGES: {`
-`    LOAD_FAILURE: "Failed to load presentation data",`
-`    INVALID_DATA: "Invalid presentation data format"`
-`  }`
+`DEFAULT_TIMER_DURATION: 1800, // 30 minutes in seconds`
+`PRESENTER_NOTES_VISIBLE: false,`
+`ERROR_MESSAGES: {`
+`LOAD_FAILURE: "Failed to load presentation data",`
+`INVALID_DATA: "Invalid presentation data format"`
+`}`
 `};`
 
 **Global State Variables:**
+
 - `currentSlideIndex` - Active slide position
 - `currentSequenceIndex` - Active image in sequence
 - `timerInterval` - Timer interval reference
@@ -166,6 +170,7 @@ The DPS block follows a clear three-section organization pattern:
 `export default async function decorate(block)`
 
 **Processing Flow:**
+
 1. Hide header/footer, force full viewport
 2. Extract rows from block children
 3. Parse presentation data via `parseRows()`
@@ -176,6 +181,7 @@ The DPS block follows a clear three-section organization pattern:
 8. Show first slide
 
 **Sub-Components:**
+
 - `createHeader(title, subtitle)` - Header with title/subtitle
 - `createPresenterNotesContainer()` - Resizable notes panel
 - `createFooter(timerDuration)` - Navigation and timer UI
@@ -186,27 +192,32 @@ The DPS block follows a clear three-section organization pattern:
 #### 3. Navigation & UI Functions (Lines 640-1270)
 
 **Slide Management:**
+
 - `showSlide(index)` - Display specific slide, hide others
 - `updateNavButtons(currentIndex, totalSlides)` - Enable/disable arrows
 - `updatePresenterNotes(slideIndex)` - Sync notes content
 
 **Sequence Navigation:**
+
 - `handleSequenceNavigation(direction)` - Navigate within image sequences
 - `updateSequence(items, activeIndex)` - Show/hide sequence items
 
 **Timer Functions:**
+
 - `startTimer()` - Begin countdown
 - `toggleTimer()` - Pause/resume
 - `updateTimer()` - Decrement and display
 - `flashTimeWarning()` - Visual alert at 2 minutes
 
 **Presenter Mode:**
+
 - `togglePresenterMode()` - Full presenter view toggle
 - `showPresenterNotes()` - Make notes visible
 - `hidePresenterNotes()` - Hide notes panel
 - `setupResizeHandler()` - Drag-to-resize functionality
 
 **Mobile Support:**
+
 - `setupMobileHandling()` - Touch detection and setup
 - `handleSwipe()` - Swipe gesture processing
 - `adjustPresenterNotesForMobile()` - Mobile-specific notes UI
@@ -214,6 +225,7 @@ The DPS block follows a clear three-section organization pattern:
 #### 4. Embedded CSS Styles (Lines 1270-2044)
 
 **Key CSS Sections:**
+
 - Global resets and full-screen mode
 - Grid-based slide layout (40% text, 60% illustration)
 - Responsive breakpoints (480px, 768px, 1024px)
@@ -225,23 +237,24 @@ The DPS block follows a clear three-section organization pattern:
 
 **Full-Screen Mode:**
 `body.dps-fullscreen {`
-`  overflow: hidden;`
-`  position: fixed;`
-`  width: 100%;`
-`  height: 100%;`
+`overflow: hidden;`
+`position: fixed;`
+`width: 100%;`
+`height: 100%;`
 `}`
 
 **Slide Layout (Grid):**
 `.slide-content {`
-`  display: grid;`
-`  grid-template-areas:`
-`    "title title"`
-`    "text illustration";`
-`  grid-template-columns: 40% 60%;`
-`  grid-template-rows: auto 1fr;`
+`display: grid;`
+`grid-template-areas:`
+`"title title"`
+`"text illustration";`
+`grid-template-columns: 40% 60%;`
+`grid-template-rows: auto 1fr;`
 `}`
 
 **Responsive Strategy:**
+
 - Mobile (< 480px): Stacked layout (title, text, illustration)
 - Tablet (480-768px): Adjusted grid (45% / 55%)
 - Desktop (768-1024px): Full grid (40% / 60%)
@@ -270,12 +283,14 @@ The DPS block follows a clear three-section organization pattern:
 ### Illustration Processing
 
 **Type Detection Priority:**
+
 1. Text patterns: `iframe URL` format
 2. DOM elements: `<picture>`, `<iframe>`, `<svg>`, `<img>`
 3. Icon spans: `<span class="icon icon-name">`
 4. Anchor links: Image URLs in `<a>` tags
 
 **Deduplication Strategy:**
+
 - Set-based identifier tracking
 - Content-specific unique IDs (URLs, icon names, content hash)
 - Preserves DOM order of first occurrence
@@ -286,11 +301,11 @@ The DPS block follows a clear three-section organization pattern:
 **API Used:** QR Server API (https://api.qrserver.com)
 
 `function generateQRCode(url, options = {}) {`
-`  const qrServerUrl =`
-`    'https://api.qrserver.com/v1/create-qr-code/?' +`
-`    'size=250x250&' +`
-`    'data=' + encodeURIComponent(url);`
-`  return qrServerUrl;`
+`const qrServerUrl =`
+`'https://api.qrserver.com/v1/create-qr-code/?' +`
+`'size=250x250&' +`
+`'data=' + encodeURIComponent(url);`
+`return qrServerUrl;`
 `}`
 
 ---
@@ -310,12 +325,14 @@ In Google Docs or any EDS authoring environment, create a table:
 ### Column Definitions
 
 **Row 1 (Configuration Row):**
+
 - **Column 1**: Presentation title (required)
 - **Column 2**: Presentation subtitle (optional) - Can include URL: `Subtitle - https://example.com`
 - **Column 3**: Timer duration in minutes (default: 25)
 - **Columns 4-5**: Leave empty
 
 **Subsequent Rows (Slide Content):**
+
 - **Column 1**: Slide title (required)
 - **Column 2**: Introduction text or subtitle (optional)
 - **Column 3**: Bullet points or short description
@@ -341,6 +358,7 @@ To create a slide with multiple images:
 `| Slide Title |              |             | Image 3 URL |       |`
 
 **Navigation:**
+
 - Right arrow advances through images 1 → 2 → 3
 - At image 3, right arrow advances to next slide
 - Left arrow goes back through sequence
@@ -351,6 +369,7 @@ To create a slide with multiple images:
 `iframe https://www.youtube.com/embed/dQw4w9WgXcQ`
 
 **Alternative Formats (also supported):**
+
 - Standard HTML: `<iframe src="https://example.com/embed"></iframe>`
 - Franklin link format: `<a href="https://example.com/embed">Link</a>`
 
@@ -360,6 +379,7 @@ To create a slide with multiple images:
 `<span class="icon icon-methods"></span>`
 
 **Requirements:**
+
 - Icon file must exist: `/icons/methods.svg`
 - Icon name extracted from class: `icon-methods` → `methods.svg`
 - Alt text auto-generated: "methods Illustration"
@@ -385,6 +405,7 @@ To create a slide with multiple images:
 ### Q&A Slide (Auto-Generated)
 
 The DPS block automatically creates a closing slide:
+
 - **Title**: "Close"
 - **Subtitle**: "Your feedback and questions are valuable"
 - **Content**: Thank you message with QR code
@@ -402,18 +423,21 @@ If subtitle contains `Text - https://example.com`, the URL becomes a clickable l
 The DPS block uses embedded CSS (lines 1270-2044) with several customizable sections:
 
 **Color Palette (Hardcoded):**
+
 - Primary: `#3498db` (blue)
 - Dark: `#2c3e50` (navy)
 - Background: `#ecf0f1` (light gray)
 - Error/Warning: `#e74c3c` (red)
 
 **Typography:**
+
 - Font: `'Segoe UI', Tahoma, Geneva, Verdana, sans-serif`
 - Title size: `28px`
 - Body text: `20px`
 - Bullet points: `20px`
 
 **Spacing:**
+
 - Slide padding: `20px`
 - Grid gap: `20px`
 - Footer height: `60px`
@@ -426,22 +450,22 @@ Edit the embedded CSS in `dps.js` (lines 1380-2040):
 
 `/* Header styling */`
 `.dps-header {`
-`  background-color: #2c3e50; /* Change this */`
-`  color: white;`
+`background-color: #2c3e50; /* Change this */`
+`color: white;`
 `}`
 
 **To Adjust Layout:**
 
 `/* Slide content layout */`
 `.slide-content {`
-`  grid-template-columns: 40% 60%; /* Adjust ratio */`
+`grid-template-columns: 40% 60%; /* Adjust ratio */`
 `}`
 
 **To Modify Timer Warning:**
 
 `// Flash warning when 2 minutes remain`
 `if (remainingTime === 120) { /* Change threshold */`
-`  flashTimeWarning();`
+`flashTimeWarning();`
 `}`
 
 ### Block Variations
@@ -449,6 +473,7 @@ Edit the embedded CSS in `dps.js` (lines 1380-2040):
 The DPS block currently does not support variations (e.g., `.dps.dark`, `.dps.compact`). All styling is built-in for consistency across presentations.
 
 **Future Enhancement:** Consider adding variation support for:
+
 - Dark theme
 - Compact mode (less padding)
 - Widescreen layout (different aspect ratio)
@@ -495,15 +520,15 @@ The DPS block currently does not support variations (e.g., `.dps.dark`, `.dps.co
 `.slide-content { /* stacked layout */ }`
 
 `@media (max-width: 480px) {`
-`  /* Smaller mobile devices */`
+`/* Smaller mobile devices */`
 `}`
 
 `@media (min-width: 768px) and (max-width: 1024px) {`
-`  /* Tablets */`
+`/* Tablets */`
 `}`
 
 `@media (max-height: 480px) and (orientation: landscape) {`
-`  /* Mobile landscape */`
+`/* Mobile landscape */`
 `}`
 
 ---
@@ -513,6 +538,7 @@ The DPS block currently does not support variations (e.g., `.dps.dark`, `.dps.co
 ### Keyboard Navigation
 
 **Full keyboard accessibility:**
+
 - Arrow keys: Navigate slides and sequences
 - Space: Control timer
 - Plus/Minus: Show/hide presenter notes
@@ -521,8 +547,8 @@ The DPS block currently does not support variations (e.g., `.dps.dark`, `.dps.co
 
 **Implementation:**
 `document.addEventListener('keydown', (event) => {`
-`  if (event.repeat) return; // Prevent key repeat`
-`  // Handle all keyboard shortcuts`
+`if (event.repeat) return; // Prevent key repeat`
+`// Handle all keyboard shortcuts`
 `});`
 
 ### Screen Reader Support
@@ -531,11 +557,13 @@ The DPS block currently does not support variations (e.g., `.dps.dark`, `.dps.co
 `<button class="nav-arrow prev-slide" aria-label="Previous slide">`
 
 **Semantic HTML:**
+
 - Proper heading hierarchy (`<h1>`, `<h2>`)
 - List structure for bullets (`<ul>`, `<li>`)
 - Alt text for all images
 
 **Focus Management:**
+
 - Visible focus indicators
 - Logical tab order
 - Skip links (implicit via keyboard navigation)
@@ -543,6 +571,7 @@ The DPS block currently does not support variations (e.g., `.dps.dark`, `.dps.co
 ### Color Contrast
 
 **WCAG AA Compliance:**
+
 - Text on background: 7.5:1 (black on white)
 - Header text: White on #2c3e50 (8.4:1)
 - Button states: Clear visual indication
@@ -554,20 +583,20 @@ Use browser DevTools Lighthouse accessibility audit.
 
 **Mobile Optimizations:**
 `@media (hover: none) and (pointer: coarse) {`
-`  .nav-arrow,`
-`  .presenter-toggle {`
-`    min-height: 44px; /* WCAG recommended */`
-`    min-width: 44px;`
-`  }`
+`.nav-arrow,`
+`.presenter-toggle {`
+`min-height: 44px; /* WCAG recommended */`
+`min-width: 44px;`
+`}`
 `}`
 
 ### Forced Colors Mode
 
 **High Contrast Support:**
 `@media (forced-colors: active) {`
-`  .iframe-container {`
-`    border: 1px solid CanvasText;`
-`  }`
+`.iframe-container {`
+`border: 1px solid CanvasText;`
+`}`
 `}`
 
 ---
@@ -577,12 +606,14 @@ Use browser DevTools Lighthouse accessibility audit.
 ### JavaScript Optimization
 
 **Code Organization:**
+
 - Modular functions with single responsibility
 - Minimal DOM queries (cached references)
 - Event delegation where appropriate
 - Efficient state management
 
 **Event Handlers:**
+
 - Debounced resize handling
 - Prevents repeated keydown events: `if (event.repeat) return;`
 - Passive touch listeners: `{ passive: true }`
@@ -590,11 +621,13 @@ Use browser DevTools Lighthouse accessibility audit.
 ### CSS Performance
 
 **Embedded CSS:**
+
 - All styles in JavaScript (no external CSS file)
 - Single file load reduces HTTP requests
 - Inline reduces render-blocking
 
 **Efficient Selectors:**
+
 - Class-based selectors (fast)
 - Minimal use of complex selectors
 - No expensive pseudo-selectors
@@ -609,6 +642,7 @@ Illustrations can use loading attribute:
 `<iframe src="..." loading="lazy" title="...">`
 
 **Optimization Opportunities:**
+
 - Preload first slide images
 - Progressive image loading for sequences
 - Intersection Observer for lazy sequence loading
@@ -616,11 +650,13 @@ Illustrations can use loading attribute:
 ### Memory Management
 
 **Cleanup:**
+
 - Timer interval cleared on component unmount
 - Event listeners properly managed
 - No memory leaks from circular references
 
 **State Management:**
+
 - Minimal global state variables
 - Local state in function closures
 - Efficient Set-based deduplication
@@ -628,12 +664,14 @@ Illustrations can use loading attribute:
 ### Metrics
 
 **Estimated Performance:**
+
 - First Contentful Paint: < 1.5s
 - Time to Interactive: < 2.5s
 - Cumulative Layout Shift: 0 (fixed layout)
 - Largest Contentful Paint: < 2.5s (depends on images)
 
 **Lighthouse Scores (Target):**
+
 - Performance: 90+
 - Accessibility: 95+
 - Best Practices: 95+
@@ -646,12 +684,14 @@ Illustrations can use loading attribute:
 ### Tested Browsers
 
 **Desktop:**
+
 - ✅ Chrome 90+ (recommended)
 - ✅ Firefox 88+
 - ✅ Safari 14+
 - ✅ Edge 90+
 
 **Mobile:**
+
 - ✅ iOS Safari 14+
 - ✅ Chrome Mobile 90+
 - ✅ Samsung Internet 14+
@@ -660,18 +700,21 @@ Illustrations can use loading attribute:
 ### Feature Compatibility
 
 **Core JavaScript:**
+
 - ES6 modules (supported by all modern browsers)
 - Async/await (widely supported)
 - Arrow functions (standard)
 - Template literals (standard)
 
 **CSS Features:**
+
 - Grid layout (all modern browsers)
 - Flexbox (universal support)
 - CSS variables (all modern browsers)
 - Media queries (universal)
 
 **DOM APIs:**
+
 - querySelector/querySelectorAll (standard)
 - addEventListener (universal)
 - classList (standard)
@@ -683,6 +726,7 @@ Illustrations can use loading attribute:
 The DPS block uses only standard, widely-supported features.
 
 **IE11 Not Supported:**
+
 - Uses ES6 features
 - Relies on modern CSS Grid
 - No polyfills provided
@@ -690,14 +734,17 @@ The DPS block uses only standard, widely-supported features.
 ### Known Issues
 
 **Safari-Specific:**
+
 - Swipe gestures may conflict with browser back/forward navigation
 - Solution: Use touch event prevention
 
 **Firefox-Specific:**
+
 - Print mode may have minor spacing differences
 - Solution: Test print output per browser
 
 **Mobile Safari:**
+
 - Full-screen mode may show address bar initially
 - Solution: Scroll to top on load (implemented)
 
@@ -712,19 +759,21 @@ The DPS block uses only standard, widely-supported features.
 **Symptoms:** Blank screen or error message
 
 **Causes:**
+
 1. Invalid table structure (missing configuration row)
 2. Insufficient rows (minimum 2 required)
 3. JavaScript errors in console
 
 **Solutions:**
+
 1. Check table structure: First row = config, subsequent rows = slides
 2. Verify minimum content: Title, subtitle, timer in row 1
 3. Open browser DevTools Console for error details
 
 `// Error handling in code`
 `if (rows.length < 2) {`
-`  block.innerHTML = '<div class="dps-error">Error: DPS block requires at least a configuration row and one slide row.</div>';`
-`  return;`
+`block.innerHTML = '<div class="dps-error">Error: DPS block requires at least a configuration row and one slide row.</div>';`
+`return;`
 `}`
 
 #### Navigation Not Working
@@ -732,11 +781,13 @@ The DPS block uses only standard, widely-supported features.
 **Symptoms:** Arrow keys or buttons don't change slides
 
 **Causes:**
+
 1. JavaScript errors preventing setup
 2. Focus on input element (keyboard captured)
 3. Browser extension interference
 
 **Solutions:**
+
 1. Check browser console for errors
 2. Click on presentation area to regain focus
 3. Disable browser extensions temporarily
@@ -747,19 +798,21 @@ The DPS block uses only standard, widely-supported features.
 **Symptoms:** Timer shows initial duration but doesn't count down
 
 **Causes:**
+
 1. Still on first slide (timer starts on slide 2)
 2. Timer interval not initialized
 3. Invalid timer duration value
 
 **Solutions:**
+
 1. Advance to second slide (timer auto-starts)
 2. Check console for timer-related errors
 3. Verify timer value is numeric in configuration row
 
 `// Timer starts when moving past first slide`
 `if (index > 0 && !hasStartedTimer) {`
-`  startTimer();`
-`  hasStartedTimer = true;`
+`startTimer();`
+`hasStartedTimer = true;`
 `}`
 
 #### Images Not Appearing
@@ -767,11 +820,13 @@ The DPS block uses only standard, widely-supported features.
 **Symptoms:** Blank illustration area
 
 **Causes:**
+
 1. Invalid image URL
 2. Image loading error (404, CORS)
 3. Illustration cell empty or malformed
 
 **Solutions:**
+
 1. Verify image URL is accessible
 2. Check browser Network tab for loading errors
 3. Use sample URLs from allabout.network domain
@@ -782,11 +837,13 @@ The DPS block uses only standard, widely-supported features.
 **Symptoms:** Notes panel hidden or not updating
 
 **Causes:**
+
 1. Notes hidden by default (press + to show)
 2. No presenter notes in slide data
 3. CSS display issue
 
 **Solutions:**
+
 1. Press + key to show notes panel
 2. Add content to fifth column of slide row
 3. Check `.presenter-notes.hidden` CSS class
@@ -797,11 +854,13 @@ The DPS block uses only standard, widely-supported features.
 **Symptoms:** Swipe gestures don't navigate slides
 
 **Causes:**
+
 1. Not detected as touch device
 2. Insufficient swipe distance
 3. Conflict with browser swipe gestures
 
 **Solutions:**
+
 1. Verify `mobile-device` class on body element
 2. Increase swipe distance (threshold: 50px)
 3. Disable browser swipe-to-navigate in settings
@@ -816,6 +875,7 @@ Add logging to key functions:
 
 **Inspect DOM Structure:**
 Use DevTools Elements panel to verify:
+
 - `.dps-wrapper` container exists
 - `.slide.active` class on current slide
 - `.presenter-notes` panel structure
@@ -826,6 +886,7 @@ In DevTools Console:
 `window.remainingTime`
 
 **Network Inspection:**
+
 - Verify image URLs load successfully
 - Check iframe URLs resolve
 - Monitor CORS errors
@@ -833,6 +894,7 @@ In DevTools Console:
 ### Getting Help
 
 **Resources:**
+
 - Developer documentation: `dev-README.md`
 - User guide: `user-README.md`
 - Example usage: `EXAMPLE.md`
@@ -840,6 +902,7 @@ In DevTools Console:
 
 **Reporting Issues:**
 Include:
+
 1. Browser and version
 2. Console error messages
 3. Table structure (markdown)
@@ -857,6 +920,7 @@ Include:
 **Location:** `/blocks/dps/test.html`
 
 **Usage:**
+
 1. Open `test.html` in browser
 2. Verify all features:
    - Slide navigation (arrows, keyboard)
@@ -869,6 +933,7 @@ Include:
 ### Test Cases
 
 **Navigation:**
+
 - ✅ Arrow keys navigate between slides
 - ✅ Navigation buttons work
 - ✅ First slide disables prev button
@@ -877,6 +942,7 @@ Include:
 - ✅ Sequence end advances to next slide
 
 **Timer:**
+
 - ✅ Timer displays initial duration
 - ✅ Timer starts on second slide
 - ✅ Spacebar toggles pause/resume
@@ -884,6 +950,7 @@ Include:
 - ✅ "Time Up!" displays at zero
 
 **Presenter Notes:**
+
 - ✅ + key shows notes
 - ✅ - key hides notes
 - ✅ P key toggles presenter mode
@@ -892,6 +959,7 @@ Include:
 - ✅ Notes persist across slides
 
 **Content Types:**
+
 - ✅ Images display correctly
 - ✅ iframes embed and load
 - ✅ Icons render from /icons/ directory
@@ -900,6 +968,7 @@ Include:
 - ✅ Q&A slide generates with QR code
 
 **Responsive:**
+
 - ✅ Desktop layout correct
 - ✅ Tablet layout adapts
 - ✅ Mobile portrait stacks content
@@ -908,6 +977,7 @@ Include:
 - ✅ Mobile notes toggle button appears
 
 **Accessibility:**
+
 - ✅ Keyboard navigation complete
 - ✅ ARIA labels present
 - ✅ Focus indicators visible
@@ -915,6 +985,7 @@ Include:
 - ✅ Touch targets sized correctly
 
 **Print:**
+
 - ✅ Print mode removes navigation
 - ✅ Page breaks between slides
 - ✅ Content preserved
@@ -923,16 +994,19 @@ Include:
 ### Automated Testing (Future)
 
 **Unit Tests:**
+
 - Test `parseRows()` function with various inputs
 - Test `formatTime()` with different second values
 - Test `extractIllustrationItems()` with different HTML
 
 **Integration Tests:**
+
 - Test full slide navigation flow
 - Test timer functionality end-to-end
 - Test presenter notes interaction
 
 **E2E Tests:**
+
 - Playwright/Puppeteer tests for browser automation
 - Test full presentation flow
 - Test mobile touch gestures
@@ -945,16 +1019,19 @@ Include:
 ### EDS Core
 
 **Required:**
+
 - `/scripts/aem.js` - EDS core utilities
 - EDS block decoration system
 
 **Used Functions:**
+
 - `createOptimizedPicture()` - Image optimization (not currently used, but available)
 - Block decoration lifecycle
 
 ### External APIs
 
 **QR Code Generation:**
+
 - API: QR Server API (https://api.qrserver.com)
 - Usage: Q&A slide QR code
 - No authentication required
@@ -965,6 +1042,7 @@ Include:
 ### Browser APIs
 
 **Standard APIs:**
+
 - DOM manipulation (querySelector, createElement, etc.)
 - Event handling (addEventListener)
 - Timer functions (setInterval, clearInterval)
@@ -972,6 +1050,7 @@ Include:
 - Print media query (@media print)
 
 **No External Libraries:**
+
 - No jQuery
 - No React/Vue
 - No animation libraries
@@ -984,47 +1063,55 @@ Include:
 ### Planned Features
 
 **1. Video Support**
+
 - Embedded video playback
 - Video controls integrated with presentation navigation
 - Auto-pause when advancing slide
 
 **2. Presenter Tools**
+
 - Next slide preview
 - Elapsed time display
 - Notes on separate window (dual monitor)
 - Audience view vs presenter view
 
 **3. Interactive Elements**
+
 - Live polls and audience questions
 - Clickable hotspots on images
 - Interactive diagrams
 - Form inputs for workshops
 
 **4. Export Options**
+
 - PDF generation
 - PowerPoint export
 - HTML package download
 - Video recording
 
 **5. Collaboration Features**
+
 - Real-time audience participation
 - Shared annotation mode
 - Q&A submission system
 - Live feedback collection
 
 **6. Animation Support**
+
 - Slide transition effects
 - Bullet point animations (appear one by one)
 - Image zoom and pan
 - SVG animation integration
 
 **7. Theme System**
+
 - Pre-built color themes
 - Custom CSS variable overrides
 - Block variation support (`.dps.dark`, `.dps.minimal`)
 - Font customization
 
 **8. Accessibility Enhancements**
+
 - Live captions (speech-to-text)
 - Sign language interpreter window
 - High contrast mode
@@ -1033,18 +1120,21 @@ Include:
 ### Technical Improvements
 
 **Performance:**
+
 - Lazy loading for sequence images
 - Intersection Observer for viewport detection
 - Preload critical resources
 - Service worker for offline presentations
 
 **Code Quality:**
+
 - Extract CSS to separate file
 - Modularize JavaScript into smaller files
 - Add TypeScript type definitions
 - Comprehensive unit test coverage
 
 **Developer Experience:**
+
 - CLI tool for presentation generation
 - Live preview during authoring
 - Validation tool for table structure
@@ -1053,12 +1143,14 @@ Include:
 ### Community Requests
 
 **Author Experience:**
+
 - Visual editor (WYSIWYG)
 - Drag-and-drop slide ordering
 - Image upload integration
 - Template gallery
 
 **Presenter Experience:**
+
 - Rehearsal mode with timing
 - Remote control via mobile app
 - Laser pointer / annotation tool
@@ -1090,6 +1182,7 @@ Part of the AllAboutV2 project.
 ## Quick Reference
 
 **Keyboard Shortcuts:**
+
 - `←` / `→` - Navigate slides/sequences
 - `Space` - Toggle timer
 - `+` - Show notes
@@ -1110,10 +1203,12 @@ Part of the AllAboutV2 project.
 `<span class="icon icon-name"></span>`
 
 **Timer Warning:**
+
 - Visual flash at 2 minutes remaining
 - "Time Up!" message at zero
 
 **Q&A Slide:**
+
 - Auto-generated
 - QR code from subtitle URL
 - "Close" title with thank you message

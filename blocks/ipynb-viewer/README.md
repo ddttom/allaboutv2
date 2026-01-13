@@ -9,6 +9,7 @@ The IPynb Viewer block is a comprehensive, production-ready system for displayin
 **Block Type:** Complex Build-Enhanced Block
 
 **Use Cases:**
+
 - Interactive coding tutorials with live JavaScript execution
 - Step-by-step technical documentation with runnable examples
 - Educational notebooks for teaching JavaScript concepts
@@ -110,6 +111,7 @@ Display notebook cells one at a time in a full-screen overlay with Previous/Next
 `| /path/to/notebook.ipynb |`
 
 Features:
+
 - Start Reading button clicks to enter full-screen reading mode
 - Full-viewport overlay provides an immersive, distraction-free reading experience
 - Smart cell grouping automatically combines instruction markdown with following code cells
@@ -131,6 +133,7 @@ Automatically execute all code cells without requiring Run button clicks:
 `| /path/to/notebook.ipynb |`
 
 Features:
+
 - Automatic execution runs code cells immediately when displayed
 - No Run buttons provides a cleaner, presentation-focused interface
 - Output always visible shows results by default without user action
@@ -139,6 +142,7 @@ Features:
 - Works in all modes functions in both default view and paged overlay
 
 Use Cases:
+
 - Live presentations where code should execute automatically
 - Demonstrations that don't require user interaction
 - Educational content with pre-validated output
@@ -154,6 +158,7 @@ Combines manual and paged modes for the complete educational experience:
 `| /path/to/notebook.ipynb |`
 
 Features:
+
 - Start Reading button opens paged overlay with manual code execution
 - Read the Manual button provides access to block documentation
 - Manual execution users click Run buttons to execute code cells (no autorun)
@@ -165,6 +170,7 @@ Features:
 - ESC key support pressing ESC closes the topmost overlay (paged or preview)
 
 Use Cases:
+
 - Complete interactive tutorials with documentation
 - Educational courses requiring reference material
 - Complex demonstrations with help documentation
@@ -180,6 +186,7 @@ Automatically opens the notebook overlay without requiring a button click - perf
 `| /path/to/notebook.ipynb |`
 
 Features:
+
 - Auto-open on page load - Notebook overlay opens automatically after 100ms (no button required)
 - Instant immersion - Users immediately enter reading mode without clicking
 - All notebook features - Includes navigation tree, bookmarks, history, help, and all controls
@@ -188,6 +195,7 @@ Features:
 - Minimal friction - Removes the extra click to start reading
 
 Use Cases:
+
 - Documentation landing pages that should open immediately
 - Main index pages for large documentation sites
 - Welcome screens that guide users through content
@@ -195,6 +203,7 @@ Use Cases:
 - Tutorial launchers that start automatically
 
 When to Use:
+
 - ✅ Use index when the notebook is the primary content
 - ✅ Use index for landing pages and documentation indexes
 - ✅ Use index when you want immediate engagement
@@ -211,6 +220,7 @@ Hides the top bar (title and buttons) for a cleaner, more immersive reading expe
 `| /path/to/notebook.ipynb |`
 
 Features:
+
 - Hidden top bar - No title, buttons, or controls visible at the top
 - Maximum content area - Content extends from top of overlay to pagination controls
 - Immersive reading - Removes visual distractions for focused content consumption
@@ -218,6 +228,7 @@ Features:
 - Works with any mode - Combine with paged, autorun, notebook, or index
 
 Use Cases:
+
 - Presentations where you want zero UI distraction
 - Kiosk displays or embedded content
 - Full-screen immersive experiences
@@ -230,6 +241,7 @@ Combinations:
 `| IPynb Viewer (paged no-topbar) |` - Standard paged mode without the top bar
 
 When to Use:
+
 - ✅ Use no-topbar for immersive, distraction-free experiences
 - ✅ Use no-topbar when content should be the sole focus
 - ✅ Use no-topbar in kiosks or embedded displays
@@ -244,19 +256,19 @@ The block supports standard Jupyter notebook JSON format with enhanced markdown 
 
 `Minimal Notebook Structure`
 `{`
-`  "cells": [`
-`    {`
-`      "cell_type": "markdown",`
-`      "source": ["# Title\\n", "Content here"]`
-`    },`
-`    {`
-`      "cell_type": "code",`
-`      "source": ["console.log('test');\\n", "return 123;"]`
-`    }`
-`  ],`
-`  "metadata": {`
-`    "title": "My Notebook"`
-`  }`
+`"cells": [`
+`{`
+`"cell_type": "markdown",`
+`"source": ["# Title\\n", "Content here"]`
+`},`
+`{`
+`"cell_type": "code",`
+`"source": ["console.log('test');\\n", "return 123;"]`
+`}`
+`],`
+`"metadata": {`
+`"title": "My Notebook"`
+`}`
 `}`
 
 ### Metadata Fields
@@ -264,9 +276,11 @@ The block supports standard Jupyter notebook JSON format with enhanced markdown 
 The notebook metadata is displayed in the header section:
 
 **Required Fields:**
+
 - title - Main notebook title (defaults to "Jupyter Notebook" if not provided)
 
 **Optional Fields:**
+
 - description - One-line summary displayed below title
 - author - Author name
 - date - Publication or creation date
@@ -297,29 +311,30 @@ The notebook metadata is displayed in the header section:
 **Example metadata in .ipynb file:**
 `Complete Metadata Example`
 `{`
-`  "metadata": {`
-`    "title": "My Interactive Tutorial",`
-`    "description": "Learn JavaScript fundamentals through interactive examples",`
-`    "author": "Tom Cranstoun",`
-`    "date": "November 14, 2025",`
-`    "version": "1.0",`
-`    "category": "tutorial",`
-`    "difficulty": "intermediate",`
-`    "duration": "30 minutes",`
-`    "tags": ["tutorial", "javascript", "interactive", "beginner"],`
-`    "license": "MIT",`
-`    "repo": "https://github.com/username/repo",`
-`    "help-repo": "https://github.com/ddttom/allaboutV2",`
-`    "github-branch": "main",`
-`    "kernelspec": {`
-`      "display_name": "JavaScript",`
-`      "language": "javascript",`
-`      "name": "jslab"`
-`    }`
-`  }`
+`"metadata": {`
+`"title": "My Interactive Tutorial",`
+`"description": "Learn JavaScript fundamentals through interactive examples",`
+`"author": "Tom Cranstoun",`
+`"date": "November 14, 2025",`
+`"version": "1.0",`
+`"category": "tutorial",`
+`"difficulty": "intermediate",`
+`"duration": "30 minutes",`
+`"tags": ["tutorial", "javascript", "interactive", "beginner"],`
+`"license": "MIT",`
+`"repo": "https://github.com/username/repo",`
+`"help-repo": "https://github.com/ddttom/allaboutV2",`
+`"github-branch": "main",`
+`"kernelspec": {`
+`"display_name": "JavaScript",`
+`"language": "javascript",`
+`"name": "jslab"`
+`}`
+`}`
 `}`
 
 **Display Order:**
+
 1. Title (1.8rem, bold, centered)
 2. Description (1.1rem, italic, gray #555)
 3. Author (1rem, italic, gray #666)
@@ -351,12 +366,14 @@ For notebooks with multiple sections (like tutorials, documentation, or educatio
 - **Avoid inconsistent levels** - Mixing `##` and `###` for same-level sections breaks navigation
 
 **Why it matters:**
+
 - VSCode outline sidebar displays level-2 headings (`##`) as main navigation items
 - Level-3 headings (`###`) are nested or may not appear in outline at same level
 - Consistent structure helps users navigate long notebooks effectively
 - Example: If Parts 1-11 use `##`, Part 12 should also use `##` (not `###`)
 
 **Example Structure:**
+
 ```markdown
 ## Part 1: Introduction          ← Main section (appears in outline)
 ### Getting Started              ← Sub-section (nested under Part 1)
@@ -371,6 +388,7 @@ For notebooks with multiple sections (like tutorials, documentation, or educatio
 Every line in a notebook cell's source array must end with `\n` (newline character) except the last line. Storing all content as a single massive string without newlines breaks VSCode outline parsing.
 
 **Problem:**
+
 ```python
 # ❌ WRONG - All content in single string
 "source": [
@@ -381,6 +399,7 @@ Every line in a notebook cell's source array must end with `\n` (newline charact
 VSCode outline shows no sub-sections because it can't parse the headings.
 
 **Solution:**
+
 ```python
 # ✅ CORRECT - Each line ends with \n
 "source": [
@@ -397,12 +416,14 @@ VSCode outline shows no sub-sections because it can't parse the headings.
 ```
 
 **Key rules:**
+
 - Every line ends with `\n` except the very last line
 - Headings need newlines before and after
 - Horizontal rules: `"---\n"` followed by `"\n"`
 - Blank lines between paragraphs: `"\n"`
 
 **Symptoms of missing newlines:**
+
 - Parts show in outline but have no sub-sections when expanded
 - Cells with many `####` headings appear as flat content
 - VSCode can't detect heading hierarchy
@@ -413,6 +434,7 @@ VSCode outline shows no sub-sections because it can't parse the headings.
 When repo metadata is provided, links to .md files are automatically converted to full GitHub URLs and open in an in-app overlay viewer instead of navigating away.
 
 **Rules:**
+
 - Must use markdown link syntax: `[text](file.md)`
 - Only converts relative paths ending in `.md`
 - Absolute URLs (http://, https://) are never converted
@@ -422,6 +444,7 @@ When repo metadata is provided, links to .md files are automatically converted t
 - **Fetches raw markdown from GitHub** - displays beautifully formatted content
 
 **How It Works:**
+
 1. Links matching pattern `[text](path.md)` are marked with special class `.ipynb-github-md-link`
 2. Click handler intercepts the link and prevents navigation
 3. Fetches raw markdown content from GitHub (converts blob URL to raw URL)
@@ -456,6 +479,7 @@ Import helper functions directly in any cell using ES6 imports:
 `return block.outerHTML;`
 
 **Available Helper Functions:**
+
 - testBlock(blockName, innerHTML) - tests block decoration in browser
 - showPreview(blockName, innerHTML) - opens overlay preview with full styling
 
@@ -484,12 +508,14 @@ The ipynb-viewer block uses multiple distinct overlay systems for different purp
 **Purpose:** Navigate through notebook cells one page at a time
 
 **Visual Controls:**
+
 - Attractive top bar with gradient background (purple-to-blue) displaying notebook title
 - Control buttons in top bar: Home (🏠), History (🕘), Bookmarks (🔖), TOC (☰), Help (❓), and Close (×)
 - Previous/Next buttons at the bottom
 - Page indicator showing current page (e.g., "3 / 8")
 
 **Keyboard Shortcuts:**
+
 - Arrow Left - Previous page
 - Arrow Right - Next page
 - Escape - Close the paged overlay
@@ -503,12 +529,14 @@ The ipynb-viewer block uses multiple distinct overlay systems for different purp
 **Purpose:** Display block documentation and reference material
 
 **Visual Controls:**
+
 - Attractive top bar with gradient background (purple-to-blue) displaying document title
 - Close button (×) in top bar
 - Scrollable content area for long documentation
 - No pagination controls (continuous scroll)
 
 **Keyboard Shortcuts:**
+
 - Escape - Close the manual overlay
 
 **When visible:** This overlay appears when you need to reference documentation while working with the notebook.
@@ -520,6 +548,7 @@ The ipynb-viewer block uses multiple distinct overlay systems for different purp
 **Purpose:** Display visual results of code execution with responsive testing
 
 **Visual Controls:**
+
 - Close button (×) in top-right
 - Responsive view buttons (📱 Mobile, 📱 Tablet, 🖥️ Desktop) - only in non-notebook variations
 - Notebook mode: Shows close button and hamburger menu (☰) for table of contents navigation
@@ -527,6 +556,7 @@ The ipynb-viewer block uses multiple distinct overlay systems for different purp
 - No pagination controls
 
 **Keyboard Shortcuts:**
+
 - Escape - Close the preview overlay (if no other overlays are open)
 
 **When visible:** This overlay appears temporarily when you run code that calls showPreview().
@@ -540,17 +570,20 @@ The ipynb-viewer block uses multiple distinct overlay systems for different purp
 **Purpose:** View GitHub markdown documentation without leaving the app
 
 **Visual Controls:**
+
 - Attractive top bar with gradient background (purple-to-blue) displaying markdown file title
 - Close button (×) in top bar
 - Scrollable content area for markdown content
 - Rendered markdown with full formatting support
 
 **Keyboard Shortcuts:**
+
 - Escape - Close the GitHub markdown overlay
 
 **When visible:** This overlay appears when you click on a link to a GitHub .md file (when repo metadata is provided).
 
 **Features:**
+
 - ✅ In-app viewing - No external navigation, users stay in your app
 - ✅ Automatic conversion - Blob URLs converted to raw URLs for fetching
 - ✅ Full markdown rendering - Tables, code blocks, lists, headings, etc.
@@ -560,12 +593,14 @@ The ipynb-viewer block uses multiple distinct overlay systems for different purp
 - ✅ Accessibility - Full ARIA support and keyboard navigation
 
 **Example:**
+
 ```markdown
 <!-- In a markdown cell with repo metadata set -->
 See the [Getting Started Guide](docs/getting-started.md) for more information.
 ```
 
 When clicked, this link:
+
 1. Prevents default navigation to GitHub
 2. Converts `https://github.com/user/repo/blob/main/docs/getting-started.md` to raw URL
 3. Fetches raw markdown content
@@ -573,6 +608,7 @@ When clicked, this link:
 5. Users can read, scroll, and close with ESC or × button
 
 **Benefits:**
+
 - **Better UX** - Users don't lose their place in your documentation
 - **Seamless experience** - No external browser navigation
 - **Consistent styling** - Matches ipynb-viewer design
@@ -598,6 +634,7 @@ This hierarchy ensures you can test responsive previews and reference documentat
 The ipynb-viewer block automatically tracks your navigation history, recording every cell and markdown file you visit. Access your history through the History button (🕘 clock icon) in notebook mode.
 
 **Features:**
+
 - ✅ Automatic tracking - Records every cell page and markdown overlay you visit
 - ✅ Max 25 entries - Keeps most recent 25 navigation events
 - ✅ Smart deduplication - Removes duplicates to keep history clean
@@ -606,23 +643,27 @@ The ipynb-viewer block automatically tracks your navigation history, recording e
 - ✅ Empty state - Shows "No history yet" when history is empty
 
 **How to Use:**
+
 1. Navigate through cells using Previous/Next buttons or TOC
 2. Click on GitHub markdown links to view documentation
 3. Click the History button (🕘) to see your navigation history
 4. Click any entry to jump back to that cell or re-open that markdown file
 
 **History Button Location:**
+
 - Position: Top-right of overlay, left of hamburger menu (☰)
 - Visibility: Only in notebook mode variation
 - Appearance: Circular button with clock icon (🕘)
 
 **What Gets Tracked:**
+
 - Cells: First heading in each page you navigate to
 - Markdown files: GitHub .md files opened in overlay viewer
 - Timestamp: Most recent visit time for sorting
 - Deduplication: Revisiting content moves it to top of history
 
 **Use Cases:**
+
 - Research flow - Revisit key sections while exploring documentation
 - Reference jumping - Quick access to frequently referenced cells
 - Learning paths - Retrace your steps through tutorial content
@@ -633,6 +674,7 @@ The ipynb-viewer block automatically tracks your navigation history, recording e
 Save your favorite pages for quick access anytime! The bookmark system uses browser localStorage to persist your bookmarks across sessions.
 
 **Features:**
+
 - ✅ Persistent Storage - Bookmarks saved in browser localStorage
 - ✅ Per-Notebook - Each notebook has separate bookmarks
 - ✅ Auto-Titles - Uses first heading from the page as bookmark title
@@ -642,6 +684,7 @@ Save your favorite pages for quick access anytime! The bookmark system uses brow
 - ✅ Visual Feedback - Button animation when bookmark is saved
 
 **How to Use:**
+
 1. Navigate to the page you want to bookmark
 2. Click the Bookmarks button (🔖) in the top bar
 3. Click "+ Bookmark This Page" at the top of the dropdown
@@ -649,11 +692,13 @@ Save your favorite pages for quick access anytime! The bookmark system uses brow
 5. To navigate: Click Bookmarks button → Click any bookmark → Instantly jump to that page
 
 **Bookmark Button Location:**
+
 - Position: Top-right of overlay, between History and TOC buttons
 - Visibility: Only in notebook mode variation
 - Appearance: Button with bookmark icon (🔖)
 
 **Managing Bookmarks:**
+
 - View All: Click bookmark button to see dropdown list
 - Navigate: Click any bookmark to jump to that page
 - Remove One: Click the × button next to any bookmark
@@ -661,6 +706,7 @@ Save your favorite pages for quick access anytime! The bookmark system uses brow
 - Auto-Update: Re-bookmarking a page updates the existing bookmark
 
 **Bookmark Storage:**
+
 - Stored in browser's localStorage with key: ipynb-bookmarks-{notebook-id}
 - Each notebook has separate bookmark list
 - Bookmarks persist across browser sessions
@@ -668,6 +714,7 @@ Save your favorite pages for quick access anytime! The bookmark system uses brow
 - Browser-specific (not synced across devices)
 
 **Use Cases:**
+
 - Reference pages - Save frequently used sections for instant access
 - Study aids - Bookmark key concepts while learning
 - Documentation - Mark important API references or examples
@@ -675,6 +722,7 @@ Save your favorite pages for quick access anytime! The bookmark system uses brow
 - Comparison - Bookmark related sections for easy cross-referencing
 
 **Tips:**
+
 - Bookmark pages with clear headings for better identification
 - Use bookmarks for pages you visit repeatedly
 - Clear old bookmarks periodically to keep list manageable
@@ -685,6 +733,7 @@ Save your favorite pages for quick access anytime! The bookmark system uses brow
 Built-in help documentation accessible anytime via the Help button! The help system displays comprehensive usage instructions in a beautiful overlay.
 
 **Features:**
+
 - ✅ Always Accessible - Help button in top bar for instant access
 - ✅ Comprehensive Guide - Covers all features and navigation
 - ✅ GitHub Integration - Opens docs/help.md in overlay viewer
@@ -693,17 +742,20 @@ Built-in help documentation accessible anytime via the Help button! The help sys
 - ✅ Up-to-Date - Help doc maintained with latest features
 
 **How to Use:**
+
 1. Click the Help button (❓) in the top bar
 2. Browse the comprehensive help guide in the overlay
 3. Read about features, navigation, bookmarks, history, shortcuts
 4. Press ESC or click × to close and return to your notebook
 
 **Help Button Location:**
+
 - Position: Top-right of overlay, between TOC and Close buttons
 - Visibility: Only in notebook mode variation
 - Appearance: Button with question mark icon (❓)
 
 **Help Topics Covered:**
+
 - Getting Started - Opening notebooks and understanding the interface
 - Navigation Controls - All buttons and their functions
 - Overlay Types - Paged, GitHub Markdown, Preview overlays
@@ -714,12 +766,14 @@ Built-in help documentation accessible anytime via the Help button! The help sys
 - Troubleshooting - Common issues and solutions
 
 **Requirements:**
+
 - Help button appears automatically in notebook mode
 - Uses help-repo metadata (falls back to repo, then defaults to allaboutV2)
 - Expects help file at docs/help.md in the repository
 - Uses GitHub Markdown Overlay viewer for display
 
 **Benefits:**
+
 - Self-Service - Users find answers without leaving the app
 - Contextual - Help available exactly when needed
 - Complete - All features documented in one place
@@ -737,6 +791,7 @@ Create links with hash targets in markdown cells:
 `Jump to [Part 3](#part-3) or see the [Advanced Examples](#advanced-examples)`
 
 **How it works:**
+
 - Automatic ID generation: All ## h2 headers automatically get IDs
 - ID format: Text is converted to lowercase, spaces become hyphens, special chars removed
 - Example: ## Part 1: The Big Picture → id="part-1-the-big-picture"
@@ -745,6 +800,7 @@ Create links with hash targets in markdown cells:
 - No page reload smooth transition within overlay
 
 **Use Cases:**
+
 - Table of Contents with clickable navigation
 - Cross-references between sections
 - Progressive learning with "skip ahead" links
@@ -763,8 +819,11 @@ Create links with hash targets in markdown cells:
 `- [Resources](#resources-next-steps)`
 
 **ID generation rules:**
+
 - ## 🚀 Getting Started → #getting-started (emojis removed, leading hyphen trimmed)
+
 - ## Part 1: Introduction → #part-1-introduction (lowercase, hyphens)
+
 - ## What's New? → #whats-new (apostrophe removed, spaces to hyphens)
 
 ## Content Features
@@ -792,11 +851,13 @@ Instead of writing HTML wrappers manually, just write pure markdown in notebook 
 `**Lost in documentation?** Not anymore! This guide helps you navigate comprehensive EDS documentation.`
 
 The viewer automatically:
+
 - Detects this is the first cell with # heading (hero pattern)
 - Wraps it with `<div class="ipynb-hero-cell">...</div>`
 - Applies all CSS styling from the class
 
 **Benefits:**
+
 - ✅ 90% less authoring work - Write pure markdown, no HTML wrappers
 - ✅ Automatic styling - Pattern-based detection handles wrapping
 - ✅ Maintainable - Change styles in CSS, not in every notebook
@@ -829,6 +890,7 @@ The viewer automatically:
 → Auto-wrapped with ipynb-transition-card (short transition cell)
 
 **When to Use:**
+
 - ✅ Educational notebooks and tutorials
 - ✅ Documentation navigation guides
 - ✅ Multi-section content with transitions
@@ -897,17 +959,20 @@ In a content cell:
 **Important:** The `<!-- action-cards -->` marker only applies to the first list that follows it. Any subsequent lists in the same cell will remain as normal bullet lists.
 
 **Example matching:**
+
 - [Getting Started](#) finds heading containing "Getting Started" (like ## Getting Started or ### 🚀 Getting Started Guide)
 - [Best Practices](#) finds heading containing "Best Practices" (like ## Part 6: Best Practices)
 - Link text doesn't need exact match - searches for headings that contain your link text
 
 **Best Practices:**
+
 - ✅ Use specific link text: [Part 1: Introduction](#) instead of just [Introduction](#)
 - ✅ Make link text unique to avoid ambiguity
 - ⚠️ If multiple headings match, it picks the first one found (in cell order)
 - 💡 Tip: Use part numbers or descriptive prefixes to ensure unique matches
 
 **Features:**
+
 - ✅ Pure markdown - No manual HTML required
 - ✅ Works in any cell type - Hero cells, content cells, intro cells, transition cells
 - ✅ Smart link resolution - Automatically finds matching headings at runtime
@@ -934,6 +999,7 @@ The ipynb-viewer block includes opt-in CSS classes for creating visually consist
 **Available Classes:**
 
 Component Classes:
+
 - .ipynb-hero-cell - Hero/title sections with blue gradient, 48px padding, shadow
 - .ipynb-content-card - Standard content cards with 6px left border
 - .ipynb-content-card-thin - Content cards with thin 4px border
@@ -945,18 +1011,22 @@ Component Classes:
 - .ipynb-icon-emoji / -large / -small - Icon emoji sizing utilities
 
 Typography Utilities:
+
 - .ipynb-text-center - Center align text
 - .ipynb-font-light / -medium / -semibold / -bold / -extrabold - Font weights
 - .ipynb-text-16 / -18 / -20 / -26 / -28 / -48 / -56 - Font sizes
 
 Layout Utilities:
+
 - .ipynb-flex / .ipynb-flex-center / .ipynb-flex-align-center - Flexbox layouts
 - .ipynb-gap-8 / -12 / -16 - Gap spacing
 
 Spacing Utilities:
+
 - .ipynb-m-0 / .ipynb-mb-16 / -20 / -24 / .ipynb-my-16 - Margins
 
 Visual Effects:
+
 - .ipynb-opacity-85 / -95 - Opacity
 - .ipynb-rounded-4 - Border radius
 
@@ -964,14 +1034,15 @@ Visual Effects:
 
 `Using Reusable Classes`
 `<div class="ipynb-content-card">`
-`  <h3 class="ipynb-section-header">`
-`    <span class="ipynb-icon-emoji">📚</span>`
-`    Section Title`
-`  </h3>`
-`  <div class="ipynb-body-text">Content here</div>`
+`<h3 class="ipynb-section-header">`
+`<span class="ipynb-icon-emoji">📚</span>`
+`Section Title`
+`</h3>`
+`<div class="ipynb-body-text">Content here</div>`
 `</div>`
 
 **Features:**
+
 - ✅ Opt-in - Only applies when you use the classes (backward compatible)
 - ✅ Responsive - Automatically adjusts padding and font sizes on mobile
 - ✅ Overlay compatible - Works in paged, notebook, and autorun modes
@@ -987,6 +1058,7 @@ Code runs in the browser using AsyncFunction constructor for async/await support
 **Autorun Mode:**
 
 When autorun or notebook variations are used:
+
 - Code cells execute automatically when displayed
 - Run buttons are hidden via CSS (.ipynb-autorun class)
 - Output areas are visible by default (display: block)
@@ -998,6 +1070,7 @@ When autorun or notebook variations are used:
 The paged variation automatically detects when markdown cells reference code cells and groups them together:
 
 **Detection Patterns:**
+
 - Markdown ending with colon (:)
 - Contains "below", "following"
 - Contains "try running", "click run"
@@ -1013,6 +1086,7 @@ The paged variation automatically detects when markdown cells reference code cel
 Creates overlay element with minimal DOM structure (EDS-compatible), appends to document body, decorates block, and manages responsive view switching.
 
 **Why overlay is better than popup windows:**
+
 - No popup blockers
 - Stays on the same page
 - Better UX (ESC or backdrop click to close)
@@ -1020,6 +1094,7 @@ Creates overlay element with minimal DOM structure (EDS-compatible), appends to 
 - Simpler implementation
 
 **Overlay Controls:**
+
 - Close button (×) always visible in top-right corner for all modes (including notebook variation)
 - Responsive view buttons switch between Mobile, Tablet, and Desktop views
 - ESC key support pressing ESC closes the preview overlay (unless a paged/manual overlay is open)
@@ -1035,6 +1110,7 @@ EDS blocks expect specific DOM patterns where they can iterate over block.childr
 The block includes a comprehensive markdown parser that supports:
 
 **Processing Order:**
+
 1. Code blocks (extracted first with placeholders)
 2. Tables (multi-line processing with header detection)
 3. Headers (H1, H2, H3)
@@ -1046,6 +1122,7 @@ The block includes a comprehensive markdown parser that supports:
 9. Line break conversion
 
 **Key Features:**
+
 - Code block protection prevents markdown processing inside code blocks
 - Table parsing supports markdown tables with | delimiters and header rows
 - List handling properly closes and nests `<ul>` and `<ol>` tags
@@ -1133,11 +1210,13 @@ blocks/ipynb-viewer/
 ### Testing Locally
 
 1. Start the development server:
+
    ```bash
    npm run debug
    ```
 
 2. Access the test file:
+
    ```
    http://localhost:3000/blocks/ipynb-viewer/test.html
    ```

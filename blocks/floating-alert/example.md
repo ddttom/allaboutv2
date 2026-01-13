@@ -132,26 +132,32 @@
 ## Usage Notes
 
 ### Dismissal Behavior
+
 - Click the X button in the top-right corner
 - Click outside the modal (on the darkened overlay)
 - Press the Escape key
 - Once dismissed, the alert won't appear again until localStorage is cleared
 
 ### Heading Processing
+
 When you include a heading (h1-h6) in your content:
+
 - The heading is automatically extracted as the alert title
 - It appears prominently at the top of the modal
 - A horizontal rule separator is added below the heading
 - The remaining content displays below the separator
 
 ### Testing and Development
+
 Use browser console commands for testing:
+
 - `window.floatingAlertDebug.reset()` - Clear dismissed state
 - `window.floatingAlertDebug.checkStatus()` - Check if dismissed
 - `window.floatingAlertDebug.forceShow()` - Force display
 - `window.floatingAlertDebug.checkDOM()` - Inspect DOM elements
 
 ### Best Practices
+
 - Keep messages concise and actionable
 - Use headings to provide context
 - Include relevant links for more information
@@ -160,6 +166,7 @@ Use browser console commands for testing:
 - Consider timing - don't overwhelm users with alerts
 
 ### Content Guidelines
+
 - **Headings**: Use h2 or h3 for consistency
 - **Links**: Make link text descriptive (not "click here")
 - **Length**: Aim for 1-3 sentences plus links
@@ -167,11 +174,13 @@ Use browser console commands for testing:
 - **Formatting**: Use `<br>` tags for line breaks
 
 ### Customization
+
 Override CSS variables to match your brand:
+
 - `--alert-bg-color`: Background color
 - `--alert-border-color`: Border color
 - `--alert-text-color`: Text color
 - `--alert-max-width`: Maximum width
 - `--alert-padding`: Internal spacing
 
-See README.md for complete customization options. 
+See README.md for complete customization options.

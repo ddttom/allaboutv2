@@ -7,6 +7,7 @@ A methodology for maintaining project context across Claude Code sessions and co
 ## The Problem
 
 **Context resets lose everything:**
+
 - Implementation decisions
 - Key files and their purposes
 - Task progress
@@ -39,6 +40,7 @@ dev/active/[task-name]/
 **Purpose:** Strategic plan for the implementation
 
 **Contains:**
+
 - Executive summary
 - Current state analysis
 - Proposed future state
@@ -53,6 +55,7 @@ dev/active/[task-name]/
 **When to update:** When scope changes or new phases discovered
 
 **Example:**
+
 ```markdown
 # Feature Name - Implementation Plan
 
@@ -81,6 +84,7 @@ Where we are now
 **Purpose:** Key information for resuming work
 
 **Contains:**
+
 - SESSION PROGRESS section (updated frequently!)
 - What's completed vs in-progress
 - Key files and their purposes
@@ -94,6 +98,7 @@ Where we are now
 **When to update:** **FREQUENTLY** - after major decisions, completions, or discoveries
 
 **Example:**
+
 ```markdown
 # Feature Name - Context
 
@@ -138,6 +143,7 @@ To continue:
 **Purpose:** Checklist for tracking progress
 
 **Contains:**
+
 - Phases broken down by logical sections
 - Tasks in checkbox format
 - Status indicators (✅/🟡/⏳)
@@ -149,6 +155,7 @@ To continue:
 **When to update:** After completing each task or discovering new tasks
 
 **Example:**
+
 ```markdown
 # Feature Name - Task Checklist
 
@@ -174,6 +181,7 @@ To continue:
 ## When to Use Dev Docs
 
 **Use for:**
+
 - ✅ Complex multi-day tasks
 - ✅ Features with many moving parts
 - ✅ Tasks likely to span multiple sessions
@@ -181,6 +189,7 @@ To continue:
 - ✅ Refactoring large systems
 
 **Skip for:**
+
 - ❌ Simple bug fixes
 - ❌ Single-file changes
 - ❌ Quick updates
@@ -195,6 +204,7 @@ To continue:
 ### Starting a New Task
 
 1. **Use /dev-docs slash command:**
+
    ```
    /dev-docs refactor authentication system
    ```
@@ -232,28 +242,34 @@ No need to explain what you were doing - it's all documented!
 ## Integration with Slash Commands
 
 ### /dev-docs
+
 **Creates:** New dev docs for a task
 
 **Usage:**
+
 ```
 /dev-docs implement real-time notifications
 ```
 
 **Generates:**
+
 - `dev/active/implement-real-time-notifications/`
   - implement-real-time-notifications-plan.md
   - implement-real-time-notifications-context.md
   - implement-real-time-notifications-tasks.md
 
 ### /dev-docs-update
+
 **Updates:** Existing dev docs before context reset
 
 **Usage:**
+
 ```
 /dev-docs-update
 ```
 
 **Updates:**
+
 - Marks completed tasks
 - Adds new tasks discovered
 - Updates context with session progress
@@ -288,6 +304,7 @@ dev/
 ## Example: Real Usage
 
 See **dev/active/public-infrastructure-repo/** in this repository for a real example:
+
 - **plan.md** - 700+ line strategic plan for creating this showcase
 - **context.md** - Tracks what's completed, decisions made, what's next
 - **tasks.md** - Checklist of all phases and tasks
@@ -304,6 +321,7 @@ This is the actual dev docs used to build this showcase!
 **Good:** Update after each major milestone
 
 **SESSION PROGRESS section should always reflect reality:**
+
 ```markdown
 ## SESSION PROGRESS (YYYY-MM-DD)
 
@@ -318,6 +336,7 @@ This is the actual dev docs used to build this showcase!
 **Good:** "Implement JWT token validation in AuthMiddleware.ts (Acceptance: Tokens validated, errors to Sentry)"
 
 **Include:**
+
 - Specific file names
 - Clear acceptance criteria
 - Dependencies on other tasks
@@ -325,6 +344,7 @@ This is the actual dev docs used to build this showcase!
 ### Keep Plan Current
 
 If scope changes:
+
 - Update the plan
 - Add new phases
 - Adjust timeline estimates
@@ -362,6 +382,7 @@ If scope changes:
 4. **Refer to plan.md** - understand overall strategy
 
 **Update frequently:**
+
 - Mark tasks complete immediately
 - Update SESSION PROGRESS after significant work
 - Add new tasks as discovered
@@ -373,23 +394,27 @@ If scope changes:
 If you don't have the /dev-docs command:
 
 **1. Create directory:**
+
 ```bash
 mkdir -p dev/active/your-task-name
 ```
 
 **2. Create plan.md:**
+
 - Executive summary
 - Implementation phases
 - Detailed tasks
 - Timeline estimates
 
 **3. Create context.md:**
+
 - SESSION PROGRESS section
 - Key files
 - Important decisions
 - Quick resume instructions
 
 **4. Create tasks.md:**
+
 - Phases with checkboxes
 - [ ] Task format
 - Acceptance criteria
@@ -399,12 +424,14 @@ mkdir -p dev/active/your-task-name
 ## Benefits
 
 **Before dev docs:**
+
 - Context reset = start over
 - Forget why decisions were made
 - Lose track of progress
 - Repeat work
 
 **After dev docs:**
+
 - Context reset = read 3 files, resume instantly
 - Decisions documented
 - Progress tracked

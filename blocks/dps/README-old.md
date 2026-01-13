@@ -3,6 +3,7 @@
 A powerful presentation system that transforms structured content into an interactive presentation with features like image sequences, presenter notes, and timer controls.
 
 ## Features
+
 - Full-screen presentation mode
 - Keyboard-based navigation
 - Multiple images per slide with arrow key navigation
@@ -19,6 +20,7 @@ A powerful presentation system that transforms structured content into an intera
 - Automatic Q&A slide with interactive link support
 
 ## Content Structure
+
 | Title | Subtitle | Timer (minutes) | Content | Presenter Notes |
 | :---- | :------- | :-------------- | :------ | :-------------- |
 | Presentation Title | Optional subtitle | 25 | Main content | Presenter notes |
@@ -28,6 +30,7 @@ A powerful presentation system that transforms structured content into an intera
 | | | | iframes | Additional notes |
 
 ## Navigation
+
 - **Arrow Keys**: Navigate between slides and within image sequences
 - **Space**: Toggle timer pause/play
 - **Escape**: Toggle navigation bar
@@ -36,6 +39,7 @@ A powerful presentation system that transforms structured content into an intera
 - **P**: Toggle enlarged presenter notes (shows only notes content)
 
 ### Image Sequence Navigation
+
 - Use left/right arrow keys to navigate through multiple images
 - Images maintain aspect ratio and use full viewport height
 - Simplified transitions between images with direct display toggling
@@ -45,12 +49,13 @@ A powerful presentation system that transforms structured content into an intera
 - Reliable state management with consistent containers
 
 ### Container-Based Navigation System
+
 - Navigation operates at the container level for improved reliability
 - Each sequence item is contained in its own `.sequence-item-container`
 - Containers maintain proper state for all child elements during navigation
 
-
 ### Icon Support
+
 The fourth column supports icon spans with specific class names:
 
 ```html
@@ -58,44 +63,56 @@ The fourth column supports icon spans with specific class names:
 ```
 
 Icons are automatically transformed into proper image references:
+
 - Extracts the icon name from the class (e.g., "methods" from "icon-methods")
 - Creates an image tag pointing to `/icons/[icon-name].svg`
 - Sets proper alt text as "[icon-name] Illustration"
 - Preserves sequence order when mixed with other content types
 
 ### Mixed Content Support
+
 The DPS block handles various content types in any order:
+
 - Icons, images, iframes, and SVGs in any combination
 - Preserves the exact order from your original document
 - Proper navigation between all content types
 
 ### iframe Support
+
 The fourth column supports embedded iframes with flexible URL handling:
 
 #### Supported URL Formats
+
 1. **Simplified author-friendly format (recommended):**
+
 ```
 iframe https://example.com/embed
 ```
+
 This is the easiest way for authors to add iframes - just type "iframe" followed by the URL.
 
-2. **iframe with anchor tag format:**
+1. **iframe with anchor tag format:**
+
 ```
 iframe <a href="https://example.com/embed">Link text</a>
 ```
+
 This combines the simplified iframe keyword with Franklin's link format.
 
-3. Standard iframe format:
+1. Standard iframe format:
+
 ```html
 <iframe src="https://example.com/embed"></iframe>
 ```
 
-4. Franklin link format (automatically converted):
+1. Franklin link format (automatically converted):
+
 ```html
 <a href="https://example.com/embed">Link</a>
 ```
 
 ### Presenter Notes
+
 - Appears in bottom left third of viewport (31.25% width) by default
 - Can be enlarged to 50% width with 'P' key while staying pinned to the left
 - Always stays pinned to the left of the viewport
@@ -105,9 +122,11 @@ This combines the simplified iframe keyword with Franklin's link format.
 ## Image Handling
 
 ### Supported Image Formats
+
 The fourth column supports various image formats and sources:
 
 1. **Picture Elements**
+
 ```html
 <picture>
   <source type="image/webp" srcset="/path/to/image.webp" media="(min-width: 600px)">
@@ -117,22 +136,26 @@ The fourth column supports various image formats and sources:
 </picture>
 ```
 
-2. **Direct Images**
+1. **Direct Images**
+
 ```html
 <img src="/path/to/image.jpg" alt="Description">
 ```
 
-3. **Direct Image URLs**
+1. **Direct Image URLs**
+
 ```
 /path/to/image.jpg
 ```
 
-4. **URLs in Anchor Tags (Franklin Format)**
+1. **URLs in Anchor Tags (Franklin Format)**
+
 ```html
 <a href="https://example.com/path/to/image.jpg">https://example.com/path/to/image.jpg</a>
 ```
 
-5. **SVG Content**
+1. **SVG Content**
+
 ```html
 <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
   <ellipse cx="200" cy="100" rx="150" ry="80" fill="#BBDEFB" stroke="#3498db" stroke-width="2"/>
@@ -140,7 +163,8 @@ The fourth column supports various image formats and sources:
 </svg>
 ```
 
-6. **Icon Spans**
+1. **Icon Spans**
+
 ```html
 <span class="icon icon-methods"></span>
 ```
@@ -219,30 +243,38 @@ Content authors should structure their content as follows:
 To simplify the authoring experience, DPS provides these easy-to-use formats:
 
 ### Simplified iframe
+
 ```
 iframe https://example.com/embed
 ```
+
 Just type "iframe" followed by the URL - no HTML tags needed!
 
 ### Icon Spans
+
 ```html
 <span class="icon icon-methods"></span>
 ```
+
 Use a simple span with the correct classes to reference SVG icons.
 
 ### Plain URLs
+
 ```
 https://example.com/image.jpg
 ```
+
 For images, you can simply paste the URL directly.
 
 ## Browser Compatibility
+
 - Chrome (recommended)
 - Firefox
 - Safari
 - Edge
 
 ## Q&A Slide
+
 The DPS block automatically adds a "Questions & Answers" slide at the end of every presentation. This slide features:
 
 - A prominent "Q&A" title
@@ -251,6 +283,7 @@ The DPS block automatically adds a "Questions & Answers" slide at the end of eve
 - A "Thank You" message
 
 ### Interactive Link from Presentation Subtitle
+
 The Q&A slide can display a "Contact Us" link that comes from the presentation subtitle:
 
 - If the presentation subtitle (in the first row) contains a hyphen (" - ") followed by a URL, that URL will be used as a link in the Q&A slide

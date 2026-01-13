@@ -7,6 +7,7 @@ This document outlines the plan for enhancing the code-expander block to detect 
 ## Current Functionality
 
 The code-expander block already detects HTML through:
+
 - HTML link tags (lines starting with `<link`)
 
 However, it doesn't detect HTML when a line starts with "<!--", which is a common HTML comment syntax.

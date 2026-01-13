@@ -99,6 +99,7 @@ Sequences are now structured as containers with clear separation:
 ```
 
 This structure provides several advantages:
+
 - Clear separation between sequence items
 - Simple show/hide logic with CSS display property
 - Consistent labeling for all content types
@@ -108,21 +109,21 @@ This structure provides several advantages:
 
 The navigation system now uses a simpler, more direct approach:
 
-1.  **Slide Navigation**: Direct toggling of slide display with consistent state updates
-2.  **Sequence Navigation**: Container-based navigation with clear boundaries
-3.  **State Management**: Maintains a current slide index and sequence index for clear state tracking
+1. **Slide Navigation**: Direct toggling of slide display with consistent state updates
+2. **Sequence Navigation**: Container-based navigation with clear boundaries
+3. **State Management**: Maintains a current slide index and sequence index for clear state tracking
 
 ### Navigation Flow
 
-1.  When navigating forward:
-    * Check if current slide has a sequence with more items
-    * If yes, advance to the next sequence item
-    * If no, advance to the next slide
+1. When navigating forward:
+    - Check if current slide has a sequence with more items
+    - If yes, advance to the next sequence item
+    - If no, advance to the next slide
 
-2.  When navigating backward:
-    * Check if current slide has a sequence and is past the first item
-    * If yes, go back to the previous sequence item
-    * If no, go back to the previous slide
+2. When navigating backward:
+    - Check if current slide has a sequence and is past the first item
+    - If yes, go back to the previous sequence item
+    - If no, go back to the previous slide
 
 This approach eliminates complex state calculations and provides a more intuitive navigation experience.
 
@@ -130,20 +131,20 @@ This approach eliminates complex state calculations and provides a more intuitiv
 
 The timer system has been simplified for better reliability:
 
-1.  **Timer Initialization**: Timer automatically starts when moving past the first slide
-2.  **Timer Controls**: Space key toggles timer pause/resume
-3.  **Visual Feedback**: Time warning flashes when 2 minutes remain
-4.  **Timer Display**: MM:SS format with clear visual styling
+1. **Timer Initialization**: Timer automatically starts when moving past the first slide
+2. **Timer Controls**: Space key toggles timer pause/resume
+3. **Visual Feedback**: Time warning flashes when 2 minutes remain
+4. **Timer Display**: MM:SS format with clear visual styling
 
 ## Presenter Notes System
 
 The presenter notes system has been enhanced:
 
-1.  **Basic Mode**: Shows notes in bottom left corner (31.25% width)
-2.  **Expanded Mode**: Enlarged view (50% width) with 'P' key
-3.  **Presenter Mode**: Full presenter mode with slide content hidden
-4.  **Resize Handling**: Drag-based resizing for flexible note display
-5.  **Content Synchronization**: Notes update automatically with slide changes
+1. **Basic Mode**: Shows notes in bottom left corner (31.25% width)
+2. **Expanded Mode**: Enlarged view (50% width) with 'P' key
+3. **Presenter Mode**: Full presenter mode with slide content hidden
+4. **Resize Handling**: Drag-based resizing for flexible note display
+5. **Content Synchronization**: Notes update automatically with slide changes
 
 ## Implementation Notes
 
@@ -151,55 +152,56 @@ The presenter notes system has been enhanced:
 
 The codebase is now organized into clear, focused sections:
 
-1.  **Core Functions and Setup** (0-600 lines)
-    * Configuration and state variables
-    * Main entry point
-    * Basic utility functions
-    * DOM creation helpers
-    * Content parsing
+1. **Core Functions and Setup** (0-600 lines)
+    - Configuration and state variables
+    - Main entry point
+    - Basic utility functions
+    - DOM creation helpers
+    - Content parsing
 
-2.  **Illustration Processing and Slide Building** (600-1200 lines)
-    * Illustration extraction
-    * Content type detection
-    * Slide building
-    * Sequence HTML creation
+2. **Illustration Processing and Slide Building** (600-1200 lines)
+    - Illustration extraction
+    - Content type detection
+    - Slide building
+    - Sequence HTML creation
 
-3.  **Navigation and Timer Functions** (1200-1800 lines)
-    * Slide navigation
-    * Sequence navigation
-    * Timer controls
-    * Presenter notes functions
-    * Keyboard handlers
+3. **Navigation and Timer Functions** (1200-1800 lines)
+    - Slide navigation
+    - Sequence navigation
+    - Timer controls
+    - Presenter notes functions
+    - Keyboard handlers
 
-4.  **CSS Styles** (1800-2400 lines)
-    * Embedded CSS for consistent styling
-    * Responsive design rules
-    * Print formatting
+4. **CSS Styles** (1800-2400 lines)
+    - Embedded CSS for consistent styling
+    - Responsive design rules
+    - Print formatting
 
 ### Deduplication Logic
 
 The deduplication system has been designed to be lightweight but effective:
 
-1.  **Why Deduplication is Necessary**:
-    * Defense against HTML quirks in source content
-    * Protection against common user errors (duplicate content)
-    * Stability for edge cases with nested structures
-    * Better reliability with different content sources
+1. **Why Deduplication is Necessary**:
+    - Defense against HTML quirks in source content
+    - Protection against common user errors (duplicate content)
+    - Stability for edge cases with nested structures
+    - Better reliability with different content sources
 
-2.  **How Deduplication Works**:
-    * Generates unique identifiers based on content type and attributes
-    * Uses a Set-based approach for efficient duplicate detection
-    * Preserves original item order in the final output
-    * Minimal performance impact as a safety mechanism
+2. **How Deduplication Works**:
+    - Generates unique identifiers based on content type and attributes
+    - Uses a Set-based approach for efficient duplicate detection
+    - Preserves original item order in the final output
+    - Minimal performance impact as a safety mechanism
 
-3.  **Content Identifiers**:
-    * iframe items: URL as identifier
-    * Icon items: "icon-{iconName}" as identifier
-    * Other items: First 100 characters of content as identifier
+3. **Content Identifiers**:
+    - iframe items: URL as identifier
+    - Icon items: "icon-{iconName}" as identifier
+    - Other items: First 100 characters of content as identifier
 
 ## Browser Compatibility
 
 The revised implementation has been tested in:
+
 - Chrome (recommended)
 - Firefox
 - Safari
@@ -209,38 +211,38 @@ The revised implementation has been tested in:
 
 Potential areas for future enhancement:
 
-1.  **Performance Optimization**:
-    * Lazy loading for sequence items
-    * More efficient DOM updates for very large presentations
+1. **Performance Optimization**:
+    - Lazy loading for sequence items
+    - More efficient DOM updates for very large presentations
 
-2.  **Enhanced Feature Set**:
-    * Support for audio and video content
-    * Interactive polls or questions
-    * Advanced presenter tools (timer controls, next slide preview)
+2. **Enhanced Feature Set**:
+    - Support for audio and video content
+    - Interactive polls or questions
+    - Advanced presenter tools (timer controls, next slide preview)
 
-3.  **Additional Content Types**:
-    * MathML support
-    * Data visualization components
-    * Annotation tools
+3. **Additional Content Types**:
+    - MathML support
+    - Data visualization components
+    - Annotation tools
 
 ## Troubleshooting
 
 Common issues and solutions:
 
-1.  **Slide Display Issues**:
-    * Check for proper table structure in the source document
-    * Ensure proper nesting of HTML elements in content cells
+1. **Slide Display Issues**:
+    - Check for proper table structure in the source document
+    - Ensure proper nesting of HTML elements in content cells
 
-2.  **Navigation Problems**:
-    * Validate slide index is within bounds
-    * Check navigation event handling
+2. **Navigation Problems**:
+    - Validate slide index is within bounds
+    - Check navigation event handling
 
-3.  **Timer Issues**:
-    * Verify timer initialization in showSlide function
-    * Check timer interval handling
+3. **Timer Issues**:
+    - Verify timer initialization in showSlide function
+    - Check timer interval handling
 
-4.  **Content Parsing Problems**:
-    * Review content extraction in parseRows function
-    * Check illustration extraction logic for supported formats
+4. **Content Parsing Problems**:
+    - Review content extraction in parseRows function
+    - Check illustration extraction logic for supported formats
 
 ```

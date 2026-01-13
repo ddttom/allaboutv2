@@ -163,6 +163,7 @@ Add a comment anywhere in your document:
 ### Do's
 
 **Use Comments For:**
+
 - Editorial reminders and notes
 - Team collaboration and approvals
 - Workflow status tracking
@@ -172,6 +173,7 @@ Add a comment anywhere in your document:
 - Internal documentation
 
 **Writing Effective Comments:**
+
 - Be specific and actionable
 - Include dates when relevant
 - Tag team members with @mentions
@@ -181,6 +183,7 @@ Add a comment anywhere in your document:
 ### Don'ts
 
 **Avoid Comments For:**
+
 - Sensitive security information (use secure channels)
 - Personal data or PII (even hidden, it's in source)
 - Production configuration (use config files)
@@ -188,6 +191,7 @@ Add a comment anywhere in your document:
 - Accessibility instructions (use separate documentation)
 
 **Comment Anti-Patterns:**
+
 - Vague notes without context
 - Outdated comments left indefinitely
 - Comments as substitute for proper documentation
@@ -322,6 +326,7 @@ A: This depends on your authoring tool. Check your CMS documentation for comment
 **Problem:** You added a comment but don't see it in the authoring interface.
 
 **Solutions:**
+
 1. Refresh the authoring interface
 2. Check table syntax is correct (header, separator, content)
 3. Verify block name is exactly "Comment" (case-sensitive)
@@ -332,6 +337,7 @@ A: This depends on your authoring tool. Check your CMS documentation for comment
 **Problem:** Comment is visible on the published website.
 
 **This should never happen.** If it does:
+
 1. Verify the CSS file is loaded correctly
 2. Check browser cache (hard refresh)
 3. Contact development team immediately
@@ -342,6 +348,7 @@ A: This depends on your authoring tool. Check your CMS documentation for comment
 **Problem:** Comment block not rendering correctly in authoring.
 
 **Common Issues:**
+
 - Missing table separator line (`| --- |`)
 - Incorrect block name (must be "Comment")
 - Unclosed markdown formatting
@@ -354,14 +361,17 @@ A: This depends on your authoring tool. Check your CMS documentation for comment
 ## Related Resources
 
 **Technical Documentation:**
+
 - README.md - Complete technical documentation
 - test.html - Browser-based testing file
 
 **EDS Documentation:**
+
 - [EDS Authoring Guide](https://www.aem.live/docs/authoring)
 - [Markdown Reference](https://www.aem.live/docs/authoring-basics)
 
 **Support:**
+
 - Contact: Development team
 - Issues: Project repository
 - Questions: Team Slack/Email

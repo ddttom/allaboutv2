@@ -94,6 +94,7 @@ The Showcaser block is designed to work on modern browsers, including:
 - Edge (latest versions)
 
 For older browsers, some features may have limited functionality, but the core content display should remain accessible.- Syntax highlighting based on detected language
+
 - Responsive layout adjusts for mobile devices
 - "Return to Menu" button appears when scrolling down and, when clicked, smoothly scrolls the page back to the top of the Showcaser block
 
@@ -105,7 +106,6 @@ For older browsers, some features may have limited functionality, but the core c
 - "Return to Menu" button provides an easy way for users to navigate back to the top of the Showcaser, improving usability for all users
 - Expand/collapse buttons for long code snippets improve readability and navigation
 - Focus styles for interactive elements to aid keyboard navigation
-
 
 ## Language Detection
 

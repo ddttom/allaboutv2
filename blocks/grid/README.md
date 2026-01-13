@@ -26,6 +26,7 @@ A versatile, CSS-only grid layout system providing multiple responsive grid patt
 The grid block is a CSS-only layout component that provides flexible grid patterns for organizing content. Unlike JavaScript-heavy blocks, this block relies entirely on CSS Grid for layout management, making it exceptionally performant and maintainable.
 
 **Primary Use Cases:**
+
 - Logo walls and partner showcases
 - Icon-based feature grids
 - Two-column content layouts
@@ -38,6 +39,7 @@ The grid block is a CSS-only layout component that provides flexible grid patter
 **Location:** `/blocks/grid/`
 
 **Files:**
+
 - `grid.js` - Empty file (CSS-only block, no JavaScript)
 - `grid.css` - All grid layout styles and variations
 - `README.md` - Technical documentation (this file)
@@ -88,6 +90,7 @@ The grid block is a CSS-only layout component that provides flexible grid patter
 ### CSS-Only Block Pattern
 
 The grid block is a CSS-only component, meaning:
+
 - `grid.js` is intentionally empty
 - All functionality is in `grid.css`
 - EDS automatically applies classes to the block container
@@ -105,6 +108,7 @@ The block uses CSS Grid Layout as its foundation:
 ```
 
 This provides:
+
 - Flexible column layouts
 - Automatic row creation
 - Responsive gap sizing
@@ -197,6 +201,7 @@ Displays as 1 column on mobile, 2 columns on desktop (>= 992px).
 ```
 
 Responsive logo grid:
+
 - Mobile: 1 column
 - Tablet (576px+): 3 columns
 - Desktop (992px+): 5 columns
@@ -215,6 +220,7 @@ Responsive logo grid:
 ```
 
 Icon-based card grid:
+
 - Mobile: 1 column
 - Small tablet (576px+): 2 columns
 - Tablet (768px+): 2 columns
@@ -242,11 +248,13 @@ Grid with bullet-style icons on the left side of each item.
 **Syntax:** `Grid`
 
 **Behavior:**
+
 - Default CSS Grid layout
 - Flexible columns based on content
 - Large gap spacing from design system
 
 **CSS:**
+
 ```css
 .grid {
     display: grid;
@@ -255,6 +263,7 @@ Grid with bullet-style icons on the left side of each item.
 ```
 
 **Best for:**
+
 - Flexible content layouts
 - Custom grid configurations
 - Generic grid containers
@@ -266,12 +275,14 @@ Grid with bullet-style icons on the left side of each item.
 **Syntax:** `Grid (two-cols)`
 
 **Behavior:**
+
 - 1 column on mobile (< 992px)
 - 2 columns on desktop (>= 992px)
 - Equal-width columns
 - Responsive breakpoint at 992px
 
 **CSS:**
+
 ```css
 .grid.two-cols {
     display: grid;
@@ -286,6 +297,7 @@ Grid with bullet-style icons on the left side of each item.
 ```
 
 **Best for:**
+
 - Side-by-side content
 - Comparison layouts
 - Text with image combinations
@@ -298,12 +310,14 @@ Grid with bullet-style icons on the left side of each item.
 **Syntax:** `Grid (bulleted)`
 
 **Behavior:**
+
 - Displays items with icon bullets
 - Icon takes up 8.33% width (1/12 of grid)
 - Flexbox layout within each item
 - Icons from design system
 
 **CSS:**
+
 ```css
 .grid.bulleted > div {
     display: flex;
@@ -316,6 +330,7 @@ Grid with bullet-style icons on the left side of each item.
 ```
 
 **Best for:**
+
 - Feature lists with icons
 - Checkmark lists
 - Bullet-point layouts
@@ -328,12 +343,14 @@ Grid with bullet-style icons on the left side of each item.
 **Syntax:** `Grid (img-grid)` (implied by section styling)
 
 **Behavior:**
+
 - Section-level styling for image grids
 - Border separator at top
 - Minimum height: 98px
 - Extra padding around grid
 
 **CSS:**
+
 ```css
 .section:has(.img-grid) {
     border-top: 1px solid var(--ros-semantic-color-seperator-on-base);
@@ -346,6 +363,7 @@ Grid with bullet-style icons on the left side of each item.
 **Note:** This is a section-level style, not a direct grid variation. The class `.img-grid` triggers special section styling.
 
 **Best for:**
+
 - Photo galleries
 - Image showcases
 - Visual portfolios
@@ -358,6 +376,7 @@ Grid with bullet-style icons on the left side of each item.
 **Syntax:** `Grid (logo-grid)`
 
 **Behavior:**
+
 - Mobile: 1 column
 - Small tablet (576px+): 3 columns
 - Tablet (768px+): 3 columns
@@ -367,6 +386,7 @@ Grid with bullet-style icons on the left side of each item.
 - Section borders top and bottom
 
 **CSS:**
+
 ```css
 .logo-grid {
     display: grid;
@@ -398,6 +418,7 @@ Grid with bullet-style icons on the left side of each item.
 ```
 
 **Section Styling:**
+
 ```css
 .section:has(.logo-grid) {
     border-top: var(--ros-semantic-border-width-sm) solid
@@ -409,6 +430,7 @@ Grid with bullet-style icons on the left side of each item.
 ```
 
 **Best for:**
+
 - Partner logos
 - Client logos
 - Brand showcases
@@ -422,6 +444,7 @@ Grid with bullet-style icons on the left side of each item.
 **Syntax:** `Grid (icon-cards)`
 
 **Behavior:**
+
 - Responsive grid: 1-2-3-4 columns
 - Card-based layout with shadows
 - Rotated icon containers
@@ -429,6 +452,7 @@ Grid with bullet-style icons on the left side of each item.
 - Design system typography
 
 **CSS:**
+
 ```css
 .icon-cards {
     display: grid;
@@ -457,6 +481,7 @@ Grid with bullet-style icons on the left side of each item.
 ```
 
 **Card Styling:**
+
 ```css
 .icon-cards > div {
     border-radius: var(--ros-semantic-border-radius-default);
@@ -473,6 +498,7 @@ Grid with bullet-style icons on the left side of each item.
 ```
 
 **Icon Container:**
+
 ```css
 .icon-cards .icon {
     background-color: var(--ros-semantic-color-background-layer-2);
@@ -493,6 +519,7 @@ Grid with bullet-style icons on the left side of each item.
 ```
 
 **Best for:**
+
 - Feature grids with icons
 - Service offerings
 - Product features
@@ -508,6 +535,7 @@ Grid with bullet-style icons on the left side of each item.
 The grid block uses design system tokens extensively:
 
 **Spacing:**
+
 ```css
 --ros-semantic-spacing-gap-component-lg      /* Grid gap */
 --ros-semantic-spacing-gap-component-xl      /* Icon cards gap */
@@ -518,6 +546,7 @@ The grid block uses design system tokens extensively:
 ```
 
 **Colors:**
+
 ```css
 --ros-semantic-color-seperator-on-base              /* Border color */
 --ros-semantic-color-background-layer-2             /* Icon background */
@@ -527,6 +556,7 @@ The grid block uses design system tokens extensively:
 ```
 
 **Typography:**
+
 ```css
 --ros-semantic-font-family-heading          /* Heading font */
 --ros-semantic-font-weight-heading-regular  /* Regular weight */
@@ -538,6 +568,7 @@ The grid block uses design system tokens extensively:
 ```
 
 **Borders & Shadows:**
+
 ```css
 --ros-semantic-border-radius-default        /* Card radius */
 --ros-semantic-border-width-sm              /* Border width */
@@ -547,6 +578,7 @@ The grid block uses design system tokens extensively:
 ### Custom Styling Examples
 
 **Adjust Grid Gap:**
+
 ```css
 .grid {
     gap: 2rem; /* Override default gap */
@@ -554,6 +586,7 @@ The grid block uses design system tokens extensively:
 ```
 
 **Customize Two-Column Breakpoint:**
+
 ```css
 @media (min-width: 768px) {
     .grid.two-cols {
@@ -563,6 +596,7 @@ The grid block uses design system tokens extensively:
 ```
 
 **Modify Logo Grid Columns:**
+
 ```css
 @media (min-width: 1400px) {
     .logo-grid {
@@ -572,6 +606,7 @@ The grid block uses design system tokens extensively:
 ```
 
 **Change Icon Card Hover Effect:**
+
 ```css
 .icon-cards > div:hover {
     transform: translateY(-4px);
@@ -588,19 +623,23 @@ The grid block uses design system tokens extensively:
 The grid block uses multiple responsive breakpoints:
 
 **576px (Small Tablet):**
+
 - Logo grid: 1 → 3 columns
 - Icon cards: 1 → 2 columns
 
 **768px (Tablet):**
+
 - Logo grid: maintains 3 columns
 - Icon cards: maintains 2 columns
 
 **992px (Desktop):**
+
 - Two-column grid: 1 → 2 columns
 - Logo grid: 3 → 5 columns
 - Icon cards: 2 → 3 columns
 
 **1200px (Large Desktop):**
+
 - Icon cards: 3 → 4 columns
 
 ### Mobile Behavior (< 576px)
@@ -647,6 +686,7 @@ The grid block uses multiple responsive breakpoints:
 ### Semantic HTML
 
 The grid block works with standard HTML elements:
+
 - Divs for grid containers
 - Images with alt text
 - Headings with proper hierarchy
@@ -656,6 +696,7 @@ The grid block works with standard HTML elements:
 ### Screen Reader Support
 
 **What works well:**
+
 - Grid announced as container
 - Items announced in document order
 - Headings navigable via shortcuts
@@ -663,6 +704,7 @@ The grid block works with standard HTML elements:
 - Links have descriptive text
 
 **Best practices for authors:**
+
 1. Provide alt text for all images (logos, icons)
 2. Use descriptive link text (not "click here")
 3. Maintain logical reading order
@@ -679,6 +721,7 @@ The grid block works with standard HTML elements:
 ### Color Contrast
 
 Design system tokens ensure WCAG AA compliance:
+
 - Text on backgrounds: 4.5:1 minimum
 - Icon contrast: 3:1 minimum
 - Hover states: sufficient contrast
@@ -695,6 +738,7 @@ Design system tokens ensure WCAG AA compliance:
 ### CSS-Only Advantage
 
 The grid block is exceptionally performant because:
+
 - **Zero JavaScript:** No JS parsing or execution
 - **Pure CSS:** Hardware-accelerated rendering
 - **No DOM manipulation:** Static structure
@@ -704,6 +748,7 @@ The grid block is exceptionally performant because:
 ### Network Efficiency
 
 **Per grid block:**
+
 - CSS: ~6KB total (covers all variations)
 - JavaScript: 0 bytes (empty file)
 - No external dependencies
@@ -711,6 +756,7 @@ The grid block is exceptionally performant because:
 - No lazy loading needed
 
 **Total overhead:**
+
 - CSS: 6KB (minified with all variations)
 - JavaScript: 0KB
 - Images: Depends on content (not block overhead)
@@ -726,6 +772,7 @@ The grid block is exceptionally performant because:
 ### Rendering Performance
 
 **CSS Grid advantages:**
+
 - Hardware-accelerated layout
 - GPU-optimized transforms
 - Efficient reflow on resize
@@ -735,6 +782,7 @@ The grid block is exceptionally performant because:
 ### Lighthouse Impact
 
 Expected Lighthouse scores with grid block:
+
 - **Performance:** 100 (no JavaScript overhead)
 - **Accessibility:** 100 (semantic HTML + design tokens)
 - **Best Practices:** 100 (CSS-only, no anti-patterns)
@@ -757,11 +805,13 @@ All modern browsers with CSS Grid support:
 ### CSS Grid Support
 
 **Required:** CSS Grid Layout Module Level 1
+
 - Available in all browsers since March 2017
 - 96%+ global browser support
 - No polyfills needed for modern browsers
 
 **Not supported:**
+
 - Internet Explorer 11 (partial support, buggy)
 - Opera Mini (no support)
 - UC Browser < 11.4
@@ -769,6 +819,7 @@ All modern browsers with CSS Grid support:
 ### CSS Features Used
 
 **CSS Grid:**
+
 - `display: grid`
 - `grid-template-columns`
 - `gap` (grid-gap)
@@ -776,6 +827,7 @@ All modern browsers with CSS Grid support:
 - `minmax()` function
 
 **Modern CSS:**
+
 - CSS Custom Properties (variables)
 - `:has()` pseudo-class (for section styling)
 - Media queries
@@ -785,6 +837,7 @@ All modern browsers with CSS Grid support:
 ### Fallback Strategy
 
 For browsers without CSS Grid support:
+
 1. Content displays as vertical stack (default block behavior)
 2. No broken layouts
 3. Still accessible and usable
@@ -797,6 +850,7 @@ For browsers without CSS Grid support:
 ### Issue: Grid not displaying
 
 **Symptoms:**
+
 - Content stacks vertically
 - No grid columns appearing
 - Looks like plain block layout
@@ -827,6 +881,7 @@ For browsers without CSS Grid support:
 ### Issue: Wrong number of columns
 
 **Symptoms:**
+
 - Too many or too few columns
 - Columns don't match expected breakpoint behavior
 - Inconsistent column counts
@@ -857,6 +912,7 @@ For browsers without CSS Grid support:
 ### Issue: Logo grid images too large/small
 
 **Symptoms:**
+
 - Logos overflow containers
 - Logos too small to see
 - Inconsistent logo sizes
@@ -870,6 +926,7 @@ For browsers without CSS Grid support:
    - Recommended: 200-300px wide minimum
 
 2. **Adjust max height:**
+
    ```css
    .logo-grid img {
        max-height: 70px; /* Increase from 50px */
@@ -877,6 +934,7 @@ For browsers without CSS Grid support:
    ```
 
 3. **Fix container height:**
+
    ```css
    .logo-grid > div {
        height: 77px; /* Increase from 57px */
@@ -888,6 +946,7 @@ For browsers without CSS Grid support:
 ### Issue: Icon cards not showing icons
 
 **Symptoms:**
+
 - Icon placeholder visible but no icon
 - Empty diamond shapes
 - Icons not rendering
@@ -917,6 +976,7 @@ For browsers without CSS Grid support:
 ### Issue: Section borders not appearing
 
 **Symptoms:**
+
 - No top/bottom borders on logo grid sections
 - Missing separator lines
 - Section styling not applied
@@ -931,6 +991,7 @@ For browsers without CSS Grid support:
    - Run: `CSS.supports('selector(:has(*))')`
 
 2. **Verify section structure:**
+
    ```html
    <div class="section">
      <div class="logo-grid block">
@@ -938,10 +999,12 @@ For browsers without CSS Grid support:
      </div>
    </div>
    ```
+
    - Section must be parent of grid
    - Grid must have `.logo-grid` class
 
 3. **Add borders manually (fallback):**
+
    ```css
    .logo-grid {
        border-top: 1px solid #e0e0e0;
@@ -954,6 +1017,7 @@ For browsers without CSS Grid support:
 ### Issue: Icon cards hover not working
 
 **Symptoms:**
+
 - No hover effect on cards
 - Background doesn't change
 - Text color stays same
@@ -972,11 +1036,13 @@ For browsers without CSS Grid support:
    - Test on different devices
 
 3. **Verify CSS loaded:**
+
    ```css
    .icon-cards > div:hover {
        background-color: var(--ros-semantic-color-background-primary);
    }
    ```
+
    - Check if CSS variables are defined
    - Test with hardcoded color values
 
@@ -985,6 +1051,7 @@ For browsers without CSS Grid support:
 ### Issue: Responsive breakpoints not triggering
 
 **Symptoms:**
+
 - Columns don't change at expected widths
 - Mobile layout on desktop
 - Desktop layout on mobile
@@ -998,9 +1065,11 @@ For browsers without CSS Grid support:
    - Verify breakpoint values match viewport
 
 2. **Check viewport meta tag:**
+
    ```html
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    ```
+
    - Must be in `<head>`
    - Ensures proper mobile rendering
 
@@ -1018,6 +1087,7 @@ For browsers without CSS Grid support:
 ### Manual Testing (test.html)
 
 1. **Open test file:**
+
    ```
    http://localhost:3000/blocks/grid/test.html
    ```
@@ -1051,6 +1121,7 @@ For browsers without CSS Grid support:
 ### DevTools Inspection
 
 **Check grid structure:**
+
 ```javascript
 // Count grid items
 document.querySelectorAll('.logo-grid > div').length
@@ -1066,6 +1137,7 @@ getComputedStyle(document.querySelector('.logo-grid'))
 ```
 
 **Test responsive behavior:**
+
 ```javascript
 // Get current breakpoint
 window.innerWidth
@@ -1079,6 +1151,7 @@ matchMedia('(min-width: 992px)').matches
 ### Automated Testing
 
 **Future implementation:**
+
 - Visual regression tests with Playwright
 - Responsive screenshot tests
 - Accessibility tests with axe-core
@@ -1158,6 +1231,7 @@ matchMedia('(min-width: 992px)').matches
 ### Contributing
 
 To propose enhancements:
+
 1. Review existing variations in `grid.css`
 2. Create new variation following naming conventions
 3. Add responsive breakpoints as needed
@@ -1194,6 +1268,7 @@ To propose enhancements:
 ## Support
 
 For issues or questions:
+
 1. Check [Troubleshooting](#troubleshooting) section
 2. Review [EXAMPLE.md](./EXAMPLE.md) for usage examples
 3. Test with [test.html](./test.html)

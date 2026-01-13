@@ -5,6 +5,7 @@ This directory contains timestamped backups created by the Cloudflare Worker tes
 ## What Gets Backed Up
 
 When `cloudflare-worker.js` is edited, the automation system creates backups of:
+
 - `test.html` - Browser-based test page
 - `test-local-html.js` - Local HTML processing test script
 - `cloudflare-worker.test.js` - Unit/integration test suite
@@ -12,11 +13,13 @@ When `cloudflare-worker.js` is edited, the automation system creates backups of:
 ## Backup Naming
 
 Backups follow this naming pattern:
+
 ```
 {original-filename}.backup-{ISO-timestamp}
 ```
 
 **Examples:**
+
 ```
 test.html.backup-2025-12-12T20-27-11
 test-local-html.js.backup-2025-12-12T20-27-11

@@ -71,7 +71,7 @@ console.log(`Total: $${total}`); // Output: Total: $50
 ### CSS Example
 
 `css
-/* Base styles */
+/*Base styles*/
 body {
   font-family: 'Arial', sans-serif;
   line-height: 1.6;
@@ -118,7 +118,7 @@ class DataProcessor:
     def __init__(self, data_file):
         self.data_file = data_file
         self.data = self.load_data()
-    
+
     def load_data(self):
         try:
             with open(self.data_file, 'r') as f:
@@ -143,6 +143,7 @@ class DataProcessor:
         print(f"Results saved to {output_file}")
 
 # Usage
+
 processor = DataProcessor('data.json')
 processor.save_results('processed_data.json')
 `
@@ -150,23 +151,28 @@ processor.save_results('processed_data.json')
 ### Shell Script Example
 
 `shell
-#!/bin/bash
+# !/bin/bash
+
 # Simple backup script
 
 # Configuration
+
 SOURCE_DIR="/path/to/source"
 BACKUP_DIR="/path/to/backup"
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 BACKUP_FILE="backup_${TIMESTAMP}.tar.gz"
 
 # Create backup directory if it doesn't exist
+
 mkdir -p "$BACKUP_DIR"
 
 # Create the backup
+
 echo "Creating backup of $SOURCE_DIR..."
 tar -czf "$BACKUP_DIR/$BACKUP_FILE" -C "$(dirname "$SOURCE_DIR")" "$(basename "$SOURCE_DIR")"
 
 # Check if backup was successful
+
 if [ $? -eq 0 ]; then
   echo "Backup completed successfully: $BACKUP_DIR/$BACKUP_FILE"
   echo "Backup size: $(du -h "$BACKUP_DIR/$BACKUP_FILE" | cut -f1)"
@@ -180,14 +186,14 @@ fi
 
 The Code Expander block provides the following features:
 
-1. **Automatic language detection** - The block detects the programming language based on code content
-2. **Syntax highlighting** - Code is highlighted according to the detected language
-3. **Copy to clipboard** - One-click copying of code snippets
-4. **Raw/formatted view toggle** - Switch between raw text and formatted code
-5. **Download as file** - Save code snippets with appropriate file extensions
-6. **Expand/collapse for long code blocks** - Collapsible view for long code snippets
-7. **Keyboard navigation** - Arrow key navigation for scrolling through code
-8. **Info tooltip** - Helpful information about available controls and keyboard shortcuts
+1. __Automatic language detection__ - The block detects the programming language based on code content
+2. __Syntax highlighting__ - Code is highlighted according to the detected language
+3. __Copy to clipboard__ - One-click copying of code snippets
+4. __Raw/formatted view toggle__ - Switch between raw text and formatted code
+5. __Download as file__ - Save code snippets with appropriate file extensions
+6. __Expand/collapse for long code blocks__ - Collapsible view for long code snippets
+7. __Keyboard navigation__ - Arrow key navigation for scrolling through code
+8. __Info tooltip__ - Helpful information about available controls and keyboard shortcuts
 
 ## Use Cases
 

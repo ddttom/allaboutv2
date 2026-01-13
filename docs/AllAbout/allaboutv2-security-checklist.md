@@ -9,6 +9,7 @@ This security checklist provides comprehensive guidelines for securing AllAboutV
 ### Content Management Security
 
 **Google Workspace Access Control**
+
 - [ ] Configure Google Workspace domain restrictions
 - [ ] Implement role-based access for content authors
 - [ ] Enable two-factor authentication for all Google accounts
@@ -16,6 +17,7 @@ This security checklist provides comprehensive guidelines for securing AllAboutV
 - [ ] Monitor Google Drive sharing permissions
 
 **Adobe EDS Access Management**
+
 - [ ] Restrict Adobe EDS admin access to authorised personnel
 - [ ] Implement proper role separation (author vs. admin)
 - [ ] Regular audit of user permissions
@@ -25,6 +27,7 @@ This security checklist provides comprehensive guidelines for securing AllAboutV
 ### User Authentication (When Required)
 
 **JWT Implementation**
+
 ```javascript
 // Secure JWT configuration
 const jwtConfig = {
@@ -54,6 +57,7 @@ function generateSecureToken(user) {
 ```
 
 **Session Management**
+
 - [ ] Implement secure session tokens
 - [ ] Use HTTP-only cookies for session storage
 - [ ] Set appropriate session timeouts
@@ -65,6 +69,7 @@ function generateSecureToken(user) {
 ### Content Security
 
 **Input Validation and Sanitisation**
+
 ```javascript
 // Comprehensive input validation
 function validateAndSanitise(input, type) {
@@ -89,6 +94,7 @@ function validateAndSanitise(input, type) {
 ```
 
 **Content Validation Checklist**
+
 - [ ] Validate all user inputs on both client and server
 - [ ] Sanitise HTML content to prevent XSS attacks
 - [ ] Implement Content Security Policy (CSP)
@@ -98,6 +104,7 @@ function validateAndSanitise(input, type) {
 ### Data Encryption
 
 **HTTPS Implementation**
+
 - [ ] Force HTTPS across all environments
 - [ ] Implement HTTP Strict Transport Security (HSTS)
 - [ ] Use TLS 1.3 or higher
@@ -105,6 +112,7 @@ function validateAndSanitise(input, type) {
 - [ ] Implement Certificate Transparency monitoring
 
 **Data at Rest Protection**
+
 - [ ] Encrypt sensitive data in storage
 - [ ] Use strong encryption algorithms (AES-256)
 - [ ] Implement proper key management
@@ -116,6 +124,7 @@ function validateAndSanitise(input, type) {
 ### Content Security Policy
 
 **CSP Implementation**
+
 ```javascript
 const cspPolicy = {
   'default-src': ["'self'"],
@@ -151,6 +160,7 @@ const cspPolicy = {
 ```
 
 **XSS Prevention Checklist**
+
 - [ ] Implement and test Content Security Policy
 - [ ] Validate and sanitise all user inputs
 - [ ] Use parameterised queries for database operations
@@ -160,6 +170,7 @@ const cspPolicy = {
 ### DOM Manipulation Security
 
 **Safe DOM Updates**
+
 ```javascript
 // Secure DOM manipulation
 function safeUpdateContent(element, content) {
@@ -187,6 +198,7 @@ function escapeHtml(text) {
 ### CSRF Token Implementation
 
 **Token Generation and Validation**
+
 ```javascript
 // CSRF token generation
 function generateCSRFToken() {
@@ -207,6 +219,7 @@ function validateCSRFToken(req, res, next) {
 ```
 
 **CSRF Protection Checklist**
+
 - [ ] Implement CSRF tokens for all state-changing operations
 - [ ] Validate tokens on server-side
 - [ ] Use SameSite cookie attribute
@@ -218,6 +231,7 @@ function validateCSRFToken(req, res, next) {
 ### Security Headers Implementation
 
 **Comprehensive Security Headers**
+
 ```javascript
 const securityHeaders = {
   // Prevent XSS attacks
@@ -246,6 +260,7 @@ const securityHeaders = {
 ```
 
 **Security Headers Checklist**
+
 - [ ] Implement all recommended security headers
 - [ ] Regular testing of header configuration
 - [ ] Monitor security header effectiveness
@@ -257,6 +272,7 @@ const securityHeaders = {
 ### Rate Limiting and Throttling
 
 **Rate Limiting Implementation**
+
 ```javascript
 class RateLimiter {
   constructor(windowMs = 15 * 60 * 1000, max = 100) {
@@ -291,6 +307,7 @@ class RateLimiter {
 ```
 
 **API Security Checklist**
+
 - [ ] Implement rate limiting for all API endpoints
 - [ ] Use API keys for service-to-service communication
 - [ ] Validate all API inputs
@@ -300,6 +317,7 @@ class RateLimiter {
 ### Input Validation
 
 **Comprehensive Input Validation**
+
 ```javascript
 const validationRules = {
   email: {
@@ -352,6 +370,7 @@ function validateInput(data, rules) {
 ### Package Management
 
 **Dependency Security Checklist**
+
 - [ ] Regular dependency updates and security patches
 - [ ] Use npm audit to check for vulnerabilities
 - [ ] Implement dependency scanning in CI/CD pipeline
@@ -359,6 +378,7 @@ function validateInput(data, rules) {
 - [ ] Use package-lock.json for dependency locking
 
 **Security Audit Process**
+
 ```bash
 # Regular security audits
 npm audit
@@ -374,6 +394,7 @@ npm update
 ### Third-Party Integration Security
 
 **External Service Security**
+
 - [ ] Validate all third-party integrations
 - [ ] Use HTTPS for all external API calls
 - [ ] Implement proper error handling for external services
@@ -385,6 +406,7 @@ npm update
 ### Security Monitoring
 
 **Security Event Logging**
+
 ```javascript
 const securityLogger = {
   logSecurityEvent(event, details) {
@@ -414,6 +436,7 @@ const securityLogger = {
 ```
 
 **Monitoring Checklist**
+
 - [ ] Implement comprehensive security logging
 - [ ] Monitor failed authentication attempts
 - [ ] Track unusual access patterns
@@ -423,6 +446,7 @@ const securityLogger = {
 ### Incident Response
 
 **Security Incident Response Plan**
+
 1. **Detection**: Automated monitoring and alerting
 2. **Analysis**: Assess the scope and impact
 3. **Containment**: Isolate affected systems
@@ -431,6 +455,7 @@ const securityLogger = {
 6. **Lessons Learned**: Post-incident review
 
 **Incident Response Checklist**
+
 - [ ] Documented incident response procedures
 - [ ] Emergency contact information
 - [ ] Regular incident response drills
@@ -442,6 +467,7 @@ const securityLogger = {
 ### Data Privacy
 
 **GDPR Compliance Checklist**
+
 - [ ] Implement privacy by design principles
 - [ ] Provide clear privacy notices
 - [ ] Implement data subject rights (access, rectification, erasure)
@@ -449,6 +475,7 @@ const securityLogger = {
 - [ ] Implement data breach notification procedures
 
 **Cookie Management**
+
 ```javascript
 // Cookie consent management
 const cookieConsent = {
@@ -473,6 +500,7 @@ const cookieConsent = {
 ### Content Security
 
 **Content Moderation**
+
 - [ ] Implement content filtering for user-generated content
 - [ ] Regular review of published content
 - [ ] Automated scanning for inappropriate content
@@ -484,6 +512,7 @@ const cookieConsent = {
 ### DDoS Protection
 
 **DDoS Mitigation Strategies**
+
 - [ ] Implement rate limiting at multiple levels
 - [ ] Use CDN for traffic distribution
 - [ ] Monitor traffic patterns for anomalies
@@ -493,6 +522,7 @@ const cookieConsent = {
 ### Resource Protection
 
 **Resource Security Checklist**
+
 - [ ] Implement proper file upload restrictions
 - [ ] Monitor resource usage and quotas
 - [ ] Implement timeout policies for long-running operations
@@ -504,6 +534,7 @@ const cookieConsent = {
 ### Regular Security Assessments
 
 **Security Testing Schedule**
+
 - [ ] Weekly automated vulnerability scans
 - [ ] Monthly penetration testing
 - [ ] Quarterly security architecture reviews
@@ -511,6 +542,7 @@ const cookieConsent = {
 - [ ] Continuous security monitoring
 
 **Testing Tools and Procedures**
+
 ```bash
 # Security testing tools
 npm install --save-dev eslint-plugin-security
@@ -526,6 +558,7 @@ nsp check
 ### Code Security Review
 
 **Security Code Review Checklist**
+
 - [ ] Review all authentication and authorisation code
 - [ ] Validate input handling and sanitisation
 - [ ] Check for SQL injection vulnerabilities
@@ -537,6 +570,7 @@ nsp check
 ### Production Environment Security
 
 **Production Security Checklist**
+
 - [ ] Secure server configuration
 - [ ] Regular security updates and patches
 - [ ] Implement proper backup and recovery procedures
@@ -544,6 +578,7 @@ nsp check
 - [ ] Regular security configuration audits
 
 **Environment Variable Security**
+
 ```javascript
 // Secure environment configuration
 const requiredEnvVars = [
@@ -574,6 +609,7 @@ This security checklist provides a comprehensive framework for securing AllAbout
 Security is an ongoing process that requires continuous attention, regular testing, and adaptation to new threats. Implementing these measures provides a strong foundation for protecting users, data, and system integrity.
 
 **Key Recommendations:**
+
 - Conduct regular security assessments
 - Maintain up-to-date security documentation
 - Provide security training for all team members

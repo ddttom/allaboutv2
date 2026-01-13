@@ -7,6 +7,7 @@ The project is in active development with a focus on educational content deliver
 ## Recent Accomplishments
 
 ### ipynb-viewer SVG Inline Embedding (2026-01-13)
+
 - **Status**: ✅ Completed inline SVG rendering for notebook illustrations
 - **Changes implemented**:
   - Added SVG_INLINE_CONFIG with pattern matching for `illustrations/*.svg` files
@@ -27,6 +28,7 @@ The project is in active development with a focus on educational content deliver
 - **Documentation**: Added LEARNINGS.md entry about GitHub raw URL format bug
 
 ### Step-Commit Workflow Enhancement (2026-01-13)
+
 - **Status**: ✅ Completed automatic sitemap regeneration integration
 - **Changes implemented**:
   - Created `scripts/generate-invisible-users-sitemap.js` for automatic sitemap generation
@@ -39,6 +41,7 @@ The project is in active development with a focus on educational content deliver
   - ES module compatible with project's module system
 
 ### invisible-users/notebook.ipynb (2026-01-13)
+
 - **Status**: ✅ Completed major synchronization with manuscript v2.0
 - **Changes implemented**:
   - Updated from 10 to 12 chapters (added Chapter 9: The Platform Race, Chapter 12: What Agent Creators Must Build)
@@ -50,6 +53,7 @@ The project is in active development with a focus on educational content deliver
   - Updated all chapter cross-references and word counts (~58,000 words)
 
 ### Documentation Improvements (2026-01-13)
+
 - **LEARNINGS.md**: Created new file documenting the ipynb-viewer smart links pattern mistake
   - Captures real-world error: using full GitHub URLs breaks smart link feature
   - Documents correct pattern: relative paths with repo metadata
@@ -62,6 +66,7 @@ The project is in active development with a focus on educational content deliver
 ## Active Features
 
 ### Jupyter Notebook Integration
+
 - **ipynb-viewer block**: Fully functional for displaying executable notebooks
   - Smart links with GitHub markdown overlay
   - Multiple display modes (basic, paged, autorun, notebook)
@@ -70,6 +75,7 @@ The project is in active development with a focus on educational content deliver
   - **NEW**: Inline SVG embedding for illustration images (auto-fetches and inlines illustrations/*.svg)
 
 ### Educational Content
+
 - **invisible-users/notebook.ipynb**: Interactive companion to "The Invisible Users" manuscript
   - 37 cells covering preface, 12 chapters, and appendices
   - JavaScript visualizations for failure types
@@ -79,11 +85,13 @@ The project is in active development with a focus on educational content deliver
 ## Core Functionality
 
 ### EDS Architecture
+
 - **Blocks**: 40+ production-ready blocks in `/blocks/` directory
 - **Build System**: Vite-based build pipeline for complex blocks in `/build/`
 - **Cloudflare Worker**: Custom v1.1.4 with CORS, JSON-LD, metadata cleanup
 
 ### Development Tools
+
 - **Claude Code Integration**: 17 commands, 27 skills, 6 agents, 4 hooks
 - **CI/CD**: GitHub Actions for linting, testing, security scanning
 - **Testing**: Multiple approaches (test.html, Jupyter notebooks, automated tests)
@@ -91,7 +99,9 @@ The project is in active development with a focus on educational content deliver
 ## Known Issues
 
 ### None Critical
+
 All recent issues have been resolved:
+
 - ✅ Smart links in ipynb-viewer now working correctly (fixed 2026-01-13)
 - ✅ Chapter references synchronized with manuscript (fixed 2026-01-13)
 - ✅ Metadata updated with correct repository URL (fixed 2026-01-13)
@@ -99,16 +109,19 @@ All recent issues have been resolved:
 ## Next Focus Areas
 
 ### Documentation
+
 - Continue documenting mistakes in LEARNINGS.md as they occur
 - Expand educational notebook collection
 - Create more presentation notebooks for client demos
 
 ### Content Quality
+
 - Monitor smart link functionality in production
 - Validate notebook rendering on allabout.network
 - Ensure manuscript synchronization remains current
 
 ### Performance
+
 - Optimize ipynb-viewer block loading for large notebooks
 - Improve JavaScript execution performance in notebooks
 - Monitor CDN cache hit rates

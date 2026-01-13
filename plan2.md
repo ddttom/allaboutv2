@@ -14,6 +14,7 @@ The Bright Sparks Management System will leverage the existing Adobe Edge Delive
 ### Key Benefits
 
 **For Contractors:**
+
 - Professional web components without custom development
 - Familiar markdown-based content creation (hybrid GUI + direct editing)
 - Rich interactive features (accordions, tabs, cards, modals, galleries)
@@ -21,6 +22,7 @@ The Bright Sparks Management System will leverage the existing Adobe Edge Delive
 - Mobile-responsive by default
 
 **For DDT (Development Team):**
+
 - Leverage 48+ pre-built, tested blocks from allaboutV2 codebase
 - No ongoing block maintenance (EDS team maintains upstream)
 - AI assistants handle block adaptation automatically
@@ -28,6 +30,7 @@ The Bright Sparks Management System will leverage the existing Adobe Edge Delive
 - Future blocks automatically compatible via defined patterns
 
 **For System:**
+
 - Server-side rendering via Cloudflare Workers (fast first paint)
 - Cloudflare Image Resizing (automatic optimization)
 - Both subdomain and custom domain support
@@ -51,6 +54,7 @@ The Bright Sparks Management System will leverage the existing Adobe Edge Delive
 EDS blocks are inherently portable because they follow strict architectural patterns:
 
 **Pattern 1: Self-Contained Components**
+
 ```
 /blocks/cards/
 ├── cards.js           ← Pure JavaScript, framework-free
@@ -60,6 +64,7 @@ EDS blocks are inherently portable because they follow strict architectural patt
 ```
 
 **Pattern 2: Standard Decoration Function**
+
 ```javascript
 // Every block exports default decorate function
 export default async function decorate(block) {
@@ -70,6 +75,7 @@ export default async function decorate(block) {
 ```
 
 **Pattern 3: Configuration at Top**
+
 ```javascript
 const CARDS_CONFIG = {
   ERROR_MESSAGE: 'Failed to load cards',
@@ -83,6 +89,7 @@ export default async function decorate(block) {
 ```
 
 **Pattern 4: Variation Support**
+
 ```javascript
 export default async function decorate(block) {
   // Detect variations via CSS classes
@@ -123,11 +130,13 @@ These blocks require NO adaptation - copy and use directly:
 These blocks import 1-3 EDS functions, easily shimmed:
 
 **Common Dependencies:**
+
 - `createOptimizedPicture()` - Responsive image generation (8 blocks use this)
 - `getMetadata()` - Read page metadata (5 blocks use this)
 - `toClassName()` - String to kebab-case conversion (3 blocks use this)
 
 **Blocks in this tier:**
+
 - `blogroll` - Blog post listings
 - `embed` - Video/iframe embeds
 - `footer` - Site footer
@@ -156,6 +165,7 @@ These blocks import 1-3 EDS functions, easily shimmed:
 These blocks require more substantial adaptation:
 
 **External Library Dependencies:**
+
 - `shoelace-card` - Uses Shoelace web components
 - `shoelace` - Shoelace component library
 - `spectrum-card` - Adobe Spectrum components
@@ -163,6 +173,7 @@ These blocks require more substantial adaptation:
 - `vue-slide-builder` - Vue-based slide builder
 
 **Complex Logic Dependencies:**
+
 - `ipynb-viewer` - Jupyter notebook renderer (custom markdown parsing + overlays)
 - `code-expander` - Expandable code blocks with syntax highlighting
 - `slide-builder` - Presentation slide builder
@@ -179,6 +190,7 @@ These blocks require more substantial adaptation:
 Every EDS block follows this structure:
 
 **JavaScript File (`{blockname}.js`):**
+
 ```javascript
 // 1. Configuration Object (top of file)
 const BLOCKNAME_CONFIG = {
@@ -210,6 +222,7 @@ function formatDate(dateString) {
 ```
 
 **CSS File (`{blockname}.css`):**
+
 ```css
 /* 1. Block-level CSS variables */
 .blockname {
@@ -240,6 +253,7 @@ function formatDate(dateString) {
 ```
 
 **README.md Documentation:**
+
 - Block purpose and features
 - Usage examples (markdown syntax)
 - Configuration options
@@ -274,6 +288,7 @@ const requiredShimFunctions = edsImports.flatMap(imp => imp.names);
 ```
 
 **AI Assistant Checklist:**
+
 1. ✅ Read block JavaScript file
 2. ✅ Extract all `import` statements
 3. ✅ Filter imports from `../../scripts/aem.js` or `lib-franklin.js`
@@ -282,6 +297,7 @@ const requiredShimFunctions = edsImports.flatMap(imp => imp.names);
 6. ✅ Report if shim function missing (block requires Tier 3 integration)
 
 **Example Output:**
+
 ```
 Block: cards
 Dependencies Detected: createOptimizedPicture
@@ -295,6 +311,7 @@ Adaptation: Replace import path
 **Purpose:** Replace EDS core imports with SaaS shim library imports.
 
 **Original Block Code:**
+
 ```javascript
 // cards.js (from EDS)
 import { createOptimizedPicture } from '../../scripts/aem.js';
@@ -307,6 +324,7 @@ export default async function decorate(block) {
 ```
 
 **AI Assistant Transformation:**
+
 ```javascript
 // cards.js (adapted for SaaS)
 import { createOptimizedPicture } from '/lib/eds-shim.js';
@@ -319,6 +337,7 @@ export default async function decorate(block) {
 ```
 
 **AI Assistant Algorithm:**
+
 ```python
 def adapt_block_imports(block_js_path):
     content = read_file(block_js_path)
@@ -342,6 +361,7 @@ def adapt_block_imports(block_js_path):
 ```
 
 **AI Assistant Checklist:**
+
 1. ✅ Identify all EDS core imports (aem.js, lib-franklin.js)
 2. ✅ Replace import path with `/lib/eds-shim.js`
 3. ✅ Preserve imported function names (no renaming)
@@ -354,6 +374,7 @@ def adapt_block_imports(block_js_path):
 **Purpose:** Extract block configuration for tenant customization.
 
 **Block Configuration Pattern:**
+
 ```javascript
 // Every block has CONFIG object at top
 const CARDS_CONFIG = {
@@ -380,6 +401,7 @@ const CARDS_CONFIG = {
 ```
 
 **AI Assistant Extraction:**
+
 ```javascript
 // Extract configuration to tenant config schema
 function extractBlockConfig(blockJsContent) {
@@ -400,6 +422,7 @@ function extractBlockConfig(blockJsContent) {
 ```
 
 **Generated Tenant Config Schema:**
+
 ```json
 {
   "blocks": {
@@ -420,6 +443,7 @@ function extractBlockConfig(blockJsContent) {
 ```
 
 **AI Assistant Checklist:**
+
 1. ✅ Locate CONFIG object in block JavaScript (top of file)
 2. ✅ Extract all key-value pairs
 3. ✅ Categorize by type (messages, UI text, thresholds, paths, flags)
@@ -500,6 +524,7 @@ async function testBlockVariations(blockName) {
 ```
 
 **AI Assistant Test Report:**
+
 ```markdown
 ## Block Adaptation Test Report: cards
 
@@ -528,6 +553,7 @@ Block is ready for production use in SaaS environment.
 ```
 
 **AI Assistant Checklist:**
+
 1. ✅ Run structural test (block renders)
 2. ✅ Run dependency test (shim functions work)
 3. ✅ Run configuration test (tenant overrides apply)
@@ -618,6 +644,7 @@ Customize this block in your `config.json`:
 ```
 
 **AI Assistant Checklist:**
+
 1. ✅ Generate documentation from README.md
 2. ✅ Adapt EDS-specific syntax to SaaS context
 3. ✅ Include all variations
@@ -1708,6 +1735,7 @@ async function handleLibraryAsset(request, env) {
 **Purpose:** Provide default metadata in contractor-friendly YAML format.
 
 **Benefits of YAML:**
+
 - Human-readable and writable
 - Standard in static site generators (Jekyll, Hugo, Eleventy)
 - Supports complex data structures
@@ -1751,6 +1779,7 @@ serviceArea: York, North Yorkshire
 ```
 
 **Processing Rules:**
+
 1. YAML must be first thing in file (before any content)
 2. Delimited by `---` on separate lines
 3. Invalid YAML falls back to EDS table metadata
@@ -1774,6 +1803,7 @@ serviceArea: York, North Yorkshire
 ```
 
 **Processing Rules:**
+
 1. Must start with `| metadata |` in first cell
 2. Subsequent rows are key-value pairs
 3. Keys can include colons (e.g., `og:image`)
@@ -1783,6 +1813,7 @@ serviceArea: York, North Yorkshire
 ### Merge Algorithm (YAML Overrides Tables)
 
 **Priority Order:**
+
 1. **YAML frontmatter** (highest priority)
 2. **EDS metadata table** (medium priority)
 3. **Tenant config.json** (fallback defaults)
@@ -1790,6 +1821,7 @@ serviceArea: York, North Yorkshire
 **Merge Example:**
 
 **config.json (Tenant Defaults):**
+
 ```json
 {
   "metadata": {
@@ -1801,6 +1833,7 @@ serviceArea: York, North Yorkshire
 ```
 
 **Markdown with Both YAML and Table:**
+
 ```markdown
 ---
 title: Electrical Services
@@ -1818,6 +1851,7 @@ Content here...
 ```
 
 **Merged Result:**
+
 ```json
 {
   "title": "Electrical Services",          // From YAML
@@ -1922,6 +1956,7 @@ title: Our Services
 **Overview:** Cloudflare Image Resizing transforms images on-the-fly at the edge.
 
 **Key Features:**
+
 - Automatic format selection (WebP, AVIF, JPEG)
 - Responsive sizing (width, height, fit modes)
 - Quality control
@@ -1935,6 +1970,7 @@ title: Our Services
 ```
 
 **Common Options:**
+
 - `width=X` - Resize to width X pixels
 - `height=X` - Resize to height X pixels
 - `fit=scale-down` - Never scale up, only down
@@ -2064,6 +2100,7 @@ export function createResponsivePicture(src, alt = '', eager = false) {
 ### Cost Analysis
 
 **Cloudflare Image Resizing Pricing (as of 2024):**
+
 - Included: 5,000 unique transformations/month (free tier)
 - Overage: $5.00 per 1,000 unique transformations
 - Bandwidth: Standard Cloudflare bandwidth pricing
@@ -2085,10 +2122,12 @@ export function createResponsivePicture(src, alt = '', eager = false) {
 - Unique transformations: 75,000
 
 **Monthly Cost:**
+
 - First 5,000: FREE
 - Remaining 70,000: 70 × $5.00 = $350.00
 
 **Comparison to Third-Party Services:**
+
 - **Cloudinary** (similar volume): ~$450/month
 - **imgix** (similar volume): ~$500/month
 - **AWS CloudFront + Lambda@Edge**: ~$400/month
@@ -2374,16 +2413,19 @@ export default async function decorate(block) {
 **1. Self-Service (Free/Low-Cost Tier)**
 
 Contractors edit config.json directly via:
+
 - Web-based JSON editor
 - File upload interface
 - GitHub integration (advanced users)
 
 **Benefits:**
+
 - Immediate updates
 - Full control
 - No waiting for DDT
 
 **Limitations:**
+
 - Requires JSON knowledge
 - Risk of syntax errors
 - No validation until deployment
@@ -2391,18 +2433,21 @@ Contractors edit config.json directly via:
 **2. DDT-Managed (Premium Tier)**
 
 DDT creates/updates config.json for contractor:
+
 - Guided form interface
 - Pre-validated inputs
 - Professional design consultation
 - Custom theme development
 
 **Benefits:**
+
 - No technical knowledge required
 - Guaranteed valid configuration
 - Professional guidance
 - Custom design options
 
 **Pricing:**
+
 - Self-service: £0-20/month (included in base tier)
 - DDT-managed: £50-150/month (premium tier)
 - One-time setup: £200-500 (custom themes)
@@ -2430,6 +2475,7 @@ DDT creates/updates config.json for contractor:
 **Example:**
 
 **config.json:**
+
 ```json
 {
   "theme": {
@@ -2441,6 +2487,7 @@ DDT creates/updates config.json for contractor:
 ```
 
 **Injected CSS (generated by Worker):**
+
 ```css
 :root {
   --color-primary: #FF6B00;
@@ -2450,6 +2497,7 @@ DDT creates/updates config.json for contractor:
 ```
 
 **Block CSS (uses variables):**
+
 ```css
 /* blocks/cards/cards.css */
 .cards .card {
@@ -2477,11 +2525,13 @@ DDT creates/updates config.json for contractor:
 **Format:** `{tenant}.bsms.com`
 
 **Examples:**
+
 - brightsparks.bsms.com
 - aplus-plumbing.bsms.com
 - york-heating.bsms.com
 
 **Features:**
+
 - Automatic SSL via Cloudflare
 - Instant provisioning
 - No DNS configuration
@@ -2490,6 +2540,7 @@ DDT creates/updates config.json for contractor:
 **Pricing:** Included in all tiers (£0-20/month)
 
 **Setup Process:**
+
 1. Contractor chooses subdomain name
 2. System validates availability
 3. Cloudflare Worker routes subdomain to tenant
@@ -2515,22 +2566,26 @@ function getTenantFromHost(hostname) {
 **Format:** Any custom domain contractor owns
 
 **Examples:**
+
 - brightsparks-york.com
 - frankieelectrical.co.uk
 - aplusplumbing.com
 
 **Features:**
+
 - Full brand control
 - SEO benefits (own domain authority)
 - Professional appearance
 - Email addresses on same domain possible
 
 **Pricing:**
+
 - Setup fee: £50 (one-time)
 - Monthly: £30-50/month (premium tier)
 - Domain registration: Contractor's responsibility
 
 **Requirements:**
+
 1. Contractor must own domain
 2. Contractor must update DNS settings
 3. SSL certificate provisioning via Cloudflare
@@ -2538,14 +2593,17 @@ function getTenantFromHost(hostname) {
 **Setup Process:**
 
 **Step 1: Contractor Purchases Domain**
+
 - Use registrar of choice (GoDaddy, Namecheap, etc.)
 - Provide domain to DDT
 
 **Step 2: DNS Configuration**
+
 - Contractor updates DNS CNAME records
 - Points domain to Cloudflare Worker
 
 **Example DNS Records:**
+
 ```
 Type: CNAME
 Name: @
@@ -2554,6 +2612,7 @@ TTL: Auto
 ```
 
 **Step 3: Domain Mapping (DDT)**
+
 - Add mapping to Cloudflare KV store
 
 ```javascript
@@ -2565,11 +2624,13 @@ TTL: Auto
 ```
 
 **Step 4: SSL Provisioning**
+
 - Cloudflare auto-provisions SSL certificate
 - Typically takes 5-15 minutes
 - Validates via DNS challenge
 
 **Step 5: Verification**
+
 - System verifies domain resolves correctly
 - Contractor receives confirmation email
 - Domain live
@@ -2603,22 +2664,26 @@ async function getTenant(hostname, env) {
 ### SSL Automation
 
 **Cloudflare Universal SSL:**
+
 - Free SSL certificates for all domains
 - Automatic renewal
 - Supports wildcard (*.bsms.com) for subdomains
 - DV (Domain Validated) certificates
 
 **Process:**
+
 1. Domain added to Cloudflare
 2. Cloudflare issues SSL certificate
 3. Certificate auto-renews before expiration
 4. Zero maintenance required
 
 **Certificate Types:**
+
 - Subdomains: Wildcard certificate (*.bsms.com)
 - Custom domains: Individual DV certificates per domain
 
 **Security Features:**
+
 - TLS 1.2 minimum
 - Strong cipher suites
 - HSTS (HTTP Strict Transport Security)
@@ -2627,6 +2692,7 @@ async function getTenant(hostname, env) {
 ### Pricing Model
 
 **Free Tier (Subdomain Only):**
+
 - Domain: {tenant}.bsms.com
 - Storage: 100MB
 - Pages: Up to 10
@@ -2634,6 +2700,7 @@ async function getTenant(hostname, env) {
 - Price: £0/month
 
 **Basic Tier (Subdomain):**
+
 - Domain: {tenant}.bsms.com
 - Storage: 1GB
 - Pages: Unlimited
@@ -2642,6 +2709,7 @@ async function getTenant(hostname, env) {
 - Price: £20/month
 
 **Premium Tier (Custom Domain):**
+
 - Domain: Custom domain + subdomain
 - Storage: 10GB
 - Pages: Unlimited
@@ -2652,6 +2720,7 @@ async function getTenant(hostname, env) {
 - Price: £50/month + £50 setup fee
 
 **Enterprise Tier:**
+
 - Domains: Multiple custom domains
 - Storage: Unlimited
 - Pages: Unlimited
@@ -2684,6 +2753,7 @@ async function getTenant(hostname, env) {
 **When asked to integrate an EDS block into SaaS environment:**
 
 **Step 1: Dependency Analysis**
+
 ```
 1. Read block JavaScript file
 2. Extract all import statements
@@ -2694,6 +2764,7 @@ async function getTenant(hostname, env) {
 ```
 
 **Step 2: Import Replacement**
+
 ```
 1. Replace "from '../../scripts/aem.js'" with "from '/lib/eds-shim.js'"
 2. Replace "from '../../scripts/lib-franklin.js'" with "from '/lib/eds-shim.js'"
@@ -2702,6 +2773,7 @@ async function getTenant(hostname, env) {
 ```
 
 **Step 3: Configuration Extraction**
+
 ```
 1. Locate CONFIG object at top of file
 2. Extract all key-value pairs
@@ -2711,6 +2783,7 @@ async function getTenant(hostname, env) {
 ```
 
 **Step 4: Testing**
+
 ```
 1. Run structural test (block renders)
 2. Run dependency test (shim functions work)
@@ -2721,6 +2794,7 @@ async function getTenant(hostname, env) {
 ```
 
 **Step 5: Documentation**
+
 ```
 1. Generate contractor documentation from README.md
 2. Adapt EDS-specific syntax to SaaS context
@@ -2749,6 +2823,7 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 ```
 
 **Dependency Analysis:**
+
 - Function: `createOptimizedPicture`
 - Shim Status: ✅ Available in /lib/eds-shim.js
 - Tier: 2 (Minimal Dependencies)
@@ -2756,6 +2831,7 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 ### Step 2: Import Replacement
 
 **Original Code:**
+
 ```javascript
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
@@ -2765,6 +2841,7 @@ export default async function decorate(block) {
 ```
 
 **Adapted Code:**
+
 ```javascript
 import { createOptimizedPicture } from '/lib/eds-shim.js';
 
@@ -2778,6 +2855,7 @@ export default async function decorate(block) {
 ### Step 3: Configuration Extraction
 
 **Detected Configuration:**
+
 ```javascript
 const CARDS_CONFIG = {
   ERROR_MESSAGE: 'Failed to load cards',
@@ -2789,6 +2867,7 @@ const CARDS_CONFIG = {
 ```
 
 **Generated Tenant Config Schema:**
+
 ```json
 {
   "blocks": {
@@ -2806,25 +2885,30 @@ const CARDS_CONFIG = {
 ### Step 4: Testing
 
 **Structural Test:** ✅ PASS
+
 - Block renders with 3 sample cards
 - No console errors
 - Block status: loaded
 
 **Dependency Test:** ✅ PASS
+
 - createOptimizedPicture: Returns <picture> element with 2 sources + img
 - Cloudflare Image Resizing URLs generated correctly
 
 **Configuration Test:** ✅ PASS
+
 - Tenant override: buttonLabel = "Learn More" ✅ Applied
 - Tenant override: cardsPerPage = 6 ✅ Applied
 
 **Variation Test:** ✅ PASS
+
 - Base: ✅ Grid layout (3 columns)
 - Dark: ✅ Dark background, white text
 - Wide: ✅ 4 columns instead of 3
 - Dark + Wide: ✅ Both variations combined
 
 **Responsive Test:** ✅ PASS
+
 - Mobile (375px): 1 column
 - Tablet (768px): 2 columns
 - Desktop (1200px): 3 columns (or 4 with wide variation)
@@ -2840,6 +2924,7 @@ Display content in a responsive card grid layout.
 ## Usage
 
 ### Basic Example
+
 ```markdown
 | Cards |
 |-------|
@@ -2850,6 +2935,7 @@ Display content in a responsive card grid layout.
 ```
 
 ### With Variations
+
 ```markdown
 | Cards (dark) |
 |--------------|
@@ -2883,6 +2969,7 @@ Customize in config.json:
 | wide | 4 columns on desktop instead of 3 |
 
 ## Browser Support
+
 - ✅ All modern browsers
 - ✅ Mobile responsive
 
@@ -2891,14 +2978,17 @@ Customize in config.json:
 ## Integration Result: ✅ SUCCESS
 
 **Files to Deploy:**
+
 1. /blocks/cards/cards.js (modified import)
 2. /blocks/cards/cards.css (no changes)
 3. /docs/blocks/cards.md (contractor documentation)
 
 **Tenant Action Required:**
+
 - Optional: Customize buttonLabel in config.json
 
 **Estimated Time:** Integration complete in < 5 minutes
+
 ```
 
 ### Example: Handling Tier 3 Block (Complex)
@@ -2908,6 +2998,7 @@ Customize in config.json:
 **AI Assistant Response:**
 
 ```
+
 ## Block Integration Report: ipynb-viewer
 
 ### Step 1: Dependency Analysis
@@ -2916,11 +3007,13 @@ Customize in config.json:
 **Location:** /blocks/ipynb-viewer/ipynb-viewer.js
 
 **Detected Imports:**
+
 ```javascript
 import { getMetadata, decorateIcons } from '../../scripts/aem.js';
 ```
 
 **Dependency Analysis:**
+
 - Functions: `getMetadata`, `decorateIcons`
 - Shim Status: ✅ Both available in /lib/eds-shim.js
 - **Additional Dependencies:**
@@ -2933,12 +3026,14 @@ import { getMetadata, decorateIcons } from '../../scripts/aem.js';
 ### Step 2: Complexity Assessment
 
 **Block Characteristics:**
+
 - **File Size:** 2,847 lines (very large)
 - **Custom Logic:** Jupyter notebook parsing, cell execution simulation, overlay system
 - **External Libraries:** marked.js, highlight.js, MathJax
 - **Interactive Features:** Code execution UI, notebook navigation, smart links
 
 **Integration Challenges:**
+
 1. Large codebase requires thorough testing
 2. External library CDN dependencies
 3. Complex state management (active cells, overlays)
@@ -2948,6 +3043,7 @@ import { getMetadata, decorateIcons } from '../../scripts/aem.js';
 ### Step 3: Recommended Approach
 
 **Option 1: Full Integration (Recommended)**
+
 - Replace EDS imports with shim
 - Add external library loading to shim
 - Test all features (code cells, overlays, navigation)
@@ -2955,6 +3051,7 @@ import { getMetadata, decorateIcons } from '../../scripts/aem.js';
 - Estimated effort: 4-8 hours
 
 **Option 2: Simplified Version**
+
 - Basic notebook display only
 - Remove interactive features
 - Static code cells (no execution UI)
@@ -2962,6 +3059,7 @@ import { getMetadata, decorateIcons } from '../../scripts/aem.js';
 - Estimated effort: 2-4 hours
 
 **Option 3: Alternative Solution**
+
 - Use third-party notebook viewer (nbviewer, JupyterLite)
 - Embed via iframe
 - Lose customization but gain stability
@@ -2981,8 +3079,10 @@ Which approach do you prefer for ipynb-viewer integration?
 ### Step 5: If Proceeding with Full Integration
 
 **Implementation Plan:**
+
 1. Replace EDS imports ✅
 2. Add library loading to shim:
+
    ```javascript
    // In /lib/eds-shim.js
    export async function loadNotebookLibraries() {
@@ -2993,6 +3093,7 @@ Which approach do you prefer for ipynb-viewer integration?
      ]);
    }
    ```
+
 3. Test notebook rendering with sample .ipynb files
 4. Test overlay system (help, markdown, images)
 5. Test navigation modes (basic, paged, autorun, notebook)
@@ -3001,6 +3102,7 @@ Which approach do you prefer for ipynb-viewer integration?
 8. Generate documentation
 
 **Testing Checklist:**
+
 - ✅ Basic notebook display
 - ✅ Code cells with syntax highlighting
 - ✅ Markdown cells with formatting
@@ -3013,6 +3115,7 @@ Which approach do you prefer for ipynb-viewer integration?
 - ✅ Mobile responsive
 
 **Estimated Timeline:**
+
 - Import replacement: 10 minutes
 - Library integration: 1 hour
 - Feature testing: 3-4 hours
@@ -3026,6 +3129,7 @@ Which approach do you prefer for ipynb-viewer integration?
 **Next Step:** Choose integration approach (Options 1, 2, or 3)
 
 **If approved, AI assistant will proceed with detailed implementation.**
+
 ```
 
 ---

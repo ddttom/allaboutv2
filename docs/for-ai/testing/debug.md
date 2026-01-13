@@ -4,7 +4,7 @@
 
 ## 🚨 **DEEP DEBUGGING POLICY NOTICE**
 
-> **📋 Policy Requirement**: The advanced debugging techniques described in this document (file replacement, instrumentation, core file modifications) require **explicit user request** per the [debugging policy](debug.md#deep-debugging-request-policy). 
+> **📋 Policy Requirement**: The advanced debugging techniques described in this document (file replacement, instrumentation, core file modifications) require **explicit user request** per the [debugging policy](debug.md#deep-debugging-request-policy).
 >
 > **⚠️ DO NOT PROCEED** with file replacement operations, instrumentation setup, or advanced testing workflows without explicit approval from the user.
 >
@@ -19,11 +19,13 @@
 **OFFICIAL POLICY**: Temporary debugging statements ARE permitted in EDS core files for troubleshooting purposes, provided the files are restored to their original state after debugging is complete.
 
 #### **Debuggable EDS Core Files**
+
 - **[`scripts/aem.js`](scripts/aem.js)** - EDS core functionality and block processing
 - **[`scripts/scripts.js`](scripts/scripts.js)** - EDS main processing script and lifecycle  
 - **[`scripts/delayed.js`](scripts/delayed.js)** - EDS delayed loading functionality
 
 #### **Mandatory Restoration Requirement**
+
 ```bash
 # After debugging is complete, ALWAYS restore original files
 git restore scripts/aem.js
@@ -35,7 +37,9 @@ git status
 ```
 
 #### **Allowed Debug Modifications**
+
 **✅ PERMITTED Debug Statements:**
+
 ```javascript
 // DOM inspection and state logging
 console.log('[DEBUG-EDS] Block processing state:', blockStatus);
@@ -56,7 +60,9 @@ console.timeEnd('[DEBUG-EDS] Block decoration time');
 ```
 
 #### **Forbidden Modifications**
+
 **❌ NEVER ALLOWED:**
+
 ```javascript
 // DO NOT modify logic or behavior
 if (condition) {
@@ -74,6 +80,7 @@ block.addEventListener('click', handler); // Adding new behavior - FORBIDDEN
 ```
 
 #### **Debug Statement Guidelines**
+
 1. **Non-Behavioral Only**: Debug statements must NOT alter functionality, logic, or behavior
 2. **Visibility Only**: Only provide visibility into execution flow, variable values, and state
 3. **Temporary**: Must be removed after debugging session is complete
@@ -86,6 +93,7 @@ block.addEventListener('click', handler); // Adding new behavior - FORBIDDEN
 ## Standard Debugging Workflow
 
 ### **Deep Debugging Activities (Require Explicit Request)**
+
 - **Temporary Core EDS File Debugging**: Adding debug statements to `scripts/aem.js`, `scripts/scripts.js`, `scripts/delayed.js` (with mandatory restoration)
 - **Test File Amendments**: Modifying existing test.html files or creating new test scenarios
 - **File Replacement Operations**: Backing up and replacing block files for testing
@@ -93,6 +101,7 @@ block.addEventListener('click', handler); // Adding new behavior - FORBIDDEN
 - **Production File Debugging**: Any debugging that affects files deployed to production
 
 ### **Standard Debugging (No Request Required)**
+
 - **Console Logging**: Adding `console.log` statements to user-created block files
 - **Block Function Debugging**: Standard debugging within component `decorate()` functions
 - **CSS Debugging**: Testing styles and layout issues
@@ -100,6 +109,7 @@ block.addEventListener('click', handler); // Adding new behavior - FORBIDDEN
 - **Configuration Validation**: Checking block structure and naming
 
 **WHY THIS POLICY EXISTS:**
+
 - **EDS Core Integrity**: Prevents accidental modification of Adobe-licensed core files
 - **File Safety**: Avoids unintended changes to test files and production code
 - **Debugging Clarity**: Ensures complex debugging operations are intentionally requested
@@ -112,6 +122,7 @@ block.addEventListener('click', handler); // Adding new behavior - FORBIDDEN
 This guide provides step-by-step instructions for AI assistants to debug and test EDS (Edge Delivery Services) blocks using the local development server designed to improve AI assistant workflows.
 
 ### Prerequisites
+
 - Node.js installed
 - Project server running via `npm run debug`
 - Understanding of EDS block structure
@@ -119,17 +130,21 @@ This guide provides step-by-step instructions for AI assistants to debug and tes
 ### Quick Start
 
 1. **Start the development server:**
+
    ```bash
    npm run debug
    ```
+
    Server runs at: `http://localhost:3000`
 
 2. **Create a test file in your block directory:**
+
    ```bash
    blocks/your-block-name/test.html
    ```
 
 3. **Access your test:**
+
    ```bash
    http://localhost:3000/blocks/your-block-name/test.html
    ```
@@ -161,13 +176,15 @@ blocks/block-name/
 
 ### **When to Use Each File Type**
 
-#### Use `index.html` when:
+#### Use `index.html` when
+
 - Working in `/build/` directories
 - Using Vite, webpack, or other modern build tools
 - Need auto-loading development server behavior
 - Building components with external dependencies
 
-#### Use `test.html` when:
+#### Use `test.html` when
+
 - Working in `/blocks/` directories  
 - Testing EDS block compatibility
 - Need explicit file requests
@@ -176,6 +193,7 @@ blocks/block-name/
 ### **File Naming Examples**
 
 #### ✅ **CORRECT Usage:**
+
 ```bash
 # Development environment
 build/my-component/
@@ -192,6 +210,7 @@ blocks/my-component/
 ```
 
 #### ❌ **INCORRECT Usage:**
+
 ```bash
 # Wrong: Using index.html in blocks directory
 blocks/my-component/
@@ -223,11 +242,13 @@ npm run debug
 ### **Common HTML File Naming Mistakes**
 
 #### ❌ **Wrong Assumptions:**
+
 - "File naming is inconsistent across the project"
 - "test.html and index.html serve the same purpose"
 - "You can use either file name in any environment"
 
 #### ✅ **Correct Understanding:**
+
 - Different environments require different file names
 - Each file type serves a specific purpose and tool ecosystem
 - The naming pattern prevents conflicts and ensures proper tool integration
@@ -241,6 +262,7 @@ npm run debug
 ### **EDS Dynamic Block Loading Constraint**
 
 **CRITICAL**: EDS uses dynamic imports with constructed paths that cannot be modified:
+
 ```javascript
 // In scripts/aem.js - loadBlock function
 const mod = await import(`/blocks/${blockName}/${blockName}.js`);
@@ -253,6 +275,7 @@ This means EDS **always** calls the block by its exact name (`your-component.js`
 When testing instrumented or enhanced block versions, you must temporarily replace the original block file:
 
 #### **Method 1: Manual Backup/Restore**
+
 ```bash
 # 1. Create backup of original
 cp blocks/your-component/your-component.js blocks/your-component/your-component-backup.js
@@ -271,6 +294,7 @@ rm blocks/your-component/your-component-backup.js
 ```
 
 #### **Method 2: Git-Based Workflow (Recommended)**
+
 ```bash
 # 1. Ensure clean working directory
 git status
@@ -289,6 +313,7 @@ git status  # Should show no changes
 ```
 
 #### **Automated Testing Script Template**
+
 ```bash
 #!/bin/bash
 # test-instrumented-block.sh
@@ -340,6 +365,7 @@ echo "✅ Original file restored and backup cleaned up"
 All EDS blocks should implement comprehensive debugging patterns in their `decorate()` functions:
 
 #### **Standard Error Handling Pattern**
+
 ```javascript
 // Standard error handling pattern for all blocks
 export default async function decorate(block) {
@@ -374,6 +400,7 @@ export default async function decorate(block) {
 ```
 
 #### **Performance Monitoring Integration**
+
 ```javascript
 // Add to component decorate() function for performance monitoring
 export default function decorate(block) {
@@ -404,6 +431,7 @@ export default function decorate(block) {
 ## Browser DevTools Debugging
 
 ### Console Debugging Commands
+
 ```javascript
 // Find all blocks on page
 const blocks = document.querySelectorAll('[class*="block"]');
@@ -423,12 +451,14 @@ document.addEventListener('DOMContentLoaded', () => {
 ```
 
 ### Network Tab Analysis
+
 - **Check Resource Loading**: Verify CSS and JS files load correctly
 - **Monitor API Calls**: Watch for failed external requests
 - **Asset Validation**: Ensure images and fonts load properly
 - **Timing Analysis**: Identify slow-loading resources
 
 ### Performance Tab Usage
+
 - **Lighthouse Audits**: Run performance, accessibility, and SEO audits
 - **Paint Metrics**: Monitor First Contentful Paint and Largest Contentful Paint
 - **Layout Shifts**: Identify Cumulative Layout Shift issues
@@ -439,6 +469,7 @@ document.addEventListener('DOMContentLoaded', () => {
 ### Blank Page / Nothing Visible
 
 **Symptom:** Page appears completely blank despite:
+
 - No JavaScript errors in console
 - Elements exist in DOM (verified via Elements tab)
 - JavaScript executes successfully
@@ -462,6 +493,7 @@ body.appear {
 **Diagnostic Steps:**
 
 1. **Check body visibility:**
+
 ```javascript
 console.log('Body classes:', document.body.className);
 console.log('Body display:', getComputedStyle(document.body).display);
@@ -469,14 +501,16 @@ console.log('Body display:', getComputedStyle(document.body).display);
 // If shows "none", body.appear class is missing
 ```
 
-2. **Check if elements exist:**
+1. **Check if elements exist:**
+
 ```javascript
 const button = document.querySelector('.your-button');
 console.log('Button exists:', !!button);
 console.log('Button visible:', button && getComputedStyle(button).display !== 'none');
 ```
 
-3. **Force visibility (debugging only):**
+1. **Force visibility (debugging only):**
+
 ```javascript
 document.body.classList.add('appear');
 // Page should now be visible if this was the issue
@@ -502,6 +536,7 @@ Add `appear` class in your test.html:
 ```
 
 **Production vs Test:**
+
 - **Production:** EDS automatically adds `appear` class when page loads
 - **Test files:** Must add `appear` class manually
 - **Purpose:** Prevents FOUC by hiding page until fully decorated
@@ -511,13 +546,15 @@ Add `appear` class in your test.html:
 If elements are visible but unstyled:
 
 1. **Verify global styles load:**
+
 ```html
 <!-- In test.html head -->
 <link rel="stylesheet" href="/styles/styles.css">
 <link rel="stylesheet" href="your-block.css">
 ```
 
-2. **Check button inheritance:**
+1. **Check button inheritance:**
+
 ```javascript
 const button = document.querySelector('button');
 const styles = getComputedStyle(button);
@@ -526,7 +563,8 @@ console.log('Button padding:', styles.padding);
 // Should show styled values, not defaults
 ```
 
-3. **Verify CSS variables:**
+1. **Verify CSS variables:**
+
 ```javascript
 const root = getComputedStyle(document.documentElement);
 console.log('--link-color:', root.getPropertyValue('--link-color'));
@@ -534,6 +572,7 @@ console.log('--background-color:', root.getPropertyValue('--background-color'));
 ```
 
 ### Block Not Initializing
+
 ```javascript
 // Check if block exists and has proper structure
 const block = document.querySelector('.your-block-name');
@@ -547,6 +586,7 @@ if (!block) {
 ```
 
 ### CSS Not Applied
+
 ```javascript
 // Check if CSS file loaded
 const cssLinks = document.querySelectorAll('link[rel="stylesheet"]');
@@ -563,6 +603,7 @@ console.log('Applied styles:', styles);
 ```
 
 ### JavaScript Errors
+
 ```javascript
 // Global error handler for debugging
 window.addEventListener('error', (event) => {
@@ -580,6 +621,7 @@ window.addEventListener('unhandledrejection', (event) => {
 ## Testing Workflow
 
 ### 1. Local Testing
+
 ```bash
 # Start development server
 npm run debug
@@ -589,12 +631,14 @@ open http://localhost:3000/blocks/your-block/test.html
 ```
 
 ### 2. Browser Testing
+
 - **Chrome DevTools**: Primary debugging environment
 - **Firefox Developer Tools**: Cross-browser validation
 - **Safari Web Inspector**: WebKit compatibility testing
 - **Mobile Testing**: Chrome DevTools device simulation
 
 ### 3. Performance Testing
+
 ```javascript
 // Simple performance test
 console.time('Block load time');
@@ -606,6 +650,7 @@ console.log('Memory usage:', performance.memory);
 ```
 
 ### EDS Body Visibility Debugging
+
 ```javascript
 // Check if body has appear class for visibility
 if (!document.body.classList.contains('appear')) {
@@ -633,6 +678,7 @@ export default async function decorate(block) {
 ## Error Handling Best Practices
 
 ### Graceful Degradation
+
 ```javascript
 export default async function decorate(block) {
   try {
@@ -647,6 +693,7 @@ export default async function decorate(block) {
 ```
 
 ### User-Friendly Error Messages
+
 ```javascript
 function handleError(error, block) {
   console.error('Block error:', error);
@@ -665,6 +712,7 @@ function handleError(error, block) {
 ## Enhanced Debugging Checklist
 
 ### **Pre-Development Setup**
+
 - [ ] **File Naming**: Understand when to use `index.html` vs `test.html`
 - [ ] **Environment Setup**: Correct server for file type (Vite vs EDS debug)
 - [ ] **File Replacement Strategy**: Understand instrumented file testing workflow
@@ -673,6 +721,7 @@ function handleError(error, block) {
 - [ ] **Error Patterns**: Familiar with common failure modes and solutions
 
 ### **Before Testing**
+
 - [ ] Block files exist (`.js`, `.css`)
 - [ ] Server is running (`npm run debug`)
 - [ ] Test file created in correct location with correct name (`test.html`)
@@ -681,6 +730,7 @@ function handleError(error, block) {
 - [ ] **Git working directory clean** (for file replacement workflow)
 
 ### **During Testing**
+
 - [ ] Check browser console for errors
 - [ ] Verify network requests succeed
 - [ ] Test responsive behavior
@@ -691,6 +741,7 @@ function handleError(error, block) {
 - [ ] **Verify EDS integration** (attributes, styling, lifecycle)
 
 ### **Performance Testing Checklist**
+
 - [ ] **Function Execution Timing**: <20ms for block decoration
 - [ ] **Memory Usage**: <500KB increase per block
 - [ ] **DOM Mutations**: <15 mutations per decoration cycle
@@ -699,6 +750,7 @@ function handleError(error, block) {
 - [ ] **Error Recovery**: Graceful degradation implemented
 
 ### **File Replacement Testing Checklist**
+
 - [ ] **Backup Created**: Original file safely backed up
 - [ ] **Instrumented Version**: Enhanced version ready for deployment
 - [ ] **Testing Complete**: All scenarios tested thoroughly
@@ -745,6 +797,7 @@ function handleError(error, block) {
 ## Deployment and EDS Integration
 
 ### Deploy Command Usage
+
 After successful development and testing, use the deploy command to build and deploy components:
 
 ```bash
@@ -756,6 +809,7 @@ npm run deploy
 ```
 
 ### EDS Project Integration
+
 To actually use the built system in your EDS project, copy the `blocks/` contents to your own repository:
 
 ```bash
@@ -774,6 +828,7 @@ git push origin main
 ```
 
 ### Complete Workflow
+
 1. **Development**: Work in `build/your-component/` with `npm run dev` (uses index.html)
 2. **Testing**: Use `npm run debug` for EDS compatibility testing (uses test.html)
 3. **Build & Deploy**: Run `npm run deploy` to create production files
@@ -796,24 +851,28 @@ This policy ensures safe, intentional debugging while maintaining EDS core integ
 ## See Also
 
 ### Essential Development Guides
+
 - **[Block Architecture Standards](../implementation/block-architecture-standards.md)** - Comprehensive standards for EDS block development including naming conventions, file structure, and coding patterns
 - **[Raw EDS Blocks Guide](../implementation/raw-eds-blocks-guide.md)** - Step-by-step guide to creating simple EDS blocks using vanilla JavaScript and minimal dependencies
 - **[Complex EDS Blocks Guide](../implementation/complex-eds-blocks-guide.md)** - Advanced block development with build tools, external dependencies, and sophisticated patterns
 - **[EDS Overview](../eds.md)** - Complete introduction to Edge Delivery Services architecture and core concepts
 
 ### Testing & Quality Assurance
+
 - **[Testing Strategies](testing-strategies.md)** - Comprehensive testing approaches for EDS blocks including unit tests and integration testing
 - **[Performance Optimization](performance-optimization.md)** - Techniques for optimizing EDS block performance and loading
 - **[Browser Compatibility](browser-compatibility.md)** - Ensuring cross-browser compatibility for EDS implementations
 - **[Accessibility Testing](accessibility-testing.md)** - Testing EDS blocks for accessibility compliance and best practices
 
 ### Development Tools & Workflows
+
 - **[Project Structure](../project-structure.md)** - Understanding the overall EDS project organization and file conventions
 - **[Build Tools Configuration](build-tools-configuration.md)** - Advanced build tool setup and configuration for complex EDS blocks
 - **[Deployment Strategies](deployment-strategies.md)** - Best practices for deploying EDS blocks to production
 - **[CI/CD Integration](ci-cd-integration.md)** - Integrating EDS block development into continuous integration pipelines
 
 ### Implementation Examples
+
 - **[Block Examples](block-examples.md)** - Real-world examples of successful EDS block implementations
 - **[JavaScript Patterns](javascript-patterns.md)** - Reusable JavaScript patterns for EDS block development
 - **[CSS Patterns](css-patterns.md)** - Common CSS patterns and styling approaches for EDS blocks
@@ -822,6 +881,7 @@ This policy ensures safe, intentional debugging while maintaining EDS core integ
 ## Next Steps
 
 ### For New EDS Developers
+
 1. **Master the basics** by completing the [Raw EDS Blocks Guide](../implementation/raw-eds-blocks-guide.md) before attempting debugging
 2. **Understand EDS architecture** through the [EDS Overview](../eds.md) to grasp the system you're debugging
 3. **Learn the standards** from [Block Architecture Standards](../implementation/block-architecture-standards.md) to debug more effectively
@@ -829,6 +889,7 @@ This policy ensures safe, intentional debugging while maintaining EDS core integ
 5. **Set up your development environment** following [Project Structure](../project-structure.md) guidelines
 
 ### For Experienced Developers
+
 1. **Master the file replacement workflow** for testing instrumented versions of blocks
 2. **Implement comprehensive error handling** using the patterns shown in this guide
 3. **Set up performance monitoring** to identify bottlenecks and optimization opportunities
@@ -836,6 +897,7 @@ This policy ensures safe, intentional debugging while maintaining EDS core integ
 5. **Explore advanced debugging** with [Complex EDS Blocks Guide](../implementation/complex-eds-blocks-guide.md) techniques
 
 ### For QA Engineers & Testers
+
 1. **Understand the dual testing approach** (development vs. EDS integration testing)
 2. **Master browser DevTools** for comprehensive block testing and validation
 3. **Create systematic test scenarios** covering all debugging checklist items
@@ -843,6 +905,7 @@ This policy ensures safe, intentional debugging while maintaining EDS core integ
 5. **Develop performance benchmarks** for consistent quality assurance
 
 ### For DevOps & Build Engineers
+
 1. **Set up debugging-friendly CI/CD pipelines** that support file replacement workflows
 2. **Implement automated performance monitoring** for production EDS blocks
 3. **Create debugging environments** that mirror production EDS setups
@@ -850,6 +913,7 @@ This policy ensures safe, intentional debugging while maintaining EDS core integ
 5. **Monitor system health** during debugging operations to prevent service disruption
 
 ### For Technical Leads & Architects
+
 1. **Establish debugging policies** for your team based on the guidelines in this document
 2. **Create debugging standards** that balance thoroughness with safety
 3. **Design debugging workflows** that integrate with your development lifecycle
@@ -857,6 +921,7 @@ This policy ensures safe, intentional debugging while maintaining EDS core integ
 5. **Train team members** on safe debugging practices and file replacement procedures
 
 ### For AI Assistants & Automation
+
 1. **Understand the debugging request policy** and when to ask for explicit permission
 2. **Master standard debugging techniques** that don't require special approval
 3. **Learn to identify** when deep debugging is necessary vs. standard approaches

@@ -11,6 +11,7 @@ AllAboutV2 uses a deliberately minimal technology stack focused on web standards
 ### Core Languages
 
 **JavaScript (ES2020+)**
+
 - Pure JavaScript without TypeScript
 - ES modules for code organisation
 - Async/await for asynchronous operations
@@ -19,6 +20,7 @@ AllAboutV2 uses a deliberately minimal technology stack focused on web standards
 *Rationale*: Eliminates build complexity while maintaining modern development practices.
 
 **CSS3**
+
 - Custom properties for theming
 - CSS Grid and Flexbox for layouts
 - Media queries for responsive design
@@ -27,6 +29,7 @@ AllAboutV2 uses a deliberately minimal technology stack focused on web standards
 *Rationale*: Direct CSS provides clear debugging and eliminates build steps.
 
 **HTML5**
+
 - Semantic markup standards
 - Progressive enhancement approach
 - Accessibility-first structure
@@ -35,6 +38,7 @@ AllAboutV2 uses a deliberately minimal technology stack focused on web standards
 ### JavaScript Frameworks and Libraries
 
 **None - Vanilla JavaScript**
+
 - No React, Vue, or Angular
 - No UI component libraries
 - Custom DOM helper utilities
@@ -45,12 +49,14 @@ AllAboutV2 uses a deliberately minimal technology stack focused on web standards
 ### Build Tools
 
 **Minimal Build Process**
+
 - ESLint for code quality
 - Stylelint for CSS standards
 - No bundlers (Webpack, Vite, Rollup)
 - No transpilers (Babel, TypeScript)
 
 *Configuration*:
+
 ```json
 {
   "scripts": {
@@ -65,18 +71,21 @@ AllAboutV2 uses a deliberately minimal technology stack focused on web standards
 ### Development Tools
 
 **Local Development Server**
+
 - Custom Node.js server
 - Zero external dependencies
 - Local-first with proxy fallback
 - Automatic MIME type detection
 
 *Key Features*:
+
 - Serves local files first
 - Proxies missing assets from production
 - CORS headers for cross-origin requests
 - Comprehensive error logging
 
 **Code Quality Tools**
+
 - ESLint with Airbnb base configuration
 - Stylelint with standard configuration
 - JSDoc for function documentation
@@ -87,12 +96,14 @@ AllAboutV2 uses a deliberately minimal technology stack focused on web standards
 ### Adobe Edge Delivery Services
 
 **Core Platform**
+
 - Adobe Helix/Franklin architecture
 - Static site generation from Google Docs
 - CDN-first content delivery
 - Automatic performance optimisation
 
 **Content Processing**
+
 - Google Docs as content source
 - Automatic HTML generation
 - Image optimisation pipeline
@@ -101,12 +112,14 @@ AllAboutV2 uses a deliberately minimal technology stack focused on web standards
 ### Server Infrastructure
 
 **Hosting Platform**
+
 - Adobe Edge Delivery Services
 - Global CDN distribution
 - Automatic scaling
 - Performance monitoring
 
 **Domain Management**
+
 - Custom domain configuration
 - SSL certificate management
 - DNS configuration
@@ -115,12 +128,14 @@ AllAboutV2 uses a deliberately minimal technology stack focused on web standards
 ### APIs and Services
 
 **Google Workspace Integration**
+
 - Google Docs API for content retrieval
 - Google Drive API for file management
 - Google Sheets API for data sources
 - Real-time collaboration features
 
 **Adobe Services**
+
 - Edge Delivery Services for hosting
 - Adobe Analytics for tracking
 - Adobe Target for personalisation
@@ -131,12 +146,14 @@ AllAboutV2 uses a deliberately minimal technology stack focused on web standards
 ### Content Storage
 
 **Google Drive**
+
 - Primary content storage
 - Version control through Google Drive history
 - Collaborative editing capabilities
 - Automatic backup and synchronisation
 
 **Static File Generation**
+
 - HTML files generated from Google Docs
 - JSON files for dynamic content queries
 - Optimised images and media assets
@@ -145,12 +162,14 @@ AllAboutV2 uses a deliberately minimal technology stack focused on web standards
 ### Data Management
 
 **Query Index System**
+
 - Automatically generated from published content
 - JSON format for JavaScript consumption
 - Filtered by content type and metadata
 - Updated on content publication
 
 *Structure*:
+
 ```json
 {
   "total": 150,
@@ -168,6 +187,7 @@ AllAboutV2 uses a deliberately minimal technology stack focused on web standards
 ```
 
 **No Traditional Database**
+
 - No SQL databases required
 - No NoSQL databases needed
 - File-based data storage
@@ -178,12 +198,14 @@ AllAboutV2 uses a deliberately minimal technology stack focused on web standards
 ### Content Management
 
 **Google Workspace**
+
 - Google Docs for content authoring
 - Google Drive for file storage
 - Google Sheets for data management
 - Google Analytics for tracking
 
 **Adobe Ecosystem**
+
 - Edge Delivery Services for hosting
 - Adobe Analytics for advanced metrics
 - Adobe Target for personalisation
@@ -192,12 +214,14 @@ AllAboutV2 uses a deliberately minimal technology stack focused on web standards
 ### Development Services
 
 **Version Control**
+
 - GitHub for code repository
 - Git-based workflow
 - Pull request reviews
 - Automated testing
 
 **Monitoring and Analytics**
+
 - Core Web Vitals monitoring
 - Error tracking and logging
 - Performance metrics collection
@@ -206,12 +230,14 @@ AllAboutV2 uses a deliberately minimal technology stack focused on web standards
 ### Third-Party Services
 
 **Performance Monitoring**
+
 - Real User Monitoring (RUM)
 - Synthetic testing
 - Core Web Vitals tracking
 - Performance budgets
 
 **Security Services**
+
 - SSL certificate management
 - Content Security Policy
 - DDoS protection
@@ -222,12 +248,14 @@ AllAboutV2 uses a deliberately minimal technology stack focused on web standards
 ### Local Development Setup
 
 **Requirements**
+
 - Node.js 18+ (for built-in fetch support)
 - Git for version control
 - Modern web browser for testing
 - Text editor with ESLint support
 
 **Setup Process**
+
 ```bash
 # Clone repository
 git clone https://github.com/ddttom/allaboutv2.git
@@ -246,6 +274,7 @@ open http://localhost:3000
 ### Development Server Architecture
 
 **Core Components**
+
 ```javascript
 // server.js structure
 import { createServer } from 'http';
@@ -264,6 +293,7 @@ const server = createServer(async (req, res) => {
 ```
 
 **Key Features**
+
 - Zero external dependencies
 - Automatic MIME type detection
 - Comprehensive error handling
@@ -274,12 +304,14 @@ const server = createServer(async (req, res) => {
 ### Build Process
 
 **No Build Required**
+
 - Direct file serving
 - No compilation steps
 - No bundling process
 - No asset optimisation needed
 
 **Quality Assurance**
+
 - ESLint validation
 - Stylelint validation
 - Unit test execution
@@ -288,12 +320,14 @@ const server = createServer(async (req, res) => {
 ### Deployment Strategy
 
 **Continuous Integration**
+
 - GitHub Actions for automation
 - Automated testing on pull requests
 - Code quality checks
 - Performance regression testing
 
 **Deployment Process**
+
 1. Code review and approval
 2. Merge to main branch
 3. Automatic deployment to staging
@@ -305,18 +339,21 @@ const server = createServer(async (req, res) => {
 ### Asset Delivery
 
 **Image Optimisation**
+
 - Automatic WebP conversion
 - Responsive image sizing
 - Lazy loading implementation
 - Progressive enhancement
 
 **CSS Optimisation**
+
 - Critical CSS inlining
 - Non-blocking CSS loading
 - CSS custom properties for theming
 - Minimal CSS footprint
 
 **JavaScript Optimisation**
+
 - ES modules for tree shaking
 - Async loading for non-critical scripts
 - Progressive enhancement
@@ -325,12 +362,14 @@ const server = createServer(async (req, res) => {
 ### Caching Strategy
 
 **Static Assets**
+
 - Long-term caching with versioning
 - CDN-based distribution
 - Browser caching optimisation
 - Cache invalidation strategies
 
 **Dynamic Content**
+
 - Short-term caching for dynamic data
 - Edge-side includes for personalisation
 - Cache warming strategies
@@ -341,12 +380,14 @@ const server = createServer(async (req, res) => {
 ### Content Security
 
 **Content Security Policy**
+
 - Strict CSP headers
 - Script source restrictions
 - Style source limitations
 - Image source controls
 
 **HTTPS Enforcement**
+
 - SSL/TLS encryption
 - HTTP to HTTPS redirects
 - Secure cookie configuration
@@ -355,12 +396,14 @@ const server = createServer(async (req, res) => {
 ### Code Security
 
 **Dependency Management**
+
 - Minimal external dependencies
 - Regular security audits
 - Automated vulnerability scanning
 - Dependency version pinning
 
 **Input Validation**
+
 - Content sanitisation
 - XSS prevention
 - CSRF protection
@@ -371,12 +414,14 @@ const server = createServer(async (req, res) => {
 ### Performance Monitoring
 
 **Core Web Vitals**
+
 - Largest Contentful Paint (LCP)
 - First Input Delay (FID)
 - Cumulative Layout Shift (CLS)
 - Time to First Byte (TTFB)
 
 **Error Tracking**
+
 - JavaScript error monitoring
 - Network error tracking
 - Performance regression detection
@@ -385,12 +430,14 @@ const server = createServer(async (req, res) => {
 ### Maintenance Procedures
 
 **Regular Updates**
+
 - Dependency security updates
 - Browser compatibility testing
 - Performance optimisation reviews
 - Code quality improvements
 
 **Backup and Recovery**
+
 - Google Drive automatic backup
 - Git-based version control
 - Disaster recovery procedures
@@ -401,12 +448,14 @@ const server = createServer(async (req, res) => {
 ### Why Vanilla JavaScript?
 
 **Benefits**
+
 - Eliminates framework dependencies
 - Reduces bundle size significantly
 - Simplifies debugging process
 - Improves long-term maintainability
 
 **Trade-offs**
+
 - More manual DOM manipulation
 - No component lifecycle management
 - Requires more boilerplate code
@@ -415,12 +464,14 @@ const server = createServer(async (req, res) => {
 ### Why No Build Process?
 
 **Benefits**
+
 - Faster development iterations
 - Eliminates build complexity
 - Reduces deployment time
 - Simplifies debugging
 
 **Trade-offs**
+
 - No automatic optimisations
 - Manual asset management
 - No code splitting
@@ -429,12 +480,14 @@ const server = createServer(async (req, res) => {
 ### Why Adobe EDS?
 
 **Benefits**
+
 - Excellent performance out-of-the-box
 - Minimal infrastructure management
 - Integrated content management
 - Automatic optimisations
 
 **Trade-offs**
+
 - Platform lock-in
 - Limited customisation options
 - Specific workflow requirements
@@ -445,12 +498,14 @@ const server = createServer(async (req, res) => {
 ### Scalability Planning
 
 **Traffic Growth**
+
 - CDN scaling capabilities
 - Performance monitoring thresholds
 - Resource allocation planning
 - Capacity planning procedures
 
 **Feature Expansion**
+
 - New block development
 - Third-party integrations
 - Advanced functionality additions
@@ -459,12 +514,14 @@ const server = createServer(async (req, res) => {
 ### Technology Evolution
 
 **Web Standards**
+
 - New JavaScript features adoption
 - CSS specification updates
 - HTML5 evolution
 - Browser API improvements
 
 **Platform Updates**
+
 - Adobe EDS feature updates
 - Google Workspace API changes
 - Third-party service updates

@@ -23,6 +23,7 @@ Add the index block to your document:
 ```
 
 The block will automatically:
+
 1. Scan all h1-h6 headings on the page
 2. Generate a collapsible navigation menu
 3. Add IDs to headings (format: `header-0`, `header-1`, etc.)
@@ -208,6 +209,7 @@ Generated DOM structure:
 ### ID Format
 
 Headings receive auto-generated IDs:
+
 - Format: `header-{index}`
 - Example: `header-0`, `header-1`, `header-2`
 - Sequential based on document order

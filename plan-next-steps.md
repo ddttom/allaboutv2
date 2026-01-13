@@ -3,6 +3,7 @@
 ## Immediate Actions (This Week)
 
 ### 1. Technical Setup
+
 - [ ] **Choose database technology**
   - PostgreSQL (recommended - mature, JSON support)
   - MySQL (alternative)
@@ -20,6 +21,7 @@
   - Environment variables structure
 
 ### 2. Architecture Decisions
+
 - [ ] **Confirm tenant routing strategy**
   - Subdomain approach (brightsparks-york.platform.com)
   - Custom domain approach (brightsparks-york.com)
@@ -38,10 +40,13 @@
 ## Week 1 Priorities (Phase 1 Start)
 
 ### Day 1-2: Database Foundation
+
 **Goal**: Create multi-tenant database schema
 
 **Tasks**:
+
 1. **Create tenants table**
+
    ```sql
    CREATE TABLE tenants (
      tenant_id VARCHAR(255) PRIMARY KEY,
@@ -65,6 +70,7 @@
    ```
 
 2. **Create jobs table**
+
    ```sql
    CREATE TABLE jobs (
      job_id VARCHAR(36) PRIMARY KEY,
@@ -88,6 +94,7 @@
    ```
 
 3. **Add tenant_id index for performance**
+
    ```sql
    CREATE INDEX idx_jobs_tenant ON jobs(tenant_id);
    CREATE INDEX idx_jobs_status ON jobs(tenant_id, status);
@@ -95,10 +102,13 @@
    ```
 
 ### Day 3: Workflow Templates
+
 **Goal**: Create markdown workflow definitions
 
 **Tasks**:
+
 1. **Create `/config/workflows/electrical-contractor.md`**
+
    ```markdown
    # Electrical Contractor Workflow
 
@@ -122,6 +132,7 @@
    ```
 
 2. **Create `/config/workflows/software-developer.md`**
+
    ```markdown
    # Software Developer Workflow
 
@@ -150,6 +161,7 @@
    - Return JSON structure for app
 
 ### Day 4: Tenant Configuration Service
+
 **Goal**: Build tenant config loader
 
 **File**: `/src/services/tenant-config.js`
@@ -190,6 +202,7 @@ async function loadWorkflowTemplate(templateName) {
 ```
 
 ### Day 5: Onboarding Script
+
 **Goal**: Create command-line tenant onboarding tool
 
 **File**: `/scripts/onboard-tenant.sh`
@@ -250,6 +263,7 @@ echo "✅ Tenant created successfully!"
 ```
 
 **Make executable**:
+
 ```bash
 chmod +x /scripts/onboard-tenant.sh
 ```
@@ -257,6 +271,7 @@ chmod +x /scripts/onboard-tenant.sh
 ## Week 1 Testing
 
 ### Test 1: Create Bright Sparks Tenant
+
 ```bash
 ./scripts/onboard-tenant.sh \
   --tenant-id="brightsparks-york" \
@@ -270,12 +285,14 @@ chmod +x /scripts/onboard-tenant.sh
 ```
 
 **Verify**:
+
 - [ ] Tenant record exists in database
 - [ ] All modules enabled
 - [ ] Pricing configured correctly
 - [ ] Workflow template loaded
 
 ### Test 2: Create DevFlow Tenant
+
 ```bash
 ./scripts/onboard-tenant.sh \
   --tenant-id="devflow-software" \
@@ -290,6 +307,7 @@ chmod +x /scripts/onboard-tenant.sh
 ```
 
 **Verify**:
+
 - [ ] Tenant record exists
 - [ ] Photos/suppliers/materials disabled
 - [ ] Optional fields configured
@@ -298,6 +316,7 @@ chmod +x /scripts/onboard-tenant.sh
 ## Week 1 Acceptance Criteria
 
 By end of Week 1, you should have:
+
 - ✅ Database schema created and tested
 - ✅ 2 workflow templates (electrical, software)
 - ✅ Tenant config service working
@@ -307,18 +326,21 @@ By end of Week 1, you should have:
 ## Resources Needed
 
 ### Tools
+
 - Database client (pgAdmin, TablePlus, or CLI)
 - Code editor (VS Code recommended)
 - Git for version control
 - Node.js 18+ for local development
 
 ### Knowledge
+
 - SQL basics (CREATE TABLE, INSERT, SELECT)
 - Markdown syntax
 - Bash scripting basics
 - JavaScript/Node.js
 
 ### Access
+
 - Database connection string
 - Cloudflare account (for Workers)
 - Domain registrar access (for custom domains)
@@ -334,6 +356,7 @@ By end of Week 1, you should have:
 ## Next Steps After Week 1
 
 Once Week 1 is complete, you'll move to:
+
 - **Week 2-3**: Build React UI components that load tenant config
 - **Week 4-5**: Dynamic form rendering based on tenant modules
 - **Week 6**: Create 4 more industry templates (plumber, builder, architect, web designer)
@@ -342,6 +365,7 @@ Once Week 1 is complete, you'll move to:
 ## Getting Help
 
 If you get stuck:
+
 1. Check the complete plan: [complete-plan.md](complete-plan.md)
 2. Review specific phase details for more context
 3. Test each component individually before integration

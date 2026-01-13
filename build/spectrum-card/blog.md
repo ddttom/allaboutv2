@@ -5,6 +5,7 @@ Adobe's Edge Delivery Services (EDS) enables document-driven web development, bu
 ## Why Spectrum Components Work Well with EDS
 
 Spectrum Web Components follow Adobe's design system and are built on web standards, making them a perfect fit for EDS. They provide:
+
 - Professional, accessible UI out of the box
 - Theming and responsive design
 - Keyboard and screen reader support
@@ -171,11 +172,13 @@ This approach lets you see the real Spectrum card rendering and interactivity be
 When deployed, EDS will automatically call your `decorate` function for each block instance. The block will support images, custom titles, descriptions, and button text, and will be fully accessible and theme-aware.
 
 ## Performance and Accessibility
+
 - Spectrum components are tree-shaken and optimized by Vite
 - All interactive elements are keyboard accessible
 - Theming and responsive design are automatic
 
 ## Troubleshooting
+
 - If you see a gray box, add an image as the fourth cell
 - If cards are unstyled, ensure you are calling `decorate` manually in local tests
 - For EDS, just deploy to `/blocks/spectrum-card/` and EDS will handle everything

@@ -5,6 +5,7 @@
 > **Please use the new documentation:** [Explaining Jupyter - Interactive Testing for EDS Blocks](explaining-jupyter.md)
 >
 > The new guide includes:
+>
 > - Complete architecture overview and execution model
 > - Browser-only execution patterns
 > - Helper functions (`testBlock`, `showPreview`, `saveBlockHTML`)
@@ -24,6 +25,7 @@ We've set up a Jupyter notebook environment (`test.ipynb`) that lets you test ED
 ### The Traditional Way (aka "The Pain")
 
 You know the drill:
+
 1. Make a change to your block
 2. Refresh the browser
 3. Wait for the page to load
@@ -105,6 +107,7 @@ Don't worry, this looks like more steps than it actually is. Think of it as asse
 ### What You'll Need
 
 **Node.js stuff:**
+
 ```bash
 npm install jsdom
 ```
@@ -112,6 +115,7 @@ npm install jsdom
 That's it for JavaScript dependencies. Just one package. We like simple.
 
 **Python stuff:**
+
 ```bash
 # Get Jupyter (you probably already have this)
 pip install jupyter
@@ -126,30 +130,36 @@ jslab install
 ### The 5-Minute Setup Dance
 
 **Step 1: Install Your Dependencies**
+
 ```bash
 # In your project root (this gets jsdom)
 npm install
 ```
 
 **Step 2: Get Jupyter (If You Don't Have It)**
+
 ```bash
 pip install jupyter
 # Or if you're a conda person: conda install jupyter
 ```
 
 **Step 3: Install JSLab**
+
 ```bash
 npm install -g jslab
 jslab install
 ```
 
 **Step 4: Make Sure It Worked**
+
 ```bash
 jupyter kernelspec list
 ```
+
 You should see `jslab` in there. If you do, you're golden!
 
 **Step 5: Fire It Up**
+
 ```bash
 jupyter notebook
 ```
@@ -165,6 +175,7 @@ That's it! You're ready to start testing blocks.
 ### "It Didn't Work" Troubleshooting
 
 **JSLab isn't showing up:**
+
 ```bash
 # Reinstall and register
 npm install -g jslab
@@ -190,6 +201,7 @@ Open it in Jupyter, delete the examples you don't need, add your own. Done!
 ### The "I Want to Build It Myself" Way
 
 **1. Start Jupyter and create a new notebook**
+
 ```bash
 jupyter notebook
 # Click "New" → "jslab"
@@ -238,29 +250,35 @@ That's really all there is to it!
 Think of your notebook like a story—it should flow naturally from simple to complex:
 
 **1. Start with a title and intro** (Markdown cell)
-   - What are you testing?
-   - Any important warnings?
+
+- What are you testing?
+- Any important warnings?
 
 **2. The setup cell** (Code)
-   - jsdom initialization
-   - Helper functions
-   - Run this first, always
+
+- jsdom initialization
+- Helper functions
+- Run this first, always
 
 **3. Simple tests first** (Mix of Markdown and Code)
-   - Ease into it with basic examples
-   - Build confidence before getting fancy
+
+- Ease into it with basic examples
+- Build confidence before getting fancy
 
 **4. Then your actual block tests** (Code with Markdown explanations)
-   - One block per section
-   - Use markdown cells to explain what you're testing and why
+
+- One block per section
+- Use markdown cells to explain what you're testing and why
 
 **5. Visual output examples** (Code)
-   - Show how to save HTML files
-   - Great for blocks that need styling to make sense
+
+- Show how to save HTML files
+- Great for blocks that need styling to make sense
 
 **6. Reference section** (Markdown)
-   - Quick reminder of helper functions
-   - Code snippets you might need
+
+- Quick reminder of helper functions
+- Code snippets you might need
 
 ## Writing Tests That Don't Suck
 
@@ -325,6 +343,7 @@ These are already set up in the notebook. Just use them!
 **What it does:** Loads your block, runs it, shows you what happened.
 
 **How to use it:**
+
 ```javascript
 const block = await testBlock('accordion', '<div>your content</div>');
 console.log(block.outerHTML); // See what it created
@@ -337,11 +356,13 @@ console.log(block.outerHTML); // See what it created
 **What it does:** Tests your block AND saves a nice HTML file you can open in a browser to see it styled and interactive.
 
 **Here's the cool part:** The generated HTML files link to your actual CSS files (not embedded copies), so you get:
+
 - Real EDS styling from `/styles/styles.css`, `/styles/fonts.css`, and `/styles/lazy-styles.css`
 - Block-specific styles from `/blocks/blockname/blockname.css`
 - Live reload capability - modify CSS and just refresh the browser!
 
 **How to use it:**
+
 ```javascript
 // Saves as accordion-preview.html
 await saveBlockHTML('accordion', content);
@@ -359,6 +380,7 @@ await saveBlockHTML('accordion', content, 'my-special-test.html');
 **What it does:** Just loads the CSS for a block.
 
 **How to use it:**
+
 ```javascript
 const css = await loadBlockStyles('accordion');
 ```
@@ -370,6 +392,7 @@ const css = await loadBlockStyles('accordion');
 ### "JSLab isn't in my kernel list!"
 
 Run these commands and check again:
+
 ```bash
 npm install -g jslab
 jslab install
@@ -387,6 +410,7 @@ Use `global.document` and `global.window` in your code. TypeScript gets confused
 ### "My Web Component block is broken!"
 
 Yeah, Web Components are tricky in jsdom. Your best bet:
+
 ```javascript
 // Save it and test in a real browser
 await saveBlockHTML('myblock', content);
@@ -406,6 +430,7 @@ Once you're comfortable, here are some fun patterns:
 ### Batch Testing
 
 Test multiple blocks at once:
+
 ```javascript
 const blocks = ['accordion', 'tabs', 'cards'];
 
@@ -501,6 +526,7 @@ git commit -m "Add myblock with awesome features"
 ```
 
 **The workflow is brilliant because:**
+
 - CSS changes = just refresh the browser (files are linked)
 - JS changes = rerun the notebook cell (instant feedback)
 - No build steps, no servers, no waiting
@@ -508,6 +534,7 @@ git commit -m "Add myblock with awesome features"
 ### When to Use the Notebook
 
 **Yes, use it for:**
+
 - Quick validation before committing
 - Trying different content structures
 - Debugging weird edge cases
@@ -515,6 +542,7 @@ git commit -m "Add myblock with awesome features"
 - Creating examples for documentation
 
 **Maybe skip it for:**
+
 - Complex interactive features (just test in a real browser)
 - Animation testing (browser is better)
 - Cross-browser issues (obviously need real browsers)

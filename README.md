@@ -18,6 +18,7 @@ The site features a blog-focused homepage ([index.html](index.html)) that showca
 - **86+ Blog Posts**: Comprehensive collection organized across `/blogs/ddt/`, `/blogs/ddt/ai/`, and `/blogs/ddt/integrations/`
 
 The homepage follows EDS best practices:
+
 - Full EDS block integration (header, footer, cards, blogroll)
 - Responsive design with mobile-first approach
 - No inline CSS - all styling in [styles/homepage.css](styles/homepage.css)
@@ -75,6 +76,7 @@ npm run debug
 ```
 
 The server will start on `http://localhost:3000` and provide:
+
 - Local file serving with automatic proxy fallback to `https://allabout.network`
 - Support for testing EDS blocks in isolation with immediate feedback
 - Comprehensive MIME type support and clear error reporting
@@ -164,12 +166,14 @@ Access your tests at: `http://localhost:3000/blocks/your-block/test.html`
 ## Available Scripts
 
 ### Main Project
+
 - `npm run debug` - Start development server on port 3000
 - `npm run lint` - Run ESLint and Stylelint
 - `npm run lint:js` - Run ESLint on JavaScript files
 - `npm run lint:css` - Run Stylelint on CSS files
 
 ### Cloudflare Worker (from `cloudflare/files/`)
+
 - `npm run dev` - Start local Cloudflare Worker dev server (localhost:8787)
 - `npm run deploy` - Deploy worker to Cloudflare production
 - `npm run tail` - View live logs from deployed worker
@@ -184,6 +188,7 @@ See [cloudflare/files/SETUP.md](cloudflare/files/SETUP.md) for complete Cloudfla
 This project includes a complete Claude Code configuration for AI-assisted development:
 
 ### Slash Commands
+
 - `/new-block <name>` - Create a new EDS block following Content Driven Development
 - `/test-block <name>` - Run tests for a specific block
 - `/create-notebook` - Create educational/interactive Jupyter notebooks with auto-wrapping support
@@ -199,7 +204,9 @@ This project includes a complete Claude Code configuration for AI-assisted devel
 See [`.claude/README.md`](.claude/README.md) for complete command reference.
 
 ### Skills
+
 Auto-activating skills provide inline guidance for:
+
 - **building-blocks** - Creating and modifying EDS blocks
 - **block-collection-and-party** - Reference implementations from Block Collection and Block Party repositories, with block structure fetching
 - **block-inventory** - Survey available blocks from local project and Block Collection to understand authoring options
@@ -222,7 +229,9 @@ All skills are tailored specifically for EDS vanilla JavaScript development.
 See [`.claude/skills/`](.claude/skills/) for complete skill documentation.
 
 ### Agents
+
 Specialized agents for complex tasks:
+
 - **code-architecture-reviewer** - Review code for best practices
 - **documentation-architect** - Create comprehensive documentation
 - **refactor-planner** - Plan code refactoring strategies
@@ -242,6 +251,7 @@ See [`.claude/agents/README.md`](.claude/agents/README.md) for details.
 ### Block Development
 
 Each block should include:
+
 - `blockname.js` - Core functionality
 - `blockname.css` - Block-specific styles
 - `README.md` - Documentation and usage examples
@@ -249,6 +259,7 @@ Each block should include:
 - `test.html` - Development test file (traditional browser testing)
 
 **Optional but recommended:**
+
 - `.ipynb` notebook file for interactive testing and documentation
   - Use auto-wrapping for fast authoring in notebook mode
   - Or manual HTML for custom styling in any mode
@@ -274,6 +285,7 @@ Each block should include:
 ### Project Instructions for AI Assistants
 
 **📋 CLAUDE.md** - Compact project guide for AI assistants
+
 - Quick reference guide covering essential patterns and workflows
 - References comprehensive documentation in `docs/for-ai/` (26+ guides)
 - Recently compacted (48 lines reduced) by extracting ipynb details to dedicated docs
@@ -282,6 +294,7 @@ Each block should include:
 ### Navigation & Getting Started
 
 **🗺️ Documentation Navigator** - Start here!
+
 - **[docs-navigation.ipynb](docs-navigation.ipynb)** - Interactive guide to navigating all 26+ documentation files
   - 8 parts covering role-based, task-based, and workflow-based navigation
   - 76 cells with action cards and smart link resolution
@@ -290,6 +303,7 @@ Each block should include:
   - View with ipynb-viewer in notebook mode for best experience
 
 **📖 The Invisible Users** - Book companion notebook
+
 - **[invisible-users/notebook.ipynb](invisible-users/notebook.ipynb)** - Interactive exploration of AI agents and modern web design
   - Companion to "The Invisible Users" book by Tom Cranstoun
   - 10 parts covering all book chapters with interactive demonstrations
@@ -303,8 +317,8 @@ Each block should include:
 
 The site audit is created with https://github.com/ddttom/my-pa11y-project
 
-
 **📊 EDS Site Remediation Strategy**
+
 - **[Executive Summary](docs/remediation/files/00-executive-summary.md)** - Complete overview of site audit findings and remediation plan
   - Comprehensive 121-page SEO/accessibility/performance audit analysis
   - 6 prioritized remediation strategies with ROI calculations
@@ -321,6 +335,7 @@ The site audit is created with https://github.com/ddttom/my-pa11y-project
   - 🟡 [Content Quality Improvements](docs/remediation/files/06-content-quality-improvements.md) - Bottom 10 pages (21 hours) - excludes notebooks
 
 ### Core Documentation
+
 - [Development Server Guide](docs/Server-README.md) - Comprehensive server documentation
 - [Block Debugging Guide](docs/debug.md) - Step-by-step debugging guide for AI assistants
 - [Fast EDS Development Tutorial](docs/blog.md) - Complete tutorial with real-world examples
@@ -328,6 +343,7 @@ The site audit is created with https://github.com/ddttom/my-pa11y-project
 - [EDS Best Practices](docs/eds-appendix.md) - Advanced patterns and techniques
 
 ### Infrastructure & Operations
+
 - **[Cloudflare Configuration Reference](cloudflare/cloudflare.md)** - Complete infrastructure documentation (Version 1.1 - Pro Plan)
   - **Plan**: Cloudflare Pro ($20/month) - Upgraded from Free plan (2025-12-09)
   - **Key Features**: Surgical cache purging, WAF rules, rate limiting, image optimization
@@ -367,6 +383,7 @@ The site audit is created with https://github.com/ddttom/my-pa11y-project
   - **Blog Post**: [cloudflare/blog.md](cloudflare/blog.md) - Journey from challenge to production-ready deployment
 
 ### Testing & Documentation
+
 - [Jupyter Notebook Testing Guide](docs/for-ai/explaining-jupyter.md) - Context-aware interactive testing with live preview, includes:
   - JSLab mode for development with jsdom virtual DOM
   - Browser mode for end-user interaction via ipynb-viewer block
@@ -383,6 +400,7 @@ The site audit is created with https://github.com/ddttom/my-pa11y-project
 - [ipynb-viewer Block Documentation](blocks/ipynb-viewer/README.md) - Display and execute notebooks on EDS pages
 
 ### For AI Assistants
+
 - [Complete AI Documentation Index](docs/for-ai/index.md) - Navigation hub for all 26 EDS development guides
 
 ## Security and Performance
@@ -409,4 +427,3 @@ When contributing to this project:
 - Do not use placeholders in markdown documents
 - All code should be production-ready and well-documented
 - Focus on solving real problems with simple, effective solutions
- 

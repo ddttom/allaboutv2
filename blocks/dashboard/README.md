@@ -26,6 +26,7 @@ A comprehensive content management dashboard that displays site content status, 
 The dashboard block fetches content from `query-index.json` and displays it in an interactive table with sortable columns, filterable status indicators, and image preview popups. It automatically calculates review and expiry dates based on site configuration, providing visual indicators for content that needs attention.
 
 **Primary Use Cases:**
+
 - Content audit dashboards for editorial teams
 - Site-wide content governance and compliance tracking
 - Review cycle management and content freshness monitoring
@@ -37,6 +38,7 @@ The dashboard block fetches content from `query-index.json` and displays it in a
 **Location:** `/blocks/dashboard/`
 
 **Files:**
+
 - `dashboard.js` - Core dashboard functionality
 - `dashboard.css` - Table styling and responsive layouts
 - `README.md` - Technical documentation (this file)
@@ -99,6 +101,7 @@ The dashboard block fetches content from `query-index.json` and displays it in a
 The dashboard uses an event-driven architecture with modular functions:
 
 **Main Flow:**
+
 1. **Fetch Data** - Retrieves `/query-index.json` on page load
 2. **Create Dashboard** - Builds title, filter, and table structure
 3. **Process Rows** - Iterates through data array to create table rows
@@ -108,11 +111,13 @@ The dashboard uses an event-driven architecture with modular functions:
 **Function Organization:**
 
 **Decorate Function:**
+
 - Entry point for block decoration
 - Fetches JSON data and initiates dashboard creation
 - Error handling for fetch failures
 
 **Sub-Components:**
+
 - `createDashboard()` - Assembles main dashboard structure
 - `createFilter()` - Builds status filter dropdown
 - `createTable()` - Creates table with headers and body
@@ -122,6 +127,7 @@ The dashboard uses an event-driven architecture with modular functions:
 - `createDateCell()` - Creates date cells with RAG status indicators
 
 **Helpers:**
+
 - `parseDate()` - Handles multiple date format parsing
 - `formatDate()` - Formats dates consistently (MMM DD, YYYY)
 - `calculateReviewDate()` - Computes review date from lastModified
@@ -139,6 +145,7 @@ The dashboard uses an event-driven architecture with modular functions:
 The dashboard uses a mobile-first approach with adaptive layouts:
 
 **Table Layout (Desktop):**
+
 - Standard HTML table structure
 - Border-collapse for clean cell borders
 - Sortable column headers with arrow indicators
@@ -146,17 +153,20 @@ The dashboard uses a mobile-first approach with adaptive layouts:
 - Fixed column widths for path cells
 
 **Card Layout (Mobile):**
+
 - Transforms table rows into card-like blocks
 - Each cell becomes a labeled row in the card
 - Data labels displayed via `::before` pseudo-elements
 - Vertical stacking for easy mobile reading
 
 **Color System:**
+
 - Green backgrounds: `#90EE90` (healthy, 30+ days)
 - Amber backgrounds: `#FFBF00` (warning, 0-30 days)
 - Red backgrounds: `#FF6347` (overdue, negative days)
 
 **Responsive Strategy:**
+
 - 1024px breakpoint for layout switching
 - CSS classes `.card-view` and `.card-layout` applied dynamically
 - No media query duplication (JavaScript handles classes)
@@ -191,11 +201,12 @@ The dashboard reads from `window.siteConfig` for customizable periods:
 
 `Configuration object`
 `window.siteConfig = {`
-`  '$co:defaultreviewperiod': 300,  // days`
-`  '$co:defaultexpiryperiod': 365   // days`
+`'$co:defaultreviewperiod': 300,  // days`
+`'$co:defaultexpiryperiod': 365   // days`
 `};`
 
 **Defaults if not configured:**
+
 - Review period: 300 days (10 months)
 - Expiry period: 365 days (1 year)
 
@@ -216,6 +227,7 @@ That's it! The block automatically fetches and displays data from `query-index.j
 ### Page Placement
 
 **Recommended pages:**
+
 - `/admin/content-dashboard`
 - `/editorial/content-review`
 - `/content-audit`
@@ -237,8 +249,8 @@ Set custom review and expiry periods in your site configuration:
 
 `Custom periods in config`
 `window.siteConfig = {`
-`  '$co:defaultreviewperiod': 180,  // 6 months`
-`  '$co:defaultexpiryperiod': 730   // 2 years`
+`'$co:defaultreviewperiod': 180,  // 6 months`
+`'$co:defaultexpiryperiod': 730   // 2 years`
 `};`
 
 **Note:** Configuration must be set before dashboard loads (typically in `head.html` or early in page load).
@@ -246,24 +258,28 @@ Set custom review and expiry periods in your site configuration:
 ### User Interactions
 
 **Sorting:**
+
 1. Click any column header to sort by that column
 2. First click: ascending order (↑)
 3. Second click: descending order (↓)
 4. Sort indicator arrow shows current state
 
 **Filtering:**
+
 1. Select status from "Filter by status" dropdown
 2. Options: All, Green, Amber, Red
 3. Table updates instantly to show matching rows
 4. Filter applies to review AND expiry date cells
 
 **Image Preview:**
+
 1. Hover over any path link in the Path column
 2. Image popup appears following mouse cursor
 3. Popup repositions to stay within viewport
 4. Move mouse away to hide popup
 
 **Navigation:**
+
 1. Click any path link to navigate to that page
 2. Links open in same window (standard navigation)
 3. Keyboard accessible (Tab to navigate links)
@@ -278,25 +294,27 @@ The dashboard expects `query-index.json` with this structure:
 
 `JSON structure`
 `{`
-`  "data": [`
-`    {`
-`      "title": "Page Title",`
-`      "path": "/path/to/page",`
-`      "description": "Page description text",`
-`      "lastModified": "1640995200",  // Unix timestamp or ISO string`
-`      "image": "/media_abc123.png"   // optional`
-`    },`
-`    // more items...`
-`  ]`
+`"data": [`
+`{`
+`"title": "Page Title",`
+`"path": "/path/to/page",`
+`"description": "Page description text",`
+`"lastModified": "1640995200",  // Unix timestamp or ISO string`
+`"image": "/media_abc123.png"   // optional`
+`},`
+`// more items...`
+`]`
 `}`
 
 **Required fields:**
+
 - `title` - Page title (string)
 - `path` - Page URL path (string)
 - `description` - Page description (string)
 - `lastModified` - Last modified date (timestamp or ISO string)
 
 **Optional fields:**
+
 - `image` - Preview image URL (string, enables hover popup if present)
 
 ### Output Structure (After Decoration)
@@ -305,50 +323,50 @@ The decorate function transforms the block into:
 
 `HTML output`
 `<div class="dashboard-container">`
-`  <div class="dashboard">`
-`    <h1>Edge Delivery Services Content Dashboard</h1>`
+`<div class="dashboard">`
+`<h1>Edge Delivery Services Content Dashboard</h1>`
 `    `
-`    <div class="filter-container">`
-`      <label>Filter by status:</label>`
-`      <select id="status-filter">`
-`        <option value="all">All</option>`
-`        <option value="green">Green</option>`
-`        <option value="amber">Amber</option>`
-`        <option value="red">Red</option>`
-`      </select>`
-`    </div>`
+`<div class="filter-container">`
+`<label>Filter by status:</label>`
+`<select id="status-filter">`
+`<option value="all">All</option>`
+`<option value="green">Green</option>`
+`<option value="amber">Amber</option>`
+`<option value="red">Red</option>`
+`</select>`
+`</div>`
 `    `
-`    <table class="content-table">`
-`      <thead>`
-`        <tr>`
-`          <th class="sortable" data-column="0">Title</th>`
-`          <th class="sortable" data-column="1">Path</th>`
-`          <th class="sortable" data-column="2">Description</th>`
-`          <th class="sortable" data-column="3">Last Modified</th>`
-`          <th class="sortable" data-column="4">Review</th>`
-`          <th class="sortable" data-column="5">Expiry</th>`
-`        </tr>`
-`      </thead>`
-`      <tbody>`
-`        <tr>`
-`          <td class="title-cell" data-label="Title">Page Title</td>`
-`          <td class="path-cell" data-label="Path">`
-`            <a href="/path" class="path-link" title="/path">`
-`              /path`
-`              <div class="image-popup">`
-`                <img src="/media_abc.png" alt="Preview">`
-`              </div>`
-`            </a>`
-`          </td>`
-`          <td class="description-cell" data-label="Description">Description</td>`
-`          <td class="date-cell last-modified-cell" data-label="Last Modified">Jan 1, 2024</td>`
-`          <td class="date-cell review-date-cell green" data-label="Review">Sep 27, 2024</td>`
-`          <td class="date-cell expiry-date-cell green" data-label="Expiry">Jan 1, 2025</td>`
-`        </tr>`
-`        <!-- more rows... -->`
-`      </tbody>`
-`    </table>`
-`  </div>`
+`<table class="content-table">`
+`<thead>`
+`<tr>`
+`<th class="sortable" data-column="0">Title</th>`
+`<th class="sortable" data-column="1">Path</th>`
+`<th class="sortable" data-column="2">Description</th>`
+`<th class="sortable" data-column="3">Last Modified</th>`
+`<th class="sortable" data-column="4">Review</th>`
+`<th class="sortable" data-column="5">Expiry</th>`
+`</tr>`
+`</thead>`
+`<tbody>`
+`<tr>`
+`<td class="title-cell" data-label="Title">Page Title</td>`
+`<td class="path-cell" data-label="Path">`
+`<a href="/path" class="path-link" title="/path">`
+`/path`
+`<div class="image-popup">`
+`<img src="/media_abc.png" alt="Preview">`
+`</div>`
+`</a>`
+`</td>`
+`<td class="description-cell" data-label="Description">Description</td>`
+`<td class="date-cell last-modified-cell" data-label="Last Modified">Jan 1, 2024</td>`
+`<td class="date-cell review-date-cell green" data-label="Review">Sep 27, 2024</td>`
+`<td class="date-cell expiry-date-cell green" data-label="Expiry">Jan 1, 2025</td>`
+`</tr>`
+`<!-- more rows... -->`
+`</tbody>`
+`</table>`
+`</div>`
 `</div>`
 
 ### Date Parsing Logic
@@ -356,12 +374,14 @@ The decorate function transforms the block into:
 The dashboard handles multiple date formats:
 
 **Supported formats:**
+
 - Unix timestamps (seconds): `1640995200`
 - Unix timestamps as strings: `"1640995200"`
 - ISO 8601 strings: `"2024-01-01T00:00:00Z"`
 - JavaScript Date objects: `new Date()`
 
 **Invalid dates:**
+
 - Display "Invalid Date" text
 - Receive red background color
 - Still sortable (treated as earliest date)
@@ -383,9 +403,9 @@ The dashboard uses standard table styling with custom color variables:
 
 `Custom status colors`
 `:root {`
-`  --status-green: #28a745;`
-`  --status-amber: #ffc107;`
-`  --status-red: #dc3545;`
+`--status-green: #28a745;`
+`--status-amber: #ffc107;`
+`--status-red: #dc3545;`
 `}`
 ``
 `.dashboard .green { background-color: var(--status-green); }`
@@ -398,9 +418,9 @@ Override default dashboard styles in your project CSS:
 
 `Custom table styling`
 `.content-table th {`
-`  background-color: #2c3e50;  /* Darker header */`
-`  color: white;`
-`  font-weight: 600;`
+`background-color: #2c3e50;  /* Darker header */`
+`color: white;`
+`font-weight: 600;`
 `}`
 ``
 `.content-table tr:hover {`
@@ -409,8 +429,8 @@ Override default dashboard styles in your project CSS:
 `}`
 ``
 `.content-table td {`
-`  padding: 12px;  /* More padding */`
-`  font-size: 15px; /* Larger text */`
+`padding: 12px;  /* More padding */`
+`font-size: 15px; /* Larger text */`
 `}`
 
 ### Popup Customization
@@ -419,16 +439,16 @@ Adjust image popup appearance:
 
 `Popup styling`
 `.image-popup {`
-`  border: 2px solid #333;`
-`  border-radius: 8px;`
-`  box-shadow: 0 4px 12px rgba(0,0,0,0.3);`
-`  padding: 10px;`
+`border: 2px solid #333;`
+`border-radius: 8px;`
+`box-shadow: 0 4px 12px rgba(0,0,0,0.3);`
+`padding: 10px;`
 `}`
 ``
 `.image-popup img {`
-`  max-width: 400px;  /* Larger preview */`
-`  max-height: 400px;`
-`  border-radius: 4px;`
+`max-width: 400px;  /* Larger preview */`
+`max-height: 400px;`
+`border-radius: 4px;`
 `}`
 
 ### Layout Customization
@@ -437,17 +457,17 @@ Change responsive breakpoint:
 
 `Custom breakpoint`
 `@media (max-width: 768px) {  /* Switch to cards earlier */`
-`  .dashboard {`
-`    /* Card layout styles */`
-`  }`
+`.dashboard {`
+`/* Card layout styles */`
+`}`
 `}`
 
 Update JavaScript breakpoint to match:
 
 `Update handleResponsiveLayout() function`
 `if (window.innerWidth < 768) {  // Match CSS breakpoint`
-`  dashboard.classList.add('card-view');`
-`  table.classList.add('card-layout');`
+`dashboard.classList.add('card-view');`
+`table.classList.add('card-layout');`
 `}`
 
 ---
@@ -464,6 +484,7 @@ The dashboard uses a **single breakpoint at 1024px** for layout switching:
 ### Desktop Behavior (≥1024px)
 
 **Table Layout:**
+
 - All 6 columns visible horizontally
 - Fixed column widths for consistent alignment
 - Hover effects on rows for interactivity
@@ -472,6 +493,7 @@ The dashboard uses a **single breakpoint at 1024px** for layout switching:
 - Full sorting and filtering functionality
 
 **Visual characteristics:**
+
 - Max-width: 1200px centered with padding
 - Horizontal scrolling if content exceeds viewport
 - Striped rows (alternating backgrounds)
@@ -480,6 +502,7 @@ The dashboard uses a **single breakpoint at 1024px** for layout switching:
 ### Mobile Behavior (<1024px)
 
 **Card Layout:**
+
 - Table transforms into stacked cards
 - Each row becomes a card block
 - Headers hidden (data labels used instead)
@@ -488,6 +511,7 @@ The dashboard uses a **single breakpoint at 1024px** for layout switching:
 - Full sorting and filtering maintained
 
 **Card structure:**
+
 - Each cell becomes a labeled row: `Label: Value`
 - Labels from `data-label` attributes
 - Rounded corners and borders for card effect
@@ -506,6 +530,7 @@ The dashboard uses a **single breakpoint at 1024px** for layout switching:
 ### Responsive Layout Switch
 
 The `handleResponsiveLayout()` function:
+
 - Fires on page load
 - Fires on window resize
 - Checks `window.innerWidth`
@@ -531,6 +556,7 @@ The dashboard uses proper semantic markup:
 ### Screen Reader Support
 
 **What works well:**
+
 - Table is announced as "table with N rows, 6 columns"
 - Headers are properly associated with data cells
 - Sort state announced via arrow indicators (↑ ↓)
@@ -539,6 +565,7 @@ The dashboard uses proper semantic markup:
 - Status colors have textual date information
 
 **Best practices implemented:**
+
 1. Descriptive column headers ("Title", "Path", "Last Modified", etc.)
 2. Link text includes path information
 3. Table structure maintained in both layouts
@@ -547,6 +574,7 @@ The dashboard uses proper semantic markup:
 ### Keyboard Navigation
 
 **Full keyboard accessibility:**
+
 - **Tab**: Navigate through filter dropdown, sortable headers, and path links
 - **Enter/Space**: Activate sort on focused header
 - **Enter**: Follow link on focused path link
@@ -554,6 +582,7 @@ The dashboard uses proper semantic markup:
 - **Arrow keys**: Navigate dropdown options (when focused)
 
 **Focus indicators:**
+
 - Default browser focus outlines visible
 - Links show focus state
 - Dropdown shows focus state
@@ -572,6 +601,7 @@ The dashboard relies on semantic HTML without additional ARIA attributes. For en
 ### Color Contrast
 
 **Status colors:**
+
 - Green (#90EE90): AAA compliant with dark text
 - Amber (#FFBF00): AAA compliant with dark text
 - Red (#FF6347): AAA compliant with white text
@@ -586,17 +616,20 @@ Use browser DevTools or tools like WebAIM Contrast Checker to verify contrast ra
 ### Network Efficiency
 
 **Dashboard loading:**
+
 - 1 fetch request: `/query-index.json` (typically 5-50KB)
 - No external API calls
 - No additional resource loading
 - Images loaded on-demand (hover only)
 
 **Per interaction:**
+
 - Sort: 0 network requests (client-side only)
 - Filter: 0 network requests (client-side only)
 - Image popup: 0 additional requests (images already in JSON)
 
 **Total overhead:**
+
 - JavaScript: ~11KB (unminified)
 - CSS: ~3KB (unminified)
 - JSON data: Varies by site size (5-50KB typical)
@@ -612,6 +645,7 @@ The dashboard uses immediate loading pattern:
 5. Images in popups load when JSON loads (not on hover)
 
 **Optimization opportunities:**
+
 - Minify JavaScript and CSS for production
 - Compress `query-index.json` (gzip)
 - Consider pagination for large datasets (>500 rows)
@@ -620,12 +654,14 @@ The dashboard uses immediate loading pattern:
 ### Memory Efficiency
 
 **Data storage:**
+
 - JSON data stored in closure scope (not global)
 - Table rows created once, not recreated on sort/filter
 - Popups reused (not recreated on hover)
 - Mouse position tracked efficiently (single listener)
 
 **Memory footprint:**
+
 - ~50KB for dashboard logic
 - ~1KB per table row (100 rows = ~100KB)
 - ~10KB for event listeners
@@ -641,6 +677,7 @@ Expected Lighthouse scores with dashboard block:
 - **SEO: 90-100** (content is indexable, proper structure)
 
 **Performance tips:**
+
 1. Keep `query-index.json` under 100KB
 2. Limit dashboard to <500 rows for best performance
 3. Use pagination for larger datasets
@@ -661,6 +698,7 @@ Expected Lighthouse scores with dashboard block:
 ### JavaScript Features Used
 
 **ES6+ features:**
+
 - Arrow functions: `() => {}`
 - Template literals: `` `string ${var}` ``
 - `const` and `let` declarations
@@ -669,6 +707,7 @@ Expected Lighthouse scores with dashboard block:
 - Destructuring (minimal usage)
 
 **Compatibility:**
+
 - Chrome 51+ (May 2016)
 - Firefox 54+ (June 2017)
 - Safari 10+ (September 2016)
@@ -679,6 +718,7 @@ Expected Lighthouse scores with dashboard block:
 ### CSS Features Used
 
 **Modern CSS:**
+
 - Flexbox for card layout alignment
 - CSS Grid (minimal usage, fallbacks provided)
 - Media queries for responsive behavior
@@ -687,6 +727,7 @@ Expected Lighthouse scores with dashboard block:
 - `calc()` for dynamic sizing
 
 **Compatibility:**
+
 - Chrome 29+ (2013)
 - Firefox 28+ (2014)
 - Safari 9+ (2015)
@@ -695,6 +736,7 @@ Expected Lighthouse scores with dashboard block:
 ### Date API Support
 
 **Date parsing:**
+
 - `new Date()` constructor
 - `Date.parse()` method
 - `toLocaleDateString()` formatting
@@ -709,6 +751,7 @@ Expected Lighthouse scores with dashboard block:
 ### Issue: Dashboard not appearing
 
 **Symptoms:**
+
 - Blank space where dashboard should be
 - No table visible
 - Console errors
@@ -735,6 +778,7 @@ Expected Lighthouse scores with dashboard block:
 ### Issue: Sorting not working
 
 **Symptoms:**
+
 - Clicking headers does nothing
 - No sort arrows appear
 - Table doesn't reorder
@@ -759,6 +803,7 @@ Expected Lighthouse scores with dashboard block:
 ### Issue: Filter dropdown not working
 
 **Symptoms:**
+
 - Selecting filter options doesn't change table
 - All rows remain visible
 - No filtering occurs
@@ -783,6 +828,7 @@ Expected Lighthouse scores with dashboard block:
 ### Issue: Image popups not appearing
 
 **Symptoms:**
+
 - Hovering over path links shows no popup
 - No images display
 - Popup doesn't follow mouse
@@ -807,6 +853,7 @@ Expected Lighthouse scores with dashboard block:
 ### Issue: Dates showing "Invalid Date"
 
 **Symptoms:**
+
 - Date cells display "Invalid Date" text
 - Red background applied to all date cells
 - Review/expiry calculations fail
@@ -831,6 +878,7 @@ Expected Lighthouse scores with dashboard block:
 ### Issue: Mobile layout not switching
 
 **Symptoms:**
+
 - Table remains in desktop mode on mobile
 - Card layout doesn't appear
 - Horizontal scrolling required on mobile
@@ -855,6 +903,7 @@ Expected Lighthouse scores with dashboard block:
 ### Issue: Table too wide / horizontal scrolling
 
 **Symptoms:**
+
 - Table extends beyond viewport
 - Horizontal scrollbar appears
 - Content difficult to read
@@ -865,18 +914,18 @@ Expected Lighthouse scores with dashboard block:
 
 `Limit table width`
 `.dashboard {`
-`  max-width: 100%;`
-`  overflow-x: auto;`
+`max-width: 100%;`
+`overflow-x: auto;`
 `}`
 
-2. **Reduce column widths:**
+1. **Reduce column widths:**
 
 `Smaller path cells`
 `.path-cell {`
-`  max-width: 150px;  /* Reduce from 200px */`
+`max-width: 150px;  /* Reduce from 200px */`
 `}`
 
-3. **Consider earlier mobile breakpoint:**
+1. **Consider earlier mobile breakpoint:**
 
 Update `handleResponsiveLayout()` to switch at 1200px instead of 1024px.
 
@@ -887,6 +936,7 @@ Update `handleResponsiveLayout()` to switch at 1200px instead of 1024px.
 ### Manual Testing (test.html)
 
 1. **Open test file:**
+
    ```
    http://localhost:3000/blocks/dashboard/test.html
    ```
@@ -970,6 +1020,7 @@ Update `handleResponsiveLayout()` to switch at 1200px instead of 1024px.
 ### Automated Testing
 
 **Future implementation:**
+
 - Jest tests for date parsing and calculations
 - Playwright tests for sorting and filtering
 - Visual regression tests for layout switching
@@ -1013,6 +1064,7 @@ Update `handleResponsiveLayout()` to switch at 1200px instead of 1024px.
 ### EDS Core Integration
 
 Unlike many EDS blocks, the dashboard does **NOT** use `aem.js` utilities:
+
 - No `createOptimizedPicture()` (images in JSON are already URLs)
 - No `decorateIcons()` (no icons used)
 - No `loadCSS()` or `loadScript()` (loads normally)
@@ -1088,6 +1140,7 @@ The dashboard is **fully self-contained** with no EDS helper dependencies.
 ### Contributing
 
 To propose enhancements:
+
 1. Create test implementation with sample data
 2. Add test cases to test.html
 3. Update documentation (README and EXAMPLE)
@@ -1120,6 +1173,7 @@ To propose enhancements:
 ## Support
 
 For issues or questions:
+
 1. Check [Troubleshooting](#troubleshooting) section
 2. Review [EXAMPLE.md](./EXAMPLE.md) for usage examples
 3. Test with [test.html](./test.html)

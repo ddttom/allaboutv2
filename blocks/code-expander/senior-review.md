@@ -94,6 +94,7 @@ While the current implementation is strong, the following enhancements could be 
 ## Browser Compatibility
 
 The block has been tested and works well in:
+
 - Chrome (latest)
 - Firefox (latest)
 - Safari (latest)

@@ -21,7 +21,7 @@ The Blogroll block displays a list of blog posts grouped by series. You can filt
 
 The compact variation adds a floating icon (📚) with the text "Blogroll" in the top-left corner of the viewport. Clicking on either the icon or the text opens a slide-out panel, providing a more space-efficient option for displaying the blogroll.
 
-### Compact Variation Features:
+### Compact Variation Features
 
 - Floating icon (📚) with "Blogroll" text in the top-left corner  
 - Slide-out panel from the left side when clicked  

@@ -12,6 +12,7 @@ The simplest way to use the Vue Slide Builder block:
 | :---------------- |
 
 This will:
+
 - Load the Vue.js slide builder application
 - Render the full slide creation interface
 - Enable reactive slide building features
@@ -244,6 +245,7 @@ Add supporting information:
 ### Reactive Interface
 
 The Vue-based interface provides:
+
 - **Instant Updates**: Changes appear immediately
 - **Two-Way Binding**: Seamless form interactions
 - **Component Reactivity**: Dynamic UI updates
@@ -252,6 +254,7 @@ The Vue-based interface provides:
 ### Component-Based Design
 
 Benefits of Vue's component architecture:
+
 - **Reusable Elements**: Consistent UI patterns
 - **Modular Features**: Easy to understand and maintain
 - **Scoped Styles**: No style conflicts
@@ -262,6 +265,7 @@ Benefits of Vue's component architecture:
 ### Block Not Displaying
 
 If the block doesn't appear:
+
 1. Check that you've published the page
 2. Verify the block syntax is correct
 3. Ensure your browser is up to date
@@ -270,6 +274,7 @@ If the block doesn't appear:
 ### Slow Loading
 
 If the application loads slowly:
+
 1. Check your internet connection
 2. Try on a faster network
 3. Close unnecessary browser tabs
@@ -278,6 +283,7 @@ If the application loads slowly:
 ### Functionality Issues
 
 If features don't work:
+
 1. Ensure JavaScript is enabled
 2. Check browser compatibility (no IE11)
 3. Try a different modern browser
@@ -286,6 +292,7 @@ If features don't work:
 ### After Updates
 
 If builder stops working after an update:
+
 1. Clear browser cache completely
 2. Hard refresh the page (Ctrl+Shift+R / Cmd+Shift+R)
 3. Check if bundle files were updated correctly
@@ -296,6 +303,7 @@ If builder stops working after an update:
 ### Browser Requirements
 
 Best experience on modern browsers:
+
 - Chrome 64+
 - Firefox 67+
 - Safari 12+
@@ -306,11 +314,13 @@ Best experience on modern browsers:
 ### Device Recommendations
 
 Optimal use on:
+
 - Desktop computers
 - Laptop computers
 - Tablets (landscape orientation)
 
 Limited functionality on:
+
 - Mobile phones (small screen)
 - Older devices (performance)
 
@@ -375,6 +385,7 @@ Limited functionality on:
 ## Support
 
 For questions about using Vue Slide Builder:
+
 - See [Block Documentation](README.md) for technical details
 - Contact support for functionality questions
 - Check browser console for error messages
@@ -385,6 +396,7 @@ For questions about using Vue Slide Builder:
 ### Why Vue.js?
 
 The Vue Slide Builder leverages Vue.js for:
+
 - **Reactive Updates**: Instant UI responsiveness
 - **Component Reusability**: Consistent design patterns
 - **Simplified State**: Easier application logic
@@ -394,6 +406,7 @@ The Vue Slide Builder leverages Vue.js for:
 ### User Benefits
 
 As a user, you benefit from:
+
 - **Smooth Interactions**: No page reloads
 - **Instant Feedback**: See changes immediately
 - **Better Performance**: Optimized rendering

@@ -26,6 +26,7 @@ A flexible multi-column layout system for organizing content side-by-side. Autom
 The columns block transforms markdown table content into flexible multi-column layouts using CSS flexbox. The block automatically detects the number of columns in the first row and applies appropriate styling, with special handling for image-only columns.
 
 **Primary Use Cases:**
+
 - Side-by-side text and image layouts
 - Feature comparison displays
 - Multi-column content organization
@@ -38,6 +39,7 @@ The columns block transforms markdown table content into flexible multi-column l
 **Location:** `/blocks/columns/`
 
 **Files:**
+
 - `columns.js` - Core decoration logic with column detection
 - `columns.css` - Flexbox layout and responsive styles
 - `README.md` - Technical documentation (this file)
@@ -99,6 +101,7 @@ The `decorate()` function performs these transformations:
 **Key Functions:**
 
 `decorate(block)`
+
 - **Purpose**: Main decoration function
 - **Parameters**: `block` - The columns block div element
 - **Returns**: void (modifies DOM in place)
@@ -112,6 +115,7 @@ The `decorate()` function performs these transformations:
 ### CSS Structure
 
 **Base Layout:**
+
 ```
 .columns > div
   - display: flex
@@ -120,6 +124,7 @@ The `decorate()` function performs these transformations:
 ```
 
 **Column Styling:**
+
 ```
 .columns > div > div
   - flex: 1 (equal width on desktop)
@@ -127,6 +132,7 @@ The `decorate()` function performs these transformations:
 ```
 
 **Image Column Styling:**
+
 ```
 .columns > div > .columns-img-col
   - order: 0 (appears first on mobile)
@@ -136,6 +142,7 @@ The `decorate()` function performs these transformations:
 ### DOM Transformation
 
 **Markdown Input:**
+
 ```
 | Columns |
 |---------|
@@ -143,6 +150,7 @@ The `decorate()` function performs these transformations:
 ```
 
 **HTML Output:**
+
 ```
 <div class="columns columns-2-cols block">
   <div>
@@ -153,6 +161,7 @@ The `decorate()` function performs these transformations:
 ```
 
 **With Image:**
+
 ```
 <div class="columns columns-2-cols block">
   <div>
@@ -171,6 +180,7 @@ The `decorate()` function performs these transformations:
 ### Basic Two-Column Layout
 
 **Markdown:**
+
 ```
 | Columns |
 |---------|
@@ -182,6 +192,7 @@ The `decorate()` function performs these transformations:
 ### Three-Column Layout
 
 **Markdown:**
+
 ```
 | Columns |
 |---------|
@@ -193,6 +204,7 @@ The `decorate()` function performs these transformations:
 ### Text-Only Columns
 
 **Markdown:**
+
 ```
 | Columns |
 |---------|
@@ -216,6 +228,7 @@ The columns block uses EDS standard markdown table format:
 ```
 
 **Rules:**
+
 - First row header: `| Columns |`
 - Separator row: `|---------|`
 - Content row: Pipe-separated columns
@@ -225,16 +238,19 @@ The columns block uses EDS standard markdown table format:
 ### Content Recommendations
 
 **Text Columns:**
+
 - Use headings for section titles
 - Keep text length balanced across columns
 - Paragraphs, lists, and formatting supported
 
 **Image Columns:**
+
 - Images should be properly sized
 - Use EDS image optimization
 - Alt text for accessibility
 
 **Mixed Content:**
+
 - Combine text, images, headings
 - No restrictions on HTML content
 - Nested blocks NOT supported
@@ -294,6 +310,7 @@ The block automatically adds classes based on column count:
 ### Breakpoint Strategy
 
 **Mobile (< 900px):**
+
 - Columns stack vertically
 - `flex-direction: column`
 - Image columns appear first (`order: 0`)
@@ -301,6 +318,7 @@ The block automatically adds classes based on column count:
 - Full-width content
 
 **Desktop (>= 900px):**
+
 - Horizontal flexbox layout
 - `flex-direction: unset`
 - Equal column widths (`flex: 1`)
@@ -310,6 +328,7 @@ The block automatically adds classes based on column count:
 ### Responsive Images
 
 Images automatically scale:
+
 - Mobile: Full container width
 - Desktop: Constrained by column width
 - Maintains aspect ratio
@@ -331,6 +350,7 @@ Images automatically scale:
 ### Semantic HTML
 
 The block maintains semantic HTML structure:
+
 - Divs for layout only
 - Images include alt text (from markdown)
 - Headings maintain hierarchy
@@ -372,16 +392,19 @@ The block maintains semantic HTML structure:
 ### Core Web Vitals Impact
 
 **Largest Contentful Paint (LCP):**
+
 - Minimal JavaScript execution
 - No layout shift from decoration
 - Images can be optimized via EDS
 
 **Cumulative Layout Shift (CLS):**
+
 - No layout shift after decoration
 - CSS applied before JavaScript runs
 - Stable column heights
 
 **First Input Delay (FID):**
+
 - No event listeners attached
 - Decoration runs in < 1ms
 - No blocking operations
@@ -418,11 +441,13 @@ The block maintains semantic HTML structure:
 ### Supported Browsers
 
 **Desktop:**
+
 - Chrome/Edge 90+ ✓
 - Firefox 88+ ✓
 - Safari 14+ ✓
 
 **Mobile:**
+
 - iOS Safari 14+ ✓
 - Android Chrome 90+ ✓
 - Samsung Internet 14+ ✓
@@ -430,16 +455,19 @@ The block maintains semantic HTML structure:
 ### Feature Requirements
 
 **CSS Flexbox:**
+
 - Required for layout
 - Supported in all modern browsers
 - Fallback: Content stacks vertically
 
 **CSS Media Queries:**
+
 - Required for responsive behavior
 - `@media (width >= 900px)` syntax
 - Widely supported
 
 **JavaScript ES6:**
+
 - Spread operator: `[...block.children]`
 - Arrow functions
 - `querySelector` / `querySelectorAll`
@@ -454,10 +482,12 @@ No polyfills required for modern browsers. For legacy browser support:
 ### Known Browser Issues
 
 **Safari < 14:**
+
 - May not support `width >=` media query syntax
 - Use `min-width: 900px` as fallback
 
 **IE11:**
+
 - No native spread operator support
 - Requires transpilation
 
@@ -470,10 +500,12 @@ No polyfills required for modern browsers. For legacy browser support:
 **Issue: Columns not appearing side-by-side**
 
 **Symptoms:**
+
 - Columns stack vertically on desktop
 - No horizontal layout
 
 **Solutions:**
+
 1. Check browser width is >= 900px
 2. Verify `columns.css` is loaded
 3. Check for CSS conflicts with `flex-direction`
@@ -482,10 +514,12 @@ No polyfills required for modern browsers. For legacy browser support:
 **Issue: Images not full width**
 
 **Symptoms:**
+
 - Images appear smaller than column width
 - Inconsistent image sizing
 
 **Solutions:**
+
 1. Verify `.columns img { width: 100%; }` is applied
 2. Check for inline width styles on images
 3. Ensure picture element exists
@@ -494,10 +528,12 @@ No polyfills required for modern browsers. For legacy browser support:
 **Issue: Image columns not ordered first on mobile**
 
 **Symptoms:**
+
 - Text appears before images on mobile
 - Incorrect stacking order
 
 **Solutions:**
+
 1. Check if `columns-img-col` class is applied
 2. Verify image is only content in column (no text)
 3. Inspect CSS order values
@@ -506,10 +542,12 @@ No polyfills required for modern browsers. For legacy browser support:
 **Issue: Unequal column widths**
 
 **Symptoms:**
+
 - Columns have different widths on desktop
 - Layout appears unbalanced
 
 **Solutions:**
+
 1. Check for custom CSS overriding `flex: 1`
 2. Verify no fixed widths on columns
 3. Test with different content lengths
@@ -518,10 +556,12 @@ No polyfills required for modern browsers. For legacy browser support:
 **Issue: Column count class not applied**
 
 **Symptoms:**
+
 - No `.columns-N-cols` class on block
 - Custom column-specific styles not working
 
 **Solutions:**
+
 1. Verify `columns.js` is loaded and executed
 2. Check console for JavaScript errors
 3. Inspect block element for class names
@@ -534,6 +574,7 @@ No polyfills required for modern browsers. For legacy browser support:
 ### Manual Testing Checklist
 
 **Visual Testing:**
+
 - [ ] Columns display correctly on desktop (>= 900px)
 - [ ] Columns stack vertically on mobile (< 900px)
 - [ ] Images are full width in their columns
@@ -541,6 +582,7 @@ No polyfills required for modern browsers. For legacy browser support:
 - [ ] Content is vertically centered on desktop
 
 **Responsive Testing:**
+
 - [ ] Test at 899px (just below breakpoint)
 - [ ] Test at 900px (exactly at breakpoint)
 - [ ] Test at 1200px (standard desktop)
@@ -548,6 +590,7 @@ No polyfills required for modern browsers. For legacy browser support:
 - [ ] Check iPad/tablet sizes
 
 **Content Testing:**
+
 - [ ] Two-column layout (text + image)
 - [ ] Three-column layout (equal text)
 - [ ] Image-only columns
@@ -555,6 +598,7 @@ No polyfills required for modern browsers. For legacy browser support:
 - [ ] Mixed content (headings, lists, paragraphs)
 
 **Accessibility Testing:**
+
 - [ ] Screen reader reads content in correct order
 - [ ] Images have alt text
 - [ ] Heading hierarchy is preserved
@@ -562,6 +606,7 @@ No polyfills required for modern browsers. For legacy browser support:
 - [ ] Focus indicators visible
 
 **Browser Testing:**
+
 - [ ] Chrome (latest)
 - [ ] Firefox (latest)
 - [ ] Safari (latest)
@@ -571,6 +616,7 @@ No polyfills required for modern browsers. For legacy browser support:
 ### Automated Testing
 
 **Unit Tests:**
+
 ```
 Test column count detection
 Test image column class application
@@ -578,6 +624,7 @@ Test DOM structure preservation
 ```
 
 **Integration Tests:**
+
 ```
 Test with EDS core decoration
 Test E-L-D loading pattern
@@ -599,16 +646,19 @@ Test with multiple blocks on page
 The columns block depends on EDS core for:
 
 **Markdown Transformation:**
+
 - Converts markdown tables to nested divs
 - Applied before block decoration
 - Structure: `.block > div > div`
 
 **Block Loading:**
+
 - E-L-D pattern (Eager/Lazy/Delayed)
 - Auto-decoration via `decorate()` export
 - CSS auto-loading
 
 **Image Optimization:**
+
 - EDS handles image URLs
 - Responsive image sizing
 - Picture element generation
@@ -616,6 +666,7 @@ The columns block depends on EDS core for:
 ### External Dependencies
 
 **None.** The columns block is self-contained:
+
 - No third-party libraries
 - No external CSS frameworks
 - No icon sets or fonts
@@ -624,6 +675,7 @@ The columns block depends on EDS core for:
 ### Internal Dependencies
 
 **CSS Variables:**
+
 ```
 --body-font-family (from styles.css)
 --text-color (from styles.css)
@@ -631,6 +683,7 @@ The columns block depends on EDS core for:
 ```
 
 **Utility Functions:**
+
 - None (block does not use aem.js utilities)
 
 ---
@@ -675,12 +728,14 @@ The columns block depends on EDS core for:
 ### Considerations
 
 **Why Not Include Now:**
+
 - Keep block simple and maintainable
 - Avoid feature bloat
 - Most use cases covered by current implementation
 - Variations can be added as needed
 
 **Implementation Strategy:**
+
 - Use variation classes for options (e.g., `columns-narrow`)
 - Maintain single JavaScript file
 - Add CSS-only features where possible

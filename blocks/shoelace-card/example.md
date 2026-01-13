@@ -14,6 +14,7 @@ The simplest way to use the Shoelace Card block:
 ```
 
 This will:
+
 - Fetch data from `/slides/query-index.json`
 - Display cards with numbered badges
 - Open immersive modals when buttons are clicked
@@ -53,6 +54,7 @@ Create a folder for your cards (e.g., `/slides/` or `/products/`):
 Each card should have its own page with content that will be displayed in the modal:
 
 **slide-1.md:**
+
 ```markdown
 # Amazing Product Features
 
@@ -88,22 +90,26 @@ Create a `query-index.xlsx` file with these columns:
 ## Content Guidelines
 
 ### Titles
+
 - Keep titles concise (2-6 words)
 - Use action-oriented language
 - Make them descriptive and engaging
 
 ### Descriptions
+
 - Limit to 1-2 sentences
 - Focus on key benefits or value proposition
 - Use clear, compelling language
 
 ### Images
+
 - Use high-quality images (minimum 400px wide)
 - Optimize for web (JPEG/PNG, under 500KB)
 - Ensure images work as modal backgrounds
 - Use descriptive alt text in your content pages
 
 ### Button Text
+
 - Keep it short and action-oriented
 - Examples: "Learn More", "Get Started", "Read Story", "View Details"
 - Match the tone of your content
@@ -119,6 +125,7 @@ Create a `query-index.xlsx` file with these columns:
 ```
 
 **Query Index Content:**
+
 | path | title | description | image | buttonText |
 |------|-------|-------------|-------|------------|
 | /products/laptop-pro | Laptop Pro | Professional performance for demanding workflows | /products/media/laptop.jpg | View Specs |
@@ -134,6 +141,7 @@ Create a `query-index.xlsx` file with these columns:
 ```
 
 **Query Index Content:**
+
 | path | title | description | image | buttonText |
 |------|-------|-------------|-------|------------|
 | /team/john-doe | John Doe | Lead Developer with 10+ years experience | /team/media/john.jpg | View Profile |
@@ -149,6 +157,7 @@ Create a `query-index.xlsx` file with these columns:
 ```
 
 **Query Index Content:**
+
 | path | title | description | image | buttonText |
 |------|-------|-------------|-------|------------|
 | /case-studies/acme-corp | ACME Corp | 300% increase in productivity with our solution | /case-studies/media/acme.jpg | Read Case Study |
@@ -158,21 +167,25 @@ Create a `query-index.xlsx` file with these columns:
 ## Best Practices
 
 ### Content Organization
+
 - Use consistent naming conventions
 - Keep folder structures simple and logical
 - Group related content together
 
 ### Performance
+
 - Optimize images for web delivery
 - Keep descriptions concise
 - Use descriptive but short file names
 
 ### Accessibility
+
 - Provide meaningful alt text for images
 - Use clear, descriptive titles
 - Ensure good color contrast in images
 
 ### SEO
+
 - Use descriptive page titles
 - Include relevant keywords naturally
 - Structure content with proper headings
@@ -180,16 +193,19 @@ Create a `query-index.xlsx` file with these columns:
 ## Troubleshooting
 
 ### Cards not displaying
+
 - Check that your query-index.xlsx file is published
 - Verify all paths in the spreadsheet are correct
 - Ensure images are accessible and properly sized
 
 ### Modal content not loading
+
 - Confirm individual pages are published
 - Check that paths match exactly between query-index and actual pages
 - Verify `.plain.html` endpoints are accessible
 
 ### Images not showing
+
 - Check image paths are correct and absolute
 - Ensure images are published and accessible
 - Verify image file formats are supported (JPEG, PNG, GIF, SVG)
@@ -205,6 +221,7 @@ Create a `query-index.xlsx` file with these columns:
 ## Support
 
 For technical issues or questions about implementation, refer to:
+
 - [Block Documentation](README.md)
 - [Implementation Plan](../../docs/shoelace-card-implementation-plan.md)
 - [EDS Documentation](https://www.aem.live/docs/)

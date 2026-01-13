@@ -1,4 +1,5 @@
 # EDS Documentation Navigation Flows
+
 ## Text-Based Relationship Mapping and User Journey Visualization
 
 This document provides text-based visual representations of the documentation relationships and navigation flows, designed to complement the [`document-relationship-mapping.md`](document-relationship-mapping.md) with clear pathway descriptions.
@@ -24,6 +25,7 @@ Central Hub: index.md (48+ links)
 ## User Journey Flow Patterns
 
 ### Beginner Developer Journey Flow
+
 ```
 Entry Point: getting-started-guide.md
     ↓ (Role Selection: New to EDS)
@@ -43,6 +45,7 @@ Advanced Learning: block-architecture-standards.md
 ```
 
 ### Experienced Developer Journey Flow
+
 ```
 Entry Point: getting-started-guide.md
     ↓ (Role Selection: Experienced Developer)
@@ -61,6 +64,7 @@ Performance Optimization: instrumentation-how-it-works.md
 ```
 
 ### Architect/Technical Lead Journey Flow
+
 ```
 Entry Point: getting-started-guide.md
     ↓ (Role Selection: Architect)
@@ -80,6 +84,7 @@ Team Guidelines: guidelines/ directory documents
 ## Document Cluster Relationship Flows
 
 ### Architecture & Standards Cluster Flow
+
 ```
 Central Document: eds.md (Foundational Concepts)
     ↓ ↑ (Bidirectional Flow)
@@ -95,6 +100,7 @@ Implementation Guides Cluster
 **Flow Description**: Users start with foundational concepts in [`eds.md`](eds.md), then branch to comprehensive patterns in [`block-architecture-standards.md`](implementation/block-architecture-standards.md), EDS-native standards in [`eds-architecture-standards.md`](implementation/eds-architecture-standards.md), or decision frameworks in [`design-philosophy-guide.md`](implementation/design-philosophy-guide.md). All documents interconnect bidirectionally for flexible navigation.
 
 ### Implementation Guides Cluster Flow
+
 ```
 Simple Path: raw-eds-blocks-guide.md
     ↓ ↑ (Alternative Approaches)
@@ -110,6 +116,7 @@ Architecture & Standards Cluster
 **Flow Description**: Implementation guides provide progressive complexity paths. Users can start with simple components in [`raw-eds-blocks-guide.md`](implementation/raw-eds-blocks-guide.md), advance to complex components in [`complex-eds-blocks-guide.md`](implementation/complex-eds-blocks-guide.md), utilize templates from [`build-component-template.md`](implementation/build-component-template.md), and understand architecture through [`build-blocks-clarification.md`](implementation/build-blocks-clarification.md).
 
 ### Testing & Debugging Cluster Flow
+
 ```
 Entry Point: debug.md (Core Troubleshooting)
     ↓ ↑ (Bidirectional Flow)
@@ -127,6 +134,7 @@ Implementation Guides Cluster
 ## Navigation Decision Trees
 
 ### Component Development Decision Tree
+
 ```
 Start: Need to build a component
     ↓
@@ -154,6 +162,7 @@ Question: Having issues?
 ```
 
 ### Architecture Decision Tree
+
 ```
 Start: Need to understand EDS architecture
     ↓
@@ -179,6 +188,7 @@ Question: Need performance analysis?
 ## Cross-Reference Connection Patterns
 
 ### High-Impact Bidirectional Connections
+
 ```
 Core Development Flow:
 eds.md ←→ block-architecture-standards.md
@@ -191,6 +201,7 @@ eds-native-testing-standards.md ←→ debug.md
 ```
 
 ### Progressive Learning Pathways
+
 ```
 Beginner Pathway:
 index.md → getting-started-guide.md → eds.md → ../Server-README.md → raw-eds-blocks-guide.md
@@ -205,12 +216,14 @@ Any document → debug.md → eds-architecture-and-testing-guide.md → instrume
 ## Navigation Optimization Strategies
 
 ### For Human Developers
+
 1. **Role-Based Entry**: Use [`getting-started-guide.md`](getting-started-guide.md) for immediate role-specific guidance
 2. **Progressive Disclosure**: Follow experience-level pathways to avoid information overload
 3. **Cross-Reference Following**: Use "See Also" and "Next Steps" sections for natural progression
 4. **Problem-Solving Focus**: Jump directly to [`debug.md`](debug.md) when encountering issues
 
 ### For AI Assistants
+
 1. **Context Mapping**: Reference [`document-relationship-mapping.md`](document-relationship-mapping.md) for complete cross-reference analysis
 2. **User Journey Understanding**: Apply user journey pathways to provide appropriate next steps
 3. **Cluster Navigation**: Use document cluster flows to suggest related documentation
@@ -219,11 +232,13 @@ Any document → debug.md → eds-architecture-and-testing-guide.md → instrume
 ## Navigation Efficiency Metrics
 
 ### Optimal Path Lengths
+
 - **New Developer to First Component**: 4-5 documents (getting-started → eds → server-README → raw-eds-blocks → testing)
 - **Experienced Developer to Advanced Component**: 3-4 documents (getting-started → block-architecture → complex-eds-blocks → templates)
 - **Troubleshooting Resolution**: 2-3 documents (debug → advanced-testing → instrumentation)
 
 ### Cross-Reference Density
+
 - **High-Density Hubs**: [`index.md`](index.md) (48+ links), [`eds.md`](eds.md) (comprehensive), [`block-architecture-standards.md`](implementation/block-architecture-standards.md) (1,982 lines)
 - **Strategic Connectors**: [`getting-started-guide.md`](getting-started-guide.md), [`document-relationship-mapping.md`](document-relationship-mapping.md)
 - **Specialized Endpoints**: Implementation guides, testing standards, debugging procedures
@@ -231,6 +246,7 @@ Any document → debug.md → eds-architecture-and-testing-guide.md → instrume
 ## Text-Based Relationship Visualization
 
 ### Document Interconnection Map
+
 ```
                     index.md (Central Hub)
                          │
@@ -263,6 +279,7 @@ getting-started-guide.md │    document-relationship-mapping.md
 ```
 
 ### User Flow Convergence Points
+
 ```
 All User Types → getting-started-guide.md
     ↓
