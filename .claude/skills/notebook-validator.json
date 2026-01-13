@@ -1,0 +1,63 @@
+{
+  "name": "notebook-validator",
+  "version": "1.0.0",
+  "description": "Comprehensive validation of Jupyter notebooks for production readiness. Validates smart links, structure, transitions, part flow, and quality standards.",
+  "author": "Claude Code",
+  "triggerPatterns": {
+    "keywords": [
+      "validate notebook",
+      "check notebook",
+      "notebook validation",
+      "verify notebook",
+      "notebook quality",
+      "ipynb validation",
+      "production ready notebook"
+    ],
+    "intentPatterns": [
+      "validate.*\\.ipynb",
+      "check.*notebook.*quality",
+      "notebook.*production.*ready",
+      "verify.*notebook.*structure"
+    ],
+    "filePathPatterns": [
+      "**/*.ipynb"
+    ]
+  },
+  "enforcementLevel": "suggest",
+  "enabledByDefault": true,
+  "files": [
+    {
+      "path": "SKILL.md",
+      "description": "Complete skill documentation with validation categories, usage patterns, and examples"
+    },
+    {
+      "path": "validator.py",
+      "description": "Generic notebook validator with configurable parameters and detailed reporting"
+    },
+    {
+      "path": "README.md",
+      "description": "Quick start guide and common use cases"
+    }
+  ],
+  "hooks": [],
+  "usage": {
+    "quickStart": "Ask Claude to validate a notebook: 'validate the notebook.ipynb file'",
+    "commonCommands": [
+      "validate <notebook>.ipynb",
+      "check notebook quality for <notebook>.ipynb",
+      "verify <notebook>.ipynb is production ready"
+    ]
+  },
+  "relatedSkills": [
+    "ipynb-validator",
+    "jupyter-notebook",
+    "jupyter-educational-notebook"
+  ],
+  "tags": [
+    "validation",
+    "quality-assurance",
+    "jupyter",
+    "notebooks",
+    "production-readiness"
+  ]
+}
