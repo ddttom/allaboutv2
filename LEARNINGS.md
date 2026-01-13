@@ -156,3 +156,70 @@ Missing newlines can cause:
 **Documentation:** See `blocks/ipynb-viewer/README.md` section on "Markdown Cells" and VSCode notebook outline behavior
 
 ---
+
+## Emojis in Jupyter Notebook Headings Cause Rendering Issues
+
+**Rule** (2026-01-13): Avoid using emojis in Jupyter notebook headings (##, ###, etc.). Emojis can cause text concatenation and spacing issues when notebooks are rendered in ipynb-viewer or other display contexts.
+
+**Why it matters:**
+- Emojis between heading markers and text can prevent proper word breaks
+- Rendered content may show text running together without spaces
+- Different viewers handle emoji rendering inconsistently
+- Currency symbols (£, $, €) and punctuation should be preserved - only emoji characters should be removed
+
+**Problem example from screenshot:**
+```markdown
+❌ ## 💡 Part 12: What Agent Creators Must Build
+❌ ### 🛡️ Validation Layers & Guardrails
+
+Result: Text renders as "Validation Layers & GuardrailsThethe six guardrails..."
+(no space between heading and following text)
+```
+
+**Correct pattern:**
+```markdown
+✅ ## Part 12: What Agent Creators Must Build
+✅ ### Validation Layers & Guardrails
+
+Result: Proper spacing and rendering
+```
+
+**What to preserve:**
+- Currency symbols: £, $, €, ¥
+- Punctuation marks
+- Accented characters
+- Standard Unicode symbols
+
+**What to remove:**
+- Emoji pictographs (😀, 🎉, 💡, etc.)
+- Emoji symbols (📚, 🛡️, 🏁, etc.)
+- Emoji modifiers and variation selectors
+
+**Technical details:**
+- Emojis typically in Unicode ranges U+1F600-U+1F64F (emoticons), U+1F300-U+1F5FF (symbols), U+1F680-U+1F6FF (transport)
+- Python regex pattern for removal:
+  ```python
+  emoji_pattern = re.compile(
+      "["
+      "\U0001F600-\U0001F64F"  # emoticons
+      "\U0001F300-\U0001F5FF"  # symbols & pictographs
+      "\U0001F680-\U0001F6FF"  # transport & map
+      "]+",
+      flags=re.UNICODE
+  )
+  ```
+
+**Impact on action cards:**
+When removing emojis from headings, remember to update action card links to match:
+- If heading changes from "💡 Key Insight" to "Key Insight"
+- Update corresponding action card link: `[Key Insight](#)` instead of `[💡 Key Insight](#)`
+- Smart link resolution requires link text to match heading text (fuzzy matching applies)
+
+**Real example (invisible-users/notebook.ipynb):**
+- Removed emojis from 19 cells including headings in cells 1, 7, 37, 38, 40
+- Fixed broken action card links after emoji removal
+- Validation score restored to 100/100
+
+**Documentation:** See `blocks/ipynb-viewer/README.md` section on "Markdown Cells" - heading formatting best practices
+
+---
