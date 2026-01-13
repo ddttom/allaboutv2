@@ -427,6 +427,11 @@ View workflow runs at: `https://github.com/ddttom/allaboutv2/actions`
   - MD033 disabled (inline HTML) - needed for EDS blocks
   - MD034 disabled (bare URLs) - common in documentation
   - MD041 disabled (h1 first line) - metadata tables come first
+  - MD024 disabled (duplicate headings) - valid for FAQs and multi-section docs
+  - MD025 disabled (multiple h1) - valid for long documentation
+  - MD036 disabled (emphasis as heading) - stylistic choice in documentation
+  - MD040 disabled (fenced code language) - not always necessary for snippets
+  - MD060 disabled (dollar signs in code) - false positives with inline code
 - **Block Structure**: Each block has its own directory with JS/CSS/README (see complete structure in [Block Development](#block-file-structure))
 - **Naming**: Use kebab-case for files and block names
 - **JS Modules**: Use ES modules with named exports
