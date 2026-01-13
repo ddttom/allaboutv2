@@ -2313,8 +2313,9 @@ System will monitor these suppliers' invoice emails and auto-extract costs.
 - [ ] Support contact details shared
 - [ ] Customer has admin access and password
 
-**Notes:**  
-_______________________________________________
+**Notes:**
+
+---
 
 **Customer Sign-off:** _______________
 
