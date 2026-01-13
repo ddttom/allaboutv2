@@ -19,6 +19,17 @@
 function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePath = null) {
   let html = markdown;
 
+  // Filter out LaTeX commands (single-word lines starting with \)
+  // These are LaTeX formatting commands like \newpage, \pagebreak, etc.
+  // that should be ignored in markdown rendering
+  html = html.split('\n')
+    .filter((line) => {
+      // Remove lines that are ONLY a LaTeX command (word starting with \)
+      const trimmed = line.trim();
+      return !(/^\\[a-zA-Z]+$/.test(trimmed));
+    })
+    .join('\n');
+
   // Code blocks (triple backticks) - MUST be processed first before other replacements
   const codeBlockPlaceholders = [];
   html = html.replace(/```(\w+)?\n?([\s\S]*?)```/g, (match, lang, code) => {
@@ -111,14 +122,21 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
   // Links - convert .md files to repo URLs if repo is available
   // Process BEFORE bold/italic to handle constructs like **Text** → [link](url)
   html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, text, url) => {
+    // Auto-convert PNG illustrations to SVG (pattern: illustrations/*.png → illustrations/*.svg)
+    let processedUrl = url;
+    if (url.match(/illustrations\/.*\.png$/i)) {
+      processedUrl = url.replace(/\.png$/i, '.svg');
+      console.log(`🎨 Auto-converting PNG to SVG: ${url} → ${processedUrl}`);
+    }
+
     // Check if it's a .md file and we have a repo URL
-    if (repoUrl && url.endsWith('.md') && !url.startsWith('http://') && !url.startsWith('https://')) {
-      let cleanPath = url;
+    if (repoUrl && processedUrl.endsWith('.md') && !processedUrl.startsWith('http://') && !processedUrl.startsWith('https://')) {
+      let cleanPath = processedUrl;
 
       // Resolve relative paths based on current file location
-      if (currentFilePath && !url.startsWith('/') && !url.startsWith('http')) {
+      if (currentFilePath && !processedUrl.startsWith('/') && !processedUrl.startsWith('http')) {
         // This is a relative path - resolve it based on current file's directory
-        console.log('🔍 Resolving relative path:', url, 'from:', currentFilePath);
+        console.log('🔍 Resolving relative path:', processedUrl, 'from:', currentFilePath);
 
         // Extract the directory path from the current file (remove filename)
         const currentDir = currentFilePath.substring(0, currentFilePath.lastIndexOf('/'));
@@ -126,7 +144,7 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
 
         // Combine current directory with relative path
         const parts = currentDir ? currentDir.split('/') : [];
-        const urlParts = url.replace(/^\.\//, '').split('/'); // Remove leading ./ if present
+        const urlParts = processedUrl.replace(/^\.\//, '').split('/'); // Remove leading ./ if present
 
         // Process each part of the URL
         urlParts.forEach((part) => {
@@ -143,15 +161,15 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
 
         cleanPath = parts.join('/');
         console.log('   ✅ Resolved to:', cleanPath);
-      } else if (url.startsWith('/')) {
+      } else if (processedUrl.startsWith('/')) {
         // Absolute path from repo root - remove leading /
-        cleanPath = url.replace(/^\//, '');
+        cleanPath = processedUrl.replace(/^\//, '');
         console.log('🔍 Absolute path from root:', cleanPath);
       } else {
         // No currentFilePath or already absolute URL
-        cleanPath = url.replace(/^\.?\//, '');
-        if ((url.startsWith('../') || url.includes('/../')) && !currentFilePath) {
-          console.warn('⚠️  Relative path with ".." but no currentFilePath provided:', url);
+        cleanPath = processedUrl.replace(/^\.?\//, '');
+        if ((processedUrl.startsWith('../') || processedUrl.includes('/../')) && !currentFilePath) {
+          console.warn('⚠️  Relative path with ".." but no currentFilePath provided:', processedUrl);
         }
       }
 
@@ -164,18 +182,18 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
     }
 
     // External links (http/https) - display as non-clickable text with URL shown
-    if (url.startsWith('http://') || url.startsWith('https://')) {
-      return `<span class="ipynb-external-link" title="${url}">${text} <code>${url}</code></span>`;
+    if (processedUrl.startsWith('http://') || processedUrl.startsWith('https://')) {
+      return `<span class="ipynb-external-link" title="${processedUrl}">${text} <code>${processedUrl}</code></span>`;
     }
 
     // Hash links - keep as-is for internal navigation
-    if (url.startsWith('#')) {
-      return `<a href="${url}">${text}</a>`;
+    if (processedUrl.startsWith('#')) {
+      return `<a href="${processedUrl}">${text}</a>`;
     }
 
     // Other file types (.html, .htm, images, etc.) - display as non-clickable text
-    // Show the filename/path for documentation purposes
-    return `<span class="ipynb-non-md-link" title="${url}">${text} <code>(${url})</code></span>`;
+    // Show the filename/path for documentation purposes (show converted URL)
+    return `<span class="ipynb-non-md-link" title="${processedUrl}">${text} <code>(${processedUrl})</code></span>`;
   });
 
   // Bold (after links to preserve bold text before links like **Text** → [link])
