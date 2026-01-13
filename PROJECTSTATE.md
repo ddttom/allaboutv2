@@ -6,6 +6,26 @@ The project is in active development with a focus on educational content deliver
 
 ## Recent Accomplishments
 
+### ipynb-viewer SVG Inline Embedding (2026-01-13)
+- **Status**: ✅ Completed inline SVG rendering for notebook illustrations
+- **Changes implemented**:
+  - Added SVG_INLINE_CONFIG with pattern matching for `illustrations/*.svg` files
+  - Implemented `fetchSVGContent()` with 10-second timeout and AbortController
+  - Implemented `sanitizeSVG()` to parse, sanitize (remove scripts), and add accessibility
+  - Implemented `inlineSVGIllustrations()` for fetching and inlining SVG content
+  - Made `createMarkdownCell()` async to support SVG fetching workflow
+  - Cache fetched SVGs in Map to avoid redundant requests
+  - Parallel fetching with Promise.all() for performance
+  - Graceful fallback to img tags on fetch/parse errors
+- **Bug fixes**:
+  - Fixed GitHub raw URL format: Removed extra `/raw/` in path (line 159)
+    - Before: `raw.githubusercontent.com/{org}/{repo}/raw/{branch}/{path}` (404)
+    - After: `raw.githubusercontent.com/{org}/{repo}/{branch}/{path}` (200)
+  - Fixed navigation tree disappearing due to async forEach
+    - Changed to sequential for-loop to ensure proper cell rendering order
+  - Updated regex pattern to match both relative and absolute illustration URLs
+- **Documentation**: Added LEARNINGS.md entry about GitHub raw URL format bug
+
 ### Step-Commit Workflow Enhancement (2026-01-13)
 - **Status**: ✅ Completed automatic sitemap regeneration integration
 - **Changes implemented**:
@@ -47,6 +67,7 @@ The project is in active development with a focus on educational content deliver
   - Multiple display modes (basic, paged, autorun, notebook)
   - Link navigation with hash targets
   - Interactive JavaScript execution
+  - **NEW**: Inline SVG embedding for illustration images (auto-fetches and inlines illustrations/*.svg)
 
 ### Educational Content
 - **invisible-users/notebook.ipynb**: Interactive companion to "The Invisible Users" manuscript
@@ -102,11 +123,11 @@ All recent issues have been resolved:
 
 ## Recent Commits (Last 5)
 
-1. `84faa52e` - docs: add LEARNINGS.md reference to CLAUDE.md
-2. `7b51f3e6` - docs: document ipynb-viewer smart links pattern in LEARNINGS.md
-3. `6df1eeb2` - fix: revert all smart links to relative paths for ipynb-viewer compatibility
-4. `b80e2aca` - docs: update invisible-users notebook metadata with Digital-Domain-Technologies-Ltd repo
-5. `4ddf97bd` - Enhance FAQ page with UI improvements and extract CSS to separate file
+1. `b1147eb1` - feat: Add inline SVG embedding for notebook illustrations
+2. `84faa52e` - docs: add LEARNINGS.md reference to CLAUDE.md
+3. `7b51f3e6` - docs: document ipynb-viewer smart links pattern in LEARNINGS.md
+4. `6df1eeb2` - fix: revert all smart links to relative paths for ipynb-viewer compatibility
+5. `b80e2aca` - docs: update invisible-users notebook metadata with Digital-Domain-Technologies-Ltd repo
 
 ## Branch Status
 
