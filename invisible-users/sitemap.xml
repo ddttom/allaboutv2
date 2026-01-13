@@ -1,105 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://allabout.network/invisible-users/web/</loc>
+    <loc>https://allabout.network/invisible-users/appendix-index.html</loc>
     <lastmod>2026-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://allabout.network/invisible-users/web/index.html</loc>
+    <loc>https://allabout.network/invisible-users/index.html</loc>
     <lastmod>2026-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://allabout.network/invisible-users/web/appendix-index.html</loc>
+    <loc>https://allabout.network/invisible-users/the-invisible-users.pdf</loc>
     <lastmod>2026-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://allabout.network/invisible-users/web/news.html</loc>
+    <loc>https://allabout.network/invisible-users/faq.html</loc>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://allabout.network/invisible-users/news.html</loc>
     <lastmod>2026-01-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://allabout.network/invisible-users/web/faq.html</loc>
-    <lastmod>2026-01-13</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://allabout.network/invisible-users/web/appendix-a.html</loc>
-    <lastmod>2026-01-13</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://allabout.network/invisible-users/web/appendix-b.html</loc>
-    <lastmod>2026-01-13</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://allabout.network/invisible-users/web/appendix-c.html</loc>
+    <loc>https://allabout.network/invisible-users/appendix-a.html</loc>
     <lastmod>2026-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://allabout.network/invisible-users/web/appendix-d.html</loc>
-    <lastmod>2026-01-13</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://allabout.network/invisible-users/web/appendix-e.html</loc>
-    <lastmod>2026-01-13</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://allabout.network/invisible-users/web/appendix-f.html</loc>
+    <loc>https://allabout.network/invisible-users/appendix-b.html</loc>
     <lastmod>2026-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://allabout.network/invisible-users/web/appendix-g.html</loc>
-    <lastmod>2026-01-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://allabout.network/invisible-users/web/appendix-h.html</loc>
-    <lastmod>2026-01-13</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://allabout.network/invisible-users/web/appendix-i.html</loc>
-    <lastmod>2026-01-13</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://allabout.network/invisible-users/web/appendix-j.html</loc>
-    <lastmod>2026-01-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://allabout.network/invisible-users/web/appendix-k.html</loc>
+    <loc>https://allabout.network/invisible-users/appendix-c.html</loc>
     <lastmod>2026-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://allabout.network/invisible-users/web/appendix-l.html</loc>
+    <loc>https://allabout.network/invisible-users/appendix-d.html</loc>
     <lastmod>2026-01-13</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://allabout.network/invisible-users/appendix-e.html</loc>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://allabout.network/invisible-users/appendix-f.html</loc>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://allabout.network/invisible-users/appendix-g.html</loc>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://allabout.network/invisible-users/appendix-h.html</loc>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://allabout.network/invisible-users/appendix-i.html</loc>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://allabout.network/invisible-users/appendix-j.html</loc>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://allabout.network/invisible-users/appendix-k.html</loc>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://allabout.network/invisible-users/appendix-l.html</loc>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://allabout.network/invisible-users/for-reviewers.html</loc>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://allabout.network/invisible-users/notebook.html</loc>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>
