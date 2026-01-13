@@ -1322,3 +1322,61 @@ The Jupyter notebook system for EDS provides **three specialized environments** 
 - **Presenting?** → demo.ipynb or showcase.ipynb (use `/create-presentation`)
 
 This approach gives you **speed, simplicity, visual feedback, and shareability** - all with native browser APIs, direct imports, and no initialization required.
+
+## Best Practices
+
+### Proper Newline Formatting in Notebook Cells
+
+**CRITICAL**: Every line in a Jupyter notebook cell's source array must end with `\n` (newline character) except the last line. This ensures proper rendering in VSCode outline and other notebook viewers.
+
+**Why it matters:**
+- VSCode outline parser requires proper line breaks to detect headings
+- Cells with content stored as one massive string prevent VSCode from detecting sub-headings (`###`, `####`)
+- Without newlines, VSCode can't build the outline tree structure
+- Users won't see sub-sections when expanding parts in the outline sidebar
+
+**Problem example:**
+```python
+# ❌ WRONG - All content in single string
+"source": [
+  "### Section Title**Content here**More content---#### Sub-section..."
+]
+
+# Result: VSCode outline shows no sub-sections when expanded
+```
+
+**Correct pattern:**
+```python
+# ✅ CORRECT - Each line ends with \n
+"source": [
+  "### Section Title\n",
+  "\n",
+  "**Content here**\n",
+  "\n",
+  "More content\n",
+  "\n",
+  "---\n",
+  "\n",
+  "#### Sub-section\n",
+  "\n",
+  "Sub-section content here\n"
+]
+
+# Result: VSCode outline shows all sub-sections properly
+```
+
+**Key formatting rules:**
+1. Every line ends with `\n` except the very last line in source array
+2. Headings need newlines before and after
+3. Horizontal rules: `"---\n"` followed by `"\n"`
+4. Blank lines between paragraphs: `"\n"`
+5. List items end with newlines
+
+**Common symptoms:**
+- Parts appear in VSCode outline but have no sub-sections when expanded
+- Cells with many sub-headings showing as flat content
+- "The parts need more than one sub section in their expansion"
+
+**See also:**
+- `LEARNINGS.md` section on "Jupyter Notebook Cell Source Must Use Proper Newlines"
+- `blocks/ipynb-viewer/README.md` section on "Markdown Cells"

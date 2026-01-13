@@ -1739,3 +1739,53 @@ Ready-to-use notebook templates are available:
 **Remember:** Presentation notebooks are about **viewing**, not **executing**. Beautiful visuals + embedded interactivity = compelling presentations.
 
 **Pro Tip:** For notebook mode, skip the HTML wrappers entirely and let the auto-wrapping feature handle styling automatically based on your markdown patterns!
+
+## Best Practices
+
+### Proper Newline Formatting in Notebook Cells
+
+**CRITICAL**: Every line in a Jupyter notebook cell's source array must end with `\n` (newline character) except the last line. This ensures proper rendering in VSCode outline and maintains professional presentation structure.
+
+**Why it matters for presentations:**
+- VSCode outline shows presentation structure and navigation
+- Clients/viewers can navigate via outline sidebar during presentations
+- Section organization remains clear and professional
+- Proper structure enhances presentation flow
+
+**Problem:**
+```python
+# ❌ WRONG - Single string breaks outline navigation
+"source": [
+  "### Slide Title**Content**Bullet points---#### Sub-topic..."
+]
+```
+
+**Solution:**
+```python
+# ✅ CORRECT - Professional structure with outline support
+"source": [
+  "### Slide Title\n",
+  "\n",
+  "**Content**\n",
+  "\n",
+  "Bullet points\n",
+  "\n",
+  "---\n",
+  "\n",
+  "#### Sub-topic\n"
+]
+```
+
+**For presentations:**
+- Proper newlines enable outline-based navigation during demos
+- Stakeholders can jump between sections via outline
+- Professional appearance in VSCode and other viewers
+- Maintains slide structure integrity
+
+**Key formatting rules:**
+1. Every line ends with `\n` except the last line
+2. Slide titles (headings) need newlines before and after
+3. Horizontal rules (slide breaks): `"---\n"` followed by `"\n"`
+4. Content sections separated by `"\n"`
+
+**See:** `LEARNINGS.md` section on "Jupyter Notebook Cell Source Must Use Proper Newlines" for complete details.

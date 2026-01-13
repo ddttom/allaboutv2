@@ -1543,3 +1543,53 @@ Educational Jupyter notebooks transform static content into interactive learning
 **Need help?** Consult the skill files in `.claude/skills/jupyter-educational-notebook/` for detailed guidance, examples, templates, and content organization strategies.
 
 Happy notebook creating! 📓✨
+
+## Best Practices
+
+### Proper Newline Formatting in Notebook Cells
+
+**CRITICAL**: Every line in a Jupyter notebook cell's source array must end with `\n` (newline character) except the last line. This is essential for proper rendering in VSCode outline and all notebook viewers.
+
+**Why it matters:**
+- VSCode outline parser requires proper line breaks to detect headings
+- Educational notebooks with parts/sections need proper outline structure for navigation
+- Without newlines, users can't see sub-sections when expanding parts in the outline sidebar
+- Affects learning experience and navigation in educational content
+
+**Problem:**
+```python
+# ❌ WRONG - Content as single string breaks outline
+"source": [
+  "### Learning Objective**Content**Examples---#### Exercise..."
+]
+```
+
+**Solution:**
+```python
+# ✅ CORRECT - Proper line breaks for outline parsing
+"source": [
+  "### Learning Objective\n",
+  "\n",
+  "**Content**\n",
+  "\n",
+  "Examples\n",
+  "\n",
+  "---\n",
+  "\n",
+  "#### Exercise\n"
+]
+```
+
+**Key rules:**
+- Every line ends with `\n` except the last line
+- Headings need newlines before and after
+- Horizontal rules: `"---\n"` followed by `"\n"`
+- Blank lines between sections: `"\n"`
+
+**For educational notebooks:**
+- Proper newlines enable VSCode outline navigation
+- Students can navigate via outline sidebar
+- Part structure remains visible and navigable
+- Better learning experience with clear structure
+
+**See:** `LEARNINGS.md` for complete details and examples.
