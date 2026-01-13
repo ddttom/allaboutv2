@@ -6,6 +6,18 @@ The project is in active development with a focus on educational content deliver
 
 ## Recent Accomplishments
 
+### Step-Commit Workflow Enhancement (2026-01-13)
+- **Status**: ✅ Completed automatic sitemap regeneration integration
+- **Changes implemented**:
+  - Created `scripts/generate-invisible-users-sitemap.js` for automatic sitemap generation
+  - Added new Step 2 to step-commit workflow for sitemap regeneration
+  - Detects HTML and PDF changes in `invisible-users/` folder
+  - Automatically regenerates `invisible-users/sitemap.xml` when changes detected
+  - Added npm script: `npm run generate-sitemap:invisible-users`
+  - Renumbered existing step-commit steps (2-9 → 3-10)
+  - Hardcoded priority/changefreq rules based on file type
+  - ES module compatible with project's module system
+
 ### invisible-users/notebook.ipynb (2026-01-13)
 - **Status**: ✅ Completed major synchronization with manuscript v2.0
 - **Changes implemented**:
