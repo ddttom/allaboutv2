@@ -26,7 +26,8 @@
     "scrap",
     "docs/remediation/files/results",
     "promptloc",
-    ".agents/workflows"
+    ".agents/workflows",
+    "**/*.ipynb"
   ],
   // Use .gitignore patterns
   "gitignore": true
