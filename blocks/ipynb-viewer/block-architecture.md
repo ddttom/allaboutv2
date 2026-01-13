@@ -41,6 +41,7 @@ The ipynb-viewer block is a sophisticated component for displaying and interacti
 **Location:** `renderNavigationTree()` function (lines 1584-1634)
 
 **Key Code:**
+
 ```javascript
 container._treeClickHandler = (e) => {
   // Handle expand/collapse icon clicks
@@ -69,6 +70,7 @@ container.addEventListener('click', container._treeClickHandler);
 ```
 
 **Benefits:**
+
 - Survives DOM replacement (innerHTML clears)
 - Better performance (one listener vs. N listeners)
 - Handles dynamically added/removed nodes
@@ -83,6 +85,7 @@ container.addEventListener('click', container._treeClickHandler);
 **Location:** Lines 1-45
 
 **Structure:**
+
 ```javascript
 const IPYNB_CONFIG = {
   // Error messages
@@ -112,6 +115,7 @@ const IPYNB_CONFIG = {
 3. **helpers** - Utility functions
 
 **Example:**
+
 ```javascript
 // 1. Main decorate function
 export default async function decorate(block) {
@@ -144,10 +148,12 @@ function parseNotebookData(data) {
 **Purpose:** Hierarchical navigation for notebook structure and GitHub repository files.
 
 **Architecture:** Two-level tree structure:
+
 - **Notebook node:** Contains parts, cells from notebook
 - **Repository node:** Contains folders, markdown files from GitHub
 
 **State Management:**
+
 ```javascript
 const treeState = {
   tree: [],              // Full tree structure
@@ -157,6 +163,7 @@ const treeState = {
 ```
 
 **Functions:**
+
 - `buildNavigationTree(cells, repoUrl, branch)` - Construct initial tree
 - `renderNavigationTree(tree, container, treeState, onNodeClick)` - Render tree with event delegation
 - `renderTreeNode(node, parentElement, treeContainer, treeState, onNodeClick)` - Recursive node rendering
@@ -165,6 +172,7 @@ const treeState = {
 - `findNodeById(tree, nodeId)` - Helper to find node by ID
 
 **Data Structure:**
+
 ```javascript
 {
   id: 'notebook',
@@ -196,17 +204,20 @@ const treeState = {
 **Purpose:** Fetch and display markdown files from GitHub repository.
 
 **Functions:**
+
 - `discoverRepositoryStructure(repoUrl, branch)` - Scan repo for .md files
 - `addMarkdownPathsToTree(paths, repoNode)` - Add discovered files to tree
 - `createGitHubMarkdownOverlay(markdownPath, repoUrl, branch, parentHistory)` - Display markdown in overlay
 
 **Smart Link Pattern:**
+
 - All `.md` links use GitHub repo URL from notebook metadata
 - Fetch from `raw.githubusercontent.com` (converted from blob URL)
 - No local path fallback - single source of truth
 - See [LEARNINGS.md](../../LEARNINGS.md) for documented pattern
 
 **URL Transformation:**
+
 ```javascript
 // GitHub blob URL → raw URL
 https://github.com/user/repo/blob/main/docs/file.md
@@ -236,6 +247,7 @@ https://github.com/user/repo/blob/main/docs/file.md
    - Function: `createHelpOverlay()`
 
 **Overlay State Management:**
+
 ```javascript
 const parentHistory = {
   navigationTree: [],
@@ -254,6 +266,7 @@ const parentHistory = {
 **Purpose:** Execute JavaScript code cells in browser context.
 
 **Architecture:**
+
 - Each code cell has isolated execution context
 - Uses `Function()` constructor for code evaluation
 - Captures console output and return values
@@ -262,6 +275,7 @@ const parentHistory = {
 **Function:** `attachRunButtons(container, autorun)`
 
 **Execution Flow:**
+
 ```javascript
 // 1. Find code cell
 const codeContent = codeBlock.textContent;
@@ -297,6 +311,7 @@ outputDiv.textContent = output;
 **Purpose:** Render markdown content with enhanced features.
 
 **Features:**
+
 - GitHub Flavored Markdown (GFM) support
 - Smart link transformation (.md → GitHub URLs)
 - Code syntax highlighting
@@ -306,6 +321,7 @@ outputDiv.textContent = output;
 **Function:** `renderMarkdownToHTML(markdown, repoUrl, branch)`
 
 **Smart Link Implementation:**
+
 ```javascript
 // Transform .md links to GitHub URLs
 html = html.replace(
@@ -318,6 +334,7 @@ html = html.replace(
 ```
 
 **Event Delegation for Smart Links:**
+
 ```javascript
 // Attach delegated listener to markdown container
 container.addEventListener('click', (e) => {
@@ -333,21 +350,25 @@ container.addEventListener('click', (e) => {
 ## Performance Optimizations
 
 ### 1. Event Delegation
+
 - **Before:** N event listeners (one per tree node)
 - **After:** 1 event listener (on container)
 - **Benefit:** Reduced memory usage, faster re-renders
 
 ### 2. Lazy Tree Rendering
+
 - Only render visible nodes
 - Expand children on demand
 - Collapse unused branches
 
 ### 3. Markdown Caching
+
 - Cache fetched markdown content
 - Avoid redundant network requests
 - Store in overlay state
 
 ### 4. DOM Manipulation Optimization
+
 - Use `innerHTML` for bulk updates
 - Minimize reflows/repaints
 - Batch DOM operations
@@ -357,12 +378,14 @@ container.addEventListener('click', (e) => {
 **File:** `ipynb-viewer.css`
 
 **Organization:**
+
 1. Base block styles
 2. Variation styles (.paged, .autorun, .notebook)
 3. Component styles (tree, overlay, cells)
 4. Responsive breakpoints
 
 **CSS Variables:**
+
 ```css
 .ipynb-viewer {
   --ipynb-bg-color: #fff;
@@ -374,6 +397,7 @@ container.addEventListener('click', (e) => {
 ```
 
 **Variation Pattern:**
+
 ```css
 /* Base styles */
 .ipynb-viewer {
@@ -394,6 +418,7 @@ container.addEventListener('click', (e) => {
 ## Data Flow
 
 ### 1. Initial Load
+
 ```
 User visits page
   ↓
@@ -415,6 +440,7 @@ Ready for interaction
 ```
 
 ### 2. Tree Navigation Click
+
 ```
 User clicks tree node
   ↓
@@ -432,6 +458,7 @@ Re-render tree with event delegation intact
 ```
 
 ### 3. GitHub Markdown Overlay
+
 ```
 User clicks .md link
   ↓
@@ -453,6 +480,7 @@ User navigates tree or closes overlay
 ```
 
 ### 4. Code Cell Execution
+
 ```
 User clicks Run button
   ↓
@@ -474,6 +502,7 @@ Reset output on next run
 ## Error Handling
 
 ### 1. Network Errors
+
 ```javascript
 try {
   const response = await fetch(url);
@@ -488,6 +517,7 @@ try {
 ```
 
 ### 2. Code Execution Errors
+
 ```javascript
 try {
   const result = executeCode();
@@ -498,6 +528,7 @@ try {
 ```
 
 ### 3. Tree Navigation Errors
+
 ```javascript
 const node = findNodeById(treeState.tree, nodeId);
 if (!node) {
@@ -510,6 +541,7 @@ onNodeClick(node);
 ## Testing Strategy
 
 ### Manual Testing Checklist
+
 - [ ] Initial tree render (all nodes clickable)
 - [ ] Expand/collapse notebook sections
 - [ ] Click repository items (open overlays)
@@ -522,12 +554,14 @@ onNodeClick(node);
 - [ ] Copy-to-clipboard functionality
 
 ### Browser Testing
+
 - Chrome (primary)
 - Safari (vendor prefix considerations)
 - Firefox (compatibility)
 - Mobile browsers (responsive design)
 
 ### Performance Testing
+
 - Page load time
 - Tree re-render speed
 - Memory usage (event listeners)
@@ -556,18 +590,21 @@ onNodeClick(node);
 ## Future Enhancements
 
 ### Short-term
+
 - [ ] Add keyboard navigation (arrow keys)
 - [ ] Implement search functionality (find in tree)
 - [ ] Add breadcrumb navigation (current path)
 - [ ] Improve mobile responsiveness (tree panel)
 
 ### Medium-term
+
 - [ ] Cache GitHub repository structure (localStorage)
 - [ ] Add markdown editing capabilities (inline)
 - [ ] Implement code cell output persistence
 - [ ] Add export functionality (PDF, HTML)
 
 ### Long-term
+
 - [ ] Support for Jupyter kernels (Python, R)
 - [ ] Real-time collaboration (WebSockets)
 - [ ] Version control integration (git)
@@ -576,12 +613,14 @@ onNodeClick(node);
 ## Maintenance Guidelines
 
 ### Code Reviews
+
 - Verify event delegation pattern maintained
 - Check for memory leaks (event listeners)
 - Ensure CSS follows naming conventions
 - Test all variations (paged, autorun, notebook)
 
 ### Adding New Features
+
 1. Update IPYNB_CONFIG if new configuration needed
 2. Follow functional organization (decorate → components → helpers)
 3. Use event delegation for interactive elements
@@ -589,6 +628,7 @@ onNodeClick(node);
 5. Update README.md with usage examples
 
 ### Performance Monitoring
+
 - Monitor bundle size (target: <100KB)
 - Check event listener count (use Chrome DevTools)
 - Profile re-render performance (aim: <16ms)
@@ -597,12 +637,14 @@ onNodeClick(node);
 ## References
 
 ### Internal Documentation
+
 - [README.md](README.md) - Usage and features guide
 - [EXAMPLE.md](EXAMPLE.md) - Markdown examples
 - [CLAUDE.md](../../CLAUDE.md) - Project guidelines
 - [LEARNINGS.md](../../LEARNINGS.md) - Documented patterns
 
 ### External Resources
+
 - [Jupyter Notebook Format](https://nbformat.readthedocs.io/)
 - [GitHub Flavored Markdown](https://github.github.com/gfm/)
 - [Event Delegation Pattern](https://javascript.info/event-delegation)
@@ -611,6 +653,7 @@ onNodeClick(node);
 ## Changelog
 
 ### Version 2.0.2 (2026-01-13)
+
 - **Fixed:** Fallback click handler in GitHub markdown overlay now handles all node types
 - **Impact:** Clicking notebook items (parts/cells) from within markdown overlay now works correctly
 - **Root Cause:** Fallback handler only processed markdown nodes, ignoring part/cell clicks
@@ -621,12 +664,14 @@ onNodeClick(node);
   - Root/folder clicks → Handled by expand/collapse icon only
 
 ### Version 2.0.1 (2026-01-13)
+
 - **Fixed:** Event delegation now uses `tree` parameter (closure) instead of `treeState.tree`
 - **Impact:** Notebook area clicks now work correctly in all contexts (paged overlay, GitHub markdown overlay)
 - **Root Cause:** `treeState.tree` was undefined in some contexts (GitHub overlay fallback case)
 - **Solution:** Use function parameter captured in closure instead of state property
 
 ### Version 2.0 (2026-01-13)
+
 - **Breaking:** Implemented event delegation pattern for tree navigation
 - **Added:** `findNodeById()` helper function
 - **Modified:** `renderNavigationTree()` to use delegated listeners
@@ -635,6 +680,7 @@ onNodeClick(node);
 - **Performance:** Reduced event listener count from N to 1
 
 ### Version 1.x (Legacy)
+
 - Initial implementation with direct event listeners
 - Basic tree navigation
 - GitHub integration
