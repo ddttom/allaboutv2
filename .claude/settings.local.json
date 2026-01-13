@@ -116,7 +116,8 @@
       "Bash(npx wrangler deploy:*)",
       "Bash(SKIP_DOC_CHECK=1 git push:*)",
       "Bash(npm run test:local:*)",
-      "Bash(npm audit:*)"
+      "Bash(npm audit:*)",
+      "Bash(git restore:*)"
     ],
     "deny": [],
     "ask": []
