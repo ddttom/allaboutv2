@@ -123,9 +123,35 @@ Repository structure: Chapter files at root level
 - `#### Heading` = Nested further under `###`
 
 **Real example (invisible-users/notebook.ipynb):**
-- Parts 1-11 used `##` and appeared in outline correctly
-- Part 12 used `###` and was missing from outline
-- Changed Part 12 to `##` and it appeared in outline properly
+- **Issue 1**: Part 12 used `###` (level-3) and was missing from outline
+  - Fix: Changed to `##` (level-2) for consistency
+- **Issue 2**: Part 9 had markdown lines without proper `\n` newline characters
+  - Fix: Added `\n` to end of each line (except last) in source array
+  - Result: VSCode outline now parses and displays Part 9 correctly
+
+**Technical note on Jupyter notebook line formatting:**
+Jupyter notebook cells store markdown source as an array of strings. Each line should end with `\n` (newline character) for proper rendering in most viewers:
+
+```python
+# Correct format
+"source": [
+  "## Part 9: The Platform Race\n",
+  "\n",
+  "Content here\n"
+]
+
+# Broken format (missing newlines)
+"source": [
+  "## Part 9: The Platform Race",
+  "",
+  "Content here"
+]
+```
+
+Missing newlines can cause:
+- VSCode outline to skip or misparse headings
+- Some markdown renderers to concatenate lines incorrectly
+- Inconsistent behavior across different notebook viewers
 
 **Documentation:** See `blocks/ipynb-viewer/README.md` section on "Markdown Cells" and VSCode notebook outline behavior
 
