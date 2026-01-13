@@ -98,7 +98,9 @@ All `.claude/` operations, block creation, slash commands, and documentation upd
 
 - `npm run lint:js` - Lint JavaScript files
 - `npm run lint:css` - Lint CSS files
-- `npm run lint` - Run all linting
+- `npm run lint:markdown` - Lint markdown files
+- `npm run lint:markdown:fix` - Auto-fix markdown issues
+- `npm run lint` - Run all linting (JS + CSS + Markdown)
 - `npm run debug` - Run local development server (server.js is READ-ONLY)
 
 ## ⚠️ CRITICAL: server.js is READ-ONLY
@@ -420,6 +422,11 @@ View workflow runs at: `https://github.com/ddttom/allaboutv2/actions`
 
 - **JS**: Follows Airbnb style guide (eslint-config-airbnb-base)
 - **CSS**: Follows stylelint-config-standard
+- **Markdown**: Follows standard markdownlint rules with sensible exceptions (see `.markdownlint.json`)
+  - MD013 disabled (line length) - too restrictive for documentation
+  - MD033 disabled (inline HTML) - needed for EDS blocks
+  - MD034 disabled (bare URLs) - common in documentation
+  - MD041 disabled (h1 first line) - metadata tables come first
 - **Block Structure**: Each block has its own directory with JS/CSS/README (see complete structure in [Block Development](#block-file-structure))
 - **Naming**: Use kebab-case for files and block names
 - **JS Modules**: Use ES modules with named exports
