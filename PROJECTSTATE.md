@@ -6,7 +6,7 @@ The project is in active development with a focus on educational content deliver
 
 ## Recent Accomplishments
 
-### invisible-users.ipynb Notebook (2026-01-13)
+### invisible-users/notebook.ipynb (2026-01-13)
 - **Status**: ✅ Completed major synchronization with manuscript v2.0
 - **Changes implemented**:
   - Updated from 10 to 12 chapters (added Chapter 9: The Platform Race, Chapter 12: What Agent Creators Must Build)
@@ -37,7 +37,7 @@ The project is in active development with a focus on educational content deliver
   - Interactive JavaScript execution
 
 ### Educational Content
-- **invisible-users.ipynb**: Interactive companion to "The Invisible Users" manuscript
+- **invisible-users/notebook.ipynb**: Interactive companion to "The Invisible Users" manuscript
   - 37 cells covering preface, 12 chapters, and appendices
   - JavaScript visualizations for failure types
   - Smart links to GitHub-hosted manuscript files

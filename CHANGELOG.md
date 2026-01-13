@@ -7,10 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2026-01-13] - Invisible Users Notebook Reorganization
+
+### Changed
+- **File organization**: Moved notebook files to dedicated subdirectory
+  - Moved `invisible-users.ipynb` → `invisible-users/notebook.ipynb`
+  - Moved `invisible-users.html` → `invisible-users/notebook.html`
+  - Updated HTML file to reference new notebook path (`/invisible-users/notebook.ipynb`)
+  - Updated all documentation references (README.md, PROJECTSTATE.md, CHANGELOG.md)
+  - Consolidates invisible-users content in single directory with existing HTML appendices
+
 ## [2026-01-13] - Invisible Users Notebook Update
 
 ### Fixed
-- **invisible-users.ipynb**: Fixed all smart links to use correct ipynb-viewer pattern
+- **invisible-users/notebook.ipynb**: Fixed all smart links to use correct ipynb-viewer pattern
   - Converted from full GitHub URLs back to relative paths (preface.md)
   - Updated repo metadata to point to manuscript directory (tree/main/packages/manuscript/manuscript)
   - Fixed 20 cells to use proper ipynb-viewer smart link pattern
@@ -19,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Pattern follows ipynb-viewer block documentation for GitHub markdown overlay feature
 
 ### Changed
-- **invisible-users.ipynb**: Updated to align with manuscript v2.0
+- **invisible-users/notebook.ipynb**: Updated to align with manuscript v2.0
   - Expanded from 10 to 12 chapters (added Chapter 9: The Platform Race, Chapter 12: What Agent Creators Must Build)
   - Updated total word count from ~41,700 to ~58,000 words
   - Renumbered chapters: old Chapter 9→10 (Designing for Both), old Chapter 10→11 (Technical Advice)
