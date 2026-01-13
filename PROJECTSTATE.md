@@ -6,6 +6,24 @@ The project is in active development with a focus on educational content deliver
 
 ## Recent Accomplishments
 
+### Markdown Linting Setup (2026-01-13)
+
+- **Status**: ✅ Completed markdown linting integration with auto-fix capabilities
+- **Changes implemented**:
+  - Created `.markdownlint.json` with standard rules enabled
+  - Created `.markdownlint-cli2.jsonc` for CLI configuration
+  - Added npm scripts: `lint:markdown` and `lint:markdown:fix`
+  - Configured to respect `.gitignore` automatically
+  - Added ignore patterns for `.claude` and `plusplus` folders
+  - Auto-fixed 11,115 markdown issues across 172 files (75% reduction)
+  - Remaining 3,638 errors require manual review
+- **Rules disabled**:
+  - MD013 (line length) - too restrictive for documentation
+  - MD033 (inline HTML) - needed for EDS blocks
+  - MD034 (bare URLs) - common in documentation
+  - MD041 (h1 first line) - metadata tables come first
+- **Documentation**: Updated CLAUDE.md with markdown linting guidance
+
 ### ipynb-viewer SVG Inline Embedding (2026-01-13)
 
 - **Status**: ✅ Completed inline SVG rendering for notebook illustrations
