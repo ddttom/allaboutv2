@@ -8,7 +8,8 @@
     "lint:js": "npx eslint .",
     "lint:css": "npx stylelint blocks/**/*.css styles/*.css",
     "lint": "npm run lint:js && npm run lint:css",
-    "debug": "node server.js"
+    "debug": "node server.js",
+    "generate-sitemap:invisible-users": "node scripts/generate-invisible-users-sitemap.js"
   },
   "repository": {
     "type": "git",
