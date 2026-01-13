@@ -128,7 +128,40 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
       console.log(`🎨 Auto-converting PNG to SVG in image: ${url} → ${processedUrl}`);
     }
 
-    // Return inline image with alt text
+    // Resolve image URLs to GitHub raw content if repo available and path is relative
+    if (repoUrl && !processedUrl.startsWith('http://') && !processedUrl.startsWith('https://')) {
+      let imagePath = processedUrl;
+
+      // Resolve relative paths based on current file location
+      if (currentFilePath && !processedUrl.startsWith('/')) {
+        // Extract directory from current file
+        const currentDir = currentFilePath.substring(0, currentFilePath.lastIndexOf('/'));
+        const parts = currentDir ? currentDir.split('/') : [];
+        const urlParts = processedUrl.replace(/^\.\//, '').split('/');
+
+        // Process path parts
+        urlParts.forEach((part) => {
+          if (part === '..') {
+            if (parts.length > 0) parts.pop();
+          } else if (part !== '.' && part !== '') {
+            parts.push(part);
+          }
+        });
+
+        imagePath = parts.join('/');
+        console.log(`🖼️  Resolved image path: ${processedUrl} → ${imagePath}`);
+      } else if (processedUrl.startsWith('/')) {
+        // Absolute path from repo root
+        imagePath = processedUrl.replace(/^\//, '');
+      }
+
+      // Convert to raw GitHub URL
+      const rawUrl = `${repoUrl.replace('github.com', 'raw.githubusercontent.com')}/raw/${branch}/${imagePath}`;
+      console.log(`🖼️  Image URL: ${rawUrl}`);
+      return `<img src="${rawUrl}" alt="${alt}" class="ipynb-markdown-image" loading="lazy">`;
+    }
+
+    // Return inline image with alt text (for absolute URLs or when no repo)
     return `<img src="${processedUrl}" alt="${alt}" class="ipynb-markdown-image" loading="lazy">`;
   });
 
