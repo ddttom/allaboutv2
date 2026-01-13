@@ -4,14 +4,15 @@ Welcome to the **Documentation Viewer** interactive help guide! This document wi
 
 ## Table of Contents
 
-[Getting Started](#getting-started)
-[Navigation Controls](#navigation-controls)
-[Overlay Types](#overlay-types)
-[Navigation Tree](#navigation-tree)
-[Bookmarks](#bookmarks)
-[History](#history)
-[Keyboard Shortcuts](#keyboard-shortcuts)
+[Getting Started](#getting-started) |
+[Navigation Controls](#navigation-controls) |
+[Overlay Types](#overlay-types) |
+[Navigation Tree](#navigation-tree) |
+[Bookmarks](#bookmarks) |
+[History](#history) |
+[Keyboard Shortcuts](#keyboard-shortcuts) |
 [Tips & Tricks](#tips--tricks)
+
 ---
 
 ## Getting Started
@@ -27,10 +28,12 @@ Each page may contain one or more cells (markdown or code)
 ### Understanding the Interface
 
 The overlay has several key areas:
-**Top Bar** -Header with notebook title and control buttons
-**Content Area** - Displays the current page's cells
-**Navigation Controls** - Previous/Next buttons and page indicator at bottom
-**Control Buttons** - Home, History, Bookmarks, TOC, Help, and Close buttons
+
+- **Top Bar** - Header with notebook title and control buttons
+- **Content Area** - Displays the current page's cells
+- **Navigation Controls** - Previous/Next buttons and page indicator at bottom
+- **Control Buttons** - Home, History, Bookmarks, TOC, Help, and Close buttons
+
 ---
 
 ## Navigation Controls

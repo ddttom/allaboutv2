@@ -359,7 +359,7 @@ Add to `head.html` or early in page load (before dashboard block loads).
 
 Content team dashboard for tracking review cycles:
 
-# Editorial Calendar
+**Editorial Calendar Example:**
 
 Track all content review and expiry dates. Green = healthy, Amber = attention needed soon, Red = overdue.
 
@@ -386,7 +386,7 @@ Track all content review and expiry dates. Green = healthy, Amber = attention ne
 
 Site-wide content audit for governance:
 
-# Content Audit Dashboard
+**Content Audit Dashboard Example:**
 
 Complete inventory of all site content with health indicators. Use filters to identify content needing updates.
 

@@ -25,10 +25,11 @@ The header block in its simplest form loads the default navigation from `/nav`:
 
 To specify a custom navigation document path, use metadata:
 
+```
 ---
-
 nav: /custom-nav
 ---
+```
 
 | Header |
 |--------|
@@ -37,10 +38,11 @@ nav: /custom-nav
 
 For multi-language or regional sites, specify different navigation documents:
 
+```
 ---
-
 nav: /navigation/en-us
 ---
+```
 
 | Header |
 |--------|

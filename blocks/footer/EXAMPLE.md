@@ -25,10 +25,11 @@ The footer block in its simplest form loads the default footer from `/footer`:
 
 To specify a custom footer document path, use metadata:
 
+```
 ---
-
 footer: /custom-footer
 ---
+```
 
 | Footer |
 |--------|
@@ -37,10 +38,11 @@ footer: /custom-footer
 
 For multi-language or regional sites, specify different footer documents:
 
+```
 ---
-
 footer: /footer/en-us
 ---
+```
 
 | Footer |
 |--------|
