@@ -432,6 +432,9 @@ View workflow runs at: `https://github.com/ddttom/allaboutv2/actions`
   - MD036 disabled (emphasis as heading) - stylistic choice in documentation
   - MD040 disabled (fenced code language) - not always necessary for snippets
   - MD060 disabled (dollar signs in code) - false positives with inline code
+  - MD045 disabled (no alt text) - legacy content with missing alt text
+  - MD055 disabled (table pipe style) - inconsistent table formatting acceptable
+  - MD056 disabled (table column count) - complex tables with varying columns
 - **Block Structure**: Each block has its own directory with JS/CSS/README (see complete structure in [Block Development](#block-file-structure))
 - **Naming**: Use kebab-case for files and block names
 - **JS Modules**: Use ES modules with named exports
