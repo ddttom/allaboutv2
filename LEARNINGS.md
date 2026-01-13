@@ -303,3 +303,81 @@ The notebook-validator script does NOT catch this issue because:
 **Documentation:** See `blocks/ipynb-viewer/README.md` section on "Markdown Cells" - proper source array formatting for VSCode compatibility
 
 ---
+
+## GitHub Raw Content URL Format - No /raw/ in Path
+
+**Rule** (2026-01-13): When converting GitHub repository URLs to raw content URLs, do NOT include `/raw/` in the path. The correct format is `raw.githubusercontent.com/{org}/{repo}/{branch}/{path}`, not `raw.githubusercontent.com/{org}/{repo}/raw/{branch}/{path}`.
+
+**Why it matters:**
+- GitHub's raw content server uses a different URL structure than the web interface
+- Adding an extra `/raw/` in the path causes 404 errors
+- This affects image loading, markdown file fetching, and any direct content access
+- The bug was hidden because it only manifests when files are actually fetched
+
+**Common error:**
+```javascript
+❌ const rawUrl = `${repoUrl.replace('github.com', 'raw.githubusercontent.com')}/raw/${branch}/${path}`;
+   Result: https://raw.githubusercontent.com/org/repo/raw/main/file.svg (404 error)
+
+✅ const rawUrl = `${repoUrl.replace('github.com', 'raw.githubusercontent.com')}/${branch}/${path}`;
+   Result: https://raw.githubusercontent.com/org/repo/main/file.svg (200 OK)
+```
+
+**URL format comparison:**
+- **Web interface**: `https://github.com/org/repo/blob/main/path/file.svg`
+  - Uses `/blob/` to indicate file view
+  - Renders file in GitHub's web UI
+- **Raw content**: `https://raw.githubusercontent.com/org/repo/main/path/file.svg`
+  - No `/blob/` or `/raw/` in path
+  - Returns file contents directly
+  - Used for fetching, embedding, downloading
+
+**Real example (invisible-users SVG inlining):**
+- **Bug**: `https://raw.githubusercontent.com/Digital-Domain-Technologies-Ltd/invisible-users-manuscript/raw/main/illustrations/chapter-02-illustration.svg` → 404
+- **Fix**: `https://raw.githubusercontent.com/Digital-Domain-Technologies-Ltd/invisible-users-manuscript/main/illustrations/chapter-02-illustration.svg` → 200
+
+**How the bug occurred:**
+1. Code converted repo URL: `github.com` → `raw.githubusercontent.com` ✓
+2. Code added path: `/raw/${branch}/${path}` ✗ (extra `/raw/` is wrong)
+3. Result: Double "raw" in URL (once in domain, once in path)
+4. GitHub raw server returned 404 because path doesn't exist
+
+**Correct conversion pattern:**
+```javascript
+// From: https://github.com/org/repo
+// To:   https://raw.githubusercontent.com/org/repo/main/path/file
+
+const repoUrl = 'https://github.com/org/repo';
+const branch = 'main';
+const path = 'illustrations/file.svg';
+
+// ✅ Correct
+const rawUrl = `${repoUrl.replace('github.com', 'raw.githubusercontent.com')}/${branch}/${path}`;
+
+// ❌ Wrong - adds /raw/ in path
+const wrongUrl = `${repoUrl.replace('github.com', 'raw.githubusercontent.com')}/raw/${branch}/${path}`;
+```
+
+**Testing raw URLs:**
+```bash
+# Test with curl to verify URL works
+curl -I https://raw.githubusercontent.com/org/repo/main/path/file.svg
+
+# Should return: HTTP/2 200
+# If returns 404, check for extra /raw/ in path
+```
+
+**Where this bug appeared:**
+- File: `blocks/ipynb-viewer/ipynb-viewer.js`
+- Line: 159 (in `parseMarkdown` function)
+- Impact: All images referenced in notebooks were getting 404 errors
+- Fix: Removed `/raw/` from path construction
+
+**Related learnings:**
+- See "Repository URL Pattern in Notebook Metadata" (earlier in this file)
+- Both learnings relate to proper GitHub URL construction
+- One focuses on metadata format, this one on raw content URLs
+
+**Documentation:** See `blocks/ipynb-viewer/README.md` section on "Smart Links and GitHub Integration" - URL resolution patterns
+
+---

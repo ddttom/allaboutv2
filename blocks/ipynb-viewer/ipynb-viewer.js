@@ -156,7 +156,7 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
       }
 
       // Convert to raw GitHub URL
-      const rawUrl = `${repoUrl.replace('github.com', 'raw.githubusercontent.com')}/raw/${branch}/${imagePath}`;
+      const rawUrl = `${repoUrl.replace('github.com', 'raw.githubusercontent.com')}/${branch}/${imagePath}`;
       console.log(`🖼️  Image URL: ${rawUrl}`);
       return `<img src="${rawUrl}" alt="${alt}" class="ipynb-markdown-image" loading="lazy">`;
     }
@@ -377,6 +377,162 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
 }
 
 /**
+ * Fetch SVG content with timeout
+ * @param {string} url - URL of SVG file
+ * @param {number} timeout - Timeout in milliseconds
+ * @returns {Promise<string|null>} SVG text content or null on error
+ */
+async function fetchSVGContent(url, timeout) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+  try {
+    const response = await fetch(url, { signal: controller.signal });
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      console.warn(`⚠️ Failed to fetch SVG (HTTP ${response.status}): ${url}`);
+      return null;
+    }
+
+    const svgText = await response.text();
+    return svgText;
+  } catch (error) {
+    clearTimeout(timeoutId);
+    if (error.name === 'AbortError') {
+      console.warn(`⚠️ SVG fetch timeout: ${url}`);
+    } else {
+      console.warn(`⚠️ Failed to fetch SVG: ${url}`, error);
+    }
+    return null;
+  }
+}
+
+/**
+ * Sanitize SVG content and add accessibility
+ * @param {string} svgText - Raw SVG XML text
+ * @param {string} altText - Alt text to add as title
+ * @returns {string|null} Sanitized SVG HTML string or null on error
+ */
+function sanitizeSVG(svgText, altText) {
+  try {
+    // Parse SVG XML
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(svgText, 'image/svg+xml');
+
+    // Check for parser errors
+    const parserError = doc.querySelector('parsererror');
+    if (parserError) {
+      console.warn('⚠️ Invalid SVG XML:', parserError.textContent);
+      return null;
+    }
+
+    const svgElement = doc.querySelector('svg');
+    if (!svgElement) {
+      console.warn('⚠️ No <svg> element found in SVG content');
+      return null;
+    }
+
+    // Remove script tags for security
+    const scripts = svgElement.querySelectorAll('script');
+    scripts.forEach((script) => script.remove());
+
+    // Add title for accessibility if altText provided and no title exists
+    if (altText && !svgElement.querySelector('title')) {
+      const title = doc.createElementNS('http://www.w3.org/2000/svg', 'title');
+      title.textContent = altText;
+      svgElement.insertBefore(title, svgElement.firstChild);
+    }
+
+    // Add class for styling
+    svgElement.classList.add('ipynb-markdown-image');
+
+    // Serialize back to string
+    const serializer = new XMLSerializer();
+    return serializer.serializeToString(svgElement);
+  } catch (error) {
+    console.warn('⚠️ Failed to sanitize SVG:', error);
+    return null;
+  }
+}
+
+/**
+ * Inline SVG illustrations in HTML
+ * @param {string} htmlString - HTML string with img tags
+ * @returns {Promise<string>} HTML string with inlined SVGs
+ */
+async function inlineSVGIllustrations(htmlString) {
+  try {
+    // Parse HTML to find img tags
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlString, 'text/html');
+    const images = doc.querySelectorAll('img');
+
+    // Find illustration SVGs to inline
+    const svgsToInline = [];
+    images.forEach((img) => {
+      const src = img.getAttribute('src');
+      if (src && SVG_INLINE_CONFIG.PATTERN.test(src)) {
+        svgsToInline.push({ img, src, alt: img.getAttribute('alt') || '' });
+      }
+    });
+
+    if (svgsToInline.length === 0) {
+      return htmlString; // No SVGs to inline
+    }
+
+    // Fetch all SVGs in parallel
+    const fetchPromises = svgsToInline.map(async ({ img, src, alt }) => {
+      // Check cache first
+      if (SVG_INLINE_CONFIG.CACHE.has(src)) {
+        console.log(`📦 SVG from cache: ${src}`);
+        return { img, svg: SVG_INLINE_CONFIG.CACHE.get(src), src };
+      }
+
+      // Fetch and sanitize
+      const svgText = await fetchSVGContent(src, SVG_INLINE_CONFIG.TIMEOUT);
+      if (!svgText) {
+        return { img, svg: null, src }; // Keep as img tag
+      }
+
+      const sanitizedSVG = sanitizeSVG(svgText, alt);
+      if (!sanitizedSVG) {
+        return { img, svg: null, src }; // Keep as img tag
+      }
+
+      // Cache the result
+      SVG_INLINE_CONFIG.CACHE.set(src, sanitizedSVG);
+      console.log(`🎨 Inlined SVG: ${src}`);
+
+      return { img, svg: sanitizedSVG, src };
+    });
+
+    const results = await Promise.all(fetchPromises);
+
+    // Replace img tags with inline SVGs
+    results.forEach(({ img, svg }) => {
+      if (svg) {
+        // Create a temporary container to parse the SVG string
+        const tempDiv = doc.createElement('div');
+        tempDiv.innerHTML = svg;
+        const svgElement = tempDiv.querySelector('svg');
+
+        if (svgElement) {
+          img.parentNode.replaceChild(svgElement, img);
+        }
+      }
+      // If svg is null, keep the original img tag (fallback)
+    });
+
+    // Serialize back to HTML string
+    return doc.body.innerHTML;
+  } catch (error) {
+    console.warn('⚠️ Failed to inline SVG illustrations:', error);
+    return htmlString; // Return original HTML on error
+  }
+}
+
+/**
  * Detect cell type based on content patterns
  * @param {string} content - Cell content
  * @param {number} index - Cell index
@@ -517,9 +673,9 @@ function styleActionCards(contentElement) {
  * @param {string} [helpRepoUrl] - Optional help repository URL
  * @param {string} [branch='main'] - GitHub branch to use for .md links
  * @param {Array} [parentHistory=null] - Optional parent overlay's history array
- * @returns {HTMLElement} Cell element
+ * @returns {Promise<HTMLElement>} Cell element
  */
-function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false, helpRepoUrl = null, branch = 'main', parentHistory = null) {
+async function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false, helpRepoUrl = null, branch = 'main', parentHistory = null) {
   const cellDiv = document.createElement('div');
   cellDiv.className = 'ipynb-cell ipynb-markdown-cell';
   cellDiv.dataset.cellIndex = index;
@@ -530,6 +686,9 @@ function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false, helpR
   // Join source lines and parse markdown
   const markdownText = Array.isArray(cell.source) ? cell.source.join('') : cell.source;
   let html = parseMarkdown(markdownText, repoUrl, branch);
+
+  // Inline SVG illustrations
+  html = await inlineSVGIllustrations(html);
 
   // Auto-wrap with styling classes if in notebook mode
   if (autoWrap) {
@@ -806,6 +965,14 @@ function createPageGroups(cells) {
  * Maximum number of history entries to track per overlay instance
  */
 const MAX_HISTORY_ENTRIES = 25;
+
+// SVG Inline Configuration
+const SVG_INLINE_CONFIG = {
+  TIMEOUT: 10000, // 10 seconds
+  // Match both relative (illustrations/*.svg) and absolute GitHub URLs (*/illustrations/*.svg)
+  PATTERN: /\/illustrations\/[^/]+\.svg$/i,
+  CACHE: new Map(), // Cache fetched SVGs
+};
 
 /**
  * Add entry to navigation history for a specific overlay instance
@@ -3009,7 +3176,12 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
 
       // Render markdown with CURRENT repo URL (not help repo!) to generate smart links
       console.log('🔗 Parsing markdown with:', { repoUrl: currentRepoUrl, branch, currentFilePath });
-      contentArea.innerHTML = parseMarkdown(markdownText, currentRepoUrl, branch, currentFilePath);
+      let renderedHTML = parseMarkdown(markdownText, currentRepoUrl, branch, currentFilePath);
+
+      // Inline SVG illustrations
+      renderedHTML = await inlineSVGIllustrations(renderedHTML);
+
+      contentArea.innerHTML = renderedHTML;
 
       // Process smart links in the rendered markdown
       // 1. Resolve hash links (internal navigation)
@@ -3435,11 +3607,14 @@ export default async function decorate(block) {
                         || notebook.metadata?.repo
                         || 'https://github.com/ddttom/allaboutV2';
 
-    notebook.cells.forEach(async (cell, index) => {
+    // Process cells sequentially to ensure proper rendering order
+    for (let index = 0; index < notebook.cells.length; index += 1) {
+      const cell = notebook.cells[index];
       let cellElement;
 
       if (cell.cell_type === 'markdown') {
-        cellElement = createMarkdownCell(cell, index, repoUrl, isNotebook, helpRepoUrl, githubBranch);
+        // eslint-disable-next-line no-await-in-loop
+        cellElement = await createMarkdownCell(cell, index, repoUrl, isNotebook, helpRepoUrl, githubBranch);
       } else if (cell.cell_type === 'code') {
         cellElement = createCodeCell(cell, index, shouldAutorun);
 
@@ -3453,6 +3628,7 @@ export default async function decorate(block) {
           }
         } else if (!isPaged && !isNotebook) {
           // In autorun mode, execute immediately in default view
+          // eslint-disable-next-line no-await-in-loop
           await executeCodeCell(cellElement);
         }
       }
@@ -3460,7 +3636,7 @@ export default async function decorate(block) {
       if (cellElement) {
         cellsContainer.appendChild(cellElement);
       }
-    });
+    }
 
     // Assemble container
     container.appendChild(header);
