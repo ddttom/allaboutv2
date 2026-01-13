@@ -27,7 +27,16 @@
     "docs/remediation/files/results",
     "promptloc",
     ".agents/workflows",
-    "**/*.ipynb"
+    "**/*.ipynb",
+    "blocks/code-expander/demo.md",
+    "blocks/columns/EXAMPLE.md",
+    "blocks/dashboard/EXAMPLE.md",
+    "blocks/tags/EXAMPLE.md",
+    "blocks/ipynb-viewer/README.md",
+    "docs/help.md",
+    "docs/for-ai/eds.md",
+    "docs/for-ai/implementation/block-architecture-standards.md",
+    "CLAUDE.md"
   ],
   // Use .gitignore patterns
   "gitignore": true
