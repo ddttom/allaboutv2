@@ -1969,7 +1969,8 @@ button.ipynb-help-button {
   padding-left: calc(1rem + var(--level, 0) * 1.25rem);
   cursor: pointer;
   transition: all 0.2s ease;
-  user-select: none;
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-user-select: none;
   user-select: none;
   color: rgb(255 255 255 / 0.85);
   font-size: 0.9rem;
