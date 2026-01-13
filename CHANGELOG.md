@@ -10,11 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2026-01-13] - Invisible Users Notebook Update
 
 ### Fixed
-- **invisible-users.ipynb**: Fixed all smart links to use full GitHub URLs
-  - Changed from relative paths (invisible-users/preface.md) to full GitHub URLs
-  - Links now point to github.com/Digital-Domain-Technologies-Ltd/invisible-users-manuscript/blob/main/packages/manuscript/manuscript/
-  - Updated 20 cells with proper GitHub URLs
-  - Links now work correctly when viewing notebook in any context (local, GitHub, ipynb-viewer)
+- **invisible-users.ipynb**: Fixed all smart links to use correct ipynb-viewer pattern
+  - Converted from full GitHub URLs back to relative paths (preface.md)
+  - Updated repo metadata to point to manuscript directory (tree/main/packages/manuscript/manuscript)
+  - Fixed 20 cells to use proper ipynb-viewer smart link pattern
+  - ipynb-viewer now automatically converts relative .md links to GitHub URLs
+  - Links open in overlay viewer keeping users in the app (no external navigation)
+  - Pattern follows ipynb-viewer block documentation for GitHub markdown overlay feature
 
 ### Changed
 - **invisible-users.ipynb**: Updated to align with manuscript v2.0
