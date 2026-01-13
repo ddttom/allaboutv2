@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Configured to automatically respect `.gitignore` patterns
   - Added explicit ignore patterns for `.claude` and `plusplus` folders
   - Auto-fixed 11,115 markdown formatting issues across 172 files (75% error reduction)
-  - Disabled 5 additional cosmetic rules (94% reduction of remaining errors: 3,638 → 207)
+  - Disabled 8 cosmetic rules (90% reduction of remaining errors: 207 → 20 legitimate structural issues)
 
 ### Changed
 
@@ -33,6 +33,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - MD036 (emphasis as heading) - stylistic choice acceptable in documentation
   - MD040 (fenced code language) - not always necessary for simple code snippets
   - MD060 (dollar signs in code) - false positives with inline code examples
+  - MD045 (no alt text) - legacy content with missing alt text attributes
+  - MD055 (table pipe style) - inconsistent table formatting acceptable in documentation
+  - MD056 (table column count) - complex tables with varying column counts
 
 ### Documentation
 
