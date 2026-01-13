@@ -16,13 +16,18 @@ The project is in active development with a focus on educational content deliver
   - Configured to respect `.gitignore` automatically
   - Added ignore patterns for `.claude` and `plusplus` folders
   - Auto-fixed 11,115 markdown issues across 172 files (75% reduction)
-  - Remaining 3,638 errors require manual review
+  - Disabled 5 cosmetic rules (94% reduction of remaining errors: 3,638 → 207)
 - **Rules disabled**:
   - MD013 (line length) - too restrictive for documentation
   - MD033 (inline HTML) - needed for EDS blocks
   - MD034 (bare URLs) - common in documentation
   - MD041 (h1 first line) - metadata tables come first
-- **Documentation**: Updated CLAUDE.md with markdown linting guidance
+  - MD024 (duplicate headings) - valid for FAQs and multi-section docs
+  - MD025 (multiple h1) - valid for long documentation
+  - MD036 (emphasis as heading) - stylistic choice in documentation
+  - MD040 (fenced code language) - not always necessary for snippets
+  - MD060 (dollar signs in code) - false positives with inline code
+- **Documentation**: Updated CLAUDE.md with complete markdown linting rule documentation
 
 ### ipynb-viewer SVG Inline Embedding (2026-01-13)
 
