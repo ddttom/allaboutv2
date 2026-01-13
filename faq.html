@@ -11,7 +11,7 @@
   <meta name="ai-content-policy" content="summaries-allowed, full-extraction-allowed">
   <meta name="ai-freshness" content="monthly">
   <meta name="ai-structured-data" content="json-ld">
-  <meta name="ai-attribution" content="required">
+  <meta name="ai-attribution" content="required" text="Digital Domain Technologies Ltd: https://allabout.network">
 
   <title>Adobe Edge Delivery Services FAQ | Digital Domain Technologies</title>
 
@@ -28,7 +28,7 @@
       "email": "tom@digitaldomaintechnologies.com",
       "url": "https://digitaldomaintechnologies.com"
     },
-    "inLanguage": "en-US",
+    "inLanguage": "en-GB",
     "mainEntity": [
       {"@type": "Question", "name": "What is Adobe Edge Delivery Services?", "acceptedAnswer": {"@type": "Answer", "text": "Adobe Edge Delivery Services (EDS) is a document-based content management system that represents a paradigm shift in web development. Content creators work in familiar tools like Google Docs or Microsoft Word, while the system handles the technical transformation into high-performance web pages with perfect Lighthouse scores."}},
       {"@type": "Question", "name": "How does EDS differ from traditional CMSs?", "acceptedAnswer": {"@type": "Answer", "text": "Traditional CMSs require content to fit rigid structures, while EDS adapts to how authors naturally create content. Authors use Google Docs, the system transforms documents to web pages, and code lives in GitHub with version control."}},
@@ -75,445 +75,18 @@
   }
   </script>
 
-  <style>
-    /* Reset and base styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    /* EDS Design System Variables */
-    :root {
-      /* Colors */
-      --link-color: #035fe6;
-      --link-hover-color: #136ff6;
-      --background-color: white;
-      --light-color: #eee;
-      --dark-color: #ccc;
-      --text-color: #1f2937;
-
-      /* Typography */
-      --body-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      --body-font-size-m: 22px;
-      --body-font-size-s: 18px;
-      --heading-font-size-xxl: 48px;
-      --heading-font-size-xl: 40px;
-      --heading-font-size-l: 32px;
-
-      /* FAQ-specific */
-      --faq-spacing: 22px;
-      --faq-border-radius: 8px;
-      --faq-transition: 0.2s ease;
-      --faq-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    @media (width >= 900px) {
-      :root {
-        --heading-font-size-xxl: 60px;
-        --heading-font-size-xl: 48px;
-        --heading-font-size-l: 36px;
-      }
-    }
-
-    body {
-      font-family: var(--body-font-family);
-      line-height: 1.6;
-      color: var(--text-color);
-      background: var(--background-color);
-    }
-
-    /* Hero Section */
-    .faq-hero {
-      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-      color: white;
-      padding: 3rem 2rem;
-      text-align: center;
-    }
-
-    .faq-hero h1 {
-      font-size: var(--heading-font-size-xxl);
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-
-    .faq-hero p {
-      font-size: 1.25rem;
-      opacity: 0.95;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    /* Container */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem;
-    }
-
-    /* Search Bar */
-    .faq-search {
-      max-width: 600px;
-      margin: 0 auto 2rem;
-      position: relative;
-    }
-
-    .faq-search input {
-      width: 100%;
-      padding: 1rem 3rem 1rem 1.5rem;
-      border: 2px solid var(--dark-color);
-      border-radius: 50px;
-      font-size: var(--body-font-size-m);
-      font-family: var(--body-font-family);
-      transition: border-color var(--faq-transition);
-    }
-
-    .faq-search input:focus {
-      outline: none;
-      border-color: var(--link-color);
-      box-shadow: 0 0 0 3px rgba(3, 95, 230, 0.1);
-    }
-
-    .faq-search #clear-search {
-      position: absolute;
-      right: 1rem;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      font-size: 2rem;
-      color: var(--text-color);
-      cursor: pointer;
-      opacity: 0;
-      transition: opacity var(--faq-transition);
-      padding: 0;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .faq-search #clear-search.visible {
-      opacity: 0.5;
-    }
-
-    .faq-search #clear-search:hover {
-      opacity: 1;
-    }
-
-    .search-results-count {
-      text-align: center;
-      color: #6b7280;
-      margin-top: 0.5rem;
-      font-size: var(--body-font-size-s);
-    }
-
-    /* Controls */
-    .faq-controls {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .control-btn {
-      padding: 0.75rem 1.5rem;
-      border: 2px solid var(--dark-color);
-      border-radius: 30px;
-      background: white;
-      color: var(--text-color);
-      font-size: var(--body-font-size-s);
-      font-family: var(--body-font-family);
-      cursor: pointer;
-      transition: all var(--faq-transition);
-    }
-
-    .control-btn:hover {
-      background: var(--link-color);
-      color: white;
-      border-color: var(--link-color);
-    }
-
-    /* Category Navigation */
-    .category-nav {
-      display: flex;
-      gap: 12px;
-      overflow-x: auto;
-      padding: 1rem 0;
-      position: sticky;
-      top: 0;
-      background: white;
-      z-index: 10;
-      border-bottom: 1px solid var(--light-color);
-      margin-bottom: 2rem;
-    }
-
-    .category-nav::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    .category-nav::-webkit-scrollbar-thumb {
-      background: var(--dark-color);
-      border-radius: 3px;
-    }
-
-    .category-nav button {
-      padding: 8px 20px;
-      border: 2px solid var(--dark-color);
-      border-radius: 30px;
-      background: white;
-      color: var(--text-color);
-      font-size: var(--body-font-size-s);
-      font-family: var(--body-font-family);
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all var(--faq-transition);
-    }
-
-    .category-nav button.active {
-      background: var(--link-color);
-      color: white;
-      border-color: var(--link-color);
-    }
-
-    .category-nav button:hover:not(.active) {
-      background: var(--light-color);
-    }
-
-    @media (width >= 900px) {
-      .category-nav {
-        justify-content: center;
-      }
-    }
-
-    /* FAQ Categories */
-    .faq-category {
-      margin-bottom: 3rem;
-    }
-
-    .faq-category h2 {
-      font-size: var(--heading-font-size-l);
-      color: #1e40af;
-      margin-bottom: 1.5rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid var(--light-color);
-    }
-
-    /* FAQ Items (Accordion) */
-    .faq-item {
-      border: 1px solid var(--dark-color);
-      border-radius: var(--faq-border-radius);
-      margin-bottom: 16px;
-      background: white;
-      transition: box-shadow var(--faq-transition);
-    }
-
-    .faq-item:hover {
-      box-shadow: var(--faq-shadow);
-    }
-
-    .faq-item summary {
-      position: relative;
-      padding: 1.5rem 4rem 1.5rem 1.5rem;
-      cursor: pointer;
-      list-style: none;
-      font-weight: 500;
-      font-size: var(--body-font-size-m);
-      transition: background-color var(--faq-transition);
-    }
-
-    .faq-item summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .faq-item[open] summary {
-      background-color: var(--light-color);
-      border-bottom: 1px solid var(--dark-color);
-    }
-
-    .faq-item summary:hover {
-      background-color: var(--light-color);
-    }
-
-    /* Chevron icon */
-    .faq-item summary::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      right: 1.5rem;
-      transform: translateY(-50%) rotate(135deg);
-      width: 10px;
-      height: 10px;
-      border: 2px solid var(--text-color);
-      border-width: 2px 2px 0 0;
-      transition: transform var(--faq-transition);
-    }
-
-    .faq-item[open] summary::after {
-      transform: translateY(-50%) rotate(-45deg);
-    }
-
-    /* Copy link button */
-    .copy-link {
-      position: absolute;
-      right: 3.5rem;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      cursor: pointer;
-      opacity: 0;
-      transition: opacity var(--faq-transition);
-      padding: 4px;
-      color: var(--link-color);
-    }
-
-    .faq-item summary:hover .copy-link {
-      opacity: 1;
-    }
-
-    .copy-link:hover {
-      color: var(--link-hover-color);
-    }
-
-    .copy-link svg {
-      width: 20px;
-      height: 20px;
-    }
-
-    /* Answer content */
-    .faq-answer {
-      padding: 1.5rem;
-      line-height: 1.8;
-    }
-
-    .faq-answer p {
-      margin-bottom: 1rem;
-    }
-
-    .faq-answer ul,
-    .faq-answer ol {
-      margin-left: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    .faq-answer li {
-      margin-bottom: 0.5rem;
-    }
-
-    .faq-answer code {
-      background: #f3f4f6;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-family: 'Courier New', monospace;
-      font-size: 0.9em;
-    }
-
-    .faq-answer mark {
-      background-color: #fef08a;
-      padding: 2px 4px;
-      border-radius: 2px;
-    }
-
-    /* Footer */
-    footer {
-      background: #f9fafb;
-      border-top: 1px solid #e5e7eb;
-      padding: 2rem;
-      text-align: center;
-      margin-top: 4rem;
-    }
-
-    footer p {
-      color: #6b7280;
-      margin: 0.25rem 0;
-    }
-
-    .contact-links {
-      margin: 1.5rem 0;
-    }
-
-    .contact-links a {
-      color: #2563eb;
-      margin: 0 1rem;
-      text-decoration: none;
-    }
-
-    .contact-links a:hover {
-      text-decoration: underline;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .faq-hero {
-        padding: 2rem 1rem;
-      }
-
-      .faq-hero h1 {
-        font-size: 2rem;
-      }
-
-      .faq-hero p {
-        font-size: 1rem;
-      }
-
-      .faq-item summary {
-        padding: 1rem 3rem 1rem 1rem;
-        font-size: var(--body-font-size-s);
-      }
-
-      .copy-link {
-        display: none;
-      }
-
-      .faq-controls {
-        flex-direction: column;
-      }
-
-      .control-btn {
-        width: 100%;
-      }
-    }
-
-    /* No results message */
-    .no-results {
-      text-align: center;
-      padding: 3rem;
-      color: #6b7280;
-      font-size: var(--body-font-size-m);
-    }
-
-    .no-results.hidden {
-      display: none;
-    }
-
-    /* Copy feedback */
-    .copy-feedback {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      background: #10b981;
-      color: white;
-      padding: 1rem 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.3s ease;
-      pointer-events: none;
-    }
-
-    .copy-feedback.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  </style>
+  <link rel="stylesheet" href="faq.css">
 </head>
 <body>
   <header class="faq-hero">
-    <h1>Adobe Edge Delivery Services FAQ</h1>
-    <p>Comprehensive guide to standard EDS features, architecture, and best practices</p>
+    <div class="faq-hero-content">
+      <a href="/" class="home-link" aria-label="Go to home page">
+        <span>🏠</span>
+        <span>Home</span>
+      </a>
+      <h1>Adobe Edge Delivery Services FAQ</h1>
+      <p>Comprehensive guide to standard EDS features, architecture, and best practices</p>
+    </div>
   </header>
 
   <main class="container" role="main">
@@ -2278,6 +1851,11 @@
     Link copied to clipboard!
   </div>
 
+  <!-- Jump to Top Button -->
+  <button class="jump-to-top" id="jump-to-top" aria-label="Jump to top">
+    ↑
+  </button>
+
   <script>
     // Configuration
     const FAQ_CONFIG = {
@@ -2481,6 +2059,26 @@
           }, 100);
         }
       }
+
+      // Jump to Top Button
+      const jumpToTopBtn = document.getElementById('jump-to-top');
+
+      // Show/hide button based on scroll position
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+          jumpToTopBtn.classList.add('visible');
+        } else {
+          jumpToTopBtn.classList.remove('visible');
+        }
+      });
+
+      // Scroll to top when clicked
+      jumpToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
     });
   </script>
 </body>
