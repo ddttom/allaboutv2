@@ -16,7 +16,7 @@ Critical insights for AI assistants working on this project. Focus: actionable g
 
 **Correct pattern:**
 - Link: `[Chapter 1](chapter-01.md)`
-- Metadata: `"repo": "https://github.com/org/repo/tree/main/path/to/files"`
+- Metadata: `"repo": "https://github.com/org/repo"` (base URL only, see next section)
 - Result: ipynb-viewer converts to GitHub raw URL and opens in overlay
 
 **Documentation:** See `blocks/ipynb-viewer/README.md` section on "GitHub Markdown Overlay"
@@ -25,38 +25,57 @@ Critical insights for AI assistants working on this project. Focus: actionable g
 
 ## Repository URL Pattern in Notebook Metadata
 
-**Rule** (2026-01-13): Use `/blob/main/` pattern in notebook metadata repo URLs, NOT `/tree/main/`. The wrong pattern causes 404 errors when ipynb-viewer transforms URLs to fetch raw content.
+**Rule** (2026-01-13, corrected): Use the **base repository URL only**, without `/blob/`, `/tree/`, branch names, or subdirectory paths. The ipynb-viewer adds path components automatically.
 
 **Why it matters:**
-- ipynb-viewer transforms GitHub URLs to raw.githubusercontent.com for fetching markdown
-- Transformation: `github.com` → `raw.githubusercontent.com`, `/blob/` → `/`
-- But `/tree/main/` doesn't transform correctly, creating malformed URLs
-- Results in double `/main/` in the URL (one from `tree/main`, one from the path)
+- ipynb-viewer constructs full URLs as: `${repoUrl}/blob/${branch}/${filename}`
+- Then transforms to raw.githubusercontent.com for fetching content
+- If metadata includes branch or path info, you get malformed URLs
+- **Critical:** Verify actual file locations in the repository first
 
-**Error example:**
+**Common errors:**
 ```
-❌ Metadata: "repo": "https://github.com/.../tree/main/packages/manuscript/manuscript"
-❌ Result:   https://raw.githubusercontent.com/.../tree/main/.../main/chapter-01.md (404)
-   Problem:  Double 'main', malformed URL structure
+❌ "repo": "https://github.com/org/repo/tree/main/path"
+   Problem: Includes /tree/main/ - ipynb-viewer adds /blob/main/ creating duplicates
+
+❌ "repo": "https://github.com/org/repo/blob/main/path"
+   Problem: Includes /blob/main/ - gets doubled when ipynb-viewer adds it
+
+❌ "repo": "https://github.com/org/repo/packages/manuscript"
+   Problem: Assumes files in subdirectory, but they're at root
 ```
 
 **Correct pattern:**
 ```
-✅ Metadata: "repo": "https://github.com/.../blob/main/packages/manuscript/manuscript"
-✅ Result:   https://raw.githubusercontent.com/.../main/packages/manuscript/manuscript/chapter-01.md
-   Success:  Clean single 'main', correct URL structure
+✅ "repo": "https://github.com/org/repo"
+
+   How ipynb-viewer constructs URLs:
+   1. Metadata: https://github.com/org/repo
+   2. Add path: /blob/main/chapter-01.md
+   3. Full URL: https://github.com/org/repo/blob/main/chapter-01.md
+   4. Transform: github.com → raw.githubusercontent.com, /blob/ → /
+   5. Final: https://raw.githubusercontent.com/org/repo/main/chapter-01.md ✓
 ```
 
-**GitHub URL patterns explained:**
-- `/tree/main/` = directory listing (web interface)
-- `/blob/main/` = file view (web interface) ← **Use this in metadata**
-- `/main/` = raw content (API/download)
+**Step-by-step verification:**
+1. Find where chapter files actually exist in repository
+2. Test raw URL manually: `curl -I https://raw.githubusercontent.com/org/repo/main/chapter-01.md`
+3. If 404, files may be in subdirectory - check repository structure
+4. Use base repo URL if files at root, or include path if in subdirectory
+5. **Never** include `/blob/`, `/tree/`, or branch name in metadata
 
-**Correct transformation flow:**
-1. Metadata: `.../blob/main/packages/manuscript/manuscript`
-2. ipynb-viewer removes `/blob/`: `.../main/packages/manuscript/manuscript`
-3. Appends filename: `.../main/packages/manuscript/manuscript/chapter-01.md`
-4. Result: Valid raw content URL ✓
+**GitHub URL patterns:**
+- `/tree/main/path` = directory listing (web interface)
+- `/blob/main/file` = file view (web interface)
+- `/main/file` = raw content (API/download)
+- **Metadata should be**: Base repo only (no tree, blob, or branch)
+
+**Real example (invisible-users-manuscript):**
+```
+Repository structure: Chapter files at root level
+✅ Correct: "repo": "https://github.com/.../invisible-users-manuscript"
+❌ Wrong:   "repo": "https://github.com/.../invisible-users-manuscript/packages/manuscript/manuscript"
+```
 
 **Documentation:** See `blocks/ipynb-viewer/README.md` section on "Smart Links and GitHub Integration"
 
