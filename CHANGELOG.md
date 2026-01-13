@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2026-01-13] - Markdown Linting Setup
+
+### Added
+
+- **Markdown linting with auto-fix capabilities**: Integrated markdownlint-cli2 for consistent markdown formatting
+  - Created `.markdownlint.json` with standard rules enabled and sensible exceptions
+  - Created `.markdownlint-cli2.jsonc` for CLI configuration with `.gitignore` integration
+  - Added npm scripts: `lint:markdown` for checking and `lint:markdown:fix` for auto-fixing
+  - Updated `lint` script to include markdown: `npm run lint:js && npm run lint:css && npm run lint:markdown`
+  - Configured to automatically respect `.gitignore` patterns
+  - Added explicit ignore patterns for `.claude` and `plusplus` folders
+  - Auto-fixed 11,115 markdown formatting issues across 172 files (75% error reduction)
+  - Remaining 3,638 errors documented as requiring manual review
+
+### Changed
+
+- **Disabled markdown rules** for documentation-heavy projects:
+  - MD013 (line length check) - too restrictive for technical documentation
+  - MD033 (inline HTML) - needed for EDS block examples and complex formatting
+  - MD034 (bare URLs) - common and acceptable in documentation
+  - MD041 (h1 as first line) - metadata tables come first in EDS convention
+
+### Documentation
+
+- **CLAUDE.md**: Added markdown linting npm scripts and code style documentation
+- **PROJECTSTATE.md**: Documented markdown linting setup with statistics and rationale
+
 ## [2026-01-13] - ipynb-viewer SVG Inline Embedding
 
 ### Added
