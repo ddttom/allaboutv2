@@ -177,7 +177,7 @@ function main() {
     console.log(`   ${entries.length} URLs included`);
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error(`\n❌ Error writing sitemap file:`, error.message);
+    console.error('\n❌ Error writing sitemap file:', error.message);
     process.exit(1);
   }
 }
