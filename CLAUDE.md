@@ -7,6 +7,7 @@
 - **Claude Code Tools**: See `.claude/` directory (17 commands, 27 skills, 6 agents, 2 hooks)
 - **Start Here**: `docs/for-ai/index.md` for complete navigation
 - **Agents**: See `.claude/agents_README.md` for autonomous task handlers
+- **Critical Learnings**: See `LEARNINGS.md` for documented mistakes and patterns to avoid
 
 ### Common Workflows
 - **Create new block**: Use `/new-block <name>` command (follows Content Driven Development)
@@ -1049,6 +1050,14 @@ const code = 'here';
 - **`.claude/skills/`** - Extended capabilities for EDS development (27 total)
 - **`.claude/hooks/`** - Development workflow automation (2 active hooks)
   - `CONFIG.md` - Hook configuration and customization guide
+
+### Critical Learnings
+- **`LEARNINGS.md`** - Documented mistakes and patterns to avoid
+  - **Purpose**: Captures real-world errors made during development to prevent repetition
+  - **Current learnings**: ipynb-viewer smart links pattern (use relative paths, not full URLs)
+  - **Format**: Rule → Why it matters → Correct pattern → Documentation reference
+  - **When to update**: After discovering a mistake that could help future AI assistants
+  - **Read this file**: Before working with Jupyter notebooks, ipynb-viewer block, or similar features
 
 ### Quick Links
 - Architecture standards: `docs/for-ai/implementation/block-architecture-standards.md`
