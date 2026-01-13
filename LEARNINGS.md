@@ -80,3 +80,53 @@ Repository structure: Chapter files at root level
 **Documentation:** See `blocks/ipynb-viewer/README.md` section on "Smart Links and GitHub Integration"
 
 ---
+
+## Notebook Heading Levels for VSCode Outline
+
+**Rule** (2026-01-13): All major parts/sections in Jupyter notebooks must use level-2 headings (`##`) to appear in VSCode's notebook outline sidebar. Using level-3 headings (`###`) causes sections to appear as sub-items or be hidden.
+
+**Why it matters:**
+- VSCode notebook outline displays level-2 headings (`##`) as main navigation items
+- Level-3 headings (`###`) appear nested under level-2 or may not show in outline at all
+- Inconsistent heading levels break navigation structure and user experience
+- Authors expect all numbered parts (Part 1, Part 2, etc.) to be visible at same outline level
+
+**Common error:**
+```markdown
+❌ ### 💡 Part 12: What Agent Creators Must Build
+   Problem: Level-3 heading doesn't appear in outline as main item
+
+❌ ---## Part 9: The Platform Race
+   Problem: Horizontal rule (---) directly attached to heading breaks syntax
+```
+
+**Correct pattern:**
+```markdown
+✅ ## Part 1: The Discovery
+✅ ## Part 2: Understanding Invisible Failures
+✅ ## Part 3: The Accessibility Connection
+✅ ## 💡 Part 12: What Agent Creators Must Build
+
+   All parts use level-2 headings (##) consistently
+   Emojis are fine, just maintain ## heading level
+```
+
+**How to verify:**
+1. Open notebook in VSCode
+2. Check outline sidebar (shows notebook structure)
+3. All major parts should appear at same indentation level
+4. If a part is missing or nested, check heading level in that cell
+
+**VSCode outline hierarchy:**
+- `## Heading` = Main outline item (always visible)
+- `### Heading` = Sub-item under previous `##` heading
+- `#### Heading` = Nested further under `###`
+
+**Real example (invisible-users/notebook.ipynb):**
+- Parts 1-11 used `##` and appeared in outline correctly
+- Part 12 used `###` and was missing from outline
+- Changed Part 12 to `##` and it appeared in outline properly
+
+**Documentation:** See `blocks/ipynb-viewer/README.md` section on "Markdown Cells" and VSCode notebook outline behavior
+
+---

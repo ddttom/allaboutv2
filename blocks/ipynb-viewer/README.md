@@ -277,9 +277,12 @@ The notebook metadata is displayed in the header section:
 - tags - Array of keywords for searchability (e.g., ["tutorial", "javascript", "interactive"]) - displayed as gray tags
 - license - Content license (e.g., "MIT", "CC BY 4.0")
 - repo - Repository URL for automatically linking .md files in markdown cells (e.g., "https://github.com/username/repo")
-  - **When provided:** Markdown links to .md files are automatically converted to full repository URLs
+  - **Format:** Base repository URL only - do NOT include `/blob/`, `/tree/`, branch name, or subdirectory paths
+  - **Important:** Verify actual file locations in the repository first using `curl -I https://raw.githubusercontent.com/org/repo/main/file.md`
+  - **How it works:** ipynb-viewer constructs full URLs as `${repoUrl}/blob/${branch}/${filename}` then transforms to raw URLs
+  - **When provided:** Markdown links to .md files are automatically converted to full GitHub URLs and open in overlay
   - **When omitted:** Links render as-is (relative paths remain relative)
-  - **Important:** Use markdown link syntax `[text](file.md)`, not inline code `` `file.md` ``
+  - **Link syntax:** Use markdown syntax `[text](file.md)`, not inline code `` `file.md` ``
 - help-repo - Repository URL for help documentation (e.g., "https://github.com/ddttom/allaboutV2")
   - **Fallback:** Uses `repo` if not specified, then defaults to allaboutV2
   - **Purpose:** Separate repository for help button (❓) documentation
@@ -339,6 +342,29 @@ Unordered lists with - or *. Ordered lists with 1., 2., etc. Proper indentation 
 
 **Inline Formatting:**
 Headers (H1, H2, H3) with #, ##, ###. Bold text with **text**. Italic text with *text*. Inline code with backticks. Links with [text](url). Line breaks.
+
+**Heading Level Best Practices:**
+For notebooks with multiple sections (like tutorials, documentation, or educational content), use consistent heading levels to ensure proper outline structure in VSCode and other notebook viewers:
+
+- **Use `##` (level-2) for main parts/sections** - Appears as top-level items in VSCode outline sidebar
+- **Use `###` (level-3) for sub-sections** - Appears nested under the previous `##` heading
+- **Avoid inconsistent levels** - Mixing `##` and `###` for same-level sections breaks navigation
+
+**Why it matters:**
+- VSCode outline sidebar displays level-2 headings (`##`) as main navigation items
+- Level-3 headings (`###`) are nested or may not appear in outline at same level
+- Consistent structure helps users navigate long notebooks effectively
+- Example: If Parts 1-11 use `##`, Part 12 should also use `##` (not `###`)
+
+**Example Structure:**
+```markdown
+## Part 1: Introduction          ← Main section (appears in outline)
+### Getting Started              ← Sub-section (nested under Part 1)
+### Key Concepts                 ← Sub-section (nested under Part 1)
+
+## Part 2: Advanced Topics       ← Main section (same level as Part 1)
+### Performance                  ← Sub-section (nested under Part 2)
+```
 
 **Documentation Links:**
 When repo metadata is provided, links to .md files are automatically converted to full GitHub URLs and open in an in-app overlay viewer instead of navigating away.
