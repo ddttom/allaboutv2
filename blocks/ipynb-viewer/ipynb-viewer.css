@@ -332,6 +332,24 @@ html {
   text-decoration: underline;
 }
 
+/* Images in markdown */
+.ipynb-markdown-cell img,
+.ipynb-markdown-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+}
+
+/* SVG images - ensure they scale properly */
+.ipynb-markdown-cell img[src$=".svg"],
+.ipynb-markdown-image[src$=".svg"] {
+  max-width: 100%;
+  height: auto;
+}
+
 /* ============================================
    REUSABLE CONTENT STYLING CLASSES
 

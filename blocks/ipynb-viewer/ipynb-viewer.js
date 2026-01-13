@@ -119,8 +119,21 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
   // Code inline (before links to avoid conflicts)
   html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
 
+  // Images - process BEFORE links since images use ![alt](url) syntax
+  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_match, alt, url) => {
+    // Auto-convert PNG illustrations to SVG (pattern: illustrations/*.png → illustrations/*.svg)
+    let processedUrl = url;
+    if (url.match(/illustrations\/.*\.png$/i)) {
+      processedUrl = url.replace(/\.png$/i, '.svg');
+      console.log(`🎨 Auto-converting PNG to SVG in image: ${url} → ${processedUrl}`);
+    }
+
+    // Return inline image with alt text
+    return `<img src="${processedUrl}" alt="${alt}" class="ipynb-markdown-image" loading="lazy">`;
+  });
+
   // Links - convert .md files to repo URLs if repo is available
-  // Process BEFORE bold/italic to handle constructs like **Text** → [link](url)
+  // Process AFTER images (images also use bracket syntax but with ! prefix)
   html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, text, url) => {
     // Auto-convert PNG illustrations to SVG (pattern: illustrations/*.png → illustrations/*.svg)
     let processedUrl = url;
@@ -2313,6 +2326,15 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
 
     // Cell nodes or navigable part nodes: navigate to the page containing that cell
     if ((node.type === 'cell' || node.type === 'part') && node.cellIndex !== null) {
+      // Close any open GitHub markdown overlays first (they're layered on top)
+      const openMdOverlays = document.querySelectorAll('.ipynb-github-md-overlay');
+      openMdOverlays.forEach((mdOverlay) => {
+        if (mdOverlay.style.display !== 'none') {
+          mdOverlay.style.display = 'none';
+          console.log('🔙 Closed GitHub markdown overlay to navigate to cell');
+        }
+      });
+
       // Find the page that contains this cell
       const pageIndex = pages.findIndex((page) => page.cells.some(
         (cell) => parseInt(cell.dataset.cellIndex, 10) === node.cellIndex,
@@ -2504,6 +2526,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     openOverlay,
     closeOverlay,
     navigateToAnchor,
+    paginationState,
   };
 }
 
@@ -2942,6 +2965,15 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
         console.warn('⚠️  GitHub URL does not contain /blob/, cannot extract path:', githubUrl);
       }
 
+      // Update browser URL hash to reflect current markdown file (for AI agent visibility)
+      if (currentFilePath) {
+        const newHash = `#${currentFilePath}`;
+        if (window.location.hash !== newHash) {
+          window.history.replaceState(null, '', newHash);
+          console.log(`🔗 Updated URL hash to: ${newHash}`);
+        }
+      }
+
       // Render markdown with CURRENT repo URL (not help repo!) to generate smart links
       console.log('🔗 Parsing markdown with:', { repoUrl: currentRepoUrl, branch, currentFilePath });
       contentArea.innerHTML = parseMarkdown(markdownText, currentRepoUrl, branch, currentFilePath);
@@ -3021,21 +3053,32 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
           treeState.tree = parentHistory.navigationTree;
         }
 
-        // Create node click handler for this overlay's tree
-        const handleTreeNodeClick = (node) => {
-          if (node.type === 'markdown' && node.path) {
-            const mdRepoUrl = helpRepoUrl || 'https://github.com/ddttom/allaboutV2';
-            const fullUrl = `${mdRepoUrl}/blob/${branch}/${node.path}`;
+        // Use parent's tree click handler if available (handles both cell and markdown nodes)
+        // Otherwise create a simple markdown-only handler
+        let handleTreeNodeClick;
 
-            // Close current overlay and open new one
-            closeOverlay();
-            const newOverlay = createGitHubMarkdownOverlay(fullUrl, node.label, helpRepoUrl, branch, parentHistory);
-            newOverlay.openOverlay();
+        if (parentHistory.handleTreeNodeClick && typeof parentHistory.handleTreeNodeClick === 'function') {
+          // Use parent's handler - it knows how to navigate to both cells and markdown
+          console.log('✅ Using parent overlay\'s tree click handler (supports cell + markdown navigation)');
+          handleTreeNodeClick = parentHistory.handleTreeNodeClick;
+        } else {
+          // Fallback: create markdown-only handler
+          console.log('⚠️  No parent handler available, creating markdown-only handler');
+          handleTreeNodeClick = (node) => {
+            if (node.type === 'markdown' && node.path) {
+              const mdRepoUrl = helpRepoUrl || 'https://github.com/ddttom/allaboutV2';
+              const fullUrl = `${mdRepoUrl}/blob/${branch}/${node.path}`;
 
-            // Select this node in tree
-            selectTreeNode(node.id, treeState, navTreePanel, handleTreeNodeClick);
-          }
-        };
+              // Close current overlay and open new one
+              closeOverlay();
+              const newOverlay = createGitHubMarkdownOverlay(fullUrl, node.label, helpRepoUrl, branch, parentHistory);
+              newOverlay.openOverlay();
+
+              // Select this node in tree
+              selectTreeNode(node.id, treeState, navTreePanel, handleTreeNodeClick);
+            }
+          };
+        }
 
         // Render the tree in THIS overlay's tree panel
         renderNavigationTree(parentHistory.navigationTree, navTreePanel, treeState, handleTreeNodeClick);
@@ -3115,6 +3158,50 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
     openOverlay,
     closeOverlay,
   };
+}
+
+/**
+ * Check for hash in URL and navigate to that markdown file if present
+ * @param {string} repoUrl - Repository URL
+ * @param {string} helpRepoUrl - Help repository URL
+ * @param {string} branch - GitHub branch
+ * @param {Object} pagedOverlay - The paged overlay object with navigation methods
+ */
+function checkHashNavigation(repoUrl, helpRepoUrl, branch, pagedOverlay) {
+  const { hash } = window.location;
+
+  if (!hash || hash === '#') {
+    console.log('📍 No hash in URL, staying on current page');
+    return;
+  }
+
+  // Remove leading # from hash
+  const targetPath = hash.substring(1);
+  console.log(`📍 Hash detected in URL: ${targetPath}`);
+
+  // Check if it's a markdown file path (ends with .md)
+  if (targetPath.endsWith('.md')) {
+    console.log(`🔗 Navigating to markdown file from URL hash: ${targetPath}`);
+
+    // Build full GitHub URL
+    const fullUrl = `${repoUrl}/blob/${branch}/${targetPath}`;
+    const title = targetPath.split('/').pop().replace('.md', '').replace(/-/g, ' ');
+
+    // Open markdown overlay with a slight delay to ensure paged overlay is ready
+    setTimeout(() => {
+      const mdOverlay = createGitHubMarkdownOverlay(
+        fullUrl,
+        title,
+        helpRepoUrl,
+        branch,
+        pagedOverlay.paginationState,
+        false,
+      );
+      mdOverlay.openOverlay();
+    }, 200);
+  } else {
+    console.log(`📍 Hash is not a markdown file path: ${targetPath}`);
+  }
 }
 
 /**
@@ -3360,6 +3447,8 @@ export default async function decorate(block) {
         // Auto-open after a brief delay to ensure DOM is ready
         setTimeout(() => {
           overlay.openOverlay();
+          // Check for hash navigation after overlay opens
+          checkHashNavigation(repoUrl, helpRepoUrl, githubBranch, overlay);
         }, 100);
       } else {
         // Regular notebook/paged: Show start button
@@ -3373,6 +3462,10 @@ export default async function decorate(block) {
         // Start button opens overlay
         startButton.addEventListener('click', () => {
           overlay.openOverlay();
+          // Check for hash navigation after overlay opens
+          setTimeout(() => {
+            checkHashNavigation(repoUrl, helpRepoUrl, githubBranch, overlay);
+          }, 100);
         });
 
         container.appendChild(buttonContainer);
