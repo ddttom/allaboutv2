@@ -1584,6 +1584,38 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl) {
 function renderNavigationTree(tree, container, treeState, onNodeClick) {
   container.innerHTML = '';
 
+  // Remove old delegated listener if it exists
+  if (container._treeClickHandler) {
+    container.removeEventListener('click', container._treeClickHandler);
+  }
+
+  // Add single delegated listener for ALL tree clicks
+  container._treeClickHandler = (e) => {
+    // Handle expand/collapse icon clicks
+    const icon = e.target.closest('.ipynb-nav-tree-icon');
+    // Has arrow (not spacer)
+    if (icon && icon.textContent.trim()) {
+      const { nodeId } = icon.parentElement.dataset;
+      if (nodeId) {
+        e.stopPropagation();
+        toggleTreeNode(nodeId, treeState, container, onNodeClick);
+        return;
+      }
+    }
+
+    // Handle tree node clicks
+    const treeItem = e.target.closest('.ipynb-nav-tree-item');
+    if (treeItem) {
+      const { nodeId } = treeItem.dataset;
+      const node = findNodeById(tree, nodeId);
+      if (node) {
+        onNodeClick(node);
+      }
+    }
+  };
+
+  container.addEventListener('click', container._treeClickHandler);
+
   // Filter out Repository node if it has no children (no .md files found)
   const filteredTree = tree.filter((node) => {
     if (node.id === 'repository') {
@@ -1634,10 +1666,7 @@ function renderTreeNode(node, parentElement, treeContainer, treeState, onNodeCli
       icon.classList.add('expanded');
     }
     icon.textContent = '▶'; // Right arrow
-    icon.addEventListener('click', (e) => {
-      e.stopPropagation();
-      toggleTreeNode(node.id, treeState, treeContainer, onNodeClick);
-    });
+    // Event listener handled by event delegation in renderNavigationTree()
     nodeEl.appendChild(icon);
   } else {
     // Empty space for alignment
@@ -1664,10 +1693,7 @@ function renderTreeNode(node, parentElement, treeContainer, treeState, onNodeCli
     nodeEl.setAttribute('title', node.label);
   }
 
-  // Click handler for navigation
-  nodeEl.addEventListener('click', () => {
-    onNodeClick(node);
-  });
+  // Click handler handled by event delegation in renderNavigationTree()
 
   parentElement.appendChild(nodeEl);
 
@@ -1719,6 +1745,25 @@ function selectTreeNode(nodeId, treeState, container, onNodeClick) {
       selectedEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   }, 100);
+}
+
+/**
+ * Find node by ID in tree (recursive)
+ * @param {Array} tree - Tree structure
+ * @param {string} nodeId - Node ID to find
+ * @returns {Object|null} - Found node or null
+ */
+function findNodeById(tree, nodeId) {
+  for (const node of tree) {
+    if (node.id === nodeId) {
+      return node;
+    }
+    if (node.children) {
+      const found = findNodeById(node.children, nodeId);
+      if (found) return found;
+    }
+  }
+  return null;
 }
 
 /**
@@ -3267,9 +3312,17 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
           console.log('✅ Using parent overlay\'s tree click handler (supports cell + markdown navigation)');
           handleTreeNodeClick = parentHistory.handleTreeNodeClick;
         } else {
-          // Fallback: create markdown-only handler
-          console.log('⚠️  No parent handler available, creating markdown-only handler');
+          // Fallback: create handler that handles all node types
           handleTreeNodeClick = (node) => {
+            // For cell/part nodes: close overlay (user expects to see notebook)
+            if (node.type === 'cell' || node.type === 'part') {
+              closeOverlay();
+              // Note: The parent paged overlay will handle the navigation
+              // The tree state is shared, so the selection will be visible
+              return;
+            }
+
+            // For markdown nodes: navigate to that markdown file
             if (node.type === 'markdown' && node.path) {
               const mdRepoUrl = helpRepoUrl || 'https://github.com/ddttom/allaboutV2';
               const fullUrl = `${mdRepoUrl}/blob/${branch}/${node.path}`;
@@ -3282,6 +3335,8 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
               // Select this node in tree
               selectTreeNode(node.id, treeState, navTreePanel, handleTreeNodeClick);
             }
+
+            // For root/folder nodes: do nothing (just expand/collapse via icon)
           };
         }
 
