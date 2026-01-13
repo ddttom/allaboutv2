@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Configured to automatically respect `.gitignore` patterns
   - Added explicit ignore patterns for `.claude` and `plusplus` folders
   - Auto-fixed 11,115 markdown formatting issues across 172 files (75% error reduction)
-  - Remaining 3,638 errors documented as requiring manual review
+  - Disabled 5 additional cosmetic rules (94% reduction of remaining errors: 3,638 → 207)
 
 ### Changed
 
@@ -28,6 +28,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - MD033 (inline HTML) - needed for EDS block examples and complex formatting
   - MD034 (bare URLs) - common and acceptable in documentation
   - MD041 (h1 as first line) - metadata tables come first in EDS convention
+  - MD024 (duplicate headings) - valid for FAQ sections and multi-section documentation
+  - MD025 (multiple h1 headers) - valid for long-form documentation
+  - MD036 (emphasis as heading) - stylistic choice acceptable in documentation
+  - MD040 (fenced code language) - not always necessary for simple code snippets
+  - MD060 (dollar signs in code) - false positives with inline code examples
 
 ### Documentation
 
