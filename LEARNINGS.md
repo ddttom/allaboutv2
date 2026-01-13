@@ -223,3 +223,83 @@ When removing emojis from headings, remember to update action card links to matc
 **Documentation:** See `blocks/ipynb-viewer/README.md` section on "Markdown Cells" - heading formatting best practices
 
 ---
+
+## Jupyter Notebook Cell Source Must Use Proper Newlines
+
+**Rule** (2026-01-13): Every line in a Jupyter notebook cell's source array must end with `\n` (newline character) except the last line. Storing all content as a single massive string without newlines breaks VSCode outline parsing and prevents sub-headings from being detected.
+
+**Why it matters:**
+- VSCode notebook outline parser requires proper line breaks to detect headings
+- A cell with content stored as one string (e.g., `"source": ["### Heading..."]`) prevents VSCode from seeing the `###` or `####` sub-headings
+- Without newlines, VSCode can't build the outline tree structure
+- Users won't see sub-sections when expanding parts in the outline sidebar
+- Proper newlines ensure consistent rendering across all notebook viewers
+
+**Problem example (Cell 40 from invisible-users/notebook.ipynb):**
+```python
+# ❌ WRONG - All content in single string without newlines
+"source": [
+  "### Platform Race & Identity Delegation**Navigating the competitive landscape (January 2026 update)**The missing piece this chapter described - a universal identity delegation layer - now has **three competing implementations** launched within seven days.---#### What Actually Happened: Seven-Day Acceleration**January 5-11, 2026:** Three major platforms launched agent commerce systems:1. **Agentic Commerce Protocol (ACP)**..."
+]
+
+Result: VSCode outline shows no sub-sections when Part is expanded
+```
+
+**Correct pattern:**
+```python
+# ✅ CORRECT - Each line ends with \n, proper structure
+"source": [
+  "### Platform Race & Identity Delegation\n",
+  "\n",
+  "**Navigating the competitive landscape (January 2026 update)**\n",
+  "\n",
+  "The missing piece this chapter described - a universal identity delegation layer - now has **three competing implementations** launched within seven days.\n",
+  "\n",
+  "---\n",
+  "\n",
+  "#### What Actually Happened: Seven-Day Acceleration\n",
+  "\n",
+  "**January 5-11, 2026:** Three major platforms launched agent commerce systems:\n",
+  "\n",
+  "1. **Agentic Commerce Protocol (ACP)** - OpenAI/Stripe (September 2024, expanded January 2026)\n",
+  "   - Open standard (Apache 2.0 license)\n",
+  "   - Powers \"Instant Checkout\" in ChatGPT\n",
+  "   - 1M+ merchants on Shopify/Etsy\n"
+]
+
+Result: VSCode outline shows all 7 sub-sections (####) when Part is expanded
+```
+
+**Key formatting rules:**
+1. **Every line ends with `\n`** - Except the very last line in the source array
+2. **Headings need newlines** - Both before and after heading lines
+3. **Horizontal rules need newlines** - `"---\n"` followed by `"\n"`
+4. **Paragraphs separated** - Blank line (`"\n"`) between paragraphs
+5. **Lists properly formatted** - Newlines after each list item
+
+**How to fix:**
+If you have a cell with massive single-line string:
+1. Split content at structural boundaries (headings, horizontal rules, paragraphs)
+2. Add `\n` to end of each line except the last
+3. Verify with VSCode outline - all sub-sections should be visible
+
+**Real example fix (invisible-users/notebook.ipynb Cell 40):**
+- **Before**: 1 line (massive string) - 0 sub-sections visible in outline
+- **After**: 177 lines (properly formatted) - 7 sub-sections visible in outline
+- **Result**: VSCode outline now shows all `####` headings as expandable sub-items
+
+**Common symptoms:**
+- Parts appear in VSCode outline but have no sub-sections when expanded
+- "The parts need more than one sub section in their expansion"
+- Cells with many `####` headings showing as flat content
+- Validation passes (100/100) but outline structure is broken
+
+**Validation note:**
+The notebook-validator script does NOT catch this issue because:
+- It validates smart links, structure, part flow - not visual rendering
+- Missing newlines don't break smart links or part detection
+- This is a VSCode outline parsing issue, not a structural validation issue
+
+**Documentation:** See `blocks/ipynb-viewer/README.md` section on "Markdown Cells" - proper source array formatting for VSCode compatibility
+
+---

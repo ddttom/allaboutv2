@@ -366,6 +366,49 @@ For notebooks with multiple sections (like tutorials, documentation, or educatio
 ### Performance                  ← Sub-section (nested under Part 2)
 ```
 
+**Critical: Proper Newline Formatting in Source Arrays**
+
+Every line in a notebook cell's source array must end with `\n` (newline character) except the last line. Storing all content as a single massive string without newlines breaks VSCode outline parsing.
+
+**Problem:**
+```python
+# ❌ WRONG - All content in single string
+"source": [
+  "### Heading**Content**More content---#### Sub-heading..."
+]
+```
+
+VSCode outline shows no sub-sections because it can't parse the headings.
+
+**Solution:**
+```python
+# ✅ CORRECT - Each line ends with \n
+"source": [
+  "### Heading\n",
+  "\n",
+  "**Content**\n",
+  "\n",
+  "More content\n",
+  "\n",
+  "---\n",
+  "\n",
+  "#### Sub-heading\n"
+]
+```
+
+**Key rules:**
+- Every line ends with `\n` except the very last line
+- Headings need newlines before and after
+- Horizontal rules: `"---\n"` followed by `"\n"`
+- Blank lines between paragraphs: `"\n"`
+
+**Symptoms of missing newlines:**
+- Parts show in outline but have no sub-sections when expanded
+- Cells with many `####` headings appear as flat content
+- VSCode can't detect heading hierarchy
+
+**See:** `LEARNINGS.md` section on "Jupyter Notebook Cell Source Must Use Proper Newlines" for complete details and real examples.
+
 **Documentation Links:**
 When repo metadata is provided, links to .md files are automatically converted to full GitHub URLs and open in an in-app overlay viewer instead of navigating away.
 
