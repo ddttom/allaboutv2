@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2026-01-13] - Step-Commit Sitemap Automation
+
+### Added
+- **Automatic sitemap regeneration**: Created new Step 2 in step-commit workflow
+  - Created `scripts/generate-invisible-users-sitemap.js` for sitemap generation
+  - Detects HTML and PDF file changes in `invisible-users/` folder
+  - Automatically regenerates `invisible-users/sitemap.xml` when changes detected
+  - Commits sitemap separately with message: "chore: Regenerate invisible-users sitemap"
+  - Added npm script: `npm run generate-sitemap:invisible-users` for manual generation
+  - ES module compatible (uses `import` instead of `require`)
+
+### Changed
+- **Step-commit workflow**: Renumbered steps 2-9 to 3-10 to accommodate new sitemap step
+  - Updated `.claude/commands/step-commit.md` with new Step 2
+  - Updated `.claude/skills/step-commit.json` with conditional sitemap regeneration logic
+  - Workflow now has 10 steps total (was 9)
+
+### Technical Details
+- **Sitemap configuration**: Hardcoded priority and changefreq rules
+  - Priority 1.0: index.html, appendix-index.html, the-invisible-users.pdf
+  - Priority 0.9: news.html (weekly changefreq), faq.html
+  - Priority 0.8: appendix-[a-l].html, for-reviewers.html, notebook.html
+  - Priority 0.7: default fallback (yearly changefreq)
+- **URL pattern**: Direct `/invisible-users/{filename}` format
+- **File detection**: Scans for `.html` and `.pdf` files, excluding hidden files and subdirectories
+
 ## [2026-01-13] - Invisible Users Notebook Reorganization
 
 ### Changed
