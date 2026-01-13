@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2026-01-13] - Invisible Users Notebook Update
+
+### Changed
+- **invisible-users.ipynb**: Updated to align with manuscript v2.0
+  - Expanded from 10 to 12 chapters (added Chapter 9: The Platform Race, Chapter 12: What Agent Creators Must Build)
+  - Updated total word count from ~41,700 to ~58,000 words
+  - Renumbered chapters: old Chapter 9→10 (Designing for Both), old Chapter 10→11 (Technical Advice)
+  - Updated from five to six types of invisible failure (added Loading States)
+  - Added January 2026 platform launch context (Amazon, Microsoft, Google)
+  - Added new Part 9 section covering The Platform Race
+  - Updated all chapter cross-references and links throughout
+  - Updated repository URL to github.com/Digital-Domain-Technologies-Ltd/invisible-users-manuscript
+  - Updated metadata last-modified date to 2026-01-13
+
+### Added
+- **Copyright notice**: Added prominent copyright notice in Cell-0 stating material is for review purposes only
+- **New content cell**: Inserted Part 9 section between Cell-17 and Cell-18 covering platform race dynamics
+
+### Technical Details
+- Total cells: 37 (one new markdown cell added)
+- All interactive JavaScript visualizations maintained
+- Consistent repository references across all cells and metadata
+- Notebook synchronized with official manuscript repository
+
 ## [2025-12-14] - Universal Service Provider Management System Planning
 
 ### Added
