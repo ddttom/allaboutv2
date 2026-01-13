@@ -42,7 +42,7 @@ While there is basic error handling, it could be more informative and user-frien
   console.error('Showcaser Error:', error);
   const errorMessage = SHOWCASER_CONFIG.DEBUG_MODE
     ?`Error: ${error.message}`
-    : SHOWCASER_CONFIG.ERROR_MESSAGE;
+: SHOWCASER_CONFIG.ERROR_MESSAGE;
   displayErrorMessage(errorMessage);
 }`
 
