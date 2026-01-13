@@ -17,10 +17,10 @@ Validate the notebook.ipynb file
 ## Common Usage
 
 ```bash
-# Basic validation
+# Basic validation (detects parts automatically, no expectations)
 python validator.py notebook.ipynb
 
-# With expected parts
+# With expected parts (validates specific count)
 python validator.py notebook.ipynb --expected-parts 12
 
 # Require transitions
@@ -39,10 +39,13 @@ python validator.py notebook.ipynb --quiet
 ## What It Validates
 
 1. **Smart Links** (30%) - All `[text](#)` links resolve to headings
-2. **Structure** (25%) - Proper intro, parts, conclusion
+2. **Structure** (25%) - Detects parts/sections if present, validates count if specified
 3. **Transitions** (20%) - Action cards between parts (if required)
-4. **Part Flow** (15%) - Sequential numbering (1, 2, 3...)
+4. **Part Flow** (15%) - Sequential numbering if parts exist (1, 2, 3...)
 5. **Production** (10%) - Metadata, file size, JSON validity
+
+**Note:** Validator is flexible - works with notebooks that have numbered parts/sections
+or free-form structure. Only enforces part count when `--expected-parts` is specified.
 
 ## Scoring
 

@@ -146,33 +146,32 @@ class NotebookValidator:
         parts = self.identify_parts()
         issues = []
 
-        # Check part count if expected_parts specified
+        # Only check part count if expected_parts specified
         if self.expected_parts is not None:
-            if len(parts) < self.expected_parts:
-                issues.append(f"Expected {self.expected_parts} parts, found {len(parts)}")
-            elif len(parts) > self.expected_parts:
+            if len(parts) != self.expected_parts:
                 issues.append(f"Expected {self.expected_parts} parts, found {len(parts)}")
 
-        # Check for introduction
-        if parts and parts[0]['cell'] < self.min_intro_cells:
-            issues.append(
-                f"No clear introduction section "
-                f"(need {self.min_intro_cells}+ cells before first part)"
-            )
+        # Only check intro/conclusion if parts exist and thresholds are set
+        if parts:
+            if self.min_intro_cells > 0 and parts[0]['cell'] < self.min_intro_cells:
+                issues.append(
+                    f"No clear introduction section "
+                    f"(need {self.min_intro_cells}+ cells before first part)"
+                )
 
-        # Check for conclusion
-        if parts and parts[-1]['cell'] > len(self.cells) - self.min_conclusion_cells:
-            issues.append(
-                f"No clear conclusion section "
-                f"(need {self.min_conclusion_cells}+ cells after last part)"
-            )
+            if self.min_conclusion_cells > 0 and parts[-1]['cell'] > len(self.cells) - self.min_conclusion_cells:
+                issues.append(
+                    f"No clear conclusion section "
+                    f"(need {self.min_conclusion_cells}+ cells after last part)"
+                )
 
         status = 'PASS' if len(issues) == 0 else 'WARN'
         score = max(0, 100 - (len(issues) * 20))
 
         return {
             'parts_found': len(parts),
-            'parts_expected': self.expected_parts or 'auto',
+            'parts_expected': self.expected_parts if self.expected_parts is not None else 'not specified',
+            'has_parts': len(parts) > 0,
             'issues': issues,
             'status': status,
             'score': score
@@ -435,9 +434,12 @@ class NotebookValidator:
                     print(f"  ✓ All {result['valid']} smart links resolve correctly")
 
             elif category == 'structure':
-                print(f"  ✓ Found {result['parts_found']} parts")
-                if self.expected_parts:
-                    print(f"    (expected {self.expected_parts})")
+                if result['has_parts']:
+                    print(f"  ✓ Found {result['parts_found']} parts")
+                    if result['parts_expected'] != 'not specified':
+                        print(f"    (expected {result['parts_expected']})")
+                else:
+                    print(f"  ℹ️  No numbered parts/sections detected (notebook uses free-form structure)")
                 if result['issues']:
                     for issue in result['issues']:
                         print(f"  ⚠  {issue}")

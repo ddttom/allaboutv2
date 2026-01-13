@@ -91,21 +91,25 @@ Specify required metadata fields:
 ### 2. Structure (Weight: 25%)
 
 **What it validates:**
-- Correct number of parts (if specified)
-- Introduction section exists
-- Conclusion section exists
-- No structural gaps
+- Detects numbered parts/sections if present (optional)
+- Validates part count only if `--expected-parts` specified
+- Introduction section exists (if parts present and threshold set)
+- Conclusion section exists (if parts present and threshold set)
+- Works with both structured (parts) and free-form notebooks
 
 **Scoring:**
-- 100: Perfect structure
+- 100: Perfect structure (or no parts detected with no expectations)
 - 80: Minor issues (intro/conclusion)
-- 60: Missing parts
+- 60: Wrong part count (when expected parts specified)
 - 0-59: Major structural problems
 
 **Common issues:**
+- Part count doesn't match `--expected-parts`
 - Too few cells before first part
 - Too few cells after last part
-- Missing parts/sections
+
+**Note:** The validator is flexible - it doesn't require notebooks to have numbered parts.
+It only validates structure if parts exist, and only enforces counts when explicitly told.
 
 ### 3. Transitions (Weight: 20%)
 
