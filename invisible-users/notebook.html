@@ -8,6 +8,19 @@
     <!-- EDS Core Styles -->
     <link rel="stylesheet" href="/styles/styles.css">
     <link rel="stylesheet" href="/styles/fonts.css">
+
+    <!-- Prevent FOUC -->
+    <style>
+        body:not(.appear) {
+            visibility: hidden;
+        }
+    </style>
+    <script>
+        // Add appear class immediately, before DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.add('appear');
+        });
+    </script>
 </head>
 <body>
     <main>
@@ -43,6 +56,5 @@
             block.innerHTML = `<p style="color: red; padding: 2rem;">Failed to load block: ${error.message}</p>`;
         }
     </script>
-    <script>document.body.classList.add('appear');</script>
 </body>
 </html>
