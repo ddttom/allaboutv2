@@ -7,6 +7,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2026-01-13] - ipynb-viewer SVG Inline Embedding
+
+### Added
+- **Inline SVG rendering for notebook illustrations**: Automatically fetches and embeds SVG illustrations inline
+  - Added `SVG_INLINE_CONFIG` with pattern matching (`/illustrations\/[^/]+\.svg$/i`)
+  - Implemented `fetchSVGContent()` with 10-second timeout using AbortController
+  - Implemented `sanitizeSVG()` to parse SVG XML, remove script tags, and add accessibility (title elements)
+  - Implemented `inlineSVGIllustrations()` for post-processing markdown HTML to inline SVG content
+  - SVG caching in Map to avoid redundant network requests
+  - Parallel fetching with `Promise.all()` for performance when multiple SVGs present
+  - Graceful fallback to `<img>` tags if fetch or parse fails
+  - Only processes `illustrations/*.svg` files (scoped pattern for safety)
+
+### Fixed
+- **GitHub raw URL format bug**: Removed extra `/raw/` in path construction (line 159 in `ipynb-viewer.js`)
+  - **Before**: `raw.githubusercontent.com/{org}/{repo}/raw/{branch}/{path}` → 404 errors
+  - **After**: `raw.githubusercontent.com/{org}/{repo}/{branch}/{path}` → correct format
+  - Bug was causing all notebook images to fail with 404 errors
+- **Navigation tree disappearing**: Changed `forEach` to `for` loop for proper async/await handling
+  - `forEach` with async callbacks doesn't wait for completion
+  - Sequential `for` loop ensures all cells render before navigation tree builds
+  - Fixes issue where tree tried to render before cell content was available
+- **SVG pattern matching**: Updated regex to match both relative and absolute GitHub URLs
+  - Pattern now matches: `/illustrations/` anywhere in URL path
+  - Works for both `illustrations/*.svg` and `https://.../illustrations/*.svg`
+
+### Changed
+- **`createMarkdownCell()` function**: Made async to support SVG fetching workflow
+  - Returns `Promise<HTMLElement>` instead of `HTMLElement`
+  - All callers updated to `await` the function
+  - Cell rendering now sequential to ensure proper order and navigation tree data
+
+### Security
+- **SVG sanitization**: Removes `<script>` tags from fetched SVG content before inlining
+- **Timeout protection**: 10-second timeout per SVG prevents hanging on slow/stalled requests
+
+### Documentation
+- **LEARNINGS.md**: Added entry about GitHub raw URL format bug
+  - Documents correct URL format: no `/raw/` in path
+  - Explains how bug occurred (double "raw" in URL)
+  - Provides testing approach with curl to verify URLs
+
 ## [2026-01-13] - Step-Commit Sitemap Automation
 
 ### Added
