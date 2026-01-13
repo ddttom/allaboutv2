@@ -7,6 +7,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2026-01-13] - ipynb-viewer Tree Navigation Event Delegation
+
+### Fixed
+
+- **Tree navigation click handling in ipynb-viewer**: Implemented event delegation pattern to fix unresponsive tree clicks
+  - Issue: Notebook tree items (parts/cells) were unclickable after clicking repository items or when viewing markdown overlays
+  - Root cause #1: Event listeners destroyed during tree re-renders when using `container.innerHTML = ''`
+  - Root cause #2: Fallback click handler in GitHub markdown overlay only processed markdown nodes, ignoring part/cell clicks
+  - Solution: Single delegated event listener on container survives DOM replacement
+  - Added `findNodeById()` helper function for recursive tree node lookup
+  - Removed direct event listeners from `renderTreeNode()` (N listeners → 1 listener)
+  - Enhanced fallback handler to handle all node types:
+    - Cell/part clicks → Close overlay (reveals notebook)
+    - Markdown clicks → Navigate to markdown file
+    - Root/folder clicks → Handled by expand/collapse icon only
+  - Performance improvement: Reduced event listener count from N to 1 per container
+  - Commits: 6e45d3bd (implementation), a583a20b (lint fixes)
+
+### Added
+
+- **block-architecture.md**: Comprehensive technical documentation for ipynb-viewer block
+  - Architecture principles (event delegation pattern, configuration object pattern, functional organization)
+  - Key components (navigation tree, GitHub integration, overlay system, code execution engine)
+  - Data flow diagrams (initial load, tree navigation, GitHub overlay, code execution)
+  - Performance optimizations and CSS architecture
+  - Error handling patterns and testing strategy
+  - Complete changelog tracking versions 1.x → 2.0 → 2.0.1 → 2.0.2
+  - File: `blocks/ipynb-viewer/block-architecture.md` (642 lines)
+
+### Technical Details
+
+- **Event delegation pattern**: Captures clicks on container instead of individual nodes
+  - Prevents event listener loss during DOM manipulation
+  - Uses `e.target.closest()` to identify clicked elements
+  - Fallback uses `tree` parameter (closure) instead of `treeState.tree`
+- **Fallback handler behavior**: Context-aware navigation based on node type
+  - Closes markdown overlay when user clicks notebook items
+  - Maintains tree state shared across overlays
+  - Parent paged overlay handles actual notebook navigation
+
 ## [2026-01-13] - Markdown Linting Setup
 
 ### Added
