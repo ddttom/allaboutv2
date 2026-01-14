@@ -3428,7 +3428,15 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
       // Inline SVG illustrations
       renderedHTML = await inlineSVGIllustrations(renderedHTML);
 
-      contentArea.innerHTML = renderedHTML;
+      // Use DOMParser to preserve whitespace in code blocks
+      // Setting innerHTML directly can cause the browser to normalize whitespace
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(renderedHTML, 'text/html');
+      contentArea.innerHTML = '';
+      // Move all child nodes from parsed document to content area
+      while (doc.body.firstChild) {
+        contentArea.appendChild(doc.body.firstChild);
+      }
 
       // Process smart links in the rendered markdown
       // 1. Resolve hash links (internal navigation)
