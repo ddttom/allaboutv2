@@ -45,10 +45,10 @@ A powerful new navigation panel appears on the left side of the overlay:
 **Features:**
 
 - **Notebook Section** - Shows all cells organized by Parts (or flat structure if no Parts)
-- **Repository Section** - Lists all linked markdown files from the repository
+- **Repository Section** - Categorized folders: Chapters, Appendix, Miscellaneous
 - **Expandable/Collapsible** - Click triangles (▶) to expand folders and sections
 - **Click to Navigate** - Click any cell or file to jump directly to it
-- **Visual Organization** - Files organized in folder hierarchy
+- **Smart Categorization** - Files automatically sorted into appropriate folders
 - **Toggle Visibility** - Use the tree toggle button (◄/►) to hide/show the panel
 
 **Structure:**
@@ -56,7 +56,7 @@ A powerful new navigation panel appears on the left side of the overlay:
 - **Frontmatter** - Cells before first Part (only if Parts exist)
 - **Part N** - Each numbered Part with its cells
 - **Summary** - Cells after completion (only if Parts exist)
-- **Repository** - All .md files referenced in the notebook (auto-hidden if empty)
+- **Repository** - Categorized into Chapters (expanded), Appendix, Miscellaneous folders (auto-hidden if empty)
 
 ### Top Bar Buttons
 
@@ -165,13 +165,29 @@ Shows all cells in the notebook:
 
 #### Repository Section
 
-Shows all markdown files linked in the notebook:
+Shows all markdown files linked in the notebook, organized into three categorized folders:
 
+**Chapters Folder** (expanded by default):
+- Contains files matching: `preface.md` or `chapter-N.md` patterns
+- Automatically sorted alphabetically
+- Example: `chapter-1.md`, `chapter-2.md`, `preface.md`
+
+**Appendix Folder** (collapsed by default):
+- Contains files matching: `appendix-X.md` pattern
+- Automatically sorted alphabetically
+- Example: `appendix-a.md`, `appendix-b.md`
+
+**Miscellaneous Folder** (collapsed by default):
+- Restricted to specific files only: `advice.md`, `for-ai.md`, `glossary.md`
+- All other files are automatically ignored
+- Hardcoded inclusion list for essential reference files
+
+**Features:**
 - **Automatically populated** from .md links in cells
-- **Folder hierarchy** - files organized by directory structure
-- **Alphabetical sorting** within folders
-- **Auto-hidden** if no .md files are referenced
+- **Smart categorization** - files automatically sorted into correct folders
+- **Auto-hidden** - Repository section hidden if no .md files referenced
 - **Deduplication** - same filename only appears once (uses first occurrence)
+- **Alphabetical sorting** - files sorted within each folder
 
 ### Using the Tree
 
@@ -201,7 +217,10 @@ Shows all markdown files linked in the notebook:
 - Automatically finds Part headings (pattern: `Part \d+`)
 - Detects Summary section (contains "completed" AND "final")
 - Extracts all .md links from notebook cells
-- Resolves relative paths (../, ./, same directory)
+- Categorizes files into Chapters (preface.md, chapter-N.md)
+- Categorizes files into Appendix (appendix-X.md)
+- Restricts Miscellaneous to: advice.md, for-ai.md, glossary.md
+- Ignores all other files automatically
 
 **Visual Feedback:**
 
