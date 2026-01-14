@@ -6,6 +6,26 @@ The project is in active development with a focus on educational content deliver
 
 ## Recent Accomplishments
 
+### ipynb-viewer External Link Support (2026-01-14)
+
+- **Status**: ✅ Completed external link functionality in GitHub markdown overlay
+- **Features implemented**:
+  - Angle-bracket URLs (`<https://example.com>`) now clickable, open in new tab
+  - External markdown links (`[text](https://...)`) now clickable, open in new tab
+  - Security attributes: `target="_blank" rel="noopener noreferrer"`
+  - Styled with external link icon (↗) for visual indication
+  - Blue GitHub-style link color with hover underline
+- **Implementation**:
+  - Added angle-bracket URL detection before HTML escaping (line 70)
+  - Modified external link generation to create `<a>` tags instead of `<span>` (line 253)
+  - Updated CSS styling with clickable link styles and external link icon
+  - Processing order: angle-bracket detection → HTML escaping → link generation
+- **Documentation**:
+  - Updated block-architecture.md processing order (added step 4: Angle-bracket URLs)
+  - Added test file: docs/test-external-links.md with comprehensive test cases
+  - Updated CHANGELOG.md with feature details
+- **Files modified**: `blocks/ipynb-viewer/ipynb-viewer.js`, `blocks/ipynb-viewer/ipynb-viewer.css`, `blocks/ipynb-viewer/block-architecture.md`
+
 ### ipynb-viewer Code Block Rendering Fix (2026-01-14)
 
 - **Status**: ✅ Completed code block rendering fix for GitHub markdown overlays
