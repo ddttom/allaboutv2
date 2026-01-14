@@ -46,6 +46,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Documentation completeness check in eds-block-development skill**: Added critical learning to prevent incomplete documentation after architectural changes
+  - **Problem**: During unified overlay refactor, updated 9 out of 10 documentation files but forgot `blocks/ipynb-viewer/README.md`
+  - **Solution**: Added comprehensive checklist to `eds-block-development` skill with 6 required documentation files
+  - **Triggers**: Enhanced skill-rules.json with 8 new keywords (block architecture, architectural change, update documentation) and 5 intent patterns
+  - **Real-world learning**: Documents actual mistake to prevent repetition by future AI assistants
+  - **Files modified**: `.claude/skills/eds-block-development/SKILL.md` (lines 1283-1372), `.claude/skills/skill-rules.json` (lines 28-75)
+  - **Commit**: 5a5f634b
+
 - **Enhanced metadata for notebook.html**: Added comprehensive metadata following article.html pattern
   - Added author meta tag (Tom Cranstoun)
   - Added descriptive meta description for AI-friendly web content guide
@@ -57,6 +65,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Files modified: `invisible-users/notebook.html`
 
 ### Changed
+
+- **Fixed markdown linting issues in unified overlay documentation**: Auto-fixed markdown formatting inconsistencies
+  - Added blank lines around lists and fenced code blocks (MD031, MD032)
+  - Fixed heading spacing in summary document (MD022)
+  - Improved markdown formatting consistency across documentation
+  - No content changes, formatting only
+  - Files modified: `LEARNINGS.md`, `blocks/ipynb-viewer/block-architecture.md`, `blocks/ipynb-viewer/overlay/README.md`, `docs/for-ai/ipynb-viewer-*.md` (3 files)
+  - **Commit**: 2b620464
 
 - **Simplified notebook.html script loading**: Removed RUM (Real User Monitoring) code
   - Removed `sampleRUM` import and initialization calls
