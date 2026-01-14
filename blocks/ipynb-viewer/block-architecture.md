@@ -420,7 +420,7 @@ const IPYNB_CONFIG = {
   LOAD_ERROR_MESSAGE: 'Error loading notebook',
 
   // File paths
-  DEFAULT_HELP_FILE: '/docs/help.md',
+  DEFAULT_HELP_FILE: '/docs/help.md',  // Fetches from allaboutv2 repo main branch
 
   // UI text
   RUN_BUTTON_LABEL: '▶ Run',
@@ -590,6 +590,14 @@ const treeState = {
 https://github.com/user/repo/blob/main/docs/file.md
 → https://raw.githubusercontent.com/user/repo/main/docs/file.md
 ```
+
+**Help Button Behavior:**
+
+- Help button fetches `docs/help.md` from fallback repository (allaboutv2)
+- Uses `main` branch after refactor merge (not feature branch)
+- Opens help overlay on top of current overlay (doesn't close current)
+- Preserves tree navigation if help fails to load
+- Two help button locations: paged overlay (line 2348) and GitHub overlay (line 3322)
 
 ### Overlay System
 
@@ -1091,7 +1099,7 @@ onNodeClick(node);
 
 ### Version 3.0 (2026-01-14)
 
-- **Added:** Unified Overlay Architecture (branch: `refactor/ipynb-viewer-unified-overlay`)
+- **Added:** Unified Overlay Architecture (branch: `refactor/ipynb-viewer-unified-overlay`, merged to main)
   - Complete refactor to eliminate multiple overlay confusion
   - Single overlay with mode switching (notebook/markdown/manual)
   - 8 core modules implementing unified navigation system
@@ -1100,12 +1108,20 @@ onNodeClick(node);
   - Architecture benefits: eliminates context confusion, unified navigation, consistent home button
   - Clean API: `createNotebookOverlay()` and `createMarkdownOverlay()`
   - Fresh implementation (no legacy code or migration)
-  - Status: Complete and production-ready
+  - Status: Complete and production-ready, merged to main
   - Documentation: See overlay/README.md for comprehensive guide
+- **Fixed:** Help button behavior improvements
+  - Changed fallback branch from 'refactor/ipynb-viewer-unified-overlay' to 'main' after merge
+  - Removed closeOverlay() call to prevent tree disappearing on errors
+  - Help overlay now opens on top instead of replacing current overlay
+  - Updated docs/help.md to match current implementation (categorized folders)
+  - Removed redundant invisible-users/docs/ directory
+  - Single source of truth: docs/help.md in allaboutv2 repository
 - **Documentation:** Added comprehensive documentation across all project files
-  - Updated CHANGELOG.md with unified overlay entry
+  - Updated CHANGELOG.md with unified overlay entry and help button fixes
   - Updated CLAUDE.md with new critical section
-  - Updated README.md with unified overlay reference
+  - Updated README.md with unified overlay reference and help button requirements
+  - Updated block-architecture.md with help button behavior details
   - Updated docs/for-ai/index.md with dedicated section
   - Created ipynb-viewer-unified-overlay-summary.md (complete summary)
   - Created ipynb-viewer-refactor-progress.md (progress tracking)

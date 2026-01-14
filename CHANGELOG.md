@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **ipynb-viewer Help Button Fixes**: Multiple fixes to help button behavior
+  - **Branch Reference Fix**: Changed fallback branch from 'refactor/ipynb-viewer-unified-overlay' to 'main' after merge
+    - Updated both help button handlers (paged and GitHub overlay modes)
+    - Commit: fa779009
+  - **Tree Preservation Fix**: Removed closeOverlay() call to prevent tree disappearing on errors
+    - Tree now stays visible even if help.md fails to load
+    - Help overlay opens on top instead of replacing current overlay
+    - Commit: 299b724a
+  - **Documentation Updates**: Updated help.md to match current implementation
+    - Documented categorized folders (Chapters, Appendix, Miscellaneous)
+    - Added file categorization patterns and hardcoded inclusion list
+    - Removed redundant invisible-users/docs/ directory
+    - Single source of truth: docs/help.md in allaboutv2 repository
+    - Commits: 30bb069a, 7c733032
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js`, `docs/help.md`
+
 ### Added
 
 - **ipynb-viewer Performance & UX Improvements**: Multiple optimizations for better user experience

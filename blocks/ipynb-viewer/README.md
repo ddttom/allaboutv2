@@ -879,6 +879,8 @@ Built-in help documentation accessible anytime via the Help button! The help sys
 - Uses help-repo metadata (falls back to repo, then defaults to allaboutV2)
 - Expects help file at docs/help.md in the repository
 - Uses GitHub Markdown Overlay viewer for display
+- Fetches from main branch after refactor merge
+- Opens on top of current overlay (preserves tree if error occurs)
 
 **Benefits:**
 
