@@ -255,13 +255,7 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
     return `<span class="ipynb-non-md-link" title="${processedUrl}">${text} <code>(${processedUrl})</code></span>`;
   });
 
-  // Bold (after links to preserve bold text before links like **Text** → [link])
-  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-
-  // Italic (after bold)
-  html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
-
-  // Lists - process line by line with nested list support
+  // Lists - process line by line with nested list support (BEFORE bold/italic)
   const linesWithLists = html.split('\n');
   const processedWithLists = [];
   const listStack = []; // Track nested list state: [{type: 'ol'|'ul', indent: number}]
@@ -344,6 +338,12 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
   }
 
   html = processedWithLists.join('\n');
+
+  // Bold (process after lists to allow bold text in list items)
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+  // Italic (process after bold)
+  html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
 
   // Blockquotes - process line by line (must match raw > character, not &gt;)
   const linesWithBlockquotes = html.split('\n');
