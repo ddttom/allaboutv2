@@ -7,9 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [2026-01-14] - ipynb-viewer Inline HTML Escaping
+## [2026-01-14] - ipynb-viewer Markdown Rendering Improvements
 
 ### Fixed
+
+- **Missing h4/h5/h6 heading support in ipynb-viewer markdown rendering**: Added support for heading levels 4-6
+  - Issue: `####` (h4), `#####` (h5), and `######` (h6) markdown headers were not being rendered as HTML headings
+  - Only h1, h2, and h3 were supported, causing h4-h6 to display as plain text
+  - Solution: Added regex replacements for h4, h5, h6 headers in correct processing order (h6 → h5 → h4 → h3 → h2 → h1)
+  - Result: All six markdown heading levels now render correctly with proper HTML tags
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js` (lines 113-115)
+  - Commits: 24aec47a (implementation), 9c50362b (tests), 8e79024e (documentation)
 
 - **Inline HTML tag escaping in ipynb-viewer markdown rendering**: Added HTML escaping to match GitHub's behavior
   - Issue: Inline HTML tags (e.g., `<div>`, `<img>`, `<script>`) in markdown files were being rendered as actual HTML instead of displayed as literal text
