@@ -1850,10 +1850,20 @@ button.ipynb-help-button {
 .ipynb-github-md-overlay .ipynb-manual-content-area pre {
   margin: 1rem 0 !important;
   white-space: pre !important;
+  overflow-x: auto !important;
 }
 
 .ipynb-github-md-overlay .ipynb-manual-content-area pre code {
   line-height: 1.4 !important;
+  white-space: pre !important;
+  display: block !important;
+  font-family: 'Courier New', monospace !important;
+}
+
+/* Ultra-specific override for GitHub overlay code blocks */
+.ipynb-manual-overlay.ipynb-github-md-overlay .ipynb-manual-content-area pre code,
+.ipynb-github-md-overlay .ipynb-paged-overlay-content .ipynb-manual-content-area pre code,
+.ipynb-github-md-overlay .ipynb-overlay-content pre code {
   white-space: pre !important;
   display: block !important;
 }
