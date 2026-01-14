@@ -299,6 +299,10 @@ html {
   padding-left: 1.5rem;
 }
 
+/* Remove browser's auto-numbering for ordered lists since content already contains numbers */
+.ipynb-markdown-cell ol {
+  list-style-type: none;
+}
 
 .ipynb-markdown-cell li {
   margin: 0;
