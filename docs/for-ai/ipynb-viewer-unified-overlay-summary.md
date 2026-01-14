@@ -80,8 +80,9 @@ The original ipynb-viewer used multiple separate overlay implementations:
 6. **tree.js** (300 lines)
    - Unified navigation tree showing all content
    - Sections: notebook (cells), repository (files), help (pages)
+   - Repository organized into Chapters, Appendix, Miscellaneous folders
    - Features: expand/collapse, selection tracking, click handlers
-   - Groups cells by parts
+   - Groups cells by parts, categorizes files by type
 
 7. **integration.js** (200 lines)
    - Clean API layer for creating overlays

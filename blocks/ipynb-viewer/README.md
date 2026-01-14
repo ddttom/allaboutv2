@@ -51,7 +51,7 @@ The IPynb Viewer block is a comprehensive, production-ready system for displayin
 
 **Link Navigation** - Navigate between overlays using hash targets in markdown cells.
 
-**Navigation Tree** - Hierarchical tree panel for exploring notebook structure and linked files.
+**Navigation Tree** - Hierarchical tree panel with organized sections: Notebook (parts/cells) and Repository (Chapters, Appendix, Miscellaneous folders for easy file navigation).
 
 **Navigation History** - Track and revisit up to 25 recently viewed cells and markdown files.
 
@@ -755,6 +755,85 @@ Save your favorite pages for quick access anytime! The bookmark system uses brow
 - Use bookmarks for pages you visit repeatedly
 - Clear old bookmarks periodically to keep list manageable
 - Combine with History for complete navigation workflow
+
+### Navigation Tree
+
+Explore your notebook structure and repository files through an organized, hierarchical tree panel! The navigation tree provides two main sections with smart categorization.
+
+**Features:**
+
+- ✅ Two-Section Structure - Notebook (parts/cells) and Repository (markdown files)
+- ✅ Organized Folders - Repository files grouped into Chapters, Appendix, Miscellaneous
+- ✅ Smart Categorization - Automatic sorting of files by type
+- ✅ Priority Order - Chapters → Appendix → Miscellaneous for logical browsing
+- ✅ Expand/Collapse - Click folder icons to show/hide contents
+- ✅ Quick Navigation - Click any item to jump directly to that content
+- ✅ Visual Indicators - Icons show folders (▶) vs files
+- ✅ Alphabetical Sorting - Files within each category sorted A-Z
+
+**Tree Structure:**
+
+**Notebook Section:**
+- Contains parts and cells from your notebook
+- Organized by Part headings (Part 1, Part 2, etc.)
+- Click any part to expand and see cells
+- Click any cell to navigate to that page
+
+**Repository Section:**
+- **Chapters Folder** - preface.md and all chapter-*.md files
+- **Appendix Folder** - All appendix-*.md files (appendix-a.md, appendix-b.md, etc.)
+- **Miscellaneous Folder** - All other markdown files (readme.md, advice.md, glossary.md, etc.)
+
+**How to Use:**
+
+1. Tree panel appears automatically in notebook mode
+2. Click folder icons (▶) to expand/collapse sections
+3. Click on Chapters to see preface and all chapters
+4. Click on Appendix to see all appendix files
+5. Click on Miscellaneous to see other documentation
+6. Click any file to open it in the GitHub markdown overlay
+
+**Categorization Rules:**
+
+- **Chapters:** Files matching `preface.md` or `chapter-*.md`
+- **Appendix:** Files matching `appendix-*.md`
+- **Miscellaneous:** Everything else
+
+**Benefits:**
+
+- Logical organization - Find chapters, appendices, and other content easily
+- Consistent structure - Same organization across all notebooks
+- Better browsing - Priority folders (Chapters first) guide exploration
+- Clean interface - No clutter from deep folder hierarchies
+
+**Example Tree:**
+
+```
+📘 Notebook
+  ▶ Part 1: Introduction
+  ▶ Part 2: Core Concepts
+
+📁 Repository
+  ▶ Chapters (13 files)
+    - preface.md
+    - chapter-01-what-you-will-learn.md
+    - chapter-02-the-invisible-failure.md
+  ▶ Appendix (12 files)
+    - appendix-a-implementation-cookbook.md
+    - appendix-b-battle-tested-lessons.md
+    - appendix-c-web-audit-suite-guide.md
+  ▶ Miscellaneous (8 files)
+    - advice.md
+    - glossary.md
+    - readme.md
+```
+
+**Use Cases:**
+
+- Structured learning - Follow chapters in order through notebook
+- Reference lookup - Jump directly to specific appendix or document
+- Documentation browsing - Explore all available markdown files
+- Tutorial navigation - See entire content structure at a glance
 
 ### Help System
 

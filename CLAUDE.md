@@ -895,6 +895,8 @@ notebook.navigate({
 4. **renderers/notebook.js** - Notebook cell renderer (markdown/code/outputs)
 5. **renderers/markdown.js** - Markdown file renderer with smart links
 6. **tree.js** - Unified navigation tree (notebook/repository/help sections)
+   - Repository section organized into Chapters, Appendix, Miscellaneous folders
+   - Smart categorization: preface + chapter-*.md → Chapters, appendix-*.md → Appendix, others → Miscellaneous
 7. **integration.js** - Clean API (`createNotebookOverlay`, `createMarkdownOverlay`)
 
 ### Key Features

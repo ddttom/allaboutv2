@@ -478,7 +478,10 @@ function parseNotebookData(data) {
 **Architecture:** Two-level tree structure:
 
 - **Notebook node:** Contains parts, cells from notebook
-- **Repository node:** Contains folders, markdown files from GitHub
+- **Repository node:** Contains categorized folders for markdown files from GitHub
+  - **Chapters:** preface.md and chapter-*.md files
+  - **Appendix:** appendix-*.md files
+  - **Miscellaneous:** All other markdown files
 
 **State Management:**
 
@@ -521,6 +524,42 @@ const treeState = {
           level: 2,
           cellIndex: 0
         }
+      ]
+    }
+  ]
+},
+{
+  id: 'repository',
+  label: 'Repository',
+  type: 'root',
+  level: 0,
+  children: [
+    {
+      id: 'folder-chapters',
+      label: 'Chapters',
+      type: 'folder',
+      level: 1,
+      children: [
+        { id: 'preface.md', label: 'preface.md', type: 'markdown', level: 2 },
+        { id: 'chapter-01.md', label: 'chapter-01.md', type: 'markdown', level: 2 }
+      ]
+    },
+    {
+      id: 'folder-appendix',
+      label: 'Appendix',
+      type: 'folder',
+      level: 1,
+      children: [
+        { id: 'appendix-a.md', label: 'appendix-a.md', type: 'markdown', level: 2 }
+      ]
+    },
+    {
+      id: 'folder-miscellaneous',
+      label: 'Miscellaneous',
+      type: 'folder',
+      level: 1,
+      children: [
+        { id: 'readme.md', label: 'readme.md', type: 'markdown', level: 2 }
       ]
     }
   ]
