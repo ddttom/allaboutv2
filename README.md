@@ -118,6 +118,10 @@ Access your tests at: `http://localhost:3000/blocks/your-block/test.html`
    - Interactive JavaScript code execution in browser
    - **Auto-wrapping in notebook mode** - Write pure markdown, automatic styling (90% less code)
    - **Hybrid approach** - Mix pure markdown with custom HTML for flexibility
+   - **Unified Overlay Architecture** - Single overlay with mode switching (notebook/markdown/manual)
+     - Eliminates multiple overlay confusion
+     - Branch: `refactor/ipynb-viewer-unified-overlay` (complete and production-ready)
+     - See [overlay/README.md](blocks/ipynb-viewer/overlay/README.md) for complete guide
    - Perfect for tutorials, demos, and documentation
    - Located at [blocks/ipynb-viewer/](blocks/ipynb-viewer/)
 
@@ -398,6 +402,7 @@ The site audit is created with https://github.com/ddttom/my-pa11y-project
   - Use `/create-notebook` command for guided creation
 - [EDS Native Testing Standards](docs/for-ai/testing/eds-native-testing-standards.md) - Traditional test.html testing patterns
 - [ipynb-viewer Block Documentation](blocks/ipynb-viewer/README.md) - Display and execute notebooks on EDS pages
+- [ipynb-viewer Unified Overlay](blocks/ipynb-viewer/overlay/README.md) - Architecture guide for unified overlay system (eliminates multiple overlay confusion)
 
 ### For AI Assistants
 

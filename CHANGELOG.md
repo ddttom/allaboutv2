@@ -9,6 +9,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Unified Overlay Architecture for ipynb-viewer**: Complete refactor to eliminate multiple overlay confusion
+  - **Branch**: `refactor/ipynb-viewer-unified-overlay`
+  - **Status**: Complete and ready for production
+  - **Problem**: Multiple separate overlays (paged, GitHub markdown, manual) caused context confusion
+  - **Solution**: Single unified overlay with mode switching instead of multiple nested overlays
+  - **Architecture Benefits**:
+    - One overlay, one state → eliminates "where am I?" confusion
+    - Mode switching (notebook/markdown/manual) → no overlay nesting
+    - Unified navigation system → consistent behavior across all modes
+    - Centralized hash management → single source of truth for URL state
+    - Single home button → always does the same thing
+  - **New Modules** (8 files):
+    - `overlay/hash-manager.js` - URL hash management (parse, update, clear, matches)
+    - `overlay/navigation.js` - Unified navigation with history, home, back, mode switching
+    - `overlay/unified-overlay.js` - Core overlay with single state and DOM structure
+    - `overlay/renderers/notebook.js` - Notebook cell renderer (markdown/code/outputs)
+    - `overlay/renderers/markdown.js` - Markdown file renderer with smart links
+    - `overlay/tree.js` - Unified navigation tree (notebook/repository/help sections)
+    - `overlay/integration.js` - Clean API (createNotebookOverlay, createMarkdownOverlay)
+    - `overlay/example-usage.js` - Usage examples
+  - **Documentation** (3 files):
+    - `overlay/README.md` - Comprehensive system documentation (525 lines)
+    - `docs/for-ai/ipynb-viewer-refactor-progress.md` - Progress tracking
+    - `docs/for-ai/ipynb-viewer-overlay-refactor-proposal.md` - Original proposal
+  - **Key Features**:
+    - ES6 modules with clean imports/exports
+    - History management (max 50 entries)
+    - Comprehensive logging for debugging
+    - Mode-specific renderers with shared utilities
+    - Fresh implementation (no legacy code or migration)
+  - **Integration Ready**: Simple API for creating overlays with `createNotebookOverlay()` and `createMarkdownOverlay()`
+  - Files created: `blocks/ipynb-viewer/overlay/*` (8 modules + README)
+  - Documentation: `docs/for-ai/ipynb-viewer-*` (2 files)
+  - Commits: 22b9f0e0, f297f7e8, bb7921a4, f72493af, 5923b04c
+
+### Added
+
 - **Enhanced metadata for notebook.html**: Added comprehensive metadata following article.html pattern
   - Added author meta tag (Tom Cranstoun)
   - Added descriptive meta description for AI-friendly web content guide

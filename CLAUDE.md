@@ -833,6 +833,88 @@ When a notebook has a `repo` metadata attribute, all `.md` file links are automa
 - Help Button and Metadata (Section 6: Three Types of Overlays)
 - Link Navigation Implementation (Section 4: Interactive Features)
 
+## ⚠️ CRITICAL: ipynb-viewer Unified Overlay Architecture
+
+**The ipynb-viewer now uses a unified overlay system to eliminate multiple overlay confusion.**
+
+**Branch**: `refactor/ipynb-viewer-unified-overlay` (complete and ready for production)
+
+### The Problem (Before)
+
+Multiple separate overlays caused confusion:
+- `createPagedOverlay()` - Paged overlay with notebook cells
+- `createGitHubMarkdownOverlay()` - GitHub overlay with markdown files
+- `createManualOverlay()` - Manual overlay with help pages
+
+**Issues**:
+- Context confusion ("where am I?")
+- Duplicate home buttons with different behaviors
+- Different navigation systems
+- Nested overlays stacking on top of each other
+- Complex state management across multiple overlay instances
+
+### The Solution (After)
+
+**Single unified overlay with mode switching:**
+
+```javascript
+import { createNotebookOverlay, createMarkdownOverlay } from './overlay/integration.js';
+
+// Create notebook overlay
+const notebook = createNotebookOverlay(cells, {
+  title: 'My Notebook',
+  repo: 'https://github.com/user/repo',
+  autorun: false,
+});
+notebook.show();
+
+// Switch to markdown mode
+notebook.updateMode('markdown');
+notebook.navigate({
+  mode: 'markdown',
+  identifier: 'docs/README.md',
+  title: 'README',
+});
+```
+
+### Architecture Benefits
+
+- ✅ **Single overlay, single state** - One source of truth, eliminates "where am I?" confusion
+- ✅ **Mode switching** - Change modes (notebook/markdown/manual) without creating new overlays
+- ✅ **Unified navigation** - One navigation system for all content types
+- ✅ **Centralized hash management** - Single system for URL state (`#mode/identifier`)
+- ✅ **Consistent home button** - Always does the same thing regardless of mode
+
+### Core Modules
+
+**Location**: `blocks/ipynb-viewer/overlay/`
+
+1. **hash-manager.js** - URL hash management (parse, update, clear, matches)
+2. **navigation.js** - Unified navigation with history, home, back, mode switching
+3. **unified-overlay.js** - Core overlay with single state and DOM structure
+4. **renderers/notebook.js** - Notebook cell renderer (markdown/code/outputs)
+5. **renderers/markdown.js** - Markdown file renderer with smart links
+6. **tree.js** - Unified navigation tree (notebook/repository/help sections)
+7. **integration.js** - Clean API (`createNotebookOverlay`, `createMarkdownOverlay`)
+
+### Key Features
+
+- ES6 modules with clean imports/exports
+- History management (max 50 entries)
+- Comprehensive logging with module prefixes (`[HASH]`, `[NAV]`, `[OVERLAY]`)
+- Mode-specific renderers with shared utilities
+- Fresh implementation (no legacy code or migration)
+
+### Documentation
+
+- **Complete guide**: `blocks/ipynb-viewer/overlay/README.md` (525 lines)
+- **Progress tracking**: `docs/for-ai/ipynb-viewer-refactor-progress.md`
+- **Original proposal**: `docs/for-ai/ipynb-viewer-overlay-refactor-proposal.md`
+
+### Usage Examples
+
+See `blocks/ipynb-viewer/overlay/example-usage.js` for complete examples.
+
 ## Cloudflare Custom Worker Implementation
 
 **Custom Adobe EDS worker with enhanced features (v1.1.4)** - see `cloudflare/files/`
@@ -1167,6 +1249,7 @@ const code = 'here';
 - **NEW: Jupyter testing**: `docs/for-ai/explaining-jupyter.md` - Context-aware interactive testing with `initialize()` function (96% smaller Cell 1) and unified API
 - **NEW: Educational notebooks**: `docs/for-ai/explaining-educational-notebooks.md` - Create tutorials, guides, and interactive demos as SPAs
 - **NEW: ipynb-viewer block**: `blocks/ipynb-viewer/README.md` - Display executable notebooks with autorun, paged, and link navigation
+- **NEW: ipynb-viewer unified overlay**: `blocks/ipynb-viewer/overlay/README.md` - Unified overlay architecture eliminating multiple overlay confusion (branch: `refactor/ipynb-viewer-unified-overlay`)
 - **Helix Configuration**: `docs/for-ai/helix-config.md` - Complete .helix/config file reference covering CDN integration (Cloudflare), push invalidation, environment configuration, and troubleshooting
 - **Custom Cloudflare Worker**: `cloudflare/files/README.md` - Custom Adobe EDS worker implementation (v1.1.4) with CORS headers, JSON-LD generation, picture placeholder replacement, and metadata cleanup. Version managed via package.json single source of truth.
 - Security checklist: `docs/for-ai/guidelines/security-checklist.md`

@@ -34,6 +34,27 @@ This index provides structured access to all documentation within the `docs/for-
   - Scoring system (88-100 = production ready)
   - Best practices and common fixes
 
+### 🎨 ipynb-viewer Unified Overlay Architecture
+
+- **[`ipynb-viewer-overlay-refactor-proposal.md`](ipynb-viewer-overlay-refactor-proposal.md)** - **Original architecture proposal**
+  - Problem analysis: Multiple overlay confusion
+  - Proposed solution: Single overlay with mode switching
+  - Complete implementation strategy with code examples
+  - Migration plan from old architecture
+
+- **[`ipynb-viewer-refactor-progress.md`](ipynb-viewer-refactor-progress.md)** - **Implementation progress tracking**
+  - Status: ✅ Complete and ready for production
+  - All 8 core modules implemented and documented
+  - Branch: `refactor/ipynb-viewer-unified-overlay`
+  - Integration examples and testing strategy
+
+- **[`../blocks/ipynb-viewer/overlay/README.md`](../blocks/ipynb-viewer/overlay/README.md)** - **Complete overlay system guide (525 lines)**
+  - Architecture overview and benefits
+  - Module documentation (hash manager, navigation, renderers, tree)
+  - Usage examples and API reference
+  - State management, event handling, and debugging
+  - **Target**: Developers working with ipynb-viewer overlays
+
 ### Essential Starting Points
 
 - **New to EDS?** → Start with [`getting-started-guide.md`](getting-started-guide.md) then [`eds.md`](eds.md)
