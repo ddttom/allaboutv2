@@ -1202,10 +1202,8 @@ function extractMarkdownPathsFromElement(element) {
   // Find all GitHub markdown links
   const mdLinks = element.querySelectorAll('.ipynb-github-md-link');
 
-
   mdLinks.forEach((link) => {
     const { mdUrl } = link.dataset;
-    const { mdPath } = link.dataset;
     if (mdUrl) {
       // Extract path from URL (remove blob/branch parts)
       const pathMatch = mdUrl.match(/\/blob\/[^/]+\/(.+)$/);
@@ -1266,7 +1264,6 @@ function addMarkdownPathsToTree(tree, newPaths) {
   if (pathsToAdd.length === 0) {
     return; // No new paths to add
   }
-
 
   // Rebuild the entire file tree with all paths using the existing buildFileTree function
   // This ensures consistent structure and no duplicates
@@ -1426,7 +1423,7 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl, notebookData =
   // The rendered cells have already had "Part X:" stripped by createMarkdownCell (line 711)
   // So we need to check the original markdown source instead
   if (notebookData && notebookData.cells) {
-    notebookData.cells.forEach((cell, index) => {
+    notebookData.cells.forEach((cell) => {
       if (cell.cell_type === 'markdown') {
         const markdownText = Array.isArray(cell.source) ? cell.source.join('') : cell.source;
         // Check if any line starts with ## Part or ## Chapter
@@ -1447,8 +1444,14 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl, notebookData =
     const markdownText = Array.isArray(cellData.source) ? cellData.source.join('') : cellData.source;
     const lines = markdownText.split('\n');
 
-    for (const line of lines) {
+    // Use .find() instead of for...of to avoid eslint no-restricted-syntax
+    const partHeading = lines.find((line) => {
       const trimmed = line.trim();
+      return trimmed.startsWith('##') && !trimmed.startsWith('###');
+    });
+
+    if (partHeading) {
+      const trimmed = partHeading.trim();
       if (trimmed.startsWith('###')) {
         return { text: trimmed.replace(/^###\s*/, ''), level: 3 };
       }
@@ -1488,7 +1491,6 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl, notebookData =
       }
 
       if (heading) {
-
         if (hasPartHeadings) {
           // WITH Part/Chapter headings: Use Frontmatter/Parts/Summary structure
 
@@ -1831,16 +1833,17 @@ function selectTreeNode(nodeId, treeState, container, onNodeClick) {
  * @returns {Object|null} - Found node or null
  */
 function findNodeById(tree, nodeId) {
-  for (const node of tree) {
+  // Use .reduce() instead of for...of to avoid eslint no-restricted-syntax
+  return tree.reduce((found, node) => {
+    if (found) return found;
     if (node.id === nodeId) {
       return node;
     }
     if (node.children) {
-      const found = findNodeById(node.children, nodeId);
-      if (found) return found;
+      return findNodeById(node.children, nodeId);
     }
-  }
-  return null;
+    return null;
+  }, null);
 }
 
 /**
@@ -1878,7 +1881,9 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   navigationTree.forEach((root) => {
     root.children.forEach((child) => {
       if (child.type === 'cell') {
+        // Cell nodes handled by parent
       } else if (child.type === 'markdown') {
+        // Markdown nodes handled by parent
       }
     });
   });
@@ -2837,9 +2842,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       // Navigate to this page
       paginationState.currentPage = pageIndex;
       updatePageDisplay();
-      return;
     }
-
   }
 
   // Append overlay to body
@@ -3364,7 +3367,6 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
       // 4. Render navigation tree in this overlay (if we have tree context from parent)
 
       if (parentHistory && typeof parentHistory === 'object' && parentHistory.navigationTree) {
-
         // Store tree reference in treeState if not already present (required for toggleTreeNode function)
         if (!treeState.tree) {
           treeState.tree = parentHistory.navigationTree;
@@ -3507,7 +3509,6 @@ function checkHashNavigation(repoUrl, helpRepoUrl, branch, pagedOverlay, metadat
 
   // Check if it's a markdown file path (ends with .md)
   if (targetPath.endsWith('.md')) {
-
     // Build full GitHub URL
     const fullUrl = `${repoUrl}/blob/${branch}/${targetPath}`;
     const title = targetPath.split('/').pop().replace('.md', '').replace(/-/g, ' ');
@@ -3524,8 +3525,8 @@ function checkHashNavigation(repoUrl, helpRepoUrl, branch, pagedOverlay, metadat
       );
       mdOverlay.openOverlay();
     }, 200);
-  } else {
   }
+  // No else needed - only handle .md links
 }
 
 /**
