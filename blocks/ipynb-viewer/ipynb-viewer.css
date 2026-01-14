@@ -280,7 +280,7 @@ html {
   padding: 1rem;
   border-radius: 4px;
   overflow-x: auto;
-  margin: 0.5rem 0;
+  margin: 1.5rem 0;
   border: 1px solid var(--light-color, #e0e0e0);
 }
 
@@ -289,9 +289,9 @@ html {
   padding: 0;
   border-radius: 0;
   font-size: 0.875rem;
-  line-height: 1.5;
+  line-height: 1.6;
   display: block;
-  white-space: pre;
+  white-space: pre-wrap;
 }
 
 .ipynb-markdown-cell ul,
@@ -1848,7 +1848,7 @@ button.ipynb-help-button {
 }
 
 .ipynb-github-md-overlay .ipynb-manual-content-area pre {
-  margin: 0.4rem 0 !important;
+  margin: 1.5rem 0 !important;
 }
 
 .ipynb-manual-content-area ul,
@@ -1874,12 +1874,14 @@ button.ipynb-help-button {
   padding: 1rem;
   border-radius: 4px;
   overflow-x: auto;
-  margin: 1rem 0;
+  margin: 1.5rem 0;
 }
 
 .ipynb-manual-content-area pre code {
   background: none;
   padding: 0;
+  line-height: 1.6;
+  white-space: pre-wrap;
 }
 
 .ipynb-manual-content-area table {

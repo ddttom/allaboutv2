@@ -398,19 +398,26 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
 
   // Wrap each paragraph in <p> tags, unless it's already a block element
   const blockElementPattern = /^<(h[1-6]|table|ul|ol|blockquote|pre|hr)/;
+  const preBlockPattern = /^<pre/; // Separate pattern for code blocks that need newlines preserved
+
   html = paragraphs
     .map((para) => {
       const trimmed = para.trim();
       if (!trimmed) return ''; // Skip empty paragraphs
       if (blockElementPattern.test(trimmed)) {
-        // Already a block element, don't wrap
+        // Block element detected
+        if (preBlockPattern.test(trimmed)) {
+          // Code blocks - preserve all newlines
+          return trimmed;
+        }
+        // Other block elements - convert newlines to spaces
         return trimmed.replace(/\n/g, ' ');
       }
       // Regular paragraph - wrap in <p> and convert single newlines to spaces
       return `<p>${trimmed.replace(/\n/g, ' ')}</p>`;
     })
     .filter((p) => p) // Remove empty strings
-    .join('\n');
+    .join('\n\n'); // Use double newline for better spacing between blocks
 
   return html;
 }
