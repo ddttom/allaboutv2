@@ -693,3 +693,83 @@ createButton({ context: 'B', onClick: () => { /* do thing B */ } });
 **Documentation:** See `blocks/ipynb-viewer/ipynb-viewer.js` lines 2904-2963 for complete implementation
 
 ---
+
+## ipynb-viewer: Markdown Ordered Lists Require list-style-type: none
+
+**Rule** (2026-01-14): Jupyter notebook markdown cells that use ordered lists (1., 2., 3.) must have `list-style-type: none` applied to prevent duplicate numbering. The markdown parser already includes the numbers in the content, and browser auto-numbering creates visual duplication.
+
+**Why it matters:**
+
+- Jupyter notebook markdown stores explicit numbers: `1. They're invisible to site owners`
+- Markdown parser converts to: `<ol><li>They're invisible to site owners</li></ol>`
+- Browser's default ordered list styling adds its own `1.` marker before each `<li>`
+- Result: `1. 1. They're invisible to site owners` (duplicate numbers)
+- This is visually confusing and breaks the intended formatting
+
+**Problem pattern:**
+
+```markdown
+Markdown source in notebook cell:
+1. They're invisible to site owners
+1. Your interface is partly invisible to them
+
+Browser renders as:
+1. 1. They're invisible to site owners
+2. 1. Your interface is partly invisible to them
+```
+
+**Solution:**
+
+```css
+/* Remove browser's auto-numbering for ordered lists since content already contains numbers */
+.ipynb-markdown-cell ol {
+  list-style-type: none;
+}
+```
+
+**Result:**
+
+```
+Displays correctly as:
+1. They're invisible to site owners
+1. Your interface is partly invisible to them
+```
+
+**Regression history:**
+
+- **Original fix**: Commit 57a4b3d3 (2026-01-14 12:25) - Added `list-style-type: none`
+- **Regression**: Commit 7f6dd772 (2026-01-14 15:06) - Accidentally removed rule during blockquote styling updates
+- **Re-fixed**: Commit e4ecc9c1 (2026-01-14, refactor branch) - Restored the rule
+
+**Why the regression occurred:**
+
+The CSS rule was accidentally deleted when updating blockquote styles for `.ipynb-github-md-overlay`. The deletion happened in the same block of changes and wasn't related to the blockquote updates - it was an editing mistake during conflict resolution or manual deletion.
+
+**Prevention pattern:**
+
+When modifying CSS files with many similar selectors:
+
+1. **Before editing**: Note nearby rules that should NOT be touched
+2. **During editing**: Make surgical changes - only modify target selectors
+3. **After editing**: Review diff to ensure no unintended deletions
+4. **Watch for**: Rules that are separated by blank lines getting accidentally removed
+
+**Common mistake pattern:**
+
+```diff
+ /* Blockquote styling */
+ .selector1 { ... }
+
+-/* Important rule */
+-.selector2 { ... }  ← Accidentally deleted
+-
+ .selector3 { ... }
+```
+
+**Best practice:**
+
+If you need to modify multiple related selectors (like adding `.ipynb-github-md-overlay` to blockquote rules), make changes to ONLY those selectors. Don't delete or modify unrelated rules even if they're in the same CSS section.
+
+**Documentation:** See `blocks/ipynb-viewer/ipynb-viewer.css` lines 302-305 for current implementation
+
+---

@@ -98,6 +98,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Fixed duplicate numbering in ordered lists (regression)**: Restored `list-style-type: none` for markdown cell ordered lists
+  - **Issue**: Ordered lists displayed duplicate numbers (e.g., "1. 1. They're invisible...")
+  - **Root cause**: CSS rule accidentally deleted in commit 7f6dd772 during blockquote styling updates
+  - **Original fix**: Commit 57a4b3d3 (2026-01-14 12:25) added `list-style-type: none` to remove browser auto-numbering
+  - **Regression**: Commit 7f6dd772 (2026-01-14 15:06) accidentally removed the rule
+  - **Solution**: Re-added `list-style-type: none` to `.ipynb-markdown-cell ol`
+  - **Why it matters**: Notebook markdown contains explicit numbers ("1. Text"), browser adds its own markers, creating visual duplication
+  - **Result**: Lists now display single numbering from source content only
+  - **Files modified**: `blocks/ipynb-viewer/ipynb-viewer.css` (lines 302-305)
+  - **Learning added**: `LEARNINGS.md` - pattern for preventing CSS rule deletion during unrelated edits
+  - **Commit**: e4ecc9c1
+  - **Branch**: `refactor/ipynb-viewer-unified-overlay`
+
 - **Fixed tree node expansion when using next/previous pagination buttons**: Tree now auto-expands to show current cell
   - **Issue**: Clicking next/previous buttons updated the selected cell in tree but didn't expand parent nodes
   - **Issue**: User couldn't see which cell was selected because tree folders remained collapsed
