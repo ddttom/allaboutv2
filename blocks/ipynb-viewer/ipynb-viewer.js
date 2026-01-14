@@ -1452,9 +1452,10 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl, notebookData =
     const lines = markdownText.split('\n');
 
     // Use .find() instead of for...of to avoid eslint no-restricted-syntax
+    // Find first heading (h1, h2, or h3)
     const partHeading = lines.find((line) => {
       const trimmed = line.trim();
-      return trimmed.startsWith('##') && !trimmed.startsWith('###');
+      return trimmed.startsWith('#');
     });
 
     if (partHeading) {
