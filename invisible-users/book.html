@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Tom Cranstoun">
+  <meta name="description" content="Preview of The Invisible Users: A practical guide to making websites work for both humans and AI agents. Features chapter highlights, key insights, and sample content from the forthcoming book.">
+
+  <!-- AI-specific meta tags (proposed pattern from Chapter 10) -->
+  <meta name="ai-preferred-access" content="html">
+  <meta name="ai-content-policy" content="summaries-allowed, full-extraction-allowed">
+  <meta name="ai-freshness" content="monthly">
+  <meta name="ai-structured-data" content="json-ld">
+  <meta name="ai-attribution" content="required" text="Source: The Invisible Users by Tom Cranstoun, https://allabout.network/invisible-users/">
+  <meta name="llms-txt" content="/llms.txt">
+
+  <link rel="canonical" href="https://allabout.network/invisible-users/book.html">
+
+  <title>Book Preview - The Invisible Users</title>
+
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Book",
+    "name": "The Invisible Users: Designing the Web for AI Agents and Everyone Else",
+    "description": "A practical guide examining how modern web design optimized for human users fails for AI agents, and how fixing this benefits everyone",
+    "author": {
+      "@type": "Person",
+      "name": "Tom Cranstoun",
+      "email": "tom.cranstoun@gmail.com",
+      "url": "https://allabout.network"
+    },
+    "inLanguage": "en-GB",
+    "datePublished": "2026-01-10",
+    "dateModified": "2026-01-10",
+    "numberOfPages": "300",
+    "bookFormat": "https://schema.org/EBook",
+    "genre": ["Technology", "Web Design", "Artificial Intelligence", "Accessibility"],
+    "keywords": "AI agents, web design, accessibility, agent-mediated commerce, semantic HTML, structured data, browser automation",
+    "publisher": {
+      "@type": "Organization",
+      "name": "All About Network"
+    }
+  }
+  </script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: #1f2937;
+      background: #ffffff;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    header .subtitle {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      font-weight: 400;
+      color: #ffffff;
+    }
+
+    header .tagline {
+      font-size: 1.125rem;
+      max-width: 800px;
+      margin: 0 auto;
+      color: #e0e7ff;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    .intro-section {
+      background: #f9fafb;
+      border-left: 4px solid #3b82f6;
+      border-radius: 8px;
+      padding: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .intro-section h2 {
+      color: #1f2937;
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .intro-section p {
+      color: #4b5563;
+      margin-bottom: 1rem;
+      font-size: 1.125rem;
+    }
+
+    .intro-section .hook {
+      font-size: 1.3rem;
+      font-style: italic;
+      color: #1e40af;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+
+    h2 {
+      font-size: 2rem;
+      color: #1f2937;
+      margin: 3rem 0 1.5rem;
+      font-weight: 700;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      color: #374151;
+      margin: 2rem 0 1rem;
+      font-weight: 600;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      color: #4b5563;
+    }
+
+    .highlight-box {
+      background: #eff6ff;
+      border-left: 4px solid #2563eb;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .highlight-box p {
+      color: #1e40af;
+      font-size: 1.125rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .highlight-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .webinar-notice {
+      background: #eff6ff;
+      border: 2px solid #3b82f6;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0 3rem;
+      color: #1e40af;
+    }
+
+    .webinar-notice h2 {
+      color: #1e40af;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-size: 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .webinar-notice h2::before {
+      content: "🎥";
+      font-size: 2rem;
+    }
+
+    .webinar-notice h3 {
+      color: #1e40af;
+      margin: 1.5rem 0 0.75rem;
+      font-size: 1.25rem;
+    }
+
+    .webinar-notice p {
+      color: #1e40af;
+      margin-bottom: 1rem;
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    .webinar-notice strong {
+      color: #1e40af;
+      font-weight: 700;
+    }
+
+    .webinar-notice .webinar-date {
+      background: white;
+      border: 1px solid #3b82f6;
+      padding: 1rem;
+      border-radius: 6px;
+      margin: 1rem 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .webinar-notice .btn {
+      background: #2563eb;
+      color: white;
+      margin-top: 1rem;
+    }
+
+    .webinar-notice .btn:hover {
+      background: #1d4ed8;
+      color: white;
+    }
+
+    .webinar-notice.hidden {
+      display: none;
+    }
+
+    blockquote {
+      background: #f9fafb;
+      border-left: 4px solid #6b7280;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      font-style: italic;
+      color: #4b5563;
+    }
+
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .resource-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 2rem;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .resource-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-color: #3b82f6;
+    }
+
+    .resource-card h3 {
+      margin-top: 0;
+      color: #1e40af;
+      font-size: 1.25rem;
+    }
+
+    .resource-card .chapter-excerpt {
+      background: #f9fafb;
+      padding: 1rem;
+      border-radius: 4px;
+      margin: 1rem 0;
+      font-style: italic;
+      color: #4b5563;
+      font-size: 0.95rem;
+    }
+
+    .resource-card .key-point {
+      color: #374151;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+
+    .resource-card .why-matters {
+      color: #6b7280;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+      font-weight: 600;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .stat-card {
+      background: #f9fafb;
+      padding: 1.5rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #1e40af;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: #6b7280;
+      font-size: 0.95rem;
+    }
+
+    .cta-section {
+      background: #eff6ff;
+      border: 2px solid #3b82f6;
+      border-radius: 12px;
+      padding: 3rem;
+      margin: 3rem 0;
+      text-align: center;
+    }
+
+    .cta-section h2 {
+      margin-top: 0;
+      color: #1e40af;
+    }
+
+    .cta-section p {
+      font-size: 1.125rem;
+      color: #1e40af;
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #2563eb;
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+      margin: 0.5rem;
+    }
+
+    .btn:hover {
+      background: #1d4ed8;
+      text-decoration: none;
+    }
+
+    .btn-secondary {
+      background: #6b7280;
+    }
+
+    .btn-secondary:hover {
+      background: #4b5563;
+    }
+
+    footer {
+      background: #f9fafb;
+      border-top: 1px solid #e5e7eb;
+      padding: 3rem 2rem;
+      text-align: center;
+      margin-top: 4rem;
+    }
+
+    footer p {
+      color: #6b7280;
+      margin: 0.5rem 0;
+    }
+
+    .contact-links {
+      margin: 2rem 0;
+    }
+
+    .contact-links a {
+      margin: 0 1rem;
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    .contact-links a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      header .subtitle {
+        font-size: 1.25rem;
+      }
+
+      .resources-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .floating-top-button {
+        bottom: 15px;
+        left: 15px;
+        padding: 10px 16px;
+        font-size: 0.85rem;
+      }
+
+      .floating-reviewer-badge {
+        top: 15px;
+        right: 15px;
+        padding: 8px 16px;
+        font-size: 0.8rem;
+      }
+    }
+
+    /* Floating back to top button */
+    .floating-top-button {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #0066cc;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .floating-top-button:hover {
+      background-color: #003d7a;
+      color: white;
+      box-shadow: 0 6px 16px rgba(0, 102, 204, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .floating-top-button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
+    }
+
+    .floating-top-button svg {
+      fill: white;
+    }
+
+    /* Floating reviewer badge */
+    .floating-reviewer-badge {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      animation: gentle-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes gentle-pulse {
+      0%, 100% {
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+      }
+      50% {
+        box-shadow: 0 6px 16px rgba(220, 38, 38, 0.5);
+      }
+    }
+
+    .floating-reviewer-badge::before {
+      content: "📋";
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- For Reviewers badge -->
+  <div class="floating-reviewer-badge" role="status" aria-label="Review Copy">
+    In Review, expected Q1 2026
+  </div>
+
+  <header role="banner">
+    <h1>The Invisible Users</h1>
+    <p class="subtitle">Designing the Web for AI Agents and Everyone Else</p>
+    <p class="tagline">Preview the book: Chapter highlights, key insights, and sample content</p>
+  </header>
+
+  <main class="container" role="main" data-load-state="complete" data-page-type="book-teaser">
+    <div class="intro-section" role="region" aria-labelledby="intro-heading" data-section-type="introduction">
+      <h2 id="intro-heading">A Book Preview</h2>
+      <p class="hook">"The patterns that break AI agents also break humans. We didn't notice."</p>
+      <p>Modern websites work beautifully for humans but fail completely for AI agents. Toast notifications that vanish, pagination hiding content, single-page applications with invisible state changes - these patterns have created accessibility problems for years. Now AI agents are struggling with the same issues, and there's commercial pressure to fix them.</p>
+      <p><strong>January 2026 changed everything.</strong> In seven days, Amazon, Microsoft, and Google launched AI agent commerce systems. The shift from future concern to present reality happened faster than anyone expected. This book examines the collision between agent capabilities and web design conventions - and provides practical solutions for adapting to this new reality.</p>
+    </div>
+
+    <div class="webinar-notice" role="region" aria-labelledby="webinar-heading" data-section-type="webinar-announcement">
+      <h2 id="webinar-heading">I'm on a Webinar</h2>
+      <h3>Websites That Work Perfectly - Until They Don't</h3>
+      <div class="webinar-date">
+        <strong>Wednesday, January 21, 2026 | 14:00–14:30 London</strong>
+      </div>
+      <p>Join me for a 30-minute conversation exploring how websites can appear polished and intuitive yet fail silently for growing user groups, including AI agents already browsing and transacting online.</p>
+      <p>Drawing from <em>The Invisible Users</em>, we'll examine how design decisions relying solely on visual feedback can cause task failures without triggering error messages or analytics alerts. The session covers how AI agents interact with websites today and practical approaches to improving accessibility and resilience for both humans and machines.</p>
+      <p><strong>Format:</strong> 30 minutes + Q&A | <strong>Cost:</strong> Free | <strong>Recording:</strong> Available for those unable to attend live</p>
+      <a href="https://www.boye-co.com/blog/2026/1/websites-work-until-dont" class="btn" target="_blank" rel="noopener">Register for Free Webinar</a>
+    </div>
+
+    <section aria-labelledby="highlights-heading" data-section-type="chapter-highlights">
+      <h2 id="highlights-heading">Chapter Highlights</h2>
+      <p>Explore key insights from six essential chapters:</p>
+
+      <div class="resources-grid">
+        <div class="resource-card" data-chapter="1">
+          <h3>Chapter 1 - What You Will Learn</h3>
+          <div class="chapter-excerpt">
+            "The patterns that break AI agents also break humans. We didn't notice. The elderly user who misses a three-second toast notification. The person with ADHD who can't track state changes across paginated screens. They've all been struggling with modern web design for years."
+          </div>
+          <p class="key-point"><strong>Key insight:</strong> The web was optimised for a narrow definition of "user" - and now AI agents expose how that optimisation left many humans behind.</p>
+          <p class="why-matters">Why it matters: Foundation for understanding the convergence between accessibility and agent compatibility.</p>
+        </div>
+
+        <div class="resource-card" data-chapter="2">
+          <h3>Chapter 2 - The Invisible Failure</h3>
+          <div class="chapter-excerpt">
+            "The agent reported back: 'Done. Your message has been sent successfully.' A week later, no response. The CAPTCHA error appeared for three seconds in the top-right corner, then faded away. The agent missed it entirely."
+          </div>
+          <p class="key-point"><strong>Six failure types:</strong> Toast notifications, hidden content, single-page applications, delayed validation, hidden pricing, and ambiguous loading states.</p>
+          <p class="why-matters">Why it matters: Concrete examples of how modern design patterns create silent failures for agents and humans alike.</p>
+        </div>
+
+        <div class="resource-card" data-chapter="6">
+          <h3>Chapter 6 - The Security Maze</h3>
+          <div class="chapter-excerpt">
+            "When AI agents operate within your browser, they inherit your authenticated sessions. Every security check you've passed, every trust token you've earned, every proof-of-humanity challenge you've solved - the AI rides along on all of it."
+          </div>
+          <p class="key-point"><strong>Session inheritance:</strong> Banks cannot detect AI involvement because agents inherit proof-of-humanity tokens from authenticated sessions.</p>
+          <p class="why-matters">Why it matters: A security insight that changes how we think about authentication and authorisation.</p>
+        </div>
+
+        <div class="resource-card" data-chapter="9">
+          <h3>Chapter 9 - The Platform Race</h3>
+          <div class="chapter-excerpt">
+            "In seven days, three of the world's largest technology companies launched agent commerce systems. Amazon on January 5th. Microsoft on January 8th. Google on January 11th. This wasn't coincidence. This was consensus."
+          </div>
+          <p class="key-point"><strong>Open vs closed:</strong> OpenAI and Google chose open protocols (ACP and UCP), Microsoft chose proprietary. Only one approach can win.</p>
+          <p class="why-matters">Why it matters: Commercial urgency compressed from 12-18 months to NOW. Businesses must adapt immediately.</p>
+        </div>
+
+        <div class="resource-card" data-chapter="10">
+          <h3>Chapter 10 - Designing for Both</h3>
+          <div class="chapter-excerpt">
+            "The toast notification fails everyone. It affects agents, screen reader users, people with ADHD, and stressed users - just in different ways. The solution? Make errors persistent, visible, and explicit. One change helps everyone."
+          </div>
+          <p class="key-point"><strong>Convergence principle:</strong> Patterns that work for machines also work for humans under non-ideal conditions.</p>
+          <p class="why-matters">Why it matters: Practical solutions with code examples, proven patterns, and implementation guidance.</p>
+        </div>
+
+        <div class="resource-card" data-chapter="12">
+          <h3>Chapter 12 - What Agent Creators Must Build</h3>
+          <div class="chapter-excerpt">
+            "The £203,000 cruise pricing mistake - an agent reported £203,000 per person when the actual price was £2,030. This wasn't a website failure or a reasoning failure. It was a pipeline failure."
+          </div>
+          <p class="key-point"><strong>Three failure types:</strong> Website design failures, agent reasoning failures, and pipeline failures - each requiring different solutions.</p>
+          <p class="why-matters">Why it matters: Agent developers need validation layers, confidence scoring, and guardrails to prevent catastrophic errors.</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="sample-content" data-section-type="sample-highlights">
+      <h2 id="sample-content">Sample Content</h2>
+
+      <div class="highlight-box">
+        <p><strong>The urgency is real:</strong></p>
+        <p>January 2026 brought unprecedented acceleration. In seven days, Amazon launched Alexa+, Microsoft expanded Copilot Checkout, and Google announced Universal Commerce Protocol with Business Agent. Every major platform simultaneously betting that AI agents will mediate how humans shop online.</p>
+        <p>The timeline just compressed dramatically. What businesses expected to prepare for over 12-18 months is happening now.</p>
+      </div>
+
+      <blockquote>
+        "Your bank cannot detect when AI reads your account - because the AI inherits your authenticated session. You solved the CAPTCHA, passed Cloudflare, entered your password, completed 2FA. Then you asked the AI to check your balance. From the bank's perspective, nothing happened."
+        <footer>- Chapter 6, The Security Maze</footer>
+      </blockquote>
+
+      <div class="highlight-box">
+        <p><strong>Before and after pattern:</strong></p>
+        <p><strong>Before (fails for agents and many humans):</strong> Toast notification appears for 3 seconds, displays "Error: Please complete CAPTCHA", then vanishes.</p>
+        <p><strong>After (works for everyone):</strong> Error appears at top of form with <code>role="alert"</code>, stays visible until resolved, clearly states "Complete the CAPTCHA below to submit this form" with pointer to location.</p>
+        <p>One pattern serves agents, screen readers, distracted users, and anyone who looked away at the wrong moment.</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="book-stats" data-section-type="statistics">
+      <h2 id="book-stats">Complete Coverage</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-number">12</span>
+          <span class="stat-label">Chapters</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">11</span>
+          <span class="stat-label">Appendices</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">57,000+</span>
+          <span class="stat-label">Words</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">150+</span>
+          <span class="stat-label">Resources</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="cta-section" role="complementary" data-section-type="call-to-action">
+      <h2>Get Early Access</h2>
+      <p>Interested in an early review copy? Contact us for access details and publication timeline.</p>
+      <a href="mailto:tom.cranstoun@gmail.com?subject=Early%20Access%20Request%20-%20The%20Invisible%20Users&body=Yes%20please%20give%20me%20early%20access" class="btn">Contact for Early Access</a>
+      <p style="margin-top: 1.5rem; color: #1e40af; font-size: 1rem;">Or email directly: <strong>tom.cranstoun@gmail.com</strong></p>
+      <a href="appendix-index.html" class="btn btn-secondary">Read Free Appendices</a>
+      <a href="faq.html" class="btn btn-secondary">View FAQ</a>
+    </div>
+
+    <section aria-labelledby="full-book" data-section-type="book-overview">
+      <h2 id="full-book">About the Full Book</h2>
+      <p>The complete book includes:</p>
+      <ul>
+        <li><strong>Part I:</strong> Understanding the Problem (Chapters 1-3)</li>
+        <li><strong>Part II:</strong> Business and Societal Impact (Chapters 4-8)</li>
+        <li><strong>Part III:</strong> The Platform Race (Chapter 9)</li>
+        <li><strong>Part IV:</strong> Practical Solutions (Chapters 10-12)</li>
+        <li><strong>11 Online Appendices:</strong> Implementation guides, quick references, case studies, and resource directory</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer role="contentinfo">
+    <div class="contact-links">
+      <a href="mailto:tom.cranstoun@gmail.com">Email</a>
+      <a href="https://allabout.network">Website</a>
+      <a href="faq.html">FAQ</a>
+      <a href="news.html">News</a>
+    </div>
+    <p><strong>Author:</strong> Tom Cranstoun</p>
+    <p><strong>Contact:</strong> tom.cranstoun@gmail.com</p>
+    <p><strong>Website:</strong> <a href="https://allabout.network">allabout.network</a></p>
+    <p>&copy; 2026 Tom Cranstoun. All rights reserved.</p>
+    <p>Last updated: January 2026</p>
+  </footer>
+
+  <!-- Floating back to top button -->
+  <a href="#" class="floating-top-button" aria-label="Back to Top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 3.5l-5.5 5.5L4 10.5l3-3v8.5h2V7.5l3 3L13.5 9z"/>
+    </svg>
+    Top
+  </a>
+
+  <script>
+    // Hide webinar notice on or after January 21, 2026
+    (function() {
+      const webinarDate = new Date('2026-01-21T00:00:00');
+      const now = new Date();
+
+      if (now >= webinarDate) {
+        const webinarNotice = document.querySelector('.webinar-notice');
+        if (webinarNotice) {
+          webinarNotice.classList.add('hidden');
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
