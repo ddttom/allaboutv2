@@ -9,6 +9,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **ipynb-viewer Code Block Rendering**: Fixed code blocks displaying on one line in GitHub markdown overlays
+  - **Root Cause**: Code blocks restored BEFORE paragraph processing caused blocks with blank lines (\\n\\n) to be split by the paragraph splitter into fragments
+  - **Solution**:
+    - Moved code block restoration to AFTER paragraph processing (line 410, was 382)
+    - Updated blockElementPattern regex to recognize `__CODEBLOCK_` placeholders as block elements
+    - Replaced code blocks with simple `<div>` placeholders to prevent browser HTML parser issues
+    - Processing order: extract → paragraph process → restore code blocks
+  - **Documentation Updates**:
+    - Added comprehensive section to LEARNINGS.md with the pattern and examples
+    - Updated block-architecture.md with processing order details and visual comparisons
+    - Added block-architecture.md as optional file to all block structure templates:
+      - `.claude/skills/eds-block-development/SKILL.md`
+      - `docs/for-ai/eds-appendix.md`
+      - `docs/for-ai/eds.md` (2 occurrences)
+      - `docs/for-ai/implementation/block-architecture-standards.md` (2 occurrences)
+      - `docs/for-ai/implementation/build-blocks-clarification.md`
+      - `docs/for-ai/testing/debug.md`
+    - Added "When Struggling to Find Answers" section to eds-block-development skill instructing AI assistants to check for block-architecture.md files
+  - **Result**: Code blocks now render with proper line breaks and indentation in GitHub markdown overlays
+  - **Testing**: Verified with appendix-a-implementation-cookbook.md showing correct HTML code formatting
+  - Commits: 8c0d13e5, 3e29e5bc
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js`, `blocks/ipynb-viewer/block-architecture.md`, `LEARNINGS.md`, `.claude/skills/eds-block-development/SKILL.md`, 7 documentation files
+
 - **ipynb-viewer Paragraph Rendering**: Fixed markdown rendering and spacing for better readability
   - **Paragraph Wrapping Fix**: Changed line break handling to wrap paragraphs in `<p>` tags
     - Split content by double newlines to identify paragraphs
