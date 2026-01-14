@@ -1816,6 +1816,11 @@ button.ipynb-help-button {
   color: var(--text-color, #555);
 }
 
+/* Tighter paragraph spacing for GitHub markdown files */
+.ipynb-github-md-overlay .ipynb-manual-content-area p {
+  margin: 0.25rem 0;
+}
+
 .ipynb-manual-content-area ul,
 .ipynb-manual-content-area ol {
   margin: 1rem 0;
