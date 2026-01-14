@@ -392,10 +392,25 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
     html = html.replace(`__INLINECODE_${index}__`, `<code>${escapedCode}</code>`);
   });
 
-  // Line breaks - only convert double newlines to paragraph breaks
-  // Single newlines within block elements are already handled by HTML structure
-  html = html.replace(/\n\n+/g, '<br><br>'); // Double+ newlines become paragraph breaks
-  html = html.replace(/\n/g, ' '); // Single newlines become spaces (natural flow)
+  // Line breaks - wrap paragraphs properly
+  // Split by double newlines to identify paragraphs
+  const paragraphs = html.split(/\n\n+/);
+
+  // Wrap each paragraph in <p> tags, unless it's already a block element
+  const blockElementPattern = /^<(h[1-6]|table|ul|ol|blockquote|pre|hr)/;
+  html = paragraphs
+    .map((para) => {
+      const trimmed = para.trim();
+      if (!trimmed) return ''; // Skip empty paragraphs
+      if (blockElementPattern.test(trimmed)) {
+        // Already a block element, don't wrap
+        return trimmed.replace(/\n/g, ' ');
+      }
+      // Regular paragraph - wrap in <p> and convert single newlines to spaces
+      return `<p>${trimmed.replace(/\n/g, ' ')}</p>`;
+    })
+    .filter((p) => p) // Remove empty strings
+    .join('\n');
 
   return html;
 }
