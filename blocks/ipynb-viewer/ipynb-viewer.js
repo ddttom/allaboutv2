@@ -42,7 +42,12 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
   const codeBlockPlaceholders = [];
   html = html.replace(/```(\w+)?\n?([\s\S]*?)```/g, (match, lang, code) => {
     const placeholder = `__CODEBLOCK_${codeBlockPlaceholders.length}__`;
-    codeBlockPlaceholders.push(`<pre><code class="language-${lang || 'plaintext'}">${code.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`);
+    // Preserve formatting: escape HTML but keep newlines and indentation
+    const escapedCode = code
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .trimEnd(); // Remove trailing whitespace but preserve internal formatting
+    codeBlockPlaceholders.push(`<pre><code class="language-${lang || 'plaintext'}">${escapedCode}</code></pre>`);
     return placeholder;
   });
 
