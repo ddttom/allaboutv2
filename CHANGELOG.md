@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2026-01-14] - ipynb-viewer Inline HTML Escaping
+
+### Fixed
+
+- **Inline HTML tag escaping in ipynb-viewer markdown rendering**: Added HTML escaping to match GitHub's behavior
+  - Issue: Inline HTML tags (e.g., `<div>`, `<img>`, `<script>`) in markdown files were being rendered as actual HTML instead of displayed as literal text
+  - Behavior inconsistent with GitHub's markdown rendering which escapes inline HTML
+  - Solution: Extract inline code with placeholders, escape remaining HTML tags, then restore inline code
+  - Processing order ensures correct behavior:
+    1. Code blocks extracted → placeholders (HTML already escaped)
+    2. Inline code extracted → placeholders (content preserved)
+    3. Remaining HTML tags escaped (catches inline HTML)
+    4. Markdown processing creates legitimate HTML (headings, links, images)
+    5. Code blocks and inline code restored
+  - Result:
+    - Inline HTML tags displayed as literal text (escaped)
+    - Inline code works correctly with backticks
+    - Code blocks display HTML with proper escaping
+    - Escaped characters (\< and \>) work as literal text
+    - Legitimate markdown HTML renders correctly
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js` (lines 41-47, 55-58, 381-384, removed line 133)
+  - Test file added: `blocks/ipynb-viewer/test-inline-html.md`
+  - Commits: d94cea36 (implementation), 2bc4ff36 (documentation)
+
+### Changed
+
+- **ipynb-viewer README.md**: Updated documentation to reflect inline HTML escaping behavior
+  - Enhanced Markdown Rendering section now mentions inline HTML escaping
+  - Key Features section documents inline code protection and HTML escaping
+  - Clarifies matching GitHub's markdown behavior
+
 ## [2026-01-13] - ipynb-viewer Tree Navigation Event Delegation
 
 ### Fixed
