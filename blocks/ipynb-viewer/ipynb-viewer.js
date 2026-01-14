@@ -2348,7 +2348,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     helpButton.addEventListener('click', () => {
       // Use fallback repo for help.md (allaboutv2) since help lives there
       const fallbackRepo = 'https://github.com/ddttom/allaboutv2';
-      const fallbackBranch = 'refactor/ipynb-viewer-unified-overlay';
+      const fallbackBranch = 'main';
       const helpPath = `${fallbackRepo}/blob/${fallbackBranch}/invisible-users/docs/help.md`;
 
       // Open using GitHub markdown overlay with fallback branch
@@ -3322,7 +3322,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
     helpButton.addEventListener('click', () => {
       // Use fallback repo for help.md (allaboutv2) since help lives there
       const fallbackRepo = 'https://github.com/ddttom/allaboutv2';
-      const fallbackBranch = 'refactor/ipynb-viewer-unified-overlay';
+      const fallbackBranch = 'main';
       const helpPath = `${fallbackRepo}/blob/${fallbackBranch}/invisible-users/docs/help.md`;
       // Close current overlay and open help
       closeOverlay();
