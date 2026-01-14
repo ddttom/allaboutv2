@@ -1282,117 +1282,95 @@ function addMarkdownPathsToTree(tree, newPaths) {
 /**
  * Build hierarchical file tree from markdown paths
  * @param {Array<string>} paths - Array of file paths (e.g., 'docs/help.md')
- * @param {string} helpPath - Path to help.md (prioritized at start)
+ * @param {string} _helpPath - Path to help.md (no longer used - kept for API compatibility)
  * @returns {Array} Tree nodes for files with folder hierarchy
  */
-function buildFileTree(paths, helpPath) {
+function buildFileTree(paths, _helpPath) {
   const tree = [];
-  const folderMap = new Map(); // Track folder nodes by full path
-  const pathMap = new Set(); // Deduplicate files
 
-  // Helper to get or create folder node and its parent hierarchy
-  const getOrCreateFolderHierarchy = (folderPath) => {
-    if (folderMap.has(folderPath)) {
-      return folderMap.get(folderPath);
+  // Categorize files into Chapters, Appendices, and Miscellaneous
+  const chapters = [];
+  const appendices = [];
+  const miscellaneous = [];
+
+  // Regular expressions for categorization
+  const chapterRegex = /^(chapter-\d+|preface\.md)/i;
+  const appendixRegex = /^appendix-[a-z]/i;
+
+  // Categorize each path
+  paths.forEach((path) => {
+    const parts = path.split('/');
+    const fileName = parts[parts.length - 1];
+
+    const fileNode = {
+      id: path,
+      label: fileName,
+      type: 'markdown',
+      path,
+      cellIndex: null,
+      children: [],
+      expanded: false,
+      level: 2, // Level 2 because they're under category folders
+    };
+
+    if (chapterRegex.test(fileName)) {
+      chapters.push(fileNode);
+    } else if (appendixRegex.test(fileName)) {
+      appendices.push(fileNode);
+    } else {
+      miscellaneous.push(fileNode);
     }
+  });
 
-    const parts = folderPath.split('/');
-    const folderName = parts[parts.length - 1];
-    const level = parts.length;
+  // Sort each category alphabetically
+  chapters.sort((a, b) => a.label.localeCompare(b.label));
+  appendices.sort((a, b) => a.label.localeCompare(b.label));
+  miscellaneous.sort((a, b) => a.label.localeCompare(b.label));
 
-    const folderNode = {
-      id: `folder-${folderPath}`,
-      label: folderName,
+  // Create "Chapters" folder node
+  if (chapters.length > 0) {
+    const chaptersNode = {
+      id: 'folder-chapters',
+      label: 'Chapters',
       type: 'folder',
       path: null,
       cellIndex: null,
-      children: [],
+      children: chapters,
       expanded: false,
-      level,
+      level: 1,
     };
-
-    folderMap.set(folderPath, folderNode);
-
-    // If this folder has a parent, create parent hierarchy and add this as child
-    if (parts.length > 1) {
-      const parentPath = parts.slice(0, -1).join('/');
-      const parentNode = getOrCreateFolderHierarchy(parentPath);
-      if (!parentNode.children.includes(folderNode)) {
-        parentNode.children.push(folderNode);
-      }
-    } else if (!tree.includes(folderNode)) {
-      // Top-level folder - add to tree root
-      tree.push(folderNode);
-    }
-
-    return folderNode;
-  };
-
-  // Helper to add file to tree
-  const addFileToTree = (filePath, prioritized = false) => {
-    if (pathMap.has(filePath)) return; // Skip if already added
-    pathMap.add(filePath);
-
-    const parts = filePath.split('/');
-    const fileName = parts[parts.length - 1];
-    const level = parts.length;
-
-    const fileNode = {
-      id: filePath,
-      label: fileName,
-      type: 'markdown',
-      path: filePath,
-      cellIndex: null,
-      children: [],
-      expanded: false,
-      level,
-    };
-
-    if (parts.length === 1) {
-      // Root level file
-      if (prioritized) {
-        tree.unshift(fileNode); // Add at start
-      } else {
-        tree.push(fileNode);
-      }
-    } else {
-      // File in folder(s) - create full folder hierarchy
-      const folderPath = parts.slice(0, -1).join('/');
-      const folderNode = getOrCreateFolderHierarchy(folderPath);
-
-      if (prioritized) {
-        folderNode.children.unshift(fileNode);
-      } else {
-        folderNode.children.push(fileNode);
-      }
-    }
-  };
-
-  // Process help.md first if specified
-  if (helpPath) {
-    const helpFileName = helpPath.split('/').pop();
-    const fullHelpPath = paths.find((p) => p.endsWith(helpPath) || p.endsWith(helpFileName));
-    if (fullHelpPath) {
-      addFileToTree(fullHelpPath, true);
-    }
+    tree.push(chaptersNode);
   }
 
-  // Process remaining paths
-  paths.forEach((path) => {
-    addFileToTree(path, false);
-  });
+  // Create "Appendix" folder node
+  if (appendices.length > 0) {
+    const appendixNode = {
+      id: 'folder-appendix',
+      label: 'Appendix',
+      type: 'folder',
+      path: null,
+      cellIndex: null,
+      children: appendices,
+      expanded: false,
+      level: 1,
+    };
+    tree.push(appendixNode);
+  }
 
-  // Recursive sort function
-  const sortNode = (node) => {
-    if (node.children && node.children.length > 0) {
-      node.children.sort((a, b) => a.label.localeCompare(b.label));
-      node.children.forEach(sortNode);
-    }
-  };
-
-  // Sort root level
-  tree.sort((a, b) => a.label.localeCompare(b.label));
-  tree.forEach(sortNode);
+  // Create "Miscellaneous" folder node
+  if (miscellaneous.length > 0) {
+    const miscNode = {
+      id: 'folder-miscellaneous',
+      label: 'Miscellaneous',
+      type: 'folder',
+      path: null,
+      cellIndex: null,
+      children: miscellaneous,
+      expanded: false,
+      level: 1,
+    };
+    tree.push(miscNode);
+  }
 
   return tree;
 }
