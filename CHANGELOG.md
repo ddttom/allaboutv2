@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **ipynb-viewer External Link Support**: Angle-bracket URLs and external markdown links now clickable in GitHub markdown overlay
+  - **Features**:
+    - Angle-bracket URLs (`<https://example.com>`) automatically converted to clickable links
+    - External markdown links (`[text](https://...)`) now open in new tab
+    - Security attributes: `target="_blank" rel="noopener noreferrer"`
+    - Styled with external link icon (↗) for visual indication
+    - Blue GitHub-style link color with hover underline
+  - **Implementation**:
+    - Added angle-bracket URL detection before HTML escaping (line 70)
+    - Modified external link generation to create `<a>` tags instead of `<span>` (line 253)
+    - Updated CSS styling with clickable link styles and external link icon
+    - Processing order: angle-bracket detection → HTML escaping → link generation
+  - **Documentation Updates**:
+    - Updated block-architecture.md processing order (added step 4: Angle-bracket URLs)
+    - Added "Why Processing Order Matters" entry for angle-bracket URL handling
+    - Updated markdown rendering section with external link details
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js`, `blocks/ipynb-viewer/ipynb-viewer.css`, `blocks/ipynb-viewer/block-architecture.md`
+
 ### Fixed
 
 - **ipynb-viewer Code Block Rendering**: Fixed code blocks displaying on one line in GitHub markdown overlays

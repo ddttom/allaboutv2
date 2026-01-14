@@ -2178,14 +2178,32 @@ pre code {
   background: rgb(255 255 255 / 0.3);
 }
 
-/* Non-clickable links for documentation purposes */
-.ipynb-external-link,
+/* External links - clickable, styled like GitHub external links */
+.ipynb-external-link {
+  color: #0366d6;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.ipynb-external-link:hover {
+  text-decoration: underline;
+}
+
+/* Optional: Add external link icon */
+.ipynb-external-link::after {
+  content: '↗';
+  font-size: 0.8em;
+  margin-left: 0.2em;
+  vertical-align: super;
+  opacity: 0.6;
+}
+
+/* Non-markdown links (kept for backward compatibility) */
 .ipynb-non-md-link {
   color: #666;
   font-style: italic;
 }
 
-.ipynb-external-link code,
 .ipynb-non-md-link code {
   font-size: 0.85em;
   color: #888;

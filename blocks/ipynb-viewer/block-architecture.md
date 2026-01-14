@@ -703,19 +703,21 @@ outputDiv.textContent = output;
 1. **Code blocks** - Extract and protect with placeholders
 2. **Inline code** - Extract and protect with placeholders
 3. **Escaped HTML** - Handle `\<` and `\>` characters
-4. **HTML escaping** - Escape remaining `<` and `>` (not in code blocks/inline code)
-5. **Tables** - Multi-line processing with header detection
-6. **Headers** - H6 → H5 → H4 → H3 → H2 → H1 (largest to smallest)
-7. **Lists** - Unordered and ordered lists (BEFORE bold/italic)
-8. **Bold** - `**text**` to `<strong>` (AFTER lists)
-9. **Italic** - `*text*` to `<em>` (AFTER bold)
-10. **Links** - `[text](url)` to `<a href>`
-11. **Paragraph wrapping** - Split by double newlines, wrap in `<p>` tags (skip block elements AND placeholders)
-12. **Code block restoration** - Replace placeholders with `<pre><code>` (AFTER paragraph processing)
-13. **Inline code restoration** - Replace placeholders with `<code>`
+4. **Angle-bracket URLs** - Detect `<https://...>` patterns and convert to markdown link format (BEFORE HTML escaping)
+5. **HTML escaping** - Escape remaining `<` and `>` (not in code blocks/inline code)
+6. **Tables** - Multi-line processing with header detection
+7. **Headers** - H6 → H5 → H4 → H3 → H2 → H1 (largest to smallest)
+8. **Lists** - Unordered and ordered lists (BEFORE bold/italic)
+9. **Bold** - `**text**` to `<strong>` (AFTER lists)
+10. **Italic** - `*text*` to `<em>` (AFTER bold)
+11. **Links** - `[text](url)` to `<a href>` including external links with `target="_blank"`
+12. **Paragraph wrapping** - Split by double newlines, wrap in `<p>` tags (skip block elements AND placeholders)
+13. **Code block restoration** - Replace placeholders with `<pre><code>` (AFTER paragraph processing)
+14. **Inline code restoration** - Replace placeholders with `<code>`
 
 **Why Processing Order Matters:**
 
+- **Angle-bracket URLs before escaping:** Allows `<https://...>` to be detected and converted before `<` and `>` are escaped to HTML entities
 - **Lists before bold/italic:** Allows `1. **Bold text**` to render as list with bold item
 - **Blank lines in lists:** Parser ignores blank lines between items, maintaining continuous numbering (CommonMark/GFM compliance)
 - **Code protection:** Prevents markdown processing inside code blocks and inline code

@@ -64,6 +64,11 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
   html = html.replace(/\\>/g, '&gt;');
   html = html.replace(/\\:/g, ':');
 
+  // Convert angle-bracket enclosed URLs to markdown link format
+  // Must happen BEFORE HTML escaping (line 69) to preserve angle brackets
+  // Example: <https://github.com> becomes [https://github.com](https://github.com)
+  html = html.replace(/<(https?:\/\/[^>]+)>/g, (match, url) => `[${url}](${url})`);
+
   // Escape all remaining HTML tags (not in code blocks or inline code)
   // This prevents inline HTML from being rendered, matching GitHub's behavior
   html = html.replace(/</g, '&lt;');
@@ -243,9 +248,9 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
       return `<a href="#" class="ipynb-github-md-link" data-md-url="${fullUrl}" data-md-path="${cleanPath}" data-repo="${repoUrl}" data-branch="${branch}">${text}</a>`;
     }
 
-    // External links (http/https) - display as non-clickable text with URL shown
+    // External links (http/https) - clickable links that open in new tab
     if (processedUrl.startsWith('http://') || processedUrl.startsWith('https://')) {
-      return `<span class="ipynb-external-link" title="${processedUrl}">${text} <code>${processedUrl}</code></span>`;
+      return `<a href="${processedUrl}" class="ipynb-external-link" title="Open in new tab: ${processedUrl}" target="_blank" rel="noopener noreferrer">${text}</a>`;
     }
 
     // Hash links - keep as-is for internal navigation
