@@ -3428,23 +3428,32 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
       // Inline SVG illustrations
       renderedHTML = await inlineSVGIllustrations(renderedHTML);
 
-      // First set the HTML normally
+      // CRITICAL FIX: Extract code block content BEFORE innerHTML parsing
+      // Store original code content with newlines preserved
+      const codeBlockContents = [];
+      const codeBlockPattern = /<pre><code class="language-[\w-]+">([\s\S]*?)<\/code><\/pre>/g;
+      let match;
+      // eslint-disable-next-line no-cond-assign
+      while ((match = codeBlockPattern.exec(renderedHTML)) !== null) {
+        // Decode HTML entities while preserving newlines
+        const encodedContent = match[1];
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = encodedContent;
+        const decodedText = tempDiv.textContent || tempDiv.innerText;
+        codeBlockContents.push(decodedText);
+        console.log(`[CODE BLOCK ${codeBlockContents.length - 1}] Extracted ${decodedText.split('\n').length} lines`);
+      }
+
+      // Now set the HTML (this will normalize whitespace)
       contentArea.innerHTML = renderedHTML;
 
-      // Post-process: Fix code blocks by extracting text and re-inserting as text nodes
-      // This preserves newlines that were in the HTML string but got normalized by innerHTML
+      // Post-process: Replace code block content with preserved text
       const codeBlocks = contentArea.querySelectorAll('pre code');
-      codeBlocks.forEach((codeBlock) => {
-        // Extract the HTML content (which has entity-encoded characters)
-        const htmlContent = codeBlock.innerHTML;
-
-        // Decode HTML entities and preserve newlines
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = htmlContent;
-        const decodedText = tempDiv.textContent || tempDiv.innerText;
-
-        // Clear the code block and insert as pure text node
-        codeBlock.textContent = decodedText;
+      codeBlocks.forEach((codeBlock, index) => {
+        if (index < codeBlockContents.length) {
+          codeBlock.textContent = codeBlockContents[index];
+          console.log(`[CODE BLOCK ${index}] Restored ${codeBlockContents[index].split('\n').length} lines`);
+        }
       });
 
       // Process smart links in the rendered markdown
