@@ -117,7 +117,8 @@
       "Bash(SKIP_DOC_CHECK=1 git push:*)",
       "Bash(npm run test:local:*)",
       "Bash(npm audit:*)",
-      "Bash(git restore:*)"
+      "Bash(git restore:*)",
+      "Bash(git rm:*)"
     ],
     "deny": [],
     "ask": []
