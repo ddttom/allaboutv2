@@ -110,6 +110,9 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
 
   // Headers (process in order from most specific to least)
   // Add IDs to h2 headers for navigation
+  html = html.replace(/^###### (.*$)/gim, '<h6>$1</h6>');
+  html = html.replace(/^##### (.*$)/gim, '<h5>$1</h5>');
+  html = html.replace(/^#### (.*$)/gim, '<h4>$1</h4>');
   html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
   html = html.replace(/^## (.*$)/gim, (match, text) => {
     // Generate ID from text (lowercase, replace spaces with hyphens, remove special chars)
