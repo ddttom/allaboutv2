@@ -3444,18 +3444,24 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
  * @param {string} helpRepoUrl - Help repository URL
  * @param {string} branch - GitHub branch
  * @param {Object} pagedOverlay - The paged overlay object with navigation methods
+ * @param {Object} metadata - Notebook metadata (may contain opening-page)
  */
-function checkHashNavigation(repoUrl, helpRepoUrl, branch, pagedOverlay) {
+function checkHashNavigation(repoUrl, helpRepoUrl, branch, pagedOverlay, metadata = {}) {
   const { hash } = window.location;
+  let targetPath = null;
 
-  if (!hash || hash === '#') {
-    console.log('📍 No hash in URL, staying on current page');
+  // Check URL hash first (takes precedence)
+  if (hash && hash !== '#') {
+    targetPath = hash.substring(1);
+    console.log(`📍 Hash detected in URL: ${targetPath}`);
+  } else if (metadata['opening-page']) {
+    // Fallback to opening-page metadata if no URL hash
+    targetPath = metadata['opening-page'].replace(/^#/, ''); // Remove leading # if present
+    console.log(`📍 Opening page from metadata: ${targetPath}`);
+  } else {
+    console.log('📍 No hash in URL or opening-page metadata, staying on current page');
     return;
   }
-
-  // Remove leading # from hash
-  const targetPath = hash.substring(1);
-  console.log(`📍 Hash detected in URL: ${targetPath}`);
 
   // Check if it's a markdown file path (ends with .md)
   if (targetPath.endsWith('.md')) {
@@ -3730,7 +3736,7 @@ export default async function decorate(block) {
         setTimeout(() => {
           overlay.openOverlay();
           // Check for hash navigation after overlay opens
-          checkHashNavigation(repoUrl, helpRepoUrl, githubBranch, overlay);
+          checkHashNavigation(repoUrl, helpRepoUrl, githubBranch, overlay, notebook.metadata);
         }, 100);
       } else {
         // Regular notebook/paged: Show start button
@@ -3746,7 +3752,7 @@ export default async function decorate(block) {
           overlay.openOverlay();
           // Check for hash navigation after overlay opens
           setTimeout(() => {
-            checkHashNavigation(repoUrl, helpRepoUrl, githubBranch, overlay);
+            checkHashNavigation(repoUrl, helpRepoUrl, githubBranch, overlay, notebook.metadata);
           }, 100);
         });
 
