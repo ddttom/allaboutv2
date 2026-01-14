@@ -1,9 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IPynb Viewer  - Notebook Variation</title>
+    <meta name="author" content="Tom Cranstoun">
+    <meta name="description" content="Interactive demonstration of The Invisible Users - a comprehensive guide to building AI-friendly web content with practical examples, testing strategies, and implementation patterns.">
+
+    <!-- AI-specific meta tags -->
+    <meta name="ai-preferred-access" content="html">
+    <meta name="ai-content-policy" content="summaries-allowed, full-extraction-allowed">
+    <meta name="ai-freshness" content="monthly">
+    <meta name="ai-structured-data" content="json-ld">
+    <meta name="ai-attribution" content="required" text="Source: The Invisible Users by Tom Cranstoun, https://allabout.network/invisible-users/">
+
+    <title>The Invisible Users - Interactive Notebook | AI-Friendly Web Content Guide</title>
+
+    <!-- Schema.org structured data for web application -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "The Invisible Users - Interactive Notebook",
+        "description": "Interactive demonstration and guide for building AI-friendly web content, featuring practical examples and implementation patterns",
+        "datePublished": "2026-01-14",
+        "dateModified": "2026-01-14",
+        "author": {
+            "@type": "Person",
+            "name": "Tom Cranstoun",
+            "email": "tom.cranstoun@gmail.com",
+            "url": "https://allabout.network/tom-cranstoun.html",
+            "image": "https://allabout.network/images/tom-cranstoun.jpg"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Digital Domain Technologies Ltd",
+            "url": "https://allabout.network"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://allabout.network/invisible-users/notebook.html"
+        },
+        "applicationCategory": "Educational",
+        "keywords": "AI-friendly content, web accessibility, AI agents, interactive documentation, implementation guide",
+        "timeRequired": "PT60M",
+        "educationalLevel": "Intermediate",
+        "inLanguage": "en-GB",
+        "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://allabout.network/invisible-users/"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Interactive Notebook",
+                    "item": "https://allabout.network/invisible-users/notebook.html"
+                }
+            ]
+        },
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "GBP"
+        }
+    }
+    </script>
 
     <!-- EDS Core Styles -->
     <link rel="stylesheet" href="/styles/styles.css">
@@ -26,7 +91,7 @@
     <main>
         <!-- IPynb Viewer Block - Index Variation (Auto-opens) -->
         <div class="ipynb-viewer notebook index block"
-             id="test-notebook"
+             id="notebook"
              data-block-name="ipynb-viewer"
              data-block-status="initialized">
             <div>
@@ -39,14 +104,10 @@
 
     <!-- EDS Core Scripts -->
     <script type="module">
-        import { sampleRUM, loadBlock } from '/scripts/aem.js';
-
-        // Initialize RUM 
-        sampleRUM('top');
-        window.addEventListener('load', () => sampleRUM('load'));
+        import { loadBlock } from '/scripts/aem.js';
 
         // Load the notebook block
-        const block = document.querySelector('#test-notebook');
+        const block = document.querySelector('#notebook');
 
         try {
             // Load block (will fetch /docs-navigation.ipynb)
