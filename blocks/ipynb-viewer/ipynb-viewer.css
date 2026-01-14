@@ -1868,6 +1868,23 @@ button.ipynb-help-button {
   display: block !important;
 }
 
+/* Target language-specific code classes */
+.ipynb-github-md-overlay code[class*="language-"],
+.ipynb-manual-content-area code[class*="language-"],
+.ipynb-overlay-content code[class*="language-"] {
+  white-space: pre !important;
+  display: block !important;
+}
+
+/* Even more specific - target pre > code with language class */
+.ipynb-github-md-overlay pre > code[class^="language-"],
+.ipynb-manual-content-area pre > code[class^="language-"],
+.ipynb-overlay-content pre > code[class^="language-"] {
+  white-space: pre !important;
+  display: block !important;
+  font-family: 'Courier New', monospace !important;
+}
+
 .ipynb-manual-content-area ul,
 .ipynb-manual-content-area ol {
   margin: 1rem 0;
