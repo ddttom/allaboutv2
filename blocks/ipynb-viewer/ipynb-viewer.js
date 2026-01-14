@@ -1327,8 +1327,14 @@ function buildFileTree(paths, _helpPath) {
     // All other files are ignored (not added to any category)
   });
 
-  // Sort each category alphabetically
-  chapters.sort((a, b) => a.label.localeCompare(b.label));
+  // Sort each category with special handling for preface.md
+  chapters.sort((a, b) => {
+    // preface.md always comes first
+    if (a.label.toLowerCase() === 'preface.md') return -1;
+    if (b.label.toLowerCase() === 'preface.md') return 1;
+    // Otherwise alphabetical
+    return a.label.localeCompare(b.label);
+  });
   appendices.sort((a, b) => a.label.localeCompare(b.label));
   miscellaneous.sort((a, b) => a.label.localeCompare(b.label));
 
