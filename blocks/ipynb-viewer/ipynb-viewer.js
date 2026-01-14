@@ -3428,15 +3428,24 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
       // Inline SVG illustrations
       renderedHTML = await inlineSVGIllustrations(renderedHTML);
 
-      // Use DOMParser to preserve whitespace in code blocks
-      // Setting innerHTML directly can cause the browser to normalize whitespace
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(renderedHTML, 'text/html');
-      contentArea.innerHTML = '';
-      // Move all child nodes from parsed document to content area
-      while (doc.body.firstChild) {
-        contentArea.appendChild(doc.body.firstChild);
-      }
+      // First set the HTML normally
+      contentArea.innerHTML = renderedHTML;
+
+      // Post-process: Fix code blocks by extracting text and re-inserting as text nodes
+      // This preserves newlines that were in the HTML string but got normalized by innerHTML
+      const codeBlocks = contentArea.querySelectorAll('pre code');
+      codeBlocks.forEach((codeBlock) => {
+        // Extract the HTML content (which has entity-encoded characters)
+        const htmlContent = codeBlock.innerHTML;
+
+        // Decode HTML entities and preserve newlines
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = htmlContent;
+        const decodedText = tempDiv.textContent || tempDiv.innerText;
+
+        // Clear the code block and insert as pure text node
+        codeBlock.textContent = decodedText;
+      });
 
       // Process smart links in the rendered markdown
       // 1. Resolve hash links (internal navigation)
