@@ -728,6 +728,7 @@ outputDiv.textContent = output;
 The order of code block restoration vs paragraph processing is CRITICAL:
 
 **❌ WRONG - Early Restoration (Original Bug):**
+
 ```
 1. Extract code blocks → placeholders
 2. Restore code blocks → <pre><code>line1\n\nline2</code></pre>
@@ -736,6 +737,7 @@ The order of code block restoration vs paragraph processing is CRITICAL:
 ```
 
 **✅ CORRECT - Deferred Restoration (Fix):**
+
 ```
 1. Extract code blocks → placeholders
 2. Paragraph processing splits by \n\n → placeholders remain intact (single tokens)
@@ -743,6 +745,7 @@ The order of code block restoration vs paragraph processing is CRITICAL:
 ```
 
 **Why this matters:**
+
 - Code blocks often contain blank lines (`\n\n`) for readability
 - If restored before paragraph splitting, these blank lines cause the code block to be split into fragments
 - Split fragments don't match the `/^<pre/` block element pattern
@@ -752,6 +755,7 @@ The order of code block restoration vs paragraph processing is CRITICAL:
 **Implementation Details:**
 
 The `blockElementPattern` regex must recognize BOTH actual block elements AND placeholders:
+
 ```javascript
 // ✅ Correct pattern - protects placeholders
 const blockElementPattern = /^<(h[1-6]|table|ul|ol|blockquote|pre|hr)|^__CODEBLOCK_/;
@@ -770,12 +774,14 @@ html = paragraphs.map((para) => {
 **Paragraph Rendering:**
 
 Double newlines (`\n\n`) indicate paragraph boundaries. The parser:
+
 1. Splits content by double newlines
 2. Wraps each paragraph in `<p>` tags
 3. Skips wrapping block elements (headers, tables, lists, blockquotes, pre, hr)
 4. Converts single newlines within paragraphs to spaces (natural text flow)
 
 **CSS Spacing:**
+
 - GitHub overlay paragraphs: `margin: 1rem 0`, `line-height: 1.6`
 - Notebook cell paragraphs: `margin: 0.75rem 0`, `line-height: 1.6`
 

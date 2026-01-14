@@ -3433,7 +3433,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
       // Store original code content with newlines preserved
       const codeBlockContents = [];
       const codeBlockPattern = /<pre><code[^>]*>([\s\S]*?)<\/code><\/pre>/g;
-      
+
       // Replace code blocks with unique, simple placeholders that won't confuse the browser parser
       // We use a div with display:none to ensure it's treated as a block element but hidden
       let placeholderIndex = 0;
@@ -3445,10 +3445,10 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
           .replace(/&amp;/g, '&')
           .replace(/&quot;/g, '"')
           .replace(/&#39;/g, "'");
-          
+
         codeBlockContents.push(decodedText);
         const placeholder = `<div id="ipynb-code-placeholder-${placeholderIndex}" style="display:none;"></div>`;
-        placeholderIndex++;
+        placeholderIndex += 1;
         return placeholder;
       });
 
@@ -3459,28 +3459,28 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
       // Post-process: Replace placeholders with manually constructed code blocks
       // This bypasses innerHTML whitespace normalization for the code content
       console.log(`[RESTORE] Manually constructing ${codeBlockContents.length} code blocks`);
-      
+
       codeBlockContents.forEach((content, index) => {
         const placeholder = contentArea.querySelector(`#ipynb-code-placeholder-${index}`);
         if (placeholder) {
           // Create the structure: <pre><code class="language-xyz">content</code></pre>
           const pre = document.createElement('pre');
           const code = document.createElement('code');
-          
+
           // Try to determine language from the original match if possible, or default to plaintext
           // For now we'll rely on the class being set by specific language detection if we had it,
           // but since we're reconstructing, we'll default to plaintext or specific class if we extracted it.
           // Note: The original regex didn't capture the class, so we might lose syntax highlighting class
           // if we don't improve the extraction. However, the priority is structure.
-          // To improve: we could adjust regex to capture class. 
+          // To improve: we could adjust regex to capture class.
           // But for this fix, we prioritize the content structure.
-          code.className = 'language-plaintext'; 
-          
+          code.className = 'language-plaintext';
+
           // CRITICAL: Use textContent to preserve ALL newlines and whitespace
           code.textContent = content;
-          
+
           pre.appendChild(code);
-          
+
           // Replace placeholder with actual code block
           placeholder.parentNode.replaceChild(pre, placeholder);
           console.log(`[CODE BLOCK ${index}] Restored ${content.split('\n').length} lines`);

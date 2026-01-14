@@ -902,6 +902,7 @@ When debugging CSS that "isn't applying":
 5. **Read the source** - 5 minutes reading code beats 1 hour of trial-and-error
 
 **Documentation:**
+
 - Parser implementation: `blocks/ipynb-viewer/ipynb-viewer.js` lines 395-400
 - CSS fix: `blocks/ipynb-viewer/ipynb-viewer.css` lines 1819-1864
 - Commit: c10eed55
@@ -1024,6 +1025,7 @@ document.querySelector('.ipynb-github-md-overlay pre code').childNodes
 - Paragraph processing order matters for ALL content types, not just code blocks
 
 **Documentation:**
+
 - Implementation: `blocks/ipynb-viewer/ipynb-viewer.js` lines 19-427
 - Result: `/Users/tomcranstoun/Documents/GitHub/allaboutV2/result.md`
 
