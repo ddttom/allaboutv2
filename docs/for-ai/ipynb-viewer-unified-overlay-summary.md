@@ -12,6 +12,7 @@
 ## Problem Statement
 
 The original ipynb-viewer used multiple separate overlay implementations:
+
 - `createPagedOverlay()` - Paged overlay with notebook cells
 - `createGitHubMarkdownOverlay()` - GitHub overlay with markdown files
 - `createManualOverlay()` - Manual overlay with help pages
@@ -121,26 +122,31 @@ The original ipynb-viewer used multiple separate overlay implementations:
 ## Key Features
 
 ### ES6 Modules
+
 - Clean imports/exports
 - No global variables
 - Modular architecture
 
 ### History Management
+
 - Max 50 entries (configurable)
 - Navigate back through history
 - History dropdown UI
 
 ### Comprehensive Logging
+
 - Module prefixes: `[HASH]`, `[NAV]`, `[OVERLAY]`, `[NOTEBOOK RENDERER]`, `[MARKDOWN RENDERER]`
 - Debug-friendly console output
 - State change tracking
 
 ### Mode-Specific Renderers
+
 - Shared utility functions
 - Consistent rendering patterns
 - Easy to extend with new modes
 
 ### Fresh Implementation
+
 - No legacy code
 - No migration needed
 - Clean, modern architecture
@@ -365,22 +371,27 @@ overlay.home();
 ## Performance Optimizations
 
 ### Lazy Rendering
+
 - Content rendered only when navigated to
 - Improves initial load time
 
 ### DOM Reuse
+
 - Overlay DOM created once
 - Content swapped, not recreated
 
 ### Mode Switching
+
 - No overlay destruction/recreation
 - Fast mode transitions
 
 ### Tree Caching
+
 - Tree structure built once
 - Re-rendered only on expand/collapse
 
 ### Memory Management
+
 - History limit: max 50 entries
 - Event cleanup on destruction
 - DOM cleanup on hide
@@ -456,6 +467,7 @@ overlay.home();
 ### Parser Integration
 
 Currently uses simple parsers. Future integration:
+
 - Full `parseMarkdown()` from main ipynb-viewer.js
 - `inlineSVGIllustrations()` support
 - JSLab integration for code execution
@@ -468,6 +480,7 @@ Currently uses simple parsers. Future integration:
 The unified overlay refactor is **100% complete** and ready for production use. It successfully eliminates the multiple overlay confusion problem through a clean, mode-based architecture with centralized state management and unified navigation.
 
 **Key Achievements**:
+
 - 8 core modules implemented with clean ES6 architecture
 - 525 lines of comprehensive documentation
 - Fresh implementation (no legacy code)
@@ -475,12 +488,14 @@ The unified overlay refactor is **100% complete** and ready for production use. 
 - Production-ready and tested
 
 **Developer Experience**:
+
 - Simple API: `createNotebookOverlay()` and `createMarkdownOverlay()`
 - Comprehensive logging for debugging
 - Clear module separation
 - Easy to extend with new modes
 
 **User Experience**:
+
 - No more context confusion
 - Consistent navigation behavior
 - Smooth mode transitions

@@ -3,11 +3,13 @@
 ## Problem Statement
 
 The current ipynb-viewer block has multiple separate overlay implementations:
+
 - Paged overlay (notebook cells)
 - GitHub markdown overlay (repository files)
 - Manual overlay (help content)
 
 This creates:
+
 - Context confusion ("where am I?")
 - Duplicate code (even after refactoring)
 - Complex navigation logic
@@ -364,6 +366,7 @@ blocks/ipynb-viewer/
 ### Risk: Big Bang Refactor
 
 **Mitigation**:
+
 - Keep old code during migration
 - Use feature flag to switch between old/new
 - Incremental migration per mode
@@ -371,6 +374,7 @@ blocks/ipynb-viewer/
 ### Risk: Breaking Changes
 
 **Mitigation**:
+
 - Comprehensive test suite before refactor
 - Visual regression testing
 - User acceptance testing
@@ -378,6 +382,7 @@ blocks/ipynb-viewer/
 ### Risk: Performance Impact
 
 **Mitigation**:
+
 - Benchmark before/after
 - Lazy load mode renderers
 - Cache rendered content

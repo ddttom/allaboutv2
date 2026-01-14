@@ -84,6 +84,7 @@ overlay.navigate({
 ```
 
 **Complete Documentation:** See [overlay/README.md](overlay/README.md) for comprehensive 525-line guide covering:
+
 - Module documentation with API reference
 - Usage examples and code samples
 - State management and event handling
@@ -92,6 +93,7 @@ overlay.navigate({
 **Architecture Comparison:**
 
 **Before (Multiple Overlays):**
+
 ```javascript
 // Three separate overlay implementations
 createPagedOverlay(...)      // Notebook cells
@@ -100,6 +102,7 @@ createManualOverlay(...)     // Help pages
 ```
 
 **After (Unified Overlay):**
+
 ```javascript
 // Single overlay with modes
 const overlay = createUnifiedOverlay({ mode: 'notebook' });
@@ -108,6 +111,7 @@ overlay.updateMode('manual');
 ```
 
 **Related Documentation:**
+
 - [ipynb-viewer-overlay-refactor-proposal.md](../../docs/for-ai/ipynb-viewer-overlay-refactor-proposal.md) - Original proposal
 - [ipynb-viewer-refactor-progress.md](../../docs/for-ai/ipynb-viewer-refactor-progress.md) - Progress tracking
 - [ipynb-viewer-unified-overlay-summary.md](../../docs/for-ai/ipynb-viewer-unified-overlay-summary.md) - Complete summary
@@ -283,6 +287,7 @@ const parentHistoryContext = {
 **Solution:** Access raw notebook JSON source via `notebookData.cells` array for Part heading detection instead of rendered HTML.
 
 **Location:**
+
 - `buildNavigationTree()` function (lines 1406-1731)
 - `extractHeadingFromRaw()` helper function (lines 1461-1480)
 - `createPagedOverlay()` function signature (line 1833)

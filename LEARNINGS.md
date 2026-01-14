@@ -493,6 +493,7 @@ Use AskUserQuestion to clarify with visual descriptions:
 **CSS reference for each structure:**
 
 **Markdown Cell Content:**
+
 - Paragraphs: `.ipynb-markdown-cell .ipynb-cell-content p { margin: 0.25em 0; }`
 - Line height: `.ipynb-markdown-cell .ipynb-cell-content { line-height: 1.4; }`
 - Headings: `.ipynb-markdown-cell h1/h2/h3 { margin-top: 0.75rem; margin-bottom: 0.25rem; }`
@@ -501,6 +502,7 @@ Use AskUserQuestion to clarify with visual descriptions:
 - List paragraphs: `.ipynb-markdown-cell li p { margin: 0; }`
 
 **Repository Navigation Tree:**
+
 - Tree items: `.ipynb-nav-tree-item { padding: 0.5rem 1rem; gap: 0.5rem; }`
 - Root nodes: `.ipynb-nav-tree-item[data-type="root"] { margin-bottom: 0.25rem; }`
 
@@ -537,6 +539,7 @@ Use AskUserQuestion to clarify with visual descriptions:
 **Real example - Home button duplication (2026-01-14):**
 
 **Problem:**
+
 ```javascript
 // Paged overlay (lines 1984-2016) - Notebook mode home button
 let homeButton;
@@ -559,6 +562,7 @@ homeButton.addEventListener('click', (e) => {
 ```
 
 **Issues with this approach:**
+
 - Two separate button creation processes with near-identical code
 - Debug logs unclear which button was clicked
 - Can't tell if user is in notebook mode or GitHub mode
@@ -610,6 +614,7 @@ function createHomeButton(config) {
 ```
 
 **Usage in paged overlay (notebook mode):**
+
 ```javascript
 homeButton = createHomeButton({
   context: 'notebook',
@@ -622,6 +627,7 @@ homeButton = createHomeButton({
 ```
 
 **Usage in GitHub markdown overlay:**
+
 ```javascript
 homeButton = createHomeButton({
   context: 'github',
@@ -646,6 +652,7 @@ homeButton = createHomeButton({
 **Pattern recognition:**
 
 When you see code like this:
+
 ```javascript
 // In function A
 const button = createElement();
@@ -657,6 +664,7 @@ button.addEventListener('click', () => { /* do thing B */ });
 ```
 
 Refactor to:
+
 ```javascript
 function createButton(config) {
   const button = createElement();

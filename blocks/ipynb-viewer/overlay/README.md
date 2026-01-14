@@ -41,10 +41,12 @@ Manages URL hashes for navigation.
 **Format**: `#mode/identifier`
 
 **Examples**:
+
 - `#notebook/cell-5`
 - `#markdown/docs/README.md`
 
 **API**:
+
 ```javascript
 import hashManager from './hash-manager.js';
 
@@ -66,6 +68,7 @@ const matches = hashManager.matches(target);
 Unified navigation for all content types.
 
 **API**:
+
 ```javascript
 import createUnifiedNavigation from './navigation.js';
 
@@ -97,6 +100,7 @@ navigation.updateMode('markdown');
 Core overlay implementation.
 
 **API**:
+
 ```javascript
 import createUnifiedOverlay from './unified-overlay.js';
 
@@ -125,6 +129,7 @@ overlay.hide();
 Renders notebook cells.
 
 **Features**:
+
 - Markdown cell rendering
 - Code cell rendering
 - Output display
@@ -136,6 +141,7 @@ Renders notebook cells.
 Renders markdown files.
 
 **Features**:
+
 - Fetch from GitHub or local
 - Parse markdown to HTML
 - Smart links (.md files)
@@ -147,11 +153,13 @@ Renders markdown files.
 Unified tree showing all content.
 
 **Sections**:
+
 - Notebook (cells grouped by parts)
 - Repository (files and folders)
 - Help (manual pages)
 
 **API**:
+
 ```javascript
 import createUnifiedNavigationTree from './tree.js';
 
@@ -174,6 +182,7 @@ tree.toggle('part-1');
 Simple API for creating overlays.
 
 **API**:
+
 ```javascript
 import { createNotebookOverlay, createMarkdownOverlay } from './integration.js';
 
@@ -435,6 +444,7 @@ console.log('Current identifier:', navigation.getCurrentIdentifier());
 ### Manual Testing
 
 1. **Create overlay**
+
    ```javascript
    const overlay = createNotebookOverlay(cells, { title: 'Test' });
    overlay.show();
@@ -447,6 +457,7 @@ console.log('Current identifier:', navigation.getCurrentIdentifier());
    - Check hash updates
 
 3. **Test mode switching**
+
    ```javascript
    overlay.updateMode('markdown');
    overlay.navigate({ mode: 'markdown', identifier: 'README.md' });
