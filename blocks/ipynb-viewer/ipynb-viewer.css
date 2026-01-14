@@ -1849,11 +1849,13 @@ button.ipynb-help-button {
 
 .ipynb-github-md-overlay .ipynb-manual-content-area pre {
   margin: 1rem 0 !important;
+  white-space: pre !important;
 }
 
 .ipynb-github-md-overlay .ipynb-manual-content-area pre code {
   line-height: 1.4 !important;
   white-space: pre !important;
+  display: block !important;
 }
 
 .ipynb-manual-content-area ul,
@@ -1880,6 +1882,7 @@ button.ipynb-help-button {
   border-radius: 4px;
   overflow-x: auto;
   margin: 1rem 0;
+  white-space: pre;
 }
 
 .ipynb-manual-content-area pre code {
@@ -1887,6 +1890,7 @@ button.ipynb-help-button {
   padding: 0;
   line-height: 1.4;
   white-space: pre;
+  display: block;
 }
 
 .ipynb-manual-content-area table {

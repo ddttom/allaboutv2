@@ -43,14 +43,9 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
   html = html.replace(/```(\w+)?\n?([\s\S]*?)```/g, (match, lang, code) => {
     const placeholder = `__CODEBLOCK_${codeBlockPlaceholders.length}__`;
     // Preserve formatting: escape HTML but keep newlines and indentation
-    // Important: Don't trim or modify the code content - preserve exactly as written
     const escapedCode = code
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
-
-    // Debug: Log first 100 chars to see if formatting is preserved
-    console.log(`[CODEBLOCK] Length: ${escapedCode.length}, Preview: ${escapedCode.substring(0, 100).replace(/\n/g, '\\n')}`);
-
     codeBlockPlaceholders.push(`<pre><code class="language-${lang || 'plaintext'}">${escapedCode}</code></pre>`);
     return placeholder;
   });
