@@ -7,6 +7,68 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2026-01-14] - ipynb-viewer Navigation Hash Handling & Markdown Overlay Improvements
+
+### Fixed
+
+- **Home button hash clearing and navigation hash updates**: Fixed URL hash behavior in ipynb-viewer
+  - Issue: Clicking home button didn't clear hash, returning to tagged/filtered page instead of actual home
+  - Issue: Hash never updated when navigating between cells or markdown pages
+  - Solution: Home button now clears URL hash using `window.history.replaceState()`
+  - Solution: Navigation updates hash to reflect current location (`#cell-X` for cells, `#filename.md` for markdown)
+  - Implementation: Added hash clearing in both notebook mode and markdown overlay home buttons (lines 1976-1979, 3063-3066)
+  - Implementation: Added hash update in `updatePageDisplay()` function (lines 2577-2584)
+  - Result: Proper bookmarking and sharing of specific cells/pages via URL hash
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js`
+  - Commits: 7f6dd772
+
+- **Blockquote styling in GitHub markdown overlays**: Fixed missing blockquote styles for GitHub markdown overlays
+  - Issue: Blockquotes in GitHub markdown overlays (`.ipynb-github-md-overlay`) had no styling
+  - Solution: Added `.ipynb-github-md-overlay blockquote` selector to all blockquote CSS rules
+  - Result: Blockquotes now render consistently across all overlay types (paged, manual, GitHub)
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.css` (lines 23-55)
+  - Commits: 7f6dd772
+
+- **LaTeX command and Pandoc attribute filtering**: Enhanced markdown rendering to filter LaTeX/Pandoc syntax
+  - Issue: LaTeX commands like `\addtocontents{toc}{...}` displayed in rendered markdown
+  - Issue: Pandoc attributes like `{.unnumbered .unlisted}` displayed in rendered markdown
+  - Solution: Updated LaTeX filter to match lines starting with `\` (not just exact matches)
+  - Solution: Added Pandoc attribute filter for lines matching `^\{\.[a-zA-Z.\s]+\}$`
+  - Implementation: Combined both filters in single function with multiple conditions (lines 22-39)
+  - Result: LaTeX commands and Pandoc attributes properly filtered from rendered output
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js`
+  - Commits: 7f6dd772
+
+- **Removed broken navigation-guide.md link**: Cleaned up non-existent file reference in invisible-users notebook
+  - Issue: Link to `navigation-guide.md` returned 404 (file doesn't exist in repository)
+  - Solution: Removed reference to navigation guide from Book Structure section
+  - Files modified: `invisible-users/notebook.ipynb` (cell-2)
+  - Commits: 7f6dd772
+
+### Changed
+
+- **ESLint violations fixed**: Improved code quality and standards compliance
+  - Removed unused `mdPath` variable
+  - Removed unused `index` parameter in forEach callback
+  - Replaced empty block statements with explanatory comments
+  - Converted `for...of` loops to functional array methods (`.reduce()`, `.find()`)
+  - Removed unnecessary else block
+  - Fixed syntax error in `findNodeById` reduce callback
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js`
+  - Commits: 30b920bc
+
+### Documentation
+
+- **ipynb-viewer version update**: Updated to version 13.2
+  - Updated version number from 13.1 to 13.2
+  - Updated file size documentation (3,786 lines)
+  - Documented list formatting improvements (blank line preservation)
+  - Added comprehensive architecture documentation for tree handler system
+  - Documented Part heading tree building pattern
+  - Added unified tree handler system documentation
+  - Files modified: `blocks/ipynb-viewer/README.md`, `blocks/ipynb-viewer/block-architecture.md`
+  - Commits: 8cafa4fe
+
 ## [2026-01-14] - ipynb-viewer Markdown Rendering Improvements & Documentation Updates
 
 ### Added
