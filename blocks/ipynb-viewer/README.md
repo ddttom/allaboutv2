@@ -77,7 +77,7 @@ The IPynb Viewer block is a comprehensive, production-ready system for displayin
 
 **Metadata Display** - Shows title, author, date, version, category, difficulty, duration, tags, and license from notebook metadata.
 
-**Enhanced Markdown Rendering** - Full support for tables, code blocks, lists, blockquotes, and inline formatting.
+**Enhanced Markdown Rendering** - Full support for tables, code blocks, lists, blockquotes, and inline formatting. Inline HTML tags are escaped and displayed as literal text, matching GitHub's markdown behavior.
 
 **Responsive Design** - Mobile-friendly layout with breakpoints at 768px and 480px.
 
@@ -1124,9 +1124,11 @@ The block includes a comprehensive markdown parser that supports:
 **Key Features:**
 
 - Code block protection prevents markdown processing inside code blocks
+- Inline code protection preserves content within backticks
 - Table parsing supports markdown tables with | delimiters and header rows
 - List handling properly closes and nests `<ul>` and `<ol>` tags
-- HTML escaping safely escapes < and > in code blocks
+- HTML escaping safely escapes < and > in code blocks and inline HTML tags
+- Inline HTML tags displayed as literal text, matching GitHub behavior
 - Language tagging preserves language hints from code fences
 
 ### Security Considerations
