@@ -50,6 +50,15 @@ Mixed: \<span>text</span>
 
 > Blockquote text
 
+### 6. All Heading Levels (Should Render Correctly)
+
+# Heading 1
+## Heading 2
+### Heading 3
+#### Heading 4
+##### Heading 5
+###### Heading 6
+
 ## Expected Results
 
 1. **Inline HTML tags**: Displayed as escaped text (visible angle brackets)
@@ -57,6 +66,7 @@ Mixed: \<span>text</span>
 3. **Code blocks**: Displayed with syntax highlighting, HTML escaped
 4. **Escaped chars**: Displayed as literal angle brackets without escaping prefix
 5. **Markdown HTML**: Rendered as proper HTML elements (bold, links, images, etc.)
+6. **Heading levels**: All six heading levels (h1-h6) render with proper sizing
 
 ## Verification Steps
 
@@ -68,3 +78,4 @@ Mixed: \<span>text</span>
    - Section 3: Code blocks show escaped HTML in `<pre><code>` elements
    - Section 4: Literal angle brackets visible (no backslashes)
    - Section 5: HTML elements rendered (not escaped)
+   - Section 6: All heading levels (h1-h6) display with decreasing sizes
