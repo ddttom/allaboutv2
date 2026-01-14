@@ -1491,17 +1491,35 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl) {
             });
           } else if (partRegex.test(headingText)) {
             // Check if this is a Part/Chapter heading
+            // Check if this cell has content after the heading
+            const content = cell.querySelector('.ipynb-cell-content');
+            const hasContentAfterHeading = content && content.children.length > 1;
+
             currentPartNode = {
               id: `part-${index}`,
               label: headingText,
               type: 'part',
               path: null,
-              cellIndex: index,
+              cellIndex: hasContentAfterHeading ? null : index, // null if content exists - just for navigation
               children: [],
               expanded: false, // Parts/Chapters start collapsed
               level: 1,
             };
             notebookNode.children.push(currentPartNode);
+
+            // If the Part heading cell has content after the heading, add it as first child
+            if (hasContentAfterHeading) {
+              currentPartNode.children.push({
+                id: `cell-${index}`,
+                label: headingText, // Same label as part, but this one shows the content
+                type: 'cell',
+                path: null,
+                cellIndex: index, // This one has the cellIndex to show content
+                children: [],
+                expanded: false,
+                level: 2,
+              });
+            }
           } else if (currentPartNode) {
             // Add cell to current Part/Chapter
             currentPartNode.children.push({
