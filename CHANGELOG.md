@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **ipynb-viewer Paragraph Rendering**: Fixed markdown rendering and spacing for better readability
+  - **Paragraph Wrapping Fix**: Changed line break handling to wrap paragraphs in `<p>` tags
+    - Split content by double newlines to identify paragraphs
+    - Block elements (headers, tables, lists, etc.) not wrapped
+    - Single newlines within paragraphs converted to spaces (natural flow)
+    - Fixes GitHub markdown files rendering without line breaks
+    - Commit: def84ace
+  - **Spacing Improvements**: Updated CSS for comfortable white space
+    - GitHub overlay paragraph margin: 0.15rem → 1rem
+    - Notebook cell paragraph margin: 0 → 0.75rem
+    - Added line-height: 1.6 for better text readability
+    - Removed obsolete `<br>` tag rules (now using proper `<p>` tags)
+    - Commit: 33e16126
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js`, `blocks/ipynb-viewer/ipynb-viewer.css`
+
 - **ipynb-viewer Tree Ordering**: Ensure preface.md appears before chapters in Chapters folder
   - Modified chapters sorting to place preface.md first
   - Other chapters still sorted alphabetically (chapter-1, chapter-2, etc.)

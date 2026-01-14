@@ -712,7 +712,7 @@ outputDiv.textContent = output;
 10. **Links** - `[text](url)` to `<a href>`
 11. **Code block restoration** - Replace placeholders with `<pre><code>`
 12. **Inline code restoration** - Replace placeholders with `<code>`
-13. **Line breaks** - Convert `\n` to `<br>`
+13. **Paragraph wrapping** - Split by double newlines, wrap in `<p>` tags (skip block elements)
 
 **Why Processing Order Matters:**
 
@@ -720,6 +720,19 @@ outputDiv.textContent = output;
 - **Blank lines in lists:** Parser ignores blank lines between items, maintaining continuous numbering (CommonMark/GFM compliance)
 - **Code protection:** Prevents markdown processing inside code blocks and inline code
 - **HTML escaping after code extraction:** Inline HTML tags become literal text
+- **Paragraph wrapping last:** Ensures block elements (headers, tables, lists) aren't wrapped in `<p>` tags
+
+**Paragraph Rendering:**
+
+Double newlines (`\n\n`) indicate paragraph boundaries. The parser:
+1. Splits content by double newlines
+2. Wraps each paragraph in `<p>` tags
+3. Skips wrapping block elements (headers, tables, lists, blockquotes, pre, hr)
+4. Converts single newlines within paragraphs to spaces (natural text flow)
+
+**CSS Spacing:**
+- GitHub overlay paragraphs: `margin: 1rem 0`, `line-height: 1.6`
+- Notebook cell paragraphs: `margin: 0.75rem 0`, `line-height: 1.6`
 
 **Smart Link Implementation:**
 
@@ -1121,6 +1134,13 @@ onNodeClick(node);
   - preface.md now always appears first in Chapters folder
   - Other chapters sorted alphabetically after preface
   - Provides logical reading order: preface → chapter-1 → chapter-2, etc.
+- **Fixed:** Markdown paragraph rendering and spacing
+  - Changed line break handling to wrap paragraphs in `<p>` tags
+  - Split content by double newlines to identify paragraphs
+  - Block elements (headers, tables, lists) not wrapped
+  - Updated CSS spacing: GitHub overlay (1rem margin), notebook cells (0.75rem margin)
+  - Added line-height: 1.6 for better readability
+  - Removed obsolete `<br>` tag rules
 - **Documentation:** Added comprehensive documentation across all project files
   - Updated CHANGELOG.md with unified overlay entry and help button fixes
   - Updated CLAUDE.md with new critical section
