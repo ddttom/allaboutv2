@@ -1,11 +1,13 @@
 # Test Inline HTML Escaping
 
 ## Purpose
+
 This document tests that inline HTML tags are properly escaped in ipynb-viewer markdown rendering, matching GitHub's behavior.
 
 ## Test Cases
 
 ### 1. Inline HTML Tags (Should Be Escaped)
+
 This has an inline <div>tag</div> that should be displayed as text.
 
 Here's an image tag that should be escaped: <img src="test.jpg" alt="test">
@@ -15,6 +17,7 @@ And a script tag: <script>alert('test')</script>
 Multiple tags: <div><span>nested</span></div>
 
 ### 2. Inline Code (Should Work Correctly)
+
 This inline code `<div>tag</div>` should be displayed in a code element.
 
 More inline code with HTML: `<img src="test.jpg">` and `<script>alert('test')</script>`
@@ -34,11 +37,13 @@ document.body.innerHTML = html;
 ```
 
 ### 4. Escaped HTML Characters (Should Display As Literal Text)
+
 Previously escaped: \<div> and \</div>
 
 Mixed: \<span>text</span>
 
 ### 5. Legitimate Markdown HTML (Should Render Correctly)
+
 **Bold text** and *italic text*
 
 - List item 1
@@ -59,10 +64,15 @@ Mixed: \<span>text</span>
 ### 6. All Heading Levels (Should Render Correctly)
 
 # Heading 1
+
 ## Heading 2
+
 ### Heading 3
+
 #### Heading 4
+
 ##### Heading 5
+
 ###### Heading 6
 
 ## Expected Results
