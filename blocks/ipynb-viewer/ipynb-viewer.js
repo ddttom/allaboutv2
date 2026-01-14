@@ -3324,8 +3324,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
       const fallbackRepo = 'https://github.com/ddttom/allaboutv2';
       const fallbackBranch = 'main';
       const helpPath = `${fallbackRepo}/blob/${fallbackBranch}/invisible-users/docs/help.md`;
-      // Close current overlay and open help
-      closeOverlay();
+      // Open help overlay (don't close current overlay to preserve tree)
       const helpOverlay = createGitHubMarkdownOverlay(helpPath, 'IPynb Viewer Help', fallbackRepo, fallbackBranch, parentHistory);
       helpOverlay.openOverlay();
     });
