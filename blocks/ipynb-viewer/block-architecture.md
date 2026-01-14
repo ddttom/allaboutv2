@@ -4,9 +4,9 @@
 
 The ipynb-viewer block is a sophisticated component for displaying and interacting with Jupyter notebooks (.ipynb files) in Adobe Edge Delivery Services (EDS) environments. It provides multiple viewing modes, interactive JavaScript execution, markdown rendering, and tree-based navigation.
 
-**Version:** 2.3 (Part Heading Tree Building)
+**Version:** 3.0 (Unified Overlay Architecture)
 **Last Updated:** 2026-01-14
-**Lines of Code:** 3,786
+**Lines of Code:** 3,786 (main block) + ~2,000 (unified overlay modules)
 
 ## Core Capabilities
 
@@ -31,6 +31,86 @@ The ipynb-viewer block is a sophisticated component for displaying and interacti
    - Smart link resolution
 
 ## Architecture Principles
+
+### 0. Unified Overlay Architecture (Version 3.0)
+
+**Status**: ✅ Complete implementation in branch `refactor/ipynb-viewer-unified-overlay`
+
+**Problem Solved:** The original implementation used three separate overlay types (`createPagedOverlay()`, `createGitHubMarkdownOverlay()`, `createManualOverlay()`) which caused context confusion, duplicate navigation systems, and complex state management.
+
+**Solution:** Single unified overlay with mode switching instead of multiple separate overlays.
+
+**Location:** `blocks/ipynb-viewer/overlay/` (8 core modules)
+
+**Key Modules:**
+
+1. **hash-manager.js** - URL hash management (parse, update, clear, matches)
+2. **navigation.js** - Unified navigation with history, home, back, mode switching
+3. **unified-overlay.js** - Core overlay with single state and DOM structure
+4. **renderers/notebook.js** - Notebook cell renderer (markdown/code/outputs)
+5. **renderers/markdown.js** - Markdown file renderer with smart links
+6. **tree.js** - Unified navigation tree (notebook/repository/help sections)
+7. **integration.js** - Clean API (`createNotebookOverlay`, `createMarkdownOverlay`)
+8. **example-usage.js** - Usage examples
+
+**Architecture Benefits:**
+
+- ✅ **Single overlay, single state** - Eliminates "where am I?" confusion
+- ✅ **Mode switching** - Change modes (notebook/markdown/manual) without creating new overlays
+- ✅ **Unified navigation** - One navigation system for all content types
+- ✅ **Centralized hash management** - Single system for URL state (`#mode/identifier`)
+- ✅ **Consistent home button** - Always does the same thing regardless of mode
+
+**Usage Example:**
+
+```javascript
+import { createNotebookOverlay } from './overlay/integration.js';
+
+const overlay = createNotebookOverlay(cells, {
+  title: 'My Notebook',
+  repo: 'https://github.com/user/repo',
+  autorun: false,
+});
+
+overlay.show();
+
+// Switch to markdown mode
+overlay.updateMode('markdown');
+overlay.navigate({
+  mode: 'markdown',
+  identifier: 'docs/README.md',
+  title: 'README',
+});
+```
+
+**Complete Documentation:** See [overlay/README.md](overlay/README.md) for comprehensive 525-line guide covering:
+- Module documentation with API reference
+- Usage examples and code samples
+- State management and event handling
+- Debugging guide and testing strategy
+
+**Architecture Comparison:**
+
+**Before (Multiple Overlays):**
+```javascript
+// Three separate overlay implementations
+createPagedOverlay(...)      // Notebook cells
+createGitHubMarkdownOverlay(...)  // Markdown files
+createManualOverlay(...)     // Help pages
+```
+
+**After (Unified Overlay):**
+```javascript
+// Single overlay with modes
+const overlay = createUnifiedOverlay({ mode: 'notebook' });
+overlay.updateMode('markdown');  // Switch modes
+overlay.updateMode('manual');
+```
+
+**Related Documentation:**
+- [ipynb-viewer-overlay-refactor-proposal.md](../../docs/for-ai/ipynb-viewer-overlay-refactor-proposal.md) - Original proposal
+- [ipynb-viewer-refactor-progress.md](../../docs/for-ai/ipynb-viewer-refactor-progress.md) - Progress tracking
+- [ipynb-viewer-unified-overlay-summary.md](../../docs/for-ai/ipynb-viewer-unified-overlay-summary.md) - Complete summary
 
 ### 1. Event Delegation Pattern (Critical)
 
@@ -950,6 +1030,28 @@ onNodeClick(node);
 - [EDS Block Development](https://www.aem.live/developer/block-collection)
 
 ## Changelog
+
+### Version 3.0 (2026-01-14)
+
+- **Added:** Unified Overlay Architecture (branch: `refactor/ipynb-viewer-unified-overlay`)
+  - Complete refactor to eliminate multiple overlay confusion
+  - Single overlay with mode switching (notebook/markdown/manual)
+  - 8 core modules implementing unified navigation system
+  - Centralized hash management and state
+  - Module documentation in overlay/README.md (525 lines)
+  - Architecture benefits: eliminates context confusion, unified navigation, consistent home button
+  - Clean API: `createNotebookOverlay()` and `createMarkdownOverlay()`
+  - Fresh implementation (no legacy code or migration)
+  - Status: Complete and production-ready
+  - Documentation: See overlay/README.md for comprehensive guide
+- **Documentation:** Added comprehensive documentation across all project files
+  - Updated CHANGELOG.md with unified overlay entry
+  - Updated CLAUDE.md with new critical section
+  - Updated README.md with unified overlay reference
+  - Updated docs/for-ai/index.md with dedicated section
+  - Created ipynb-viewer-unified-overlay-summary.md (complete summary)
+  - Created ipynb-viewer-refactor-progress.md (progress tracking)
+  - Created ipynb-viewer-overlay-refactor-proposal.md (original proposal)
 
 ### Version 2.3 (2026-01-14)
 
