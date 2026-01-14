@@ -9,6 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **ipynb-viewer Performance & UX Improvements**: Multiple optimizations for better user experience
+  - **FOUC Prevention**: Eliminated flash when switching pages
+    - Uses DocumentFragment pattern to build content off-screen
+    - Single atomic replace operation prevents visible gap
+    - Smooth, seamless page transitions
+    - Commit: d3f7c4ab
+  - **Tree Navigation Optimization**:
+    - Only Chapters folder expanded by default (Appendix and Miscellaneous collapsed)
+    - Miscellaneous folder restricted to 3 essential files (advice.md, for-ai.md, glossary.md)
+    - Reduces initial render complexity and visual clutter
+    - Commits: 31f226a8, 9f85ce73, f617e157
+  - **Documentation Updates**:
+    - Added Performance Optimizations section to README.md
+    - Updated block-architecture.md with FOUC prevention details
+    - Updated tree categorization rules in all docs
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js`, `README.md`, `block-architecture.md`
+
 - **ipynb-viewer Repository Tree Restructuring**: Reorganized repository navigation tree into logical sections
   - **Location**: `blocks/ipynb-viewer/ipynb-viewer.js` (buildFileTree function)
   - **Structure**: Repository files now organized in three folders:

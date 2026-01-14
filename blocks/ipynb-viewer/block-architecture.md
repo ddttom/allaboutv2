@@ -479,9 +479,9 @@ function parseNotebookData(data) {
 
 - **Notebook node:** Contains parts, cells from notebook
 - **Repository node:** Contains categorized folders for markdown files from GitHub
-  - **Chapters:** preface.md and chapter-*.md files
-  - **Appendix:** appendix-*.md files
-  - **Miscellaneous:** All other markdown files
+  - **Chapters:** preface.md and chapter-*.md files (expanded by default)
+  - **Appendix:** appendix-*.md files (collapsed by default)
+  - **Miscellaneous:** Only advice.md, for-ai.md, glossary.md (hardcoded whitelist, collapsed by default)
 
 **State Management:**
 
@@ -795,6 +795,20 @@ container.addEventListener('click', (e) => {
 - Use `innerHTML` for bulk updates
 - Minimize reflows/repaints
 - Batch DOM operations
+
+### 5. FOUC Prevention (Flash of Unstyled Content)
+
+- **Pattern:** DocumentFragment for page transitions
+- **Implementation:** Build new content off-screen in fragment, then replace in single atomic operation
+- **Benefit:** Eliminates visible flash when switching pages
+- **Code:** `updatePageDisplay()` function uses `document.createDocumentFragment()`
+
+### 6. Tree State Optimization
+
+- Only Chapters folder expanded by default
+- Appendix and Miscellaneous collapsed initially
+- Miscellaneous limited to 3 files (advice.md, for-ai.md, glossary.md)
+- Reduces initial render complexity
 
 ## CSS Architecture
 

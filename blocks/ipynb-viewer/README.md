@@ -797,7 +797,8 @@ Explore your notebook structure and repository files through an organized, hiera
 
 - **Chapters:** Files matching `preface.md` or `chapter-*.md`
 - **Appendix:** Files matching `appendix-*.md`
-- **Miscellaneous:** Everything else
+- **Miscellaneous:** Only `advice.md`, `for-ai.md`, and `glossary.md` (hardcoded whitelist)
+- All other files are ignored and not shown in the tree
 
 **Benefits:**
 
@@ -822,10 +823,10 @@ Explore your notebook structure and repository files through an organized, hiera
     - appendix-a-implementation-cookbook.md
     - appendix-b-battle-tested-lessons.md
     - appendix-c-web-audit-suite-guide.md
-  ▶ Miscellaneous (8 files)
+  ▶ Miscellaneous (3 files)
     - advice.md
+    - for-ai.md
     - glossary.md
-    - readme.md
 ```
 
 **Use Cases:**
@@ -1304,6 +1305,20 @@ overlay.navigate({
 - `createUnifiedOverlay({ mode: 'notebook' })`
 - `overlay.updateMode('markdown')` - Switch modes
 - `overlay.updateMode('manual')`
+
+### Performance Optimizations
+
+**FOUC Prevention:**
+- Page transitions use DocumentFragment pattern
+- New content built off-screen before display
+- Single atomic replace operation eliminates flash
+- Smooth, seamless transitions between pages
+
+**Tree Navigation:**
+- Only Chapters folder expanded by default
+- Reduces initial render time
+- Miscellaneous folder limited to 3 essential files (advice.md, for-ai.md, glossary.md)
+- Eliminates clutter from unused markdown files
 
 ### Documentation
 
