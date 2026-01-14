@@ -1,10 +1,28 @@
 # Project State
 
-## Current Status (2026-01-13)
+## Current Status (2026-01-14)
 
 The project is in active development with a focus on educational content delivery through Jupyter notebooks and the ipynb-viewer block.
 
 ## Recent Accomplishments
+
+### ipynb-viewer Inline HTML Escaping (2026-01-14)
+
+- **Status**: ✅ Completed inline HTML tag escaping in markdown rendering
+- **Changes implemented**:
+  - Added inline code extraction with placeholders before HTML escaping
+  - Escape all remaining < and > characters (not in code blocks or inline code)
+  - Removed redundant inline code processing
+  - Restore inline code as <code> elements after markdown processing
+  - Processing order ensures correct behavior for all content types
+- **Result**:
+  - Inline HTML tags displayed as literal text (escaped), matching GitHub behavior
+  - Inline code continues to work correctly with backticks
+  - Code blocks display HTML with proper escaping and syntax highlighting
+  - Escaped characters (\< and \>) work as literal text
+  - Legitimate markdown HTML renders correctly (headings, links, images)
+- **Documentation**: Updated README.md with inline HTML escaping behavior
+- **Test file**: Added `blocks/ipynb-viewer/test-inline-html.md` for verification
 
 ### Markdown Linting Setup (2026-01-13)
 
@@ -98,7 +116,8 @@ The project is in active development with a focus on educational content deliver
   - Multiple display modes (basic, paged, autorun, notebook)
   - Link navigation with hash targets
   - Interactive JavaScript execution
-  - **NEW**: Inline SVG embedding for illustration images (auto-fetches and inlines illustrations/*.svg)
+  - Inline SVG embedding for illustration images (auto-fetches and inlines illustrations/*.svg)
+  - **NEW**: Inline HTML escaping in markdown rendering (matches GitHub behavior)
 
 ### Educational Content
 
@@ -162,11 +181,11 @@ All recent issues have been resolved:
 
 ## Recent Commits (Last 5)
 
-1. `b1147eb1` - feat: Add inline SVG embedding for notebook illustrations
-2. `84faa52e` - docs: add LEARNINGS.md reference to CLAUDE.md
-3. `7b51f3e6` - docs: document ipynb-viewer smart links pattern in LEARNINGS.md
-4. `6df1eeb2` - fix: revert all smart links to relative paths for ipynb-viewer compatibility
-5. `b80e2aca` - docs: update invisible-users notebook metadata with Digital-Domain-Technologies-Ltd repo
+1. `2bc4ff36` - docs(ipynb-viewer): Update README with inline HTML escaping behavior
+2. `d94cea36` - fix(ipynb-viewer): Escape inline HTML tags in markdown rendering
+3. `b1147eb1` - feat: Add inline SVG embedding for notebook illustrations
+4. `84faa52e` - docs: add LEARNINGS.md reference to CLAUDE.md
+5. `7b51f3e6` - docs: document ipynb-viewer smart links pattern in LEARNINGS.md
 
 ## Branch Status
 
@@ -183,4 +202,4 @@ All recent issues have been resolved:
 
 ---
 
-**Last Updated**: 2026-01-13 by Claude Sonnet 4.5
+**Last Updated**: 2026-01-14 by Claude Sonnet 4.5
