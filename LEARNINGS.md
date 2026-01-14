@@ -4,6 +4,47 @@ Critical insights for AI assistants working on this project. Focus: actionable g
 
 ---
 
+## ipynb-viewer: Tree Navigation Must Include All Heading Levels
+
+**Rule** (2026-01-14): When extracting headings for tree navigation, include ALL heading levels (h1, h2, h3), not just h2. Filtering out h3 headings creates invisible gaps in the navigation tree.
+
+**Why it matters:**
+
+- Notebooks often use h3 (###) for subsections within parts
+- Users expect ALL headings to appear in the navigation tree
+- Missing h3 headings breaks the logical flow of content
+- Example: "Part 1: The Discovery" → "The Pagination Problem" (h3) → "The Broader Investigation" (h3)
+
+**Bug that occurred:**
+
+```javascript
+// ❌ WRONG - Excludes h3 headings
+const partHeading = lines.find((line) => {
+  const trimmed = line.trim();
+  return trimmed.startsWith('##') && !trimmed.startsWith('###');
+});
+```
+
+This explicitly filtered OUT h3 headings with the condition `!trimmed.startsWith('###')`, causing cells like "The Pagination Problem" and "The Broader Investigation" to disappear from the tree.
+
+**Correct pattern:**
+
+```javascript
+// ✅ CORRECT - Includes all heading levels
+const partHeading = lines.find((line) => {
+  const trimmed = line.trim();
+  return trimmed.startsWith('#'); // Matches h1, h2, h3, h4, etc.
+});
+```
+
+**Impact:** All notebook cells with headings now appear in tree navigation, maintaining complete structural visibility.
+
+**Documentation:** See `blocks/ipynb-viewer/ipynb-viewer.js` lines 1448-1473 (extractHeadingFromRaw function)
+
+**Commit:** 4a13457e
+
+---
+
 ## ipynb-viewer Smart Links
 
 **Rule** (2026-01-13): Tried using full GitHub URLs for markdown links in Jupyter notebooks, but this breaks the ipynb-viewer block's smart link feature. Always use relative paths like `[Preface](preface.md)` instead of full URLs like `[Preface](https://github.com/.../preface.md)`.
