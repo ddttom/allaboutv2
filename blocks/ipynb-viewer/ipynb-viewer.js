@@ -1297,6 +1297,9 @@ function buildFileTree(paths, _helpPath) {
   const chapterRegex = /^(chapter-\d+|preface\.md)/i;
   const appendixRegex = /^appendix-[a-z]/i;
 
+  // Hardcoded inclusion list for Miscellaneous folder
+  const miscAllowedFiles = ['advice.md', 'for-ai.md', 'glossary.md'];
+
   // Categorize each path
   paths.forEach((path) => {
     const parts = path.split('/');
@@ -1317,9 +1320,11 @@ function buildFileTree(paths, _helpPath) {
       chapters.push(fileNode);
     } else if (appendixRegex.test(fileName)) {
       appendices.push(fileNode);
-    } else {
+    } else if (miscAllowedFiles.includes(fileName.toLowerCase())) {
+      // Only include files from the hardcoded whitelist
       miscellaneous.push(fileNode);
     }
+    // All other files are ignored (not added to any category)
   });
 
   // Sort each category alphabetically
