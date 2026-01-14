@@ -1816,9 +1816,30 @@ button.ipynb-help-button {
   color: var(--text-color, #555);
 }
 
-/* Tighter paragraph spacing for GitHub markdown files */
+/* Tighter spacing for GitHub markdown files */
 .ipynb-github-md-overlay .ipynb-manual-content-area p {
   margin: 0.15rem 0;
+}
+
+.ipynb-github-md-overlay .ipynb-manual-content-area h2 {
+  margin: 0.5rem 0 0.25rem;
+}
+
+.ipynb-github-md-overlay .ipynb-manual-content-area h3 {
+  margin: 0.4rem 0 0.2rem;
+}
+
+.ipynb-github-md-overlay .ipynb-manual-content-area ul,
+.ipynb-github-md-overlay .ipynb-manual-content-area ol {
+  margin: 0.5rem 0;
+}
+
+.ipynb-github-md-overlay .ipynb-manual-content-area li {
+  margin: 0.25rem 0;
+}
+
+.ipynb-github-md-overlay .ipynb-manual-content-area pre {
+  margin: 0.5rem 0;
 }
 
 .ipynb-manual-content-area ul,
