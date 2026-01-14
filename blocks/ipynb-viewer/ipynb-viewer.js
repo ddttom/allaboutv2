@@ -1327,7 +1327,7 @@ function buildFileTree(paths, _helpPath) {
   appendices.sort((a, b) => a.label.localeCompare(b.label));
   miscellaneous.sort((a, b) => a.label.localeCompare(b.label));
 
-  // Create "Chapters" folder node
+  // Create "Chapters" folder node (expanded by default)
   if (chapters.length > 0) {
     const chaptersNode = {
       id: 'folder-chapters',
@@ -1336,7 +1336,7 @@ function buildFileTree(paths, _helpPath) {
       path: null,
       cellIndex: null,
       children: chapters,
-      expanded: false,
+      expanded: true, // Open by default for easy access to chapters
       level: 1,
     };
     tree.push(chaptersNode);
