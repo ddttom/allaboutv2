@@ -8,6 +8,8 @@ The IPynb Viewer block is a comprehensive, production-ready system for displayin
 
 **Block Type:** Complex Build-Enhanced Block
 
+**Architecture:** Version 3.0 introduces a unified overlay system (branch: `refactor/ipynb-viewer-unified-overlay`) that eliminates multiple overlay confusion through mode switching. See [Architecture](#unified-overlay-architecture-version-30) section below for details.
+
 **Use Cases:**
 
 - Interactive coding tutorials with live JavaScript execution
@@ -1160,6 +1162,88 @@ The block includes a comprehensive markdown parser that supports:
 ### Security Considerations
 
 Code execution happens in the user's browser context. Be cautious with untrusted notebook files. Code has access to the global scope and DOM. Consider implementing additional sandboxing for public sites.
+
+## Unified Overlay Architecture (Version 3.0)
+
+**Status:** ✅ Complete implementation in branch `refactor/ipynb-viewer-unified-overlay`
+
+**Problem:** The original implementation used three separate overlay types which caused context confusion, duplicate navigation systems, and complex state management.
+
+**Solution:** Single unified overlay with mode switching instead of multiple separate overlays.
+
+### Architecture Benefits
+
+- ✅ **Single overlay, single state** - Eliminates "where am I?" confusion
+- ✅ **Mode switching** - Change modes (notebook/markdown/manual) without creating new overlays
+- ✅ **Unified navigation** - One navigation system for all content types
+- ✅ **Centralized hash management** - Single system for URL state (`#mode/identifier`)
+- ✅ **Consistent home button** - Always does the same thing regardless of mode
+
+### Core Modules
+
+**Location:** `blocks/ipynb-viewer/overlay/` (8 modules)
+
+1. **hash-manager.js** - URL hash management (parse, update, clear, matches)
+2. **navigation.js** - Unified navigation with history, home, back, mode switching
+3. **unified-overlay.js** - Core overlay with single state and DOM structure
+4. **renderers/notebook.js** - Notebook cell renderer (markdown/code/outputs)
+5. **renderers/markdown.js** - Markdown file renderer with smart links
+6. **tree.js** - Unified navigation tree (notebook/repository/help sections)
+7. **integration.js** - Clean API (`createNotebookOverlay`, `createMarkdownOverlay`)
+8. **example-usage.js** - Usage examples
+
+### Usage Example
+
+```javascript
+import { createNotebookOverlay } from './overlay/integration.js';
+
+const overlay = createNotebookOverlay(cells, {
+  title: 'My Notebook',
+  repo: 'https://github.com/user/repo',
+  autorun: false,
+});
+
+overlay.show();
+
+// Switch to markdown mode
+overlay.updateMode('markdown');
+overlay.navigate({
+  mode: 'markdown',
+  identifier: 'docs/README.md',
+  title: 'README',
+});
+```
+
+### Before vs After
+
+**Before (Multiple Overlays):**
+- `createPagedOverlay()` - Notebook cells
+- `createGitHubMarkdownOverlay()` - Markdown files
+- `createManualOverlay()` - Help pages
+
+**After (Unified Overlay):**
+- `createUnifiedOverlay({ mode: 'notebook' })`
+- `overlay.updateMode('markdown')` - Switch modes
+- `overlay.updateMode('manual')`
+
+### Documentation
+
+- **[overlay/README.md](overlay/README.md)** - Comprehensive 525-line guide
+  - Module documentation with API reference
+  - Usage examples and code samples
+  - State management and event handling
+  - Debugging guide and testing strategy
+
+- **[docs/for-ai/ipynb-viewer-unified-overlay-summary.md](../../docs/for-ai/ipynb-viewer-unified-overlay-summary.md)** - Complete summary
+  - Problem analysis and solution architecture
+  - Implementation details for all 8 modules
+  - Performance optimizations
+  - Future enhancements
+
+- **[block-architecture.md](block-architecture.md)** - Technical architecture documentation
+  - Detailed module descriptions
+  - Data flow and state management
+  - Event handling patterns
 
 ## Styling
 
