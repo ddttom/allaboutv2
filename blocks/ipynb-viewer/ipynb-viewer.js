@@ -2443,9 +2443,6 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   // Update page display
   // @param {boolean} skipHashUpdate - If true, don't update URL hash (used by home button)
   async function updatePageDisplay(skipHashUpdate = false) {
-    // Clear cell area
-    cellContentArea.innerHTML = '';
-
     // Get current page group
     const currentPage = pages[paginationState.currentPage];
 
@@ -2463,13 +2460,20 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       }
     }
 
-    // Clone and append all cells in this page
+    // Build new content in a document fragment (prevents FOUC)
+    const fragment = document.createDocumentFragment();
+
+    // Clone and append all cells in this page to fragment
     const clonedCells = currentPage.cells.map((cell) => {
       const clonedCell = cell.cloneNode(true);
       clonedCell.classList.add('active');
-      cellContentArea.appendChild(clonedCell);
+      fragment.appendChild(clonedCell);
       return clonedCell;
     });
+
+    // Replace content in one atomic operation (prevents FOUC)
+    cellContentArea.innerHTML = '';
+    cellContentArea.appendChild(fragment);
 
     // Re-attach run button handlers for code cells
     // Use Promise.all to handle async execution in autorun mode
