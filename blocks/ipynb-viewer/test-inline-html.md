@@ -43,6 +43,12 @@ Mixed: \<span>text</span>
 
 - List item 1
 - List item 2
+- **Bold in list**
+- *Italic in list*
+
+1. **In your work:** Which patterns have you seen?
+2. **In your experience:** What frustrated you?
+3. *Looking ahead:* How will things change?
 
 [Link text](https://example.com)
 
@@ -65,7 +71,8 @@ Mixed: \<span>text</span>
 2. **Inline code**: Rendered as `<code>` elements with content
 3. **Code blocks**: Displayed with syntax highlighting, HTML escaped
 4. **Escaped chars**: Displayed as literal angle brackets without escaping prefix
-5. **Markdown HTML**: Rendered as proper HTML elements (bold, links, images, etc.)
+5. **Markdown HTML**: Rendered as proper HTML elements (bold, links, images, lists, etc.)
+   - Lists with bold/italic formatting work correctly
 6. **Heading levels**: All six heading levels (h1-h6) render with proper sizing
 
 ## Verification Steps
