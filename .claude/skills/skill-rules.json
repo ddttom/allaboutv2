@@ -29,7 +29,7 @@
             "type": "domain",
             "enforcement": "warn",
             "priority": "critical",
-            "description": "EDS block development using vanilla JavaScript, Content Driven Development, and block decoration patterns. CRITICAL: Prevents CSS class conflicts with EDS reserved names. CRITICAL: Enforces single JavaScript file per block regardless of variations.",
+            "description": "EDS block development using vanilla JavaScript, Content Driven Development, and block decoration patterns. CRITICAL: Prevents CSS class conflicts with EDS reserved names. CRITICAL: Enforces single JavaScript file per block regardless of variations. CRITICAL: Ensures ALL documentation files are updated for architectural changes.",
             "promptTriggers": {
                 "keywords": [
                     "block",
@@ -47,7 +47,15 @@
                     "block variation",
                     "variation",
                     "block variant",
-                    "create variation"
+                    "create variation",
+                    "block architecture",
+                    "architectural change",
+                    "refactor block",
+                    "update documentation",
+                    "update docs",
+                    "block README",
+                    "block-architecture",
+                    "documentation complete"
                 ],
                 "intentPatterns": [
                     "(create|add|build|make).*?block",
@@ -58,7 +66,12 @@
                     "class.*?(name|naming)",
                     "(create|add|build|make).*?variation.*?block",
                     "block.*?variation",
-                    "variation.*?(block|of.*?block)"
+                    "variation.*?(block|of.*?block)",
+                    "(refactor|architectural).*?(block|change)",
+                    "(update|check|verify).*?(documentation|docs).*?block",
+                    "block.*?(README|architecture|documentation)",
+                    "(all|complete|comprehensive).*?documentation",
+                    "documentation.*?(complete|updated|missing)"
                 ]
             },
             "fileTriggers": {

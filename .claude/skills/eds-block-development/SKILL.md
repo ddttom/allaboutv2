@@ -1280,6 +1280,96 @@ export default async function decorate(block) {
 }
 ```
 
+### ❌ CRITICAL: Don't Forget to Update ALL Block Documentation
+
+**This is a common mistake that causes incomplete documentation after architectural changes.**
+
+When making architectural changes to a block (refactoring, adding major features, changing patterns), you must update **ALL** documentation files, not just some of them.
+
+**Required documentation files for EVERY block:**
+
+1. **blocks/{blockname}/README.md** - Primary user-facing documentation
+   - Overview and features
+   - Usage examples
+   - Configuration options
+   - Architecture sections (if applicable)
+
+2. **blocks/{blockname}/block-architecture.md** - Technical documentation
+   - Architecture patterns
+   - Module descriptions
+   - Code organization
+   - Version history
+
+3. **CHANGELOG.md** - Project-wide changelog
+   - Document all changes with details
+   - Include architectural benefits
+   - List affected files
+
+4. **CLAUDE.md** - Project guide for AI assistants
+   - Critical patterns section
+   - Reference to block features
+   - Links to documentation
+
+5. **README.md** (project root) - Project overview
+   - Update block descriptions
+   - Add new features to lists
+
+6. **docs/for-ai/index.md** - AI documentation index
+   - Add entries for new documentation
+   - Update existing references
+
+**Real-world mistake:**
+
+After implementing a unified overlay architecture refactor for ipynb-viewer:
+- ✅ Updated: CHANGELOG.md, CLAUDE.md, project README.md, docs/for-ai/index.md
+- ✅ Created: overlay/README.md, summary document, progress tracking
+- ✅ Updated: block-architecture.md
+- ❌ **FORGOT**: blocks/ipynb-viewer/README.md (the main block README!)
+
+**Impact:**
+- Users see outdated documentation
+- New architecture not discoverable
+- Inconsistent documentation across files
+- Confusion about which version is current
+
+**Checklist for architectural changes:**
+
+```bash
+# After making architectural changes, verify ALL these files are updated:
+blocks/{blockname}/README.md           # Main block documentation
+blocks/{blockname}/block-architecture.md  # Technical documentation
+CHANGELOG.md                           # Project changelog
+CLAUDE.md                              # Project guide
+README.md                              # Project root
+docs/for-ai/index.md                   # AI docs index
+```
+
+**Before committing, ask yourself:**
+1. Did I update the main block README.md?
+2. Did I update block-architecture.md?
+3. Did I add a CHANGELOG.md entry?
+4. Did I update CLAUDE.md with critical patterns?
+5. Did I update the project README.md?
+6. Did I update docs/for-ai/index.md?
+
+**Why this matters:**
+- Documentation is the first thing developers read
+- Incomplete docs waste time (users don't know about new features)
+- Inconsistent docs cause confusion (which version is correct?)
+- Main README.md is often viewed first - must be current
+
+**Pattern to follow:**
+
+```javascript
+// After completing architectural work:
+// 1. List all documentation files
+// 2. Check each file systematically
+// 3. Update with consistent information
+// 4. Commit all updates together
+```
+
+**Related production bug:** After implementing unified overlay refactor (8 modules, complete architecture change), the main blocks/ipynb-viewer/README.md was not updated, leaving users with no knowledge of the new architecture until a code review caught the omission.
+
 ---
 
 ## Related Documentation
