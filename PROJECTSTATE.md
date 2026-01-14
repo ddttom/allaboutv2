@@ -6,6 +6,23 @@ The project is in active development with a focus on educational content deliver
 
 ## Recent Accomplishments
 
+### ipynb-viewer Code Block Rendering Fix (2026-01-14)
+
+- **Status**: ✅ Completed code block rendering fix for GitHub markdown overlays
+- **Problem**: Code blocks displayed all on one line despite newlines being extracted and CSS being correct
+- **Root Cause**: Code blocks were restored BEFORE paragraph processing in parseMarkdown(), causing blocks with blank lines (\\n\\n) to be split into fragments by the paragraph splitter
+- **Solution**:
+  - Moved code block restoration to AFTER paragraph processing (line 410, was 382)
+  - Updated blockElementPattern regex to recognize `__CODEBLOCK_` placeholders as block elements
+  - Replaced code blocks with simple `<div>` placeholders to prevent browser HTML parser issues
+  - Processing order now: extract → paragraph process → restore code blocks
+- **Documentation**:
+  - Added comprehensive section to LEARNINGS.md documenting the pattern
+  - Updated block-architecture.md with processing order details and visual comparisons
+  - Added block-architecture.md as optional file to all block structure templates across 7+ documentation files
+  - Added "When Struggling to Find Answers" section to eds-block-development skill
+- **Result**: Code blocks now render with proper line breaks and indentation in GitHub markdown overlays
+
 ### ipynb-viewer Inline HTML Escaping (2026-01-14)
 
 - **Status**: ✅ Completed inline HTML tag escaping in markdown rendering
