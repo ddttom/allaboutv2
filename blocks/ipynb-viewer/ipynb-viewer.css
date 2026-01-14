@@ -1816,34 +1816,51 @@ button.ipynb-help-button {
   color: var(--text-color, #555);
 }
 
-/* Tighter spacing for GitHub markdown files - using !important to override inherited styles */
+/* Tighter spacing for GitHub markdown files - using !important to override inherited styles
+ * NOTE: parseMarkdown() converts double newlines to <br><br>, not <p> tags!
+ * So we need to target br elements, not p elements for paragraph spacing.
+ */
+
+/* Reduce spacing from <br> tags (parseMarkdown uses <br><br> for paragraphs) */
+.ipynb-github-md-overlay .ipynb-manual-content-area br {
+  display: block !important;
+  content: "" !important;
+  margin: 0.15rem 0 !important;
+  line-height: 0.15rem !important;
+}
+
+/* Remove double-br excessive spacing by targeting adjacent br elements */
+.ipynb-github-md-overlay .ipynb-manual-content-area br + br {
+  display: none !important;
+}
+
 .ipynb-github-md-overlay .ipynb-manual-content-area p {
   margin: 0.15rem 0 !important;
 }
 
 .ipynb-github-md-overlay .ipynb-manual-content-area h1 {
-  margin: 0.75rem 0 0.5rem !important;
+  margin: 0.5rem 0 0.3rem !important;
 }
 
 .ipynb-github-md-overlay .ipynb-manual-content-area h2 {
-  margin: 0.5rem 0 0.25rem !important;
+  margin: 0.4rem 0 0.2rem !important;
 }
 
 .ipynb-github-md-overlay .ipynb-manual-content-area h3 {
-  margin: 0.4rem 0 0.2rem !important;
+  margin: 0.3rem 0 0.15rem !important;
 }
 
 .ipynb-github-md-overlay .ipynb-manual-content-area ul,
 .ipynb-github-md-overlay .ipynb-manual-content-area ol {
-  margin: 0.5rem 0 !important;
+  margin: 0.4rem 0 !important;
 }
 
 .ipynb-github-md-overlay .ipynb-manual-content-area li {
-  margin: 0.25rem 0 !important;
+  margin: 0.15rem 0 !important;
 }
 
 .ipynb-github-md-overlay .ipynb-manual-content-area pre {
-  margin: 0.5rem 0 !important;
+  margin: 0.4rem 0 !important;
 }
 
 .ipynb-manual-content-area ul,
