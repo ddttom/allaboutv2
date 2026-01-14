@@ -1917,22 +1917,12 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   });
 
   // Tree state management (shared across overlays)
-  // Also expand first-level folders under Repository for better UX
-  const initiallyExpanded = new Set(['notebook', 'repository']);
-
-  // Find Repository node and expand its first-level folders
-  const repoNode = navigationTree.find((node) => node.id === 'repository');
-  if (repoNode && repoNode.children) {
-    repoNode.children.forEach((child) => {
-      if (child.type === 'folder') {
-        initiallyExpanded.add(child.id);
-      }
-    });
-  }
+  // Expand notebook, repository root, and only the Chapters folder
+  const initiallyExpanded = new Set(['notebook', 'repository', 'folder-chapters']);
 
   const treeState = {
     tree: navigationTree,
-    expandedNodes: initiallyExpanded, // Start with root nodes and first-level folders expanded
+    expandedNodes: initiallyExpanded, // Start with notebook, repository, and Chapters folder expanded
     selectedNode: null,
   };
 
@@ -3025,7 +3015,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
     treeState = parentHistory.treeState;
   } else {
     treeState = {
-      expandedNodes: new Set(['repository']), // Repository root expanded by default
+      expandedNodes: new Set(['repository', 'folder-chapters']), // Repository root and Chapters folder expanded by default
       selectedNode: null,
     };
   }
