@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **ipynb-viewer Repository Tree Restructuring**: Reorganized repository navigation tree into logical sections
+  - **Location**: `blocks/ipynb-viewer/ipynb-viewer.js` (buildFileTree function)
+  - **Structure**: Repository files now organized in three folders:
+    1. **Chapters** - preface.md and all chapter-*.md files
+    2. **Appendix** - all appendix-*.md files
+    3. **Miscellaneous** - all other markdown files
+  - **Order**: Folders appear in priority order (Chapters → Appendix → Miscellaneous)
+  - **Benefits**:
+    - Better organization for notebook navigation
+    - Easier to find chapters vs appendices vs other content
+    - Consistent categorization across all notebooks
+  - **Implementation**: Simplified buildFileTree() removing complex folder hierarchy in favor of categorical organization
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js`
+  - Commit: 3ccfbf37
+
 - **Invisible Users Notebook - Part 13**: Added complete appendices reference section to notebook
   - **Location**: `invisible-users/notebook.ipynb`
   - **Content**: New Part 13 cell listing all 12 appendices with descriptions
