@@ -44,6 +44,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Documentation: `docs/for-ai/ipynb-viewer-*` (2 files)
   - Commits: 22b9f0e0, f297f7e8, bb7921a4, f72493af, 5923b04c
 
+### Fixed
+
+- **ipynb-viewer tree navigation for h3 headings**: Fixed missing tree entries for cells with h3 (###) headings
+  - **Problem**: Tree was excluding cells with ### headings like "The Pagination Problem" and "The Broader Investigation"
+  - **Root cause**: The `extractHeadingFromRaw()` function filtered headings with `trimmed.startsWith('##') && !trimmed.startsWith('###')`, which explicitly excluded h3 headings
+  - **Impact**: Cells with ### headings were invisible in the navigation tree, creating gaps in notebook structure
+  - **Fix**: Changed `.find()` condition to match ANY heading level (`trimmed.startsWith('#')`), allowing h1, h2, and h3 headings to be processed
+  - **Result**: All notebook cells with headings now appear correctly in the tree navigation
+  - Commit: 4a13457e
+
 ### Added
 
 - **Documentation completeness check in eds-block-development skill**: Added critical learning to prevent incomplete documentation after architectural changes
