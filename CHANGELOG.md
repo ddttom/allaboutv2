@@ -46,6 +46,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **ipynb-viewer GitHub markdown paragraph spacing**: Reduced excessive vertical spacing in GitHub markdown overlay
+  - **Problem**: GitHub markdown files had too much space between paragraphs (0.5rem)
+  - **Root cause**: Inherited `.ipynb-manual-content-area p` styles meant for manual help pages
+  - **Impact**: Reading experience felt too spacious and uncomfortable
+  - **Fix**: Added `.ipynb-github-md-overlay` override reducing paragraph margin to 0.25rem (50% reduction)
+  - **Result**: More comfortable, tighter paragraph spacing for GitHub markdown files
+  - Commit: b05710a1
+
 - **ipynb-viewer tree navigation for h3 headings**: Fixed missing tree entries for cells with h3 (###) headings
   - **Problem**: Tree was excluding cells with ### headings like "The Pagination Problem" and "The Broader Investigation"
   - **Root cause**: The `extractHeadingFromRaw()` function filtered headings with `trimmed.startsWith('##') && !trimmed.startsWith('###')`, which explicitly excluded h3 headings
