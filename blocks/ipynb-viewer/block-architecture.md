@@ -4,9 +4,9 @@
 
 The ipynb-viewer block is a sophisticated component for displaying and interacting with Jupyter notebooks (.ipynb files) in Adobe Edge Delivery Services (EDS) environments. It provides multiple viewing modes, interactive JavaScript execution, markdown rendering, and tree-based navigation.
 
-**Version:** 2.1 (Enhanced Markdown Rendering)
+**Version:** 2.3 (Part Heading Tree Building)
 **Last Updated:** 2026-01-14
-**Lines of Code:** ~3,500
+**Lines of Code:** 3,786
 
 ## Core Capabilities
 
@@ -78,7 +78,250 @@ container.addEventListener('click', container._treeClickHandler);
 
 **Related Documentation:** See [CLAUDE.md](../../CLAUDE.md#critical-event-listeners-and-dom-cloning) for event listener best practices.
 
-### 2. Configuration Object Pattern
+### 2. Unified Tree Handler System
+
+**Problem Solved:** Original implementation had duplicate tree handler code for paged overlay and markdown overlay. When clicking a cell from within a markdown overlay, navigation would fail due to timing issues with handler availability.
+
+**Solution:** Factory pattern with lazy handler resolution that creates context-specific handlers from a single source of truth.
+
+**Location:** Lines 1621-1731
+
+**Architecture:**
+
+1. **Factory Function:** `createTreeNodeClickHandler(context)` creates handlers based on context type
+2. **Specialized Handlers:**
+   - `handleNotebookNodeClick(node, context)` - Navigate to cells/parts in notebook
+   - `handleMarkdownNodeClick(node, context)` - Open markdown files from repository
+3. **Lazy Resolution:** Handler availability checked at click time, not creation time
+
+**Key Code:**
+
+```javascript
+// Factory creates context-specific handler
+function createTreeNodeClickHandler(context) {
+  const handler = (node) => {
+    switch (node.type) {
+      case 'cell':
+      case 'part':
+        handleNotebookNodeClick(node, context);
+        break;
+      case 'markdown':
+        handleMarkdownNodeClick(node, context);
+        break;
+    }
+  };
+  context.handler = handler;
+  return handler;
+}
+
+// Notebook node handler with lazy resolution
+function handleNotebookNodeClick(node, context) {
+  if (context.type === 'paged') {
+    // Paged overlay: direct navigation
+    context.navigateToCell(node);
+  } else if (context.type === 'markdown-overlay') {
+    // Markdown overlay: close overlay first
+    context.closeOverlay();
+
+    // LAZY RESOLUTION: Check at click time (not creation time)
+    if (context.parentHistory?.handleTreeNodeClick) {
+      context.parentHistory.handleTreeNodeClick(node);
+    }
+  }
+}
+```
+
+**Context Object Structure:**
+
+```javascript
+{
+  type: 'paged' | 'markdown-overlay',
+  closeOverlay: Function,           // Close current overlay
+  navigateToCell: Function,         // Navigate to cell (paged only)
+  openMarkdownOverlay: Function,    // Open markdown overlay
+  treeState: Object,                // Tree state (expandedNodes, selectedNode)
+  navTreePanel: HTMLElement,        // Tree container element
+  helpRepoUrl: string,              // GitHub repo URL
+  branch: string,                   // Git branch
+  parentHistory: Object,            // Parent overlay's context (for markdown overlays)
+  handler: Function                 // Self-reference (for recursive calls)
+}
+```
+
+**Parent History Context:**
+
+```javascript
+const parentHistoryContext = {
+  historyArray: navigationHistory,    // Navigation history array
+  navigationTree: tree,               // Tree structure
+  navTreePanel: element,              // Tree panel element
+  treeState: state,                   // Tree state object
+  handleTreeNodeClick: handler        // Click handler function
+};
+```
+
+**Flow:**
+
+1. **Paged Overlay Creation:**
+   - Create `parentHistoryContext` object (handler initially null)
+   - Create unified handler using factory
+   - Store handler in `parentHistoryContext.handleTreeNodeClick`
+   - Return overlay object with `parentHistoryContext` exposed
+
+2. **Markdown Overlay Creation:**
+   - Receive `parentHistoryContext` from paged overlay
+   - Use parent's `handleTreeNodeClick` directly (no fallback creation)
+   - Tree clicks navigate through parent's handler
+
+3. **Tree Navigation:**
+   - User clicks tree node
+   - Handler checks node type and context type
+   - For markdown overlay clicking cell: close overlay, call parent handler
+   - For paged overlay: navigate directly to cell
+
+**Benefits:**
+
+- **Single source of truth:** Only paged overlay creates handlers
+- **Lazy resolution:** Handler availability checked at click time
+- **Fail-fast debugging:** Errors logged when architecture is violated
+- **Cleaner code:** No duplicate handler creation logic
+- **Maintainability:** Changes to navigation logic happen in one place
+
+**Testing Notes:**
+
+- Tree navigation tested from both paged and markdown overlays
+- Clicking cells from markdown overlay correctly navigates to cells
+- Clicking markdown files from either overlay opens new markdown overlay
+- Event propagation controlled with `e.stopPropagation()` and `e.preventDefault()`
+
+### 3. Part Heading Tree Building (Raw Markdown Access)
+
+**Problem Solved:** Tree navigation showing flat structure instead of hierarchical Part nodes after "Part X:" heading stripping was implemented.
+
+**Root Cause:** Timing issue where `createMarkdownCell` strips "Part X:" from H2 headings (line 711) BEFORE cells are added to DOM, then `buildNavigationTree` tries to detect "Part X:" by reading already-rendered cells with `extractHeading`, but they've already been stripped.
+
+**Solution:** Access raw notebook JSON source via `notebookData.cells` array for Part heading detection instead of rendered HTML.
+
+**Location:**
+- `buildNavigationTree()` function (lines 1406-1731)
+- `extractHeadingFromRaw()` helper function (lines 1461-1480)
+- `createPagedOverlay()` function signature (line 1833)
+
+**Implementation:**
+
+**1. Raw Markdown Detection (First Pass):**
+
+```javascript
+// Check raw notebook cell data, NOT rendered HTML
+if (notebookData && notebookData.cells) {
+  notebookData.cells.forEach((cell, index) => {
+    if (cell.cell_type === 'markdown') {
+      const markdownText = Array.isArray(cell.source)
+        ? cell.source.join('')
+        : cell.source;
+      const lines = markdownText.split('\n');
+      lines.forEach((line) => {
+        const cleaned = line.trim().replace(/^##\s*/, '');
+        if (partRegex.test(cleaned)) {
+          hasPartHeadings = true;
+        }
+      });
+    }
+  });
+}
+```
+
+**2. Helper Function for Raw Heading Extraction:**
+
+```javascript
+const extractHeadingFromRaw = (cellData) => {
+  if (!cellData || cellData.cell_type !== 'markdown') return null;
+  const markdownText = Array.isArray(cellData.source)
+    ? cellData.source.join('')
+    : cellData.source;
+  const lines = markdownText.split('\n');
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (trimmed.startsWith('###')) {
+      return { text: trimmed.replace(/^###\s*/, ''), level: 3 };
+    }
+    if (trimmed.startsWith('##')) {
+      return { text: trimmed.replace(/^##\s*/, ''), level: 2 };
+    }
+    if (trimmed.startsWith('#')) {
+      return { text: trimmed.replace(/^#\s*/, ''), level: 1 };
+    }
+  }
+  return null;
+};
+```
+
+**3. Second Pass Uses Raw Markdown:**
+
+```javascript
+cells.forEach((cell, index) => {
+  if (cell.classList.contains('ipynb-markdown-cell')) {
+    let heading = null;
+    let headingText = '';
+
+    // Extract from raw markdown source
+    if (notebookData && notebookData.cells && notebookData.cells[index]) {
+      heading = extractHeadingFromRaw(notebookData.cells[index]);
+      if (heading) {
+        headingText = heading.text.trim();
+      }
+    } else {
+      // Fallback to rendered HTML if raw data not available
+      heading = extractHeading(cell);
+      if (heading) {
+        headingText = heading.text.trim();
+      }
+    }
+
+    // Part regex can now match "Part X:" from raw markdown
+    const partMatch = headingText.match(partRegex);
+    if (partMatch) {
+      // Create Part node
+    }
+  }
+});
+```
+
+**4. Parameter Threading:**
+
+```javascript
+// Pass notebookData through function call chain
+function buildNavigationTree(cells, cellsContainer, _helpRepoUrl, notebookData = null)
+function createPagedOverlay(..., notebook = null)
+
+// In decorate() function:
+const overlay = createPagedOverlay(container, cellsContainer, shouldAutorun,
+  isNotebook, repoUrl, notebookTitle, helpRepoUrl, githubBranch, isNoTopbar, notebook);
+```
+
+**Result:**
+
+- **Tree Part nodes:** Display "Part 2: Understanding Invisible Failures" (full text from raw markdown)
+- **Tree child cell nodes:** Display "Understanding Invisible Failures" (split on colon)
+- **Content pane H2 headings:** Display "Understanding Invisible Failures" (regex stripped)
+- **Tree structure:** Hierarchical with Part nodes as parents, cells as children
+
+**Benefits:**
+
+- Separation of concerns: Title stripping for display, raw data for structure
+- Hierarchical navigation: Parts contain their child cells
+- Consistent behavior: Tree structure matches notebook logical organization
+- No timing issues: Raw data always available regardless of render state
+
+**Testing Notes:**
+
+- Tested with notebooks containing "Part X:" and "Chapter X:" prefixes
+- Verified Part nodes create proper hierarchy
+- Confirmed child cells nest under correct Part parent
+- Validated content pane shows stripped headings as intended
+
+### 4. Configuration Object Pattern
 
 **Pattern:** All configurable values centralized at top of file in `IPYNB_CONFIG` object.
 
@@ -342,6 +585,7 @@ outputDiv.textContent = output;
 **Why Processing Order Matters:**
 
 - **Lists before bold/italic:** Allows `1. **Bold text**` to render as list with bold item
+- **Blank lines in lists:** Parser ignores blank lines between items, maintaining continuous numbering (CommonMark/GFM compliance)
 - **Code protection:** Prevents markdown processing inside code blocks and inline code
 - **HTML escaping after code extraction:** Inline HTML tags become literal text
 
@@ -698,6 +942,39 @@ onNodeClick(node);
 
 ## Changelog
 
+### Version 2.3 (2026-01-14)
+
+- **Added:** Part heading tree building from raw notebook JSON source
+  - Fixed flat tree structure by accessing raw markdown instead of rendered HTML
+  - Created `extractHeadingFromRaw()` helper function to extract headings from notebook cells
+  - Modified `buildNavigationTree()` to accept `notebookData` parameter
+  - Updated first pass to detect Part headings from raw cell source
+  - Updated second pass to use raw markdown for Part regex matching
+  - Threaded `notebookData` parameter through call chain (decorate → createPagedOverlay → buildNavigationTree)
+  - Result: Hierarchical tree with Part nodes as parents, cells as children
+- **Cleanup:** Removed all console.log statements for production cleanliness
+  - Removed 51 logging console.log statements throughout codebase
+  - Preserved 4 functional console.log statements for code execution capture
+  - Removed 1 orphaned object literal that caused syntax error
+  - Final line count: 3,786 lines (down from 3,838 lines)
+  - Validated syntax with `node -c ipynb-viewer.js`
+- **Documentation:** Added comprehensive entry to LEARNINGS.md about console.log removal context
+  - Documented "Removing Console.log Statements - Context Matters" (lines 631-795)
+  - Explained why simple line deletion breaks code (orphaned object literals)
+  - Provided safe removal strategy with pattern matching
+  - Real examples of mistakes and their symptoms
+
+### Version 2.2 (2026-01-14)
+
+- **Added:** Unified Tree Handler System
+  - Factory pattern with lazy handler resolution for context-specific handlers
+  - Created `createTreeNodeClickHandler(context)` factory function
+  - Specialized handlers: `handleNotebookNodeClick()` and `handleMarkdownNodeClick()`
+  - Single source of truth: Only paged overlay creates handlers
+  - Parent history context for markdown overlays
+  - Fixed navigation from markdown overlays to notebook cells
+  - Fail-fast debugging with logged errors when architecture violated
+
 ### Version 2.1 (2026-01-14)
 
 - **Added:** Inline HTML escaping in markdown rendering (matches GitHub behavior)
@@ -713,6 +990,11 @@ onNodeClick(node);
   - Root cause: Bold/italic processing happened before list processing
   - Solution: Moved list processing before bold/italic processing
   - Result: `1. **Bold text**` now renders correctly as bold list item
+- **Fixed:** Ordered lists with blank lines showing restarted numbering
+  - Root cause: Parser closed lists when encountering blank lines between items
+  - Impact: Lists like "1. Item\n\n2. Item" rendered as two separate `<ol>` elements, both showing "1."
+  - Solution: Ignore blank lines within lists, keep list open for sequential numbering
+  - Result: Blank lines between items now work correctly (matches CommonMark/GFM spec)
 - **Added:** `opening-page` metadata support for automatic navigation
   - Specify markdown file to auto-open when notebook loads
   - Format: `"opening-page": "preface.md"` or `"opening-page": "#preface.md"`

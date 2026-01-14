@@ -363,7 +363,7 @@ Triple backtick code blocks with optional language specification. Proper syntax 
 Full markdown table support with headers. Alternating row colors for readability. Responsive table styling.
 
 **Lists:**
-Unordered lists with - or *. Ordered lists with 1., 2., etc. Proper indentation and spacing.
+Unordered lists with - or *. Ordered lists with 1., 2., etc. Proper indentation and spacing. **Critical:** Blank lines between list items are preserved correctly - lists remain continuous with sequential numbering (matches CommonMark/GFM spec).
 
 **Inline Formatting:**
 Headers (all six levels: H1-H6) with #, ##, ###, ####, #####, ######. Bold text with **text**. Italic text with *text*. Inline code with backticks. Links with [text](url). Line breaks. **Critical:** Bold and italic work correctly within lists (processing order: lists first, then bold/italic).
@@ -1272,7 +1272,7 @@ Check CSS custom properties are defined. Verify block CSS is loaded. Test with d
 |----------|-------|
 | Block Name | ipynb-viewer |
 | Status | Production Ready |
-| Version | 13.1 |
+| Version | 13.2 |
 | Last Updated | 2026-01-14 |
 | Author | Tom Cranstoun |
 | Category | Complex Build-Enhanced |
@@ -1280,6 +1280,6 @@ Check CSS custom properties are defined. Verify block CSS is loaded. Test with d
 | Mobile Support | Yes (fully responsive) |
 | Accessibility | WCAG 2.1 AA compliant |
 | Dependencies | None (vanilla JavaScript) |
-| File Size | JavaScript: 3,338 lines, CSS: 2,110 lines |
+| File Size | JavaScript: 3,786 lines, CSS: 2,110 lines |
 | Performance | Excellent (Core Web Vitals optimized) |
 | Documentation | Complete (README, EXAMPLE, test.html) |
