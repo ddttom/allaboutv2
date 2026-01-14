@@ -77,7 +77,8 @@ EDS projects follow a consistent file organization pattern. Each block or compon
 ├── example.md               # Usage examples for content authors
 ├── demo.md                  # More comprehensive usage examples
 ├── example.json             # Sample data (if needed)
-└── example.csv              # CSV version of sample data
+├── example.csv              # CSV version of sample data
+└── block-architecture.md    # Technical architecture (optional - for complex blocks)
 ```
 
 This structure ensures that all blocks have complete documentation, clear examples for authors, and consistent organization that makes it easy for developers to understand how the block works.

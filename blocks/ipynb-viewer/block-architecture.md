@@ -710,9 +710,9 @@ outputDiv.textContent = output;
 8. **Bold** - `**text**` to `<strong>` (AFTER lists)
 9. **Italic** - `*text*` to `<em>` (AFTER bold)
 10. **Links** - `[text](url)` to `<a href>`
-11. **Code block restoration** - Replace placeholders with `<pre><code>`
-12. **Inline code restoration** - Replace placeholders with `<code>`
-13. **Paragraph wrapping** - Split by double newlines, wrap in `<p>` tags (skip block elements)
+11. **Paragraph wrapping** - Split by double newlines, wrap in `<p>` tags (skip block elements AND placeholders)
+12. **Code block restoration** - Replace placeholders with `<pre><code>` (AFTER paragraph processing)
+13. **Inline code restoration** - Replace placeholders with `<code>`
 
 **Why Processing Order Matters:**
 
@@ -720,7 +720,52 @@ outputDiv.textContent = output;
 - **Blank lines in lists:** Parser ignores blank lines between items, maintaining continuous numbering (CommonMark/GFM compliance)
 - **Code protection:** Prevents markdown processing inside code blocks and inline code
 - **HTML escaping after code extraction:** Inline HTML tags become literal text
-- **Paragraph wrapping last:** Ensures block elements (headers, tables, lists) aren't wrapped in `<p>` tags
+- **Paragraph wrapping before code restoration:** CRITICAL - Code blocks must be restored AFTER paragraph processing to prevent splitting
+- **Placeholder protection:** Block element pattern must recognize `__CODEBLOCK_` placeholders to prevent wrapping in `<p>` tags
+
+**Code Block Restoration Timing (Critical Fix - 2026-01-14):**
+
+The order of code block restoration vs paragraph processing is CRITICAL:
+
+**❌ WRONG - Early Restoration (Original Bug):**
+```
+1. Extract code blocks → placeholders
+2. Restore code blocks → <pre><code>line1\n\nline2</code></pre>
+3. Paragraph processing splits by \n\n → BREAKS CODE BLOCKS
+   Result: <p><pre><code>line1</p><p>line2</code></pre></p>
+```
+
+**✅ CORRECT - Deferred Restoration (Fix):**
+```
+1. Extract code blocks → placeholders
+2. Paragraph processing splits by \n\n → placeholders remain intact (single tokens)
+3. Restore code blocks → <pre><code>line1\n\nline2</code></pre> inserted safely
+```
+
+**Why this matters:**
+- Code blocks often contain blank lines (`\n\n`) for readability
+- If restored before paragraph splitting, these blank lines cause the code block to be split into fragments
+- Split fragments don't match the `/^<pre/` block element pattern
+- Paragraph wrapper then wraps fragments in `<p>` tags, creating invalid HTML
+- Result: Code displays on one line with visible `<p>` tags
+
+**Implementation Details:**
+
+The `blockElementPattern` regex must recognize BOTH actual block elements AND placeholders:
+```javascript
+// ✅ Correct pattern - protects placeholders
+const blockElementPattern = /^<(h[1-6]|table|ul|ol|blockquote|pre|hr)|^__CODEBLOCK_/;
+
+// Paragraph processing
+html = paragraphs.map((para) => {
+  if (blockElementPattern.test(para.trim())) {
+    return para.trim();  // Don't wrap block elements or placeholders
+  }
+  return `<p>${para.trim()}</p>`;
+}).join('\n\n');
+```
+
+**See:** LEARNINGS.md - "Code Block Rendering Requires Deferred Restoration" for complete analysis
 
 **Paragraph Rendering:**
 

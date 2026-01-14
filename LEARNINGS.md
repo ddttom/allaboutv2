@@ -907,3 +907,124 @@ When debugging CSS that "isn't applying":
 - Commit: c10eed55
 
 ---
+
+## ipynb-viewer: Code Block Rendering Requires Deferred Restoration
+
+**Rule** (2026-01-14): When rendering GitHub markdown overlays, code block restoration must happen AFTER paragraph processing, not before. Code blocks containing blank lines will be split by paragraph processing if restored too early, causing `<p>` tags to be injected inside `<pre>` elements.
+
+**Why it matters:**
+
+- The `parseMarkdown()` function splits content by double newlines (`\n\n`) to identify paragraphs
+- If code blocks are restored BEFORE paragraph splitting, blank lines inside code blocks cause splits
+- Split code fragments no longer match the block-level regex pattern
+- Paragraph wrapper then wraps code fragments in `<p>` tags
+- Result: Invalid HTML like `<p><pre>code</pre></p>` or split fragments like `<pre>code</pre><p>more code</p><pre>end</pre>`
+
+**Root cause example:**
+
+```javascript
+// ❌ WRONG ORDER - Restores code blocks too early
+// 1. Extract code blocks into placeholders (line 41-51)
+html = html.replace(/```(\w+)?\n?([\s\S]*?)```/g, (match, lang, code) => {
+  codeBlockPlaceholders.push(`<pre><code>${escapedCode}</code></pre>`);
+  return `__CODEBLOCK_${index}__`;
+});
+
+// 2. Restore code blocks (line 382-385)
+codeBlockPlaceholders.forEach((codeBlock, index) => {
+  html = html.replace(`__CODEBLOCK_${index}__`, codeBlock);
+});
+
+// 3. Paragraph processing (line 399-424)
+const paragraphs = html.split(/\n\n+/);  // ❌ Splits RESTORED code blocks with blank lines!
+```
+
+**Problem flow:**
+
+1. Code block contains blank lines: `<pre><code>line1\n\nline2</code></pre>`
+2. Paragraph splitter sees `\n\n` and breaks: `<pre><code>line1` + `line2</code></pre>`
+3. Fragments don't match `/^<pre/` regex (first fragment doesn't start with `<pre>`)
+4. Paragraph wrapper adds `<p>` tags: `<p><pre><code>line1</p>` + `<p>line2</code></pre></p>`
+
+**Correct solution:**
+
+```javascript
+// ✅ CORRECT ORDER - Restore code blocks AFTER paragraph processing
+// 1. Extract code blocks into placeholders (line 41-51)
+html = html.replace(/```(\w+)?\n?([\s\S]*?)```/g, (match, lang, code) => {
+  codeBlockPlaceholders.push(`<pre><code>${escapedCode}</code></pre>`);
+  return `__CODEBLOCK_${index}__`;
+});
+
+// 2. Paragraph processing (line 399-424)
+const paragraphs = html.split(/\n\n+/);  // ✅ Splits only placeholders (single tokens)
+const blockElementPattern = /^<(h[1-6]|table|ul|ol|blockquote|pre|hr)|^__CODEBLOCK_/;  // ✅ Recognize placeholders
+html = paragraphs.map((para) => {
+  if (blockElementPattern.test(para.trim())) {
+    return para.trim();  // Don't wrap placeholders
+  }
+  return `<p>${para.trim()}</p>`;
+}).join('\n\n');
+
+// 3. Restore code blocks (line 382-385)
+codeBlockPlaceholders.forEach((codeBlock, index) => {
+  html = html.replace(`__CODEBLOCK_${index}__`, codeBlock);  // ✅ Safe - paragraphs already wrapped
+});
+```
+
+**Key changes:**
+
+1. **Deferred restoration:** Move code block restoration to AFTER paragraph processing
+2. **Protected placeholders:** Update `blockElementPattern` regex to recognize `__CODEBLOCK_` placeholders as block elements
+3. **Manual DOM construction:** In `createGitHubMarkdownOverlay`, build code block elements manually instead of relying on `innerHTML`
+
+**Why placeholders must be protected:**
+
+Placeholders like `__CODEBLOCK_0__` are single tokens without newlines. When paragraph processing splits by `\n\n`, placeholders remain intact. But the regex must explicitly recognize them as block-level elements to prevent wrapping:
+
+```javascript
+// ❌ Without placeholder protection
+const blockElementPattern = /^<(h[1-6]|table|ul|ol|blockquote|pre|hr)/;
+// Result: `__CODEBLOCK_0__` doesn't match, gets wrapped in <p>
+
+// ✅ With placeholder protection
+const blockElementPattern = /^<(h[1-6]|table|ul|ol|blockquote|pre|hr)|^__CODEBLOCK_/;
+// Result: `__CODEBLOCK_0__` matches, stays unwrapped
+```
+
+**Real example (appendix-a-implementation-cookbook.md):**
+
+- **Issue:** Code blocks showing `<p>` tags inside `<pre>` elements
+- **Symptom:** All code on one line despite "Restored 26 lines" in console
+- **Root cause:** Code blocks restored before paragraph processing
+- **Fix:** Moved restoration after paragraph processing, added placeholder protection
+- **Result:** Code blocks render correctly with proper line breaks and indentation
+
+**Testing verification:**
+
+```bash
+# Test URL
+http://localhost:3000/invisible-users/notebook.html#appendix-a-implementation-cookbook.md
+
+# Check HTML structure in DevTools
+document.querySelector('.ipynb-github-md-overlay pre code').childNodes
+// Should be: Single text node with newlines
+// Should NOT be: Multiple <p> elements
+```
+
+**Impact:**
+
+- **Before:** Code blocks split by blank lines, `<p>` tags injected, everything on one line
+- **After:** Code blocks preserved intact, proper line breaks, correct indentation
+- **Files modified:** `blocks/ipynb-viewer/ipynb-viewer.js` (parseMarkdown function order)
+
+**Related learnings:**
+
+- See "parseMarkdown() Uses `<br>` Tags, Not `<p>` Tags" (earlier in this file) for paragraph rendering context
+- Paragraph processing order matters for ALL content types, not just code blocks
+
+**Documentation:**
+- Implementation: `blocks/ipynb-viewer/ipynb-viewer.js` lines 19-427
+- Result: `/Users/tomcranstoun/Documents/GitHub/allaboutV2/result.md`
+
+---

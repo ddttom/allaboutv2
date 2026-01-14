@@ -160,7 +160,8 @@ blocks/block-name/
 ├── block-name.js          # Block JavaScript (ES module)
 ├── block-name.css         # Block styles
 ├── README.md              # Documentation
-└── test.html              # Test file (MUST replicate EDS structure)
+├── test.html              # Test file (MUST replicate EDS structure)
+└── block-architecture.md  # Optional - for complex blocks
 ```
 
 **CRITICAL**: Test files must use the exact same block structure as EDS. The purpose of test files is to replicate the EDS environment locally - there is no alternative structure.

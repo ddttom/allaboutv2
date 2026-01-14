@@ -46,8 +46,9 @@ Repository Root
         ├── {component-name}.css    # Source styles (edit directly)
         ├── README.md               # Documentation
         ├── test.html               # Test file
-        └── example.md              # Content author examples
-        
+        ├── example.md              # Content author examples
+        └── block-architecture.md   # Optional - for complex blocks
+
     # No corresponding build/ folder exists
 ```
 

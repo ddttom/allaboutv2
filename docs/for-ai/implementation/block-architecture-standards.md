@@ -264,7 +264,8 @@ This naming convention ensures smooth integration with both modern development t
 ├── {component-name}.css
 ├── test.html
 ├── README.md
-└── example.md
+├── example.md
+└── block-architecture.md    # Optional - for complex blocks
 ```
 
 **Examples:** floating-alert, banners, simple cards, content blocks, text components
@@ -431,6 +432,7 @@ npm run test
 ├── test.html                    # Standardized test file
 ├── README.md                    # Documentation
 ├── example.md                   # Content author examples
+├── block-architecture.md        # Technical architecture (optional - for complex blocks)
 └── {component-name}.test.js     # Unit tests (optional)
 ```
 

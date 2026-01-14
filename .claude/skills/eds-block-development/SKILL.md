@@ -51,11 +51,12 @@ Every EDS block follows this structure:
 
 ```
 blocks/your-block/
-├── your-block.js       # Decoration logic (REQUIRED)
-├── your-block.css      # Block-specific styles (REQUIRED)
-├── README.md           # Usage documentation (REQUIRED)
-├── EXAMPLE.md          # Google Docs example (REQUIRED)
-└── test.html           # Development test file (RECOMMENDED)
+├── your-block.js             # Decoration logic (REQUIRED)
+├── your-block.css            # Block-specific styles (REQUIRED)
+├── README.md                 # Usage documentation (REQUIRED)
+├── EXAMPLE.md                # Google Docs example (REQUIRED)
+├── test.html                 # Development test file (RECOMMENDED)
+└── block-architecture.md     # Technical architecture (OPTIONAL - for complex blocks)
 ```
 
 **Critical naming convention:** File names must match the block name exactly (kebab-case).
@@ -1433,6 +1434,34 @@ docs/for-ai/index.md                   # AI docs index
 ```
 
 **Related production bug:** After implementing unified overlay refactor (8 modules, complete architecture change), the main blocks/ipynb-viewer/README.md was not updated, leaving users with no knowledge of the new architecture until a code review caught the omission.
+
+---
+
+## When Struggling to Find Answers
+
+**If you're having trouble understanding a block's implementation or finding specific technical details:**
+
+1. **Check for block-specific architecture documentation:**
+   - Look for `blocks/{blockname}/block-architecture.md` in the block folder
+   - This file contains detailed technical architecture specific to that block
+   - Example: `blocks/ipynb-viewer/block-architecture.md` documents the ipynb-viewer's rendering pipeline, processing order, and critical implementation details
+
+2. **Why this matters:**
+   - Block-specific architecture docs contain implementation details not found in general EDS guides
+   - They document processing order, critical timing issues, and block-specific patterns
+   - They often include solutions to previously encountered bugs and edge cases
+
+3. **When to read block-architecture.md:**
+   - When implementing similar functionality in a new block
+   - When debugging issues in an existing block
+   - When making modifications to complex blocks
+   - When you need to understand the "why" behind implementation decisions
+
+**Example:** The ipynb-viewer block has extensive architecture documentation covering:
+- Markdown parsing pipeline and processing order
+- Code block restoration timing (critical for preventing rendering bugs)
+- Smart link resolution patterns
+- Overlay system architecture
 
 ---
 

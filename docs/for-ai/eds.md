@@ -763,7 +763,8 @@ Each block corresponds to a specific folder and files in your project structure 
 ├── example.md               # Usage examples
 ├── demo.md                  # Demo content
 ├── example.json             # Sample data (if needed)
-└── example.csv              # CSV version of sample data
+├── example.csv              # CSV version of sample data
+└── block-architecture.md    # Technical architecture (optional - for complex blocks)
 ```
 
 This structured organization ensures consistency across blocks and makes maintenance easier. Each file serves a specific purpose:
@@ -1533,9 +1534,10 @@ Comprehensive documentation is crucial for block maintainability:
 /blocks/myblock/
 ├── myblock.js
 ├── myblock.css
-├── README.md           # Comprehensive documentation
-├── example.md          # Simple copy-paste example for devs
-└── demo.md             # More complex real-world usage examples
+├── README.md                # Comprehensive documentation
+├── example.md               # Simple copy-paste example for devs
+├── demo.md                  # More complex real-world usage examples
+└── block-architecture.md    # Optional - for complex blocks
 ```
 
 README.md should include:
