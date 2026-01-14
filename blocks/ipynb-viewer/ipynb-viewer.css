@@ -23,7 +23,8 @@ html {
 /* Blockquote styling */
 .ipynb-viewer blockquote,
 .ipynb-paged-overlay blockquote,
-.ipynb-manual-overlay blockquote {
+.ipynb-manual-overlay blockquote,
+.ipynb-github-md-overlay blockquote {
   margin: 1.5em 0;
   padding: 1em 1.5em;
   background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
@@ -34,19 +35,22 @@ html {
 
 .ipynb-viewer blockquote p,
 .ipynb-paged-overlay blockquote p,
-.ipynb-manual-overlay blockquote p {
+.ipynb-manual-overlay blockquote p,
+.ipynb-github-md-overlay blockquote p {
   margin: 0.5em 0;
 }
 
 .ipynb-viewer blockquote p:first-child,
 .ipynb-paged-overlay blockquote p:first-child,
-.ipynb-manual-overlay blockquote p:first-child {
+.ipynb-manual-overlay blockquote p:first-child,
+.ipynb-github-md-overlay blockquote p:first-child {
   margin-top: 0;
 }
 
 .ipynb-viewer blockquote p:last-child,
 .ipynb-paged-overlay blockquote p:last-child,
-.ipynb-manual-overlay blockquote p:last-child {
+.ipynb-manual-overlay blockquote p:last-child,
+.ipynb-github-md-overlay blockquote p:last-child {
   margin-bottom: 0;
 }
 
@@ -295,10 +299,6 @@ html {
   padding-left: 1.5rem;
 }
 
-/* Remove browser's auto-numbering for ordered lists since content already contains numbers */
-.ipynb-markdown-cell ol {
-  list-style-type: none;
-}
 
 .ipynb-markdown-cell li {
   margin: 0;
