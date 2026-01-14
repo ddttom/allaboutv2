@@ -7,7 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Enhanced metadata for notebook.html**: Added comprehensive metadata following article.html pattern
+  - Added author meta tag (Tom Cranstoun)
+  - Added descriptive meta description for AI-friendly web content guide
+  - Added AI-specific meta tags (Appendix L proposal): preferred-access, content-policy, freshness, structured-data, attribution
+  - Added JSON-LD structured data (WebApplication type) with complete author/publisher information
+  - Added breadcrumb navigation, time required (PT60M), educational level (Intermediate)
+  - Changed HTML lang to 'en-GB' for consistency
+  - Updated page title to be more descriptive: "The Invisible Users - Interactive Notebook | AI-Friendly Web Content Guide"
+  - Files modified: `invisible-users/notebook.html`
+
 ### Changed
+
+- **Simplified notebook.html script loading**: Removed RUM (Real User Monitoring) code
+  - Removed `sampleRUM` import and initialization calls
+  - RUM tracking not needed for test/demo page
+  - Keeps essential `loadBlock` functionality
+  - Cleaner, more focused code
+  - Files modified: `invisible-users/notebook.html`
+
+- **Renamed notebook block ID**: Changed from 'test-notebook' to 'notebook'
+  - Cleaner, more concise identifier
+  - Matches production naming conventions
+  - Files modified: `invisible-users/notebook.html`
 
 - **Refactored ipynb-viewer home button implementation**: Unified duplicate home button implementations into single reusable function
   - Issue: Two separate home button implementations (paged overlay and GitHub markdown overlay) with duplicated code
