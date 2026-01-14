@@ -1818,7 +1818,7 @@ button.ipynb-help-button {
 
 /* Tighter paragraph spacing for GitHub markdown files */
 .ipynb-github-md-overlay .ipynb-manual-content-area p {
-  margin: 0.25rem 0;
+  margin: 0.15rem 0;
 }
 
 .ipynb-manual-content-area ul,
