@@ -38,11 +38,24 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
     return placeholder;
   });
 
+  // Extract inline code and protect it with placeholders
+  const inlineCodePlaceholders = [];
+  html = html.replace(/`([^`]+)`/g, (match, code) => {
+    const placeholder = `__INLINECODE_${inlineCodePlaceholders.length}__`;
+    inlineCodePlaceholders.push(code);
+    return placeholder;
+  });
+
   // Handle escaped HTML characters (e.g., \<img>, \:// in documentation examples)
   // These should be rendered as literal text, not actual HTML
   html = html.replace(/\\</g, '&lt;');
   html = html.replace(/\\>/g, '&gt;');
   html = html.replace(/\\:/g, ':');
+
+  // Escape all remaining HTML tags (not in code blocks or inline code)
+  // This prevents inline HTML from being rendered, matching GitHub's behavior
+  html = html.replace(/</g, '&lt;');
+  html = html.replace(/>/g, '&gt;');
 
   // Tables - must be before line breaks
   const lines = html.split('\n');
@@ -115,9 +128,6 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
   // Horizontal rules (must be before bold/italic to avoid conflicts)
   // Matches: ---, ***, or ___ (3 or more, with optional spaces)
   html = html.replace(/^(?:[-*_]\s*){3,}$/gim, '<hr>');
-
-  // Code inline (before links to avoid conflicts)
-  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
 
   // Images - process BEFORE links since images use ![alt](url) syntax
   html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_match, alt, url) => {
@@ -366,6 +376,11 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
   // Restore code blocks
   codeBlockPlaceholders.forEach((codeBlock, index) => {
     html = html.replace(`__CODEBLOCK_${index}__`, codeBlock);
+  });
+
+  // Restore inline code (now as <code> elements with content)
+  inlineCodePlaceholders.forEach((code, index) => {
+    html = html.replace(`__INLINECODE_${index}__`, `<code>${code}</code>`);
   });
 
   // Line breaks - only convert double newlines to paragraph breaks
