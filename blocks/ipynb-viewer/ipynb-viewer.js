@@ -1491,35 +1491,35 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl) {
             });
           } else if (partRegex.test(headingText)) {
             // Check if this is a Part/Chapter heading
-            // Check if this cell has content after the heading
-            const content = cell.querySelector('.ipynb-cell-content');
-            const hasContentAfterHeading = content && content.children.length > 1;
-
+            // Part nodes are ALWAYS navigation-only (no cellIndex)
             currentPartNode = {
               id: `part-${index}`,
               label: headingText,
               type: 'part',
               path: null,
-              cellIndex: hasContentAfterHeading ? null : index, // null if content exists - just for navigation
+              cellIndex: null, // Navigation only - never shows content
               children: [],
               expanded: false, // Parts/Chapters start collapsed
               level: 1,
             };
             notebookNode.children.push(currentPartNode);
 
-            // If the Part heading cell has content after the heading, add it as first child
-            if (hasContentAfterHeading) {
-              currentPartNode.children.push({
-                id: `cell-${index}`,
-                label: headingText, // Same label as part, but this one shows the content
-                type: 'cell',
-                path: null,
-                cellIndex: index, // This one has the cellIndex to show content
-                children: [],
-                expanded: false,
-                level: 2,
-              });
-            }
+            // ALWAYS create a child node for the content (without "Part X:" prefix)
+            // Extract just the title part after the colon
+            const contentLabel = headingText.includes(':')
+              ? headingText.split(':').slice(1).join(':').trim()
+              : headingText;
+
+            currentPartNode.children.push({
+              id: `cell-${index}`,
+              label: contentLabel, // Title without "Part X:" prefix
+              type: 'cell',
+              path: null,
+              cellIndex: index, // This shows the actual content
+              children: [],
+              expanded: false,
+              level: 2,
+            });
           } else if (currentPartNode) {
             // Add cell to current Part/Chapter
             currentPartNode.children.push({
