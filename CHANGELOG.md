@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2026-01-14] - ipynb-viewer Markdown Rendering Improvements
 
+### Added
+
+- **Opening-page metadata support**: Automatically open a specific markdown file when notebook starts
+  - Feature: New `opening-page` metadata field for notebooks
+  - Purpose: Display a table of contents, preface, or README when user opens notebook
+  - Implementation: Updated `checkHashNavigation` to check metadata if no URL hash present
+  - Priority: URL hash takes precedence over metadata (allows user override)
+  - Example: `"opening-page": "preface.md"` or `"opening-page": "#preface.md"`
+  - Applied to: invisible-users notebook now opens with preface.md
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js` (lines 3441-3464, 3739, 3755), `invisible-users/notebook.ipynb` (metadata)
+  - Commits: 734e4be2 (implementation), 7bfb4264 (documentation)
+
 ### Fixed
 
 - **Broken link in invisible-users notebook**: Updated implementation roadmap filename
