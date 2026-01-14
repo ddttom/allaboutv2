@@ -98,6 +98,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Fixed tree node expansion when using next/previous pagination buttons**: Tree now auto-expands to show current cell
+  - **Issue**: Clicking next/previous buttons updated the selected cell in tree but didn't expand parent nodes
+  - **Issue**: User couldn't see which cell was selected because tree folders remained collapsed
+  - **Solution**: Added `expandParentsOfNode()` helper function to recursively find and expand all ancestor nodes
+  - **Solution**: Modified `selectTreeNode()` to call `expandParentsOfNode()` before rendering tree
+  - **Result**: Tree automatically expands Part/Chapter folders to show currently selected cell
+  - **Result**: Improved navigation UX - users can always see where they are in the notebook structure
+  - **Files modified**: `blocks/ipynb-viewer/ipynb-viewer.js` (lines 1826-1850, 1863-1864)
+  - **Commit**: 27db2dd0
+  - **Branch**: `refactor/ipynb-viewer-unified-overlay`
+
 - **Fixed home button behavior in GitHub markdown overlay**: Home button now returns to notebook instead of reloading same page
   - Issue: Home button cleared hash but stayed on same markdown page (didn't go anywhere)
   - Issue: Home button was reloading current page instead of returning to parent notebook
