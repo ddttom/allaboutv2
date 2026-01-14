@@ -1885,6 +1885,16 @@ button.ipynb-help-button {
   font-family: 'Courier New', monospace !important;
 }
 
+/* UNIVERSAL code block white-space rule - catch ALL code blocks */
+.ipynb-github-md-overlay pre code,
+.ipynb-manual-overlay pre code,
+.ipynb-paged-overlay pre code,
+.ipynb-overlay-content code,
+pre code {
+  white-space: pre !important;
+  display: block !important;
+}
+
 .ipynb-manual-content-area ul,
 .ipynb-manual-content-area ol {
   margin: 1rem 0;
