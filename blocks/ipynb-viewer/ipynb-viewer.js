@@ -2346,11 +2346,13 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     helpButton.setAttribute('title', 'Help');
 
     helpButton.addEventListener('click', () => {
-      // Build GitHub URL using the specified branch from notebook metadata
-      const helpPath = `${helpRepoUrl}/blob/${branch}/docs/help.md`;
+      // Use fallback repo for help.md (allaboutv2) since help lives there
+      const fallbackRepo = 'https://github.com/ddttom/allaboutv2';
+      const fallbackBranch = 'refactor/ipynb-viewer-unified-overlay';
+      const helpPath = `${fallbackRepo}/blob/${fallbackBranch}/invisible-users/docs/help.md`;
 
-      // Open using GitHub markdown overlay with branch parameter
-      const helpOverlay = createGitHubMarkdownOverlay(helpPath, 'IPynb Viewer Help', helpRepoUrl, branch, paginationState, hideTopbar);
+      // Open using GitHub markdown overlay with fallback branch
+      const helpOverlay = createGitHubMarkdownOverlay(helpPath, 'IPynb Viewer Help', fallbackRepo, fallbackBranch, paginationState, hideTopbar);
       helpOverlay.openOverlay();
     });
   }
@@ -3318,11 +3320,13 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
   // Help button handler
   if (helpButton && helpRepoUrl) {
     helpButton.addEventListener('click', () => {
-      // Build GitHub URL using the specified branch
-      const helpPath = `${helpRepoUrl}/blob/${branch}/docs/help.md`;
+      // Use fallback repo for help.md (allaboutv2) since help lives there
+      const fallbackRepo = 'https://github.com/ddttom/allaboutv2';
+      const fallbackBranch = 'refactor/ipynb-viewer-unified-overlay';
+      const helpPath = `${fallbackRepo}/blob/${fallbackBranch}/invisible-users/docs/help.md`;
       // Close current overlay and open help
       closeOverlay();
-      const helpOverlay = createGitHubMarkdownOverlay(helpPath, 'IPynb Viewer Help', helpRepoUrl, branch, parentHistory);
+      const helpOverlay = createGitHubMarkdownOverlay(helpPath, 'IPynb Viewer Help', fallbackRepo, fallbackBranch, parentHistory);
       helpOverlay.openOverlay();
     });
   }
