@@ -7,6 +7,69 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Refactored ipynb-viewer home button implementation**: Unified duplicate home button implementations into single reusable function
+  - Issue: Two separate home button implementations (paged overlay and GitHub markdown overlay) with duplicated code
+  - Issue: Difficult to debug which button was clicked due to separate implementations
+  - Issue: Context confusion - didn't know if user was in notebook mode or GitHub markdown mode
+  - Solution: Created `createHomeButton()` factory function that both overlays use
+  - Solution: Added `data-context` attribute to track button context ('notebook' or 'github')
+  - Solution: Centralized logging to clearly identify which context is active
+  - Result: Eliminated code duplication, improved maintainability, easier debugging
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js` (lines 2904-2963, 1983-2000, 3513-3532)
+
+### Fixed
+
+- **Fixed home button behavior in GitHub markdown overlay**: Home button now returns to notebook instead of reloading same page
+  - Issue: Home button cleared hash but stayed on same markdown page (didn't go anywhere)
+  - Issue: Home button was reloading current page instead of returning to parent notebook
+  - Solution: Detect if overlay was opened from notebook (has parentHistory context)
+  - Solution: If opened from notebook: close overlay to return to notebook
+  - Solution: If standalone markdown viewer: scroll to top (already home)
+  - Result: Home button returns you to notebook when viewing repository markdown files
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js` (lines 3156, 3519-3532)
+
+- **Further reduced markdown cell spacing in ipynb-viewer**: Made spacing even more compact in GitHub markdown overlays
+  - Issue: Still too much vertical space between headings and paragraphs
+  - Solution: Removed all paragraph margins (0.1em → 0)
+  - Solution: Reduced heading top margin from 0.5rem to 0.25rem
+  - Solution: Removed heading bottom margin entirely (0.1rem → 0)
+  - Result: Much tighter, more compact content display matching typical markdown rendering
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.css` (lines 222, 236-237)
+
+- **Inline code HTML entity escaping in ipynb-viewer**: Fixed inline code not properly escaping HTML entities in GitHub markdown overlays
+  - Issue: Inline code like `` `<div>` `` was being rendered as HTML instead of displaying as literal text
+  - Solution: Added comprehensive HTML entity escaping when restoring inline code placeholders
+  - Entities escaped: `&` → `&amp;`, `<` → `&lt;`, `>` → `&gt;`, `"` → `&quot;`, `'` → `&#39;`
+  - Critical: Ampersand must be escaped first to prevent double-escaping
+  - Result: Inline code displays exactly as written, matching GitHub markdown behavior
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js` (lines 383-393)
+
+- **Markdown cell spacing reduced in ipynb-viewer**: Reduced excessive vertical spacing in markdown cells
+  - Issue: Too much spacing between paragraphs, list items, and headings in GitHub markdown overlays
+  - Solution: Reduced line-height from 1.6 to 1.3, paragraph margins from 0.75em to 0.1em
+  - Solution: Reduced heading margins, list margins, and list item line-height
+  - Solution: Added zero margin rule for paragraphs inside list items
+  - Result: Much more compact, readable content display
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.css` (lines 211, 222, 236-237, 298, 305, 309-311)
+
+### Documentation
+
+- **Updated ipynb-viewer documentation**: Added comprehensive inline code entity escaping documentation
+  - Added detailed explanation of entity escaping in README.md (lines 375, 379-385)
+  - Updated block architecture documentation with complete escaping implementation (lines 620-633)
+  - Documented why escaping order matters (ampersand first to prevent double-escaping)
+  - Added examples showing all escaped entities and their display behavior
+  - Files modified: `blocks/ipynb-viewer/README.md`, `blocks/ipynb-viewer/block-architecture.md`
+
+- **Added LEARNINGS.md entry**: Documented ipynb-viewer structure confusion between markdown cells and repository navigation
+  - Added rule about distinguishing markdown cell content from repository navigation tree
+  - Explained why clarifying questions prevent wasted effort on wrong CSS targets
+  - Included CSS line number references for each structure type
+  - Provided AskUserQuestion template for future clarifications
+  - Files modified: `LEARNINGS.md` (lines 426-524)
+
 ## [2026-01-14] - ipynb-viewer Navigation Hash Handling & Markdown Overlay Improvements
 
 ### Fixed

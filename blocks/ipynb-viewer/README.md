@@ -371,9 +371,18 @@ Headers (all six levels: H1-H6) with #, ##, ###, ####, #####, ######. Bold text 
 **Inline HTML Handling:**
 Inline HTML tags (e.g., `<div>`, `<img>`, `<script>`) are automatically escaped and displayed as literal text, matching GitHub's markdown rendering behavior. This means:
 - `<div>tag</div>` displays as visible text: `<div>tag</div>`
-- Inline code like `` `<div>` `` renders correctly in `<code>` elements
+- Inline code like `` `<div>` `` renders correctly in `<code>` elements with full HTML entity escaping
+- All special HTML characters in inline code are escaped: `&` → `&amp;`, `<` → `&lt;`, `>` → `&gt;`, `"` → `&quot;`, `'` → `&#39;`
 - Code blocks with HTML show syntax highlighting with proper escaping
 - Legitimate markdown HTML (headings, links, images) renders normally
+
+**Entity Escaping in Inline Code:**
+When you write inline code with backticks, all HTML entities are properly escaped:
+- `` `<div>` `` → displays as `<div>` (not rendered as HTML)
+- `` `data-value="test"` `` → displays as `data-value="test"` (quotes preserved)
+- `` `it's a test` `` → displays as `it's a test` (apostrophe preserved)
+- `` `AT&T` `` → displays as `AT&T` (ampersand preserved)
+This ensures code examples display exactly as written, preventing accidental HTML rendering
 
 **Heading Level Best Practices:**
 For notebooks with multiple sections (like tutorials, documentation, or educational content), use consistent heading levels to ensure proper outline structure in VSCode and other notebook viewers:

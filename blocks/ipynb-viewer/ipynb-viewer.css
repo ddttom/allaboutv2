@@ -208,7 +208,7 @@ html {
 
 .ipynb-markdown-cell .ipynb-cell-content {
   font-family: var(--body-font-family, sans-serif);
-  line-height: 1.6;
+  line-height: 1.3;
   color: var(--text-color, #333);
 }
 
@@ -219,7 +219,7 @@ html {
 
 /* Tighten spacing for paragraphs */
 .ipynb-markdown-cell .ipynb-cell-content p {
-  margin: 0.75em 0;
+  margin: 0;
 }
 
 .ipynb-markdown-cell .ipynb-cell-content p:first-child {
@@ -233,8 +233,8 @@ html {
 .ipynb-markdown-cell h1,
 .ipynb-markdown-cell h2,
 .ipynb-markdown-cell h3 {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0;
   font-family: var(--heading-font-family, inherit);
 }
 
@@ -295,14 +295,19 @@ html {
 
 .ipynb-markdown-cell ul,
 .ipynb-markdown-cell ol {
-  margin: 0.5rem 0;
+  margin: 0.25rem 0;
   padding-left: 1.5rem;
 }
 
 
 .ipynb-markdown-cell li {
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.3;
+}
+
+/* Remove paragraph margins inside list items for tighter spacing */
+.ipynb-markdown-cell li p {
+  margin: 0;
 }
 
 .ipynb-markdown-cell table {
@@ -1980,6 +1985,7 @@ button.ipynb-help-button {
   color: rgb(255 255 255 / 0.85);
   font-size: 0.9rem;
   line-height: 1.3;
+  font-weight: 400;
 }
 
 /* Hover state */
@@ -1998,7 +2004,7 @@ button.ipynb-help-button {
 
 /* Root nodes (Notebook, Repository) - special styling */
 .ipynb-nav-tree-item[data-type="root"] {
-  font-weight: 700;
+  font-weight: 600;
   font-size: 1rem;
   color: white;
   background: rgb(255 255 255 / 0.05);
@@ -2013,32 +2019,20 @@ button.ipynb-help-button {
 
 /* Folder nodes - directory containers */
 .ipynb-nav-tree-item[data-type="folder"] {
-  font-weight: 600;
+  font-weight: 500;
   color: rgb(255 255 255 / 0.9);
 }
 
-.ipynb-nav-tree-item[data-type="folder"]::after {
-  content: '📁';
-  font-size: 0.85rem;
-  opacity: 0.6;
-  margin-left: auto;
-  flex-shrink: 0;
-}
+/* Folder icon removed for cleaner UI */
 
 /* Part nodes - section containers */
 .ipynb-nav-tree-item[data-type="part"] {
-  font-weight: 600;
+  font-weight: 500;
   color: rgb(255 255 255 / 0.95);
   font-size: 0.95rem;
 }
 
-.ipynb-nav-tree-item[data-type="part"]::after {
-  content: '📑';
-  font-size: 0.85rem;
-  opacity: 0.7;
-  margin-left: auto;
-  flex-shrink: 0;
-}
+/* Part icon removed for cleaner UI */
 
 /* Expand/collapse icon */
 .ipynb-nav-tree-icon {
@@ -2075,23 +2069,9 @@ button.ipynb-help-button {
   color: white;
 }
 
-/* Cell type indicator */
-.ipynb-nav-tree-item[data-type="cell"]::after {
-  content: '📄';
-  font-size: 0.85rem;
-  opacity: 0.6;
-  margin-left: auto;
-  flex-shrink: 0;
-}
+/* Cell icon removed for cleaner UI */
 
-/* Markdown type indicator */
-.ipynb-nav-tree-item[data-type="markdown"]::after {
-  content: '📝';
-  font-size: 0.85rem;
-  opacity: 0.6;
-  margin-left: auto;
-  flex-shrink: 0;
-}
+/* Markdown icon removed for cleaner UI */
 
 /* Custom scrollbar for tree panel */
 .ipynb-nav-tree::-webkit-scrollbar {

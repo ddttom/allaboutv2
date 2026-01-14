@@ -422,3 +422,266 @@ curl -I https://raw.githubusercontent.com/org/repo/main/path/file.svg
 **Documentation:** See `blocks/ipynb-viewer/README.md` section on "Smart Links and GitHub Integration" - URL resolution patterns
 
 ---
+
+## ipynb-viewer: Distinguish Markdown Cells from Repository Navigation
+
+**Rule** (2026-01-14): When a user reports spacing issues in "ipynb-viewer", always clarify which structure they're referring to. There are two completely different areas with different CSS rules.
+
+**Why it matters:**
+
+- The ipynb-viewer block has two distinct UI areas with separate CSS classes
+- "Markdown cells" and "Repository view" are visually adjacent but structurally different
+- Applying fixes to the wrong area wastes time and creates confusion
+- User language like "repository view" can be ambiguous without context
+
+**Two distinct structures:**
+
+1. **Markdown Cell Content** (main content area)
+   - Class: `.ipynb-markdown-cell .ipynb-cell-content`
+   - Contains: Rendered notebook markdown (paragraphs, lists, headings, code blocks)
+   - Styling: Paragraph margins (`p`), line-height, list spacing (`ul`, `ol`, `li`)
+   - Location: Central/right content area (blue background in overlays)
+   - CSS lines: 209-311 in ipynb-viewer.css
+
+2. **Repository Navigation Tree** (sidebar)
+   - Class: `.ipynb-nav-tree-panel`, `.ipynb-nav-tree-item`
+   - Contains: Tree structure with folders, files, and navigation items
+   - Styling: Tree item padding, gap between items, background colors
+   - Location: Left sidebar (dark background)
+   - CSS lines: 1939-2117 in ipynb-viewer.css
+
+**Common confusion patterns:**
+
+```
+❌ User: "The spacing in repository view is too much"
+   AI assumes: They mean the navigation tree sidebar
+   AI applies: Changes to .ipynb-nav-tree-item padding
+   Reality: User meant the markdown content rendering (cells)
+   Result: Wrong CSS changed, issue persists
+
+✅ User: "The spacing in repository view is too much"
+   AI asks: "Do you mean the markdown cell content (blue area) or the navigation tree (left sidebar)?"
+   User clarifies: "The markdown cells"
+   AI applies: Changes to .ipynb-markdown-cell p margin and line-height
+   Result: Correct fix applied
+```
+
+**How to clarify when user mentions "spacing" or "repository":**
+
+Use AskUserQuestion to clarify with visual descriptions:
+
+```javascript
+{
+  "question": "Which area has the spacing issue?",
+  "options": [
+    {
+      "label": "Markdown cell content",
+      "description": "The main content area showing rendered notebook text, lists, headings"
+    },
+    {
+      "label": "Repository navigation tree",
+      "description": "The left sidebar with folder/file listings"
+    },
+    {
+      "label": "Both areas",
+      "description": "Both the content and navigation need spacing adjustments"
+    }
+  ]
+}
+```
+
+**CSS reference for each structure:**
+
+**Markdown Cell Content:**
+- Paragraphs: `.ipynb-markdown-cell .ipynb-cell-content p { margin: 0.25em 0; }`
+- Line height: `.ipynb-markdown-cell .ipynb-cell-content { line-height: 1.4; }`
+- Headings: `.ipynb-markdown-cell h1/h2/h3 { margin-top: 0.75rem; margin-bottom: 0.25rem; }`
+- Lists: `.ipynb-markdown-cell ul/ol { margin: 0.5rem 0; }`
+- List items: `.ipynb-markdown-cell li { margin: 0; }`
+- List paragraphs: `.ipynb-markdown-cell li p { margin: 0; }`
+
+**Repository Navigation Tree:**
+- Tree items: `.ipynb-nav-tree-item { padding: 0.5rem 1rem; gap: 0.5rem; }`
+- Root nodes: `.ipynb-nav-tree-item[data-type="root"] { margin-bottom: 0.25rem; }`
+
+**Real example (2026-01-14):**
+
+- **Issue**: User showed screenshot saying "repository view" spacing too deep
+- **Confusion**: AI assumed navigation tree sidebar needed fixing
+- **Reality**: User meant markdown cell content (the rendered notebook content)
+- **Fix**: Added clarifying question, then adjusted paragraph margins, line-height, and heading spacing in markdown cells
+- **Result**: Correct CSS modified after clarification
+
+**Best practice:**
+
+1. When user mentions "spacing" without specifying area, ask for clarification
+2. Use visual descriptions in questions (not just class names)
+3. Reference screenshots if provided to confirm which area
+4. Check CSS line numbers to ensure changes target correct structure
+
+**Documentation:** See `blocks/ipynb-viewer/block-architecture.md` section on "Key Components" - Navigation Tree vs Markdown Rendering
+
+---
+
+## ipynb-viewer: Refactor Duplicate Implementations into Unified Functions
+
+**Rule** (2026-01-14): When you discover duplicate code implementations in separate contexts (like paged overlay vs GitHub markdown overlay), refactor them into a single reusable factory function. Don't debug duplicate implementations - unify them first.
+
+**Why it matters:**
+
+- Duplicate implementations create debugging nightmares - you don't know which code is running
+- Separate implementations make it hard to identify context (notebook mode vs GitHub mode)
+- Code duplication violates DRY principle and increases maintenance burden
+- Unified functions enable centralized logging and consistent behavior
+
+**Real example - Home button duplication (2026-01-14):**
+
+**Problem:**
+```javascript
+// Paged overlay (lines 1984-2016) - Notebook mode home button
+let homeButton;
+if (isNotebookMode) {
+  homeButton = document.createElement('button');
+  homeButton.className = 'ipynb-overlay-button ipynb-home-button';
+  // ... setup code ...
+  homeButton.addEventListener('click', (e) => {
+    // Navigate to cell 0
+  });
+}
+
+// GitHub markdown overlay (lines 2994-3012) - GitHub mode home button
+const homeButton = document.createElement('button');
+homeButton.className = 'ipynb-overlay-button ipynb-home-button';
+// ... setup code ...
+homeButton.addEventListener('click', (e) => {
+  // Navigate to first markdown
+});
+```
+
+**Issues with this approach:**
+- Two separate button creation processes with near-identical code
+- Debug logs unclear which button was clicked
+- Can't tell if user is in notebook mode or GitHub mode
+- Changes need to be applied to both implementations
+- Wasted time debugging "which button is this?"
+
+**Solution:**
+
+Create a unified factory function with context tracking:
+
+```javascript
+/**
+ * Create unified home button for both paged overlay and GitHub markdown overlay
+ * @param {Object} config - Configuration object
+ * @param {string} config.context - Context identifier ('notebook' or 'github')
+ * @param {Function} config.onClick - Click handler function
+ * @param {string} [config.ariaLabel='Go home'] - Aria label for accessibility
+ * @returns {HTMLElement} Home button element
+ */
+function createHomeButton(config) {
+  const { context, onClick, ariaLabel = 'Go home' } = config;
+
+  const homeButton = document.createElement('button');
+  homeButton.type = 'button';
+  homeButton.className = 'ipynb-overlay-button ipynb-home-button';
+  homeButton.innerHTML = '🏠';
+  homeButton.setAttribute('aria-label', ariaLabel);
+  homeButton.setAttribute('title', 'Home');
+  homeButton.setAttribute('data-context', context); // Track context
+
+  console.log(`[HOME BUTTON] Created button for context: ${context}`);
+
+  homeButton.addEventListener('click', (e) => {
+    console.log(`[HOME BUTTON] Clicked in context: ${context}`);
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Clear URL hash
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+
+    // Call context-specific handler
+    onClick(e);
+  });
+
+  return homeButton;
+}
+```
+
+**Usage in paged overlay (notebook mode):**
+```javascript
+homeButton = createHomeButton({
+  context: 'notebook',
+  ariaLabel: 'Go to first cell',
+  onClick: () => {
+    paginationState.currentPage = 0;
+    updatePageDisplay(true);
+  },
+});
+```
+
+**Usage in GitHub markdown overlay:**
+```javascript
+homeButton = createHomeButton({
+  context: 'github',
+  ariaLabel: 'Go to first page',
+  onClick: () => {
+    closeOverlay();
+    const homeOverlay = createGitHubMarkdownOverlay(firstPageUrl, firstPageTitle, helpRepoUrl, branch, parentHistory);
+    homeOverlay.openOverlay();
+  },
+});
+```
+
+**Benefits of unified approach:**
+
+1. **Context clarity**: `data-context` attribute and logs show which mode is active
+2. **DRY principle**: Common code (hash clearing, event handling) in one place
+3. **Easier debugging**: Centralized logging with context identification
+4. **Consistent behavior**: Hash clearing, event handling identical in both modes
+5. **Maintainability**: Changes apply to all usages automatically
+6. **Flexibility**: Context-specific behavior via onClick callback
+
+**Pattern recognition:**
+
+When you see code like this:
+```javascript
+// In function A
+const button = createElement();
+button.addEventListener('click', () => { /* do thing A */ });
+
+// In function B
+const button = createElement();
+button.addEventListener('click', () => { /* do thing B */ });
+```
+
+Refactor to:
+```javascript
+function createButton(config) {
+  const button = createElement();
+  button.setAttribute('data-context', config.context);
+  button.addEventListener('click', () => {
+    console.log(`Clicked in context: ${config.context}`);
+    config.onClick();
+  });
+  return button;
+}
+
+// Usage
+createButton({ context: 'A', onClick: () => { /* do thing A */ } });
+createButton({ context: 'B', onClick: () => { /* do thing B */ } });
+```
+
+**Best practice:**
+
+1. Identify duplicate implementations early (code review, grep for similar patterns)
+2. Create factory function with context parameter
+3. Add centralized logging with context identification
+4. Use callbacks for context-specific behavior
+5. Add `data-*` attributes to track context in DOM
+6. Refactor both usages to use unified function
+
+**Documentation:** See `blocks/ipynb-viewer/ipynb-viewer.js` lines 2904-2963 for complete implementation
+
+---

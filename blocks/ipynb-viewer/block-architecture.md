@@ -617,11 +617,20 @@ html = html.replace(/`([^`]+)`/g, (match, code) => {
 html = html.replace(/</g, '&lt;');
 html = html.replace(/>/g, '&gt;');
 
-// Later: Restore inline code as <code> elements
+// Later: Restore inline code as <code> elements with full entity escaping
 inlineCodePlaceholders.forEach((code, index) => {
-  html = html.replace(`__INLINECODE_${index}__`, `<code>${code}</code>`);
+  const escapedCode = code
+    .replace(/&/g, '&amp;')   // Must be first - escape existing ampersands
+    .replace(/</g, '&lt;')    // Escape less-than
+    .replace(/>/g, '&gt;')    // Escape greater-than
+    .replace(/"/g, '&quot;')  // Escape double quotes
+    .replace(/'/g, '&#39;');  // Escape single quotes
+  html = html.replace(`__INLINECODE_${index}__`, `<code>${escapedCode}</code>`);
 });
 ```
+
+**Why Entity Escaping Order Matters:**
+The ampersand (`&`) must be escaped first because other replacements introduce ampersands (like `&lt;`). If we escaped `&` last, we'd double-escape and get `&amp;lt;` instead of `&lt;`.
 
 **Event Delegation for Smart Links:**
 

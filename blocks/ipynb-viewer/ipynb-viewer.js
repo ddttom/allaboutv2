@@ -381,8 +381,15 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
   });
 
   // Restore inline code (now as <code> elements with content)
+  // Escape HTML entities to display code literally (e.g., `<div>` shows as <div>, not rendered)
   inlineCodePlaceholders.forEach((code, index) => {
-    html = html.replace(`__INLINECODE_${index}__`, `<code>${code}</code>`);
+    const escapedCode = code
+      .replace(/&/g, '&amp;') // Must be first - escape existing ampersands
+      .replace(/</g, '&lt;') // Escape less-than
+      .replace(/>/g, '&gt;') // Escape greater-than
+      .replace(/"/g, '&quot;') // Escape double quotes
+      .replace(/'/g, '&#39;'); // Escape single quotes
+    html = html.replace(`__INLINECODE_${index}__`, `<code>${escapedCode}</code>`);
   });
 
   // Line breaks - only convert double newlines to paragraph breaks
@@ -1689,7 +1696,13 @@ function renderNavigationTree(tree, container, treeState, onNodeClick) {
       const { nodeId } = treeItem.dataset;
       const node = findNodeById(tree, nodeId);
       if (node) {
-        onNodeClick(node);
+        // If node has children, toggle expansion (same as clicking icon)
+        if (node.children && node.children.length > 0) {
+          toggleTreeNode(nodeId, treeState, container, onNodeClick);
+        } else {
+          // If no children, just navigate
+          onNodeClick(node);
+        }
       }
     }
   };
@@ -1970,20 +1983,20 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   // Home button (notebook mode only) - Navigate to cell 0
   let homeButton;
   if (isNotebookMode) {
-    homeButton = document.createElement('button');
-    homeButton.className = 'ipynb-overlay-button ipynb-home-button';
-    homeButton.innerHTML = '🏠';
-    homeButton.setAttribute('aria-label', 'Go to first cell');
-    homeButton.setAttribute('title', 'Home');
-
-    // Add click handler to navigate to first page (which contains cell 0)
-    homeButton.addEventListener('click', () => {
-      // Clear the URL hash when going home
-      if (window.location.hash) {
-        window.history.replaceState(null, '', window.location.pathname + window.location.search);
-      }
-      paginationState.currentPage = 0;
-      updatePageDisplay();
+    homeButton = createHomeButton({
+      context: 'notebook',
+      ariaLabel: 'Go to first cell',
+      onClick: () => {
+        // eslint-disable-next-line no-console
+        console.log('[HOME BUTTON] Setting current page to 0');
+        paginationState.currentPage = 0;
+        // eslint-disable-next-line no-console
+        console.log('[HOME BUTTON] Current page set to:', paginationState.currentPage);
+        // Pass true to skip hash update (we just cleared it in createHomeButton)
+        updatePageDisplay(true);
+        // eslint-disable-next-line no-console
+        console.log('[HOME BUTTON] updatePageDisplay called with skipHashUpdate=true');
+      },
     });
   }
 
@@ -2378,6 +2391,8 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   // Left section - home button first, then tree toggle
   if (isNotebookMode && homeButton) {
     leftControlsSection.appendChild(homeButton);
+    // eslint-disable-next-line no-console
+    console.log('[HOME BUTTON] Appended to DOM, parent:', homeButton.parentElement);
   }
   leftControlsSection.appendChild(treeToggleButton);
 
@@ -2416,7 +2431,8 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   overlay.appendChild(overlayContent);
 
   // Update page display
-  async function updatePageDisplay() {
+  // @param {boolean} skipHashUpdate - If true, don't update URL hash (used by home button)
+  async function updatePageDisplay(skipHashUpdate = false) {
     // Clear cell area
     cellContentArea.innerHTML = '';
 
@@ -2580,12 +2596,20 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     nextButton.disabled = paginationState.currentPage === totalPages - 1;
 
     // Update browser URL hash to reflect current cell (for bookmarking/sharing)
-    if (currentPage && currentPage.cells.length > 0) {
+    // Skip hash update if explicitly requested (e.g., home button wants to clear hash)
+    // eslint-disable-next-line no-console
+    console.log('[UPDATE PAGE] skipHashUpdate:', skipHashUpdate, 'currentPage:', paginationState.currentPage);
+    if (!skipHashUpdate && currentPage && currentPage.cells.length > 0) {
       const firstCellIndex = parseInt(currentPage.cells[0].dataset.cellIndex, 10);
       const newHash = `#cell-${firstCellIndex}`;
+      // eslint-disable-next-line no-console
+      console.log('[UPDATE PAGE] Updating hash to:', newHash);
       if (window.location.hash !== newHash) {
         window.history.replaceState(null, '', newHash);
       }
+    } else {
+      // eslint-disable-next-line no-console
+      console.log('[UPDATE PAGE] Skipping hash update');
     }
 
     // Update tree selection to match current page
@@ -2857,6 +2881,67 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
 }
 
 /**
+ * Create unified home button for both paged overlay and GitHub markdown overlay
+ * @param {Object} config - Configuration object
+ * @param {string} config.context - Context identifier ('notebook' or 'github')
+ * @param {Function} config.onClick - Click handler function
+ * @param {string} [config.ariaLabel='Go home'] - Aria label for accessibility
+ * @returns {HTMLElement} Home button element
+ */
+function createHomeButton(config) {
+  const { context, onClick, ariaLabel = 'Go home' } = config;
+
+  const homeButton = document.createElement('button');
+  homeButton.type = 'button'; // Prevent form submission behavior
+  homeButton.className = 'ipynb-overlay-button ipynb-home-button';
+  homeButton.innerHTML = '🏠';
+  homeButton.setAttribute('aria-label', ariaLabel);
+  homeButton.setAttribute('title', 'Home');
+  homeButton.setAttribute('data-context', context); // Track which context this button belongs to
+
+  // eslint-disable-next-line no-console
+  console.log(`[HOME BUTTON] Created button for context: ${context}`);
+
+  // Add click handler with comprehensive logging
+  homeButton.addEventListener('click', (e) => {
+    // eslint-disable-next-line no-console
+    console.log(`[HOME BUTTON] Clicked in context: ${context}`);
+    // eslint-disable-next-line no-console
+    console.log('[HOME BUTTON] Event type:', e.type);
+    // eslint-disable-next-line no-console
+    console.log('[HOME BUTTON] Hash before clear:', window.location.hash);
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Clear the URL hash when going home
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      // eslint-disable-next-line no-console
+      console.log('[HOME BUTTON] Hash after clear:', window.location.hash);
+    }
+
+    // Call the provided onClick handler
+    onClick(e);
+
+    // eslint-disable-next-line no-console
+    console.log('[HOME BUTTON] onClick handler completed');
+  });
+
+  // Add inline onclick as backup test
+  homeButton.onclick = () => {
+    // eslint-disable-next-line no-console
+    console.log(`[HOME BUTTON] INLINE onclick fired for context: ${context}!`);
+    // Don't prevent default here - let the addEventListener handle it
+  };
+
+  // eslint-disable-next-line no-console
+  console.log('[HOME BUTTON] Button creation complete, returning button');
+
+  return homeButton;
+}
+
+/**
  * Create start button for paged variation
  * @returns {HTMLElement} Start button element
  */
@@ -2946,14 +3031,10 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
   treeToggleButton.setAttribute('aria-expanded', 'true');
   treeToggleButton.setAttribute('title', 'Hide Tree');
 
-  // Home button - navigate to first opened markdown
-  const homeButton = document.createElement('button');
-  homeButton.className = 'ipynb-overlay-button ipynb-home-button';
-  homeButton.innerHTML = '🏠';
-  homeButton.setAttribute('aria-label', 'Go to first page');
-  homeButton.setAttribute('title', 'Home');
+  // Home button - navigate to first opened markdown (will be configured later with actual handler)
+  // We need to declare it here so it's available for the event handler setup below
+  let homeButton = null;
 
-  leftControlsSection.appendChild(homeButton);
   leftControlsSection.appendChild(treeToggleButton);
 
   // Title section
@@ -3068,19 +3149,11 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
   // Storage key for bookmarks (based on GitHub URL)
   const bookmarkId = `github-md-${btoa(githubUrl).substring(0, 20)}`;
 
-  // Home button handler - Navigate to initial markdown page
-  const firstPageUrl = githubUrl;
-  const firstPageTitle = title;
-  homeButton.addEventListener('click', () => {
-    // Clear the URL hash when going home
-    if (window.location.hash) {
-      window.history.replaceState(null, '', window.location.pathname + window.location.search);
-    }
-    // Close current overlay and open first page
-    closeOverlay();
-    const homeOverlay = createGitHubMarkdownOverlay(firstPageUrl, firstPageTitle, helpRepoUrl, branch, parentHistory);
-    homeOverlay.openOverlay();
-  });
+  // Home button will be created after closeOverlay is defined (see below)
+  // For GitHub markdown overlay, "home" means:
+  // - If opened from notebook (has parentHistory context): close overlay and return to notebook
+  // - Otherwise: stay on current page (already home)
+  const hasParentNotebook = parentHistory && typeof parentHistory === 'object' && parentHistory.navigationTree;
 
   // History button handlers
   const updateHistoryDropdown = () => {
@@ -3257,7 +3330,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
   });
 
   // Open/close functions
-  const openOverlay = async () => {
+  const openOverlay = async (skipHashUpdate = false) => {
     // Fetch and display markdown
     try {
       contentArea.innerHTML = '<div class="ipynb-loading">Loading markdown...</div>';
@@ -3292,7 +3365,8 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
       }
 
       // Update browser URL hash to reflect current markdown file (for AI agent visibility)
-      if (currentFilePath) {
+      // Skip hash update if explicitly requested (e.g., home button wants to clear hash)
+      if (!skipHashUpdate && currentFilePath) {
         const newHash = `#${currentFilePath}`;
         if (window.location.hash !== newHash) {
           window.history.replaceState(null, '', newHash);
@@ -3438,6 +3512,30 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
     overlay.style.display = 'none';
     document.body.style.overflow = '';
   };
+
+  // Create home button now that closeOverlay is defined
+  homeButton = createHomeButton({
+    context: 'github',
+    ariaLabel: hasParentNotebook ? 'Return to notebook' : 'Go to first page',
+    onClick: () => {
+      if (hasParentNotebook) {
+        // We were opened from a notebook - close this overlay to return to notebook
+        // eslint-disable-next-line no-console
+        console.log('[HOME BUTTON] Returning to parent notebook');
+        closeOverlay();
+      } else {
+        // We're a standalone markdown viewer - scroll to top
+        // eslint-disable-next-line no-console
+        console.log('[HOME BUTTON] Scrolling to top (already home)');
+        contentArea.scrollTop = 0;
+      }
+    },
+  });
+
+  // Add home button to left controls (prepend before tree toggle)
+  leftControlsSection.insertBefore(homeButton, treeToggleButton);
+  // eslint-disable-next-line no-console
+  console.log('[HOME BUTTON] Appended to DOM, parent:', homeButton.parentElement);
 
   // Tree toggle button handler
   treeToggleButton.addEventListener('click', () => {
