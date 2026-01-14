@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Invisible Users Notebook - Part 13**: Added complete appendices reference section to notebook
+  - **Location**: `invisible-users/notebook.ipynb`
+  - **Content**: New Part 13 cell listing all 12 appendices with descriptions
+  - **Organization**: Appendices grouped into 5 logical sections:
+    - Implementation Guidance (A, B, C)
+    - Technical Reference (D, E)
+    - Strategic Planning (F, G)
+    - Practical Examples (H, K)
+    - Case Studies & Industry Context (I, J)
+    - Future Standards (L)
+  - **Links**: All appendix links verified against GitHub repository structure
+  - **Filenames corrected**:
+    - `appendix-c-web-audit-suite-guide.md` (was web-audit-suite-user-guide)
+    - `appendix-h-live-llms.md` (was example-llmstxt-file)
+  - **Usage Guide**: Added recommendations for navigating appendices by use case
+  - Files modified: `invisible-users/notebook.ipynb`
+  - Commit: 2f6b9af9
+
 - **Unified Overlay Architecture for ipynb-viewer**: Complete refactor to eliminate multiple overlay confusion
   - **Branch**: `refactor/ipynb-viewer-unified-overlay`
   - **Status**: Complete and ready for production
