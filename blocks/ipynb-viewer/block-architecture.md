@@ -4,8 +4,8 @@
 
 The ipynb-viewer block is a sophisticated component for displaying and interacting with Jupyter notebooks (.ipynb files) in Adobe Edge Delivery Services (EDS) environments. It provides multiple viewing modes, interactive JavaScript execution, markdown rendering, and tree-based navigation.
 
-**Version:** 2.0 (Event Delegation Architecture)
-**Last Updated:** 2026-01-13
+**Version:** 2.1 (Enhanced Markdown Rendering)
+**Last Updated:** 2026-01-14
 **Lines of Code:** ~3,500
 
 ## Core Capabilities
@@ -308,7 +308,7 @@ outputDiv.textContent = output;
 
 ### Markdown Rendering
 
-**Purpose:** Render markdown content with enhanced features.
+**Purpose:** Render markdown content with enhanced features, matching GitHub's behavior.
 
 **Features:**
 
@@ -317,8 +317,33 @@ outputDiv.textContent = output;
 - Code syntax highlighting
 - Table rendering
 - Image handling
+- **Inline HTML escaping** - All inline HTML tags displayed as literal text
+- **All six heading levels** - H1 through H6 support (h4, h5, h6 added in v2.1)
+- **Bold/italic in lists** - Correct processing order (lists before bold/italic)
 
-**Function:** `renderMarkdownToHTML(markdown, repoUrl, branch)`
+**Function:** `parseMarkdown(html)` (lines 19-377 in ipynb-viewer.js)
+
+**Processing Order (Critical):**
+
+1. **Code blocks** - Extract and protect with placeholders
+2. **Inline code** - Extract and protect with placeholders
+3. **Escaped HTML** - Handle `\<` and `\>` characters
+4. **HTML escaping** - Escape remaining `<` and `>` (not in code blocks/inline code)
+5. **Tables** - Multi-line processing with header detection
+6. **Headers** - H6 → H5 → H4 → H3 → H2 → H1 (largest to smallest)
+7. **Lists** - Unordered and ordered lists (BEFORE bold/italic)
+8. **Bold** - `**text**` to `<strong>` (AFTER lists)
+9. **Italic** - `*text*` to `<em>` (AFTER bold)
+10. **Links** - `[text](url)` to `<a href>`
+11. **Code block restoration** - Replace placeholders with `<pre><code>`
+12. **Inline code restoration** - Replace placeholders with `<code>`
+13. **Line breaks** - Convert `\n` to `<br>`
+
+**Why Processing Order Matters:**
+
+- **Lists before bold/italic:** Allows `1. **Bold text**` to render as list with bold item
+- **Code protection:** Prevents markdown processing inside code blocks and inline code
+- **HTML escaping after code extraction:** Inline HTML tags become literal text
 
 **Smart Link Implementation:**
 
@@ -331,6 +356,27 @@ html = html.replace(
     return `<a href="${githubUrl}" class="smart-link">`;
   }
 );
+```
+
+**Inline HTML Escaping Implementation:**
+
+```javascript
+// Extract inline code and protect it with placeholders
+const inlineCodePlaceholders = [];
+html = html.replace(/`([^`]+)`/g, (match, code) => {
+  const placeholder = `__INLINECODE_${inlineCodePlaceholders.length}__`;
+  inlineCodePlaceholders.push(code);
+  return placeholder;
+});
+
+// Escape all remaining HTML tags (not in code blocks or inline code)
+html = html.replace(/</g, '&lt;');
+html = html.replace(/>/g, '&gt;');
+
+// Later: Restore inline code as <code> elements
+inlineCodePlaceholders.forEach((code, index) => {
+  html = html.replace(`__INLINECODE_${index}__`, `<code>${code}</code>`);
+});
 ```
 
 **Event Delegation for Smart Links:**
@@ -579,9 +625,9 @@ onNodeClick(node);
    - Consider caching strategy
 
 3. **Markdown Rendering**
-   - Basic GFM support
-   - No math equations (LaTeX)
+   - Basic GFM support (no math equations or LaTeX)
    - Limited image optimization
+   - Inline HTML completely escaped (matches GitHub, by design)
 
 4. **Tree Navigation**
    - Maximum depth: ~5 levels (performance)
@@ -651,6 +697,29 @@ onNodeClick(node);
 - [EDS Block Development](https://www.aem.live/developer/block-collection)
 
 ## Changelog
+
+### Version 2.1 (2026-01-14)
+
+- **Added:** Inline HTML escaping in markdown rendering (matches GitHub behavior)
+  - Inline HTML tags like `<div>`, `<img>`, `<script>` now display as literal text
+  - Inline code protection with placeholder pattern
+  - Escape all `<` and `>` characters not in code blocks or inline code
+  - Result: `<div>tag</div>` displays as visible text, not rendered HTML
+- **Added:** Support for h4, h5, h6 heading levels
+  - Previously only h1-h3 were supported
+  - Now all six heading levels (H1-H6) render correctly
+  - Processing order: h6 → h5 → h4 → h3 → h2 → h1
+- **Fixed:** Bold/italic text in lists not rendering correctly
+  - Root cause: Bold/italic processing happened before list processing
+  - Solution: Moved list processing before bold/italic processing
+  - Result: `1. **Bold text**` now renders correctly as bold list item
+- **Added:** `opening-page` metadata support for automatic navigation
+  - Specify markdown file to auto-open when notebook loads
+  - Format: `"opening-page": "preface.md"` or `"opening-page": "#preface.md"`
+  - URL hash takes precedence (allows user override)
+  - Graceful degradation when metadata omitted (opens on first cell)
+- **Documentation:** Updated README.md with inline HTML behavior and opening-page examples
+- **Testing:** Created test-inline-html.md for verification of all markdown features
 
 ### Version 2.0.2 (2026-01-13)
 

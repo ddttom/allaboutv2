@@ -77,7 +77,7 @@ The IPynb Viewer block is a comprehensive, production-ready system for displayin
 
 **Metadata Display** - Shows title, author, date, version, category, difficulty, duration, tags, and license from notebook metadata.
 
-**Enhanced Markdown Rendering** - Full support for all six heading levels (h1-h6), tables, code blocks, lists, blockquotes, and inline formatting. Inline HTML tags are escaped and displayed as literal text, matching GitHub's markdown behavior.
+**Enhanced Markdown Rendering** - Full support for all six heading levels (h1-h6), tables, code blocks, lists with inline formatting (bold/italic), blockquotes, and inline code. Inline HTML tags are automatically escaped and displayed as literal text, matching GitHub's markdown behavior. Processing order ensures bold/italic text works correctly within lists.
 
 **Responsive Design** - Mobile-friendly layout with breakpoints at 768px and 480px.
 
@@ -308,10 +308,12 @@ The notebook metadata is displayed in the header section:
   - **Use case:** Load docs from feature branch during development when files don't exist in main yet
   - **Applies to:** All .md file links and help button
 - opening-page - Markdown file to automatically open when notebook starts (e.g., "preface.md", "#preface.md")
-  - **Default:** None - notebook opens on first cell
+  - **Default:** None - notebook opens on first cell when metadata is omitted
   - **Purpose:** Automatically display a specific markdown file in overlay when notebook loads
   - **Format:** Filename with or without leading # (both work)
   - **Precedence:** URL hash takes precedence over metadata (allows user override via URL)
+  - **Behavior without metadata:** When omitted and no URL hash present, notebook opens normally on first cell
+  - **Graceful degradation:** Missing metadata doesn't break functionality - feature is completely optional
   - **Use case:** Open with a table of contents, preface, or README when user starts notebook
   - **Requires:** `repo` metadata must be set for GitHub markdown overlay to work
 
@@ -364,7 +366,14 @@ Full markdown table support with headers. Alternating row colors for readability
 Unordered lists with - or *. Ordered lists with 1., 2., etc. Proper indentation and spacing.
 
 **Inline Formatting:**
-Headers (H1, H2, H3) with #, ##, ###. Bold text with **text**. Italic text with *text*. Inline code with backticks. Links with [text](url). Line breaks.
+Headers (all six levels: H1-H6) with #, ##, ###, ####, #####, ######. Bold text with **text**. Italic text with *text*. Inline code with backticks. Links with [text](url). Line breaks. **Critical:** Bold and italic work correctly within lists (processing order: lists first, then bold/italic).
+
+**Inline HTML Handling:**
+Inline HTML tags (e.g., `<div>`, `<img>`, `<script>`) are automatically escaped and displayed as literal text, matching GitHub's markdown rendering behavior. This means:
+- `<div>tag</div>` displays as visible text: `<div>tag</div>`
+- Inline code like `` `<div>` `` renders correctly in `<code>` elements
+- Code blocks with HTML show syntax highlighting with proper escaping
+- Legitimate markdown HTML (headings, links, images) renders normally
 
 **Heading Level Best Practices:**
 For notebooks with multiple sections (like tutorials, documentation, or educational content), use consistent heading levels to ensure proper outline structure in VSCode and other notebook viewers:
@@ -1263,8 +1272,8 @@ Check CSS custom properties are defined. Verify block CSS is loaded. Test with d
 |----------|-------|
 | Block Name | ipynb-viewer |
 | Status | Production Ready |
-| Version | 13.0 |
-| Last Updated | 2025-01-22 |
+| Version | 13.1 |
+| Last Updated | 2026-01-14 |
 | Author | Tom Cranstoun |
 | Category | Complex Build-Enhanced |
 | Browser Support | Modern browsers (ES6+) |

@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [2026-01-14] - ipynb-viewer Markdown Rendering Improvements
+## [2026-01-14] - ipynb-viewer Markdown Rendering Improvements & Documentation Updates
 
 ### Added
 
@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Purpose: Display a table of contents, preface, or README when user opens notebook
   - Implementation: Updated `checkHashNavigation` to check metadata if no URL hash present
   - Priority: URL hash takes precedence over metadata (allows user override)
+  - Behavior: Graceful degradation when metadata omitted (opens on first cell)
   - Example: `"opening-page": "preface.md"` or `"opening-page": "#preface.md"`
   - Applied to: invisible-users notebook now opens with preface.md
   - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js` (lines 3441-3464, 3739, 3755), `invisible-users/notebook.ipynb` (metadata)
@@ -69,10 +70,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **ipynb-viewer README.md**: Updated documentation to reflect inline HTML escaping behavior
-  - Enhanced Markdown Rendering section now mentions inline HTML escaping
-  - Key Features section documents inline code protection and HTML escaping
-  - Clarifies matching GitHub's markdown behavior
+- **ipynb-viewer documentation**: Comprehensive update to reflect all recent enhancements
+  - **README.md** (v13.1):
+    - Enhanced Markdown Rendering section now documents all improvements
+    - Inline HTML escaping behavior explained with examples
+    - Bold/italic in lists processing order documented
+    - All six heading levels (h1-h6) documented
+    - opening-page metadata behavior clarified (graceful degradation, precedence rules)
+    - Inline Formatting section expanded with critical processing order notes
+    - Metadata Fields section updated with opening-page details
+    - Version bumped to 13.1, last updated date changed to 2026-01-14
+  - **block-architecture.md** (v2.1):
+    - Version updated to 2.1 (Enhanced Markdown Rendering)
+    - Markdown Rendering section completely rewritten with processing order details
+    - Added inline HTML escaping implementation code examples
+    - Added placeholder pattern explanation
+    - Changelog section added documenting v2.1 changes
+    - Known Limitations section updated
+    - Last updated date changed to 2026-01-14
+  - **test-inline-html.md**:
+    - Section 5 updated to include lists with bold/italic formatting
+    - Expected Results section updated to document list formatting
+    - Verification Steps section updated with new test cases
 
 ## [2026-01-13] - ipynb-viewer Tree Navigation Event Delegation
 
