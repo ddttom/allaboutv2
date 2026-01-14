@@ -21,8 +21,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Easier to find chapters vs appendices vs other content
     - Consistent categorization across all notebooks
   - **Implementation**: Simplified buildFileTree() removing complex folder hierarchy in favor of categorical organization
-  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js`
-  - Commit: 3ccfbf37
+  - **Documentation**: Comprehensive updates to all ipynb-viewer documentation
+    - Added detailed Navigation Tree section to README.md with examples
+    - Updated block-architecture.md with new tree data structure
+    - Updated CLAUDE.md with categorization details
+    - Updated unified overlay summary with folder organization
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js`, `README.md`, `block-architecture.md`, `CLAUDE.md`, `docs/for-ai/*`
+  - Commits: 3ccfbf37, 8001f778
 
 - **Invisible Users Notebook - Part 13**: Added complete appendices reference section to notebook
   - **Location**: `invisible-users/notebook.ipynb`
