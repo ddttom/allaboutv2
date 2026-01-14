@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Broken link in invisible-users notebook**: Updated implementation roadmap filename
+  - Issue: Links to `implementation-checklist.md` returned 404 errors
+  - Root cause: File was renamed to `appendix-f-implementation-roadmap.md` but notebook links not updated
+  - Solution: Updated all 4 references in notebook to use correct filename
+  - Result: Implementation roadmap links now resolve correctly
+  - Files modified: `invisible-users/notebook.ipynb` (lines 96, 1917, 2611, 2724)
+  - Commits: f6101820
+
 - **List processing order with bold/italic formatting**: Fixed lists that contain bold or italic text
   - Issue: Lists like `1. **In your work:** text` were not rendering as lists
   - Root cause: Bold/italic processing happened before list processing, converting `**text**` to `<strong>text</strong>` before list regex could match
