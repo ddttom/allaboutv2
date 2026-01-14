@@ -51,7 +51,7 @@ The IPynb Viewer block is a comprehensive, production-ready system for displayin
 
 **Link Navigation** - Navigate between overlays using hash targets in markdown cells.
 
-**Navigation Tree** - Hierarchical tree panel with organized sections: Notebook (parts/cells) and Repository (Chapters, Appendix, Miscellaneous folders for easy file navigation).
+**Navigation Tree** - Hierarchical tree panel with organized sections: Notebook (parts/cells) and Repository (Chapters with preface first, Appendix, Miscellaneous folders for easy file navigation).
 
 **Navigation History** - Track and revisit up to 25 recently viewed cells and markdown files.
 
@@ -780,7 +780,7 @@ Explore your notebook structure and repository files through an organized, hiera
 - Click any cell to navigate to that page
 
 **Repository Section:**
-- **Chapters Folder** - preface.md and all chapter-*.md files
+- **Chapters Folder** - preface.md (always first) and all chapter-*.md files (alphabetical)
 - **Appendix Folder** - All appendix-*.md files (appendix-a.md, appendix-b.md, etc.)
 - **Miscellaneous Folder** - All other markdown files (readme.md, advice.md, glossary.md, etc.)
 
@@ -788,14 +788,14 @@ Explore your notebook structure and repository files through an organized, hiera
 
 1. Tree panel appears automatically in notebook mode
 2. Click folder icons (▶) to expand/collapse sections
-3. Click on Chapters to see preface and all chapters
+3. Click on Chapters to see preface and all chapters (preface first, then chapter-1, chapter-2, etc.)
 4. Click on Appendix to see all appendix files
 5. Click on Miscellaneous to see other documentation
 6. Click any file to open it in the GitHub markdown overlay
 
 **Categorization Rules:**
 
-- **Chapters:** Files matching `preface.md` or `chapter-*.md`
+- **Chapters:** Files matching `preface.md` or `chapter-*.md` (preface always listed first)
 - **Appendix:** Files matching `appendix-*.md`
 - **Miscellaneous:** Only `advice.md`, `for-ai.md`, and `glossary.md` (hardcoded whitelist)
 - All other files are ignored and not shown in the tree

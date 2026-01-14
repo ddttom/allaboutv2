@@ -169,8 +169,9 @@ Shows all markdown files linked in the notebook, organized into three categorize
 
 **Chapters Folder** (expanded by default):
 - Contains files matching: `preface.md` or `chapter-N.md` patterns
-- Automatically sorted alphabetically
-- Example: `chapter-1.md`, `chapter-2.md`, `preface.md`
+- `preface.md` always appears first
+- Chapters sorted alphabetically after preface
+- Example: `preface.md`, `chapter-1.md`, `chapter-2.md`
 
 **Appendix Folder** (collapsed by default):
 - Contains files matching: `appendix-X.md` pattern

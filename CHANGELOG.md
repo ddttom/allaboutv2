@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **ipynb-viewer Tree Ordering**: Ensure preface.md appears before chapters in Chapters folder
+  - Modified chapters sorting to place preface.md first
+  - Other chapters still sorted alphabetically (chapter-1, chapter-2, etc.)
+  - Provides logical reading order: preface → chapters
+  - Commit: ed1f3f04
+  - File modified: `blocks/ipynb-viewer/ipynb-viewer.js`
+
 - **ipynb-viewer Help Button Fixes**: Multiple fixes to help button behavior
   - **Branch Reference Fix**: Changed fallback branch from 'refactor/ipynb-viewer-unified-overlay' to 'main' after merge
     - Updated both help button handlers (paged and GitHub overlay modes)
