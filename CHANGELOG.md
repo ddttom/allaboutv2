@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **List processing order with bold/italic formatting**: Fixed lists that contain bold or italic text
+  - Issue: Lists like `1. **In your work:** text` were not rendering as lists
+  - Root cause: Bold/italic processing happened before list processing, converting `**text**` to `<strong>text</strong>` before list regex could match
+  - Solution: Move list processing before bold/italic processing
+  - Result: Lists with bold/italic formatting now render correctly
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js` (lines 258, 342-346)
+  - Commits: 02666296 (implementation), 431bf03e (tests)
+
 - **Missing h4/h5/h6 heading support in ipynb-viewer markdown rendering**: Added support for heading levels 4-6
   - Issue: `####` (h4), `#####` (h5), and `######` (h6) markdown headers were not being rendered as HTML headings
   - Only h1, h2, and h3 were supported, causing h4-h6 to display as plain text
