@@ -705,6 +705,10 @@ async function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false,
   const markdownText = Array.isArray(cell.source) ? cell.source.join('') : cell.source;
   let html = parseMarkdown(markdownText, repoUrl, branch);
 
+  // Strip "Part X:" prefix from Part/Chapter headings in viewer pane
+  // Pattern: "Part 1:", "Chapter 2:", etc.
+  html = html.replace(/<h2>(Part|Chapter)\s+\d+:\s*(.+?)<\/h2>/gi, '<h2>$2</h2>');
+
   // Inline SVG illustrations
   html = await inlineSVGIllustrations(html);
 
