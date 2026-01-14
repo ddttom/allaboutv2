@@ -479,9 +479,9 @@ function parseNotebookData(data) {
 
 - **Notebook node:** Contains parts, cells from notebook
 - **Repository node:** Contains categorized folders for markdown files from GitHub
-  - **Chapters:** preface.md and chapter-*.md files (expanded by default)
-  - **Appendix:** appendix-*.md files (collapsed by default)
-  - **Miscellaneous:** Only advice.md, for-ai.md, glossary.md (hardcoded whitelist, collapsed by default)
+  - **Chapters:** preface.md (always first) and chapter-*.md files (alphabetical, expanded by default)
+  - **Appendix:** appendix-*.md files (alphabetical, collapsed by default)
+  - **Miscellaneous:** Only advice.md, for-ai.md, glossary.md (hardcoded whitelist, alphabetical, collapsed by default)
 
 **State Management:**
 
@@ -1117,6 +1117,10 @@ onNodeClick(node);
   - Updated docs/help.md to match current implementation (categorized folders)
   - Removed redundant invisible-users/docs/ directory
   - Single source of truth: docs/help.md in allaboutv2 repository
+- **Fixed:** Tree ordering for logical reading flow
+  - preface.md now always appears first in Chapters folder
+  - Other chapters sorted alphabetically after preface
+  - Provides logical reading order: preface → chapter-1 → chapter-2, etc.
 - **Documentation:** Added comprehensive documentation across all project files
   - Updated CHANGELOG.md with unified overlay entry and help button fixes
   - Updated CLAUDE.md with new critical section
