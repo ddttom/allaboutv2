@@ -1817,6 +1817,39 @@ function toggleTreeNode(nodeId, treeState, container, onNodeClick) {
 }
 
 /**
+ * Expand all parent nodes to make a target node visible
+ * @param {Array} tree - Tree structure
+ * @param {string} targetNodeId - Node ID to make visible
+ * @param {Object} treeState - State object
+ * @returns {boolean} - True if node was found and parents expanded
+ */
+function expandParentsOfNode(tree, targetNodeId, treeState) {
+  // Recursive function to find node and expand all parents
+  function searchAndExpand(nodes, nodeId, ancestors = []) {
+    return nodes.reduce((found, node) => {
+      if (found) return found;
+
+      // If this is the target node, expand all ancestors
+      if (node.id === nodeId) {
+        ancestors.forEach((ancestor) => {
+          treeState.expandedNodes.add(ancestor.id);
+        });
+        return true;
+      }
+
+      // Search children with this node as an ancestor
+      if (node.children && node.children.length > 0) {
+        return searchAndExpand(node.children, nodeId, [...ancestors, node]);
+      }
+
+      return false;
+    }, false);
+  }
+
+  return searchAndExpand(tree, targetNodeId);
+}
+
+/**
  * Select node (highlight as active)
  * @param {string} nodeId - Node ID to select
  * @param {Object} treeState - State object
@@ -1826,8 +1859,11 @@ function toggleTreeNode(nodeId, treeState, container, onNodeClick) {
 function selectTreeNode(nodeId, treeState, container, onNodeClick) {
   treeState.selectedNode = nodeId;
 
-  // Re-render tree
+  // Expand all parent nodes to make selected node visible
   const { tree } = treeState;
+  expandParentsOfNode(tree, nodeId, treeState);
+
+  // Re-render tree
   renderNavigationTree(tree, container, treeState, onNodeClick);
 
   // Scroll to selected node
