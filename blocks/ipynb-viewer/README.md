@@ -307,6 +307,13 @@ The notebook metadata is displayed in the header section:
   - **Purpose:** Specify which branch to load markdown files from
   - **Use case:** Load docs from feature branch during development when files don't exist in main yet
   - **Applies to:** All .md file links and help button
+- opening-page - Markdown file to automatically open when notebook starts (e.g., "preface.md", "#preface.md")
+  - **Default:** None - notebook opens on first cell
+  - **Purpose:** Automatically display a specific markdown file in overlay when notebook loads
+  - **Format:** Filename with or without leading # (both work)
+  - **Precedence:** URL hash takes precedence over metadata (allows user override via URL)
+  - **Use case:** Open with a table of contents, preface, or README when user starts notebook
+  - **Requires:** `repo` metadata must be set for GitHub markdown overlay to work
 
 **Example metadata in .ipynb file:**
 `Complete Metadata Example`
@@ -325,6 +332,7 @@ The notebook metadata is displayed in the header section:
 `"repo": "https://github.com/username/repo",`
 `"help-repo": "https://github.com/ddttom/allaboutV2",`
 `"github-branch": "main",`
+`"opening-page": "preface.md",`
 `"kernelspec": {`
 `"display_name": "JavaScript",`
 `"language": "javascript",`
