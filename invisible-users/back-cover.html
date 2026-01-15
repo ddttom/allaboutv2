@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Back Cover - The Invisible Users</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050a14;
+            --accent-blue: #00d4ff;
+            --text-main: #e0e6ed;
+            --text-dim: #a0aec0;
+            --glow: 0 0 15px rgba(0, 212, 255, 0.3);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: #1a202c;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 40px 0;
+        }
+
+        /* A4 Aspect Ratio Container */
+        .page {
+            width: 210mm;
+            height: 297mm;
+            background: linear-gradient(135deg, #050a14 0%, #0a192f 100%);
+            color: var(--text-main);
+            padding: 25mm 20mm;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #2d3748;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Futuristic Background Accents */
+        .page::before {
+            content: "";
+            position: absolute;
+            top: -10%; right: -10%;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .content { position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column; }
+
+        h1, h2 { color: var(--accent-blue); text-transform: uppercase; letter-spacing: 2px; }
+
+        /* Main Text Styles */
+        .main-copy { font-size: 14pt; line-height: 1.6; margin-bottom: 25px; font-weight: 300; }
+        .main-copy b { color: var(--accent-blue); font-weight: 700; }
+
+        /* Audience Grid */
+        .audience-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+            padding: 20px;
+            border-left: 3px solid var(--accent-blue);
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .audience-item strong { color: var(--accent-blue); display: block; font-size: 10pt; text-transform: uppercase; }
+        .audience-item { font-size: 11pt; color: var(--text-dim); }
+
+        /* Review Section */
+        .review-box {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            background: rgba(0, 212, 255, 0.05);
+            font-style: italic;
+            position: relative;
+        }
+        .stars { color: #f6ad55; font-size: 18pt; margin-bottom: 10px; font-style: normal; }
+
+        /* Author Bio Section */
+        .author-section {
+            display: flex;
+            align-items: flex-start;
+            gap: 25px;
+            margin-top: auto;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .author-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-blue);
+            box-shadow: var(--glow);
+            object-fit: cover;
+            background-color: #2d3748;
+        }
+        .author-bio { font-size: 10.5pt; line-height: 1.5; color: var(--text-dim); }
+        .author-bio strong { color: white; font-size: 12pt; display: block; margin-bottom: 5px; }
+
+        /* Footer */
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 40px;
+        }
+        .url { color: var(--accent-blue); font-weight: 700; text-decoration: none; font-size: 12pt; }
+        .barcode { background: white; width: 150px; height: 60px; padding: 5px; display: flex; align-items: center; justify-content: center; }
+        .release-date { font-size: 10pt; color: var(--text-dim); text-transform: uppercase; }
+
+    </style>
+</head>
+<body>
+
+<div class="page">
+    <div class="content">
+
+        <section class="main-copy">
+            <p style="margin-bottom: 15px;">AI agents are no longer just reading websites — they're completing purchases, processing transactions, and operating with your credentials. In January 2026, Amazon, Microsoft, and Google launched agent commerce systems within seven days. <b>This isn't speculation about a distant future. It's happening now.</b></p>
+
+            <p style="margin-bottom: 15px;"><b>The problem:</b> Your website works perfectly for humans but breaks for AI agents. Toast notifications vanish before agents can read them. Pagination hides content. Single-page applications don't update URLs. And your analytics never show these silent conversion failures.</p>
+
+            <p><b>The opportunity:</b> Fixing your site for agents fixes it for everyone — and there's finally commercial pressure to make it happen.</p>
+        </section>
+
+        <section class="audience-grid">
+            <div class="audience-item"><strong>Web Professionals</strong>Technical patterns & implementation</div>
+            <div class="audience-item"><strong>Business Leaders</strong>Strategic frameworks & decision criteria</div>
+            <div class="audience-item"><strong>Agent Developers</strong>Validation layers & confidence scoring</div>
+            <div class="audience-item"><strong>Platform Vendors</strong>Competitive positioning & retention</div>
+        </section>
+
+        <p style="font-size: 11pt; margin-top: 20px; margin-bottom: 20px; color: var(--text-dim);">Not just for business leaders. Developers and testers get technical patterns and detailed appendices. Business readers can skip the code.</p>
+
+        <section class="review-box">
+            <div class="stars">★★★★☆</div>
+            <p>"A clear, practical guide for modern web development. The 'Convergence Principle' is a breakthrough for understanding how agent optimization reinforces accessibility."</p>
+            <p style="font-size: 10pt; margin-top: 10px; opacity: 0.8; font-style: normal;">— Solid Recommendation</p>
+        </section>
+
+        <div class="author-section">
+            <img src="https://allabout.network/media_126e99d56f06caf788bee715aff92281d2e31a206" alt="Tom Cranstoun" class="author-img">
+            <div class="author-bio">
+                <strong>Tom Cranstoun</strong>
+                Tom has worked on web technology since the early days of the commercial internet. His career spans technical implementation and strategic consulting, focusing on the friction between engineering possibilities and business needs. He writes for allabout.network and is based in the UK.
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="release-info">
+                <div class="release-date">Due Q1 2026</div>
+                <a href="https://allabout.network/invisible-users" class="url">allabout.network/invisible-users</a>
+            </div>
+        </footer>
+    </div>
+</div>
+
+</body>
+</html>
