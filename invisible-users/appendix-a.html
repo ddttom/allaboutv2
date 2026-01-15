@@ -17,6 +17,27 @@
   <meta name="ai-structured-data" content="json-ld">
   <meta name="ai-attribution" content="required" text="Source: The Invisible Users by Tom Cranstoun, https://allabout.network/invisible-users/">
   <meta name="llms-txt" content="/llms.txt">
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://allabout.network/invisible-users/appendix-a.html">
+  <meta property="og:title" content="Appendix A: Implementation Cookbook">
+  <meta property="og:description" content="Practical guidance from The Invisible Users book on designing AI agent-friendly websites">
+  <meta property="og:image" content="https://allabout.network/images/invisible-users-appendix-og.jpg">
+  <meta property="og:site_name" content="The Invisible Users">
+  <meta property="og:locale" content="en_GB">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://allabout.network/invisible-users/appendix-a.html">
+  <meta name="twitter:title" content="Appendix A: Implementation Cookbook">
+  <meta name="twitter:description" content="Implementation guide from The Invisible Users book">
+  <meta name="twitter:image" content="https://allabout.network/images/invisible-users-appendix-og.jpg">
+  <meta name="twitter:creator" content="@tomcranstoun">
+
+  <!-- Additional SEO -->
+  <meta name="robots" content="index, follow">
+  <meta name="keywords" content="AI agents, web design, implementation guide, Appendix A, technical patterns, code examples">
+  <meta name="theme-color" content="#1e40af">
   <!-- Schema.org structured data -->
   <script type="application/ld+json">
   {
@@ -31,6 +52,8 @@
       "url": "https://allabout.network"
     },
     "inLanguage": "en-GB",
+    "timeRequired": "PT60M",
+    "educationalLevel": "Intermediate",
     "datePublished": "2026-01-10",
     "dateModified": "2026-01-10",
     "isPartOf": {
@@ -107,12 +130,21 @@ Button with Clear Reason</a></li>
 <li><a href="#recipe-10-small-business-restaurant-template"
 id="toc-recipe-10-small-business-restaurant-template">Recipe 10: Small
 Business Restaurant Template</a></li>
+<li><a href="#recipe-11-faqpage-schema-for-customer-support"
+id="toc-recipe-11-faqpage-schema-for-customer-support">Recipe 11:
+FAQPage Schema for Customer Support</a></li>
 <li><a href="#quick-reference-scoring-impact"
 id="toc-quick-reference-scoring-impact">Quick Reference: Scoring
 Impact</a></li>
+<li><a href="#recipe-12-social-media-meta-tags"
+id="toc-recipe-12-social-media-meta-tags">Recipe 12: Social Media Meta
+Tags</a></li>
+<li><a href="#cross-references"
+id="toc-cross-references">Cross-References</a></li>
 </ul></li>
 </ul>
 </nav>
+<main role="main" data-content-type="appendix">
 <h1 id="appendix-a-implementation-cookbook">Appendix A: Implementation
 Cookbook</h1>
 <p>Quick-reference recipes for common AI agent compatibility patterns.
@@ -589,7 +621,8 @@ Sitemap: https://example.com/sitemap.xml</code></pre>
 <p><strong>Problem:</strong> No structured agent guidance</p>
 <p><strong>Score Impact:</strong> +20 points (AI communication)</p>
 <p><strong>Implementation:</strong></p>
-<p>Create <code>/llms.txt</code>:</p>
+<p>Create <code>/llms.txt</code> (basic version shown here; see Appendix
+D for comprehensive template):</p>
 <pre class="text" data-role="code-block" data-language="text"><code># Example Shop
 
 Technical documentation and product catalogue for Example Shop, electronics retailer.
@@ -802,6 +835,112 @@ class="sourceCode html"><code class="sourceCode html" data-role="code-content"><
 the schema markup.</p>
 <p><strong>Cost:</strong> Zero. No JavaScript, no frameworks, no APIs
 needed.</p>
+<h2 id="recipe-11-faqpage-schema-for-customer-support">Recipe 11:
+FAQPage Schema for Customer Support</h2>
+<p><strong>Problem:</strong> FAQ content not structured for agent
+extraction</p>
+<p><strong>Score Impact:</strong> +12 points (structured data
+category)</p>
+<p><strong>Implementation:</strong></p>
+<div class="sourceCode" id="cb12" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="ot"> lang</span><span class="op">=</span><span class="st">&quot;en-GB&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> charset</span><span class="op">=</span><span class="st">&quot;UTF-8&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>Frequently Asked Questions - Example Shop<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">main</span><span class="dt">&gt;</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>Frequently Asked Questions<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">section</span><span class="ot"> itemscope itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/FAQPage&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> itemscope itemprop</span><span class="op">=</span><span class="st">&quot;mainEntity&quot;</span><span class="ot"> itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/Question&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">h2</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="dt">&gt;</span>What are your delivery charges?<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> itemscope itemprop</span><span class="op">=</span><span class="st">&quot;acceptedAnswer&quot;</span><span class="ot"> itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/Answer&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;text&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>UK mainland delivery is £4.99 for standard (3-5 working days) and £9.99 for next-day delivery. Orders over £50 qualify for free standard delivery.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> itemscope itemprop</span><span class="op">=</span><span class="st">&quot;mainEntity&quot;</span><span class="ot"> itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/Question&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">h2</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="dt">&gt;</span>What is your returns policy?<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> itemscope itemprop</span><span class="op">=</span><span class="st">&quot;acceptedAnswer&quot;</span><span class="ot"> itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/Answer&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;text&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>We accept returns within 30 days of delivery for a full refund. Items must be unused and in original packaging. Return shipping is free for faulty items, £4.99 for other returns.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> itemscope itemprop</span><span class="op">=</span><span class="st">&quot;mainEntity&quot;</span><span class="ot"> itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/Question&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">h2</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="dt">&gt;</span>Do you ship internationally?<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> itemscope itemprop</span><span class="op">=</span><span class="st">&quot;acceptedAnswer&quot;</span><span class="ot"> itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/Answer&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;text&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Yes, we ship to EU countries (£12.99, 5-7 working days) and worldwide (£19.99, 7-14 working days). International orders may incur customs charges at the destination country.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">section</span><span class="dt">&gt;</span></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">main</span><span class="dt">&gt;</span></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Alternative: JSON-LD format (can be used alongside or instead of HTML microdata) --&gt;</span></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;application/ld+json&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;@context&quot;</span><span class="op">:</span> <span class="st">&quot;https://schema.org&quot;</span><span class="op">,</span></span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;FAQPage&quot;</span><span class="op">,</span></span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;mainEntity&quot;</span><span class="op">:</span> [</span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;Question&quot;</span><span class="op">,</span></span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;name&quot;</span><span class="op">:</span> <span class="st">&quot;What are your delivery charges?&quot;</span><span class="op">,</span></span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;acceptedAnswer&quot;</span><span class="op">:</span> {</span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;Answer&quot;</span><span class="op">,</span></span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;text&quot;</span><span class="op">:</span> <span class="st">&quot;UK mainland delivery is £4.99 for standard (3-5 working days) and £9.99 for next-day delivery. Orders over £50 qualify for free standard delivery.&quot;</span></span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;Question&quot;</span><span class="op">,</span></span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;name&quot;</span><span class="op">:</span> <span class="st">&quot;What is your returns policy?&quot;</span><span class="op">,</span></span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;acceptedAnswer&quot;</span><span class="op">:</span> {</span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;Answer&quot;</span><span class="op">,</span></span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;text&quot;</span><span class="op">:</span> <span class="st">&quot;We accept returns within 30 days of delivery for a full refund. Items must be unused and in original packaging. Return shipping is free for faulty items, £4.99 for other returns.&quot;</span></span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;Question&quot;</span><span class="op">,</span></span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;name&quot;</span><span class="op">:</span> <span class="st">&quot;Do you ship internationally?&quot;</span><span class="op">,</span></span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;acceptedAnswer&quot;</span><span class="op">:</span> {</span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;Answer&quot;</span><span class="op">,</span></span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;text&quot;</span><span class="op">:</span> <span class="st">&quot;Yes, we ship to EU countries (£12.99, 5-7 working days) and worldwide (£19.99, 7-14 working days). International orders may incur customs charges at the destination country.&quot;</span></span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div>
+<p><strong>Why this matters:</strong></p>
+<ul>
+<li>Search engines display rich results with expandable Q&amp;A</li>
+<li>AI agents extract answers without reading entire pages</li>
+<li>Screen readers announce questions clearly</li>
+<li>Works with zero JavaScript</li>
+</ul>
+<p><strong>Common mistakes to avoid:</strong></p>
+<ul>
+<li>Don’t nest FAQPage inside other schema types</li>
+<li>Each question needs both <code>name</code> and
+<code>acceptedAnswer</code></li>
+<li>Answer <code>text</code> should be plain text or HTML, not just a
+link</li>
+<li>Use either HTML microdata OR JSON-LD, not both (unless they’re
+identical)</li>
+</ul>
+<p><strong>See also:</strong> Appendix D (AI-Friendly HTML Guide,
+Section 5: Structured Data) for comprehensive Schema.org patterns.</p>
 <hr />
 <h2 id="quick-reference-scoring-impact">Quick Reference: Scoring
 Impact</h2>
@@ -830,6 +969,11 @@ Impact</h2>
 <td>Priority 1</td>
 </tr>
 <tr>
+<td>Small business markup</td>
+<td>+30 points</td>
+<td>Priority 1</td>
+</tr>
+<tr>
 <td>Inline validation</td>
 <td>+10 points</td>
 <td>Priority 2</td>
@@ -855,24 +999,133 @@ Impact</h2>
 <td>Priority 2</td>
 </tr>
 <tr>
+<td>Social media meta tags</td>
+<td>+20 points</td>
+<td>Priority 2</td>
+</tr>
+<tr>
+<td>FAQPage schema</td>
+<td>+12 points</td>
+<td>Priority 2</td>
+</tr>
+<tr>
+<td>Reading time metadata</td>
+<td>+10 points</td>
+<td>Priority 2</td>
+</tr>
+<tr>
+<td>SEO meta tags</td>
+<td>+5 points</td>
+<td>Priority 2</td>
+</tr>
+<tr>
 <td>Disabled button clarity</td>
 <td>+5 points</td>
 <td>Priority 3</td>
-</tr>
-<tr>
-<td>Small business markup</td>
-<td>+30 points</td>
-<td>Priority 1</td>
 </tr>
 </tbody>
 </table>
 <p>Focus on patterns with highest score impact and lowest implementation
 effort first.</p>
 <hr />
+<h2 id="recipe-12-social-media-meta-tags">Recipe 12: Social Media Meta
+Tags</h2>
+<p><strong>Problem:</strong> Links shared on social media show generic
+previews without rich content</p>
+<p><strong>Score Impact:</strong> +20 points (Open Graph +8, Twitter
+Card +5, completeness ratio +7)</p>
+<p><strong>Implementation:</strong></p>
+<div class="sourceCode" id="cb13" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Open Graph / Facebook --&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> property</span><span class="op">=</span><span class="st">&quot;og:type&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;website&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> property</span><span class="op">=</span><span class="st">&quot;og:url&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;https://example.com/page.html&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> property</span><span class="op">=</span><span class="st">&quot;og:title&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;Your Page Title&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> property</span><span class="op">=</span><span class="st">&quot;og:description&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;Brief description for social sharing&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> property</span><span class="op">=</span><span class="st">&quot;og:image&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;https://example.com/images/preview.jpg&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> property</span><span class="op">=</span><span class="st">&quot;og:locale&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;en_GB&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Twitter --&gt;</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;twitter:card&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;summary_large_image&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;twitter:title&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;Your Page Title&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;twitter:description&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;Brief description&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;twitter:image&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;https://example.com/images/preview.jpg&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- SEO Enhancements --&gt;</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;robots&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;index, follow&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;keywords&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;relevant, keywords, here&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;theme-color&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;#1e40af&quot;</span><span class="dt">&gt;</span></span></code></pre></div>
+<p><strong>Reading time metadata (add to Schema.org):</strong></p>
+<div class="sourceCode" id="cb14" data-role="code-container"><pre
+class="sourceCode json"><code class="sourceCode json" data-role="code-content"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;@context&quot;</span><span class="fu">:</span> <span class="st">&quot;https://schema.org&quot;</span><span class="fu">,</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;@type&quot;</span><span class="fu">:</span> <span class="st">&quot;Article&quot;</span><span class="fu">,</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;timeRequired&quot;</span><span class="fu">:</span> <span class="st">&quot;PT10M&quot;</span><span class="fu">,</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;educationalLevel&quot;</span><span class="fu">:</span> <span class="st">&quot;Intermediate&quot;</span><span class="fu">,</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;inLanguage&quot;</span><span class="fu">:</span> <span class="st">&quot;en-GB&quot;</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p><strong>ISO 8601 duration format:</strong> <code>PT10M</code> =
+P(Period) + T(Time) + 10M(10 minutes)</p>
+<p><strong>Image requirements:</strong> 1200×630px, under 1MB, JPG or
+PNG</p>
+<p><strong>Scoring breakdown:</strong></p>
+<ul>
+<li><strong>Open Graph tags:</strong> +8 points (minimum 5 of 7 tags
+required)</li>
+<li><strong>Twitter Card tags:</strong> +5 points (minimum 3 of 4 tags
+required)</li>
+<li><strong>Completeness ratio:</strong> +7 points (11 total tags: 7
+Open Graph + 4 Twitter)</li>
+<li><strong>SEO meta tags:</strong> +5 points (robots, keywords,
+theme-color)</li>
+<li><strong>Reading time metadata:</strong> +10 points (timeRequired +5,
+completeness ratio +5)</li>
+</ul>
+<p><strong>Validation tools:</strong></p>
+<ul>
+<li>Facebook: <a href="https://developers.facebook.com/tools/debug/"
+class="uri">https://developers.facebook.com/tools/debug/</a></li>
+<li>Twitter: <a href="https://cards-dev.twitter.com/validator"
+class="uri">https://cards-dev.twitter.com/validator</a></li>
+<li>Schema.org: <a href="https://validator.schema.org/"
+class="uri">https://validator.schema.org/</a></li>
+</ul>
+<p><strong>Reference:</strong> See <a
+href="web/META-TAG-ENHANCEMENTS.md">web/META-TAG-ENHANCEMENTS.md</a> for
+per-page customization guidance.</p>
+<hr />
+<h2 id="cross-references">Cross-References</h2>
+<p><strong>For comprehensive context and business
+implications:</strong></p>
+<ul>
+<li><strong>Chapter 11 (Technical Advice)</strong>: Full narrative
+explaining why these patterns matter, with business context and
+strategic guidance</li>
+<li><strong>Appendix D (AI-Friendly HTML Guide)</strong>: Complete
+technical reference with detailed explanations, testing strategies, and
+production examples. Available as <code>.txt</code> file that can be
+copied directly into AI coding assistants (Claude Code, Cursor, GitHub
+Copilot)</li>
+<li><strong>Appendix L (Proposed AI Metadata Patterns)</strong>:
+Specifications for experimental patterns with forward-compatibility
+guarantees</li>
+</ul>
+<p><strong>How to use these together:</strong></p>
+<ol type="1">
+<li><strong>Business decision</strong>: Read Chapter 11 to understand
+strategic implications</li>
+<li><strong>Quick implementation</strong>: Use recipes from this
+appendix (Appendix A) for copy-paste solutions</li>
+<li><strong>Deep technical guidance</strong>: Reference Appendix D when
+AI assistants need complete context</li>
+<li><strong>Pattern specifications</strong>: Check Appendix L before
+implementing experimental patterns</li>
+</ol>
+<hr />
 <p><strong>Note:</strong> These recipes are production-tested patterns.
 Copy them directly, adapting field names and styling to your needs. All
 patterns are forward-compatible and won’t break if agents don’t
 recognise them.</p>
+</main>
 <hr>
 <nav class="appendix-navigation" role="navigation" aria-label="Appendix Navigation">
     <p><a href="appendix-index.html">← Back to Appendices Index</a></p>

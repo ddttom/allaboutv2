@@ -17,6 +17,27 @@
   <meta name="ai-structured-data" content="json-ld">
   <meta name="ai-attribution" content="required" text="Source: The Invisible Users by Tom Cranstoun, https://allabout.network/invisible-users/">
   <meta name="llms-txt" content="/llms.txt">
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://allabout.network/invisible-users/appendix-d.html">
+  <meta property="og:title" content="Appendix D: AI-Friendly HTML Guide">
+  <meta property="og:description" content="Practical guidance from The Invisible Users book on designing AI agent-friendly websites">
+  <meta property="og:image" content="https://allabout.network/images/invisible-users-appendix-og.jpg">
+  <meta property="og:site_name" content="The Invisible Users">
+  <meta property="og:locale" content="en_GB">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://allabout.network/invisible-users/appendix-d.html">
+  <meta name="twitter:title" content="Appendix D: AI-Friendly HTML Guide">
+  <meta name="twitter:description" content="Implementation guide from The Invisible Users book">
+  <meta name="twitter:image" content="https://allabout.network/images/invisible-users-appendix-og.jpg">
+  <meta name="twitter:creator" content="@tomcranstoun">
+
+  <!-- Additional SEO -->
+  <meta name="robots" content="index, follow">
+  <meta name="keywords" content="AI agents, web design, implementation guide, Appendix D, technical patterns, code examples">
+  <meta name="theme-color" content="#1e40af">
   <!-- Schema.org structured data -->
   <script type="application/ld+json">
   {
@@ -31,6 +52,8 @@
       "url": "https://allabout.network"
     },
     "inLanguage": "en-GB",
+    "timeRequired": "PT60M",
+    "educationalLevel": "Intermediate",
     "datePublished": "2026-01-10",
     "dateModified": "2026-01-10",
     "isPartOf": {
@@ -78,14 +101,6 @@
 id="toc-appendix-d-ai-friendly-html-guide">Appendix D: AI-Friendly HTML
 Guide</a>
 <ul>
-<li><a href="#core-principle" id="toc-core-principle">Core
-Principle</a></li>
-<li><a href="#standards-vs-proposed-patterns"
-id="toc-standards-vs-proposed-patterns">Standards vs Proposed
-Patterns</a></li>
-<li><a href="#part-1-quick-reference-tables"
-id="toc-part-1-quick-reference-tables">Part 1 — Quick Reference
-Tables</a></li>
 <li><a href="#part-2-simple-html-patterns"
 id="toc-part-2-simple-html-patterns">Part 2 — Simple HTML
 Patterns</a></li>
@@ -120,245 +135,152 @@ Building for AI Development Assistants</a></li>
 </ul></li>
 </ul>
 </nav>
+<main role="main" data-content-type="appendix">
 <h1 id="appendix-d-ai-friendly-html-guide">Appendix D: AI-Friendly HTML
 Guide</h1>
 <p>A prescriptive guide for developers creating web interfaces that work
-for both humans and AI agents.</p>
-<h2 id="core-principle">Core Principle</h2>
-<p>Build web pages where state is explicit, information is complete, and
-structure is semantic. This isn’t about accommodating AI as an
-afterthought — it’s about building clearer interfaces that serve
-everyone better.</p>
-<p>The patterns in this guide progress from quick fixes you can apply in
-minutes to architectural decisions that require more planning. Start
-wherever makes sense for your situation.</p>
-<h2 id="standards-vs-proposed-patterns">Standards vs Proposed
-Patterns</h2>
-<p>This guide presents both established standards and proposed
-patterns:</p>
-<p><strong>Established Standards</strong> (use with confidence):</p>
-<ul>
-<li>Schema.org JSON-LD structured data</li>
-<li>HTML semantic elements (<code>&lt;nav&gt;</code>,
-<code>&lt;main&gt;</code>, <code>&lt;dialog&gt;</code>)</li>
-<li>ARIA attributes for accessibility</li>
-<li>HTTP status codes</li>
-<li>robots.txt</li>
-</ul>
-<p><strong>Emerging Conventions</strong> (early adoption):</p>
-<ul>
-<li>llms.txt for AI agent guidance</li>
-</ul>
-<p><strong>Proposed Patterns</strong> (experimental,
-forward-compatible):</p>
-<ul>
-<li>ai-* meta tag namespace</li>
-<li>data-agent-visible attribute pattern</li>
-</ul>
-<p><strong>For complete proposal specifications, rationale, and adoption
-guidelines, see <a
-href="https://allabout.network/invisible-users/web/appendix-l.html">Appendix
-L: Proposed AI Metadata Patterns</a>.</strong></p>
-<p>All patterns shown are designed to be forward-compatible — they won’t
-break anything if agents don’t recognise them. Think of them as
-progressive enhancement for AI.</p>
-<hr />
-<h2 id="part-1-quick-reference-tables">Part 1 — Quick Reference
-Tables</h2>
-<p>These reference tables give you immediate answers to common
-questions.</p>
-<h3 id="http-status-codes-that-matter">HTTP Status Codes That
-Matter</h3>
-<p>Use the correct status code. Agents rely on these to understand what
-happened.</p>
-<table>
-<colgroup>
-<col style="width: 18%" />
-<col style="width: 31%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr>
-<th>Code</th>
-<th>Meaning</th>
-<th>When to Use</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>200</td>
-<td>Success</td>
-<td>GET requests returning content</td>
-</tr>
-<tr>
-<td>201</td>
-<td>Created</td>
-<td>Successful POST creating a resource</td>
-</tr>
-<tr>
-<td>303</td>
-<td>See Other</td>
-<td>After form submission (POST → redirect)</td>
-</tr>
-<tr>
-<td>400</td>
-<td>Bad Request</td>
-<td>Validation failures, malformed input</td>
-</tr>
-<tr>
-<td>401</td>
-<td>Unauthorised</td>
-<td>Login required</td>
-</tr>
-<tr>
-<td>403</td>
-<td>Forbidden</td>
-<td>Authenticated but not permitted</td>
-</tr>
-<tr>
-<td>404</td>
-<td>Not Found</td>
-<td>Resource doesn’t exist</td>
-</tr>
-<tr>
-<td>422</td>
-<td>Unprocessable Entity</td>
-<td>Valid syntax, invalid semantics</td>
-</tr>
-<tr>
-<td>429</td>
-<td>Too Many Requests</td>
-<td>Rate limit exceeded (include Retry-After header)</td>
-</tr>
-<tr>
-<td>503</td>
-<td>Service Unavailable</td>
-<td>Temporary downtime (include Retry-After header)</td>
-</tr>
-</tbody>
-</table>
-<h3 id="standard-form-field-names">Standard Form Field Names</h3>
-<p>Use names that agents recognise. Pick one convention (camelCase or
-snake_case) and use it consistently.</p>
-<table>
-<colgroup>
-<col style="width: 17%" />
-<col style="width: 60%" />
-<col style="width: 21%" />
-</colgroup>
-<thead>
-<tr>
-<th>Data</th>
-<th>Preferred Name</th>
-<th>Avoid</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Email</td>
-<td>email</td>
-<td>e-mail, emailAddress, user_email</td>
-</tr>
-<tr>
-<td>First name</td>
-<td>firstName or first_name</td>
-<td>fname, givenName</td>
-</tr>
-<tr>
-<td>Last name</td>
-<td>lastName or last_name</td>
-<td>lname, surname, familyName</td>
-</tr>
-<tr>
-<td>Full name</td>
-<td>fullName or full_name</td>
-<td>name, customerName</td>
-</tr>
-<tr>
-<td>Phone</td>
-<td>phone or telephone</td>
-<td>tel, phoneNumber, mobile</td>
-</tr>
-<tr>
-<td>Postcode</td>
-<td>postcode or postal_code</td>
-<td>zip, zipCode (UK sites)</td>
-</tr>
-<tr>
-<td>Address line 1</td>
-<td>address1 or street_address</td>
-<td>addr1, addressLine1</td>
-</tr>
-<tr>
-<td>Address line 2</td>
-<td>address2</td>
-<td>addr2, addressLine2</td>
-</tr>
-<tr>
-<td>City</td>
-<td>city</td>
-<td>town, locality</td>
-</tr>
-<tr>
-<td>County/State</td>
-<td>county or state</td>
-<td>region, province</td>
-</tr>
-<tr>
-<td>Country</td>
-<td>country or country_code</td>
-<td>nation, countryName</td>
-</tr>
-<tr>
-<td>Card number</td>
-<td>cardNumber or card_number</td>
-<td>cc_number, pan, ccnum</td>
-</tr>
-<tr>
-<td>Expiry date</td>
-<td>expiryDate or expiry</td>
-<td>exp, cardExpiry</td>
-</tr>
-<tr>
-<td>CVV/CVC</td>
-<td>cvv or cvc</td>
-<td>securityCode, cv2</td>
-</tr>
-<tr>
-<td>Password</td>
-<td>password</td>
-<td>pass, pwd, passwd</td>
-</tr>
-<tr>
-<td>Username</td>
-<td>username</td>
-<td>user, userName, login</td>
-</tr>
-<tr>
-<td>Date of birth</td>
-<td>dateOfBirth or date_of_birth</td>
-<td>dob, birthday, birthDate</td>
-</tr>
-<tr>
-<td>Company</td>
-<td>company or company_name</td>
-<td>organisation, businessName</td>
-</tr>
-<tr>
-<td>Quantity</td>
-<td>quantity</td>
-<td>qty, amount, count</td>
-</tr>
-</tbody>
-</table>
-<h3 id="date-and-time-formats">Date and Time Formats</h3>
-<p>Always use ISO 8601 in data attributes, even when displaying locally
-formatted dates:</p>
+for both humans and AI agents. The content is formatted as a markdown
+file that can be copied and fed directly to AI coding assistants like
+Claude Code, Cursor, or GitHub Copilot.</p>
+<p><strong>To use this guide with AI assistants:</strong></p>
+<ol type="1">
+<li>Open <code>appendix-d-ai-friendly-html-guide.txt</code> in this
+directory</li>
+<li>Copy the entire content (Ctrl+A, Ctrl+C)</li>
+<li>Paste into your AI assistant’s context window</li>
+<li>Reference specific sections when asking for implementation help</li>
+</ol>
+<p><strong>Guide Contents:</strong></p>
+<p>The guide covers 9 major parts:</p>
+<ol type="1">
+<li><strong>Quick Reference Tables</strong> - HTTP status codes, form
+field names, date formats, common data attributes</li>
+<li><strong>Simple HTML Patterns</strong> - Visual design vs AI parsing,
+authentication state, explicit state attributes, persistent errors</li>
+<li><strong>Form Patterns</strong> - Disabled button explanations,
+synchronous validation, multi-step wizards, modal dialogs</li>
+<li><strong>Page Structure Patterns</strong> - Navigation, breadcrumbs,
+search results, filtering, pagination, cart state, success
+confirmation</li>
+<li><strong>Structured Data</strong> - Schema.org quick reference
+(Product, LocalBusiness, Event, Article, FAQPage, BreadcrumbList,
+Book)</li>
+<li><strong>Why Modern Architecture Confuses AI</strong> - JavaScript
+execution problem, context separation, dual-channel solution, SSR
+patterns</li>
+<li><strong>Server-Side Patterns</strong> - Agent detection, cookie
+consent, captcha handling, rate limiting, error handling</li>
+<li><strong>Complete Examples</strong> - Small business template,
+e-commerce product page</li>
+<li><strong>Testing and Validation</strong> - Automated Playwright
+tests, manual validation, real-world testing</li>
+</ol>
+<p><strong>The complete guide is shown below:</strong></p>
 <div class="sourceCode" id="cb1" data-role="code-container"><pre
-class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">time</span><span class="ot"> datetime</span><span class="op">=</span><span class="st">&quot;2025-03-15T14:30:00Z&quot;</span><span class="ot"> </span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ot">      data-timezone</span><span class="op">=</span><span class="st">&quot;Europe/London&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  3:30 PM GMT</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">time</span><span class="dt">&gt;</span></span></code></pre></div>
+class="sourceCode markdown"><code class="sourceCode markdown" data-role="code-content"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># AI-Friendly HTML Guide</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>**Version**: 2.0</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>**Last Updated**: January 2026</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>**Purpose**: Prescriptive guide for developers building web interfaces for both humans and AI agents</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>**Format**: Copy-paste this entire file into your AI assistant for implementation guidance</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>**Cross-references**: </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Appendix A (Implementation Cookbook) - Quick copy-paste recipes</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Chapter 11 (Technical Advice) - Full narrative with business context</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Appendix L (Proposed AI Metadata Patterns) - Specifications for experimental patterns</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>A prescriptive guide for developers creating web interfaces that work for both humans and AI agents.</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">## Core Principle</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>Build web pages where state is explicit, information is complete, and structure is semantic. This isn&#39;t about accommodating AI as an afterthought — it&#39;s about building clearer interfaces that serve everyone better.</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>The patterns in this guide progress from quick fixes you can apply in minutes to architectural decisions that require more planning. Start wherever makes sense for your situation.</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## Standards vs Proposed Patterns</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>This guide presents both established standards and proposed patterns:</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>**Established Standards** (use with confidence):</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Schema.org JSON-LD structured data</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>HTML semantic elements (<span class="in">`&lt;nav&gt;`</span>, <span class="in">`&lt;main&gt;`</span>, <span class="in">`&lt;dialog&gt;`</span>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>ARIA attributes for accessibility</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>HTTP status codes</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>robots.txt</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>**Emerging Conventions** (early adoption):</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>llms.txt for AI agent guidance</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>**Proposed Patterns** (experimental, forward-compatible):</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>ai-* meta tag namespace</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>data-agent-visible attribute pattern</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>**For complete proposal specifications, rationale, and adoption guidelines, see [Appendix L: Proposed AI Metadata Patterns](&lt;https://allabout.network/invisible-users/web/appendix-l.html&gt;).**</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>All patterns shown are designed to be forward-compatible — they won&#39;t break anything if agents don&#39;t recognise them. Think of them as progressive enhancement for AI.</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 1 — Quick Reference Tables</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>These reference tables give you immediate answers to common questions.</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="fu">### HTTP Status Codes That Matter</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>Use the correct status code. Agents rely on these to understand what happened.</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Code <span class="pp">|</span> Meaning <span class="pp">|</span> When to Use <span class="pp">|</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="pp">| ----</span> <span class="pp">| -------</span> <span class="pp">| -----------</span> <span class="pp">|</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 200 <span class="pp">|</span> Success <span class="pp">|</span> GET requests returning content <span class="pp">|</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 201 <span class="pp">|</span> Created <span class="pp">|</span> Successful POST creating a resource <span class="pp">|</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 303 <span class="pp">|</span> See Other <span class="pp">|</span> After form submission (POST → redirect) <span class="pp">|</span></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 400 <span class="pp">|</span> Bad Request <span class="pp">|</span> Validation failures, malformed input <span class="pp">|</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 401 <span class="pp">|</span> Unauthorised <span class="pp">|</span> Login required <span class="pp">|</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 403 <span class="pp">|</span> Forbidden <span class="pp">|</span> Authenticated but not permitted <span class="pp">|</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 404 <span class="pp">|</span> Not Found <span class="pp">|</span> Resource doesn&#39;t exist <span class="pp">|</span></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 422 <span class="pp">|</span> Unprocessable Entity <span class="pp">|</span> Valid syntax, invalid semantics <span class="pp">|</span></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 429 <span class="pp">|</span> Too Many Requests <span class="pp">|</span> Rate limit exceeded (include Retry-After header) <span class="pp">|</span></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 503 <span class="pp">|</span> Service Unavailable <span class="pp">|</span> Temporary downtime (include Retry-After header) <span class="pp">|</span></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="fu">### Standard Form Field Names</span></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>Use names that agents recognise. Pick one convention (camelCase or snake_case) and use it consistently.</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Data <span class="pp">|</span> Preferred Name <span class="pp">|</span> Avoid <span class="pp">|</span></span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="pp">| ----</span> <span class="pp">| --------------</span> <span class="pp">| -----</span> <span class="pp">|</span></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Email <span class="pp">|</span> email <span class="pp">|</span> e-mail, emailAddress, user_email <span class="pp">|</span></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> First name <span class="pp">|</span> firstName or first_name <span class="pp">|</span> fname, givenName <span class="pp">|</span></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Last name <span class="pp">|</span> lastName or last_name <span class="pp">|</span> lname, surname, familyName <span class="pp">|</span></span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Full name <span class="pp">|</span> fullName or full_name <span class="pp">|</span> name, customerName <span class="pp">|</span></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Phone <span class="pp">|</span> phone or telephone <span class="pp">|</span> tel, phoneNumber, mobile <span class="pp">|</span></span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Postcode <span class="pp">|</span> postcode or postal_code <span class="pp">|</span> zip, zipCode (UK sites) <span class="pp">|</span></span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Address line 1 <span class="pp">|</span> address1 or street_address <span class="pp">|</span> addr1, addressLine1 <span class="pp">|</span></span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Address line 2 <span class="pp">|</span> address2 <span class="pp">|</span> addr2, addressLine2 <span class="pp">|</span></span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> City <span class="pp">|</span> city <span class="pp">|</span> town, locality <span class="pp">|</span></span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> County/State <span class="pp">|</span> county or state <span class="pp">|</span> region, province <span class="pp">|</span></span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Country <span class="pp">|</span> country or country_code <span class="pp">|</span> nation, countryName <span class="pp">|</span></span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Card number <span class="pp">|</span> cardNumber or card_number <span class="pp">|</span> cc_number, pan, ccnum <span class="pp">|</span></span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Expiry date <span class="pp">|</span> expiryDate or expiry <span class="pp">|</span> exp, cardExpiry <span class="pp">|</span></span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> CVV/CVC <span class="pp">|</span> cvv or cvc <span class="pp">|</span> securityCode, cv2 <span class="pp">|</span></span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Password <span class="pp">|</span> password <span class="pp">|</span> pass, pwd, passwd <span class="pp">|</span></span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Username <span class="pp">|</span> username <span class="pp">|</span> user, userName, login <span class="pp">|</span></span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Date of birth <span class="pp">|</span> dateOfBirth or date_of_birth <span class="pp">|</span> dob, birthday, birthDate <span class="pp">|</span></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Company <span class="pp">|</span> company or company_name <span class="pp">|</span> organisation, businessName <span class="pp">|</span></span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Quantity <span class="pp">|</span> quantity <span class="pp">|</span> qty, amount, count <span class="pp">|</span></span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a><span class="fu">### Date and Time Formats</span></span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a>Always use ISO 8601 in data attributes, even when displaying locally formatted dates:</span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a><span class="in">```html</span></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">time</span><span class="ot"> datetime</span><span class="op">=</span><span class="st">&quot;2025-03-15T14:30:00Z&quot;</span><span class="ot"> </span></span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a><span class="ot">      data-timezone</span><span class="op">=</span><span class="st">&quot;Europe/London&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>  3:30 PM GMT</span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">time</span><span class="dt">&gt;</span></span></code></pre></div>
 <p>For date inputs, show the expected format:</p>
 <div class="sourceCode" id="cb2" data-role="code-container"><pre
 class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;date-picker&quot;</span><span class="dt">&gt;</span></span>
@@ -3388,7 +3310,8 @@ Practical implementation guide</li>
 <h3 id="further-reading">Further Reading</h3>
 <p>For business implications, security considerations, and legal
 frameworks, see <em>The Invisible Users: Designing the Web for AI Agents
-and Everyone Else</em>.</p>
+and Everyone Else</em>. ```</p>
+</main>
 <hr>
 <nav class="appendix-navigation" role="navigation" aria-label="Appendix Navigation">
     <p><a href="appendix-index.html">← Back to Appendices Index</a></p>
