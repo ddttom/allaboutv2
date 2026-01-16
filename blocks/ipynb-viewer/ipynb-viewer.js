@@ -668,15 +668,19 @@ function createHelpButtonHandler(repoUrl, branch, overlayContext, config) {
     // 1. First try: allaboutv2 repo main branch (from config fallback)
     // 2. If that fails: try notebook's repo using github-branch metadata
 
-    // If no config provided, cannot show help (config contains all necessary values)
-    if (!config) {
-      console.error(`[IPYNB-VIEWER] ${IPYNB_ERRORS.CONFIG_MISSING_HELP}`);
-      return;
-    }
+    // If no config provided, use hardcoded defaults (for GitHub overlay context)
+    const effectiveConfig = config || {
+      fallbackHelpRepo: 'https://github.com/ddttom/allaboutV2',
+      fallbackHelpBranch: 'main',
+      fallbackHelpPath: 'docs/help.md',
+      icons: {
+        questionMark: '❓',
+      },
+    };
 
-    const fallbackRepo = config.fallbackHelpRepo;
-    const fallbackBranch = config.fallbackHelpBranch;
-    const fallbackHelpPath = `${fallbackRepo}/blob/${fallbackBranch}/${config.fallbackHelpPath}`;
+    const fallbackRepo = effectiveConfig.fallbackHelpRepo;
+    const fallbackBranch = effectiveConfig.fallbackHelpBranch;
+    const fallbackHelpPath = `${fallbackRepo}/blob/${fallbackBranch}/${effectiveConfig.fallbackHelpPath}`;
 
     // Try fetching from fallback first
     const fallbackRawUrl = fallbackHelpPath.replace('/blob/', '/').replace('github.com', 'raw.githubusercontent.com');
@@ -687,11 +691,12 @@ function createHelpButtonHandler(repoUrl, branch, overlayContext, config) {
         // Fallback succeeded - use allaboutv2 main branch
         const helpOverlay = overlayContext.createGitHubMarkdownOverlay(
           fallbackHelpPath,
-          config.helpOverlayTitle,
+          effectiveConfig.helpOverlayTitle || 'Help',
           fallbackRepo,
           fallbackBranch,
           overlayContext.history,
           overlayContext.hideTopbar,
+          effectiveConfig,
         );
         helpOverlay.openOverlay();
         return;
@@ -711,6 +716,7 @@ function createHelpButtonHandler(repoUrl, branch, overlayContext, config) {
       branch,
       overlayContext.history,
       overlayContext.hideTopbar,
+      effectiveConfig,
     );
     helpOverlay.openOverlay();
   };
