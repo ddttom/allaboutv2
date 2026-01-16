@@ -1,10 +1,51 @@
 # Project State
 
-## Current Status (2026-01-14)
+## Current Status (2026-01-16)
 
-The project is in active development with a focus on educational content delivery through Jupyter notebooks and the ipynb-viewer block.
+The project is in active development with a focus on educational content delivery through Jupyter notebooks and the ipynb-viewer block. Recent work has focused on configuration architecture standardization and splash screen enhancements.
 
 ## Recent Accomplishments
+
+### ipynb-viewer Configuration Architecture Refactor (2026-01-16)
+
+- **Status**: ✅ Completed comprehensive configuration architecture refactor
+- **Changes implemented**:
+  - Created `IPYNB_ERRORS` global constant for developer-facing error messages at file top
+  - Defined `SVG_INLINE_CACHE` as module-level constant (Map for cross-invocation caching)
+  - Created comprehensive config object in `decorate()` with organized sections:
+    - Messages (error/loading messages)
+    - Splash Screen (duration, fade transitions)
+    - History & Navigation (max entries)
+    - Code Cells (max group size)
+    - SVG Inlining (timeout, path pattern)
+    - Help System (fallback URLs, overlay title)
+    - UI Icons (HTML entities)
+    - UI Text (button labels, messages)
+  - Implemented dependency injection: config passed through `createPagedOverlay()`, `createGitHubMarkdownOverlay()`, `checkHashNavigation()`
+  - Added guard clauses: functions fail explicitly with clear errors if config missing
+  - Removed all hardcoded fallbacks using `||` operator (no silent failures)
+  - Added metadata override pattern: `splash-duration` from notebook metadata (seconds → milliseconds)
+  - Enhanced `inlineSVGIllustrations()` with options parameter for pattern and timeout
+- **Splash Screen Enhancements**:
+  - Added countdown timer to top-right corner showing remaining seconds
+  - Changed to auto-dismiss after duration (no manual dismiss needed)
+  - Fixed GitHub overlay home button to properly show splash screen
+  - Changed return type from `Promise<Function>` to `Promise<void>`
+- **Documentation Updates**:
+  - Added "Local Testing Workflow" section to CLAUDE.md (don't commit for every test iteration)
+  - Added comprehensive "Configuration Object Architecture" section (323 lines) to `.claude/skills/eds-block-development/SKILL.md`:
+    - Global constants vs runtime config vs metadata overrides
+    - Dependency injection patterns
+    - Guard clause patterns (fail explicitly, no fallbacks)
+    - Refactoring checklist for existing blocks
+    - Real-world ipynb-viewer example with line number references
+- **Benefits**:
+  - Clear separation of concerns (global constants, runtime config, metadata)
+  - No hidden fallbacks - explicit failures with clear error messages
+  - Easily searchable error messages at file top
+  - Testability improved (easy to mock config)
+  - Consistent pattern for future block development
+- **Files modified**: `blocks/ipynb-viewer/ipynb-viewer.js`, `CLAUDE.md`, `.claude/skills/eds-block-development/SKILL.md`
 
 ### ipynb-viewer External Link Support (2026-01-14)
 
