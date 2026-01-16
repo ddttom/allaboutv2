@@ -195,6 +195,23 @@ export async function showPreview(blockName, innerHTML = '') {
     });
   }
 
+  // Cleanup function to remove overlay and event listener
+  function cleanupAndClose() {
+    // eslint-disable-next-line no-use-before-define
+    document.removeEventListener('keydown', handleEscape);
+    overlay.remove();
+  }
+
+  // ESC key handler attached to document for global capture
+  function handleEscape(e) {
+    if (e.key === 'Escape') {
+      // Always close the preview overlay first when ESC is pressed
+      // This fixes the hierarchy issue where preview overlay couldn't close
+      // when opened from within a paged overlay
+      cleanupAndClose();
+    }
+  }
+
   // Handle close button
   closeBtn.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -221,28 +238,12 @@ export async function showPreview(blockName, innerHTML = '') {
     });
   }
 
-  // ESC key handler attached to document for global capture
-  const handleEscape = (e) => {
-    if (e.key === 'Escape') {
-      // Always close the preview overlay first when ESC is pressed
-      // This fixes the hierarchy issue where preview overlay couldn't close
-      // when opened from within a paged overlay
-      cleanupAndClose();
-    }
-  };
-
   // Click backdrop to close
   overlay.addEventListener('click', (e) => {
     if (e.target === overlay) {
       cleanupAndClose();
     }
   });
-
-  // Cleanup function to remove overlay and event listener
-  function cleanupAndClose() {
-    document.removeEventListener('keydown', handleEscape);
-    overlay.remove();
-  }
 
   // Attach ESC handler to document
   document.addEventListener('keydown', handleEscape);
