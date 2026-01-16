@@ -309,17 +309,20 @@ These attributes control behavior rather than display.
 - **Display:** Full-screen overlay image
 - **Default:** None - no splash screen when omitted
 - **Purpose:** Display a branded splash screen image during notebook initialization and navigation
-- **Where shown:** During initialization and when home button (🏠) is pressed
+- **Where shown:**
+  - During initialization (10-second duration)
+  - When home button (🏠) is pressed in notebook mode (5-second duration)
+  - When home button (🏠) is pressed in GitHub markdown overlay (5-second duration, if opened from notebook)
 - **Typical use:** Branding, visual transition, loading indicator, or welcome screen
 
 **How it works:**
 
-- When notebook loads, displays splash image for minimum 5 seconds with fade-in animation
-- Auto-dismisses after 5 seconds with fade-out animation
-- When home button (🏠) is pressed, shows splash again for same 5-second duration
-- Full-screen dark overlay (rgba(0, 0, 0, 0.95)) with centered image
-- Image automatically sized to fit screen (max 90% width/height)
-- Smooth transitions (0.3s fade-in/out) for professional appearance
+- **Startup:** Displays splash image for minimum 10 seconds (longer for initial impression)
+- **Home button:** Shows splash for minimum 5 seconds (shorter for navigation)
+- **Auto-dismiss:** Automatically fades out after minimum duration
+- **Full-screen dark overlay** (rgba(0, 0, 0, 0.95)) with centered image
+- **Image sizing:** Automatically sized to fit screen (max 90% width/height)
+- **Smooth transitions:** 0.3s fade-in/out for professional appearance
 
 ```json
 {

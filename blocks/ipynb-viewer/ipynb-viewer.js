@@ -2152,6 +2152,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     navigationHistory, // Add history to state for easy access
     navigationTree, // Add tree to state
     treeState, // Add tree state to state for sharing across overlays
+    splashUrl: notebook?.metadata?.['splash-page'], // Add splash URL for GitHub overlay access
   };
 
   // Create overlay structure
@@ -3768,6 +3769,14 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
     ariaLabel: hasParentNotebook ? 'Return to notebook' : 'Go to first page',
     onClick: () => {
       if (hasParentNotebook) {
+        // Show splash screen if configured (from parent notebook)
+        const splashUrl = parentHistory?.splashUrl;
+        if (splashUrl) {
+          showSplashScreen(splashUrl, 5000).then((dismiss) => {
+            dismiss();
+          });
+        }
+
         // We were opened from a notebook - close this overlay to return to notebook
         // eslint-disable-next-line no-console
         console.log('[HOME BUTTON] Returning to parent notebook');
@@ -4145,8 +4154,9 @@ export default async function decorate(block) {
     block.appendChild(container);
 
     // Show splash screen if splash-page metadata exists
+    // Startup uses 10 seconds for longer initial display
     if (splashPageUrl) {
-      showSplashScreen(splashPageUrl, 5000).then((dismiss) => {
+      showSplashScreen(splashPageUrl, 10000).then((dismiss) => {
         // Auto-dismiss after minimum duration
         dismiss();
       });
