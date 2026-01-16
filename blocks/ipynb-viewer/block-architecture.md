@@ -597,7 +597,7 @@ https://github.com/user/repo/blob/main/docs/file.md
 **Help Button Behavior:**
 
 - Help button fetches `docs/help.md` with two-tier fallback strategy:
-  1. **First try:** allaboutV2 repo main branch (hardcoded: `https://github.com/ddttom/allaboutv2/blob/main/invisible-users/docs/help.md`)
+  1. **First try:** allaboutV2 repo main branch (hardcoded: `https://github.com/ddttom/allaboutv2/blob/main/docs/help.md`)
   2. **Second try:** Notebook's `repo` metadata using `github-branch` metadata
 - Opens help overlay on top of current overlay (doesn't close current)
 - Preserves tree navigation if help fails to load

@@ -68,16 +68,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- **ipynb-viewer Help Button Fallback Priority**: Corrected help button fallback order to prioritize standard help location (2026-01-16)
-  - **Root Cause**: Help button was using notebook's `github-branch` metadata first, then falling back to 'main' branch
-  - **Solution**: Reversed priority order to try allaboutV2 repo main branch FIRST, then notebook repo as fallback
+- **ipynb-viewer Help Button Fallback Path**: Fixed incorrect help.md path in fallback URL (2026-01-16)
+  - **Root Cause**: Fallback URL pointed to `/invisible-users/docs/help.md` which returned 404
+  - **Solution**: Corrected path to `/docs/help.md` where the file actually exists
   - **Correct Priority**:
-    1. First try: `https://github.com/ddttom/allaboutv2/blob/main/invisible-users/docs/help.md` (standard location)
+    1. First try: `https://github.com/ddttom/allaboutv2/blob/main/docs/help.md` (standard location)
     2. If fails: Try notebook's `repo` metadata using `github-branch` metadata
-  - **Implementation**: Async fetch validation in both help button locations (notebook mode and GitHub overlay)
-  - **Impact**: Users now get latest help docs from standard location, with notebook-specific help as fallback
-  - **Documentation Updates**: Updated README.md and block-architecture.md with corrected fallback behavior
-  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js`, `blocks/ipynb-viewer/README.md`, `blocks/ipynb-viewer/block-architecture.md`
+  - **Implementation**: Updated `createHelpButtonHandler()` function (line 528) with correct path
+  - **Impact**: Help button now successfully loads help documentation from fallback location
+  - **Documentation Updates**: Updated block-architecture.md with correct fallback URL path
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js`, `blocks/ipynb-viewer/block-architecture.md`
 
 - **ipynb-viewer Code Block Rendering**: Fixed code blocks displaying on one line in GitHub markdown overlays
   - **Root Cause**: Code blocks restored BEFORE paragraph processing caused blocks with blank lines (\\n\\n) to be split by the paragraph splitter into fragments

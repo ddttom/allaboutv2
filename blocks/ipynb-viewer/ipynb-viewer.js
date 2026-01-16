@@ -525,7 +525,7 @@ function createHelpButtonHandler(repoUrl, branch, overlayContext) {
 
     const fallbackRepo = 'https://github.com/ddttom/allaboutv2';
     const fallbackBranch = 'main'; // Always use main for fallback
-    const fallbackHelpPath = `${fallbackRepo}/blob/${fallbackBranch}/invisible-users/docs/help.md`;
+    const fallbackHelpPath = `${fallbackRepo}/blob/${fallbackBranch}/docs/help.md`;
 
     // Try fetching from fallback first
     const fallbackRawUrl = fallbackHelpPath.replace('/blob/', '/').replace('github.com', 'raw.githubusercontent.com');
