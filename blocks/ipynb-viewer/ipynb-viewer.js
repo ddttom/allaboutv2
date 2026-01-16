@@ -3128,6 +3128,8 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
         navTreePanel, // Tree panel element for re-rendering
         treeState, // Tree state for expand/collapse
         handleTreeNodeClick, // Click handler for tree nodes
+        splashUrl: paginationState.splashUrl, // Add splash URL from pagination state
+        splashDuration: paginationState.splashDuration, // Add splash duration from pagination state
       };
 
       // Open using GitHub markdown overlay
