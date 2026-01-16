@@ -613,12 +613,26 @@ function showSplashScreen(imageUrl, minDuration = 4000) {
         // eslint-disable-next-line no-console
         console.log('[SPLASH] Minimum duration passed, fading out immediately');
         fadeOut();
+        // Resolve after fade completes
+        setTimeout(() => {
+          // eslint-disable-next-line no-console
+          console.log('[SPLASH] Fade complete (manual dismiss), resolving promise');
+          resolve();
+        }, 350);
       } else {
         // Wait for minimum duration to pass
         const remaining = minDuration - (Date.now() - startTime);
         // eslint-disable-next-line no-console
         console.log('[SPLASH] Minimum duration NOT passed, waiting', remaining, 'ms');
-        setTimeout(fadeOut, Math.max(0, remaining));
+        setTimeout(() => {
+          fadeOut();
+          // Resolve after fade completes
+          setTimeout(() => {
+            // eslint-disable-next-line no-console
+            console.log('[SPLASH] Fade complete (delayed manual dismiss), resolving promise');
+            resolve();
+          }, 350);
+        }, Math.max(0, remaining));
       }
     };
 
@@ -3962,16 +3976,22 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
 
       if (hasParentNotebook) {
         // Show splash screen if configured (from parent notebook)
+        // parentHistory may be paginationState object with splashUrl property
         const splashUrl = parentHistory?.splashUrl;
+        const splashDuration = parentHistory?.splashDuration || 4000;
+
+        // eslint-disable-next-line no-console
+        console.log('[GITHUB HOME] parentHistory type:', typeof parentHistory);
         // eslint-disable-next-line no-console
         console.log('[GITHUB HOME] splashUrl from parentHistory:', splashUrl);
+        // eslint-disable-next-line no-console
+        console.log('[GITHUB HOME] splashDuration:', splashDuration);
 
         if (splashUrl) {
-          const duration = parentHistory?.splashDuration || 4000;
           // eslint-disable-next-line no-console
-          console.log('[GITHUB HOME] Showing splash screen for', duration, 'ms...');
+          console.log('[GITHUB HOME] Showing splash screen for', splashDuration, 'ms...');
           // Wait for splash to complete (it auto-dismisses after duration)
-          await showSplashScreen(splashUrl, duration);
+          await showSplashScreen(splashUrl, splashDuration);
           // eslint-disable-next-line no-console
           console.log('[GITHUB HOME] Splash screen completed');
         } else {
