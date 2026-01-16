@@ -10,35 +10,36 @@ const HOMEPAGE_TABS_CONFIG = {
 };
 
 /**
- * Initialize category tabs functionality
- * Sets up click handlers and checks for URL hash on load
+ * Update URL hash without scrolling
  */
-export function initCategoryTabs() {
-  const tabs = document.querySelectorAll('.category-tabs button');
-  const containers = document.querySelectorAll('.blogroll-container');
+function updateUrlHash(category) {
+  const newHash = `#category-${category}`;
 
-  // Guard clause: exit if no tabs or containers found
-  if (!tabs.length || !containers.length) {
-    return;
+  // Use pushState to avoid scroll jump
+  if (window.history.pushState) {
+    window.history.pushState(null, '', newHash);
+  } else {
+    // Fallback for older browsers
+    window.location.hash = newHash;
   }
+}
 
-  // Add click listeners to each tab
-  tabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      handleTabClick(tab, tabs, containers);
-    });
+/**
+ * Initialize category from URL hash on page load
+ */
+function initializeFromHash(tabs) {
+  const hash = window.location.hash.replace('#category-', '');
 
-    // Add keyboard support (Enter and Space)
-    tab.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        handleTabClick(tab, tabs, containers);
-      }
-    });
-  });
+  if (hash) {
+    const targetTab = document.querySelector(`[data-category="${hash}"]`);
 
-  // Check for hash on page load to restore category state
-  initializeFromHash(tabs);
+    if (targetTab) {
+      // Small delay to ensure DOM is ready
+      setTimeout(() => {
+        targetTab.click();
+      }, 100);
+    }
+  }
 }
 
 /**
@@ -84,36 +85,35 @@ function handleTabClick(clickedTab, allTabs, containers) {
 }
 
 /**
- * Update URL hash without scrolling
+ * Initialize category tabs functionality
+ * Sets up click handlers and checks for URL hash on load
  */
-function updateUrlHash(category) {
-  const newHash = `#category-${category}`;
+export function initCategoryTabs() {
+  const tabs = document.querySelectorAll('.category-tabs button');
+  const containers = document.querySelectorAll('.blogroll-container');
 
-  // Use pushState to avoid scroll jump
-  if (window.history.pushState) {
-    window.history.pushState(null, '', newHash);
-  } else {
-    // Fallback for older browsers
-    window.location.hash = newHash;
+  // Guard clause: exit if no tabs or containers found
+  if (!tabs.length || !containers.length) {
+    return;
   }
-}
 
-/**
- * Initialize category from URL hash on page load
- */
-function initializeFromHash(tabs) {
-  const hash = window.location.hash.replace('#category-', '');
+  // Add click listeners to each tab
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      handleTabClick(tab, tabs, containers);
+    });
 
-  if (hash) {
-    const targetTab = document.querySelector(`[data-category="${hash}"]`);
+    // Add keyboard support (Enter and Space)
+    tab.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        handleTabClick(tab, tabs, containers);
+      }
+    });
+  });
 
-    if (targetTab) {
-      // Small delay to ensure DOM is ready
-      setTimeout(() => {
-        targetTab.click();
-      }, 100);
-    }
-  }
+  // Check for hash on page load to restore category state
+  initializeFromHash(tabs);
 }
 
 // Auto-initialize when DOM is ready
