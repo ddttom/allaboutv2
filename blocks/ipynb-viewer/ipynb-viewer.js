@@ -1044,9 +1044,10 @@ function styleActionCards(contentElement) {
  * @param {string} [helpRepoUrl] - Optional help repository URL
  * @param {string} [branch='main'] - GitHub branch to use for .md links
  * @param {Array} [parentHistory=null] - Optional parent overlay's history array
+ * @param {Object} [config=null] - Configuration object (injected dependency)
  * @returns {Promise<HTMLElement>} Cell element
  */
-async function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false, helpRepoUrl = null, branch = 'main', parentHistory = null) {
+async function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false, helpRepoUrl = null, branch = 'main', parentHistory = null, config = null) {
   const cellDiv = document.createElement('div');
   cellDiv.className = 'ipynb-cell ipynb-markdown-cell';
   cellDiv.dataset.cellIndex = index;
@@ -1087,7 +1088,7 @@ async function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false,
       const githubUrl = link.dataset.mdUrl; // Get URL from data attribute
       const linkBranch = link.dataset.branch || branch; // Get branch from link or use default
       const title = link.textContent || 'GitHub Markdown';
-      const overlay = createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl, linkBranch, parentHistory, false, null);
+      const overlay = createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl, linkBranch, parentHistory, false, config);
       overlay.openOverlay();
     });
   });
@@ -3106,7 +3107,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       };
 
       // Open using GitHub markdown overlay
-      const mdOverlay = createGitHubMarkdownOverlay(fullUrl, node.label, mdRepoUrl, branch, historyContext, false, null);
+      const mdOverlay = createGitHubMarkdownOverlay(fullUrl, node.label, mdRepoUrl, branch, historyContext, false, config);
       mdOverlay.openOverlay();
 
       // Select this node in tree
@@ -4335,7 +4336,7 @@ export default async function decorate(block) {
 
       if (cell.cell_type === 'markdown') {
         // eslint-disable-next-line no-await-in-loop
-        cellElement = await createMarkdownCell(cell, index, repoUrl, isNotebook, helpRepoUrl, githubBranch);
+        cellElement = await createMarkdownCell(cell, index, repoUrl, isNotebook, helpRepoUrl, githubBranch, null, config);
       } else if (cell.cell_type === 'code') {
         cellElement = createCodeCell(cell, index, shouldAutorun);
 
