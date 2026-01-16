@@ -1063,6 +1063,11 @@ function styleActionCards(contentElement) {
  * @returns {Promise<HTMLElement>} Cell element
  */
 async function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false, helpRepoUrl = null, branch = 'main', parentHistory = null, config = null) {
+  // eslint-disable-next-line no-console
+  console.log('[CREATE MARKDOWN CELL] index:', index);
+  // eslint-disable-next-line no-console
+  console.log('[CREATE MARKDOWN CELL] parentHistory received:', JSON.stringify(parentHistory, null, 2));
+
   const cellDiv = document.createElement('div');
   cellDiv.className = 'ipynb-cell ipynb-markdown-cell';
   cellDiv.dataset.cellIndex = index;
@@ -1103,6 +1108,10 @@ async function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false,
       const githubUrl = link.dataset.mdUrl; // Get URL from data attribute
       const linkBranch = link.dataset.branch || branch; // Get branch from link or use default
       const title = link.textContent || 'GitHub Markdown';
+
+      // eslint-disable-next-line no-console
+      console.log('[MD LINK CLICK] Passing parentHistory to createGitHubMarkdownOverlay:', JSON.stringify(parentHistory, null, 2));
+
       const overlay = createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl, linkBranch, parentHistory, false, config);
       overlay.openOverlay();
     });
@@ -3373,6 +3382,13 @@ function convertToRawUrl(blobUrl, _branch = 'main') {
  * @returns {Object} Object with openOverlay and closeOverlay functions
  */
 function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branch = 'main', parentHistory = null, hideTopbar = false, config = null) {
+  // eslint-disable-next-line no-console
+  console.log('[CREATE GITHUB OVERLAY] Function called');
+  // eslint-disable-next-line no-console
+  console.log('[CREATE GITHUB OVERLAY] githubUrl:', githubUrl);
+  // eslint-disable-next-line no-console
+  console.log('[CREATE GITHUB OVERLAY] parentHistory received:', JSON.stringify(parentHistory, null, 2));
+
   // Config is required for icons and UI text - fail if missing
   if (!config) {
     console.error('[IPYNB-VIEWER] CRITICAL: Config object missing in createGitHubMarkdownOverlay');
@@ -3984,6 +4000,8 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
         // eslint-disable-next-line no-console
         console.log('[GITHUB HOME] parentHistory keys:', Object.keys(parentHistory || {}));
         // eslint-disable-next-line no-console
+        console.log('[GITHUB HOME] parentHistory FULL OBJECT:', JSON.stringify(parentHistory, null, 2));
+        // eslint-disable-next-line no-console
         console.log('[GITHUB HOME] parentHistory.splashUrl:', parentHistory?.splashUrl);
         // eslint-disable-next-line no-console
         console.log('[GITHUB HOME] parentHistory.splashDuration:', parentHistory?.splashDuration);
@@ -4364,6 +4382,13 @@ export default async function decorate(block) {
       splashDuration,
       navigationTree: true, // Marker to indicate this came from a notebook
     } : null;
+
+    // eslint-disable-next-line no-console
+    console.log('[DECORATE] splashPageUrl:', splashPageUrl);
+    // eslint-disable-next-line no-console
+    console.log('[DECORATE] splashDuration:', splashDuration);
+    // eslint-disable-next-line no-console
+    console.log('[DECORATE] splashContext:', JSON.stringify(splashContext, null, 2));
 
     // Process cells sequentially to ensure proper rendering order
     for (let index = 0; index < notebook.cells.length; index += 1) {
