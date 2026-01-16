@@ -2251,6 +2251,16 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     selectedNode: null,
   };
 
+  // Debug: Check notebook metadata for splash URL
+  // eslint-disable-next-line no-console
+  console.log('[PAGINATION STATE] Creating paginationState...');
+  // eslint-disable-next-line no-console
+  console.log('[PAGINATION STATE] notebook:', notebook);
+  // eslint-disable-next-line no-console
+  console.log('[PAGINATION STATE] notebook.metadata:', notebook?.metadata);
+  // eslint-disable-next-line no-console
+  console.log('[PAGINATION STATE] splash-page from metadata:', notebook?.metadata?.['splash-page']);
+
   const paginationState = {
     currentPage: 0,
     totalPages,
@@ -2262,6 +2272,11 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     treeState, // Add tree state to state for sharing across overlays
     splashUrl: notebook?.metadata?.['splash-page'], // Add splash URL for GitHub overlay access
   };
+
+  // eslint-disable-next-line no-console
+  console.log('[PAGINATION STATE] paginationState created:', paginationState);
+  // eslint-disable-next-line no-console
+  console.log('[PAGINATION STATE] paginationState.splashUrl:', paginationState.splashUrl);
 
   // Create overlay structure
   const overlay = document.createElement('div');
