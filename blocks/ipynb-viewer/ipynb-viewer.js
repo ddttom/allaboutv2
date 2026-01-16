@@ -3322,8 +3322,8 @@ function createHomeButton(config) {
   // eslint-disable-next-line no-console
   console.log(`[HOME BUTTON] Created button for context: ${context}`);
 
-  // Add click handler with comprehensive logging
-  homeButton.addEventListener('click', (e) => {
+  // Add click handler with comprehensive logging (async to await onClick)
+  homeButton.addEventListener('click', async (e) => {
     // eslint-disable-next-line no-console
     console.log(`[HOME BUTTON] Clicked in context: ${context}`);
     // eslint-disable-next-line no-console
@@ -3341,8 +3341,8 @@ function createHomeButton(config) {
       console.log('[HOME BUTTON] Hash after clear:', window.location.hash);
     }
 
-    // Call the provided onClick handler
-    onClick(e);
+    // Call the provided onClick handler and WAIT for it to complete (may show splash)
+    await onClick(e);
 
     // eslint-disable-next-line no-console
     console.log('[HOME BUTTON] onClick handler completed');
