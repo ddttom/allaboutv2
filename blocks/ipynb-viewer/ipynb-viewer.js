@@ -433,6 +433,180 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
 }
 
 /**
+ * Display splash screen image
+ * @param {string} imageUrl - URL of splash screen image
+ * @param {number} minDuration - Minimum display duration in milliseconds (default 5000)
+ * @returns {Promise<Function>} Promise that resolves with dismiss function after minDuration
+ */
+function showSplashScreen(imageUrl, minDuration = 5000) {
+  return new Promise((resolve) => {
+    // Create splash overlay
+    const splashOverlay = document.createElement('div');
+    splashOverlay.className = 'ipynb-splash-overlay';
+    splashOverlay.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.95);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    `;
+
+    // Create image element
+    const splashImage = document.createElement('img');
+    splashImage.src = imageUrl;
+    splashImage.alt = 'Splash screen';
+    splashImage.style.cssText = `
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      border-radius: 8px;
+    `;
+
+    splashOverlay.appendChild(splashImage);
+    document.body.appendChild(splashOverlay);
+
+    // Fade in
+    requestAnimationFrame(() => {
+      splashOverlay.style.opacity = '1';
+    });
+
+    // Track when minimum duration has passed
+    let minDurationPassed = false;
+    const minDurationTimer = setTimeout(() => {
+      minDurationPassed = true;
+    }, minDuration);
+
+    // Create dismiss function
+    const dismiss = () => {
+      const fadeOut = () => {
+        splashOverlay.style.opacity = '0';
+        setTimeout(() => {
+          document.body.removeChild(splashOverlay);
+        }, 300);
+      };
+
+      if (minDurationPassed) {
+        fadeOut();
+      } else {
+        // Wait for minimum duration to pass
+        const remaining = minDuration - (Date.now() - startTime);
+        setTimeout(fadeOut, Math.max(0, remaining));
+      }
+    };
+
+    const startTime = Date.now();
+
+    // Resolve after minimum duration with dismiss function
+    setTimeout(() => {
+      resolve(dismiss);
+    }, minDuration);
+  });
+}
+
+/**
+ * Create help button click handler with two-tier fallback strategy
+ * @param {string} repoUrl - Notebook's repository URL
+ * @param {string} branch - GitHub branch from metadata
+ * @param {Object} overlayContext - Context object containing createGitHubMarkdownOverlay parameters
+ * @returns {Function} Async click handler for help button
+ */
+function createHelpButtonHandler(repoUrl, branch, overlayContext) {
+  return async () => {
+    // Priority order for help.md:
+    // 1. First try: allaboutv2 repo main branch (hardcoded fallback)
+    // 2. If that fails: try notebook's repo using github-branch metadata
+
+    const fallbackRepo = 'https://github.com/ddttom/allaboutv2';
+    const fallbackBranch = 'main'; // Always use main for fallback
+    const fallbackHelpPath = `${fallbackRepo}/blob/${fallbackBranch}/invisible-users/docs/help.md`;
+
+    // Try fetching from fallback first
+    const fallbackRawUrl = fallbackHelpPath.replace('/blob/', '/').replace('github.com', 'raw.githubusercontent.com');
+
+    try {
+      const response = await fetch(fallbackRawUrl);
+      if (response.ok) {
+        // Fallback succeeded - use allaboutv2 main branch
+        const helpOverlay = overlayContext.createGitHubMarkdownOverlay(
+          fallbackHelpPath,
+          'IPynb Viewer Help',
+          fallbackRepo,
+          fallbackBranch,
+          overlayContext.history,
+          overlayContext.hideTopbar
+        );
+        helpOverlay.openOverlay();
+        return;
+      }
+    } catch (error) {
+      // Fallback failed, continue to try notebook repo
+      // eslint-disable-next-line no-console
+      console.log('[HELP] Fallback help.md not found, trying notebook repo');
+    }
+
+    // Fallback failed - try notebook's repo with github-branch
+    const notebookHelpPath = `${repoUrl}/blob/${branch}/docs/help.md`;
+    const helpOverlay = overlayContext.createGitHubMarkdownOverlay(
+      notebookHelpPath,
+      'IPynb Viewer Help',
+      repoUrl,
+      branch,
+      overlayContext.history,
+      overlayContext.hideTopbar
+    );
+    helpOverlay.openOverlay();
+  };
+}
+
+/**
+ * Create dropdown close handler for clicking outside
+ * @param {Array} dropdowns - Array of {dropdown, button} objects
+ * @returns {Function} Click handler for document
+ */
+function createDropdownCloseHandler(dropdowns) {
+  return (e) => {
+    dropdowns.forEach(({ dropdown, button }) => {
+      if (dropdown && !dropdown.contains(e.target) && e.target !== button) {
+        dropdown.style.display = 'none';
+        button.setAttribute('aria-expanded', 'false');
+      }
+    });
+  };
+}
+
+/**
+ * Create tree toggle button click handler
+ * @param {HTMLElement} navTreePanel - Navigation tree panel element
+ * @param {HTMLElement} treeToggleButton - Tree toggle button element
+ * @returns {Function} Click handler for tree toggle button
+ */
+function createTreeToggleHandler(navTreePanel, treeToggleButton) {
+  return () => {
+    const isVisible = navTreePanel.style.display !== 'none';
+    if (isVisible) {
+      // Hide tree - show right arrow (►) to indicate it can be opened
+      navTreePanel.style.display = 'none';
+      treeToggleButton.innerHTML = '&#9654;'; // Right arrow (►)
+      treeToggleButton.setAttribute('aria-expanded', 'false');
+      treeToggleButton.setAttribute('title', 'Show Tree');
+    } else {
+      // Show tree - show left arrow (◄) to indicate it can be closed
+      navTreePanel.style.display = '';
+      treeToggleButton.innerHTML = '&#9664;'; // Left arrow (◄)
+      treeToggleButton.setAttribute('aria-expanded', 'true');
+      treeToggleButton.setAttribute('title', 'Hide Tree');
+    }
+  };
+}
+
+/**
  * Fetch SVG content with timeout
  * @param {string} url - URL of SVG file
  * @param {number} timeout - Timeout in milliseconds
@@ -2035,6 +2209,14 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       context: 'notebook',
       ariaLabel: 'Go to first cell',
       onClick: () => {
+        // Show splash screen if configured
+        const splashUrl = block.getAttribute('data-splash-page');
+        if (splashUrl) {
+          showSplashScreen(splashUrl, 5000).then((dismiss) => {
+            dismiss();
+          });
+        }
+
         // eslint-disable-next-line no-console
         console.log('[HOME BUTTON] Setting current page to 0');
         paginationState.currentPage = 0;
@@ -2118,13 +2300,6 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       historyButton.setAttribute('aria-expanded', !isOpen);
     });
 
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (e) => {
-      if (historyDropdown && !historyDropdown.contains(e.target) && e.target !== historyButton) {
-        historyDropdown.style.display = 'none';
-        historyButton.setAttribute('aria-expanded', 'false');
-      }
-    });
   }
 
   // Hamburger menu (notebook mode only) - Table of Contents
@@ -2224,14 +2399,6 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       const isOpen = tocDropdown.style.display === 'block';
       tocDropdown.style.display = isOpen ? 'none' : 'block';
       hamburgerButton.setAttribute('aria-expanded', !isOpen);
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (e) => {
-      if (tocDropdown && !tocDropdown.contains(e.target) && e.target !== hamburgerButton) {
-        tocDropdown.style.display = 'none';
-        hamburgerButton.setAttribute('aria-expanded', 'false');
-      }
     });
   }
 
@@ -2364,14 +2531,6 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       bookmarkDropdown.style.display = isOpen ? 'none' : 'block';
       bookmarkButton.setAttribute('aria-expanded', !isOpen);
     });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (e) => {
-      if (bookmarkDropdown && !bookmarkDropdown.contains(e.target) && e.target !== bookmarkButton) {
-        bookmarkDropdown.style.display = 'none';
-        bookmarkButton.setAttribute('aria-expanded', 'false');
-      }
-    });
   }
 
   // Help button (notebook mode only) - Opens help.md in GitHub overlay
@@ -2383,16 +2542,21 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     helpButton.setAttribute('aria-label', 'Help');
     helpButton.setAttribute('title', 'Help');
 
-    helpButton.addEventListener('click', () => {
-      // Use fallback repo for help.md (allaboutv2) since help lives there
-      const fallbackRepo = 'https://github.com/ddttom/allaboutv2';
-      const fallbackBranch = 'main';
-      const helpPath = `${fallbackRepo}/blob/${fallbackBranch}/invisible-users/docs/help.md`;
+    helpButton.addEventListener('click', createHelpButtonHandler(repoUrl, branch, {
+      createGitHubMarkdownOverlay,
+      history: paginationState,
+      hideTopbar,
+    }));
+  }
 
-      // Open using GitHub markdown overlay with fallback branch
-      const helpOverlay = createGitHubMarkdownOverlay(helpPath, 'IPynb Viewer Help', fallbackRepo, fallbackBranch, paginationState, hideTopbar);
-      helpOverlay.openOverlay();
-    });
+  // Close all dropdowns when clicking outside (consolidated handler)
+  if (isNotebookMode) {
+    const dropdowns = [
+      { dropdown: historyDropdown, button: historyButton },
+      { dropdown: tocDropdown, button: hamburgerButton },
+      { dropdown: bookmarkDropdown, button: bookmarkButton },
+    ];
+    document.addEventListener('click', createDropdownCloseHandler(dropdowns));
   }
 
   // Pagination controls
@@ -2842,22 +3006,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   closeButton.addEventListener('click', closeOverlay);
 
   // Tree toggle button handler
-  treeToggleButton.addEventListener('click', () => {
-    const isVisible = navTreePanel.style.display !== 'none';
-    if (isVisible) {
-      // Hide tree - show right arrow (►) to indicate it can be opened
-      navTreePanel.style.display = 'none';
-      treeToggleButton.innerHTML = '&#9654;'; // Right arrow (►)
-      treeToggleButton.setAttribute('aria-expanded', 'false');
-      treeToggleButton.setAttribute('title', 'Show Tree');
-    } else {
-      // Show tree - show left arrow (◄) to indicate it can be closed
-      navTreePanel.style.display = '';
-      treeToggleButton.innerHTML = '&#9664;'; // Left arrow (◄)
-      treeToggleButton.setAttribute('aria-expanded', 'true');
-      treeToggleButton.setAttribute('title', 'Hide Tree');
-    }
-  });
+  treeToggleButton.addEventListener('click', createTreeToggleHandler(navTreePanel, treeToggleButton));
 
   // Keyboard navigation
   const keyHandler = (e) => {
@@ -3357,32 +3506,20 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
 
   // Help button handler
   if (helpButton && helpRepoUrl) {
-    helpButton.addEventListener('click', () => {
-      // Use fallback repo for help.md (allaboutv2) since help lives there
-      const fallbackRepo = 'https://github.com/ddttom/allaboutv2';
-      const fallbackBranch = 'main';
-      const helpPath = `${fallbackRepo}/blob/${fallbackBranch}/invisible-users/docs/help.md`;
-      // Open help overlay (don't close current overlay to preserve tree)
-      const helpOverlay = createGitHubMarkdownOverlay(helpPath, 'IPynb Viewer Help', fallbackRepo, fallbackBranch, parentHistory);
-      helpOverlay.openOverlay();
-    });
+    helpButton.addEventListener('click', createHelpButtonHandler(repoUrl, branch, {
+      createGitHubMarkdownOverlay,
+      history: parentHistory,
+      hideTopbar: false, // GitHub overlay doesn't have hideTopbar parameter
+    }));
   }
 
-  // Close dropdowns when clicking outside
-  document.addEventListener('click', (e) => {
-    if (historyDropdown && !historyDropdown.contains(e.target) && e.target !== historyButton) {
-      historyDropdown.style.display = 'none';
-      historyButton.setAttribute('aria-expanded', 'false');
-    }
-    if (bookmarkDropdown && !bookmarkDropdown.contains(e.target) && e.target !== bookmarkButton) {
-      bookmarkDropdown.style.display = 'none';
-      bookmarkButton.setAttribute('aria-expanded', 'false');
-    }
-    if (tocDropdown && !tocDropdown.contains(e.target) && e.target !== hamburgerButton) {
-      tocDropdown.style.display = 'none';
-      hamburgerButton.setAttribute('aria-expanded', 'false');
-    }
-  });
+  // Close dropdowns when clicking outside (consolidated handler)
+  const dropdowns = [
+    { dropdown: historyDropdown, button: historyButton },
+    { dropdown: bookmarkDropdown, button: bookmarkButton },
+    { dropdown: tocDropdown, button: hamburgerButton },
+  ];
+  document.addEventListener('click', createDropdownCloseHandler(dropdowns));
 
   // Open/close functions
   const openOverlay = async (skipHashUpdate = false) => {
@@ -3631,6 +3768,14 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
     context: 'github',
     ariaLabel: hasParentNotebook ? 'Return to notebook' : 'Go to first page',
     onClick: () => {
+      // Show splash screen if configured
+      const splashUrl = block.getAttribute('data-splash-page');
+      if (splashUrl) {
+        showSplashScreen(splashUrl, 5000).then((dismiss) => {
+          dismiss();
+        });
+      }
+
       if (hasParentNotebook) {
         // We were opened from a notebook - close this overlay to return to notebook
         // eslint-disable-next-line no-console
@@ -3651,22 +3796,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
   console.log('[HOME BUTTON] Appended to DOM, parent:', homeButton.parentElement);
 
   // Tree toggle button handler
-  treeToggleButton.addEventListener('click', () => {
-    const isVisible = navTreePanel.style.display !== 'none';
-    if (isVisible) {
-      // Hide tree - show right arrow (►) to indicate it can be opened
-      navTreePanel.style.display = 'none';
-      treeToggleButton.innerHTML = '&#9654;'; // Right arrow (►)
-      treeToggleButton.setAttribute('aria-expanded', 'false');
-      treeToggleButton.setAttribute('title', 'Show Tree');
-    } else {
-      // Show tree - show left arrow (◄) to indicate it can be closed
-      navTreePanel.style.display = '';
-      treeToggleButton.innerHTML = '&#9664;'; // Left arrow (◄)
-      treeToggleButton.setAttribute('aria-expanded', 'true');
-      treeToggleButton.setAttribute('title', 'Hide Tree');
-    }
-  });
+  treeToggleButton.addEventListener('click', createTreeToggleHandler(navTreePanel, treeToggleButton));
 
   // Close button handler
   closeButton.addEventListener('click', closeOverlay);
@@ -3789,6 +3919,12 @@ export default async function decorate(block) {
     // Set github-branch attribute if available in metadata (defaults to 'main')
     const githubBranch = notebook.metadata?.['github-branch'] || 'main';
     block.setAttribute('data-github-branch', githubBranch);
+
+    // Set splash-page attribute if available in metadata
+    const splashPageUrl = notebook.metadata?.['splash-page'] || null;
+    if (splashPageUrl) {
+      block.setAttribute('data-splash-page', splashPageUrl);
+    }
 
     // Set help-repo attribute if available in metadata
     // Falls back to repo, then to allaboutV2 default
@@ -4016,6 +4152,14 @@ export default async function decorate(block) {
     }
 
     block.appendChild(container);
+
+    // Show splash screen if splash-page metadata exists
+    if (splashPageUrl) {
+      showSplashScreen(splashPageUrl, 5000).then((dismiss) => {
+        // Auto-dismiss after minimum duration
+        dismiss();
+      });
+    }
   } catch (error) {
     console.error('Block decoration failed:', error);
     block.innerHTML = `<div class="ipynb-error">${config.errorMessage}: ${error.message}</div>`;

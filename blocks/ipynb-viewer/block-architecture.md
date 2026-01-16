@@ -420,7 +420,7 @@ const IPYNB_CONFIG = {
   LOAD_ERROR_MESSAGE: 'Error loading notebook',
 
   // File paths
-  DEFAULT_HELP_FILE: '/docs/help.md',  // Fetches from allaboutv2 repo main branch
+  DEFAULT_HELP_FILE: '/docs/help.md',  // Fetches from allaboutv2 repo (respects github-branch metadata)
 
   // UI text
   RUN_BUTTON_LABEL: '▶ Run',
@@ -428,7 +428,10 @@ const IPYNB_CONFIG = {
 
   // Thresholds
   LONG_DOCUMENT_THRESHOLD: 40,
-  COPY_BUTTON_RESET_DELAY: 2000
+  COPY_BUTTON_RESET_DELAY: 2000,
+
+  // Splash screen
+  SPLASH_MIN_DURATION: 5000  // Minimum splash display duration (milliseconds)
 };
 ```
 
@@ -593,11 +596,13 @@ https://github.com/user/repo/blob/main/docs/file.md
 
 **Help Button Behavior:**
 
-- Help button fetches `docs/help.md` from fallback repository (allaboutv2)
-- Uses `main` branch after refactor merge (not feature branch)
+- Help button fetches `docs/help.md` with two-tier fallback strategy:
+  1. **First try:** allaboutV2 repo main branch (hardcoded: `https://github.com/ddttom/allaboutv2/blob/main/invisible-users/docs/help.md`)
+  2. **Second try:** Notebook's `repo` metadata using `github-branch` metadata
 - Opens help overlay on top of current overlay (doesn't close current)
 - Preserves tree navigation if help fails to load
-- Two help button locations: paged overlay (line 2348) and GitHub overlay (line 3322)
+- Two help button locations: paged overlay (line 2472) and GitHub overlay (line 3467)
+- Async fetch validation ensures fallback is used first before trying notebook repo
 
 ### Overlay System
 
@@ -696,7 +701,47 @@ outputDiv.textContent = output;
 - **All six heading levels** - H1 through H6 support (h4, h5, h6 added in v2.1)
 - **Bold/italic in lists** - Correct processing order (lists before bold/italic)
 
-**Function:** `parseMarkdown(html)` (lines 19-377 in ipynb-viewer.js)
+**Function:** `parseMarkdown(html)` (lines 19-433 in ipynb-viewer.js)
+
+**Function:** `showSplashScreen(imageUrl, minDuration)` (lines 441-511 in ipynb-viewer.js)
+
+**Purpose:** Display full-screen splash image with minimum duration and automatic dismissal
+
+**Implementation:**
+
+- Creates full-screen overlay with dark background (rgba(0, 0, 0, 0.95))
+- Centers image with max 90% width/height, maintains aspect ratio
+- Fade-in animation (0.3s) when showing
+- Enforces minimum display duration (default 5000ms)
+- Returns promise that resolves with dismiss function after minimum duration
+- Auto-dismisses with fade-out animation (0.3s)
+- Removes overlay element from DOM after fade-out completes
+
+**Usage:**
+
+```javascript
+// Show splash during initialization
+if (splashPageUrl) {
+  showSplashScreen(splashPageUrl, 5000).then((dismiss) => {
+    dismiss(); // Auto-dismiss after 5 seconds
+  });
+}
+
+// Show splash on home button press
+const splashUrl = block.getAttribute('data-splash-page');
+if (splashUrl) {
+  showSplashScreen(splashUrl, 5000).then((dismiss) => {
+    dismiss();
+  });
+}
+```
+
+**Timing behavior:**
+
+- Promise resolves after `minDuration` milliseconds
+- Dismiss function respects minimum duration (won't fade out early)
+- If dismissed before minimum duration passes, waits for remaining time
+- Prevents jarring quick flashes (ensures professional appearance)
 
 **Processing Order (Critical):**
 
@@ -1176,6 +1221,12 @@ onNodeClick(node);
   - Fresh implementation (no legacy code or migration)
   - Status: Complete and production-ready, merged to main
   - Documentation: See overlay/README.md for comprehensive guide
+- **Enhanced:** Help button now respects `github-branch` metadata (2026-01-16)
+  - Help button (`docs/help.md`) now uses branch from notebook metadata
+  - Previously hardcoded to 'main' branch only
+  - Updated both help button locations (lines 2389 and 3363)
+  - Falls back to 'main' if no branch specified (backward compatible)
+  - Enables frozen documentation versions and branch-specific help files
 - **Fixed:** Help button behavior improvements
   - Changed fallback branch from 'refactor/ipynb-viewer-unified-overlay' to 'main' after merge
   - Removed closeOverlay() call to prevent tree disappearing on errors
@@ -1264,6 +1315,43 @@ onNodeClick(node);
   - Graceful degradation when metadata omitted (opens on first cell)
 - **Documentation:** Updated README.md with inline HTML behavior and opening-page examples
 - **Testing:** Created test-inline-html.md for verification of all markdown features
+
+### Version 2.1.0 (2026-01-16)
+
+- **Added:** Splash screen feature via `splash-page` metadata
+- **Feature:** Display branded splash image during initialization and home button press
+- **Display duration:** Minimum 5 seconds with fade-in/fade-out animations
+- **Implementation:**
+  - New `showSplashScreen()` helper function (lines 441-511)
+  - Metadata extraction: `notebook.metadata?.['splash-page']` (lines 3872-3875)
+  - Initialization display after content loads (lines 4105-4110)
+  - Home button integration in notebook mode (lines 2116-2122)
+  - Home button integration in GitHub overlay mode (lines 3720-3726)
+- **Visual design:**
+  - Full-screen dark overlay (rgba(0, 0, 0, 0.95))
+  - Centered image with max 90% width/height
+  - Smooth 0.3s fade-in/fade-out transitions
+  - Auto-dismiss after 5 seconds
+- **Use cases:** Branding, loading indicator, welcome screen, visual transitions
+- **Fixed:** Help button fallback priority corrected
+  - **Old behavior:** Used notebook's `github-branch` first, then fell back to 'main'
+  - **New behavior:** Tries allaboutV2 main branch first, then notebook's repo with `github-branch`
+  - **Priority:** allaboutV2/main → notebook repo + github-branch
+  - **Impact:** Help button now correctly prioritizes standard help location
+  - **Implementation:** Async fetch validation at both help button locations (lines 2545-2549, 3509-3513)
+- **Refactored:** Event handlers consolidated into reusable helper functions
+  - **createHelpButtonHandler()** (lines 520-566) - Two-tier fallback logic for help button
+    - Eliminates duplicate help button code (was duplicated in notebook and GitHub overlays)
+    - Centralizes fallback priority logic
+  - **createDropdownCloseHandler()** (lines 573-582) - Dropdown close on outside click
+    - Eliminates 4 duplicate close handlers (3 in notebook mode, 1 consolidated in GitHub overlay)
+    - Accepts array of {dropdown, button} objects
+  - **createTreeToggleHandler()** (lines 590-607) - Tree toggle show/hide logic
+    - Eliminates duplicate tree toggle code (was duplicated in notebook and GitHub overlays)
+    - Handles aria attributes and icons consistently
+  - **Benefits:** ~100 lines of code eliminated, easier maintenance, consistent behavior
+  - **Usage:** All handlers called via addEventListener with shared function
+- **Documentation:** Updated README.md, explaining-attributes.md with splash-page details and corrected help button priority
 
 ### Version 2.0.2 (2026-01-13)
 

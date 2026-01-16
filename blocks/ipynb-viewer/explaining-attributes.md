@@ -264,20 +264,32 @@ These attributes control behavior rather than display.
 - **Display:** Not directly displayed
 - **Default:** `"main"` if not specified
 - **Purpose:** Specify which GitHub branch to use when loading .md files
-- **Where used:** All markdown file links and help button
-- **Typical use:** When working in a feature branch and need to load markdown files from that branch instead of main
+- **Where used:** All markdown file links, smart links, and help button (❓)
+- **Typical use:** When working in a feature branch, using frozen documentation versions, or accessing branch-specific content
 
 **How it works:**
 
 - When clicking help button or any .md link in the notebook, files are loaded from the specified branch
 - Without this attribute, all files default to loading from the `main` branch
+- Help button (`docs/help.md`) respects this setting and loads from the specified branch
 - Useful during development when files exist in feature branches but not yet in main
+- Also useful for frozen documentation versions that shouldn't change
 
 ```json
 {
   "metadata": {
     "repo": "https://github.com/ddttom/allaboutV2",
     "help-repo": "https://github.com/ddttom/allaboutV2",
+    "github-branch": "frozen"
+  }
+}
+```
+
+**Example (feature branch):**
+```json
+{
+  "metadata": {
+    "repo": "https://github.com/ddttom/allaboutV2",
     "github-branch": "claude/github-markdown-viewer-012wJTuNsNumzhbWWraUQWhf"
   }
 }
@@ -287,7 +299,52 @@ These attributes control behavior rather than display.
 
 - Development: Load docs from your feature branch while testing
 - Staging: Point to a staging branch for preview
+- Frozen versions: Use a frozen branch for documentation that shouldn't change
+- Release versions: Point to release-specific branches (v1.0, v2.0, etc.)
 - Versioning: Use specific release branches for different notebook versions
+
+### `splash-page`
+
+- **Type:** String (URL)
+- **Display:** Full-screen overlay image
+- **Default:** None - no splash screen when omitted
+- **Purpose:** Display a branded splash screen image during notebook initialization and navigation
+- **Where shown:** During initialization and when home button (🏠) is pressed
+- **Typical use:** Branding, visual transition, loading indicator, or welcome screen
+
+**How it works:**
+
+- When notebook loads, displays splash image for minimum 5 seconds with fade-in animation
+- Auto-dismisses after 5 seconds with fade-out animation
+- When home button (🏠) is pressed, shows splash again for same 5-second duration
+- Full-screen dark overlay (rgba(0, 0, 0, 0.95)) with centered image
+- Image automatically sized to fit screen (max 90% width/height)
+- Smooth transitions (0.3s fade-in/out) for professional appearance
+
+```json
+{
+  "metadata": {
+    "title": "Invisible Users",
+    "splash-page": "https://allabout.network/dam/media_1f892fe947de031bcd3da71e54220726833215931.png?width=2000&format=webply&optimize=medium"
+  }
+}
+```
+
+**Common use cases:**
+
+- Branding: Display company logo or book cover during initialization
+- Loading indicator: Provide visual feedback while notebook loads
+- Welcome screen: Show title page or introduction image
+- Visual transition: Smooth experience when returning home
+- Professional polish: Add branded splash for published notebooks
+
+**Image optimization tips:**
+
+- Use optimized formats (WebP) for faster loading
+- Specify width parameter for responsive sizing
+- Use `optimize=medium` for balance of quality and size
+- Recommended size: 2000px width or appropriate for your content
+- Aspect ratio: Design for 16:9 or square for best compatibility
 
 ## Examples
 
@@ -308,7 +365,8 @@ These attributes control behavior rather than display.
     "tags": ["EDS", "blocks", "beginner", "hands-on"],
     "repo": "https://github.com/yourorg/eds-examples",
     "help-repo": "https://github.com/ddttom/allaboutV2",
-    "github-branch": "main"
+    "github-branch": "main",
+    "splash-page": "https://example.com/splash.png"
   }
 }
 ```

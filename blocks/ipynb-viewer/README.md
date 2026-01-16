@@ -304,11 +304,25 @@ The notebook metadata is displayed in the header section:
   - **Purpose:** Separate repository for help button (❓) documentation
   - **Use case:** When notebook content is from one repo but help docs are from viewer's repo
   - **Help button:** In notebook mode, displays a ❓ button that opens `docs/help.md` from the help-repo
-- github-branch - GitHub branch to use when loading .md files (e.g., "main", "develop", "feature/new-docs")
+- github-branch - GitHub branch to use when loading .md files (e.g., "main", "develop", "frozen", "feature/new-docs")
   - **Default:** `"main"` if not specified
   - **Purpose:** Specify which branch to load markdown files from
-  - **Use case:** Load docs from feature branch during development when files don't exist in main yet
-  - **Applies to:** All .md file links and help button
+  - **Use case:** Load docs from feature branch during development, or use frozen documentation versions
+  - **Applies to:** All .md file links and smart links
+  - **Help button priority:**
+    1. **First**: Tries allaboutV2 repo main branch (hardcoded fallback)
+    2. **If fails**: Tries notebook's `repo` using `github-branch` metadata
+- splash-page - URL of splash screen image to display during initialization and when home button is pressed (e.g., "https://example.com/splash.png")
+  - **Default:** None - no splash screen displayed when omitted
+  - **Purpose:** Display a branded splash screen image during notebook initialization and navigation
+  - **Display duration:** Minimum 5 seconds, then auto-dismisses with fade-out animation
+  - **When shown:**
+    - Automatically during notebook initialization (after content loads)
+    - When home button (🏠) is pressed at any time
+  - **Visual effect:** Full-screen dark overlay with centered image, fade-in/fade-out transitions
+  - **Use case:** Branding, loading indicator, or visual transition for better user experience
+  - **Image format:** Any web-compatible format (PNG, JPG, WebP, SVG)
+  - **Recommended size:** Optimized images (e.g., `?width=2000&format=webply&optimize=medium`)
 - opening-page - Markdown file to automatically open when notebook starts (e.g., "preface.md", "#preface.md")
   - **Default:** None - notebook opens on first cell when metadata is omitted
   - **Purpose:** Automatically display a specific markdown file in overlay when notebook loads
@@ -336,6 +350,7 @@ The notebook metadata is displayed in the header section:
 `"repo": "https://github.com/username/repo",`
 `"help-repo": "https://github.com/ddttom/allaboutV2",`
 `"github-branch": "main",`
+`"splash-page": "https://example.com/splash.png",`
 `"opening-page": "preface.md",`
 `"kernelspec": {`
 `"display_name": "JavaScript",`
