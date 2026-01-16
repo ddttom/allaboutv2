@@ -18,6 +18,52 @@ const IPYNB_ERRORS = {
 };
 
 // ============================================================================
+// DEFAULT CONFIGURATION - Single source of truth
+// ============================================================================
+const DEFAULT_CONFIG = {
+  // Messages
+  errorMessage: 'Failed to load notebook',
+  loadingMessage: 'Loading notebook...',
+
+  // Splash Screen
+  defaultSplashDuration: 4000, // Default splash screen duration in milliseconds
+  splashFadeTransition: 300, // Fade in/out transition duration in milliseconds
+  splashFadeBuffer: 50, // Extra buffer time after fade (ms)
+
+  // History & Navigation
+  maxHistoryEntries: 25, // Maximum number of history entries to keep
+
+  // Code Cells
+  maxCodeGroupSize: 3, // Maximum number of consecutive code cells to group in paged mode
+
+  // SVG Inlining
+  svgFetchTimeout: 10000, // SVG fetch timeout in milliseconds (10 seconds)
+  svgPathPattern: /\/illustrations\/[^/]+\.svg$/i, // Pattern to match SVG illustration paths
+
+  // Help System
+  fallbackHelpRepo: 'https://github.com/ddttom/allaboutv2',
+  fallbackHelpBranch: 'main',
+  fallbackHelpPath: 'docs/help.md',
+  helpOverlayTitle: 'IPynb Viewer Help',
+
+  // UI Icons (HTML entities)
+  icons: {
+    close: '&times;', // × close button
+    arrowRight: '&#9654;', // ► right arrow
+    arrowLeft: '&#9664;', // ◄ left arrow
+    arrowUp: '&#9650;', // ▲ up arrow
+    arrowDown: '&#9660;', // ▼ down arrow
+    home: '&#8962;', // ⌂ home icon
+    questionMark: '&#10067;', // ❓ question mark
+    bookmark: '&#128278;', // 🔖 bookmark
+    bookmarkFilled: '&#128279;', // 🔗 bookmark filled (alternative)
+    history: '&#128337;', // 🕘 clock/history icon
+    hamburger: '&#9776;', // ☰ hamburger menu
+    playButton: '&#9654;', // ► play button for code execution
+  },
+};
+
+// ============================================================================
 // MODULE-LEVEL CONSTANTS
 // ============================================================================
 // SVG Inline Cache (kept at module level for cross-invocation caching)
@@ -668,16 +714,8 @@ function createHelpButtonHandler(repoUrl, branch, overlayContext, config) {
     // 1. First try: allaboutv2 repo main branch (from config fallback)
     // 2. If that fails: try notebook's repo using github-branch metadata
 
-    // If no config provided, use hardcoded defaults (for GitHub overlay context)
-    const effectiveConfig = config || {
-      fallbackHelpRepo: 'https://github.com/ddttom/allaboutv2',
-      fallbackHelpBranch: 'main',
-      fallbackHelpPath: 'docs/help.md',
-      helpOverlayTitle: 'IPynb Viewer Help',
-      icons: {
-        questionMark: '❓',
-      },
-    };
+    // If no config provided, use DEFAULT_CONFIG (for GitHub overlay context)
+    const effectiveConfig = config || DEFAULT_CONFIG;
 
     const fallbackRepo = effectiveConfig.fallbackHelpRepo;
     const fallbackBranch = effectiveConfig.fallbackHelpBranch;
@@ -4162,53 +4200,8 @@ function checkHashNavigation(repoUrl, helpRepoUrl, branch, pagedOverlay, metadat
  * @param {HTMLElement} block - Block element
  */
 export default async function decorate(block) {
-  // Configuration
-  const config = {
-    // Messages
-    errorMessage: 'Failed to load notebook',
-    loadingMessage: 'Loading notebook...',
-
-    // Splash Screen
-    defaultSplashDuration: 4000, // Default splash screen duration in milliseconds
-    splashFadeTransition: 300, // Fade in/out transition duration in milliseconds
-    splashFadeBuffer: 50, // Extra buffer time after fade (ms)
-
-    // History & Navigation
-    maxHistoryEntries: 25, // Maximum number of history entries to keep
-
-    // Code Cells
-    maxCodeGroupSize: 3, // Maximum number of consecutive code cells to group in paged mode
-
-    // SVG Inlining
-    svgFetchTimeout: 10000, // SVG fetch timeout in milliseconds (10 seconds)
-    svgPathPattern: /\/illustrations\/[^/]+\.svg$/i, // Pattern to match SVG illustration paths
-
-    // Help System
-    fallbackHelpRepo: 'https://github.com/ddttom/allaboutv2',
-    fallbackHelpBranch: 'main',
-    fallbackHelpPath: 'docs/help.md',
-    helpOverlayTitle: 'IPynb Viewer Help',
-
-    // UI Icons (HTML entities)
-    icons: {
-      close: '&times;', // × close button
-      arrowRight: '&#9654;', // ► right arrow
-      arrowLeft: '&#9664;', // ◄ left arrow
-      clock: '&#128337;', // 🕘 clock/history icon
-      hamburger: '&#9776;', // ☰ hamburger menu
-      bookmark: '&#128278;', // 🔖 bookmark icon
-      questionMark: '&#10067;', // ❓ question mark icon
-    },
-
-    // UI Text
-    text: {
-      runButton: 'Run',
-      noHistoryMessage: 'No history yet',
-      noBookmarksMessage: 'No bookmarks yet',
-      clearAllBookmarks: 'Clear All Bookmarks',
-      addBookmark: '+ Bookmark This Page',
-    },
-  };
+  // Configuration - Use DEFAULT_CONFIG defined at top of file
+  const config = DEFAULT_CONFIG;
 
   // Detect variations
   const isPaged = block.classList.contains('paged');
