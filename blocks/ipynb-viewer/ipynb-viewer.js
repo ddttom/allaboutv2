@@ -2446,6 +2446,63 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     });
   }
 
+  /**
+   * Creates a menu item for history or bookmarks
+   * @param {Object} options - Configuration options
+   * @param {string} options.type - 'history' or 'bookmark'
+   * @param {Object} options.item - The history entry or bookmark object
+   * @param {Function} options.onNavigate - Callback for navigation (cell or markdown)
+   * @param {Function} options.onClose - Callback to close the dropdown
+   * @param {Function} options.onRemove - Optional callback to remove bookmark
+   * @returns {HTMLElement} The menu item button
+   */
+  function createNavigationMenuItem({
+    type,
+    item,
+    onNavigate,
+    onClose,
+    onRemove = null,
+  }) {
+    const menuItem = document.createElement('button');
+    menuItem.className = type === 'history' ? 'ipynb-history-item' : 'ipynb-bookmark-item';
+    menuItem.setAttribute('role', 'menuitem');
+
+    if (type === 'history') {
+      // History item: simple icon + title
+      const icon = item.type === 'cell' ? '📄' : '📝';
+      menuItem.textContent = `${icon} ${item.title}`;
+    } else {
+      // Bookmark item: title span + remove button
+      const titleSpan = document.createElement('span');
+      if (item.type === 'cell') {
+        titleSpan.textContent = `📑 ${item.title} (Page ${item.pageIndex + 1})`;
+      } else {
+        const fileName = item.url ? item.url.split('/').pop() : item.title;
+        titleSpan.textContent = `📝 ${fileName}`;
+      }
+
+      const removeBtn = document.createElement('span');
+      removeBtn.className = 'ipynb-bookmark-remove';
+      removeBtn.innerHTML = '&times;';
+      removeBtn.setAttribute('aria-label', 'Remove bookmark');
+      removeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (onRemove) onRemove();
+      });
+
+      menuItem.appendChild(titleSpan);
+      menuItem.appendChild(removeBtn);
+    }
+
+    // Add click handler for navigation
+    menuItem.addEventListener('click', () => {
+      onNavigate();
+      onClose();
+    });
+
+    return menuItem;
+  }
+
   // History button (notebook mode only) - Navigation History
   let historyButton; let
     historyDropdown;
@@ -2475,32 +2532,29 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       }
 
       navigationHistory.forEach((entry) => {
-        const menuItem = document.createElement('button');
-        menuItem.className = 'ipynb-history-item';
-
-        // Add icon based on type
-        const icon = entry.type === 'cell' ? '📄' : '📝';
-        menuItem.textContent = `${icon} ${entry.title}`;
-        menuItem.setAttribute('role', 'menuitem');
-
-        menuItem.addEventListener('click', () => {
-          if (entry.type === 'cell' && entry.cellIndex !== null) {
-            // Navigate to cell page
-            // Find page containing this cell
-            const pageIndex = pages.findIndex((page) => page.cells.some(
-              (cell) => parseInt(cell.dataset.cellIndex, 10) === entry.cellIndex,
-            ));
-            if (pageIndex !== -1) {
-              paginationState.currentPage = pageIndex;
-              updatePageDisplay();
+        const menuItem = createNavigationMenuItem({
+          type: 'history',
+          item: entry,
+          onNavigate: () => {
+            if (entry.type === 'cell' && entry.cellIndex !== null) {
+              // Navigate to cell page
+              const pageIndex = pages.findIndex((page) => page.cells.some(
+                (cell) => parseInt(cell.dataset.cellIndex, 10) === entry.cellIndex,
+              ));
+              if (pageIndex !== -1) {
+                paginationState.currentPage = pageIndex;
+                updatePageDisplay();
+              }
+            } else if (entry.type === 'markdown' && entry.url) {
+              // Re-open GitHub markdown overlay
+              const mdOverlay = createGitHubMarkdownOverlay(entry.url, entry.title, helpRepoUrl, branch, paginationState, hideTopbar, config);
+              mdOverlay.openOverlay();
             }
-          } else if (entry.type === 'markdown' && entry.url) {
-            // Re-open GitHub markdown overlay
-            const mdOverlay = createGitHubMarkdownOverlay(entry.url, entry.title, helpRepoUrl, branch, paginationState, hideTopbar, config);
-            mdOverlay.openOverlay();
-          }
-          historyDropdown.style.display = 'none';
-          historyButton.setAttribute('aria-expanded', 'false');
+          },
+          onClose: () => {
+            historyDropdown.style.display = 'none';
+            historyButton.setAttribute('aria-expanded', 'false');
+          },
         });
 
         historyDropdown.appendChild(menuItem);
@@ -2648,45 +2702,28 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
         bookmarkDropdown.appendChild(emptyMessage);
       } else {
         bookmarks.forEach((bookmark) => {
-          const menuItem = document.createElement('button');
-          menuItem.className = 'ipynb-bookmark-item';
-
-          const titleSpan = document.createElement('span');
-          // Display differently based on type
-          if (bookmark.type === 'cell') {
-            titleSpan.textContent = `📑 ${bookmark.title} (Page ${bookmark.pageIndex + 1})`;
-          } else {
-            // For markdown files, show just the file name
-            const fileName = bookmark.url ? bookmark.url.split('/').pop() : bookmark.title;
-            titleSpan.textContent = `📝 ${fileName}`;
-          }
-
-          const removeBtn = document.createElement('span');
-          removeBtn.className = 'ipynb-bookmark-remove';
-          removeBtn.innerHTML = '&times;';
-          removeBtn.setAttribute('aria-label', 'Remove bookmark');
-          removeBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            removeBookmark(notebookId, bookmark.type, bookmark.pageIndex, bookmark.url);
-            updateBookmarkDropdown();
-          });
-
-          menuItem.appendChild(titleSpan);
-          menuItem.appendChild(removeBtn);
-          menuItem.setAttribute('role', 'menuitem');
-
-          menuItem.addEventListener('click', () => {
-            if (bookmark.type === 'cell') {
-              // Navigate to cell page
-              paginationState.currentPage = bookmark.pageIndex;
-              updatePageDisplay();
-            } else if (bookmark.type === 'markdown' && bookmark.url) {
-              // Open markdown file in overlay
-              const mdOverlay = createGitHubMarkdownOverlay(bookmark.url, bookmark.title, helpRepoUrl, branch, paginationState, hideTopbar, config);
-              mdOverlay.openOverlay();
-            }
-            bookmarkDropdown.style.display = 'none';
-            bookmarkButton.setAttribute('aria-expanded', 'false');
+          const menuItem = createNavigationMenuItem({
+            type: 'bookmark',
+            item: bookmark,
+            onNavigate: () => {
+              if (bookmark.type === 'cell') {
+                // Navigate to cell page
+                paginationState.currentPage = bookmark.pageIndex;
+                updatePageDisplay();
+              } else if (bookmark.type === 'markdown' && bookmark.url) {
+                // Open markdown file in overlay
+                const mdOverlay = createGitHubMarkdownOverlay(bookmark.url, bookmark.title, helpRepoUrl, branch, paginationState, hideTopbar, config);
+                mdOverlay.openOverlay();
+              }
+            },
+            onClose: () => {
+              bookmarkDropdown.style.display = 'none';
+              bookmarkButton.setAttribute('aria-expanded', 'false');
+            },
+            onRemove: () => {
+              removeBookmark(notebookId, bookmark.type, bookmark.pageIndex, bookmark.url);
+              updateBookmarkDropdown();
+            },
           });
 
           bookmarkDropdown.appendChild(menuItem);
