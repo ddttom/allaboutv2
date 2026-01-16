@@ -58,7 +58,7 @@ export default function decorate(block) {
 
     // Process FAQ data rows
     const faqs = [];
-    for (let i = 1; i < rows.length; i++) {
+    for (let i = 1; i < rows.length; i += 1) {
       const row = rows[i];
       const cells = Array.from(row.children);
 
@@ -142,7 +142,7 @@ export default function decorate(block) {
     const metadata = {};
 
     // Start from the row after the "metadata" header
-    for (let i = 1; i < metadataRows.length; i++) {
+    for (let i = 1; i < metadataRows.length; i += 1) {
       const row = metadataRows[i];
       const cells = Array.from(row.children);
 

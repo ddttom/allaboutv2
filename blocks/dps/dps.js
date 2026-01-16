@@ -227,7 +227,7 @@ function parseRows(rows) {
   const slides = [];
 
   // Process each slide row
-  for (let i = 1; i < rows.length; i++) {
+  for (let i = 1; i < rows.length; i += 1) {
     const row = rows[i];
     const cells = Array.from(row.children);
 
@@ -763,12 +763,12 @@ function handleSequenceNavigation(direction) {
   let nextIndex = currentSequenceIndex;
 
   if (direction === 'next') {
-    nextIndex++;
+    nextIndex += 1;
     if (nextIndex >= items.length) {
       return false; // Move to next slide
     }
   } else {
-    nextIndex--;
+    nextIndex -= 1;
     if (nextIndex < 0) {
       return false; // Move to previous slide
     }
@@ -968,7 +968,7 @@ function toggleTimer() {
  */
 function updateTimer() {
   if (remainingTime > 0) {
-    remainingTime--;
+    remainingTime -= 1;
     document.querySelector('.timer').textContent = formatTime(remainingTime);
 
     // Flash warning when 2 minutes remain
@@ -995,7 +995,7 @@ function flashTimeWarning() {
 
     setTimeout(() => {
       container.style.backgroundColor = '';
-      flashCount++;
+      flashCount += 1;
 
       if (flashCount < 3) {
         setTimeout(singleFlash, 300);

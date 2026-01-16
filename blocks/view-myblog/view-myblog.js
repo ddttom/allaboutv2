@@ -312,11 +312,11 @@ export default async function decorate(block) {
         if (category.posts) {
           const nonIndexPosts = category.posts.filter((post) => !isIndexPage(post.url));
           if (nonIndexPosts.length > 0) {
-            activeCategoryCount++;
+            activeCategoryCount += 1;
           }
         } else if (category.links) {
           // Additional Resources section counts as active
-          activeCategoryCount++;
+          activeCategoryCount += 1;
         }
       });
     }
