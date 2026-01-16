@@ -465,7 +465,7 @@ function showSplashScreen(imageUrl, minDuration = 4000) {
     // eslint-disable-next-line no-console
     console.log('[SPLASH] Creating splash overlay...');
 
-    // Create splash overlay
+    // Create splash overlay with HIGHEST z-index to appear above all overlays
     const splashOverlay = document.createElement('div');
     splashOverlay.className = 'ipynb-splash-overlay';
     splashOverlay.style.cssText = `
@@ -475,7 +475,7 @@ function showSplashScreen(imageUrl, minDuration = 4000) {
       width: 100%;
       height: 100%;
       background-color: rgba(0, 0, 0, 0.95);
-      z-index: 10000;
+      z-index: 10002;
       display: flex;
       align-items: center;
       justify-content: center;
