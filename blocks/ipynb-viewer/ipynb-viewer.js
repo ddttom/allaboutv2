@@ -825,9 +825,16 @@ function sanitizeSVG(svgText, altText) {
 /**
  * Inline SVG illustrations in HTML
  * @param {string} htmlString - HTML string with img tags
+ * @param {Object} options - SVG inlining options
+ * @param {RegExp} options.pattern - Pattern to match SVG paths (default: /\/illustrations\/[^/]+\.svg$/i)
+ * @param {number} options.timeout - Fetch timeout in ms (default: 10000)
  * @returns {Promise<string>} HTML string with inlined SVGs
  */
-async function inlineSVGIllustrations(htmlString) {
+async function inlineSVGIllustrations(htmlString, options = {}) {
+  // Default options
+  const pattern = options.pattern || /\/illustrations\/[^/]+\.svg$/i;
+  const timeout = options.timeout || 10000;
+
   try {
     // Parse HTML to find img tags
     const parser = new DOMParser();
@@ -838,7 +845,7 @@ async function inlineSVGIllustrations(htmlString) {
     const svgsToInline = [];
     images.forEach((img) => {
       const src = img.getAttribute('src');
-      if (src && SVG_INLINE_CONFIG.PATTERN.test(src)) {
+      if (src && pattern.test(src)) {
         svgsToInline.push({ img, src, alt: img.getAttribute('alt') || '' });
       }
     });
@@ -850,12 +857,12 @@ async function inlineSVGIllustrations(htmlString) {
     // Fetch all SVGs in parallel
     const fetchPromises = svgsToInline.map(async ({ img, src, alt }) => {
       // Check cache first
-      if (SVG_INLINE_CONFIG.CACHE.has(src)) {
-        return { img, svg: SVG_INLINE_CONFIG.CACHE.get(src), src };
+      if (SVG_INLINE_CACHE.has(src)) {
+        return { img, svg: SVG_INLINE_CACHE.get(src), src };
       }
 
       // Fetch and sanitize
-      const svgText = await fetchSVGContent(src, SVG_INLINE_CONFIG.TIMEOUT);
+      const svgText = await fetchSVGContent(src, timeout);
       if (!svgText) {
         return { img, svg: null, src }; // Keep as img tag
       }
@@ -866,7 +873,7 @@ async function inlineSVGIllustrations(htmlString) {
       }
 
       // Cache the result
-      SVG_INLINE_CONFIG.CACHE.set(src, sanitizedSVG);
+      SVG_INLINE_CACHE.set(src, sanitizedSVG);
 
       return { img, svg: sanitizedSVG, src };
     });
@@ -2231,9 +2238,10 @@ function findNodeById(tree, nodeId) {
  * @param {boolean} [hideTopbar] - Whether to hide the top bar
  * @param {object} [notebook] - Raw notebook data with cells array
  * @param {object} [config] - Configuration object with settings (injected dependency)
+ * @param {number} [splashDuration] - Splash screen duration in ms (from metadata or config)
  * @returns {object} Overlay controls
  */
-function createPagedOverlay(container, cellsContainer, autorun = false, isNotebookMode = false, repoUrl = null, notebookTitle = 'Jupyter Notebook', helpRepoUrl = null, branch = 'main', hideTopbar = false, notebook = null, config = null) {
+function createPagedOverlay(container, cellsContainer, autorun = false, isNotebookMode = false, repoUrl = null, notebookTitle = 'Jupyter Notebook', helpRepoUrl = null, branch = 'main', hideTopbar = false, notebook = null, config = null, splashDuration = 4000) {
   // Config is required - fail with clear error if missing
   if (!config) {
     console.error('[IPYNB-VIEWER] CRITICAL: Config object missing in createPagedOverlay');
@@ -2246,14 +2254,16 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
 
   const cells = Array.from(cellsContainer.querySelectorAll('.ipynb-cell'));
 
-  if (cells.length === 0) return null;
+  if (cells.length === 0) {
+    return null;
+  }
 
   // Remove any existing overlays to prevent duplicates
   const existingOverlays = document.querySelectorAll('.ipynb-paged-overlay');
   existingOverlays.forEach((overlay) => overlay.remove());
 
   // Create page groups (smart grouping)
-  const maxCodeGroupSize = config.maxCodeGroupSize;
+  const { maxCodeGroupSize } = config;
   const pages = createPageGroups(cells, maxCodeGroupSize);
   const totalPages = pages.length;
 
@@ -4026,8 +4036,9 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
  * @param {string} branch - GitHub branch
  * @param {Object} pagedOverlay - The paged overlay object with navigation methods
  * @param {Object} metadata - Notebook metadata (may contain opening-page)
+ * @param {Object} config - Configuration object (injected dependency)
  */
-function checkHashNavigation(repoUrl, helpRepoUrl, branch, pagedOverlay, metadata = {}) {
+function checkHashNavigation(repoUrl, helpRepoUrl, branch, pagedOverlay, metadata = {}, config = null) {
   const { hash } = window.location;
   let targetPath = null;
 
@@ -4359,7 +4370,7 @@ export default async function decorate(block) {
 
       // Create overlay with autorun support and notebook mode flag
       const notebookTitle = notebook.metadata?.title || 'Jupyter Notebook';
-      const overlay = createPagedOverlay(container, cellsContainer, shouldAutorun, isNotebook, repoUrl, notebookTitle, helpRepoUrl, githubBranch, isNoTopbar, notebook, config);
+      const overlay = createPagedOverlay(container, cellsContainer, shouldAutorun, isNotebook, repoUrl, notebookTitle, helpRepoUrl, githubBranch, isNoTopbar, notebook, config, splashDuration);
 
       // Index variation: Auto-open overlay without button
       if (isIndex) {
@@ -4367,7 +4378,7 @@ export default async function decorate(block) {
         setTimeout(() => {
           overlay.openOverlay();
           // Check for hash navigation after overlay opens
-          checkHashNavigation(repoUrl, helpRepoUrl, githubBranch, overlay, notebook.metadata);
+          checkHashNavigation(repoUrl, helpRepoUrl, githubBranch, overlay, notebook.metadata, config);
         }, 100);
       } else {
         // Regular notebook/paged: Show start button
@@ -4383,7 +4394,7 @@ export default async function decorate(block) {
           overlay.openOverlay();
           // Check for hash navigation after overlay opens
           setTimeout(() => {
-            checkHashNavigation(repoUrl, helpRepoUrl, githubBranch, overlay, notebook.metadata);
+            checkHashNavigation(repoUrl, helpRepoUrl, githubBranch, overlay, notebook.metadata, config);
           }, 100);
         });
 
