@@ -101,8 +101,9 @@ To adapt these pages for your own use:
 Complete documentation for these patterns is available in:
 
 - **Appendix K: Common Page Patterns** - The source appendix with detailed explanations
-- **Appendix D: AI-Friendly HTML Guide** - Comprehensive patterns and best practices
+- **Appendix D: AI-Friendly HTML Guide** - Comprehensive patterns and best practices (~9,050 words)
 - **Appendix A: Implementation Cookbook** - Quick-reference code snippets
+- **Chapter 12: Technical Advice** - Implementation patterns and testing strategies
 
 ## Source
 
@@ -120,6 +121,6 @@ These example pages are provided for educational purposes. You may copy, adapt, 
 
 For questions about these patterns:
 
-- **Email:** tom.cranstoun@gmail.com
+- **Email:** <tom.cranstoun@gmail.com>
 - **Website:** <https://allabout.network>
 - **GitHub:** <https://github.com/Digital-Domain-Technologies-Ltd/invisible-users-manuscript>

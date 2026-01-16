@@ -232,7 +232,7 @@ January 2025)</li>
 <p><strong>Particularly relevant:</strong> ACP represents the first
 major open protocol for agent-mediated commerce, directly addressing the
 identity delegation and platform lock-in concerns discussed in Chapter
-12.</p>
+13.</p>
 <h3 id="technical-implementation-insights">Technical Implementation
 Insights</h3>
 <p><strong>Open Standard Approach:</strong></p>
@@ -283,16 +283,16 @@ ACP.</p>
 Checkout) for immediate market access to platform-specific users</li>
 <li><strong>Adopt open protocol</strong> (ACP) for portability across
 multiple AI agents</li>
-<li><strong>Support both</strong> (Chapter 12’s identity abstraction
+<li><strong>Support both</strong> (Chapter 13’s identity abstraction
 approach) for maximum reach</li>
 </ol>
 <p>The “support both” approach requires building an abstraction layer
 that isolates platform-specific implementations behind a standard
 interface.</p>
 <h3 id="what-this-validates">What This Validates</h3>
-<p><strong>From Chapter 12 - “The Missing Identity Layer” (lines
+<p><strong>From Chapter 13 - “The Missing Identity Layer” (lines
 898-1000):</strong></p>
-<p>Chapter 12 identified the lack of universal identity delegation as a
+<p>Chapter 13 identified the lack of universal identity delegation as a
 critical gap: “What’s missing: A universal identity delegation layer
 that works across platforms and agents.” ACP provides exactly this - an
 open protocol for delegation that isn’t locked to a single platform.</p>
@@ -300,7 +300,7 @@ open protocol for delegation that isn’t locked to a single platform.</p>
 advantages before standards emerge.” ACP challenges this prediction by
 publishing an open standard immediately rather than building a
 proprietary system first.</p>
-<p><strong>From Chapter 12 - “Identity Abstraction” (lines
+<p><strong>From Chapter 13 - “Identity Abstraction” (lines
 974-991):</strong></p>
 <p>The chapter recommended: “Build the identity layer as an abstraction.
 Support proprietary systems today (you need market access) but design
@@ -320,14 +320,14 @@ prevents the identity loss problem discussed in Chapter 4.</p>
 <h3 id="what-this-challenges">What This Challenges</h3>
 <p><strong>Assumption challenged - Platform Consolidation Before
 Standards:</strong></p>
-<p>Chapter 12, line 916: “The technically correct solution - build on
+<p>Chapter 13, line 916: “The technically correct solution - build on
 open standards like OAuth, implement portable delegation tokens, and
 support cross-platform identity - doesn’t exist yet because platforms
 have no incentive to create it.”</p>
 <p>This assumption proved incorrect. OpenAI and Stripe published an open
 protocol before proprietary consolidation occurred, racing to establish
 ACP as the standard before platform lock-in happens. The timeline
-Chapter 12 predicted (proprietary systems first, open standards after
+Chapter 13 predicted (proprietary systems first, open standards after
 regulatory pressure) was compressed - open standards emerged alongside
 proprietary systems.</p>
 <p><strong>Competitive tension created:</strong></p>
@@ -351,7 +351,7 @@ limited agent reach today)</li>
 <li><strong>Multi-platform:</strong> Support both closed and open
 (maximum reach, highest implementation cost)</li>
 </ol>
-<p>Chapter 12’s identity abstraction recommendation becomes even more
+<p>Chapter 13’s identity abstraction recommendation becomes even more
 critical - businesses need architecture that isolates platform
 differences behind a unified interface.</p>
 <h3 id="architectural-insights">Architectural Insights</h3>
@@ -398,7 +398,7 @@ precedence? How do merchants handle conflicting delegation tokens from
 different platforms?</p>
 <p><strong>What happens when regulations force
 interoperability?</strong></p>
-<p>Chapter 12 predicted regulators would eventually mandate open
+<p>Chapter 13 predicted regulators would eventually mandate open
 standards. If ACP becomes that standard through market adoption, does
 that give OpenAI and Stripe disproportionate influence over agent
 commerce infrastructure?</p>
@@ -409,7 +409,7 @@ Adyen, PayPal, or Square adopt ACP, or will they view it as a Stripe
 advantage?</p>
 <h3 id="strategic-implications-for-readers">Strategic Implications for
 Readers</h3>
-<p><strong>For Web Developers (Chapter 11 audience):</strong></p>
+<p><strong>For Web Developers (Chapter 12 audience):</strong></p>
 <p>If you’re implementing e-commerce or checkout flows, consider ACP
 integration alongside traditional payment flows. The protocol provides a
 standard way for agents to complete purchases without requiring custom
@@ -417,10 +417,10 @@ agent-specific implementations for each platform.</p>
 <p><strong>Implementation priority:</strong> Medium-term (6-12 months).
 ACP is production-ready but agent adoption is still growing. Position
 for future growth without disrupting current operations.</p>
-<p><strong>For Agent Creators (Chapter 12 audience):</strong></p>
-<p>ACP provides the open standard Chapter 12 advocated for. If you’re
+<p><strong>For Agent Creators (Chapter 13 audience):</strong></p>
+<p>ACP provides the open standard Chapter 13 advocated for. If you’re
 building agents, implement ACP support to enable commerce without
-platform lock-in. The abstraction layer pattern from Chapter 12 (lines
+platform lock-in. The abstraction layer pattern from Chapter 13 (lines
 974-991) applies directly: isolate ACP behind a standard interface so
 you can support proprietary platforms alongside open standards.</p>
 <p><strong>Implementation priority:</strong> High (immediate).
@@ -450,10 +450,10 @@ platform integrations as needed</li>
 ACP provides infrastructure for transaction-based benefits</li>
 <li>Chapter 4, lines 324-425: Identity delegation challenges - ACP
 addresses customer relationship preservation</li>
-<li>Chapter 12, lines 898-1000: “The Missing Identity Layer” - ACP fills
-the gap Chapter 12 identified</li>
-<li>Chapter 12, lines 974-991: Identity abstraction recommendation - ACP
-enables the pattern Chapter 12 advocated</li>
+<li>Chapter 13, lines 898-1000: “The Missing Identity Layer” - ACP fills
+the gap Chapter 13 identified</li>
+<li>Chapter 13, lines 974-991: Identity abstraction recommendation - ACP
+enables the pattern Chapter 13 advocated</li>
 </ul>
 <p><strong>Related appendix entries:</strong></p>
 <ul>
@@ -783,7 +783,7 @@ This acceleration demonstrates “rocket-fuel mode” market dynamics even
 faster than projected.</p>
 <p><strong>Competitive fragmentation:</strong></p>
 <p>The ecosystem is more fragmented than “proprietary platforms vs. open
-standards” dichotomy suggested in Chapter 12:</p>
+standards” dichotomy suggested in Chapter 13:</p>
 <ul>
 <li>Standalone browsers with built-in agents (Comet)</li>
 <li>Browser extensions (Claude for Chrome, ChatGPT sidebar)</li>
@@ -815,7 +815,7 @@ don’t implement agent-friendly patterns.</p>
 <li>Errors more costly (user not watching screen)</li>
 <li>Privacy implications (always-listening mic)</li>
 </ul>
-<p>Validates Chapter 11’s emphasis on explicit state and persistent
+<p>Validates Chapter 12’s emphasis on explicit state and persistent
 error messages - voice users need clear feedback even more than visual
 users.</p>
 <p><strong>Background Task Management:</strong></p>
@@ -826,7 +826,7 @@ users.</p>
 <li>Clear completion notifications</li>
 <li>Rollback capabilities if errors occur</li>
 </ul>
-<p>This is the validation layer architecture discussed in Chapter 11:
+<p>This is the validation layer architecture discussed in Chapter 12:
 agents need confidence scoring, error detection, and graceful failure
 modes.</p>
 <h3 id="questions-raised-1">Questions Raised</h3>
@@ -864,7 +864,7 @@ successfully vs. fail partially or silently?</p>
 definitive solutions.</p>
 <h3 id="strategic-implications-for-readers-1">Strategic Implications for
 Readers</h3>
-<p><strong>For Website Owners (Chapter 10 guidance):</strong></p>
+<p><strong>For Website Owners (Chapter 11 guidance):</strong></p>
 <p>Millions of Comet users are attempting workflows on your site right
 now. Test with Comet immediately:</p>
 <ol type="1">
@@ -872,7 +872,7 @@ now. Test with Comet immediately:</p>
 <li>Instruct agent to complete critical workflow (book appointment,
 complete purchase, fill contact form)</li>
 <li>Observe where it fails</li>
-<li>Implement patterns from Chapter 10 to fix failures</li>
+<li>Implement patterns from Chapter 11 to fix failures</li>
 </ol>
 <p>Those failures cost you both human and AI-mediated conversions.</p>
 <p><strong>For Security Professionals (Chapter 6 guidance):</strong></p>
@@ -887,7 +887,7 @@ don’t rely solely on authentication state:</p>
 challenging)</li>
 <li>Rate limiting per session rather than per IP</li>
 </ul>
-<p><strong>For Agent Creators (Chapter 11 guidance):</strong></p>
+<p><strong>For Agent Creators (Chapter 12 guidance):</strong></p>
 <p>Comet demonstrates gaps between marketing claims and production
 reliability:</p>
 <ul>
@@ -897,7 +897,7 @@ reliability:</p>
 </ul>
 <p>Build validation layers and guardrails that prevent false positives
 (agent reports success when task failed). Implement patterns from
-Chapter 11: planning mode review, pre-approval, confidence scoring,
+Chapter 12: planning mode review, pre-approval, confidence scoring,
 confirmation for irreversible actions.</p>
 <p><strong>For Competing Platforms:</strong></p>
 <p>Comet’s free model pressures premium pricing strategies.
@@ -919,7 +919,7 @@ authenticated sessions, impossible to detect (6:46, 6:101)</li>
 now owns browser, validates competitive dynamics</li>
 <li><strong>Chapter 10:</strong> “Browser Agent Architecture” -
 represents this agent type with session inheritance capabilities</li>
-<li><strong>Chapter 11:</strong> “Validation Layers” - multi-step
+<li><strong>Chapter 12:</strong> “Validation Layers” - multi-step
 workflows need robust error handling and confirmation patterns</li>
 <li><strong>Appendix D:</strong> “AI-Friendly HTML Guide” - patterns
 that help Comet succeed on your website</li>
@@ -1012,19 +1012,19 @@ tokens, and logged-in state. This demonstrates the “session inheritance
 problem” discussed in Chapter 6: banks cannot distinguish between human
 and AI activity because the AI inherits proof-of-humanity tokens from
 the authenticated session.</p>
-<p><strong>Chapter 11 correlation - Browser Agent
+<p><strong>Chapter 12 correlation - Browser Agent
 Architecture:</strong></p>
 <p>Claude for Chrome represents the “rendered HTML” agent type discussed
-in Chapter 11’s “Critical Distinction: Served vs Rendered HTML” section.
+in Chapter 12’s “Critical Distinction: Served vs Rendered HTML” section.
 Unlike server-based agents that fetch static HTML, Claude for Chrome
 executes JavaScript, sees dynamic updates, and can interact with fully
 rendered pages. This makes it more capable than CLI agents but also more
 complex to secure and control.</p>
-<p><strong>Chapter 12 validation - Agent Creator
+<p><strong>Chapter 13 validation - Agent Creator
 Responsibilities:</strong></p>
 <p>The safety controls in Claude for Chrome - pre-approval, confirmation
 for irreversible actions, planning mode review - demonstrate the
-validation layers and guardrails discussed in Chapter 12. Anthropic
+validation layers and guardrails discussed in Chapter 13. Anthropic
 implemented confidence scoring (implicit in planning mode), user
 confirmation for high-stakes actions, and explicit permission
 models.</p>
@@ -1095,14 +1095,14 @@ authenticated session, making it impossible for websites to distinguish
 AI activity from human activity based on authentication alone. Banks
 cannot detect that Claude is making transfers because Claude presents
 valid session cookies from the authenticated user.</p>
-<p><strong>From Chapter 11:</strong></p>
+<p><strong>From Chapter 12:</strong></p>
 <p>“Two HTML States” - Claude for Chrome operates on rendered HTML
 (after JavaScript execution), validating the distinction between served
 and rendered states. The patterns that work for server-based agents
 (semantic HTML in served state) also benefit browser agents, but browser
 agents can additionally handle JavaScript-dependent interfaces that
 would break CLI agents.</p>
-<p><strong>From Chapter 12:</strong></p>
+<p><strong>From Chapter 13:</strong></p>
 <p>“Validation Layers” - The safety controls in Claude for Chrome
 demonstrate production-grade guardrails: planning mode review,
 pre-approval for actions, confirmation for irreversible operations, and
@@ -1197,7 +1197,7 @@ concern. Your authentication systems cannot distinguish between human
 activity and AI activity based on session tokens alone. Review the
 security patterns in Chapter 6 and implement detection strategies that
 don’t rely solely on authentication state.</p>
-<p><strong>For agent creators (Chapter 11 guidance):</strong></p>
+<p><strong>For agent creators (Chapter 12 guidance):</strong></p>
 <p>Claude for Chrome demonstrates production-grade validation patterns
 you should implement: planning mode review, pre-approval for actions,
 confirmation for irreversible operations, prompt injection defences, and
@@ -1213,7 +1213,7 @@ authenticated sessions, impossible to detect</li>
 rendered state after JavaScript execution</li>
 <li><strong>Chapter 10:</strong> “Browser Agent Architecture” -
 represents this agent type discussed in the chapter</li>
-<li><strong>Chapter 11:</strong> “Validation Layers” - demonstrates
+<li><strong>Chapter 12:</strong> “Validation Layers” - demonstrates
 production guardrails and safety controls</li>
 <li><strong>Appendix D:</strong> “AI-Friendly HTML Guide” - patterns
 that help Claude for Chrome succeed</li>
@@ -1579,7 +1579,7 @@ strategic position.</p>
 major platforms (Microsoft, Amazon, potentially Google) launch agent
 commerce within months, timeline assumptions compress from “two years”
 to “12 months” for reaching 10-20% agent-mediated shopping.</p>
-<p><strong>For agent creators (Chapter 11 guidance):</strong></p>
+<p><strong>For agent creators (Chapter 12 guidance):</strong></p>
 <p>Amazon’s integration strategy (partner with major service platforms)
 provides alternative to individual website scraping. Consider whether
 platform partnerships enable broader agent capabilities than
@@ -1820,9 +1820,9 @@ verified metrics until independent research confirms them.</p>
 <h3 id="technical-implementation">Technical Implementation</h3>
 <p>Copilot Checkout demonstrates several patterns discussed in this
 book:</p>
-<p><strong>Chapter 11 validation - Proprietary Identity
+<p><strong>Chapter 12 validation - Proprietary Identity
 Lock-in:</strong></p>
-<p>Chapter 11 predicted: “every major platform is building closed
+<p>Chapter 12 predicted: “every major platform is building closed
 identity systems that lock users into their ecosystem. They’re racing to
 establish first-mover advantages before standards emerge.”</p>
 <p>Microsoft’s implementation validates this prediction exactly. Copilot
@@ -1846,16 +1846,16 @@ that sever customer relationships (see Chapter 4, “The Severed Customer
 Relationship”), Copilot Checkout maintains retailer-customer connections
 for warranty registration, loyalty programmes, and order history -
 albeit through Microsoft’s controlled system.</p>
-<p><strong>Chapter 9 correlation - Structured Data
+<p><strong>Chapter 11 correlation - Structured Data
 Requirements:</strong></p>
 <p>Partner retailers provide structured product data (Schema.org), API
 endpoints, and clear transaction state indicators - precisely the
-patterns recommended in Chapter 9, “Designing for Both.”</p>
-<p><strong>Chapter 10 correlation - Dual-Interface
+patterns recommended in Chapter 11, “Designing for Both.”</p>
+<p><strong>Chapter 12 correlation - Dual-Interface
 Architecture:</strong></p>
 <p>The system operates through both conversational interface (agent) and
 traditional web interface (human fallback), demonstrating the
-dual-interface pattern described in Chapter 10, “Technical Advice.”</p>
+dual-interface pattern described in Chapter 12, “Technical Advice.”</p>
 <h3 id="copilot-business-model-implications">Copilot Business Model
 Implications</h3>
 <p><strong>For retailers (Chapter 4 analysis):</strong></p>
@@ -1883,7 +1883,7 @@ implementing compatible patterns.</p>
 <p>“Designing for Both” - Partner retailers demonstrate that
 agent-friendly patterns require explicit state, structured data, and
 clear transaction feedback.</p>
-<p><strong>From Chapter 11:</strong></p>
+<p><strong>From Chapter 12:</strong></p>
 <p>“What Agent Creators Must Build” - Successful implementation required
 retailer compliance with validation patterns, confidence scoring, and
 graceful error handling.</p>
@@ -1907,7 +1907,7 @@ payment gateways rather than building proprietary systems.</p>
 - demonstrating the “session inheritance problem” described in Chapter
 6.</p>
 <p><strong>Retailer APIs:</strong></p>
-<p>Partner integrations require API access - validating Chapter 10’s
+<p>Partner integrations require API access - validating Chapter 11’s
 recommendation that businesses should provide agent-accessible
 interfaces alongside human UIs.</p>
 <h3 id="copilot-questions-raised">Copilot Questions Raised</h3>
@@ -1940,7 +1940,7 @@ adoption.</p>
 competitive response times. Platforms are watching competitors and
 responding within days, not quarters. Strategic planning cycles must
 account for rapid platform evolution.</p>
-<p><strong>For agent creators (Chapter 11 guidance):</strong></p>
+<p><strong>For agent creators (Chapter 12 guidance):</strong></p>
 <p>Copilot Checkout demonstrates validation patterns in production -
 study their error handling, confidence scoring, and fallback mechanisms.
 The January 2026 expansion (retail AI agents for operations, product
@@ -1958,7 +1958,7 @@ browser-based agent inherits authentication</li>
 demonstrate universal patterns</li>
 <li><strong>Chapter 10:</strong> “Dual-Interface Architecture” -
 conversational + web fallback pattern</li>
-<li><strong>Chapter 11:</strong> “Validation Layers” - production
+<li><strong>Chapter 12:</strong> “Validation Layers” - production
 implementation of guardrails</li>
 <li><strong>Appendix F:</strong> “Implementation Roadmap” - urgency
 increased for Priority 1-2 tasks</li>
@@ -2167,11 +2167,11 @@ meaningful agent commerce adoption</li>
 compete to establish agent commerce standards. Google’s announcement
 (three days after Microsoft, six days after Amazon) validates the
 platform race thesis and competitive intensity.</p>
-<p><strong>From Chapter 10 - “Designing for Both”:</strong></p>
+<p><strong>From Chapter 11 - “Designing for Both”:</strong></p>
 <p>Open protocols enable the “design once, work everywhere” approach
 recommended throughout the book. UCP positioning (assuming technical
 delivery matches claims) validates the universal pattern strategy.</p>
-<p><strong>From Chapter 12 - “What Agent Creators Must
+<p><strong>From Chapter 13 - “What Agent Creators Must
 Build”:</strong></p>
 <p>“Identity Abstraction” recommendation becomes critical - agent
 creators must now support at minimum two open protocols (ACP, UCP) plus
@@ -2198,7 +2198,7 @@ disclosed. Platform competitive instincts may dominate over ecosystem
 health.</p>
 <h3 id="architectural-insights-for-implementers">Architectural Insights
 for Implementers</h3>
-<p><strong>For Web Developers (Chapter 11 audience):</strong></p>
+<p><strong>For Web Developers (Chapter 12 audience):</strong></p>
 <ol type="1">
 <li><strong>Implement semantic HTML and structured data first</strong>
 (Priority 1 patterns from Appendix F) - these work regardless of
@@ -2211,7 +2211,7 @@ interoperability</li>
 <li><strong>Test with multiple agents</strong> - Google Business Agent,
 ChatGPT, Copilot to verify cross-platform compatibility</li>
 </ol>
-<p><strong>For Agent Creators (Chapter 12 audience):</strong></p>
+<p><strong>For Agent Creators (Chapter 13 audience):</strong></p>
 <ol type="1">
 <li><strong>Support both ACP and UCP</strong> if resources permit -
 maximize merchant compatibility during convergence period</li>
@@ -2219,7 +2219,7 @@ maximize merchant compatibility during convergence period</li>
 protocols without rewriting agent logic</li>
 <li><strong>Prefer open over closed</strong> - avoid exclusive Microsoft
 Copilot integration, position for ACP/UCP convergence</li>
-<li><strong>Implement validation layers</strong> (Chapter 12 patterns) -
+<li><strong>Implement validation layers</strong> (Chapter 13 patterns) -
 open protocols don’t eliminate data extraction failures or pipeline
 errors</li>
 </ol>
@@ -2438,9 +2438,9 @@ leveraging search monopoly exactly as predicted</li>
 compression increases urgency for high-exposure businesses</li>
 <li><strong>Chapter 10: “Designing for Both”</strong> - Open protocols
 enable universal pattern approach</li>
-<li><strong>Chapter 11: “Technical Advice”</strong> - Implementation
+<li><strong>Chapter 12: “Technical Advice”</strong> - Implementation
 guide for protocol-agnostic patterns</li>
-<li><strong>Chapter 12: “Identity Abstraction”</strong> - Agent creators
+<li><strong>Chapter 13: “Identity Abstraction”</strong> - Agent creators
 must support multiple protocols during convergence</li>
 <li><strong>Appendix F: “Implementation Roadmap”</strong> - Prioritize
 tasks based on compressed timeline</li>
@@ -2836,7 +2836,7 @@ protocol</li>
 <ul>
 <li>Chapter 10: Designing for Both (patterns that work for AI and
 humans)</li>
-<li>Chapter 11: Technical Advice (implementation guidance)</li>
+<li>Chapter 12: Technical Advice (implementation guidance)</li>
 <li>Appendix D: Design Principles (simplicity, transparency,
 clarity)</li>
 </ul>
@@ -3075,11 +3075,11 @@ behavioral shifts occur. You don’t have five years to make your site
 agent-compatible. You have 1-2 years before mainstream adoption
 accelerates. Use the Agent Exposure Assessment framework (Chapter 4) to
 prioritize work. The window is smaller than you think.</p>
-<p><strong>For agent creators (Chapter 11 guidance):</strong></p>
+<p><strong>For agent creators (Chapter 12 guidance):</strong></p>
 <p>Developers trust AI tools enough to replace Stack Overflow for
 routine coding questions. This demonstrates ecosystem maturity - users
 are comfortable delegating significant decisions to agents. Build robust
-validation layers (Chapter 11) to earn and maintain that trust. Pipeline
+validation layers (Chapter 12) to earn and maintain that trust. Pipeline
 failures like the £203,000 cruise pricing error (Appendix I) will
 destroy adoption faster than Stack Overflow declined.</p>
 <p><strong>For content publishers (Chapter 5 guidance):</strong></p>
@@ -3158,7 +3158,7 @@ appendices</li>
 </ol>
 <hr />
 <h2 id="how-to-use-this-appendix">How to Use This Appendix</h2>
-<p><strong>For sequential readers:</strong> Read after Chapter 11 to see
+<p><strong>For sequential readers:</strong> Read after Chapter 12 to see
 real-world validation of the book’s patterns.</p>
 <p><strong>For business leaders:</strong> Review after Chapter 4 to
 understand current industry dynamics before creating strategy.</p>

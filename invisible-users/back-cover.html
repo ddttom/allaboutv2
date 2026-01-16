@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB" data-locale="en-GB">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -112,11 +112,56 @@
         .release-date { font-size: 10pt; color: var(--text-dim); text-transform: uppercase; }
 
     </style>
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": ["Product", "Book"],
+      "name": "The Invisible Users",
+      "description": "Designing the Web for AI Agents and Everyone Else - A practical guide examining how modern web design optimized for human users fails for AI agents, and how fixing this benefits everyone.",
+      "author": {
+        "@type": "Person",
+        "name": "Tom Cranstoun",
+        "image": "https://allabout.network/media_126e99d56f06caf788bee715aff92281d2e31a206.png",
+        "description": "Tom has worked on web technology since the early days of the commercial internet. His career spans technical implementation and strategic consulting, focusing on the friction between engineering possibilities and business needs."
+      },
+      "bookFormat": "https://schema.org/EBook",
+      "inLanguage": "en-GB",
+      "datePublished": "2026-03-31",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Digital Domain Technologies"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4",
+        "bestRating": "5",
+        "ratingCount": "1"
+      },
+      "review": {
+        "@type": "Review",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "4",
+          "bestRating": "5"
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "Solid Recommendation"
+        },
+        "reviewBody": "A clear, practical guide for modern web development. The 'Convergence Principle' is a breakthrough for understanding how agent optimization reinforces accessibility."
+      },
+      "url": "https://allabout.network/invisible-users"
+    }
+    </script>
 </head>
 <body>
 
 <div class="page">
     <div class="content">
+        <main>
+            <article>
 
         <section class="main-copy">
             <p style="margin-bottom: 15px;">AI agents are no longer just reading websites — they're completing purchases, processing transactions, and operating with your credentials. In January 2026, Amazon, Microsoft, and Google launched agent commerce systems within seven days. <b>This isn't speculation about a distant future. It's happening now.</b></p>
@@ -127,34 +172,41 @@
         </section>
 
         <section class="audience-grid">
-            <div class="audience-item"><strong>Web Professionals</strong>Technical patterns & implementation</div>
-            <div class="audience-item"><strong>Business Leaders</strong>Strategic frameworks & decision criteria</div>
-            <div class="audience-item"><strong>Agent Developers</strong>Validation layers & confidence scoring</div>
-            <div class="audience-item"><strong>Platform Vendors</strong>Competitive positioning & retention</div>
+            <div class="audience-item"><strong>Web Professionals</strong>Technical patterns &amp; implementation</div>
+            <div class="audience-item"><strong>Business Leaders</strong>Strategic frameworks &amp; decision criteria</div>
+            <div class="audience-item"><strong>Agent Developers</strong>Validation layers &amp; confidence scoring</div>
+            <div class="audience-item"><strong>Platform Vendors</strong>Competitive positioning &amp; retention</div>
         </section>
 
         <p style="font-size: 11pt; margin-top: 20px; margin-bottom: 20px; color: var(--text-dim);">Not just for business leaders. Developers and testers get technical patterns and detailed appendices. Business readers can skip the code.</p>
 
-        <section class="review-box">
-            <div class="stars">★★★★☆</div>
+            </article>
+
+        <section class="review-box" aria-label="Book review">
+            <div class="stars" role="img" aria-label="Rating: 4 out of 5 stars">★★★★☆</div>
             <p>"A clear, practical guide for modern web development. The 'Convergence Principle' is a breakthrough for understanding how agent optimization reinforces accessibility."</p>
             <p style="font-size: 10pt; margin-top: 10px; opacity: 0.8; font-style: normal;">— Solid Recommendation</p>
         </section>
 
-        <div class="author-section">
-            <img src="https://allabout.network/media_126e99d56f06caf788bee715aff92281d2e31a206" alt="Tom Cranstoun" class="author-img">
+        <section class="author-section" aria-label="About the author">
+            <img src="https://allabout.network/media_126e99d56f06caf788bee715aff92281d2e31a206.png" alt="Tom Cranstoun" class="author-img">
             <div class="author-bio">
                 <strong>Tom Cranstoun</strong>
                 Tom has worked on web technology since the early days of the commercial internet. His career spans technical implementation and strategic consulting, focusing on the friction between engineering possibilities and business needs. He writes for allabout.network and is based in the UK.
             </div>
-        </div>
+        </section>
 
-        <footer class="footer">
+        <footer class="footer" role="contentinfo">
             <div class="release-info">
-                <div class="release-date">Due Q1 2026</div>
-                <a href="https://allabout.network/invisible-users" class="url">allabout.network/invisible-users</a>
+                <div class="release-date">
+                    <time datetime="2026-03-31" data-quarter="Q1">Due Q1 2026</time>
+                </div>
+                <address>
+                    <a href="https://allabout.network/invisible-users" class="url">allabout.network/invisible-users</a>
+                </address>
             </div>
         </footer>
+        </main>
     </div>
 </div>
 
