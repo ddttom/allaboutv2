@@ -1,36 +1,5 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
-export default async function decorate(block) {
-  let content = block.innerHTML.trim();
-  block.innerHTML = '';
-
-  // Remove surrounding quotes if present
-  if (content.startsWith('"') && content.endsWith('"')) {
-    content = content.slice(1, -1);
-  }
-
-  // Decode HTML entities
-  content = decodeHTMLEntities(content);
-
-  // Sanitize the content
-  const sanitizedContent = sanitizeHTML(content);
-
-  // Validate HTML structure
-  if (isValidHTML(sanitizedContent)) {
-    try {
-      block.insertAdjacentHTML('beforeend', sanitizedContent);
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Error inserting HTML:', error);
-      reportIssue('Error inserting HTML', error);
-    }
-  } else {
-    // eslint-disable-next-line no-console
-    console.warn('Invalid HTML structure detected');
-    reportIssue('Invalid HTML structure', sanitizedContent);
-  }
-}
-
 function decodeHTMLEntities(text) {
   const textarea = document.createElement('textarea');
   textarea.innerHTML = text;
@@ -93,4 +62,35 @@ function reportIssue(type, details) {
   // This could be an API call to a logging service or a custom reporting system
   // eslint-disable-next-line no-console
   console.warn(`Raw Block Issue: ${type}`, details);
+}
+
+export default async function decorate(block) {
+  let content = block.innerHTML.trim();
+  block.innerHTML = '';
+
+  // Remove surrounding quotes if present
+  if (content.startsWith('"') && content.endsWith('"')) {
+    content = content.slice(1, -1);
+  }
+
+  // Decode HTML entities
+  content = decodeHTMLEntities(content);
+
+  // Sanitize the content
+  const sanitizedContent = sanitizeHTML(content);
+
+  // Validate HTML structure
+  if (isValidHTML(sanitizedContent)) {
+    try {
+      block.insertAdjacentHTML('beforeend', sanitizedContent);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Error inserting HTML:', error);
+      reportIssue('Error inserting HTML', error);
+    }
+  } else {
+    // eslint-disable-next-line no-console
+    console.warn('Invalid HTML structure detected');
+    reportIssue('Invalid HTML structure', sanitizedContent);
+  }
 }
