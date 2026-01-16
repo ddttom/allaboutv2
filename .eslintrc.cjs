@@ -21,6 +21,8 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'linebreak-style': 'off',
     'no-use-before-define': 'off', // Allow function hoisting
+    'no-restricted-syntax': 'off', // Allow for-of loops
+    'prefer-destructuring': 'off', // Allow array/object access without destructuring
   },
   ignorePatterns: ['blocks/**/*.md'],
 };
