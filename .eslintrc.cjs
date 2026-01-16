@@ -20,6 +20,7 @@ module.exports = {
     'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     'no-underscore-dangle': 'off',
     'linebreak-style': 'off',
+    'no-use-before-define': 'off', // Allow function hoisting
   },
   ignorePatterns: ['blocks/**/*.md'],
 };
