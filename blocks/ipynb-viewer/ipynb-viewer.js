@@ -479,7 +479,7 @@ function showSplashScreen(imageUrl, minDuration = 5000) {
 
     // Track when minimum duration has passed
     let minDurationPassed = false;
-    const minDurationTimer = setTimeout(() => {
+    setTimeout(() => {
       minDurationPassed = true;
     }, minDuration);
 
@@ -540,7 +540,7 @@ function createHelpButtonHandler(repoUrl, branch, overlayContext) {
           fallbackRepo,
           fallbackBranch,
           overlayContext.history,
-          overlayContext.hideTopbar
+          overlayContext.hideTopbar,
         );
         helpOverlay.openOverlay();
         return;
@@ -559,7 +559,7 @@ function createHelpButtonHandler(repoUrl, branch, overlayContext) {
       repoUrl,
       branch,
       overlayContext.history,
-      overlayContext.hideTopbar
+      overlayContext.hideTopbar,
     );
     helpOverlay.openOverlay();
   };
@@ -2210,7 +2210,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       ariaLabel: 'Go to first cell',
       onClick: () => {
         // Show splash screen if configured
-        const splashUrl = block.getAttribute('data-splash-page');
+        const splashUrl = notebook?.metadata?.['splash-page'];
         if (splashUrl) {
           showSplashScreen(splashUrl, 5000).then((dismiss) => {
             dismiss();
@@ -2299,7 +2299,6 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       historyDropdown.style.display = isOpen ? 'none' : 'block';
       historyButton.setAttribute('aria-expanded', !isOpen);
     });
-
   }
 
   // Hamburger menu (notebook mode only) - Table of Contents
@@ -3506,7 +3505,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
 
   // Help button handler
   if (helpButton && helpRepoUrl) {
-    helpButton.addEventListener('click', createHelpButtonHandler(repoUrl, branch, {
+    helpButton.addEventListener('click', createHelpButtonHandler(helpRepoUrl, branch, {
       createGitHubMarkdownOverlay,
       history: parentHistory,
       hideTopbar: false, // GitHub overlay doesn't have hideTopbar parameter
@@ -3768,14 +3767,6 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
     context: 'github',
     ariaLabel: hasParentNotebook ? 'Return to notebook' : 'Go to first page',
     onClick: () => {
-      // Show splash screen if configured
-      const splashUrl = block.getAttribute('data-splash-page');
-      if (splashUrl) {
-        showSplashScreen(splashUrl, 5000).then((dismiss) => {
-          dismiss();
-        });
-      }
-
       if (hasParentNotebook) {
         // We were opened from a notebook - close this overlay to return to notebook
         // eslint-disable-next-line no-console
