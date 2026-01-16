@@ -3348,13 +3348,6 @@ function createHomeButton(config) {
     console.log('[HOME BUTTON] onClick handler completed');
   });
 
-  // Add inline onclick as backup test
-  homeButton.onclick = () => {
-    // eslint-disable-next-line no-console
-    console.log(`[HOME BUTTON] INLINE onclick fired for context: ${context}!`);
-    // Don't prevent default here - let the addEventListener handle it
-  };
-
   // eslint-disable-next-line no-console
   console.log('[HOME BUTTON] Button creation complete, returning button');
 
