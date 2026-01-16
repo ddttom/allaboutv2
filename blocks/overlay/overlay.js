@@ -71,32 +71,6 @@ function createOverlay(title, contentElement) {
 }
 
 /**
- * Shows the overlay with animation
- * @param {HTMLElement} overlay - The overlay element to show
- * @param {HTMLElement} triggerButton - The button that triggered the overlay (for focus return)
- no-unused-vars, import/no-unresolved, import/no-self-import */
-function showOverlay(overlay, triggerButton) {
-  // Add to DOM
-  document.body.appendChild(overlay);
-  document.body.classList.add('overlay-open');
-
-  // Trigger animation
-  requestAnimationFrame(() => {
-    overlay.classList.add('overlay-backdrop--visible');
-  });
-
-  // Focus management
-  const closeButton = overlay.querySelector('.overlay-close');
-  closeButton.focus();
-
-  // Store the trigger button for focus return
-  overlay.triggerButtonRef = triggerButton;
-
-  // Setup event handlers
-  setupOverlayEventHandlers(overlay);
-}
-
-/**
  * Closes the overlay with animation
  * @param {HTMLElement} overlay - The overlay element to close
  no-unused-vars, import/no-unresolved, import/no-self-import */
@@ -169,6 +143,32 @@ function setupOverlayEventHandlers(overlay) {
       }
     }
   });
+}
+
+/**
+ * Shows the overlay with animation
+ * @param {HTMLElement} overlay - The overlay element to show
+ * @param {HTMLElement} triggerButton - The button that triggered the overlay (for focus return)
+ no-unused-vars, import/no-unresolved, import/no-self-import */
+function showOverlay(overlay, triggerButton) {
+  // Add to DOM
+  document.body.appendChild(overlay);
+  document.body.classList.add('overlay-open');
+
+  // Trigger animation
+  requestAnimationFrame(() => {
+    overlay.classList.add('overlay-backdrop--visible');
+  });
+
+  // Focus management
+  const closeButton = overlay.querySelector('.overlay-close');
+  closeButton.focus();
+
+  // Store the trigger button for focus return
+  overlay.triggerButtonRef = triggerButton;
+
+  // Setup event handlers
+  setupOverlayEventHandlers(overlay);
 }
 
 /**
