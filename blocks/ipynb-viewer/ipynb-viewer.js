@@ -2447,6 +2447,36 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   }
 
   /**
+   * Creates a dropdown menu element
+   * @param {string} className - CSS class name for the dropdown
+   * @returns {HTMLElement} The dropdown element
+   */
+  function createDropdown(className) {
+    const dropdown = document.createElement('div');
+    dropdown.className = className;
+    dropdown.setAttribute('role', 'menu');
+    dropdown.style.display = 'none';
+    return dropdown;
+  }
+
+  /**
+   * Creates a dropdown toggle handler
+   * @param {HTMLElement} button - The button element
+   * @param {HTMLElement} dropdown - The dropdown element
+   * @param {Function} updateFn - Optional update function to call before showing
+   * @returns {Function} The click event handler
+   */
+  function createDropdownToggleHandler(button, dropdown, updateFn = null) {
+    return (e) => {
+      e.stopPropagation();
+      if (updateFn) updateFn(); // Refresh before showing
+      const isOpen = dropdown.style.display === 'block';
+      dropdown.style.display = isOpen ? 'none' : 'block';
+      button.setAttribute('aria-expanded', !isOpen);
+    };
+  }
+
+  /**
    * Creates a menu item for history or bookmarks
    * @param {Object} options - Configuration options
    * @param {string} options.type - 'history' or 'bookmark'
@@ -2514,10 +2544,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     historyButton.setAttribute('aria-expanded', 'false');
     historyButton.setAttribute('title', 'History');
 
-    historyDropdown = document.createElement('div');
-    historyDropdown.className = 'ipynb-history-dropdown';
-    historyDropdown.setAttribute('role', 'menu');
-    historyDropdown.style.display = 'none';
+    historyDropdown = createDropdown('ipynb-history-dropdown');
 
     // Function to update history dropdown
     const updateHistoryDropdown = () => {
@@ -2562,13 +2589,11 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     };
 
     // Toggle history dropdown on button click
-    historyButton.addEventListener('click', (e) => {
-      e.stopPropagation();
-      updateHistoryDropdown(); // Refresh before showing
-      const isOpen = historyDropdown.style.display === 'block';
-      historyDropdown.style.display = isOpen ? 'none' : 'block';
-      historyButton.setAttribute('aria-expanded', !isOpen);
-    });
+    historyButton.addEventListener('click', createDropdownToggleHandler(
+      historyButton,
+      historyDropdown,
+      updateHistoryDropdown,
+    ));
   }
 
   // Hamburger menu (notebook mode only) - Table of Contents
@@ -2582,10 +2607,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     hamburgerButton.setAttribute('aria-expanded', 'false');
     hamburgerButton.setAttribute('title', 'Table of Contents');
 
-    tocDropdown = document.createElement('div');
-    tocDropdown.className = 'ipynb-toc-dropdown';
-    tocDropdown.setAttribute('role', 'menu');
-    tocDropdown.style.display = 'none';
+    tocDropdown = createDropdown('ipynb-toc-dropdown');
 
     // Extract cell titles and create menu items
     const tocItems = [];
@@ -2663,12 +2685,10 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     });
 
     // Toggle dropdown on hamburger click
-    hamburgerButton.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isOpen = tocDropdown.style.display === 'block';
-      tocDropdown.style.display = isOpen ? 'none' : 'block';
-      hamburgerButton.setAttribute('aria-expanded', !isOpen);
-    });
+    hamburgerButton.addEventListener('click', createDropdownToggleHandler(
+      hamburgerButton,
+      tocDropdown,
+    ));
   }
 
   // Bookmark button (notebook mode only) - Save and view bookmarks
@@ -2684,10 +2704,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     bookmarkButton.setAttribute('aria-expanded', 'false');
     bookmarkButton.setAttribute('title', 'Bookmarks');
 
-    bookmarkDropdown = document.createElement('div');
-    bookmarkDropdown.className = 'ipynb-bookmark-dropdown';
-    bookmarkDropdown.setAttribute('role', 'menu');
-    bookmarkDropdown.style.display = 'none';
+    bookmarkDropdown = createDropdown('ipynb-bookmark-dropdown');
 
     // Function to update bookmark dropdown
     const updateBookmarkDropdown = () => {
@@ -2776,13 +2793,11 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     };
 
     // Toggle bookmark dropdown on button click
-    bookmarkButton.addEventListener('click', (e) => {
-      e.stopPropagation();
-      updateBookmarkDropdown(); // Refresh before showing
-      const isOpen = bookmarkDropdown.style.display === 'block';
-      bookmarkDropdown.style.display = isOpen ? 'none' : 'block';
-      bookmarkButton.setAttribute('aria-expanded', !isOpen);
-    });
+    bookmarkButton.addEventListener('click', createDropdownToggleHandler(
+      bookmarkButton,
+      bookmarkDropdown,
+      updateBookmarkDropdown,
+    ));
   }
 
   // Help button (notebook mode only) - Opens help.md in GitHub overlay
