@@ -322,7 +322,9 @@ The notebook metadata is displayed in the header section:
     - Automatically during notebook initialization (after content loads) - 7.5 seconds
     - When home button (🏠) is pressed in notebook mode - 5 seconds
     - When home button (🏠) is pressed in GitHub markdown overlay (if opened from notebook) - 5 seconds
-  - **Interactive controls:** Close button (×) in top-right corner allows early dismissal
+  - **Interactive controls:**
+    - **Close button (×):** Top-right corner, allows early dismissal at any time
+    - **Countdown timer:** Shows remaining seconds next to close button (e.g., "5s", "4s", "3s"...)
   - **Visual effect:** Full-screen dark overlay with centered image, fade-in/fade-out transitions
   - **Use case:** Branding, loading indicator, or visual transition for better user experience
   - **Image format:** Any web-compatible format (PNG, JPG, WebP, SVG)

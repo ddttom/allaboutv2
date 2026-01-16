@@ -14,20 +14,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - New `splash-page` metadata attribute for notebook configuration
     - Full-screen dark overlay (rgba(0, 0, 0, 0.95)) with centered image
     - **Dual timing:** 7.5-second duration on startup, 5-second duration on home button press
+    - **Countdown timer:** Live countdown display (e.g., "8s", "7s"...) showing remaining time
     - **Close button:** X button in top-right corner for early dismissal at any time
     - Auto-dismisses after minimum duration with smooth fade-in/fade-out transitions
     - Shows on initialization, notebook mode home button, and GitHub overlay home button (when opened from notebook)
   - **Implementation**:
-    - New `showSplashScreen()` helper function with close button (lines 441-554)
+    - New `showSplashScreen()` helper function with countdown timer and close button (lines 441-584)
+    - Countdown timer: Updates every frame via requestAnimationFrame (lines 542-551)
+      - Positioned left of close button (top: 20px, right: 80px)
+      - Monospace font for consistent width, white text on semi-transparent background
+      - Shows seconds remaining (e.g., "8s" → "7s" → "6s"...)
     - Close button: Circular white button (×) with hover effects and click handler
     - Metadata extraction with `notebook.metadata?.['splash-page']` (lines 3926)
     - Added splash URL to paginationState for GitHub overlay access (line 2155)
     - Initialization display with 7.5-second duration (lines 4200-4206)
     - Home button integration in notebook mode with 5-second duration (lines 2213-2218)
-    - Home button integration in GitHub overlay with 5-second duration (lines 3773-3778)
+    - Home button integration in GitHub overlay with async/await for proper sequencing (lines 3846-3866)
+      - Fixed: Now waits for splash to complete before closing overlay
   - **Documentation Updates**:
-    - Updated README.md with dual timing and close button documentation
-    - Updated explaining-attributes.md with timing breakdown and interactive controls
+    - Updated README.md with countdown timer and close button documentation
+    - Updated explaining-attributes.md with countdown timer details and positioning
     - Updated block-architecture.md with Version 2.1.0 entry
   - **Use Cases**: Branding, loading indicator, welcome screen, visual transitions
   - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js`, `blocks/ipynb-viewer/README.md`, `blocks/ipynb-viewer/explaining-attributes.md`, `blocks/ipynb-viewer/block-architecture.md`, `invisible-users/notebook.ipynb`

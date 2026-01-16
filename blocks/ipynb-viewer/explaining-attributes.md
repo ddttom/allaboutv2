@@ -319,6 +319,10 @@ These attributes control behavior rather than display.
 
 - **Startup:** Displays splash image for minimum 7.5 seconds
 - **Home button:** Shows splash for minimum 5 seconds (shorter for navigation)
+- **Countdown timer:** Shows remaining seconds (e.g., "8s", "7s"...) in top-right corner
+  - Updates every frame for smooth countdown
+  - Positioned to left of close button
+  - Monospace font for consistent width
 - **Close button:** X button in top-right corner allows early dismissal at any time
 - **Auto-dismiss:** Automatically fades out after minimum duration if not manually closed
 - **Full-screen dark overlay** (rgba(0, 0, 0, 0.95)) with centered image

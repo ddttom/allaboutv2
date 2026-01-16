@@ -458,6 +458,26 @@ function showSplashScreen(imageUrl, minDuration = 5000) {
       transition: opacity 0.3s ease-in-out;
     `;
 
+    // Create countdown timer
+    const countdownTimer = document.createElement('div');
+    countdownTimer.setAttribute('aria-live', 'polite');
+    countdownTimer.setAttribute('aria-label', 'Countdown timer');
+    countdownTimer.style.cssText = `
+      position: absolute;
+      top: 20px;
+      right: 80px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      padding: 10px 16px;
+      border-radius: 24px;
+      font-family: monospace;
+      min-width: 50px;
+      text-align: center;
+    `;
+
     // Create close button
     const closeButton = document.createElement('button');
     closeButton.innerHTML = '&times;';
@@ -506,6 +526,7 @@ function showSplashScreen(imageUrl, minDuration = 5000) {
       border-radius: 8px;
     `;
 
+    splashOverlay.appendChild(countdownTimer);
     splashOverlay.appendChild(closeButton);
     splashOverlay.appendChild(splashImage);
     document.body.appendChild(splashOverlay);
@@ -516,6 +537,18 @@ function showSplashScreen(imageUrl, minDuration = 5000) {
     });
 
     const startTime = Date.now();
+
+    // Update countdown timer
+    const updateCountdown = () => {
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(0, Math.ceil((minDuration - elapsed) / 1000));
+      countdownTimer.textContent = `${remaining}s`;
+
+      if (remaining > 0) {
+        requestAnimationFrame(updateCountdown);
+      }
+    };
+    updateCountdown();
 
     // Track when minimum duration has passed
     let minDurationPassed = false;
@@ -3810,14 +3843,14 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
   homeButton = createHomeButton({
     context: 'github',
     ariaLabel: hasParentNotebook ? 'Return to notebook' : 'Go to first page',
-    onClick: () => {
+    onClick: async () => {
       if (hasParentNotebook) {
         // Show splash screen if configured (from parent notebook)
         const splashUrl = parentHistory?.splashUrl;
         if (splashUrl) {
-          showSplashScreen(splashUrl, 5000).then((dismiss) => {
-            dismiss();
-          });
+          // Wait for splash to complete before closing overlay
+          const dismiss = await showSplashScreen(splashUrl, 5000);
+          dismiss();
         }
 
         // We were opened from a notebook - close this overlay to return to notebook
