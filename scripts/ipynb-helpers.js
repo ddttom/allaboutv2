@@ -223,10 +223,10 @@ export async function showPreview(blockName, innerHTML = '') {
     homeBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       // Find the paged overlay which contains the navigateToAnchor function
-      const pagedOverlay = document.querySelector('.ipynb-paged-overlay');
-      if (pagedOverlay) {
+      const targetOverlay = document.querySelector('.ipynb-paged-overlay');
+      if (targetOverlay) {
         // Look for links in the paged overlay's content area that point to cell-0
-        const cellContentArea = pagedOverlay.querySelector('.ipynb-paged-cell-content-area');
+        const cellContentArea = targetOverlay.querySelector('.ipynb-paged-cell-content-area');
         if (cellContentArea) {
           const homeLinks = cellContentArea.querySelectorAll('a[href="#cell-0"]');
           if (homeLinks.length > 0) {

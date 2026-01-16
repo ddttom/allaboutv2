@@ -140,7 +140,7 @@ export default async function decorate(block) {
   const slides = await fetchSlides();
 
   const observer = new IntersectionObserver(
-    (entries, observer) => {
+    (entries, _observer) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const slideItem = entry.target;

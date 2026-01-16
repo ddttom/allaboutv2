@@ -42,10 +42,10 @@ export default async function decorate(block) {
 
   // Enhance each header cell
   const headers = table.querySelectorAll('th');
-  headers.forEach((header, index) => {
-    header.setAttribute('scope', 'col');
-    header.setAttribute('role', 'columnheader');
-    header.id = `header-${index}`;
+  headers.forEach((headerCell, index) => {
+    headerCell.setAttribute('scope', 'col');
+    headerCell.setAttribute('role', 'columnheader');
+    headerCell.id = `header-${index}`;
   });
 
   // Enhance each data cell

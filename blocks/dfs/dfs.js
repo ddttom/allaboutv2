@@ -33,8 +33,8 @@ export default function decorate(block) {
   };
 
   // Extract raw data from the table structure
-  const extractFaqData = (block) => {
-    const rows = Array.from(block.children);
+  const extractFaqData = (blockElement) => {
+    const rows = Array.from(blockElement.children);
 
     // Check if we have enough rows for a header plus data
     if (rows.length < 2) return { faqs: [], metadata: {} };
@@ -444,9 +444,9 @@ export default function decorate(block) {
   }
 
   // Setup event listeners for interactive features
-  const setupEventListeners = (block, faqs) => {
+  const setupEventListeners = (container, faqs) => {
     // Toggle FAQ visibility on question click or keypress
-    block.querySelectorAll('.faq-question').forEach((question) => {
+    container.querySelectorAll('.faq-question').forEach((question) => {
       // Click handler
       question.addEventListener('click', (e) => {
         toggleFaqItem(question);
@@ -469,7 +469,7 @@ export default function decorate(block) {
     });
 
     // Search functionality
-    const searchInput = block.querySelector('.faq-search');
+    const searchInput = container.querySelector('.faq-search');
     let debounceTimeout;
 
     if (searchInput) {
@@ -478,20 +478,20 @@ export default function decorate(block) {
 
         debounceTimeout = setTimeout(() => {
           const searchTerm = e.target.value.toLowerCase().trim();
-          filterFaqs(block, searchTerm);
+          filterFaqs(container, searchTerm);
         }, CONFIG.SEARCH_DEBOUNCE);
       });
     }
 
     // Category filter
-    const categoryFilter = block.querySelector('.faq-category-filter');
+    const categoryFilter = container.querySelector('.faq-category-filter');
 
     if (categoryFilter) {
       categoryFilter.addEventListener('change', (e) => {
         const selectedCategory = e.target.value;
-        const searchTerm = block.querySelector('.faq-search')?.value.toLowerCase().trim() || '';
+        const searchTerm = container.querySelector('.faq-search')?.value.toLowerCase().trim() || '';
 
-        filterFaqs(block, searchTerm, selectedCategory);
+        filterFaqs(container, searchTerm, selectedCategory);
       });
     }
   };
@@ -563,10 +563,10 @@ export default function decorate(block) {
   }
 
   // Filter FAQs based on search term and/or category
-  const filterFaqs = (block, searchTerm, category = '') => {
-    const faqItems = block.querySelectorAll('.faq-item');
-    const categorySections = block.querySelectorAll('.faq-category-section');
-    const emptyMessage = block.querySelector('.faq-empty-message');
+  const filterFaqs = (container, searchTerm, category = '') => {
+    const faqItems = container.querySelectorAll('.faq-item');
+    const categorySections = container.querySelectorAll('.faq-category-section');
+    const emptyMessage = container.querySelector('.faq-empty-message');
 
     let hasVisibleItems = false;
 
@@ -615,14 +615,14 @@ export default function decorate(block) {
         // If search term exists, highlight the first match
         if (searchTerm) {
           // Expand this item if it's a match and search term exists
-          const content = item.querySelector('.faq-content');
+          const faqContent = item.querySelector('.faq-content');
           const icon = item.querySelector('.faq-toggle-icon svg');
-          const question = item.querySelector('.faq-question');
+          const questionEl = item.querySelector('.faq-question');
 
-          content.style.display = 'block';
+          faqContent.style.display = 'block';
           icon.style.transform = 'rotate(180deg)';
           item.classList.add('faq-open');
-          question.setAttribute('aria-expanded', 'true');
+          questionEl.setAttribute('aria-expanded', 'true');
 
           // Highlight search term if configured
           if (CONFIG.HIGHLIGHT_SEARCH_TERMS) {
@@ -725,8 +725,8 @@ export default function decorate(block) {
   }
 
   // Update subcategory headers visibility based on visible FAQ items
-  const updateSubcategoryVisibility = (block) => {
-    const subcategoryHeaders = block.querySelectorAll('.faq-subcategory-header');
+  const updateSubcategoryVisibility = (container) => {
+    const subcategoryHeaders = container.querySelectorAll('.faq-subcategory-header');
 
     subcategoryHeaders.forEach((header) => {
       // Check if any following faq-items (until next subcategory header) are visible
