@@ -224,12 +224,12 @@ async function updateLlmsTxt(filePath, queryIndex) {
       // Find the end of this section (next ## heading or end of file)
       let endIndex = i + 1;
       while (endIndex < lines.length && !lines[endIndex].startsWith('## ')) {
-        endIndex++;
+        endIndex += 1;
       }
       // Remove the section
       lines.splice(i, endIndex - i);
     } else {
-      i++;
+      i += 1;
     }
   }
 
