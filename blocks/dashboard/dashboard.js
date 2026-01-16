@@ -172,16 +172,16 @@ export default function decorate(block) {
     if (dateInput instanceof Date) {
       return dateInput;
     }
-    if (typeof dateInput === 'number' || (typeof dateInput === 'string' && !isNaN(dateInput))) {
+    if (typeof dateInput === 'number' || (typeof dateInput === 'string' && !Number.isNaN(Number(dateInput)))) {
       const timestamp = typeof dateInput === 'string' ? parseInt(dateInput, 10) : dateInput;
       return new Date(timestamp * 1000);
     }
     const parsedDate = new Date(dateInput);
-    return isNaN(parsedDate.getTime()) ? null : parsedDate;
+    return Number.isNaN(parsedDate.getTime()) ? null : parsedDate;
   }
 
   function formatDate(date) {
-    if (!(date instanceof Date) || isNaN(date.getTime())) {
+    if (!(date instanceof Date) || Number.isNaN(date.getTime())) {
       return 'Invalid Date';
     }
     return date.toLocaleDateString('en-US', {
@@ -195,7 +195,7 @@ export default function decorate(block) {
     if (!lastModified) {
       return 'Invalid Date';
     }
-    const reviewPeriod = parseInt(window.siteConfig?.['$co:defaultreviewperiod']) || 300;
+    const reviewPeriod = parseInt(window.siteConfig?.['$co:defaultreviewperiod'], 10) || 300;
     const lastModifiedDate = parseDate(lastModified);
     if (!lastModifiedDate) {
       return 'Invalid Date';
@@ -207,7 +207,7 @@ export default function decorate(block) {
     if (!lastModified) {
       return 'Invalid Date';
     }
-    const expiryPeriod = parseInt(window.siteConfig?.['$co:defaultexpiryperiod']) || 365;
+    const expiryPeriod = parseInt(window.siteConfig?.['$co:defaultexpiryperiod'], 10) || 365;
     const lastModifiedDate = parseDate(lastModified);
     if (!lastModifiedDate) {
       return 'Invalid Date';
@@ -227,7 +227,7 @@ export default function decorate(block) {
     const headers = document.querySelectorAll('.content-table th');
     headers.forEach((header) => {
       header.addEventListener('click', () => {
-        const column = parseInt(header.dataset.column);
+        const column = parseInt(header.dataset.column, 10);
         const isAscending = header.classList.contains('asc');
         sortTable(column, !isAscending);
       });

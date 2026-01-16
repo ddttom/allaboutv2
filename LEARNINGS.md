@@ -1030,3 +1030,88 @@ document.querySelector('.ipynb-github-md-overlay pre code').childNodes
 - Result: `/Users/tomcranstoun/Documents/GitHub/allaboutV2/result.md`
 
 ---
+
+## ipynb-viewer: Splash Overlay Must Have Highest z-index
+
+**Rule** (2026-01-16): The splash screen overlay must have a z-index higher than ALL other overlays (paged overlay, GitHub markdown overlay) to be visible. Set splash z-index to at least 10002.
+
+**Why it matters:**
+
+- Splash screen created ABOVE other overlays must be visually above them
+- If splash z-index is lower than GitHub overlay, splash is hidden behind it
+- User sees 4-second delay with no visual feedback (looks broken)
+- Console logs show splash working but it's invisible to user
+
+**Problem pattern:**
+
+```javascript
+// ❌ WRONG - Splash hidden behind GitHub overlay
+const splashOverlay = document.createElement('div');
+splashOverlay.style.cssText = `
+  z-index: 10000;  // Too low!
+`;
+// GitHub markdown overlay has z-index: 10001 in CSS
+// Result: Splash renders behind GitHub overlay, invisible to user
+```
+
+**Z-index hierarchy in ipynb-viewer:**
+
+```css
+/* CSS file: blocks/ipynb-viewer/ipynb-viewer.css */
+.ipynb-paged-overlay {
+  z-index: 10000;  /* Line 1052 - Notebook paged mode */
+}
+
+.ipynb-manual-overlay {
+  z-index: 10001;  /* Line 1698 - GitHub markdown overlay */
+}
+```
+
+**Correct solution:**
+
+```javascript
+// ✅ CORRECT - Splash above all overlays
+const splashOverlay = document.createElement('div');
+splashOverlay.style.cssText = `
+  z-index: 10002;  // Highest z-index - above GitHub overlay!
+`;
+```
+
+**How the bug manifested:**
+
+- Console logs showed splash working perfectly:
+  - `[SPLASH] showSplashScreen called`
+  - `[SPLASH] Creating splash overlay...`
+  - `[SPLASH] Splash overlay added to body`
+  - `[SPLASH] Faded in splash overlay`
+  - `[SPLASH] Auto-dismiss timer fired` (after 4 seconds)
+  - `[SPLASH] Splash overlay removed from DOM`
+- User saw: Nothing. 4-second delay, then overlay closed.
+- Root cause: Splash was behind GitHub overlay with higher z-index
+
+**Debugging approach:**
+
+1. Console shows splash working → Timing/async is correct
+2. User doesn't see it → Visual/CSS issue
+3. Check z-index hierarchy → Found GitHub overlay at 10001, splash at 10000
+4. Increase splash z-index → Fixed immediately
+
+**Impact:**
+
+- **Before**: Splash screen invisible (behind overlay), users confused by 4-second delay
+- **After**: Splash screen visible above overlay, users see transition feedback
+
+**Related issues:**
+
+- Splash close button (×) must await splash promise resolution
+- Home button addEventListener must be async to await onClick handler
+- All three issues needed fixing for splash to work properly
+
+**Documentation:**
+
+- Splash z-index: `blocks/ipynb-viewer/ipynb-viewer.js` line 478
+- Paged overlay z-index: `blocks/ipynb-viewer/ipynb-viewer.css` line 1052
+- GitHub overlay z-index: `blocks/ipynb-viewer/ipynb-viewer.css` line 1698
+- Commit: 2ab3fa9b
+
+---

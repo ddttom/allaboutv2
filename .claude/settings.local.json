@@ -118,7 +118,9 @@
       "Bash(npm run test:local:*)",
       "Bash(npm audit:*)",
       "Bash(git restore:*)",
-      "Bash(git rm:*)"
+      "Bash(git rm:*)",
+      "Bash(stat -f \"%Sm\" -t \"%Y-%m-%d\" CHANGELOG.md CLAUDE.md README.md)",
+      "Bash(ls -la README.md CLAUDE.md CHANGELOG.md 2>/dev/null | awk '{print $6, $7, $8, $9}')"
     ],
     "deny": [],
     "ask": []

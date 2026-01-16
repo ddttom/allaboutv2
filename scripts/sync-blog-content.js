@@ -54,7 +54,7 @@ function extractLlmsTxtDate(content) {
     const dateStr = dateMatch[1] || dateMatch[2];
     // Convert "November 2025" or "Nov 25 2025" to ISO date
     const date = new Date(dateStr);
-    if (!isNaN(date.getTime())) {
+    if (!Number.isNaN(date.getTime())) {
       lastUpdated = date.toISOString().split('T')[0];
     }
   }
@@ -100,12 +100,12 @@ function filterNewEntries(entries, afterDate) {
   // Convert afterDate to Unix timestamp if it's an ISO date
   const afterTimestamp = afterDate.includes('-')
     ? Math.floor(new Date(afterDate).getTime() / 1000)
-    : parseInt(afterDate);
+    : parseInt(afterDate, 10);
 
   return entries.filter((entry) => {
     if (!entry.lastModified) return false;
     // lastModified in query-index.json is a Unix timestamp (string)
-    const entryTimestamp = parseInt(entry.lastModified);
+    const entryTimestamp = parseInt(entry.lastModified, 10);
     return entryTimestamp > afterTimestamp;
   });
 }

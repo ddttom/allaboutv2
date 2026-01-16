@@ -132,8 +132,8 @@ export default async function decorate(block) {
     // Check for Python-specific patterns
     // Look for distinctive Python patterns rather than just 'import'
     if (code.includes('def ')
-        || /\bimport\s+[\w\.]+\s+as\s+\w+/.test(code) // import X as Y pattern
-        || /\bfrom\s+[\w\.]+\s+import\s+/.test(code) // from X import Y pattern
+        || /\bimport\s+[\w.]+\s+as\s+\w+/.test(code) // import X as Y pattern
+        || /\bfrom\s+[\w.]+\s+import\s+/.test(code) // from X import Y pattern
         || code.includes('class ')
         || /\bif\s+__name__\s*==\s*['"]__main__['"]/.test(code)) {
       return 'python';
@@ -192,7 +192,7 @@ export default async function decorate(block) {
         );
       case 'json':
         return decodedCode.replace(
-          /(\"(?:\\.|[^\\"])*\")(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,
+          /("(?:\\.|[^\\"])*")(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?/g,
           (match, string, colon, boolean) => {
             if (string) {
               return colon
@@ -484,13 +484,13 @@ export default async function decorate(block) {
    * Creates a code expander wrapper for a code element
    * @param {HTMLElement} codeElement - The code element to process
    * @param {number} index - The index of the code element
-   * @param {boolean} forceText - Whether to force the language to be "text"
+   * @param {boolean} forceTextMode - Whether to force the language to be "text"
    * @returns {HTMLElement} - The created wrapper element
    */
-  function createCodeExpanderWrapper(codeElement, index, forceText) {
+  function createCodeExpanderWrapper(codeElement, index, forceTextMode) {
     const code = codeElement.textContent;
-    // If forceText is true, set language to "text" without detection
-    const language = forceText ? 'text' : detectLanguage(code);
+    // If forceTextMode is true, set language to "text" without detection
+    const language = forceTextMode ? 'text' : detectLanguage(code);
     const lines = code.split('\n');
     const isLongDocument = lines.length > CODE_EXPANDER_CONFIG.LONG_DOCUMENT_THRESHOLD;
 
