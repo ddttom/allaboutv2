@@ -316,12 +316,13 @@ The notebook metadata is displayed in the header section:
   - **Default:** None - no splash screen displayed when omitted
   - **Purpose:** Display a branded splash screen image during notebook initialization and navigation
   - **Display duration:**
-    - **Startup:** 10 seconds minimum (longer for initial impression)
-    - **Home button:** 5 seconds minimum (shorter for navigation)
+    - **Startup:** 7.5 seconds minimum (can be closed early with X button)
+    - **Home button:** 5 seconds minimum (can be closed early with X button)
   - **When shown:**
-    - Automatically during notebook initialization (after content loads) - 10 seconds
+    - Automatically during notebook initialization (after content loads) - 7.5 seconds
     - When home button (🏠) is pressed in notebook mode - 5 seconds
     - When home button (🏠) is pressed in GitHub markdown overlay (if opened from notebook) - 5 seconds
+  - **Interactive controls:** Close button (×) in top-right corner allows early dismissal
   - **Visual effect:** Full-screen dark overlay with centered image, fade-in/fade-out transitions
   - **Use case:** Branding, loading indicator, or visual transition for better user experience
   - **Image format:** Any web-compatible format (PNG, JPG, WebP, SVG)

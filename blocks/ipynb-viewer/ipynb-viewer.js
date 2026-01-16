@@ -458,6 +458,43 @@ function showSplashScreen(imageUrl, minDuration = 5000) {
       transition: opacity 0.3s ease-in-out;
     `;
 
+    // Create close button
+    const closeButton = document.createElement('button');
+    closeButton.innerHTML = '&times;';
+    closeButton.setAttribute('aria-label', 'Close splash screen');
+    closeButton.style.cssText = `
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      color: white;
+      font-size: 32px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      padding: 0;
+      transition: all 0.2s ease;
+    `;
+
+    // Close button hover effect
+    closeButton.addEventListener('mouseenter', () => {
+      closeButton.style.background = 'rgba(255, 255, 255, 0.3)';
+      closeButton.style.borderColor = 'rgba(255, 255, 255, 0.8)';
+      closeButton.style.transform = 'scale(1.1)';
+    });
+
+    closeButton.addEventListener('mouseleave', () => {
+      closeButton.style.background = 'rgba(255, 255, 255, 0.2)';
+      closeButton.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+      closeButton.style.transform = 'scale(1)';
+    });
+
     // Create image element
     const splashImage = document.createElement('img');
     splashImage.src = imageUrl;
@@ -469,6 +506,7 @@ function showSplashScreen(imageUrl, minDuration = 5000) {
       border-radius: 8px;
     `;
 
+    splashOverlay.appendChild(closeButton);
     splashOverlay.appendChild(splashImage);
     document.body.appendChild(splashOverlay);
 
@@ -476,6 +514,8 @@ function showSplashScreen(imageUrl, minDuration = 5000) {
     requestAnimationFrame(() => {
       splashOverlay.style.opacity = '1';
     });
+
+    const startTime = Date.now();
 
     // Track when minimum duration has passed
     let minDurationPassed = false;
@@ -488,7 +528,9 @@ function showSplashScreen(imageUrl, minDuration = 5000) {
       const fadeOut = () => {
         splashOverlay.style.opacity = '0';
         setTimeout(() => {
-          document.body.removeChild(splashOverlay);
+          if (splashOverlay.parentNode) {
+            document.body.removeChild(splashOverlay);
+          }
         }, 300);
       };
 
@@ -501,7 +543,8 @@ function showSplashScreen(imageUrl, minDuration = 5000) {
       }
     };
 
-    const startTime = Date.now();
+    // Wire up close button
+    closeButton.addEventListener('click', dismiss);
 
     // Resolve after minimum duration with dismiss function
     setTimeout(() => {
@@ -4154,9 +4197,9 @@ export default async function decorate(block) {
     block.appendChild(container);
 
     // Show splash screen if splash-page metadata exists
-    // Startup uses 10 seconds for longer initial display
+    // Startup uses 7.5 seconds for initial display
     if (splashPageUrl) {
-      showSplashScreen(splashPageUrl, 10000).then((dismiss) => {
+      showSplashScreen(splashPageUrl, 7500).then((dismiss) => {
         // Auto-dismiss after minimum duration
         dismiss();
       });

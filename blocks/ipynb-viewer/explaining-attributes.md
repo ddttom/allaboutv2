@@ -310,16 +310,17 @@ These attributes control behavior rather than display.
 - **Default:** None - no splash screen when omitted
 - **Purpose:** Display a branded splash screen image during notebook initialization and navigation
 - **Where shown:**
-  - During initialization (10-second duration)
+  - During initialization (7.5-second duration)
   - When home button (🏠) is pressed in notebook mode (5-second duration)
   - When home button (🏠) is pressed in GitHub markdown overlay (5-second duration, if opened from notebook)
 - **Typical use:** Branding, visual transition, loading indicator, or welcome screen
 
 **How it works:**
 
-- **Startup:** Displays splash image for minimum 10 seconds (longer for initial impression)
+- **Startup:** Displays splash image for minimum 7.5 seconds
 - **Home button:** Shows splash for minimum 5 seconds (shorter for navigation)
-- **Auto-dismiss:** Automatically fades out after minimum duration
+- **Close button:** X button in top-right corner allows early dismissal at any time
+- **Auto-dismiss:** Automatically fades out after minimum duration if not manually closed
 - **Full-screen dark overlay** (rgba(0, 0, 0, 0.95)) with centered image
 - **Image sizing:** Automatically sized to fit screen (max 90% width/height)
 - **Smooth transitions:** 0.3s fade-in/out for professional appearance

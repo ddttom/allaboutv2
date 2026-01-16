@@ -13,19 +13,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **Features**:
     - New `splash-page` metadata attribute for notebook configuration
     - Full-screen dark overlay (rgba(0, 0, 0, 0.95)) with centered image
-    - **Dual timing:** 10-second duration on startup (longer initial impression), 5-second duration on home button press
+    - **Dual timing:** 7.5-second duration on startup, 5-second duration on home button press
+    - **Close button:** X button in top-right corner for early dismissal at any time
     - Auto-dismisses after minimum duration with smooth fade-in/fade-out transitions
     - Shows on initialization, notebook mode home button, and GitHub overlay home button (when opened from notebook)
   - **Implementation**:
-    - New `showSplashScreen()` helper function (lines 441-511)
+    - New `showSplashScreen()` helper function with close button (lines 441-554)
+    - Close button: Circular white button (×) with hover effects and click handler
     - Metadata extraction with `notebook.metadata?.['splash-page']` (lines 3926)
     - Added splash URL to paginationState for GitHub overlay access (line 2155)
-    - Initialization display with 10-second duration (lines 4158-4162)
+    - Initialization display with 7.5-second duration (lines 4200-4206)
     - Home button integration in notebook mode with 5-second duration (lines 2213-2218)
     - Home button integration in GitHub overlay with 5-second duration (lines 3773-3778)
   - **Documentation Updates**:
-    - Updated README.md with dual timing documentation
-    - Updated explaining-attributes.md with timing breakdown and all contexts
+    - Updated README.md with dual timing and close button documentation
+    - Updated explaining-attributes.md with timing breakdown and interactive controls
     - Updated block-architecture.md with Version 2.1.0 entry
   - **Use Cases**: Branding, loading indicator, welcome screen, visual transitions
   - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js`, `blocks/ipynb-viewer/README.md`, `blocks/ipynb-viewer/explaining-attributes.md`, `blocks/ipynb-viewer/block-architecture.md`, `invisible-users/notebook.ipynb`
