@@ -9,34 +9,102 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **ipynb-viewer Configuration Architecture Refactor**: Comprehensive refactor implementing clean configuration patterns (2026-01-16)
+  - **Architecture Changes**:
+    - Created `IPYNB_ERRORS` global constant for developer-facing error messages at file top
+      - Easily searchable with Ctrl+F
+      - Separates developer messages from runtime configuration
+    - Defined `SVG_INLINE_CACHE` as module-level constant (Map for cross-invocation caching)
+    - Created comprehensive config object in `decorate()` with organized sections:
+      - Messages (error/loading messages)
+      - Splash Screen (duration, fade transitions)
+      - History & Navigation (max entries)
+      - Code Cells (max group size)
+      - SVG Inlining (timeout, path pattern)
+      - Help System (fallback URLs, overlay title)
+      - UI Icons (HTML entities)
+      - UI Text (button labels, messages)
+    - Implemented **dependency injection pattern**:
+      - Config passed as explicit parameter through `createPagedOverlay()`, `createGitHubMarkdownOverlay()`, `checkHashNavigation()`
+      - Functions document config requirement in JSDoc
+      - Clear dependency trail through entire call chain
+    - Added **guard clauses** for config validation:
+      - Functions fail explicitly with clear errors if config missing
+      - No silent fallbacks - errors shown immediately
+      - Example: "Incomplete code: Configuration object missing. Block cannot initialize."
+    - Removed all hardcoded fallbacks using `||` operator
+      - Changed from `config?.value || 'fallback'` to guard clauses
+      - Forces proper dependency injection
+      - Makes missing config bugs obvious during development
+    - Added **metadata override pattern**:
+      - `splash-duration` from notebook metadata (in seconds)
+      - Converted to milliseconds: `metadata['splash-duration'] * 1000`
+      - Falls back to `config.defaultSplashDuration` if not specified
+    - Enhanced `inlineSVGIllustrations()` with options parameter
+      - Pattern and timeout as function parameters with defaults
+      - Uses `SVG_INLINE_CACHE` module constant (not undefined `SVG_INLINE_CONFIG`)
+  - **Benefits**:
+    - Clear separation of concerns (global constants, runtime config, metadata)
+    - No hidden fallbacks - explicit failures with clear error messages
+    - Testability improved (easy to mock config in tests)
+    - Consistent pattern for future block development
+    - Easily searchable error messages at file top
+  - **Splash Screen Enhancements** (part of config refactor):
+    - **Countdown timer:** Live countdown display in top-right corner (e.g., "4s", "3s", "2s", "1s")
+      - Uses `requestAnimationFrame()` for smooth updates
+      - Positioned: `top: 20px; right: 80px` (left of close button)
+      - Monospace font for consistent width
+      - White text on semi-transparent background
+    - **Auto-dismiss behavior:**
+      - Changed from manual dismiss pattern to automatic dismissal
+      - Promise resolves after duration + fade time (no dismiss function returned)
+      - Changed return type from `Promise<Function>` to `Promise<void>`
+    - **Configurable duration:**
+      - Default: 4000ms (4 seconds, configurable in metadata or config)
+      - Metadata override: `splash-duration` in seconds (notebook metadata)
+      - Config fallback: `config.defaultSplashDuration` in milliseconds
+    - **Fixed GitHub overlay home button:**
+      - Now properly shows splash screen when returning to notebook
+      - Uses async/await pattern for proper sequencing
+      - Passes config through dependency injection
+  - **Documentation Updates**:
+    - Added "Local Testing Workflow" section to `CLAUDE.md`
+      - Clarifies: don't commit for every test iteration
+      - User runs `npm run debug` to test locally without commits
+      - Commit only after validation
+    - Added comprehensive "Configuration Object Architecture" section (323 lines) to `.claude/skills/eds-block-development/SKILL.md`:
+      - Global constants pattern (error messages at file top)
+      - Runtime configuration object structure (what belongs where)
+      - Metadata override pattern (for both `.ipynb` notebooks and EDS blocks)
+      - Dependency injection pattern (passing config through functions)
+      - Config validation pattern (guard clauses, no fallbacks)
+      - Refactoring checklist for existing blocks
+      - Real-world ipynb-viewer example with specific line number references
+  - **Files Modified**:
+    - `blocks/ipynb-viewer/ipynb-viewer.js` - Core implementation
+    - `CLAUDE.md` - Local testing workflow
+    - `.claude/skills/eds-block-development/SKILL.md` - Configuration architecture documentation
+    - `PROJECTSTATE.md` - Current state documentation
+  - **Impact**:
+    - Sets standard pattern for all future EDS block development
+    - Makes configuration issues obvious (fail fast with clear errors)
+    - Improves code maintainability and testability
+    - Provides clear upgrade path for existing blocks
+
 - **ipynb-viewer Splash Screen Feature**: Display branded splash image during initialization and home button press (2026-01-16)
-  - **Features**:
+  - **Note**: This feature was enhanced as part of the Configuration Architecture Refactor (see above)
+  - **Original Features**:
     - New `splash-page` metadata attribute for notebook configuration
     - Full-screen dark overlay (rgba(0, 0, 0, 0.95)) with centered image
-    - **Dual timing:** 7.5-second duration on startup, 5-second duration on home button press
-    - **Countdown timer:** Live countdown display (e.g., "8s", "7s"...) showing remaining time
-    - **Close button:** X button in top-right corner for early dismissal at any time
-    - Auto-dismisses after minimum duration with smooth fade-in/fade-out transitions
-    - Shows on initialization, notebook mode home button, and GitHub overlay home button (when opened from notebook)
-  - **Implementation**:
-    - New `showSplashScreen()` helper function with countdown timer and close button (lines 441-584)
-    - Countdown timer: Updates every frame via requestAnimationFrame (lines 542-551)
-      - Positioned left of close button (top: 20px, right: 80px)
-      - Monospace font for consistent width, white text on semi-transparent background
-      - Shows seconds remaining (e.g., "8s" → "7s" → "6s"...)
-    - Close button: Circular white button (×) with hover effects and click handler
-    - Metadata extraction with `notebook.metadata?.['splash-page']` (lines 3926)
-    - Added splash URL to paginationState for GitHub overlay access (line 2155)
-    - Initialization display with 7.5-second duration (lines 4200-4206)
-    - Home button integration in notebook mode with 5-second duration (lines 2213-2218)
-    - Home button integration in GitHub overlay with async/await for proper sequencing (lines 3846-3866)
-      - Fixed: Now waits for splash to complete before closing overlay
-  - **Documentation Updates**:
-    - Updated README.md with countdown timer and close button documentation
-    - Updated explaining-attributes.md with countdown timer details and positioning
-    - Updated block-architecture.md with Version 2.1.0 entry
+    - Close button (×) in top-right corner for early dismissal
+    - Smooth fade-in/fade-out transitions
+    - Shows on initialization, notebook mode home button, and GitHub overlay home button
+  - **Enhancements** (from config refactor):
+    - Countdown timer showing remaining seconds
+    - Auto-dismiss after configurable duration
+    - Metadata override for duration (`splash-duration` in seconds)
+    - Proper GitHub overlay home button integration
   - **Use Cases**: Branding, loading indicator, welcome screen, visual transitions
-  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js`, `blocks/ipynb-viewer/README.md`, `blocks/ipynb-viewer/explaining-attributes.md`, `blocks/ipynb-viewer/block-architecture.md`, `invisible-users/notebook.ipynb`
 
 - **ipynb-viewer External Link Support**: Angle-bracket URLs and external markdown links now clickable in GitHub markdown overlay
   - **Features**:
