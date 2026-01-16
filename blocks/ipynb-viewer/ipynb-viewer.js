@@ -439,7 +439,17 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
  * @returns {Promise<Function>} Promise that resolves with dismiss function after minDuration
  */
 function showSplashScreen(imageUrl, minDuration = 5000) {
+  // eslint-disable-next-line no-console
+  console.log('[SPLASH] showSplashScreen called');
+  // eslint-disable-next-line no-console
+  console.log('[SPLASH] imageUrl:', imageUrl);
+  // eslint-disable-next-line no-console
+  console.log('[SPLASH] minDuration:', minDuration);
+
   return new Promise((resolve) => {
+    // eslint-disable-next-line no-console
+    console.log('[SPLASH] Creating splash overlay...');
+
     // Create splash overlay
     const splashOverlay = document.createElement('div');
     splashOverlay.className = 'ipynb-splash-overlay';
@@ -530,10 +540,14 @@ function showSplashScreen(imageUrl, minDuration = 5000) {
     splashOverlay.appendChild(closeButton);
     splashOverlay.appendChild(splashImage);
     document.body.appendChild(splashOverlay);
+    // eslint-disable-next-line no-console
+    console.log('[SPLASH] Splash overlay added to body');
 
     // Fade in
     requestAnimationFrame(() => {
       splashOverlay.style.opacity = '1';
+      // eslint-disable-next-line no-console
+      console.log('[SPLASH] Faded in splash overlay');
     });
 
     const startTime = Date.now();
@@ -558,20 +572,36 @@ function showSplashScreen(imageUrl, minDuration = 5000) {
 
     // Create dismiss function
     const dismiss = () => {
+      // eslint-disable-next-line no-console
+      console.log('[SPLASH] dismiss() called');
+      // eslint-disable-next-line no-console
+      console.log('[SPLASH] minDurationPassed:', minDurationPassed);
+
       const fadeOut = () => {
+        // eslint-disable-next-line no-console
+        console.log('[SPLASH] fadeOut() - fading out splash');
         splashOverlay.style.opacity = '0';
         setTimeout(() => {
           if (splashOverlay.parentNode) {
             document.body.removeChild(splashOverlay);
+            // eslint-disable-next-line no-console
+            console.log('[SPLASH] Splash overlay removed from DOM');
+          } else {
+            // eslint-disable-next-line no-console
+            console.log('[SPLASH] Splash overlay already removed from DOM');
           }
         }, 300);
       };
 
       if (minDurationPassed) {
+        // eslint-disable-next-line no-console
+        console.log('[SPLASH] Minimum duration passed, fading out immediately');
         fadeOut();
       } else {
         // Wait for minimum duration to pass
         const remaining = minDuration - (Date.now() - startTime);
+        // eslint-disable-next-line no-console
+        console.log('[SPLASH] Minimum duration NOT passed, waiting', remaining, 'ms');
         setTimeout(fadeOut, Math.max(0, remaining));
       }
     };
@@ -581,6 +611,8 @@ function showSplashScreen(imageUrl, minDuration = 5000) {
 
     // Resolve after minimum duration with dismiss function
     setTimeout(() => {
+      // eslint-disable-next-line no-console
+      console.log('[SPLASH] Minimum duration reached, resolving promise with dismiss function');
       resolve(dismiss);
     }, minDuration);
   });
@@ -3844,23 +3876,44 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
     context: 'github',
     ariaLabel: hasParentNotebook ? 'Return to notebook' : 'Go to first page',
     onClick: async () => {
+      // eslint-disable-next-line no-console
+      console.log('[GITHUB HOME] Button clicked');
+      // eslint-disable-next-line no-console
+      console.log('[GITHUB HOME] hasParentNotebook:', hasParentNotebook);
+      // eslint-disable-next-line no-console
+      console.log('[GITHUB HOME] parentHistory:', parentHistory);
+
       if (hasParentNotebook) {
         // Show splash screen if configured (from parent notebook)
         const splashUrl = parentHistory?.splashUrl;
+        // eslint-disable-next-line no-console
+        console.log('[GITHUB HOME] splashUrl from parentHistory:', splashUrl);
+
         if (splashUrl) {
+          // eslint-disable-next-line no-console
+          console.log('[GITHUB HOME] Showing splash screen for 5 seconds...');
           // Wait for splash to complete before closing overlay
           const dismiss = await showSplashScreen(splashUrl, 5000);
+          // eslint-disable-next-line no-console
+          console.log('[GITHUB HOME] Splash screen promise resolved, dismissing...');
           dismiss();
+          // eslint-disable-next-line no-console
+          console.log('[GITHUB HOME] Splash screen dismissed');
+        } else {
+          // eslint-disable-next-line no-console
+          console.log('[GITHUB HOME] No splash URL configured, skipping splash');
         }
 
         // We were opened from a notebook - close this overlay to return to notebook
         // eslint-disable-next-line no-console
-        console.log('[HOME BUTTON] Returning to parent notebook');
+        console.log('[GITHUB HOME] Returning to parent notebook, closing overlay...');
         closeOverlay();
+        // eslint-disable-next-line no-console
+        console.log('[GITHUB HOME] Overlay closed');
       } else {
         // We're a standalone markdown viewer - scroll to top
         // eslint-disable-next-line no-console
-        console.log('[HOME BUTTON] Scrolling to top (already home)');
+        console.log('[GITHUB HOME] Scrolling to top (already home)');
         contentArea.scrollTop = 0;
       }
     },
