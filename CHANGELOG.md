@@ -9,6 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **ipynb-viewer Splash Screen Feature**: Display branded splash image during initialization and home button press (2026-01-16)
+  - **Features**:
+    - New `splash-page` metadata attribute for notebook configuration
+    - Full-screen dark overlay (rgba(0, 0, 0, 0.95)) with centered image
+    - Minimum 5-second display duration with smooth fade-in/fade-out transitions
+    - Auto-dismisses after minimum duration
+    - Shows on initialization and when home button (🏠) is pressed in notebook mode
+  - **Implementation**:
+    - New `showSplashScreen()` helper function (lines 441-511)
+    - Metadata extraction with `notebook.metadata?.['splash-page']` (lines 3926)
+    - Initialization display after content loads (lines 4105-4110)
+    - Home button integration in notebook mode (lines 2213-2218)
+  - **Documentation Updates**:
+    - Updated README.md with splash-page attribute documentation
+    - Added complete splash-page section to explaining-attributes.md
+    - Updated block-architecture.md with Version 2.1.0 entry
+  - **Use Cases**: Branding, loading indicator, welcome screen, visual transitions
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js`, `blocks/ipynb-viewer/README.md`, `blocks/ipynb-viewer/explaining-attributes.md`, `blocks/ipynb-viewer/block-architecture.md`, `invisible-users/notebook.ipynb`
+
 - **ipynb-viewer External Link Support**: Angle-bracket URLs and external markdown links now clickable in GitHub markdown overlay
   - **Features**:
     - Angle-bracket URLs (`<https://example.com>`) automatically converted to clickable links
@@ -27,7 +46,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Updated markdown rendering section with external link details
   - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js`, `blocks/ipynb-viewer/ipynb-viewer.css`, `blocks/ipynb-viewer/block-architecture.md`
 
+### Changed
+
+- **ipynb-viewer Event Handler Refactoring**: Consolidated duplicate event handlers into reusable helper functions (2026-01-16)
+  - **Motivation**: Eliminate ~100 lines of duplicate code violating DRY principles
+  - **New Helper Functions**:
+    - `createHelpButtonHandler()` (lines 520-566) - Two-tier fallback logic for help button
+      - Eliminates 2 duplicate help button implementations
+      - Centralizes fallback priority logic
+      - Used in both notebook mode and GitHub overlay mode
+    - `createDropdownCloseHandler()` (lines 573-582) - Dropdown close on outside click
+      - Eliminates 4 duplicate close handlers (3 in notebook mode, 1 in GitHub overlay)
+      - Accepts array of {dropdown, button} objects for flexible use
+    - `createTreeToggleHandler()` (lines 590-607) - Tree toggle show/hide logic
+      - Eliminates 2 duplicate tree toggle implementations
+      - Consistent aria attributes and icon handling
+      - Used in both notebook mode and GitHub overlay mode
+  - **Benefits**: Improved maintainability, consistent behavior, easier testing, ~100 lines less code
+  - **Documentation Updates**: Added refactoring details to block-architecture.md Version 2.1.0 entry
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js`, `blocks/ipynb-viewer/block-architecture.md`
+
 ### Fixed
+
+- **ipynb-viewer Help Button Fallback Priority**: Corrected help button fallback order to prioritize standard help location (2026-01-16)
+  - **Root Cause**: Help button was using notebook's `github-branch` metadata first, then falling back to 'main' branch
+  - **Solution**: Reversed priority order to try allaboutV2 repo main branch FIRST, then notebook repo as fallback
+  - **Correct Priority**:
+    1. First try: `https://github.com/ddttom/allaboutv2/blob/main/invisible-users/docs/help.md` (standard location)
+    2. If fails: Try notebook's `repo` metadata using `github-branch` metadata
+  - **Implementation**: Async fetch validation in both help button locations (notebook mode and GitHub overlay)
+  - **Impact**: Users now get latest help docs from standard location, with notebook-specific help as fallback
+  - **Documentation Updates**: Updated README.md and block-architecture.md with corrected fallback behavior
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js`, `blocks/ipynb-viewer/README.md`, `blocks/ipynb-viewer/block-architecture.md`
 
 - **ipynb-viewer Code Block Rendering**: Fixed code blocks displaying on one line in GitHub markdown overlays
   - **Root Cause**: Code blocks restored BEFORE paragraph processing caused blocks with blank lines (\\n\\n) to be split by the paragraph splitter into fragments
