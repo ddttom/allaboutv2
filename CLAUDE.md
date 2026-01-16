@@ -103,6 +103,39 @@ All `.claude/` operations, block creation, slash commands, and documentation upd
 - `npm run lint` - Run all linting (JS + CSS + Markdown)
 - `npm run debug` - Run local development server (server.js is READ-ONLY)
 
+### Local Testing Workflow (for AI Assistants)
+
+**You do NOT need to commit code for the user to test changes.**
+
+**Correct workflow:**
+
+1. **Make changes** - Edit files using Read/Edit/Write tools
+2. **User tests locally** - User runs `npm run debug` and tests in browser at `http://localhost:3000`
+3. **Iterate if needed** - Make additional changes based on test results
+4. **Commit when validated** - Only commit after changes are tested and working
+
+**Why this matters:**
+
+- Reduces unnecessary commits during debugging
+- Keeps git history clean
+- Faster iteration cycle (no commit overhead)
+- User can test multiple iterations before deciding what to commit
+
+**When to commit:**
+
+- ✅ After user confirms changes work correctly
+- ✅ When implementing a complete, tested feature
+- ✅ When user explicitly asks for a commit
+- ❌ After every single change during debugging
+- ❌ To enable testing (user can test without commits)
+
+**Debug code pattern:**
+
+- Add debug logging (`console.log`) during troubleshooting
+- User tests with debug logs in browser console
+- Remove or comment out debug logs before final commit
+- Or: Keep critical debug logs with `// eslint-disable-next-line no-console` if valuable for future debugging
+
 ## ⚠️ CRITICAL: server.js is READ-ONLY
 
 **NEVER modify server.js** - it is a readonly debug tool for local development.

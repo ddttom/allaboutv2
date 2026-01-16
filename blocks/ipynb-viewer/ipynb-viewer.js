@@ -8,6 +8,21 @@
 // before their definitions. This is valid JavaScript and the functions are properly
 // hoisted. The complex nested structure makes reordering impractical.
 
+// ============================================================================
+// GLOBAL CONSTANTS - Developer-facing error messages (easily searchable)
+// ============================================================================
+const IPYNB_ERRORS = {
+  CONFIG_MISSING_OVERLAY: 'Incomplete code: Configuration object missing. Block cannot initialize.',
+  CONFIG_MISSING_GITHUB: 'Incomplete code: Configuration object missing. Cannot display GitHub markdown.',
+  CONFIG_MISSING_HELP: 'Help button clicked but configuration object is missing.',
+};
+
+// ============================================================================
+// MODULE-LEVEL CONSTANTS
+// ============================================================================
+// SVG Inline Cache (kept at module level for cross-invocation caching)
+const SVG_INLINE_CACHE = new Map();
+
 /**
  * Parse markdown text to HTML (enhanced implementation)
  * @param {string} markdown - Markdown text
@@ -433,12 +448,12 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
 }
 
 /**
- * Display splash screen image
+ * Display splash screen image that auto-dismisses after duration
  * @param {string} imageUrl - URL of splash screen image
- * @param {number} minDuration - Minimum display duration in milliseconds (default 5000)
- * @returns {Promise<Function>} Promise that resolves with dismiss function after minDuration
+ * @param {number} minDuration - Display duration in milliseconds (default 4000, should match config.defaultSplashDuration)
+ * @returns {Promise<void>} Promise that resolves after splash fades out
  */
-function showSplashScreen(imageUrl, minDuration = 5000) {
+function showSplashScreen(imageUrl, minDuration = 4000) {
   // eslint-disable-next-line no-console
   console.log('[SPLASH] showSplashScreen called');
   // eslint-disable-next-line no-console
@@ -564,34 +579,35 @@ function showSplashScreen(imageUrl, minDuration = 5000) {
     };
     updateCountdown();
 
+    // Helper fadeOut function
+    const fadeOut = () => {
+      // eslint-disable-next-line no-console
+      console.log('[SPLASH] fadeOut() - fading out splash');
+      splashOverlay.style.opacity = '0';
+      setTimeout(() => {
+        if (splashOverlay.parentNode) {
+          document.body.removeChild(splashOverlay);
+          // eslint-disable-next-line no-console
+          console.log('[SPLASH] Splash overlay removed from DOM');
+        } else {
+          // eslint-disable-next-line no-console
+          console.log('[SPLASH] Splash overlay already removed from DOM');
+        }
+      }, 300);
+    };
+
     // Track when minimum duration has passed
     let minDurationPassed = false;
     setTimeout(() => {
       minDurationPassed = true;
     }, minDuration);
 
-    // Create dismiss function
+    // Create dismiss function for close button
     const dismiss = () => {
       // eslint-disable-next-line no-console
-      console.log('[SPLASH] dismiss() called');
+      console.log('[SPLASH] dismiss() called (close button)');
       // eslint-disable-next-line no-console
       console.log('[SPLASH] minDurationPassed:', minDurationPassed);
-
-      const fadeOut = () => {
-        // eslint-disable-next-line no-console
-        console.log('[SPLASH] fadeOut() - fading out splash');
-        splashOverlay.style.opacity = '0';
-        setTimeout(() => {
-          if (splashOverlay.parentNode) {
-            document.body.removeChild(splashOverlay);
-            // eslint-disable-next-line no-console
-            console.log('[SPLASH] Splash overlay removed from DOM');
-          } else {
-            // eslint-disable-next-line no-console
-            console.log('[SPLASH] Splash overlay already removed from DOM');
-          }
-        }, 300);
-      };
 
       if (minDurationPassed) {
         // eslint-disable-next-line no-console
@@ -609,11 +625,17 @@ function showSplashScreen(imageUrl, minDuration = 5000) {
     // Wire up close button
     closeButton.addEventListener('click', dismiss);
 
-    // Resolve after minimum duration with dismiss function
+    // Auto-dismiss after minimum duration and resolve promise
     setTimeout(() => {
       // eslint-disable-next-line no-console
-      console.log('[SPLASH] Minimum duration reached, resolving promise with dismiss function');
-      resolve(dismiss);
+      console.log('[SPLASH] Minimum duration reached (4s), auto-dismissing...');
+      fadeOut();
+      // Resolve after fade completes (300ms fade + small buffer)
+      setTimeout(() => {
+        // eslint-disable-next-line no-console
+        console.log('[SPLASH] Fade complete, resolving promise');
+        resolve();
+      }, 350);
     }, minDuration);
   });
 }
@@ -625,15 +647,21 @@ function showSplashScreen(imageUrl, minDuration = 5000) {
  * @param {Object} overlayContext - Context object containing createGitHubMarkdownOverlay parameters
  * @returns {Function} Async click handler for help button
  */
-function createHelpButtonHandler(repoUrl, branch, overlayContext) {
+function createHelpButtonHandler(repoUrl, branch, overlayContext, config) {
   return async () => {
     // Priority order for help.md:
-    // 1. First try: allaboutv2 repo main branch (hardcoded fallback)
+    // 1. First try: allaboutv2 repo main branch (from config fallback)
     // 2. If that fails: try notebook's repo using github-branch metadata
 
-    const fallbackRepo = 'https://github.com/ddttom/allaboutv2';
-    const fallbackBranch = 'main'; // Always use main for fallback
-    const fallbackHelpPath = `${fallbackRepo}/blob/${fallbackBranch}/docs/help.md`;
+    // If no config provided, cannot show help (config contains all necessary values)
+    if (!config) {
+      console.error(`[IPYNB-VIEWER] ${IPYNB_ERRORS.CONFIG_MISSING_HELP}`);
+      return;
+    }
+
+    const fallbackRepo = config.fallbackHelpRepo;
+    const fallbackBranch = config.fallbackHelpBranch;
+    const fallbackHelpPath = `${fallbackRepo}/blob/${fallbackBranch}/${config.fallbackHelpPath}`;
 
     // Try fetching from fallback first
     const fallbackRawUrl = fallbackHelpPath.replace('/blob/', '/').replace('github.com', 'raw.githubusercontent.com');
@@ -644,7 +672,7 @@ function createHelpButtonHandler(repoUrl, branch, overlayContext) {
         // Fallback succeeded - use allaboutv2 main branch
         const helpOverlay = overlayContext.createGitHubMarkdownOverlay(
           fallbackHelpPath,
-          'IPynb Viewer Help',
+          config.helpOverlayTitle,
           fallbackRepo,
           fallbackBranch,
           overlayContext.history,
@@ -1052,7 +1080,7 @@ async function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false,
       const githubUrl = link.dataset.mdUrl; // Get URL from data attribute
       const linkBranch = link.dataset.branch || branch; // Get branch from link or use default
       const title = link.textContent || 'GitHub Markdown';
-      const overlay = createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl, linkBranch, parentHistory, false);
+      const overlay = createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl, linkBranch, parentHistory, false, null);
       overlay.openOverlay();
     });
   });
@@ -1260,9 +1288,9 @@ function shouldGroupWithNext(cell, nextCell) {
  * @param {Array<HTMLElement>} cells - Array of cell elements
  * @returns {Array<Object>} Array of page objects with grouped cells
  */
-function createPageGroups(cells) {
+function createPageGroups(cells, maxCodeGroupSize = 3) {
   const pages = [];
-  const MAX_CODE_GROUP_SIZE = 3; // Maximum number of consecutive code cells to group
+  const MAX_CODE_GROUP_SIZE = maxCodeGroupSize; // Maximum number of consecutive code cells to group
   let i = 0;
 
   while (i < cells.length) {
@@ -1305,15 +1333,6 @@ function createPageGroups(cells) {
 /**
  * Maximum number of history entries to track per overlay instance
  */
-const MAX_HISTORY_ENTRIES = 25;
-
-// SVG Inline Configuration
-const SVG_INLINE_CONFIG = {
-  TIMEOUT: 10000, // 10 seconds
-  // Match both relative (illustrations/*.svg) and absolute GitHub URLs (*/illustrations/*.svg)
-  PATTERN: /\/illustrations\/[^/]+\.svg$/i,
-  CACHE: new Map(), // Cache fetched SVGs
-};
 
 /**
  * Add entry to navigation history for a specific overlay instance
@@ -1323,7 +1342,7 @@ const SVG_INLINE_CONFIG = {
  * @param {number} [cellIndex] - Cell index for cell entries
  * @param {string} [url] - URL for markdown entries
  */
-function addToHistory(historyArray, title, type, cellIndex = null, url = null) {
+function addToHistory(historyArray, title, type, cellIndex = null, url = null, maxEntries = 25) {
   const entry = {
     title,
     type,
@@ -1343,8 +1362,8 @@ function addToHistory(historyArray, title, type, cellIndex = null, url = null) {
   // Add to front of history
   historyArray.unshift(entry);
 
-  // Limit to MAX_HISTORY_ENTRIES
-  if (historyArray.length > MAX_HISTORY_ENTRIES) {
+  // Limit to maxEntries
+  if (historyArray.length > maxEntries) {
     historyArray.pop();
   }
 }
@@ -2208,10 +2227,23 @@ function findNodeById(tree, nodeId) {
  * @param {string} [repoUrl] - Optional repository URL for markdown .md links
  * @param {string} [notebookTitle] - Optional notebook title for top bar
  * @param {string} [helpRepoUrl] - Optional help repository URL
+ * @param {string} [branch] - GitHub branch to use
+ * @param {boolean} [hideTopbar] - Whether to hide the top bar
  * @param {object} [notebook] - Raw notebook data with cells array
+ * @param {object} [config] - Configuration object with settings (injected dependency)
  * @returns {object} Overlay controls
  */
-function createPagedOverlay(container, cellsContainer, autorun = false, isNotebookMode = false, repoUrl = null, notebookTitle = 'Jupyter Notebook', helpRepoUrl = null, branch = 'main', hideTopbar = false, notebook = null) {
+function createPagedOverlay(container, cellsContainer, autorun = false, isNotebookMode = false, repoUrl = null, notebookTitle = 'Jupyter Notebook', helpRepoUrl = null, branch = 'main', hideTopbar = false, notebook = null, config = null) {
+  // Config is required - fail with clear error if missing
+  if (!config) {
+    console.error('[IPYNB-VIEWER] CRITICAL: Config object missing in createPagedOverlay');
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'ipynb-error';
+    errorDiv.textContent = IPYNB_ERRORS.CONFIG_MISSING_OVERLAY;
+    container.appendChild(errorDiv);
+    return null;
+  }
+
   const cells = Array.from(cellsContainer.querySelectorAll('.ipynb-cell'));
 
   if (cells.length === 0) return null;
@@ -2221,7 +2253,8 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   existingOverlays.forEach((overlay) => overlay.remove());
 
   // Create page groups (smart grouping)
-  const pages = createPageGroups(cells);
+  const maxCodeGroupSize = config.maxCodeGroupSize;
+  const pages = createPageGroups(cells, maxCodeGroupSize);
   const totalPages = pages.length;
 
   // Create instance-specific navigation history (rooted in this overlay)
@@ -2271,6 +2304,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     navigationTree, // Add tree to state
     treeState, // Add tree state to state for sharing across overlays
     splashUrl: notebook?.metadata?.['splash-page'], // Add splash URL for GitHub overlay access
+    splashDuration, // Add splash duration from metadata/config
   };
 
   // eslint-disable-next-line no-console
@@ -2336,9 +2370,8 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
         // Show splash screen if configured
         const splashUrl = notebook?.metadata?.['splash-page'];
         if (splashUrl) {
-          showSplashScreen(splashUrl, 5000).then((dismiss) => {
-            dismiss();
-          });
+          // Show splash with duration from metadata/config (auto-dismisses)
+          showSplashScreen(splashUrl, paginationState.splashDuration);
         }
 
         // eslint-disable-next-line no-console
@@ -2404,7 +2437,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
             }
           } else if (entry.type === 'markdown' && entry.url) {
             // Re-open GitHub markdown overlay
-            const mdOverlay = createGitHubMarkdownOverlay(entry.url, entry.title, helpRepoUrl, branch, paginationState, hideTopbar);
+            const mdOverlay = createGitHubMarkdownOverlay(entry.url, entry.title, helpRepoUrl, branch, paginationState, hideTopbar, config);
             mdOverlay.openOverlay();
           }
           historyDropdown.style.display = 'none';
@@ -2590,7 +2623,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
               updatePageDisplay();
             } else if (bookmark.type === 'markdown' && bookmark.url) {
               // Open markdown file in overlay
-              const mdOverlay = createGitHubMarkdownOverlay(bookmark.url, bookmark.title, helpRepoUrl, branch, paginationState, hideTopbar);
+              const mdOverlay = createGitHubMarkdownOverlay(bookmark.url, bookmark.title, helpRepoUrl, branch, paginationState, hideTopbar, config);
               mdOverlay.openOverlay();
             }
             bookmarkDropdown.style.display = 'none';
@@ -2661,7 +2694,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   if (isNotebookMode && helpRepoUrl) {
     helpButton = document.createElement('button');
     helpButton.className = 'ipynb-overlay-button ipynb-help-button';
-    helpButton.innerHTML = '&#10067;'; // Question mark icon (❓)
+    helpButton.innerHTML = config.icons.questionMark; // Question mark icon (❓)
     helpButton.setAttribute('aria-label', 'Help');
     helpButton.setAttribute('title', 'Help');
 
@@ -2669,7 +2702,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       createGitHubMarkdownOverlay,
       history: paginationState,
       hideTopbar,
-    }));
+    }, config));
   }
 
   // Close all dropdowns when clicking outside (consolidated handler)
@@ -2909,7 +2942,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
         const githubUrl = link.dataset.mdUrl; // Get URL from data attribute
         const linkBranch = link.dataset.branch || branch; // Get branch from link or use default
         const title = link.textContent || 'GitHub Markdown';
-        const mdOverlay = createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl, linkBranch, paginationState, hideTopbar);
+        const mdOverlay = createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl, linkBranch, paginationState, hideTopbar, config);
         mdOverlay.openOverlay();
       });
     });
@@ -3063,7 +3096,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       };
 
       // Open using GitHub markdown overlay
-      const mdOverlay = createGitHubMarkdownOverlay(fullUrl, node.label, mdRepoUrl, branch, historyContext);
+      const mdOverlay = createGitHubMarkdownOverlay(fullUrl, node.label, mdRepoUrl, branch, historyContext, false, null);
       mdOverlay.openOverlay();
 
       // Select this node in tree
@@ -3309,9 +3342,25 @@ function convertToRawUrl(blobUrl, _branch = 'main') {
  * @param {string} [helpRepoUrl] - Optional help repository URL
  * @param {string} [branch='main'] - GitHub branch to use
  * @param {Array} [parentHistory=null] - Optional parent overlay's history array
+ * @param {boolean} [hideTopbar=false] - Whether to hide the top bar
+ * @param {object} [config=null] - Configuration object with settings (injected dependency)
  * @returns {Object} Object with openOverlay and closeOverlay functions
  */
-function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branch = 'main', parentHistory = null, hideTopbar = false) {
+function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branch = 'main', parentHistory = null, hideTopbar = false, config = null) {
+  // Config is required for icons and UI text - fail if missing
+  if (!config) {
+    console.error('[IPYNB-VIEWER] CRITICAL: Config object missing in createGitHubMarkdownOverlay');
+    const errorOverlay = document.createElement('div');
+    errorOverlay.className = 'ipynb-error';
+    errorOverlay.style.cssText = 'padding: 2rem; text-align: center; background: #fee; color: #c00;';
+    errorOverlay.textContent = IPYNB_ERRORS.CONFIG_MISSING_GITHUB;
+    document.body.appendChild(errorOverlay);
+    return {
+      openOverlay: () => {},
+      closeOverlay: () => {},
+    };
+  }
+
   // Create overlay container
   const overlay = document.createElement('div');
   overlay.className = 'ipynb-manual-overlay ipynb-github-md-overlay';
@@ -3417,7 +3466,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
   if (helpRepoUrl) {
     helpButton = document.createElement('button');
     helpButton.className = 'ipynb-overlay-button ipynb-help-button';
-    helpButton.innerHTML = '&#10067;'; // Question mark icon (❓)
+    helpButton.innerHTML = config.icons.questionMark; // Question mark icon (❓)
     helpButton.setAttribute('aria-label', 'Help');
     helpButton.setAttribute('title', 'Help');
   }
@@ -3506,7 +3555,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
         if (entry.type === 'markdown' && entry.url) {
           // Close current overlay and open historical markdown
           closeOverlay();
-          const histOverlay = createGitHubMarkdownOverlay(entry.url, entry.title, helpRepoUrl, branch, parentHistory);
+          const histOverlay = createGitHubMarkdownOverlay(entry.url, entry.title, helpRepoUrl, branch, parentHistory, false, config);
           histOverlay.openOverlay();
         }
         historyDropdown.style.display = 'none';
@@ -3565,7 +3614,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
         if (bookmark.url) {
           // Close current overlay and open bookmarked markdown
           closeOverlay();
-          const bmOverlay = createGitHubMarkdownOverlay(bookmark.url, bookmark.title, helpRepoUrl, branch, parentHistory);
+          const bmOverlay = createGitHubMarkdownOverlay(bookmark.url, bookmark.title, helpRepoUrl, branch, parentHistory, false, config);
           bmOverlay.openOverlay();
         }
         bookmarkDropdown.style.display = 'none';
@@ -3629,11 +3678,13 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
 
   // Help button handler
   if (helpButton && helpRepoUrl) {
+    // Note: GitHub overlay needs config from parent notebook context
+    // We don't have access to the parent's config here, so we pass null and use defaults
     helpButton.addEventListener('click', createHelpButtonHandler(helpRepoUrl, branch, {
       createGitHubMarkdownOverlay,
       history: parentHistory,
       hideTopbar: false, // GitHub overlay doesn't have hideTopbar parameter
-    }));
+    }, null)); // null config will use hardcoded defaults in createHelpButtonHandler
   }
 
   // Close dropdowns when clicking outside (consolidated handler)
@@ -3796,7 +3847,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
           const linkUrl = link.dataset.mdUrl; // Get URL from data attribute
           const linkBranch = link.dataset.branch || branch; // Get branch from link or use default
           const linkTitle = link.textContent || 'GitHub Markdown';
-          const nestedOverlay = createGitHubMarkdownOverlay(linkUrl, linkTitle, helpRepoUrl, linkBranch, parentHistory);
+          const nestedOverlay = createGitHubMarkdownOverlay(linkUrl, linkTitle, helpRepoUrl, linkBranch, parentHistory, false, config);
           nestedOverlay.openOverlay();
         });
       });
@@ -3844,7 +3895,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
 
               // Close current overlay and open new one
               closeOverlay();
-              const newOverlay = createGitHubMarkdownOverlay(fullUrl, node.label, helpRepoUrl, branch, parentHistory);
+              const newOverlay = createGitHubMarkdownOverlay(fullUrl, node.label, helpRepoUrl, branch, parentHistory, false, config);
               newOverlay.openOverlay();
 
               // Select this node in tree
@@ -3905,15 +3956,13 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
         console.log('[GITHUB HOME] splashUrl from parentHistory:', splashUrl);
 
         if (splashUrl) {
+          const duration = parentHistory?.splashDuration || 4000;
           // eslint-disable-next-line no-console
-          console.log('[GITHUB HOME] Showing splash screen for 5 seconds...');
-          // Wait for splash to complete before closing overlay
-          const dismiss = await showSplashScreen(splashUrl, 5000);
+          console.log('[GITHUB HOME] Showing splash screen for', duration, 'ms...');
+          // Wait for splash to complete (it auto-dismisses after duration)
+          await showSplashScreen(splashUrl, duration);
           // eslint-disable-next-line no-console
-          console.log('[GITHUB HOME] Splash screen promise resolved, dismissing...');
-          dismiss();
-          // eslint-disable-next-line no-console
-          console.log('[GITHUB HOME] Splash screen dismissed');
+          console.log('[GITHUB HOME] Splash screen completed');
         } else {
           // eslint-disable-next-line no-console
           console.log('[GITHUB HOME] No splash URL configured, skipping splash');
@@ -4007,6 +4056,7 @@ function checkHashNavigation(repoUrl, helpRepoUrl, branch, pagedOverlay, metadat
         branch,
         pagedOverlay.paginationState,
         false,
+        config,
       );
       mdOverlay.openOverlay();
     }, 200);
@@ -4021,8 +4071,50 @@ function checkHashNavigation(repoUrl, helpRepoUrl, branch, pagedOverlay, metadat
 export default async function decorate(block) {
   // Configuration
   const config = {
+    // Messages
     errorMessage: 'Failed to load notebook',
     loadingMessage: 'Loading notebook...',
+
+    // Splash Screen
+    defaultSplashDuration: 4000, // Default splash screen duration in milliseconds
+    splashFadeTransition: 300, // Fade in/out transition duration in milliseconds
+    splashFadeBuffer: 50, // Extra buffer time after fade (ms)
+
+    // History & Navigation
+    maxHistoryEntries: 25, // Maximum number of history entries to keep
+
+    // Code Cells
+    maxCodeGroupSize: 3, // Maximum number of consecutive code cells to group in paged mode
+
+    // SVG Inlining
+    svgFetchTimeout: 10000, // SVG fetch timeout in milliseconds (10 seconds)
+    svgPathPattern: /\/illustrations\/[^/]+\.svg$/i, // Pattern to match SVG illustration paths
+
+    // Help System
+    fallbackHelpRepo: 'https://github.com/ddttom/allaboutv2',
+    fallbackHelpBranch: 'main',
+    fallbackHelpPath: 'docs/help.md',
+    helpOverlayTitle: 'IPynb Viewer Help',
+
+    // UI Icons (HTML entities)
+    icons: {
+      close: '&times;', // × close button
+      arrowRight: '&#9654;', // ► right arrow
+      arrowLeft: '&#9664;', // ◄ left arrow
+      clock: '&#128337;', // 🕘 clock/history icon
+      hamburger: '&#9776;', // ☰ hamburger menu
+      bookmark: '&#128278;', // 🔖 bookmark icon
+      questionMark: '&#10067;', // ❓ question mark icon
+    },
+
+    // UI Text
+    text: {
+      runButton: 'Run',
+      noHistoryMessage: 'No history yet',
+      noBookmarksMessage: 'No bookmarks yet',
+      clearAllBookmarks: 'Clear All Bookmarks',
+      addBookmark: '+ Bookmark This Page',
+    },
   };
 
   // Detect variations
@@ -4069,6 +4161,13 @@ export default async function decorate(block) {
     if (splashPageUrl) {
       block.setAttribute('data-splash-page', splashPageUrl);
     }
+
+    // Get splash duration from metadata (in seconds), convert to milliseconds
+    // Falls back to config.defaultSplashDuration if not specified
+    const splashDurationSeconds = notebook.metadata?.['splash-duration'];
+    const splashDuration = splashDurationSeconds
+      ? splashDurationSeconds * 1000
+      : config.defaultSplashDuration;
 
     // Set help-repo attribute if available in metadata
     // Falls back to repo, then to allaboutV2 default
@@ -4260,7 +4359,7 @@ export default async function decorate(block) {
 
       // Create overlay with autorun support and notebook mode flag
       const notebookTitle = notebook.metadata?.title || 'Jupyter Notebook';
-      const overlay = createPagedOverlay(container, cellsContainer, shouldAutorun, isNotebook, repoUrl, notebookTitle, helpRepoUrl, githubBranch, isNoTopbar, notebook);
+      const overlay = createPagedOverlay(container, cellsContainer, shouldAutorun, isNotebook, repoUrl, notebookTitle, helpRepoUrl, githubBranch, isNoTopbar, notebook, config);
 
       // Index variation: Auto-open overlay without button
       if (isIndex) {
@@ -4298,12 +4397,9 @@ export default async function decorate(block) {
     block.appendChild(container);
 
     // Show splash screen if splash-page metadata exists
-    // Startup uses 7.5 seconds for initial display
+    // Uses duration from metadata (splash-duration) or config default (auto-dismisses)
     if (splashPageUrl) {
-      showSplashScreen(splashPageUrl, 7500).then((dismiss) => {
-        // Auto-dismiss after minimum duration
-        dismiss();
-      });
+      showSplashScreen(splashPageUrl, splashDuration);
     }
   } catch (error) {
     console.error('Block decoration failed:', error);

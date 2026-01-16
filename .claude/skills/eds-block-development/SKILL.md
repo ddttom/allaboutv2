@@ -164,6 +164,329 @@ export default function decorate(block) {
 
 ---
 
+## Configuration Object Architecture
+
+### ⚠️ CRITICAL: Separation of Concerns
+
+**Every block must distinguish between:**
+
+1. **Global Constants** - Developer-facing messages and module-level state
+2. **Runtime Configuration** - User-facing settings, durations, URLs, icons, text
+3. **Metadata Overrides** - Notebook-specific configuration from `.ipynb` metadata
+
+### Global Constants Pattern
+
+**Place at the top of your JavaScript file (before all other code):**
+
+```javascript
+// ============================================================================
+// GLOBAL CONSTANTS - Developer-facing error messages (easily searchable)
+// ============================================================================
+const BLOCKNAME_ERRORS = {
+  CONFIG_MISSING: 'Incomplete code: Configuration object missing. Block cannot initialize.',
+  INVALID_DATA: 'Invalid data format. Expected array of objects.',
+  FETCH_FAILED: 'Failed to fetch remote data.',
+};
+
+// ============================================================================
+// MODULE-LEVEL CONSTANTS
+// ============================================================================
+// Module-level cache (persists across block instances)
+const BLOCKNAME_CACHE = new Map();
+```
+
+**Why this matters:**
+
+- Error messages are **developer-facing** - they help developers debug issues
+- Placing them at the top makes them **easily searchable** with Ctrl+F
+- Separates concerns: developers modify global constants, users/metadata configure runtime behavior
+- **Never put error messages in the config object** - they're not runtime configuration
+
+### Runtime Configuration Object
+
+**Define inside `decorate()` function:**
+
+```javascript
+export default function decorate(block) {
+  // Configuration object - runtime settings
+  const config = {
+    // Messages (user-facing)
+    errorMessage: 'Failed to load content',
+    loadingMessage: 'Loading...',
+
+    // Timing
+    animationDuration: 300,
+    defaultTimeout: 5000,
+
+    // Limits
+    maxItems: 10,
+    maxRetries: 3,
+
+    // URLs and Paths
+    apiEndpoint: '/api/data.json',
+    fallbackUrl: 'https://example.com/fallback',
+
+    // UI Icons (HTML entities)
+    icons: {
+      close: '&times;',
+      arrow: '&#9654;',
+      warning: '&#9888;',
+    },
+
+    // UI Text
+    text: {
+      submitButton: 'Submit',
+      cancelButton: 'Cancel',
+      confirmMessage: 'Are you sure?',
+    },
+  };
+
+  // Extract metadata overrides
+  const metadata = block.dataset;
+  const timeout = metadata.timeout ? parseInt(metadata.timeout) : config.defaultTimeout;
+
+  // Use config and metadata throughout
+  // ...
+}
+```
+
+**What belongs in config object:**
+
+- ✅ Durations and timing values
+- ✅ API endpoints and URLs
+- ✅ UI text and icons
+- ✅ Limits and thresholds
+- ✅ User-facing messages
+- ❌ Error messages (use global constants)
+- ❌ Module-level caches (use module constants)
+
+### Metadata Override Pattern
+
+**For `.ipynb` notebooks:**
+
+```javascript
+export default function decorate(block) {
+  const config = { /* ... */ };
+
+  // Extract notebook metadata (if applicable)
+  const notebookData = JSON.parse(block.textContent || '{}');
+  const metadata = notebookData.metadata || {};
+
+  // Override config with metadata (convert units if needed)
+  const splashDuration = metadata['splash-duration']
+    ? metadata['splash-duration'] * 1000  // Convert seconds to milliseconds
+    : config.defaultSplashDuration;
+
+  const autorun = metadata.autorun === true;  // Boolean from metadata
+
+  // Use overridden values
+  showSplashScreen(splashDuration);
+}
+```
+
+**For EDS blocks with data attributes:**
+
+```javascript
+export default function decorate(block) {
+  const config = { /* ... */ };
+
+  // Override config with data attributes
+  const layout = block.dataset.layout || 'grid';
+  const columns = parseInt(block.dataset.columns) || config.defaultColumns;
+
+  // Apply configuration
+  block.classList.add(`layout-${layout}`);
+  block.style.setProperty('--columns', columns);
+}
+```
+
+### Dependency Injection for Config
+
+**When config is needed in helper functions, use dependency injection:**
+
+```javascript
+// ❌ BAD - Global access (causes ReferenceError)
+function createOverlay(data) {
+  const icon = config.icons.close;  // ReferenceError: config is not defined
+  // ...
+}
+
+// ✅ GOOD - Dependency injection
+function createOverlay(data, config) {
+  const icon = config.icons.close;  // Explicit parameter
+  // ...
+}
+
+export default function decorate(block) {
+  const config = { /* ... */ };
+
+  // Pass config explicitly
+  const overlay = createOverlay(data, config);
+}
+```
+
+**For nested function calls:**
+
+```javascript
+function createOverlay(data, config) {
+  // Config validation guard clause
+  if (!config) {
+    console.error('[BLOCK] CRITICAL: Config object missing in createOverlay');
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'block-error';
+    errorDiv.textContent = BLOCKNAME_ERRORS.CONFIG_MISSING;
+    return errorDiv;
+  }
+
+  // Pass config down the chain
+  const content = renderContent(data, config);
+  const footer = renderFooter(config);
+
+  // ...
+}
+
+function renderContent(data, config) {
+  // Config flows through entire call chain
+  const icon = config.icons.arrow;
+  // ...
+}
+
+export default function decorate(block) {
+  const config = { /* ... */ };
+
+  // Top-level call passes config
+  const overlay = createOverlay(data, config);
+}
+```
+
+### Config Validation Pattern
+
+**CRITICAL: Never use hardcoded fallbacks with `||` operator:**
+
+```javascript
+// ❌ BAD - Hardcoded fallback bypasses config
+function createOverlay(data, config = null) {
+  const icon = config?.icons?.close || '&times;';  // Fallback defeats config purpose
+  const timeout = config?.timeout || 5000;         // Hardcoded value
+}
+
+// ✅ GOOD - Guard clause with explicit error
+function createOverlay(data, config = null) {
+  // Fail explicitly if config missing
+  if (!config) {
+    console.error('[BLOCK] CRITICAL: Config object missing');
+    const errorDiv = document.createElement('div');
+    errorDiv.textContent = BLOCKNAME_ERRORS.CONFIG_MISSING;
+    return errorDiv;
+  }
+
+  // Direct property access (no fallbacks)
+  const icon = config.icons.close;
+  const timeout = config.timeout;
+
+  // Config is guaranteed to exist here
+}
+```
+
+**Why this matters:**
+
+- Fallbacks hide configuration issues
+- Block should **fail explicitly** if config missing
+- Makes bugs obvious during development
+- Forces proper dependency injection
+
+**Only acceptable use of fallback:**
+
+```javascript
+// ✅ Acceptable - Ternary for intentional default behavior
+const layout = config ? config.layout : 'grid';
+
+// ✅ Acceptable - Metadata override with config fallback
+const duration = metadata['duration'] || config.defaultDuration;
+```
+
+### Refactoring Existing Blocks
+
+**When reviewing or modifying existing blocks, check for:**
+
+1. **Hardcoded values scattered throughout code**
+   - Extract to config object at top of `decorate()`
+   - Group by category (messages, timing, limits, etc.)
+
+2. **Error messages in function bodies**
+   - Move to `BLOCKNAME_ERRORS` global constant at file top
+   - Update all usages to reference global constant
+
+3. **Functions accessing config globally**
+   - Add `config` parameter to function signature
+   - Pass config explicitly from call sites
+   - Add guard clause for config validation
+
+4. **Hardcoded fallbacks using `||` operator**
+   - Replace with guard clauses that fail explicitly
+   - Use ternary only for intentional defaults
+
+**Refactoring checklist:**
+
+```javascript
+// Before refactoring:
+function helper() {
+  const icon = '&times;';  // ❌ Hardcoded
+  const timeout = 5000;    // ❌ Hardcoded
+  if (error) {
+    showError('Failed');   // ❌ Hardcoded message
+  }
+}
+
+// After refactoring:
+const BLOCK_ERRORS = {
+  FETCH_FAILED: 'Failed to load data',  // ✅ Global constant
+};
+
+export default function decorate(block) {
+  const config = {
+    icons: { close: '&times;' },  // ✅ Config object
+    timeout: 5000,                 // ✅ Config object
+  };
+
+  helper(config);  // ✅ Dependency injection
+}
+
+function helper(config) {
+  if (!config) {  // ✅ Guard clause
+    console.error(BLOCK_ERRORS.CONFIG_MISSING);
+    return;
+  }
+
+  const icon = config.icons.close;  // ✅ Direct access
+  const timeout = config.timeout;   // ✅ Direct access
+
+  if (error) {
+    showError(BLOCK_ERRORS.FETCH_FAILED);  // ✅ Global constant
+  }
+}
+```
+
+### Real-World Example: ipynb-viewer
+
+**See `blocks/ipynb-viewer/ipynb-viewer.js` for comprehensive implementation:**
+
+- **Global constants** (lines 14-24): Error messages and module cache
+- **Config object** (lines 4073-4105): Runtime settings organized by category
+- **Metadata overrides** (lines 4120-4125): Splash duration from notebook metadata
+- **Dependency injection** (lines 2236, 3349): Config passed through function chain
+- **Guard clauses** (lines 2238-2245, 3351-3362): Fail explicitly if config missing
+
+**Key architectural decisions:**
+
+1. Error messages promoted to global constants (easily searchable)
+2. All hardcoded values moved to config object
+3. Config passed explicitly through all function calls
+4. No `||` fallbacks - functions fail with clear errors
+5. Metadata overrides use ternary for intentional defaults
+
+---
+
 ## Content Extraction Patterns
 
 ### Basic Two-Column Pattern
