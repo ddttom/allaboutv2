@@ -624,7 +624,11 @@ function showSplashScreen(imageUrl, minDuration = 4000) {
         const remaining = minDuration - (Date.now() - startTime);
         // eslint-disable-next-line no-console
         console.log('[SPLASH] Minimum duration NOT passed, waiting', remaining, 'ms');
+        // eslint-disable-next-line no-console
+        console.log('[SPLASH] Setting timeout for', Math.max(0, remaining), 'ms');
         setTimeout(() => {
+          // eslint-disable-next-line no-console
+          console.log('[SPLASH] Timeout fired, calling fadeOut()');
           fadeOut();
           // Resolve after fade completes
           setTimeout(() => {
@@ -633,6 +637,8 @@ function showSplashScreen(imageUrl, minDuration = 4000) {
             resolve();
           }, 350);
         }, Math.max(0, remaining));
+        // eslint-disable-next-line no-console
+        console.log('[SPLASH] Timeout set, waiting...');
       }
     };
 
@@ -3977,15 +3983,23 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
       if (hasParentNotebook) {
         // Show splash screen if configured (from parent notebook)
         // parentHistory may be paginationState object with splashUrl property
-        const splashUrl = parentHistory?.splashUrl;
-        const splashDuration = parentHistory?.splashDuration || 4000;
 
         // eslint-disable-next-line no-console
         console.log('[GITHUB HOME] parentHistory type:', typeof parentHistory);
         // eslint-disable-next-line no-console
-        console.log('[GITHUB HOME] splashUrl from parentHistory:', splashUrl);
+        console.log('[GITHUB HOME] parentHistory keys:', Object.keys(parentHistory || {}));
         // eslint-disable-next-line no-console
-        console.log('[GITHUB HOME] splashDuration:', splashDuration);
+        console.log('[GITHUB HOME] parentHistory.splashUrl:', parentHistory?.splashUrl);
+        // eslint-disable-next-line no-console
+        console.log('[GITHUB HOME] parentHistory.splashDuration:', parentHistory?.splashDuration);
+
+        const splashUrl = parentHistory?.splashUrl;
+        const splashDuration = parentHistory?.splashDuration || 4000;
+
+        // eslint-disable-next-line no-console
+        console.log('[GITHUB HOME] Extracted splashUrl:', splashUrl);
+        // eslint-disable-next-line no-console
+        console.log('[GITHUB HOME] Extracted splashDuration:', splashDuration);
 
         if (splashUrl) {
           // eslint-disable-next-line no-console
