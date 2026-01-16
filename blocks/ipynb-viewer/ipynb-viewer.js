@@ -670,9 +670,10 @@ function createHelpButtonHandler(repoUrl, branch, overlayContext, config) {
 
     // If no config provided, use hardcoded defaults (for GitHub overlay context)
     const effectiveConfig = config || {
-      fallbackHelpRepo: 'https://github.com/ddttom/allaboutV2',
+      fallbackHelpRepo: 'https://github.com/ddttom/allaboutv2',
       fallbackHelpBranch: 'main',
       fallbackHelpPath: 'docs/help.md',
+      helpOverlayTitle: 'IPynb Viewer Help',
       icons: {
         questionMark: '❓',
       },
@@ -691,7 +692,7 @@ function createHelpButtonHandler(repoUrl, branch, overlayContext, config) {
         // Fallback succeeded - use allaboutv2 main branch
         const helpOverlay = overlayContext.createGitHubMarkdownOverlay(
           fallbackHelpPath,
-          effectiveConfig.helpOverlayTitle || 'Help',
+          effectiveConfig.helpOverlayTitle,
           fallbackRepo,
           fallbackBranch,
           overlayContext.history,
