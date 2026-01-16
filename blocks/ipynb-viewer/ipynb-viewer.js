@@ -1401,6 +1401,39 @@ function addToHistory(historyArray, title, type, cellIndex = null, url = null, m
 }
 
 /**
+ * Create standardized history context object for passing to GitHub markdown overlays
+ * Ensures all necessary properties (splash config, navigation tree, history) are included
+ * @param {object} options - Configuration options
+ * @param {Array} options.historyArray - The history array for this overlay instance
+ * @param {Array} options.navigationTree - Navigation tree structure
+ * @param {HTMLElement} [options.navTreePanel] - Tree panel element for re-rendering
+ * @param {object} [options.treeState] - Tree state for expand/collapse
+ * @param {Function} [options.handleTreeNodeClick] - Click handler for tree nodes
+ * @param {string} [options.splashUrl] - URL for splash screen image
+ * @param {number} [options.splashDuration] - Duration to show splash screen in ms
+ * @returns {object} Standardized history context object
+ */
+function createHistoryContext({
+  historyArray,
+  navigationTree,
+  navTreePanel = null,
+  treeState = null,
+  handleTreeNodeClick = null,
+  splashUrl = null,
+  splashDuration = 4000,
+}) {
+  return {
+    historyArray,
+    navigationTree,
+    navTreePanel,
+    treeState,
+    handleTreeNodeClick,
+    splashUrl,
+    splashDuration,
+  };
+}
+
+/**
  * Bookmark Management - localStorage-based bookmarks per notebook
  */
 
@@ -3121,16 +3154,16 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       const mdRepoUrl = repoUrl || 'https://github.com/ddttom/allaboutV2';
       const fullUrl = `${mdRepoUrl}/blob/${branch}/${node.path}`;
 
-      // Create extended history context with tree references
-      const historyContext = {
-        historyArray: navigationHistory, // Keep the actual array
-        navigationTree, // Reference to the tree for dynamic updates
-        navTreePanel, // Tree panel element for re-rendering
-        treeState, // Tree state for expand/collapse
-        handleTreeNodeClick, // Click handler for tree nodes
-        splashUrl: paginationState.splashUrl, // Add splash URL from pagination state
-        splashDuration: paginationState.splashDuration, // Add splash duration from pagination state
-      };
+      // Create standardized history context with all necessary properties
+      const historyContext = createHistoryContext({
+        historyArray: navigationHistory,
+        navigationTree,
+        navTreePanel,
+        treeState,
+        handleTreeNodeClick,
+        splashUrl: paginationState.splashUrl,
+        splashDuration: paginationState.splashDuration,
+      });
 
       // Open using GitHub markdown overlay
       const mdOverlay = createGitHubMarkdownOverlay(fullUrl, node.label, mdRepoUrl, branch, historyContext, false, config);
@@ -4378,7 +4411,9 @@ export default async function decorate(block) {
                         || notebook.metadata?.repo
                         || 'https://github.com/ddttom/allaboutV2';
 
-    // Create splash context for markdown cells (needed for GitHub overlay home button)
+    // Create simple splash context for basic/default mode
+    // This is lighter than the full historyContext used in paged mode
+    // since basic mode doesn't have navigation tree or history arrays
     const splashContext = splashPageUrl ? {
       splashUrl: splashPageUrl,
       splashDuration,
