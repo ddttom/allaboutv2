@@ -6,23 +6,9 @@ export default function decorate(block) {
   let activePopup = null;
   let data = null;
 
-  // Fetch JSON data and create dashboard
-  fetch(jsonUrl)
-    .then((response) => response.json())
-    .then((jsonData) => {
-      data = jsonData.data;
-      const dashboardElement = createDashboard(data);
-      dashboardContainer.appendChild(dashboardElement);
-      addEventListeners();
-      handleResponsiveLayout();
+  // Helper Functions (defined before use to avoid hoisting errors)
 
-      // Sort initially by Title
-      sortTable(0, true);
-      document.querySelector('.content-table th[data-column="0"]').classList.add('asc');
-    })
-    .catch((error) => console.error('Error fetching data:', error));
-
-  function createDashboard(data) {
+  function createDashboard(dashboardData) {
     const dashboard = document.createElement('div');
     dashboard.className = 'dashboard';
 
@@ -33,7 +19,7 @@ export default function decorate(block) {
     const filter = createFilter();
     dashboard.appendChild(filter);
 
-    const table = createTable(data);
+    const table = createTable(dashboardData);
     dashboard.appendChild(table);
 
     return dashboard;
@@ -61,7 +47,7 @@ export default function decorate(block) {
     return filterContainer;
   }
 
-  function createTable(data) {
+  function createTable(tableData) {
     const table = document.createElement('table');
     table.className = 'content-table';
 
@@ -78,7 +64,7 @@ export default function decorate(block) {
     table.appendChild(thead);
 
     const tbody = document.createElement('tbody');
-    data.forEach((item) => {
+    tableData.forEach((item) => {
       const row = createTableRow(item);
       tbody.appendChild(row);
     });
@@ -330,4 +316,21 @@ export default function decorate(block) {
     const sortedHeader = document.querySelector(`.content-table th[data-column="${column}"]`);
     sortedHeader.classList.add(ascending ? 'asc' : 'desc');
   }
+
+  // Fetch JSON data and create dashboard
+  fetch(jsonUrl)
+    .then((response) => response.json())
+    .then((jsonData) => {
+      data = jsonData.data;
+      const dashboardElement = createDashboard(data);
+      dashboardContainer.appendChild(dashboardElement);
+      addEventListeners();
+      handleResponsiveLayout();
+
+      // Sort initially by Title
+      sortTable(0, true);
+      document.querySelector('.content-table th[data-column="0"]').classList.add('asc');
+    })
+    .catch((error) => console.error('Error fetching data:', error));
+
 }
