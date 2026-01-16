@@ -134,12 +134,10 @@ function setupOverlayEventHandlers(overlay) {
           event.preventDefault();
           lastFocusable.focus();
         }
-      } else {
+      } else if (document.activeElement === lastFocusable) {
         // Tab - forward navigation
-        if (document.activeElement === lastFocusable) {
-          event.preventDefault();
-          firstFocusable.focus();
-        }
+        event.preventDefault();
+        firstFocusable.focus();
       }
     }
   });
@@ -190,9 +188,6 @@ function showOverlay(overlay, triggerButton) {
  no-unused-vars, import/no-unresolved, import/no-self-import */
 export default function decorate(block) {
   try {
-    // Detect variations (currently notebook variation behaves same as default)
-    const isNotebookVariation = block.classList.contains('notebook');
-
     // Extract rows from block
     const rows = Array.from(block.children);
 

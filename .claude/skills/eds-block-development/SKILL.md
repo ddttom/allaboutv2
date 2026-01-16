@@ -1788,6 +1788,290 @@ docs/for-ai/index.md                   # AI docs index
 
 ---
 
+## JavaScript Code Quality & ESLint Standards
+
+### Critical ESLint Rules to Follow
+
+**The project uses Airbnb JavaScript style guide with custom rules. Follow these patterns to avoid lint errors:**
+
+### 1. No Unused Variables
+
+```javascript
+// ❌ BAD - Variable defined but never used
+function processData(data, context) {
+  const result = data.map(item => item.value);
+  return result;
+  // 'context' is never used - ESLint error!
+}
+
+// ✅ GOOD - Prefix unused parameters with underscore
+function processData(data, _context) {
+  const result = data.map(item => item.value);
+  return result;
+  // '_context' prefix signals intentionally unused
+}
+
+// ✅ GOOD - Remove unused parameter entirely
+function processData(data) {
+  const result = data.map(item => item.value);
+  return result;
+}
+```
+
+**Why this matters:** Unused variables clutter code and may indicate bugs or incomplete implementations.
+
+### 2. No Variable Shadowing
+
+```javascript
+// ❌ BAD - 'block' parameter shadows outer 'block'
+export default function decorate(block) {
+  const rows = Array.from(block.children);
+
+  rows.forEach((row) => {
+    function processBlock(block) { // Shadows outer 'block'!
+      return block.textContent;
+    }
+  });
+}
+
+// ✅ GOOD - Use specific names to avoid shadowing
+export default function decorate(block) {
+  const rows = Array.from(block.children);
+
+  rows.forEach((row) => {
+    function processBlock(element) { // Clear, no shadowing
+      return element.textContent;
+    }
+  });
+}
+```
+
+**Why this matters:** Variable shadowing makes code confusing and error-prone. It's unclear which variable you're referencing.
+
+### 3. No Unary Operators (++ and --)
+
+```javascript
+// ❌ BAD - Unary operators not allowed
+for (let i = 0; i < items.length; i++) {
+  processItem(items[i]);
+}
+
+let count = 0;
+count++;
+
+// ✅ GOOD - Use += 1 or -= 1
+for (let i = 0; i < items.length; i += 1) {
+  processItem(items[i]);
+}
+
+let count = 0;
+count += 1;
+
+// ✅ BETTER - Use forEach or map
+items.forEach((item) => processItem(item));
+```
+
+**Why this matters:** Unary operators can be confusing and lead to subtle bugs with pre/post increment behavior.
+
+### 4. No Lonely If (else with single if)
+
+```javascript
+// ❌ BAD - Lone if as only statement in else block
+if (condition1) {
+  doSomething();
+} else {
+  if (condition2) { // Lonely if in else
+    doSomethingElse();
+  }
+}
+
+// ✅ GOOD - Use else if
+if (condition1) {
+  doSomething();
+} else if (condition2) {
+  doSomethingElse();
+}
+```
+
+**Why this matters:** Reduces unnecessary nesting and improves readability.
+
+### 5. Avoid Await in Loop (When Possible)
+
+```javascript
+// ⚠️ PROBLEMATIC - Sequential awaits in loop
+for (const file of files) {
+  await processFile(file); // Processes one at a time
+}
+
+// ✅ BETTER - Process in parallel
+await Promise.all(files.map(file => processFile(file)));
+
+// ✅ ACCEPTABLE - When sequential processing is required
+// Add eslint-disable comment with explanation
+/* eslint-disable no-await-in-loop */
+// Sequential processing required to avoid race conditions
+for (const file of files) {
+  await updateFile(file);
+}
+/* eslint-enable no-await-in-loop */
+```
+
+**Why this matters:** Await in loops is often unintentional and causes unnecessary slowness. However, it's acceptable when you need sequential processing (e.g., file writes to avoid race conditions).
+
+### 6. ParseInt Always Needs Radix
+
+```javascript
+// ❌ BAD - Missing radix parameter
+const number = parseInt(str);
+
+// ✅ GOOD - Always specify radix (usually 10)
+const number = parseInt(str, 10);
+```
+
+**Why this matters:** Without radix, `parseInt('08')` may parse as octal (base 8) instead of decimal.
+
+### 7. Use Number.isNaN Instead of isNaN
+
+```javascript
+// ❌ BAD - Global isNaN has type coercion issues
+if (isNaN(value)) {
+  // ...
+}
+
+// ✅ GOOD - Number.isNaN is strict
+if (Number.isNaN(value)) {
+  // ...
+}
+```
+
+**Why this matters:** Global `isNaN('hello')` returns `true` because it coerces to number first. `Number.isNaN()` is strict.
+
+### 8. Escape Special Characters in Regex
+
+```javascript
+// ❌ BAD - Unescaped special characters
+const pattern = /file.txt/;
+
+// ✅ GOOD - Escape dots and other special chars
+const pattern = /file\.txt/;
+```
+
+**Why this matters:** Unescaped dots match any character, not literal dots.
+
+### 9. Object Formatting (object-curly-newline)
+
+```javascript
+// ❌ BAD - Inconsistent formatting for long objects
+const cell = { cell_type: 'code', source: ['console.log("test");'], metadata: {}, outputs: [] };
+
+// ✅ GOOD - Use line breaks for objects with multiple properties
+const cell = {
+  cell_type: 'code',
+  source: ['console.log("test");'],
+  metadata: {},
+  outputs: [],
+};
+
+// ✅ ALSO GOOD - Single line for simple objects
+const point = { x: 10, y: 20 };
+```
+
+**Why this matters:** Consistent formatting improves readability for complex objects.
+
+### 10. Import/Require Patterns
+
+```javascript
+// ❌ BAD - Unable to resolve path (incorrect relative path)
+import { helper } from '../../../../../../../scripts/scripts.js';
+
+// ✅ GOOD - Fix relative path
+import { helper } from '../../scripts/scripts.js';
+
+// ✅ GOOD - Or add eslint-disable for intentional external references
+// eslint-disable-next-line import/no-unresolved
+import { helper } from '../external/scripts.js';
+```
+
+**Why this matters:** Incorrect import paths cause runtime errors.
+
+### Quick Checklist Before Committing
+
+✅ **Run linter:** `npm run lint:js`
+✅ **No unused variables** - Remove or prefix with `_`
+✅ **No shadowing** - Use specific variable names
+✅ **Use `+= 1` instead of `++`**
+✅ **Use `else if` instead of `else { if }`**
+✅ **Always specify radix in parseInt()**
+✅ **Use `Number.isNaN()` not `isNaN()`**
+✅ **Escape special regex characters**
+✅ **Format long objects with line breaks**
+
+### When to Disable Rules
+
+**Only disable rules with clear justification:**
+
+```javascript
+// ✅ GOOD - Justified disable with explanation
+/* eslint-disable no-await-in-loop */
+// Sequential file processing required to avoid race conditions
+for (const file of files) {
+  await writeFile(file);
+}
+/* eslint-enable no-await-in-loop */
+
+// ❌ BAD - Blanket disable without reason
+/* eslint-disable */
+// Don't do this!
+```
+
+### Common Patterns That Pass Linting
+
+```javascript
+// Pattern: Processing array items
+items.forEach((item, index) => {
+  processItem(item);
+  // If index is unused, either remove it or prefix: (_item, _index)
+});
+
+// Pattern: Event handlers with unused event object
+button.addEventListener('click', (_e) => {
+  // Use _e to signal event param is intentionally unused
+  handleClick();
+});
+
+// Pattern: Function parameters you might not use yet
+function createOverlay(content, _options) {
+  // _options prefix shows it's for future use
+  return buildOverlay(content);
+}
+```
+
+### Auto-Fix with ESLint
+
+Some errors can be auto-fixed:
+
+```bash
+# Fix auto-fixable issues
+npm run lint:js -- --fix
+
+# Or for specific file
+npx eslint blocks/your-block/your-block.js --fix
+```
+
+**Auto-fixable rules include:**
+- Trailing commas
+- Quote style
+- Indentation
+- Some spacing issues
+
+**Not auto-fixable (require manual fixes):**
+- Unused variables
+- Variable shadowing
+- Unary operators
+- Most logic issues
+
+---
+
 ## Related Documentation
 
 - **[Block Architecture Standards](../../../docs/for-ai/implementation/block-architecture-standards.md)** - Comprehensive architecture guide

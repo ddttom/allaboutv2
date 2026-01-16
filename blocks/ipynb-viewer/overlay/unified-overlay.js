@@ -1,311 +1,403 @@
 /**
- * Unified Overlay System
- * Single overlay that handles all content types (notebook cells, markdown files, manual pages)
+ * Unified Overlay Manager
+ * Single overlay with content switching (no nesting!)
  */
 
-import hashManager from './hash-manager.js';
-import createUnifiedNavigation from './navigation.js';
+import { NavigationState } from './navigation-state.js';
+import { createToolbar } from './toolbar.js';
+import { createFooter } from './footer.js';
+import { renderNotebookContent } from './renderers/notebook-renderer.js';
+import { renderMarkdownContent } from './renderers/markdown-renderer.js';
 
-/**
- * Create unified overlay
- * @param {Object} config - Configuration
- * @param {string} config.mode - Initial mode ('notebook' | 'markdown' | 'manual')
- * @param {Object} config.content - Content to display
- * @param {Object} config.metadata - Metadata (title, repo, etc.)
- * @param {Object} [config.parentOverlay] - Optional parent overlay reference
- * @param {Object} config.renderers - Mode-specific renderers
- * @returns {Object} Overlay API
- */
-function createUnifiedOverlay(config) {
-  const {
-    mode,
-    content,
-    metadata = {},
-    parentOverlay = null,
-    renderers = {},
-  } = config;
+export function createUnifiedOverlay({
+  notebook,
+  pages,
+  navigationTree,
+  treeState,
+  config,
+  repoUrl,
+  branch,
+  notebookTitle,
+  renderNavigationTree,
+}) {
+  // Remove any existing overlays
+  document.querySelectorAll('.ipynb-unified-overlay').forEach((el) => el.remove());
 
-  // eslint-disable-next-line no-console
-  console.log(`[OVERLAY] Creating unified overlay in mode: ${mode}`);
+  // Create overlay container
+  const overlay = document.createElement('div');
+  overlay.className = 'ipynb-unified-overlay ipynb-paged-overlay';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
 
-  // Create overlay DOM structure
-  const overlay = createOverlayStructure(mode, metadata);
+  const overlayContent = document.createElement('div');
+  overlayContent.className = 'ipynb-paged-overlay-content';
+
+  const navTreePanel = document.createElement('div');
+  navTreePanel.className = 'ipynb-nav-tree-panel';
+
+  const contentArea = document.createElement('div');
+  contentArea.className = 'ipynb-paged-cell-area';
+
+  const mainWrapper = document.createElement('div');
+  mainWrapper.className = 'ipynb-overlay-main';
+  mainWrapper.appendChild(navTreePanel);
+  mainWrapper.appendChild(contentArea);
 
   // Initialize state
-  const state = {
-    mode,
-    currentMode: mode,
-    currentIdentifier: null,
-    history: [],
-    content,
-    metadata,
-    parentOverlay,
-    isOpen: false,
-  };
+  const navigationState = new NavigationState({ config, maxHistoryEntries: config.maxHistoryEntries });
 
-  // Create navigation system
-  const navigation = createUnifiedNavigation(state, overlay, renderers);
+  let isTreeVisible = true;
+  let currentRenderer = null;
+  let isOverlayOpen = false;
 
-  /**
-   * Show overlay
-   * @param {Object} [initialTarget] - Optional target to navigate to immediately
-   */
-  function show(initialTarget = null) {
-    // eslint-disable-next-line no-console
-    console.log('[OVERLAY] Showing overlay');
+  function updateTreeVisibility(visible) {
+    isTreeVisible = visible;
+    navTreePanel.style.display = visible ? '' : 'none';
+    toolbar.updateTreeToggle(visible);
+  }
 
-    overlay.element.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    state.isOpen = true;
+  function handleTreeToggle() {
+    updateTreeVisibility(!isTreeVisible);
+  }
 
-    // Navigate to initial target if provided
-    if (initialTarget) {
-      navigation.navigate(initialTarget);
+  function handleHomeClick() {
+    const currentView = navigationState.getCurrentView();
+    if (currentView.type === 'notebook') {
+      const openingPage = notebook?.metadata?.['opening-page'];
+      if (openingPage) {
+        const targetPath = openingPage.replace(/^#/, '');
+        if (targetPath.startsWith('cell-')) {
+          const cellIndex = parseInt(targetPath.replace('cell-', ''), 10);
+          if (currentRenderer?.navigateToCell) currentRenderer.navigateToCell(cellIndex);
+        } else if (currentRenderer?.navigateToHeading) {
+          currentRenderer.navigateToHeading(targetPath);
+        }
+      } else if (currentRenderer?.updatePage) {
+        currentRenderer.updatePage(0);
+      }
     } else {
-      // Try to navigate to hash, otherwise go to first page
-      if (!navigation.navigateToHash()) {
-        navigation.home();
+      navigationState.switchView('notebook', { pageIndex: navigationState.viewStates.notebook.pageIndex || 0 });
+    }
+  }
+
+  function closeOverlay() {
+    isOverlayOpen = false;
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
+    if (currentRenderer?.destroy) currentRenderer.destroy();
+  }
+
+  const toolbar = createToolbar({
+    config,
+    navigationState,
+    onHomeClick: handleHomeClick,
+    onTreeToggle: handleTreeToggle,
+  });
+
+  const footer = createFooter({
+    config,
+    navigationState,
+  });
+
+  overlayContent.appendChild(toolbar.element);
+  overlayContent.appendChild(mainWrapper);
+  overlayContent.appendChild(footer.element);
+  overlay.appendChild(overlayContent);
+  document.body.appendChild(overlay);
+
+  async function renderCurrentView() {
+    const currentView = navigationState.getCurrentView();
+    if (currentRenderer?.destroy) currentRenderer.destroy();
+
+    if (currentView.type === 'notebook') {
+      // Update title to current page's first heading (or notebook title as fallback)
+      const page = pages[currentView.data.pageIndex];
+      let pageTitle = notebookTitle;
+      let firstCellIndex = null;
+
+      if (page && page.cells && page.cells[0]) {
+        const firstCell = page.cells[0];
+
+        // Get cell index for tree highlighting
+        firstCellIndex = parseInt(firstCell.dataset.cellIndex, 10);
+
+        if (firstCell.classList.contains('ipynb-markdown-cell')) {
+          const heading = firstCell.querySelector('.ipynb-cell-content h1, .ipynb-cell-content h2, .ipynb-cell-content h3');
+          if (heading) {
+            pageTitle = heading.textContent.trim();
+          }
+        }
+      }
+      toolbar.updateTitle(pageTitle);
+
+      // Highlight current cell in tree
+      if (firstCellIndex !== null) {
+        const cellNodeId = `cell-${firstCellIndex}`;
+        updateTreeHighlight(cellNodeId, navigationTree, treeState, navTreePanel, renderNavigationTree, handleTreeNodeClick);
+      }
+
+      currentRenderer = renderNotebookContent(contentArea, {
+        pages,
+        currentPage: currentView.data.pageIndex,
+        navigationState,
+        config,
+        onPageChange: (pageIndex) => {
+          // Update toolbar title to match current page heading
+          const page = pages[pageIndex];
+          let firstCellIndex = null;
+
+          if (page && page.cells && page.cells[0]) {
+            const firstCell = page.cells[0];
+
+            // Get cell index for tree highlighting
+            firstCellIndex = parseInt(firstCell.dataset.cellIndex, 10);
+
+            if (firstCell.classList.contains('ipynb-markdown-cell')) {
+              const heading = firstCell.querySelector('.ipynb-cell-content h1, .ipynb-cell-content h2, .ipynb-cell-content h3');
+              if (heading) {
+                toolbar.updateTitle(heading.textContent.trim());
+              }
+            }
+          }
+
+          // Update footer pagination
+          footer.updatePageInfo(`${pageIndex + 1} / ${pages.length}`);
+          footer.updateButtons(pageIndex === 0, pageIndex === pages.length - 1);
+
+          // Highlight current cell in tree
+          if (firstCellIndex !== null) {
+            const cellNodeId = `cell-${firstCellIndex}`;
+            updateTreeHighlight(cellNodeId, navigationTree, treeState, navTreePanel, renderNavigationTree, handleTreeNodeClick);
+          } else if (renderNavigationTree) {
+            renderNavigationTree(navigationTree, navTreePanel, treeState, handleTreeNodeClick);
+          }
+        },
+        onCellExecute: (cell) => {
+          if (window.ipynbExecuteCell) window.ipynbExecuteCell(cell);
+        },
+      });
+
+      const tocItems = pages.map((page, index) => {
+        const firstCell = page.cells[0];
+        let title = `Page ${index + 1}`;
+        if (firstCell?.classList.contains('ipynb-markdown-cell')) {
+          const heading = firstCell.querySelector('.ipynb-cell-content h1, .ipynb-cell-content h2, .ipynb-cell-content h3');
+          if (heading) title = heading.textContent.trim();
+        }
+        return {
+          level: 2,
+          text: title,
+          onClick: () => { if (currentRenderer.updatePage) currentRenderer.updatePage(index); },
+        };
+      });
+
+      toolbar.updateTocContent(tocItems);
+
+      // Configure footer for notebook pagination
+      footer.setNotebookMode(
+        pages.length,
+        currentView.data.pageIndex,
+        () => {
+          const newIndex = currentView.data.pageIndex - 1;
+          if (newIndex >= 0 && currentRenderer?.updatePage) {
+            currentRenderer.updatePage(newIndex);
+          }
+        },
+        () => {
+          const newIndex = currentView.data.pageIndex + 1;
+          if (newIndex < pages.length && currentRenderer?.updatePage) {
+            currentRenderer.updatePage(newIndex);
+          }
+        },
+      );
+    } else if (currentView.type === 'markdown' || currentView.type === 'help') {
+      toolbar.updateTitle(currentView.data.markdownTitle || 'Markdown');
+
+      currentRenderer = await renderMarkdownContent(contentArea, {
+        markdownUrl: currentView.data.markdownUrl,
+        title: currentView.data.markdownTitle,
+        repoUrl,
+        branch,
+        navigationState,
+        config,
+        onLinkClick: (linkData) => {
+          if (linkData.type === 'markdown') {
+            navigationState.switchView('markdown', {
+              markdownUrl: linkData.url,
+              markdownTitle: linkData.title,
+            });
+          }
+        },
+      });
+
+      const headings = currentRenderer.getHeadings();
+      toolbar.updateTocContent(headings.map((h) => ({
+        level: h.level,
+        text: h.text,
+        onClick: () => { if (currentRenderer.scrollTo) currentRenderer.scrollTo(`#${h.id}`); },
+      })));
+
+      // Update navigation tree to highlight current markdown file
+      // Extract the file path from the markdown URL
+      const urlPath = currentView.data.markdownUrl;
+      if (urlPath && urlPath.includes('/blob/')) {
+        const pathParts = urlPath.split('/blob/');
+        if (pathParts[1]) {
+          const filePath = pathParts[1].split('/').slice(1).join('/'); // Remove branch, keep path
+          // Markdown nodes use their path as the node ID
+          updateTreeHighlight(filePath, navigationTree, treeState, navTreePanel, renderNavigationTree, handleTreeNodeClick);
+        }
+      }
+
+      // Configure footer for markdown tree navigation
+      footer.setMarkdownMode(
+        navigationTree,
+        currentView.data.markdownUrl,
+        (node) => {
+          if (node.type === 'markdown' && node.path) {
+            const fullUrl = `${repoUrl}/blob/${branch}/${node.path}`;
+            navigationState.switchView('markdown', {
+              markdownUrl: fullUrl,
+              markdownTitle: node.label,
+            });
+          }
+        },
+      );
+    }
+
+    toolbar.refreshDropdowns();
+  }
+
+  function handleTreeNodeClick(node) {
+    if (node.type === 'root' || node.type === 'folder') return;
+
+    if ((node.type === 'cell' || node.type === 'part') && node.cellIndex !== null) {
+      if (navigationState.currentView !== 'notebook') {
+        navigationState.switchView('notebook', { pageIndex: 0 });
+      }
+      if (currentRenderer?.navigateToCell) currentRenderer.navigateToCell(node.cellIndex);
+      return;
+    }
+
+    if (node.type === 'help-topic' && node.path) {
+      // Help topics use hash fragments to navigate within help.md
+      const fullUrl = `${config.fallbackHelpRepo}/blob/${config.fallbackHelpBranch}/${node.path}${node.anchor || ''}`;
+      navigationState.switchView('markdown', {
+        markdownUrl: fullUrl,
+        markdownTitle: node.label,
+      });
+      return;
+    }
+
+    if (node.type === 'markdown' && node.path) {
+      const fullUrl = `${repoUrl}/blob/${branch}/${node.path}`;
+      navigationState.switchView('markdown', {
+        markdownUrl: fullUrl,
+        markdownTitle: node.label,
+      });
+    }
+  }
+
+  async function openOverlay() {
+    isOverlayOpen = true;
+    overlay.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+
+    if (renderNavigationTree) renderNavigationTree(navigationTree, navTreePanel, treeState, handleTreeNodeClick);
+    await renderCurrentView();
+
+    const openingPage = notebook?.metadata?.['opening-page'];
+    if (openingPage && currentRenderer) {
+      const targetPath = openingPage.replace(/^#/, '');
+      if (targetPath.startsWith('cell-')) {
+        const cellIndex = parseInt(targetPath.replace('cell-', ''), 10);
+        if (currentRenderer.navigateToCell) await currentRenderer.navigateToCell(cellIndex);
+      } else if (currentRenderer.navigateToHeading) {
+        await currentRenderer.navigateToHeading(targetPath);
       }
     }
   }
 
-  /**
-   * Hide overlay
-   */
-  function hide() {
-    // eslint-disable-next-line no-console
-    console.log('[OVERLAY] Hiding overlay');
+  navigationState.onViewChange = async () => { await renderCurrentView(); };
+  navigationState.onHistoryChange = () => { toolbar.refreshDropdowns(); };
 
-    overlay.element.style.display = 'none';
-    document.body.style.overflow = '';
-    state.isOpen = false;
-
-    // Clear hash when hiding
-    hashManager.clear();
-  }
-
-  /**
-   * Toggle overlay visibility
-   */
-  function toggle() {
-    if (state.isOpen) {
-      hide();
-    } else {
-      show();
-    }
-  }
-
-  // Set up event listeners
-  setupEventListeners(overlay, navigation, state);
-
-  // Return overlay API
-  return {
-    show,
-    hide,
-    toggle,
-    navigate: navigation.navigate,
-    home: navigation.home,
-    back: navigation.back,
-    updateMode: navigation.updateMode,
-    getState: () => state,
-    getNavigation: () => navigation,
-  };
-}
-
-/**
- * Create overlay DOM structure
- * @param {string} mode - Initial mode
- * @param {Object} metadata - Metadata
- * @returns {Object} Overlay DOM references
- */
-function createOverlayStructure(mode, metadata) {
-  // Main overlay container
-  const element = document.createElement('div');
-  element.className = 'ipynb-unified-overlay';
-  element.setAttribute('data-mode', mode);
-  element.setAttribute('role', 'dialog');
-  element.setAttribute('aria-modal', 'true');
-  element.setAttribute('aria-label', 'Content viewer');
-  element.style.display = 'none';
-
-  // Overlay content wrapper
-  const content = document.createElement('div');
-  content.className = 'ipynb-overlay-content';
-
-  // Top bar with controls
-  const topBar = document.createElement('div');
-  topBar.className = 'ipynb-overlay-top-bar';
-
-  // Left controls section
-  const leftControls = document.createElement('div');
-  leftControls.className = 'ipynb-overlay-controls ipynb-overlay-controls-left';
-
-  // Home button
-  const homeButton = document.createElement('button');
-  homeButton.type = 'button';
-  homeButton.className = 'ipynb-overlay-button ipynb-home-button';
-  homeButton.innerHTML = '🏠';
-  homeButton.setAttribute('aria-label', 'Go home');
-  homeButton.setAttribute('title', 'Home');
-
-  // Tree toggle button
-  const treeToggle = document.createElement('button');
-  treeToggle.type = 'button';
-  treeToggle.className = 'ipynb-overlay-button ipynb-tree-toggle-button';
-  treeToggle.innerHTML = '&#9664;'; // Left arrow (◄)
-  treeToggle.setAttribute('aria-label', 'Toggle navigation tree');
-  treeToggle.setAttribute('aria-expanded', 'true');
-  treeToggle.setAttribute('title', 'Hide Tree');
-
-  leftControls.appendChild(homeButton);
-  leftControls.appendChild(treeToggle);
-
-  // Title section
-  const titleSection = document.createElement('div');
-  titleSection.className = 'ipynb-overlay-title';
-  titleSection.textContent = metadata.title || 'Content Viewer';
-  titleSection.setAttribute('title', metadata.title || 'Content Viewer');
-
-  // Right controls section
-  const rightControls = document.createElement('div');
-  rightControls.className = 'ipynb-overlay-controls ipynb-overlay-controls-right';
-
-  // History button
-  const historyButton = document.createElement('button');
-  historyButton.type = 'button';
-  historyButton.className = 'ipynb-overlay-button ipynb-history-button';
-  historyButton.innerHTML = '&#128337;'; // Clock icon (🕘)
-  historyButton.setAttribute('aria-label', 'Navigation History');
-  historyButton.setAttribute('aria-expanded', 'false');
-  historyButton.setAttribute('title', 'History');
-
-  // Close button
-  const closeButton = document.createElement('button');
-  closeButton.type = 'button';
-  closeButton.className = 'ipynb-overlay-button ipynb-close-button';
-  closeButton.innerHTML = '&times;';
-  closeButton.setAttribute('aria-label', 'Close viewer');
-
-  rightControls.appendChild(historyButton);
-  rightControls.appendChild(closeButton);
-
-  // Assemble top bar
-  topBar.appendChild(leftControls);
-  topBar.appendChild(titleSection);
-  topBar.appendChild(rightControls);
-
-  // Main content area wrapper
-  const mainWrapper = document.createElement('div');
-  mainWrapper.className = 'ipynb-overlay-main';
-
-  // Navigation tree panel
-  const treePanel = document.createElement('div');
-  treePanel.className = 'ipynb-nav-tree-panel';
-  treePanel.setAttribute('role', 'navigation');
-  treePanel.setAttribute('aria-label', 'Navigation tree');
-
-  // Content area
-  const contentArea = document.createElement('div');
-  contentArea.className = 'ipynb-overlay-content-area';
-  contentArea.setAttribute('role', 'main');
-
-  mainWrapper.appendChild(treePanel);
-  mainWrapper.appendChild(contentArea);
-
-  // Assemble overlay
-  content.appendChild(topBar);
-  content.appendChild(mainWrapper);
-  element.appendChild(content);
-
-  // Append to body
-  document.body.appendChild(element);
-
-  // Return references
-  return {
-    element,
-    content,
-    topBar,
-    leftControls,
-    rightControls,
-    titleSection,
-    homeButton,
-    treeToggle,
-    historyButton,
-    closeButton,
-    mainWrapper,
-    treePanel,
-    contentArea,
-  };
-}
-
-/**
- * Set up event listeners
- * @param {Object} overlay - Overlay DOM references
- * @param {Object} navigation - Navigation API
- * @param {Object} state - State object
- */
-function setupEventListeners(overlay, navigation, state) {
-  // Home button
-  overlay.homeButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    navigation.home();
-  });
-
-  // Close button
-  overlay.closeButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    // If there's a parent overlay, hide this one and show parent
-    if (state.parentOverlay) {
-      state.parentOverlay.show();
-    }
-
-    // Hide this overlay
-    overlay.element.style.display = 'none';
-    document.body.style.overflow = '';
-    state.isOpen = false;
-    hashManager.clear();
-  });
-
-  // Tree toggle button
-  overlay.treeToggle.addEventListener('click', () => {
-    const isVisible = overlay.treePanel.style.display !== 'none';
-    if (isVisible) {
-      overlay.treePanel.style.display = 'none';
-      overlay.treeToggle.innerHTML = '&#9654;'; // Right arrow (►)
-      overlay.treeToggle.setAttribute('aria-expanded', 'false');
-      overlay.treeToggle.setAttribute('title', 'Show Tree');
-    } else {
-      overlay.treePanel.style.display = '';
-      overlay.treeToggle.innerHTML = '&#9664;'; // Left arrow (◄)
-      overlay.treeToggle.setAttribute('aria-expanded', 'true');
-      overlay.treeToggle.setAttribute('title', 'Hide Tree');
-    }
-  });
-
-  // Close on overlay background click
-  overlay.element.addEventListener('click', (e) => {
-    if (e.target === overlay.element) {
-      overlay.closeButton.click();
-    }
-  });
-
-  // Close on Escape key
   const keyHandler = (e) => {
-    if (e.key === 'Escape' && state.isOpen) {
-      overlay.closeButton.click();
+    if (isOverlayOpen && e.key === 'Escape') {
+      e.preventDefault();
+      closeOverlay();
     }
   };
+
   document.addEventListener('keydown', keyHandler);
 
-  // Listen for hash changes (e.g., browser back button)
-  window.addEventListener('hashchange', () => {
-    if (state.isOpen) {
-      navigation.navigateToHash();
-    }
-  });
+  return {
+    openOverlay,
+    closeOverlay,
+    navigateTo: (viewType, data) => { navigationState.switchView(viewType, data); },
+    getNavigationState: () => navigationState,
+  };
 }
 
-export default createUnifiedOverlay;
+/**
+ * Expand all parent nodes to make a target node visible
+ * @param {Array} tree - Tree structure
+ * @param {string} targetNodeId - Node ID to make visible
+ * @param {Object} treeState - State object
+ * @returns {boolean} - True if node was found and parents expanded
+ */
+function expandParentsOfNode(tree, targetNodeId, treeState) {
+  // Recursive function to find node and expand all parents
+  function searchAndExpand(nodes, nodeId, ancestors = []) {
+    return nodes.reduce((found, node) => {
+      if (found) return found;
+
+      // If this is the target node, expand all ancestors
+      if (node.id === nodeId) {
+        ancestors.forEach((ancestor) => {
+          treeState.expandedNodes.add(ancestor.id);
+        });
+        return true;
+      }
+
+      // Search children with this node as an ancestor
+      if (node.children && node.children.length > 0) {
+        return searchAndExpand(node.children, nodeId, [...ancestors, node]);
+      }
+
+      return false;
+    }, false);
+  }
+
+  return searchAndExpand(tree, targetNodeId);
+}
+
+/**
+ * Update tree to highlight and scroll to a specific node
+ * Unified function for both notebook cells and markdown files
+ * @param {string} nodeId - Node ID to highlight (e.g., 'cell-5' or 'appendix-a.md')
+ * @param {Array} navigationTree - Tree structure
+ * @param {Object} treeState - State object
+ * @param {HTMLElement} navTreePanel - Tree panel DOM element
+ * @param {Function} renderNavigationTree - Tree rendering function
+ * @param {Function} handleTreeNodeClick - Node click handler
+ */
+function updateTreeHighlight(nodeId, navigationTree, treeState, navTreePanel, renderNavigationTree, handleTreeNodeClick) {
+  if (!renderNavigationTree || !nodeId) return;
+
+  // Set selected node
+  treeState.selectedNode = nodeId;
+
+  // Expand all parent folders to make the node visible
+  expandParentsOfNode(navigationTree, nodeId, treeState);
+
+  // Re-render tree with updated state
+  renderNavigationTree(navigationTree, navTreePanel, treeState, handleTreeNodeClick);
+
+  // Scroll to selected node after rendering
+  setTimeout(() => {
+    const selectedEl = navTreePanel.querySelector(`[data-node-id="${nodeId}"]`);
+    if (selectedEl) {
+      selectedEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, 100);
+}

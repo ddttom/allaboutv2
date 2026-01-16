@@ -304,7 +304,7 @@ export default async function decorate(block) {
     });
 
     // Render the code snippets in the showcaser
-    codeSnippets.forEach((snippet, index) => {
+    codeSnippets.forEach((snippet) => {
       const snippetContainer = document.createElement('div');
       snippetContainer.className = 'showcaser-snippet';
 

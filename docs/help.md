@@ -8,7 +8,6 @@ Welcome to the **Documentation Viewer** interactive help guide! This document wi
 [Navigation Controls](#navigation-controls) |
 [Overlay Types](#overlay-types) |
 [Navigation Tree](#navigation-tree) |
-[Bookmarks](#bookmarks) |
 [History](#history) |
 [Keyboard Shortcuts](#keyboard-shortcuts) |
 [Tips & Tricks](#tips--tricks)
@@ -21,18 +20,23 @@ The Viewer displays Jupyter notebooks (.ipynb files) directly in your browser wi
 
 ### Opening a Notebook
 
-Click the **"Start Reading"** button to open the paged overlay
-Use **Previous/Next** buttons to navigate between pages
-Each page may contain one or more cells (markdown or code)
+Click the **"Start Reading"** button to open the overlay. A splash screen may appear briefly while the notebook loads, then you'll see the interactive interface with:
+
+- **Navigation Tree** - Left panel showing notebook structure and linked files
+- **Content Area** - Center panel displaying notebook cells
+- **Footer Navigation** - Bottom bar with Previous/Next buttons and page indicator
+
+Use **Previous/Next** buttons in the footer to navigate between pages. Each page may contain one or more cells (markdown or code).
 
 ### Understanding the Interface
 
 The overlay has several key areas:
 
 - **Top Bar** - Header with notebook title and control buttons
-- **Content Area** - Displays the current page's cells
-- **Navigation Controls** - Previous/Next buttons and page indicator at bottom
-- **Control Buttons** - Home, History, Bookmarks, TOC, Help, and Close buttons
+- **Navigation Tree** - Left panel for exploring structure (can be hidden with ◄/► button)
+- **Content Area** - Main panel displaying the current page's cells
+- **Footer Navigation** - Bottom bar with Previous/Next buttons and page indicator
+- **Control Buttons** - Home, Tree Toggle, History, and Table of Contents in the top bar
 
 ---
 
@@ -67,10 +71,9 @@ The top bar contains all your navigation and utility controls:
 | **Home** | 🏠 | Left | Jump to the first page/cell or markdown file |
 | **Tree Toggle** | ◄/► | Left | Hide/show the navigation tree panel |
 | **History** | 🕘 | Right | View your navigation history (last 25 items) |
-| **Bookmarks** | 🔖 | Right | View and manage your saved bookmarks |
 | **Table of Contents** | ☰ | Right | Quick navigation to any section |
-| **Help** | ❓ | Right | Open this help guide |
-| **Close** | × | Right | Close the overlay |
+
+**Note:** Help documentation is now integrated into the navigation tree as a "Help" folder, rather than a separate button.
 
 **Tree Toggle Button:**
 
@@ -229,60 +232,13 @@ Shows all markdown files linked in the notebook, organized into three categorize
 - Hover effect on clickable items
 - Indentation shows hierarchy level
 - Icons indicate node type (folder/file)
+- Auto-scroll to expanded folders near bottom (keeps newly revealed items visible)
 
 **State Management:**
 
 - Expansion state shared across both overlays
 - Tree structure updates when new .md links discovered
 - Duplicate files automatically filtered out
-
----
-
-## Bookmarks
-
-**New Feature!** Save your favorite pages for quick access later.
-
-### Adding a Bookmark
-
-1. Navigate to the page you want to bookmark
-2. Click the **Bookmark** button (🔖) in the top bar
-3. The current page will be saved with its title
-4. You'll see a confirmation (button changes appearance briefly)
-
-### Viewing Bookmarks
-
-1. Click the **Bookmark** button (🔖) to open the bookmark dropdown
-2. See all your saved bookmarks with page indicators
-3. Click any bookmark to jump to that page instantly
-
-### Bookmark Features
-
-- **Persistent Storage** - Bookmarks saved in browser localStorage
-- **Per-Notebook** - Each notebook has separate bookmarks
-- **Auto-Titles** - Uses first heading from the page
-- **Smart Deduplication** - Re-bookmarking updates the existing bookmark
-- **Visual Indicators** - Shows page number and title
-
-### Managing Bookmarks
-
-- **Remove Individual** - Click the × button next to any bookmark
-- **Clear All** - Click "Clear All Bookmarks" at the bottom of the list
-- **Automatic Cleanup** - Invalid bookmarks are removed automatically
-
-### Bookmark Storage
-
-Bookmarks are stored in your browser's localStorage using the pattern:
-
-```
-ipynb-bookmarks-{notebook-path}
-```
-
-This means:
-
-- Bookmarks persist across browser sessions
-- Each notebook has its own bookmark list
-- Bookmarks are specific to your browser
-- No server storage required
 
 ---
 
@@ -311,17 +267,6 @@ The Viewer automatically tracks your navigation history for each notebook sessio
 - **Cells** - Pages with headings (uses first H1, H2, or H3)
 - **Markdown Files** - GitHub .md files opened via links
 - **Timestamp** - Most recent visit time for sorting
-
-### History vs Bookmarks
-
-| Feature | History | Bookmarks |
-|---------|---------|-----------|
-| **Automatic** | ✅ Yes | ❌ No (manual) |
-| **Limit** | 25 items per notebook | Unlimited |
-| **Persistence** | Session only (per notebook) | Permanent (localStorage) |
-| **Scope** | Per-notebook isolation | Per-notebook isolation |
-| **Purpose** | Recent navigation | Important pages |
-| **Best For** | Retracing steps | Favorite sections |
 
 ---
 
@@ -358,9 +303,8 @@ Make navigation faster with keyboard shortcuts:
 1. **Use Navigation Tree** - Fastest way to see structure and jump anywhere
 2. **Use TOC for Big Jumps** - Table of Contents (☰) for quick section access
 3. **Use History for Recent Pages** - Quickly revisit pages you just read
-4. **Use Bookmarks for Favorites** - Save important reference pages
-5. **Use Home for Reset** - Start over from the beginning anytime
-6. **Toggle Tree for Focus** - Hide tree (►) to maximize reading space
+4. **Use Home for Reset** - Start over from the beginning anytime
+5. **Toggle Tree for Focus** - Hide tree (►) to maximize reading space
 
 ### Workflow Examples
 
@@ -368,7 +312,6 @@ Make navigation faster with keyboard shortcuts:
 
 - Use Navigation Tree to see overall structure
 - Read sequentially with Previous/Next
-- Bookmark key concepts for review
 - Use History to revisit tricky sections
 - Collapse Parts in tree you've completed
 
@@ -376,7 +319,6 @@ Make navigation faster with keyboard shortcuts:
 
 - Keep Navigation Tree open to see all sections
 - Click tree items to jump directly to content
-- Bookmark frequently used sections
 - Use History to jump between related topics
 - Toggle tree (►) when deep reading
 
@@ -391,11 +333,10 @@ Make navigation faster with keyboard shortcuts:
 
 ### Best Practices
 
-1. **Bookmark Early** - Save pages as you find them useful
-2. **Check History** - Before bookmarking, check if it's in history
-3. **Use Descriptive Headings** - First heading becomes bookmark/history title
-4. **Keep Organized** - Clear old bookmarks periodically
-5. **Keyboard Shortcuts** - Learn Arrow Left/Right for faster navigation
+1. **Use Descriptive Headings** - First heading becomes history title
+2. **Check History** - Quickly revisit recent pages
+3. **Keyboard Shortcuts** - Learn Arrow Left/Right for faster navigation
+4. **Use Tree for Structure** - Navigation tree shows overall organization
 
 ---
 
@@ -432,12 +373,6 @@ When `repo` metadata is set, .md links automatically:
 
 ## Troubleshooting
 
-### Bookmarks Not Saving?
-
-- Check browser allows localStorage
-- Verify not in private/incognito mode
-- Check browser storage quota
-
 ### Keyboard Shortcuts Not Working?
 
 - Click inside the overlay to focus it
@@ -452,4 +387,4 @@ When `repo` metadata is set, .md links automatically:
 
 **Happy Reading!** 📚✨
 
-This help guide is always accessible via the **Help** button (❓) in the top bar.
+This help guide is always accessible via the **Help** folder in the navigation tree.

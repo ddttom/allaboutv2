@@ -4,9 +4,9 @@
 
 The ipynb-viewer block is a sophisticated component for displaying and interacting with Jupyter notebooks (.ipynb files) in Adobe Edge Delivery Services (EDS) environments. It provides multiple viewing modes, interactive JavaScript execution, markdown rendering, and tree-based navigation.
 
-**Version:** 3.0 (Unified Overlay Architecture)
-**Last Updated:** 2026-01-14
-**Lines of Code:** 3,786 (main block) + ~2,000 (unified overlay modules)
+**Version:** 3.2 (Unified Overlay System - Clean Implementation)
+**Last Updated:** 2026-01-16
+**Lines of Code:** ~4,700 (main block) + ~750 (unified overlay modules, ready for integration)
 
 ## Core Capabilities
 
@@ -17,6 +17,7 @@ The ipynb-viewer block is a sophisticated component for displaying and interacti
    - Notebook (persistent navigation tree)
 
 2. **Interactive Features**
+   - Splash screen with loading indicator
    - JavaScript code execution in browser
    - Markdown rendering with GitHub integration
    - Tree-based navigation (notebook structure + repository files)
@@ -32,89 +33,108 @@ The ipynb-viewer block is a sophisticated component for displaying and interacti
 
 ## Architecture Principles
 
-### 0. Unified Overlay Architecture (Version 3.0)
+### 0. Unified Overlay Architecture (Version 3.2)
 
-**Status**: ✅ Complete implementation in branch `refactor/ipynb-viewer-unified-overlay`
+**Status**: ✅ Complete and ready for integration
 
-**Problem Solved:** The original implementation used three separate overlay types (`createPagedOverlay()`, `createGitHubMarkdownOverlay()`, `createManualOverlay()`) which caused context confusion, duplicate navigation systems, and complex state management.
+**Problem Solved:** The original implementation had duplicate toolbars and nested overlay stacking. When clicking markdown files from the navigation tree, a new overlay would be created on top of the existing one, each with its own toolbar, causing confusion and memory issues.
 
-**Solution:** Single unified overlay with mode switching instead of multiple separate overlays.
+**Solution:** Single unified overlay container with content switching instead of nested overlay creation.
 
-**Location:** `blocks/ipynb-viewer/overlay/` (8 core modules)
+**Location:** `blocks/ipynb-viewer/overlay/` (5 core modules, ~750 lines)
 
 **Key Modules:**
 
-1. **hash-manager.js** - URL hash management (parse, update, clear, matches)
-2. **navigation.js** - Unified navigation with history, home, back, mode switching
-3. **unified-overlay.js** - Core overlay with single state and DOM structure
-4. **renderers/notebook.js** - Notebook cell renderer (markdown/code/outputs)
-5. **renderers/markdown.js** - Markdown file renderer with smart links
-6. **tree.js** - Unified navigation tree (notebook/repository/help sections)
-7. **integration.js** - Clean API (`createNotebookOverlay`, `createMarkdownOverlay`)
-8. **example-usage.js** - Usage examples
+1. **navigation-state.js** (~100 lines) - View state management and history tracking
+2. **toolbar.js** (~160 lines) - Single adaptive toolbar that changes behavior based on current view
+3. **unified-overlay.js** (~220 lines) - Main controller that coordinates view switching
+4. **renderers/notebook-renderer.js** (~110 lines) - Renders paged notebook cells with pagination
+5. **renderers/markdown-renderer.js** (~160 lines) - Fetches and renders GitHub markdown files
 
 **Architecture Benefits:**
 
-- ✅ **Single overlay, single state** - Eliminates "where am I?" confusion
-- ✅ **Mode switching** - Change modes (notebook/markdown/manual) without creating new overlays
-- ✅ **Unified navigation** - One navigation system for all content types
-- ✅ **Centralized hash management** - Single system for URL state (`#mode/identifier`)
-- ✅ **Consistent home button** - Always does the same thing regardless of mode
+- ✅ **No duplicate toolbars** - Single toolbar instance shared across all views (primary benefit)
+- ✅ **Content switching** - Views swap in/out of content area, overlays don't nest
+- ✅ **Better memory management** - No accumulation of overlay elements in DOM
+- ✅ **Adaptive toolbar** - Toolbar buttons and dropdowns adapt to current view type
+- ✅ **Cleaner code** - Modular ES6 structure (~750 lines) vs monolithic legacy code (~1,300 lines)
 
 **Usage Example:**
 
 ```javascript
-import { createNotebookOverlay } from './overlay/integration.js';
+import { createUnifiedOverlay } from './overlay/unified-overlay.js';
 
-const overlay = createNotebookOverlay(cells, {
-  title: 'My Notebook',
-  repo: 'https://github.com/user/repo',
-  autorun: false,
+// Create unified overlay
+const overlay = createUnifiedOverlay({
+  notebook,
+  pages,
+  navigationTree,
+  treeState,
+  config,
+  repoUrl: 'https://github.com/user/repo',
+  branch: 'main',
+  notebookTitle: 'My Notebook',
+  renderNavigationTree,  // Existing function from main file
 });
 
-overlay.show();
+// Open overlay
+overlay.openOverlay();
 
-// Switch to markdown mode
-overlay.updateMode('markdown');
-overlay.navigate({
-  mode: 'markdown',
-  identifier: 'docs/README.md',
-  title: 'README',
+// Navigate to markdown (content switches, no new overlay created)
+overlay.navigateTo('markdown', {
+  markdownUrl: 'https://github.com/user/repo/blob/main/docs/README.md',
+  markdownTitle: 'README',
 });
 ```
-
-**Complete Documentation:** See [overlay/README.md](overlay/README.md) for comprehensive 525-line guide covering:
-
-- Module documentation with API reference
-- Usage examples and code samples
-- State management and event handling
-- Debugging guide and testing strategy
 
 **Architecture Comparison:**
 
 **Before (Multiple Overlays):**
 
 ```javascript
-// Three separate overlay implementations
-createPagedOverlay(...)      // Notebook cells
-createGitHubMarkdownOverlay(...)  // Markdown files
-createManualOverlay(...)     // Help pages
+// Two separate overlay implementations with duplicate toolbars
+createPagedOverlay(...)           // ~700 lines - Notebook cells with toolbar
+createGitHubMarkdownOverlay(...)  // ~600 lines - Markdown with toolbar
+
+// Problem: Clicking markdown from tree creates nested overlay
+// Result: Two toolbars visible, user confusion about location
 ```
 
 **After (Unified Overlay):**
 
 ```javascript
-// Single overlay with modes
-const overlay = createUnifiedOverlay({ mode: 'notebook' });
-overlay.updateMode('markdown');  // Switch modes
-overlay.updateMode('manual');
+// Single overlay with content renderers (no duplication)
+createUnifiedOverlay({...})       // ~220 lines - Main controller
+renderNotebookContent(...)        // ~110 lines - Notebook renderer
+renderMarkdownContent(...)        // ~160 lines - Markdown renderer
+
+// Benefit: Clicking markdown from tree switches content
+// Result: One toolbar, clear user location, better UX
 ```
+
+**Integration Instructions:**
+
+See [INTEGRATION-INSTRUCTIONS.md](INTEGRATION-INSTRUCTIONS.md) for complete step-by-step integration guide.
+
+**Key Integration Steps:**
+
+1. Add import: `import { createUnifiedOverlay } from './overlay/unified-overlay.js';`
+2. Replace old overlay creation in `decorate()` with `createUnifiedOverlay()`
+3. Delete legacy functions: `createPagedOverlay()` (line 2351, ~700 lines) and `createGitHubMarkdownOverlay()` (line 3687, ~600 lines)
+4. Export `executeCodeCell`: `window.ipynbExecuteCell = executeCodeCell;`
+
+**File Size Impact:**
+
+- **Before**: ipynb-viewer.js = ~4,700 lines (with legacy overlay code)
+- **After**: ipynb-viewer.js = ~3,400 lines (legacy removed) + overlay/ modules = ~750 lines
+- **Net**: Same functionality, better organization, no duplication
 
 **Related Documentation:**
 
-- [ipynb-viewer-overlay-refactor-proposal.md](../../docs/for-ai/ipynb-viewer-overlay-refactor-proposal.md) - Original proposal
-- [ipynb-viewer-refactor-progress.md](../../docs/for-ai/ipynb-viewer-refactor-progress.md) - Progress tracking
-- [ipynb-viewer-unified-overlay-summary.md](../../docs/for-ai/ipynb-viewer-unified-overlay-summary.md) - Complete summary
+- [NEW-OVERLAY-READY.md](NEW-OVERLAY-READY.md) - Summary of completed system
+- [INTEGRATION-INSTRUCTIONS.md](INTEGRATION-INSTRUCTIONS.md) - Step-by-step integration guide
+- [unified-overlay-architecture.md](unified-overlay-architecture.md) - Detailed design document
+- [REFACTORING-SUMMARY.md](REFACTORING-SUMMARY.md) - Overview of what was built and why
 
 ### 1. Event Delegation Pattern (Critical)
 
@@ -376,13 +396,14 @@ cells.forEach((cell, index) => {
 **4. Parameter Threading:**
 
 ```javascript
-// Pass notebookData through function call chain
-function buildNavigationTree(cells, cellsContainer, _helpRepoUrl, notebookData = null)
-function createPagedOverlay(..., notebook = null)
+// Pass notebookData and config through function call chain
+function buildNavigationTree(cells, cellsContainer, _helpRepoUrl, notebookData = null, config = DEFAULT_CONFIG)
+function createPagedOverlay(..., notebook = null, config = null)
 
 // In decorate() function:
+const config = DEFAULT_CONFIG;
 const overlay = createPagedOverlay(container, cellsContainer, shouldAutorun,
-  isNotebook, repoUrl, notebookTitle, helpRepoUrl, githubBranch, isNoTopbar, notebook);
+  isNotebook, repoUrl, notebookTitle, helpRepoUrl, githubBranch, isNoTopbar, notebook, config);
 ```
 
 **Result:**
@@ -408,34 +429,111 @@ const overlay = createPagedOverlay(container, cellsContainer, shouldAutorun,
 
 ### 4. Configuration Object Pattern
 
-**Pattern:** All configurable values centralized at top of file in `IPYNB_CONFIG` object.
+**Pattern:** All configurable values centralized at top of file in `DEFAULT_CONFIG` object.
 
-**Location:** Lines 1-45
+**Location:** Lines 66-124
 
 **Structure:**
 
 ```javascript
-const IPYNB_CONFIG = {
-  // Error messages
-  LOAD_ERROR_MESSAGE: 'Error loading notebook',
+const DEFAULT_CONFIG = {
+  // Navigation Tree Labels
+  treeLabels: {
+    notebook: 'Notebook',
+    repository: 'Repository',
+    chapters: 'Chapters',
+    appendices: 'Appendices',
+    miscellaneous: 'Miscellaneous',
+  },
 
-  // File paths
-  DEFAULT_HELP_FILE: '/docs/help.md',  // Fetches from allaboutv2 repo (respects github-branch metadata)
+  // Button Labels
+  buttonLabels: {
+    run: 'Run',
+    previous: 'Previous',
+    next: 'Next',
+    startReading: 'Start Reading',
+  },
 
-  // UI text
-  RUN_BUTTON_LABEL: '▶ Run',
-  COPY_BUTTON_LABEL: '📋 Copy',
+  // Empty State Messages
+  emptyMessages: {
+    noHistory: 'No history yet',
+    noHeadings: 'No headings found',
+  },
 
-  // Thresholds
-  LONG_DOCUMENT_THRESHOLD: 40,
-  COPY_BUTTON_RESET_DELAY: 2000,
+  // Tooltip Text
+  tooltips: {
+    showTree: 'Show Tree',
+    hideTree: 'Hide Tree',
+    history: 'History',
+    home: 'Home',
+    tableOfContents: 'Table of Contents',
+    toc: 'TOC',
+    previousPage: 'Previous page',
+    nextPage: 'Next page',
+  },
 
-  // Splash screen
-  SPLASH_MIN_DURATION: 5000  // Minimum splash display duration (milliseconds)
+  // Aria Labels (Accessibility)
+  ariaLabels: {
+    toggleTree: 'Toggle navigation tree',
+    closePaged: 'Close paged view',
+    closeMarkdown: 'Close markdown viewer',
+    navigationHistory: 'Navigation History',
+    contentNavigation: 'Content navigation',
+    navigationTree: 'Navigation tree',
+    startReading: 'Start paged reading mode',
+    runCodeCell: 'Run code cell',
+    countdownTimer: 'Countdown timer',
+    closeSplash: 'Close splash screen',
+    githubMarkdownViewer: 'GitHub markdown viewer',
+  },
+
+  // Loading and Error Messages
+  messages: {
+    loadingMarkdown: 'Loading markdown...',
+    failedToLoadMarkdown: 'Failed to load markdown from GitHub',
+  },
+
+  // Other configuration
+  loadingMessage: 'Loading notebook...',
+  defaultSplashDuration: 4000,
+  longDocumentThreshold: 40,
+  copyButtonResetDelay: 2000,
 };
 ```
 
-**Why:** Easy localization, maintainability, single source of truth for all configuration.
+**Why:**
+- Easy localization - change all UI text in one place
+- Maintainability - single source of truth for all configuration
+- Type safety - structured object with clear sections
+- No duplication - functions use `config = DEFAULT_CONFIG` parameter, no fallback objects needed
+
+**Usage Pattern:**
+
+All functions that need config receive it as a parameter with default:
+
+```javascript
+function buildFileTree(paths, _helpPath, config = DEFAULT_CONFIG) {
+  const labels = config.treeLabels;  // Direct access, no fallback needed
+  // ...
+}
+
+function createCodeCell(cell, index, autorun = false, config = DEFAULT_CONFIG) {
+  runButton.textContent = config.buttonLabels.run;
+  // ...
+}
+```
+
+Config is threaded through function calls from `decorate()`:
+
+```javascript
+export default async function decorate(block) {
+  const config = DEFAULT_CONFIG;
+
+  // Pass to all functions that need it
+  const overlay = createPagedOverlay(..., notebook, config);
+  const tree = buildNavigationTree(cells, ..., notebook, config);
+}
+```
 
 ### 3. Functional Organization
 
@@ -483,7 +581,7 @@ function parseNotebookData(data) {
 - **Notebook node:** Contains parts, cells from notebook
 - **Repository node:** Contains categorized folders for markdown files from GitHub
   - **Chapters:** preface.md (always first) and chapter-*.md files (alphabetical, expanded by default)
-  - **Appendix:** appendix-*.md files (alphabetical, collapsed by default)
+  - **Appendices:** appendix-*.md files (alphabetical, collapsed by default)
   - **Miscellaneous:** Only advice.md, for-ai.md, glossary.md (hardcoded whitelist, alphabetical, collapsed by default)
 
 **State Management:**
@@ -498,10 +596,12 @@ const treeState = {
 
 **Functions:**
 
-- `buildNavigationTree(cells, repoUrl, branch)` - Construct initial tree
+- `buildNavigationTree(cells, cellsContainer, _helpRepoUrl, notebookData, config)` - Construct initial tree from notebook data
+- `buildFileTree(paths, _helpPath, config)` - Build hierarchical file tree from markdown paths
+- `addMarkdownPathsToTree(tree, newPaths, config)` - Dynamically add new markdown files to existing tree
 - `renderNavigationTree(tree, container, treeState, onNodeClick)` - Render tree with event delegation
 - `renderTreeNode(node, parentElement, treeContainer, treeState, onNodeClick)` - Recursive node rendering
-- `toggleTreeNode(nodeId, treeState, container, onNodeClick)` - Expand/collapse nodes
+- `toggleTreeNode(nodeId, treeState, container, onNodeClick)` - Expand/collapse nodes with auto-scroll to center
 - `selectTreeNode(nodeId, treeState, container, onNodeClick)` - Highlight selected node
 - `findNodeById(tree, nodeId)` - Helper to find node by ID
 
@@ -510,7 +610,7 @@ const treeState = {
 ```javascript
 {
   id: 'notebook',
-  label: 'Notebook',
+  label: config.treeLabels.notebook,  // 'Notebook'
   type: 'root',
   level: 0,
   children: [
@@ -533,13 +633,13 @@ const treeState = {
 },
 {
   id: 'repository',
-  label: 'Repository',
+  label: config.treeLabels.repository,  // 'Repository'
   type: 'root',
   level: 0,
   children: [
     {
       id: 'folder-chapters',
-      label: 'Chapters',
+      label: config.treeLabels.chapters,  // 'Chapters'
       type: 'folder',
       level: 1,
       children: [
@@ -549,7 +649,7 @@ const treeState = {
     },
     {
       id: 'folder-appendix',
-      label: 'Appendix',
+      label: config.treeLabels.appendices,  // 'Appendices'
       type: 'folder',
       level: 1,
       children: [
@@ -558,7 +658,7 @@ const treeState = {
     },
     {
       id: 'folder-miscellaneous',
-      label: 'Miscellaneous',
+      label: config.treeLabels.miscellaneous,  // 'Miscellaneous'
       type: 'folder',
       level: 1,
       children: [
@@ -596,35 +696,31 @@ https://github.com/user/repo/blob/main/docs/file.md
 
 **Help Button Behavior:**
 
-- Help button fetches `docs/help.md` with two-tier fallback strategy:
+- Help documentation is integrated into the navigation tree as a "Help" folder
+- Help content fetches `docs/help.md` with two-tier fallback strategy:
   1. **First try:** allaboutV2 repo main branch (hardcoded: `https://github.com/ddttom/allaboutv2/blob/main/docs/help.md`)
   2. **Second try:** Notebook's `repo` metadata using `github-branch` metadata
-- Opens help overlay on top of current overlay (doesn't close current)
-- Preserves tree navigation if help fails to load
-- Two help button locations: paged overlay (line 2472) and GitHub overlay (line 3467)
-- Async fetch validation ensures fallback is used first before trying notebook repo
+- Help topics appear as navigable nodes in the tree (Getting Started, Navigation Controls, etc.)
+- Clicking help topics switches the overlay content view to display the help markdown
+- No separate help button - help is always accessible via tree navigation
 
 ### Overlay System
 
-**Three Types of Overlays:**
+**Unified Overlay with Content Switching:**
 
-1. **Paged Overlay** - Full notebook with pagination
-   - Navigation controls (prev/next/close)
-   - Auto-grouping of cells into pages
-   - Optional autorun mode
-   - Function: `createPagedOverlay()`
+The overlay uses a single container with content area that switches between two view types:
 
-2. **GitHub Markdown Overlay** - Display repository markdown
-   - Tree navigation panel
-   - Content area with markdown rendering
-   - Smart links for .md files
-   - Function: `createGitHubMarkdownOverlay()`
+1. **Notebook View** - Displays paged notebook cells
+   - Navigation tree on left
+   - Paged content in center
+   - Footer with Previous/Next buttons
+   - Renderer: `renderers/notebook-renderer.js`
 
-3. **Help Overlay** - Context-sensitive help
-   - Fetches from repo or default location
-   - Markdown rendering
-   - Close button
-   - Function: `createHelpOverlay()`
+2. **Markdown View** - Displays GitHub markdown files
+   - Same navigation tree on left
+   - Markdown content in center
+   - Footer with tree-based navigation
+   - Renderer: `renderers/markdown-renderer.js`
 
 **Overlay State Management:**
 
@@ -925,7 +1021,7 @@ container.addEventListener('click', (e) => {
 ### 6. Tree State Optimization
 
 - Only Chapters folder expanded by default
-- Appendix and Miscellaneous collapsed initially
+- Appendices and Miscellaneous collapsed initially
 - Miscellaneous limited to 3 files (advice.md, for-ai.md, glossary.md)
 - Reduces initial render complexity
 
@@ -1068,7 +1164,7 @@ try {
   const data = await response.json();
 } catch (error) {
   console.error('Failed to fetch:', error);
-  showErrorMessage(IPYNB_CONFIG.LOAD_ERROR_MESSAGE);
+  showErrorMessage(config.loadingMessage);
 }
 ```
 
@@ -1177,11 +1273,12 @@ onNodeClick(node);
 
 ### Adding New Features
 
-1. Update IPYNB_CONFIG if new configuration needed
+1. Update DEFAULT_CONFIG if new configuration needed (lines 66-124)
 2. Follow functional organization (decorate → components → helpers)
-3. Use event delegation for interactive elements
-4. Document in block-architecture.md
-5. Update README.md with usage examples
+3. Thread config parameter through function calls (config = DEFAULT_CONFIG)
+4. Use event delegation for interactive elements
+5. Document in block-architecture.md
+6. Update README.md with usage examples
 
 ### Performance Monitoring
 
@@ -1208,19 +1305,49 @@ onNodeClick(node);
 
 ## Changelog
 
-### Version 3.0 (2026-01-14)
+### Version 3.2 (2026-01-16)
 
-- **Added:** Unified Overlay Architecture (branch: `refactor/ipynb-viewer-unified-overlay`, merged to main)
-  - Complete refactor to eliminate multiple overlay confusion
-  - Single overlay with mode switching (notebook/markdown/manual)
-  - 8 core modules implementing unified navigation system
-  - Centralized hash management and state
-  - Module documentation in overlay/README.md (525 lines)
-  - Architecture benefits: eliminates context confusion, unified navigation, consistent home button
-  - Clean API: `createNotebookOverlay()` and `createMarkdownOverlay()`
-  - Fresh implementation (no legacy code or migration)
-  - Status: Complete and production-ready, merged to main
-  - Documentation: See overlay/README.md for comprehensive guide
+- **Added:** Unified Overlay System - Clean Implementation
+  - Complete refactor to eliminate duplicate toolbars and nested overlay stacking
+  - Single overlay container with content switching (no nesting)
+  - 5 core modules (~750 lines total)
+    - `navigation-state.js` - View state management and history
+    - `toolbar.js` - Single adaptive toolbar
+    - `unified-overlay.js` - Main controller
+    - `renderers/notebook-renderer.js` - Paged notebook view
+    - `renderers/markdown-renderer.js` - Markdown file view
+  - Architecture benefits:
+    - ✅ No duplicate toolbars (primary benefit)
+    - ✅ Content switching instead of nested overlays
+    - ✅ Better memory management (no overlay accumulation)
+    - ✅ Adaptive toolbar behavior based on current view
+    - ✅ Cleaner modular code (~750 lines vs ~1,300 lines legacy)
+  - Integration ready: See INTEGRATION-INSTRUCTIONS.md for step-by-step guide
+  - Legacy code marked for deletion: `createPagedOverlay()` (line 2351, ~700 lines) and `createGitHubMarkdownOverlay()` (line 3687, ~600 lines)
+  - Status: Complete and ready for integration into main file
+- **Enhanced:** Tree navigation auto-scroll on folder expansion
+  - When expanding folders near the bottom of the tree panel, the tree automatically scrolls to center the expanded node
+  - Uses `scrollIntoView({ behavior: 'smooth', block: 'center' })` for optimal visibility
+  - Only triggers on expand (not collapse) to prevent jarring jumps
+  - 100ms delay ensures tree re-renders before scrolling
+  - Improves UX when expanding Help folder or other folders near viewport bottom
+- **Enhanced:** Streamlined toolbar interface
+  - Reduced to 4 essential buttons: Home, Tree Toggle, History, Table of Contents
+  - Removed Bookmarks button (functionality removed from overlay system)
+  - Removed Help button (now integrated into navigation tree as Help folder)
+  - Removed Close button (use ESC key to close overlay)
+  - Cleaner, less cluttered interface with focus on core navigation
+- **Added:** Splash screen with loading indicator
+  - Shows briefly while notebook loads
+  - Provides visual feedback during initialization
+  - Improves perceived performance
+
+### Version 3.0 (2026-01-14) [DEPRECATED]
+
+- **Note:** Previous unified overlay attempt (8 modules, ~2,000 lines) has been replaced with Version 3.2 clean implementation
+  - Old approach had incomplete integration and unused code
+  - New approach: Simpler, cleaner, fully documented
+  - Old overlay/ directory deleted, fresh modules created
 - **Enhanced:** Help button now respects `github-branch` metadata (2026-01-16)
   - Help button (`docs/help.md`) now uses branch from notebook metadata
   - Previously hardcoded to 'main' branch only

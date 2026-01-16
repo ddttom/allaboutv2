@@ -153,7 +153,7 @@ export default async function decorate(block) {
     { rootMargin: '100px' },
   );
 
-  for (let i = 0; i < slides.length; i++) {
+  for (let i = 0; i < slides.length; i += 1) {
     const slideItem = await createSlideItem(slides[i], i);
     observer.observe(slideItem);
     container.appendChild(slideItem);

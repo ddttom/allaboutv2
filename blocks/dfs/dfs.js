@@ -39,10 +39,6 @@ export default function decorate(block) {
     // Check if we have enough rows for a header plus data
     if (rows.length < 2) return { faqs: [], metadata: {} };
 
-    // Get header row (if it exists properly formatted)
-    const headerRow = rows[0].children;
-    const headerTexts = Array.from(headerRow).map((cell) => cell.textContent.trim());
-
     // Extract metadata table if it exists (typically at the end)
     let metadata = {};
     const lastRowIndex = rows.length - 1;
@@ -444,11 +440,11 @@ export default function decorate(block) {
   }
 
   // Setup event listeners for interactive features
-  const setupEventListeners = (container, faqs) => {
+  const setupEventListeners = (container, _faqs) => {
     // Toggle FAQ visibility on question click or keypress
     container.querySelectorAll('.faq-question').forEach((question) => {
       // Click handler
-      question.addEventListener('click', (e) => {
+      question.addEventListener('click', (_e) => {
         toggleFaqItem(question);
       });
 
@@ -649,7 +645,7 @@ export default function decorate(block) {
   };
 
   // Announce search results for screen readers
-  function announceSearchResults(hasResults, totalItems) {
+  function announceSearchResults(hasResults, _totalItems) {
     let liveRegion = document.getElementById('faq-live-region');
 
     if (!liveRegion) {

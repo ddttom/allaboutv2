@@ -9,6 +9,11 @@
 // hoisted. The complex nested structure makes reordering impractical.
 
 // ============================================================================
+// IMPORTS
+// ============================================================================
+import { createUnifiedOverlay } from './overlay/unified-overlay.js';
+
+// ============================================================================
 // GLOBAL CONSTANTS - Developer-facing error messages (easily searchable)
 // ============================================================================
 const IPYNB_ERRORS = {
@@ -26,7 +31,7 @@ const DEFAULT_CONFIG = {
   loadingMessage: 'Loading notebook...',
 
   // Splash Screen
-  defaultSplashDuration: 4000, // Default splash screen duration in milliseconds
+  defaultSplashDuration: 3000, // Default splash screen duration in milliseconds
   splashFadeTransition: 300, // Fade in/out transition duration in milliseconds
   splashFadeBuffer: 50, // Extra buffer time after fade (ms)
 
@@ -61,6 +66,79 @@ const DEFAULT_CONFIG = {
     hamburger: '&#9776;', // ☰ hamburger menu
     playButton: '&#9654;', // ► play button for code execution
   },
+
+  // Navigation Tree Labels
+  treeLabels: {
+    notebook: 'Notebook',
+    repository: 'Repository',
+    chapters: 'Chapters',
+    appendices: 'Appendices',
+    miscellaneous: 'Miscellaneous',
+    help: 'Help',
+  },
+
+  // Button Labels
+  buttonLabels: {
+    run: 'Run',
+    previous: 'Previous',
+    next: 'Next',
+    startReading: 'Start Reading',
+    clearAllBookmarks: 'Clear All Bookmarks',
+    addBookmark: '+ Bookmark This Page',
+    addBookmarkLower: '+ Bookmark this page',
+  },
+
+  // Empty State Messages
+  emptyMessages: {
+    noHistory: 'No history yet',
+    noBookmarks: 'No bookmarks yet',
+    noHeadings: 'No headings found',
+  },
+
+  // Tooltip Text (title attributes)
+  tooltips: {
+    showTree: 'Show Tree',
+    hideTree: 'Hide Tree',
+    history: 'History',
+    bookmarks: 'Bookmarks',
+    help: 'Help',
+    home: 'Home',
+    tableOfContents: 'Table of Contents',
+    toc: 'TOC',
+    previousPage: 'Previous page',
+    nextPage: 'Next page',
+  },
+
+  // Aria Labels (accessibility)
+  ariaLabels: {
+    toggleTree: 'Toggle navigation tree',
+    closePaged: 'Close paged view',
+    closeMarkdown: 'Close markdown viewer',
+    navigationHistory: 'Navigation History',
+    removeBookmark: 'Remove bookmark',
+    contentNavigation: 'Content navigation',
+    navigationTree: 'Navigation tree',
+    startReading: 'Start paged reading mode',
+    runCodeCell: 'Run code cell',
+    closeSplash: 'Close splash screen',
+    githubMarkdownViewer: 'GitHub markdown viewer',
+  },
+
+  // Loading and Error Messages
+  messages: {
+    loadingMarkdown: 'Loading markdown...',
+    failedToLoadMarkdown: 'Failed to load markdown from GitHub',
+    errorPrefix: 'Error:',
+    failedToLoadNotebook: 'Failed to load notebook:',
+    invalidGitHubUrl: 'Invalid GitHub URL format - cannot extract repository',
+    noNotebookPath: 'No notebook path provided',
+    noNotebookCells: 'Notebook has no cells',
+  },
+
+  // Image Alt Text
+  altText: {
+    splashScreen: 'Splash screen',
+  },
 };
 
 // ============================================================================
@@ -68,6 +146,21 @@ const DEFAULT_CONFIG = {
 // ============================================================================
 // SVG Inline Cache (kept at module level for cross-invocation caching)
 const SVG_INLINE_CACHE = new Map();
+
+/**
+ * Generate a URL-friendly slug from text
+ * @param {string} text - Text to convert to slug
+ * @returns {string} URL-friendly slug
+ */
+function generateSlug(text) {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, '') // Remove non-word characters except spaces and hyphens
+    .replace(/\s+/g, '-') // Replace spaces with hyphens
+    .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
+    .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
+}
 
 /**
  * Parse markdown text to HTML (enhanced implementation)
@@ -298,7 +391,6 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
         // No currentFilePath or already absolute URL
         cleanPath = processedUrl.replace(/^\.?\//, '');
         if ((processedUrl.startsWith('../') || processedUrl.includes('/../')) && !currentFilePath) {
-          console.warn('⚠️  Relative path with ".." but no currentFilePath provided:', processedUrl);
         }
       }
 
@@ -496,20 +588,12 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
 /**
  * Display splash screen image that auto-dismisses after duration
  * @param {string} imageUrl - URL of splash screen image
- * @param {number} minDuration - Display duration in milliseconds (default 4000, should match config.defaultSplashDuration)
+ * @param {number} minDuration - Display duration in milliseconds (default 3000, should match config.defaultSplashDuration)
  * @returns {Promise<void>} Promise that resolves after splash fades out
  */
-function showSplashScreen(imageUrl, minDuration = 4000) {
-  // eslint-disable-next-line no-console
-  console.log('[SPLASH] showSplashScreen called');
-  // eslint-disable-next-line no-console
-  console.log('[SPLASH] imageUrl:', imageUrl);
-  // eslint-disable-next-line no-console
-  console.log('[SPLASH] minDuration:', minDuration);
+function showSplashScreen(imageUrl, minDuration = 3000) {
 
   return new Promise((resolve) => {
-    // eslint-disable-next-line no-console
-    console.log('[SPLASH] Creating splash overlay...');
 
     // Create splash overlay with HIGHEST z-index to appear above all overlays
     const splashOverlay = document.createElement('div');
@@ -520,33 +604,11 @@ function showSplashScreen(imageUrl, minDuration = 4000) {
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.95);
+      background-color: #000;
       z-index: 10002;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       opacity: 0;
       transition: opacity 0.3s ease-in-out;
-    `;
-
-    // Create countdown timer
-    const countdownTimer = document.createElement('div');
-    countdownTimer.setAttribute('aria-live', 'polite');
-    countdownTimer.setAttribute('aria-label', 'Countdown timer');
-    countdownTimer.style.cssText = `
-      position: absolute;
-      top: 20px;
-      right: 80px;
-      background: rgba(255, 255, 255, 0.2);
-      border: 2px solid rgba(255, 255, 255, 0.5);
-      color: white;
-      font-size: 20px;
-      font-weight: bold;
-      padding: 10px 16px;
-      border-radius: 24px;
-      font-family: monospace;
-      min-width: 50px;
-      text-align: center;
+      overflow: hidden;
     `;
 
     // Create close button
@@ -571,6 +633,7 @@ function showSplashScreen(imageUrl, minDuration = 4000) {
       line-height: 1;
       padding: 0;
       transition: all 0.2s ease;
+      z-index: 10003;
     `;
 
     // Close button hover effect
@@ -586,58 +649,38 @@ function showSplashScreen(imageUrl, minDuration = 4000) {
       closeButton.style.transform = 'scale(1)';
     });
 
-    // Create image element
+    // Create image element - fills entire viewport like a cover page
     const splashImage = document.createElement('img');
     splashImage.src = imageUrl;
-    splashImage.alt = 'Splash screen';
+    splashImage.alt = DEFAULT_CONFIG.altText.splashScreen;
     splashImage.style.cssText = `
-      max-width: 90%;
-      max-height: 90%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       object-fit: contain;
-      border-radius: 8px;
+      object-position: center;
     `;
 
-    splashOverlay.appendChild(countdownTimer);
     splashOverlay.appendChild(closeButton);
     splashOverlay.appendChild(splashImage);
     document.body.appendChild(splashOverlay);
-    // eslint-disable-next-line no-console
-    console.log('[SPLASH] Splash overlay added to body');
 
     // Fade in
     requestAnimationFrame(() => {
       splashOverlay.style.opacity = '1';
-      // eslint-disable-next-line no-console
-      console.log('[SPLASH] Faded in splash overlay');
     });
 
     const startTime = Date.now();
 
-    // Update countdown timer
-    const updateCountdown = () => {
-      const elapsed = Date.now() - startTime;
-      const remaining = Math.max(0, Math.ceil((minDuration - elapsed) / 1000));
-      countdownTimer.textContent = `${remaining}s`;
-
-      if (remaining > 0) {
-        requestAnimationFrame(updateCountdown);
-      }
-    };
-    updateCountdown();
-
     // Helper fadeOut function
     const fadeOut = () => {
-      // eslint-disable-next-line no-console
-      console.log('[SPLASH] fadeOut() - fading out splash');
       splashOverlay.style.opacity = '0';
       setTimeout(() => {
         if (splashOverlay.parentNode) {
           document.body.removeChild(splashOverlay);
-          // eslint-disable-next-line no-console
-          console.log('[SPLASH] Splash overlay removed from DOM');
         } else {
-          // eslint-disable-next-line no-console
-          console.log('[SPLASH] Splash overlay already removed from DOM');
         }
       }, 300);
     };
@@ -650,31 +693,21 @@ function showSplashScreen(imageUrl, minDuration = 4000) {
     const resolveOnce = (reason) => {
       if (!isResolved) {
         isResolved = true;
-        // eslint-disable-next-line no-console
-        console.log(`[SPLASH] Resolving promise (${reason})`);
         resolve();
       } else {
-        // eslint-disable-next-line no-console
-        console.log(`[SPLASH] Promise already resolved, ignoring ${reason}`);
       }
     };
 
     // Create dismiss function for close button
     const dismiss = () => {
-      // eslint-disable-next-line no-console
-      console.log('[SPLASH] dismiss() called (close button clicked)');
 
       // Cancel auto-dismiss timer if it hasn't fired yet
       if (autoDismissTimer !== null) {
-        // eslint-disable-next-line no-console
-        console.log('[SPLASH] Canceling auto-dismiss timer');
         clearTimeout(autoDismissTimer);
         autoDismissTimer = null;
       }
 
       // Fade out immediately
-      // eslint-disable-next-line no-console
-      console.log('[SPLASH] Starting immediate fade out');
       fadeOut();
 
       // Resolve after fade completes
@@ -688,8 +721,6 @@ function showSplashScreen(imageUrl, minDuration = 4000) {
 
     // Auto-dismiss after minimum duration and resolve promise
     autoDismissTimer = setTimeout(() => {
-      // eslint-disable-next-line no-console
-      console.log('[SPLASH] Auto-dismiss timer fired');
       autoDismissTimer = null; // Timer has fired
 
       fadeOut();
@@ -742,8 +773,6 @@ function createHelpButtonHandler(repoUrl, branch, overlayContext, config) {
       }
     } catch (error) {
       // Fallback failed, continue to try notebook repo
-      // eslint-disable-next-line no-console
-      console.log('[HELP] Fallback help.md not found, trying notebook repo');
     }
 
     // Fallback failed - try notebook's repo with github-branch
@@ -769,7 +798,8 @@ function createHelpButtonHandler(repoUrl, branch, overlayContext, config) {
 function createDropdownCloseHandler(dropdowns) {
   return (e) => {
     dropdowns.forEach(({ dropdown, button }) => {
-      if (dropdown && !dropdown.contains(e.target) && e.target !== button) {
+      // Check if click is outside both dropdown and button (including button's children)
+      if (dropdown && !dropdown.contains(e.target) && !button.contains(e.target)) {
         dropdown.style.display = 'none';
         button.setAttribute('aria-expanded', 'false');
       }
@@ -781,9 +811,10 @@ function createDropdownCloseHandler(dropdowns) {
  * Create tree toggle button click handler
  * @param {HTMLElement} navTreePanel - Navigation tree panel element
  * @param {HTMLElement} treeToggleButton - Tree toggle button element
+ * @param {object} config - Configuration object
  * @returns {Function} Click handler for tree toggle button
  */
-function createTreeToggleHandler(navTreePanel, treeToggleButton) {
+function createTreeToggleHandler(navTreePanel, treeToggleButton, config = DEFAULT_CONFIG) {
   return () => {
     const isVisible = navTreePanel.style.display !== 'none';
     if (isVisible) {
@@ -791,13 +822,13 @@ function createTreeToggleHandler(navTreePanel, treeToggleButton) {
       navTreePanel.style.display = 'none';
       treeToggleButton.innerHTML = '&#9654;'; // Right arrow (►)
       treeToggleButton.setAttribute('aria-expanded', 'false');
-      treeToggleButton.setAttribute('title', 'Show Tree');
+      treeToggleButton.setAttribute('title', config.tooltips.showTree);
     } else {
       // Show tree - show left arrow (◄) to indicate it can be closed
       navTreePanel.style.display = '';
       treeToggleButton.innerHTML = '&#9664;'; // Left arrow (◄)
       treeToggleButton.setAttribute('aria-expanded', 'true');
-      treeToggleButton.setAttribute('title', 'Hide Tree');
+      treeToggleButton.setAttribute('title', config.tooltips.hideTree);
     }
   };
 }
@@ -817,7 +848,6 @@ async function fetchSVGContent(url, timeout) {
     clearTimeout(timeoutId);
 
     if (!response.ok) {
-      console.warn(`⚠️ Failed to fetch SVG (HTTP ${response.status}): ${url}`);
       return null;
     }
 
@@ -826,9 +856,7 @@ async function fetchSVGContent(url, timeout) {
   } catch (error) {
     clearTimeout(timeoutId);
     if (error.name === 'AbortError') {
-      console.warn(`⚠️ SVG fetch timeout: ${url}`);
     } else {
-      console.warn(`⚠️ Failed to fetch SVG: ${url}`, error);
     }
     return null;
   }
@@ -849,13 +877,11 @@ function sanitizeSVG(svgText, altText) {
     // Check for parser errors
     const parserError = doc.querySelector('parsererror');
     if (parserError) {
-      console.warn('⚠️ Invalid SVG XML:', parserError.textContent);
       return null;
     }
 
     const svgElement = doc.querySelector('svg');
     if (!svgElement) {
-      console.warn('⚠️ No <svg> element found in SVG content');
       return null;
     }
 
@@ -877,7 +903,6 @@ function sanitizeSVG(svgText, altText) {
     const serializer = new XMLSerializer();
     return serializer.serializeToString(svgElement);
   } catch (error) {
-    console.warn('⚠️ Failed to sanitize SVG:', error);
     return null;
   }
 }
@@ -958,7 +983,6 @@ async function inlineSVGIllustrations(htmlString, options = {}) {
     // Serialize back to HTML string
     return doc.body.innerHTML;
   } catch (error) {
-    console.warn('⚠️ Failed to inline SVG illustrations:', error);
     return htmlString; // Return original HTML on error
   }
 }
@@ -1101,13 +1125,12 @@ function styleActionCards(contentElement) {
  * @param {number} index - Cell index
  * @param {string} [repoUrl] - Optional repository URL for converting .md links
  * @param {boolean} [autoWrap=false] - Whether to auto-wrap with styling classes (notebook mode)
- * @param {string} [helpRepoUrl] - Optional help repository URL
  * @param {string} [branch='main'] - GitHub branch to use for .md links
  * @param {Array} [parentHistory=null] - Optional parent overlay's history array
  * @param {Object} [config=null] - Configuration object (injected dependency)
  * @returns {Promise<HTMLElement>} Cell element
  */
-async function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false, helpRepoUrl = null, branch = 'main', parentHistory = null, config = null) {
+async function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false, branch = 'main', parentHistory = null, config = null) {
   const cellDiv = document.createElement('div');
   cellDiv.className = 'ipynb-cell ipynb-markdown-cell';
   cellDiv.dataset.cellIndex = index;
@@ -1148,7 +1171,8 @@ async function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false,
       const githubUrl = link.dataset.mdUrl; // Get URL from data attribute
       const linkBranch = link.dataset.branch || branch; // Get branch from link or use default
       const title = link.textContent || 'GitHub Markdown';
-      const overlay = createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl, linkBranch, parentHistory, false, config);
+      // No longer pass helpRepoUrl - extraction happens from githubUrl instead
+      const overlay = createGitHubMarkdownOverlay(githubUrl, title, null, linkBranch, parentHistory, false, config);
       overlay.openOverlay();
     });
   });
@@ -1164,7 +1188,7 @@ async function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false,
  * @param {boolean} autorun - Whether to hide run button (autorun mode)
  * @returns {HTMLElement} Cell element
  */
-function createCodeCell(cell, index, autorun = false) {
+function createCodeCell(cell, index, autorun = false, config = DEFAULT_CONFIG) {
   const cellDiv = document.createElement('div');
   cellDiv.className = 'ipynb-cell ipynb-code-cell';
   cellDiv.dataset.cellIndex = index;
@@ -1187,8 +1211,8 @@ function createCodeCell(cell, index, autorun = false) {
   if (!autorun) {
     const runButton = document.createElement('button');
     runButton.className = 'ipynb-run-button';
-    runButton.textContent = 'Run';
-    runButton.setAttribute('aria-label', `Run code cell ${index + 1}`);
+    runButton.textContent = config.buttonLabels.run;
+    runButton.setAttribute('aria-label', `${config.ariaLabels.runCodeCell} ${index + 1}`);
     header.appendChild(runButton);
   }
 
@@ -1292,13 +1316,16 @@ async function executeCodeCell(cellDiv) {
     // Display error
     const errorDiv = document.createElement('div');
     errorDiv.className = 'ipynb-output-error';
-    errorDiv.textContent = `Error: ${error.message}`;
+    errorDiv.textContent = `${DEFAULT_CONFIG.messages.errorPrefix} ${error.message}`;
     output.appendChild(errorDiv);
 
     // Show error indicator
     cellDiv.classList.add('ipynb-cell-error');
   }
 }
+
+// Export for overlay renderer
+window.ipynbExecuteCell = executeCodeCell;
 
 /**
  * Load and parse notebook file
@@ -1309,13 +1336,12 @@ async function loadNotebook(notebookPath) {
   try {
     const response = await fetch(notebookPath);
     if (!response.ok) {
-      throw new Error(`Failed to load notebook: ${response.status} ${response.statusText}`);
+      throw new Error(`${DEFAULT_CONFIG.messages.failedToLoadNotebook} ${response.status} ${response.statusText}`);
     }
 
     const notebook = await response.json();
     return notebook;
   } catch (error) {
-    console.error('Error loading notebook:', error);
     throw error;
   }
 }
@@ -1456,7 +1482,7 @@ function createHistoryContext({
   treeState = null,
   handleTreeNodeClick = null,
   splashUrl = null,
-  splashDuration = 4000,
+  splashDuration = 3000,
 }) {
   return {
     historyArray,
@@ -1493,7 +1519,6 @@ function getBookmarks(notebookId) {
     const stored = localStorage.getItem(key);
     return stored ? JSON.parse(stored) : [];
   } catch (error) {
-    console.error('Failed to get bookmarks:', error);
     return [];
   }
 }
@@ -1537,7 +1562,6 @@ function saveBookmark(notebookId, title, type, pageIndex = null, url = null) {
     localStorage.setItem(key, JSON.stringify(bookmarks));
     return true;
   } catch (error) {
-    console.error('Failed to save bookmark:', error);
     return false;
   }
 }
@@ -1564,7 +1588,6 @@ function removeBookmark(notebookId, type, pageIndex = null, url = null) {
     localStorage.setItem(key, JSON.stringify(filtered));
     return true;
   } catch (error) {
-    console.error('Failed to remove bookmark:', error);
     return false;
   }
 }
@@ -1580,7 +1603,6 @@ function clearAllBookmarks(notebookId) {
     localStorage.removeItem(key);
     return true;
   } catch (error) {
-    console.error('Failed to clear bookmarks:', error);
     return false;
   }
 }
@@ -1663,7 +1685,7 @@ function extractMarkdownPathsFromElement(element) {
  * @param {Array} tree - Navigation tree array
  * @param {Array<string>} newPaths - New markdown file paths to add
  */
-function addMarkdownPathsToTree(tree, newPaths) {
+function addMarkdownPathsToTree(tree, newPaths, config = DEFAULT_CONFIG) {
   // Find the Repository root node
   const repoNode = tree.find((node) => node.id === 'repository');
   if (!repoNode) {
@@ -1710,7 +1732,7 @@ function addMarkdownPathsToTree(tree, newPaths) {
   // This ensures consistent structure and no duplicates
   const allPaths = [...existingPaths, ...pathsToAdd].sort();
   const helpPath = 'docs/help.md';
-  repoNode.children = buildFileTree(allPaths, helpPath);
+  repoNode.children = buildFileTree(allPaths, helpPath, config);
 }
 
 /**
@@ -1719,8 +1741,9 @@ function addMarkdownPathsToTree(tree, newPaths) {
  * @param {string} _helpPath - Path to help.md (no longer used - kept for API compatibility)
  * @returns {Array} Tree nodes for files with folder hierarchy
  */
-function buildFileTree(paths, _helpPath) {
+function buildFileTree(paths, _helpPath, config = DEFAULT_CONFIG) {
   const tree = [];
+  const labels = config.treeLabels;
 
   // Categorize files into Chapters, Appendices, and Miscellaneous
   const chapters = [];
@@ -1776,7 +1799,7 @@ function buildFileTree(paths, _helpPath) {
   if (chapters.length > 0) {
     const chaptersNode = {
       id: 'folder-chapters',
-      label: 'Chapters',
+      label: labels.chapters,
       type: 'folder',
       path: null,
       cellIndex: null,
@@ -1787,11 +1810,11 @@ function buildFileTree(paths, _helpPath) {
     tree.push(chaptersNode);
   }
 
-  // Create "Appendix" folder node
+  // Create "Appendices" folder node
   if (appendices.length > 0) {
     const appendixNode = {
       id: 'folder-appendix',
-      label: 'Appendix',
+      label: labels.appendices,
       type: 'folder',
       path: null,
       cellIndex: null,
@@ -1806,7 +1829,7 @@ function buildFileTree(paths, _helpPath) {
   if (miscellaneous.length > 0) {
     const miscNode = {
       id: 'folder-miscellaneous',
-      label: 'Miscellaneous',
+      label: labels.miscellaneous,
       type: 'folder',
       path: null,
       cellIndex: null,
@@ -1821,20 +1844,108 @@ function buildFileTree(paths, _helpPath) {
 }
 
 /**
+ * Fetch and parse help documentation to build help tree node
+ * @param {Object} config - Configuration object with help repo settings
+ * @returns {Promise<Object|null>} Help tree node or null if failed to load
+ */
+async function buildHelpTreeNode(config = DEFAULT_CONFIG) {
+  try {
+    const helpUrl = `${config.fallbackHelpRepo}/blob/${config.fallbackHelpBranch}/${config.fallbackHelpPath}`;
+
+    // Convert GitHub blob URL to raw URL
+    const rawUrl = helpUrl
+      .replace('github.com', 'raw.githubusercontent.com')
+      .replace('/blob/', '/');
+
+    const response = await fetch(rawUrl);
+    if (!response.ok) {
+      return null; // Silently fail - help section will be hidden
+    }
+
+    const markdownText = await response.text();
+
+    // Extract hash links: [text](#anchor)
+    const hashLinkRegex = /\[([^\]]+)\]\(#([^)]+)\)/g;
+    const helpChildren = [];
+    const seenAnchors = new Set();
+    let match;
+
+    // Add "Home" node first - takes user to top of help.md
+    helpChildren.push({
+      id: 'help-home',
+      label: '🏠 Home',
+      type: 'help-topic',
+      path: config.fallbackHelpPath,
+      anchor: '', // No anchor = top of page
+      cellIndex: null,
+      children: [],
+      expanded: false,
+      level: 1,
+    });
+
+    // eslint-disable-next-line no-cond-assign
+    while ((match = hashLinkRegex.exec(markdownText)) !== null) {
+      const [, linkText, anchor] = match;
+
+      // Skip duplicates (hash links may appear multiple times)
+      if (seenAnchors.has(anchor)) {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+      seenAnchors.add(anchor);
+
+      // Each topic opens help.md with a hash fragment
+      helpChildren.push({
+        id: `help-${anchor}`,
+        label: linkText,
+        type: 'help-topic',
+        path: config.fallbackHelpPath,
+        anchor: `#${anchor}`,
+        cellIndex: null,
+        children: [],
+        expanded: false,
+        level: 1,
+      });
+    }
+
+    // Only create help node if we found help topics (always true now with Home node)
+    if (helpChildren.length === 0) {
+      return null;
+    }
+
+    return {
+      id: 'help',
+      label: config.treeLabels.help || 'Help',
+      type: 'root',
+      path: null,
+      cellIndex: null,
+      children: helpChildren,
+      expanded: false, // Start collapsed
+      level: 0,
+    };
+  } catch (error) {
+    // Silently fail - help section will be hidden
+    return null;
+  }
+}
+
+/**
  * Build navigation tree from notebook cells and repository files
  * @param {Array<HTMLElement>} cells - Array of cell elements
  * @param {HTMLElement} cellsContainer - Container for extracting markdown paths
- * @param {string} helpRepoUrl - Help repository URL
+ * @param {string} _helpRepoUrl - DEPRECATED: No longer used, kept for API compatibility
  * @param {object} notebookData - Raw notebook data with cells array
- * @returns {Array} Root tree nodes
+ * @param {object} config - Configuration object with tree labels
+ * @returns {Promise<Array>} Root tree nodes (async to support help loading)
  */
-function buildNavigationTree(cells, cellsContainer, _helpRepoUrl, notebookData = null) {
+async function buildNavigationTree(cells, cellsContainer, _helpRepoUrl, notebookData = null, config = DEFAULT_CONFIG) {
   const tree = [];
+  const labels = config.treeLabels;
 
   // 1. Create "Notebook" root node
   const notebookNode = {
     id: 'notebook',
-    label: 'Notebook',
+    label: labels.notebook,
     type: 'root',
     path: null,
     cellIndex: null,
@@ -2062,7 +2173,7 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl, notebookData =
   if (markdownPaths.length > 0) {
     const repoNode = {
       id: 'repository',
-      label: 'Repository',
+      label: labels.repository,
       type: 'root',
       path: null,
       cellIndex: null,
@@ -2073,9 +2184,15 @@ function buildNavigationTree(cells, cellsContainer, _helpRepoUrl, notebookData =
 
     // Build file tree with help.md prioritized (always look for it)
     const helpPath = 'docs/help.md';
-    repoNode.children = buildFileTree(markdownPaths, helpPath);
+    repoNode.children = buildFileTree(markdownPaths, helpPath, config);
 
     tree.push(repoNode);
+  }
+
+  // 5. Add "Help" root node if help documentation can be loaded
+  const helpNode = await buildHelpTreeNode(config);
+  if (helpNode) {
+    tree.push(helpNode);
   }
 
   return tree;
@@ -2229,7 +2346,9 @@ function renderTreeNode(node, parentElement, treeContainer, treeState, onNodeCli
  * @param {Function} onNodeClick - Click handler
  */
 function toggleTreeNode(nodeId, treeState, container, onNodeClick) {
-  if (treeState.expandedNodes.has(nodeId)) {
+  const wasExpanded = treeState.expandedNodes.has(nodeId);
+
+  if (wasExpanded) {
     treeState.expandedNodes.delete(nodeId);
   } else {
     treeState.expandedNodes.add(nodeId);
@@ -2238,6 +2357,16 @@ function toggleTreeNode(nodeId, treeState, container, onNodeClick) {
   // Re-render tree
   const { tree } = treeState;
   renderNavigationTree(tree, container, treeState, onNodeClick);
+
+  // If we just expanded, scroll to make the node visible
+  if (!wasExpanded) {
+    setTimeout(() => {
+      const expandedEl = container.querySelector(`[data-node-id="${nodeId}"]`);
+      if (expandedEl) {
+        expandedEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 100);
+  }
 }
 
 /**
@@ -2327,7 +2456,6 @@ function findNodeById(tree, nodeId) {
  * @param {boolean} isNotebookMode - Whether this is notebook mode (close button always visible)
  * @param {string} [repoUrl] - Optional repository URL for markdown .md links
  * @param {string} [notebookTitle] - Optional notebook title for top bar
- * @param {string} [helpRepoUrl] - Optional help repository URL
  * @param {string} [branch] - GitHub branch to use
  * @param {boolean} [hideTopbar] - Whether to hide the top bar
  * @param {object} [notebook] - Raw notebook data with cells array
@@ -2335,10 +2463,9 @@ function findNodeById(tree, nodeId) {
  * @param {number} [splashDuration] - Splash screen duration in ms (from metadata or config)
  * @returns {object} Overlay controls
  */
-function createPagedOverlay(container, cellsContainer, autorun = false, isNotebookMode = false, repoUrl = null, notebookTitle = 'Jupyter Notebook', helpRepoUrl = null, branch = 'main', hideTopbar = false, notebook = null, config = null, splashDuration = 4000) {
+async function createPagedOverlay(container, cellsContainer, autorun = false, isNotebookMode = false, repoUrl = null, notebookTitle = 'Jupyter Notebook', branch = 'main', hideTopbar = false, notebook = null, config = null, splashDuration = 3000) {
   // Config is required - fail with clear error if missing
   if (!config) {
-    console.error('[IPYNB-VIEWER] CRITICAL: Config object missing in createPagedOverlay');
     const errorDiv = document.createElement('div');
     errorDiv.className = 'ipynb-error';
     errorDiv.textContent = IPYNB_ERRORS.CONFIG_MISSING_OVERLAY;
@@ -2365,7 +2492,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   const navigationHistory = [];
 
   // Build navigation tree (Phase 1 - Testing)
-  const navigationTree = buildNavigationTree(cells, cellsContainer, helpRepoUrl, notebook);
+  const navigationTree = await buildNavigationTree(cells, cellsContainer, null, notebook, config);
 
   // TEST: Log tree structure to console
   navigationTree.forEach((root) => {
@@ -2389,14 +2516,6 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   };
 
   // Debug: Check notebook metadata for splash URL
-  // eslint-disable-next-line no-console
-  console.log('[PAGINATION STATE] Creating paginationState...');
-  // eslint-disable-next-line no-console
-  console.log('[PAGINATION STATE] notebook:', notebook);
-  // eslint-disable-next-line no-console
-  console.log('[PAGINATION STATE] notebook.metadata:', notebook?.metadata);
-  // eslint-disable-next-line no-console
-  console.log('[PAGINATION STATE] splash-page from metadata:', notebook?.metadata?.['splash-page']);
 
   const paginationState = {
     currentPage: 0,
@@ -2411,10 +2530,6 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     splashDuration, // Add splash duration from metadata/config
   };
 
-  // eslint-disable-next-line no-console
-  console.log('[PAGINATION STATE] paginationState created:', paginationState);
-  // eslint-disable-next-line no-console
-  console.log('[PAGINATION STATE] paginationState.splashUrl:', paginationState.splashUrl);
 
   // Create overlay structure
   const overlay = document.createElement('div');
@@ -2464,30 +2579,78 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   // Close button is now always visible (notebook mode fix)
   // Previously hidden in notebook mode, now always shown for better UX
 
-  // Home button (notebook mode only) - Navigate to cell 0
+  /**
+   * Get the home page index from metadata opening-page
+   * @returns {number} Page index for the home page
+   */
+  function getHomePageIndex() {
+    const openingPage = notebook?.metadata?.['opening-page'];
+    if (!openingPage) {
+      return 0; // Default to first page
+    }
+
+    const targetPath = openingPage.replace(/^#/, '');
+
+    // Cell-based hash format (e.g., #cell-2)
+    if (targetPath.startsWith('cell-')) {
+      const cellIndex = parseInt(targetPath.replace('cell-', ''), 10);
+      if (!Number.isNaN(cellIndex)) {
+        const pageIndex = pages.findIndex((page) => page.cells.some(
+          (cell) => parseInt(cell.dataset.cellIndex, 10) === cellIndex,
+        ));
+        if (pageIndex !== -1) return pageIndex;
+      }
+    } else {
+      // Heading-based hash format (e.g., #chapter-1-introduction)
+      const pageIndex = pages.findIndex((page) => {
+        const firstCell = page.cells[0];
+        if (firstCell && firstCell.classList.contains('ipynb-markdown-cell')) {
+          const content = firstCell.querySelector('.ipynb-cell-content');
+          if (content) {
+            const heading = content.querySelector('h1, h2, h3');
+            if (heading) {
+              const headingSlug = generateSlug(heading.textContent.trim());
+              return headingSlug === targetPath;
+            }
+          }
+        }
+        return false;
+      });
+      if (pageIndex !== -1) return pageIndex;
+    }
+
+    return 0; // Fallback to first page if not found
+  }
+
+  /**
+   * Navigate to home page (from metadata opening-page)
+   */
+  async function navigateToHome() {
+    const homePageIndex = getHomePageIndex();
+
+    // Skip if already at home page
+    if (paginationState.currentPage === homePageIndex) {
+      return;
+    }
+
+    // Show splash screen if configured (only when navigating away from current page)
+    const splashUrl = notebook?.metadata?.['splash-page'];
+    if (splashUrl) {
+      await showSplashScreen(splashUrl, paginationState.splashDuration);
+    }
+
+    // Navigate to home page
+    paginationState.currentPage = homePageIndex;
+    await updatePageDisplay(true); // Skip hash update
+  }
+
+  // Home button (notebook mode only) - Navigate to opening page
   let homeButton;
   if (isNotebookMode) {
     homeButton = createHomeButton({
       context: 'notebook',
-      ariaLabel: 'Go to first cell',
-      onClick: () => {
-        // Show splash screen if configured
-        const splashUrl = notebook?.metadata?.['splash-page'];
-        if (splashUrl) {
-          // Show splash with duration from metadata/config (auto-dismisses)
-          showSplashScreen(splashUrl, paginationState.splashDuration);
-        }
-
-        // eslint-disable-next-line no-console
-        console.log('[HOME BUTTON] Setting current page to 0');
-        paginationState.currentPage = 0;
-        // eslint-disable-next-line no-console
-        console.log('[HOME BUTTON] Current page set to:', paginationState.currentPage);
-        // Pass true to skip hash update (we just cleared it in createHomeButton)
-        updatePageDisplay(true);
-        // eslint-disable-next-line no-console
-        console.log('[HOME BUTTON] updatePageDisplay called with skipHashUpdate=true');
-      },
+      ariaLabel: 'Go to opening page',
+      onClick: navigateToHome,
     });
   }
 
@@ -2509,11 +2672,21 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
    * @param {HTMLElement} button - The button element
    * @param {HTMLElement} dropdown - The dropdown element
    * @param {Function} updateFn - Optional update function to call before showing
+   * @param {Array} allDropdowns - Array of all dropdown objects to close others
    * @returns {Function} The click event handler
    */
-  function createDropdownToggleHandler(button, dropdown, updateFn = null) {
+  function createDropdownToggleHandler(button, dropdown, updateFn = null, allDropdowns = []) {
     return (e) => {
       e.stopPropagation();
+
+      // Close all other dropdowns first
+      allDropdowns.forEach(({ dropdown: otherDropdown, button: otherButton }) => {
+        if (otherDropdown !== dropdown && otherDropdown.style.display === 'block') {
+          otherDropdown.style.display = 'none';
+          otherButton.setAttribute('aria-expanded', 'false');
+        }
+      });
+
       if (updateFn) updateFn(); // Refresh before showing
       const isOpen = dropdown.style.display === 'block';
       dropdown.style.display = isOpen ? 'none' : 'block';
@@ -2598,7 +2771,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       if (navigationHistory.length === 0) {
         const emptyMessage = document.createElement('div');
         emptyMessage.className = 'ipynb-history-empty';
-        emptyMessage.textContent = 'No history yet';
+        emptyMessage.textContent = config.emptyMessages.noHistory;
         historyDropdown.appendChild(emptyMessage);
         return;
       }
@@ -2618,8 +2791,8 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
                 updatePageDisplay();
               }
             } else if (entry.type === 'markdown' && entry.url) {
-              // Re-open GitHub markdown overlay
-              const mdOverlay = createGitHubMarkdownOverlay(entry.url, entry.title, helpRepoUrl, branch, paginationState, hideTopbar, config);
+              // Re-open GitHub markdown overlay (always hide topbar for nested overlays)
+              const mdOverlay = createGitHubMarkdownOverlay(entry.url, entry.title, null, branch, paginationState, true, config);
               mdOverlay.openOverlay();
             }
           },
@@ -2633,12 +2806,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       });
     };
 
-    // Toggle history dropdown on button click
-    historyButton.addEventListener('click', createDropdownToggleHandler(
-      historyButton,
-      historyDropdown,
-      updateHistoryDropdown,
-    ));
+    // Event listener will be attached after all dropdowns are created
   }
 
   // Hamburger menu (notebook mode only) - Table of Contents
@@ -2729,11 +2897,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       }
     });
 
-    // Toggle dropdown on hamburger click
-    hamburgerButton.addEventListener('click', createDropdownToggleHandler(
-      hamburgerButton,
-      tocDropdown,
-    ));
+    // Event listener will be attached after all dropdowns are created
   }
 
   // Bookmark button (notebook mode only) - Save and view bookmarks
@@ -2760,7 +2924,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       if (bookmarks.length === 0) {
         const emptyMessage = document.createElement('div');
         emptyMessage.className = 'ipynb-bookmark-empty';
-        emptyMessage.textContent = 'No bookmarks yet';
+        emptyMessage.textContent = config.emptyMessages.noBookmarks;
         bookmarkDropdown.appendChild(emptyMessage);
       } else {
         bookmarks.forEach((bookmark) => {
@@ -2773,8 +2937,8 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
                 paginationState.currentPage = bookmark.pageIndex;
                 updatePageDisplay();
               } else if (bookmark.type === 'markdown' && bookmark.url) {
-                // Open markdown file in overlay
-                const mdOverlay = createGitHubMarkdownOverlay(bookmark.url, bookmark.title, helpRepoUrl, branch, paginationState, hideTopbar, config);
+                // Open markdown file in overlay (always hide topbar for nested overlays)
+                const mdOverlay = createGitHubMarkdownOverlay(bookmark.url, bookmark.title, null, branch, paginationState, true, config);
                 mdOverlay.openOverlay();
               }
             },
@@ -2794,7 +2958,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
         // Add "Clear All" button if there are bookmarks
         const clearAllBtn = document.createElement('button');
         clearAllBtn.className = 'ipynb-bookmark-clear-all';
-        clearAllBtn.textContent = 'Clear All Bookmarks';
+        clearAllBtn.textContent = config.buttonLabels.clearAllBookmarks;
         clearAllBtn.addEventListener('click', () => {
           // eslint-disable-next-line no-alert
           if (window.confirm('Are you sure you want to clear all bookmarks?')) {
@@ -2808,7 +2972,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       // Add "Bookmark This Page" button
       const addBookmarkBtn = document.createElement('button');
       addBookmarkBtn.className = 'ipynb-bookmark-add';
-      addBookmarkBtn.textContent = '+ Bookmark This Page';
+      addBookmarkBtn.textContent = config.buttonLabels.addBookmark;
       addBookmarkBtn.addEventListener('click', () => {
         const currentPage = pages[paginationState.currentPage];
         const firstCell = currentPage.cells[0];
@@ -2837,37 +3001,60 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
       bookmarkDropdown.insertBefore(addBookmarkBtn, bookmarkDropdown.firstChild);
     };
 
-    // Toggle bookmark dropdown on button click
-    bookmarkButton.addEventListener('click', createDropdownToggleHandler(
-      bookmarkButton,
-      bookmarkDropdown,
-      updateBookmarkDropdown,
-    ));
+    // Event listener will be attached after all dropdowns are created
   }
 
   // Help button (notebook mode only) - Opens help.md in GitHub overlay
   let helpButton;
-  if (isNotebookMode && helpRepoUrl) {
+  if (isNotebookMode) {
     helpButton = document.createElement('button');
     helpButton.className = 'ipynb-overlay-button ipynb-help-button';
     helpButton.innerHTML = config.icons.questionMark; // Question mark icon (❓)
     helpButton.setAttribute('aria-label', 'Help');
     helpButton.setAttribute('title', 'Help');
 
+    // Pass repoUrl to help handler - it will try allaboutV2 first, then notebook's repo
+    // Always hide topbar in help overlay (nested)
     helpButton.addEventListener('click', createHelpButtonHandler(repoUrl, branch, {
       createGitHubMarkdownOverlay,
       history: paginationState,
-      hideTopbar,
+      hideTopbar: true,
     }, config));
+  } else {
   }
 
   // Close all dropdowns when clicking outside (consolidated handler)
+  // Also attach dropdown toggle handlers with references to all dropdowns
   if (isNotebookMode) {
     const dropdowns = [
       { dropdown: historyDropdown, button: historyButton },
       { dropdown: tocDropdown, button: hamburgerButton },
       { dropdown: bookmarkDropdown, button: bookmarkButton },
     ];
+
+    // Attach toggle handlers with dropdown array so each can close others
+    historyButton.addEventListener('click', createDropdownToggleHandler(
+      historyButton,
+      historyDropdown,
+      updateHistoryDropdown,
+      dropdowns,
+    ));
+
+    hamburgerButton.addEventListener('click', createDropdownToggleHandler(
+      hamburgerButton,
+      tocDropdown,
+      null,
+      dropdowns,
+    ));
+
+    bookmarkButton.addEventListener('click', createDropdownToggleHandler(
+      bookmarkButton,
+      bookmarkDropdown,
+      updateBookmarkDropdown,
+      dropdowns,
+    ));
+
+    // Close dropdowns when clicking outside
     document.addEventListener('click', createDropdownCloseHandler(dropdowns));
   }
 
@@ -2877,16 +3064,16 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
 
   const prevButton = document.createElement('button');
   prevButton.className = 'ipynb-pagination-button ipynb-prev-button';
-  prevButton.textContent = 'Previous';
-  prevButton.setAttribute('aria-label', 'Previous page');
+  prevButton.textContent = config.buttonLabels.previous;
+  prevButton.setAttribute('aria-label', config.ariaLabels.previousPage);
 
   const pageIndicator = document.createElement('span');
   pageIndicator.className = 'ipynb-page-indicator';
 
   const nextButton = document.createElement('button');
   nextButton.className = 'ipynb-pagination-button ipynb-next-button';
-  nextButton.textContent = 'Next';
-  nextButton.setAttribute('aria-label', 'Next page');
+  nextButton.textContent = config.buttonLabels.next;
+  nextButton.setAttribute('aria-label', config.ariaLabels.nextPage);
 
   paginationDiv.appendChild(prevButton);
   paginationDiv.appendChild(pageIndicator);
@@ -2917,8 +3104,6 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   // Left section - home button first, then tree toggle
   if (isNotebookMode && homeButton) {
     leftControlsSection.appendChild(homeButton);
-    // eslint-disable-next-line no-console
-    console.log('[HOME BUTTON] Appended to DOM, parent:', homeButton.parentElement);
   }
   leftControlsSection.appendChild(treeToggleButton);
 
@@ -2934,8 +3119,23 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   }
   if (isNotebookMode && helpButton) {
     rightControlsSection.appendChild(helpButton);
+    // Check computed styles after a brief delay to ensure styles are applied
+    setTimeout(() => {
+      const styles = window.getComputedStyle(helpButton);
+    }, 100);
+  } else {
   }
   rightControlsSection.appendChild(closeButton);
+
+  // Add unique overlay identifier for debugging
+  overlay.setAttribute('data-overlay-id', `overlay-${Date.now()}`);
+  topBar.setAttribute('data-topbar-for', notebookTitle);
+
+  // Log all buttons in rightControlsSection after assembly
+  setTimeout(() => {
+    Array.from(rightControlsSection.children).forEach((child, idx) => {
+    });
+  }, 200);
 
   // Assemble top bar: left controls, title, right controls
   topBar.appendChild(leftControlsSection);
@@ -2962,7 +3162,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     // Get current page group
     const currentPage = pages[paginationState.currentPage];
 
-    // Track first cell in history (if it has a heading)
+    // Track first cell in history (if it has a heading) and update title
     const firstCell = currentPage.cells[0];
     if (firstCell && firstCell.classList.contains('ipynb-markdown-cell')) {
       const content = firstCell.querySelector('.ipynb-cell-content');
@@ -2972,6 +3172,10 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
           const title = heading.textContent.trim();
           const cellIndex = parseInt(firstCell.dataset.cellIndex, 10);
           addToHistory(navigationHistory, title, 'cell', cellIndex);
+
+          // Update overlay title to reflect current page content
+          titleSection.textContent = title;
+          titleSection.setAttribute('title', title);
         }
       }
     }
@@ -3098,7 +3302,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
         const githubUrl = link.dataset.mdUrl; // Get URL from data attribute
         const linkBranch = link.dataset.branch || branch; // Get branch from link or use default
         const title = link.textContent || 'GitHub Markdown';
-        const mdOverlay = createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl, linkBranch, paginationState, hideTopbar, config);
+        const mdOverlay = createGitHubMarkdownOverlay(githubUrl, title, null, linkBranch, paginationState, true, config);
         mdOverlay.openOverlay();
       });
     });
@@ -3125,21 +3329,35 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
     prevButton.disabled = paginationState.currentPage === 0;
     nextButton.disabled = paginationState.currentPage === totalPages - 1;
 
-    // Update browser URL hash to reflect current cell (for bookmarking/sharing)
+    // Update browser URL hash to reflect current page (for bookmarking/sharing)
     // Skip hash update if explicitly requested (e.g., home button wants to clear hash)
-    // eslint-disable-next-line no-console
-    console.log('[UPDATE PAGE] skipHashUpdate:', skipHashUpdate, 'currentPage:', paginationState.currentPage);
     if (!skipHashUpdate && currentPage && currentPage.cells.length > 0) {
-      const firstCellIndex = parseInt(currentPage.cells[0].dataset.cellIndex, 10);
-      const newHash = `#cell-${firstCellIndex}`;
-      // eslint-disable-next-line no-console
-      console.log('[UPDATE PAGE] Updating hash to:', newHash);
+      // Try to extract heading from first cell for a meaningful hash
+      let newHash = null;
+      const firstCell = currentPage.cells[0];
+
+      if (firstCell && firstCell.classList.contains('ipynb-markdown-cell')) {
+        const content = firstCell.querySelector('.ipynb-cell-content');
+        if (content) {
+          const heading = content.querySelector('h1, h2, h3');
+          if (heading) {
+            const headingText = heading.textContent.trim();
+            const slug = generateSlug(headingText);
+            newHash = `#${slug}`;
+          }
+        }
+      }
+
+      // Fallback to cell index if no heading found
+      if (!newHash) {
+        const firstCellIndex = parseInt(firstCell.dataset.cellIndex, 10);
+        newHash = `#cell-${firstCellIndex}`;
+      }
+
       if (window.location.hash !== newHash) {
         window.history.replaceState(null, '', newHash);
       }
     } else {
-      // eslint-disable-next-line no-console
-      console.log('[UPDATE PAGE] Skipping hash update');
     }
 
     // Update tree selection to match current page
@@ -3238,8 +3456,12 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
 
     // Markdown nodes: open in overlay
     if (node.type === 'markdown' && node.path) {
-      // Use repoUrl from closure scope (passed to createPagedOverlay)
-      const mdRepoUrl = repoUrl || 'https://github.com/ddttom/allaboutV2';
+      // CRITICAL: Always use repoUrl from notebook metadata (passed to createPagedOverlay)
+      // Never fall back to hardcoded repo - it causes 404s for notebooks with different repos
+      const mdRepoUrl = repoUrl;
+      if (!mdRepoUrl) {
+        return; // Safety: don't open overlay if we don't have a valid repo URL
+      }
       const fullUrl = `${mdRepoUrl}/blob/${branch}/${node.path}`;
 
       // Create standardized history context with all necessary properties
@@ -3253,8 +3475,8 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
         splashDuration: paginationState.splashDuration,
       });
 
-      // Open using GitHub markdown overlay
-      const mdOverlay = createGitHubMarkdownOverlay(fullUrl, node.label, mdRepoUrl, branch, historyContext, false, config);
+      // Open using GitHub markdown overlay (hide topbar since this is nested in paged overlay)
+      const mdOverlay = createGitHubMarkdownOverlay(fullUrl, node.label, mdRepoUrl, branch, historyContext, true, config);
       mdOverlay.openOverlay();
 
       // Select this node in tree
@@ -3320,7 +3542,7 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   closeButton.addEventListener('click', closeOverlay);
 
   // Tree toggle button handler
-  treeToggleButton.addEventListener('click', createTreeToggleHandler(navTreePanel, treeToggleButton));
+  treeToggleButton.addEventListener('click', createTreeToggleHandler(navTreePanel, treeToggleButton, config));
 
   // Keyboard navigation
   const keyHandler = (e) => {
@@ -3354,7 +3576,6 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
 
     // If targetId is empty, don't navigate
     if (!targetId) {
-      console.warn('Cannot navigate to empty target');
       return;
     }
 
@@ -3389,10 +3610,104 @@ function createPagedOverlay(container, cellsContainer, autorun = false, isNotebo
   // Append overlay to body
   document.body.appendChild(overlay);
 
+  // Navigate to a specific cell by index
+  async function navigateToCell(cellIndex) {
+    const pageIndex = pages.findIndex((page) => page.cells.some(
+      (cell) => parseInt(cell.dataset.cellIndex, 10) === cellIndex,
+    ));
+
+    if (pageIndex !== -1) {
+      paginationState.currentPage = pageIndex;
+      await updatePageDisplay();
+
+      // Update tree selection to match the navigated cell (only if overlay is already open)
+      if (paginationState.isOverlayOpen) {
+        const notebookRoot = navigationTree.find((root) => root.id === 'notebook');
+        if (notebookRoot) {
+          const searchChildren = (nodes) => {
+            const result = nodes.reduce((found, node) => {
+              if (found) return found;
+              if (node.cellIndex === cellIndex) {
+                return node;
+              }
+              if (node.children && node.children.length > 0) {
+                return searchChildren(node.children);
+              }
+              return null;
+            }, null);
+            return result;
+          };
+
+          const cellNode = searchChildren(notebookRoot.children);
+          if (cellNode) {
+            selectTreeNode(cellNode.id, treeState, navTreePanel, handleTreeNodeClick);
+          }
+        }
+      }
+    }
+  }
+
+  // Navigate to a page by heading slug
+  async function navigateToHeading(slug) {
+
+    const pageIndex = pages.findIndex((page) => {
+      const firstCell = page.cells[0];
+      if (firstCell && firstCell.classList.contains('ipynb-markdown-cell')) {
+        const content = firstCell.querySelector('.ipynb-cell-content');
+        if (content) {
+          const heading = content.querySelector('h1, h2, h3');
+          if (heading) {
+            const headingSlug = generateSlug(heading.textContent.trim());
+            return headingSlug === slug;
+          }
+        }
+      }
+      return false;
+    });
+
+
+    if (pageIndex !== -1) {
+      paginationState.currentPage = pageIndex;
+      await updatePageDisplay();
+
+      // Update tree selection to match the navigated page (only if overlay is already open)
+      if (paginationState.isOverlayOpen) {
+        const currentPage = pages[pageIndex];
+        if (currentPage && currentPage.cells.length > 0) {
+          const firstCellIndex = parseInt(currentPage.cells[0].dataset.cellIndex, 10);
+          const notebookRoot = navigationTree.find((root) => root.id === 'notebook');
+
+          if (notebookRoot) {
+            const searchChildren = (nodes) => {
+              const result = nodes.reduce((found, node) => {
+                if (found) return found;
+                if (node.cellIndex === firstCellIndex) {
+                  return node;
+                }
+                if (node.children && node.children.length > 0) {
+                  return searchChildren(node.children);
+                }
+                return null;
+              }, null);
+              return result;
+            };
+
+            const cellNode = searchChildren(notebookRoot.children);
+            if (cellNode) {
+              selectTreeNode(cellNode.id, treeState, navTreePanel, handleTreeNodeClick);
+            }
+          }
+        }
+      }
+    }
+  }
+
   return {
     openOverlay,
     closeOverlay,
     navigateToAnchor,
+    navigateToCell,
+    navigateToHeading,
     paginationState,
   };
 }
@@ -3416,17 +3731,9 @@ function createHomeButton(config) {
   homeButton.setAttribute('title', 'Home');
   homeButton.setAttribute('data-context', context); // Track which context this button belongs to
 
-  // eslint-disable-next-line no-console
-  console.log(`[HOME BUTTON] Created button for context: ${context}`);
 
   // Add click handler with comprehensive logging (async to await onClick)
   homeButton.addEventListener('click', async (e) => {
-    // eslint-disable-next-line no-console
-    console.log(`[HOME BUTTON] Clicked in context: ${context}`);
-    // eslint-disable-next-line no-console
-    console.log('[HOME BUTTON] Event type:', e.type);
-    // eslint-disable-next-line no-console
-    console.log('[HOME BUTTON] Hash before clear:', window.location.hash);
 
     e.preventDefault();
     e.stopPropagation();
@@ -3434,32 +3741,27 @@ function createHomeButton(config) {
     // Clear the URL hash when going home
     if (window.location.hash) {
       window.history.replaceState(null, '', window.location.pathname + window.location.search);
-      // eslint-disable-next-line no-console
-      console.log('[HOME BUTTON] Hash after clear:', window.location.hash);
     }
 
     // Call the provided onClick handler and WAIT for it to complete (may show splash)
     await onClick(e);
 
-    // eslint-disable-next-line no-console
-    console.log('[HOME BUTTON] onClick handler completed');
   });
 
-  // eslint-disable-next-line no-console
-  console.log('[HOME BUTTON] Button creation complete, returning button');
 
   return homeButton;
 }
 
 /**
  * Create start button for paged variation
+ * @param {object} config - Configuration object
  * @returns {HTMLElement} Start button element
  */
-function createPagedStartButton() {
+function createPagedStartButton(config = DEFAULT_CONFIG) {
   const startButton = document.createElement('button');
   startButton.className = 'ipynb-paged-start-button';
-  startButton.textContent = 'Start Reading';
-  startButton.setAttribute('aria-label', 'Start paged reading mode');
+  startButton.textContent = config.buttonLabels.startReading;
+  startButton.setAttribute('aria-label', config.ariaLabels.startReading);
   return startButton;
 }
 
@@ -3490,17 +3792,16 @@ function convertToRawUrl(blobUrl, _branch = 'main') {
  * Create GitHub markdown overlay for displaying markdown files from GitHub
  * @param {string} githubUrl - Full GitHub blob URL or local path
  * @param {string} title - Title to display in overlay header
- * @param {string} [helpRepoUrl] - Optional help repository URL
+ * @param {string} [_helpRepoUrl] - DEPRECATED: No longer used, kept for API compatibility
  * @param {string} [branch='main'] - GitHub branch to use
  * @param {Array} [parentHistory=null] - Optional parent overlay's history array
  * @param {boolean} [hideTopbar=false] - Whether to hide the top bar
  * @param {object} [config=null] - Configuration object with settings (injected dependency)
  * @returns {Object} Object with openOverlay and closeOverlay functions
  */
-function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branch = 'main', parentHistory = null, hideTopbar = false, config = null) {
+function createGitHubMarkdownOverlay(githubUrl, title, _helpRepoUrl = null, branch = 'main', parentHistory = null, hideTopbar = false, config = null) {
   // Config is required for icons and UI text - fail if missing
   if (!config) {
-    console.error('[IPYNB-VIEWER] CRITICAL: Config object missing in createGitHubMarkdownOverlay');
     const errorOverlay = document.createElement('div');
     errorOverlay.className = 'ipynb-error';
     errorOverlay.style.cssText = 'padding: 2rem; text-align: center; background: #fee; color: #c00;';
@@ -3612,15 +3913,12 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
   tocDropdown.setAttribute('role', 'menu');
   tocDropdown.style.display = 'none';
 
-  // Help button - Opens help.md
-  let helpButton = null;
-  if (helpRepoUrl) {
-    helpButton = document.createElement('button');
-    helpButton.className = 'ipynb-overlay-button ipynb-help-button';
-    helpButton.innerHTML = config.icons.questionMark; // Question mark icon (❓)
-    helpButton.setAttribute('aria-label', 'Help');
-    helpButton.setAttribute('title', 'Help');
-  }
+  // Help button - Opens help.md in GitHub overlay
+  const helpButton = document.createElement('button');
+  helpButton.className = 'ipynb-overlay-button ipynb-help-button';
+  helpButton.innerHTML = config.icons.questionMark; // Question mark icon (❓)
+  helpButton.setAttribute('aria-label', 'Help');
+  helpButton.setAttribute('title', 'Help');
 
   // Close button
   const closeButton = document.createElement('button');
@@ -3632,9 +3930,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
   rightControlsSection.appendChild(historyButton);
   rightControlsSection.appendChild(bookmarkButton);
   rightControlsSection.appendChild(hamburgerButton);
-  if (helpButton) {
-    rightControlsSection.appendChild(helpButton);
-  }
+  rightControlsSection.appendChild(helpButton);
   rightControlsSection.appendChild(closeButton);
 
   topBar.appendChild(leftControlsSection);
@@ -3685,15 +3981,18 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
   const updateHistoryDropdown = () => {
     historyDropdown.innerHTML = '';
 
-    if (!parentHistory || parentHistory.length === 0) {
+    // Extract history array from context object (supports both context object and direct array)
+    const historyArray = parentHistory?.historyArray || parentHistory;
+
+    if (!historyArray || !Array.isArray(historyArray) || historyArray.length === 0) {
       const emptyMessage = document.createElement('div');
       emptyMessage.className = 'ipynb-history-empty';
-      emptyMessage.textContent = 'No history yet';
+      emptyMessage.textContent = config.emptyMessages.noHistory;
       historyDropdown.appendChild(emptyMessage);
       return;
     }
 
-    parentHistory.forEach((entry) => {
+    historyArray.forEach((entry) => {
       const menuItem = document.createElement('button');
       menuItem.className = 'ipynb-history-item';
 
@@ -3704,9 +4003,9 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
 
       menuItem.addEventListener('click', () => {
         if (entry.type === 'markdown' && entry.url) {
-          // Close current overlay and open historical markdown
+          // Close current overlay and open historical markdown (inherit hideTopbar state)
           closeOverlay();
-          const histOverlay = createGitHubMarkdownOverlay(entry.url, entry.title, helpRepoUrl, branch, parentHistory, false, config);
+          const histOverlay = createGitHubMarkdownOverlay(entry.url, entry.title, null, branch, parentHistory, hideTopbar, config);
           histOverlay.openOverlay();
         }
         historyDropdown.style.display = 'none';
@@ -3717,13 +4016,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
     });
   };
 
-  historyButton.addEventListener('click', (e) => {
-    e.stopPropagation();
-    updateHistoryDropdown();
-    const isOpen = historyDropdown.style.display === 'block';
-    historyDropdown.style.display = isOpen ? 'none' : 'block';
-    historyButton.setAttribute('aria-expanded', !isOpen);
-  });
+  // History button handler will be attached after dropdowns array is created
 
   // Bookmark button handlers
   const updateBookmarkDropdown = () => {
@@ -3734,7 +4027,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
     // Add "Bookmark this page" button at the top
     const addBookmarkBtn = document.createElement('button');
     addBookmarkBtn.className = 'ipynb-bookmark-item ipynb-add-bookmark';
-    addBookmarkBtn.textContent = '+ Bookmark this page';
+    addBookmarkBtn.textContent = config.buttonLabels.addBookmarkLower;
     addBookmarkBtn.setAttribute('role', 'menuitem');
 
     addBookmarkBtn.addEventListener('click', () => {
@@ -3748,7 +4041,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
     if (bookmarks.length === 0) {
       const emptyMessage = document.createElement('div');
       emptyMessage.className = 'ipynb-bookmark-empty';
-      emptyMessage.textContent = 'No bookmarks yet';
+      emptyMessage.textContent = config.emptyMessages.noBookmarks;
       bookmarkDropdown.appendChild(addBookmarkBtn);
       bookmarkDropdown.appendChild(emptyMessage);
       return;
@@ -3763,9 +4056,9 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
 
       menuItem.addEventListener('click', () => {
         if (bookmark.url) {
-          // Close current overlay and open bookmarked markdown
+          // Close current overlay and open bookmarked markdown (inherit hideTopbar state)
           closeOverlay();
-          const bmOverlay = createGitHubMarkdownOverlay(bookmark.url, bookmark.title, helpRepoUrl, branch, parentHistory, false, config);
+          const bmOverlay = createGitHubMarkdownOverlay(bookmark.url, bookmark.title, null, branch, parentHistory, hideTopbar, config);
           bmOverlay.openOverlay();
         }
         bookmarkDropdown.style.display = 'none';
@@ -3779,13 +4072,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
     bookmarkDropdown.insertBefore(addBookmarkBtn, bookmarkDropdown.firstChild);
   };
 
-  bookmarkButton.addEventListener('click', (e) => {
-    e.stopPropagation();
-    updateBookmarkDropdown();
-    const isOpen = bookmarkDropdown.style.display === 'block';
-    bookmarkDropdown.style.display = isOpen ? 'none' : 'block';
-    bookmarkButton.setAttribute('aria-expanded', !isOpen);
-  });
+  // Bookmark button handler will be attached after dropdowns array is created
 
   // Hamburger (TOC) button handlers - will be populated after markdown is loaded
   const updateTocDropdown = () => {
@@ -3797,7 +4084,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
     if (headings.length === 0) {
       const emptyMessage = document.createElement('div');
       emptyMessage.className = 'ipynb-toc-empty';
-      emptyMessage.textContent = 'No headings found';
+      emptyMessage.textContent = config.emptyMessages.noHeadings;
       tocDropdown.appendChild(emptyMessage);
       return;
     }
@@ -3819,51 +4106,81 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
     });
   };
 
+  // Hamburger button handler will be attached after dropdowns array is created
+
+  // Note: GitHub markdown overlays no longer have help button handlers
+
+  // Close dropdowns when clicking outside (consolidated handler)
+  // Also attach dropdown toggle handlers with references to all dropdowns
+  const dropdowns = [
+    { dropdown: historyDropdown, button: historyButton },
+    { dropdown: bookmarkDropdown, button: bookmarkButton },
+    { dropdown: tocDropdown, button: hamburgerButton },
+  ];
+
+  // Attach handlers that close other dropdowns when one is opened
+  historyButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    // Close other dropdowns
+    bookmarkDropdown.style.display = 'none';
+    bookmarkButton.setAttribute('aria-expanded', 'false');
+    tocDropdown.style.display = 'none';
+    hamburgerButton.setAttribute('aria-expanded', 'false');
+    // Toggle this dropdown
+    updateHistoryDropdown();
+    const isOpen = historyDropdown.style.display === 'block';
+    historyDropdown.style.display = isOpen ? 'none' : 'block';
+    historyButton.setAttribute('aria-expanded', !isOpen);
+  });
+
+  bookmarkButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    // Close other dropdowns
+    historyDropdown.style.display = 'none';
+    historyButton.setAttribute('aria-expanded', 'false');
+    tocDropdown.style.display = 'none';
+    hamburgerButton.setAttribute('aria-expanded', 'false');
+    // Toggle this dropdown
+    updateBookmarkDropdown();
+    const isOpen = bookmarkDropdown.style.display === 'block';
+    bookmarkDropdown.style.display = isOpen ? 'none' : 'block';
+    bookmarkButton.setAttribute('aria-expanded', !isOpen);
+  });
+
   hamburgerButton.addEventListener('click', (e) => {
     e.stopPropagation();
+    // Close other dropdowns
+    historyDropdown.style.display = 'none';
+    historyButton.setAttribute('aria-expanded', 'false');
+    bookmarkDropdown.style.display = 'none';
+    bookmarkButton.setAttribute('aria-expanded', 'false');
+    // Toggle this dropdown
     updateTocDropdown();
     const isOpen = tocDropdown.style.display === 'block';
     tocDropdown.style.display = isOpen ? 'none' : 'block';
     hamburgerButton.setAttribute('aria-expanded', !isOpen);
   });
 
-  // Help button handler
-  if (helpButton && helpRepoUrl) {
-    // Note: GitHub overlay needs config from parent notebook context
-    // We don't have access to the parent's config here, so we pass null and use defaults
-    helpButton.addEventListener('click', createHelpButtonHandler(helpRepoUrl, branch, {
-      createGitHubMarkdownOverlay,
-      history: parentHistory,
-      hideTopbar: false, // GitHub overlay doesn't have hideTopbar parameter
-    }, null)); // null config will use hardcoded defaults in createHelpButtonHandler
-  }
-
-  // Close dropdowns when clicking outside (consolidated handler)
-  const dropdowns = [
-    { dropdown: historyDropdown, button: historyButton },
-    { dropdown: bookmarkDropdown, button: bookmarkButton },
-    { dropdown: tocDropdown, button: hamburgerButton },
-  ];
   document.addEventListener('click', createDropdownCloseHandler(dropdowns));
 
   // Open/close functions
   const openOverlay = async (skipHashUpdate = false) => {
     // Fetch and display markdown
     try {
-      contentArea.innerHTML = '<div class="ipynb-loading">Loading markdown...</div>';
+      contentArea.innerHTML = `<div class="ipynb-loading">${config.messages.loadingMarkdown}</div>`;
 
       // Fetch from GitHub raw URL (single source of truth from repo metadata)
       // Local dev server will proxy to production or serve local file if available
       const response = await fetch(rawUrl);
       if (!response.ok) {
-        throw new Error(`Failed to load markdown: ${response.status}`);
+        throw new Error(`${config.messages.failedToLoadMarkdown}: ${response.status}`);
       }
       const markdownText = await response.text();
 
       // Extract current file path AND repo URL from GitHub URL for relative link resolution
       // GitHub URL format: https://github.com/user/repo/blob/branch/path/to/file.md
       let currentFilePath = null;
-      let currentRepoUrl = helpRepoUrl; // Default to help repo as fallback
+      let currentRepoUrl = null;
 
       if (githubUrl.includes('/blob/')) {
         // Extract file path
@@ -3878,8 +4195,23 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
           [, currentRepoUrl] = repoMatch; // Extract https://github.com/user/repo
         }
       } else {
-        console.warn('⚠️  GitHub URL does not contain /blob/, cannot extract path:', githubUrl);
       }
+
+      if (!currentRepoUrl) {
+        throw new Error(config.messages.invalidGitHubUrl);
+      }
+
+      // Set up help button handler now that we have currentRepoUrl
+      // Remove any existing handler first (in case overlay is reused)
+      const newHelpButton = helpButton.cloneNode(true);
+      helpButton.parentNode.replaceChild(newHelpButton, helpButton);
+
+      // Add click handler with the current repo URL
+      newHelpButton.addEventListener('click', createHelpButtonHandler(currentRepoUrl, branch, {
+        createGitHubMarkdownOverlay,
+        history: parentHistory,
+        hideTopbar,
+      }, config));
 
       // Update browser URL hash to reflect current markdown file (for AI agent visibility)
       // Skip hash update if explicitly requested (e.g., home button wants to clear hash)
@@ -3925,7 +4257,14 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
 
       // Post-process: Replace placeholders with manually constructed code blocks
       // This bypasses innerHTML whitespace normalization for the code content
-      console.log(`[RESTORE] Manually constructing ${codeBlockContents.length} code blocks`);
+
+      // Extract first heading from rendered content to update title
+      const firstHeading = contentArea.querySelector('h1, h2, h3');
+      if (firstHeading) {
+        const extractedTitle = firstHeading.textContent.trim();
+        titleSection.textContent = extractedTitle;
+        titleSection.setAttribute('title', extractedTitle);
+      }
 
       codeBlockContents.forEach((content, index) => {
         const placeholder = contentArea.querySelector(`#ipynb-code-placeholder-${index}`);
@@ -3950,9 +4289,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
 
           // Replace placeholder with actual code block
           placeholder.parentNode.replaceChild(pre, placeholder);
-          console.log(`[CODE BLOCK ${index}] Restored ${content.split('\n').length} lines`);
         } else {
-          console.warn(`[RESTORE] Placeholder ${index} not found in DOM`);
         }
       });
 
@@ -3998,7 +4335,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
           const linkUrl = link.dataset.mdUrl; // Get URL from data attribute
           const linkBranch = link.dataset.branch || branch; // Get branch from link or use default
           const linkTitle = link.textContent || 'GitHub Markdown';
-          const nestedOverlay = createGitHubMarkdownOverlay(linkUrl, linkTitle, helpRepoUrl, linkBranch, parentHistory, false, config);
+          const nestedOverlay = createGitHubMarkdownOverlay(linkUrl, linkTitle, null, linkBranch, parentHistory, false, config);
           nestedOverlay.openOverlay();
         });
       });
@@ -4008,7 +4345,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
       if (newMarkdownPaths.length > 0) {
         // Check if parentHistory is a context object with tree references
         if (parentHistory && typeof parentHistory === 'object' && parentHistory.navigationTree) {
-          addMarkdownPathsToTree(parentHistory.navigationTree, newMarkdownPaths);
+          addMarkdownPathsToTree(parentHistory.navigationTree, newMarkdownPaths, config);
           // Note: Don't re-render parent's tree here - it will be rendered in this overlay's tree
         }
       }
@@ -4041,12 +4378,24 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
 
             // For markdown nodes: navigate to that markdown file
             if (node.type === 'markdown' && node.path) {
-              const mdRepoUrl = helpRepoUrl || 'https://github.com/ddttom/allaboutV2';
+              // Extract repo from current githubUrl to maintain correct context
+              let mdRepoUrl = null;
+              if (githubUrl.includes('/blob/')) {
+                const repoMatch = githubUrl.match(/^(https:\/\/github\.com\/[^/]+\/[^/]+)\/blob\//);
+                if (repoMatch) {
+                  [, mdRepoUrl] = repoMatch;
+                }
+              }
+
+              if (!mdRepoUrl) {
+                return;
+              }
+
               const fullUrl = `${mdRepoUrl}/blob/${branch}/${node.path}`;
 
               // Close current overlay and open new one
               closeOverlay();
-              const newOverlay = createGitHubMarkdownOverlay(fullUrl, node.label, helpRepoUrl, branch, parentHistory, false, config);
+              const newOverlay = createGitHubMarkdownOverlay(fullUrl, node.label, null, branch, parentHistory, false, config);
               newOverlay.openOverlay();
 
               // Select this node in tree
@@ -4060,7 +4409,6 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
         // Render the tree in THIS overlay's tree panel
         renderNavigationTree(parentHistory.navigationTree, navTreePanel, treeState, handleTreeNodeClick);
       } else {
-        console.warn('⚠️  No tree context available for GitHub overlay');
       }
 
       // Add to history (use parent overlay's history if available)
@@ -4076,8 +4424,7 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
       document.body.style.overflow = 'hidden';
       closeButton.focus();
     } catch (error) {
-      console.error('Failed to load markdown:', error);
-      contentArea.innerHTML = `<div class="ipynb-error">Failed to load markdown from GitHub: ${error.message}<br><br>URL: ${rawUrl}</div>`;
+      contentArea.innerHTML = `<div class="ipynb-error">${config.messages.failedToLoadMarkdown}: ${error.message}<br><br>URL: ${rawUrl}</div>`;
       overlay.style.display = 'flex';
       document.body.style.overflow = 'hidden';
     }
@@ -4115,11 +4462,9 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
 
   // Add home button to left controls (prepend before tree toggle)
   leftControlsSection.insertBefore(homeButton, treeToggleButton);
-  // eslint-disable-next-line no-console
-  console.log('[HOME BUTTON] Appended to DOM, parent:', homeButton.parentElement);
 
   // Tree toggle button handler
-  treeToggleButton.addEventListener('click', createTreeToggleHandler(navTreePanel, treeToggleButton));
+  treeToggleButton.addEventListener('click', createTreeToggleHandler(navTreePanel, treeToggleButton, config));
 
   // Close button handler
   closeButton.addEventListener('click', closeOverlay);
@@ -4152,15 +4497,15 @@ function createGitHubMarkdownOverlay(githubUrl, title, helpRepoUrl = null, branc
 /**
  * Check for hash in URL and navigate to that markdown file if present
  * @param {string} repoUrl - Repository URL
- * @param {string} helpRepoUrl - Help repository URL
  * @param {string} branch - GitHub branch
  * @param {Object} pagedOverlay - The paged overlay object with navigation methods
  * @param {Object} metadata - Notebook metadata (may contain opening-page)
  * @param {Object} config - Configuration object (injected dependency)
  */
-function checkHashNavigation(repoUrl, helpRepoUrl, branch, pagedOverlay, metadata = {}, config = null) {
+async function checkHashNavigation(repoUrl, branch, pagedOverlay, metadata = {}, config = null) {
   const { hash } = window.location;
   let targetPath = null;
+
 
   // Check URL hash first (takes precedence)
   if (hash && hash !== '#') {
@@ -4183,7 +4528,7 @@ function checkHashNavigation(repoUrl, helpRepoUrl, branch, pagedOverlay, metadat
       const mdOverlay = createGitHubMarkdownOverlay(
         fullUrl,
         title,
-        helpRepoUrl,
+        null,
         branch,
         pagedOverlay.paginationState,
         false,
@@ -4191,8 +4536,19 @@ function checkHashNavigation(repoUrl, helpRepoUrl, branch, pagedOverlay, metadat
       );
       mdOverlay.openOverlay();
     }, 200);
+  } else if (targetPath.startsWith('cell-')) {
+    // Handle old cell-based hash format (e.g., #cell-5)
+    const cellIndex = parseInt(targetPath.replace('cell-', ''), 10);
+    if (!Number.isNaN(cellIndex) && pagedOverlay.navigateToCell) {
+      await pagedOverlay.navigateToCell(cellIndex);
+    }
+  } else {
+    // Handle heading-based hash format (e.g., #chapter-1-introduction)
+    // Find the page with a heading that matches this slug
+    if (pagedOverlay.navigateToHeading) {
+      await pagedOverlay.navigateToHeading(targetPath);
+    }
   }
-  // No else needed - only handle .md links
 }
 
 /**
@@ -4214,7 +4570,7 @@ export default async function decorate(block) {
     // Extract notebook path from block content
     const rows = Array.from(block.children);
     if (rows.length === 0) {
-      throw new Error('No notebook path provided');
+      throw new Error(DEFAULT_CONFIG.messages.noNotebookPath);
     }
 
     // First cell should contain the notebook path
@@ -4254,16 +4610,6 @@ export default async function decorate(block) {
     const splashDuration = splashDurationSeconds
       ? splashDurationSeconds * 1000
       : config.defaultSplashDuration;
-
-    // Set help-repo attribute if available in metadata
-    // Falls back to repo, then to allaboutV2 default
-    if (notebook.metadata?.['help-repo']) {
-      block.setAttribute('data-help-repo', notebook.metadata['help-repo']);
-    } else if (notebook.metadata?.repo) {
-      block.setAttribute('data-help-repo', notebook.metadata.repo);
-    } else {
-      block.setAttribute('data-help-repo', 'https://github.com/ddttom/allaboutV2');
-    }
 
     // Clear block
     block.textContent = '';
@@ -4385,7 +4731,7 @@ export default async function decorate(block) {
 
     // Process cells
     if (!notebook.cells || notebook.cells.length === 0) {
-      throw new Error('Notebook has no cells');
+      throw new Error(DEFAULT_CONFIG.messages.noNotebookCells);
     }
 
     // Determine if autorun should be enabled
@@ -4396,12 +4742,6 @@ export default async function decorate(block) {
     const repoUrl = notebook.metadata?.repo || null;
 
     // Note: githubBranch already extracted above at line 2282
-
-    // Extract help-repo URL from metadata for help button
-    // Falls back to repo, then to allaboutV2 default
-    const helpRepoUrl = notebook.metadata?.['help-repo']
-                        || notebook.metadata?.repo
-                        || 'https://github.com/ddttom/allaboutV2';
 
     // Create simple splash context for basic/default mode
     // This is lighter than the full historyContext used in paged mode
@@ -4419,9 +4759,9 @@ export default async function decorate(block) {
 
       if (cell.cell_type === 'markdown') {
         // eslint-disable-next-line no-await-in-loop
-        cellElement = await createMarkdownCell(cell, index, repoUrl, isNotebook, helpRepoUrl, githubBranch, splashContext, config);
+        cellElement = await createMarkdownCell(cell, index, repoUrl, isNotebook, githubBranch, splashContext, config);
       } else if (cell.cell_type === 'code') {
-        cellElement = createCodeCell(cell, index, shouldAutorun);
+        cellElement = createCodeCell(cell, index, shouldAutorun, config);
 
         // Add click handler for run button (if not autorun)
         if (!shouldAutorun) {
@@ -4453,16 +4793,70 @@ export default async function decorate(block) {
       container.appendChild(cellsContainer);
 
       // Create overlay with autorun support and notebook mode flag
-      const notebookTitle = notebook.metadata?.title || 'Jupyter Notebook';
-      const overlay = createPagedOverlay(container, cellsContainer, shouldAutorun, isNotebook, repoUrl, notebookTitle, helpRepoUrl, githubBranch, isNoTopbar, notebook, config, splashDuration);
+      // Extract title from metadata, or find first heading in notebook cells, or use default
+      let notebookTitle = notebook.metadata?.title;
+
+      if (!notebookTitle) {
+        // Search for first heading in markdown cells
+        const firstHeading = notebook.cells.find((cell) => {
+          if (cell.cell_type === 'markdown') {
+            const source = Array.isArray(cell.source) ? cell.source.join('') : cell.source;
+            const headingMatch = source.match(/^#\s+(.+)$/m);
+            if (headingMatch) {
+              notebookTitle = headingMatch[1].trim();
+              return true;
+            }
+          }
+          return false;
+        });
+
+        // Fallback to default if no heading found
+        if (!notebookTitle) {
+          notebookTitle = 'Jupyter Notebook';
+        }
+      }
+
+      // Create pages from cells
+      const cells = Array.from(cellsContainer.querySelectorAll('.ipynb-cell'));
+      const pages = createPageGroups(cells, config.maxCodeGroupSize);
+
+      // Build navigation tree
+      const navigationTree = await buildNavigationTree(cells, cellsContainer, null, notebook, config);
+
+      // Tree state
+      const treeState = {
+        tree: navigationTree,
+        expandedNodes: new Set(['notebook', 'repository', 'folder-chapters']),
+        selectedNode: null,
+      };
+
+      // Create unified overlay
+      const overlay = createUnifiedOverlay({
+        notebook,
+        pages,
+        navigationTree,
+        treeState,
+        config,
+        repoUrl: repoUrl || null,
+        branch: githubBranch || 'main',
+        notebookTitle,
+        renderNavigationTree, // Use existing function from main file
+      });
+
+      // Clear any hash from URL on initial page load (hard refresh)
+      // Hash navigation is only for in-session navigation, not initial load
+      if (window.location.hash) {
+        window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
 
       // Index variation: Auto-open overlay without button
       if (isIndex) {
         // Auto-open after a brief delay to ensure DOM is ready
-        setTimeout(() => {
+        setTimeout(async () => {
+          // Check for hash navigation (will use metadata opening-page since hash is cleared)
+          await checkHashNavigation(repoUrl, githubBranch, overlay, notebook.metadata, config);
+          // Open overlay (will display the correct page)
           overlay.openOverlay();
-          // Check for hash navigation after overlay opens
-          checkHashNavigation(repoUrl, helpRepoUrl, githubBranch, overlay, notebook.metadata, config);
         }, 100);
       } else {
         // Regular notebook/paged: Show start button
@@ -4470,16 +4864,15 @@ export default async function decorate(block) {
         buttonContainer.className = 'ipynb-button-container';
 
         // Create start button
-        const startButton = createPagedStartButton();
+        const startButton = createPagedStartButton(config);
         buttonContainer.appendChild(startButton);
 
         // Start button opens overlay
-        startButton.addEventListener('click', () => {
+        startButton.addEventListener('click', async () => {
+          // Check for hash navigation (uses metadata opening-page)
+          await checkHashNavigation(repoUrl, githubBranch, overlay, notebook.metadata, config);
+          // Open overlay (will display the correct page)
           overlay.openOverlay();
-          // Check for hash navigation after overlay opens
-          setTimeout(() => {
-            checkHashNavigation(repoUrl, helpRepoUrl, githubBranch, overlay, notebook.metadata, config);
-          }, 100);
         });
 
         container.appendChild(buttonContainer);
@@ -4497,7 +4890,6 @@ export default async function decorate(block) {
       showSplashScreen(splashPageUrl, splashDuration);
     }
   } catch (error) {
-    console.error('Block decoration failed:', error);
     block.innerHTML = `<div class="ipynb-error">${config.errorMessage}: ${error.message}</div>`;
   }
 }

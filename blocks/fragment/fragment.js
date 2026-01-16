@@ -6,14 +6,10 @@
 
 // External dependencies from sibling repository
 // eslint-disable-next-line import/no-unresolved
-import {
-  decorateMain,
-} from '../../../../../../../scripts/scripts.js';
+import { decorateMain } from '../../../../../../../scripts/scripts.js';
 
 // eslint-disable-next-line import/no-unresolved
-import {
-  loadBlocks,
-} from '../../../../../../../scripts/aem.js';
+import { loadBlocks } from '../../../../../../../scripts/aem.js';
 
 /**
  * Loads a fragment.

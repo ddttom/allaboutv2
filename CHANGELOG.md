@@ -9,6 +9,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **ipynb-viewer Help Button in GitHub Overlays**: Added help button (❓) to GitHub markdown overlays for consistent help access across all overlay types (2026-01-16)
+  - Help button now appears in both notebook overlays and GitHub markdown overlays
+  - Uses correct repository URL extracted from current GitHub URL
+  - Maintains consistency with help button handler from notebook overlays
+
+- **ipynb-viewer UI Text Configuration System**: Centralized all user-facing text in DEFAULT_CONFIG for maintainability and localization (2026-01-16)
+  - **treeLabels**: Navigation tree folder names (Notebook, Repository, Chapters, Appendices, Miscellaneous)
+  - **buttonLabels**: All button text (Run, Previous, Next, Start Reading, bookmark actions)
+  - **emptyMessages**: Empty state messages (No history yet, No bookmarks yet, No headings found)
+  - **tooltips**: Hover text for all interactive elements
+  - **ariaLabels**: Accessibility labels for screen readers
+  - **messages**: Loading and error messages
+  - Updated code to use config values instead of hardcoded strings
+  - Ready for localization - swap config for different languages
+
+- **ipynb-viewer Semantic URL Hashes**: Replaced numeric cell hashes with human-readable heading-based URLs (2026-01-16)
+  - **New format**: `#chapter-1-introduction` instead of `#cell-5`
+  - **Backwards compatible**: Still supports legacy `#cell-X` format
+  - **generateSlug()** helper function converts heading text to URL-friendly slugs
+  - **navigateToHeading()** method finds pages by heading slug
+  - More shareable, stable, and SEO-friendly URLs
+
+- **ipynb-viewer Dynamic Title Updates**: Overlay title now reflects current content (2026-01-16)
+  - Extracts first H1/H2/H3 heading from notebook pages
+  - Updates when navigating between pages
+  - Updates when opening GitHub markdown files
+  - Falls back to metadata.title or "Jupyter Notebook"
+  - Provides better context for users
+
+### Changed
+
+- **ipynb-viewer Navigation Tree**: Renamed "Appendix" folder to "Appendices" (plural form) for grammatical correctness (2026-01-16)
+  - Updated tree label in config: `treeLabels.appendices`
+  - Updated all documentation references
+  - Affects navigation tree display in Repository section
+
+### Added
+
 - **ipynb-viewer Configuration Architecture Refactor**: Comprehensive refactor implementing clean configuration patterns (2026-01-16)
   - **Architecture Changes**:
     - Created `IPYNB_ERRORS` global constant for developer-facing error messages at file top

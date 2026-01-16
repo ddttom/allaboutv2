@@ -27,7 +27,7 @@ function updateUrlHash(category) {
 /**
  * Initialize category from URL hash on page load
  */
-function initializeFromHash(tabs) {
+function initializeFromHash() {
   const hash = window.location.hash.replace('#category-', '');
 
   if (hash) {

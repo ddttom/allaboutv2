@@ -15,6 +15,9 @@
  * DO NOT manually add latestPosts to my-blog.json - it defeats auto-generation.
  */
 
+/* eslint-disable no-await-in-loop */
+// Sequential file processing is intentional to avoid race conditions
+
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -84,7 +87,7 @@ function getFolderContext(filePath) {
 /**
  * Filter query index entries by folder context
  */
-function filterByContext(entries, context, filePath) {
+function filterByContext(entries, context, _filePath) {
   if (!context) {
     return entries;
   }

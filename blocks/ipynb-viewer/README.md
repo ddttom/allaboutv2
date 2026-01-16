@@ -51,7 +51,7 @@ The IPynb Viewer block is a comprehensive, production-ready system for displayin
 
 **Link Navigation** - Navigate between overlays using hash targets in markdown cells.
 
-**Navigation Tree** - Hierarchical tree panel with organized sections: Notebook (parts/cells) and Repository (Chapters with preface first, Appendix, Miscellaneous folders for easy file navigation).
+**Navigation Tree** - Hierarchical tree panel with organized sections: Notebook (parts/cells) and Repository (Chapters with preface first, Appendices, Miscellaneous folders for easy file navigation).
 
 **Navigation History** - Track and revisit up to 25 recently viewed cells and markdown files.
 
@@ -784,9 +784,9 @@ Explore your notebook structure and repository files through an organized, hiera
 **Features:**
 
 - ✅ Two-Section Structure - Notebook (parts/cells) and Repository (markdown files)
-- ✅ Organized Folders - Repository files grouped into Chapters, Appendix, Miscellaneous
+- ✅ Organized Folders - Repository files grouped into Chapters, Appendices, Miscellaneous
 - ✅ Smart Categorization - Automatic sorting of files by type
-- ✅ Priority Order - Chapters → Appendix → Miscellaneous for logical browsing
+- ✅ Priority Order - Chapters → Appendices → Miscellaneous for logical browsing
 - ✅ Expand/Collapse - Click folder icons to show/hide contents
 - ✅ Quick Navigation - Click any item to jump directly to that content
 - ✅ Visual Indicators - Icons show folders (▶) vs files
@@ -802,7 +802,7 @@ Explore your notebook structure and repository files through an organized, hiera
 
 **Repository Section:**
 - **Chapters Folder** - preface.md (always first) and all chapter-*.md files (alphabetical)
-- **Appendix Folder** - All appendix-*.md files (appendix-a.md, appendix-b.md, etc.)
+- **Appendices Folder** - All appendix-*.md files (appendix-a.md, appendix-b.md, etc.)
 - **Miscellaneous Folder** - All other markdown files (readme.md, advice.md, glossary.md, etc.)
 
 **How to Use:**
@@ -810,14 +810,14 @@ Explore your notebook structure and repository files through an organized, hiera
 1. Tree panel appears automatically in notebook mode
 2. Click folder icons (▶) to expand/collapse sections
 3. Click on Chapters to see preface and all chapters (preface first, then chapter-1, chapter-2, etc.)
-4. Click on Appendix to see all appendix files
+4. Click on Appendices to see all appendix files
 5. Click on Miscellaneous to see other documentation
 6. Click any file to open it in the GitHub markdown overlay
 
 **Categorization Rules:**
 
 - **Chapters:** Files matching `preface.md` or `chapter-*.md` (preface always listed first)
-- **Appendix:** Files matching `appendix-*.md`
+- **Appendices:** Files matching `appendix-*.md`
 - **Miscellaneous:** Only `advice.md`, `for-ai.md`, and `glossary.md` (hardcoded whitelist)
 - All other files are ignored and not shown in the tree
 
@@ -840,7 +840,7 @@ Explore your notebook structure and repository files through an organized, hiera
     - preface.md
     - chapter-01-what-you-will-learn.md
     - chapter-02-the-invisible-failure.md
-  ▶ Appendix (12 files)
+  ▶ Appendices (12 files)
     - appendix-a-implementation-cookbook.md
     - appendix-b-battle-tested-lessons.md
     - appendix-c-web-audit-suite-guide.md
@@ -1458,6 +1458,83 @@ Create a .ipynb file in JSON format with cells array and metadata object.
 
 See [EDS Block Development](../../.claude/skills/eds-block-development/SKILL.md), [Jupyter Notebook Testing](../../docs/for-ai/explaining-jupyter.md), and [EDS Native Testing](../../docs/for-ai/testing/eds-native-testing-standards.md).
 
+## Configuration
+
+### UI Text Configuration
+
+All user-facing text is centralized in the `DEFAULT_CONFIG` object for easy customization and localization:
+
+**Configuration Sections:**
+
+- **`treeLabels`** - Navigation tree folder labels (Notebook, Repository, Chapters, Appendices, Miscellaneous)
+- **`buttonLabels`** - Button text (Run, Previous, Next, Start Reading, bookmark actions)
+- **`emptyMessages`** - Empty state messages (No history yet, No bookmarks yet, No headings found)
+- **`tooltips`** - Hover text for all buttons (Show/Hide Tree, History, Bookmarks, Help, Home, TOC)
+- **`ariaLabels`** - Accessibility labels for screen readers
+- **`messages`** - Loading and error messages (Loading markdown, Failed to load)
+
+**Example Configuration:**
+
+```javascript
+const DEFAULT_CONFIG = {
+  treeLabels: {
+    notebook: 'Notebook',
+    repository: 'Repository',
+    chapters: 'Chapters',
+    appendices: 'Appendices',
+    miscellaneous: 'Miscellaneous',
+  },
+  buttonLabels: {
+    run: 'Run',
+    previous: 'Previous',
+    next: 'Next',
+    startReading: 'Start Reading',
+  },
+  // ... other sections
+};
+```
+
+**Benefits:**
+
+- ✅ Centralized text management - All UI text in one place
+- ✅ Easy localization - Swap config for different languages
+- ✅ Consistent labeling - No scattered hardcoded strings
+- ✅ Maintainable - Change text without hunting through code
+
+### URL Hash Navigation
+
+The block uses semantic URL hashes for better bookmarking and sharing:
+
+**Hash Formats:**
+
+- **Heading-based**: `#chapter-1-introduction` (extracted from page heading)
+- **Legacy cell-based**: `#cell-5` (backwards compatible)
+- **Markdown files**: `#docs/help.md` (opens in overlay)
+
+**Example URLs:**
+
+```
+invisible-users/notebook.html#chapter-1-what-you-will-learn
+invisible-users/notebook.html#part-2-understanding-invisible-users
+invisible-users/notebook.html#appendix-a-implementation-cookbook
+```
+
+**Benefits:**
+
+- ✅ Human-readable URLs - Understand what page you're viewing
+- ✅ Shareable links - Send direct links to specific content
+- ✅ Stable references - Heading text doesn't change when adding cells
+- ✅ Better SEO - Search engines understand content structure
+
+**Dynamic Title Updates:**
+
+The overlay title automatically updates to reflect the current page content:
+
+- Shows first heading (H1, H2, or H3) from the current page
+- Updates when navigating between notebook pages
+- Updates when opening GitHub markdown files
+- Falls back to "Jupyter Notebook" if no heading found
+
 ## Tips
 
 Test your notebooks by verifying notebook JSON structure is valid. Keep code simple since complex dependencies may not work in browser context. Use console.log to help debug execution issues. Mobile testing checks layout on different screen sizes. Error handling wraps risky code in try-catch blocks.
@@ -1482,14 +1559,14 @@ Check CSS custom properties are defined. Verify block CSS is loaded. Test with d
 |----------|-------|
 | Block Name | ipynb-viewer |
 | Status | Production Ready |
-| Version | 13.2 |
-| Last Updated | 2026-01-14 |
+| Version | 13.3 |
+| Last Updated | 2026-01-16 |
 | Author | Tom Cranstoun |
 | Category | Complex Build-Enhanced |
 | Browser Support | Modern browsers (ES6+) |
 | Mobile Support | Yes (fully responsive) |
 | Accessibility | WCAG 2.1 AA compliant |
 | Dependencies | None (vanilla JavaScript) |
-| File Size | JavaScript: 3,786 lines, CSS: 2,110 lines |
+| File Size | JavaScript: 4,700+ lines, CSS: 2,110 lines |
 | Performance | Excellent (Core Web Vitals optimized) |
 | Documentation | Complete (README, EXAMPLE, test.html) |

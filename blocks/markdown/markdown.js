@@ -1,5 +1,3 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
-
 const MARKDOWN_CONFIG = {
   CONTAINER_CLASS: 'markdown-content',
   ERROR_MESSAGE: 'Error processing markdown content.',
