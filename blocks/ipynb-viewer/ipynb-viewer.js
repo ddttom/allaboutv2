@@ -596,65 +596,60 @@ function showSplashScreen(imageUrl, minDuration = 4000) {
       }, 300);
     };
 
-    // Track when minimum duration has passed
-    let minDurationPassed = false;
-    setTimeout(() => {
-      minDurationPassed = true;
-    }, minDuration);
+    // Track resolution state and auto-dismiss timer
+    let isResolved = false;
+    let autoDismissTimer = null;
+
+    // Helper to safely resolve once
+    const resolveOnce = (reason) => {
+      if (!isResolved) {
+        isResolved = true;
+        // eslint-disable-next-line no-console
+        console.log(`[SPLASH] Resolving promise (${reason})`);
+        resolve();
+      } else {
+        // eslint-disable-next-line no-console
+        console.log(`[SPLASH] Promise already resolved, ignoring ${reason}`);
+      }
+    };
 
     // Create dismiss function for close button
     const dismiss = () => {
       // eslint-disable-next-line no-console
-      console.log('[SPLASH] dismiss() called (close button)');
-      // eslint-disable-next-line no-console
-      console.log('[SPLASH] minDurationPassed:', minDurationPassed);
+      console.log('[SPLASH] dismiss() called (close button clicked)');
 
-      if (minDurationPassed) {
+      // Cancel auto-dismiss timer if it hasn't fired yet
+      if (autoDismissTimer !== null) {
         // eslint-disable-next-line no-console
-        console.log('[SPLASH] Minimum duration passed, fading out immediately');
-        fadeOut();
-        // Resolve after fade completes
-        setTimeout(() => {
-          // eslint-disable-next-line no-console
-          console.log('[SPLASH] Fade complete (manual dismiss), resolving promise');
-          resolve();
-        }, 350);
-      } else {
-        // Wait for minimum duration to pass
-        const remaining = minDuration - (Date.now() - startTime);
-        // eslint-disable-next-line no-console
-        console.log('[SPLASH] Minimum duration NOT passed, waiting', remaining, 'ms');
-        // eslint-disable-next-line no-console
-        console.log('[SPLASH] Setting timeout for', Math.max(0, remaining), 'ms');
-        setTimeout(() => {
-          // eslint-disable-next-line no-console
-          console.log('[SPLASH] Timeout fired, calling fadeOut()');
-          fadeOut();
-          // Resolve after fade completes
-          setTimeout(() => {
-            // eslint-disable-next-line no-console
-            console.log('[SPLASH] Fade complete (delayed manual dismiss), resolving promise');
-            resolve();
-          }, 350);
-        }, Math.max(0, remaining));
-        // eslint-disable-next-line no-console
-        console.log('[SPLASH] Timeout set, waiting...');
+        console.log('[SPLASH] Canceling auto-dismiss timer');
+        clearTimeout(autoDismissTimer);
+        autoDismissTimer = null;
       }
+
+      // Fade out immediately
+      // eslint-disable-next-line no-console
+      console.log('[SPLASH] Starting immediate fade out');
+      fadeOut();
+
+      // Resolve after fade completes
+      setTimeout(() => {
+        resolveOnce('manual dismiss');
+      }, 350);
     };
 
     // Wire up close button
     closeButton.addEventListener('click', dismiss);
 
     // Auto-dismiss after minimum duration and resolve promise
-    setTimeout(() => {
+    autoDismissTimer = setTimeout(() => {
       // eslint-disable-next-line no-console
-      console.log('[SPLASH] Minimum duration reached (4s), auto-dismissing...');
+      console.log('[SPLASH] Auto-dismiss timer fired');
+      autoDismissTimer = null; // Timer has fired
+
       fadeOut();
       // Resolve after fade completes (300ms fade + small buffer)
       setTimeout(() => {
-        // eslint-disable-next-line no-console
-        console.log('[SPLASH] Fade complete, resolving promise');
-        resolve();
+        resolveOnce('auto dismiss');
       }, 350);
     }, minDuration);
   });
@@ -4363,6 +4358,13 @@ export default async function decorate(block) {
                         || notebook.metadata?.repo
                         || 'https://github.com/ddttom/allaboutV2';
 
+    // Create splash context for markdown cells (needed for GitHub overlay home button)
+    const splashContext = splashPageUrl ? {
+      splashUrl: splashPageUrl,
+      splashDuration,
+      navigationTree: true, // Marker to indicate this came from a notebook
+    } : null;
+
     // Process cells sequentially to ensure proper rendering order
     for (let index = 0; index < notebook.cells.length; index += 1) {
       const cell = notebook.cells[index];
@@ -4370,7 +4372,7 @@ export default async function decorate(block) {
 
       if (cell.cell_type === 'markdown') {
         // eslint-disable-next-line no-await-in-loop
-        cellElement = await createMarkdownCell(cell, index, repoUrl, isNotebook, helpRepoUrl, githubBranch, null, config);
+        cellElement = await createMarkdownCell(cell, index, repoUrl, isNotebook, helpRepoUrl, githubBranch, splashContext, config);
       } else if (cell.cell_type === 'code') {
         cellElement = createCodeCell(cell, index, shouldAutorun);
 
