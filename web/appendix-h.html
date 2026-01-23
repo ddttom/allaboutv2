@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Tom Cranstoun" />
+  <meta name="description" content="Practical guidance from MX-Bible book on designing AI agent-friendly websites" />
+  <title>Appendix H: Example llms.txt File {.unnumbered}</title>
+  
+
+  <link rel="canonical" href="https://allabout.network/invisible-users/appendix-h.html">
+  <!-- AI-specific meta tags (proposed pattern from Chapter 10) -->
+  <meta name="ai-preferred-access" content="html">
+  <meta name="ai-content-policy" content="summaries-allowed, full-extraction-allowed">
+  <meta name="ai-freshness" content="monthly">
+  <meta name="ai-structured-data" content="json-ld">
+  <meta name="ai-attribution" content="required" text="Source: MX-Bible by Tom Cranstoun, https://allabout.network/invisible-users/">
+  <meta name="llms-txt" content="/llms.txt">
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://allabout.network/invisible-users/appendix-h.html">
+  <meta property="og:title" content="Appendix H: Example llms.txt File {.unnumbered}">
+  <meta property="og:description" content="Practical guidance from MX-Bible book on designing AI agent-friendly websites">
+  <meta property="og:image" content="https://allabout.network/images/invisible-users-appendix-og.jpg">
+  <meta property="og:site_name" content="MX-Bible">
+  <meta property="og:locale" content="en_GB">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://allabout.network/invisible-users/appendix-h.html">
+  <meta name="twitter:title" content="Appendix H: Example llms.txt File {.unnumbered}">
+  <meta name="twitter:description" content="Implementation guide from MX-Bible book">
+  <meta name="twitter:image" content="https://allabout.network/images/invisible-users-appendix-og.jpg">
+  <meta name="twitter:creator" content="@tomcranstoun">
+
+  <!-- Additional SEO -->
+  <meta name="robots" content="index, follow">
+  <meta name="keywords" content="AI agents, web design, implementation guide, Appendix H, technical patterns, code examples">
+  <meta name="theme-color" content="#1e40af">
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "name": "Appendix H: Example llms.txt File {.unnumbered}",
+    "description": "Practical guidance from MX-Bible book on designing AI agent-friendly websites",
+    "author": {
+      "@type": "Person",
+      "name": "Tom Cranstoun",
+      "email": "tom.cranstoun@gmail.com",
+      "url": "https://allabout.network"
+    },
+    "inLanguage": "en-GB",
+    "timeRequired": "PT60M",
+    "educationalLevel": "Intermediate",
+    "datePublished": "2026-01-10",
+    "dateModified": "2026-01-10",
+    "isPartOf": {
+      "@type": "Book",
+      "name": "MX-Bible",
+      "author": {
+        "@type": "Person",
+        "name": "Tom Cranstoun"
+      },
+      "url": "https://allabout.network/invisible-users"
+    },
+    "position": "8"
+  }
+  </script>
+  <link rel="stylesheet" href="appendix.css">
+</head>
+<body>
+<nav class="appendix-navigation" role="navigation" aria-label="Appendix Navigation">
+    <p><a href="appendix-index.html">← Back to Appendices Index</a></p>
+    <p>Quick navigation:
+        <a href="appendix-a.html">A</a> |
+        <a href="appendix-b.html">B</a> |
+        <a href="appendix-c.html">C</a> |
+        <a href="appendix-d.html">D</a> |
+        <a href="appendix-e.html">E</a> |
+        <a href="appendix-f.html">F</a> |
+        <a href="appendix-g.html">G</a> |
+        <a href="appendix-h.html">H</a> |
+        <a href="appendix-i.html">I</a> |
+        <a href="appendix-j.html">J</a> |
+        <a href="appendix-k.html">K</a> |
+        <a href="appendix-l.html">L</a>
+    </p>
+</nav>
+<hr>
+<header id="title-block-header">
+<h1 class="title">Appendix H: Example llms.txt File {.unnumbered}</h1>
+<p class="subtitle">MX-Bible</p>
+<p class="author">Tom Cranstoun</p>
+<p class="date">January 2026</p>
+</header>
+<nav id="TOC" role="navigation" aria-label="Table of Contents">
+<ul>
+<li><a href="#appendix-h-example-llms.txt-file"
+id="toc-appendix-h-example-llms.txt-file">Appendix H: Example llms.txt
+File</a></li>
+</ul>
+</nav>
+<main role="main" data-content-type="appendix">
+<h1 class="unnumbered" id="appendix-h-example-llms.txt-file">Appendix H:
+Example llms.txt File</h1>
+<p>This is an example of an <code>llms.txt</code> file demonstrating
+<strong>extended format with metadata</strong> - a proposed enhancement
+to the standard llms.txt specification.</p>
+<p><strong>Format note:</strong> The standard llms.txt format
+(llmstxt.org) contains only URLs to curated content. This example
+extends that format with markdown-formatted metadata at the top of the
+file - author bio, company details, contact information, site
+description.</p>
+<p><strong>Why extend llms.txt?</strong> When agents access llms.txt
+directly instead of crawling HTML pages, they miss the rich metadata
+layers (Schema.org, HTML meta tags, author information). Extended
+llms.txt compensates by embedding that context directly in the file.</p>
+<p><strong>Status:</strong> This is a proposed pattern, not part of the
+official llms.txt specification. Standard URL-only llms.txt files remain
+valid. This extended format is backwards-compatible - parsers expecting
+only URLs will skip markdown sections and process URL sections
+normally.</p>
+<p>The example below shows both metadata sections (top) and standard URL
+sections (bottom), separated by clear category headings.</p>
+<div class="sourceCode" id="cb1" data-role="code-container"><pre
+class="sourceCode markdown"><code class="sourceCode markdown" data-role="code-content"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Digital Domain Technologies (DDT)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Expert Adobe Edge Delivery Services consulting and AI integration resources by Tom Cranstoun (&quot;The AEM Guy&quot;)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## About the Author &amp; Consultancy</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>**Tom Cranstoun** is a seasoned Adobe Experience Manager (AEM) expert and Principal Consultant at Digital Domain Technologies (DDT). With over 15 years of experience in enterprise content management, he specializes in Adobe Edge Delivery Services (EDS), document-based authoring, and AI-native development.</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>**Key Achievements:**</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Global Architecture Director for Nissan/Renault Helios initiative (200+ global sites)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Lead Strategist for EE (UK Telecom) and Twitter enterprise CMS implementations</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Pioneer in LLM context delivery and Model Context Protocol (MCP) integration</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>**Contact:**</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Website**: <span class="ot">&lt;https://allabout.network&gt;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Email**: <span class="ot">&lt;info@digitaldomaintechnologies.com&gt;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**LinkedIn**: <span class="ot">&lt;https://www.linkedin.com/in/tom-cranstoun/&gt;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## Access Guidelines</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Base Rate: 100 requests per hour per IP</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Cache Retention: 24 hour maximum</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Content Usage: Attribution required</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Commercial Use: Requires written permission</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Training Usage: Permitted for public documentation only</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Attribution Format: &quot;Source: Digital Domain Technologies (allabout.network)&quot;</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">## Adobe Edge Delivery Services &amp; AI Development Resources</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>Technical documentation and educational resources for Adobe Edge Delivery Services development, AI integration, and modern web architecture.</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>**Last updated:** December 2025</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>**Authors:** Tom Cranstoun, Cate Nisbet</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>**Site Type:** Document-Centric, Technical Documentation, Educational Resource</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>**Purpose:** Developer Education, Content Author Training, AI Integration Guidance</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>**Technology Stack:** Adobe Edge Delivery Services, Document-Based Architecture</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="fu">## Developer Documentation</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>13-part series covering Edge Delivery Services development from fundamentals to advanced AI integration. Complete series available at <span class="ot">&lt;https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-0&gt;</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>Key parts:</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Part 0 - EDS Introduction</span><span class="co">](https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-0)</span>: Complete beginner&#39;s guide and concepts</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Part 2 - Block Development</span><span class="co">](https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-2)</span>: Component creation and customization</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Part 5 - React Implementation</span><span class="co">](https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-5)</span>: React integration guide</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Part 8 - AI Development Guide</span><span class="co">](https://allabout.network/blogs/ddt/developer-guide-to-document-authoring-with-edge-delivery-services-part-8)</span>: AI integration basics</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="fu">## EDS Integration &amp; Development</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">AI-Powered Adobe EDS Development</span><span class="co">](https://allabout.network/blogs/ddt/integrations/ai-powered-adobe-eds-development)</span>: Framework for building sophisticated EDS components using vanilla JavaScript with zero dependencies</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Building a React App with Edge Delivery Services</span><span class="co">](https://allabout.network/blogs/ddt/integrations/building-a-react-app-with-edge-delivery-services)</span>: Integrate React applications with Adobe Edge Delivery Services</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Using Web Components in Adobe Edge Delivery Services Blocks</span><span class="co">](https://allabout.network/blogs/ddt/integrations/using-web-components-in-adobe-edge-delivery-services-blocks)</span>: Implementing web components in EDS blocks with Shoelace components</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Mastering EDS Block Debugging</span><span class="co">](https://allabout.network/blogs/ddt/integrations/mastering-eds-block-debugging-a-developer-guide-to-edge-delivery-services)</span>: Systematic debugging approaches for EDS blocks</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="fu">## Core AI/LLM Topics</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">You Built Software for Humans - Now Build It for AI</span><span class="co">](https://allabout.network/blogs/ddt/ai/you-built-software-for-humans-now-build-it-for-ai)</span>: Why software that works for humans often confuses AI assistants</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">The &quot;No Elephants&quot; Problem</span><span class="co">](https://allabout.network/blogs/ddt/ai/the-no-elephants-problem-why-ai-struggles-with-what-not-to-do)</span>: Why AI systems fail at understanding negation</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">The Tokenization Trap - How AI Processes German</span><span class="co">](https://allabout.network/blogs/ddt/ai/the-tokenization-trap-how-ai-actually-processes-german)</span>: Fundamental computational approaches built around English assumptions</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Making LLMs.txt work for Headless Websites</span><span class="co">](https://allabout.network/blogs/ddt/ai/making-llms-txt-work-for-headless-websites)</span>: Ensuring content remains visible in an AI-mediated world</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">The Mathematical Heartbeat of AI</span><span class="co">](https://allabout.network/blogs/ddt/ai/the-mathematical-heartbeat-of-ai)</span>: Fundamental mathematical concepts powering artificial intelligence</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="fu">## AI Development Tools &amp; Practices</span></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Structuring Context for Effective AI Development</span><span class="co">](https://allabout.network/blogs/ddt/structuring-context-for-effective-ai-development)</span>: Three-tiered structure for creating context in AI development tools</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Human-Centred AI in Content Management</span><span class="co">](https://allabout.network/blogs/ddt/human-centred-ai-in-content-management)</span>: Why human oversight remains essential in AI workflows</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Building the AI-Native Web with EDS, llms.txt</span><span class="co">](https://allabout.network/blogs/ddt/building-the-ai-native-web-with-eds)</span>: Jeremy Howard&#39;s llms.txt standard for helping LLMs understand websites</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="fu">## AEM/CMS Resources</span></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Strategic AEM Architecture</span><span class="co">](https://allabout.network/strategic-aem-architecture-why-framework-thinking-beats-feature-chasing)</span>: Framework thinking for digital transformation</span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Adobe EDS: Revolutionizing Content Management</span><span class="co">](https://allabout.network/blogs/ddt/adobe-eds-revolutionizing-content-management)</span>: Why content authors actually dislike traditional CMS systems</span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="fu">## Content Author Resources</span></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Content Creation Basics</span><span class="co">](https://allabout.network/blogs/ddt/content-creator-guide-to-document-authoring-with-edge-delivery-services)</span>: Getting started guide</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Advanced Authoring</span><span class="co">](https://allabout.network/blogs/ddt/content-creator-guide-to-document-authoring-with-edge-delivery-services-part-2)</span>: Advanced techniques</span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="fu">## For Human Visitors</span></span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>Looking for the full interactive experience?</span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Main Documentation:** <span class="ot">&lt;https://allabout.network/blogs/ddt/&gt;</span></span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Contact:** <span class="ot">&lt;info@digitaldomaintechnologies.com&gt;</span></span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Agency Services:** <span class="ot">&lt;https://allabout.network/&gt;</span></span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**About llms.txt:** <span class="ot">&lt;https://llmstxt.org&gt;</span></span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Integrations Focus:** <span class="ot">&lt;https://allabout.network/blogs/ddt/integrations/llms.txt&gt;</span></span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a><span class="fu">## Version Information</span></span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>**Version:** 2.0 (Updated: January 2026)</span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a>**Curated highlights:** 20 key resources across 6 major categories</span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>**Categories:** Developer Documentation (4), EDS Integration &amp; Development (4), Core AI/LLM Topics (5), AI Development Tools &amp; Practices (3), AEM/CMS Resources (2), Content Author Resources (2)</span></code></pre></div>
+</main>
+<hr>
+<nav class="appendix-navigation" role="navigation" aria-label="Appendix Navigation">
+    <p><a href="appendix-index.html">← Back to Appendices Index</a></p>
+    <p>Quick navigation:
+        <a href="appendix-a.html">A</a> |
+        <a href="appendix-b.html">B</a> |
+        <a href="appendix-c.html">C</a> |
+        <a href="appendix-d.html">D</a> |
+        <a href="appendix-e.html">E</a> |
+        <a href="appendix-f.html">F</a> |
+        <a href="appendix-g.html">G</a> |
+        <a href="appendix-h.html">H</a> |
+        <a href="appendix-i.html">I</a> |
+        <a href="appendix-j.html">J</a> |
+        <a href="appendix-k.html">K</a> |
+        <a href="appendix-l.html">L</a>
+    </p>
+</nav>
+
+  <!-- Floating home button (top-left) -->
+  <a href="index.html" class="floating-home-button" aria-label="Back to Home">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 0L0 8h3v8h10V8h3L8 0zm0 2.5L13.5 8H11v6H5V8H2.5L8 2.5z"/>
+    </svg>
+    Home
+  </a>
+  <!-- Floating back to top button (bottom-left) -->
+  <a href="#" class="floating-top-button" aria-label="Back to Top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 3.5l-5.5 5.5L4 10.5l3-3v8.5h2V7.5l3 3L13.5 9z"/>
+    </svg>
+    Top
+  </a>
+
+  <script>
+    // Add copy buttons to all code blocks
+    document.addEventListener('DOMContentLoaded', function() {
+      // Find both wrapped code blocks (div.sourceCode) and standalone pre blocks
+      const wrappedBlocks = document.querySelectorAll('div.sourceCode');
+      const standaloneBlocks = document.querySelectorAll('pre[data-role="code-block"]:not(.sourceCode)');
+
+      // Process wrapped code blocks (HTML, JavaScript, etc.)
+      wrappedBlocks.forEach(function(block) {
+        addCopyButton(block, function(block) {
+          const codeElement = block.querySelector('code');
+          let text = '';
+          const spans = codeElement.querySelectorAll('span[id^="cb"]');
+          spans.forEach(function(span) {
+            const nodes = Array.from(span.childNodes);
+            nodes.forEach(function(node) {
+              if (node.nodeType === Node.TEXT_NODE) {
+                text += node.textContent;
+              } else if (node.nodeName !== 'A') {
+                text += node.textContent;
+              }
+            });
+          });
+          return text;
+        });
+      });
+
+      // Process standalone pre blocks (text, robots.txt, etc.)
+      standaloneBlocks.forEach(function(block) {
+        addCopyButton(block, function(block) {
+          const codeElement = block.querySelector('code');
+          return codeElement ? codeElement.textContent : block.textContent;
+        });
+      });
+
+      // Helper function to add copy button to any block
+      function addCopyButton(block, extractTextFn) {
+        const button = document.createElement('button');
+        button.className = 'copy-button';
+        button.textContent = 'Copy';
+        button.setAttribute('aria-label', 'Copy code to clipboard');
+
+        button.addEventListener('click', function() {
+          const text = extractTextFn(block);
+
+          navigator.clipboard.writeText(text).then(function() {
+            button.textContent = 'Copied';
+            button.classList.add('copied');
+            setTimeout(function() {
+              button.textContent = 'Copy';
+              button.classList.remove('copied');
+            }, 2000);
+          }).catch(function(err) {
+            console.error('Failed to copy:', err);
+            button.textContent = 'Failed';
+            setTimeout(function() {
+              button.textContent = 'Copy';
+            }, 2000);
+          });
+        });
+
+        block.insertBefore(button, block.firstChild);
+      }
+    });
+  </script>
+</body>
+</html>

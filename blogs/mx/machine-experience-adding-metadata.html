@@ -7,6 +7,10 @@
   <meta name="description" content="Machine Experience (MX) enables AI agents to discover, cite, compare, understand pricing, and complete goals on your website. Miss any stage and the entire chain breaks.">
   <meta name="keywords" content="machine-experience, mx, ai-agents, hallucination-prevention, semantic-html, schema-org, agent-commerce, web-optimisation">
 
+  <!-- Robots Meta Tags (SEO) -->
+  <meta name="robots" content="index, follow">
+  <meta name="X-Robots-Tag" content="index, follow">
+
   <!-- Canonical URL (SEO) -->
   <link rel="canonical" href="https://allabout.network/blogs/mx/machine-experience-adding-metadata.html">
 
@@ -34,7 +38,8 @@
   <meta name="ai-content-policy" content="extract-with-attribution">
   <meta name="ai-freshness" content="monthly">
   <meta name="ai-structured-data" content="schema.org-jsonld">
-  <meta name="ai-attribution" content="required">
+  <meta name="ai-attribution" content="required" text="Source: Machine Experience: Adding Metadata So AI Agents Don't Have to Think by Tom Cranstoun, Digital Domain Technologies Ltd, https://allabout.network/blogs/mx/machine-experience-adding-metadata.html">
+  <meta name="llms-txt" content="/llms.txt">
 
   <title>Machine Experience: Adding Metadata So AI Agents Don't Have to Think | Tom Cranstoun</title>
 
@@ -64,12 +69,28 @@
     },
     "articleSection": "Machine Experience",
     "keywords": ["machine-experience", "mx", "ai-agents", "hallucination-prevention", "semantic-html", "schema-org", "agent-commerce", "web-optimisation"],
-    "wordCount": 4678,
+    "wordCount": 4675,
     "inLanguage": "en-GB"
   }
   </script>
 
-  <link rel="stylesheet" href="machine-experience-adding-metadata.css">
+  <!-- Schema.org Question JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Question",
+    "name": "How do you optimize websites for AI agent compatibility?",
+    "text": "What is Machine Experience (MX) and how can you add metadata to websites so AI agents can discover, cite, compare, understand pricing, and complete goals without guessing?",
+    "answerCount": 1,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Machine Experience (MX) enables AI agents to discover, cite, compare, understand pricing, and complete goals on your website through explicit metadata and semantic HTML. The 5-stage agent journey requires clear structure: discovery (via llms.txt and robots.txt), citation (with Schema.org metadata), comparison (explicit product attributes), pricing (machine-readable formats), and confidence (complete information in served HTML). Missing any stage breaks the entire chain.",
+      "url": "https://allabout.network/blogs/mx/machine-experience-adding-metadata.html"
+    }
+  }
+  </script>
+
+  <link rel="stylesheet" href="shared-mx.css">
 </head>
 <body>
   <!-- Skip to Content Link (WCAG Accessibility) -->
@@ -93,7 +114,7 @@
   </aside>
 
   <!-- Collapsible Index (TOC) - Pre-collapsed -->
-  <details id="index" class="table-of-contents">
+  <details id="index" class="table-of-contents" data-state="initially-collapsed">
     <summary>Index</summary>
     <nav aria-label="Table of contents">
       <ul>
@@ -102,7 +123,7 @@
         <li><a href="#invisible-user-problem">Invisible User Problem</a></li>
         <li><a href="#section-5-stage-mx-framework">5-Stage MX Framework</a></li>
         <li><a href="#why-missing-one-stage-breaks-everything">Why Missing One Stage Breaks Everything</a></li>
-        <li><a href="#ai-will-figure-it-out-fallacy">The "AI Will Figure It Out" Fallacy</a></li>
+        <li><a href="#ai-will-figure-it-out-fallacy">"AI Will Figure It Out" Fallacy</a></li>
         <li><a href="#mx-in-the-content-pipeline">MX in the Content Pipeline</a></li>
         <li><a href="#why-mx-prevents-hallucination">Why MX Prevents Hallucination</a></li>
         <li><a href="#mx-applies-to-every-web-goal">MX Applies to Every Web Goal</a></li>
@@ -116,7 +137,7 @@
 
   <!-- Main Article -->
   <main id="main" tabindex="-1">
-    <article data-article-type="blog-post" data-word-count="4678">
+    <article data-article-type="blog-post" data-word-count="4675">
       <header>
         <h1>Machine Experience: Adding Metadata So AI Agents Don't Have to Think</h1>
         <div class="article-meta"
@@ -149,12 +170,13 @@
 <p>Side benefit: MX patterns also benefit users with disabilities through shared reliance on semantic structure. But the primary focus is improving machine visitor compatibility. The business case - goal completion, conversions, lead generation - drives the technical requirements.</p>
 <h2 id="section-5-stage-mx-framework" tabindex="-1">5-Stage MX Framework</h2>
 <p>When AI agents interact with your website, they follow a predictable 5-stage journey with specific technical requirements at each stage. Miss any stage and the entire goal completion chain breaks.</p>
-<figure role="img" aria-label="The 5 Stage Agent Journey">
+<figure>
   <object type="image/svg+xml"
-          data="machine-experience-adding-metadata-the-5-stage-agent-journey.svg"
+          data="the-5-stage-agent-journey.svg"
           width="800"
           height="400"
-          class="diagram">
+          class="diagram"
+          title="The 5 Stage Agent Journey">
     <p>Diagram not available</p>
   </object>
   <figcaption>The 5 Stage Agent Journey</figcaption>
@@ -234,17 +256,19 @@
 <h3 id="computational-trust-and-first-mover-advantage" tabindex="-1">Computational Trust and First-Mover Advantage</h3>
 <p>Sites that successfully complete the full journey gain computational trust - agents return for more interactions through learned behaviour. Sites that fail at any stage disappear from the agent’s map permanently.</p>
 <p>Unlike humans who persist through bad UX and can be won back with improvements, agents provide no analytics visibility and offer no second chance.</p>
-<figure role="img" aria-label="Human Vs Ai Agent Behaviour">
+<figure>
   <object type="image/svg+xml"
-          data="machine-experience-adding-metadata-human-vs-ai-agent-behaviour.svg"
+          data="human-vs-ai-agent-behaviour.svg"
           width="800"
           height="400"
-          class="diagram">
+          class="diagram"
+          title="Human Vs Ai Agent Behaviour">
     <p>Diagram not available</p>
   </object>
   <figcaption>Human Vs Ai Agent Behaviour</figcaption>
 </figure>
 <table>
+  <caption>Human Vs Ai Agent Behaviour</caption>
 <thead>
 <tr>
 <th>Behaviour</th>
@@ -303,7 +327,7 @@
 <p>The platform added 1 million models in just 335 days (late 2024-2025), compared to 1,000+ days for the first million. This acceleration shows the diversity problem is intensifying, not resolving.</p>
 <h3 id="why-waiting-for-ai-to-improve-fails" tabindex="-1">Why “Waiting for AI to Improve” Fails</h3>
 <p>Problem 1 - No standardisation: No central authority controls agent capabilities. No way to demand parsing standards when no imperative exists. Everyone does what they want, giving lip service to standards without enforcement.</p>
-<p>Problem 2 - The diversity paradox: Large frontier models are getting better at handling ambiguity. But small models (7B, 13B parameters) deployed on edge devices cannot handle the same complexity. And you don’t know which model is visiting their site. Result: Designing for “average” AI means failing for 40%+ of agents.</p>
+<p>Problem 2 - The diversity paradox: Large frontier models are getting better at handling ambiguity. But small models (7B, 13B parameters) deployed on edge devices cannot handle the same complexity. And you don’t know which model is visiting your site. Result: Designing for “average” AI means failing for 40%+ of agents.</p>
 <p>Problem 3 - Local and edge deployment: Browser extensions with local LLMs (privacy-focused users), mobile agents with smaller models (resource constraints), and custom domain-specific models (specialised capabilities) will never have the computational power of frontier models. These agents are proliferating, not disappearing.</p>
 <h3 id="design-for-the-worst-agent" tabindex="-1">Design for the Worst Agent</h3>
 <p>Explicit structure and unambiguous MX patterns make you compatible with the worst agents, therefore compatible with all:</p>
@@ -324,25 +348,16 @@
 </ul>
 <p>MX IS: The publication mechanism that makes context get through to the goal of the site.</p>
 <h3 id="content-pipeline" tabindex="-1">Content Pipeline</h3>
-<figure role="img" aria-label="The Content Pipeline Where Mx Fits">
+<figure>
   <object type="image/svg+xml"
-          data="machine-experience-adding-metadata-the-content-pipeline-where-mx-fits.svg"
+          data="the-content-pipeline-where-mx-fits.svg"
           width="800"
           height="400"
-          class="diagram">
+          class="diagram"
+          title="The Content Pipeline Where Mx Fits">
     <p>Diagram not available</p>
   </object>
   <figcaption>The Content Pipeline Where Mx Fits</figcaption>
-</figure>
-<figure role="img" aria-label="Content Operations Mx Content Delivery">
-  <object type="image/svg+xml"
-          data="machine-experience-adding-metadata-content-operations-mx-content-delivery.svg"
-          width="800"
-          height="400"
-          class="diagram">
-    <p>Diagram not available</p>
-  </object>
-  <figcaption>Content Operations Mx Content Delivery</figcaption>
 </figure>
 <p>Content Operations is essential for AI at the construction point - creating semantic structure, defining relationships, building ontology models. But Content Operations alone is not enough. If the publication layer (MX) doesn’t preserve this structure, agents at the delivery point never see it.</p>
 <p>Example failure mode:</p>
@@ -386,8 +401,8 @@
 <p>These are your <strong>Entity Assets</strong>—the strategic capital that determines success or failure when AI agents visit your site. And most businesses don’t own them; platforms do.</p>
 <h4 id="identity-evolves-into-strategic-asset-vault" tabindex="-1">Identity Evolves into Strategic Asset Vault</h4>
 <p>When AI agents interact with your business, they need more than identity verification (“Who you are”). They need access to your Entity Assets:</p>
-<p><strong>The Four Asset Categories:</strong></p>
 <table>
+  <caption>The Four Asset Categories</caption>
 <thead>
 <tr>
 <th>Category</th>
@@ -427,23 +442,25 @@
 <h4 id="eal-solution-for-asset-ownership" tabindex="-1">EAL Solution for Asset Ownership</h4>
 <p>The Entity Asset Layer provides a fundamental innovation: <strong>you own your assets, and they travel with you across any platform.</strong></p>
 <p>Instead of this (current state):</p>
-<figure role="img" aria-label="Platform Database Amazon Shopify Proprietary Cms">
+<figure>
   <object type="image/svg+xml"
-          data="machine-experience-adding-metadata-platform-database-amazon-shopify-proprietary-cms.svg"
+          data="platform-database-amazon-shopify-proprietary-cms.svg"
           width="800"
           height="400"
-          class="diagram">
+          class="diagram"
+          title="Platform Database Amazon Shopify Proprietary Cms">
     <p>Diagram not available</p>
   </object>
   <figcaption>Platform Database Amazon Shopify Proprietary Cms</figcaption>
 </figure>
 <p>You get this (EAL state):</p>
-<figure role="img" aria-label="Entity Asset Layer Your Sovereign Database">
+<figure>
   <object type="image/svg+xml"
-          data="machine-experience-adding-metadata-entity-asset-layer-your-sovereign-database.svg"
+          data="entity-asset-layer-your-sovereign-database.svg"
           width="800"
           height="400"
-          class="diagram">
+          class="diagram"
+          title="Entity Asset Layer Your Sovereign Database">
     <p>Diagram not available</p>
   </object>
   <figcaption>Entity Asset Layer Your Sovereign Database</figcaption>

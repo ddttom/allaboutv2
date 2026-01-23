@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Tom Cranstoun" />
+  <meta name="description" content="Practical guidance from MX-Bible book on designing AI agent-friendly websites" />
+  <title>Appendix A: Implementation Cookbook</title>
+  
+
+  <link rel="canonical" href="https://allabout.network/invisible-users/appendix-a.html">
+  <!-- AI-specific meta tags (proposed pattern from Chapter 10) -->
+  <meta name="ai-preferred-access" content="html">
+  <meta name="ai-content-policy" content="summaries-allowed, full-extraction-allowed">
+  <meta name="ai-freshness" content="monthly">
+  <meta name="ai-structured-data" content="json-ld">
+  <meta name="ai-attribution" content="required" text="Source: MX-Bible by Tom Cranstoun, https://allabout.network/invisible-users/">
+  <meta name="llms-txt" content="/llms.txt">
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://allabout.network/invisible-users/appendix-a.html">
+  <meta property="og:title" content="Appendix A: Implementation Cookbook">
+  <meta property="og:description" content="Practical guidance from MX-Bible book on designing AI agent-friendly websites">
+  <meta property="og:image" content="https://allabout.network/images/invisible-users-appendix-og.jpg">
+  <meta property="og:site_name" content="MX-Bible">
+  <meta property="og:locale" content="en_GB">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://allabout.network/invisible-users/appendix-a.html">
+  <meta name="twitter:title" content="Appendix A: Implementation Cookbook">
+  <meta name="twitter:description" content="Implementation guide from MX-Bible book">
+  <meta name="twitter:image" content="https://allabout.network/images/invisible-users-appendix-og.jpg">
+  <meta name="twitter:creator" content="@tomcranstoun">
+
+  <!-- Additional SEO -->
+  <meta name="robots" content="index, follow">
+  <meta name="keywords" content="AI agents, web design, implementation guide, Appendix A, technical patterns, code examples">
+  <meta name="theme-color" content="#1e40af">
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "name": "Appendix A: Implementation Cookbook",
+    "description": "Practical guidance from MX-Bible book on designing AI agent-friendly websites",
+    "author": {
+      "@type": "Person",
+      "name": "Tom Cranstoun",
+      "email": "tom.cranstoun@gmail.com",
+      "url": "https://allabout.network"
+    },
+    "inLanguage": "en-GB",
+    "timeRequired": "PT60M",
+    "educationalLevel": "Intermediate",
+    "datePublished": "2026-01-10",
+    "dateModified": "2026-01-10",
+    "isPartOf": {
+      "@type": "Book",
+      "name": "MX-Bible",
+      "author": {
+        "@type": "Person",
+        "name": "Tom Cranstoun"
+      },
+      "url": "https://allabout.network/invisible-users"
+    },
+    "position": "1"
+  }
+  </script>
+  <link rel="stylesheet" href="appendix.css">
+</head>
+<body>
+<nav class="appendix-navigation" role="navigation" aria-label="Appendix Navigation">
+    <p><a href="appendix-index.html">← Back to Appendices Index</a></p>
+    <p>Quick navigation:
+        <a href="appendix-a.html">A</a> |
+        <a href="appendix-b.html">B</a> |
+        <a href="appendix-c.html">C</a> |
+        <a href="appendix-d.html">D</a> |
+        <a href="appendix-e.html">E</a> |
+        <a href="appendix-f.html">F</a> |
+        <a href="appendix-g.html">G</a> |
+        <a href="appendix-h.html">H</a> |
+        <a href="appendix-i.html">I</a> |
+        <a href="appendix-j.html">J</a> |
+        <a href="appendix-k.html">K</a> |
+        <a href="appendix-l.html">L</a>
+    </p>
+</nav>
+<hr>
+<header id="title-block-header">
+<h1 class="title">Appendix A: Implementation Cookbook</h1>
+<p class="subtitle">MX-Bible</p>
+<p class="author">Tom Cranstoun</p>
+<p class="date">January 2026</p>
+</header>
+<nav id="TOC" role="navigation" aria-label="Table of Contents">
+<ul>
+<li><a href="#appendix-a-implementation-cookbook"
+id="toc-appendix-a-implementation-cookbook">Appendix A: Implementation
+Cookbook</a>
+<ul>
+<li><a href="#recipe-1-persistent-error-messages"
+id="toc-recipe-1-persistent-error-messages">Recipe 1: Persistent Error
+Messages</a></li>
+<li><a href="#recipe-2-complete-pricing-display"
+id="toc-recipe-2-complete-pricing-display">Recipe 2: Complete Pricing
+Display</a></li>
+<li><a href="#recipe-3-explicit-loading-states"
+id="toc-recipe-3-explicit-loading-states">Recipe 3: Explicit Loading
+States</a></li>
+<li><a href="#recipe-4-inline-form-validation"
+id="toc-recipe-4-inline-form-validation">Recipe 4: Inline Form
+Validation</a></li>
+<li><a href="#recipe-5-progressive-enhancement-for-product-pages"
+id="toc-recipe-5-progressive-enhancement-for-product-pages">Recipe 5:
+Progressive Enhancement for Product Pages</a></li>
+<li><a href="#recipe-6-explicit-state-attributes"
+id="toc-recipe-6-explicit-state-attributes">Recipe 6: Explicit State
+Attributes</a></li>
+<li><a href="#recipe-7-robots.txt-for-e-commerce"
+id="toc-recipe-7-robots.txt-for-e-commerce">Recipe 7: robots.txt for
+E-commerce</a></li>
+<li><a href="#recipe-8-basic-llms.txt"
+id="toc-recipe-8-basic-llms.txt">Recipe 8: Basic llms.txt</a></li>
+<li><a href="#recipe-9-disabled-button-with-clear-reason"
+id="toc-recipe-9-disabled-button-with-clear-reason">Recipe 9: Disabled
+Button with Clear Reason</a></li>
+<li><a href="#recipe-10-small-business-restaurant-template"
+id="toc-recipe-10-small-business-restaurant-template">Recipe 10: Small
+Business Restaurant Template</a></li>
+<li><a href="#recipe-11-faqpage-schema-for-customer-support"
+id="toc-recipe-11-faqpage-schema-for-customer-support">Recipe 11:
+FAQPage Schema for Customer Support</a></li>
+<li><a href="#quick-reference-scoring-impact"
+id="toc-quick-reference-scoring-impact">Quick Reference: Scoring
+Impact</a></li>
+<li><a href="#recipe-12-social-media-meta-tags"
+id="toc-recipe-12-social-media-meta-tags">Recipe 12: Social Media Meta
+Tags</a></li>
+<li><a href="#recipe-13-html-validation-and-common-pitfalls"
+id="toc-recipe-13-html-validation-and-common-pitfalls">Recipe 13: HTML
+Validation and Common Pitfalls</a></li>
+<li><a href="#cross-references"
+id="toc-cross-references">Cross-References</a></li>
+</ul></li>
+</ul>
+</nav>
+<main role="main" data-content-type="appendix">
+<h1 id="appendix-a-implementation-cookbook">Appendix A: Implementation
+Cookbook</h1>
+<p>Quick-reference recipes for common AI agent compatibility patterns.
+Copy these implementations directly into your projects.</p>
+<h2 id="recipe-1-persistent-error-messages">Recipe 1: Persistent Error
+Messages</h2>
+<p><strong>Problem:</strong> Errors vanish before agents can read
+them</p>
+<p><strong>Score Impact:</strong> +12 points (error persistence
+category)</p>
+<p><strong>Implementation:</strong></p>
+<div class="sourceCode" id="cb1" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">form</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;signup-form&quot;</span><span class="ot"> data-state</span><span class="op">=</span><span class="st">&quot;incomplete&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">&lt;!-- Error summary at top --&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;error-summary&quot;</span><span class="ot"> role</span><span class="op">=</span><span class="st">&quot;alert&quot;</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;errors&quot;</span><span class="ot"> style</span><span class="op">=</span><span class="st">&quot;display: none;&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h3</span><span class="dt">&gt;</span>Please fix the following errors:<span class="dt">&lt;/</span><span class="kw">h3</span><span class="dt">&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">ul</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;error-list&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">ul</span><span class="dt">&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">&lt;!-- Form fields with inline errors --&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;form-group&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">label</span><span class="ot"> for</span><span class="op">=</span><span class="st">&quot;email&quot;</span><span class="dt">&gt;</span>Email address<span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">input</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ot">      type</span><span class="op">=</span><span class="st">&quot;email&quot;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ot">      id</span><span class="op">=</span><span class="st">&quot;email&quot;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ot">      name</span><span class="op">=</span><span class="st">&quot;email&quot;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ot">      aria-describedby</span><span class="op">=</span><span class="st">&quot;email-error&quot;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ot">      aria-invalid</span><span class="op">=</span><span class="st">&quot;false&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;email-error&quot;</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;field-error&quot;</span><span class="ot"> style</span><span class="op">=</span><span class="st">&quot;display: none;&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">button</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;submit&quot;</span><span class="dt">&gt;</span>Sign Up<span class="dt">&lt;/</span><span class="kw">button</span><span class="dt">&gt;</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">form</span><span class="dt">&gt;</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">showError</span>(fieldId<span class="op">,</span> message) {</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Update field state</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> field <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(fieldId)<span class="op">;</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  field<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">&#39;aria-invalid&#39;</span><span class="op">,</span> <span class="st">&#39;true&#39;</span>)<span class="op">;</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  field<span class="op">.</span><span class="at">classList</span><span class="op">.</span><span class="fu">add</span>(<span class="st">&#39;error&#39;</span>)<span class="op">;</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Show inline error</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> errorEl <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="vs">`</span><span class="sc">${</span>fieldId<span class="sc">}</span><span class="vs">-error`</span>)<span class="op">;</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  errorEl<span class="op">.</span><span class="at">textContent</span> <span class="op">=</span> message<span class="op">;</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  errorEl<span class="op">.</span><span class="at">style</span><span class="op">.</span><span class="at">display</span> <span class="op">=</span> <span class="st">&#39;block&#39;</span><span class="op">;</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Update summary</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> summary <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">&#39;error-summary&#39;</span>)<span class="op">;</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> list <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">&#39;error-list&#39;</span>)<span class="op">;</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> item <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">&#39;li&#39;</span>)<span class="op">;</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  item<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> <span class="vs">`&lt;a href=&quot;#</span><span class="sc">${</span>fieldId<span class="sc">}</span><span class="vs">&quot;&gt;</span><span class="sc">${</span>message<span class="sc">}</span><span class="vs">&lt;/a&gt;`</span><span class="op">;</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  list<span class="op">.</span><span class="fu">appendChild</span>(item)<span class="op">;</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  summary<span class="op">.</span><span class="at">style</span><span class="op">.</span><span class="at">display</span> <span class="op">=</span> <span class="st">&#39;block&#39;</span><span class="op">;</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Errors persist until user fixes them (no auto-dismiss)</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">clearError</span>(fieldId) {</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> field <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(fieldId)<span class="op">;</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  field<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">&#39;aria-invalid&#39;</span><span class="op">,</span> <span class="st">&#39;false&#39;</span>)<span class="op">;</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  field<span class="op">.</span><span class="at">classList</span><span class="op">.</span><span class="fu">remove</span>(<span class="st">&#39;error&#39;</span>)<span class="op">;</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> errorEl <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="vs">`</span><span class="sc">${</span>fieldId<span class="sc">}</span><span class="vs">-error`</span>)<span class="op">;</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  errorEl<span class="op">.</span><span class="at">style</span><span class="op">.</span><span class="at">display</span> <span class="op">=</span> <span class="st">&#39;none&#39;</span><span class="op">;</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Remove from summary</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> list <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">&#39;error-list&#39;</span>)<span class="op">;</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> items <span class="op">=</span> list<span class="op">.</span><span class="fu">querySelectorAll</span>(<span class="st">&#39;a&#39;</span>)<span class="op">;</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>  items<span class="op">.</span><span class="fu">forEach</span>(item <span class="kw">=&gt;</span> {</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (item<span class="op">.</span><span class="fu">getAttribute</span>(<span class="st">&#39;href&#39;</span>) <span class="op">===</span> <span class="vs">`#</span><span class="sc">${</span>fieldId<span class="sc">}</span><span class="vs">`</span>) {</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>      item<span class="op">.</span><span class="at">parentElement</span><span class="op">.</span><span class="fu">remove</span>()<span class="op">;</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Hide summary if no errors remain</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (list<span class="op">.</span><span class="at">children</span><span class="op">.</span><span class="at">length</span> <span class="op">===</span> <span class="dv">0</span>) {</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>    <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">&#39;error-summary&#39;</span>)<span class="op">.</span><span class="at">style</span><span class="op">.</span><span class="at">display</span> <span class="op">=</span> <span class="st">&#39;none&#39;</span><span class="op">;</span></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+<h2 id="recipe-2-complete-pricing-display">Recipe 2: Complete Pricing
+Display</h2>
+<p><strong>Problem:</strong> Hidden fees, “From £99” pricing confuses
+agents</p>
+<p><strong>Score Impact:</strong> +8 points (pricing category)</p>
+<p><strong>Implementation:</strong></p>
+<div class="sourceCode" id="cb2" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Bad: Incomplete pricing --&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;product-price&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  From £99</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Good: Complete pricing with breakdown --&gt;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;product-price&quot;</span><span class="ot"> itemscope itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/Offer&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;priceCurrency&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;GBP&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;price&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;119.00&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;price-total&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    Total: <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;amount&quot;</span><span class="dt">&gt;</span>£119.00<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;tax-status&quot;</span><span class="dt">&gt;</span>(inc. VAT)<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="dv">&amp;lt;</span>details class=&quot;price-breakdown&quot;<span class="dv">&amp;gt;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="dv">&amp;lt;</span>summary<span class="dv">&amp;gt;</span>See breakdown<span class="dv">&amp;lt;</span>/summary<span class="dv">&amp;gt;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">table</span><span class="dt">&gt;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>Product price:<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>£99.00<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>Delivery:<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>£15.00<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>Service fee:<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>£5.00<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">tr</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;total&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>Total (inc. VAT):<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>£119.00<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">table</span><span class="dt">&gt;</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="dv">&amp;lt;</span>/details<span class="dv">&amp;gt;</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;application/ld+json&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;@context&quot;</span><span class="op">:</span> <span class="st">&quot;https://schema.org&quot;</span><span class="op">,</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;Product&quot;</span><span class="op">,</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;name&quot;</span><span class="op">:</span> <span class="st">&quot;Product Name&quot;</span><span class="op">,</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;offers&quot;</span><span class="op">:</span> {</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;Offer&quot;</span><span class="op">,</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;price&quot;</span><span class="op">:</span> <span class="st">&quot;119.00&quot;</span><span class="op">,</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;priceCurrency&quot;</span><span class="op">:</span> <span class="st">&quot;GBP&quot;</span><span class="op">,</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;availability&quot;</span><span class="op">:</span> <span class="st">&quot;https://schema.org/InStock&quot;</span><span class="op">,</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;priceValidUntil&quot;</span><span class="op">:</span> <span class="st">&quot;2026-12-31&quot;</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+<h2 id="recipe-3-explicit-loading-states">Recipe 3: Explicit Loading
+States</h2>
+<p><strong>Problem:</strong> Spinners with no context confuse agents</p>
+<p><strong>Score Impact:</strong> +6 points (state visibility
+category)</p>
+<p><strong>Implementation:</strong></p>
+<div class="sourceCode" id="cb3" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Initial loading state --&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;content-area&quot;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ot">     data-state</span><span class="op">=</span><span class="st">&quot;loading&quot;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ot">     data-load-started</span><span class="op">=</span><span class="st">&quot;2025-01-04T10:30:00Z&quot;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ot">     data-expected-duration</span><span class="op">=</span><span class="st">&quot;2000&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ot">     role</span><span class="op">=</span><span class="st">&quot;status&quot;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="ot">     aria-live</span><span class="op">=</span><span class="st">&quot;polite&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;loading-indicator&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    Loading product information (estimated 2 seconds)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">loadContent</span>() {</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> container <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&#39;.content-area&#39;</span>)<span class="op">;</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> startTime <span class="op">=</span> <span class="bu">Date</span><span class="op">.</span><span class="fu">now</span>()<span class="op">;</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">try</span> {</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(<span class="st">&#39;/api/product/123&#39;</span>)<span class="op">;</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> data <span class="op">=</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Update to loaded state</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    container<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">&#39;data-state&#39;</span><span class="op">,</span> <span class="st">&#39;loaded&#39;</span>)<span class="op">;</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    container<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">&#39;data-load-completed&#39;</span><span class="op">,</span> <span class="kw">new</span> <span class="bu">Date</span>()<span class="op">.</span><span class="fu">toISOString</span>())<span class="op">;</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    container<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">&#39;data-load-duration&#39;</span><span class="op">,</span> <span class="bu">Date</span><span class="op">.</span><span class="fu">now</span>() <span class="op">-</span> startTime)<span class="op">;</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Replace loading indicator with content</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    container<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> <span class="vs">`</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;h2&gt;</span><span class="sc">${</span>data<span class="op">.</span><span class="at">name</span><span class="sc">}</span><span class="vs">&lt;/h2&gt;</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;p&gt;</span><span class="sc">${</span>data<span class="op">.</span><span class="at">description</span><span class="sc">}</span><span class="vs">&lt;/p&gt;</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;div class=&quot;price&quot;&gt;£</span><span class="sc">${</span>data<span class="op">.</span><span class="at">price</span><span class="sc">}</span><span class="vs">&lt;/div&gt;</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="vs">    `</span><span class="op">;</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">catch</span> (error) {</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Update to error state</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    container<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">&#39;data-state&#39;</span><span class="op">,</span> <span class="st">&#39;error&#39;</span>)<span class="op">;</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    container<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">&#39;data-error-type&#39;</span><span class="op">,</span> error<span class="op">.</span><span class="at">name</span>)<span class="op">;</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    container<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> <span class="vs">`</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;div class=&quot;error-message&quot; role=&quot;alert&quot;&gt;</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="vs">        Failed to load product information.</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="vs">        &lt;button onclick=&quot;loadContent()&quot;&gt;Try again&lt;/button&gt;</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;/div&gt;</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="vs">    `</span><span class="op">;</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="co">// Start loading</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a><span class="fu">loadContent</span>()<span class="op">;</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+<h2 id="recipe-4-inline-form-validation">Recipe 4: Inline Form
+Validation</h2>
+<p><strong>Problem:</strong> Validation only on submit causes repeated
+failures</p>
+<p><strong>Score Impact:</strong> +10 points (validation category)</p>
+<p><strong>Implementation:</strong></p>
+<div class="sourceCode" id="cb4" data-role="code-container"><pre
+class="sourceCode javascript"><code class="sourceCode javascript" data-role="code-content"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> InlineValidator {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">constructor</span>(formId) {</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">.</span><span class="at">form</span> <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(formId)<span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">.</span><span class="at">fields</span> <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">form</span><span class="op">.</span><span class="fu">querySelectorAll</span>(<span class="st">&#39;[data-validation-required]&#39;</span>)<span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">.</span><span class="at">fields</span><span class="op">.</span><span class="fu">forEach</span>(field <span class="kw">=&gt;</span> {</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>      field<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;input&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> <span class="kw">this</span><span class="op">.</span><span class="fu">validateField</span>(field))<span class="op">;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>      field<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;blur&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> <span class="kw">this</span><span class="op">.</span><span class="fu">validateField</span>(field))<span class="op">;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">validateField</span>(field) {</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> rules <span class="op">=</span> field<span class="op">.</span><span class="at">dataset</span><span class="op">.</span><span class="at">validationRules</span><span class="op">?.</span><span class="fu">split</span>(<span class="st">&#39;,&#39;</span>) <span class="op">||</span> []<span class="op">;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> isValid <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> message <span class="op">=</span> <span class="st">&#39;&#39;</span><span class="op">;</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Required check</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (rules<span class="op">.</span><span class="fu">includes</span>(<span class="st">&#39;required&#39;</span>) <span class="op">&amp;&amp;</span> <span class="op">!</span>field<span class="op">.</span><span class="at">value</span><span class="op">.</span><span class="fu">trim</span>()) {</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>      isValid <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>      message <span class="op">=</span> <span class="st">&#39;This field is required&#39;</span><span class="op">;</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Email check</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (rules<span class="op">.</span><span class="fu">includes</span>(<span class="st">&#39;email&#39;</span>) <span class="op">&amp;&amp;</span> field<span class="op">.</span><span class="at">value</span>) {</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> emailRegex <span class="op">=</span> <span class="ss">/</span><span class="sc">^[^\s@]+</span><span class="ss">@</span><span class="sc">[^\s@]+\.[^\s@]+$</span><span class="ss">/</span><span class="op">;</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="op">!</span>emailRegex<span class="op">.</span><span class="fu">test</span>(field<span class="op">.</span><span class="at">value</span>)) {</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        isValid <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        message <span class="op">=</span> <span class="st">&#39;Invalid email format&#39;</span><span class="op">;</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Min length check</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> minLength <span class="op">=</span> field<span class="op">.</span><span class="at">dataset</span><span class="op">.</span><span class="at">minLength</span><span class="op">;</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (minLength <span class="op">&amp;&amp;</span> field<span class="op">.</span><span class="at">value</span><span class="op">.</span><span class="at">length</span> <span class="op">&lt;</span> <span class="pp">parseInt</span>(minLength)) {</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>      isValid <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>      message <span class="op">=</span> <span class="vs">`Must be at least </span><span class="sc">${</span>minLength<span class="sc">}</span><span class="vs"> characters`</span><span class="op">;</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Update field state</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    field<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">&#39;data-validation-state&#39;</span><span class="op">,</span> isValid <span class="op">?</span> <span class="st">&#39;valid&#39;</span> <span class="op">:</span> <span class="st">&#39;invalid&#39;</span>)<span class="op">;</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    field<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">&#39;aria-invalid&#39;</span><span class="op">,</span> <span class="op">!</span>isValid)<span class="op">;</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Update error message</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> errorId <span class="op">=</span> <span class="vs">`</span><span class="sc">${</span>field<span class="op">.</span><span class="at">id</span><span class="sc">}</span><span class="vs">-error`</span><span class="op">;</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> errorEl <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(errorId)<span class="op">;</span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="op">!</span>errorEl) {</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>      errorEl <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">&#39;div&#39;</span>)<span class="op">;</span></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>      errorEl<span class="op">.</span><span class="at">id</span> <span class="op">=</span> errorId<span class="op">;</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>      errorEl<span class="op">.</span><span class="at">className</span> <span class="op">=</span> <span class="st">&#39;field-error&#39;</span><span class="op">;</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>      field<span class="op">.</span><span class="at">parentNode</span><span class="op">.</span><span class="fu">appendChild</span>(errorEl)<span class="op">;</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>    errorEl<span class="op">.</span><span class="at">textContent</span> <span class="op">=</span> message<span class="op">;</span></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>    errorEl<span class="op">.</span><span class="at">style</span><span class="op">.</span><span class="at">display</span> <span class="op">=</span> isValid <span class="op">?</span> <span class="st">&#39;none&#39;</span> <span class="op">:</span> <span class="st">&#39;block&#39;</span><span class="op">;</span></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="co">// Usage</span></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> validator <span class="op">=</span> <span class="kw">new</span> <span class="fu">InlineValidator</span>(<span class="st">&#39;signup-form&#39;</span>)<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb5" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">form</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;signup-form&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;field&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">label</span><span class="ot"> for</span><span class="op">=</span><span class="st">&quot;email&quot;</span><span class="dt">&gt;</span>Email<span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">input</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ot">      type</span><span class="op">=</span><span class="st">&quot;email&quot;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ot">      id</span><span class="op">=</span><span class="st">&quot;email&quot;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="ot">      name</span><span class="op">=</span><span class="st">&quot;email&quot;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="ot">      data-validation-required</span><span class="op">=</span><span class="st">&quot;true&quot;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="ot">      data-validation-rules</span><span class="op">=</span><span class="st">&quot;required,email&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;field&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">label</span><span class="ot"> for</span><span class="op">=</span><span class="st">&quot;password&quot;</span><span class="dt">&gt;</span>Password<span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">input</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="ot">      type</span><span class="op">=</span><span class="st">&quot;password&quot;</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="ot">      id</span><span class="op">=</span><span class="st">&quot;password&quot;</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="ot">      name</span><span class="op">=</span><span class="st">&quot;password&quot;</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="ot">      data-validation-required</span><span class="op">=</span><span class="st">&quot;true&quot;</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="ot">      data-validation-rules</span><span class="op">=</span><span class="st">&quot;required&quot;</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="ot">      data-min-length</span><span class="op">=</span><span class="st">&quot;8&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">button</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;submit&quot;</span><span class="dt">&gt;</span>Sign Up<span class="dt">&lt;/</span><span class="kw">button</span><span class="dt">&gt;</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">form</span><span class="dt">&gt;</span></span></code></pre></div>
+<h2 id="recipe-5-progressive-enhancement-for-product-pages">Recipe 5:
+Progressive Enhancement for Product Pages</h2>
+<p><strong>Problem:</strong> JavaScript-dependent content invisible to
+most agents</p>
+<p><strong>Score Impact:</strong> +15 points (served HTML
+completeness)</p>
+<p><strong>Implementation:</strong></p>
+<div class="sourceCode" id="cb6" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Server-rendered HTML (works for ALL agents) --&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">article</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;product&quot;</span><span class="ot"> data-product-id</span><span class="op">=</span><span class="st">&quot;12345&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>Wireless Headphones<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;product-price&quot;</span><span class="ot"> data-price</span><span class="op">=</span><span class="st">&quot;149.99&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;currency&quot;</span><span class="dt">&gt;</span>£<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;amount&quot;</span><span class="dt">&gt;</span>149.99<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;vat-status&quot;</span><span class="dt">&gt;</span>(inc. VAT)<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;product-availability&quot;</span><span class="ot"> data-stock-level</span><span class="op">=</span><span class="st">&quot;23&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;status&quot;</span><span class="dt">&gt;</span>In Stock<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;quantity&quot;</span><span class="dt">&gt;</span>(23 available)<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;product-description&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Over-ear wireless headphones with active noise cancellation...<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="co">&lt;!-- Structured data --&gt;</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;application/ld+json&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;@context&quot;</span><span class="op">:</span> <span class="st">&quot;https://schema.org&quot;</span><span class="op">,</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;Product&quot;</span><span class="op">,</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;name&quot;</span><span class="op">:</span> <span class="st">&quot;Wireless Headphones&quot;</span><span class="op">,</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;sku&quot;</span><span class="op">:</span> <span class="st">&quot;WH-1000&quot;</span><span class="op">,</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;offers&quot;</span><span class="op">:</span> {</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;Offer&quot;</span><span class="op">,</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;price&quot;</span><span class="op">:</span> <span class="st">&quot;149.99&quot;</span><span class="op">,</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;priceCurrency&quot;</span><span class="op">:</span> <span class="st">&quot;GBP&quot;</span><span class="op">,</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;availability&quot;</span><span class="op">:</span> <span class="st">&quot;https://schema.org/InStock&quot;</span><span class="op">,</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;inventoryLevel&quot;</span><span class="op">:</span> <span class="dv">23</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">article</span><span class="dt">&gt;</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Progressive enhancement (for browser agents) --&gt;</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="co">// Enhance with real-time updates</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">enhanceProductPage</span>() {</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> productId <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&#39;.product&#39;</span>)<span class="op">.</span><span class="at">dataset</span><span class="op">.</span><span class="at">productId</span><span class="op">;</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>  <span class="cf">try</span> {</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(<span class="vs">`/api/products/</span><span class="sc">${</span>productId<span class="sc">}</span><span class="vs">/live`</span>)<span class="op">;</span></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> data <span class="op">=</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Update price if changed</span></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (data<span class="op">.</span><span class="at">price</span> <span class="op">!==</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&#39;.product-price&#39;</span>)<span class="op">.</span><span class="at">dataset</span><span class="op">.</span><span class="at">price</span>) {</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>      <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&#39;.amount&#39;</span>)<span class="op">.</span><span class="at">textContent</span> <span class="op">=</span> data<span class="op">.</span><span class="at">price</span><span class="op">;</span></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>      <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&#39;.product-price&#39;</span>)<span class="op">.</span><span class="at">dataset</span><span class="op">.</span><span class="at">price</span> <span class="op">=</span> data<span class="op">.</span><span class="at">price</span><span class="op">;</span></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Update stock level</span></span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>    <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&#39;.product-availability&#39;</span>)<span class="op">.</span><span class="at">dataset</span><span class="op">.</span><span class="at">stockLevel</span> <span class="op">=</span> data<span class="op">.</span><span class="at">stockLevel</span><span class="op">;</span></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>    <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&#39;.quantity&#39;</span>)<span class="op">.</span><span class="at">textContent</span> <span class="op">=</span> <span class="vs">`(</span><span class="sc">${</span>data<span class="op">.</span><span class="at">stockLevel</span><span class="sc">}</span><span class="vs"> available)`</span><span class="op">;</span></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>    <span class="co">// If low stock, add warning</span></span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (data<span class="op">.</span><span class="at">stockLevel</span> <span class="op">&lt;</span> <span class="dv">5</span>) {</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> warning <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">&#39;div&#39;</span>)<span class="op">;</span></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>      warning<span class="op">.</span><span class="at">className</span> <span class="op">=</span> <span class="st">&#39;low-stock-warning&#39;</span><span class="op">;</span></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>      warning<span class="op">.</span><span class="at">textContent</span> <span class="op">=</span> <span class="st">&#39;Low stock - order soon!&#39;</span><span class="op">;</span></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>      <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&#39;.product-availability&#39;</span>)<span class="op">.</span><span class="fu">appendChild</span>(warning)<span class="op">;</span></span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">catch</span> (error) {</span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Fail gracefully - server-rendered content still works</span></span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">warn</span>(<span class="st">&#39;Failed to enhance product page:&#39;</span><span class="op">,</span> error)<span class="op">;</span></span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a><span class="co">// Only enhance for browsers</span></span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="bu">window</span><span class="op">.</span><span class="at">fetch</span>) {</span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">enhanceProductPage</span>()<span class="op">;</span></span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+<h2 id="recipe-6-explicit-state-attributes">Recipe 6: Explicit State
+Attributes</h2>
+<p><strong>Problem:</strong> Visual-only state changes invisible to
+agents</p>
+<p><strong>Score Impact:</strong> +8 points (state explicitness)</p>
+<p><strong>Implementation:</strong></p>
+<div class="sourceCode" id="cb7" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Shopping cart with explicit state --&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;shopping-cart&quot;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ot">     data-state</span><span class="op">=</span><span class="st">&quot;active&quot;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ot">     data-item-count</span><span class="op">=</span><span class="st">&quot;3&quot;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ot">     data-subtotal</span><span class="op">=</span><span class="st">&quot;247.97&quot;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ot">     data-currency</span><span class="op">=</span><span class="st">&quot;GBP&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>Shopping Cart<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;cart-summary&quot;</span><span class="ot"> role</span><span class="op">=</span><span class="st">&quot;status&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Items: <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;item-count&quot;</span><span class="dt">&gt;</span>3<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Subtotal: £<span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;subtotal&quot;</span><span class="dt">&gt;</span>247.97<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;cart-items&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;cart-item&quot;</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="ot">         data-item-id</span><span class="op">=</span><span class="st">&quot;12345&quot;</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="ot">         data-quantity</span><span class="op">=</span><span class="st">&quot;2&quot;</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="ot">         data-unit-price</span><span class="op">=</span><span class="st">&quot;49.99&quot;</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="ot">         data-line-total</span><span class="op">=</span><span class="st">&quot;99.98&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>      <span class="co">&lt;!-- Item details --&gt;</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">updateCart</span>(itemId<span class="op">,</span> newQuantity) {</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> item <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="vs">`[data-item-id=&quot;</span><span class="sc">${</span>itemId<span class="sc">}</span><span class="vs">&quot;]`</span>)<span class="op">;</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> unitPrice <span class="op">=</span> <span class="pp">parseFloat</span>(item<span class="op">.</span><span class="at">dataset</span><span class="op">.</span><span class="at">unitPrice</span>)<span class="op">;</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> lineTotal <span class="op">=</span> unitPrice <span class="op">*</span> newQuantity<span class="op">;</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Update item</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>  item<span class="op">.</span><span class="at">dataset</span><span class="op">.</span><span class="at">quantity</span> <span class="op">=</span> newQuantity<span class="op">;</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>  item<span class="op">.</span><span class="at">dataset</span><span class="op">.</span><span class="at">lineTotal</span> <span class="op">=</span> lineTotal<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>)<span class="op">;</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Recalculate cart totals</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> items <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelectorAll</span>(<span class="st">&#39;.cart-item&#39;</span>)<span class="op">;</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> totalItems <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> subtotal <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>  items<span class="op">.</span><span class="fu">forEach</span>(item <span class="kw">=&gt;</span> {</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>    totalItems <span class="op">+=</span> <span class="pp">parseInt</span>(item<span class="op">.</span><span class="at">dataset</span><span class="op">.</span><span class="at">quantity</span>)<span class="op">;</span></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>    subtotal <span class="op">+=</span> <span class="pp">parseFloat</span>(item<span class="op">.</span><span class="at">dataset</span><span class="op">.</span><span class="at">lineTotal</span>)<span class="op">;</span></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Update cart state</span></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> cart <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">&#39;shopping-cart&#39;</span>)<span class="op">;</span></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>  cart<span class="op">.</span><span class="at">dataset</span><span class="op">.</span><span class="at">itemCount</span> <span class="op">=</span> totalItems<span class="op">;</span></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>  cart<span class="op">.</span><span class="at">dataset</span><span class="op">.</span><span class="at">subtotal</span> <span class="op">=</span> subtotal<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>)<span class="op">;</span></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Update visual display</span></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>  <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">&#39;item-count&#39;</span>)<span class="op">.</span><span class="at">textContent</span> <span class="op">=</span> totalItems<span class="op">;</span></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>  <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">&#39;subtotal&#39;</span>)<span class="op">.</span><span class="at">textContent</span> <span class="op">=</span> subtotal<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>)<span class="op">;</span></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+<h2 id="recipe-7-robots.txt-for-e-commerce">Recipe 7: robots.txt for
+E-commerce</h2>
+<p><strong>Problem:</strong> No AI agent guidance</p>
+<p><strong>Score Impact:</strong> +25 points (robots.txt quality)</p>
+<p><strong>Implementation:</strong></p>
+<p>Create <code>/robots.txt</code>:</p>
+<pre class="text" data-role="code-block" data-language="text"><code># robots.txt - E-commerce AI Agent Guidance
+# See llms.txt for detailed policies
+# Contact: api-support@example.com
+
+User-agent: *
+Disallow: /admin/
+Disallow: /account/
+Disallow: /cart/
+Disallow: /checkout/
+Disallow: /api/
+
+User-agent: GPTBot
+Allow: /products/
+Allow: /categories/
+Allow: /reviews/
+Disallow: /
+
+User-agent: ClaudeBot
+Allow: /products/
+Allow: /categories/
+Allow: /reviews/
+Disallow: /
+
+User-agent: PerplexityBot
+Allow: /products/
+Disallow: /
+
+User-agent: OAI-SearchBot
+Allow: /products/
+Allow: /categories/
+Disallow: /
+
+Sitemap: https://example.com/sitemap.xml</code></pre>
+<h2 id="recipe-8-basic-llms.txt">Recipe 8: Basic llms.txt</h2>
+<p><strong>Problem:</strong> No structured agent guidance</p>
+<p><strong>Score Impact:</strong> +20 points (AI communication)</p>
+<p><strong>Implementation:</strong></p>
+<p>Create <code>/llms.txt</code> (basic version shown here; see Appendix
+D for comprehensive template):</p>
+<pre class="text" data-role="code-block" data-language="text"><code># Example Shop
+
+Technical documentation and product catalogue for Example Shop, electronics retailer.
+
+Last updated: January 2026
+Contact: agents@example.com
+
+## Access Guidelines
+
+- Rate: 100 requests per hour per IP
+- Cache: 24 hours maximum
+- Attribution: Required
+- Commercial Use: Permitted for price comparison
+- Training: Product data permitted
+
+## Product Catalogue
+
+Browse our full product range:
+
+- [Products](https://example.com/products/): Complete product listings
+- [Categories](https://example.com/categories/): Organised by department
+- [Reviews](https://example.com/reviews/): Customer reviews
+
+## Content Restrictions
+
+- [Shopping Cart](https://example.com/cart/): Authentication required
+- [Checkout](https://example.com/checkout/): Authentication required
+- [Account](https://example.com/account/): Authentication required
+
+## API Access
+
+Preferred method: API
+Endpoint: https://api.example.com/v1
+Documentation: https://developers.example.com
+Authentication: OAuth2 or API key
+
+## For Human Visitors
+
+- Shop: [example.com](https://example.com)
+- Help: [help@example.com](mailto:help@example.com)</code></pre>
+<h2 id="recipe-9-disabled-button-with-clear-reason">Recipe 9: Disabled
+Button with Clear Reason</h2>
+<p><strong>Problem:</strong> Disabled buttons don’t explain why</p>
+<p><strong>Score Impact:</strong> +5 points (clarity category)</p>
+<p><strong>Implementation:</strong></p>
+<div class="sourceCode" id="cb10" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">button</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;submit-btn&quot;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ot">        type</span><span class="op">=</span><span class="st">&quot;submit&quot;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ot">        disabled</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ot">        aria-disabled</span><span class="op">=</span><span class="st">&quot;true&quot;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="ot">        aria-describedby</span><span class="op">=</span><span class="st">&quot;submit-status&quot;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="ot">        data-disabled-reason</span><span class="op">=</span><span class="st">&quot;3 fields incomplete&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  Submit (3 errors remaining)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">button</span><span class="dt">&gt;</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;submit-status&quot;</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;form-status&quot;</span><span class="ot"> role</span><span class="op">=</span><span class="st">&quot;status&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Form completion: <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;completion-pct&quot;</span><span class="dt">&gt;</span>60%<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Required fields remaining: 3<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">ul</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;incomplete-fields&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;#email&quot;</span><span class="dt">&gt;</span>Email address required<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;#postcode&quot;</span><span class="dt">&gt;</span>Postcode format incorrect<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;#payment&quot;</span><span class="dt">&gt;</span>Payment method not selected<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">ul</span><span class="dt">&gt;</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">updateSubmitButton</span>() {</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> form <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">&#39;checkout-form&#39;</span>)<span class="op">;</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> fields <span class="op">=</span> form<span class="op">.</span><span class="fu">querySelectorAll</span>(<span class="st">&#39;[data-validation-state]&#39;</span>)<span class="op">;</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> incomplete <span class="op">=</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">from</span>(fields)<span class="op">.</span><span class="fu">filter</span>(f <span class="kw">=&gt;</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    f<span class="op">.</span><span class="at">dataset</span><span class="op">.</span><span class="at">validationState</span> <span class="op">!==</span> <span class="st">&#39;valid&#39;</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> submitBtn <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">&#39;submit-btn&#39;</span>)<span class="op">;</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> statusList <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">&#39;incomplete-fields&#39;</span>)<span class="op">;</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (incomplete<span class="op">.</span><span class="at">length</span> <span class="op">===</span> <span class="dv">0</span>) {</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Enable button</span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>    submitBtn<span class="op">.</span><span class="at">disabled</span> <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>    submitBtn<span class="op">.</span><span class="fu">removeAttribute</span>(<span class="st">&#39;aria-disabled&#39;</span>)<span class="op">;</span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>    submitBtn<span class="op">.</span><span class="fu">removeAttribute</span>(<span class="st">&#39;data-disabled-reason&#39;</span>)<span class="op">;</span></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>    submitBtn<span class="op">.</span><span class="at">textContent</span> <span class="op">=</span> <span class="st">&#39;Submit&#39;</span><span class="op">;</span></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Keep disabled, update reason</span></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>    submitBtn<span class="op">.</span><span class="at">disabled</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>    submitBtn<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">&#39;aria-disabled&#39;</span><span class="op">,</span> <span class="st">&#39;true&#39;</span>)<span class="op">;</span></span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>    submitBtn<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">&#39;data-disabled-reason&#39;</span><span class="op">,</span> <span class="vs">`</span><span class="sc">${</span>incomplete<span class="op">.</span><span class="at">length</span><span class="sc">}</span><span class="vs"> fields incomplete`</span>)<span class="op">;</span></span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>    submitBtn<span class="op">.</span><span class="at">textContent</span> <span class="op">=</span> <span class="vs">`Submit (</span><span class="sc">${</span>incomplete<span class="op">.</span><span class="at">length</span><span class="sc">}</span><span class="vs"> errors remaining)`</span><span class="op">;</span></span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Update status list</span></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>    statusList<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> incomplete<span class="op">.</span><span class="fu">map</span>(field <span class="kw">=&gt;</span> {</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> label <span class="op">=</span> field<span class="op">.</span><span class="at">labels</span>[<span class="dv">0</span>]<span class="op">?.</span><span class="at">textContent</span> <span class="op">||</span> field<span class="op">.</span><span class="at">name</span><span class="op">;</span></span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> error <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="vs">`</span><span class="sc">${</span>field<span class="op">.</span><span class="at">id</span><span class="sc">}</span><span class="vs">-error`</span>)<span class="op">?.</span><span class="at">textContent</span> <span class="op">||</span> <span class="st">&#39;Required&#39;</span><span class="op">;</span></span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="vs">`&lt;li&gt;&lt;a href=&quot;#</span><span class="sc">${</span>field<span class="op">.</span><span class="at">id</span><span class="sc">}</span><span class="vs">&quot;&gt;</span><span class="sc">${</span>label<span class="sc">}</span><span class="vs">: </span><span class="sc">${</span>error<span class="sc">}</span><span class="vs">&lt;/a&gt;&lt;/li&gt;`</span><span class="op">;</span></span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>    })<span class="op">.</span><span class="fu">join</span>(<span class="st">&#39;&#39;</span>)<span class="op">;</span></span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Update completion percentage</span></span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> completionPct <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">round</span>((fields<span class="op">.</span><span class="at">length</span> <span class="op">-</span> incomplete<span class="op">.</span><span class="at">length</span>) <span class="op">/</span> fields<span class="op">.</span><span class="at">length</span> <span class="op">*</span> <span class="dv">100</span>)<span class="op">;</span></span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>  <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">&#39;completion-pct&#39;</span>)<span class="op">.</span><span class="at">textContent</span> <span class="op">=</span> <span class="vs">`</span><span class="sc">${</span>completionPct<span class="sc">}</span><span class="vs">%`</span><span class="op">;</span></span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a><span class="co">// Call on every field change</span></span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a><span class="bu">document</span><span class="op">.</span><span class="fu">querySelectorAll</span>(<span class="st">&#39;[data-validation-state]&#39;</span>)<span class="op">.</span><span class="fu">forEach</span>(field <span class="kw">=&gt;</span> {</span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>  field<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;input&#39;</span><span class="op">,</span> updateSubmitButton)<span class="op">;</span></span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a>  field<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;blur&#39;</span><span class="op">,</span> updateSubmitButton)<span class="op">;</span></span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a><span class="co">// Initial update</span></span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a><span class="fu">updateSubmitButton</span>()<span class="op">;</span></span>
+<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+<h2 id="recipe-10-small-business-restaurant-template">Recipe 10: Small
+Business Restaurant Template</h2>
+<p><strong>Problem:</strong> Complex infrastructure not needed for
+simple sites</p>
+<p><strong>Score Impact:</strong> +30 points (complete semantic
+markup)</p>
+<p><strong>Implementation:</strong></p>
+<div class="sourceCode" id="cb11" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="ot"> lang</span><span class="op">=</span><span class="st">&quot;en-GB&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> charset</span><span class="op">=</span><span class="st">&quot;UTF-8&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;viewport&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;width=device-width, initial-scale=1.0&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>Luigi&#39;s Pizza - Manchester<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    body { <span class="kw">font-family</span><span class="ch">:</span> <span class="dv">sans-serif</span><span class="op">;</span> <span class="kw">max-width</span><span class="ch">:</span> <span class="dv">800</span><span class="dt">px</span><span class="op">;</span> <span class="kw">margin</span><span class="ch">:</span> <span class="dv">0</span> <span class="bu">auto</span><span class="op">;</span> <span class="kw">padding</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> }</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.menu-section</span> { <span class="kw">margin</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">em</span> <span class="dv">0</span><span class="op">;</span> }</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.menu-item</span> { <span class="kw">margin</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">em</span> <span class="dv">0</span><span class="op">;</span> }</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.price</span> { <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">bold</span><span class="op">;</span> <span class="kw">color</span><span class="ch">:</span> <span class="cn">#2c5282</span><span class="op">;</span> }</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> itemscope itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/Restaurant&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">h1</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="dt">&gt;</span>Luigi&#39;s Pizza<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;address&quot;</span><span class="ot"> itemscope itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/PostalAddress&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;streetAddress&quot;</span><span class="dt">&gt;</span>123 Main Street<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span>,</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;addressLocality&quot;</span><span class="dt">&gt;</span>Manchester<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span>,</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;postalCode&quot;</span><span class="dt">&gt;</span>M1 1AA<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Phone: <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;tel:+441611234567&quot;</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;telephone&quot;</span><span class="dt">&gt;</span>0161 123 4567<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Open:</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">time</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;openingHours&quot;</span><span class="ot"> datetime</span><span class="op">=</span><span class="st">&quot;Mo-Su 11:00-22:00&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>      11am - 10pm daily</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">time</span><span class="dt">&gt;</span></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;menu&quot;</span><span class="ot"> itemscope itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/Menu&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>Menu<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;menu-section&quot;</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;hasMenuSection&quot;</span><span class="ot"> itemscope itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/MenuSection&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">h3</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="dt">&gt;</span>Pizzas<span class="dt">&lt;/</span><span class="kw">h3</span><span class="dt">&gt;</span></span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;menu-item&quot;</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;hasMenuItem&quot;</span><span class="ot"> itemscope itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/MenuItem&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="dt">&gt;</span>Margherita<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> -</span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;offers&quot;</span><span class="ot"> itemscope itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/Offer&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;price&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>              <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;priceCurrency&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;GBP&quot;</span><span class="dt">&gt;</span>£<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>              <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;price&quot;</span><span class="dt">&gt;</span>12.99<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">p</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;description&quot;</span><span class="dt">&gt;</span>Tomato sauce, mozzarella, fresh basil<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;menu-item&quot;</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;hasMenuItem&quot;</span><span class="ot"> itemscope itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/MenuItem&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="dt">&gt;</span>Pepperoni<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> -</span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;offers&quot;</span><span class="ot"> itemscope itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/Offer&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;price&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>              <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;priceCurrency&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;GBP&quot;</span><span class="dt">&gt;</span>£<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>              <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;price&quot;</span><span class="dt">&gt;</span>14.99<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">p</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;description&quot;</span><span class="dt">&gt;</span>Tomato sauce, mozzarella, pepperoni<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;menu-section&quot;</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;hasMenuSection&quot;</span><span class="ot"> itemscope itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/MenuSection&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">h3</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="dt">&gt;</span>Sides<span class="dt">&lt;/</span><span class="kw">h3</span><span class="dt">&gt;</span></span>
+<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;menu-item&quot;</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;hasMenuItem&quot;</span><span class="ot"> itemscope itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/MenuItem&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="dt">&gt;</span>Garlic Bread<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> -</span>
+<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;offers&quot;</span><span class="ot"> itemscope itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/Offer&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;price&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a>              <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;priceCurrency&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;GBP&quot;</span><span class="dt">&gt;</span>£<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a>              <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;price&quot;</span><span class="dt">&gt;</span>4.99<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div>
+<p><strong>Implementation time:</strong> Two hours including learning
+the schema markup.</p>
+<p><strong>Cost:</strong> Zero. No JavaScript, no frameworks, no APIs
+needed.</p>
+<h2 id="recipe-11-faqpage-schema-for-customer-support">Recipe 11:
+FAQPage Schema for Customer Support</h2>
+<p><strong>Problem:</strong> FAQ content not structured for agent
+extraction</p>
+<p><strong>Score Impact:</strong> +12 points (structured data
+category)</p>
+<p><strong>Implementation:</strong></p>
+<div class="sourceCode" id="cb12" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="ot"> lang</span><span class="op">=</span><span class="st">&quot;en-GB&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> charset</span><span class="op">=</span><span class="st">&quot;UTF-8&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>Frequently Asked Questions - Example Shop<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">main</span><span class="dt">&gt;</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>Frequently Asked Questions<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">section</span><span class="ot"> itemscope itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/FAQPage&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> itemscope itemprop</span><span class="op">=</span><span class="st">&quot;mainEntity&quot;</span><span class="ot"> itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/Question&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">h2</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="dt">&gt;</span>What are your delivery charges?<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> itemscope itemprop</span><span class="op">=</span><span class="st">&quot;acceptedAnswer&quot;</span><span class="ot"> itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/Answer&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;text&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>UK mainland delivery is £4.99 for standard (3-5 working days) and £9.99 for next-day delivery. Orders over £50 qualify for free standard delivery.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> itemscope itemprop</span><span class="op">=</span><span class="st">&quot;mainEntity&quot;</span><span class="ot"> itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/Question&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">h2</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="dt">&gt;</span>What is your returns policy?<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> itemscope itemprop</span><span class="op">=</span><span class="st">&quot;acceptedAnswer&quot;</span><span class="ot"> itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/Answer&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;text&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>We accept returns within 30 days of delivery for a full refund. Items must be unused and in original packaging. Return shipping is free for faulty items, £4.99 for other returns.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> itemscope itemprop</span><span class="op">=</span><span class="st">&quot;mainEntity&quot;</span><span class="ot"> itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/Question&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">h2</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="dt">&gt;</span>Do you ship internationally?<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> itemscope itemprop</span><span class="op">=</span><span class="st">&quot;acceptedAnswer&quot;</span><span class="ot"> itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/Answer&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;text&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Yes, we ship to EU countries (£12.99, 5-7 working days) and worldwide (£19.99, 7-14 working days). International orders may incur customs charges at the destination country.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">section</span><span class="dt">&gt;</span></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">main</span><span class="dt">&gt;</span></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Alternative: JSON-LD format (can be used alongside or instead of HTML microdata) --&gt;</span></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;application/ld+json&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;@context&quot;</span><span class="op">:</span> <span class="st">&quot;https://schema.org&quot;</span><span class="op">,</span></span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;FAQPage&quot;</span><span class="op">,</span></span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;mainEntity&quot;</span><span class="op">:</span> [</span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;Question&quot;</span><span class="op">,</span></span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;name&quot;</span><span class="op">:</span> <span class="st">&quot;What are your delivery charges?&quot;</span><span class="op">,</span></span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;acceptedAnswer&quot;</span><span class="op">:</span> {</span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;Answer&quot;</span><span class="op">,</span></span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;text&quot;</span><span class="op">:</span> <span class="st">&quot;UK mainland delivery is £4.99 for standard (3-5 working days) and £9.99 for next-day delivery. Orders over £50 qualify for free standard delivery.&quot;</span></span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;Question&quot;</span><span class="op">,</span></span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;name&quot;</span><span class="op">:</span> <span class="st">&quot;What is your returns policy?&quot;</span><span class="op">,</span></span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;acceptedAnswer&quot;</span><span class="op">:</span> {</span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;Answer&quot;</span><span class="op">,</span></span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;text&quot;</span><span class="op">:</span> <span class="st">&quot;We accept returns within 30 days of delivery for a full refund. Items must be unused and in original packaging. Return shipping is free for faulty items, £4.99 for other returns.&quot;</span></span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;Question&quot;</span><span class="op">,</span></span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;name&quot;</span><span class="op">:</span> <span class="st">&quot;Do you ship internationally?&quot;</span><span class="op">,</span></span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;acceptedAnswer&quot;</span><span class="op">:</span> {</span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;Answer&quot;</span><span class="op">,</span></span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;text&quot;</span><span class="op">:</span> <span class="st">&quot;Yes, we ship to EU countries (£12.99, 5-7 working days) and worldwide (£19.99, 7-14 working days). International orders may incur customs charges at the destination country.&quot;</span></span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div>
+<p><strong>Why this matters:</strong></p>
+<ul>
+<li>Search engines display rich results with expandable Q&amp;A</li>
+<li>AI agents extract answers without reading entire pages</li>
+<li>Screen readers announce questions clearly</li>
+<li>Works with zero JavaScript</li>
+</ul>
+<p><strong>Common mistakes to avoid:</strong></p>
+<ul>
+<li>Don’t nest FAQPage inside other schema types</li>
+<li>Each question needs both <code>name</code> and
+<code>acceptedAnswer</code></li>
+<li>Answer <code>text</code> should be plain text or HTML, not just a
+link</li>
+<li>Use either HTML microdata OR JSON-LD, not both (unless they’re
+identical)</li>
+</ul>
+<p><strong>See also:</strong> Appendix D (AI-Friendly HTML Guide,
+Section 5: Structured Data) for comprehensive Schema.org patterns.</p>
+<hr />
+<h2 id="quick-reference-scoring-impact">Quick Reference: Scoring
+Impact</h2>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Score Impact</th>
+<th>Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Persistent errors</td>
+<td>+12 points</td>
+<td>Priority 1</td>
+</tr>
+<tr>
+<td>Served HTML completeness</td>
+<td>+15 points</td>
+<td>Priority 1</td>
+</tr>
+<tr>
+<td>Complete pricing</td>
+<td>+8 points</td>
+<td>Priority 1</td>
+</tr>
+<tr>
+<td>Small business markup</td>
+<td>+30 points</td>
+<td>Priority 1</td>
+</tr>
+<tr>
+<td>Inline validation</td>
+<td>+10 points</td>
+<td>Priority 2</td>
+</tr>
+<tr>
+<td>Explicit state attributes</td>
+<td>+8 points</td>
+<td>Priority 2</td>
+</tr>
+<tr>
+<td>Loading state clarity</td>
+<td>+6 points</td>
+<td>Priority 2</td>
+</tr>
+<tr>
+<td>robots.txt quality</td>
+<td>+25 points</td>
+<td>Priority 2</td>
+</tr>
+<tr>
+<td>llms.txt presence</td>
+<td>+20 points</td>
+<td>Priority 2</td>
+</tr>
+<tr>
+<td>Social media meta tags</td>
+<td>+20 points</td>
+<td>Priority 2</td>
+</tr>
+<tr>
+<td>FAQPage schema</td>
+<td>+12 points</td>
+<td>Priority 2</td>
+</tr>
+<tr>
+<td>Reading time metadata</td>
+<td>+10 points</td>
+<td>Priority 2</td>
+</tr>
+<tr>
+<td>SEO meta tags</td>
+<td>+5 points</td>
+<td>Priority 2</td>
+</tr>
+<tr>
+<td>Disabled button clarity</td>
+<td>+5 points</td>
+<td>Priority 3</td>
+</tr>
+</tbody>
+</table>
+<p>Focus on patterns with highest score impact and lowest implementation
+effort first.</p>
+<hr />
+<h2 id="recipe-12-social-media-meta-tags">Recipe 12: Social Media Meta
+Tags</h2>
+<p><strong>Problem:</strong> Links shared on social media show generic
+previews without rich content</p>
+<p><strong>Score Impact:</strong> +20 points (Open Graph +8, Twitter
+Card +5, completeness ratio +7)</p>
+<p><strong>Implementation:</strong></p>
+<div class="sourceCode" id="cb13" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Open Graph / Facebook --&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> property</span><span class="op">=</span><span class="st">&quot;og:type&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;website&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> property</span><span class="op">=</span><span class="st">&quot;og:url&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;https://example.com/page.html&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> property</span><span class="op">=</span><span class="st">&quot;og:title&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;Your Page Title&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> property</span><span class="op">=</span><span class="st">&quot;og:description&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;Brief description for social sharing&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> property</span><span class="op">=</span><span class="st">&quot;og:image&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;https://example.com/images/preview.jpg&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> property</span><span class="op">=</span><span class="st">&quot;og:locale&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;en_GB&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Twitter --&gt;</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;twitter:card&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;summary_large_image&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;twitter:title&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;Your Page Title&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;twitter:description&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;Brief description&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;twitter:image&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;https://example.com/images/preview.jpg&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- SEO Enhancements --&gt;</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;robots&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;index, follow&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;keywords&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;relevant, keywords, here&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;theme-color&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;#1e40af&quot;</span><span class="dt">&gt;</span></span></code></pre></div>
+<p><strong>Reading time metadata (add to Schema.org):</strong></p>
+<div class="sourceCode" id="cb14" data-role="code-container"><pre
+class="sourceCode json"><code class="sourceCode json" data-role="code-content"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;@context&quot;</span><span class="fu">:</span> <span class="st">&quot;https://schema.org&quot;</span><span class="fu">,</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;@type&quot;</span><span class="fu">:</span> <span class="st">&quot;Article&quot;</span><span class="fu">,</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;timeRequired&quot;</span><span class="fu">:</span> <span class="st">&quot;PT10M&quot;</span><span class="fu">,</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;educationalLevel&quot;</span><span class="fu">:</span> <span class="st">&quot;Intermediate&quot;</span><span class="fu">,</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;inLanguage&quot;</span><span class="fu">:</span> <span class="st">&quot;en-GB&quot;</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p><strong>ISO 8601 duration format:</strong> <code>PT10M</code> =
+P(Period) + T(Time) + 10M(10 minutes)</p>
+<p><strong>Image requirements:</strong> 1200×630px, under 1MB, JPG or
+PNG</p>
+<p><strong>Scoring breakdown:</strong></p>
+<ul>
+<li><strong>Open Graph tags:</strong> +8 points (minimum 5 of 7 tags
+required)</li>
+<li><strong>Twitter Card tags:</strong> +5 points (minimum 3 of 4 tags
+required)</li>
+<li><strong>Completeness ratio:</strong> +7 points (11 total tags: 7
+Open Graph + 4 Twitter)</li>
+<li><strong>SEO meta tags:</strong> +5 points (robots, keywords,
+theme-color)</li>
+<li><strong>Reading time metadata:</strong> +10 points (timeRequired +5,
+completeness ratio +5)</li>
+</ul>
+<p><strong>Validation tools:</strong></p>
+<ul>
+<li>Facebook: <a href="https://developers.facebook.com/tools/debug/"
+class="uri">https://developers.facebook.com/tools/debug/</a></li>
+<li>Twitter: <a href="https://cards-dev.twitter.com/validator"
+class="uri">https://cards-dev.twitter.com/validator</a></li>
+<li>Schema.org: <a href="https://validator.schema.org/"
+class="uri">https://validator.schema.org/</a></li>
+</ul>
+<p><strong>Reference:</strong> See <a
+href="web/META-TAG-ENHANCEMENTS.md">web/META-TAG-ENHANCEMENTS.md</a> for
+per-page customization guidance.</p>
+<hr />
+<h2 id="recipe-13-html-validation-and-common-pitfalls">Recipe 13: HTML
+Validation and Common Pitfalls</h2>
+<p><strong>Problem:</strong> Invalid HTML breaks both AI agent parsing
+and accessibility</p>
+<p><strong>Score Impact:</strong> Variable (fixes multiple
+categories)</p>
+<p><strong>Implementation:</strong></p>
+<h3 id="common-validation-errors-to-fix">Common Validation Errors to
+Fix</h3>
+<p><strong>1. Unencoded Special Characters:</strong></p>
+<div class="sourceCode" id="cb15" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Bad: Raw ampersands --&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="dt">&gt;</span>Technical patterns <span class="er">&amp;</span> implementation<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Good: Properly encoded --&gt;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="dt">&gt;</span>Technical patterns <span class="dv">&amp;amp;</span> implementation<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>Always encode: <code>&amp;</code> as <code>&amp;amp;</code>,
+<code>&lt;</code> as <code>&amp;lt;</code>, <code>&gt;</code> as
+<code>&amp;gt;</code>, <code>"</code> as <code>&amp;quot;</code> (in
+attributes)</p>
+<p><strong>2. Redundant ARIA Roles:</strong></p>
+<div class="sourceCode" id="cb16" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Bad: Redundant role on semantic element --&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">section</span><span class="ot"> role</span><span class="op">=</span><span class="st">&quot;region&quot;</span><span class="ot"> aria-label</span><span class="op">=</span><span class="st">&quot;Book review&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Good: Semantic element has implicit role --&gt;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">section</span><span class="ot"> aria-label</span><span class="op">=</span><span class="st">&quot;Book review&quot;</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>Semantic elements have implicit roles:</p>
+<ul>
+<li><code>&lt;section&gt;</code> = region (when it has accessible
+name)</li>
+<li><code>&lt;nav&gt;</code> = navigation</li>
+<li><code>&lt;main&gt;</code> = main</li>
+<li><code>&lt;article&gt;</code> = article</li>
+<li><code>&lt;footer&gt;</code> = contentinfo (when top-level)</li>
+</ul>
+<p><strong>3. ARIA Attributes on Non-Interactive Elements:</strong></p>
+<div class="sourceCode" id="cb17" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Bad: aria-label on plain div --&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;stars&quot;</span><span class="ot"> aria-label</span><span class="op">=</span><span class="st">&quot;Rating: 4 out of 5 stars&quot;</span><span class="dt">&gt;</span>★★★★☆<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Good: Add role to make it work --&gt;</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;stars&quot;</span><span class="ot"> role</span><span class="op">=</span><span class="st">&quot;img&quot;</span><span class="ot"> aria-label</span><span class="op">=</span><span class="st">&quot;Rating: 4 out of 5 stars&quot;</span><span class="dt">&gt;</span>★★★★☆<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code></pre></div>
+<p><code>aria-label</code> only works on:</p>
+<ul>
+<li>Interactive elements (buttons, links, inputs)</li>
+<li>Landmark roles (navigation, main, etc.)</li>
+<li>Elements with explicit <code>role="img"</code> or similar</li>
+</ul>
+<p><strong>4. Missing Semantic Structure:</strong></p>
+<div class="sourceCode" id="cb18" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Bad: Generic divs --&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;content&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">section</span><span class="dt">&gt;</span>...<span class="dt">&lt;/</span><span class="kw">section</span><span class="dt">&gt;</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Good: Semantic landmarks --&gt;</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;content&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">main</span><span class="dt">&gt;</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">article</span><span class="dt">&gt;</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;</span><span class="kw">section</span><span class="dt">&gt;</span>...<span class="dt">&lt;/</span><span class="kw">section</span><span class="dt">&gt;</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;/</span><span class="kw">article</span><span class="dt">&gt;</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">main</span><span class="dt">&gt;</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code></pre></div>
+<h3 id="validation-tools">Validation Tools</h3>
+<p><strong>html-validate (local CLI):</strong></p>
+<div class="sourceCode" id="cb19" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> html-validate your-file.html</span></code></pre></div>
+<p>Catches: unencoded characters, redundant ARIA roles, ARIA misuse,
+non-semantic structure</p>
+<p><strong>W3C Validator (online):</strong></p>
+<p>Visit: <a href="https://validator.w3.org/"
+class="uri">https://validator.w3.org/</a></p>
+<p>Checks: HTML5 spec compliance, well-formed markup, valid
+attributes</p>
+<p><strong>Pre-Deploy Checklist:</strong></p>
+<ul class="task-list">
+<li><label><input type="checkbox" />All <code>&amp;</code> characters
+encoded as <code>&amp;amp;</code></label></li>
+<li><label><input type="checkbox" />No redundant <code>role</code>
+attributes on semantic elements</label></li>
+<li><label><input type="checkbox" /><code>aria-label</code> only used on
+elements that support it</label></li>
+<li><label><input type="checkbox" />Semantic elements used instead of
+divs where appropriate</label></li>
+<li><label><input type="checkbox" />Document has
+<code>&lt;main&gt;</code> landmark</label></li>
+<li><label><input type="checkbox" />Self-contained content wrapped in
+<code>&lt;article&gt;</code></label></li>
+<li><label><input type="checkbox" />CSS in external stylesheet files
+(not inline <code>style=""</code> attributes)</label></li>
+<li><label><input type="checkbox" />JavaScript in external script files
+(not inline <code>onclick=""</code> or <code>&lt;script&gt;</code>
+blocks)</label></li>
+<li><label><input type="checkbox" />Schema.org JSON-LD validates without
+errors</label></li>
+<li><label><input type="checkbox" />Passes W3C HTML
+validator</label></li>
+</ul>
+<p><strong>See also:</strong> Appendix D (AI-Friendly HTML Guide, Part
+9: Testing and Validation) for comprehensive validation guidance and
+common pitfalls.</p>
+<hr />
+<h2 id="cross-references">Cross-References</h2>
+<p><strong>For comprehensive context and business
+implications:</strong></p>
+<ul>
+<li><strong>Chapter 12 (Technical Advice)</strong>: Full narrative
+explaining why these patterns matter, with business context and
+strategic guidance</li>
+<li><strong>Appendix D (AI-Friendly HTML Guide)</strong>: Complete
+technical reference with detailed explanations, testing strategies, and
+production examples. Available as <code>.txt</code> file that can be
+copied directly into AI coding assistants (Claude Code, Cursor, GitHub
+Copilot)</li>
+<li><strong>Appendix L (Proposed AI Metadata Patterns)</strong>:
+Specifications for experimental patterns with forward-compatibility
+guarantees</li>
+</ul>
+<p><strong>How to use these together:</strong></p>
+<ol type="1">
+<li><strong>Business decision</strong>: Read Chapter 12 to understand
+strategic implications</li>
+<li><strong>Quick implementation</strong>: Use recipes from this
+appendix (Appendix A) for copy-paste solutions</li>
+<li><strong>Deep technical guidance</strong>: Reference Appendix D when
+AI assistants need complete context</li>
+<li><strong>Pattern specifications</strong>: Check Appendix L before
+implementing experimental patterns</li>
+</ol>
+<hr />
+<p><strong>Note:</strong> These recipes are production-tested patterns.
+Copy them directly, adapting field names and styling to your needs. All
+patterns are forward-compatible and won’t break if agents don’t
+recognise them.</p>
+</main>
+<hr>
+<nav class="appendix-navigation" role="navigation" aria-label="Appendix Navigation">
+    <p><a href="appendix-index.html">← Back to Appendices Index</a></p>
+    <p>Quick navigation:
+        <a href="appendix-a.html">A</a> |
+        <a href="appendix-b.html">B</a> |
+        <a href="appendix-c.html">C</a> |
+        <a href="appendix-d.html">D</a> |
+        <a href="appendix-e.html">E</a> |
+        <a href="appendix-f.html">F</a> |
+        <a href="appendix-g.html">G</a> |
+        <a href="appendix-h.html">H</a> |
+        <a href="appendix-i.html">I</a> |
+        <a href="appendix-j.html">J</a> |
+        <a href="appendix-k.html">K</a> |
+        <a href="appendix-l.html">L</a>
+    </p>
+</nav>
+
+  <!-- Floating home button (top-left) -->
+  <a href="index.html" class="floating-home-button" aria-label="Back to Home">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 0L0 8h3v8h10V8h3L8 0zm0 2.5L13.5 8H11v6H5V8H2.5L8 2.5z"/>
+    </svg>
+    Home
+  </a>
+  <!-- Floating back to top button (bottom-left) -->
+  <a href="#" class="floating-top-button" aria-label="Back to Top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 3.5l-5.5 5.5L4 10.5l3-3v8.5h2V7.5l3 3L13.5 9z"/>
+    </svg>
+    Top
+  </a>
+
+  <script>
+    // Add copy buttons to all code blocks
+    document.addEventListener('DOMContentLoaded', function() {
+      // Find both wrapped code blocks (div.sourceCode) and standalone pre blocks
+      const wrappedBlocks = document.querySelectorAll('div.sourceCode');
+      const standaloneBlocks = document.querySelectorAll('pre[data-role="code-block"]:not(.sourceCode)');
+
+      // Process wrapped code blocks (HTML, JavaScript, etc.)
+      wrappedBlocks.forEach(function(block) {
+        addCopyButton(block, function(block) {
+          const codeElement = block.querySelector('code');
+          let text = '';
+          const spans = codeElement.querySelectorAll('span[id^="cb"]');
+          spans.forEach(function(span) {
+            const nodes = Array.from(span.childNodes);
+            nodes.forEach(function(node) {
+              if (node.nodeType === Node.TEXT_NODE) {
+                text += node.textContent;
+              } else if (node.nodeName !== 'A') {
+                text += node.textContent;
+              }
+            });
+          });
+          return text;
+        });
+      });
+
+      // Process standalone pre blocks (text, robots.txt, etc.)
+      standaloneBlocks.forEach(function(block) {
+        addCopyButton(block, function(block) {
+          const codeElement = block.querySelector('code');
+          return codeElement ? codeElement.textContent : block.textContent;
+        });
+      });
+
+      // Helper function to add copy button to any block
+      function addCopyButton(block, extractTextFn) {
+        const button = document.createElement('button');
+        button.className = 'copy-button';
+        button.textContent = 'Copy';
+        button.setAttribute('aria-label', 'Copy code to clipboard');
+
+        button.addEventListener('click', function() {
+          const text = extractTextFn(block);
+
+          navigator.clipboard.writeText(text).then(function() {
+            button.textContent = 'Copied';
+            button.classList.add('copied');
+            setTimeout(function() {
+              button.textContent = 'Copy';
+              button.classList.remove('copied');
+            }, 2000);
+          }).catch(function(err) {
+            console.error('Failed to copy:', err);
+            button.textContent = 'Failed';
+            setTimeout(function() {
+              button.textContent = 'Copy';
+            }, 2000);
+          });
+        });
+
+        block.insertBefore(button, block.firstChild);
+      }
+    });
+  </script>
+</body>
+</html>

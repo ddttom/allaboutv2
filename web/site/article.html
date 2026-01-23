@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Tom Cranstoun">
+  <meta name="description" content="Complete technical guide to implementing llms.txt files for AI agent discovery - syntax, structure, best practices, and real-world examples from production deployments.">
+
+  <!-- AI-specific meta tags (PROPOSED - see Appendix L) -->
+  <meta name="ai-preferred-access" content="html">
+  <meta name="ai-content-policy" content="summaries-allowed, full-extraction-allowed">
+  <meta name="ai-freshness" content="monthly">
+  <meta name="ai-structured-data" content="json-ld">
+  <meta name="ai-attribution" content="required" text="Source: MX-Bible by Tom Cranstoun, https://allabout.network/invisible-users/">
+
+  <title>Complete Guide to llms.txt Implementation | MX-Bible</title>
+
+  <!-- Schema.org structured data for technical article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Complete Guide to llms.txt Implementation",
+    "description": "Comprehensive technical documentation for implementing llms.txt files to enable AI agent discovery and provide structured site information",
+    "datePublished": "2026-01-11",
+    "dateModified": "2026-01-11",
+    "author": {
+      "@type": "Person",
+      "name": "Tom Cranstoun",
+      "email": "tom.cranstoun@gmail.com",
+      "url": "https://allabout.network/tom-cranstoun.html",
+      "image": "https://allabout.network/images/tom-cranstoun.jpg"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Digital Domain Technologies Ltd",
+      "url": "https://allabout.network"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://allabout.network/invisible-users/articles/llms-txt-guide.html"
+    },
+    "articleSection": "Technical Documentation",
+    "keywords": "llms.txt, AI agents, LLM discovery, website documentation, structured information",
+    "wordCount": "2500",
+    "proficiencyLevel": "Intermediate",
+    "dependencies": "Text editor, web server",
+    "inLanguage": "en-GB",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://allabout.network/invisible-users/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Article",
+          "item": "https://allabout.network/invisible-users/web/article.html"
+        }
+      ]
+    },
+    "image": "https://allabout.network/images/article.jpg"
+  }
+  </script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Complete Guide to llms.txt Implementation</h1>
+    <div class="article-meta" data-published="2026-01-11" data-modified="2026-01-11" data-reading-time="12 minutes">
+      <time datetime="2026-01-11">Published: 11 January 2026</time>
+      <span>•</span>
+      <span>12 min read</span>
+      <span>•</span>
+      <span>Tom Cranstoun</span>
+    </div>
+  </header>
+
+  <div class="container">
+    <nav class="toc" aria-label="Table of Contents" data-toc-type="sticky">
+      <h2>Contents</h2>
+      <ul>
+        <li><a href="#what-is-llms-txt">What is llms.txt?</a></li>
+        <li><a href="#why-it-matters">Why It Matters</a></li>
+        <li><a href="#basic-structure">Basic Structure</a></li>
+        <li><a href="#metadata-section">Metadata Section</a></li>
+        <li><a href="#links-section">Links Section</a></li>
+        <li><a href="#best-practices">Best Practices</a></li>
+        <li><a href="#real-world-example">Real-World Example</a></li>
+        <li><a href="#validation">Validation</a></li>
+        <li><a href="#deployment">Deployment</a></li>
+      </ul>
+    </nav>
+
+    <article data-article-type="technical-guide" data-word-count="2500">
+
+      <section id="what-is-llms-txt" data-section-id="introduction">
+        <h2>What is llms.txt?</h2>
+        <p>
+          llms.txt is an emerging convention for providing AI agents with structured information about your website. Similar to robots.txt for crawler control, llms.txt offers a standardised location where agents can find curated links, site descriptions, and usage guidelines.
+        </p>
+        <p>
+          The file lives at <code>/llms.txt</code> in your site root. When an AI agent encounters your website, it can check this file for authoritative information about your content structure, recommended entry points, and access policies.
+        </p>
+
+        <div class="info-box">
+          <strong>Standard Status:</strong>
+          <p>llms.txt is an emerging convention (2024-2025), not yet a formal standard. However, major AI platforms including Anthropic, OpenAI, and others have begun recognising and respecting llms.txt files. The specification is maintained at <code>https://llmstxt.org</code>.</p>
+        </div>
+      </section>
+
+      <section id="why-it-matters" data-section-id="rationale">
+        <h2>Why It Matters</h2>
+        <p>Without llms.txt, AI agents must discover your site structure through trial and error:</p>
+        <ul>
+          <li>Crawling sitemaps (if present)</li>
+          <li>Following navigation links</li>
+          <li>Guessing URL patterns</li>
+          <li>Searching for specific content types</li>
+        </ul>
+        <p>
+          This wastes computational resources and creates inconsistent experiences. With llms.txt, you provide a curated list of important pages, explain your site's purpose, and guide agents to the most valuable content first.
+        </p>
+
+        <h3>Business Benefits</h3>
+        <ul>
+          <li><strong>Efficient discovery:</strong> Agents find your key content immediately</li>
+          <li><strong>Accurate representation:</strong> You control which pages represent your business</li>
+          <li><strong>Reduced server load:</strong> Fewer speculative requests from agents guessing URLs</li>
+          <li><strong>Clear policies:</strong> Explicit guidance about content usage and attribution</li>
+        </ul>
+      </section>
+
+      <section id="basic-structure" data-section-id="structure">
+        <h2>Basic Structure</h2>
+        <p>An llms.txt file contains two sections:</p>
+
+        <h3>1. Metadata Header</h3>
+        <p>Free-form text describing your site, marked with markdown headings (##). This section provides context about your content, technology stack, and intended audience.</p>
+
+        <h3>2. Curated Links</h3>
+        <p>A list of important URLs with brief descriptions. Each link includes a title in square brackets, the URL, and a short explanation of the content.</p>
+
+        <pre><code>## Site Metadata
+**Last updated:** January 2026
+**Contact:** admin@example.com
+
+## Access Guidelines
+[Documentation](https://example.com/docs/): Complete API reference and guides</code></pre>
+      </section>
+
+      <section id="metadata-section" data-section-id="metadata">
+        <h2>Metadata Section</h2>
+        <p>The metadata header should include:</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Purpose</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Last updated</td>
+              <td>When the file was last revised</td>
+              <td>January 2026</td>
+            </tr>
+            <tr>
+              <td>Contact</td>
+              <td>Email for agent-related questions</td>
+              <td>ai-support@example.com</td>
+            </tr>
+            <tr>
+              <td>Site Type</td>
+              <td>Category of website</td>
+              <td>E-Commerce, Documentation, Blog</td>
+            </tr>
+            <tr>
+              <td>Purpose</td>
+              <td>What the site provides</td>
+              <td>Customer Support and Product Sales</td>
+            </tr>
+            <tr>
+              <td>Technology Stack</td>
+              <td>Key technologies used</td>
+              <td>RESTful API, React Frontend</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="links-section" data-section-id="links">
+        <h2>Links Section</h2>
+        <p>The links section should prioritise:</p>
+
+        <h3>Essential Pages</h3>
+        <ul>
+          <li>Homepage or landing page</li>
+          <li>API documentation (if applicable)</li>
+          <li>Product catalogue or service directory</li>
+          <li>Help centre or support resources</li>
+          <li>Contact information</li>
+        </ul>
+
+        <h3>Format</h3>
+        <pre><code>- [Page Title](https://example.com/path/): Brief description of content</code></pre>
+
+        <div class="warning-box">
+          <strong>Keep it focused:</strong>
+          <p>Limit your llms.txt file to 15-25 links. More than this dilutes the curation value. Agents looking for everything can use your sitemap — llms.txt should highlight what matters most.</p>
+        </div>
+      </section>
+
+      <section id="best-practices" data-section-id="best-practices">
+        <h2>Best Practices</h2>
+
+        <h3>1. Curate, Don't Duplicate</h3>
+        <p>llms.txt is not a sitemap. Include only your most important pages — those that best represent your content and serve as entry points for understanding your site.</p>
+
+        <h3>2. Maintain Regularly</h3>
+        <p>Update your llms.txt file when you launch major features, restructure content, or change contact information. Outdated llms.txt files provide worse guidance than no file at all.</p>
+
+        <h3>3. Explain Context</h3>
+        <p>Don't just list URLs. Explain what each page contains and why it matters. Agents use these descriptions to determine relevance.</p>
+
+        <h3>4. Test Accessibility</h3>
+        <p>Verify that your llms.txt file is accessible at <code>https://yourdomain.com/llms.txt</code> with correct MIME type (<code>text/plain; charset=utf-8</code>).</p>
+      </section>
+
+      <section id="real-world-example" data-section-id="example">
+        <h2>Real-World Example</h2>
+        <p>Here's a complete llms.txt file for MX-Bible project:</p>
+
+        <pre><code># MX-Bible
+
+## Site Information
+**Last updated:** January 2026
+**Contact:** tom.cranstoun@gmail.com
+**Site Type:** Technical Documentation, Educational Resource
+**Purpose:** AI Agent Compatibility Guidance
+
+## Quick Links
+- [Homepage](https://allabout.network/invisible-users/): Project overview and introduction
+- [Appendices](https://allabout.network/invisible-users/web/appendix-index.html): Implementation guides and resources
+- [Implementation Cookbook](https://allabout.network/invisible-users/web/appendix-a.html): Quick-reference recipes
+- [AI-Friendly HTML Guide](https://allabout.network/invisible-users/web/appendix-d.html): Comprehensive patterns
+- [FAQ](https://allabout.network/invisible-users/web/faq.html): Common questions</code></pre>
+      </section>
+
+      <section id="validation" data-section-id="validation">
+        <h2>Validation</h2>
+        <p>Before deploying your llms.txt file, verify:</p>
+
+        <ol>
+          <li>File is accessible at <code>/llms.txt</code></li>
+          <li>Content-Type header is <code>text/plain; charset=utf-8</code></li>
+          <li>All linked URLs are absolute (include full domain)</li>
+          <li>All links return 200 status codes</li>
+          <li>Descriptions are concise (under 80 characters)</li>
+          <li>Contact email is current and monitored</li>
+        </ol>
+      </section>
+
+      <section id="deployment" data-section-id="deployment">
+        <h2>Deployment</h2>
+        <p>Place your llms.txt file in your website root directory and configure your web server to serve it with the correct MIME type.</p>
+
+        <h3>Apache (.htaccess)</h3>
+        <pre><code>AddType text/plain .txt</code></pre>
+
+        <h3>Nginx</h3>
+        <pre><code>location = /llms.txt {
+  add_header Content-Type "text/plain; charset=utf-8";
+}</code></pre>
+
+        <h3>Node.js/Express</h3>
+        <pre><code>app.get('/llms.txt', (req, res) => {
+  res.type('text/plain; charset=utf-8');
+  res.sendFile(path.join(__dirname, 'public', 'llms.txt'));
+});</code></pre>
+
+        <p>
+          Test deployment by accessing <code>https://yourdomain.com/llms.txt</code> in a browser and verifying the content appears as plain text.
+        </p>
+      </section>
+
+    </article>
+
+    <footer role="contentinfo">
+      <div class="contact-links">
+        <a href="mailto:tom.cranstoun@gmail.com">Email</a>
+        <a href="https://allabout.network">Website</a>
+        <a href="https://www.linkedin.com/in/tom-cranstoun/">LinkedIn</a>
+        <a href="https://github.com/Digital-Domain-Technologies-Ltd/invisible-users-manuscript">GitHub</a>
+      </div>
+      <p>&copy; 2026 Tom Cranstoun. All rights reserved.</p>
+      <p>Last updated: January 2026</p>
+    </footer>
+  </div>
+
+  <a href="index.html" class="floating-home-button" aria-label="Back to Home">Home</a>
+  <a href="#" class="floating-top-button" aria-label="Back to Top">Top</a>
+  <script src="js/common.js"></script>
+</body>
+</html>

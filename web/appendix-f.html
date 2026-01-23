@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Tom Cranstoun" />
+  <meta name="description" content="Practical guidance from MX-Bible book on designing AI agent-friendly websites" />
+  <title>Appendix F: Implementation Roadmap</title>
+  
+
+  <link rel="canonical" href="https://allabout.network/invisible-users/appendix-f.html">
+  <!-- AI-specific meta tags (proposed pattern from Chapter 10) -->
+  <meta name="ai-preferred-access" content="html">
+  <meta name="ai-content-policy" content="summaries-allowed, full-extraction-allowed">
+  <meta name="ai-freshness" content="monthly">
+  <meta name="ai-structured-data" content="json-ld">
+  <meta name="ai-attribution" content="required" text="Source: MX-Bible by Tom Cranstoun, https://allabout.network/invisible-users/">
+  <meta name="llms-txt" content="/llms.txt">
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://allabout.network/invisible-users/appendix-f.html">
+  <meta property="og:title" content="Appendix F: Implementation Roadmap">
+  <meta property="og:description" content="Practical guidance from MX-Bible book on designing AI agent-friendly websites">
+  <meta property="og:image" content="https://allabout.network/images/invisible-users-appendix-og.jpg">
+  <meta property="og:site_name" content="MX-Bible">
+  <meta property="og:locale" content="en_GB">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://allabout.network/invisible-users/appendix-f.html">
+  <meta name="twitter:title" content="Appendix F: Implementation Roadmap">
+  <meta name="twitter:description" content="Implementation guide from MX-Bible book">
+  <meta name="twitter:image" content="https://allabout.network/images/invisible-users-appendix-og.jpg">
+  <meta name="twitter:creator" content="@tomcranstoun">
+
+  <!-- Additional SEO -->
+  <meta name="robots" content="index, follow">
+  <meta name="keywords" content="AI agents, web design, implementation guide, Appendix F, technical patterns, code examples">
+  <meta name="theme-color" content="#1e40af">
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "name": "Appendix F: Implementation Roadmap",
+    "description": "Practical guidance from MX-Bible book on designing AI agent-friendly websites",
+    "author": {
+      "@type": "Person",
+      "name": "Tom Cranstoun",
+      "email": "tom.cranstoun@gmail.com",
+      "url": "https://allabout.network"
+    },
+    "inLanguage": "en-GB",
+    "timeRequired": "PT60M",
+    "educationalLevel": "Intermediate",
+    "datePublished": "2026-01-10",
+    "dateModified": "2026-01-10",
+    "isPartOf": {
+      "@type": "Book",
+      "name": "MX-Bible",
+      "author": {
+        "@type": "Person",
+        "name": "Tom Cranstoun"
+      },
+      "url": "https://allabout.network/invisible-users"
+    },
+    "position": "6"
+  }
+  </script>
+  <link rel="stylesheet" href="appendix.css">
+</head>
+<body>
+<nav class="appendix-navigation" role="navigation" aria-label="Appendix Navigation">
+    <p><a href="appendix-index.html">← Back to Appendices Index</a></p>
+    <p>Quick navigation:
+        <a href="appendix-a.html">A</a> |
+        <a href="appendix-b.html">B</a> |
+        <a href="appendix-c.html">C</a> |
+        <a href="appendix-d.html">D</a> |
+        <a href="appendix-e.html">E</a> |
+        <a href="appendix-f.html">F</a> |
+        <a href="appendix-g.html">G</a> |
+        <a href="appendix-h.html">H</a> |
+        <a href="appendix-i.html">I</a> |
+        <a href="appendix-j.html">J</a> |
+        <a href="appendix-k.html">K</a> |
+        <a href="appendix-l.html">L</a>
+    </p>
+</nav>
+<hr>
+<header id="title-block-header">
+<h1 class="title">Appendix F: Implementation Roadmap</h1>
+<p class="subtitle">MX-Bible</p>
+<p class="author">Tom Cranstoun</p>
+<p class="date">January 2026</p>
+</header>
+<nav id="TOC" role="navigation" aria-label="Table of Contents">
+<ul>
+<li><a href="#appendix-f-implementation-roadmap"
+id="toc-appendix-f-implementation-roadmap">Appendix F: Implementation
+Roadmap</a>
+<ul>
+<li><a href="#priority-1-critical-quick-wins"
+id="toc-priority-1-critical-quick-wins">Priority 1: Critical Quick
+Wins</a></li>
+<li><a href="#priority-1.5-protocol-integration-strategy"
+id="toc-priority-1.5-protocol-integration-strategy">Priority 1.5:
+Protocol Integration Strategy</a></li>
+<li><a href="#priority-2-essential-improvements"
+id="toc-priority-2-essential-improvements">Priority 2: Essential
+Improvements</a></li>
+<li><a href="#priority-3-core-infrastructure"
+id="toc-priority-3-core-infrastructure">Priority 3: Core
+Infrastructure</a></li>
+<li><a href="#priority-4-advanced-features"
+id="toc-priority-4-advanced-features">Priority 4: Advanced
+Features</a></li>
+<li><a href="#accessibility-alignment"
+id="toc-accessibility-alignment">Accessibility Alignment</a></li>
+<li><a href="#performance-and-operations"
+id="toc-performance-and-operations">Performance and Operations</a></li>
+<li><a href="#advanced-implementation"
+id="toc-advanced-implementation">Advanced Implementation</a></li>
+<li><a href="#testing-your-implementation"
+id="toc-testing-your-implementation">Testing Your
+Implementation</a></li>
+<li><a href="#maintenance" id="toc-maintenance">Maintenance</a></li>
+<li><a href="#success-metrics" id="toc-success-metrics">Success
+Metrics</a></li>
+<li><a href="#priority-by-business-type"
+id="toc-priority-by-business-type">Priority by Business Type</a></li>
+<li><a href="#getting-help" id="toc-getting-help">Getting Help</a></li>
+</ul></li>
+</ul>
+</nav>
+<main role="main" data-content-type="appendix">
+<h1 id="appendix-f-implementation-roadmap">Appendix F: Implementation
+Roadmap</h1>
+<p>A practical guide to making your website work well for both AI agents
+and human users.</p>
+<p><strong>Based on:</strong> <em>MX-Bible: Designing the Web
+for AI Agents and Everyone Else</em></p>
+<hr />
+<h2 id="priority-1-critical-quick-wins">Priority 1: Critical Quick
+Wins</h2>
+<p>These changes provide immediate benefit with minimal effort.</p>
+<p><strong>Effort Level:</strong> A single developer can implement these
+changes in a focused session. No architectural changes required, minimal
+risk, immediate deployment. Most changes involve replacing existing
+patterns with better alternatives rather than building new systems.</p>
+<h3 id="error-messages">Error Messages</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Remove toast
+notifications</strong> - Replace with persistent error messages that
+stay visible until resolved</label></li>
+<li><label><input type="checkbox" /><strong>Add error summary at top of
+forms</strong> - List all validation errors in one place with links to
+problematic fields</label></li>
+<li><label><input type="checkbox" /><strong>Make errors
+specific</strong> - “Email format invalid: expected <a
+href="mailto:name@domain.com" class="email">name@domain.com</a>” instead
+of “Invalid input”</label></li>
+<li><label><input type="checkbox" /><strong>Show errors
+immediately</strong> - Don’t wait for form submission to reveal
+validation problems</label></li>
+</ul>
+<h3 id="pricing-and-information">Pricing and Information</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Display complete pricing
+upfront</strong> - Show total cost including all fees, not “From
+£99”</label></li>
+<li><label><input type="checkbox" /><strong>Break down pricing
+clearly</strong> - If fees exist, show them: “Product: £99 + Delivery:
+£15 + Service: £5 = Total: £119”</label></li>
+<li><label><input type="checkbox" /><strong>State what’s
+included</strong> - “Price includes VAT” or “VAT will be added at
+checkout”</label></li>
+<li><label><input type="checkbox" /><strong>Avoid progressive disclosure
+of costs</strong> - All fees visible before checkout begins</label></li>
+</ul>
+<h3 id="basic-structured-data">Basic Structured Data</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Add one piece of
+JSON-LD</strong> - Start with your most important page type (product,
+business, event)</label></li>
+<li><label><input type="checkbox" /><strong>Use Schema.org
+vocabulary</strong> - Follow standard types from schema.org</label></li>
+<li><label><input type="checkbox" /><strong>Include essential
+fields</strong> - Name, price, availability for products; address, hours
+for businesses</label></li>
+</ul>
+<p><strong>Example (basic product):</strong></p>
+<div class="sourceCode" id="cb1" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;application/ld+json&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;@context&quot;</span><span class="op">:</span> <span class="st">&quot;https://schema.org&quot;</span><span class="op">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;Product&quot;</span><span class="op">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;name&quot;</span><span class="op">:</span> <span class="st">&quot;Your Product Name&quot;</span><span class="op">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;offers&quot;</span><span class="op">:</span> {</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;Offer&quot;</span><span class="op">,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;price&quot;</span><span class="op">:</span> <span class="st">&quot;99.99&quot;</span><span class="op">,</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;priceCurrency&quot;</span><span class="op">:</span> <span class="st">&quot;GBP&quot;</span><span class="op">,</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;availability&quot;</span><span class="op">:</span> <span class="st">&quot;https://schema.org/InStock&quot;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+<p><strong>Example (product with delivery and service
+charges):</strong></p>
+<p>This example shows how to represent the complete pricing breakdown
+mentioned above (Product: £99 + Delivery: £15 + Service: £5 = Total:
+£119) in Schema.org JSON-LD.</p>
+<div class="sourceCode" id="cb2" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;application/ld+json&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;@context&quot;</span><span class="op">:</span> <span class="st">&quot;https://schema.org&quot;</span><span class="op">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;Product&quot;</span><span class="op">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;name&quot;</span><span class="op">:</span> <span class="st">&quot;Your Product Name&quot;</span><span class="op">,</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;offers&quot;</span><span class="op">:</span> {</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;Offer&quot;</span><span class="op">,</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;price&quot;</span><span class="op">:</span> <span class="st">&quot;119.00&quot;</span><span class="op">,</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;priceCurrency&quot;</span><span class="op">:</span> <span class="st">&quot;GBP&quot;</span><span class="op">,</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;availability&quot;</span><span class="op">:</span> <span class="st">&quot;https://schema.org/InStock&quot;</span><span class="op">,</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;priceSpecification&quot;</span><span class="op">:</span> [</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>      {</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;UnitPriceSpecification&quot;</span><span class="op">,</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;price&quot;</span><span class="op">:</span> <span class="st">&quot;99.00&quot;</span><span class="op">,</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;priceCurrency&quot;</span><span class="op">:</span> <span class="st">&quot;GBP&quot;</span><span class="op">,</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;name&quot;</span><span class="op">:</span> <span class="st">&quot;Product price&quot;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>      }<span class="op">,</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>      {</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;DeliveryChargeSpecification&quot;</span><span class="op">,</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;price&quot;</span><span class="op">:</span> <span class="st">&quot;15.00&quot;</span><span class="op">,</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;priceCurrency&quot;</span><span class="op">:</span> <span class="st">&quot;GBP&quot;</span><span class="op">,</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;name&quot;</span><span class="op">:</span> <span class="st">&quot;Delivery charge&quot;</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>      }<span class="op">,</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>      {</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;PaymentChargeSpecification&quot;</span><span class="op">,</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;price&quot;</span><span class="op">:</span> <span class="st">&quot;5.00&quot;</span><span class="op">,</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;priceCurrency&quot;</span><span class="op">:</span> <span class="st">&quot;GBP&quot;</span><span class="op">,</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;name&quot;</span><span class="op">:</span> <span class="st">&quot;Service charge&quot;</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    ]<span class="op">,</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;priceValidUntil&quot;</span><span class="op">:</span> <span class="st">&quot;2026-12-31&quot;</span><span class="op">,</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;shippingDetails&quot;</span><span class="op">:</span> {</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;OfferShippingDetails&quot;</span><span class="op">,</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;shippingRate&quot;</span><span class="op">:</span> {</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;MonetaryAmount&quot;</span><span class="op">,</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;value&quot;</span><span class="op">:</span> <span class="st">&quot;15.00&quot;</span><span class="op">,</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;currency&quot;</span><span class="op">:</span> <span class="st">&quot;GBP&quot;</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>      }<span class="op">,</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;shippingDestination&quot;</span><span class="op">:</span> {</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;DefinedRegion&quot;</span><span class="op">,</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;addressCountry&quot;</span><span class="op">:</span> <span class="st">&quot;GB&quot;</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+<p><strong>Key points:</strong></p>
+<ul>
+<li>The main <code>price</code> field (£119.00) shows the total cost
+including all fees</li>
+<li><code>priceSpecification</code> array breaks down individual charges
+(product, delivery, service)</li>
+<li><code>shippingDetails</code> provides explicit delivery cost and
+destination information</li>
+<li>This structured data allows AI agents to understand complete pricing
+before initiating purchases</li>
+</ul>
+<h3 id="dynamic-content">Dynamic Content</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Add text alternatives for
+animated GIFs</strong> - Use <code>aria-describedby</code> to link
+descriptive text explaining what the GIF demonstrates</label></li>
+<li><label><input type="checkbox" /><strong>Mark background videos as
+decorative</strong> - Add <code>data-video-role="decorative"</code> and
+<code>aria-hidden="true"</code> to purely visual videos</label></li>
+<li><label><input type="checkbox" /><strong>Provide pause controls for
+autoplay media</strong> - WCAG 2.2.2 compliance: animations &gt;5
+seconds need pause controls</label></li>
+</ul>
+<p><strong>Example (animated GIF with description):</strong></p>
+<div class="sourceCode" id="cb3" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;assembly-process.gif&quot;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ot">     alt</span><span class="op">=</span><span class="st">&quot;Three-step assembly process&quot;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ot">     aria-describedby</span><span class="op">=</span><span class="st">&quot;assembly-detail&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;assembly-detail&quot;</span><span class="ot"> data-agent-visible</span><span class="op">=</span><span class="st">&quot;true&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  Assembly steps:</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  1. Insert tab A into slot B</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  2. Rotate clockwise 90 degrees until click</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  3. Secure with provided screw</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code></pre></div>
+<p><strong>Example (decorative vs informational video):</strong></p>
+<div class="sourceCode" id="cb4" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Decorative: purely aesthetic --&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">video</span><span class="ot"> data-video-role</span><span class="op">=</span><span class="st">&quot;decorative&quot;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ot">       aria-hidden</span><span class="op">=</span><span class="st">&quot;true&quot;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ot">       autoplay muted loop playsinline</span><span class="dt">&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">source</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;ambient-clouds.mp4&quot;</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;video/mp4&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">video</span><span class="dt">&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Informational: needs transcript --&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">video</span><span class="ot"> data-video-role</span><span class="op">=</span><span class="st">&quot;informational&quot;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="ot">       controls</span><span class="dt">&gt;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">source</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;product-demo.mp4&quot;</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;video/mp4&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">track</span><span class="ot"> kind</span><span class="op">=</span><span class="st">&quot;captions&quot;</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;demo-en.vtt&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">video</span><span class="dt">&gt;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>View transcript<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">ol</span><span class="dt">&gt;</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Step 1 description<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Step 2 description<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">ol</span><span class="dt">&gt;</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span></code></pre></div>
+<hr />
+<h2 id="priority-1.5-protocol-integration-strategy">Priority 1.5:
+Protocol Integration Strategy</h2>
+<p><strong>When to integrate:</strong> Protocol integration timing
+depends on your exposure level and business priorities. This section
+helps you decide when to integrate commerce protocols (ACP, UCP) versus
+focusing on universal agent-friendly patterns first.</p>
+<p><strong>Critical principle:</strong> Universal patterns (semantic
+HTML, structured data, explicit state management) work for all agents
+regardless of protocol. Implement these first. Protocol integration
+comes after your site is fundamentally agent-navigable.</p>
+<h3 id="integration-timeline-by-exposure-level">Integration Timeline by
+Exposure Level</h3>
+<p><strong>Critical exposure (ad-dependent, agent traffic threatens
+business model):</strong></p>
+<ul>
+<li><strong>Protocol integration:</strong> Not applicable - focus on
+business model diversification first</li>
+<li><strong>Universal patterns:</strong> Immediate (helps humans and
+remaining agent traffic)</li>
+<li><strong>Rationale:</strong> Protocol integration enables
+transactions, but your problem is that agents bypass ads. Fix economics
+before enabling more agent traffic.</li>
+</ul>
+<p><strong>High exposure (transaction-based, competitive pressure,
+agent-hostile patterns):</strong></p>
+<ul>
+<li><strong>Protocol integration:</strong> Q1 2026 (immediate if reading
+this after Q1 2026)</li>
+<li><strong>Universal patterns:</strong> Immediate (Priority 1 from this
+appendix)</li>
+<li><strong>Protocol choice:</strong> One open protocol (ACP or UCP)
+based on traffic sources</li>
+<li><strong>Rationale:</strong> Agent-mediated commerce is processing
+real transactions (Amazon Alexa+, Microsoft Copilot Checkout launched
+January 2026). Waiting risks competitive disadvantage.</li>
+</ul>
+<p><strong>Medium exposure (transaction-based, some agent
+compatibility):</strong></p>
+<ul>
+<li><strong>Protocol integration:</strong> Q2 2026</li>
+<li><strong>Universal patterns:</strong> Q1 2026 (Priority 1 and
+Priority 2)</li>
+<li><strong>Protocol choice:</strong> One open protocol initially,
+evaluate second protocol Q4 2026</li>
+<li><strong>Rationale:</strong> Build foundation first (universal
+patterns), then add transaction capability once patterns are
+stable.</li>
+</ul>
+<p><strong>Low exposure (relationship-based sales, strong brand
+loyalty):</strong></p>
+<ul>
+<li><strong>Protocol integration:</strong> Q3-Q4 2026 or later</li>
+<li><strong>Universal patterns:</strong> Q2 2026 (Priority 1 only)</li>
+<li><strong>Rationale:</strong> Monitor industry adoption, wait for
+protocol convergence or clear winner, focus on fixing obvious usability
+problems first.</li>
+</ul>
+<h3 id="single-protocol-vs.-dual-protocol-decision">Single Protocol
+vs. Dual Protocol Decision</h3>
+<p><strong>Choose one open protocol if:</strong></p>
+<ul>
+<li>Small-to-medium business (under £10M annual revenue)</li>
+<li>Limited engineering resources (fewer than 5 developers)</li>
+<li>Traffic comes primarily from one source (Google Search → UCP;
+ChatGPT users → ACP)</li>
+<li>First-time protocol integration (learn one system before adding
+complexity)</li>
+</ul>
+<p><strong>Support both open protocols if:</strong></p>
+<ul>
+<li>Large enterprise (£50M+ annual revenue)</li>
+<li>Significant engineering capacity</li>
+<li>Traffic sources are diversified (both Google and OpenAI users)</li>
+<li>Agent-mediated commerce expected to exceed 15% of transactions</li>
+</ul>
+<p><strong>Avoid Microsoft proprietary integration unless:</strong></p>
+<ul>
+<li>80%+ of your business is enterprise B2B commerce</li>
+<li>Your customer base is exclusively Windows/Office 365 enterprise
+users</li>
+<li>You have strategic partnership with Microsoft justifying
+lock-in</li>
+</ul>
+<p><strong>Rationale:</strong> Microsoft’s proprietary approach creates
+isolation (see Chapter 9). Even if you eventually support Microsoft,
+integrate at least one open protocol first to avoid vendor lock-in.</p>
+<h3 id="small-business-simplified-path">Small Business Simplified
+Path</h3>
+<p>If you’re a small business without dedicated engineering teams:</p>
+<p><strong>Step 1: Check automatic integration (Week 1)</strong></p>
+<ul>
+<li>Shopify merchants: Verify whether ACP is enabled by default (Shopify
+added ACP support Q4 2024)</li>
+<li>Etsy sellers: ACP integration automatic for all shops</li>
+<li>Other platforms: Check your e-commerce provider’s documentation for
+protocol support</li>
+</ul>
+<p><strong>Step 2: Implement universal patterns (Weeks 2-4)</strong></p>
+<p>Focus on Priority 1 items from this appendix:</p>
+<ul>
+<li>Remove toast notifications, add persistent errors</li>
+<li>Display complete pricing upfront (no “From £99”)</li>
+<li>Add basic Schema.org JSON-LD for products or services</li>
+<li>Verify forms have clear error messages</li>
+</ul>
+<p><strong>Step 3: Monitor platform provider announcements
+(Ongoing)</strong></p>
+<p>Your e-commerce platform will likely choose protocols for you. Follow
+their guidance rather than building custom integration.</p>
+<p><strong>Step 4: Reassess quarterly (Q2, Q3, Q4 2026)</strong></p>
+<p>Check:</p>
+<ul>
+<li>Has your platform added protocol support?</li>
+<li>Has one protocol clearly won market share?</li>
+<li>Have ACP and UCP converged into unified standard?</li>
+<li>What percentage of your traffic comes from agents?</li>
+</ul>
+<p><strong>Timeline:</strong> Q2-Q3 2026 for protocol integration (after
+universal patterns implemented). If your platform doesn’t offer
+simplified integration by Q4 2026, evaluate custom implementation or
+professional audit service.</p>
+<h3 id="enterprise-integration-considerations">Enterprise Integration
+Considerations</h3>
+<p>Large businesses with significant agent exposure should treat
+protocol integration as strategic infrastructure, not optional
+enhancement.</p>
+<p><strong>Build protocol abstraction layers:</strong></p>
+<p>Don’t integrate directly with ACP/UCP in your checkout code. Build an
+abstraction layer:</p>
+<pre class="text" data-role="code-block" data-language="text"><code>Your Checkout Logic
+       ↓
+Protocol Abstraction Layer (swap ACP ↔ UCP without rewriting checkout)
+       ↓
+   ACP Implementation    UCP Implementation</code></pre>
+<p>This enables:</p>
+<ul>
+<li>Swapping protocols if one fails or loses market share</li>
+<li>Adding new protocols without rewriting business logic</li>
+<li>Testing different protocols for conversion rate optimisation</li>
+<li>Migrating if protocols converge into unified standard</li>
+</ul>
+<p><strong>Include agent testing in QA processes:</strong></p>
+<p>Traditional QA tests human interactions (click buttons, fill forms,
+complete checkout). Agent QA tests different patterns:</p>
+<ul>
+<li>Can agents extract product data from structured markup?</li>
+<li>Do validation errors persist long enough for agents to read
+them?</li>
+<li>Can agents determine transaction success from DOM state?</li>
+<li>Do protocol-specific endpoints return correct data formats?</li>
+</ul>
+<p><strong>Track agent traffic separately in analytics:</strong></p>
+<p>Distinguish between:</p>
+<ul>
+<li>Human-initiated transactions (user directly browses and buys)</li>
+<li>Agent-mediated transactions (user delegates task to AI
+assistant)</li>
+</ul>
+<p>This enables measuring protocol-specific conversion rates and
+ROI.</p>
+<p><strong>Implement identity delegation patterns:</strong></p>
+<p>When agents make purchases on users’ behalf, preserve customer
+relationship data. See Chapter 6 for identity delegation patterns and
+security considerations.</p>
+<p><strong>Consider protocol convergence timelines:</strong></p>
+<p>Over-engineering for permanent dual-protocol support may prove
+unnecessary if ACP and UCP merge within 6-12 months (Chapter 9
+analysis). Balance current needs (support both now) with future
+flexibility (architect for convergence).</p>
+<h3 id="testing-and-validation-requirements">Testing and Validation
+Requirements</h3>
+<p><strong>Before deploying protocol integration, verify:</strong></p>
+<p><strong>Authentication flow:</strong></p>
+<ul>
+<li>Users can authenticate through protocol-specific OAuth flow</li>
+<li>Tokens expire appropriately and refresh without user
+re-authentication</li>
+<li>Failed authentication shows clear error message (not generic “Try
+again”)</li>
+</ul>
+<p><strong>Transaction handling:</strong></p>
+<ul>
+<li>Cart creation succeeds with protocol-formatted data</li>
+<li>Inventory checks prevent overselling</li>
+<li>Tax calculation matches your standard checkout process</li>
+<li>Payment processing completes through protocol infrastructure</li>
+<li>Order confirmation provides tracking and order ID</li>
+</ul>
+<p><strong>Error scenarios:</strong></p>
+<ul>
+<li>Out-of-stock items handled gracefully</li>
+<li>Payment failures don’t create orphaned carts</li>
+<li>Network timeouts trigger retry logic, not silent failures</li>
+<li>Protocol version mismatches detected and logged</li>
+</ul>
+<p><strong>Security validation:</strong></p>
+<ul>
+<li>Authentication tokens stored securely (not in URL parameters or
+client-side JavaScript)</li>
+<li>Transaction data encrypted in transit</li>
+<li>User permissions verified (users can only access their own
+transactions)</li>
+<li>Rate limiting prevents abuse</li>
+</ul>
+<h3
+id="platform-agnostic-patterns-before-protocol-specific-integration">Platform-Agnostic
+Patterns Before Protocol-Specific Integration</h3>
+<p><strong>Critical guidance:</strong> Don’t integrate protocols before
+fixing underlying patterns.</p>
+<p>Protocol integration enables secure transactions. But it doesn’t help
+if agents can’t:</p>
+<ul>
+<li>Extract product information (requires structured data)</li>
+<li>Compare options (requires complete pricing upfront)</li>
+<li>Verify transaction success (requires explicit state attributes)</li>
+<li>Handle errors (requires persistent, machine-readable feedback)</li>
+</ul>
+<p><strong>The correct order:</strong></p>
+<ol type="1">
+<li><strong>Universal patterns</strong> (Priority 1 from this appendix)
+- Ensures agents can navigate and understand your site</li>
+<li><strong>Protocol integration</strong> (this section) - Enables
+secure, authenticated transactions</li>
+<li><strong>Advanced optimisation</strong> (Priority 2-4) - Improves
+agent efficiency and conversion rates</li>
+</ol>
+<p>Integrating protocols without fixing patterns is like building a
+secure payment gateway for a site agents can’t read. Technically correct
+but practically useless.</p>
+<h3 id="when-to-evaluate-professional-audit-services">When to Evaluate
+Professional Audit Services</h3>
+<p>Consider professional audit or implementation services if:</p>
+<ul>
+<li>You lack internal expertise in protocol integration</li>
+<li>Your e-commerce platform doesn’t offer simplified integration</li>
+<li>You need dual-protocol support but lack engineering capacity</li>
+<li>You’re unsure which protocol best serves your business model</li>
+<li>You need protocol abstraction architecture guidance</li>
+</ul>
+<p><strong>Timeline:</strong> Q2-Q3 2026 for most businesses. Earlier if
+you’re high-exposure enterprise; later if you’re low-exposure small
+business.</p>
+<hr />
+<h2 id="priority-2-essential-improvements">Priority 2: Essential
+Improvements</h2>
+<p><strong>Effort Level:</strong> Requires coordinated work across
+multiple developers or sustained focus from a small team. Involves
+systematic changes to existing code, testing across multiple pages, and
+potentially updating design patterns. May require stakeholder buy-in for
+visible changes to user experience. Plan for iterative deployment with
+rollback capability.</p>
+<h3 id="form-improvements">Form Improvements</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Implement synchronous
+validation</strong> - Check fields as users complete them, not after
+submission</label></li>
+<li><label><input type="checkbox" /><strong>Add explicit state
+attributes</strong> -
+<code>data-validation-state="valid|invalid|empty"</code> on form
+fields</label></li>
+<li><label><input type="checkbox" /><strong>Show completion
+percentage</strong> - “Form 60% complete” helps agents and humans track
+progress</label></li>
+<li><label><input type="checkbox" /><strong>Disable submit with
+reason</strong> - Button says “Submit (3 errors remaining)” not just
+“Submit”</label></li>
+<li><label><input type="checkbox" /><strong>Make field requirements
+visible</strong> - Show what’s required before users start
+typing</label></li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="sourceCode" id="cb6" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">form</span><span class="ot"> data-state</span><span class="op">=</span><span class="st">&quot;incomplete&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;form-status&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    Completion: <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;completion&quot;</span><span class="dt">&gt;</span>40%<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    Errors: <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;errors&quot;</span><span class="dt">&gt;</span>2<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">input</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="ot">    type</span><span class="op">=</span><span class="st">&quot;email&quot;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="ot">    data-validation-state</span><span class="op">=</span><span class="st">&quot;invalid&quot;</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="ot">    aria-invalid</span><span class="op">=</span><span class="st">&quot;true&quot;</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="ot">    aria-describedby</span><span class="op">=</span><span class="st">&quot;email-error&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;email-error&quot;</span><span class="ot"> role</span><span class="op">=</span><span class="st">&quot;alert&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    Email format invalid (expected: name@domain.com)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">button</span><span class="ot"> disabled data-disabled-reason</span><span class="op">=</span><span class="st">&quot;2 validation errors&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    Submit (2 errors remaining)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">button</span><span class="dt">&gt;</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">form</span><span class="dt">&gt;</span></span></code></pre></div>
+<h3 id="content-organization">Content Organization</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Reduce forced
+pagination</strong> - Show complete information on single pages where
+practical</label></li>
+<li><label><input type="checkbox" /><strong>Add jump navigation</strong>
+- For long pages, provide a table of contents with anchor
+links</label></li>
+<li><label><input type="checkbox" /><strong>Expand critical
+content</strong> - Don’t hide essential information behind tabs or
+accordions</label></li>
+<li><label><input type="checkbox" /><strong>Make search results
+complete</strong> - Show all results or clearly indicate
+pagination</label></li>
+</ul>
+<h3 id="dynamic-content-patterns">Dynamic Content Patterns</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Replace auto-rotating
+carousels with manual navigation</strong> - Remove auto-advance timing,
+let users control progression</label></li>
+<li><label><input type="checkbox" /><strong>Add “View all” option for
+carousel content</strong> - Provide static list showing all items at
+once</label></li>
+<li><label><input type="checkbox" /><strong>Ensure animated text fully
+visible in served HTML</strong> - Complete text in HTML, animation as
+CSS enhancement only</label></li>
+<li><label><input type="checkbox" /><strong>Provide transcripts for
+informational videos</strong> - All non-decorative video needs text
+alternative</label></li>
+</ul>
+<p><strong>Example (carousel with static alternative):</strong></p>
+<div class="sourceCode" id="cb7" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;carousel&quot;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ot">     data-total-slides</span><span class="op">=</span><span class="st">&quot;5&quot;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ot">     data-current-slide</span><span class="op">=</span><span class="st">&quot;1&quot;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ot">     data-autoplay</span><span class="op">=</span><span class="st">&quot;false&quot;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ot">     aria-label</span><span class="op">=</span><span class="st">&quot;Featured products&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;slide&quot;</span><span class="ot"> data-slide-index</span><span class="op">=</span><span class="st">&quot;1&quot;</span><span class="ot"> aria-label</span><span class="op">=</span><span class="st">&quot;Slide 1 of 5&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    Product 1</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">&lt;!-- Slides 2-5 --&gt;</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Static alternative --&gt;</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>View all 5 products<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">ul</span><span class="ot"> data-agent-visible</span><span class="op">=</span><span class="st">&quot;true&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Product 1 - £89.99<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Product 2 - £129.99<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Product 3 - £19.99<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Product 4 - £24.99<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Product 5 - £12.99<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">ul</span><span class="dt">&gt;</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span></code></pre></div>
+<p><strong>Example (animated text done correctly):</strong></p>
+<div class="sourceCode" id="cb8" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Complete text in HTML --&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h1</span><span class="ot"> aria-live</span><span class="op">=</span><span class="st">&quot;off&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  Welcome to our platform that transforms workflows</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">// CSS animation only - content already in DOM</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&#39;h1&#39;</span>)<span class="op">.</span><span class="at">classList</span><span class="op">.</span><span class="fu">add</span>(<span class="st">&#39;typewriter-effect&#39;</span>)<span class="op">;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+<h3 id="loading-states">Loading States</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Add explicit state
+attributes</strong> -
+<code>data-load-state="loading|complete|error"</code></label></li>
+<li><label><input type="checkbox" /><strong>Provide expected
+duration</strong> - “Loading (expected: ~3 seconds)” helps agents wait
+appropriately</label></li>
+<li><label><input type="checkbox" /><strong>Include timestamps</strong>
+- <code>data-started="2025-01-15T10:30:00Z"</code> helps agents decide
+when to timeout</label></li>
+<li><label><input type="checkbox" /><strong>Show what’s loading</strong>
+- “Loading product information…” not just a spinner</label></li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="sourceCode" id="cb9" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> data-load-state</span><span class="op">=</span><span class="st">&quot;loading&quot;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ot">     data-started</span><span class="op">=</span><span class="st">&quot;2025-01-15T10:30:00Z&quot;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ot">     data-expected-duration</span><span class="op">=</span><span class="st">&quot;3000&quot;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ot">     role</span><span class="op">=</span><span class="st">&quot;status&quot;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="ot">     aria-live</span><span class="op">=</span><span class="st">&quot;polite&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  Loading product information (estimated 3 seconds)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code></pre></div>
+<hr />
+<h2 id="priority-3-core-infrastructure">Priority 3: Core
+Infrastructure</h2>
+<p><strong>Effort Level:</strong> Multi-person project requiring
+planning, architectural decisions, and cross-functional collaboration.
+Involves changes to core application structure, integration with
+external systems, and potentially business model adjustments. Requires
+thorough testing, staged rollout, and ongoing monitoring. Budget for
+technical debt reduction and refactoring. Expect dependencies on legal,
+product, and business stakeholders.</p>
+<h3 id="agent-detection">Agent Detection</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Implement basic
+detection</strong> - Check for patterns like rapid form completion, no
+mouse movement</label></li>
+<li><label><input type="checkbox" /><strong>Add server-side
+detection</strong> - Analyse user-agent strings, request patterns,
+session behaviour</label></li>
+<li><label><input type="checkbox" /><strong>Create agent-mode CSS
+class</strong> - Apply when agent detected to adjust
+presentation</label></li>
+<li><label><input type="checkbox" /><strong>Track agent sessions
+separately</strong> - Segment analytics by session type</label></li>
+</ul>
+<h3 id="structured-data-expansion">Structured Data Expansion</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Add JSON-LD to all key
+pages</strong> - Products, services, locations, events</label></li>
+<li><label><input type="checkbox" /><strong>Include comprehensive
+fields</strong> - Reviews, ratings, availability,
+specifications</label></li>
+<li><label><input type="checkbox" /><strong>Add breadcrumb
+markup</strong> - Help agents understand site structure</label></li>
+<li><label><input type="checkbox" /><strong>Mark up search
+functionality</strong> - Use SearchAction to advertise search
+capability</label></li>
+</ul>
+<h3 id="agent-metadata">Agent Metadata</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Add meta tags for API
+endpoints</strong> -
+<code>&lt;meta name="ai-api-endpoint" content="/api/products/123"&gt;</code></label></li>
+<li><label><input type="checkbox" /><strong>Declare rate limits</strong>
+-
+<code>&lt;meta name="ai-rate-limit" content="100/minute"&gt;</code></label></li>
+<li><label><input type="checkbox" /><strong>State content
+policy</strong> -
+<code>&lt;meta name="ai-content-policy" content="summaries-allowed"&gt;</code></label></li>
+<li><label><input type="checkbox" /><strong>Provide structured data
+format info</strong> -
+<code>&lt;meta name="ai-structured-data" content="json-ld"&gt;</code></label></li>
+</ul>
+<h3 id="http-semantics">HTTP Semantics</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Use correct status
+codes</strong> - 200 for success, 201 for created, 303 for redirect
+after POST, 400 for validation errors</label></li>
+<li><label><input type="checkbox" /><strong>Implement proper
+redirects</strong> - POST → 303 redirect → confirmation page with new
+URL</label></li>
+<li><label><input type="checkbox" /><strong>Create distinct confirmation
+pages</strong> - <code>/cart/added</code>,
+<code>/booking/confirmed</code> with explicit success
+messages</label></li>
+<li><label><input type="checkbox" /><strong>Include meaningful error
+responses</strong> - JSON with field-level error details</label></li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="sourceCode" id="cb10" data-role="code-container"><pre
+class="sourceCode javascript"><code class="sourceCode javascript" data-role="code-content"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Successful form submission</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">post</span>(<span class="st">&#39;/cart/add&#39;</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addToCart</span>(req<span class="op">.</span><span class="at">body</span>)<span class="op">;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  res<span class="op">.</span><span class="fu">redirect</span>(<span class="dv">303</span><span class="op">,</span> <span class="st">&#39;/cart/added?product=123&#39;</span>)<span class="op">;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">// Validation error</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">post</span>(<span class="st">&#39;/checkout&#39;</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> errors <span class="op">=</span> <span class="fu">validate</span>(req<span class="op">.</span><span class="at">body</span>)<span class="op">;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (errors<span class="op">.</span><span class="at">length</span> <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    res<span class="op">.</span><span class="fu">status</span>(<span class="dv">400</span>)<span class="op">.</span><span class="fu">json</span>({</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">error</span><span class="op">:</span> <span class="st">&#39;Validation failed&#39;</span><span class="op">,</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>      <span class="dt">details</span><span class="op">:</span> errors<span class="op">.</span><span class="fu">map</span>(e <span class="kw">=&gt;</span> ({</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>        <span class="dt">field</span><span class="op">:</span> e<span class="op">.</span><span class="at">field</span><span class="op">,</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        <span class="dt">message</span><span class="op">:</span> e<span class="op">.</span><span class="at">message</span><span class="op">,</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>        <span class="dt">code</span><span class="op">:</span> e<span class="op">.</span><span class="at">code</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>      }))</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+<hr />
+<h2 id="priority-4-advanced-features">Priority 4: Advanced Features</h2>
+<p><strong>Effort Level:</strong> Ongoing programme, not a one-time
+project. Requires dedicated resources, sustained organizational
+commitment, and strategic business alignment. Involves building new
+systems, establishing governance frameworks, and potentially partnering
+with external platforms. Plan for multi-phase delivery with measurable
+business outcomes at each stage.</p>
+<h3 id="api-development">API Development</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Create formal API alongside
+web interface</strong> - RESTful or GraphQL API for structured
+access</label></li>
+<li><label><input type="checkbox" /><strong>Document API
+comprehensively</strong> - Clear documentation with
+examples</label></li>
+<li><label><input type="checkbox" /><strong>Implement authentication for
+API</strong> - OAuth2 or API keys</label></li>
+<li><label><input type="checkbox" /><strong>Version your API</strong> -
+Use <code>/api/v1/</code> and maintain backwards
+compatibility</label></li>
+<li><label><input type="checkbox" /><strong>Provide API
+discovery</strong> - Advertise API availability in HTML meta tags and
+llms.txt</label></li>
+</ul>
+<h3 id="site-wide-agent-guidance">Site-Wide Agent Guidance</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Create llms.txt
+file</strong> - Site-wide policy for AI agents (like
+robots.txt)</label></li>
+<li><label><input type="checkbox" /><strong>Declare preferred access
+method</strong> - API vs HTML scraping</label></li>
+<li><label><input type="checkbox" /><strong>State content extraction
+policy</strong> - What’s allowed, what’s prohibited</label></li>
+<li><label><input type="checkbox" /><strong>Specify rate limits</strong>
+- Per minute limits for different access types</label></li>
+<li><label><input type="checkbox" /><strong>Provide contact for agent
+issues</strong> - Email or support channel</label></li>
+</ul>
+<p><strong>Example llms.txt:</strong></p>
+<pre class="text" data-role="code-block" data-language="text"><code># llms.txt - AI Agent Guidance
+
+&gt; RetailCo sells electronics. AI agents may browse products and
+&gt; complete purchases on behalf of customers with valid delegation tokens.
+
+preferred-access: api
+api-endpoint: https://api.retailco.com/v1
+api-docs: https://developers.retailco.com
+
+allow: /products/*
+allow: /categories/*
+allow: /reviews/*
+
+auth-required: /cart/*
+auth-required: /checkout/*
+auth-required: /account/*
+
+rate-limit: 100/minute
+rate-limit: 500/minute with-api-key
+
+extraction: product-data-allowed
+extraction: pricing-allowed
+attribution: appreciated
+
+agent-contact: api-support@retailco.com</code></pre>
+<h3 id="testing-infrastructure">Testing Infrastructure</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Set up automated agent
+testing</strong> - Playwright or Selenium tests simulating agent
+behaviour</label></li>
+<li><label><input type="checkbox" /><strong>Test with animations
+disabled</strong> -
+<code>prefers-reduced-motion: reduce</code></label></li>
+<li><label><input type="checkbox" /><strong>Verify errors
+persist</strong> - Check error messages don’t auto-dismiss</label></li>
+<li><label><input type="checkbox" /><strong>Test rapid form
+completion</strong> - Submit forms instantly without delays</label></li>
+<li><label><input type="checkbox" /><strong>Check state
+visibility</strong> - Ensure all state changes are explicit in
+DOM</label></li>
+</ul>
+<h3 id="analytics-and-monitoring">Analytics and Monitoring</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Implement segmented
+analytics</strong> - Track agent vs human sessions
+separately</label></li>
+<li><label><input type="checkbox" /><strong>Monitor agent success
+rates</strong> - % of agent sessions that complete goals</label></li>
+<li><label><input type="checkbox" /><strong>Track agent task
+duration</strong> - How long common tasks take for agents</label></li>
+<li><label><input type="checkbox" /><strong>Log agent errors</strong> -
+Capture and analyse agent-specific failures</label></li>
+<li><label><input type="checkbox" /><strong>Create agent
+dashboard</strong> - Monitor agent traffic and success
+metrics</label></li>
+</ul>
+<h3 id="identity-and-delegation">Identity and Delegation</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Plan delegation token
+system</strong> - How will agents authenticate on behalf of
+users?</label></li>
+<li><label><input type="checkbox" /><strong>Implement OAuth-style
+authorization</strong> - Scoped, time-limited permissions</label></li>
+<li><label><input type="checkbox" /><strong>Create token management
+UI</strong> - Let users view and revoke agent
+authorizations</label></li>
+<li><label><input type="checkbox" /><strong>Add audit logging</strong> -
+Record what agents do on users’ behalf</label></li>
+<li><label><input type="checkbox" /><strong>Consider identity repository
+integration</strong> - For multi-retailer agent shopping</label></li>
+</ul>
+<hr />
+<h2 id="accessibility-alignment">Accessibility Alignment</h2>
+<p>These improvements help both agents and users with disabilities:</p>
+<h3 id="semantic-html">Semantic HTML</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Use proper heading
+hierarchy</strong> - <code>&lt;h1&gt;</code> through
+<code>&lt;h6&gt;</code> in order</label></li>
+<li><label><input type="checkbox" /><strong>Mark up navigation</strong>
+- <code>&lt;nav&gt;</code> for navigation sections</label></li>
+<li><label><input type="checkbox" /><strong>Identify main
+content</strong> - <code>&lt;main&gt;</code> for primary
+content</label></li>
+<li><label><input type="checkbox" /><strong>Use
+<code>&lt;article&gt;</code> for independent content</strong> - Blog
+posts, products, news items</label></li>
+<li><label><input type="checkbox" /><strong>Mark up forms
+properly</strong> - <code>&lt;label&gt;</code> for every input,
+<code>&lt;fieldset&gt;</code> for groups</label></li>
+</ul>
+<h3 id="aria-attributes">ARIA Attributes</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Add
+<code>role="alert"</code> to errors</strong> - Screen readers announce
+immediately</label></li>
+<li><label><input type="checkbox" /><strong>Use <code>aria-live</code>
+for dynamic content</strong> - Announce updates to screen
+readers</label></li>
+<li><label><input type="checkbox" /><strong>Include
+<code>aria-invalid</code> on error fields</strong> - Mark which fields
+have errors</label></li>
+<li><label><input type="checkbox" /><strong>Add
+<code>aria-describedby</code> for error messages</strong> - Connect
+errors to fields</label></li>
+<li><label><input type="checkbox" /><strong>Use
+<code>role="status"</code> for loading states</strong> - Announce
+loading without interrupting</label></li>
+</ul>
+<h3 id="keyboard-navigation">Keyboard Navigation</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Ensure all interactive
+elements are keyboard-accessible</strong> - Tab through forms
+logically</label></li>
+<li><label><input type="checkbox" /><strong>Provide skip navigation
+links</strong> - “Skip to main content”</label></li>
+<li><label><input type="checkbox" /><strong>Show focus indicators
+clearly</strong> - Visible outline on focused elements</label></li>
+<li><label><input type="checkbox" /><strong>Don’t trap keyboard
+focus</strong> - Users can tab out of modal dialogues</label></li>
+</ul>
+<hr />
+<h2 id="performance-and-operations">Performance and Operations</h2>
+<h3 id="rate-limiting">Rate Limiting</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Implement different limits
+by session type</strong> - Stricter limits for agents</label></li>
+<li><label><input type="checkbox" /><strong>Return clear rate limit
+headers</strong> - <code>X-RateLimit-Limit</code>,
+<code>X-RateLimit-Remaining</code></label></li>
+<li><label><input type="checkbox" /><strong>Provide retry-after
+information</strong> - Tell agents when to try again</label></li>
+<li><label><input type="checkbox" /><strong>Consider tiered
+access</strong> - Higher limits for authenticated/paying
+agents</label></li>
+</ul>
+<h3 id="css-for-agent-mode">CSS for Agent Mode</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Disable animations for
+agents</strong> - <code>animation-duration: 0ms</code> when agent
+detected</label></li>
+<li><label><input type="checkbox" /><strong>Respect
+prefers-reduced-motion</strong> - Disable animations for this media
+query</label></li>
+<li><label><input type="checkbox" /><strong>Reveal hidden
+content</strong> - Make agent-specific metadata visible</label></li>
+<li><label><input type="checkbox" /><strong>Expand collapsed
+sections</strong> - Open accordions and tabs by default for
+agents</label></li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="sourceCode" id="cb12" data-role="code-container"><pre
+class="sourceCode css"><code class="sourceCode css" data-role="code-content"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">@media</span> <span class="fu">(</span><span class="kw">prefers-reduced-motion</span><span class="ch">:</span> <span class="dv">reduce</span><span class="fu">)</span> {</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">*,</span> <span class="op">*</span><span class="in">::before</span><span class="op">,</span> <span class="op">*</span><span class="in">::after</span> {</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">animation-duration</span><span class="ch">:</span> <span class="dv">0.01</span><span class="dt">ms</span> <span class="at">!important</span><span class="op">;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">transition-duration</span><span class="ch">:</span> <span class="dv">0.01</span><span class="dt">ms</span> <span class="at">!important</span><span class="op">;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>body<span class="fu">.agent-mode</span> <span class="op">*</span> {</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">animation-duration</span><span class="ch">:</span> <span class="dv">0</span><span class="dt">ms</span> <span class="at">!important</span><span class="op">;</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transition-duration</span><span class="ch">:</span> <span class="dv">0</span><span class="dt">ms</span> <span class="at">!important</span><span class="op">;</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>body<span class="fu">.agent-mode</span> <span class="ex">[</span><span class="ss">data-agent-visible</span><span class="ex">]</span> {</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">block</span> <span class="at">!important</span><span class="op">;</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="version-management">Version Management</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Version your HTML</strong> -
+<code>&lt;html data-site-version="2.5"&gt;</code></label></li>
+<li><label><input type="checkbox" /><strong>Maintain stable
+identifiers</strong> - Keep field names consistent across
+redesigns</label></li>
+<li><label><input type="checkbox" /><strong>Provide changelog</strong> -
+Document changes that affect agents</label></li>
+<li><label><input type="checkbox" /><strong>Support legacy field
+names</strong> - Accept old names as aliases when you
+rename</label></li>
+</ul>
+<hr />
+<h2 id="advanced-implementation">Advanced Implementation</h2>
+<h3 id="identity-layer-for-e-commerce">Identity Layer (for
+E-commerce)</h3>
+<p>If you sell products and want to preserve customer relationships when
+agents shop:</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Implement delegation token
+acceptance</strong> - Accept tokens from identity
+repositories</label></li>
+<li><label><input type="checkbox" /><strong>Query repository for
+customer identity</strong> - Request verified customer data</label></li>
+<li><label><input type="checkbox" /><strong>Support two-tier
+sharing</strong> - Handle both “favourite supplier” and “general”
+levels</label></li>
+<li><label><input type="checkbox" /><strong>Apply loyalty points
+correctly</strong> - Credit to actual customer, not agent</label></li>
+<li><label><input type="checkbox" /><strong>Register warranties
+properly</strong> - Record customer as owner, not agent</label></li>
+<li><label><input type="checkbox" /><strong>Maintain purchase
+history</strong> - Associate agent purchases with customer
+account</label></li>
+</ul>
+<h3 id="security-considerations">Security Considerations</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Distinguish agent access
+from direct access</strong> - Apply different security
+rules</label></li>
+<li><label><input type="checkbox" /><strong>Require explicit
+authorisation for sensitive actions</strong> - Don’t allow silent
+authentication inheritance</label></li>
+<li><label><input type="checkbox" /><strong>Implement scoped
+permissions</strong> - Agents get limited access, not full account
+control</label></li>
+<li><label><input type="checkbox" /><strong>Provide revocation
+mechanism</strong> - Users can cancel agent access
+instantly</label></li>
+<li><label><input type="checkbox" /><strong>Log agent activity</strong>
+- Audit trail of what agents do</label></li>
+</ul>
+<h3 id="content-creator-protections">Content Creator Protections</h3>
+<p>If you’re an ad-funded content site:</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Declare content extraction
+policy</strong> - State what’s allowed in llms.txt and meta
+tags</label></li>
+<li><label><input type="checkbox" /><strong>Require attribution</strong>
+- Specify format: “Source: [site-name] ([url])”</label></li>
+<li><label><input type="checkbox" /><strong>Consider partial
+content</strong> - Show summaries, require visit for full
+content</label></li>
+<li><label><input type="checkbox" /><strong>Implement opt-out
+mechanism</strong> - Let agents know if you prohibit
+extraction</label></li>
+<li><label><input type="checkbox" /><strong>Monitor extraction
+volume</strong> - Track how much content agents consume</label></li>
+</ul>
+<hr />
+<h2 id="testing-your-implementation">Testing Your Implementation</h2>
+<h3 id="manual-tests">Manual Tests</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Disable animations in
+browser</strong> - System preferences → reduce motion</label></li>
+<li><label><input type="checkbox" /><strong>Use keyboard only</strong> -
+Navigate site without mouse</label></li>
+<li><label><input type="checkbox" /><strong>Check with screen
+reader</strong> - VoiceOver (Mac), NVDA (Windows), JAWS</label></li>
+<li><label><input type="checkbox" /><strong>Look at page source</strong>
+- Verify structured data is present and valid</label></li>
+<li><label><input type="checkbox" /><strong>Simulate rapid
+interaction</strong> - Complete forms instantly without
+delays</label></li>
+</ul>
+<h3 id="automated-tests">Automated Tests</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Test form
+completion</strong> - Can agent fill and submit forms
+successfully?</label></li>
+<li><label><input type="checkbox" /><strong>Test error
+persistence</strong> - Do errors remain visible for 10+
+seconds?</label></li>
+<li><label><input type="checkbox" /><strong>Test information
+completeness</strong> - Is key information visible without
+interaction?</label></li>
+<li><label><input type="checkbox" /><strong>Test state changes</strong>
+- Are state changes reflected in DOM attributes?</label></li>
+<li><label><input type="checkbox" /><strong>Test API responses</strong>
+- Are structured responses parseable and complete?</label></li>
+</ul>
+<h3 id="validation-tools">Validation Tools</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Google Rich Results
+Test</strong> - Verify structured data</label></li>
+<li><label><input type="checkbox" /><strong>Schema Markup
+Validator</strong> - Check schema.org markup</label></li>
+<li><label><input type="checkbox" /><strong>WAVE Accessibility
+Tool</strong> - Check accessibility</label></li>
+<li><label><input type="checkbox" /><strong>Lighthouse</strong> - Test
+performance and best practices</label></li>
+<li><label><input type="checkbox" /><strong>W3C HTML Validator</strong>
+- Verify valid HTML</label></li>
+</ul>
+<hr />
+<h2 id="maintenance">Maintenance</h2>
+<h3 id="ongoing">Ongoing</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Monitor agent success
+rates</strong> - Are agents completing tasks successfully?</label></li>
+<li><label><input type="checkbox" /><strong>Review agent error
+logs</strong> - What’s breaking most often?</label></li>
+<li><label><input type="checkbox" /><strong>Test after design
+changes</strong> - Verify agent compatibility isn’t broken</label></li>
+<li><label><input type="checkbox" /><strong>Update structured
+data</strong> - Keep JSON-LD current when content changes</label></li>
+<li><label><input type="checkbox" /><strong>Respond to agent
+issues</strong> - Provide support channel for agent-related
+problems</label></li>
+</ul>
+<h3 id="quarterly-review">Quarterly Review</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Analyse agent traffic
+trends</strong> - Growing or declining?</label></li>
+<li><label><input type="checkbox" /><strong>Compare agent vs human
+conversion</strong> - Are agents succeeding?</label></li>
+<li><label><input type="checkbox" /><strong>Review competitive
+positioning</strong> - Are competitors more agent-friendly?</label></li>
+<li><label><input type="checkbox" /><strong>Update llms.txt</strong> -
+Reflect any policy or access changes</label></li>
+<li><label><input type="checkbox" /><strong>Assess identity layer
+adoption</strong> - Should you integrate with identity
+repositories?</label></li>
+</ul>
+<hr />
+<h2 id="success-metrics">Success Metrics</h2>
+<p>Track these to measure progress:</p>
+<p><strong>Agent Traffic:</strong></p>
+<ul>
+<li>% of total traffic from agents</li>
+<li>Growth rate month-over-month</li>
+</ul>
+<p><strong>Agent Success:</strong></p>
+<ul>
+<li>Task completion rate for agents vs humans</li>
+<li>Error rate for agents vs humans</li>
+<li>Average task duration for agents vs humans</li>
+</ul>
+<p><strong>Business Impact:</strong></p>
+<ul>
+<li>Conversion rate for agent sessions</li>
+<li>Revenue from agent-mediated transactions</li>
+<li>Customer acquisition cost for agent traffic</li>
+</ul>
+<p><strong>Technical Health:</strong></p>
+<ul>
+<li>Structured data coverage (% of pages)</li>
+<li>API adoption rate</li>
+<li>Rate limit violations</li>
+<li>Agent-specific error volume</li>
+</ul>
+<hr />
+<h2 id="priority-by-business-type">Priority by Business Type</h2>
+<h3 id="e-commerce-retail">E-commerce / Retail</h3>
+<p><strong>Priority 1:</strong> Complete pricing, structured product
+data, checkout flow clarity <strong>Priority 2:</strong> Identity layer
+integration, delegation tokens <strong>Priority 3:</strong> API
+development, advanced analytics</p>
+<h3 id="content-publishers">Content Publishers</h3>
+<p><strong>Priority 1:</strong> Content extraction policy, attribution
+requirements <strong>Priority 2:</strong> Partial content strategy,
+llms.txt <strong>Priority 3:</strong> Licensing framework, platform
+partnerships</p>
+<h3 id="saas-applications">SaaS / Applications</h3>
+<p><strong>Priority 1:</strong> API development, OAuth delegation
+<strong>Priority 2:</strong> Agent-specific pricing, usage tracking
+<strong>Priority 3:</strong> Integration partnerships, agent SDKs</p>
+<h3 id="service-businesses">Service Businesses</h3>
+<p><strong>Priority 1:</strong> Structured business data (hours,
+location, services) <strong>Priority 2:</strong> Booking/appointment
+clarity <strong>Priority 3:</strong> Simple API for availability
+checks</p>
+<h3 id="small-businesses">Small Businesses</h3>
+<p><strong>Priority 1:</strong> Basic structured data, complete pricing
+<strong>Priority 2:</strong> Form improvements, clear errors
+<strong>Priority 3:</strong> One-page information display</p>
+<hr />
+<h2 id="getting-help">Getting Help</h2>
+<p><strong>Resources:</strong></p>
+<ul>
+<li>Schema.org documentation: <a href="https://schema.org"
+class="uri">https://schema.org</a></li>
+<li>Web Content Accessibility Guidelines: <a
+href="https://www.w3.org/WAI/WCAG21/quickref/"
+class="uri">https://www.w3.org/WAI/WCAG21/quickref/</a></li>
+<li>Google Search Central: <a
+href="https://developers.google.com/search"
+class="uri">https://developers.google.com/search</a></li>
+<li>MDN Web Docs: <a href="https://developer.mozilla.org"
+class="uri">https://developer.mozilla.org</a></li>
+</ul>
+<p><strong>Community:</strong></p>
+<ul>
+<li>Share experiences with other implementers</li>
+<li>Report common agent failures to help build best practices</li>
+<li>Contribute to emerging standards like llms.txt</li>
+</ul>
+<p><strong>Professional Support:</strong></p>
+<ul>
+<li>Hire accessibility consultants (benefits overlap with agent
+compatibility)</li>
+<li>Consider API development agencies if building formal APIs</li>
+<li>Engage security consultants for delegation token implementation</li>
+</ul>
+<hr />
+<p><strong>Remember:</strong> Every improvement helps both agents and
+humans. Start with quick wins, build momentum, and iterate based on
+insights from your analytics.</p>
+<p><strong>Next steps:</strong> Pick three items from Priority 1 and
+implement them. Track the impact. Build from there.</p>
+</main>
+<hr>
+<nav class="appendix-navigation" role="navigation" aria-label="Appendix Navigation">
+    <p><a href="appendix-index.html">← Back to Appendices Index</a></p>
+    <p>Quick navigation:
+        <a href="appendix-a.html">A</a> |
+        <a href="appendix-b.html">B</a> |
+        <a href="appendix-c.html">C</a> |
+        <a href="appendix-d.html">D</a> |
+        <a href="appendix-e.html">E</a> |
+        <a href="appendix-f.html">F</a> |
+        <a href="appendix-g.html">G</a> |
+        <a href="appendix-h.html">H</a> |
+        <a href="appendix-i.html">I</a> |
+        <a href="appendix-j.html">J</a> |
+        <a href="appendix-k.html">K</a> |
+        <a href="appendix-l.html">L</a>
+    </p>
+</nav>
+
+  <!-- Floating home button (top-left) -->
+  <a href="index.html" class="floating-home-button" aria-label="Back to Home">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 0L0 8h3v8h10V8h3L8 0zm0 2.5L13.5 8H11v6H5V8H2.5L8 2.5z"/>
+    </svg>
+    Home
+  </a>
+  <!-- Floating back to top button (bottom-left) -->
+  <a href="#" class="floating-top-button" aria-label="Back to Top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 3.5l-5.5 5.5L4 10.5l3-3v8.5h2V7.5l3 3L13.5 9z"/>
+    </svg>
+    Top
+  </a>
+
+  <script>
+    // Add copy buttons to all code blocks
+    document.addEventListener('DOMContentLoaded', function() {
+      // Find both wrapped code blocks (div.sourceCode) and standalone pre blocks
+      const wrappedBlocks = document.querySelectorAll('div.sourceCode');
+      const standaloneBlocks = document.querySelectorAll('pre[data-role="code-block"]:not(.sourceCode)');
+
+      // Process wrapped code blocks (HTML, JavaScript, etc.)
+      wrappedBlocks.forEach(function(block) {
+        addCopyButton(block, function(block) {
+          const codeElement = block.querySelector('code');
+          let text = '';
+          const spans = codeElement.querySelectorAll('span[id^="cb"]');
+          spans.forEach(function(span) {
+            const nodes = Array.from(span.childNodes);
+            nodes.forEach(function(node) {
+              if (node.nodeType === Node.TEXT_NODE) {
+                text += node.textContent;
+              } else if (node.nodeName !== 'A') {
+                text += node.textContent;
+              }
+            });
+          });
+          return text;
+        });
+      });
+
+      // Process standalone pre blocks (text, robots.txt, etc.)
+      standaloneBlocks.forEach(function(block) {
+        addCopyButton(block, function(block) {
+          const codeElement = block.querySelector('code');
+          return codeElement ? codeElement.textContent : block.textContent;
+        });
+      });
+
+      // Helper function to add copy button to any block
+      function addCopyButton(block, extractTextFn) {
+        const button = document.createElement('button');
+        button.className = 'copy-button';
+        button.textContent = 'Copy';
+        button.setAttribute('aria-label', 'Copy code to clipboard');
+
+        button.addEventListener('click', function() {
+          const text = extractTextFn(block);
+
+          navigator.clipboard.writeText(text).then(function() {
+            button.textContent = 'Copied';
+            button.classList.add('copied');
+            setTimeout(function() {
+              button.textContent = 'Copy';
+              button.classList.remove('copied');
+            }, 2000);
+          }).catch(function(err) {
+            console.error('Failed to copy:', err);
+            button.textContent = 'Failed';
+            setTimeout(function() {
+              button.textContent = 'Copy';
+            }, 2000);
+          });
+        });
+
+        block.insertBefore(button, block.firstChild);
+      }
+    });
+  </script>
+</body>
+</html>

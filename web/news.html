@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Tom Cranstoun">
+  <meta name="description" content="Latest news and updates from MX-Bible book project - AI agents, web design, and the future of human-computer interaction">
+
+  <!-- AI-specific meta tags (proposed pattern from Chapter 10) -->
+  <meta name="ai-preferred-access" content="html">
+  <meta name="ai-content-policy" content="summaries-allowed, full-extraction-allowed">
+  <meta name="ai-freshness" content="daily">
+  <meta name="ai-structured-data" content="json-ld">
+  <meta name="ai-attribution" content="required" text="Source: MX-Bible by Tom Cranstoun, https://allabout.network/invisible-users/">
+  <meta name="llms-txt" content="/llms.txt">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://allabout.network/invisible-users/news.html">
+  <meta property="og:title" content="Industry News: MX-Bible">
+  <meta property="og:description" content="Latest developments in AI agents, web design, and agent-mediated commerce since publication.">
+  <meta property="og:image" content="https://allabout.network/images/invisible-users-news-og.jpg">
+  <meta property="og:site_name" content="MX-Bible">
+  <meta property="og:locale" content="en_GB">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://allabout.network/invisible-users/news.html">
+  <meta name="twitter:title" content="MX-Bible - Industry News">
+  <meta name="twitter:description" content="Latest AI agent platform launches and web design developments.">
+  <meta name="twitter:image" content="https://allabout.network/images/invisible-users-news-og.jpg">
+  <meta name="twitter:creator" content="@tomcranstoun">
+
+  <!-- Additional SEO -->
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <meta name="keywords" content="AI agent news, platform launches, web design updates, industry developments, agent-mediated commerce">
+  <meta name="theme-color" content="#0066cc">
+
+  <title>Project News | MX-Bible</title>
+
+  <!-- Schema.org structured data for news articles -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "MX-Bible - Project News",
+    "description": "Latest news and updates from MX-Bible book project covering AI agents, web design, and identity delegation infrastructure",
+    "author": {
+      "@type": "Person",
+      "name": "Tom Cranstoun",
+      "email": "tom.cranstoun@gmail.com",
+      "url": "https://allabout.network"
+    },
+    "datePublished": "2025-01-10",
+    "dateModified": "2026-01-13",
+    "inLanguage": "en-GB",
+    "isPartOf": {
+      "@type": "Book",
+      "name": "MX-Bible",
+      "url": "https://allabout.network/invisible-users"
+    }
+  }
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: #1f2937;
+      background: #ffffff;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0066cc 0%, #2196F3 100%);
+      color: white;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    header p {
+      font-size: 1.25rem;
+      opacity: 0.95;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    .news-item {
+      background: #f9fafb;
+      border-left: 4px solid #0066cc;
+      border-radius: 8px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: box-shadow 0.2s;
+    }
+
+    .news-item:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .news-date {
+      color: #4b5563;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .news-item h2 {
+      font-size: 1.5rem;
+      color: #1f2937;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .news-item p {
+      margin-bottom: 1rem;
+      color: #4b5563;
+    }
+
+    .news-item ul {
+      margin: 1rem 0 1rem 2rem;
+      color: #4b5563;
+    }
+
+    .news-item li {
+      margin-bottom: 0.5rem;
+    }
+
+    a:not(.floating-home-button):not(.floating-top-button) {
+      color: #0066cc;
+      text-decoration: none;
+    }
+
+    a:not(.floating-home-button):not(.floating-top-button):hover {
+      text-decoration: underline;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #0066cc;
+      color: #ffffff;
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-right: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .cta-box {
+      background: #0066cc;
+      border: 2px solid #0066cc;
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    .cta-box h3 {
+      margin-top: 0;
+      color: #ffffff;
+      margin-bottom: 1rem;
+    }
+
+    .cta-box p {
+      color: #ffffff;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #0066cc;
+      color: #ffffff;
+      padding: 0.75rem 2rem;
+      border-radius: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+      border: none;
+    }
+
+    .btn:hover {
+      background: #003d7a;
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    footer {
+      background: #f9fafb;
+      border-top: 1px solid #e5e7eb;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 4rem;
+    }
+
+    footer p {
+      color: #4b5563;
+      margin: 0.25rem 0;
+    }
+
+    .contact-links {
+      margin: 1.5rem 0;
+    }
+
+    .contact-links a {
+      margin: 0 1rem;
+    }
+
+    /* Floating navigation buttons */
+    .floating-home-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: #0066cc;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .floating-home-button:hover {
+      background-color: #003d7a;
+      color: white;
+      box-shadow: 0 6px 16px rgba(0, 102, 204, 0.4);
+      transform: translateY(-2px);
+    }
+    .floating-home-button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
+    }
+    .floating-home-button svg {
+      fill: white;
+    }
+    .floating-top-button {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #0066cc;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+    .floating-top-button:hover {
+      background-color: #003d7a;
+      color: white;
+      box-shadow: 0 6px 16px rgba(0, 102, 204, 0.4);
+      transform: translateY(-2px);
+    }
+    .floating-top-button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
+    }
+    .floating-top-button svg {
+      fill: white;
+    }
+    @media (max-width: 768px) {
+      .floating-home-button {
+        top: 15px;
+        left: 15px;
+        padding: 10px 16px;
+        font-size: 0.85rem;
+      }
+      .floating-top-button {
+        bottom: 15px;
+        left: 15px;
+        padding: 10px 16px;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>MX-Bible</h1>
+    <p>Industry developments since publication (12 January 2026)</p>
+  </header>
+
+  <main class="container" role="main" data-load-state="complete">
+    <article class="news-item" data-article-type="introduction">
+      <div class="news-date">Book Published: 12 January 2026</div>
+      <h2>Industry Developments Since Publication</h2>
+      <p><strong>MX-Bible</strong> was published on 12 January 2026. This page tracks significant industry developments that have occurred since publication—events that would have been included in the book had they happened earlier.</p>
+      <p>The market is moving rapidly. Platform launches, protocol announcements, regulatory developments, and major implementations that affect the book's analysis are documented below.</p>
+    </article>
+
+    <article class="news-item" data-article-type="industry-update">
+      <time class="news-date" datetime="2025-10-02">October 2025</time>
+      <h2>Perplexity Launches Free AI Browser with Agent-Mode Automation</h2>
+      <p>Perplexity AI released Comet browser to the public for free in October 2025, democratizing access to browser-based AI agent automation. Initially launched to paid subscribers in July 2025, Comet now reaches millions of daily users worldwide with integrated AI assistance in every browser tab.</p>
+
+      <p><strong>Key details:</strong></p>
+      <ul>
+        <li><strong>Timeline:</strong> Initial launch 9 July 2025 ($200/month Max subscribers), free global release 2 October 2025, Android launch November 2025</li>
+        <li><strong>Scale:</strong> Millions joined waitlist before free release; millions of daily users as of January 2026</li>
+        <li><strong>Agent-Mode automation:</strong> Multi-step workflows, voice-activated browser control, background task management</li>
+        <li><strong>Core capabilities:</strong> Page summarization, tab management, email drafting, shopping comparison, natural language interactions</li>
+        <li><strong>Architecture:</strong> Chromium-based browser with Comet Assistant integrated in every new tab, operates within user's browser (session inheritance)</li>
+        <li><strong>Platform:</strong> Desktop (Windows, macOS) and mobile (Android, iOS coming soon)</li>
+      </ul>
+
+      <p><strong>Book validation:</strong> Validates Chapter 2's browser agent interaction patterns and Chapter 6's session inheritance warnings. Chapter 6 explicitly mentions "Claude for Chrome (launched December 2025)" as an example of this architecture—Comet (launched July 2025, free October 2025) is an earlier production example of the same session inheritance pattern that makes banking detection impossible.</p>
+
+      <p><strong>Ecosystem shift:</strong> Perplexity's entry demonstrates the platform race discussed in Chapter 9. A search engine company now owns a browser, competing directly with Chrome whilst building AI-first interfaces. The free global release democratizes browser automation previously limited to expensive subscriptions, accelerating mainstream adoption. "Agent-Mode" terminology in consumer marketing signals agents becoming normalized in everyday workflows.</p>
+
+      <p><strong>Strategic implications:</strong> Website owners must prepare for browser agents that inherit authenticated sessions, understand dynamic content, and automate multi-step workflows. The patterns from Chapter 10 (designing for both humans and agents) become immediately actionable as millions of users deploy browser-based agents daily.</p>
+
+      <p><strong>See full analysis:</strong> Comprehensive 12-section entry in Appendix J covering technical architecture, business model implications, and security considerations.</p>
+
+      <span class="tag">Platform Launch</span>
+    </article>
+
+    <article class="news-item" data-article-type="industry-update">
+      <time class="news-date" datetime="2026-01">January 2026</time>
+      <h2>Adobe Reports Massive AI Traffic Surge Across Industries</h2>
+      <p>Adobe Analytics has released comprehensive data documenting extraordinary growth in AI-driven traffic based on analysis of over 1 trillion visits to U.S. websites during the 2025 holiday season. The findings reveal a complete reversal in AI traffic performance metrics in just 12 months.</p>
+
+      <p><strong>Key findings:</strong></p>
+      <ul>
+        <li><strong>Retail:</strong> 693% year-over-year AI traffic growth</li>
+        <li><strong>Conversion reversal:</strong> AI traffic now converts 31% better than non-AI sources (was 51% worse 12 months ago)</li>
+        <li><strong>Revenue impact:</strong> AI-driven revenue per visit now 32% higher (complete reversal from -51% to +32% in one year)</li>
+        <li><strong>Engagement:</strong> 33% lower bounce rate, 14% higher engagement, 45% longer time on site</li>
+        <li><strong>Cross-industry growth:</strong> Travel +539%, Financial Services +266%, Tech/Software +120%, Media/Entertainment +92%</li>
+        <li><strong>Consumer adoption:</strong> 38% have used AI for shopping, 52% plan to use it this year</li>
+        <li><strong>User experience:</strong> 81% report improved shopping experience with AI assistance</li>
+      </ul>
+
+      <p><strong>Book validation:</strong> This data validates the market acceleration discussed in the Preface ("rocket-fuel mode"), the mainstream adoption predicted in Chapter 1, the improved user experience thesis from Chapter 8, and the platform race urgency from Chapter 9.</p>
+
+      <p><strong>Challenge to assumptions:</strong> The data challenges Chapter 4's revenue decline concerns for e-commerce sites. AI traffic now generates MORE revenue, not less. The book's cautious view was appropriate for content sites with advertising models, but e-commerce sites now have clear financial incentive to optimise for AI agents.</p>
+
+      <p><strong>Geographic scope:</strong> This data comes from U.S. websites only. Many AI platforms and campaigns are trialling in the United States first, with global expansion expected as platforms mature. The pattern demonstrates the trajectory for global markets.</p>
+
+      <p><strong>Strategic implications:</strong> E-commerce sites should immediately implement AI traffic tracking, test agent compatibility, and optimise for conversion. Content sites still face existential threats from the advertising model collapse. The dual outcome (commerce wins, content loses) creates market tension that will define the next phase of web evolution.</p>
+
+      <p><strong>See full analysis:</strong> Comprehensive 12-section entry in Appendix J covering business model implications, technical implementation insights, and strategic recommendations.</p>
+
+      <span class="tag">Ecosystem Maturity</span>
+    </article>
+
+    <div class="cta-box" role="complementary">
+      <h3>Stay Updated</h3>
+      <p>Get notified when significant industry developments are added to this page.</p>
+      <a href="mailto:tom.cranstoun@gmail.com?subject=Industry News Subscription" class="btn">Subscribe to Updates</a>
+    </div>
+
+    <section aria-labelledby="related-resources">
+      <h2 id="related-resources" style="margin: 3rem 0 1rem; color: #1f2937;">Related Resources</h2>
+    <ul style="margin: 1rem 0 1rem 2rem; color: #4b5563;">
+      <li><a href="https://allabout.network/invisible-users">MX-Bible (book website)</a></li>
+    </ul>
+    </section>
+  </main>
+
+  <footer role="contentinfo">
+    <div class="contact-links">
+      <a href="mailto:tom.cranstoun@gmail.com">Email</a>
+      <a href="https://allabout.network">Website</a>
+      <a href="https://github.com/Digital-Domain-Technologies-Ltd/invisible-users">GitHub</a>
+    </div>
+    <p>&copy; 2025 All About Network. Book project news and updates.</p>
+    <p>Last updated: 13 January 2026</p>
+  </footer>
+
+  <!-- Floating home button (top-left) -->
+  <a href="index.html" class="floating-home-button" aria-label="Back to Home">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 0L0 8h3v8h10V8h3L8 0zm0 2.5L13.5 8H11v6H5V8H2.5L8 2.5z"/>
+    </svg>
+    Home
+  </a>
+  <!-- Floating back to top button (bottom-left) -->
+  <a href="#" class="floating-top-button" aria-label="Back to Top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 3.5l-5.5 5.5L4 10.5l3-3v8.5h2V7.5l3 3L13.5 9z"/>
+    </svg>
+    Top
+  </a>
+</body>
+</html>

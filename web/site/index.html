@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Tom Cranstoun">
+  <meta name="description" content="MX-Bible - A practical guide to designing websites that work for AI agents and everyone else. Learn AI-friendly patterns, accessibility best practices, and future-proof implementation strategies.">
+
+  <!-- AI-specific meta tags (proposed pattern from Chapter 10) -->
+  <meta name="ai-preferred-access" content="html">
+  <meta name="ai-content-policy" content="summaries-allowed, full-extraction-allowed">
+  <meta name="ai-freshness" content="monthly">
+  <meta name="ai-structured-data" content="json-ld">
+  <meta name="ai-attribution" content="required" text="Source: MX-Bible by Tom Cranstoun, https://allabout.network/invisible-users/">
+
+  <title>MX-Bible | Designing the Web for AI Agents and Everyone Else</title>
+
+  <!-- Schema.org structured data for home page -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "MX-Bible",
+    "alternateName": "Designing the Web for AI Agents and Everyone Else",
+    "description": "A practical guide to designing websites that work for AI agents and everyone else",
+    "url": "https://allabout.network/invisible-users",
+    "image": "https://allabout.network/images/invisible-users-site.jpg",
+    "datePublished": "2026-01-11",
+    "dateModified": "2026-01-11",
+    "inLanguage": "en-GB",
+    "keywords": "AI agents, web design, accessibility, semantic HTML, Schema.org, structured data, agent-friendly patterns",
+    "author": {
+      "@type": "Person",
+      "name": "Tom Cranstoun",
+      "email": "tom.cranstoun@gmail.com",
+      "url": "https://allabout.network/tom-cranstoun.html",
+      "image": "https://allabout.network/images/tom-cranstoun.jpg",
+      "sameAs": [
+        "https://www.linkedin.com/in/tom-cranstoun/",
+        "https://github.com/Digital-Domain-Technologies-Ltd"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Digital Domain Technologies Ltd",
+      "url": "https://allabout.network"
+    },
+    "mainEntity": {
+      "@type": "Book",
+      "name": "MX-Bible",
+      "bookFormat": "https://schema.org/EBook",
+      "inLanguage": "en-GB",
+      "numberOfPages": "TBD",
+      "author": {
+        "@type": "Person",
+        "name": "Tom Cranstoun",
+        "url": "https://allabout.network/tom-cranstoun.html"
+      },
+      "datePublished": "2026-Q1"
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://allabout.network/invisible-users/web/search.html?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>MX-Bible</h1>
+    <p>Designing the Web for AI Agents and Everyone Else</p>
+    <div class="hero-buttons">
+      <a href="appendix-index.html" class="btn">View Appendices</a>
+      <a href="#about" class="btn btn-secondary">Learn More</a>
+    </div>
+  </header>
+
+  <main class="container" role="main" data-load-state="complete">
+
+    <section id="about" data-section-type="introduction">
+      <h2 style="font-size: 2.5rem; color: #1e40af; margin-bottom: 1.5rem; text-align: center;">A Practical Guide to the Collision Between Modern Web Design and AI Agents</h2>
+      <p style="font-size: 1.25rem; color: #4b5563; text-align: center; max-width: 900px; margin: 0 auto 3rem;">
+        Modern web design optimised for human users often fails for AI agents. Toast notifications vanish before agents can process them. Pagination hides content. Single-page applications obscure state changes. This book examines why these patterns break agents — and shows how fixing them benefits everyone.
+      </p>
+    </section>
+
+    <div class="features">
+      <article class="feature-card" data-benefit="practical-guidance">
+        <h3>Production-Ready Patterns</h3>
+        <p>Not theoretical frameworks, but battle-tested implementation guidance:</p>
+        <ul>
+          <li>Semantic HTML that works for all agents</li>
+          <li>Explicit state management patterns</li>
+          <li>Schema.org structured data examples</li>
+          <li>Form validation that agents can parse</li>
+          <li>Complete code examples you can deploy today</li>
+        </ul>
+      </article>
+
+      <article class="feature-card" data-benefit="universal-compatibility">
+        <h3>Universal Compatibility</h3>
+        <p>Patterns that work across diverse agent architectures:</p>
+        <ul>
+          <li>CLI agents (command-line tools)</li>
+          <li>Browser automation agents (Playwright, Selenium)</li>
+          <li>Server-based agents (cloud-hosted)</li>
+          <li>Browser extension assistants</li>
+          <li>IDE-integrated browser controls</li>
+        </ul>
+      </article>
+
+      <article class="feature-card" data-benefit="human-benefits">
+        <h3>Benefits for Humans</h3>
+        <p>The patterns that help AI agents also improve human experiences:</p>
+        <ul>
+          <li>Persistent error messages (no vanishing toasts)</li>
+          <li>Clear navigation structure</li>
+          <li>Semantic HTML aids screen readers</li>
+          <li>Explicit state reduces confusion</li>
+          <li>Honest pricing and complete information</li>
+        </ul>
+      </article>
+    </div>
+
+    <section class="audience-section">
+      <h2>Who This Book Serves</h2>
+      <div class="audience-grid">
+        <article class="audience-card" data-audience="developers">
+          <h3>Web Professionals</h3>
+          <p>Developers, designers, and accessibility specialists looking to future-proof their websites with patterns that work for both humans and AI agents.</p>
+        </article>
+
+        <article class="audience-card" data-audience="agent-builders">
+          <h3>Agent System Developers</h3>
+          <p>Engineers building AI agents that need to browse websites reliably. Chapter 11 provides validation frameworks and confidence scoring patterns.</p>
+        </article>
+
+        <article class="audience-card" data-audience="business-leaders">
+          <h3>Business Leaders</h3>
+          <p>CTOs and product owners making strategic decisions about agent-mediated commerce and the commercial impact of AI agents on digital business.</p>
+        </article>
+
+        <article class="audience-card" data-audience="investors">
+          <h3>Partners & Investors</h3>
+          <p>Agencies and investors evaluating opportunities in the emerging agent economy and understanding the commercial potential of this new market category.</p>
+        </article>
+      </div>
+    </section>
+
+    <section data-section-type="key-themes" style="margin: 4rem 0;">
+      <h2 style="font-size: 2rem; color: #1e40af; margin-bottom: 2rem;">Key Themes</h2>
+
+      <article style="margin-bottom: 3rem;">
+        <h3 style="font-size: 1.5rem; color: #1f2937; margin-bottom: 1rem;">Agent Diversity and Universal Patterns</h3>
+        <p style="color: #4b5563; margin-bottom: 1rem;">
+          The book addresses a diverse ecosystem of AI agents — from lightweight CLI tools to full browser automation systems. Rather than optimising for specific agent types, it focuses on universal compatibility patterns: semantic HTML that works regardless of JavaScript execution, explicit state attributes visible in the DOM for any parser, and structured data that's machine-readable across all architectures.
+        </p>
+      </article>
+
+      <article style="margin-bottom: 3rem;">
+        <h3 style="font-size: 1.5rem; color: #1f2937; margin-bottom: 1rem;">Identity Delegation</h3>
+        <p style="color: #4b5563; margin-bottom: 1rem;">
+          When AI agents transact on behalf of customers, the business-customer relationship breaks down. The book discusses identity delegation patterns as one emerging solution, acknowledging multiple approaches without prescribing a specific implementation. The Universal Identity Delegation Infrastructure project is introduced as an open-source initiative addressing this challenge.
+        </p>
+      </article>
+
+      <article style="margin-bottom: 3rem;">
+        <h3 style="font-size: 1.5rem; color: #1f2937; margin-bottom: 1rem;">Session Inheritance Problem</h3>
+        <p style="color: #4b5563; margin-bottom: 1rem;">
+          A critical security insight explored in Chapter 6: in-browser agents inherit authenticated sessions rather than failing to authenticate. Banks cannot detect AI involvement because agents inherit proof-of-humanity tokens from the user's existing session. This has profound implications for security architecture.
+        </p>
+      </article>
+    </section>
+
+    <section class="cta-section">
+      <h2>Ready to Build Better Websites?</h2>
+      <p>Start with the free appendices, explore the patterns, and transform your websites to work for everyone.</p>
+      <div class="hero-buttons">
+        <a href="appendix-index.html" class="btn" style="background: white; color: #2563eb;">View All Appendices</a>
+        <a href="mailto:tom.cranstoun@gmail.com?subject=Question about MX-Bible" class="btn" style="background: #1e40af; color: white;">Contact the Author</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer role="contentinfo">
+    <div class="contact-links">
+      <a href="mailto:tom.cranstoun@gmail.com">Email</a>
+      <a href="https://allabout.network">Website</a>
+      <a href="https://www.linkedin.com/in/tom-cranstoun/">LinkedIn</a>
+      <a href="https://github.com/Digital-Domain-Technologies-Ltd/invisible-users-manuscript">GitHub</a>
+    </div>
+    <p>&copy; 2026 Tom Cranstoun. All rights reserved.</p>
+    <p>Last updated: January 2026</p>
+  </footer>
+
+  <!-- Floating home button (top-left) -->
+  <a href="index.html" class="floating-home-button" aria-label="Back to Home">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 0L0 8h3v8h10V8h3L8 0zm0 2.5L13.5 8H11v6H5V8H2.5L8 2.5z"/>
+    </svg>
+    Home
+  </a>
+
+  <!-- Floating back to top button (bottom-left) -->
+  <a href="#" class="floating-top-button" aria-label="Back to Top">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 3.5l-5.5 5.5L4 10.5l3-3v8.5h2V7.5l3 3L13.5 9z"/>
+    </svg>
+    Top
+  </a>
+  <script src="js/common.js"></script>
+</body>
+</html>
