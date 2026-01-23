@@ -4,314 +4,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="Tom Cranstoun">
-  <meta name="description" content="Information for reviewers of The Invisible Users book - acknowledgment policy, feedback instructions, and download access with NDA agreement.">
+  <meta name="description" content="Information for reviewers of MX-Bible and MX-Handbook books - comprehensive guide and practical implementation handbook for AI-agent-friendly web design. Acknowledgment policy, feedback guidelines, and confidential review copy access.">
 
   <!-- AI-specific meta tags (proposed pattern from Chapter 10) -->
   <meta name="ai-preferred-access" content="html">
   <meta name="ai-content-policy" content="summaries-allowed, full-extraction-allowed">
   <meta name="ai-freshness" content="monthly">
   <meta name="ai-structured-data" content="json-ld">
-  <meta name="ai-attribution" content="required" text="Source: The Invisible Users by Tom Cranstoun, https://allabout.network/invisible-users/">
+  <meta name="ai-attribution" content="required" text="Source: MX-Bible by Tom Cranstoun, https://allabout.network/invisible-users/">
 
   <!-- Additional SEO - Reviewer page not for public indexing -->
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#1e40af">
 
-  <title>For Reviewers | The Invisible Users</title>
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      line-height: 1.6;
-      color: #1f2937;
-      background: #ffffff;
-    }
-
-    header {
-      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-      color: white;
-      padding: 4rem 2rem;
-      text-align: center;
-    }
-
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      font-weight: 700;
-    }
-
-    header p {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      font-weight: 400;
-      color: #ffffff;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 3rem 2rem;
-    }
-
-    h2 {
-      font-size: 2rem;
-      color: #1f2937;
-      margin: 3rem 0 1.5rem;
-      font-weight: 700;
-    }
-
-    h3 {
-      font-size: 1.5rem;
-      color: #374151;
-      margin: 2rem 0 1rem;
-      font-weight: 600;
-    }
-
-    p {
-      margin-bottom: 1rem;
-      color: #4b5563;
-    }
-
-    a {
-      color: #2563eb;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    ul {
-      margin: 1rem 0 1rem 2rem;
-      color: #4b5563;
-    }
-
-    li {
-      margin-bottom: 0.75rem;
-    }
-
-    strong {
-      color: #1f2937;
-      font-weight: 600;
-    }
-
-    .highlight-box {
-      background: #f9fafb;
-      border-left: 4px solid #3b82f6;
-      border-radius: 8px;
-      padding: 2rem;
-      margin: 2rem 0;
-    }
-
-    .highlight-box h3 {
-      margin-top: 0;
-      color: #1e40af;
-    }
-
-    .nda-section {
-      margin: 3rem 0;
-    }
-
-    .nda-box {
-      background: #fef3c7;
-      border-left: 4px solid #f59e0b;
-      border-radius: 8px;
-      padding: 2rem;
-      margin: 2rem 0;
-    }
-
-    .nda-box h3 {
-      margin-top: 0;
-      color: #92400e;
-    }
-
-    .nda-box p {
-      color: #78350f;
-    }
-
-    .nda-box ul {
-      color: #78350f;
-    }
-
-    .download-section {
-      text-align: center;
-      margin-top: 2rem;
-    }
-
-    .btn {
-      display: inline-block;
-      background: #2563eb;
-      color: white;
-      padding: 1rem 2.5rem;
-      border-radius: 6px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: background 0.2s;
-      margin: 0.5rem;
-    }
-
-    .btn:hover {
-      background: #1d4ed8;
-      text-decoration: none;
-    }
-
-    .contact-info {
-      margin-top: 3rem;
-      padding: 2rem;
-      background: #f9fafb;
-      border-radius: 8px;
-      border-left: 4px solid #3b82f6;
-    }
-
-    .contact-info h3 {
-      margin-top: 0;
-      color: #1e40af;
-    }
-
-    footer {
-      background: #f9fafb;
-      border-top: 1px solid #e5e7eb;
-      padding: 3rem 2rem;
-      text-align: center;
-      margin-top: 4rem;
-    }
-
-    footer p {
-      color: #6b7280;
-      margin: 0.5rem 0;
-    }
-
-    .contact-links {
-      margin: 2rem 0;
-    }
-
-    .contact-links a {
-      margin: 0 1rem;
-      color: #2563eb;
-      text-decoration: none;
-    }
-
-    .contact-links a:hover {
-      text-decoration: underline;
-    }
-
-    /* Floating navigation buttons */
-    .floating-home-button {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      background-color: #0066cc;
-      color: white;
-      padding: 12px 20px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9rem;
-      box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
-      transition: all 0.3s ease;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-    }
-
-    .floating-home-button:hover {
-      background-color: #003d7a;
-      color: white;
-      box-shadow: 0 6px 16px rgba(0, 102, 204, 0.4);
-      transform: translateY(-2px);
-      text-decoration: none;
-    }
-
-    .floating-home-button:active {
-      transform: translateY(0);
-      box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
-    }
-
-    .floating-home-button svg {
-      fill: white;
-    }
-
-    .floating-top-button {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      background-color: #0066cc;
-      color: white;
-      padding: 12px 20px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9rem;
-      box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
-      transition: all 0.3s ease;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-    }
-
-    .floating-top-button:hover {
-      background-color: #003d7a;
-      color: white;
-      box-shadow: 0 6px 16px rgba(0, 102, 204, 0.4);
-      transform: translateY(-2px);
-      text-decoration: none;
-    }
-
-    .floating-top-button:active {
-      transform: translateY(0);
-      box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
-    }
-
-    .floating-top-button svg {
-      fill: white;
-    }
-
-    @media (max-width: 768px) {
-      header h1 {
-        font-size: 2rem;
-      }
-
-      header p {
-        font-size: 1.25rem;
-      }
-
-      .floating-home-button,
-      .floating-top-button {
-        padding: 10px 16px;
-        font-size: 0.85rem;
-      }
-
-      .floating-home-button {
-        top: 15px;
-        left: 15px;
-      }
-
-      .floating-top-button {
-        bottom: 15px;
-        left: 15px;
-      }
-    }
-  </style>
+  <title>For Reviewers | MX-Bible</title>
+  <link rel="stylesheet" href="for-reviewers.css">
 
   <!-- Schema.org structured data for reviewer information page -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": "For Reviewers: The Invisible Users Book Review Process",
-    "description": "Information and guidelines for reviewers of The Invisible Users book, including acknowledgment policy, feedback instructions, and NDA agreement",
+    "@type": "WebPage",
+    "name": "For Reviewers — MX Series: Review Process and Guidelines",
+    "description": "Information and guidelines for reviewers of MX-Bible and MX-Handbook books - comprehensive guide and practical implementation handbook for AI-agent-friendly web design. Includes acknowledgment policy, feedback guidelines, and confidential review copy access.",
     "datePublished": "2026-01-12",
-    "dateModified": "2026-01-12",
+    "dateModified": "2026-01-23",
     "author": {
       "@type": "Person",
       "name": "Tom Cranstoun",
@@ -328,8 +45,7 @@
       "@type": "WebPage",
       "@id": "https://allabout.network/invisible-users/web/for-reviewers.html"
     },
-    "articleSection": "Book Review Process",
-    "keywords": "book review, reviewer acknowledgment, feedback, NDA agreement",
+    "keywords": "book review, reviewer acknowledgment, feedback, NDA agreement, MX-Bible, MX-Handbook",
     "inLanguage": "en-GB",
     "breadcrumb": {
       "@type": "BreadcrumbList",
@@ -354,114 +70,202 @@
 </head>
 <body>
   <header>
-    <h1>For Reviewers</h1>
-    <p>Thank You for Your Support</p>
+    <h1>For Reviewers — MX Series</h1>
+    <p>Two Books Available for Review</p>
   </header>
 
-  <main class="container" role="main" data-load-state="complete">
+  <main class="container" data-load-state="complete">
     <article data-article-type="reviewer-information">
 
       <section data-section-type="introduction">
-        <h2>Thank You for Agreeing to Review</h2>
         <p>
-          Thank you for agreeing to review <em>The Invisible Users</em>. Your feedback is important to this project, and I appreciate your time and expertise. As someone who understands web design, accessibility, or AI agent systems, your perspective will help ensure this book serves its intended audience effectively.
+          Thank you for agreeing to review one or both books in the MX series. Your expertise in web design, accessibility, or AI-agent systems makes your perspective especially valuable. These books aim to help the industry build websites that work not only for humans but also for the autonomous agents increasingly navigating the web on our behalf. Your insights will directly shape their accuracy, clarity, and usefulness.
+        </p>
+      </section>
+
+      <section data-section-type="recommended-reading" class="highlight-section">
+        <h2>Why Machine Experience Matters</h2>
+        <p>
+          For a deeper understanding of why Machine Experience is important, we recommend reading <a href="../../blogs/mx/data-sovereignty.html"><strong>Data Sovereignty and the Web We're Building</strong></a>. This blog post explores how good MX design creates data portability and sovereignty—when you structure content for AI agents to understand, you're simultaneously making your data portable, accessible, and truly yours.
+        </p>
+        <p>
+          The article demonstrates that data sovereignty and Machine Experience aren't separate concerns, but two aspects of building systems that work well in a world where both humans and AI agents interact with your content.
+        </p>
+        <p class="tagline">
+          Structure is freedom. Make it machine-readable and you make it portable.
+        </p>
+      </section>
+
+      <section data-section-type="about-books">
+        <h2>About the Two Books</h2>
+
+        <h3>MX-Bible (Comprehensive Guide)</h3>
+        <p>
+          A 13-chapter, ~78,000-word deep dive into why modern web design—optimised for human eyes—breaks down for AI agents.
+        </p>
+        <p>It covers:</p>
+        <ul>
+          <li>Foundational theory</li>
+          <li>Design and architectural patterns</li>
+          <li>Security implications</li>
+          <li>The future of agent-mediated commerce</li>
+          <li>Shared appendices with the Handbook</li>
+        </ul>
+
+        <h3>MX-Handbook (Practical Implementation Guide)</h3>
+        <p>
+          An 11-chapter, hands-on manual for developers and designers.
+        </p>
+        <p>It includes:</p>
+        <ul>
+          <li>Actionable patterns</li>
+          <li>Code examples</li>
+          <li>Practical workflows</li>
+          <li>Quick-reference material</li>
+          <li>Shared appendices with the Bible</li>
+        </ul>
+
+        <p>
+          You may review either book or both. Each stands alone, but they are designed to complement each other.
         </p>
       </section>
 
       <section data-section-type="acknowledgment-policy">
-        <h2>Reviewer Acknowledgment</h2>
+        <h2>How Your Contribution Will Be Recognised</h2>
         <p>
-          All reviewers will be acknowledged in the final published book. Your contribution matters, and I want to recognize your help publicly. You will be listed in the acknowledgments section of the book, regardless of whether your specific feedback suggestions are incorporated.
+          All reviewers will be acknowledged in the final published versions of both books.
         </p>
-        <div class="highlight-box" data-content-type="important-note">
-          <h3>Important Note About Feedback</h3>
-          <p>
-            Whilst I value all feedback, it's possible that some suggestions may not align with the book's direction or planned structure. If this occurs, you will still receive full acknowledgment in the final copy, though the specific suggestions might not be incorporated into the manuscript.
-          </p>
-          <p>
-            This is not a reflection on the quality of your feedback—it simply means that particular suggestions didn't fit the book's intended scope or approach. Your input remains valuable, and your contribution will be recognized.
-          </p>
-        </div>
+        <p>
+          This recognition is guaranteed, even if specific suggestions are not incorporated.
+        </p>
+        <p>
+          Non-inclusion simply means a suggestion didn't fit the intended scope or structure—not that the feedback lacked quality.
+        </p>
+        <p>
+          Your contribution matters, and I want to credit it properly.
+        </p>
       </section>
 
       <section data-section-type="feedback-instructions">
-        <h2>How to Submit Feedback</h2>
+        <h2>What Kind of Feedback Is Most Helpful</h2>
         <p>
-          Please send your feedback to <a href="mailto:tom.cranstoun@gmail.com">tom.cranstoun@gmail.com</a>. Any format is welcome—structured comments, inline PDF annotations, bullet points, or general impressions.
+          You may provide feedback in any format you prefer: inline PDF comments, bullet points, structured notes, or general impressions.
         </p>
-        <h3>What Kind of Feedback Is Helpful</h3>
+        <p>The most useful areas include:</p>
         <ul>
-          <li><strong>Technical accuracy:</strong> Errors, outdated information, or incorrect technical descriptions</li>
-          <li><strong>Clarity:</strong> Sections that are confusing, unclear, or need better explanation</li>
-          <li><strong>Structure:</strong> Organization issues, flow problems, or missing context</li>
-          <li><strong>Practical applicability:</strong> Examples that don't work, patterns that need refinement</li>
-          <li><strong>Audience fit:</strong> Content that doesn't serve the intended readers effectively</li>
-          <li><strong>Missing content:</strong> Important topics that should be covered but aren't</li>
+          <li><strong>Technical accuracy:</strong> Errors, outdated information, incorrect explanations, or missing nuance.</li>
+          <li><strong>Clarity:</strong> Sections that feel confusing, dense, or in need of clearer examples.</li>
+          <li><strong>Structure &amp; flow:</strong> Chapters that feel out of order, missing context, or overly long.</li>
+          <li><strong>Practical applicability:</strong> Code examples that don't work, patterns that need refinement, or unclear implementation steps.</li>
+          <li><strong>Audience fit:</strong> Content that feels too advanced, too basic, or misaligned with the intended reader.</li>
+          <li><strong>Missing content:</strong> Topics that should be included to make the books complete and future-proof.</li>
         </ul>
 
-        <div class="highlight-box" data-content-type="review-status">
-          <h3>Review Copy Status</h3>
-          <p>
-            The PDF version you have downloaded is now frozen for review, except for any critical bugs you might identify. This ensures all reviewers are working from the same baseline version.
-          </p>
-          <p>
-            Any significant industry developments or news updates will be documented on the <a href="news.html">News page</a> on this website rather than in the PDF. The manuscript will be revised and updated with relevant developments before final publication, incorporating both your feedback and any important industry changes.
-          </p>
-        </div>
+        <h3>Optional Feedback Template</h3>
+        <p>If helpful, you may use this simple structure:</p>
+        <ul>
+          <li><strong>Location:</strong> Chapter / section / page</li>
+          <li><strong>Issue:</strong> What's unclear, incorrect, or missing</li>
+          <li><strong>Suggestion:</strong> How it could be improved</li>
+          <li><strong>Severity:</strong> Minor / moderate / critical</li>
+        </ul>
 
-        <h3>Publication Timeline</h3>
+        <h2>How to Submit Feedback</h2>
         <p>
-          The book is targeting publication in <strong>Q1 2026</strong>. Feedback received before mid-February 2026 will have the best chance of being incorporated into the final manuscript, though later feedback is still welcome and appreciated.
+          Please send your feedback to <a href="mailto:tom.cranstoun@gmail.com">tom.cranstoun@gmail.com</a>
+        </p>
+        <p>All formats are welcome.</p>
+      </section>
+
+      <section data-section-type="review-status">
+        <h2>Review Copy Status</h2>
+        <p>
+          The PDF versions are now frozen for review to ensure all reviewers work from the same baseline.
+        </p>
+        <p>
+          Only <strong>critical bugs</strong> will be fixed during the review period (issues that materially affect correctness or understanding).
+        </p>
+        <p>
+          Industry developments will be posted on the website's <a href="news.html">News</a> page.
+        </p>
+        <p>
+          Relevant updates will be incorporated into the final manuscripts before publication.
+        </p>
+      </section>
+
+      <section data-section-type="timeline">
+        <h2>Timeline</h2>
+        <ul>
+          <li><strong>Target publication:</strong> Q1 2026</li>
+          <li><strong>Best chance for inclusion:</strong> Feedback received before <strong>mid-February 2026</strong></li>
+          <li>Later feedback is still welcome and appreciated.</li>
+        </ul>
+        <p>
+          You do <em>not</em> need to read the books cover-to-cover. Even partial or chapter-level feedback is extremely valuable.
         </p>
       </section>
 
       <section data-section-type="nda-agreement" class="nda-section">
-        <h2>Non-Disclosure Agreement</h2>
+        <h2>Confidentiality (Informal NDA)</h2>
+        <p>By downloading the manuscripts, you agree to the following:</p>
         <div class="highlight-box nda-box" data-content-type="nda-terms">
-          <h3>Review Copy - Confidential</h3>
-          <p>
-            This is a review copy subject to an informal non-disclosure agreement. By downloading this manuscript, you agree to the following terms:
-          </p>
           <ul>
-            <li><strong>Do Not Share Publicly:</strong> This manuscript should not be distributed outside your organisation</li>
-            <li><strong>Do Not Publish:</strong> Do not post excerpts, summaries, or reviews publicly before the official publication date</li>
-            <li><strong>Internal Sharing:</strong> You may share with colleagues in your organisation, provided they also agree to these confidentiality terms</li>
+            <li><strong>Do not share publicly:</strong> The manuscripts must not be distributed outside your organisation.</li>
+            <li><strong>Do not publish excerpts or reviews:</strong> No public posting before the official publication date.</li>
+            <li><strong>Internal sharing allowed:</strong> You may share the PDFs with colleagues <em>within your organisation</em> if they also agree to these terms.</li>
+            <li><strong>External reviewers:</strong> Anyone outside your organisation should contact me directly to request access.</li>
           </ul>
           <p>
-            If someone outside your organisation wants to review the book, please direct them to contact me directly at <a href="mailto:tom.cranstoun@gmail.com">tom.cranstoun@gmail.com</a>.
-          </p>
-          <p style="margin-top: 1.5rem; font-weight: 600; text-align: center;">
-            <strong>By downloading this manuscript, you agree to these terms.</strong>
+            All feedback is treated confidentially and used solely for the editorial process.
           </p>
         </div>
-        <div class="download-section" data-download-type="review-copy" style="text-align: center; margin-top: 2rem;">
-          <p style="font-size: 1.125rem; margin-bottom: 1.5rem; color: #1f2937;">
-            If you agree to the terms above, you may download the review copy:
-          </p>
-          <a href="https://allabout.network/invisible-users/the-invisible-users.pdf" class="btn" data-action="download" style="font-size: 1.125rem; padding: 1.25rem 3rem;">
-            Download Review Copy (PDF)
-          </a>
+        <h2>Download Review Copies</h2>
+        <div class="download-section" data-download-type="review-copies">
+
+          <div class="download-book-container" data-download-book="mx-bible">
+            <a href="https://allabout.network/invisible-users/the-invisible-users.pdf"
+               class="btn btn-large"
+               data-action="download"
+               aria-label="Download MX-Bible comprehensive guide review copy">
+              Download MX-Bible Review Copy (PDF)
+            </a>
+            <p class="download-description">
+              Comprehensive 13-chapter guide (~78,000 words)
+            </p>
+          </div>
+
+          <div class="download-book-container" data-download-book="mx-handbook">
+            <a href="https://allabout.network/invisible-users/mx-handbook.pdf"
+               class="btn btn-large"
+               data-action="download"
+               aria-label="Download MX-Handbook practical implementation guide review copy">
+              Download MX-Handbook Review Copy (PDF)
+            </a>
+            <p class="download-description">
+              Practical 11-chapter implementation guide
+            </p>
+          </div>
         </div>
       </section>
 
       <section data-section-type="closing">
-        <h2>Thank You Again</h2>
+        <h2>Thank You</h2>
         <p>
-          Your willingness to review this book is genuinely appreciated. The time and expertise you're contributing will help make this a better resource for web professionals, developers, and anyone working to make websites more accessible to both humans and AI agents.
+          Your willingness to contribute your time and expertise is genuinely appreciated.
         </p>
         <p>
-          If you have any questions about the review process, feedback expectations, or the NDA terms, please don't hesitate to contact me.
+          If you have any questions about the review process, expectations, or confidentiality terms, please feel free to reach out.
         </p>
-        <p style="margin-top: 2rem; font-weight: 600;">
-          Thank you again,<br>
-          Tom Cranstoun
+        <p class="closing-signature">
+          <strong>Tom Cranstoun</strong><br>
+          Email: <a href="mailto:tom.cranstoun@gmail.com">tom.cranstoun@gmail.com</a>
         </p>
       </section>
 
     </article>
 
-    <div class="contact-info" style="margin-top: 3rem; padding: 2rem; background: #f9fafb; border-radius: 8px; border-left: 4px solid #3b82f6;">
-      <h3 style="margin-top: 0; color: #1e40af;">Contact Information</h3>
+    <div class="contact-info">
+      <h3>Contact Information</h3>
       <p><strong>Email:</strong> <a href="mailto:tom.cranstoun@gmail.com">tom.cranstoun@gmail.com</a></p>
       <p><strong>Website:</strong> <a href="https://allabout.network">allabout.network</a></p>
       <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/tom-cranstoun/">linkedin.com/in/tom-cranstoun</a></p>
@@ -469,7 +273,7 @@
 
   </main>
 
-  <footer role="contentinfo">
+  <footer>
     <div class="contact-links">
       <a href="mailto:tom.cranstoun@gmail.com">Email</a>
       <a href="https://allabout.network">Website</a>
