@@ -1,0 +1,34 @@
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .primary { fill: #1a472a; }
+      .secondary { fill: #c9a961; }
+    </style>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="48" class="secondary" opacity="0.2"/>
+
+  <!-- Browser window -->
+  <rect x="20" y="25" width="60" height="45" rx="3" class="primary" stroke="#c9a961" stroke-width="2"/>
+
+  <!-- Browser bar -->
+  <rect x="20" y="25" width="60" height="8" rx="3" class="secondary"/>
+
+  <!-- Browser dots -->
+  <circle cx="25" cy="29" r="1.5" fill="#1a472a"/>
+  <circle cx="30" cy="29" r="1.5" fill="#1a472a"/>
+  <circle cx="35" cy="29" r="1.5" fill="#1a472a"/>
+
+  <!-- Content lines -->
+  <line x1="27" y1="40" x2="55" y2="40" stroke="#c9a961" stroke-width="2"/>
+  <line x1="27" y1="48" x2="73" y2="48" stroke="#c9a961" stroke-width="2"/>
+  <line x1="27" y1="56" x2="65" y2="56" stroke="#c9a961" stroke-width="2"/>
+  <line x1="27" y1="64" x2="50" y2="64" stroke="#c9a961" stroke-width="2"/>
+
+  <!-- Cursor -->
+  <path d="M 65 55 L 65 70 L 70 65 L 75 72 L 78 70 L 73 63 L 80 63 Z" fill="#d64545"/>
+
+  <!-- Label -->
+  <text x="50" y="95" text-anchor="middle" font-family="Arial" font-size="11" fill="#1a472a" font-weight="bold">WEB</text>
+</svg>

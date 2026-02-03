@@ -1,3 +1,4 @@
 User-agent: *
 Disallow: /drafts/
 Sitemap: https://allabout.network/sitemap.xml
+Sitemap: https://allabout.network/blogs/mx/sitemap.xml
