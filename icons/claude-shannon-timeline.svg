@@ -1,0 +1,276 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <!-- Gold accent gradient -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#b8860b"/>
+      <stop offset="50%" stop-color="#daa520"/>
+      <stop offset="100%" stop-color="#b8860b"/>
+    </linearGradient>
+
+    <!-- Glowing line gradient -->
+    <linearGradient id="lineGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#daa520" stop-opacity="0.1"/>
+      <stop offset="50%" stop-color="#daa520" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#daa520" stop-opacity="0.1"/>
+    </linearGradient>
+
+    <!-- Circuit node glow -->
+    <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#daa520" stop-opacity="0.6"/>
+      <stop offset="70%" stop-color="#daa520" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#daa520" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Bit stream gradient -->
+    <linearGradient id="bitGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#daa520" stop-opacity="0"/>
+      <stop offset="20%" stop-color="#daa520" stop-opacity="0.6"/>
+      <stop offset="80%" stop-color="#daa520" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#daa520" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Subtle grid pattern -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/>
+    </pattern>
+
+    <!-- Noise texture -->
+    <filter id="noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="multiply" result="blend"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.03"/>
+      </feComponentTransfer>
+      <feBlend in="SourceGraphic" mode="normal"/>
+    </filter>
+
+    <!-- Text shadow -->
+    <filter id="textGlow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Maze wall style -->
+    <filter id="mazeGlow">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="800" fill="url(#bgGrad)"/>
+  <rect width="1200" height="800" fill="url(#grid)" opacity="0.4"/>
+  <rect width="1200" height="800" filter="url(#noise)" opacity="0.3"/>
+
+  <!-- Decorative binary stream across top -->
+  <g opacity="0.12" fill="#daa520" font-family="'Courier New', monospace" font-size="10">
+    <text x="20" y="25">01001001 01001110 01000110 01001111 01010010 01001101 01000001 01010100 01001001 01001111 01001110</text>
+    <text x="20" y="40">10110100 11001010 01010101 10101010 01100010 01101001 01110100 00100000 01100010 01111001 00100000</text>
+    <text x="20" y="780">01000011 01001100 01000001 01010101 01000100 01000101 00100000 01010011 01001000 01000001 01001110 01001110 01001111 01001110</text>
+  </g>
+
+  <!-- Title area -->
+  <text x="600" y="90" text-anchor="middle" fill="url(#goldGrad)" font-size="38" font-weight="bold" letter-spacing="2" filter="url(#textGlow)">CLAUDE SHANNON</text>
+  <text x="600" y="120" text-anchor="middle" fill="#94a3b8" font-size="16" letter-spacing="4" font-family="'Courier New', monospace">1916 — 2001</text>
+
+  <!-- Thin gold line under title -->
+  <line x1="350" y1="135" x2="850" y2="135" stroke="url(#goldGrad)" stroke-width="0.5" opacity="0.6"/>
+  <text x="600" y="158" text-anchor="middle" fill="#cbd5e1" font-size="14" font-style="italic" letter-spacing="1">The man who taught machines to think</text>
+
+  <!-- ================================================================ -->
+  <!-- TIMELINE - Five milestone nodes connected by a flowing line -->
+  <!-- ================================================================ -->
+
+  <!-- Main connecting line -->
+  <path d="M 120 250 C 120 320, 300 320, 360 350 C 420 380, 500 380, 600 370 C 700 360, 780 360, 840 350 C 900 340, 980 340, 1080 290" 
+        fill="none" stroke="#daa520" stroke-width="1" opacity="0.3"/>
+  <path d="M 120 250 C 120 320, 300 320, 360 350 C 420 380, 500 380, 600 370 C 700 360, 780 360, 840 350 C 900 340, 980 340, 1080 290" 
+        fill="none" stroke="#daa520" stroke-width="0.5" opacity="0.6" stroke-dasharray="4,6"/>
+
+  <!-- ================================================================ -->
+  <!-- NODE 1 - Boolean Logic (1937) -->
+  <!-- ================================================================ -->
+  <g transform="translate(120, 230)">
+    <!-- Glow -->
+    <circle cx="0" cy="0" r="35" fill="url(#nodeGlow)"/>
+    <!-- Circuit symbol - AND gate -->
+    <g stroke="#daa520" stroke-width="1.5" fill="none" opacity="0.8">
+      <path d="M -12 -10 L -12 10 L 0 10 A 12 12 0 0 0 0 -10 Z"/>
+      <line x1="-20" y1="-5" x2="-12" y2="-5"/>
+      <line x1="-20" y1="5" x2="-12" y2="5"/>
+      <line x1="12" y1="0" x2="20" y2="0"/>
+    </g>
+    <!-- Node dot -->
+    <circle cx="0" cy="0" r="3" fill="#daa520" opacity="0.9"/>
+
+    <!-- Year label -->
+    <text x="0" y="-50" text-anchor="middle" fill="#daa520" font-size="13" font-weight="bold" font-family="'Courier New', monospace">1937</text>
+
+    <!-- Description -->
+    <text x="0" y="55" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="bold">Boolean Logic</text>
+    <text x="0" y="72" text-anchor="middle" fill="#94a3b8" font-size="10.5">Master's thesis at MIT</text>
+    <text x="0" y="86" text-anchor="middle" fill="#94a3b8" font-size="10.5">proved switches could</text>
+    <text x="0" y="100" text-anchor="middle" fill="#94a3b8" font-size="10.5">encode logic - making</text>
+    <text x="0" y="114" text-anchor="middle" fill="#94a3b8" font-size="10.5">digital computing possible</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- NODE 2 - Information Theory (1948) -->
+  <!-- ================================================================ -->
+  <g transform="translate(360, 330)">
+    <!-- Glow -->
+    <circle cx="0" cy="0" r="40" fill="url(#nodeGlow)"/>
+
+    <!-- Bit symbol -->
+    <g fill="#daa520" font-family="'Courier New', monospace" font-size="18" opacity="0.8">
+      <text x="-10" y="6" text-anchor="middle">0</text>
+      <text x="10" y="6" text-anchor="middle">1</text>
+    </g>
+    <circle cx="0" cy="0" r="3" fill="#daa520" opacity="0.9"/>
+
+    <!-- Year -->
+    <text x="0" y="-55" text-anchor="middle" fill="#daa520" font-size="13" font-weight="bold" font-family="'Courier New', monospace">1948</text>
+
+    <!-- Description -->
+    <text x="0" y="55" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="bold">Information Theory</text>
+    <text x="0" y="72" text-anchor="middle" fill="#94a3b8" font-size="10.5">Introduced the "bit" and</text>
+    <text x="0" y="86" text-anchor="middle" fill="#94a3b8" font-size="10.5">created the mathematics</text>
+    <text x="0" y="100" text-anchor="middle" fill="#94a3b8" font-size="10.5">of communication - the</text>
+    <text x="0" y="114" text-anchor="middle" fill="#94a3b8" font-size="10.5">"Magna Carta of the</text>
+    <text x="0" y="128" text-anchor="middle" fill="#94a3b8" font-size="10.5">Information Age"</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- NODE 3 - Theseus / Chess (1950) -->
+  <!-- ================================================================ -->
+  <g transform="translate(600, 350)">
+    <!-- Glow -->
+    <circle cx="0" cy="0" r="40" fill="url(#nodeGlow)"/>
+
+    <!-- Mini maze symbol -->
+    <g stroke="#daa520" stroke-width="1.2" fill="none" opacity="0.7" filter="url(#mazeGlow)">
+      <rect x="-14" y="-14" width="28" height="28" rx="1"/>
+      <line x1="-14" y1="-4" x2="-2" y2="-4"/>
+      <line x1="4" y1="-4" x2="14" y2="-4"/>
+      <line x1="-4" y1="6" x2="14" y2="6"/>
+      <line x1="-14" y1="6" x2="-8" y2="6"/>
+      <!-- Mouse dot -->
+      <circle cx="-9" cy="-9" r="2" fill="#daa520" stroke="none"/>
+      <!-- Cheese dot -->
+      <circle cx="9" cy="10" r="2" fill="#daa520" stroke="none" opacity="0.5"/>
+    </g>
+    <circle cx="0" cy="0" r="3" fill="#daa520" opacity="0.9"/>
+
+    <!-- Year -->
+    <text x="0" y="-55" text-anchor="middle" fill="#daa520" font-size="13" font-weight="bold" font-family="'Courier New', monospace">1950</text>
+
+    <!-- Description -->
+    <text x="0" y="50" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="bold">Theseus and Chess</text>
+    <text x="0" y="67" text-anchor="middle" fill="#94a3b8" font-size="10.5">Built a learning mouse;</text>
+    <text x="0" y="81" text-anchor="middle" fill="#94a3b8" font-size="10.5">wrote the first paper on</text>
+    <text x="0" y="95" text-anchor="middle" fill="#94a3b8" font-size="10.5">computer chess - 10^120</text>
+    <text x="0" y="109" text-anchor="middle" fill="#94a3b8" font-size="10.5">possible game variations</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- NODE 4 - Dartmouth Workshop (1956) -->
+  <!-- ================================================================ -->
+  <g transform="translate(840, 330)">
+    <!-- Glow -->
+    <circle cx="0" cy="0" r="35" fill="url(#nodeGlow)"/>
+
+    <!-- Network/brain symbol -->
+    <g stroke="#daa520" stroke-width="0.8" fill="none" opacity="0.7">
+      <circle cx="-8" cy="-8" r="3" fill="#daa520" fill-opacity="0.3"/>
+      <circle cx="8" cy="-8" r="3" fill="#daa520" fill-opacity="0.3"/>
+      <circle cx="0" cy="8" r="3" fill="#daa520" fill-opacity="0.3"/>
+      <circle cx="-14" cy="4" r="2.5" fill="#daa520" fill-opacity="0.2"/>
+      <circle cx="14" cy="4" r="2.5" fill="#daa520" fill-opacity="0.2"/>
+      <line x1="-8" y1="-8" x2="8" y2="-8"/>
+      <line x1="-8" y1="-8" x2="0" y2="8"/>
+      <line x1="8" y1="-8" x2="0" y2="8"/>
+      <line x1="-14" y1="4" x2="-8" y2="-8"/>
+      <line x1="14" y1="4" x2="8" y2="-8"/>
+      <line x1="-14" y1="4" x2="0" y2="8"/>
+      <line x1="14" y1="4" x2="0" y2="8"/>
+    </g>
+    <circle cx="0" cy="0" r="3" fill="#daa520" opacity="0.9"/>
+
+    <!-- Year -->
+    <text x="0" y="-50" text-anchor="middle" fill="#daa520" font-size="13" font-weight="bold" font-family="'Courier New', monospace">1956</text>
+
+    <!-- Description -->
+    <text x="0" y="50" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="bold">Dartmouth Workshop</text>
+    <text x="0" y="67" text-anchor="middle" fill="#94a3b8" font-size="10.5">Co-founded AI as a</text>
+    <text x="0" y="81" text-anchor="middle" fill="#94a3b8" font-size="10.5">formal discipline with</text>
+    <text x="0" y="95" text-anchor="middle" fill="#94a3b8" font-size="10.5">McCarthy, Minsky,</text>
+    <text x="0" y="109" text-anchor="middle" fill="#94a3b8" font-size="10.5">and Rochester</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- NODE 5 - Legacy / Claude AI (2023) -->
+  <!-- ================================================================ -->
+  <g transform="translate(1080, 270)">
+    <!-- Larger glow for the modern node -->
+    <circle cx="0" cy="0" r="45" fill="url(#nodeGlow)"/>
+
+    <!-- Stylised "C" for Claude -->
+    <text x="0" y="8" text-anchor="middle" fill="#daa520" font-size="24" font-weight="bold" opacity="0.7" font-family="Georgia, serif">C</text>
+    <circle cx="0" cy="0" r="3" fill="#daa520" opacity="0.9"/>
+
+    <!-- Year -->
+    <text x="0" y="-55" text-anchor="middle" fill="#daa520" font-size="13" font-weight="bold" font-family="'Courier New', monospace">2023</text>
+
+    <!-- Description -->
+    <text x="0" y="55" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="bold">Claude AI</text>
+    <text x="0" y="72" text-anchor="middle" fill="#94a3b8" font-size="10.5">Anthropic names its</text>
+    <text x="0" y="86" text-anchor="middle" fill="#94a3b8" font-size="10.5">AI assistant after</text>
+    <text x="0" y="100" text-anchor="middle" fill="#94a3b8" font-size="10.5">Shannon - built on the</text>
+    <text x="0" y="114" text-anchor="middle" fill="#94a3b8" font-size="10.5">foundations he laid</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- Bottom quote area -->
+  <!-- ================================================================ -->
+  <line x1="100" y1="680" x2="1100" y2="680" stroke="#daa520" stroke-width="0.3" opacity="0.4"/>
+
+  <text x="600" y="720" text-anchor="middle" fill="#94a3b8" font-size="13" font-style="italic" opacity="0.8">
+    "The twentieth-century engineer who contributed the most to twenty-first-century technologies"
+  </text>
+  <text x="600" y="742" text-anchor="middle" fill="#64748b" font-size="11">
+    - Rodney Brooks, former director, MIT AI Lab
+  </text>
+
+  <!-- Shannon entropy formula as decorative element -->
+  <g opacity="0.1" transform="translate(600, 770)">
+    <text x="0" y="0" text-anchor="middle" fill="#daa520" font-size="16" font-family="'Courier New', monospace">
+      H(X) = -Σ p(x) log₂ p(x)
+    </text>
+  </g>
+
+  <!-- Corner decorative elements -->
+  <g stroke="#daa520" stroke-width="0.5" fill="none" opacity="0.2">
+    <path d="M 20 20 L 20 50 M 20 20 L 50 20"/>
+    <path d="M 1180 20 L 1180 50 M 1180 20 L 1150 20"/>
+    <path d="M 20 780 L 20 750 M 20 780 L 50 780"/>
+    <path d="M 1180 780 L 1180 750 M 1180 780 L 1150 780"/>
+  </g>
+
+  <!-- Digital Domain Technologies credit -->
+  <text x="600" y="792" text-anchor="middle" fill="#475569" font-size="9" font-family="'Courier New', monospace" letter-spacing="2">DIGITAL DOMAIN TECHNOLOGIES</text>
+
+</svg>
