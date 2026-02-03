@@ -1,0 +1,200 @@
+/*
+ * The Principles That Changed How I Build for Everyone
+ * MX-compliant blog post styles
+ * Optimized for both human readers and machine readability
+ */
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  color: #1f2937;
+  background: #ffffff;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Header */
+header {
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  color: white;
+  padding: 3rem 2rem;
+  margin: -2rem -2rem 3rem -2rem;
+  border-radius: 0 0 12px 12px;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.article-meta {
+  color: #e0e7ff;
+  font-size: 0.95rem;
+}
+
+.article-meta time {
+  font-style: italic;
+}
+
+.article-meta span {
+  margin: 0 0.5rem;
+}
+
+/* Main Content */
+main {
+  padding: 2rem 0;
+}
+
+article {
+  background: white;
+}
+
+/* Typography */
+h2 {
+  color: #1e40af;
+  font-size: 2rem;
+  margin: 2.5rem 0 1rem 0;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+h3 {
+  color: #2563eb;
+  font-size: 1.5rem;
+  margin: 2rem 0 0.75rem 0;
+  font-weight: 600;
+}
+
+p {
+  margin-bottom: 1rem;
+  color: #374151;
+  font-size: 1.1rem;
+}
+
+strong {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+em {
+  font-style: italic;
+  color: #4b5563;
+}
+
+/* Links */
+a {
+  color: #2563eb;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+a:hover {
+  border-bottom-color: #2563eb;
+}
+
+a:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Horizontal Rules */
+hr {
+  border: none;
+  border-top: 2px solid #e5e7eb;
+  margin: 3rem 0;
+}
+
+/* Footer */
+footer {
+  background: #f9fafb;
+  border-top: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 4rem -2rem -2rem -2rem;
+  text-align: center;
+}
+
+footer p {
+  color: #374151;
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  body {
+    padding: 1rem;
+  }
+
+  header {
+    margin: -1rem -1rem 2rem -1rem;
+    padding: 2rem 1rem;
+  }
+
+  header h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin: 2rem 0 1rem 0;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  footer {
+    margin: 3rem -1rem -1rem -1rem;
+    padding: 1.5rem;
+  }
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background: white;
+    color: black;
+    font-size: 12pt;
+  }
+
+  header {
+    background: none;
+    color: black;
+    border-bottom: 2px solid black;
+  }
+
+  a {
+    color: black;
+    text-decoration: underline;
+  }
+
+  footer {
+    background: none;
+    border-top: 2px solid black;
+  }
+}

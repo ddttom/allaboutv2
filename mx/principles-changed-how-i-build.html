@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Tom Cranstoun">
+  <meta name="description" content="A practitioner's guide to Machine Experience principles that make digital products work better for humans, AI agents, and everyone in between.">
+
+  <!-- AI-specific meta tags (PROPOSED - see Appendix L) -->
+  <meta name="ai-preferred-access" content="html">
+  <meta name="ai-content-policy" content="summaries-allowed, full-extraction-allowed">
+  <meta name="ai-freshness" content="monthly">
+  <meta name="ai-structured-data" content="json-ld">
+  <meta name="ai-attribution" content="required" text="Source: Machine Experience by Tom Cranstoun, https://allabout.network/blogs/mx/">
+
+  <title>The Principles That Changed How I Build for Everyone | Machine Experience</title>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="principles-changed-how-i-build.css">
+
+  <!-- Schema.org structured data for blog post -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The Principles That Changed How I Build for Everyone",
+    "description": "A practitioner's guide to Machine Experience principles that make digital products work better for humans, AI agents, and everyone in between.",
+    "datePublished": "2026-02-03",
+    "dateModified": "2026-02-04",
+    "author": {
+      "@type": "Person",
+      "name": "Tom Cranstoun",
+      "email": "tom.cranstoun@gmail.com",
+      "url": "https://allabout.network/tom-cranstoun.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "MX Technologies Ltd",
+      "url": "https://allabout.network"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://allabout.network/blogs/mx/principles-changed-how-i-build.html"
+    },
+    "articleSection": "Machine Experience, Design Principles, Accessibility",
+    "keywords": "machine-experience, design-principles, accessibility, ai-agents, metadata, semantic-web, universal-design, web-development",
+    "inLanguage": "en-GB",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Machine Experience Blog"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <h1>The Principles That Changed How I Build for Everyone</h1>
+    <div class="article-meta" data-published="2026-02-03" data-modified="2026-02-03">
+      <time datetime="2026-02-03">Published: 3 February 2026</time>
+      <span>•</span>
+      <span>Tom Cranstoun</span>
+    </div>
+  </header>
+
+  <main role="main">
+    <article data-article-type="blog-post">
+
+      <p>I've been building websites and digital products for years, and for most of that time, I was designing for one audience: people with browsers and eyeballs. That seemed reasonable. After all, the web is a visual medium, right?</p>
+
+      <p>Then I started noticing something odd. The sites that worked best for screen reader users also happened to work better for everyone under stress. The patterns that made content comprehensible to people with cognitive disabilities also made it easier for anyone multitasking or distracted. And increasingly, the structure that helped humans understand pages also helped AI agents parse them correctly.</p>
+
+      <p>This wasn't a coincidence. I was seeing evidence of something I'd later come to understand as the convergence principle: the patterns that optimize for machine comprehension also improve human accessibility and comprehension. Not as a trade-off, but as a natural consequence of explicit, semantic communication.</p>
+
+      <p>That realization led me to develop what I now call Machine Experience principles. These aren't new technologies or fancy frameworks. They're design principles that recognize a simple truth: if we build digital products that communicate meaning explicitly, rather than just displaying it attractively, we serve everyone better.</p>
+
+      <p>Let me share the principles that fundamentally changed how I approach building digital products.</p>
+
+      <h2>Principle One: Design for Both</h2>
+
+      <p>The first principle is the foundation for everything else: every design decision should optimize for both human developers and AI agents simultaneously.</p>
+
+      <p>I know what you're thinking. "Isn't that impossible? Don't machines and humans need different things?"</p>
+
+      <p>That's what I thought too. But then I started paying attention to what actually breaks user experiences. Those ephemeral toast notifications that appear for three seconds then vanish? They fail everyone. AI agents can't see them by the time they check the page state. Screen reader users might miss the announcement if they're navigating elsewhere. People with ADHD don't have time to read and act. And stressed users—parents managing children while trying to complete a form—look away at precisely the wrong moment.</p>
+
+      <p>The alternative is to make errors persistent. Put them at the top of the form, keep them visible until resolved, and clearly state what's wrong and how to fix it. This single pattern helps everyone. Not ideally for each specific case, but substantially for all cases.</p>
+
+      <p>That's what "design for both" means. It's not about satisfying competing requirements. It's about recognizing that explicitness, semantic structure, and persistent feedback serve all users regardless of their technical capabilities or limitations.</p>
+
+      <h2>Principle Two: Metadata-Driven Architecture</h2>
+
+      <p>The second principle builds on the first: use structured metadata to make content and code maximally machine-readable whilst remaining human-readable.</p>
+
+      <p>I used to think metadata was something you added after building the thing. You know, for search engine optimization or accessibility compliance. But that's backwards. Metadata isn't decoration—it's infrastructure.</p>
+
+      <p>That's metadata-driven architecture. It's implementing structured information at four distinct layers: repository level, directory level, file level, and code level. Each layer declares purpose, audience, stability, what context it provides, and cross-references to related content.</p>
+
+      <h2>Principle Three: Context Declaration</h2>
+
+      <p>The third principle takes metadata further: files should explicitly declare what context they provide and what context they require.</p>
+
+      <p>This creates self-documenting dependency graphs. An AI agent reading a file knows immediately whether it has sufficient context to understand what it's reading. A human can see at a glance what they should read first. A documentation system can build a proper navigation structure automatically.</p>
+
+      <h2>Principle Four: Universal Accessibility</h2>
+
+      <p>The fourth principle recognizes that accessibility and machine-readability converge: plain text formats, explicit markup, and declared relationships serve both disabled users and automated systems.</p>
+
+      <p>Plain text formats—markdown, YAML, JSON, ASCII diagrams—work everywhere. You can read them in any text editor, process them with any programming language, version control them effectively, and they never become obsolete.</p>
+
+      <p>The principle is straightforward: no JavaScript-required content for core functionality, no binary-only documentation, no formats that require specific proprietary tools to access. If something matters, make it accessible in the most universal format possible.</p>
+
+      <h2>Principle Five: Context-Preserving References</h2>
+
+      <p>The fifth principle addresses a problem that becomes obvious once you notice it: links must work in all contexts, not just when you're browsing the live website.</p>
+
+      <p>The solution is context-preserving references. Each link should work for IDE users (clickable relative links), external readers who might encounter the document in isolation (full absolute URLs with complete titles), and anyone in between.</p>
+
+      <h2>Principle Six: Size-Neutral Documentation</h2>
+
+      <p>The sixth principle might seem minor, but it eliminates a constant maintenance headache: avoid hard-coded counts that create documentation drift.</p>
+
+      <p>The solution is to make your documentation size-neutral. Instead of "five core principles," write "core principles." Instead of "three main components," write "main components." Let the structure be self-describing rather than declaring its size in prose.</p>
+
+      <h2>Principle Seven: Executable Documentation</h2>
+
+      <p>The seventh principle is the most powerful: documents can contain their own generation instructions, enabling self-documenting specifications with executable build logic.</p>
+
+      <p>Executable documentation flips traditional documentation. The document itself contains prompting instructions and generation instructions as metadata. When an AI reads the file, these instructions are automatically included in context. When a user requests generation, these instructions get executed.</p>
+
+      <h2>Principle Eight: WCAG-Informed Design</h2>
+
+      <p>The eighth principle connects all the others to established accessibility standards: design decisions should align with Web Content Accessibility Guidelines (WCAG), recognizing that accessibility requirements for disabled users provide proven patterns that also benefit machine readability.</p>
+
+      <p>I used to think of accessibility and machine-readability as separate concerns. One was about compliance and helping disabled users. The other was about making content parseable by AI agents. Then I started actually studying WCAG in depth, and I realized they're describing the same patterns from different perspectives.</p>
+
+      <p>WCAG standards represent decades of research and practice in making digital content accessible to disabled users. Screen reader users need semantic HTML structure. AI agents need semantic HTML structure. Users with cognitive disabilities need accurate, consistent information. AI agents need accurate, consistent information. Keyboard-only users need programmatically determinable relationships. AI agents need programmatically determinable relationships.</p>
+
+      <h3>The Contrast Example</h3>
+
+      <p>Let me share a concrete example from this week. I was reviewing some HTML I'd generated for blog posts about MX principles. The footer had light gray text on a dark gray background. It looked fine on my monitor. But when I tested it with a contrast checker, it barely passed WCAG AA requirements. For users with low vision, in bright sunlight, or on older displays, that footer would be hard to read.</p>
+
+      <p>The fix was simple: change the footer text to white. Now it has excellent contrast and passes WCAG AAA standards. Machines don't care about contrast ratios—they parse text regardless of color. This principle serves humans first.</p>
+
+      <p>But here's the interesting part. When I fix contrast issues, I'm making the content more accessible to disabled users while also demonstrating a commitment to universal design that extends to how I structure everything else. The same rigor that makes me test contrast ratios also makes me verify semantic structure, check that links work out of context, and ensure documentation doesn't contain misleading information.</p>
+
+      <h3>WCAG and Documentation Accuracy</h3>
+
+      <p>WCAG Success Criterion 3.1.5 (Reading Level) requires providing supplementary content when text requires advanced reading ability. It also implies that content should be accurate and clear. When documentation says "the seven principles" but lists eight principles, that creates cognitive overhead. Users must stop and reconcile the mismatch. This particularly affects users with cognitive disabilities, users reading in non-native languages, and users under stress.</p>
+
+      <p>That's why size-neutral documentation matters. It's not just about maintenance convenience. It's about reducing cognitive load for all users, which is a core accessibility principle.</p>
+
+      <h3>Legal Requirements</h3>
+
+      <p>The legal context matters too. WCAG compliance isn't optional in many jurisdictions. The Americans with Disabilities Act, UK Equality Act, EU Accessibility Act, and similar legislation worldwide require accessible digital experiences. When MX principles align with WCAG requirements, compliance becomes a natural outcome of good design rather than a separate checkbox exercise.</p>
+
+      <p>What I've learned is that WCAG provides concrete, testable standards for accessibility patterns. Contrast ratios have specific numerical thresholds. Semantic structure has validation tools. Keyboard navigation has clear requirements.</p>
+
+      <h3>How WCAG Informs MX</h3>
+
+      <p>WCAG doesn't replace MX principles—it informs them. Every MX principle can be traced back to an accessibility principle that serves disabled users. Explicit semantic structure helps screen readers. Context-preserving references help users who can't see visual context. Accurate documentation helps users with cognitive disabilities. Universal formats help users on assistive technologies.</p>
+
+      <p>The convergence continues. Making content accessible to disabled users inherently makes it accessible to machines. Making content accessible to machines, when done right, makes it accessible to disabled users. WCAG provides the proven standards. MX extends those standards to machine users. Together, they create experiences that work for everyone and everything that uses them.</p>
+
+      <h2>What This Means for How We Build</h2>
+
+      <p>These principles aren't just theoretical. They change how you approach building digital products in concrete ways.</p>
+
+      <p>When you design for both humans and machines simultaneously, you stop making arbitrary choices about whether something should be visual or semantic. You make it both.</p>
+
+      <p>When you adopt metadata-driven architecture, you stop treating documentation as an afterthought. You embed context directly into your code and content, making it navigable and understandable from day one.</p>
+
+      <p>When you declare context explicitly, you stop making assumptions about what readers know. Your documentation becomes approachable because prerequisites are clear.</p>
+
+      <p>When you prioritize universal accessibility, you stop building features that only work in ideal conditions. You design for edges—disabled users, automated systems, degraded networks, old devices—and discover that solutions for edges improve experiences for everyone.</p>
+
+      <h2>The Convergence Continues</h2>
+
+      <p>I started with a simple observation: patterns that help AI agents tend to help humans too. But these principles reveal something deeper. They're not really about AI agents at all. They're about explicit communication, semantic structure, and designing for the broadest possible audience.</p>
+
+      <p>When you make meaning explicit rather than implicit, you help everyone. When you structure information semantically rather than just visually, you serve all users regardless of their capabilities or access methods.</p>
+
+      <p>The web was built on principles of universal access and progressive enhancement. These principles extend those foundations to an era where machines are users too, where content lives in multiple contexts simultaneously, and where the distinction between human and automated access matters less than ensuring everyone can access and understand what you've built.</p>
+
+      <p>Start with one principle. Pick the one that resonates most with your current challenges. Apply it consistently. See what changes. Notice who benefits. Then add another principle.</p>
+
+      <p>These aren't rules to follow rigidly. They're lenses for viewing your work differently. Perspectives that shift how you think about building digital products. Principles that, once you internalize them, become obvious in retrospect even though they weren't obvious before.</p>
+
+      <p>The web is evolving. AI agents are becoming users. Content lives in multiple contexts. Universal access matters more than ever. These principles help us build for that reality—not by adding complexity, but by embracing clarity, structure, and explicit communication that serves everyone.</p>
+
+      <p><strong>That's what Machine Experience really means. Making the web work for everyone and everything that uses it.</strong></p>
+
+      <hr>
+
+      <p><em>About this post: This blog post translates the technical Machine Experience principles documentation into practical guidance for practitioners. The principles described here form the foundation of the MX framework and are implemented across the MX documentation, specifications, and tooling.</em></p>
+
+    </article>
+  </main>
+
+  <footer>
+    <p>© 2026 Tom Cranstoun. All rights reserved.</p>
+    <p>Part of the Machine Experience project. For complete technical specifications, see the MX principles documentation<br>
+    MX Technologies Ltd - Making the web work for everyone and everything that uses it.</p>
+  </footer>
+
+</body>
+</html>

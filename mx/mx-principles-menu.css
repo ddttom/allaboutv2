@@ -1,0 +1,286 @@
+/*
+ * Machine Experience: The Core Principles - Quick Reference Menu
+ * MX-compliant reference page styles
+ * Optimized for both human readers and machine readability
+ */
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.7;
+  color: #1f2937;
+  background: #f9fafb;
+  padding: 0;
+}
+
+/* Header */
+header {
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+  font-size: 2.75rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.tagline {
+  font-size: 1.35rem;
+  color: #e0e7ff;
+  font-weight: 500;
+}
+
+/* Main Content Container */
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+article {
+  background: white;
+  border-radius: 12px;
+  padding: 3rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Sections */
+section {
+  margin: 3rem 0;
+}
+
+section:first-child {
+  margin-top: 0;
+}
+
+/* Typography */
+h2 {
+  color: #1e40af;
+  font-size: 2.25rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  border-bottom: 3px solid #3b82f6;
+  padding-bottom: 0.75rem;
+}
+
+h3 {
+  color: #2563eb;
+  font-size: 1.5rem;
+  margin: 2rem 0 0.75rem 0;
+  font-weight: 600;
+}
+
+p {
+  margin-bottom: 1.25rem;
+  color: #374151;
+  font-size: 1.05rem;
+}
+
+strong {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+/* Principle Cards */
+.principle {
+  background: #f9fafb;
+  border-left: 4px solid #3b82f6;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.principle:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.principle h3 {
+  color: #1e40af;
+  font-size: 1.35rem;
+  margin: 0 0 0.75rem 0;
+}
+
+.principle p {
+  color: #4b5563;
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* Definition Lists */
+dl {
+  margin: 1.5rem 0;
+}
+
+dt {
+  color: #1e40af;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 1.25rem 0 0.5rem 0;
+}
+
+dd {
+  color: #4b5563;
+  margin-left: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+/* Horizontal Rules */
+hr {
+  border: none;
+  border-top: 2px solid #e5e7eb;
+  margin: 3rem 0;
+}
+
+/* Footer */
+footer {
+  background: #1f2937;
+  color: #ffffff;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  margin-top: 3rem;
+}
+
+footer p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+  color: #ffffff;
+}
+
+footer strong {
+  color: #ffffff;
+}
+
+/* Accessibility Improvements */
+a:focus,
+button:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  body {
+    background: white;
+  }
+
+  article {
+    border: 2px solid #1f2937;
+  }
+
+  .principle {
+    border-left-width: 6px;
+    background: white;
+    border: 2px solid #3b82f6;
+    border-left-width: 6px;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header {
+    padding: 3rem 1.5rem;
+  }
+
+  header h1 {
+    font-size: 2rem;
+  }
+
+  .tagline {
+    font-size: 1.1rem;
+  }
+
+  main {
+    padding: 2rem 1rem;
+  }
+
+  article {
+    padding: 2rem 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  .principle {
+    padding: 1.25rem;
+  }
+
+  dd {
+    margin-left: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  article {
+    padding: 1.5rem 1rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+
+  header {
+    background: none;
+    color: black;
+    border-bottom: 3px solid black;
+  }
+
+  article {
+    box-shadow: none;
+    border: 1px solid black;
+  }
+
+  .principle {
+    border-left-color: black;
+    background: white;
+    page-break-inside: avoid;
+  }
+
+  footer {
+    background: none;
+    color: black;
+    border-top: 2px solid black;
+  }
+
+  hr {
+    border-top-color: black;
+  }
+}
