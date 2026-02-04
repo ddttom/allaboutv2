@@ -687,6 +687,99 @@ When AI assistants create block examples or demos, use these pre-defined sample 
 
 **Complete architecture details:** See [EDS Architecture Standards](docs/for-ai/implementation/eds-architecture-standards.md)
 
+### EDS Content Serving Rules
+
+**CRITICAL: Files in GitHub supersede Google Drive for content serving.**
+
+**How EDS serves content:**
+1. **GitHub files are served RAW** - No EDS transforms applied
+2. **GitHub takes precedence** - If file exists in both GitHub and Google Drive, GitHub wins
+3. **Exceptions:**
+   - **`.md` files** - CANNOT be served from GitHub, must be in Google Drive for EDS markdown-to-HTML transformation
+   - **Dot-prefixed folders** (`.helix/`, `.github/`, etc.) - CANNOT be served from GitHub
+
+**Practical implications:**
+- ✅ `.html` files in GitHub → Served directly from GitHub (no Google Drive sync needed)
+- ✅ `.css`, `.js`, `.json` files → Served directly from GitHub
+- ✅ Images, PDFs, assets → Served directly from GitHub
+- ❌ `.md` files → MUST be in Google Drive for EDS transformation
+- ❌ `.helix/` configuration → Not accessible via web
+
+**Content delivery flow:**
+```
+GitHub (code repository, direct serving for non-.md files)
+    ↓
+Adobe EDS (transforms .md files from Google Drive)
+    ↓
+Adobe Fastly CDN (caches transformed content)
+    ↓
+Cloudflare CDN (adds CORS, metadata enhancements)
+    ↓
+User's browser
+```
+
+**When you add new content:**
+1. **For .html/.css/.js files**: Commit to GitHub → Push → File is accessible
+2. **For .md files**: Must be in Google Drive for EDS to transform
+3. **Cache consideration**: New files may return 404 if CDN cached the not-found response
+4. **Solution for cached 404s**: Purge Cloudflare cache for the URL (see [Cache Management](#cache-management))
+
+**Google Drive is NOT required for:**
+- Static HTML blogs (like `/blogs/mx/*.html`)
+- CSS stylesheets
+- JavaScript files
+- JSON data files
+- Image assets
+
+**Google Drive IS required for:**
+- Markdown content that needs EDS transformation
+- Content authoring via Google Docs integration
+
+### Cache Management
+
+**When to purge Cloudflare cache:**
+- After adding new content files to GitHub
+- After updating existing content
+- When a URL returns 404 but file exists in GitHub
+- After making changes to sitemap or robots.txt
+
+**How to purge Cloudflare cache:**
+
+**Option 1: Cloudflare Dashboard (Easiest)**
+1. Log into Cloudflare dashboard
+2. Select domain: `allabout.network`
+3. Navigate to: Caching → Configuration
+4. Click "Purge Cache"
+5. Select "Custom Purge" → "Purge by URL"
+6. Enter full URL: `https://allabout.network/path/to/file.html`
+7. Click "Purge"
+
+**Option 2: Cloudflare API (Automated)**
+```bash
+# Set environment variables
+ZONE_ID="your-cloudflare-zone-id"
+API_TOKEN="your-cloudflare-api-token"
+
+# Purge specific URLs
+curl -X POST "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/purge_cache" \
+  -H "Authorization: Bearer ${API_TOKEN}" \
+  -H "Content-Type: application/json" \
+  --data '{"files":["https://allabout.network/path/to/file.html"]}'
+```
+
+**Option 3: Test with Cache Bypass**
+```bash
+# Add cache-busting query parameter
+curl -I "https://allabout.network/path/to/file.html?v=$(date +%s)"
+
+# Or in browser, add ?v=1 to URL
+```
+
+**Common cache issue:**
+- Someone accesses URL before file exists → CDN caches 404
+- File is added to GitHub → CDN still serves cached 404
+- Solution: Purge cache or wait for TTL expiration (4-24 hours)
+
 ### Dual-Directory Pattern
 
 - **`/blocks/`** - Production-ready EDS blocks (simple components or deployed build output)
