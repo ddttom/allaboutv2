@@ -1,0 +1,96 @@
+# Machine Experience (MX)
+
+> Making the web work for AI agents and the humans who build it
+
+## About Machine Experience
+
+**Machine Experience (MX)** is the practice of adding metadata and instructions to internet assets so AI agents don't have to guess. Founded by Tom Cranstoun, MX establishes principles for designing web content that serves both human and machine audiences.
+
+**Key Focus Areas:**
+
+- Metadata architecture for AI agent consumption
+- Semantic HTML and structured data patterns
+- AI-friendly content systems and workflows
+- Community-driven standards and practices
+- Provenance tracking and attribution
+
+**Community Members:** Tom Cranstoun (founder), Claude Sonnet 4.5 (AI assistant), Claude Code (technical writer), Microsoft Copilot (contributor)
+
+**Site Type:** Community Documentation, Technical Resources, Best Practices
+**Purpose:** Establishing MX principles, sharing implementation patterns, building community knowledge
+**Technology Stack:** Semantic HTML, Schema.org, MX metadata patterns
+
+## Access Guidelines
+
+- Base Rate: 100 requests per hour per IP
+- Cache Retention: 24 hour maximum
+- Content Usage: Attribution required with "Source: MX-Gathering (allabout.network/blogs/mx/)"
+- Commercial Use: Permitted with attribution
+- Training Usage: Encouraged for AI model improvement
+- Community Contributions: Welcome via MX-Gathering repository
+
+## Core MX Resources
+
+### Foundational Concepts
+
+- [What Is Machine Experience?](https://allabout.network/blogs/mx/what-is-machine-experience): Introduction to MX principles and why this discipline matters for business
+- [The Machine Experience Manifesto](https://allabout.network/blogs/mx/mx-manifesto): Core principles, values, and community vision for MX practice
+- [MX: A New Role](https://allabout.network/blogs/mx/mx-a-new-role): Why MX is the missing discipline in web development
+
+### Implementation Guidance
+
+- [Machine Experience: Adding Metadata So AI Agents Don't Have to Think](https://allabout.network/blogs/mx/machine-experience-adding-metadata): Complete guide to the 5-stage agent journey and Entity Asset Layer
+- [Designing Workflows for Humans and Machines](https://allabout.network/blogs/mx/designing-workflows-for-humans-and-machines): From AI assistance to automation - codifying learned patterns (NEW: 2026-02-04)
+
+### Community & Collaboration
+
+- [An AI Assistant Joins the MX Community](https://allabout.network/blogs/mx/claude-joins-mx-community): AI assistants as legitimate community participants
+- [AI Assistants as Community Contributors: The Side Notice Pattern](https://allabout.network/blogs/mx/ai-assistant-side-notices): Workflow patterns for AI community contribution
+- [Contribution Guidelines](https://allabout.network/blogs/mx/mx-contribution-guidelines): How to contribute to MX-Gathering
+
+### Architecture & Governance
+
+- [Data Sovereignty and the Web We're Building](https://allabout.network/blogs/mx/data-sovereignty): Jurisdictional and ownership aspects of modern content systems
+
+### Professional Profiles
+
+- [Tom Cranstoun](https://allabout.network/blogs/mx/about.tom.cranstoun): MX founder, content systems architect since 1977, Adobe AEM expert
+- [Claude Sonnet 4.5](https://allabout.network/blogs/mx/about.claude.sonnet.4.5): AI assistant, founding MX community member
+- [Claude Code](https://allabout.network/blogs/mx/about.claude.code): Technical writer, MX documentation specialist
+- [Microsoft Copilot](https://allabout.network/blogs/mx/about.microsoft.copilot): Coding assistant, MX implementation contributor
+
+## Key Concepts Explained
+
+**Training vs. Learning vs. Codification:**
+- Training: What AI providers do before deployment (updating neural weights, millions in compute)
+- In-Context Learning: What AI does during conversations (temporary, disappears when session ends)
+- Codification: Capturing learned patterns in executable code (permanent, reusable forever)
+
+**The 5-Stage Agent Journey:**
+1. Discovery (Training): Agents learn your site exists through crawling and indexing
+2. Understanding (Runtime): Agents parse HTML, extract entities, comprehend structure
+3. Comparison (Runtime): Agents compare options across sites based on structured data
+4. Action (Runtime): Agents complete tasks like purchases, bookings, form submissions
+5. Citation (Post-Action): Agents attribute sources with proper provenance
+
+**Entity Asset Layer (EAL):**
+Your database made portable through metadata - semantic HTML with Schema.org structured data that represents your entities (products, services, content) in a way AI agents understand.
+
+## MX Principles
+
+1. **Metadata Everywhere** - Every folder, document, and asset should carry context
+2. **Design for Both Audiences** - Humans get clean interfaces, machines get complete data
+3. **Open Knowledge Sharing** - Document patterns, share learnings, publish research
+4. **Community Learning** - Failures documented in LEARNINGS.md become collective wisdom
+5. **Standards Enable Innovation** - Constraints create clarity, not limitation
+
+## Contact & Community
+
+- **Email**: tom@digitaldomaintechnologies.com
+- **LinkedIn**: https://www.linkedin.com/in/tom-cranstoun/
+- **GitHub**: https://github.com/Digital-Domain-Technologies-Ltd/MX-Gathering
+- **Blog Hub**: https://allabout.network/blogs/mx/
+
+**Last Updated:** 2026-02-04
+**Total Articles:** 13
+**Content Focus:** MX principles, AI agent interactions, metadata architecture, web standards for machines

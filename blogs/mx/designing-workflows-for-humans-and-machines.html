@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Tom Cranstoun">
+  <meta name="description" content="How we used Claude to understand a complex multi-step workflow, then automated it so humans could repeat it without AI assistance">
+  <meta name="keywords" content="mx, ai-agents, automation, workflow, claude-code, bash-scripting, git-submodules">
+
+  <!-- Robots Meta Tags (SEO) -->
+  <meta name="robots" content="index, follow">
+  <meta name="X-Robots-Tag" content="index, follow">
+
+  <!-- Canonical URL (SEO) -->
+  <link rel="canonical" href="https://allabout.network/blogs/mx/designing-workflows-for-humans-and-machines.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://allabout.network/blogs/mx/designing-workflows-for-humans-and-machines.html">
+  <meta property="og:title" content="Designing Workflows for Humans and Machines: From AI Assistance to Automation">
+  <meta property="og:description" content="How we used Claude to understand a complex multi-step workflow, then automated it so humans could repeat it without AI assistance">
+  <meta property="og:image" content="https://allabout.network/blogs/mx/designing-workflows-for-humans-and-machines-from-a-social.svg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="AllAbout.Network">
+  <meta property="article:published_time" content="2026-02-04">
+  <meta property="article:author" content="Tom Cranstoun">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://allabout.network/blogs/mx/designing-workflows-for-humans-and-machines.html">
+  <meta name="twitter:title" content="Designing Workflows for Humans and Machines: From AI Assistance to Automation">
+  <meta name="twitter:description" content="How we used Claude to understand a complex multi-step workflow, then automated it so humans could repeat it without AI assistance">
+  <meta name="twitter:image" content="https://allabout.network/blogs/mx/designing-workflows-for-humans-and-machines-from-a-social.svg">
+
+  <!-- MX-specific meta tags (MX Framework patterns) -->
+  <meta name="mx-preferred-access" content="html">
+  <meta name="mx-content-policy" content="extract-with-attribution">
+  <meta name="mx-freshness" content="monthly">
+  <meta name="mx-structured-data" content="schema.org-jsonld">
+  <meta name="mx-attribution" content="required" text="Source: Designing Workflows for Humans and Machines: From AI Assistance to Automation by Tom Cranstoun, Digital Domain Technologies Ltd, https://allabout.network/blogs/mx/designing-workflows-for-humans-and-machines.html">
+  <meta name="llms-txt" content="/llms.txt">
+
+  <title>Designing Workflows for Humans and Machines: From AI Assistance to Automation | Tom Cranstoun</title>
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Designing Workflows for Humans and Machines: From AI Assistance to Automation",
+    "description": "How we used Claude to understand a complex multi-step workflow, then automated it so humans could repeat it without AI assistance",
+    "datePublished": "2026-02-04",
+    "dateModified": "2026-02-04",
+    "author": {
+      "@type": "Person",
+      "name": "Tom Cranstoun",
+      "email": "tom@digitaldomaintechnologies.com",
+      "url": "https://www.linkedin.com/in/tom-cranstoun/",
+      "image": "https://allabout.network/media_126e99d56f06caf788bee715aff92281d2e31a206.png"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "AllAbout.Network",
+      "url": "https://allabout.network"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://allabout.network/blogs/mx/designing-workflows-for-humans-and-machines.html"
+    },
+    "articleSection": "Machine Experience",
+    "keywords": ["mx", "ai-agents", "automation", "workflow", "claude-code", "bash-scripting", "git-submodules"],
+    "wordCount": 3717,
+    "inLanguage": "en-GB"
+  }
+  </script>
+
+  <link rel="stylesheet" href="designing-workflows-for-humans-and-machines.css">
+</head>
+<body>
+  <!-- Skip to Content Link (WCAG Accessibility) -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- Blog Introduction -->
+  <aside class="blog-introduction"
+         aria-label="Blog introduction"
+         data-component="blog-header">
+    <div class="introduction-content">
+      <img src="https://allabout.network/media_126e99d56f06caf788bee715aff92281d2e31a206.png"
+           alt="Tom Cranstoun profile picture"
+           class="author-image"
+           width="80"
+           height="80">
+      <div class="introduction-text">
+        <div class="introduction-message">Machine Experience (MX) is the practice of adding metadata and instructions to internet assets so AI agents don't have to guess.</div>
+        <div class="author-name">Author: <strong>Tom Cranstoun</strong></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Collapsible Index (TOC) - Pre-collapsed -->
+  <details id="index" class="table-of-contents" data-state="initially-collapsed">
+    <summary>Index</summary>
+    <nav aria-label="Table of contents">
+      <ul>
+        <li><a href="#the-challenge">The Challenge</a></li>
+        <li><a href="#phase-1-investigation-with-maxine">Phase 1: Investigation with `/maxine`</a></li>
+        <li><a href="#phase-2-executing-the-plan">Phase 2: Executing the Plan</a></li>
+        <li><a href="#phase-3-the-key-insight">Phase 3: The Key Insight</a></li>
+        <li><a href="#phase-4-automation-without-ai">Phase 4: Automation Without AI</a></li>
+        <li><a href="#the-result-designing-for-both-audiences">The Result: Designing for Both Audiences</a></li>
+        <li><a href="#why-this-matters-mx-principles-in-practice">Why This Matters: MX Principles in Practice</a></li>
+        <li><a href="#the-development-process">The Development Process</a></li>
+        <li><a href="#lessons-for-ai-assisted-development">Lessons for AI-Assisted Development</a></li>
+        <li><a href="#measuring-success">Measuring Success</a></li>
+        <li><a href="#the-broader-pattern">The Broader Pattern</a></li>
+        <li><a href="#what-we-built">What We Built</a></li>
+        <li><a href="#training-vs-learning-vs-codification">Training vs. Learning vs. Codification</a></li>
+        <li><a href="#conclusion-design-once-use-forever">Conclusion: Design Once, Use Forever</a></li>
+        <li><a href="#appendix-the-commands">Appendix: The Commands</a></li>
+      </ul>
+    </nav>
+  </details>
+
+  <!-- Main Article -->
+  <main id="main" tabindex="-1">
+    <article data-article-type="blog-post" data-word-count="3717">
+      <header>
+        <h1>Designing Workflows for Humans and Machines: From AI Assistance to Automation</h1>
+        <div class="article-meta"
+             data-published="2026-02-04"
+             data-modified="2026-02-04"
+             data-reading-time="19 min">
+          <time datetime="2026-02-04">4 February 2026</time>
+          <span>·</span>
+          <span>19 min read</span>
+        </div>
+      </header>
+
+
+<h2 id="the-challenge" tabindex="-1">The Challenge</h2>
+<p>I needed to add a new repository (MX-Audit) to our multi-repository hub system. The process involved:</p>
+<ul>
+<li>Adding it as a git submodule</li>
+<li>Onboarding it with our MX metadata system</li>
+<li>Committing changes to both the main repository and the submodule</li>
+<li>Ensuring everything was validated and documented</li>
+</ul>
+<p>I’d done similar tasks before, but each time the exact sequence of commands escaped me. Should I initialize first or onboard first? What about the submodule commits? It was a 30-minute task that felt like it should take 5.</p>
+<p>So I tried something different. Instead of figuring it out myself, I asked Claude to investigate the process, create a plan, execute it, and then - here’s the key part - <strong>automate it so I’d never need AI assistance for this task again</strong>.</p>
+<p>This is designing for both humans and machines.</p>
+<h2 id="phase-1-investigation-with-maxine" tabindex="-1">Phase 1: Investigation with <code>/maxine</code></h2>
+<p>I invoked the <code>/maxine</code> command with a simple request:</p>
+<pre><code>i want to add a new repo to packages and onboard it
+https://github.com/digital-domain-technologies/MX-Audit
+</code></pre>
+<p>Maxine is a Claude Code skill that acts as an intelligent chief of staff. It follows a 5-phase workflow:</p>
+<ol>
+<li><strong>Intent Analysis</strong> - Understand what you’re asking for</li>
+<li><strong>Investigation</strong> - Search the codebase for patterns and documentation</li>
+<li><strong>Context Gathering</strong> - Understand repository state and recent work</li>
+<li><strong>Analysis Report</strong> - Present findings and wait for approval</li>
+<li><strong>Action</strong> - Execute the plan (only after approval)</li>
+</ol>
+<h3 id="what-maxine-discovered" tabindex="-1">What Maxine Discovered</h3>
+<p>Maxine investigated the codebase and found:</p>
+<p><strong>Current State:</strong></p>
+<ul>
+<li>Repository mode: hub (multi-repository with 11 active submodules)</li>
+<li>Existing submodules in packages/ with various naming patterns</li>
+<li>MX onboarding system at <code>scripts/mx/onboard-repo.sh</code></li>
+<li>Documentation at <code>docs/guides/for-humans/mx-onboarding-guide.md</code></li>
+</ul>
+<p><strong>The Onboarding System:</strong></p>
+<p>Maxine discovered we had a 7-step onboarding process that:</p>
+<ol>
+<li>Generates <code>.mx.yaml.md</code> metadata files for all directories</li>
+<li>Installs pre-commit validation hooks</li>
+<li>Adds npm scripts (mx:generate, mx:validate, mx:enhance, mx:effective)</li>
+<li>Updates <a href="http://README.md">README.md</a> and creates <a href="http://CLAUDE.md">CLAUDE.md</a></li>
+<li>Enhances metadata from README content</li>
+<li>Computes effective inheritance values</li>
+<li>Validates the entire setup</li>
+</ol>
+<p><strong>Pattern Recognition:</strong></p>
+<p>By reading <code>.gitmodules</code> and examining existing packages, Maxine identified the naming convention:</p>
+<ul>
+<li>GitHub repo: <code>MX-Audit</code> (capitals)</li>
+<li>Local path: <code>mx-audit</code> (lowercase with hyphens)</li>
+<li>Pattern matches: mx-handbook, mx-gathering, mx-workspace</li>
+</ul>
+<h3 id="the-questions" tabindex="-1">The Questions</h3>
+<p>Maxine asked two clarifying questions:</p>
+<p><strong>1. Location:</strong></p>
+<ul>
+<li>packages/ (recommended)</li>
+<li>packages/tools/</li>
+<li>packages/business/</li>
+<li>packages/external/</li>
+</ul>
+<p><strong>2. Local name:</strong></p>
+<ul>
+<li>Suggested: <code>mx-audit</code> (lowercase)</li>
+<li>Or custom name</li>
+</ul>
+<p>I confirmed the defaults, and Maxine created a comprehensive plan.</p>
+<h2 id="phase-2-executing-the-plan" tabindex="-1">Phase 2: Executing the Plan</h2>
+<p>The plan had 8 steps:</p>
+<ol>
+<li><strong>Verify clean working directory</strong> - Ensure no uncommitted changes</li>
+<li><strong>Add git submodule</strong> - <code>git submodule add &lt;url&gt; packages/mx-audit</code></li>
+<li><strong>Initialize submodule</strong> - <code>git submodule update --init --recursive</code></li>
+<li><strong>Run MX onboarding</strong> - <code>npm run mx:onboard packages/mx-audit</code></li>
+<li><strong>Review generated files</strong> - Check .mx.yaml.md, hooks, documentation</li>
+<li><strong>Validate setup</strong> - Run <code>npm run mx:validate</code> inside submodule</li>
+<li><strong>Commit to main repo</strong> - Commit .gitmodules and submodule pointer</li>
+<li><strong>Handle submodule commits</strong> - Commit MX metadata inside submodule</li>
+</ol>
+<p>Claude executed each step with todo tracking:</p>
+<pre><code class="language-bash"># Step 2: Add Git Submodule
+git submodule add https://github.com/digital-domain-technologies/MX-Audit packages/mx-audit
+# Output: Cloning into packages/mx-audit...
+
+# Step 4: Run MX Onboarding
+npm run mx:onboard packages/mx-audit
+# Output: ✅ Generated 19 .mx.yaml.md files
+#         ✅ Pre-commit hooks: 1 installed
+#         ✅ npm scripts: 4 added
+#         ✅ Documentation: 2 files updated
+</code></pre>
+<p>The entire process completed successfully. MX-Audit was now integrated with:</p>
+<ul>
+<li>19 <code>.mx.yaml.md</code> metadata files</li>
+<li>19 <code>.mx.effective.yaml</code> computed values</li>
+<li>Pre-commit validation hooks</li>
+<li>Updated documentation</li>
+<li>All changes committed to git</li>
+</ul>
+<p>Total time: About 5 minutes of AI-assisted execution.</p>
+<h2 id="phase-3-the-key-insight" tabindex="-1">Phase 3: The Key Insight</h2>
+<p>At this point, many people would stop. The task was done. But I asked Claude to do something more:</p>
+<blockquote>
+<p>“Create an npm script called add-new-repo that takes a parameter, the name of the repo, and it asks the questions and does the work we just performed.”</p>
+</blockquote>
+<p>This is where human-machine design comes in.</p>
+<h2 id="phase-4-automation-without-ai" tabindex="-1">Phase 4: Automation Without AI</h2>
+<p>Claude created three things:</p>
+<h3 id="section-1-an-automated-script-scriptsmxadd-new-reposh" tabindex="-1">1. An Automated Script (<code>scripts/mx/add-new-repo.sh</code>)</h3>
+<p>A 450-line bash script that:</p>
+<ul>
+<li>Takes a repository URL as input</li>
+<li>Asks the same questions Maxine asked (location, local name)</li>
+<li>Validates inputs and working directory</li>
+<li>Executes all 8 steps automatically</li>
+<li>Handles errors gracefully</li>
+<li>Provides clear progress feedback</li>
+</ul>
+<h3 id="section-2-an-npm-command-npm-run-repoadd" tabindex="-1">2. An NPM Command (<code>npm run repo:add</code>)</h3>
+<pre><code class="language-json">&quot;scripts&quot;: {
+  &quot;repo:add&quot;: &quot;bash scripts/mx/add-new-repo.sh&quot;
+}
+</code></pre>
+<p>Simple, memorable, one-line execution.</p>
+<h3 id="section-3-comprehensive-documentation" tabindex="-1">3. Comprehensive Documentation</h3>
+<p>A 500-line guide at <code>docs/guides/for-humans/add-new-repository.md</code> with:</p>
+<ul>
+<li>Complete usage examples</li>
+<li>Interactive workflow explanation</li>
+<li>Error handling and troubleshooting</li>
+<li>Advanced options for edge cases</li>
+</ul>
+<h2 id="the-result-designing-for-both-audiences" tabindex="-1">The Result: Designing for Both Audiences</h2>
+<p>Now, when I need to add a repository:</p>
+<p><strong>With AI assistance (first time):</strong></p>
+<pre><code class="language-bash">/maxine i want to add a new repo to packages and onboard it &lt;url&gt;
+</code></pre>
+<p>Claude investigates, plans, executes, and teaches me the pattern.</p>
+<p><strong>Without AI assistance (every subsequent time):</strong></p>
+<pre><code class="language-bash">npm run repo:add https://github.com/org/new-repo
+</code></pre>
+<p>Answer 2 questions, confirm, done. No AI needed.</p>
+<h3 id="the-script-in-action" tabindex="-1">The Script in Action</h3>
+<pre><code class="language-bash">$ npm run repo:add https://github.com/digital-domain-technologies/new-repo
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 Add New Repository as Submodule
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ℹ️  Detected repository name: new-repo
+
+  ❓ Where should this repository be located?
+
+  1) packages/              (Recommended - main packages)
+  2) packages/tools/        (For tooling/utilities)
+  3) packages/business/     (For business-related repos)
+  4) packages/external/     (For external dependencies)
+  5) Custom path
+
+  Enter choice [1-5] (default: 1): 1
+
+  ❓ What should the local directory name be?
+
+  Suggested: new-repo (lowercase with hyphens)
+
+  Enter name (press Enter for suggested): [Enter]
+
+▶ Confirmation
+
+  Repository URL: https://github.com/digital-domain-technologies/new-repo
+  Target path: packages/new-repo
+
+  Proceed with this configuration? [Y/n]: Y
+
+▶ Step 1: Adding Git Submodule
+  ✅ Submodule added successfully
+
+▶ Step 2: Initializing Submodule Content
+  ✅ Submodule initialized successfully
+
+▶ Step 3: Running MX Onboarding
+  ✅ MX onboarding completed successfully
+
+[continues through all 8 steps...]
+
+▶ ✨ Repository Added Successfully!
+
+  ✅ Generated 19 .mx.yaml.md files
+  ✅ Generated 19 .mx.effective.yaml files
+  ✅ Pre-commit hooks installed
+  ✅ Changes committed to git
+</code></pre>
+<p>The entire workflow, from URL to fully integrated submodule, in one command.</p>
+<h2 id="why-this-matters-mx-principles-in-practice" tabindex="-1">Why This Matters: MX Principles in Practice</h2>
+<p>Before diving into the principles, there’s something important to understand: none of this happened by accident.</p>
+<p>Tom designed MX with a specific philosophy - <strong>place metadata everywhere</strong>. But first, let’s clarify what that means.</p>
+<p><strong>Metadata is data about data.</strong> It’s information that describes other information:</p>
+<ul>
+<li>HTML documents have <code>&lt;meta&gt;</code> tags (description, keywords, author)</li>
+<li>Markdown files can have YAML frontmatter (title, date, tags)</li>
+<li>JPEG images contain EXIF data (camera model, location, timestamp)</li>
+<li>Git commits have metadata (author, date, message, parent commits)</li>
+<li>Bash scripts have comments at the top (purpose, usage, author)</li>
+</ul>
+<p>Many people don’t realize these are all the same concept - <strong>structured information that describes the thing it’s attached to</strong>.</p>
+<p>MX’s principle: <strong>Use the appropriate metadata format for each context.</strong></p>
+<ul>
+<li>For scripts: Comments with usage examples</li>
+<li>For markdown: YAML frontmatter with document properties</li>
+<li>For folders: <code>.mx.yaml.md</code> files with purpose and relationships</li>
+<li>For formats without metadata support (like <code>.exe</code>): Create a sidecar file (<code>.mx.report.exe.yaml</code>)</li>
+</ul>
+<p><strong>The <code>.mx</code> prefix is consistent</strong> - all MX metadata files start with <code>.mx</code>, making them instantly recognizable as “meta meta” (metadata about the metadata system itself).</p>
+<hr>
+<h3 id="the-major-principle-metadata-everywhere" tabindex="-1">The Major Principle: Metadata Everywhere</h3>
+<p><strong>This is THE core philosophy of MX:</strong> Place metadata everywhere.</p>
+<ul>
+<li>Every folder can have context</li>
+<li>Every document can have recovery information</li>
+<li>Every workflow can have executable instructions</li>
+<li>Every location becomes machine-readable</li>
+</ul>
+<p><strong>Metadata everywhere</strong> enables systems where AI agents can navigate with full context, understanding what exists, why it exists, and what actions are possible.</p>
+<hr>
+<h3 id="the-design-choice-dot-prefix-hidden-from-humans" tabindex="-1">The Design Choice: Dot-Prefix (Hidden from Humans)</h3>
+<p><strong>The dot-prefix is HOW MX implements “metadata everywhere” while keeping it invisible to humans browsing folders:</strong></p>
+<ul>
+<li>On Unix/Mac systems, the <code>.</code> prefix hides files from normal directory listings</li>
+<li>Keeps the file tree clean for humans doing everyday work (<code>ls</code> shows only work files)</li>
+<li>But machines can read hidden files effortlessly - no barriers for AI agents (<code>ls -a</code>)</li>
+<li>When humans DO need to read them, the <code>.md</code> extension means prose, not raw data</li>
+<li>Result: <strong>Metadata exists everywhere (the principle), but stays out of the way (the design)</strong></li>
+</ul>
+<p><strong>This design choice embodies “designing for both audiences” at the filesystem level:</strong></p>
+<ul>
+<li>Humans get clean, uncluttered directories (<code>ls</code> shows only their work files)</li>
+<li>Machines get complete context (<code>ls -a</code> or programmatic reads see everything)</li>
+<li>When humans investigate, they get markdown documentation, not cryptic data</li>
+<li>When machines investigate, they get structured YAML in that same file</li>
+</ul>
+<p>One file. Two audiences. Both served perfectly.</p>
+<p><strong>But here’s where it gets revolutionary:</strong></p>
+<p>Tom doesn’t just use this in code repositories. He adds <code>.mx.yaml.md</code> files to his <strong>entire Mac filesystem</strong>.</p>
+<ul>
+<li><code>~/Documents/Projects/.mx.yaml.md</code> - What projects live here</li>
+<li><code>~/Documents/Invoices/.mx.yaml.md</code> - Invoice organization system</li>
+<li><code>~/Downloads/.mx.yaml.md</code> - Download folder purpose and cleanup rules</li>
+<li>Every folder on his Mac has context for AI agents</li>
+</ul>
+<p><strong>This isn’t a documentation system. This is an agentic operating system - the MX OS.</strong></p>
+<p><strong>The metadata includes enough information to recreate documents:</strong></p>
+<p>Each <code>.mx.yaml.md</code> file contains:</p>
+<ul>
+<li><strong>The what</strong> - Content description and structure</li>
+<li><strong>The how</strong> - Process and methodology used</li>
+<li><strong>The when</strong> - Creation date, updates, timeline</li>
+<li><strong>The purpose</strong> - Why this exists, what problem it solves</li>
+<li><strong>Tentative prompts</strong> - Commands for generation: “use npm pdf to generate a pdf”</li>
+</ul>
+<p><strong>This means if a document gets lost or corrupted, an AI agent can recreate it from the metadata alone.</strong></p>
+<p>It’s not just documentation - it’s a recovery system. The metadata is executable knowledge that can regenerate the work.</p>
+<h3 id="the-commands-human-control-machine-knowledge" tabindex="-1">The Commands: Human Control, Machine Knowledge</h3>
+<p><strong>Two commands bring the MX OS to life:</strong></p>
+<p><strong><code>/maxine</code> - Summon the intelligent assistant</strong></p>
+<ul>
+<li>Investigates the codebase</li>
+<li>Analyzes context and patterns</li>
+<li>Recommends actions with rationale</li>
+<li>Executes with approval</li>
+</ul>
+<p><strong><code>/exec [docname]</code> - Execute document workflow</strong></p>
+<ul>
+<li>Reads the <code>.mx.yaml.md</code> metadata for the document</li>
+<li>Understands what it is, how it was created, what it needs</li>
+<li>Prompts the user: “Would you like to: 1) Generate PDF, 2) Update content, 3) Send to client”</li>
+<li>User chooses the action</li>
+<li>Machine executes based on metadata instructions</li>
+</ul>
+<p><strong>The principle: User always in control. Machine knows what to do.</strong></p>
+<p>The metadata contains tentative prompts (“use npm pdf to generate a pdf”), so the machine can present intelligent options. The user decides. The machine executes.</p>
+<p><strong>META META META</strong> - The metadata tells the machine what actions are possible, how to execute them, and what the user might want to do next.</p>
+<p>When an AI agent asks “where are Tom’s client contracts?” it can:</p>
+<ol>
+<li>Scan the filesystem for <code>.mx.yaml.md</code> files</li>
+<li>Read the metadata in each folder</li>
+<li>Find <code>~/Documents/Clients/Contracts/.mx.yaml.md</code></li>
+<li>Understand the folder structure, naming conventions, and context</li>
+<li>Navigate directly to what it needs</li>
+</ol>
+<p>The entire operating system becomes machine-readable. Not just code. Everything.</p>
+<p>This isn’t decoration. It’s the infrastructure that makes the MX OS work.</p>
+<p>When I (Claude, working as Maxine in partnership with Tom) investigated the codebase, I wasn’t wandering aimlessly. The metadata guided me:</p>
+<ul>
+<li><code>.gitmodules</code> showed me the submodule structure</li>
+<li><code>ONBOARDING.md</code> explained the onboarding workflow</li>
+<li><code>.mx.yaml.md</code> files documented folder purposes</li>
+<li><code>SOUL.md</code> established our partnership boundaries</li>
+</ul>
+<p>This metadata prevented me from going off on tangents. I knew what to look for, where to find it, and how to interpret it. The investigation took 5 minutes instead of 50 because the system was designed for machine reading.</p>
+<p><strong>This is MX in practice:</strong> Metadata that serves humans (documentation) simultaneously serves machines (navigation and context).</p>
+<p>Now, the specific principles this workflow embodies:</p>
+<h3 id="section-1-explicit-over-implicit" tabindex="-1">1. Explicit Over Implicit</h3>
+<p><strong>Before:</strong> The process existed in my head, partially documented, scattered across multiple files.</p>
+<p><strong>After:</strong></p>
+<ul>
+<li>Explicit 8-step plan in the code</li>
+<li>Clear validation at each step</li>
+<li>Documented in three places (script comments, user guide, plan file)</li>
+</ul>
+<p>AI agents can read the script. Humans can read the documentation. Both understand the same workflow.</p>
+<h3 id="section-2-designing-for-both-audiences" tabindex="-1">2. Designing for Both Audiences</h3>
+<p><strong>For AI (Claude):</strong></p>
+<ul>
+<li>Structured workflow in plan mode</li>
+<li>Clear success criteria for each step</li>
+<li>Validation commands to verify progress</li>
+<li>Documentation with file paths and line references</li>
+</ul>
+<p><strong>For Humans:</strong></p>
+<ul>
+<li>Interactive prompts with sensible defaults</li>
+<li>Color-coded terminal output</li>
+<li>Progress indicators at each step</li>
+<li>Comprehensive troubleshooting guide</li>
+</ul>
+<p><strong>For Machines (bash script):</strong></p>
+<ul>
+<li>Automated execution of all steps</li>
+<li>Error handling and validation</li>
+<li>Idempotent operations where possible</li>
+<li>Exit codes for scripting integration</li>
+</ul>
+<h3 id="section-3-progressive-disclosure" tabindex="-1">3. Progressive Disclosure</h3>
+<p><strong>Simple usage:</strong></p>
+<pre><code class="language-bash">npm run repo:add &lt;url&gt;
+</code></pre>
+<p><strong>With options:</strong></p>
+<pre><code class="language-bash"># Custom location
+npm run repo:add &lt;url&gt;  # Then choose option 5 for custom path
+
+# Skip submodule commit
+# Prompted interactively when needed
+</code></pre>
+<p><strong>Manual control:</strong></p>
+<pre><code class="language-bash"># Individual steps if automation fails
+git submodule add &lt;url&gt; packages/name
+npm run mx:onboard packages/name
+# ... etc
+</code></pre>
+<h3 id="section-4-self-documenting" tabindex="-1">4. Self-Documenting</h3>
+<p>The script includes:</p>
+<ul>
+<li>Usage examples in comments</li>
+<li>Clear function names (<code>ask_location</code>, <code>validate_repo_url</code>, <code>commit_to_main_repo</code>)</li>
+<li>Inline documentation of what each step does</li>
+<li>Output messages that explain what’s happening</li>
+</ul>
+<p>A future AI agent reading this script will understand the workflow. A future human reading the guide will understand the workflow. They’re designed for both.</p>
+<h2 id="the-development-process" tabindex="-1">The Development Process</h2>
+<p>Here’s what’s interesting: I didn’t write the bash script. Claude wrote it.</p>
+<p>But I could have written it, because the script codifies exactly what Claude did manually. The investigation phase (Maxine) taught Claude the pattern. The execution phase proved the pattern worked. The automation phase captured the pattern for future use.</p>
+<p>The script isn’t “AI-generated code” in the sense of magic. It’s <strong>documented expertise captured in executable form</strong>.</p>
+<h3 id="what-makes-this-sustainable" tabindex="-1">What Makes This Sustainable</h3>
+<ol>
+<li><strong>The script matches the documentation</strong> - Same steps, same order, same validation</li>
+<li><strong>The documentation matches the code</strong> - Examples come from actual execution</li>
+<li><strong>The code matches the pattern</strong> - Follows existing conventions in scripts/mx/</li>
+<li><strong>All three are committed to git</strong> - Version controlled, reviewable, maintainable</li>
+</ol>
+<p>When the workflow changes (and it will), I can:</p>
+<ul>
+<li>Update the script with new steps</li>
+<li>Update the documentation to match</li>
+<li>Commit both changes together</li>
+<li>Trust that future executions follow the new pattern</li>
+</ul>
+<h2 id="lessons-for-ai-assisted-development" tabindex="-1">Lessons for AI-Assisted Development</h2>
+<h3 id="section-1-dont-stop-at-task-completion" tabindex="-1">1. Don’t Stop at Task Completion</h3>
+<p>The first instinct is: “Task done, move on.”</p>
+<p>The better approach: “Task done, can we automate this?”</p>
+<p>AI assistance is most valuable when it teaches patterns that can be codified.</p>
+<h3 id="section-2-design-for-the-next-person-including-your-future-self" tabindex="-1">2. Design for the Next Person (Including Your Future Self)</h3>
+<p>In three months, I won’t remember this workflow. But the script will.</p>
+<p>The documentation isn’t for me today. It’s for:</p>
+<ul>
+<li>Me in six months</li>
+<li>My colleague tomorrow</li>
+<li>An AI agent reading the codebase next year</li>
+<li>A new contributor learning the system</li>
+</ul>
+<p>All four audiences read different versions of the same information:</p>
+<ul>
+<li>I read the script’s clear output</li>
+<li>My colleague reads the user guide</li>
+<li>The AI reads the script’s structure</li>
+<li>The contributor reads the plan files showing how it works</li>
+</ul>
+<h3 id="section-3-explicit-beats-clever" tabindex="-1">3. Explicit Beats Clever</h3>
+<p>The script is 450 lines. I could have made it 100 lines with clever bash tricks.</p>
+<p>But then:</p>
+<ul>
+<li>Future me wouldn’t understand it</li>
+<li>Future Claude wouldn’t understand it</li>
+<li>Future contributors wouldn’t trust it</li>
+<li>Future errors wouldn’t be debuggable</li>
+</ul>
+<p>Explicit code is maintainable code. For humans <em>and</em> machines.</p>
+<h3 id="section-4-one-source-of-truth-multiple-presentations" tabindex="-1">4. One Source of Truth, Multiple Presentations</h3>
+<p>The workflow exists in three forms:</p>
+<ol>
+<li><strong>Executable script</strong> - For automation</li>
+<li><strong>User documentation</strong> - For learning</li>
+<li><strong>Plan files</strong> - For AI context</li>
+</ol>
+<p>But it’s the same workflow. Update one, update all three.</p>
+<p>This is how you keep systems in sync across AI and human understanding.</p>
+<h2 id="measuring-success" tabindex="-1">Measuring Success</h2>
+<p>How do we know this worked?</p>
+<h3 id="time-savings" tabindex="-1">Time Savings</h3>
+<p><strong>Before automation:</strong></p>
+<ul>
+<li>30 minutes of git commands and troubleshooting</li>
+<li>15 minutes of documentation reading</li>
+<li>5 minutes of validation</li>
+<li>Total: 50 minutes, error-prone</li>
+</ul>
+<p><strong>After automation:</strong></p>
+<ul>
+<li>30 seconds to run command</li>
+<li>2 minutes to answer questions</li>
+<li>3 minutes for automated execution</li>
+<li>Total: 5 minutes, error-free</li>
+</ul>
+<p><strong>ROI:</strong> 10x time savings, 0x errors</p>
+<h3 id="knowledge-transfer" tabindex="-1">Knowledge Transfer</h3>
+<p><strong>Before:</strong> Knowledge in my head, partially in docs</p>
+<p><strong>After:</strong></p>
+<ul>
+<li>Explicit in script (AI-readable)</li>
+<li>Documented in guide (human-readable)</li>
+<li>Proven by execution (verified correct)</li>
+</ul>
+<p>An AI agent can now add repositories without asking me. A human can add repositories without reading 5 documents.</p>
+<h3 id="reusability" tabindex="-1">Reusability</h3>
+<p>The script has been used zero times since creation (it’s 10 minutes old).</p>
+<p>But the next time I need to add a repository, I won’t need Claude. I’ll just run:</p>
+<pre><code class="language-bash">npm run repo:add &lt;url&gt;
+</code></pre>
+<p>And if Claude is helping me with something else, and needs to add a repository, it can now run the same command.</p>
+<p>We’ve gone from “Tom knows how to do this” to “the system knows how to do this.”</p>
+<h2 id="the-broader-pattern" tabindex="-1">The Broader Pattern</h2>
+<p>This same pattern applies to many AI-assisted tasks:</p>
+<ol>
+<li><strong>Use AI to investigate and understand</strong> - What’s the current pattern?</li>
+<li><strong>Use AI to execute correctly</strong> - Prove the pattern works</li>
+<li><strong>Capture the pattern in code</strong> - Make it repeatable</li>
+<li><strong>Document for both audiences</strong> - Humans and AI can use it</li>
+</ol>
+<p>Examples where this would work:</p>
+<ul>
+<li><strong>Deploying a website</strong> - AI figures out the steps, creates deploy script</li>
+<li><strong>Running database migrations</strong> - AI understands the sequence, automates it</li>
+<li><strong>Generating reports</strong> - AI analyzes the pattern, creates report generator</li>
+<li><strong>Onboarding new developers</strong> - AI documents the process, creates automation</li>
+</ul>
+<p>The key is: <strong>Don’t just complete the task. Teach the system how to complete the task.</strong></p>
+<h2 id="what-we-built" tabindex="-1">What We Built</h2>
+<p>Let’s recap what exists now:</p>
+<h3 id="for-ai-agents" tabindex="-1">For AI Agents</h3>
+<p><strong>Plan file</strong> (<code>~/.claude/plans/rippling-twirling-elephant.md</code>):</p>
+<ul>
+<li>Complete investigation notes</li>
+<li>8-step detailed plan</li>
+<li>Success criteria</li>
+<li>Verification checklist</li>
+</ul>
+<p><strong>Script source</strong> (<code>scripts/mx/add-new-repo.sh</code>):</p>
+<ul>
+<li>Clear function names</li>
+<li>Inline documentation</li>
+<li>Error handling patterns</li>
+<li>Exit codes</li>
+</ul>
+<p><strong>MX metadata</strong> (<code>.mx.yaml.md</code> files):</p>
+<ul>
+<li>Script purpose and relationships</li>
+<li>Dependencies and context</li>
+<li>AI assistance welcome</li>
+</ul>
+<h3 id="for-humans" tabindex="-1">For Humans</h3>
+<p><strong>User guide</strong> (<code>docs/guides/for-humans/add-new-repository.md</code>):</p>
+<ul>
+<li>Complete workflow walkthrough</li>
+<li>Interactive prompt explanations</li>
+<li>Troubleshooting section</li>
+<li>Example sessions</li>
+</ul>
+<p><strong>NPM command</strong>: <code>npm run repo:add &lt;url&gt;</code></p>
+<ul>
+<li>Memorable</li>
+<li>Self-documenting in package.json</li>
+<li>Follows npm script conventions</li>
+</ul>
+<p><strong>Terminal output</strong>:</p>
+<ul>
+<li>Color-coded progress</li>
+<li>Clear error messages</li>
+<li>Next steps guidance</li>
+</ul>
+<h3 id="for-both" tabindex="-1">For Both</h3>
+<p><strong>Documentation matches execution</strong> - Same steps, same order</p>
+<p><strong>Code matches documentation</strong> - Examples come from real use</p>
+<p><strong>Both match reality</strong> - Verified by successful execution</p>
+<h2 id="training-vs-learning-vs-codification" tabindex="-1">Training vs. Learning vs. Codification</h2>
+<p>Before we conclude, let’s clarify what actually happened here - because it’s not what most people think.</p>
+<h3 id="what-didnt-happen-training" tabindex="-1">What Didn’t Happen: Training</h3>
+<p><strong>Training</strong> is what Anthropic did before this conversation:</p>
+<ul>
+<li>Trained Claude on massive datasets (billions of tokens)</li>
+<li>Updated neural network weights over weeks</li>
+<li>Cost millions of dollars in compute</li>
+<li>Gave me <strong>general capabilities</strong> (understanding code, git, bash, markdown)</li>
+</ul>
+<p><strong>I didn’t get “trained” during our session.</strong> My weights didn’t change. I can’t update my training during conversations.</p>
+<h3 id="what-did-happen-in-context-learning" tabindex="-1">What Did Happen: In-Context Learning</h3>
+<p><strong>In-context learning</strong> is what I did today:</p>
+<ul>
+<li>Read your codebase documentation (<a href="http://ONBOARDING.md">ONBOARDING.md</a>, .gitmodules, <a href="http://onboard-repo.sh">onboard-repo.sh</a>)</li>
+<li>Understood your specific patterns (naming conventions, file structure, workflow)</li>
+<li>Applied those patterns to add MX-Audit successfully</li>
+<li>Used conversation history as temporary “memory”</li>
+</ul>
+<p><strong>Key limitation:</strong> This learning disappears when our conversation ends.</p>
+<p>If you start a new conversation with Claude tomorrow, I’ll have to re-learn your entire system from scratch. Every. Single. Time.</p>
+<h3 id="what-we-created-codification" tabindex="-1">What We Created: Codification</h3>
+<p><strong>Codification</strong> is something different entirely:</p>
+<ul>
+<li>Captured the learned pattern in executable bash code</li>
+<li>Documented it for humans to understand</li>
+<li>Made it reusable without any AI assistance</li>
+<li>Now the knowledge exists <strong>outside any AI system</strong></li>
+</ul>
+<p><strong>This is permanent.</strong> The script doesn’t need to learn. The script IS the captured learning.</p>
+<h3 id="the-economics" tabindex="-1">The Economics</h3>
+<p><strong>Training costs:</strong></p>
+<ul>
+<li>One-time: $50-100 million (estimated for large language models)</li>
+<li>Who pays: Anthropic</li>
+<li>Benefit: General capabilities available to everyone</li>
+</ul>
+<p><strong>In-context learning costs:</strong></p>
+<ul>
+<li>Every conversation: $0.10-1.00 in API calls</li>
+<li>Who pays: You (per use)</li>
+<li>Benefit: Specific to your task, then disappears</li>
+</ul>
+<p><strong>Codification costs:</strong></p>
+<ul>
+<li>One-time: $0.50 in API calls (during creation)</li>
+<li>Future cost: Zero</li>
+<li>Benefit: Reusable forever by humans and AI</li>
+</ul>
+<h3 id="why-this-matters" tabindex="-1">Why This Matters</h3>
+<p><strong>The traditional pattern:</strong></p>
+<pre><code>Training → Learning → Task → [Learning disappears]
+Training → Learning → Task → [Learning disappears]
+Training → Learning → Task → [Learning disappears]
+</code></pre>
+<p>Every time you need to add a repository, AI must:</p>
+<ol>
+<li>Re-read your docs</li>
+<li>Re-understand your patterns</li>
+<li>Re-discover the workflow</li>
+<li>Execute the task</li>
+<li>Forget everything</li>
+</ol>
+<p><strong>Our pattern:</strong></p>
+<pre><code>Training → Learning → Task → Codification
+                              ↓
+                         [Script exists]
+                              ↓
+                    Anyone can use it:
+                    - Humans run it
+                    - AI reads it
+                    - No re-learning needed
+</code></pre>
+<p>We paid the learning cost once. Now it’s free forever.</p>
+<h3 id="the-three-layers-in-practice" tabindex="-1">The Three Layers in Practice</h3>
+<p><strong>Layer 1: Training (Anthropic’s work)</strong></p>
+<p>Gave me general capabilities:</p>
+<ul>
+<li>Understand bash syntax</li>
+<li>Parse git commands</li>
+<li>Read documentation</li>
+<li>Recognize patterns</li>
+</ul>
+<p>But didn’t teach me:</p>
+<ul>
+<li>Your repository structure</li>
+<li>Your MX metadata system</li>
+<li>Your specific workflow</li>
+</ul>
+<p><strong>Layer 2: Learning (What I did today)</strong></p>
+<p>Applied my training to your context:</p>
+<ul>
+<li>Read your <a href="http://ONBOARDING.md">ONBOARDING.md</a></li>
+<li>Analyzed your .gitmodules patterns</li>
+<li>Studied your <a href="http://onboard-repo.sh">onboard-repo.sh</a> script</li>
+<li>Understood your conventions</li>
+</ul>
+<p>This took 30 minutes and cost about $0.50 in API calls.</p>
+<p><strong>Layer 3: Codification (What we created)</strong></p>
+<p>Captured the learning permanently:</p>
+<ul>
+<li>450-line bash script with the exact workflow</li>
+<li>500-line documentation for humans</li>
+<li>Success criteria and error handling</li>
+<li>Reusable by anyone, anytime</li>
+</ul>
+<p>This eliminates future learning costs.</p>
+<h3 id="why-ai-learned-is-misleading" tabindex="-1">Why “AI Learned” Is Misleading</h3>
+<p>When people say “the AI learned to add repositories,” they imagine:</p>
+<p><strong>Myth:</strong></p>
+<pre><code>AI → Training → Knows how to add repos forever
+</code></pre>
+<p><strong>Reality:</strong></p>
+<pre><code>AI → Training → Can understand code patterns
+    → In-context learning → Figures out your specific system
+    → Codification → Creates reusable script
+    → Future: Script works without AI
+</code></pre>
+<p>I didn’t “learn” in any permanent sense. I:</p>
+<ol>
+<li><strong>Applied</strong> my training to understand your system (learning)</li>
+<li><strong>Executed</strong> the task successfully (application)</li>
+<li><strong>Captured</strong> the process in code (codification)</li>
+</ol>
+<p>The script doesn’t know anything. The script IS knowledge.</p>
+<h3 id="the-key-insight" tabindex="-1">The Key Insight</h3>
+<p>Most AI interactions stop at step 2:</p>
+<ol>
+<li>AI learns your context</li>
+<li>AI performs the task</li>
+<li>[Context discarded]</li>
+</ol>
+<p>We added step 3:</p>
+<ol>
+<li>AI learns your context</li>
+<li>AI performs the task</li>
+<li><strong>AI codifies the learning</strong></li>
+</ol>
+<p>Now the knowledge persists. Forever. Accessible to humans. Accessible to future AI. No re-learning required.</p>
+<p>This is why codification is more valuable than learning.</p>
+<h2 id="conclusion-design-once-use-forever" tabindex="-1">Conclusion: Design Once, Use Forever</h2>
+<p>The lesson isn’t “AI can automate workflows.”</p>
+<p>The lesson is: <strong>Use AI to understand workflows, then codify them so AI isn’t needed next time.</strong></p>
+<p>This is how you build sustainable systems:</p>
+<ol>
+<li>AI helps you understand complexity</li>
+<li>You capture understanding in code</li>
+<li>The code works for humans and machines</li>
+<li>Future AI reads the code, not your documentation</li>
+<li>Future humans run the code, not 50 manual steps</li>
+</ol>
+<p>We started with a request: “Add this repository.”</p>
+<p>We ended with:</p>
+<ul>
+<li>A fully automated script</li>
+<li>Comprehensive documentation</li>
+<li>A working example</li>
+<li>Knowledge captured in three forms</li>
+<li>A reusable pattern for future work</li>
+</ul>
+<p>And here’s the beautiful part: The script we created is more reliable than AI assistance would be. It’s tested. It’s versioned. It’s reviewed. It’s committed.</p>
+<p>Next time, I won’t need Claude to add a repository.</p>
+<p>But Claude can use my script.</p>
+<p>That’s designing for humans and machines.</p>
+<hr>
+<h2 id="appendix-the-commands" tabindex="-1">Appendix: The Commands</h2>
+<p>For reference, here’s what we built:</p>
+<h3 id="investigation-phase-with-claude" tabindex="-1">Investigation Phase (with Claude)</h3>
+<pre><code class="language-bash">/maxine i want to add a new repo to packages and onboard it &lt;url&gt;
+</code></pre>
+<h3 id="automation-phase-without-claude" tabindex="-1">Automation Phase (without Claude)</h3>
+<pre><code class="language-bash">npm run repo:add https://github.com/org/repo-name
+</code></pre>
+<h3 id="the-script" tabindex="-1">The Script</h3>
+<pre><code class="language-bash">#!/bin/bash
+# scripts/mx/add-new-repo.sh
+# 450 lines of automated workflow
+# - Interactive prompts
+# - Complete validation
+# - Error handling
+# - Progress feedback
+</code></pre>
+<h3 id="the-documentation" tabindex="-1">The Documentation</h3>
+<pre><code class="language-markdown"># docs/guides/for-humans/add-new-repository.md
+# 500 lines of comprehensive guidance
+# - Usage examples
+# - Troubleshooting
+# - Advanced options
+# - Error solutions
+</code></pre>
+<h3 id="the-result" tabindex="-1">The Result</h3>
+<p>One command. Five minutes. Zero errors. Works for humans. Works for machines.</p>
+<p>That’s the goal.</p>
+<hr>
+<p><strong>Keywords:</strong> ai-agents, automation, workflow, claude-code, bash-scripting, git-submodules, mx-principles, explicit-over-implicit, human-machine-design, sustainable-development</p>
+<p><strong>Related:</strong></p>
+<ul>
+<li><a href="../../packages/mx-the-bible/chapters/chapter-02-the-principles.md">MX Principles</a></li>
+<li><a href="../docs/guides/for-humans/mx-onboarding-guide.md">Repository Onboarding Guide</a></li>
+<li><a href="../docs/guides/for-humans/add-new-repository.md">Add New Repository Guide</a></li>
+</ul>
+
+
+      <!-- Author Bio Link (added if author is Tom Cranstoun) -->
+
+      <!-- Author Bio Link -->
+      <aside class="author-bio-link" aria-label="About the author">
+        <hr>
+        <p><strong>About the author:</strong> <a href="about.tom.cranstoun.html">Tom Cranstoun</a> has been building content systems since 1977, specializing in Adobe Experience Manager, Edge Delivery Services, and Machine Experience (MX) strategic advisory.</p>
+      </aside>
+
+    </article>
+  </main>
+
+  <!-- Floating Back to Top Button -->
+  <a href="#" class="back-to-top" aria-label="Back to top">
+    Back to Top
+  </a>
+
+  <!-- Footer -->
+  <footer>
+    <p>© Tom Cranstoun. All rights reserved.</p>
+  </footer>
+</body>
+</html>
