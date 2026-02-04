@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The MX Bible and MX Handbook - Coming Soon. Learn how to make your website work for AI agents and everyone who uses it through Machine Experience (MX).">
+    <meta name="keywords" content="MX, Machine Experience, AI agents, web accessibility, semantic HTML, structured data, book launch">
+    <meta name="author" content="Tom Cranstoun, MX Technologies Ltd">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="The MX Bible - Coming Soon">
+    <meta property="og:description" content="The definitive guide to Machine Experience: Making the web work for AI agents and everyone who uses it.">
+    <meta property="og:url" content="https://allabout.network">
+
+    <!-- Schema.org structured data for AI agents -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Book",
+        "name": "The MX Bible",
+        "author": {
+            "@type": "Person",
+            "name": "Tom Cranstoun",
+            "email": "tom.cranstoun@gmail.com"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "MX Technologies Ltd",
+            "slogan": "Making the web work for everyone and everything that uses it"
+        },
+        "about": "Machine Experience (MX) - the practice of adding metadata and instructions so AI agents don't have to think",
+        "bookFormat": "EBook/Paperback",
+        "inLanguage": "en",
+        "datePublished": "2026",
+        "workExample": [
+            {
+                "@type": "Book",
+                "name": "The MX Handbook",
+                "description": "A practical implementation guide for developers, UX designers, and content strategists"
+            },
+            {
+                "@type": "Book",
+                "name": "The MX Bible",
+                "description": "The definitive technical reference for architects, consultants, and serious practitioners"
+            }
+        ]
+    }
+    </script>
+
+    <title>The MX Bible - Coming Soon | MX Technologies Ltd</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --mx-primary: #1a1a2e;
+            --mx-secondary: #16213e;
+            --mx-accent: #0f3460;
+            --mx-highlight: #e94560;
+            --mx-text: #f1f1f1;
+            --mx-text-muted: #a8a8a8;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: linear-gradient(135deg, var(--mx-primary) 0%, var(--mx-secondary) 100%);
+            color: var(--mx-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+
+        main {
+            max-width: 800px;
+            text-align: center;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--mx-text) 0%, var(--mx-highlight) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--mx-text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .coming-soon {
+            display: inline-block;
+            background: var(--mx-highlight);
+            color: var(--mx-text);
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .description {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            margin: 2rem 0;
+            color: var(--mx-text);
+        }
+
+        .books {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .book-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+        }
+
+        .book-card h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--mx-highlight);
+        }
+
+        .book-card p {
+            color: var(--mx-text-muted);
+            font-size: 1rem;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 3rem;
+            padding: 2rem;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+            color: var(--mx-highlight);
+        }
+
+        .contact {
+            margin-top: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .contact a {
+            color: var(--mx-highlight);
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: border-bottom 0.3s ease;
+        }
+
+        .contact a:hover {
+            border-bottom: 2px solid var(--mx-highlight);
+        }
+
+        .launch-date {
+            font-size: 1.1rem;
+            color: var(--mx-text-muted);
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .description {
+                font-size: 1.1rem;
+            }
+
+            .books {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="logo" role="img" aria-label="Target icon">🎯</div>
+
+        <h1>The MX Bible</h1>
+
+        <p class="subtitle">Making the Web Work for AI Agents</p>
+
+        <div class="coming-soon" role="status" aria-live="polite">Coming Soon</div>
+
+        <p class="description">
+            The definitive guide to <strong>Machine Experience (MX)</strong> - the practice of adding metadata and instructions so AI agents don't have to think, preventing hallucination and enabling agents to complete desired actions.
+        </p>
+
+        <section class="books" aria-label="Book Collection">
+            <article class="book-card">
+                <h2>The MX Handbook</h2>
+                <p>~300-400 pages</p>
+                <p>A practical implementation guide for developers, UX designers, and content strategists. Step-by-step platform-specific implementations, content strategies, and patterns across major CMS platforms.</p>
+            </article>
+
+            <article class="book-card">
+                <h2>The MX Bible</h2>
+                <p>~800 pages</p>
+                <p>The definitive technical reference for architects, consultants, and serious practitioners who need complete coverage of Machine Experience. For those implementing MX at scale or establishing organizational practices.</p>
+            </article>
+        </section>
+
+        <p class="launch-date">Expected publication: 2026</p>
+
+        <section class="contact">
+            <p>For more information or early access inquiries:</p>
+            <p><a href="mailto:tom.cranstoun@gmail.com">tom.cranstoun@gmail.com</a></p>
+            <p><a href="https://allabout.network" rel="noopener noreferrer">allabout.network</a></p>
+        </section>
+
+        <div class="tagline">
+            🎯 MX Technologies Ltd — Making the web work for everyone and everything that uses it
+        </div>
+    </main>
+</body>
+</html>
