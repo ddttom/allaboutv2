@@ -32,10 +32,10 @@ mx:
       - "core-principles-list"
 
     contextRequired:
-      - "mx-principles.md"
+      - "PRINCIPLES.md"
 
   related:
-    - "mx-principles.md"
+    - "PRINCIPLES.md"
     - "mx-principles-blog.md"
 
 co:
