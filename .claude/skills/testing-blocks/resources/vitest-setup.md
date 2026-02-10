@@ -180,22 +180,27 @@ Consider adding to your CI workflow:
 ## Troubleshooting
 
 **"vitest: command not found"**
+
 - Ensure `vitest` is in `devDependencies` in package.json
 - Run `npm install`
 
 **"Cannot find module 'jsdom'"**
+
 - Install jsdom: `npm install --save-dev jsdom`
 
 **Tests not finding imports**
+
 - Check import paths are correct relative to test file location
 - Ensure files being tested export the functions properly
 
 **Coverage not working**
+
 - Install coverage provider: `npm install --save-dev @vitest/coverage-v8`
 
 ## Next Steps
 
 Once setup is complete:
+
 1. Write unit tests following the patterns in the main **testing-blocks** skill
 2. Run tests during development with `npm run test:watch`
 3. Run full test suite before commits with `npm test`

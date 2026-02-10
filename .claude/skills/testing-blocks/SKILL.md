@@ -16,6 +16,7 @@ This skill guides you through testing code changes in AEM Edge Delivery Services
 ## When to Use This Skill
 
 Use this skill:
+
 - ✅ After implementing or modifying blocks
 - ✅ After changes to core scripts (scripts.js, delayed.js, aem.js)
 - ✅ After style changes (styles.css, lazy-styles.css)
@@ -31,6 +32,7 @@ This skill should be automatically invoked by the **building-blocks** skill afte
 ### Keeper Tests (High Value, Worth Maintaining)
 
 ✅ **Write unit tests for:**
+
 - Logic-heavy utility functions used across multiple blocks
 - Data processing and transformation logic
 - API integrations and external service interactions
@@ -42,6 +44,7 @@ These tests provide lasting value because they catch regressions in reused code,
 ### Throwaway Tests (Lower Value, Use Once)
 
 ⚠️ **Use browser tests for:**
+
 - Block decoration logic (DOM transformations)
 - Specific DOM structures or UI layouts
 - Visual appearance validation
@@ -50,6 +53,7 @@ These tests provide lasting value because they catch regressions in reused code,
 These tests are better done in a browser because DOM structures change frequently, visual validation requires human judgment, and maintaining UI tests is expensive relative to their value.
 
 **Important:** Even throwaway tests have value! Use them to:
+
 1. Validate your implementation works correctly
 2. Take screenshots to evaluate visual correctness
 3. Show screenshots to humans for feedback
@@ -77,6 +81,7 @@ Before opening a pull request, complete ALL of the following:
 **When to use:** Logic-heavy functions, utilities, data processing, API integrations
 
 **Quick start:**
+
 ```bash
 # Verify test setup (see resources/vitest-setup.md if not configured)
 npm test
@@ -103,12 +108,14 @@ npm run test:watch
 **When to use:** Block decoration, visual validation, DOM structure, responsive design
 
 **Organization:**
+
 - Test scripts: `test/tmp/test-{block}-browser.js`
 - Test content: `drafts/tmp/{block}.html`
 - Screenshots: `test/tmp/screenshots/`
 - Both `test/tmp/` and `drafts/tmp/` should be gitignored
 
 **Quick start:**
+
 ```bash
 # Install Playwright
 npm install --save-dev playwright
@@ -156,6 +163,7 @@ rm -rf test/tmp/*
 **When to use:** Before every commit
 
 **Quick start:**
+
 ```bash
 # Run linting
 npm run lint
@@ -171,6 +179,7 @@ npm run lint:fix
 **When to use:** After pushing branch, automatically via GitHub checks
 
 **Quick start:**
+
 ```bash
 # Push branch
 git push -u origin your-branch
@@ -192,29 +201,33 @@ For detailed step-by-step workflow, see `resources/testing-workflow.md`.
 **Quick summary:**
 
 ### During Development
+
 1. Write unit tests for new utilities
 2. Run `npm run test:watch`
 3. Manually test in browser
 
 ### Before Committing
+
 4. Run `npm test` - all tests pass
-5. Run `npm run lint` - linting passes
-6. Write throwaway browser test in `test/tmp/`
-7. Create test content in `drafts/tmp/`
-8. Review screenshots from `test/tmp/screenshots/`
-9. Manual validation in browser
+2. Run `npm run lint` - linting passes
+3. Write throwaway browser test in `test/tmp/`
+4. Create test content in `drafts/tmp/`
+5. Review screenshots from `test/tmp/screenshots/`
+6. Manual validation in browser
 
 ### Before Opening PR
+
 10. Commit and push to feature branch (test/tmp/ won't be included)
-11. Verify branch preview loads
-12. Run `gh checks`
-13. Create PR with test link
-14. Monitor `gh pr checks`
+2. Verify branch preview loads
+3. Run `gh checks`
+4. Create PR with test link
+5. Monitor `gh pr checks`
 
 ### After PR Review
+
 15. Address feedback
-16. Re-test
-17. Verify checks pass
+2. Re-test
+3. Verify checks pass
 
 ## Troubleshooting
 
@@ -223,20 +236,24 @@ For detailed troubleshooting guide, see `resources/troubleshooting.md`.
 **Common issues:**
 
 ### Tests fail
+
 - Read error message carefully
 - Run single test: `npm test -- path/to/test.js`
 - Fix code or update test
 
 ### Linting fails
+
 - Run `npm run lint:fix`
 - Manually fix remaining issues
 
 ### GitHub checks fail
+
 - Ensure PR has test link
 - Check `gh pr checks` for details
 - Fix performance issues if PSI fails
 
 ### Browser tests fail
+
 - Verify dev server running: `aem up --html-folder drafts`
 - Check test content exists in `drafts/tmp/`
 - Verify URL uses `/tmp/` path: `http://localhost:3000/drafts/tmp/my-block`
@@ -255,17 +272,20 @@ For detailed troubleshooting guide, see `resources/troubleshooting.md`.
 The **building-blocks** skill automatically invokes this skill after implementation.
 
 **Expected flow:**
+
 1. Building blocks completes implementation
 2. Invokes **testing-blocks** skill
 3. This skill guides testing process
 4. Returns control when testing complete
 
 **Building blocks provides:**
+
 - Block name being tested
 - Test content URL from CDD process
 - Any variants that need testing
 
 **This skill returns:**
+
 - Confirmation all tests pass
 - Screenshots from browser testing (if requested)
 - Any issues discovered during testing
@@ -275,18 +295,21 @@ The **building-blocks** skill automatically invokes this skill after implementat
 Testing in AEM Edge Delivery follows a pragmatic value-versus-cost approach:
 
 **Create keeper tests for:**
+
 - Logic-heavy utilities
 - Data processing and transformations
 - API integrations
 - Shared libraries
 
 **Use throwaway browser tests for:**
+
 - Block decoration validation
 - Visual appearance
 - DOM structure
 - Interactive behavior
 
 **Always do:**
+
 - Run linting before commits
 - Test manually in browser
 - Verify GitHub checks pass

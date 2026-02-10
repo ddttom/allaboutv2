@@ -7,6 +7,7 @@ Monitor changes to the Cloudflare worker (`cloudflare/files/cloudflare-worker.js
 ## When to Use This Skill
 
 This skill should be invoked automatically when:
+
 - Any edit is made to `cloudflare/files/cloudflare-worker.js`
 - A pull request includes changes to the worker file
 - Before deploying the worker to production
@@ -24,18 +25,21 @@ export const WORKER_VERSION = '1.0.0';
 ### When to Increment
 
 **MAJOR version (x.0.0):**
+
 - Breaking changes to the worker API
 - Removal of existing features
 - Changes that require client updates
 - Major architectural changes
 
 **MINOR version (1.x.0):**
+
 - New features added (backward-compatible)
 - New response headers
 - New metadata handling
 - Enhanced functionality
 
 **PATCH version (1.0.x):**
+
 - Bug fixes
 - Documentation updates in code comments
 - Performance improvements
@@ -58,6 +62,7 @@ grep "WORKER_VERSION = " cloudflare/files/cloudflare-worker.js
 ```
 
 Expected format:
+
 ```javascript
 export const WORKER_VERSION = '1.0.0';
 ```
@@ -79,6 +84,7 @@ cd cloudflare/files && npm test
 ```
 
 Tests verify:
+
 - `WORKER_VERSION` constant exists
 - Version follows semantic versioning pattern (`\d+\.\d+\.\d+`)
 - `cfw` header is present in responses
@@ -91,12 +97,14 @@ Tests verify:
 **Detection:** Current commit modifies worker but version constant unchanged.
 
 **Action:**
+
 1. Alert the user
 2. Ask which type of change (MAJOR, MINOR, PATCH)
 3. Suggest appropriate version number
 4. Offer to update the version
 
 **Example message:**
+
 ```
 ⚠️ Worker Version Not Incremented
 
@@ -116,11 +124,13 @@ Please update WORKER_VERSION in cloudflare/files/cloudflare-worker.js
 **Detection:** Version doesn't match semantic versioning pattern.
 
 **Action:**
+
 1. Alert the user
 2. Show current invalid version
 3. Suggest correct format
 
 **Example:**
+
 ```
 ❌ Invalid Version Format
 
@@ -135,6 +145,7 @@ Version must follow semantic versioning: MAJOR.MINOR.PATCH
 **Detection:** New version number is lower than previous.
 
 **Action:**
+
 1. Alert the user
 2. Show previous and current versions
 3. Ask for confirmation or correction
@@ -152,6 +163,7 @@ The `/increment-cfw-version` command provides interactive version increment work
 ### With Testing
 
 Version tests run automatically via `npm test` to validate:
+
 - Version constant format
 - Version header presence
 - Header value correctness
@@ -165,11 +177,13 @@ Version tests run automatically via `npm test` to validate:
 3. Hook invokes this skill
 4. Skill checks if version was incremented
 5. If not, skill prompts:
+
    ```
    New feature detected. Increment version?
    Current: 1.0.0
    Suggested: 1.1.0 (MINOR - new feature)
    ```
+
 6. Developer confirms
 7. Skill updates `WORKER_VERSION = '1.1.0'`
 8. Tests run automatically
@@ -219,6 +233,7 @@ Before deploying to Cloudflare:
 ## Technical Implementation
 
 This skill should be implemented as a TypeScript module that:
+
 1. Monitors file changes via git hooks
 2. Parses `WORKER_VERSION` constant from worker file
 3. Compares with previous version from git history

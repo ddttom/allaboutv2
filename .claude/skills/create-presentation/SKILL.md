@@ -24,11 +24,13 @@ Transform Jupyter notebooks into beautiful presentation-mode experiences using e
 ### Presentation Mode vs Interactive Mode vs Educational Mode vs Navigation Mode
 
 **Interactive Notebooks** (e.g., test.ipynb):
+
 - Users can run JavaScript code cells
 - Code cells have "Run" buttons
 - For developers and testing
 
 **Educational Notebooks** (e.g., tutorial.ipynb):
+
 - Runnable code cells for learning
 - Can use auto-wrapping in notebook mode (pure markdown)
 - 60% markdown, 40% code
@@ -36,6 +38,7 @@ Transform Jupyter notebooks into beautiful presentation-mode experiences using e
 - See `jupyter-educational-notebook` skill
 
 **Presentation Notebooks** (e.g., demo.ipynb):
+
 - No executable code cells
 - All interactivity via inline scripts in markdown
 - Can use auto-wrapping (notebook mode) OR manual HTML (all modes)
@@ -43,6 +46,7 @@ Transform Jupyter notebooks into beautiful presentation-mode experiences using e
 - Beautiful visual layouts with EDS blocks
 
 **Navigation Notebooks** (e.g., docs-navigation.ipynb):
+
 - No executable code cells (pure navigation)
 - 100% markdown with action cards
 - Multi-paradigm navigation (role, task, workflow, category)
@@ -65,6 +69,7 @@ Transform Jupyter notebooks into beautiful presentation-mode experiences using e
 See [resources/blocks-reference.md](resources/blocks-reference.md) for complete details on all blocks.
 
 **Visual Layout Blocks:**
+
 - `accordion` - Collapsible sections
 - `cards` - Card grid layouts
 - `tabs` - Tabbed content
@@ -73,12 +78,14 @@ See [resources/blocks-reference.md](resources/blocks-reference.md) for complete 
 - `table` - Data tables
 
 **Content Blocks:**
+
 - `quote` - Pull quotes
 - `columns` - Multi-column layouts
 - `modal` - Dialog overlays
 - `video` - Embedded videos
 
 **Interactive Blocks:**
+
 - `code-expander` - Expandable code snippets
 - `counter` - Animated counters
 - `floating-alert` - Dismissible alerts
@@ -95,6 +102,7 @@ Use /create-presentation command with:
 ```
 
 **Example:**
+
 ```
 /create-presentation "Product Demo" with sections: Features, Benefits, Pricing
 Use cards for features, accordion for benefits, table for pricing
@@ -108,6 +116,7 @@ All code cells will be converted to informative markdown
 ```
 
 **Example:**
+
 ```
 /create-presentation convert education.ipynb
 Keep structure but make it presentation-only
@@ -136,6 +145,7 @@ Every presentation notebook should have:
 ```
 
 **⚠️ CRITICAL - Version and Date Management:**
+
 - **ALWAYS update both `version` AND `last-modified` whenever you make ANY change to an .ipynb file**
 - **Version increments:**
   - Major changes (new slides, restructuring): 1.0 → 2.0
@@ -169,6 +179,7 @@ Every presentation notebook should have:
 **Typical structure:**
 
 **Title Cell (Markdown):**
+
 ```markdown
 # 🎯 Presentation Title
 
@@ -182,6 +193,7 @@ Brief introduction to the presentation
 ```
 
 **Content Cells (Markdown with Embedded Blocks):**
+
 ```markdown
 ## Section Title
 
@@ -205,6 +217,7 @@ Brief introduction to the presentation
 ```
 
 **Navigation Cell (Markdown):**
+
 ```markdown
 ---
 
@@ -427,6 +440,7 @@ Blocks inherit dark background from ipynb-viewer if not properly wrapped:
 Apply consistent inline HTML styling to all markdown cells for professional presentation:
 
 **Standard Color Palette:**
+
 ```javascript
 {
   heading: '#0d47a1',      // Dark Blue (all headings)
@@ -448,6 +462,7 @@ Apply consistent inline HTML styling to all markdown cells for professional pres
 ### Styling Patterns
 
 **Hero Header:**
+
 ```html
 <div style="background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%); color: white; border-radius: 16px; padding: 48px; text-align: center; margin: 32px 0; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
 <h1 style="font-size: 48px; font-weight: 800; margin: 0 0 16px 0;">
@@ -460,6 +475,7 @@ Your compelling subtitle or tagline
 ```
 
 **Content Card:**
+
 ```html
 <div style="background: white; border-radius: 12px; padding: 28px; margin: 20px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
 <h3 style="color: #1976d2; font-size: 24px; font-weight: 700; margin-bottom: 20px;">Section Title</h3>
@@ -470,6 +486,7 @@ Your content here with proper typography
 ```
 
 **Block Wrapper (for EDS blocks):**
+
 ```html
 <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 32px; margin: 0 0; border-left: 6px solid #0288d1; color: #212121;">
 
@@ -491,6 +508,7 @@ Your content here with proper typography
 ```
 
 **List with Icons (Compact Spacing):**
+
 ```html
 <ul style="list-style: none; padding: 0; margin: 0;">
   <li style="padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.08); font-size: 16px; display: flex; align-items: center; gap: 12px;">
@@ -530,11 +548,13 @@ Your content here with proper typography
 ### Interactive Elements
 
 **Hover Effects:**
+
 - Background transitions on links
 - Color changes on buttons
 - Shadow depth changes on cards
 
 **Best Practices:**
+
 - ✅ **Use CSS `:hover` pseudo-class** - Inline JavaScript event handlers (`onmouseover`, `onmouseout`) are blocked by browser security
 - ✅ **Use `<style>` tags with classes** - Define reusable classes for hover states
 - ✅ **Apply `transition`** - For smooth animations (e.g., `transition: background 0.2s`)
@@ -615,6 +635,7 @@ return block.outerHTML;
 Both presentation (non-interactive) and educational (interactive) notebooks can use either approach.
 
 **Auto-wrapping (pure markdown):**
+
 - ✅ 90% less code to write
 - ✅ Fast content creation
 - ✅ Consistent default styling
@@ -622,6 +643,7 @@ Both presentation (non-interactive) and educational (interactive) notebooks can 
 - ❌ Limited design control
 
 **Manual HTML styling (inline styles):**
+
 - ✅ Works in **ALL display modes** (basic, paged, autorun, notebook)
 - ✅ Precise control over visual appearance
 - ✅ Complex layouts with nested blocks
@@ -629,6 +651,7 @@ Both presentation (non-interactive) and educational (interactive) notebooks can 
 - ❌ Slower authoring (10x more code)
 
 **Decision matrix:**
+
 | Factor | Use Auto-Wrapping | Use Manual HTML |
 |--------|------------------|-----------------|
 | **Display mode** | Notebook mode | Any mode (paged, autorun, basic, notebook) |
@@ -640,6 +663,7 @@ Both presentation (non-interactive) and educational (interactive) notebooks can 
 
 **Mixing Both Approaches:**
 You can combine auto-wrapping with custom HTML in the same notebook for maximum flexibility:
+
 - Use pure markdown (auto-wrapped) for most cells
 - Add custom HTML wrapper for specific cells needing special styling
 - Example use cases:
@@ -683,6 +707,7 @@ Discover our revolutionary new features.
 ```
 
 **How it works:**
+
 1. Add `<!-- action-cards -->` HTML comment in your markdown cell
 2. Follow with a markdown list of links using `(#)` as placeholder
 3. Write link text that matches heading text somewhere in your notebook
@@ -692,17 +717,20 @@ Discover our revolutionary new features.
 **Important:** The `<!-- action-cards -->` marker only applies to the **first list** that follows it. Any subsequent lists in the same cell will remain as normal bullet lists.
 
 **Example matching:**
+
 - `[Overview](#)` finds heading containing "Overview" (like "## Overview" or "### 📊 Overview Section")
 - `[Key Features](#)` finds heading containing "Key Features" (like "## Section 2: Key Features")
 - Link text doesn't need exact match - searches for headings that *contain* your link text
 
 **Best Practices:**
+
 - ✅ Use specific link text: `[Section 1: Overview](#)` instead of just `[Overview](#)`
 - ✅ Make link text unique to avoid ambiguity
 - ⚠️ If multiple headings match, it picks the **first one found** (in cell order)
 - 💡 Tip: Use section numbers or descriptive prefixes to ensure unique matches
 
 **Features:**
+
 - ✅ Pure markdown - no HTML required
 - ✅ Works in any cell type (hero, content, intro, transition)
 - ✅ **Smart link resolution** - No hardcoded cell IDs needed
@@ -712,6 +740,7 @@ Discover our revolutionary new features.
 - ✅ Perfect for presentation navigation and agendas
 
 **When to use action cards in presentations:**
+
 - Hero cells with section navigation
 - Presentation agenda or table of contents
 - Call-to-action sections
@@ -730,6 +759,7 @@ Smart linking works for **ANY link with `(#)` as the href**, not just action car
 **Works in:** Action cards, inline text, buttons, any link element
 
 **Examples:**
+
 ```markdown
 # Regular presentation navigation
 Proceed to [Next Slide](#) or review [Previous Slide](#).
@@ -748,12 +778,14 @@ Proceed to [Next Slide](#) or review [Previous Slide](#).
 ```
 
 **How it works:**
+
 - JavaScript searches all cells for headings matching link text
 - Case-insensitive matching, ignores emojis
 - Resolves to `#cell-{index}` at runtime
 - No hardcoded cell IDs - presentation adapts if slides reorder
 
 **Best for presentations:**
+
 - Slide-to-slide navigation
 - Table of contents / agenda
 - Call-to-action buttons
@@ -767,6 +799,7 @@ Links ending in `.md` automatically convert to GitHub URLs. Perfect for "learn m
 **Requires:** `repo` field in notebook metadata
 
 **Setup:**
+
 ```json
 {
   "metadata": {
@@ -776,6 +809,7 @@ Links ending in `.md` automatically convert to GitHub URLs. Perfect for "learn m
 ```
 
 **Examples:**
+
 ```markdown
 For technical details, see [Architecture](docs/architecture.md)
 
@@ -785,6 +819,7 @@ Download [User Manual](docs/user-manual.md)
 ```
 
 **Best for presentations:**
+
 - Technical documentation links
 - "Learn more" resources
 - Follow-up materials
@@ -810,6 +845,7 @@ Ready to continue? [Next: Key Features](#)  <!-- Smart link: next slide -->
 ```
 
 **Presentation strategy:**
+
 - **Smart links** keep viewers in the presentation flow (same page)
 - **Repo links** provide optional deep dives (new tab)
 - Clear separation between presentation content and reference materials
@@ -845,6 +881,7 @@ See [resources/complete-examples.md](resources/complete-examples.md) for full pr
 ### Step 1: Plan Structure
 
 Identify:
+
 - Main topic and title
 - Key sections (3-7 sections ideal)
 - Which blocks fit each section
@@ -857,6 +894,7 @@ Set up notebook metadata with title, description, author, etc.
 ### Step 3: Build Cells
 
 For each section:
+
 1. Markdown header
 2. Content explanation
 3. Embedded block (if needed)
@@ -1010,6 +1048,7 @@ The ipynb-viewer block automatically handles consistent styling for paged presen
 ### Font Consistency
 
 All text uses selective font inheritance (fixed in v1.0.2):
+
 - Only `font-family` inherits, not `font-size`, `margin`, `padding`
 - Inline styles with explicit sizes are preserved
 - No font jumping between slides while respecting cell styling
@@ -1017,6 +1056,7 @@ All text uses selective font inheritance (fixed in v1.0.2):
 ### Fixed Position & Height
 
 Overlay stays perfectly still when navigating (fixed in v1.0.2):
+
 - Pinned at 5vh from top (not vertically centered)
 - Content box locked at exactly 85vh tall
 - Zero movement regardless of content size
@@ -1025,6 +1065,7 @@ Overlay stays perfectly still when navigating (fixed in v1.0.2):
 ### Navigation Hover Effects
 
 Navigation links work with CSS hover (fixed in v1.0.2):
+
 - Use inline styles on `<a>` elements, not `<style>` tag classes
 - CSS `:hover` selector automatically applies to nav links
 - No inline JavaScript needed (`onmouseover`/`onmouseout` don't work)
@@ -1046,11 +1087,13 @@ Navigation links work with CSS hover (fixed in v1.0.2):
 **Problem:** Overlay resizes or moves vertically between slides
 
 **Solution:** Ensure cells follow consistent structure:
+
 - ✅ **NO `<section>` tags** - These add HTML structure causing height differences
 - ✅ **Consistent H2/H3 margins** - H2: 24px, H3: 20px (not 24px)
 - ✅ **Same border hierarchy** - H2 cells: 6px, H3 cells: 4px
 
 The ipynb-viewer overlay positioning is fixed (v4, Jan 2025):
+
 - Vertically centered with fixed 85vh height using `!important`
 - Content scrolls inside cell area, overlay never resizes
 - Multiple overlays prevented by automatic cleanup
@@ -1101,6 +1144,7 @@ The ipynb-viewer overlay positioning is fixed (v4, Jan 2025):
 **Version**: 1.0.4 (2025-01-19)
 
 **Recent Changes (v4):**
+
 - Removed `<section>` tags from template (causes overlay jumping)
 - Standardized H3 margin-bottom to 20px (was inconsistent with 24px)
 - Updated documentation to emphasize NO section tags
@@ -1114,6 +1158,7 @@ The ipynb-viewer overlay positioning is fixed (v4, Jan 2025):
 **CRITICAL**: Every line in a Jupyter notebook cell's source array must end with `\n` (newline character) except the last line. This ensures professional presentation structure and proper VSCode outline navigation.
 
 **Why it matters for presentations:**
+
 - Clients and stakeholders navigate via VSCode outline during demos
 - Slide structure must be visible and professional
 - Without newlines, sub-topics don't appear when sections are expanded
@@ -1121,6 +1166,7 @@ The ipynb-viewer overlay positioning is fixed (v4, Jan 2025):
 - Essential for live demos and client presentations
 
 **Problem:**
+
 ```python
 # ❌ WRONG - Breaks outline and looks unprofessional
 "source": [
@@ -1129,6 +1175,7 @@ The ipynb-viewer overlay positioning is fixed (v4, Jan 2025):
 ```
 
 **Solution:**
+
 ```python
 # ✅ CORRECT - Professional structure with navigation
 "source": [
@@ -1145,6 +1192,7 @@ The ipynb-viewer overlay positioning is fixed (v4, Jan 2025):
 ```
 
 **For presentation notebooks:**
+
 - Use `##` for major sections (appears at top level)
 - Use `###` for individual slides (nested under sections)
 - Proper newlines enable quick navigation during live presentations
@@ -1152,6 +1200,7 @@ The ipynb-viewer overlay positioning is fixed (v4, Jan 2025):
 - Professional appearance in all viewers (VSCode, JupyterLab, etc.)
 
 **Key formatting rules:**
+
 1. Every line ends with `\n` except the last line in source array
 2. Slide titles (headings) need newlines before and after
 3. Horizontal rules (slide breaks): `"---\n"` followed by `"\n"`
@@ -1159,6 +1208,7 @@ The ipynb-viewer overlay positioning is fixed (v4, Jan 2025):
 5. Lists and bullet points end with newlines
 
 **Presentation-specific tips:**
+
 - Section headings show major topics in outline
 - Slide headings show individual slides within sections
 - During live demos, outline enables quick slide jumping
@@ -1166,6 +1216,7 @@ The ipynb-viewer overlay positioning is fixed (v4, Jan 2025):
 - Professional formatting = professional impression
 
 **See also:**
+
 - `LEARNINGS.md` - "Jupyter Notebook Cell Source Must Use Proper Newlines"
 - `blocks/ipynb-viewer/README.md` - Markdown Cells section
 - `docs/for-ai/explaining-presentation-notebooks.md` - Best Practices

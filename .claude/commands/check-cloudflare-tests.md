@@ -5,6 +5,7 @@ description: Validate Cloudflare worker test structure follows two-file rule
 You are validating that the Cloudflare worker implementation follows the two-file testing system.
 
 **Reference**:
+
 - cloudflare/files/TESTING.md (two-file rule documentation)
 - cloudflare/files/README.md (testing requirements)
 - CLAUDE.md (Cloudflare Worker Two-File Testing System section)
@@ -30,6 +31,7 @@ ls cloudflare/files/*.test.js
 **Expected**: Only `cloudflare-worker.test.js` should exist
 
 **Red Flags**:
+
 - ❌ Multiple test files (unit.test.js, integration.test.js, etc.)
 - ❌ Test files with different naming patterns
 
@@ -47,6 +49,7 @@ grep -n "element.replace" cloudflare/files/cloudflare-worker.js
 **Expected**: No matches (these methods should only be in HTMLRewriter handler functions, not core logic)
 
 **Red Flags**:
+
 - ❌ `element.ontext()` in exported functions
 - ❌ `element.onendtag()` in exported functions
 - ❌ Core transformation logic using element handlers
@@ -61,12 +64,14 @@ grep -n "^export " cloudflare/files/cloudflare-worker.js
 ```
 
 **Expected**: See exports like:
+
 - `export const replacePicturePlaceholder`
 - `export const handleJsonLdMeta`
 - `export const WORKER_VERSION`
 - `export const PICTURE_PLACEHOLDER_CONFIG`
 
 **Red Flags**:
+
 - ❌ Transformation functions not exported
 - ❌ No pure function exports
 
@@ -81,6 +86,7 @@ cd cloudflare/files && npm test
 **Expected**: All tests pass with good coverage
 
 **Red Flags**:
+
 - ❌ Tests failing
 - ❌ Tests skipped
 - ❌ Low coverage (<90%)
@@ -109,6 +115,7 @@ grep -A 5 "test.*replaces" cloudflare/files/cloudflare-worker.test.js | head -20
 **Expected**: Tests should use string literals and `expect(result).toContain()`
 
 **Red Flags**:
+
 - ❌ Tests mocking HTMLRewriter elements
 - ❌ Tests requiring Cloudflare runtime
 
@@ -213,14 +220,17 @@ test('transforms content', () => {
 ## After Validation
 
 If all checks pass:
+
 - ✅ Worker follows two-file rule
 - ✅ Ready for deployment
 
 If any checks fail:
+
 - ❌ Fix issues before committing
 - ❌ Run `/check-cloudflare-tests` again after fixes
 
 **See also**:
+
 - `cloudflare/files/TESTING.md` - Complete testing guide
 - `cloudflare/files/README.md` - Implementation patterns
 - `CLAUDE.md` - Project-wide testing standards

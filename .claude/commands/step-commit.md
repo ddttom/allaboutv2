@@ -53,13 +53,14 @@ Execute the systematic "step commit" workflow:
    - Document current state only (not historical)
    - Keep this as a snapshot of current implementation status
 
-8. Changelog
+9. Changelog
    - Update CHANGELOG.md with all changes made in this session
    - This is where historical "what we did" content goes
    - Follow chronological order (newest first)
 
 10. Final Steps
-   - Commit changelog updates
-   - Ask user if they want to push all commits to remote
+
+- Commit changelog updates
+- Ask user if they want to push all commits to remote
 
 Execute each step methodically, reporting progress after each stage is complete.

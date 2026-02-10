@@ -16,6 +16,7 @@ This skill guides you through designing content models for AEM Edge Delivery Ser
 ## When to Use This Skill
 
 Use this skill when:
+
 - Creating new blocks and need to design the author-facing content structure
 - Modifying existing blocks in ways that change what authors work with
 - Reviewing content models for conformance to best practices
@@ -53,12 +54,14 @@ Review the descriptions in `resources/canonical-models.md` and identify which mo
 - **Auto-Blocked**: Good for simplifying authoring of complex structures and block nesting (Tabs, YouTube Embed)
 
 **Consider these questions as a starting point** (note: content modeling is an art, not a science - use these as guidelines, not strict rules):
+
 - Is this a unique, one-off element? → Often Standalone
 - Is this a repeating list of similar items? → Often Collection
 - Does this pull data from an API or require behavior configuration? → Likely Configuration
 - Does this block require nesting other blocks, or use a complex structure that authors could more easily create as sections or default content that gets transformed into the block? → Consider Auto-Blocked
 
 **Important:** Consider if multiple models should be supported. For example:
+
 - Simple cases might work best as Collection
 - Complex cases (with nested blocks) might need Auto-Blocked
 - Both can be equally valid - let decoration code handle the variations
@@ -70,6 +73,7 @@ See `resources/advanced-scenarios.md` for patterns on supporting multiple models
 Design your table structure following these key guidelines:
 
 **Key Guidelines:**
+
 - Limit to maximum 4 cells per row - group like elements into cells
 - Apply semantic formatting (headings, bold, italic) to define meaning
 - Prefer block variants over config cells
@@ -82,24 +86,28 @@ Design your table structure following these key guidelines:
 **For each canonical model:**
 
 **Standalone blocks:**
+
 - Use rows or columns as needed for the unique structure
 - Be flexible about how authors organize content - your decoration code can handle variations
 - Use semantic formatting to identify elements (bold for headings, etc.) rather than rigid cell positions
 - Example: Hero block where image and text could be in separate rows, separate columns, or even combined - decoration code uses query selectors to find what it needs
 
 **Collection blocks:**
+
 - Each row represents an item
 - Columns define the parts of each item
 - Keep columns consistent across all rows
 - Example: Cards with columns for image, heading, description
 
 **Configuration blocks:**
+
 - Two-column key/value pairs for settings or parameters
 - Keys in left column, values in right column
 - Keep configuration minimal - only true behavioral settings
 - Example: Blog Listing with keys like `limit | 10`, `sort | date-desc`, `tags | technology,news`
 
 **Auto-Blocked:**
+
 - Design for the simplest possible authoring experience
 - Often uses sections and section metadata to provide context
 - The pattern detection should feel "magical" to authors
@@ -120,6 +128,7 @@ Use this checklist to validate your content model:
 - [ ] Consider edge cases (empty cells, optional content, etc.)
 
 **Common Anti-Patterns to Avoid:**
+
 - ❌ Too many columns (>4 per row)
 - ❌ Using Configuration model when Standalone or Collection would work
 - ❌ Non-semantic cell content (e.g., "column1", "column2")
@@ -183,6 +192,7 @@ Provide the content model back to the calling skill (or user) in this format:
    - ✅ Under 4 cells per row
 
 4. **Document and Return to Calling Skill**:
+
    ```markdown
    ## Content Model: Hero
 
@@ -216,10 +226,12 @@ Provide the content model back to the calling skill (or user) in this format:
 ## Integration with Other Skills
 
 **Called from content-driven-development:**
+
 - CDD invokes this skill at Step 1.2 when new content models are needed
 - After completing this skill, return to CDD to continue with content creation
 
 **Calls to other skills:**
+
 - May reference **block-collection-and-party** to find similar blocks for pattern inspiration
 - Completed models are used by **building-blocks** during implementation
 

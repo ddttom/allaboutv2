@@ -10,13 +10,14 @@ status: active
 
 # AEM Edge Delivery Services Experimentation
 
-The AEM Experimentation plugin helps you quickly set up experimentation and segmentation on your AEM project. 
-It is currently available to customers in collaboration with AEM Engineering via co-innovation VIP Projects. 
+The AEM Experimentation plugin helps you quickly set up experimentation and segmentation on your AEM project.
+It is currently available to customers in collaboration with AEM Engineering via co-innovation VIP Projects.
 To implement experimentation or personalization use-cases, please reach out to the AEM Engineering team in the Slack channel dedicated to your project.
 
 ## Features
 
 The AEM Experimentation plugin supports:
+
 - :lock: privacy-first, as it doesn't use any, nor persists any, end-user data that could lead to their identification. No end-user opt-in nor cookie consent is required when using the default configuration that uses [AEM Edge Delivery Services Real User Monitoring](https://github.com/adobe/helix-rum-js/).*
 - :busts_in_silhouette: serving different content variations to different audiences, including custom audience definitions for your project that can be either resolved directly in-browser or against a trusted backend API.
 - :money_with_wings: serving different content variations based on marketing campaigns you are running, so that you can easily track email and/or social campaigns.
@@ -28,11 +29,13 @@ The AEM Experimentation plugin supports:
 ## Installation
 
 Add the plugin to your AEM project by running:
+
 ```sh
 git subtree add --squash --prefix plugins/experimentation git@github.com:adobe/aem-experimentation.git main
 ```
 
 If you later want to pull the latest changes and update your local copy of the plugin
+
 ```sh
 git subtree pull --squash --prefix plugins/experimentation git@github.com:adobe/aem-experimentation.git main
 ```
@@ -40,9 +43,11 @@ git subtree pull --squash --prefix plugins/experimentation git@github.com:adobe/
 If you prefer using `https` links you'd replace `git@github.com:adobe/aem-experimentation.git` in the above commands by `https://github.com/adobe/aem-experimentation.git`.
 
 If the `subtree pull` command is failing with an error like:
+
 ```
 fatal: can't squash-merge: 'plugins/experimentation' was never added
 ```
+
 you can just delete the folder and re-add the plugin via the `git subtree add` command above.
 
 ## Project instrumentation
@@ -54,6 +59,7 @@ you can just delete the folder and re-add the plugin via the `git subtree add` c
 Typically, you'd know you don't have the plugin system if you don't see a reference to `window.hlx.plugins` in your `scripts.js`. In that case, you can still manually instrument this plugin in your project by falling back to a more manual instrumentation. To properly connect and configure the plugin for your project, you'll need to edit your `scripts.js` in your AEM project and add the following:
 
 1. at the start of the file:
+
     ```js
     const AUDIENCES = {
       mobile: () => window.innerWidth < 600,
@@ -77,7 +83,9 @@ Typically, you'd know you don't have the plugin system if you don't see a refere
         }, {});
     }
     ```
+
 2. if this is the first plugin you add to your project, you'll also need to add:
+
     ```js
     // Define an execution context
     const pluginContext = {
@@ -90,7 +98,9 @@ Typically, you'd know you don't have the plugin system if you don't see a refere
       toClassName,
     };
     ```
+
 3. Early in the `loadEager` method you'll need to add:
+
     ```js
     async function loadEager(doc) {
       …
@@ -105,8 +115,10 @@ Typically, you'd know you don't have the plugin system if you don't see a refere
       …
     }
     ```
+
     This needs to be done as early as possible since this will be blocking the eager phase and impacting your LCP, so we want this to execute as soon as possible.
 4. Finally at the end of the `loadLazy` method you'll have to add:
+
     ```js
     async function loadLazy(doc) {
       …
@@ -120,6 +132,7 @@ Typically, you'd know you don't have the plugin system if you don't see a refere
       }
     }
     ```
+
     This is mostly used for the authoring overlay, and as such isn't essential to the page rendering, so having it at the end of the lazy phase is good enough.
 
 ### On top of the plugin system
@@ -130,6 +143,7 @@ You'll know you have it if `window.hlx.plugins` is defined on your page.
 If you don't have it, you can follow the proposal in https://github.com/adobe/aem-lib/pull/23 and https://github.com/adobe/aem-boilerplate/pull/275 and apply the changes to your `aem.js`/`lib-franklin.js` and `scripts.js`.
 
 Once you have confirmed this, you'll need to edit your `scripts.js` in your AEM project and add the following at the start of the file:
+
 ```js
 const AUDIENCES = {
   mobile: () => window.innerWidth < 600,
@@ -193,6 +207,7 @@ runEager.call(document, {
 ```
 
 For detailed implementation instructions on the different features, please read the dedicated pages we have on those topics:
+
 - [Audiences](https://github.com/adobe/aem-experimentation/wiki/Audiences)
 - [Campaigns](https://github.com/adobe/aem-experimentation/wiki/Campaigns)
 - [Experiments](https://github.com/adobe/aem-experimentation/wiki/Experiments)

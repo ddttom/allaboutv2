@@ -15,6 +15,7 @@ Ready-to-use templates for creating educational Jupyter notebooks. Copy and adap
 All templates below show **manual HTML styling**. For auto-wrapping, simply write pure markdown and the viewer handles styling automatically in notebook mode.
 
 **Auto-Wrapping Example:**
+
 ```markdown
 # 🎯 Tutorial Title
 
@@ -26,6 +27,7 @@ Key concepts and outcomes
 ```
 
 **Hybrid Example:**
+
 ```markdown
 <!-- Most cells: pure markdown (auto-wrapped) -->
 # Tutorial Title
@@ -43,6 +45,7 @@ Regular content here...
 ```
 
 **See Also:**
+
 - SKILL.md for complete auto-wrapping documentation
 - create-notebook.md command for guided creation
 
@@ -67,12 +70,14 @@ Regular content here...
 ### When to Use
 
 ✅ **Perfect for:**
+
 - Documenting complex systems (20+ documents)
 - Multiple distinct audiences (4+ roles)
 - Documentation hubs and learning path systems
 - Teaching documentation architecture patterns
 
 ❌ **Skip for:**
+
 - Simple documentation (< 10 documents)
 - Single-audience documentation
 - Linear learning paths
@@ -210,11 +215,13 @@ Final: Troubleshooting & Remember
 ### Quick Start
 
 **Copy the template:**
+
 ```bash
 cp docs/for-ai/templates/ipynb/navigation-template.ipynb my-docs-nav.ipynb
 ```
 
 **Customize for your system:**
+
 1. Define your documentation domains and categories
 2. Identify 4-6 distinct user roles
 3. Map 5-8 common tasks
@@ -246,6 +253,7 @@ Action cards automatically resolve to matching headings at runtime - no hardcode
 ### Summary Headings (Important!)
 
 **Avoid smart linking conflicts:**
+
 - ❌ Don't: `### ✅ Part 1 Complete: The Big Picture`
 - ✅ Do: `### ✅ You've Completed Part 1`
 
@@ -918,6 +926,7 @@ Complete guide to [what this covers] with examples.
 ```
 
 ### Basic Usage
+
 ```javascript
 [simple usage example]
 ```
@@ -931,6 +940,7 @@ Complete guide to [what this covers] with examples.
 [Function/Feature 3](#function-3)
 [Error Handling](#errors)
 [Performance](#performance)
+
 ```
 
 ### Cell 2: Function Documentation (Markdown)
@@ -944,6 +954,7 @@ Complete guide to [what this covers] with examples.
 ```
 
 **Parameters:**
+
 - `[param1]` - [Description]
 - `[param2]` - [Description]
 
@@ -952,6 +963,7 @@ Complete guide to [what this covers] with examples.
 **Purpose:** [What this function does]
 
 ### Basic Usage
+
 ```
 
 ### Cell 3: Basic Example (Code)
@@ -1013,6 +1025,7 @@ try {
 ```
 
 **Pattern 2:**
+
 ```javascript
 [common pattern code]
 ```
@@ -1028,6 +1041,7 @@ try {
 - [Resource 1](#)
 - [Resource 2](#)
 - [Resource 3](#)
+
 ```
 
 ---
@@ -1166,16 +1180,19 @@ Have fun! 🚀
 ### Styling Approach Decision
 
 **For notebook mode (`| IPynb Viewer (notebook) |`):**
+
 - ✅ **Recommended:** Use pure markdown (auto-wrapped) for 90% less code
 - ✅ **Mix with custom HTML** for cells needing special styling
 - ✅ Speed: Write content fast, customize selectively
 
 **For other modes (paged, autorun, basic):**
+
 - ✅ Use manual HTML styling (shown in templates above)
 - ✅ Full design control across all display modes
 - ✅ Professional polish and consistency
 
 **Hybrid Approach Benefits:**
+
 - Most cells: Pure markdown (fast authoring)
 - Special cells: Custom HTML (unique styling)
 - Best of both worlds: speed + flexibility
@@ -1191,6 +1208,7 @@ Have fun! 🚀
 7. Adjust flow as needed
 
 **Remember:**
+
 - Templates show manual HTML styling for maximum compatibility
 - In notebook mode, consider pure markdown for faster authoring
 - Mix both approaches in the same notebook as needed

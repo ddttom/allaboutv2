@@ -12,6 +12,7 @@ Guide developers through debugging EDS blocks, optimizing performance, implement
 ## When to Use This Skill
 
 Automatically activates when:
+
 - Debugging errors in blocks or scripts
 - Working with keywords: "error", "debug", "performance", "slow", "FOUC"
 - Optimizing Core Web Vitals
@@ -492,6 +493,7 @@ export default function decorate(block) {
 ### Issue: Blank Page / Block Not Visible
 
 **Symptoms:**
+
 - Console shows no errors
 - JavaScript executes successfully
 - Elements are in the DOM
@@ -535,6 +537,7 @@ body.appear {
 **Debugging Steps:**
 
 1. **Check if elements exist:**
+
    ```javascript
    console.log('Button in DOM:', document.querySelector('.your-button'));
    ```
@@ -545,17 +548,20 @@ body.appear {
    - Check Computed styles for `display: none` or `visibility: hidden`
 
 3. **Check body visibility:**
+
    ```javascript
    console.log('Body classes:', document.body.className);
    console.log('Body computed display:', getComputedStyle(document.body).display);
    ```
 
 4. **Force visibility (debugging):**
+
    ```javascript
    document.body.classList.add('appear');
    ```
 
 **Production Notes:**
+
 - In production, EDS automatically adds `appear` class when page loads
 - Test files need to add it manually
 - This pattern prevents FOUC (Flash of Unstyled Content)
@@ -591,6 +597,7 @@ export default function decorate(block) {
 ### Issue: Buttons Not Styled
 
 **Symptoms:**
+
 - Buttons exist in DOM but look unstyled
 - No background color, borders, or padding
 
@@ -599,12 +606,14 @@ export default function decorate(block) {
 **Solution:**
 
 1. **Verify global styles load:**
+
    ```html
    <!-- In test.html -->
    <link rel="stylesheet" href="/styles/styles.css">
    ```
 
 2. **Check button inherits global styles:**
+
    ```css
    /* Global styles define button appearance */
    button {
@@ -618,6 +627,7 @@ export default function decorate(block) {
    ```
 
 3. **Add fallback styles if needed:**
+
    ```css
    /* In your-block.css - only if global styles fail */
    .your-block button {
@@ -638,6 +648,7 @@ export default function decorate(block) {
 **Solution:**
 
 1. Verify file names match exactly:
+
    ```
    blocks/your-block/
    ├── your-block.js   ← Must match
@@ -647,6 +658,7 @@ export default function decorate(block) {
 2. Check browser DevTools → Network tab for 404 errors
 
 3. Ensure CSS is valid:
+
    ```bash
    npm run lint:css
    ```
@@ -704,6 +716,7 @@ export default async function decorate(block) {
 ### Network Tab
 
 Monitor:
+
 - CSS file loading (should be automatic)
 - JavaScript module loading
 - API requests and responses
@@ -712,6 +725,7 @@ Monitor:
 ### Console Tab
 
 Use:
+
 - `console.log()` for debugging
 - `console.error()` for errors
 - `console.warn()` for warnings
@@ -721,6 +735,7 @@ Use:
 ### Performance Tab
 
 Record and analyze:
+
 1. Start recording
 2. Interact with your block
 3. Stop recording
@@ -733,6 +748,7 @@ Record and analyze:
 ### Elements Tab
 
 Use:
+
 - Inspect DOM structure
 - Check computed styles
 - View event listeners
@@ -823,6 +839,7 @@ npm run debug
 ```
 
 **Target scores:**
+
 - Performance: 90+
 - Accessibility: 90+
 - Best Practices: 90+

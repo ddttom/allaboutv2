@@ -3,6 +3,7 @@
 Find and update all `llms.txt` files in the project with new content from `query-index.json`.
 
 **Quick Run:**
+
 ```bash
 node scripts/sync-blog-content.js --target=llms
 ```
@@ -39,6 +40,7 @@ For each `llms.txt` file found:
 ## Folder Context
 
 When llms.txt is in a subfolder:
+
 - Final folder name indicates scope (e.g., `/integrations/` = EDS integrations only)
 - Filter query-index.json by URL path prefix
 - Only include relevant content for that section
@@ -46,6 +48,7 @@ When llms.txt is in a subfolder:
 ## Files Affected
 
 This command will find and potentially update:
+
 - `llms.txt` (root)
 - `blogs/ddt/integrations/llms.txt`
 - `blogs/ddt/ai/llms.txt`

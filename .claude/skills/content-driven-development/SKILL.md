@@ -12,6 +12,7 @@ Content Driven Development is a mandatory process for AEM Edge Delivery Services
 **Author needs come before developer needs.** When building for AEM Edge Delivery, authors are the primary users of the structures we create. Content models must be intuitive and easy to work with, even if that means more complex decoration code.
 
 **Efficiency through preparation.** Creating or identifying test content before coding provides:
+
 - **Immediate testing capability**: No need to stop development to create test content
 - **Better PR workflows**: Test content doubles as PR validation links for PSI checks
 - **Living documentation**: Test content often serves as author documentation and examples
@@ -30,6 +31,7 @@ Apply Content Driven Development principles to ALL AEM development tasks:
 - ✅ Any code that affects how authors create or structure content
 
 Skip CDD only for:
+
 - ⚠️ Trivial CSS-only styling tweaks (but still identify test content for validation)
 - ⚠️ Configuration changes that don't affect authoring
 
@@ -60,11 +62,13 @@ pwd
 ```
 
 If you're in a subdirectory, navigate to project root:
+
 ```bash
 cd /Users/tomcranstoun/Documents/GitHub/allaboutV2
 ```
 
 Verify project markers exist:
+
 ```bash
 ls -la | grep -E "(\.claude|blocks|package\.json|CLAUDE\.md)"
 ```
@@ -96,6 +100,7 @@ Ask the user: "Does content using this block already exist that we can use for t
 #### Step 1.2: Content Model Design
 
 **REQUIRED for:**
+
 - All new blocks
 - Structural changes to existing blocks (adding/removing/modifying sections, variants, or the authoring structure)
 
@@ -118,15 +123,18 @@ Once the content model is defined (from Step 1.2), you need test content.
 
 **Ask the user:**
 "We need test content for development and validation. This content will serve multiple purposes:
+
 - Testing during development
 - PR validation link for PSI checks
 - Author documentation and examples
 
 Would you like to:
+
 1. Create this content in the CMS now (Google Drive/SharePoint/DA/Universal Editor)
 2. Create temporary local HTML files for testing (will need CMS content before PR)"
 
 **Option 1: CMS Content (Recommended)**
+
 - Guide the user through creating content in their CMS
 - Wait for user confirmation that content is created and published
 - Get the content URL(s) from the user
@@ -134,6 +142,7 @@ Would you like to:
 - Proceed to Phase 2
 
 **Option 2: Local HTML Files (Temporary)**
+
 - Create HTML file(s) in `drafts/` folder matching the content model structure
 - Reference the [HTML Structure Guide](resources/html-structure.md) for proper file format
 - Remind user: "Restart your dev server with: `aem up --html-folder drafts`"
@@ -145,18 +154,21 @@ Would you like to:
 Test content can often double as author-facing documentation, saving time and keeping documentation current. Consider this when creating test content:
 
 **When test content IS sufficient as author documentation:**
+
 - The block is straightforward with clear patterns
 - Test content shows all variants and use cases
 - Content demonstrates best practices authors should follow
 - Examples are realistic and relatable to actual use cases
 
 **When separate author documentation is needed:**
+
 - Block has complex configuration or many variants requiring explanation
 - There are edge cases or gotchas authors need to understand
 - Project standards require formal documentation in a specific location/format
 - Block behavior isn't self-evident from examples alone
 
 **Structuring test content to serve both purposes:**
+
 1. **Create comprehensive examples**: Show all variants, edge cases, and common patterns
 2. **Use realistic content**: Avoid "lorem ipsum" or technical placeholders
 3. **Demonstrate best practices**: Structure content the way authors should
@@ -180,6 +192,7 @@ Now that test content exists, proceed with implementation:
 #### For Block Development
 
 Invoke the **building-blocks** skill:
+
 - Provide the skill with the content model and test content URL(s)
 - Follow the building-blocks process for implementation
 - Return to this skill when implementation is complete
@@ -188,6 +201,7 @@ Invoke the **building-blocks** skill:
 #### For Core Functionality Changes
 
 Follow standard development practices:
+
 - Make changes to scripts, styles, or configuration
 - Test against the identified content throughout development
 - Ensure changes don't break existing blocks or content models
@@ -200,6 +214,7 @@ The final phase ensures the implementation works correctly with real content.
 #### Step 3.1: Test with Real Content
 
 **Mandatory testing:**
+
 - ✅ View test content in local dev environment
 - ✅ Verify all variants render correctly
 - ✅ Check responsive behavior (mobile, tablet, desktop)
@@ -215,6 +230,7 @@ npm run lint
 ```
 
 If linting fails, fix issues with:
+
 ```bash
 npm run lint:fix
 ```
@@ -224,6 +240,7 @@ npm run lint:fix
 **The testing-blocks skill is automatically invoked by building-blocks** for block development.
 
 For other code changes, or for additional testing guidance, invoke the **testing-blocks** skill which provides:
+
 - Unit testing strategies for logic-heavy utilities
 - Browser testing with Playwright/Puppeteer
 - Linting and code quality checks
@@ -233,6 +250,7 @@ For other code changes, or for additional testing guidance, invoke the **testing
 #### Step 3.4: PR Preparation
 
 **Before raising a PR, ensure:**
+
 - ✅ Test content exists in the CMS (not just local HTML)
 - ✅ Test content URL is accessible for PSI checks
 - ✅ All linting passes
@@ -243,6 +261,7 @@ The test content URL will be used as the PR validation link.
 ## Anti-Patterns to Avoid
 
 **Common mistakes:**
+
 - ❌ Starting with code before understanding the content model
 - ❌ Making assumptions about content structure without seeing real examples
 - ❌ Creating developer-friendly but author-hostile content models
@@ -292,6 +311,7 @@ node .claude/skills/content-driven-development/scripts/find-block-content.js <bl
 ```
 
 **Examples:**
+
 ```bash
 node .claude/skills/content-driven-development/scripts/find-block-content.js hero
 node .claude/skills/content-driven-development/scripts/find-block-content.js hero localhost:3000 dark

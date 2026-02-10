@@ -41,16 +41,19 @@ This project uses a **minimal hooks setup** optimized for EDS development. The a
 ### Active Hooks
 
 **skill-activation-prompt.sh**
+
 - **Trigger:** When user submits a prompt
 - **Purpose:** Auto-suggest relevant skills based on prompt content
 - **Implementation:** TypeScript-based detection in `skill-activation-prompt.ts`
 
 **post-tool-use-tracker.sh**
+
 - **Trigger:** After Edit, MultiEdit, or Write operations
 - **Purpose:** Track modified files for session context
 - **Implementation:** Bash script with minimal overhead
 
 **pre-tool-use-version-check.sh** (Cloudflare Worker Version Monitor)
+
 - **Trigger:** Before Edit, MultiEdit, or Write operations on `cloudflare/files/cloudflare-worker.js`
 - **Purpose:** Monitor and enforce version increments for worker changes
 - **Implementation:** Bash script with git version comparison
@@ -71,6 +74,7 @@ This project uses a **minimal hooks setup** optimized for EDS development. The a
 - **Note:** Version is hardcoded for Cloudflare Workers compatibility (no JSON import)
 
 **cloudflare-worker-test-regenerate.sh** (Enhanced with AI Test Automation)
+
 - **Trigger:** After Edit, MultiEdit, or Write operations on `cloudflare/files/cloudflare-worker.js`
 - **Purpose:** Intelligent test automation system with auto-generation and coverage reporting
 - **Implementation:** Calls `cloudflare-test-automation.js` for complete test lifecycle management
@@ -91,6 +95,7 @@ This project uses a **minimal hooks setup** optimized for EDS development. The a
 - **See:** `.claude/hooks/cloudflare-test-automation.README.md` for complete documentation
 
 **pre-commit-changelog.sh** (Git Hook)
+
 - **Trigger:** Before `git commit` operations
 - **Purpose:**
   - **REQUIRED:** Validates CHANGELOG.md is included in commits (blocks commit if missing)
@@ -141,6 +146,7 @@ ls -la .claude/hooks/*.sh
 ```
 
 If needed, set permissions:
+
 ```bash
 chmod +x .claude/hooks/*.sh
 ```
@@ -160,6 +166,7 @@ This project follows Adobe Edge Delivery Services conventions:
 ### Customizing Skill Triggers
 
 The `skill-activation-prompt.ts` hook auto-suggests skills based on:
+
 - Keywords in user prompts
 - Intent patterns (regex matching)
 - File paths being modified
@@ -183,6 +190,7 @@ fi
 ### EDS-Specific Patterns
 
 For EDS development, you might want to track:
+
 - Block JavaScript files: `blocks/**/*.js`
 - Block CSS files: `blocks/**/*.css`
 - Test files: `blocks/**/test.html`
@@ -219,6 +227,7 @@ Hooks run in the order specified in `settings.json`. This project has two sequen
 2. **PostToolUse** - post-tool-use-tracker.sh runs after file edits
 
 **Why this order matters:**
+
 - Skill suggestions happen before any work begins
 - File tracking happens after edits are made
 - Minimal overhead for fast development workflow
@@ -345,6 +354,7 @@ fi
 **Issue:** Hooks are slow
 
 **Solutions:**
+
 1. Limit TypeScript checks to changed files only
 2. Use faster package managers (pnpm > npm)
 3. Add more skip conditions

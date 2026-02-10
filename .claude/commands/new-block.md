@@ -12,6 +12,7 @@ You are creating a new EDS block. Follow these steps:
    - Testing and validation
 
 **IMPORTANT**:
+
 - Never skip the CDD process when creating new blocks
 - Author needs come before developer needs
 - Always create test content before writing code
@@ -25,7 +26,6 @@ Uae this patter to create and document the new block:
         ├── README.md               # Documentation for Content Author
         ├── test.html               # Test file
         └── example.md              # Content author example of the component
-        
 
 If the user provides a block name as an argument, use it. Otherwise, ask the user:
 "What would you like to name this new block?"

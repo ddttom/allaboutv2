@@ -10,6 +10,7 @@ Interactive testing environment for EDS blocks using Jupyter notebooks **in the 
 ## When to Use This Skill
 
 Use this skill when:
+
 - Creating new Jupyter notebooks (`.ipynb` files) for EDS block testing
 - Using direct imports for helper functions (`testBlock`, `showPreview`)
 - Testing blocks in browser environment with ipynb-viewer block
@@ -58,11 +59,13 @@ pwd
 ```
 
 If in a subdirectory, navigate to project root:
+
 ```bash
 cd /Users/tomcranstoun/Documents/GitHub/allaboutV2
 ```
 
 Verify project markers:
+
 ```bash
 ls -la | grep -E "(\.claude|blocks|package\.json|CLAUDE\.md)"
 ```
@@ -72,12 +75,14 @@ All four must exist. If not, you're in the wrong directory!
 ### 1. Create or Open Notebook
 
 **Option A: Copy existing template**
+
 ```bash
 cp test.ipynb my-block-tests.ipynb
 # View on EDS site using ipynb-viewer block
 ```
 
 **Option B: Create from scratch**
+
 - Create new `.ipynb` file
 - Copy the first code cell from `test.ipynb`
 - Add to EDS page via ipynb-viewer block
@@ -313,12 +318,14 @@ Use this skill whenever you need to rapidly test, debug, or document EDS blocks 
 **CRITICAL**: Every line in a Jupyter notebook cell's source array must end with `\n` (newline character) except the last line. This ensures proper rendering and navigation in VSCode outline.
 
 **Why it matters for testing notebooks:**
+
 - VSCode outline shows test structure for easy navigation
 - Test scenarios organized by headings need proper outline hierarchy
 - Developers navigate between tests via outline sidebar
 - Without newlines, test sections don't appear in outline structure
 
 **Problem:**
+
 ```python
 # ❌ WRONG - Breaks outline navigation
 "source": [
@@ -327,6 +334,7 @@ Use this skill whenever you need to rapidly test, debug, or document EDS blocks 
 ```
 
 **Solution:**
+
 ```python
 # ✅ CORRECT - Clear test structure in outline
 "source": [
@@ -343,6 +351,7 @@ Use this skill whenever you need to rapidly test, debug, or document EDS blocks 
 ```
 
 **For testing notebooks:**
+
 - Use `##` for block categories (Accordion Tests, Hero Tests)
 - Use `###` for individual test cases
 - Proper newlines enable quick navigation between test scenarios
@@ -350,6 +359,7 @@ Use this skill whenever you need to rapidly test, debug, or document EDS blocks 
 - Essential for notebooks with many test cases
 
 **Key rules:**
+
 1. Every line ends with `\n` except the last line
 2. Test headings need newlines before and after
 3. Horizontal rules (test separators): `"---\n"` + `"\n"`

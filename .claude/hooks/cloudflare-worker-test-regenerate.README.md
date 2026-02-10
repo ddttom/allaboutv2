@@ -14,16 +14,19 @@ Automatically regenerates `cloudflare/test-rendered.html` whenever `cloudflare/f
 ## Benefits
 
 ### Immediate Validation
+
 - Validates worker changes immediately after editing
 - Catches errors early in development workflow
 - No need to manually run test script
 
 ### Synchronized Output
+
 - `test-rendered.html` always reflects current worker code
 - Easy to visually inspect transformations
 - Accurate reference for debugging
 
 ### Development Efficiency
+
 - Automatic workflow - no manual steps required
 - Fast feedback loop for iterative development
 - Consistent test output across sessions
@@ -111,6 +114,7 @@ Run manually: cd cloudflare/files && npm run test:local
 ```
 
 **Manual Recovery:**
+
 ```bash
 cd cloudflare/files
 npm run test:local

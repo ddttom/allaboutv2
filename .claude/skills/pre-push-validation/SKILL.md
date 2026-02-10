@@ -38,12 +38,14 @@ Ensures critical documentation files are updated before pushing changes to the r
 The hook `.claude/hooks/pre-push-validation.sh` runs automatically before `git push` operations:
 
 **Validation Logic:**
+
 - ✅ **Checks commit dates** - Documentation must be updated since oldest unpushed commit
 - ✅ **Detects uncommitted changes** - Warns if docs have uncommitted changes
 - ✅ **Validates file existence** - Ensures all critical files exist
 - ❌ **Blocks push** - If documentation is outdated relative to code changes
 
 **Example Output:**
+
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🔍 PRE-PUSH VALIDATION
@@ -77,6 +79,7 @@ Please update the following files before pushing:
 ### CHANGELOG.md (Required for ALL commits)
 
 **Always update when:**
+
 - Adding new features
 - Fixing bugs
 - Refactoring code
@@ -85,6 +88,7 @@ Please update the following files before pushing:
 - Updating documentation
 
 **Format:**
+
 ```markdown
 ## [YYYY-MM-DD<letter>] - Brief Title
 
@@ -103,6 +107,7 @@ Please update the following files before pushing:
 ### README.md (Update when project changes)
 
 **Update when:**
+
 - Adding new blocks or components
 - Changing project structure
 - Adding new npm scripts
@@ -113,6 +118,7 @@ Please update the following files before pushing:
 ### CLAUDE.md (Update when AI instructions change)
 
 **Update when:**
+
 - Adding new coding patterns
 - Changing project conventions
 - Adding new skills or commands
@@ -125,6 +131,7 @@ Please update the following files before pushing:
 ### Before Every Push
 
 1. **Review your commits:**
+
    ```bash
    git log origin/main..HEAD --oneline
    ```
@@ -135,15 +142,18 @@ Please update the following files before pushing:
    - CLAUDE.md - Update if AI instructions changed
 
 3. **Commit all changes (including user edits):**
+
    ```bash
    git add .
    git commit -m "docs: Update documentation for [feature/fix]"
    ```
 
 4. **Push with confidence:**
+
    ```bash
    git push
    ```
+
    The hook will validate and either allow or block the push.
 
 ### Bypassing Validation (NOT RECOMMENDED)
@@ -155,6 +165,7 @@ git push --no-verify
 ```
 
 **⚠️ Warning:** Only use this for:
+
 - Emergency hotfixes
 - Work-in-progress branches
 - Documentation-only changes
@@ -172,6 +183,7 @@ ls -la .claude/hooks/pre-push-validation.sh
 Should show executable permissions: `-rwxr-xr-x`
 
 If not executable:
+
 ```bash
 chmod +x .claude/hooks/pre-push-validation.sh
 ```
@@ -206,6 +218,7 @@ git log origin/main..HEAD --oneline
 **Problem:** Documentation files are outdated compared to code commits.
 
 **Solution:**
+
 1. Check which files need updating (listed in error message)
 2. Update those files with your changes
 3. Commit all changes (including user edits): `git add . && git commit -m "docs: Update documentation"`
@@ -216,6 +229,7 @@ git log origin/main..HEAD --oneline
 **Problem:** Documentation file has uncommitted changes.
 
 **Solution:**
+
 1. Review changes: `git diff [file]`
 2. Stage all changes: `git add .`
 3. Commit changes: `git commit -m "docs: Update [file]"`
@@ -226,6 +240,7 @@ git log origin/main..HEAD --oneline
 **Problem:** Push succeeds without validation.
 
 **Possible causes:**
+
 1. Hook file not executable - Run: `chmod +x .claude/hooks/pre-push-validation.sh`
 2. Not in git repository - Verify: `git rev-parse --is-inside-work-tree`
 3. New branch without upstream - Expected behavior, validation skipped

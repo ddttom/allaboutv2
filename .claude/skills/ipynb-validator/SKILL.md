@@ -12,6 +12,7 @@ Comprehensive validation of Jupyter notebooks (.ipynb files) to ensure productio
 ## When to Use This Skill
 
 Use this skill when you need to:
+
 - Validate a notebook before production deployment
 - Check smart link consistency and resolution
 - Verify layout structure and organization
@@ -37,6 +38,7 @@ Use this skill when you need to:
 ### 1. Smart Links Validation
 
 **What it checks:**
+
 - All smart links (`[text](#)`) have matching headings
 - No broken links or orphaned references
 - Link text matches heading text (case-insensitive, emoji-agnostic)
@@ -44,11 +46,13 @@ Use this skill when you need to:
 - Action card links are properly formatted
 
 **Expected pattern:**
+
 ```markdown
 [Link Text](#) → Finds heading containing "Link Text"
 ```
 
 **Common issues:**
+
 - Link text doesn't match any heading
 - Heading was renamed but link wasn't updated
 - Typos in link text
@@ -57,6 +61,7 @@ Use this skill when you need to:
 ### 2. Layout Structure
 
 **What it checks:**
+
 - Clear introduction section (hero, TOC, emergency nav)
 - Numbered parts/sections in logical order
 - Each part has consistent structure:
@@ -68,6 +73,7 @@ Use this skill when you need to:
 - No gaps or missing sections
 
 **Expected structure:**
+
 ```
 Introduction (Cells 0-N)
 → Transition (optional)
@@ -81,6 +87,7 @@ Introduction (Cells 0-N)
 ### 3. Transition Cells ⚠️ CRITICAL CHECK
 
 **What it checks:**
+
 - Transition cells exist between major parts
 - **Each transition MUST have `<!-- action-cards -->` marker** (REQUIRED)
 - Action cards have 3-6 links (enforced)
@@ -88,6 +95,7 @@ Introduction (Cells 0-N)
 - Transition text provides context
 
 **Expected pattern:**
+
 ```markdown
 ### Part X: Section Name
 **Progress: X of Y** 🔵🔵🔵⚪⚪⚪
@@ -105,16 +113,19 @@ Contextual text explaining what's next...
 **⚠️ COMMON FAILURE: Missing Action Cards Marker**
 
 This is the #1 validation failure. Every transition cell between parts MUST include:
+
 1. The `<!-- action-cards -->` HTML comment marker
 2. A markdown list of 3-6 links immediately following
 3. Each link using the `(#)` placeholder pattern
 
 **Validation will FAIL if:**
+
 - Transition cell lacks `<!-- action-cards -->` marker
 - Fewer than 3 action card links
 - Action cards not in proper markdown list format
 
 **When transitions are optional:**
+
 - Part flows naturally from previous summary
 - First part (follows introduction)
 - Conclusion section
@@ -122,6 +133,7 @@ This is the #1 validation failure. Every transition cell between parts MUST incl
 ### 4. Part Flow Validation
 
 **What it checks:**
+
 - Parts are numbered sequentially (1, 2, 3, ...)
 - No missing or duplicate part numbers
 - Part summaries come after part content
@@ -129,6 +141,7 @@ This is the #1 validation failure. Every transition cell between parts MUST incl
 - Progress indicators are accurate
 
 **Expected title patterns:**
+
 ```markdown
 ### 🌍 Part 1: Topic Name
 ### 👥Part 2: By Your Role - Subtopic
@@ -136,6 +149,7 @@ This is the #1 validation failure. Every transition cell between parts MUST incl
 ```
 
 **Part structure requirements:**
+
 - First cell: Full title with part number
 - Middle cells: Clean titles without part prefix
 - Last cell: Summary with "You've Completed Part X"
@@ -143,6 +157,7 @@ This is the #1 validation failure. Every transition cell between parts MUST incl
 ### 5. Cell Ordering
 
 **What it checks:**
+
 - Cells are in logical sequence
 - No content cells after summary
 - Summaries appear at end of parts
@@ -152,6 +167,7 @@ This is the #1 validation failure. Every transition cell between parts MUST incl
 - Part X completion immediately before Part X+1 transition
 
 **Common ordering issues:**
+
 - Summary before content is complete
 - Transition after part start
 - Content cells out of sequence
@@ -161,6 +177,7 @@ This is the #1 validation failure. Every transition cell between parts MUST incl
 - Technical detail cells orphaned outside their parent section
 
 **Example of correct flow:**
+
 ```
 Part 6 Completion Cell
   ↓ immediately adjacent
@@ -176,6 +193,7 @@ Part 8 Transition Cell
 ### 6. Action Cards Quality
 
 **What it checks:**
+
 - `<!-- action-cards -->` marker present
 - Marker followed by markdown list
 - 3-6 links per action card section
@@ -184,6 +202,7 @@ Part 8 Transition Cell
 - No duplicate action card sections in same cell
 
 **Quality criteria:**
+
 - Clear, actionable link text
 - Links point to major sections
 - Balanced number of options (not too few, not too many)
@@ -192,6 +211,7 @@ Part 8 Transition Cell
 ### 7. Production Readiness
 
 **What it checks:**
+
 - Notebook metadata present (title, description, author, etc.)
 - Repository URL configured (for .md links)
 - No test or placeholder content
@@ -201,6 +221,7 @@ Part 8 Transition Cell
 - JSON structure is valid
 
 **Metadata requirements:**
+
 ```json
 {
   "metadata": {
@@ -245,6 +266,7 @@ Part 8 Transition Cell
 **This is the most important validation step for missing action cards.**
 
 1. **Find all transition cells** by pattern matching:
+
    ```python
    def is_transition_cell(source):
        return (
@@ -256,6 +278,7 @@ Part 8 Transition Cell
    ```
 
 2. **Verify action card markers** (REQUIRED):
+
    ```python
    has_action_cards = '<!-- action-cards -->' in source
    if not has_action_cards:
@@ -267,6 +290,7 @@ Part 8 Transition Cell
    ```
 
 3. **Count links per transition** (must be 3-6):
+
    ```python
    links = re.findall(r'^\s*- \[([^\]]+)\]\(#\)', source, re.MULTILINE)
    if len(links) < 3:
@@ -302,6 +326,7 @@ Part 8 Transition Cell
 **Symptom:** Link text doesn't match any heading
 
 **Fix:**
+
 ```markdown
 # Before (broken)
 [Getting Started](#)  → No heading contains "Getting Started"
@@ -316,6 +341,7 @@ Link: [Getting Started Guide](#)
 **Symptom:** Part starts immediately after previous summary
 
 **Fix:**
+
 ```markdown
 # Add transition cell with action cards
 Contextual text...
@@ -330,6 +356,7 @@ Contextual text...
 **Symptom:** Summary appears before content, or reference cells between parts
 
 **Fix:**
+
 ```python
 # Reorder cells in notebook JSON
 # Example: Move completion cell from index 64 to index 72
@@ -340,6 +367,7 @@ cells.insert(72, completion_cell)  # Insert at correct position
 ```
 
 **Common scenarios:**
+
 - Completion cell before part content → Move to end of part
 - Reference cells between parts → Move to end of notebook (before final wrap-up)
 - Technical cells outside their section → Move into proper section
@@ -351,6 +379,7 @@ cells.insert(72, completion_cell)  # Insert at correct position
 **Critical Issue:** This is one of the most common validation failures. Every transition cell between parts MUST have action cards to guide readers.
 
 **Detection Pattern:**
+
 ```python
 # Identifies transition cells by:
 # 1. Contains "Part X:" heading
@@ -365,6 +394,7 @@ cells.insert(72, completion_cell)  # Insert at correct position
 ```
 
 **Fix:**
+
 ```markdown
 # Before (FAILS validation):
 ### Part 7: Universal Patterns
@@ -388,6 +418,7 @@ These patterns work everywhere...
 ```
 
 **Why this matters:**
+
 - Action cards provide visual navigation
 - Helps readers preview upcoming content
 - Maintains consistent user experience
@@ -412,11 +443,13 @@ These patterns work everywhere...
 ### Automated Validation
 
 Use the `/validate-notebook` command:
+
 ```bash
 /validate-notebook notebook-name.ipynb
 ```
 
 Output includes:
+
 - Smart link validation results
 - Structure analysis
 - Transition checks
@@ -448,30 +481,35 @@ Before deploying to production:
 The validator assigns scores (0-100) in each category:
 
 **Smart Links (0-100):**
+
 - 100: All links resolve perfectly
 - 75-99: Minor issues or warnings
 - 50-74: Some broken links
 - 0-49: Many broken links
 
 **Structure (0-100):**
+
 - 100: Perfect organization
 - 75-99: Minor structural issues
 - 50-74: Missing sections or gaps
 - 0-49: Poor organization
 
 **Transitions (0-100):**
+
 - 100: All transitions present with action cards
 - 75-99: Missing some action cards
 - 50-74: Some transitions missing
 - 0-49: Few or no transitions
 
 **Part Flow (0-100):**
+
 - 100: Perfect sequential flow
 - 75-99: Minor numbering issues
 - 50-74: Gaps or duplicates
 - 0-49: Major flow problems
 
 **Overall (0-100):**
+
 - 90-100: Production ready
 - 75-89: Minor fixes needed
 - 60-74: Moderate issues
@@ -493,6 +531,7 @@ The validator assigns scores (0-100) in each category:
 ### For Cell Ordering
 
 ✅ Validate cell order with structural checks:
+
 ```python
 # Check adjacency between key sections
 part_completion_idx < part_transition_idx + 1  # Must be adjacent
@@ -500,12 +539,14 @@ part_transition_idx < next_part_start_idx  # Proper sequence
 ```
 
 ✅ Place reference/utility cells strategically:
+
 - Resources & Quick Reference → End of notebook
 - Essential Bookmarks → End of notebook
 - Troubleshooting → End of notebook
 - "What's Next" → End of notebook
 
 ✅ Keep technical detail cells within their parent section:
+
 - Code examples belong in "How This Works" section
 - Implementation details stay with their topic
 - Don't orphan detail cells between major parts

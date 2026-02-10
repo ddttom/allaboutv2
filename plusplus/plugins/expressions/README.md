@@ -9,16 +9,18 @@ status: active
 ---
 
 # Franklin Expressions
+>
 > Turn documents into dynamic templates with expressions.
 
 Expressions allow users to transform Franklin documents into templates by adding simple expressions with parameters.
 These expressions then become HTML elements that display dynamically fetched content.
-It is also possible to use expressions as decorators to style and augment content around the insertion point. 
+It is also possible to use expressions as decorators to style and augment content around the insertion point.
 This turns expressions into reusable fragments that can be placed inside top level Franklin blocks.
 
 <img src="docs/diagram.png" alt="diagram" width="800"/>
 
 ## When is this is useful?
+
 - I want to show the value of a market asset using its ticker.
 - I want to show a product's price by its SKU and plan.
 - I want to style links based on their type (like CTA).
@@ -26,11 +28,13 @@ This turns expressions into reusable fragments that can be placed inside top lev
 - I want to use composition and nesting inside Franklin blocks.
 
 ## Features
+
 - Allows to insert dynamically computed values into Franklin documents.
 - Allows to decorate content around the insertion point.
 - Tiny with no external dependencies.
 
 ## Usage
+
 - Copy `expressions.js` to your project's `scripts` directory
 - Create an expression by calling `createExpression` with a name and a function returning a string or an element.
 - Render expressions by calling `renderExpressions` in your block's or card's `decorate` function.

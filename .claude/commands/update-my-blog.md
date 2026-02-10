@@ -3,6 +3,7 @@
 Find and update all `my-blog.json` files in the project with latest content from `query-index.json`.
 
 **Quick Run:**
+
 ```bash
 node scripts/sync-blog-content.js --target=blog
 ```
@@ -40,6 +41,7 @@ For each `my-blog.json` file found:
 ## Folder Context
 
 When my-blog.json is in a subfolder:
+
 - Determine scope from folder path
 - Filter query-index.json by URL path prefix
 - Example: `/blogs/ddt/integrations/my-blog.json` includes only `/blogs/ddt/integrations/*` posts
@@ -47,6 +49,7 @@ When my-blog.json is in a subfolder:
 ## Files Affected
 
 This command will find and potentially update:
+
 - `my-blog.json` (root)
 - `blogs/ddt/integrations/my-blog.json`
 - `blogs/ddt/ai/my-blog.json`

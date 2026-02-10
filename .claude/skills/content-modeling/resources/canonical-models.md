@@ -45,6 +45,7 @@ Self-contained blocks using rows or columns as needed for their unique structure
 ```
 
 **Why this works:**
+
 - ✅ Uses semantic formatting: H1 identifies the heading, paragraphs for body text
 - ✅ Flexible structure: could also work with image and text in columns, or all in one cell
 - ✅ Decoration code can find elements using query selectors regardless of exact layout
@@ -52,6 +53,7 @@ Self-contained blocks using rows or columns as needed for their unique structure
 
 **Note on flexibility:**
 These variations would also work with proper decoration code:
+
 - Image and text in separate columns: `| ![Image](hero.jpg) | # Heading<p>Description text [CTA](link)</p> |`
 - All content in one cell: `| ![Image](hero.jpg)<h1>Heading</h1><p>Description text [CTA](link)</p> |`
 - Image in one row, heading and text in another (as shown above)
@@ -66,6 +68,7 @@ These variations would also work with proper decoration code:
 ```
 
 **Why this fails:**
+
 - ❌ 6 cells in one row (exceeds maximum of 4)
 - ❌ Non-semantic: text split across multiple unlabeled cells
 - ❌ Split related text across cells unnecessarily
@@ -74,6 +77,7 @@ These variations would also work with proper decoration code:
 - ❌ Author-hostile: too many required cells, no semantic formatting
 
 **How to fix:**
+
 - Simplify to under 4 cells per row
 - Use semantic formatting (H1 for heading, paragraphs for text, links for CTA) instead of splitting into separate cells
 - Use block variant `| Hero (Dark) |` instead of config cell
@@ -114,6 +118,7 @@ Each row represents an item, with columns defining the parts of that item. Ideal
 ```
 
 **Why this works:**
+
 - ✅ Collection model: each row is one card
 - ✅ 2 columns: image and content
 - ✅ Consistent structure across all rows
@@ -122,6 +127,7 @@ Each row represents an item, with columns defining the parts of that item. Ideal
 - ✅ Within 4-cell maximum
 
 **Resulting structure:**
+
 - Each row becomes one card
 - Column 1: Card image
 - Column 2: Card heading (H2), description (paragraph), and CTA link - decoration code uses query selectors to identify each element
@@ -143,6 +149,7 @@ Each row represents an item, with columns defining the parts of that item. Ideal
 ```
 
 **Why this fails:**
+
 - ❌ Mixing configuration row with content rows
 - ❌ Non-semantic: first row should use block variant instead
 - ❌ Each card uses 4 separate rows instead of 1 row with columns
@@ -151,6 +158,7 @@ Each row represents an item, with columns defining the parts of that item. Ideal
 - ❌ Requires counting rows to understand structure
 
 **How to fix:**
+
 - Remove config row, use variant: `| Cards (Grid) |`
 - Use columns instead of rows for each card's parts
 - One row = one complete card
@@ -181,6 +189,7 @@ Two-column key/value pairs for settings or parameters. Use ONLY for API-driven o
 ### ⚠️ Important Warning
 
 **Do NOT use Configuration model when:**
+
 - Standalone or Collection model would work
 - You're just displaying static content
 - Configuration could be handled by block variants
@@ -199,6 +208,7 @@ Configuration models are often overused. Always ask: "Does this truly need dynam
 ```
 
 **Why this works:**
+
 - ✅ Truly configuration-driven (controls API query)
 - ✅ Two-column key/value pairs
 - ✅ No visual content (pure config)
@@ -206,6 +216,7 @@ Configuration models are often overused. Always ask: "Does this truly need dynam
 - ✅ Appropriate use case for Configuration model
 
 **Resulting behavior:**
+
 - Fetches 10 most recent posts
 - Sorted by date descending
 - Filtered to posts tagged with "technology" or "news"
@@ -222,6 +233,7 @@ Configuration models are often overused. Always ask: "Does this truly need dynam
 ```
 
 **Why this fails:**
+
 - ❌ This is static content, not dynamic configuration
 - ❌ Should be Standalone model, not Configuration
 - ❌ "style" and "background" should be block variants
@@ -348,6 +360,7 @@ Common issues and how to resolve them quickly.
 ```
 
 **Why this works:**
+
 - ✅ Authors create natural sections (separated by `---`) with H2 headings and content
 - ✅ Section metadata (`style | tabs`) signals intent to auto-block
 - ✅ Multiple consecutive sections with `style | tabs` metadata get merged into one tabs block
@@ -384,6 +397,7 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ
 ```
 
 **Why this works:**
+
 - ✅ Authors just paste image and URL in sequence
 - ✅ Pattern detection creates the embed block
 - ✅ Image immediately preceding YouTube URL becomes the preview/poster image
@@ -394,11 +408,13 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ
 ### When NOT to Use Auto-Blocked
 
 Auto-blocking requires:
+
 - Predictable, detectable patterns
 - Implementation of auto-blocking logic in `scripts.js`
 - Patterns that are truly common and repeatable
 
 Don't create auto-blocking for:
+
 - One-off special cases
 - Complex patterns that are hard to detect reliably
 - Cases where explicit blocks would be clearer
@@ -412,6 +428,7 @@ Content modeling is an art, not a science. There are often multiple valid approa
 **Review the detailed examples above** for each canonical model to understand their characteristics, strengths, and when they're most appropriate. Pay special attention to the "Why this works" and "Why this fails" explanations.
 
 **Key considerations:**
+
 - **Standalone** is the most flexible and often a safe default choice
 - **Collection** works well when you have clear repeating items
 - **Configuration** is frequently overused - only use for truly dynamic, API-driven content
@@ -422,6 +439,7 @@ When in doubt, start with Standalone or Collection - they're simpler and more au
 ### Common Mistakes
 
 **Using Configuration when Standalone/Collection would work:**
+
 ```markdown
 ❌ BAD (unnecessary config)
 | Card |
@@ -437,6 +455,7 @@ When in doubt, start with Standalone or Collection - they're simpler and more au
 ```
 
 **Using Standalone when Collection would work:**
+
 ```markdown
 ❌ BAD (repeating standalone pattern)
 Multiple separate blocks for each card
@@ -449,6 +468,7 @@ Multiple separate blocks for each card
 ```
 
 **Over-engineering Auto-Blocked:**
+
 ```markdown
 ❌ BAD (complex pattern for rare use case)
 Auto-detecting "testimonial quotes" by looking for:

@@ -5,11 +5,13 @@ Generic Jupyter notebook validator for production readiness checking.
 ## Quick Start
 
 **From command line:**
+
 ```bash
 python validator.py notebook.ipynb
 ```
 
 **From Claude Code:**
+
 ```
 Validate the notebook.ipynb file
 ```
@@ -68,6 +70,7 @@ or free-form structure. Only enforces part count when `--expected-parts` is spec
 ## Examples
 
 **Educational notebook (strict):**
+
 ```bash
 python validator.py educational.ipynb \
   --expected-parts 10 \
@@ -76,6 +79,7 @@ python validator.py educational.ipynb \
 ```
 
 **Documentation notebook (standard):**
+
 ```bash
 python validator.py docs.ipynb \
   --expected-parts 8 \
@@ -83,6 +87,7 @@ python validator.py docs.ipynb \
 ```
 
 **Testing notebook (flexible):**
+
 ```bash
 python validator.py test.ipynb \
   --min-intro-cells 0 \
@@ -92,11 +97,13 @@ python validator.py test.ipynb \
 ## Via Claude Code
 
 The skill activates automatically when you:
+
 - Mention "validate notebook"
 - Reference `.ipynb` files
 - Ask to "check notebook quality"
 
 **Example prompts:**
+
 ```
 Validate the invisible-users/notebook.ipynb file, it should have 12 parts
 Check if docs-navigation.ipynb is production ready
@@ -139,24 +146,29 @@ RECOMMENDATIONS:
 ## Common Issues
 
 **Broken smart links:**
+
 - Fix: Match link text to heading text exactly
 - Use fuzzy matching if needed
 
 **Structure issues:**
+
 - Fix: Add introduction/conclusion cells
 - Check part count matches expected
 
 **Missing transitions:**
+
 - Fix: Add `<!-- action-cards -->` marker
 - Include 3-6 links after marker
 
 **Part flow problems:**
+
 - Fix: Renumber parts sequentially
 - Remove duplicates
 
 ## Integration
 
 The validator is integrated with:
+
 - Claude Code (automatic skill activation)
 - `ipynb-validator` skill (original version)
 - `jupyter-notebook` skills (creation/editing)

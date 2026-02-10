@@ -275,6 +275,7 @@ If valid, jq will pretty-print the JSON. If invalid, it will show the error.
 ### Common JSON Errors
 
 **Trailing comma:**
+
 ```json
 {
   "keywords": ["one", "two",]  // ❌ Trailing comma
@@ -282,6 +283,7 @@ If valid, jq will pretty-print the JSON. If invalid, it will show the error.
 ```
 
 **Missing quotes:**
+
 ```json
 {
   type: "guardrail"  // ❌ Missing quotes on key
@@ -289,6 +291,7 @@ If valid, jq will pretty-print the JSON. If invalid, it will show the error.
 ```
 
 **Single quotes (invalid JSON):**
+
 ```json
 {
   'type': 'guardrail'  // ❌ Must use double quotes
@@ -310,6 +313,7 @@ If valid, jq will pretty-print the JSON. If invalid, it will show the error.
 ---
 
 **Related Files:**
+
 - [SKILL.md](SKILL.md) - Main skill guide
 - [TRIGGER_TYPES.md](TRIGGER_TYPES.md) - Complete trigger documentation
 - [TROUBLESHOOTING.md](TROUBLESHOOTING.md) - Debugging configuration issues

@@ -17,6 +17,7 @@ export default async function decorate(block) {
 ```
 
 **Key points:**
+
 - Always export the decorate function as the default export
 - The function receives the block DOM element as the first parameter
 - Use `async` if you need to await operations (fetching data, loading modules, etc.)
@@ -27,6 +28,7 @@ export default async function decorate(block) {
 ### Good Patterns
 
 **✅ Re-use existing DOM elements when possible:**
+
 ```javascript
 // Good - re-use the existing element
 const paragraph = block.querySelector('p');
@@ -46,12 +48,14 @@ newP.textContent = text;
 ```
 
 **✅ Use semantic HTML:**
+
 ```javascript
 const blockquote = document.createElement('blockquote');
 const figure = document.createElement('figure');
 ```
 
 **✅ Use spread operator for multiple elements:**
+
 ```javascript
 const pars = block.querySelectorAll('p');
 const container = document.createElement('div');
@@ -59,11 +63,13 @@ container.append(...pars);
 ```
 
 **✅ Replace content efficiently:**
+
 ```javascript
 block.replaceChildren(newElement);
 ```
 
 **✅ Query within the block scope:**
+
 ```javascript
 // Good - scoped to block
 const links = block.querySelectorAll('a');
@@ -75,6 +81,7 @@ const links = document.querySelectorAll('a');
 ### Bad Patterns
 
 **❌ Don't use innerHTML for complex structures:**
+
 ```javascript
 // Bad - hard to maintain, XSS risk
 block.innerHTML = '<div class="wrapper"><p>Text</p></div>';
@@ -89,6 +96,7 @@ block.append(wrapper);
 ```
 
 **❌ Don't mutate elements from other blocks:**
+
 ```javascript
 // Bad - affects global state
 const header = document.querySelector('header');
@@ -99,6 +107,7 @@ block.classList.add('has-special-behavior');
 ```
 
 **❌ Don't leave temporary DOM elements:**
+
 ```javascript
 // Bad - leaves empty paragraphs
 const text = block.querySelector('p').textContent;
@@ -130,6 +139,7 @@ export default async function decorate(block) {
 ```
 
 **Key points:**
+
 - Variant classes are added alongside the block class
 - Use `classList.contains()` to check for variants
 - CSS should handle most variant styling; use JS only for behavior changes
@@ -236,6 +246,7 @@ export default async function decorate(block) {
 This project uses Airbnb ESLint configuration with some modifications:
 
 **Key rules:**
+
 - Use ES6+ features (const, let, arrow functions, template literals)
 - Always include `.js` extension in imports: `import { foo } from './bar.js';`
 - Use single quotes for strings
@@ -245,22 +256,26 @@ This project uses Airbnb ESLint configuration with some modifications:
 - Parameter reassignment is allowed for properties: `block.foo = 'bar'`
 
 **Naming conventions:**
+
 - Use camelCase for variables and functions
 - Use PascalCase for classes
 - Use UPPER_CASE for constants
 
 **File naming:**
+
 - Block files must match block name: `my-block.js`, `my-block.css`
 - Use kebab-case for file names
 
 ## Performance Considerations
 
 **Minimize work in the decoration function:**
+
 - Only do what's necessary to achieve the desired structure
 - Defer expensive operations (heavy calculations, large data fetching) when possible
 - Remember: blocks in the first section load eagerly and affect LCP
 
 **Example - defer heavy work:**
+
 ```javascript
 export default async function decorate(block) {
   // Do minimal initial decoration
@@ -275,6 +290,7 @@ export default async function decorate(block) {
 ```
 
 **Example - use Intersection Observer to load only when viewed:**
+
 ```javascript
 export default async function decorate(block) {
   // Useful for embeds like YouTube videos, heavy widgets, etc.
@@ -308,6 +324,7 @@ import {
 ```
 
 Common helpers:
+
 - `toClassName(text)` - Converts text to a valid CSS class name
 - `getMetadata(name)` - Gets page metadata value
 - `loadCSS(href)` - Loads a CSS file and returns a promise that resolves when loaded
@@ -316,6 +333,7 @@ Common helpers:
 - `buildBlock(name, cells)` - Programmatically creates a block DOM structure. **Note:** For the block to fully display, it must be decorated and loaded after being built and added to the DOM. In most cases, you'll need to call `decorateBlock()` and `loadBlock()` after building.
 
 **Example - building and loading a block:**
+
 ```javascript
 // Create the block
 const myBlock = buildBlock('my-block', [[document.createElement('p')]]);

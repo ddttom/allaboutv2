@@ -5,6 +5,7 @@ Browser testing validates that blocks, DOM transformations, and visual elements 
 ## When to Use Browser Testing
 
 Use browser testing for:
+
 - **Block decoration validation** - Does the block transform HTML correctly?
 - **Visual appearance** - Does it look right at different screen sizes?
 - **Interactive behavior** - Do click handlers, forms, and interactions work?
@@ -99,6 +100,7 @@ Note the port (usually 3000).
 ### 2. Write throwaway test script
 
 Create a temporary script file (e.g., `test-my-block.js`) with:
+
 - Navigation to test content URL
 - Waiting for block decoration
 - Taking screenshots at multiple viewports
@@ -234,7 +236,8 @@ async function testResponsive() {
 
 ## Browser Testing Best Practices
 
-### DO:
+### DO
+
 - ✅ Test all viewport sizes (mobile, tablet, desktop)
 - ✅ Take screenshots for visual validation
 - ✅ Test all block variants in one script
@@ -243,7 +246,8 @@ async function testResponsive() {
 - ✅ Show screenshots to humans for feedback
 - ✅ Include screenshots in PRs to help reviewers
 
-### DON'T:
+### DON'T
+
 - ❌ Commit throwaway test scripts to the repository
 - ❌ Try to automate visual regression testing (not worth the maintenance)
 - ❌ Write brittle assertions about specific DOM structure
@@ -324,6 +328,7 @@ Even in these cases, keep tests focused on critical functionality only. The cost
 ## Next Steps
 
 After browser testing:
+
 1. Review all screenshots carefully
 2. Show screenshots to stakeholders if needed
 3. Include key screenshots in your PR

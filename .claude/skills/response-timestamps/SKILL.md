@@ -9,19 +9,24 @@ priority: high
 # Response Timestamp Guardrail
 
 ## Purpose
+
 Ensure all Claude responses include start timestamp, end timestamp, and execution duration for tracking and accountability.
 
 ## Rules
 
 ### At Response Start
+
 Begin every response with:
+
 ```
 🕒 Response Started: [YYYY-MM-DD HH:MM:SS TIMEZONE]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ### At Response End
+
 End every response with:
+
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🕒 Response Completed: [YYYY-MM-DD HH:MM:SS TIMEZONE]
@@ -29,6 +34,7 @@ End every response with:
 ```
 
 ### Format Requirements
+
 - Use ISO 8601 format: `YYYY-MM-DD HH:MM:SS TIMEZONE`
 - Always include timezone (PST, UTC, EST, UTC, etc.)
 - Calculate duration from start to completion
@@ -36,6 +42,7 @@ End every response with:
 - Include separator lines for visual distinction
 
 ### Example
+
 ```
 🕒 Response Started: 2025-12-07 14:30:45 PST
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -48,4 +55,5 @@ End every response with:
 ```
 
 ## Exceptions
+
 None - this applies to ALL responses without exception.

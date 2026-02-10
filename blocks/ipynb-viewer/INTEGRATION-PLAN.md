@@ -34,6 +34,7 @@ overlay/
 ## The Problem
 
 The main `ipynb-viewer.js` file STILL uses:
+
 - `createPagedOverlay()` - Old nested overlay approach (~700 lines)
 - `createGitHubMarkdownOverlay()` - Old nested overlay approach (~600 lines)
 
@@ -69,13 +70,17 @@ overlay.show();
 ## Integration Steps
 
 ### Step 1: Add Import
+
 Add at top of `ipynb-viewer.js`:
+
 ```javascript
 import { createNotebookOverlay, createMarkdownOverlay } from './overlay/integration.js';
 ```
 
 ### Step 2: Replace in decorate()
+
 Find where `createPagedOverlay()` is called and replace with:
+
 ```javascript
 const overlay = createNotebookOverlay(
   Array.from(cellsContainer.querySelectorAll('.ipynb-cell')),
@@ -92,12 +97,15 @@ overlay.show();
 ```
 
 ### Step 3: Delete Legacy Code
+
 Remove these functions (they're no longer needed):
+
 - `createPagedOverlay()` (~700 lines, starts around line 2351)
 - `createGitHubMarkdownOverlay()` (~600 lines, starts around line 3686)
 - All the duplicate toolbar/dropdown code
 
 ### Step 4: Test
+
 - Open notebook → should work
 - Click tree nodes → should switch content (not create nested overlays)
 - Click markdown links → should switch content
@@ -107,6 +115,7 @@ Remove these functions (they're no longer needed):
 ## Why This Works
 
 The existing unified overlay system:
+
 1. ✅ Has single overlay with mode switching
 2. ✅ Has clean API (`createNotebookOverlay`, `createMarkdownOverlay`)
 3. ✅ Handles all navigation (tree, links, history, bookmarks)
@@ -118,9 +127,11 @@ We just need to **USE IT** instead of the old code!
 ## File Size Impact
 
 **Before:**
+
 - `ipynb-viewer.js`: ~4,700 lines (with old overlay code)
 
 **After:**
+
 - `ipynb-viewer.js`: ~3,400 lines (delete createPagedOverlay + createGitHubMarkdownOverlay)
 - Existing `overlay/` modules: Already written!
 
@@ -129,6 +140,7 @@ Net result: **~1,300 lines removed**, cleaner code, no duplication!
 ## Next Action
 
 Just need to:
+
 1. Find where `createPagedOverlay()` is called in `decorate()`
 2. Replace with `createNotebookOverlay()` import and call
 3. Delete the legacy functions

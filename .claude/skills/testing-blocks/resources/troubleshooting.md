@@ -7,6 +7,7 @@ Common issues encountered during testing and how to resolve them.
 ### Unit Tests Fail
 
 **Symptoms:**
+
 - Test suite runs but some tests fail
 - Error messages about unexpected values or behaviors
 
@@ -25,6 +26,7 @@ Common issues encountered during testing and how to resolve them.
 **Solutions:**
 
 **If you broke functionality:**
+
 ```bash
 # Fix the code, not the test
 # Re-run tests
@@ -32,6 +34,7 @@ npm test
 ```
 
 **If requirements changed:**
+
 ```bash
 # Update the test to match new requirements
 # Ensure the change is intentional
@@ -39,12 +42,14 @@ npm test
 ```
 
 **If testing a specific file:**
+
 ```bash
 # Run just one test file for faster feedback
 npm test -- test/utils/my-utility.test.js
 ```
 
 **If debugging a specific test:**
+
 ```bash
 # Use test.only to run just one test
 it.only('should do something', () => {
@@ -55,6 +60,7 @@ it.only('should do something', () => {
 ### Browser Tests Fail
 
 **Symptoms:**
+
 - Browser test script throws errors
 - Screenshots not generated
 - Timeouts occur
@@ -62,6 +68,7 @@ it.only('should do something', () => {
 **Common Issues and Solutions:**
 
 **Issue: Dev server not running**
+
 ```bash
 # Start the dev server
 aem up
@@ -71,11 +78,13 @@ curl http://localhost:3000
 ```
 
 **Issue: Test content doesn't exist**
+
 - Verify the URL manually in a browser
 - Check that content is published/previewed
 - Ensure path in test script is correct
 
 **Issue: Block not decorated**
+
 ```javascript
 // Add wait for specific selector
 await page.waitForSelector('.my-block');
@@ -88,6 +97,7 @@ await page.waitForSelector('.my-block', { timeout: 10000 });
 ```
 
 **Issue: Timing problems**
+
 ```javascript
 // Wait for animations to complete
 await page.waitForTimeout(500);
@@ -99,6 +109,7 @@ await page.waitForFunction(() => {
 ```
 
 **Issue: Elements not clickable**
+
 ```javascript
 // Wait for element to be clickable
 await page.locator('.button').click({ force: false });
@@ -113,6 +124,7 @@ await page.locator('.button').click();
 ### Common Linting Issues
 
 **Unused variables**
+
 ```javascript
 // Error: 'foo' is defined but never used
 const foo = 'bar';
@@ -122,6 +134,7 @@ const foo = 'bar';
 ```
 
 **Missing semicolons**
+
 ```javascript
 // Error: Missing semicolon
 const foo = 'bar'
@@ -131,12 +144,14 @@ const foo = 'bar';
 ```
 
 **Incorrect indentation**
+
 ```bash
 # Auto-fix indentation issues
 npm run lint:fix
 ```
 
 **Console.log statements**
+
 ```javascript
 // Error: Unexpected console statement
 console.log('debug info');
@@ -150,6 +165,7 @@ console.log('debug info');
 ```
 
 **Import issues**
+
 ```javascript
 // Error: Unable to resolve path to module
 import { foo } from './utils';
@@ -159,6 +175,7 @@ import { foo } from './utils.js';
 ```
 
 **Airbnb style violations**
+
 ```javascript
 // Error: Expected a line break after this opening brace
 import { foo, bar } from './utils.js';
@@ -174,16 +191,19 @@ import {
 ### Quick Fixes
 
 **Auto-fix everything possible:**
+
 ```bash
 npm run lint:fix
 ```
 
 **Check what would be fixed:**
+
 ```bash
 npm run lint:js -- --fix-dry-run
 ```
 
 **Lint specific files:**
+
 ```bash
 npm run lint:js -- test/utils/my-test.test.js
 ```
@@ -197,6 +217,7 @@ npm run lint:js -- test/utils/my-test.test.js
 **Cause:** Missing test link in PR description
 
 **Solution:**
+
 ```markdown
 ## Testing
 Preview: https://branch--repo--owner.aem.page/path/to/test
@@ -213,6 +234,7 @@ Check repository settings → Actions → ensure workflows are enabled.
 **Issue: Poor performance score**
 
 **Common causes:**
+
 - Too much JavaScript loaded eagerly
 - CSS blocking render
 - Large unoptimized images
@@ -221,21 +243,25 @@ Check repository settings → Actions → ensure workflows are enabled.
 **Solutions:**
 
 **Move JavaScript to lazy or delayed phase:**
+
 ```javascript
 // In scripts.js, move non-LCP code to loadLazy() or loadDelayed()
 ```
 
 **Optimize images:**
+
 - Use WebP format
 - Lazy load below-the-fold images
 - Use appropriate dimensions
 
 **Defer non-critical CSS:**
+
 ```css
 /* Move non-LCP styles to lazy-styles.css */
 ```
 
 **Review performance report:**
+
 ```bash
 # Check details in GitHub PR checks
 gh pr checks
@@ -250,6 +276,7 @@ gh pr checks
 **Cause:** Linting not run locally or different config
 
 **Solution:**
+
 ```bash
 # Always run lint before committing
 npm run lint
@@ -264,12 +291,14 @@ git commit -m "Add eslint config"
 ### Different Node Version
 
 **Symptoms:**
+
 - Syntax errors in CI
 - Missing features
 
 **Solution:**
 
 Check CI Node version matches local:
+
 ```bash
 # Check local version
 node --version
@@ -283,6 +312,7 @@ git commit -m "Add nvmrc for consistent Node version"
 ### Missing Dependencies
 
 **Symptoms:**
+
 - Module not found errors in CI
 - Dependencies work locally
 
@@ -302,12 +332,14 @@ git add package-lock.json
 ### Environment Differences
 
 **Symptoms:**
+
 - Tests dependent on local files fail
 - Absolute paths don't work
 
 **Solution:**
 
 Use relative paths and environment-agnostic code:
+
 ```javascript
 // Bad: Absolute path
 const path = '/Users/me/project/file.js';
@@ -319,12 +351,14 @@ const path = './file.js';
 ### Race Conditions
 
 **Symptoms:**
+
 - Tests sometimes pass, sometimes fail
 - Timing-dependent failures
 
 **Solution:**
 
 Add proper waits:
+
 ```javascript
 // Bad: No wait
 it('should update text', async () => {
@@ -345,6 +379,7 @@ it('should update text', async () => {
 ### Module Resolution Errors
 
 **Error:**
+
 ```
 Failed to resolve import './utils.js'
 ```
@@ -352,6 +387,7 @@ Failed to resolve import './utils.js'
 **Solution:**
 
 Check import paths are correct:
+
 ```javascript
 // From test/utils/my-test.test.js
 // Importing from scripts/utils/my-utility.js
@@ -366,6 +402,7 @@ import { myUtility } from 'scripts/utils/my-utility.js';
 ### jsdom Errors
 
 **Error:**
+
 ```
 document is not defined
 ```
@@ -373,6 +410,7 @@ document is not defined
 **Solution:**
 
 Ensure vitest.config.js has jsdom environment:
+
 ```javascript
 export default defineConfig({
   test: {
@@ -384,6 +422,7 @@ export default defineConfig({
 ### Coverage Not Generated
 
 **Error:**
+
 ```
 Coverage provider not found
 ```
@@ -391,6 +430,7 @@ Coverage provider not found
 **Solution:**
 
 Install coverage package:
+
 ```bash
 npm install --save-dev @vitest/coverage-v8
 ```
@@ -417,6 +457,7 @@ If you're stuck:
 - ✅ Monitor `gh pr checks` after creating PR
 
 **Don't:**
+
 - ❌ Skip testing locally
 - ❌ Commit failing tests
 - ❌ Ignore linting errors

@@ -86,6 +86,7 @@ Visit [this really long URL](https://github.com/ddttom/allaboutv2/blob/main/bloc
 ## Expected Behavior
 
 All angle-bracket URLs should:
+
 - ✅ Be clickable
 - ✅ Open in new tab
 - ✅ Have security attributes (`target="_blank" rel="noopener noreferrer"`)
@@ -94,6 +95,7 @@ All angle-bracket URLs should:
 - ✅ Underline on hover
 
 All external markdown links should:
+
 - ✅ Be clickable
 - ✅ Open in new tab
 - ✅ Have security attributes
@@ -101,14 +103,17 @@ All external markdown links should:
 - ✅ Be styled consistently
 
 Code blocks and inline code should:
+
 - ❌ NOT be clickable
 - ✅ Remain as literal text
 
 Internal hash links should:
+
 - ✅ Navigate within the page
 - ❌ NOT open new tab
 
 Relative markdown links should:
+
 - ✅ Open markdown overlay
 - ❌ NOT open new tab
 
@@ -124,6 +129,7 @@ Relative markdown links should:
 ## Security Validation
 
 All external links should have:
+
 - `target="_blank"` attribute (opens new tab)
 - `rel="noopener noreferrer"` attribute (security best practice)
   - `noopener`: Prevents new tab from accessing `window.opener`
@@ -134,6 +140,7 @@ Inspect links in browser DevTools to verify attributes are present.
 ## Accessibility Validation
 
 Test with keyboard navigation:
+
 - Tab to focus links
 - Enter to activate links
 - Verify external links announce "opens in new tab" to screen readers

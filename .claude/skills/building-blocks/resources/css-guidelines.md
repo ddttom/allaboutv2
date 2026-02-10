@@ -5,6 +5,7 @@
 **All CSS selectors must be scoped to the block.** This is critical to prevent style leakage between blocks.
 
 **✅ Good - scoped to block:**
+
 ```css
 main .my-block {
   padding: 1rem;
@@ -16,6 +17,7 @@ main .my-block h2 {
 ```
 
 **❌ Bad - not scoped:**
+
 ```css
 /* This will affect ALL h2 elements on the page */
 h2 {
@@ -29,6 +31,7 @@ h2 {
 ```
 
 **Scoping pattern:**
+
 - Always start selectors with `main .{block-name}`
 - This ensures styles only apply within your block
 - Use additional classes for sub-elements within the block
@@ -86,6 +89,7 @@ main .my-block.wide .item {
 ```
 
 **Key points:**
+
 - Use lowercase with hyphens for class names (kebab-case)
 - Choose descriptive, semantic names
 - Avoid generic names like `.container`, `.wrapper` - be specific to your block
@@ -95,6 +99,7 @@ main .my-block.wide .item {
 Leverage CSS custom properties defined in `styles/styles.css` for consistency:
 
 **Colors:**
+
 ```css
 main .my-block {
   background-color: var(--background-color);
@@ -111,6 +116,7 @@ main .my-block a:hover {
 ```
 
 **Typography:**
+
 ```css
 main .my-block h2 {
   font-family: var(--heading-font-family);
@@ -124,6 +130,7 @@ main .my-block p {
 ```
 
 **Layout:**
+
 ```css
 main .my-block {
   max-width: var(--max-content-width);
@@ -132,6 +139,7 @@ main .my-block {
 ```
 
 **Available custom properties:**
+
 - Colors: `--clr-*`, `--link-color`, `--background-color`, `--text-color`, etc.
 - Fonts: `--body-font-family`, `--heading-font-family`, `--fixed-font-family`
 - Font sizes: `--heading-font-size-*`, `--body-font-size-*`
@@ -167,11 +175,13 @@ main .my-block {
 ```
 
 **Standard breakpoints:**
+
 - Mobile: default (< 600px)
 - Tablet: `@media (width >= 600px)`
 - Desktop: `@media (width >= 900px)`
 
 **Modern syntax:**
+
 - Use range syntax: `(width >= 600px)` instead of `(min-width: 600px)`
 - Use logical properties where appropriate
 
@@ -180,6 +190,7 @@ main .my-block {
 Use modern CSS features for better maintainability and performance:
 
 **Logical properties:**
+
 ```css
 /* Use logical properties for internationalization */
 main .my-block {
@@ -191,6 +202,7 @@ main .my-block {
 ```
 
 **Modern layout:**
+
 ```css
 /* Flexbox */
 main .my-block {
@@ -208,6 +220,7 @@ main .my-block {
 ```
 
 **Modern color syntax:**
+
 ```css
 main .my-block {
   background-color: rgb(0 0 0 / 20%); /* Modern RGB with alpha */
@@ -220,6 +233,7 @@ main .my-block {
 Avoid overly specific selectors:
 
 **✅ Good - low specificity:**
+
 ```css
 main .my-block .item {
   padding: 1rem;
@@ -231,6 +245,7 @@ main .my-block .item-title {
 ```
 
 **❌ Bad - high specificity:**
+
 ```css
 main .my-block div div div.item {
   padding: 1rem;
@@ -242,6 +257,7 @@ main div.my-block > div > h2.item-title {
 ```
 
 **Best practices:**
+
 - Use classes, not tag names when possible
 - Avoid ID selectors
 - Keep selector chains short (2-3 levels max)
@@ -278,6 +294,7 @@ main .my-block.dark.wide {
 ## Performance Considerations
 
 **Minimize reflows and repaints:**
+
 ```css
 /* Prefer transforms over position changes */
 main .my-block .item {
@@ -291,6 +308,7 @@ main .my-block .item {
 ```
 
 **Use will-change sparingly:**
+
 ```css
 /* Only for elements that will definitely animate */
 main .my-block .animated-item {
@@ -299,6 +317,7 @@ main .my-block .animated-item {
 ```
 
 **Avoid expensive properties on large elements:**
+
 ```css
 /* Be careful with these on large areas: */
 /* box-shadow, border-radius, opacity, filters */
@@ -307,6 +326,7 @@ main .my-block .animated-item {
 ## Code Style
 
 **Formatting:**
+
 - Use 2-space indentation
 - One selector per line for multiple selectors
 - Opening brace on same line as selector
@@ -316,6 +336,7 @@ main .my-block .animated-item {
 - End all declarations with semicolon
 
 **Example:**
+
 ```css
 main .my-block,
 main .my-block .item {
@@ -326,6 +347,7 @@ main .my-block .item {
 ```
 
 **Order of properties** (recommended):
+
 1. Layout (display, position, top, left, etc.)
 2. Box model (width, height, margin, padding, border)
 3. Visual (background, color, font, etc.)
@@ -334,6 +356,7 @@ main .my-block .item {
 ## Common Patterns
 
 ### Reset list styles
+
 ```css
 main .my-block ul {
   list-style: none;
@@ -343,6 +366,7 @@ main .my-block ul {
 ```
 
 ### Center content
+
 ```css
 main .my-block {
   max-width: var(--max-content-width);
@@ -351,6 +375,7 @@ main .my-block {
 ```
 
 ### Aspect ratio containers
+
 ```css
 main .my-block .video-container {
   aspect-ratio: 16 / 9;
@@ -358,6 +383,7 @@ main .my-block .video-container {
 ```
 
 ### Truncate text
+
 ```css
 main .my-block .truncated {
   overflow: hidden;
@@ -369,6 +395,7 @@ main .my-block .truncated {
 ## Anti-Patterns to Avoid
 
 **❌ Don't use !important:**
+
 ```css
 /* Avoid this */
 main .my-block {
@@ -379,6 +406,7 @@ main .my-block {
 ```
 
 **❌ Don't style elements outside your block:**
+
 ```css
 /* Bad - modifies header globally */
 main .my-block {
@@ -391,6 +419,7 @@ header {
 ```
 
 **❌ Don't hardcode values when variables exist:**
+
 ```css
 /* Bad */
 main .my-block {
@@ -406,6 +435,7 @@ main .my-block {
 ```
 
 **❌ Don't use absolute positioning for layout:**
+
 ```css
 /* Prefer flexbox or grid for layout */
 /* Use absolute positioning only for visual effects */

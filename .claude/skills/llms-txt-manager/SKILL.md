@@ -12,6 +12,7 @@ Manage llms.txt and my-blog.json files across the project, ensuring AI systems h
 ## When to Use
 
 This skill activates when:
+
 - Creating or editing llms.txt files
 - Creating or editing my-blog.json files
 - User mentions updating blog catalogs
@@ -24,18 +25,21 @@ This skill activates when:
 ### File Structure
 
 **llms.txt** - AI-readable content catalog
+
 - Location: Root or folder-specific (e.g., `blogs/ddt/integrations/llms.txt`)
 - Purpose: Comprehensive list of content for AI systems
 - Format: Markdown with metadata and categorized links
 - Source: URLs from my-blog.json, text/descriptions from existing llms.txt
 
 **my-blog.json** - Structured blog data
+
 - Location: Same directory as llms.txt
 - Purpose: Machine-readable catalog of blog posts
 - Format: JSON with categories, posts, metadata
 - Source: query-index.json filtered by folder context
 
 **query-index.json** - Master content index
+
 - Location: https://allabout.network/query-index.json
 - Purpose: Single source of truth for all site content
 - Contains: All pages with URLs, titles, descriptions, lastModified dates
@@ -44,6 +48,7 @@ This skill activates when:
 ### Folder Context
 
 When llms.txt is in a subfolder (e.g., `blogs/ddt/integrations/`):
+
 - The final folder name indicates intent/scope
 - my-blog.json should exist in same folder
 - Content should be filtered to relevant posts only
@@ -52,6 +57,7 @@ When llms.txt is in a subfolder (e.g., `blogs/ddt/integrations/`):
 ### Update Logic
 
 **lastModified Date Comparison:**
+
 1. Check lastModified date in llms.txt metadata
 2. Fetch query-index.json
 3. Filter entries with lastModified > llms.txt date
@@ -190,7 +196,7 @@ If you need to manually create one:
    - Update version number and date
    - Maintain text patterns and formatting
 
-5. **Update my-blog.json**
+4. **Update my-blog.json**
    - Add new posts to appropriate categories
    - Update metadata.last-updated
    - Increment category counts
@@ -220,6 +226,7 @@ The sync script now automatically creates my-blog.json files if they don't exist
 If you need to manually create one:
 
 1. **Fetch Data**
+
    ```bash
    curl https://allabout.network/query-index.json
    ```
@@ -249,11 +256,13 @@ Finds all llms.txt files in the project and updates them with new content:
 ```
 
 **Or use the script directly:**
+
 ```bash
 node scripts/sync-blog-content.js --target=llms
 ```
 
 **Process:**
+
 1. Find all existing llms.txt files: `**/*llms.txt`
 2. Find all my-blog.json files without paired llms.txt
 3. For each file (existing or new):
@@ -275,6 +284,7 @@ Finds all my-blog.json files and updates them with latest content:
 ```
 
 **Process:**
+
 1. Find all my-blog.json files: `**/*my-blog.json`
 2. For each file:
    - Read current content and last-updated

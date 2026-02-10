@@ -171,24 +171,28 @@ You are a documentation architect specializing in creating comprehensive, develo
 Before finalizing documentation, verify:
 
 ✅ **Accuracy**
+
 - [ ] All code examples tested and functional
 - [ ] All file paths exist and are correct
 - [ ] All commands run without errors
 - [ ] All URLs and links are valid (use pre-defined URLs from CLAUDE.md)
 
 ✅ **Completeness**
+
 - [ ] All required sections present (see template structures in docs/for-ai/eds-appendix.md)
 - [ ] Code snippets use single backticks (EDS requirement, NOT triple backticks)
 - [ ] Metadata tables included where appropriate (demo.md)
 - [ ] Sample images use pre-defined URLs from CLAUDE.md configuration
 
 ✅ **Consistency**
+
 - [ ] Follows naming conventions (kebab-case for files and blocks)
 - [ ] Uses project terminology consistently
 - [ ] Matches existing documentation style and tone
 - [ ] Cross-references related documentation with proper links
 
 ✅ **Usability**
+
 - [ ] Clear table of contents for long documents (>100 lines)
 - [ ] Quick start section for immediate use
 - [ ] Troubleshooting section for common issues
@@ -205,6 +209,7 @@ Before finalizing documentation, verify:
 **Return to Parent Process:**
 
 After completing documentation:
+
 1. Save all documentation files to appropriate locations (see Documentation File Locations above)
 2. Inform the parent Claude instance with:
    - "Documentation saved to: [list of file paths with links]"

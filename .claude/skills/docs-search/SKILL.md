@@ -12,6 +12,7 @@ This skill helps you efficiently search the complete aem.live documentation (doc
 ## When to Use This Skill
 
 Use this skill when:
+
 - You need information about an aem.live feature or concept
 - You've already looked at the project codebase for context
 - You've tried a basic web search but didn't find relevant aem.live documentation
@@ -19,6 +20,7 @@ Use this skill when:
 - You're looking for best practices or examples from the official docs
 
 **Do NOT use this skill when:**
+
 - You need reusable code snippets or block examples (use `block-collection-and-party` instead)
 - You already know the specific documentation URL
 - You're looking for general web development information (not aem.live specific)
@@ -30,12 +32,14 @@ Use this skill when:
 Determine 1-3 specific keywords related to what you're searching for. Be specific rather than general.
 
 **Good keywords:**
+
 - "block decoration"
 - "metadata"
 - "universal editor"
 - "sidekick plugin"
 
 **Poor keywords:**
+
 - "aem" (too generic, filtered as stop word)
 - "how to build website" (too broad)
 - "the" (stop word)
@@ -49,10 +53,12 @@ node .claude/skills/docs-search/scripts/search.js [--all] <keyword1> [keyword2] 
 ```
 
 **Options:**
+
 - `--all`: Return all matching results (default: limit to 10 most relevant)
 - Without `--all`: Returns top 10 results
 
 **Examples:**
+
 ```bash
 # Search for block decoration info
 node .claude/skills/docs-search/scripts/search.js block decoration
@@ -83,6 +89,7 @@ The script returns JSON with the following structure:
 ```
 
 **Field Explanations:**
+
 - `path`: URL path to the documentation page
 - `title`: Page title
 - `description`: Brief summary (usually ~150 chars) - **use this for quick context**
@@ -92,6 +99,7 @@ The script returns JSON with the following structure:
 - `relevanceScore`: Relevance score (higher = more relevant)
 
 **Important Notes:**
+
 - Results are sorted by relevance (highest first)
 - Deprecated pages have reduced relevance scores but still appear in results
 - The `description` field provides the best quick summary of the page
@@ -121,6 +129,7 @@ If any results have a `deprecation` field with content, **inform the user** that
 ### Stop Words (Automatically Filtered)
 
 These common words are ignored in searches:
+
 - Articles: the, a, an
 - Conjunctions: and, or, but
 - Prepositions: in, on, at, to, for, of, with, by
@@ -145,12 +154,14 @@ Index files are cached locally for 24 hours in `.claude/skills/docs-search/.cach
 **User Request:** "How do I decorate blocks in aem.live?"
 
 **Good Approach:**
+
 1. Search: `node .claude/skills/docs-search/scripts/search.js block decoration`
 2. Review top 3 results
 3. WebFetch the most relevant: `https://www.aem.live/developer/markup-sections-blocks`
 4. Read full content and provide answer
 
 **Poor Approach:**
+
 - Using WebSearch instead (wastes time on irrelevant results)
 - Not using the search script (might miss the best documentation page)
 
@@ -159,6 +170,7 @@ Index files are cached locally for 24 hours in `.claude/skills/docs-search/.cach
 **User Request:** "I need to add metadata to my pages"
 
 **Good Approach:**
+
 1. Search: `node .claude/skills/docs-search/scripts/search.js metadata`
 2. Notice top result is "/docs/bulk-metadata" (score: 63)
 3. Also see "/docs/metadata" (score: 30)
@@ -166,6 +178,7 @@ Index files are cached locally for 24 hours in `.claude/skills/docs-search/.cach
 5. Provide comprehensive answer with both approaches
 
 **Poor Approach:**
+
 - Only reading the first result and missing bulk metadata option
 - Not using `--all` when you need comprehensive coverage
 
@@ -174,6 +187,7 @@ Index files are cached locally for 24 hours in `.claude/skills/docs-search/.cach
 **User Request:** "How do I use folder mapping?"
 
 **Search Results:**
+
 ```json
 [
   {
@@ -195,6 +209,7 @@ Index files are cached locally for 24 hours in `.claude/skills/docs-search/.cach
 "I found information about folder mapping, but **this feature is deprecated**. The deprecation notice says: 'Please contact us if you have a use case for folder mapping...'. The current recommended approach is **Path mapping for AEM authoring** (the top result). Let me read that documentation for you instead."
 
 **Poor Response:**
+
 - Ignoring the deprecation warning and implementing the deprecated feature
 - Not mentioning the better alternative
 

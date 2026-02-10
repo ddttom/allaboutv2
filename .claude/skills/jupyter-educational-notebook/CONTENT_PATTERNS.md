@@ -20,6 +20,7 @@ When you have a large text document or article, follow these steps to identify t
 ### 1. Identify Main Themes
 
 **Scan for:**
+
 - Headers and subheaders (H1, H2, H3)
 - Repeated keywords or concepts
 - Section breaks or transitions
@@ -65,6 +66,7 @@ Part 5: Best Practices (Do's, don'ts, tips)
 ### 3. Identify Code Examples
 
 **Look for:**
+
 - Code snippets or blocks
 - Step-by-step procedures
 - Before/after comparisons
@@ -86,6 +88,7 @@ Part 2: State Management
 ### 4. Find Natural Breaking Points
 
 **Good breaking points:**
+
 - Major topic transitions
 - After complete concepts
 - Before introducing new terminology
@@ -93,6 +96,7 @@ Part 2: State Management
 - Before complex examples
 
 **Poor breaking points:**
+
 - Mid-explanation
 - During multi-step procedures
 - In the middle of examples
@@ -117,6 +121,7 @@ Part 5: Refinement - Best practices and optimization
 ```
 
 **Content flow:**
+
 - Each part builds on previous parts
 - Can't skip ahead without confusion
 - Clear dependencies between sections
@@ -135,6 +140,7 @@ Part 5: Integration - How features work together
 ```
 
 **Content flow:**
+
 - Each part stands alone
 - Can read in any order
 - Cross-references between parts
@@ -153,6 +159,7 @@ Part 5: Taking Action - How to implement
 ```
 
 **Content flow:**
+
 - Motivated by real problems
 - Solution feels natural
 - Proof through examples
@@ -171,6 +178,7 @@ Part 5: Advanced Topics - Edge cases and gotchas
 ```
 
 **Content flow:**
+
 - Focus on one main concept
 - Increasing technical depth
 - Theory balanced with practice
@@ -189,6 +197,7 @@ Part 5: Inspiration - Cool things you can build
 ```
 
 **Content flow:**
+
 - Heavy on demonstrations
 - Minimal explanation
 - Visual and interactive
@@ -203,6 +212,7 @@ Good narratives keep readers engaged and guide them through content naturally.
 ### Hook (Introduction)
 
 **Formula:**
+
 1. **Attention grabber** - Surprising fact, question, or problem
 2. **Context** - Why this matters
 3. **Promise** - What they'll learn
@@ -293,18 +303,21 @@ Let's extend the example from Part 2 to handle [new scenario]:
 ### Pacing Techniques
 
 **Fast pace (demonstrations):**
+
 - Short markdown cells
 - Multiple code cells in sequence
 - Minimal explanation
 - Rapid examples
 
 **Slow pace (complex concepts):**
+
 - Longer explanatory cells
 - Step-by-step breakdowns
 - Detailed code comments
 - Before/after comparisons
 
 **Mixed pace (tutorial):**
+
 - Alternate fast and slow
 - Speed up for familiar concepts
 - Slow down for new/complex material
@@ -321,6 +334,7 @@ The ideal balance depends on your notebook type, but here are general guidelines
 **60% markdown cells, 40% code cells**
 
 **Why:**
+
 - Ensures sufficient explanation
 - Prevents overwhelming with code
 - Maintains narrative flow
@@ -363,6 +377,7 @@ Cell N+2 (Markdown):
 ```
 
 **Benefits:**
+
 - Explanation provides context
 - Code proves it works
 - Follow-up reinforces learning
@@ -370,6 +385,7 @@ Cell N+2 (Markdown):
 ### When to Use More Markdown
 
 **Heavy markdown when:**
+
 - Introducing new concepts
 - Explaining "why" not just "how"
 - Providing context or background
@@ -380,6 +396,7 @@ Cell N+2 (Markdown):
 ### When to Use More Code
 
 **Heavy code when:**
+
 - Showcasing capabilities
 - Providing reference examples
 - Testing edge cases
@@ -403,6 +420,7 @@ return greeting;
 ```
 
 **Characteristics:**
+
 - No dependencies
 - No configuration
 - Immediate understanding
@@ -421,6 +439,7 @@ return block.outerHTML;
 ```
 
 **Characteristics:**
+
 - Real helper functions
 - Typical use case
 - Still straightforward
@@ -448,6 +467,7 @@ return '✓ Complete example with multiple items and preview';
 ```
 
 **Characteristics:**
+
 - Multiple features used
 - Realistic data
 - Error handling (optional)
@@ -488,6 +508,7 @@ if (count === items.length) {
 ```
 
 **Characteristics:**
+
 - Advanced techniques
 - Programmatic generation
 - Validation logic
@@ -496,6 +517,7 @@ if (count === items.length) {
 ### Progression Example
 
 **Part 1: Simple**
+
 ```markdown
 ## Part 1: Hello World
 
@@ -508,6 +530,7 @@ return message;
 ```
 
 **Part 2: Practical**
+
 ```markdown
 ## Part 2: Real Usage
 
@@ -521,6 +544,7 @@ return block.outerHTML;
 ```
 
 **Part 3: Complete**
+
 ```markdown
 ## Part 3: Complete Example
 
@@ -532,6 +556,7 @@ Here's a full implementation with multiple items:
 ```
 
 **Part 4: Advanced**
+
 ```markdown
 ## Part 4: Advanced Patterns
 
@@ -590,6 +615,7 @@ return `${emoji} ${title}: ${description}`;
 ```
 
 **Encourages:**
+
 - User modification
 - Exploration
 - Learning by doing
@@ -842,33 +868,39 @@ You've learned:
 ## Key Takeaways
 
 **Extracting Topics:**
+
 - Identify main themes
 - Group related content
 - Find natural breaking points
 
 **Organizing Parts:**
+
 - Choose appropriate pattern (linear, modular, problem-solution)
 - Create logical flow
 - Maintain clear dependencies
 
 **Creating Flow:**
+
 - Hook readers early
 - Use transitions
 - Build anticipation
 - Reinforce learning
 
 **Balancing Content:**
+
 - Aim for 60% markdown / 40% code
 - Pair explanations with demonstrations
 - Adjust ratio based on notebook type
 
 **Building Complexity:**
+
 - Start simple
 - Add features incrementally
 - Show realistic examples
 - Demonstrate advanced patterns last
 
 **Adding Interactivity:**
+
 - Make examples runnable
 - Encourage experimentation
 - Show comparisons visually

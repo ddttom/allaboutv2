@@ -11,11 +11,13 @@ This EDS project includes **6 universally applicable agents** optimized for vani
 ### Recommended Agents for EDS Development
 
 **Code Quality & Architecture:**
+
 - **code-architecture-reviewer** - Review block implementations and architectural consistency
 - **code-refactor-master** - Refactor blocks, scripts, and code organization
 - **documentation-architect** - Document blocks, features, and development patterns
 
 **Planning & Research:**
+
 - **plan-reviewer** - Review implementation plans before starting work
 - **refactor-planner** - Plan comprehensive code reorganization
 - **web-research-specialist** - Research EDS patterns and best practices
@@ -23,6 +25,7 @@ This EDS project includes **6 universally applicable agents** optimized for vani
 ### Removed Agents (Not Applicable to EDS)
 
 The following agents were removed because they're designed for backend/full-stack projects:
+
 - **auth-route-debugger** - JWT cookie authentication debugging (no auth in EDS)
 - **auth-route-tester** - Authenticated endpoint testing (no backend APIs)
 - **auto-error-resolver** - TypeScript compilation errors (EDS uses vanilla JS)
@@ -35,6 +38,7 @@ The following agents were removed because they're designed for backend/full-stac
 ## What Are Agents?
 
 Agents are autonomous Claude instances that handle specific complex tasks. Unlike skills (which provide inline guidance), agents:
+
 - Run as separate sub-tasks
 - Work autonomously with minimal supervision
 - Have specialized tool access
@@ -47,9 +51,11 @@ Agents are autonomous Claude instances that handle specific complex tasks. Unlik
 ## Available Agents (6)
 
 ### code-architecture-reviewer
+
 **Purpose:** Review code for architectural consistency and best practices
 
 **When to use:**
+
 - After implementing a new feature
 - Before merging significant changes
 - When refactoring code
@@ -60,9 +66,11 @@ Agents are autonomous Claude instances that handle specific complex tasks. Unlik
 ---
 
 ### code-refactor-master
+
 **Purpose:** Plan and execute comprehensive refactoring
 
 **When to use:**
+
 - Reorganizing file structures
 - Breaking down large components
 - Updating import paths after moves
@@ -73,9 +81,11 @@ Agents are autonomous Claude instances that handle specific complex tasks. Unlik
 ---
 
 ### documentation-architect
+
 **Purpose:** Create comprehensive documentation
 
 **When to use:**
+
 - Documenting new features
 - Creating API documentation
 - Writing developer guides
@@ -86,9 +96,11 @@ Agents are autonomous Claude instances that handle specific complex tasks. Unlik
 ---
 
 ### frontend-error-fixer
+
 **Purpose:** Debug and fix frontend errors
 
 **When to use:**
+
 - Browser console errors
 - TypeScript compilation errors in frontend
 - React errors
@@ -99,9 +111,11 @@ Agents are autonomous Claude instances that handle specific complex tasks. Unlik
 ---
 
 ### plan-reviewer
+
 **Purpose:** Review development plans before implementation
 
 **When to use:**
+
 - Before starting complex features
 - Validating architectural plans
 - Identifying potential issues early
@@ -112,9 +126,11 @@ Agents are autonomous Claude instances that handle specific complex tasks. Unlik
 ---
 
 ### refactor-planner
+
 **Purpose:** Create comprehensive refactoring strategies
 
 **When to use:**
+
 - Planning code reorganization
 - Modernizing legacy code
 - Breaking down large files
@@ -125,9 +141,11 @@ Agents are autonomous Claude instances that handle specific complex tasks. Unlik
 ---
 
 ### web-research-specialist
+
 **Purpose:** Research technical issues online
 
 **When to use:**
+
 - Debugging obscure errors
 - Finding solutions to problems
 - Researching best practices
@@ -158,12 +176,14 @@ Use the web-research-specialist agent to find examples of accordion patterns in 
 If copying agents from other projects:
 
 **Step 1: Copy the file**
+
 ```bash
 cp source/.claude/agents/agent-name.md \\
    .claude/agents/
 ```
 
 **Step 2: Verify compatibility**
+
 - Check if agent requires TypeScript (EDS uses vanilla JS)
 - Check if agent requires authentication (EDS has none)
 - Check if agent is React/framework-specific (EDS is vanilla)
@@ -184,6 +204,7 @@ Ask Claude: "Use the [agent-name] agent to [task]"
 | Example: "Review all controllers" | Example: "Creating a new route" |
 
 **Both can work together:**
+
 - Skill provides patterns during development
 - Agent reviews the result when complete
 
@@ -237,6 +258,7 @@ What format to return results in
 ```
 
 **Tips:**
+
 - Be very specific in instructions
 - Break complex tasks into numbered steps
 - Specify exactly what to return
@@ -250,6 +272,7 @@ What format to return results in
 ### Agent not found
 
 **Check:**
+
 ```bash
 # Is agent file present?
 ls -la .claude/agents/[agent-name].md
@@ -258,11 +281,13 @@ ls -la .claude/agents/[agent-name].md
 ### Agent fails with path errors
 
 **Check for hardcoded paths:**
+
 ```bash
 grep "~/\|/root/\|/Users/" .claude/agents/[agent-name].md
 ```
 
 **Fix:**
+
 ```bash
 sed -i 's|~/git/.*project|$CLAUDE_PROJECT_DIR|g' .claude/agents/[agent-name].md
 ```

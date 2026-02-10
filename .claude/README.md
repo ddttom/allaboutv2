@@ -76,16 +76,19 @@ When Claude cannot find an expected file or folder (like `.claude/`, `blocks/`, 
 Before creating ANY file or folder that should already exist in the project:
 
 1. **Check current working directory**:
+
    ```bash
    pwd
    ```
 
 2. **Verify project root markers**:
+
    ```bash
    ls -la | grep -E "(\.claude|blocks|package\.json|CLAUDE\.md)"
    ```
 
 3. **If markers are missing**, navigate to project root:
+
    ```bash
    cd /Users/tomcranstoun/Documents/GitHub/allaboutV2
    ```
@@ -101,12 +104,14 @@ Before creating ANY file or folder that should already exist in the project:
 ### Examples of Incorrect Behavior
 
 ❌ **WRONG**:
+
 ```
 Cannot find .claude/ directory. I will create it.
 mkdir .claude
 ```
 
 ✅ **CORRECT**:
+
 ```
 Cannot find .claude/ directory. Let me verify my working directory first.
 pwd
@@ -130,22 +135,27 @@ All `.claude/` operations, block creation, and documentation updates should happ
 The recommended workflow follows Content Driven Development (CDD):
 
 1. **Start a new block**:
+
    ```
    /new-block my-component
    ```
+
    This invokes the CDD process which guides you through content modeling, test content creation, and implementation.
 
 2. **Or manually start CDD**:
+
    ```
    /start-cdd
    ```
 
 3. **Test your block**:
+
    ```
    /test-block my-component
    ```
 
 4. **Deploy to production** (for build-enhanced blocks):
+
    ```
    /deploy-block my-component
    ```
@@ -255,11 +265,13 @@ Specialized autonomous agents for complex, multi-step tasks. See [agents_README.
 ### Available Agents (6 for EDS)
 
 **Code Quality & Architecture:**
+
 - **code-architecture-reviewer** - Review block implementations and architectural consistency
 - **code-refactor-master** - Plan and execute comprehensive refactoring
 - **documentation-architect** - Create comprehensive documentation for blocks and features
 
 **Planning & Research:**
+
 - **plan-reviewer** - Review development plans before implementation
 - **refactor-planner** - Create comprehensive refactoring strategies
 - **web-research-specialist** - Research EDS patterns and solutions online
@@ -267,6 +279,7 @@ Specialized autonomous agents for complex, multi-step tasks. See [agents_README.
 ### How to Use Agents
 
 Ask Claude to use an agent for complex tasks:
+
 ```
 Use the code-architecture-reviewer agent to review the new carousel block
 ```
@@ -278,22 +291,26 @@ Agents work autonomously and return comprehensive reports when complete.
 Active hooks that enhance the development workflow:
 
 ### skill-activation-prompt.sh
+
 - **Trigger:** When you submit a prompt
 - **Purpose:** Auto-suggests relevant skills based on your message
 - **Implementation:** TypeScript-based pattern matching
 
 ### post-tool-use-tracker.sh
+
 - **Trigger:** After file edits (Edit, MultiEdit, Write)
 - **Purpose:** Tracks modified files for session context
 - **Implementation:** Lightweight bash script
 
 ### pre-tool-use-version-check.sh
+
 - **Trigger:** Before file edits to `cloudflare/files/cloudflare-worker.js`
 - **Purpose:** Warns if `WORKER_VERSION` not incremented when modifying worker
 - **Implementation:** Compares current version with git HEAD
 - **Action:** Warning only (never blocks operations)
 
 ### pre-push-validation.sh (Git Hook)
+
 - **Trigger:** Before `git push` operations
 - **Purpose:** Validates CLAUDE.md, README.md, and CHANGELOG.md are current
 - **Implementation:** Git pre-push hook
@@ -310,6 +327,7 @@ Hooks are configured in [.claude/settings.json](.claude/settings.json). For adva
 **`docs/for-ai/`** - Comprehensive EDS development documentation (26 files)
 
 Key documents:
+
 - **index.md** - Complete navigation guide
 - **getting-started-guide.md** - Role-based learning paths
 - **eds.md** - Core EDS concepts (1,937 lines)
@@ -337,6 +355,7 @@ blocks/
 ```
 
 **Workflow**:
+
 1. `/new-block my-block` → Creates structure
 2. Edit files directly in blocks/
 3. `/test-block my-block` → Validate
@@ -361,6 +380,7 @@ blocks/my-block/         # Deployment
 ```
 
 **Workflow**:
+
 1. `/new-block my-block` → Creates structure in build/
 2. Develop in build/my-block/
 3. `/test-block my-block` → Validate
@@ -379,6 +399,7 @@ blocks/my-block/         # Deployment
 4. ✅ Test with real content
 
 **NEVER**:
+
 - ❌ Start coding without test content
 - ❌ Skip the content modeling phase
 - ❌ Use placeholder/dummy data for development
@@ -423,6 +444,7 @@ Detailed instructions for Claude to follow when this command is invoked.
 ### Creating New Skills
 
 Use the `skill-creator` skill:
+
 ```
 @skill-creator
 ```

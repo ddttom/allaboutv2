@@ -92,16 +92,19 @@ Please update the following files before pushing:
 
 1. **Update the outdated files** with your changes
 2. **Commit all changes (including user edits):**
+
    ```bash
    git add .
    git commit -m "docs: Update documentation for [your changes]"
    ```
+
 3. **Run validation again** to verify: `/validate-docs`
 4. **Push when ready:** `git push`
 
 ### If Validation Passes
 
 You're ready to push:
+
 ```bash
 git push
 ```

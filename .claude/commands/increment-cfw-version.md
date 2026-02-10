@@ -11,6 +11,7 @@ Interactively increment the `WORKER_VERSION` constant in `cloudflare/files/cloud
 ```
 
 **Examples:**
+
 - `/increment-cfw-version PATCH` - Bug fix: 1.0.0 → 1.0.1
 - `/increment-cfw-version MINOR` - New feature: 1.0.0 → 1.1.0
 - `/increment-cfw-version MAJOR` - Breaking change: 1.0.0 → 2.0.0
@@ -81,6 +82,7 @@ Next steps:
 ### PATCH (1.0.x)
 
 Use for:
+
 - Bug fixes that don't change behavior
 - Performance improvements
 - Code refactoring (internal changes only)
@@ -88,6 +90,7 @@ Use for:
 - Typo fixes
 
 **Example:**
+
 ```javascript
 // Before: 1.0.0
 export const WORKER_VERSION = '1.0.1';
@@ -96,6 +99,7 @@ export const WORKER_VERSION = '1.0.1';
 ### MINOR (1.x.0)
 
 Use for:
+
 - New features (backward-compatible)
 - New response headers
 - New metadata handling
@@ -103,6 +107,7 @@ Use for:
 - New optional parameters
 
 **Example:**
+
 ```javascript
 // Before: 1.0.1
 export const WORKER_VERSION = '1.1.0';
@@ -111,6 +116,7 @@ export const WORKER_VERSION = '1.1.0';
 ### MAJOR (x.0.0)
 
 Use for:
+
 - Breaking changes to API
 - Removal of features
 - Changes requiring client updates
@@ -118,6 +124,7 @@ Use for:
 - Changes to required parameters
 
 **Example:**
+
 ```javascript
 // Before: 1.1.0
 export const WORKER_VERSION = '2.0.0';
@@ -178,6 +185,7 @@ The `cfw-version-monitor` skill provides the validation logic used by this comma
 ### With Tests
 
 Version tests automatically run after increment to ensure:
+
 - Format is correct (`\d+\.\d+\.\d+`)
 - `cfw` header includes new version
 - Tests still pass with changes
@@ -246,6 +254,7 @@ This will require clients to update. Are you sure? (y/n): y
 ### Implementation
 
 This command should:
+
 1. Use regex to find and extract `WORKER_VERSION = '(\d+\.\d+\.\d+)'`
 2. Parse version into [major, minor, patch] components
 3. Increment appropriate component based on type
@@ -269,11 +278,13 @@ export const WORKER_VERSION = '1.1.0';
 ### Validation
 
 After update, command runs:
+
 ```bash
 cd cloudflare/files && npm test
 ```
 
 Expected output:
+
 ```
 ✓ cloudflare-worker.test.js (45 tests)
   ✓ Worker Version
@@ -298,6 +309,7 @@ Expected output:
 ## Success Criteria
 
 Command succeeds when:
+
 - Version number correctly incremented
 - Semantic versioning rules followed
 - All 45 tests pass

@@ -512,6 +512,7 @@ const DEFAULT_CONFIG = {
 ```
 
 **Why:**
+
 - Easy localization - change all UI text in one place
 - Maintainability - single source of truth for all configuration
 - Type safety - structured object with clear sections

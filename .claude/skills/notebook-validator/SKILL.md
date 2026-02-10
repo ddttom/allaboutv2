@@ -9,6 +9,7 @@ Validates notebooks to ensure they meet quality standards before production depl
 ## When to Use
 
 Use this skill when you need to:
+
 - Validate a notebook before production deployment
 - Check notebook quality and structure
 - Verify all smart links resolve correctly
@@ -20,16 +21,19 @@ Use this skill when you need to:
 ## Quick Start
 
 **Basic validation:**
+
 ```
 Validate the notebook.ipynb file
 ```
 
 **With expected parts:**
+
 ```
 Validate docs-navigation.ipynb, it should have 8 parts
 ```
 
 **With strict requirements:**
+
 ```
 Validate educational-notebook.ipynb with transitions required
 ```
@@ -39,31 +43,41 @@ Validate educational-notebook.ipynb with transitions required
 The validator supports multiple configuration options:
 
 ### Expected Parts
+
 Specify how many parts/sections the notebook should have:
+
 ```
 --expected-parts 12
 ```
 
 ### Require Transitions
+
 Enforce transition cells with action cards between parts:
+
 ```
 --require-transitions
 ```
 
 ### Introduction Requirements
+
 Set minimum cells before first part:
+
 ```
 --min-intro-cells 3
 ```
 
 ### Conclusion Requirements
+
 Set minimum cells after last part:
+
 ```
 --min-conclusion-cells 2
 ```
 
 ### Metadata Requirements
+
 Specify required metadata fields:
+
 ```
 --check-metadata repo version author last-modified
 ```
@@ -73,17 +87,20 @@ Specify required metadata fields:
 ### 1. Smart Links (Weight: 30%)
 
 **What it validates:**
+
 - All `[text](#)` links resolve to headings
 - Link text matches heading text (fuzzy matching)
 - No broken or orphaned links
 
 **Scoring:**
+
 - 100: All links resolve
 - 75-99: Minor mismatches
 - 50-74: Some broken links
 - 0-49: Many broken links
 
 **Common issues:**
+
 - Link text doesn't match heading
 - Typos in link or heading text
 - Heading was renamed but link wasn't updated
@@ -91,6 +108,7 @@ Specify required metadata fields:
 ### 2. Structure (Weight: 25%)
 
 **What it validates:**
+
 - Detects numbered parts/sections if present (optional)
 - Validates part count only if `--expected-parts` specified
 - Introduction section exists (if parts present and threshold set)
@@ -98,12 +116,14 @@ Specify required metadata fields:
 - Works with both structured (parts) and free-form notebooks
 
 **Scoring:**
+
 - 100: Perfect structure (or no parts detected with no expectations)
 - 80: Minor issues (intro/conclusion)
 - 60: Wrong part count (when expected parts specified)
 - 0-59: Major structural problems
 
 **Common issues:**
+
 - Part count doesn't match `--expected-parts`
 - Too few cells before first part
 - Too few cells after last part
@@ -114,17 +134,20 @@ It only validates structure if parts exist, and only enforces counts when explic
 ### 3. Transitions (Weight: 20%)
 
 **What it validates:**
+
 - Transition cells between parts (if required)
 - Action cards marker present
 - 3-6 action card links
 - Links resolve correctly
 
 **Scoring:**
+
 - 100: All transitions valid (or not required)
 - 70-99: Some issues
 - 0-69: Missing transitions/action cards
 
 **Common issues:**
+
 - Missing `<!-- action-cards -->` marker
 - Too few action card links (<3)
 - Too many action card links (>6)
@@ -132,17 +155,20 @@ It only validates structure if parts exist, and only enforces counts when explic
 ### 4. Part Flow (Weight: 15%)
 
 **What it validates:**
+
 - Parts numbered sequentially (1, 2, 3...)
 - No duplicate part numbers
 - No gaps in numbering
 
 **Scoring:**
+
 - 100: Perfect sequence
 - 75: Minor gaps
 - 50: Major gaps or duplicates
 - 0-49: Severe flow problems
 
 **Common issues:**
+
 - Non-sequential numbering
 - Duplicate part numbers
 - Missing parts in sequence
@@ -150,18 +176,21 @@ It only validates structure if parts exist, and only enforces counts when explic
 ### 5. Production Readiness (Weight: 10%)
 
 **What it validates:**
+
 - Required metadata fields present
 - Repository URL configured
 - File size reasonable (<5MB)
 - Valid JSON structure
 
 **Scoring:**
+
 - 100: All metadata complete
 - 85: Minor missing fields
 - 70: Major missing fields
 - 0-69: Critical issues
 
 **Common issues:**
+
 - Missing repo URL
 - Large file size
 - Missing version or author
@@ -169,6 +198,7 @@ It only validates structure if parts exist, and only enforces counts when explic
 ## Overall Scoring
 
 **Weighted calculation:**
+
 ```
 Overall = (Smart Links × 0.30) +
           (Structure × 0.25) +
@@ -178,6 +208,7 @@ Overall = (Smart Links × 0.30) +
 ```
 
 **Score interpretation:**
+
 - **90-100**: ✅ Production ready
 - **75-89**: ⚠️  Minor fixes needed
 - **60-74**: ⚠️  Moderate issues
@@ -192,6 +223,7 @@ python validator.py notebook.ipynb
 ```
 
 **Output:**
+
 ```
 NOTEBOOK VALIDATION REPORT: notebook.ipynb
 ==================================================
@@ -236,6 +268,7 @@ python validator.py educational.ipynb \
 ```
 
 Validates with strict requirements:
+
 - Must have 10 parts
 - Must have transition cells with action cards
 - Must have 3+ intro cells
@@ -248,6 +281,7 @@ python validator.py notebook.ipynb --quiet
 ```
 
 **Output:**
+
 ```
 Score: 100/100
 ```
@@ -261,6 +295,7 @@ Validate the invisible-users/notebook.ipynb file, it should have 12 parts
 ```
 
 Claude will:
+
 1. Load the skill
 2. Run validator with `--expected-parts 12`
 3. Generate comprehensive report
@@ -273,6 +308,7 @@ Claude will:
 The validator recognizes multiple heading patterns:
 
 **Part headings:**
+
 ```markdown
 ## Part 1: Introduction
 ### 💡 Part 12: Conclusion
@@ -280,12 +316,14 @@ The validator recognizes multiple heading patterns:
 ```
 
 **Section headings:**
+
 ```markdown
 ## Section 1: Getting Started
 ### Section 5: Advanced Topics
 ```
 
 **Transition cells:**
+
 ```markdown
 ### Part 7: Next Steps
 **Progress: 7 of 8** 🔵🔵🔵🔵🔵🔵🔵⚪
@@ -303,6 +341,7 @@ Content explaining what's next...
 ### Smart Link Matching
 
 **Exact match:**
+
 ```markdown
 Heading: ### Getting Started
 Link: [Getting Started](#)
@@ -310,6 +349,7 @@ Link: [Getting Started](#)
 ```
 
 **Fuzzy match:**
+
 ```markdown
 Heading: ### Getting Started Guide
 Link: [Getting Started](#)
@@ -317,6 +357,7 @@ Link: [Getting Started](#)
 ```
 
 **Emoji-agnostic:**
+
 ```markdown
 Heading: ### 💡 Important Concept
 Link: [Important Concept](#)
@@ -330,16 +371,19 @@ Link: [Important Concept](#)
 The skill activates automatically when:
 
 **Keywords detected:**
+
 - "validate notebook"
 - "check notebook quality"
 - "verify notebook structure"
 - "notebook production ready"
 
 **File patterns:**
+
 - Working with `.ipynb` files
 - References to notebook validation
 
 **Intent patterns:**
+
 - "validate the notebook.ipynb file"
 - "check if notebook is production ready"
 - "verify notebook quality"
@@ -347,6 +391,7 @@ The skill activates automatically when:
 ### Usage Flow
 
 1. **User request:**
+
    ```
    Validate the docs-navigation.ipynb file
    ```
@@ -363,6 +408,7 @@ The skill activates automatically when:
    - Fix suggestions
 
 4. **User can request fixes:**
+
    ```
    Fix the broken links in cell 23
    ```
@@ -372,11 +418,13 @@ The skill activates automatically when:
 ### Scenario 1: Educational Notebook
 
 **Requirements:**
+
 - 8-12 parts
 - Transitions with action cards
 - Complete metadata
 
 **Validation:**
+
 ```bash
 python validator.py educational.ipynb \
   --expected-parts 10 \
@@ -387,11 +435,13 @@ python validator.py educational.ipynb \
 ### Scenario 2: Documentation Notebook
 
 **Requirements:**
+
 - Sequential sections
 - Smart links functional
 - Repo URL configured
 
 **Validation:**
+
 ```bash
 python validator.py docs-navigation.ipynb \
   --min-intro-cells 2 \
@@ -401,11 +451,13 @@ python validator.py docs-navigation.ipynb \
 ### Scenario 3: Presentation Notebook
 
 **Requirements:**
+
 - Visual sections
 - No transition requirement
 - Basic metadata
 
 **Validation:**
+
 ```bash
 python validator.py presentation.ipynb \
   --check-metadata repo version
@@ -414,11 +466,13 @@ python validator.py presentation.ipynb \
 ### Scenario 4: Testing Notebook
 
 **Requirements:**
+
 - Flexible structure
 - Code cells allowed
 - Minimal metadata
 
 **Validation:**
+
 ```bash
 python validator.py test.ipynb \
   --min-intro-cells 0 \
@@ -430,16 +484,19 @@ python validator.py test.ipynb \
 ### Issue: Low Smart Links Score
 
 **Symptoms:**
+
 - Broken links reported
 - Link text doesn't match headings
 
 **Solutions:**
+
 1. Check link text matches heading text
 2. Look for typos
 3. Verify emojis aren't causing issues
 4. Use fuzzy matching (automatic)
 
 **Example fix:**
+
 ```markdown
 # Before (broken):
 Heading: ### Getting Started Guide
@@ -452,10 +509,12 @@ Link: [Getting Started Guide](#)
 ### Issue: Structure Score Low
 
 **Symptoms:**
+
 - "Expected N parts, found M"
 - "No clear introduction section"
 
 **Solutions:**
+
 1. Verify part count matches expected
 2. Add introduction cells
 3. Add conclusion cells
@@ -464,15 +523,18 @@ Link: [Getting Started Guide](#)
 ### Issue: Transitions Required But Missing
 
 **Symptoms:**
+
 - "Missing <!-- action-cards --> marker"
 - "Only N action cards (need 3-6)"
 
 **Solutions:**
+
 1. Add `<!-- action-cards -->` marker
 2. Add 3-6 links after marker
 3. Ensure links use `(#)` placeholder
 
 **Example fix:**
+
 ```markdown
 # Before (fails):
 ### Part 7: Next Steps
@@ -496,10 +558,12 @@ Content here...
 ### Issue: Part Flow Non-Sequential
 
 **Symptoms:**
+
 - "Part N expected, found Part M"
 - "Duplicate part numbers"
 
 **Solutions:**
+
 1. Renumber parts sequentially
 2. Remove duplicates
 3. Fill gaps in numbering

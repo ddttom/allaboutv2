@@ -24,6 +24,7 @@ You are testing an EDS block. Follow these steps:
    - Suggestions for fixes
 
 **Available linting commands**:
+
 - `npm run lint:js` - Lint JavaScript files
 - `npm run lint:css` - Lint CSS files
 - `npm run lint` - Run all linting

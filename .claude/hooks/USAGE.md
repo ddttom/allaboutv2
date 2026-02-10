@@ -9,6 +9,7 @@ Automatically ensures **CLAUDE.md**, **README.md**, and **CHANGELOG.md** are upd
 ### Automatic Validation
 
 When you run `git push`, the system automatically:
+
 1. Checks if you have unpushed commits
 2. Verifies all three documentation files are newer than your oldest unpushed commit
 3. Blocks the push if documentation is outdated
@@ -29,6 +30,7 @@ Check documentation status anytime:
 ## Example Output
 
 ### ✅ Passing Validation
+
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🔍 PRE-PUSH VALIDATION
@@ -41,6 +43,7 @@ Check documentation status anytime:
 ```
 
 ### ❌ Failing Validation
+
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🔍 PRE-PUSH VALIDATION
@@ -59,7 +62,9 @@ Please update the following files before pushing:
 ## When to Update Each File
 
 ### CLAUDE.md
+
 Update when you:
+
 - Add new features or capabilities
 - Change project conventions or standards
 - Add new blocks or skills
@@ -67,7 +72,9 @@ Update when you:
 - Update configuration patterns
 
 ### README.md
+
 Update when you:
+
 - Change project structure
 - Add new dependencies
 - Modify setup instructions
@@ -75,7 +82,9 @@ Update when you:
 - Change architectural patterns
 
 ### CHANGELOG.md
+
 **Update for EVERY change:**
+
 - New features
 - Bug fixes
 - Documentation updates
@@ -95,13 +104,16 @@ git push --no-verify
 ## Workflow Integration
 
 ### Normal Development Flow
+
 1. Make code changes
 2. Update documentation (CLAUDE.md, README.md, CHANGELOG.md)
 3. Commit changes: `git add . && git commit -m "..."`
 4. Push: `git push` (validation runs automatically)
 
 ### Claude Code Integration
+
 The system integrates with Claude Code skills:
+
 - Mention "git push" or "pushing changes" → Claude suggests validating first
 - Use `/validate-docs` command → Manual validation
 - Git push blocked → Claude provides guidance on fixing
@@ -109,16 +121,21 @@ The system integrates with Claude Code skills:
 ## Troubleshooting
 
 ### "No commits to push"
+
 This is normal - you're up to date with remote. The hook exits successfully.
 
 ### "Cannot find upstream branch"
+
 Normal for new branches. The hook allows the push to proceed.
 
 ### "Push blocked" but files are updated
+
 The file modification date is older than your first unpushed commit. Touch the file or make a small change to update its timestamp.
 
 ### Hook not executing
+
 Check permissions:
+
 ```bash
 chmod +x .claude/hooks/pre-push-validation.sh
 chmod +x .git/hooks/pre-push

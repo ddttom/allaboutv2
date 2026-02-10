@@ -9,6 +9,7 @@ You are helping to create or edit Jupyter notebooks for testing Adobe Edge Deliv
 ## When to Use This Command
 
 Use this command when you need to:
+
 - Create new `.ipynb` notebook files for block testing
 - Edit existing notebooks to add test cases
 - Generate test content for specific blocks
@@ -19,6 +20,7 @@ Use this command when you need to:
 ## Context
 
 The user wants to work with Jupyter notebooks that use:
+
 - **JSLab** (JavaScript kernel for Jupyter)
 - **jsdom** (virtual DOM for Node.js)
 - **VS Code Jupyter extension** for notebook editing
@@ -28,6 +30,7 @@ Notebooks enable rapid, interactive testing of EDS blocks without servers, deplo
 ## Related Resources
 
 For comprehensive documentation, see the `jupyter-notebook-testing` skill which includes:
+
 - **INSTALLATION.md** - Complete setup guide with one-time installation steps for tslab, Jupyter, jsdom, and VS Code extension
 - **EXAMPLES.md** - Block-specific content patterns and testing examples for accordion, tabs, cards, hero, and other blocks
 - **ADVANCED_TECHNIQUES.md** - Performance testing, snapshot testing, batch testing, validation patterns, and advanced workflows
@@ -38,6 +41,7 @@ This command provides practical notebook creation/editing assistance while the s
 ## Key Innovation: Live CSS Reload
 
 The generated HTML previews link to actual CSS files instead of embedding them:
+
 - **Edit** `blocks/myblock/myblock.css` in your editor
 - **Refresh** browser → See changes immediately!
 - **No regeneration** needed - no rerunning notebook cells
@@ -63,6 +67,7 @@ If creating a new notebook from scratch:
 2. **Create the notebook file** using the NotebookEdit tool with the following structure:
 
    **Cell 0** (Markdown): Title and introduction
+
    ```markdown
    # [Block Name] Testing
 
@@ -81,11 +86,13 @@ If creating a new notebook from scratch:
    ```
 
    **Cell 1** (Code): Setup - Copy the complete setup from test.ipynb
+
    ```javascript
    // Complete setup code including jsdom initialization and helper functions
    ```
 
    **Cell 2** (Markdown): Section introduction
+
    ```markdown
    ## Part 1: Simple Tests
 
@@ -121,18 +128,21 @@ If adding tests for a specific block:
 2. **Create appropriate test content** following these patterns:
 
    **Accordion/FAQ blocks:**
+
    ```javascript
    const content = '<div><div>Question 1</div><div>Answer 1 with details.</div></div>' +
      '<div><div>Question 2</div><div>Answer 2 with details.</div></div>';
    ```
 
    **Tabs blocks:**
+
    ```javascript
    const content = '<div><div>Tab 1 Title</div><div>Tab 1 content here</div></div>' +
      '<div><div>Tab 2 Title</div><div>Tab 2 content here</div></div>';
    ```
 
    **Cards/Grid blocks:**
+
    ```javascript
    const content = '<div><div><picture><img src="image1.jpg" alt="Card 1"></picture></div>' +
      '<div><h3>Title 1</h3><p>Description 1</p></div></div>' +
@@ -176,6 +186,7 @@ Every notebook should have:
 Remind users of these available functions:
 
 ### testBlock(blockName, innerHTML)
+
 ```javascript
 // Quick test - returns DOM element
 const block = await testBlock('accordion', '<div>content</div>');
@@ -183,6 +194,7 @@ console.log(block.outerHTML);
 ```
 
 ### saveBlockHTML(blockName, innerHTML, filename?)
+
 ```javascript
 // Generate styled preview in ipynb-tests/ folder
 await saveBlockHTML('accordion', content);
@@ -193,6 +205,7 @@ await saveBlockHTML('accordion', content, 'my-test.html');
 ```
 
 ### loadBlockStyles(blockName)
+
 ```javascript
 // Usually not needed directly (called by testBlock)
 const css = await loadBlockStyles('accordion');
@@ -205,6 +218,7 @@ When creating or editing notebooks:
 1. **Use descriptive names**: `accordion-edge-cases.ipynb` not `test2.ipynb`
 
 2. **Add clear explanations**:
+
    ```javascript
    // ✅ Good
    // Testing accordion with empty content
@@ -225,6 +239,7 @@ When creating or editing notebooks:
    - Missing expected elements
 
 4. **Include error handling**:
+
    ```javascript
    try {
      const block = await testBlock('myblock', content);
@@ -235,6 +250,7 @@ When creating or editing notebooks:
    ```
 
 5. **Generate visual previews**:
+
    ```javascript
    // Always save visual previews for blocks with styling
    await saveBlockHTML('accordion', content);
@@ -246,6 +262,7 @@ When creating or editing notebooks:
 Offer these patterns when appropriate:
 
 ### Testing Multiple Variations
+
 ```javascript
 async function testVariations(blockName, contentArray) {
   return Promise.all(
@@ -259,6 +276,7 @@ await testVariations('accordion', [content1, content2, content3]);
 ```
 
 ### Performance Testing
+
 ```javascript
 console.time('decoration');
 const block = await testBlock('accordion', content);
@@ -266,6 +284,7 @@ console.timeEnd('decoration');
 ```
 
 ### Content Generation
+
 ```javascript
 function generateContent(numItems) {
   return Array.from({ length: numItems }, (_, i) => `
@@ -319,6 +338,7 @@ code test.ipynb
 ## Troubleshooting Common Issues
 
 ### JSLab Not Available
+
 ```bash
 npm install -g tslab
 tslab install --python=python3
@@ -327,6 +347,7 @@ jupyter kernelspec list
 ```
 
 ### Module Not Found
+
 ```bash
 # Make sure VS Code opened from project root
 cd /path/to/project/
@@ -334,7 +355,9 @@ code .
 ```
 
 ### TypeScript Errors
+
 Use `global.document` instead of `document`:
+
 ```javascript
 // ✅ Works
 const div = global.document.createElement('div');
@@ -390,6 +413,7 @@ open ipynb-tests/myblock-preview.html
 ## VS Code Keyboard Shortcuts
 
 Remind users of helpful shortcuts:
+
 - **Shift+Enter** - Run cell and move to next
 - **Cmd/Ctrl+Enter** - Run cell and stay
 - **A** - Insert cell above

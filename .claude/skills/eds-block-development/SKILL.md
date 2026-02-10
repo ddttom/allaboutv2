@@ -10,10 +10,12 @@ description: Guide for developing EDS blocks using vanilla JavaScript, Content D
 **BEFORE WRITING ANY CODE, READ THIS:**
 
 EDS automatically adds these class names to your blocks:
+
 - `.{blockname}-container` - Added to parent `<section>` element
 - `.{blockname}-wrapper` - Added to block's parent `<div>` wrapper
 
 **❌ NEVER use these suffixes in your CSS or JavaScript:**
+
 ```css
 /* ❌ PRODUCTION BUG - Will break entire page */
 .overlay-container { position: fixed; opacity: 0; }
@@ -35,6 +37,7 @@ Guide developers through creating and modifying Adobe Edge Delivery Services (ED
 ## When to Use This Skill
 
 Automatically activates when:
+
 - Creating new blocks in `/blocks/`
 - Modifying existing block JavaScript (`.js` files)
 - Implementing block decoration patterns
@@ -89,6 +92,7 @@ blocks/your-block/
 ```
 
 **What EDS does:**
+
 1. Sees header row "overlay"
 2. Loads `/blocks/overlay/overlay.js`
 3. Loads `/blocks/overlay/overlay.css`
@@ -98,13 +102,16 @@ blocks/your-block/
 ### Common Mistake
 
 ❌ **WRONG** - No header row:
+
 ```
 | Learn More     |
 | Welcome! ...   |
 ```
+
 Result: Block not recognized, CSS/JS not loaded, no decoration happens
 
 ✅ **CORRECT** - Header row with block name:
+
 ```
 | overlay        | ← Must match /blocks/overlay/
 |----------------|
@@ -695,6 +702,7 @@ export default async function decorate(block) {
 ### ⚠️ CRITICAL: Avoid EDS Reserved Class Names
 
 **EDS automatically adds these classes:**
+
 - `.{blockname}-wrapper` - Added to the block's parent `<div>` wrapper
 - `.{blockname}-container` - Added to the parent `<section>` element
 - `.block` - Added to all block elements
@@ -729,6 +737,7 @@ export default async function decorate(block) {
 ```
 
 **Why this matters:**
+
 - EDS's `decorateBlock()` adds `.{blockname}-wrapper` to block parent divs (line 682)
 - EDS's `decorateBlock()` adds `.{blockname}-container` to parent sections (line 684)
 - EDS's `decorateBlock()` adds `.block` to all block elements (line 677)
@@ -738,6 +747,7 @@ export default async function decorate(block) {
 - This can cause invisible pages, broken layouts, or unexpected behavior
 
 **Additional conflicts to avoid:**
+
 ```css
 /* ❌ Never style these EDS-generated classes with layout-breaking properties */
 .block {
@@ -754,6 +764,7 @@ export default async function decorate(block) {
 ```
 
 **Safe naming patterns:**
+
 - `.{blockname}-backdrop`
 - `.{blockname}-modal`
 - `.{blockname}-content`
@@ -764,6 +775,7 @@ export default async function decorate(block) {
 - `.{blockname}-overlay`
 
 **Reference:** See `scripts/aem.js`:
+
 - Lines 674-686: `decorateBlock()` - adds wrapper/container classes
 - Lines 489-530: `decorateSections()` - adds section classes
 - Lines 421-453: `decorateButtons()` - adds button-container classes
@@ -1000,6 +1012,7 @@ Block Element (has block name class)
 ```
 
 **Example - Two-column block with one row:**
+
 ```html
 <div class="your-block">          <!-- Block element -->
     <div>                          <!-- Row 1 -->
@@ -1010,6 +1023,7 @@ Block Element (has block name class)
 ```
 
 **Example - Two-column block with multiple rows:**
+
 ```html
 <div class="your-block">           <!-- Block element -->
     <div>                           <!-- Row 1 -->
@@ -1024,6 +1038,7 @@ Block Element (has block name class)
 ```
 
 **❌ COMMON MISTAKE - Extra wrapper div:**
+
 ```html
 <!-- ❌ WRONG - Do NOT add extra wrapper divs -->
 <div class="your-block">
@@ -1172,12 +1187,14 @@ Block Element (has block name class)
 8. **Block wrappers**: If your block uses `document.querySelector('.{blockname}-wrapper')` (e.g., for expressions plugin), wrap each block in `<div class="{blockname}-wrapper">` in test.html
 
 **Common Errors:**
+
 - If you see `/blocks/undefined/undefined.js 404`, you forgot to set `block.dataset.blockName`!
 - If you see `Cannot read properties of null (reading 'firstChild')` in expressions.js, you need to wrap blocks in `.{blockname}-wrapper` divs
 
 ### Common HTML Structure Mistakes
 
 ❌ **WRONG** - Extra nesting:
+
 ```html
 <div class="your-block">
     <div><div><div>Content</div></div></div>  <!-- Too many divs! -->
@@ -1185,6 +1202,7 @@ Block Element (has block name class)
 ```
 
 ❌ **WRONG** - Missing row wrapper:
+
 ```html
 <div class="your-block">
     <div>Cell 1</div>  <!-- No row wrapper! -->
@@ -1193,6 +1211,7 @@ Block Element (has block name class)
 ```
 
 ✅ **CORRECT** - Proper structure:
+
 ```html
 <div class="your-block">
     <div>               <!-- Row -->
@@ -1203,6 +1222,7 @@ Block Element (has block name class)
 ```
 
 ✅ **CORRECT** - With wrapper (when block uses `.{blockname}-wrapper` selector):
+
 ```html
 <div class="your-block-wrapper">  <!-- Wrapper for global selectors -->
     <div class="your-block">
@@ -1215,6 +1235,7 @@ Block Element (has block name class)
 ```
 
 **When to use wrappers in test.html:**
+
 - Your block uses `document.querySelector('.{blockname}-wrapper')` in its JavaScript
 - Your block depends on external plugins (like expressions) that expect wrappers
 - In production, EDS automatically wraps blocks in `.{blockname}-wrapper` divs
@@ -1240,6 +1261,7 @@ If your test.html doesn't work, check:
    - Should see: `/blocks/your-block/your-block.js`
 
 5. **Block scoping**: Ensure your JS uses `block` parameter, not global selectors
+
    ```javascript
    // ✅ CORRECT
    const cells = block.querySelectorAll('div > div');
@@ -1265,6 +1287,7 @@ Access your test at: `http://localhost:3000/blocks/your-block/test.html`
 **MANDATORY RULE: Each block must have exactly ONE JavaScript file, regardless of how many variations it supports.**
 
 EDS blocks should NEVER have multiple JavaScript files like:
+
 - ❌ `blockname.js`, `blockname-variation1.js`, `blockname-variation2.js`
 - ❌ `view-myblog.js`, `view-myblog-ai.js`
 
@@ -1304,6 +1327,7 @@ export default async function decorate(block) {
 A blog block with an AI filter variation:
 
 ✅ **CORRECT:**
+
 ```
 blocks/view-myblog/
 ├── view-myblog.js    # Single file with both standard and AI filtering
@@ -1312,6 +1336,7 @@ blocks/view-myblog/
 ```
 
 ❌ **INCORRECT:**
+
 ```
 blocks/view-myblog/
 ├── view-myblog.js
@@ -1321,6 +1346,7 @@ blocks/view-myblog/
 ```
 
 **Implementation pattern:**
+
 ```javascript
 export default async function decorate(block) {
   // Detect AI variation
@@ -1350,12 +1376,14 @@ function filterAIContent(data) {
 ### How Authors Use Variations
 
 In Google Docs:
+
 ```
 | view-myblog (ai) |
 |------------------|
 ```
 
 This creates:
+
 ```html
 <div class="view-myblog ai block">
   <!-- Content -->
@@ -1447,6 +1475,7 @@ function createOverlay(content) {
 ```
 
 **Never use these patterns in your code:**
+
 - `.{blockname}-container` - Reserved by EDS for parent sections
 - `.{blockname}-wrapper` - Reserved by EDS for block elements
 
@@ -1477,6 +1506,7 @@ export default function decorate(block) {
 ```
 
 **Why this is wrong:**
+
 - `document.querySelector('.bio')` always returns the FIRST matching element on the page
 - If you have multiple bio blocks, they ALL use the first block's configuration
 - The second, third, etc. blocks won't work correctly
@@ -1497,12 +1527,14 @@ export default function decorate(block) {
 ```
 
 **Why this is correct:**
+
 - The `block` parameter is the specific block being decorated
 - Each block operates independently
 - Multiple blocks on the same page work correctly
 - Each block can have different configurations
 
 **Real-world bug example:**
+
 ```javascript
 // ❌ This code broke in production:
 const bioElement = document.querySelector('.bio');  // Always gets first block
@@ -1512,6 +1544,7 @@ if (!bioElement.classList.contains('hide-author')) {
 ```
 
 **The fix:**
+
 ```javascript
 // ✅ Check the CURRENT block being decorated:
 if (!block.classList.contains('hide-author')) {
@@ -1526,11 +1559,13 @@ if (!block.classList.contains('hide-author')) {
 Some blocks legitimately need to operate at the document level, not just within their own scope. These are typically structural blocks that affect page-wide behavior.
 
 **Document-level blocks include:**
+
 - **Header/Navigation** - Controls body scroll, global keyboard events, responsive layout
 - **Index/Table of Contents** - Scans all page headings to build navigation
 - **Showcaser/Code Display** - Collects all code snippets from the entire page
 
 **Example: Index Block (Document-Level)**
+
 ```javascript
 export default function decorate(block) {
   // Global Selector is INTENTIONAL - used for Document access
@@ -1550,6 +1585,7 @@ export default function decorate(block) {
 ```
 
 **Example: Header Block (Document-Level)**
+
 ```javascript
 export default function decorate(block) {
   // Global Selector is INTENTIONAL - used for Document access
@@ -1573,6 +1609,7 @@ export default function decorate(block) {
 ```
 
 **When to use document-level selectors:**
+
 - ✅ Querying page metadata: `document.querySelector('meta[name="author"]')`
 - ✅ Controlling document body: `document.body.style.overflowY`
 - ✅ Global event listeners: `window.addEventListener('keydown', ...)`
@@ -1582,6 +1619,7 @@ export default function decorate(block) {
 
 **Defensive documentation pattern:**
 Always add a comment explaining intentional global selector usage:
+
 ```javascript
 // Global Selector is INTENTIONAL - used for Document access
 // [Brief explanation of why this needs document-level access]
@@ -1589,6 +1627,7 @@ const elements = document.querySelector[All](...);
 ```
 
 **For meta tags specifically:**
+
 ```javascript
 // Meta tag selector is INTENTIONAL - document-level metadata
 const author = document.querySelector('meta[name="author"]');
@@ -1597,6 +1636,7 @@ const author = document.querySelector('meta[name="author"]');
 #### Rule of Thumb
 
 **Inside `decorate(block)` function:**
+
 - ✅ `block.querySelector()` - ALWAYS correct for block-scoped queries
 - ✅ `block.classList` - ALWAYS correct for block-scoped classes
 - ✅ `block.appendChild()` - ALWAYS correct for block-scoped DOM manipulation
@@ -1709,12 +1749,14 @@ When making architectural changes to a block (refactoring, adding major features
 **Real-world mistake:**
 
 After implementing a unified overlay architecture refactor for ipynb-viewer:
+
 - ✅ Updated: CHANGELOG.md, CLAUDE.md, project README.md, docs/for-ai/index.md
 - ✅ Created: overlay/README.md, summary document, progress tracking
 - ✅ Updated: block-architecture.md
 - ❌ **FORGOT**: blocks/ipynb-viewer/README.md (the main block README!)
 
 **Impact:**
+
 - Users see outdated documentation
 - New architecture not discoverable
 - Inconsistent documentation across files
@@ -1733,6 +1775,7 @@ docs/for-ai/index.md                   # AI docs index
 ```
 
 **Before committing, ask yourself:**
+
 1. Did I update the main block README.md?
 2. Did I update block-architecture.md?
 3. Did I add a CHANGELOG.md entry?
@@ -1741,6 +1784,7 @@ docs/for-ai/index.md                   # AI docs index
 6. Did I update docs/for-ai/index.md?
 
 **Why this matters:**
+
 - Documentation is the first thing developers read
 - Incomplete docs waste time (users don't know about new features)
 - Inconsistent docs cause confusion (which version is correct?)
@@ -1781,6 +1825,7 @@ docs/for-ai/index.md                   # AI docs index
    - When you need to understand the "why" behind implementation decisions
 
 **Example:** The ipynb-viewer block has extensive architecture documentation covering:
+
 - Markdown parsing pipeline and processing order
 - Code block restoration timing (critical for preventing rendering bugs)
 - Smart link resolution patterns
@@ -2059,12 +2104,14 @@ npx eslint blocks/your-block/your-block.js --fix
 ```
 
 **Auto-fixable rules include:**
+
 - Trailing commas
 - Quote style
 - Indentation
 - Some spacing issues
 
 **Not auto-fixable (require manual fixes):**
+
 - Unused variables
 - Variable shadowing
 - Unary operators

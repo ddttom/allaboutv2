@@ -52,6 +52,7 @@ status: active
 ### Core Components
 
 #### 1. Unified Overlay Manager
+
 ```javascript
 function createUnifiedOverlay({
   notebook,        // Notebook data
@@ -77,6 +78,7 @@ function createUnifiedOverlay({
 ```
 
 #### 2. Content Renderers
+
 ```javascript
 // Notebook Content Renderer
 function renderNotebookContent(contentArea, {
@@ -108,6 +110,7 @@ function renderHelpContent(contentArea, config) {
 ```
 
 #### 3. Navigation State Manager
+
 ```javascript
 const navigationState = {
   currentView: 'notebook',  // 'notebook' | 'markdown' | 'help'
@@ -139,6 +142,7 @@ const navigationState = {
 ```
 
 #### 4. Toolbar Manager
+
 ```javascript
 function createToolbar({ config, navigationState, overlayContext }) {
   // Creates single toolbar with all buttons
@@ -174,6 +178,7 @@ function createToolbar({ config, navigationState, overlayContext }) {
 ### Navigation Flow Examples
 
 #### Opening Markdown from Tree
+
 ```javascript
 // OLD (nested overlay):
 treeNode.onClick = () => {
@@ -192,6 +197,7 @@ treeNode.onClick = () => {
 ```
 
 #### Going Back from Markdown to Notebook
+
 ```javascript
 // OLD (close overlay):
 homeButton.onClick = () => {
@@ -237,17 +243,20 @@ const viewStates = {
 ## Implementation Strategy
 
 ### Phase 1: Create New Infrastructure (No Breaking Changes)
+
 1. Create `createUnifiedOverlay()` function
 2. Create content renderer functions
 3. Create navigation state manager
 4. Test in parallel with existing code
 
 ### Phase 2: Migrate Gradually
+
 1. Update `decorate()` to use `createUnifiedOverlay()` instead of `createPagedOverlay()`
 2. Update tree node handlers to use `switchView()` instead of creating overlays
 3. Update all navigation handlers (history, bookmarks, links)
 
 ### Phase 3: Remove Legacy Code
+
 1. Delete `createPagedOverlay()`
 2. Delete `createGitHubMarkdownOverlay()`
 3. Remove `hideTopbar` parameter (no longer needed)

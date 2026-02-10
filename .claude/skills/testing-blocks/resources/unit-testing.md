@@ -5,6 +5,7 @@ Unit tests are keeper tests for logic-heavy code that benefits from automated re
 ## When to Write Unit Tests
 
 Write unit tests for:
+
 - **Pure functions** - Functions with no side effects that transform inputs to outputs
 - **Utility libraries** - Shared helper functions used across blocks
 - **Data processors** - Code that parses, transforms, or validates data
@@ -12,6 +13,7 @@ Write unit tests for:
 - **Complex algorithms** - Business logic, calculations, or conditional flows
 
 Do NOT write unit tests for:
+
 - Block decoration functions (test these in browser)
 - DOM manipulation logic (test in browser)
 - CSS styles (test in browser)
@@ -45,6 +47,7 @@ This prevents test files from being accessible on your live site.
 ### File Location and Naming
 
 Place test files next to the code they test:
+
 - `scripts/utils/my-utility.js` → `test/utils/my-utility.test.js`
 - `blocks/hero/utils.js` → `test/blocks/hero/utils.test.js`
 
@@ -82,6 +85,7 @@ npm run test:coverage   # Generate coverage report
 ## What Makes a Good Unit Test
 
 **Good unit tests are:**
+
 - **Fast** - Run in milliseconds
 - **Isolated** - Test one function/unit at a time
 - **Repeatable** - Same input always produces same output
@@ -129,6 +133,7 @@ describe('normalizeUrl', () => {
 ```
 
 **Why this test is worth maintaining:**
+
 - URL normalization is used across many blocks
 - Bugs here would break multiple features
 - Logic is complex enough to benefit from regression tests
@@ -164,6 +169,7 @@ describe('DOM manipulation', () => {
 Integration tests validate that multiple components work together correctly. These fall into the "keeper" category if they test critical workflows.
 
 **When to write integration tests:**
+
 - Auto-blocking logic that depends on multiple functions
 - Complex workflows spanning multiple utilities
 - Critical user journeys that depend on multiple blocks
@@ -204,6 +210,7 @@ describe('Auto-blocking integration', () => {
 ```
 
 Integration tests are worth maintaining if:
+
 - The workflow is critical to site functionality
 - Multiple teams/developers work on related code
 - Bugs in this integration would be expensive to fix
@@ -258,6 +265,7 @@ it('should throw error for invalid input', () => {
 ## Next Steps
 
 Once you've written unit tests:
+
 1. Run tests during development with `npm run test:watch`
 2. Run full test suite before commits with `npm test`
 3. Monitor coverage with `npm run test:coverage`

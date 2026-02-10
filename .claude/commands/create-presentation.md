@@ -5,12 +5,14 @@ You are tasked with creating or converting a Jupyter notebook into presentation 
 ## Your Task
 
 Create a beautiful, non-interactive presentation notebook using:
+
 - **Markdown cells only** (no executable code cells)
 - **Embedded EDS blocks** for visual appeal
 - **Inline JavaScript** in markdown for block initialization
 - **Convert any existing code cells** to informative markdown text
 
 **STYLING APPROACH:** Choose based on display mode:
+
 1. **Auto-wrapping** (pure markdown) - Use when notebook will be displayed in notebook mode
 2. **Manual HTML styling** (inline styles) - Use when notebook will be displayed in other modes (paged, autorun, basic)
 
@@ -25,6 +27,7 @@ The user wants to create a presentation about: {{prompt}}
 ### 1. Notebook Structure
 
 **Metadata (required):**
+
 ```json
 {
   "metadata": {
@@ -45,11 +48,13 @@ The user wants to create a presentation about: {{prompt}}
 ```
 
 **GitHub Integration:**
+
 - `repo`: Repository URL for .md file linking
 - `help-repo`: Repository for help documentation (defaults to `repo`)
 - `github-branch`: Branch to use for loading .md files (defaults to `"main"`)
 
 **⚠️ CRITICAL - Version and Date Management:**
+
 - **ALWAYS update both `version` AND `last-modified` whenever you make ANY change to an .ipynb file**
 - **Version increments:**
   - Major changes (new slides, restructuring): 1.0 → 2.0
@@ -59,6 +64,7 @@ The user wants to create a presentation about: {{prompt}}
 - **Creation-date**: Never change after initial creation
 
 **Cell Structure:**
+
 1. Title cell with overview
 2. Table of contents (if >5 sections)
 3. Content cells with embedded blocks
@@ -69,6 +75,7 @@ The user wants to create a presentation about: {{prompt}}
 **Convert code cells like this:**
 
 Original code cell:
+
 ```javascript
 const { testBlock } = await import('/scripts/ipynb-helpers.js');
 const block = await testBlock('accordion', content);
@@ -76,6 +83,7 @@ return block.outerHTML;
 ```
 
 Becomes markdown cell:
+
 ```markdown
 <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 32px; margin: 0 0; border-left: 6px solid #0288d1; color: #212121;">
 
@@ -110,6 +118,7 @@ return block.outerHTML;
 Choose from available blocks based on content type:
 
 **Available blocks:**
+
 - `accordion` - Collapsible sections (FAQs, feature lists)
 - `cards` - Card layouts (features, team, products)
 - `tabs` - Tabbed content (code examples, comparisons)
@@ -150,6 +159,7 @@ For each block, use this pattern:
 **CRITICAL: All presentations must follow these exact styling standards for consistency.**
 
 **Typography:**
+
 - All H2 headings (major sections): `color: #0d47a1; font-size: 28px; font-weight: 700; margin-bottom: 24px;`
 - All H3 headings (subsections): `color: #0d47a1; font-size: 26px; font-weight: 700; margin-bottom: 20px;`
   - H3 emoji span: `font-size: 28px;`
@@ -159,6 +169,7 @@ For each block, use this pattern:
 - Markdown headings render with default grey colors - always use HTML
 
 **Backgrounds:**
+
 - Standard gradient: `background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);`
 - All content divs MUST include: `color: #212121;` to prevent text fading
 - Margin: `margin: 0 0;` (no vertical gaps that expose dark ipynb-viewer background)
@@ -166,12 +177,14 @@ For each block, use this pattern:
 - Padding: `padding: 32px;`
 
 **Border Hierarchy:**
+
 - H2 major sections: `border-left: 6px solid #0288d1;` (thick border for main sections)
 - H3 subsections: `border-left: 4px solid #0288d1;` (thinner border for content)
 
 **Standard Container Patterns:**
 
 **H2 Major Section (no section tag):**
+
 ```html
 <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 32px; margin: 0 0; border-left: 6px solid #0288d1; color: #212121;">
 
@@ -183,6 +196,7 @@ For each block, use this pattern:
 ```
 
 **H3 Subsection:**
+
 ```html
 <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 32px; margin: 0 0; border-left: 4px solid #0288d1; color: #212121;">
 
@@ -197,9 +211,11 @@ For each block, use this pattern:
 ```
 
 **Block Wrapping Pattern:**
+
 - All EDS blocks MUST be wrapped INSIDE styled divs, not as siblings
 - Blocks inherit dark background from ipynb-viewer if not properly wrapped
 - Pattern:
+
 ```html
 <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 32px; margin: 0 0; border-left: 6px solid #0288d1; color: #212121;">
 
@@ -225,6 +241,7 @@ For each block, use this pattern:
 ```
 
 **Common Mistakes to Avoid:**
+
 1. ❌ Using markdown headings (`##`, `###`) - they render grey
 2. ❌ Using `<section>` tags - causes overlay jumping between slides
 3. ❌ Placing blocks as siblings to styled divs - they inherit dark background
@@ -241,6 +258,7 @@ For each block, use this pattern:
 ### 8. Choosing Between Auto-Wrapping and Manual HTML
 
 **Auto-wrapping (pure markdown):**
+
 - ✅ Available when displayed in notebook mode (`| IPynb Viewer (notebook) |`)
 - ✅ 90% less code to write
 - ✅ Fast content creation
@@ -249,6 +267,7 @@ For each block, use this pattern:
 - ❌ Limited design control
 
 **Manual HTML styling (inline styles):**
+
 - ✅ Works in ALL display modes (basic, paged, autorun, notebook)
 - ✅ Full design control and customization
 - ✅ Complex layouts with nested blocks
@@ -257,12 +276,14 @@ For each block, use this pattern:
 - ❌ Slower authoring
 
 **Recommendation for presentation notebooks:**
+
 - If displaying in **notebook mode**: Use auto-wrapping (pure markdown) for speed
 - If displaying in **other modes** (paged, autorun, basic): Use manual HTML for compatibility
 - Both approaches work for "presentation style" (non-interactive) notebooks
 
 **Mixing both approaches:**
 You can combine auto-wrapping with custom HTML in the same notebook:
+
 - Most cells use pure markdown (auto-wrapped in notebook mode)
 - Specific cells use custom HTML for special styling needs
 - Example: Custom gradient for a key message or highlight section
@@ -384,6 +405,7 @@ You can combine auto-wrapping with custom HTML in the same notebook:
 ## Output
 
 Create or update the .ipynb file with:
+
 - Proper JSON structure
 - All markdown cells (no code cells with language "javascript")
 - Embedded blocks with initialization scripts

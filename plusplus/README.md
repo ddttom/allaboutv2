@@ -57,6 +57,7 @@ PlusPlus includes an intelligent date management system that automatically detec
 ### Publication Date Detection
 
 The system searches for publication dates in the following priority order:
+
 - `meta[name="publication-date"]`
 - `meta[property="article:published_time"]`
 - `meta[name="date"]`
@@ -67,6 +68,7 @@ The system searches for publication dates in the following priority order:
 ### Supported Date Formats
 
 The date parsing system supports a wide variety of date formats including:
+
 - **ISO 8601**: `2025-06-26T10:30:00Z`
 - **Slash formats**: `26/jun/2025`, `26/06/2025`
 - **Space formats**: `26 jun 2025`, `26 June 2025`
@@ -79,6 +81,7 @@ The system automatically converts all recognized formats to ISO 8601 standard fo
 ### Date Calculation Benefits
 
 When a publication date is found:
+
 - **Content Operations (CO) dates** are calculated from the publication date instead of current date
 - **Dublin Core (DC) dates** use the publication date as context for empty date fields
 - **Review dates** are calculated as publication date + 300 days (configurable)

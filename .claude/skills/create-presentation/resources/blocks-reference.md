@@ -9,6 +9,7 @@ This document provides comprehensive examples of all EDS blocks available for cr
 **Best For:** FAQs, collapsible sections, feature lists, detailed explanations
 
 **HTML Structure:**
+
 ```html
 <div class="accordion block">
   <div>
@@ -27,6 +28,7 @@ This document provides comprehensive examples of all EDS blocks available for cr
 ```
 
 **Initialization Script:**
+
 ```html
 <script type="module">
   const block = document.querySelector('.accordion.block');
@@ -36,6 +38,7 @@ This document provides comprehensive examples of all EDS blocks available for cr
 ```
 
 **Complete Example:**
+
 ```markdown
 ## ❓ Frequently Asked Questions
 
@@ -68,6 +71,7 @@ This document provides comprehensive examples of all EDS blocks available for cr
 **Best For:** Features showcase, team members, product listings, services overview
 
 **HTML Structure:**
+
 ```html
 <div class="cards block">
   <div>
@@ -86,6 +90,7 @@ This document provides comprehensive examples of all EDS blocks available for cr
 ```
 
 **Initialization Script:**
+
 ```html
 <script type="module">
   const block = document.querySelector('.cards.block');
@@ -95,6 +100,7 @@ This document provides comprehensive examples of all EDS blocks available for cr
 ```
 
 **Complete Example:**
+
 ```markdown
 ## 🚀 Key Features
 
@@ -131,6 +137,7 @@ This document provides comprehensive examples of all EDS blocks available for cr
 **Best For:** Organizing related content, code examples, comparisons, multi-view content
 
 **HTML Structure:**
+
 ```html
 <div class="tabs block">
   <div>
@@ -149,6 +156,7 @@ This document provides comprehensive examples of all EDS blocks available for cr
 ```
 
 **Initialization Script:**
+
 ```html
 <script type="module">
   const block = document.querySelector('.tabs.block');
@@ -158,6 +166,7 @@ This document provides comprehensive examples of all EDS blocks available for cr
 ```
 
 **Complete Example:**
+
 ```markdown
 ## 💻 Code Examples
 
@@ -208,6 +217,7 @@ curl -X GET https://api.example.com/data \
 **Best For:** Title sections, landing sections, call-to-action areas
 
 **HTML Structure:**
+
 ```html
 <div class="hero block">
   <div>
@@ -220,6 +230,7 @@ curl -X GET https://api.example.com/data \
 ```
 
 **Initialization Script:**
+
 ```html
 <script type="module">
   const block = document.querySelector('.hero.block');
@@ -229,6 +240,7 @@ curl -X GET https://api.example.com/data \
 ```
 
 **Complete Example:**
+
 ```markdown
 <div class="hero block">
   <div>
@@ -253,6 +265,7 @@ curl -X GET https://api.example.com/data \
 **Best For:** Flexible multi-column layouts, image galleries, feature grids
 
 **HTML Structure:**
+
 ```html
 <div class="grid block">
   <div>
@@ -275,6 +288,7 @@ curl -X GET https://api.example.com/data \
 ```
 
 **Initialization Script:**
+
 ```html
 <script type="module">
   const block = document.querySelector('.grid.block');
@@ -290,6 +304,7 @@ curl -X GET https://api.example.com/data \
 **Best For:** Data presentation, pricing tables, comparison charts, specifications
 
 **HTML Structure:**
+
 ```html
 <div class="table block">
   <div>
@@ -311,6 +326,7 @@ curl -X GET https://api.example.com/data \
 ```
 
 **Initialization Script:**
+
 ```html
 <script type="module">
   const block = document.querySelector('.table.block');
@@ -320,6 +336,7 @@ curl -X GET https://api.example.com/data \
 ```
 
 **Complete Example:**
+
 ```markdown
 ## 💰 Pricing Plans
 
@@ -362,6 +379,7 @@ curl -X GET https://api.example.com/data \
 **Best For:** Pull quotes, testimonials, highlighting key information
 
 **HTML Structure:**
+
 ```html
 <div class="quote block">
   <div>
@@ -374,6 +392,7 @@ curl -X GET https://api.example.com/data \
 ```
 
 **Initialization Script:**
+
 ```html
 <script type="module">
   const block = document.querySelector('.quote.block');
@@ -383,6 +402,7 @@ curl -X GET https://api.example.com/data \
 ```
 
 **Complete Example:**
+
 ```markdown
 <div class="quote block">
   <div>
@@ -407,6 +427,7 @@ curl -X GET https://api.example.com/data \
 **Best For:** Multi-column text layouts, side-by-side content
 
 **HTML Structure:**
+
 ```html
 <div class="columns block">
   <div>
@@ -418,6 +439,7 @@ curl -X GET https://api.example.com/data \
 ```
 
 **Initialization Script:**
+
 ```html
 <script type="module">
   const block = document.querySelector('.columns.block');
@@ -433,6 +455,7 @@ curl -X GET https://api.example.com/data \
 **Best For:** Dialog overlays, detailed information popups, image lightboxes
 
 **HTML Structure:**
+
 ```html
 <div class="modal block">
   <div>
@@ -445,6 +468,7 @@ curl -X GET https://api.example.com/data \
 ```
 
 **Initialization Script:**
+
 ```html
 <script type="module">
   const block = document.querySelector('.modal.block');
@@ -460,6 +484,7 @@ curl -X GET https://api.example.com/data \
 **Best For:** Embedded videos, YouTube/Vimeo content
 
 **HTML Structure:**
+
 ```html
 <div class="video block">
   <div>
@@ -471,6 +496,7 @@ curl -X GET https://api.example.com/data \
 ```
 
 **Initialization Script:**
+
 ```html
 <script type="module">
   const block = document.querySelector('.video.block');
@@ -488,6 +514,7 @@ curl -X GET https://api.example.com/data \
 **Best For:** Collapsible code snippets, expandable examples
 
 **HTML Structure:**
+
 ```html
 <div class="code-expander block">
   <div>
@@ -503,6 +530,7 @@ const example = 'value';
 ```
 
 **Initialization Script:**
+
 ```html
 <script type="module">
   const block = document.querySelector('.code-expander.block');
@@ -518,6 +546,7 @@ const example = 'value';
 **Best For:** Animated statistics, metric displays, achievement showcases
 
 **HTML Structure:**
+
 ```html
 <div class="counter block">
   <div>
@@ -536,6 +565,7 @@ const example = 'value';
 ```
 
 **Initialization Script:**
+
 ```html
 <script type="module">
   const block = document.querySelector('.counter.block');
@@ -545,6 +575,7 @@ const example = 'value';
 ```
 
 **Complete Example:**
+
 ```markdown
 ## 📊 Our Impact
 
@@ -581,6 +612,7 @@ const example = 'value';
 **Best For:** Dismissible notifications, important messages, announcements
 
 **HTML Structure:**
+
 ```html
 <div class="floating-alert block">
   <div>
@@ -590,6 +622,7 @@ const example = 'value';
 ```
 
 **Initialization Script:**
+
 ```html
 <script type="module">
   const block = document.querySelector('.floating-alert.block');

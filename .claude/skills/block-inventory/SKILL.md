@@ -10,11 +10,13 @@ Survey and catalog available blocks to understand what authoring options exist.
 ## When to Use This Skill
 
 Use this skill when:
+
 - Starting a page import to understand available blocks
 - Planning content structure and need to know block options
 - An author would see a block library and choose from available options
 
 **Do NOT use this skill when:**
+
 - You already know which specific block you need
 - Building new blocks from scratch
 - Only checking if one specific block exists (use block-collection-and-party directly)
@@ -44,6 +46,7 @@ ls -d blocks/*/
 ```
 
 **For each block found:**
+
 - Record block name
 - Note: Purpose/description comes from block code or documentation
 
@@ -71,6 +74,7 @@ wait
 ```
 
 **Why these specific blocks:**
+
 - hero - Large prominent content at page top
 - cards - Grid of items with images/text
 - columns - Side-by-side content layouts
@@ -89,10 +93,12 @@ wait
 For each block found (local or Block Collection):
 
 **If from Block Collection:**
+
 - Purpose is clear from live example URL
 - Visit live example to understand usage: `https://main--aem-block-collection--adobe.aem.live/block-collection/{block-name}`
 
 **If local block:**
+
 - Check for README or comments in block code
 - Infer from block name and structure
 - May need to describe based on code examination
@@ -106,6 +112,7 @@ For each block found (local or Block Collection):
 Create comprehensive block palette:
 
 **Format:**
+
 ```
 Available Blocks:
 
@@ -125,6 +132,7 @@ BLOCK COLLECTION (can be added):
 ```
 
 **Important notes in output:**
+
 - Local blocks are already available for use
 - Block Collection blocks can be added if needed
 - Link to Block Collection for authors to see examples
@@ -138,12 +146,14 @@ BLOCK COLLECTION (can be added):
 **Scenario:** Starting WKND Trendsetters homepage import
 
 **Step 1 - Local blocks:**
+
 ```bash
 ls -d blocks/*/
 # Output: (none found - new project)
 ```
 
 **Step 2 - Block Collection search:**
+
 ```bash
 # Run parallel searches
 node .claude/skills/block-collection-and-party/scripts/search-block-collection-github.js hero &
@@ -153,6 +163,7 @@ wait
 ```
 
 **Results:**
+
 - hero ✅ Found
 - cards ✅ Found
 - columns ✅ Found
@@ -166,6 +177,7 @@ wait
 Visit live examples or read descriptions from search results
 
 **Step 4 - Consolidated output:**
+
 ```
 Block Inventory for Migration:
 
@@ -203,21 +215,25 @@ BLOCK COLLECTION AVAILABLE:
 ## Key Principles
 
 **Completeness over perfection:**
+
 - Better to show too many blocks than miss one
 - Authors can ignore blocks they don't need
 - Discovering a perfect-fit block later is frustrating
 
 **Practical purposes:**
+
 - Describe blocks in author language, not developer terms
 - "Grid of items" not "repeating collection pattern"
 - "Expandable Q&A" not "interactive disclosure widget"
 
 **Block Collection focus:**
+
 - Prioritize Block Collection blocks (vetted, accessible, performant)
 - These are the canonical implementations
 - Can be added to any project
 
 **Speed matters:**
+
 - Run searches in parallel
 - Don't visit every live example (time-consuming)
 - Get enough info to understand purpose
@@ -244,6 +260,7 @@ Here's a quick reference for the most common blocks:
 ## Limitations
 
 This skill does NOT:
+
 - Determine which block to use (that's content-modeling's job)
 - Validate if blocks work correctly
 - Create new blocks
@@ -251,6 +268,7 @@ This skill does NOT:
 - Provide detailed implementation guidance
 
 For those needs, use the appropriate skills:
+
 - content-modeling: Determine which block fits
 - block-collection-and-party: Deep search and code examination
 - building-blocks: Create new blocks

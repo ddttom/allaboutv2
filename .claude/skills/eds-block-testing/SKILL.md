@@ -12,6 +12,7 @@ Guide developers through testing Adobe Edge Delivery Services (EDS) blocks using
 ## When to Use This Skill
 
 Automatically activates when:
+
 - Creating or editing `test.html` files in block directories
 - Working with keywords: "test block", "test.html", "debug block"
 - Implementing block testing patterns
@@ -152,6 +153,7 @@ blocks/your-block/
 ```
 
 **Important Notes:**
+
 - The `document.body.classList.add('appear')` line is **required** and must be called **before** `loadBlock()`. EDS hides the body by default (`body { display: none; }` in `styles/styles.css`) to prevent Flash of Unstyled Content (FOUC). Adding the `appear` class makes the page visible. In production, EDS adds this automatically, but test files must add it manually.
 - **The `.block` class is automatically added by the script** (line `block.classList.add('block')`) to mimic EDS production behavior. In your HTML, only use the block name class (e.g., `class="your-block"`).
 - This approach ensures test files behave identically to production where EDS's `decorateBlock()` adds the `.block` class automatically.
@@ -167,6 +169,7 @@ npm run debug
 ```
 
 The server starts on `http://localhost:3000` with:
+
 - Automatic proxy fallback to production site
 - CORS headers for cross-origin requests
 - Enhanced logging for debugging
@@ -207,6 +210,7 @@ http://localhost:3000/blocks/your-block/test.html
 ```
 
 **Important:**
+
 - This structure matches how EDS creates blocks from Google Docs tables
 - The `.block` class is **automatically added** by EDS's `decorateBlock()` function in production
 - For test files, you can either:
@@ -424,6 +428,7 @@ http://localhost:3000/blocks/your-block/test.html
 ### Check Network Requests
 
 Open Chrome DevTools → Network tab to see:
+
 - Which CSS files are loaded
 - Which JavaScript modules are loaded
 - Any failed requests (404, 500, etc.)
@@ -433,6 +438,7 @@ Open Chrome DevTools → Network tab to see:
 #### Issue: Page is Blank or Invisible
 
 **Symptoms:**
+
 - Page loads but nothing displays
 - Browser shows white/blank screen
 - Console shows no JavaScript errors
@@ -441,6 +447,7 @@ Open Chrome DevTools → Network tab to see:
 **Root Cause:** CSS class name conflicts with EDS reserved names
 
 **Solution:** Never use these class patterns in your CSS or JavaScript:
+
 - `.{blockname}-container` - EDS adds to parent `<section>` elements
 - `.{blockname}-wrapper` - EDS adds to block parent `<div>` wrappers
 - `.block` - EDS adds to all block elements (avoid styling globally)
@@ -449,6 +456,7 @@ Open Chrome DevTools → Network tab to see:
 - `.default-content-wrapper` - EDS adds to default content wrappers
 
 **Example of the bug:**
+
 ```css
 /* ❌ BAD - Will be applied to parent section, not your modal */
 .overlay-container {
@@ -466,12 +474,14 @@ Open Chrome DevTools → Network tab to see:
 ```
 
 **Why this happens:**
+
 1. EDS's `decorateBlock()` adds `.{blockname}-container` to parent sections (aem.js:684)
 2. Your CSS targets `.{blockname}-container` for your component
 3. Browser applies your styles to the section instead of your element
 4. Section gets `position: fixed; opacity: 0` making page invisible
 
 **Other global classes that can cause issues:**
+
 ```css
 /* ❌ DANGER - These affect ALL blocks/sections if styled incorrectly */
 .block { position: fixed; }           /* Breaks ALL blocks */
@@ -480,6 +490,7 @@ Open Chrome DevTools → Network tab to see:
 ```
 
 **How to debug:**
+
 1. Open browser console
 2. Run: `document.querySelector('section').className`
 3. If you see `{blockname}-container` in the class list, rename your CSS classes
@@ -499,6 +510,7 @@ blocks/your-block/
 #### Issue: Block Not Rendering
 
 **Check:**
+
 1. Console for JavaScript errors
 2. Block structure matches expected pattern
 3. `decorate` function is exported as default
@@ -619,6 +631,7 @@ blocks/your-block/
 ### Test Screen Reader Compatibility
 
 **Use Chrome DevTools:**
+
 1. Open DevTools → Elements
 2. Right-click element → Inspect Accessibility Properties
 3. Check ARIA labels, roles, and descriptions

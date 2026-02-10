@@ -7,12 +7,14 @@ When creating local `.plain.html` files for testing blocks in the `drafts/` fold
 **The AEM CLI now automatically wraps HTML content with the headful structure (head, header, footer).** When you create `.plain.html` files, you ONLY need to provide the section content.
 
 **What you create:**
+
 - ✅ Section divs with content: `<div>...</div>` (one per section)
 - ✅ Blocks as `<div class="block-name">` with nested divs
 - ✅ Default content (headings, paragraphs, links, images)
 - ✅ Section metadata blocks when needed
 
 **What the AEM CLI adds automatically:**
+
 - ❌ `<html>`, `<head>`, `<body>` tags
 - ❌ `<header>` and `<footer>` elements
 - ❌ `<main>` wrapper
@@ -59,6 +61,7 @@ When creating local `.plain.html` files for testing blocks in the `drafts/` fold
 ## File Naming Convention
 
 **IMPORTANT:** HTML files must use the `.plain.html` extension:
+
 - ✅ `drafts/hero-test.plain.html`
 - ✅ `drafts/blocks/cards.plain.html`
 - ❌ `drafts/hero-test.html` (old format, no longer used)
@@ -66,11 +69,13 @@ When creating local `.plain.html` files for testing blocks in the `drafts/` fold
 ## Running with Local HTML
 
 **Start dev server with:**
+
 ```bash
 aem up --html-folder drafts
 ```
 
 **Preview URLs:**
+
 - File: `drafts/hero-test.plain.html` → URL: `http://localhost:3000/drafts/hero-test`
 - File: `drafts/blocks/cards.plain.html` → URL: `http://localhost:3000/drafts/blocks/cards`
 - **Special case:** `drafts/index.plain.html` → URL: `http://localhost:3000/drafts/index` (NOT `/drafts/`)
@@ -92,6 +97,7 @@ Content is organized into **sections** (top-level `<div>` elements).
 ```
 
 **Important notes about sections:**
+
 - Sections can contain blocks, default content, or a mix of both
 - A single section can contain multiple blocks
 - There are no strict rules about when to create a new section vs. adding to an existing one
@@ -103,6 +109,7 @@ Content is organized into **sections** (top-level `<div>` elements).
 Sections can include metadata to define styling and behavior using a special `section-metadata` div.
 
 **In HTML (using section-metadata div):**
+
 ```html
 <div>
   <div class="section-metadata">
@@ -116,6 +123,7 @@ Sections can include metadata to define styling and behavior using a special `se
 ```
 
 **In markdown (Section Metadata table):**
+
 ```markdown
 +------------------------------+
 | Section Metadata             |
@@ -125,6 +133,7 @@ Sections can include metadata to define styling and behavior using a special `se
 ```
 
 **How it works:**
+
 - The `section-metadata` div is placed at the beginning of a section
 - It uses a nested div structure to represent key-value pairs (like a table)
 - The platform processes this metadata and applies it to the parent section
@@ -132,17 +141,20 @@ Sections can include metadata to define styling and behavior using a special `se
 - Metadata values become CSS classes or data attributes on the section
 
 **Common section styles:**
+
 - `light` - White or light background
 - `dark` - Dark background with light text
 - `grey` - Grey or off-white background
 - `accent` - Branded color background
 
 **Style naming best practices:**
+
 - Use consistent names across sections with same visual treatment
 - Don't create unique style names for every section
 - Example: If 3 sections have white backgrounds, use "light" for all 3
 
 **Example with multiple sections:**
+
 ```html
 <!-- Section 1: Light background -->
 <div>
@@ -212,6 +224,7 @@ Regular HTML elements like headings, paragraphs, lists, etc.
 ```
 
 **Supported default elements:**
+
 - Headings: `<h1>`, `<h2>`, `<h3>`, `<h4>`, `<h5>`, `<h6>`
 - Paragraphs: `<p>`
 - Lists: `<ul>`, `<ol>`, `<li>`
@@ -225,6 +238,7 @@ Regular HTML elements like headings, paragraphs, lists, etc.
 Blocks are `<div>` elements with specific class names that trigger decoration logic.
 
 **Basic block structure:**
+
 ```html
 <div>
   <div class="block-name">
@@ -234,6 +248,7 @@ Blocks are `<div>` elements with specific class names that trigger decoration lo
 ```
 
 **Block with variant:**
+
 ```html
 <div>
   <div class="block-name variant-name">
@@ -243,6 +258,7 @@ Blocks are `<div>` elements with specific class names that trigger decoration lo
 ```
 
 **Multiple variants:**
+
 ```html
 <div>
   <div class="block-name variant-one variant-two">
@@ -256,16 +272,19 @@ Blocks are `<div>` elements with specific class names that trigger decoration lo
 Icons are authored using the `:iconName:` syntax and are processed into `<span>` elements with icon classes.
 
 **Author input:**
+
 ```
 :profile:
 ```
 
 **HTML output:**
+
 ```html
 <span class="icon icon-profile"></span>
 ```
 
 **Important notes about icons:**
+
 - Icons can be wrapped in links, strong, em, or other inline elements
 - The icon name corresponds to an SVG file in `/icons/` (e.g., `:profile:` → `/icons/profile.svg`)
 - Icon spans use two classes: `icon` (base class) and `icon-{name}` (specific icon)
@@ -274,16 +293,19 @@ Icons are authored using the `:iconName:` syntax and are processed into `<span>`
 **Examples:**
 
 Icon in a link:
+
 ```html
 <a href="/profile"><span class="icon icon-profile"></span> View Profile</a>
 ```
 
 Icon with emphasis:
+
 ```html
 <strong><span class="icon icon-star"></span> Featured</strong>
 ```
 
 Icon by itself:
+
 ```html
 <p><span class="icon icon-home"></span></p>
 ```
@@ -293,6 +315,7 @@ Icon by itself:
 Images should always use the `<picture>` element with `<source>` elements for responsive images and format optimization.
 
 **Basic picture structure:**
+
 ```html
 <picture>
   <source type="image/webp" srcset="/media/image.jpg?width=2000&format=webply&optimize=medium" media="(min-width: 600px)">
@@ -303,6 +326,7 @@ Images should always use the `<picture>` element with `<source>` elements for re
 ```
 
 **Key aspects of picture elements:**
+
 - Multiple `<source>` elements provide WebP format with fallbacks
 - Use `media` attributes for responsive breakpoints (typically `(min-width: 600px)` for desktop)
 - Include width query parameters (`?width=750` for mobile, `?width=2000` for desktop)
@@ -312,6 +336,7 @@ Images should always use the `<picture>` element with `<source>` elements for re
 - Use `loading="lazy"` for images below the fold, `loading="eager"` for above-the-fold images
 
 **Standard responsive breakpoints:**
+
 ```html
 <picture>
   <!-- WebP desktop (600px+) -->
@@ -329,6 +354,7 @@ Images should always use the `<picture>` element with `<source>` elements for re
 ```
 
 **Important notes:**
+
 - Place images in the `/media/` folder or appropriate project location
 - Always provide meaningful `alt` text for accessibility
 - Use `loading="eager"` only for hero/above-the-fold images
@@ -337,6 +363,7 @@ Images should always use the `<picture>` element with `<source>` elements for re
 **Simplified picture format for examples:**
 
 For brevity, examples in this document may show simplified picture tags:
+
 ```html
 <picture>
   <img src="/media/image.jpg" alt="Description">
@@ -344,6 +371,7 @@ For brevity, examples in this document may show simplified picture tags:
 ```
 
 In actual test files, you can use either:
+
 1. The full responsive structure shown above (recommended for realistic testing)
 2. The simplified format (acceptable for quick prototyping, though less realistic)
 
@@ -420,6 +448,7 @@ A cards block with multiple items:
 The nested `<div>` structure in HTML corresponds to the table structure in authoring:
 
 **In document authoring (table):**
+
 ```
 | Block Name        |
 |-------------------|
@@ -428,6 +457,7 @@ The nested `<div>` structure in HTML corresponds to the table structure in autho
 ```
 
 **In HTML:**
+
 ```html
 <div class="block-name">
   <div>                    <!-- Row 1 -->
@@ -499,31 +529,37 @@ Here's a complete example of a test `.plain.html` file for a hero block:
 ## Important Notes
 
 **File location:**
+
 - Create test HTML files in the `drafts/` folder
 - Can be organized in subfolders: `drafts/blocks/hero/test.plain.html`
 - Always use `.plain.html` extension
 
 **Running with local HTML:**
+
 - Start dev server with: `aem up --html-folder drafts`
 - This tells the dev server to serve HTML files from the drafts folder
 - The CLI automatically wraps your plain HTML with head, header, and footer
 
 **Section organization:**
+
 - Sections can contain any mix of blocks and default content
 - No strict rules about section boundaries - depends on project and authoring needs
 - Some blocks may require being in their own section - check block documentation
 
 **Images:**
+
 - Use `<picture>` elements with proper responsive structure (see Images section)
 - Reference images from the `/media/` folder or appropriate location
 - Always include `alt` attributes for accessibility
 
 **Testing considerations:**
+
 - Test multiple variants in the same file by adding multiple sections
 - Include edge cases in your test content
 - Use realistic content, not placeholder text
 
 **Content model alignment:**
+
 - The HTML structure must match your block's expected content model
 - Consult your content model documentation when structuring blocks
 - The decoration JavaScript will process this structure at two levels:

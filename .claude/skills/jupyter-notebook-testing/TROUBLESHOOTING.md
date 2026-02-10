@@ -9,6 +9,7 @@ Common issues and solutions when testing EDS blocks with Jupyter notebooks in th
 **Cause:** Missing `return` statement.
 
 **Solution:**
+
 ```javascript
 // ✅ GOOD - Shows output
 const { testBlock } = await import('/scripts/ipynb-helpers.js');
@@ -31,6 +32,7 @@ const block = await testBlock('accordion', content);
 **Solution:**
 
 Import the helper functions you need in each cell:
+
 ```javascript
 // Import what you need
 const { testBlock, showPreview } = await import('/scripts/ipynb-helpers.js');
@@ -71,20 +73,21 @@ return '✓ Preview overlay opened';
 **Solutions:**
 
 1. **Verify CSS file exists:**
+
 ```bash
 ls -la blocks/accordion/accordion.css
 # Should exist with content
 ```
 
-2. **Check browser console:**
+1. **Check browser console:**
    - Press F12 to open DevTools
    - Look for 404 errors for CSS files
 
-3. **Verify block CSS is linked:**
+2. **Verify block CSS is linked:**
    - CSS loads automatically via the overlay system
    - Check that `blocks/blockname/blockname.css` exists
 
-4. **Close and reopen overlay:**
+3. **Close and reopen overlay:**
    - Press ESC or click backdrop to close
    - Run the preview cell again
 
@@ -97,12 +100,14 @@ ls -la blocks/accordion/accordion.css
 **Solutions:**
 
 1. **Verify block JavaScript exists:**
+
 ```bash
 ls -la blocks/accordion/accordion.js
 # Should exist and export default function
 ```
 
-2. **Check block export:**
+1. **Check block export:**
+
 ```javascript
 // blocks/accordion/accordion.js should have:
 export default function decorate(block) {
@@ -110,11 +115,11 @@ export default function decorate(block) {
 }
 ```
 
-3. **Check browser console:**
+1. **Check browser console:**
    - Press F12 to open DevTools
    - Look for import errors or JavaScript errors
 
-4. **Verify module path:**
+2. **Verify module path:**
    - Block JavaScript should be at: `/blocks/blockname/blockname.js`
    - Case-sensitive on production servers!
 
@@ -127,6 +132,7 @@ export default function decorate(block) {
 **Solutions:**
 
 1. **Check helper module path:**
+
 ```javascript
 // ✅ CORRECT - absolute path from site root
 const { testBlock, showPreview } = await import('/scripts/ipynb-helpers.js');
@@ -135,11 +141,11 @@ const { testBlock, showPreview } = await import('/scripts/ipynb-helpers.js');
 const { testBlock, showPreview } = await import('./scripts/ipynb-helpers.js');
 ```
 
-2. **Verify file exists:**
+1. **Verify file exists:**
    - Check `scripts/ipynb-helpers.js` is deployed
    - Check path is exactly `/scripts/ipynb-helpers.js`
 
-3. **Check browser console:**
+2. **Check browser console:**
    - Look for 404 errors
    - Verify the full URL being loaded
 
@@ -174,13 +180,15 @@ return block.outerHTML;
 **Causes & Solutions:**
 
 1. **Invalid .ipynb JSON:**
+
 ```bash
 # Validate JSON syntax
 cat test.ipynb | python -m json.tool
 # Should output formatted JSON without errors
 ```
 
-2. **Wrong file path:**
+1. **Wrong file path:**
+
 ```
 # Check block configuration in Google Doc:
 | IPynb Viewer |
@@ -188,12 +196,12 @@ cat test.ipynb | python -m json.tool
 | /test.ipynb  |  ← Must match actual file path
 ```
 
-3. **File not published:**
+1. **File not published:**
    - Ensure test.ipynb is committed to repository
    - Push changes to Git
    - Verify file appears on EDS site
 
-4. **Check browser console:**
+2. **Check browser console:**
    - F12 to open DevTools
    - Look for fetch errors or JSON parse errors
 
@@ -204,6 +212,7 @@ cat test.ipynb | python -m json.tool
 **Causes:**
 
 1. **Infinite loop:**
+
 ```javascript
 // ❌ BAD - hangs forever
 while (true) {
@@ -217,7 +226,8 @@ while (count < 10) {
 }
 ```
 
-2. **Missing return statement:**
+1. **Missing return statement:**
+
 ```javascript
 // Cell may appear stuck if no return
 const { testBlock } = await import('/scripts/ipynb-helpers.js');
@@ -252,6 +262,7 @@ await testBlock('accordion', content);
 **Current behavior:** Overlay is full-screen with scrollable content.
 
 **Solution:**
+
 - The overlay automatically fills the screen
 - Content is scrollable if it exceeds viewport height
 - Use browser zoom (Cmd/Ctrl +/-) to adjust size if needed
@@ -299,6 +310,7 @@ const content = '<div>Just one div</div>';
 **This is normal behavior.** The overlay system removes the previous overlay before creating a new one, so you should only see one at a time.
 
 **If you see multiple overlays:**
+
 - There may be a JavaScript error - check console
 - Refresh the page to reset
 
@@ -343,13 +355,15 @@ const { testBlock } = await import('/scripts/ipynb-helpers.js');
    - Close and reopen overlay
 
 2. **Changes not deployed:**
+
 ```bash
 # Verify changes committed and pushed
 git status
 git log --oneline -n 5
 ```
 
-3. **Wrong block being tested:**
+1. **Wrong block being tested:**
+
 ```javascript
 // Make sure block name matches
 const { showPreview } = await import('/scripts/ipynb-helpers.js');
@@ -365,6 +379,7 @@ await showPreview('accordion', content);  // Tests 'accordion' block
 **Note:** The overlay system doesn't have CORS issues since it's on the same page.
 
 **If you still see CORS errors:**
+
 - Check that CSS/JS files are on the same domain as the EDS site
 - Verify all paths are absolute (start with `/`)
 

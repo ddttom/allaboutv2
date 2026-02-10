@@ -31,12 +31,14 @@ overlay/
 ## Legacy Code to Delete
 
 ### 1. createPagedOverlay()
+
 - **Line:** 2351
 - **Size:** ~700 lines
 - **Delete from:** Line 2351
 - **Delete to:** End of function (find matching closing brace)
 
 ### 2. createGitHubMarkdownOverlay()
+
 - **Line:** 3687
 - **Size:** ~600 lines
 - **Delete from:** Line 3687

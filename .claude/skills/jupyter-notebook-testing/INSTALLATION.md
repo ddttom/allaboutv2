@@ -89,6 +89,7 @@ project/
 ### Test 1: Page Loads
 
 Open your EDS page with the ipynb-viewer block:
+
 - ✅ Notebook cells are visible
 - ✅ Markdown cells are formatted
 - ✅ Code cells have "Run" buttons
@@ -116,6 +117,7 @@ return '✓ Preview overlay opened';
 ```
 
 Expected result:
+
 - ✅ Full-screen overlay appears on same page
 - ✅ Styled accordion block visible
 - ✅ Close button works
@@ -126,11 +128,12 @@ Expected result:
 ### Browser Console
 
 Open browser console (F12 or Cmd+Option+I) to see:
+
 - Console.log() output from cells
 - Error messages
 - Debug information
 
-## No Installation Needed!
+## No Installation Needed
 
 Unlike traditional Jupyter setups, the browser-only approach requires:
 
@@ -148,6 +151,7 @@ Just deploy the ipynb-viewer block and open notebooks in the browser!
 ### For Developers
 
 As a developer, you can:
+
 1. Create/edit .ipynb files locally
 2. Commit to repository
 3. Deploy to EDS site
@@ -156,6 +160,7 @@ As a developer, you can:
 ### For End Users
 
 End users can:
+
 1. Open EDS pages with notebooks
 2. Read markdown documentation
 3. Click "Run" on code cells
@@ -170,6 +175,7 @@ End users can:
 **Problem:** ipynb-viewer block shows error or blank content
 
 **Solution:**
+
 - Verify .ipynb file is valid JSON
 - Check file path in block configuration
 - Ensure file is published to EDS site
@@ -180,6 +186,7 @@ End users can:
 **Problem:** `testBlock is not defined`
 
 **Solution:**
+
 - Import the helpers in each cell: `const { testBlock } = await import('/scripts/ipynb-helpers.js');`
 - Verify scripts/ipynb-helpers.js exists
 - Check import path is absolute: `/scripts/ipynb-helpers.js`
@@ -190,6 +197,7 @@ End users can:
 **Problem:** `showPreview()` doesn't show overlay
 
 **Solution:**
+
 - Check browser console for JavaScript errors
 - Verify import statement is correct
 - Try a simple test to confirm it works
@@ -199,6 +207,7 @@ End users can:
 **Problem:** Overlay shows undecorated HTML
 
 **Solution:**
+
 - Verify block JavaScript file exists: `blocks/blockname/blockname.js`
 - Check block CSS file exists: `blocks/blockname/blockname.css`
 - Check browser console for 404 errors

@@ -9,35 +9,41 @@ You are performing a security review based on the comprehensive security checkli
 Review the following areas:
 
 ## 1. Input Validation & Sanitization
+
 - Check all form inputs for validation
 - Verify XSS prevention measures
 - Check for SQL injection risks (if applicable)
 - Review URL parameter handling
 
 ## 2. Authentication & Authorization
+
 - Review authentication implementation
 - Check session management
 - Verify CSRF protection
 - Review API authentication
 
 ## 3. Data Protection
+
 - Check for sensitive data in client-side code
 - Verify HTTPS usage
 - Review cookie security settings
 - Check for exposed API keys or secrets
 
 ## 4. Content Security
+
 - Review Content Security Policy headers
 - Check for inline scripts (should be avoided)
 - Verify resource integrity (SRI)
 - Review CORS configuration
 
 ## 5. Dependencies
+
 - Check for known vulnerabilities: `npm audit`
 - Review external library usage
 - Verify CDN resources are from trusted sources
 
 ## 6. EDS-Specific Security
+
 - Check block isolation
 - Review custom decoration functions
 - Verify safe DOM manipulation
@@ -46,6 +52,7 @@ Review the following areas:
 **Process**:
 
 1. Run automated checks:
+
    ```bash
    npm audit
    npm run lint

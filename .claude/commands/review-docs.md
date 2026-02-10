@@ -9,23 +9,27 @@ You are helping the user navigate the comprehensive EDS documentation.
 **Quick Reference**:
 
 ## Start Here
+
 - **index.md** - Complete navigation guide and documentation map
 - **getting-started-guide.md** - Role-based learning paths
 
 ## By Role
 
 **New to EDS?**
+
 1. getting-started-guide.md - Quick reference
 2. eds.md - Core EDS concepts (1,937 lines, comprehensive)
 3. ../server-README.md - Local development setup
 4. implementation/raw-eds-blocks-guide.md - Simple component development
 
 **Experienced Developer?**
+
 1. implementation/block-architecture-standards.md - Architecture patterns
 2. implementation/complex-eds-blocks-guide.md - Advanced components
 3. testing/eds-native-testing-standards.md - Testing frameworks
 
 **Architect/Tech Lead?**
+
 1. implementation/design-philosophy-guide.md - Design decisions
 2. implementation/build-blocks-clarification.md - Dual-directory architecture
 3. testing/eds-architecture-and-testing-guide.md - Advanced debugging

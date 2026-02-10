@@ -7,6 +7,7 @@ This document provides complete, ready-to-use presentation notebook examples for
 **Filename:** `product-launch.ipynb`
 
 **Metadata:**
+
 ```json
 {
   "metadata": {
@@ -373,6 +374,7 @@ Thank you for your interest! We look forward to helping you build amazing applic
 **Use Case:** Teaching a technical concept without executable code
 
 **Metadata:**
+
 ```json
 {
   "metadata": {
@@ -592,15 +594,19 @@ observer.observe(block);</code></pre>
 ## Key Presentation Patterns
 
 ### Pattern 1: Feature Showcase
+
 Use **cards** for features, **tabs** for detailed explanations, **accordion** for FAQs.
 
 ### Pattern 2: Tutorial Flow
+
 Use **tabs** for step-by-step content, **code-expander** for optional details, **hero** for section titles.
 
 ### Pattern 3: Data Presentation
+
 Use **table** for comparisons, **counter** for statistics, **grid** for structured layouts.
 
 ### Pattern 4: Customer-Facing
+
 Use **quote** for testimonials, **video** for demos, **modal** for detailed information.
 
 ---
@@ -618,6 +624,7 @@ When converting an educational notebook to presentation mode:
 **Example conversion:**
 
 Original code cell:
+
 ```javascript
 const { testBlock } = await import('/scripts/ipynb-helpers.js');
 const block = await testBlock('accordion', accordionContent);
@@ -625,6 +632,7 @@ return block.outerHTML;
 ```
 
 Becomes markdown cell:
+
 ```markdown
 ### Testing the Accordion Block
 

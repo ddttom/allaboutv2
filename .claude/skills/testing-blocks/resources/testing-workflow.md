@@ -43,6 +43,7 @@ npm test
 ```
 
 If tests fail:
+
 - Review the error messages
 - Fix broken functionality OR update tests if requirements changed
 - Re-run `npm test` until all pass
@@ -102,6 +103,7 @@ node test-my-block.js
 ```
 
 Review each screenshot:
+
 - Does it look correct?
 - Are all variants working?
 - Is responsive behavior correct?
@@ -181,6 +183,7 @@ Wait for all checks to pass, especially PSI performance checks.
 #### 14. Address feedback
 
 If reviewers request changes:
+
 - Make the requested modifications
 - Follow the same workflow (test, lint, browser test)
 
@@ -212,11 +215,13 @@ Ensure all CI checks pass on the latest commit before requesting re-review.
 Use this checklist for every code change:
 
 **During Development:**
+
 - [ ] Write unit tests for new utilities/logic
 - [ ] Run `npm run test:watch` during development
 - [ ] Manually test in browser at `http://localhost:3000`
 
 **Before Committing:**
+
 - [ ] Run `npm test` - all tests pass
 - [ ] Run `npm run lint` - linting passes
 - [ ] Write throwaway browser test script
@@ -224,6 +229,7 @@ Use this checklist for every code change:
 - [ ] Manually validate in browser
 
 **Before Opening PR:**
+
 - [ ] Commit and push to feature branch
 - [ ] Verify branch preview loads
 - [ ] Run `gh checks` to verify CI passes
@@ -231,6 +237,7 @@ Use this checklist for every code change:
 - [ ] Monitor `gh pr checks` until all pass
 
 **After PR Review:**
+
 - [ ] Address all feedback
 - [ ] Re-run tests and linting
 - [ ] Verify `gh pr checks` pass on latest commit
@@ -240,14 +247,17 @@ Use this checklist for every code change:
 This workflow integrates with other AEM skills:
 
 **content-driven-development** provides:
+
 - Test content URLs for validation
 - Content model for testing against
 
 **building-blocks** invokes testing-blocks:
+
 - After block implementation
 - With block name and test URLs
 
 **This skill returns:**
+
 - Confirmation tests pass
 - Screenshots for validation
 - Any issues discovered
@@ -279,26 +289,31 @@ This workflow integrates with other AEM skills:
 ## Tips for Efficient Testing
 
 **Use watch mode during development:**
+
 ```bash
 npm run test:watch
 ```
 
 **Run single test file:**
+
 ```bash
 npm test -- test/utils/my-utility.test.js
 ```
 
 **Run tests matching pattern:**
+
 ```bash
 npm test -- --grep "checkDomain"
 ```
 
 **Generate coverage report:**
+
 ```bash
 npm run test:coverage
 ```
 
 **Monitor GitHub checks continuously:**
+
 ```bash
 gh pr checks --watch
 ```
@@ -306,6 +321,7 @@ gh pr checks --watch
 ## Next Steps
 
 After completing this workflow:
+
 1. Delete throwaway browser test scripts
 2. Keep screenshots for PR, then delete
 3. Celebrate passing tests! 🎉

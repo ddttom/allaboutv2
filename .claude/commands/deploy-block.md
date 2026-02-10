@@ -16,6 +16,7 @@ Steps:
    - Check for package.json and vite.config.js
 
 3. Run the build process:
+
    ```bash
    cd build/{block-name}
    npm install

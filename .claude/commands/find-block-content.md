@@ -13,6 +13,7 @@ Steps:
    - Look for scripts/find-block-content.js
 
 3. If the script exists, run it:
+
    ```bash
    node scripts/find-block-content.js {block-name}
    ```

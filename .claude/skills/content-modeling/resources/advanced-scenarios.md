@@ -8,12 +8,14 @@ This document covers common challenges in content modeling and their solutions. 
 
 **The Problem:**
 Sometimes a block needs to contain other blocks. Examples:
+
 - Tabs where each tab contains a cards or columns block
 - Accordions with complex content including multiple blocks
 
 **Solutions:**
 
 ### Solution A: Auto-Blocking with Sections
+
 Authors create separate sections with section metadata. The auto-blocking code merges them into one block with nested content.
 
 **Example: Tabs with nested blocks**
@@ -48,6 +50,7 @@ Welcome to our platform! Here's how to begin.
 Multiple consecutive sections with `style | tabs` metadata get merged into one tabs block, with each section becoming one tab. Any blocks within the sections are preserved as nested blocks.
 
 ### Solution B: Fragments
+
 Authors create the outer block and link to a fragment containing the inner blocks.
 
 **Example: Accordion with fragment**
@@ -62,6 +65,7 @@ Authors create the outer block and link to a fragment containing the inner block
 The fragment documents contain the detailed content with multiple blocks, which get embedded into the accordion items.
 
 **When to use which:**
+
 - **Auto-blocking**: When authors naturally think in sections and the pattern is common/predictable
 - **Fragments**: When the nested content is complex, reused across pages, or managed separately
 
@@ -71,6 +75,7 @@ The fragment documents contain the detailed content with multiple blocks, which 
 
 **The Problem:**
 In a collection block, each item might need its own configuration - not content, but behavioral or styling settings. This is different from the item's actual content (text, images, links). Examples:
+
 - Each card in a grid could potentially be "featured" with different sizing
 - Each accordion item needs to specify whether it starts expanded or collapsed
 - Each carousel slide might have different transition effects or display durations
@@ -80,6 +85,7 @@ The challenge is that this configuration isn't really content that authors shoul
 **Solutions:**
 
 ### Solution A: Variant Lists
+
 Use variants at the block level to specify which items get special configuration.
 
 **Example: Cards with featured items**
@@ -107,6 +113,7 @@ The decoration code parses the variant list `Featured-2, Featured-4` and applies
 ```
 
 ### Solution B: Optional Configuration Cell
+
 Add an additional (optional) column for configuration when variants aren't sufficient.
 
 **Example: Collection with per-item config**
@@ -122,11 +129,13 @@ Add an additional (optional) column for configuration when variants aren't suffi
 The third column is optional. When present, it configures that specific item (in this case, enabling zoom for image 2).
 
 **When to use which:**
+
 - **Variants**: When the configuration is simple styling/behavior that maps to CSS classes (Featured, Large, Open, etc.)
 - **Optional config cell**: When the configuration is more complex or doesn't fit the variant pattern well
 - **Neither**: If every (or nearly every) item needs unique configuration, those settings might actually be content that varies per item, not behavioral config - consider whether Collection is the right model
 
 **Trade-offs:**
+
 - Variants are more author-friendly and semantic
 - Config cells are more flexible but less intuitive, and non-semantic
 - Both add complexity - use sparingly, only when truly needed
@@ -147,6 +156,7 @@ Blocks often contain things that feel "list-like" to developers - repeating item
 The solution is almost always to use a Collection model, but the specific approach depends on the complexity of each item.
 
 ### Solution A: Collection Block for Complex Items
+
 When each "list item" has multiple parts (image, heading, description, link), use a Collection block.
 
 **Example: Related articles**
@@ -162,11 +172,13 @@ When each "list item" has multiple parts (image, heading, description, link), us
 Each row is one article. Columns separate the parts (image, content). Decoration code renders this as cards or a list, depending on styling needs.
 
 ### Solution B: Flexible Input for Simple Items
+
 When each "list item" is simple (text only, or text with minimal formatting), support multiple authoring approaches.
 
 **Example: Recipe ingredients - support both approaches**
 
 **Option 1: One item per line in one cell**
+
 ```markdown
 | Recipe |
 |--------|
@@ -176,6 +188,7 @@ When each "list item" is simple (text only, or text with minimal formatting), su
 ```
 
 **Option 2: One item per row**
+
 ```markdown
 | Recipe |
 |--------|
@@ -191,6 +204,7 @@ When each "list item" is simple (text only, or text with minimal formatting), su
 Both are valid. The decoration code handles both patterns - it checks if there's a `<ul>` or `<ol>` in one cell, or if there are multiple rows of simple text. This flexibility makes it easy for authors to copy/paste ingredients or type them however feels natural.
 
 **When to use which:**
+
 - **Collection for complex items (Solution A)**: When each item has multiple distinct parts (image + heading + description, or any combination that benefits from column structure)
 - **Flexible input for simple items (Solution B)**: When items are just text or links, and you want to make authoring as easy as possible by supporting multiple input methods
 
@@ -208,9 +222,11 @@ Forms seem like Standalone blocks (distinct visual element, typically appears on
 Forms are relatively uncommon in content-driven sites. When they do appear, consider these approaches in order of preference:
 
 ### Solution A: External Form Services
+
 For complex forms or forms requiring advanced features (multi-step, conditional logic, integrations), use external services like Marketo, HubSpot, Google Forms, etc. Embed them via iframe or integration blocks.
 
 ### Solution B: Spreadsheet-Based Forms
+
 Use a spreadsheet to define form fields, and create a Standalone form block that links to it.
 
 **Example: The form block**
@@ -232,12 +248,14 @@ Use a spreadsheet to define form fields, and create a Standalone form block that
 In AEM, spreadsheets get published as JSON. The form block's decoration code fetches the JSON and builds the form dynamically. See the Block Collection for examples of this pattern.
 
 **Why this works:**
+
 - Separates form definition (spreadsheet) from form placement (block)
 - Authors can manage form fields in a familiar spreadsheet interface
 - Form definition is reusable across multiple pages
 - Easy to update fields without touching content pages
 
 ### Solution C: Configuration Model (Anti-Pattern, but Sometimes Necessary)
+
 Use a Configuration block for one-off forms where a spreadsheet feels like overkill.
 
 **Example:**
@@ -253,6 +271,7 @@ Use a Configuration block for one-off forms where a spreadsheet feels like overk
 **Warning:** This is non-semantic and requires authors to understand the configuration format. Only use for very simple, one-off forms that won't be reused or frequently modified.
 
 **When to use which:**
+
 - **External services (Solution A)**: For complex forms or when integrating with marketing/CRM systems
 - **Spreadsheet (Solution B)**: For most custom forms, especially if reused or frequently updated
 - **Configuration (Solution C)**: Only for very simple one-off forms

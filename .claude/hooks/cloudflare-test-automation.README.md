@@ -5,6 +5,7 @@
 **Intelligent test automation system** that automatically generates and updates tests when `cloudflare-worker.js` is modified.
 
 **Key Features:**
+
 - 🔍 Detects changes via git diff (with cache fallback)
 - ✨ Auto-generates test stubs for new functions
 - 🔄 Auto-updates test expectations for modified functions
@@ -42,16 +43,19 @@
 The system uses **git diff** to detect:
 
 **New Functions:**
+
 - Exported functions that didn't exist in previous commit
 - Automatically inferred type (inject/remove/replace/extract/build)
 - Test stub generated based on function type
 
 **Modified Functions:**
+
 - Exported functions with changed body/implementation
 - Test expectations marked for review
 - Backup created for safety
 
 **Deleted Functions:**
+
 - Functions removed from worker
 - Tests marked as potentially obsolete
 
@@ -75,6 +79,7 @@ The system infers transformation type from function names:
 **Location:** `cloudflare/test-coverage-report.md`
 
 **Contents:**
+
 - Summary statistics (new/modified/deleted functions)
 - Quick actions checklist
 - Function-by-function coverage details
@@ -132,11 +137,13 @@ The system infers transformation type from function names:
 **Naming:** `{filename}.backup-{ISO-timestamp}`
 
 **Examples:**
+
 - `cloudflare/backups/test.html.backup-2025-12-12T20-27-11`
 - `cloudflare/backups/test-local-html.js.backup-2025-12-12T20-27-11`
 - `cloudflare/backups/cloudflare-worker.test.js.backup-2025-12-12T20-27-11`
 
 **Restoration:**
+
 ```bash
 # If you need to rollback (from project root)
 cp cloudflare/backups/test.html.backup-2025-12-12T20-27-11 cloudflare/test.html
@@ -175,6 +182,7 @@ cp cloudflare/backups/test.html.backup-2025-12-12T20-27-11 cloudflare/test.html
 ### Environment Variables
 
 **CLAUDE_PROJECT_DIR** - Project root directory
+
 - Default: `process.cwd()`
 - Set automatically by Claude Code hooks
 
@@ -215,6 +223,7 @@ The automation is triggered automatically via PostToolUse hook:
 **Trigger:** Edit, MultiEdit, or Write to `cloudflare/files/cloudflare-worker.js`
 
 **Behavior:**
+
 1. Detects file change
 2. Calls `cloudflare-test-automation.js`
 3. Displays results
@@ -274,6 +283,7 @@ Errors: 0
 ### Partial Rollback
 
 If test generation or updates fail:
+
 - Failed operations are reverted from backup
 - Successful operations are kept
 - Error details added to coverage report
@@ -282,15 +292,18 @@ If test generation or updates fail:
 ### Common Errors
 
 **Git diff unavailable:**
+
 - Fallback: Cache-based comparison (future enhancement)
 - Impact: May not detect all changes accurately
 
 **npm test fails:**
+
 - Tests still run and report generated
 - Coverage report shows failure details
 - Backups preserved for rollback
 
 **File permissions:**
+
 - Check execute permissions: `chmod +x .claude/hooks/cloudflare-test-automation.js`
 - Check write permissions for coverage report directory
 
@@ -299,6 +312,7 @@ If test generation or updates fail:
 ### 1. Review Auto-Generated Tests
 
 Always review test stubs before committing:
+
 - Check assertions make sense
 - Add edge cases
 - Update test data if needed
@@ -306,6 +320,7 @@ Always review test stubs before committing:
 ### 2. Commit Coverage Reports
 
 Include coverage reports in git:
+
 ```bash
 git add cloudflare/test-coverage-report.md
 git commit -m "feat: Add removeScriptTags with test coverage"
@@ -314,6 +329,7 @@ git commit -m "feat: Add removeScriptTags with test coverage"
 ### 3. Clean Up Old Backups
 
 Periodically remove old backup files:
+
 ```bash
 # Remove backups older than 7 days
 find cloudflare/backups/ -name "*.backup-*" -mtime +7 -delete
@@ -322,6 +338,7 @@ find cloudflare/backups/ -name "*.backup-*" -mtime +7 -delete
 ### 4. Manual Test Review
 
 When tests are marked for review:
+
 - Read the git diff to understand changes
 - Update test expectations manually
 - Run tests to verify they pass
@@ -332,11 +349,13 @@ When tests are marked for review:
 ### Hook Doesn't Fire
 
 **Check:**
+
 1. Hook is registered in `.claude/settings.json`
 2. Script has execute permissions
 3. You're editing the correct file (cloudflare/files/cloudflare-worker.js)
 
 **Solution:**
+
 ```bash
 # Test manually
 node .claude/hooks/cloudflare-test-automation.js
@@ -345,6 +364,7 @@ node .claude/hooks/cloudflare-test-automation.js
 ### Tests Fail After Auto-Update
 
 **Solution:**
+
 ```bash
 # Restore from backup (from project root)
 cp cloudflare/backups/test.html.backup-[timestamp] cloudflare/test.html
@@ -359,11 +379,13 @@ cat cloudflare/test-coverage-report.md
 ### Coverage Report Not Generated
 
 **Check:**
+
 1. Write permissions in cloudflare/ directory
 2. Disk space available
 3. Check console output for errors
 
 **Solution:**
+
 ```bash
 # Verify directory exists and is writable
 ls -la cloudflare/

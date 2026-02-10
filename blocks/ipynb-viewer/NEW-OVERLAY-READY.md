@@ -49,12 +49,14 @@ overlay/
 ## What to Delete from ipynb-viewer.js
 
 ### Function 1: `createPagedOverlay()`
+
 - **Location:** Around line 2351
 - **Size:** ~700 lines
 - **Search for:** `function createPagedOverlay(`
 - **Delete:** Entire function until closing `}`
 
 ### Function 2: `createGitHubMarkdownOverlay()`
+
 - **Location:** Around line 3686
 - **Size:** ~600 lines
 - **Search for:** `function createGitHubMarkdownOverlay(`
@@ -147,9 +149,11 @@ After integration, test:
 ## File Size Reduction
 
 **Before:**
+
 - ipynb-viewer.js: ~4,700 lines (with old overlay code)
 
 **After:**
+
 - ipynb-viewer.js: ~3,400 lines (removed createPagedOverlay + createGitHubMarkdownOverlay)
 - overlay/ modules: ~750 lines (new, modular)
 

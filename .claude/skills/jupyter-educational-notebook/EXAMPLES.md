@@ -38,6 +38,7 @@ This file contains complete examples of different notebook types with actual cod
 ```
 
 **Why these fields:**
+
 - **category: "blog"** → Blue badge showing content type
 - **difficulty: "beginner"** → Orange badge, accessible to all readers
 - **duration: "20 minutes"** → Purple badge, helps readers plan their time
@@ -53,6 +54,7 @@ This file contains complete examples of different notebook types with actual cod
 ### Cell Pattern Examples
 
 #### Header Cell
+
 ```markdown
 # 📓 Interactive Blog Post: Introducing ipynb-viewer for EDS
 
@@ -70,6 +72,7 @@ The **ipynb-viewer** block is a revolutionary tool for Adobe Edge Delivery Servi
 ```
 
 #### Table of Contents
+
 ```markdown
 ## 📋 Table of Contents
 
@@ -84,6 +87,7 @@ The **ipynb-viewer** block is a revolutionary tool for Adobe Edge Delivery Servi
 ```
 
 #### Part Introduction
+
 ```markdown
 ## 🚀 Part 2: Getting Started with ipynb-viewer
 
@@ -92,9 +96,11 @@ The **ipynb-viewer** block is a revolutionary tool for Adobe Edge Delivery Servi
 To display a Jupyter notebook on your EDS website, add this block to your Google Doc:
 
 ```
+
 | IPynb Viewer |
 |--------------|
 | /blog.ipynb  |
+
 ```
 
 That's it! The notebook will be fetched, parsed, and rendered with interactive code cells.
@@ -105,6 +111,7 @@ Let's start simple. Click the **Run** button on the code cell below to execute J
 ```
 
 #### Simple Demonstration Code
+
 ```javascript
 // Your first interactive code cell!
 const greeting = 'Hello from ipynb-viewer!';
@@ -117,6 +124,7 @@ return `${greeting} 🎉 Today is ${date}`;
 ```
 
 #### Explanation After Code
+
 ```markdown
 ### 💡 What Just Happened?
 
@@ -129,6 +137,7 @@ When you clicked "Run":
 ```
 
 #### Testing EDS Blocks
+
 ```javascript
 // Import helper functions (no initialization required!)
 const { testBlock } = await import('/scripts/ipynb-helpers.js');
@@ -155,6 +164,7 @@ return block.outerHTML;
 ```
 
 #### Visual Overlay Preview
+
 ```javascript
 // Import showPreview helper
 const { showPreview } = await import('/scripts/ipynb-helpers.js');
@@ -178,6 +188,7 @@ return '✓ Overlay opened! Check it out, then close it to continue reading.';
 ```
 
 #### Best Practices Section
+
 ```markdown
 ### ✅ Best Practices Checklist
 
@@ -190,6 +201,7 @@ return '✓ Overlay opened! Check it out, then close it to continue reading.';
 ```
 
 #### Call-to-Action/Contact
+
 ```markdown
 ## Want to Know More?
 
@@ -238,6 +250,7 @@ We're passionate about helping businesses leverage the power of Edge Delivery Se
 ```
 
 **Why these fields:**
+
 - **category: "tutorial"** → Clearly identifies as step-by-step learning
 - **difficulty: "intermediate"** → Sets expectations for required knowledge
 - **duration: "45 minutes"** → Longer duration reflects hands-on exercises
@@ -271,6 +284,7 @@ Welcome to this hands-on tutorial! By the end, you'll understand how to create, 
 ### Part Structure
 
 #### Part 1: Foundation
+
 ```markdown
 ## 📚 Part 1: Understanding Block Basics
 
@@ -282,9 +296,11 @@ A **block** is a self-contained component that transforms simple content into in
 
 **Example:** A tabs block transforms this structure:
 ```
+
 | Tabs |
 | Tab 1 | Tab 2 |
 | Content 1 | Content 2 |
+
 ```
 
 Into interactive tabs with styling and click handlers!
@@ -300,6 +316,7 @@ Let's see an example...
 ```
 
 #### Interactive Exercise
+
 ```javascript
 // 🎯 Exercise 1: Your First Block Test
 // Instructions: Run this cell to see a simple block in action
@@ -325,6 +342,7 @@ return block.outerHTML;
 ```
 
 #### Part 2: Building
+
 ```markdown
 ## 🔨 Part 2: Creating Your Block
 
@@ -338,9 +356,11 @@ First, decide what content structure your block needs.
 
 **Content structure:**
 ```
+
 | Feature |
 | 🚀 | Fast | Lightning-fast page loads |
 | 🎨 | Beautiful | Stunning designs |
+
 ```
 
 ### Step 2: Write the Decoration Logic
@@ -349,6 +369,7 @@ The decoration function transforms the table into HTML...
 ```
 
 #### Incremental Demonstration
+
 ```javascript
 // Step 2 Demo: Building the decoration function
 
@@ -383,6 +404,7 @@ return '✓ Check console to see the parsed structure';
 ```
 
 #### Part 3: Testing
+
 ```markdown
 ## 🧪 Part 3: Testing Your Block
 
@@ -436,6 +458,7 @@ return '✓ Three features displayed!';
 ```
 
 #### Summary
+
 ```markdown
 ## 🎉 Congratulations!
 
@@ -492,6 +515,7 @@ You've learned how to:
 ```
 
 **Why these fields:**
+
 - **category: "concept"** → Identifies as explanatory/educational content
 - **difficulty: "advanced"** → Indicates technical depth and complexity
 - **duration: "30 minutes"** → Medium duration for focused deep dive
@@ -697,6 +721,7 @@ This is the **power of decoration** - simple content becomes rich, interactive e
 ```
 
 **Why these fields:**
+
 - **category: "reference"** → Clear reference/documentation identifier
 - **difficulty: "intermediate"** → Assumes basic knowledge, provides advanced usage
 - **duration: "15 minutes"** → Quick lookup, not linear reading
@@ -724,11 +749,13 @@ const { testBlock, showPreview } = await import('/scripts/ipynb-helpers.js');
 ```
 
 ### Basic Test
+
 ```javascript
 const block = await testBlock('accordion', content);
 ```
 
 ### Visual Preview
+
 ```javascript
 await showPreview('accordion', content);
 ```
@@ -742,6 +769,7 @@ await showPreview('accordion', content);
 [Common Patterns](#patterns)
 [Error Handling](#errors)
 [Performance Tips](#performance)
+
 ```
 
 ### Function Documentation
@@ -755,6 +783,7 @@ async testBlock(blockName: string, innerHTML: string): Promise<HTMLElement>
 ```
 
 **Parameters:**
+
 - `blockName` - Name of the block (e.g., 'accordion', 'tabs')
 - `innerHTML` - HTML content string
 
@@ -763,6 +792,7 @@ async testBlock(blockName: string, innerHTML: string): Promise<HTMLElement>
 **Purpose:** Test block decoration logic in the browser
 
 ### Basic Usage
+
 ```
 
 ```javascript
@@ -845,6 +875,7 @@ try {
 ```
 
 **Why these fields:**
+
 - **category: "demo"** → Identifies as quick showcase
 - **difficulty: "beginner"** → No prerequisite knowledge needed
 - **duration: "10 minutes"** → Short, quick exploration
@@ -936,6 +967,7 @@ Want to experiment? Modify the content in the cells above and run them again!
 | **Interactive Demo** | Showcasing capabilities | 30% MD / 70% code | 15-20 |
 
 **Universal Best Practices:**
+
 - Always include Table of Contents
 - Use progressive disclosure (simple → complex)
 - Add emojis to section headers (sparingly)

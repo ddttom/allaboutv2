@@ -50,6 +50,7 @@ return '✓ Preview overlay opened - try the Mobile/Tablet/Desktop buttons!';
 ```
 
 **Responsive Preview Features:**
+
 - Click 📱 Mobile button to test in 375×667 viewport (iPhone SE/8)
 - Click 📱 Tablet button to test in 768×1024 viewport (iPad)
 - Click 🖥️ Desktop button for full desktop view (95%×95vh)

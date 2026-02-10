@@ -12,6 +12,7 @@ Create engaging, educational Jupyter notebooks designed as interactive Single Pa
 ## When to Use This Skill
 
 Use this skill when you need to:
+
 - Create interactive tutorials or educational content
 - Transform text content into engaging notebooks
 - Build blog posts as interactive SPAs
@@ -22,6 +23,7 @@ Use this skill when you need to:
 - Generate interactive guides for end users
 
 **Do NOT use this skill for:**
+
 - Testing EDS blocks (use `jupyter-notebook-testing` skill instead)
 - Debugging block decoration
 - Creating test.html files
@@ -48,12 +50,13 @@ When using the **notebook variation** (`| IPynb Viewer (notebook) |`), the viewe
 
 The viewer automatically detects cell types:
 
-1. **Hero Cell** - First cell (index 0) with `# ` heading → wrapped with `ipynb-hero-cell`
-2. **Intro Cell** - Early cells (index ≤ 2) with `## ` heading → wrapped with `ipynb-content-card` (thick 6px border)
+1. **Hero Cell** - First cell (index 0) with `#` heading → wrapped with `ipynb-hero-cell`
+2. **Intro Cell** - Early cells (index ≤ 2) with `##` heading → wrapped with `ipynb-content-card` (thick 6px border)
 3. **Transition Cell** - Short cells (≤3 lines) without headers → wrapped with `ipynb-transition-card`
 4. **Content Cell** - All other cells → wrapped with `ipynb-content-card-thin` (thin 4px border)
 
 **Benefits:**
+
 - ✅ 90% less code to write
 - ✅ Focus on content, not HTML wrappers
 - ✅ Consistent visual presentation
@@ -62,6 +65,7 @@ The viewer automatically detects cell types:
 **Example:**
 
 **Pure Markdown (Auto-Wrapped):**
+
 ```markdown
 # 🎯 Tutorial Title
 
@@ -69,6 +73,7 @@ The viewer automatically detects cell types:
 ```
 
 Automatically becomes:
+
 ```html
 <div class="ipynb-hero-cell">
   <h1>🎯 Tutorial Title</h1>
@@ -77,6 +82,7 @@ Automatically becomes:
 ```
 
 **When to Use:**
+
 - ✅ Notebook mode only (auto-wrapping doesn't activate in other modes)
 - ✅ Simple content structures
 - ✅ Focus on content creation speed
@@ -102,6 +108,7 @@ Learn step by step.
 ```
 
 **Features:**
+
 - ✅ Pure markdown - no HTML required
 - ✅ Works in any cell type (hero, content, intro, transition)
 - ✅ **Smart link resolution** - Automatically finds matching headings at runtime
@@ -111,6 +118,7 @@ Learn step by step.
 - ✅ Perfect for navigation in hero cells or section introductions
 
 **How it works:**
+
 1. Add `<!-- action-cards -->` HTML comment in your markdown cell
 2. Follow with a markdown list of links using `(#)` as placeholder
 3. Write link text that matches heading text somewhere in your notebook
@@ -120,17 +128,20 @@ Learn step by step.
 **Important:** The `<!-- action-cards -->` marker only applies to the **first list** that follows it. Any subsequent lists in the same cell will remain as normal bullet lists.
 
 **Example matching:**
+
 - `[Installation](#)` finds heading containing "Installation" (like "## Installation" or "### Installation Guide")
 - `[Basic Concepts](#)` finds heading containing "Basic Concepts" (like "## Part 1: Basic Concepts")
 - Link text doesn't need exact match - searches for headings that *contain* your link text
 
 **Best Practices:**
+
 - ✅ Use specific link text: `[Part 1: Introduction](#)` instead of just `[Introduction](#)`
 - ✅ Make link text unique to avoid ambiguity
 - ⚠️ If multiple headings match, it picks the **first one found** (in cell order)
 - 💡 Tip: Use part numbers or descriptive prefixes to ensure unique matches
 
 **When to use action cards:**
+
 - Hero cells with navigation options
 - Section introductions with quick links
 - Tutorial navigation between parts
@@ -149,6 +160,7 @@ Smart linking works for **ANY link with `(#)` as the href**, not just action car
 **Works in:** Action cards, regular markdown, inline text, tables, any link element
 
 **Examples:**
+
 ```markdown
 # Regular navigation links
 Continue to [Next Section](#) or go [Back to Start](#).
@@ -171,6 +183,7 @@ Continue to [Next Section](#) or go [Back to Start](#).
 ```
 
 **Key points:**
+
 - No hardcoded cell IDs needed
 - Links adapt when cells are reordered
 - Case-insensitive matching
@@ -184,6 +197,7 @@ Links ending in `.md` automatically convert to GitHub URLs using the notebook's 
 **Requires:** `repo` field in notebook metadata
 
 **Setup:**
+
 ```json
 {
   "metadata": {
@@ -193,6 +207,7 @@ Links ending in `.md` automatically convert to GitHub URLs using the notebook's 
 ```
 
 **Examples:**
+
 ```markdown
 Learn more in [Complete Guide](docs/guide.md)
 
@@ -204,6 +219,7 @@ See [Architecture Overview](docs/architecture.md) for details
 These convert to full GitHub URLs: `https://github.com/username/project/blob/main/docs/guide.md`
 
 **When to use repository links:**
+
 - Link to comprehensive documentation
 - Reference API docs or technical specs
 - Point to code examples in the repo
@@ -229,6 +245,7 @@ Continue to the [practice exercises](#) when ready.  <!-- Smart link: internal -
 
 **Mixing Auto-Wrapping with Custom HTML:**
 You can combine both approaches in the same notebook:
+
 - Use pure markdown for most cells (auto-wrapped)
 - Add custom HTML wrapper for specific cells needing special styling
 - Example: Hero cell with custom gradient or specific color scheme
@@ -245,6 +262,7 @@ This cell has custom purple gradient styling
 ```
 
 **Terminology clarification:**
+
 - **"Presentation"** = non-interactive notebook (no runnable code cells)
 - **"Educational"** = interactive notebook (runnable code cells for learning)
 - **"Notebook mode"** = display mode setting (`| IPynb Viewer (notebook) |`)
@@ -257,6 +275,7 @@ This cell has custom purple gradient styling
 Every educational notebook should include:
 
 #### 1. Header Cell (Markdown)
+
 ```markdown
 # Title with Emoji 📓
 
@@ -269,6 +288,7 @@ Brief introduction explaining what this notebook covers and who it's for.
 ```
 
 #### 2. Table of Contents (Markdown)
+
 ```markdown
 ## 📋 Table of Contents
 
@@ -279,6 +299,7 @@ Brief introduction explaining what this notebook covers and who it's for.
 ```
 
 **IMPORTANT - Hash Link Format:**
+
 - Links must match h2 header IDs exactly
 - IDs are auto-generated: lowercase, spaces→hyphens, special chars removed
 - Emojis are removed but don't leave leading hyphens
@@ -288,6 +309,7 @@ Brief introduction explaining what this notebook covers and who it's for.
   - `## What's New?` → `#whats-new`
 
 #### 3. Part Sections (Markdown + Code)
+
 ```markdown
 ## 🚀 Part 1: Introduction
 
@@ -301,6 +323,7 @@ Let's see this in action...
 ```
 
 #### 4. Interactive Code Cells
+
 ```javascript
 // Clear, explanatory comments
 const demonstration = 'Show the concept in action';
@@ -311,6 +334,7 @@ return demonstration;
 ```
 
 #### 5. Summary/Resources (Markdown)
+
 ```markdown
 ## 📚 Resources & Next Steps
 
@@ -332,26 +356,31 @@ return demonstration;
 ### Markdown Best Practices
 
 **Headers:**
+
 - Use emojis sparingly for visual interest
 - Create clear hierarchy (# → ## → ###)
 - Make headers descriptive and scannable
 
 **Lists:**
+
 - Use for enumeration and key points
 - Keep items parallel in structure
 - Bullet lists for unordered, numbered for steps
 
 **Tables:**
+
 - Great for comparisons and references
 - Use for quick reference guides
 - Keep columns narrow and scannable
 
 **Code Blocks:**
+
 ```markdown
 Use triple backticks for syntax examples:
 ```javascript
 const example = 'This is a syntax example, not executable';
 ```
+
 ```
 
 **Links:**
@@ -370,6 +399,7 @@ Hash links in TOC work in paged overlay mode:
 ```
 
 **ID Generation Rules:**
+
 1. Convert h2 text to lowercase
 2. Remove special characters (emojis, punctuation)
 3. Replace spaces with hyphens
@@ -381,6 +411,7 @@ Hash links in TOC work in paged overlay mode:
    - `## Resources & Next Steps` → `#resources-next-steps`
 
 **Emphasis:**
+
 - **Bold** for key terms and important points
 - *Italic* for emphasis and definitions
 - Use sparingly for maximum impact
@@ -388,6 +419,7 @@ Hash links in TOC work in paged overlay mode:
 ### Code Cell Best Practices
 
 **Visual Block Demonstrations (RECOMMENDED):**
+
 ```javascript
 // Use showPreview() to display beautiful block overlays
 const { showPreview } = await import('/scripts/ipynb-helpers.js');
@@ -402,6 +434,7 @@ return '✓ Beautiful visual demonstration';
 ```
 
 **Available blocks for demonstrations:**
+
 - **accordion** - Collapsible Q&A, comparisons
 - **cards** - Feature showcases, categories
 - **tabs** - Multiple options, variations
@@ -412,6 +445,7 @@ return '✓ Beautiful visual demonstration';
 - **code-expander** - Expandable code examples
 
 **Pure JavaScript Examples:**
+
 ```javascript
 // Use for general programming concepts (no visual needed)
 const data = [1, 2, 3, 4, 5];
@@ -424,6 +458,7 @@ return { original: data, doubled };
 ```
 
 **Interactive Exploration:**
+
 ```javascript
 // Combine interactivity with visual display
 const { showPreview } = await import('/scripts/ipynb-helpers.js');
@@ -457,6 +492,7 @@ return greeting;
 | Code examples | `code-expander` | Expandable for long snippets |
 
 **Example use cases:**
+
 - **Tutorial steps** → tabs (Step 1, Step 2, Step 3)
 - **Before/After** → accordion (expand to see transformation)
 - **Pro tips** → cards (each tip as a card)
@@ -468,30 +504,35 @@ return greeting;
 Build complexity gradually:
 
 ### Part 1: Simple Introduction
+
 - Basic concept with minimal code
 - Clear, concrete example
 - Single idea or principle
 - Use **hero** or **cards** for visual impact
 
 ### Part 2: Core Concepts
+
 - Expand on the foundation
 - Introduce 2-3 related ideas
 - Show practical applications
 - Use **tabs** or **accordion** for options
 
 ### Part 3: Advanced Topics
+
 - Complex scenarios
 - Edge cases and gotchas
 - Performance considerations
 - Use **grid** or **table** for organization
 
 ### Part 4: Best Practices
+
 - Do's and don'ts
 - Common mistakes to avoid
 - Pro tips and optimizations
 - Use **cards** for tips, **table** for comparisons
 
 ### Part 5: Summary & Resources
+
 - Recap what was learned
 - Next steps and further reading
 - Contact or support information
@@ -502,10 +543,12 @@ Build complexity gradually:
 Aim for **60% markdown, 40% code** in educational notebooks.
 
 **Example structure for 20 cells:**
+
 - 12 markdown cells (explanations, headers, TOC)
 - 8 code cells (demonstrations, examples)
 
 **Balance techniques:**
+
 - Pair explanation with demonstration
 - Follow code with commentary
 - Use markdown to provide context before code
@@ -514,6 +557,7 @@ Aim for **60% markdown, 40% code** in educational notebooks.
 ## Engagement Techniques
 
 ### Use Emojis Strategically
+
 ```markdown
 ## 🚀 Getting Started
 ## 💡 Key Insight
@@ -525,12 +569,14 @@ Aim for **60% markdown, 40% code** in educational notebooks.
 Don't overuse—one per major section header is plenty.
 
 ### Create Visual Interest
+
 - Use tables for comparisons
 - Use code blocks in markdown for examples
 - Use horizontal rules (`---`) to separate major sections
 - Use blockquotes (`>`) for important notes
 
 ### Tell a Story
+
 ```markdown
 ## The Problem
 
@@ -546,6 +592,7 @@ Let's break this down step by step...
 ```
 
 ### Ask Rhetorical Questions
+
 ```markdown
 ## Why Does This Matter?
 
@@ -561,6 +608,7 @@ Without proper validation, three things can happen...
 Unlike older patterns, **no Cell 1 initialization** is needed:
 
 **✅ Modern pattern (current):**
+
 ```javascript
 // Import only what you need, when you need it
 const { testBlock } = await import('/scripts/ipynb-helpers.js');
@@ -569,11 +617,13 @@ return block;
 ```
 
 **❌ Old pattern (outdated):**
+
 ```javascript
 // Cell 1: Initialize jsdom, setup globals... (not needed anymore)
 ```
 
 **Key points:**
+
 - Each cell can import independently
 - Pure JavaScript examples need no imports
 - EDS helpers imported only when using blocks
@@ -582,16 +632,20 @@ return block;
 ## Common Notebook Types
 
 ### 1. Tutorial Notebook
+
 **Purpose:** Step-by-step learning
 **Structure:**
+
 - Introduction with learning objectives
 - Progressive parts building on each other
 - Exercises or "try it yourself" moments
 - Summary with next steps
 
 ### 2. Blog Post Notebook
+
 **Purpose:** Engaging content with demonstrations
 **Structure:**
+
 - Catchy title and introduction
 - Table of contents for scanning
 - Mix of explanation and live examples
@@ -599,8 +653,10 @@ return block;
 - Contact or social links
 
 ### 3. Concept Explanation Notebook
+
 **Purpose:** Deep dive into a single idea
 **Structure:**
+
 - Problem statement
 - Solution explanation
 - How it works (technical details)
@@ -608,8 +664,10 @@ return block;
 - Best practices and gotchas
 
 ### 4. Reference Guide Notebook
+
 **Purpose:** Quick lookup and examples
 **Structure:**
+
 - Comprehensive table of contents
 - Short, focused sections
 - Code examples for each feature
@@ -617,8 +675,10 @@ return block;
 - Less narrative, more reference
 
 ### 5. Interactive Demo Notebook
+
 **Purpose:** Showcase capabilities
 **Structure:**
+
 - "What can it do?" introduction
 - Live demonstrations of features
 - Minimal explanation, maximum showing
@@ -630,29 +690,34 @@ return block;
 When creating notebooks from existing text content:
 
 ### 1. Analyze the Content
+
 - Identify main topics and subtopics
 - Find natural breaking points for parts
 - Note examples or use cases
 - Extract key concepts and definitions
 
 ### 2. Extract Key Points
+
 - What are the 3-5 main ideas?
 - What examples illustrate these ideas?
 - What should readers remember?
 - What can be demonstrated with code?
 
 ### 3. Organize Into Parts
+
 - Part 1: Introduction and context
 - Part 2-4: Main content (one topic per part)
 - Part 5: Summary and resources
 
 ### 4. Add Interactivity
+
 - Convert examples to executable code
 - Add console.log() for visibility
 - Create return values for display
 - Let users modify and experiment
 
 ### 5. Enhance with Markdown
+
 - Add table of contents
 - Use headers for structure
 - Create tables for comparisons
@@ -698,6 +763,7 @@ When creating notebooks from existing text content:
 - `license` - Content license: MIT, CC BY 4.0, etc (optional)
 
 **⚠️ CRITICAL - Version and Date Management:**
+
 - **ALWAYS update both `version` AND `last-modified` whenever you make ANY change to an .ipynb file**
 - **Version increments:**
   - Major changes (restructuring, new parts): 1.0 → 2.0
@@ -727,6 +793,7 @@ When creating notebooks from existing text content:
 ```
 
 The ipynb-viewer block displays this metadata professionally in the header with:
+
 - Large title and description
 - Author and creation date information
 - Version number
@@ -740,22 +807,26 @@ The ipynb-viewer block displays this metadata professionally in the header with:
 Notebooks can be displayed in multiple modes via ipynb-viewer:
 
 ### 1. Basic Mode (Default)
+
 ```
 | IPynb Viewer |
 |--------------|
 | /notebook.ipynb |
 ```
+
 - All cells visible
 - Scroll through content
 - Manual Run buttons on code cells
 - Good for: Quick reference, scanning content
 
 ### 2. Paged Mode
+
 ```
 | IPynb Viewer (paged) |
 |----------------------|
 | /notebook.ipynb |
 ```
+
 - Full-screen overlay with Start Reading button
 - Previous/Next navigation
 - Smart cell grouping (markdown + code)
@@ -763,22 +834,26 @@ Notebooks can be displayed in multiple modes via ipynb-viewer:
 - Good for: Tutorials, courses, presentations
 
 ### 3. Autorun Mode (NEW)
+
 ```
 | IPynb Viewer (autorun) |
 |------------------------|
 | /notebook.ipynb |
 ```
+
 - Code cells execute automatically
 - No Run buttons (cleaner interface)
 - Output visible by default
 - Good for: Live demonstrations, presentations with pre-validated output
 
 ### 4. Notebook Mode (NEW)
+
 ```
 | IPynb Viewer (notebook) |
 |--------------------------|
 | /notebook.ipynb |
 ```
+
 - Combines paged + autorun + manual documentation
 - Start Reading button opens paged overlay with autorun
 - Read the Manual button for reference docs
@@ -786,11 +861,13 @@ Notebooks can be displayed in multiple modes via ipynb-viewer:
 - Good for: Complete tutorials, courses with reference material
 
 ### 5. Paged + Manual Mode
+
 ```
 | IPynb Viewer (paged, manual) |
 |-------------------------------|
 | /notebook.ipynb |
 ```
+
 - Paged mode + "Read the Manual" button
 - Links to README.mdc documentation
 - Good for: Complex topics with extensive reference docs
@@ -810,6 +887,7 @@ Jump to [error handling section](#error-handling) or [best practices](#best-prac
 ```
 
 **Features:**
+
 - Click links to navigate between pages
 - Searches all pages for target ID
 - Supports `part-X` pattern for direct page access
@@ -821,6 +899,7 @@ Jump to [error handling section](#error-handling) or [best practices](#best-prac
 ## Best Practices Summary
 
 ✅ **Structure:**
+
 - Start with clear introduction
 - Include table of contents
 - Organize into logical parts
@@ -828,30 +907,35 @@ Jump to [error handling section](#error-handling) or [best practices](#best-prac
 - **NEW:** Use pure markdown with auto-wrapping in notebook mode (90% less code!)
 
 ✅ **Content:**
+
 - 60% markdown, 40% code
 - Progressive complexity
 - Engaging, accessible language
 - Clear explanations before code
 
 ✅ **Code:**
+
 - Illustrative, not just functional
 - Clear comments explaining "why"
 - Console output for visibility
 - Return values for display
 
 ✅ **Markdown:**
+
 - Headers with optional emojis
 - Tables for comparisons
 - Lists for key points
 - Links for navigation and resources
 
 ✅ **Engagement:**
+
 - Tell a story
 - Ask rhetorical questions
 - Show, don't just tell
 - Make it interactive
 
 ❌ **Avoid:**
+
 - Technical jargon without explanation
 - Long code blocks without context
 - Too much code, not enough explanation
@@ -866,6 +950,7 @@ For more detailed information, see:
 - **[CONTENT_PATTERNS.md](CONTENT_PATTERNS.md)** - Detailed content organization strategies
 
 For technical implementation details:
+
 - **ipynb-viewer block**: `blocks/ipynb-viewer/README.md`
 - **Jupyter testing documentation**: `docs/for-ai/explaining-jupyter.md`
 - **Testing skill** (different purpose): `.claude/skills/jupyter-notebook-testing/`
@@ -889,6 +974,7 @@ For technical implementation details:
 **CRITICAL**: Every line in a Jupyter notebook cell's source array must end with `\n` (newline character) except the last line. This is essential for educational notebooks where students navigate via VSCode outline.
 
 **Why it matters for educational notebooks:**
+
 - Students rely on VSCode outline sidebar for navigation
 - Parts/sections structure must be visible and navigable
 - Without newlines, sub-sections don't appear in outline when parts are expanded
@@ -896,6 +982,7 @@ For technical implementation details:
 - Tutorial structure needs clear hierarchy
 
 **Problem:**
+
 ```python
 # ❌ WRONG - Prevents outline navigation
 "source": [
@@ -905,6 +992,7 @@ For technical implementation details:
 ```
 
 **Solution:**
+
 ```python
 # ✅ CORRECT - Enables full outline navigation
 "source": [
@@ -924,6 +1012,7 @@ For technical implementation details:
 ```
 
 **Key formatting rules:**
+
 1. Every line ends with `\n` except the last line in source array
 2. Part headings (`##`) need newlines before and after
 3. Sub-section headings (`###`, `####`) need newlines before and after
@@ -931,6 +1020,7 @@ For technical implementation details:
 5. Blank lines between content blocks: `"\n"`
 
 **For educational notebooks specifically:**
+
 - Use `##` for main parts (appears at top level in outline)
 - Use `###` for sub-sections (nested under parts)
 - Proper newlines enable Table of Contents navigation
@@ -938,12 +1028,14 @@ For technical implementation details:
 - Essential for long tutorials with multiple sections
 
 **Common symptoms in educational notebooks:**
+
 - Students report "can't find the exercise section"
 - Outline shows parts but no sub-topics when expanded
 - Navigation feels broken or incomplete
 - "Where is Part 4, Exercise 2?" → it's hidden due to missing newlines
 
 **See also:**
+
 - `LEARNINGS.md` - "Jupyter Notebook Cell Source Must Use Proper Newlines"
 - `blocks/ipynb-viewer/README.md` - Markdown Cells section
 - `docs/for-ai/explaining-educational-notebooks.md` - Best Practices section

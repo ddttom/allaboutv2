@@ -296,6 +296,7 @@ These attributes control behavior rather than display.
 ```
 
 **Example (feature branch):**
+
 ```json
 {
   "metadata": {

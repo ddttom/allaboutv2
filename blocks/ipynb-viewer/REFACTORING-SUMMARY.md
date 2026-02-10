@@ -27,6 +27,7 @@ blocks/ipynb-viewer/overlay/
 ## Key Architecture Changes
 
 ### Before (Nested Overlays)
+
 ```
 createPagedOverlay()
   ├─ Creates overlay with toolbar
@@ -37,6 +38,7 @@ createPagedOverlay()
 ```
 
 **Problems:**
+
 - Duplicate toolbars
 - Nested overlay stacking
 - Complex state management
@@ -44,6 +46,7 @@ createPagedOverlay()
 - Duplicate code
 
 ### After (Unified Overlay)
+
 ```
 createUnifiedOverlay()
   ├─ Single overlay container
@@ -55,6 +58,7 @@ createUnifiedOverlay()
 ```
 
 **Benefits:**
+
 - ✅ One toolbar, no duplication
 - ✅ Content switching, no nesting
 - ✅ Unified state management
@@ -66,6 +70,7 @@ createUnifiedOverlay()
 ### 1. Navigation State Manager (`navigation-state.js`)
 
 Manages:
+
 - Current view type (notebook/markdown/help)
 - View-specific data (page index, markdown URL, etc.)
 - Navigation history (combined cells + markdown)
@@ -87,26 +92,31 @@ navigationState.switchView('markdown', {
 Creates single toolbar that adapts to current view:
 
 **Home Button:**
+
 - Notebook view: Go to opening page
 - Markdown view: Return to notebook
 
 **TOC Button:**
+
 - Notebook view: Show parts/chapters
 - Markdown view: Show headings
 
 **History/Bookmarks:**
+
 - Combined across all views
 - Clicking switches to appropriate view
 
 ### 3. Content Renderers
 
 **Notebook Renderer** (`notebook-renderer.js`):
+
 - Renders paged cells
 - Handles pagination
 - Cell execution
 - Returns: `{ updatePage, navigateToCell, navigateToHeading }`
 
 **Markdown Renderer** (`markdown-renderer.js`):
+
 - Fetches from GitHub
 - Converts markdown to HTML
 - Handles links (internal .md files switch view)
@@ -115,6 +125,7 @@ Creates single toolbar that adapts to current view:
 ### 4. Unified Overlay (`unified-overlay.js`)
 
 Main controller:
+
 - Creates single overlay container
 - Manages toolbar
 - Switches content renderers based on navigationState
@@ -161,7 +172,7 @@ homeButton.onClick = () => {
 
 ## What Still Needs to Be Done
 
-### Remaining Tasks:
+### Remaining Tasks
 
 1. **Extract Helper Functions** - Move these from main file to utils or make them importable:
    - `createPageGroups()` - Groups cells into pages
@@ -170,6 +181,7 @@ homeButton.onClick = () => {
    - `executeCodeCell()` - Executes code cells
 
 2. **Update `decorate()` Function** - Replace old overlay calls:
+
    ```javascript
    // OLD:
    const overlay = createPagedOverlay(...);
@@ -197,10 +209,12 @@ homeButton.onClick = () => {
 ## File Size Comparison
 
 **Before:**
+
 - `ipynb-viewer.js`: ~4,700 lines
 - All in one file
 
 **After:**
+
 - `ipynb-viewer.js`: ~3,400 lines (after removing legacy)
 - `overlay/navigation-state.js`: ~250 lines
 - `overlay/toolbar.js`: ~350 lines
@@ -223,6 +237,7 @@ homeButton.onClick = () => {
 ## Next Steps
 
 Ready to:
+
 1. Extract remaining helper functions
 2. Wire up the unified overlay in `decorate()`
 3. Test everything in the browser

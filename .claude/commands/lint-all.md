@@ -7,11 +7,13 @@ You are running comprehensive linting checks.
 Run the following commands in sequence:
 
 1. **Lint JavaScript**:
+
    ```bash
    npm run lint:js
    ```
 
 2. **Lint CSS**:
+
    ```bash
    npm run lint:css
    ```

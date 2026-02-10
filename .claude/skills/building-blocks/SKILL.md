@@ -18,11 +18,13 @@ This skill guides you through creating new AEM Edge Delivery blocks or modifying
 This skill should ONLY be invoked from the **content-driven-development** skill during Phase 2 (Implementation).
 
 If you are not already following the CDD process:
+
 - **STOP** - Do not proceed with this skill
 - **Invoke the content-driven-development skill first**
 - The CDD skill will ensure test content and content models are ready before implementation
 
 This skill handles:
+
 - Creating new block files and structure
 - Implementing JavaScript decoration
 - Adding CSS styling
@@ -31,11 +33,13 @@ This skill handles:
 ## Prerequisites
 
 **REQUIRED before using this skill:**
+
 - ✅ Test content must exist (in CMS or local drafts)
 - ✅ Content model must be defined
 - ✅ Test content URL must be available
 
 **Information needed:**
+
 1. **Block name**: What should the block be called?
 2. **Content model**: The defined structure authors will use
 3. **Test content URL**: Path to test content for development
@@ -57,6 +61,7 @@ This skill handles:
 **Before proceeding, confirm with the user:**
 
 "Do you have:
+
 - ✅ Test content created (URL or path)?
 - ✅ Content model defined?
 
@@ -89,11 +94,13 @@ pwd
 ```
 
 If you're in a subdirectory (e.g., `/blocks/hero`), navigate to project root:
+
 ```bash
 cd /Users/tomcranstoun/Documents/GitHub/allaboutV2
 ```
 
 Verify project root markers exist:
+
 ```bash
 ls -la | grep -E "(\.claude|blocks|package\.json|CLAUDE\.md)"
 ```
@@ -143,6 +150,7 @@ Follow patterns and conventions in `resources/css-guidelines.md`:
 **After implementation is complete, invoke the testing-blocks skill:**
 
 The testing-blocks skill will guide you through:
+
 - Writing unit tests for any logic-heavy utilities
 - Browser testing to validate block behavior
 - Taking screenshots for validation and PR documentation
@@ -150,6 +158,7 @@ The testing-blocks skill will guide you through:
 - Verifying GitHub checks pass
 
 Provide the testing-blocks skill with:
+
 - Block name being tested
 - Test content URL (from CDD process)
 - Any variants that need testing
@@ -173,6 +182,7 @@ Author-facing documentation helps content authors understand how to use the bloc
 **When author documentation is needed:**
 
 Almost all blocks should have author-facing documentation. The only exceptions are:
+
 - Deprecated blocks that should no longer be used but can't be removed yet
 - Special-purpose blocks used very infrequently on a need-to-know basis
 - Auto-blocked blocks that shouldn't be used directly by authors
@@ -180,6 +190,7 @@ Almost all blocks should have author-facing documentation. The only exceptions a
 **Maintaining author documentation:**
 
 Author documentation must be kept in sync with the block implementation:
+
 - Update when variants are added, removed, or modified
 - Update when the content structure changes
 - Update when block behavior or functionality changes
@@ -209,6 +220,7 @@ Different projects use different approaches for author documentation:
 **What to include in author documentation:**
 
 The specific content of author documentation varies by project. As an agent:
+
 1. Identify that author documentation needs to be created or updated
 2. Determine which documentation approach the project uses (check for `/tools/sidekick/library.html` as a signal)
 3. Guide the user on what aspects of the block should be documented based on the changes made

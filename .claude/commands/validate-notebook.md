@@ -13,6 +13,7 @@ Comprehensive validation of Jupyter notebooks (.ipynb files) for production depl
 ```
 
 **Examples:**
+
 ```bash
 /validate-notebook docs-navigation.ipynb
 /validate-notebook education.ipynb
@@ -30,6 +31,7 @@ Comprehensive validation of Jupyter notebooks (.ipynb files) for production depl
 ## Activation
 
 This command automatically loads the `ipynb-validator` skill which provides:
+
 - Detailed validation criteria
 - Common issues and fixes
 - Quality scoring system
@@ -47,6 +49,7 @@ Use Skill tool with: ipynb-validator
 ```
 
 The skill provides complete validation guidance including:
+
 - All validation categories and checks
 - Expected patterns and structures
 - Common issues and solutions
@@ -55,10 +58,12 @@ The skill provides complete validation guidance including:
 ### Step 2: Identify Target Notebook
 
 If notebook specified:
+
 - Use provided filename
 - Verify file exists
 
 If no notebook specified:
+
 - Ask: "Which notebook should I validate?"
 - List available .ipynb files if helpful
 
@@ -136,6 +141,7 @@ def validate_smart_links(cells):
 ### Step 5: Structure Validation
 
 Check for:
+
 - Introduction section (cells 0 to first part)
 - Sequential parts with consistent structure
 - Part summaries at end of each part
@@ -147,6 +153,7 @@ Check for:
 **Critical Check: Missing Action Cards**
 
 For each transition cell (cells between parts):
+
 1. Identify transition by pattern: "Part X:" heading with progress indicator
 2. Check for `<!-- action-cards -->` marker
 3. If marker missing: **FAIL** with error message
@@ -154,6 +161,7 @@ For each transition cell (cells between parts):
 5. Validate all action card links resolve
 
 **Detection logic:**
+
 ```python
 def validate_transition_action_cards(cell, cell_idx):
     source = ''.join(cell.get('source', []))
@@ -203,6 +211,7 @@ def validate_transition_action_cards(cell, cell_idx):
 ```
 
 Check for:
+
 - Transition cells between major parts
 - `<!-- action-cards -->` marker present (REQUIRED)
 - 3-6 action card links per transition
@@ -212,6 +221,7 @@ Check for:
 ### Step 7: Part Flow Validation
 
 Check for:
+
 - Sequential part numbering (1, 2, 3, ...)
 - Consistent title format
 - Progress indicators
@@ -221,6 +231,7 @@ Check for:
 ### Step 8: Cell Ordering Validation
 
 Check for:
+
 - Logical cell sequence
 - Summaries after content
 - Transitions before part starts
@@ -229,6 +240,7 @@ Check for:
 ### Step 9: Production Readiness
 
 Check for:
+
 - Complete metadata (title, description, author, etc.)
 - Repository URL configured
 - Valid JSON structure
@@ -271,6 +283,7 @@ def generate_report(results, scores, overall):
 ## Scoring System
 
 **Category Weights:**
+
 - Smart Links: 30%
 - Structure: 25%
 - Transitions: 20%
@@ -278,6 +291,7 @@ def generate_report(results, scores, overall):
 - Cell Ordering: 10%
 
 **Overall Score Interpretation:**
+
 - **90-100**: ✅ Production ready
 - **75-89**: ⚠️  Minor fixes needed
 - **60-74**: ⚠️  Moderate issues
@@ -407,6 +421,7 @@ RECOMMENDATIONS:
 ## Common Issues and Quick Fixes
 
 **Broken Smart Links:**
+
 ```bash
 # Issue: [Getting Started](#) has no matching heading
 # Fix: Either rename link or add heading
@@ -415,18 +430,21 @@ Link: [Getting Started Guide](#)
 ```
 
 **Missing Transitions:**
+
 ```bash
 # Issue: Part starts immediately after previous summary
 # Fix: Add transition cell with action cards
 ```
 
 **Incorrect Cell Order:**
+
 ```bash
 # Issue: Summary appears before content
 # Fix: Move summary cell to end of part
 ```
 
 **Missing Action Cards:**
+
 ```bash
 # Issue: Part 7 transition cell (cell 45) has no <!-- action-cards --> marker
 # Fix: Add marker and 3-6 links to guide readers
@@ -455,6 +473,7 @@ These patterns work everywhere...
 ## Best Practices
 
 ✅ **Do:**
+
 - Test all smart links before deployment
 - Use descriptive, unique link text
 - Include transitions between major parts
@@ -463,6 +482,7 @@ These patterns work everywhere...
 - Complete all metadata fields
 
 ❌ **Don't:**
+
 - Use generic link text like "Click here"
 - Hardcode cell IDs like `#cell-5`
 - Skip transitions between parts
@@ -472,6 +492,7 @@ These patterns work everywhere...
 ## Production Checklist
 
 Before deploying:
+
 - [ ] Run `/validate-notebook`
 - [ ] Overall score ≥ 90
 - [ ] All smart links resolve
