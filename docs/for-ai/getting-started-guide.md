@@ -1,3 +1,13 @@
+---
+title: "EDS Getting Started Guide"
+description: "AI assistant documentation: EDS Getting Started Guide"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # EDS Getting Started Guide
 
 ## Quick Reference for Progressive Learning Paths

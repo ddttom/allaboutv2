@@ -1,3 +1,13 @@
+---
+title: "Vue Slide Builder Block"
+description: "Documentation for the vue-slide-builder EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Vue Slide Builder Block
 
 ## Overview

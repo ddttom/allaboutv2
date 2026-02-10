@@ -1,3 +1,13 @@
+---
+title: "Video Block - Usage Examples"
+description: "Usage examples for the video EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Video Block - Usage Examples
 
 This document shows how to use the video block in Google Docs to embed YouTube, Vimeo, and MP4 videos with lazy loading and optional poster images.

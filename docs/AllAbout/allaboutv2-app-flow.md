@@ -1,3 +1,13 @@
+---
+title: "AllAboutV2 Application Flow Document"
+description: "AllAboutV2 project documentation: AllAboutV2 Application Flow Document"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # AllAboutV2 Application Flow Document
 
 ## Overview

@@ -1,3 +1,13 @@
+---
+title: "Agents Guide"
+description: "Instructions for AI agents working with the AllAboutV2 Adobe EDS project"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # AGENTS.md
 
 This project is a website built with Edge Delivery Services in Adobe Experience Manager Sites as a Cloud Service. As an agent, follow the instructions in this file to deliver code based on Adobe's standards for fast, easy-to-author, and maintainable web experiences.

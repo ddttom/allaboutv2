@@ -1,3 +1,13 @@
+---
+title: "AllAbout V2 Project"
+description: "Adobe Edge Delivery Services website with custom Cloudflare worker and blog-focused homepage"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # AllAbout V2 Project
 
 **Author:** Tom Cranstoun  

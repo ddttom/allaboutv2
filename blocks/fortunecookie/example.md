@@ -1,3 +1,13 @@
+---
+title: "Fortune Cookie Block Examples"
+description: "Usage examples for the fortunecookie EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Fortune Cookie Block Examples
 
 This page demonstrates various usage examples of the Fortune Cookie block.

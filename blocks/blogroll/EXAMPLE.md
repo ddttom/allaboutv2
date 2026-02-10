@@ -1,3 +1,13 @@
+---
+title: "Blogroll Block - Content Author Guide"
+description: "Usage examples for the blogroll EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Blogroll Block - Content Author Guide
 
 This guide shows content authors how to use the Blogroll block in their pages.

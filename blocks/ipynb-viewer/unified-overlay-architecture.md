@@ -1,3 +1,13 @@
+---
+title: "Unified Overlay Architecture Design"
+description: "Architecture for the unified overlay system in the ipynb-viewer block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Unified Overlay Architecture Design
 
 ## Current Problems

@@ -1,3 +1,13 @@
+---
+title: "Cloudflare Configuration Reference"
+description: "Complete Cloudflare CDN configuration and Adobe EDS integration for allabout.network"
+author: Tom Cranstoun
+created: 2025-12-09
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # allabout.network Cloudflare Configuration Reference
 
 ## Document Purpose

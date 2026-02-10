@@ -1,3 +1,13 @@
+---
+title: "Quote Block - Usage Examples"
+description: "Usage examples for the quote EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Quote Block - Usage Examples
 
 ## How to Use in Google Docs

@@ -1,3 +1,13 @@
+---
+title: "Common Page Patterns Demo Site"
+description: "Production-ready HTML files demonstrating eight common page patterns for AI-friendly web design"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Common Page Patterns Demo Site
 
 This directory contains production-ready HTML files demonstrating eight common page patterns for AI-friendly web design.

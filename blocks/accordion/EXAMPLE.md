@@ -1,3 +1,13 @@
+---
+title: "Accordion Block - Usage Examples"
+description: "Usage examples for the accordion EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Accordion Block - Usage Examples
 
 This document shows how to use the accordion block in Google Docs to create collapsible content sections. Perfect for FAQs, documentation, step-by-step guides, and any content that benefits from progressive disclosure.

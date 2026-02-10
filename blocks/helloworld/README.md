@@ -1,3 +1,13 @@
+---
+title: "Hello World Block"
+description: "Documentation for the helloworld EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Hello World Block
 
 A minimal starter block demonstrating the fundamental structure and patterns for Adobe Edge Delivery Services (EDS) block development. This example serves as a learning resource and template for creating new blocks.

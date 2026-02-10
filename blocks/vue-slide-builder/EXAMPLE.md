@@ -1,3 +1,13 @@
+---
+title: "Vue Slide Builder Examples"
+description: "Usage examples for the vue-slide-builder EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Vue Slide Builder Examples
 
 This document provides examples for content authors on how to use the Vue Slide Builder block in Adobe Edge Delivery Services.

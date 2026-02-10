@@ -1,3 +1,13 @@
+---
+title: "EDS Component Design Philosophy"
+description: "Implementation guide: EDS Component Design Philosophy"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # EDS Component Design Philosophy
 
 ## Bridging Simplicity and Sophistication

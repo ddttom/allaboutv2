@@ -1,3 +1,13 @@
+---
+title: "Backend Structure Guidelines"
+description: "*Related: [Tech Stack Guidelines](tech-stack.md) | [Security Checklist](security-checklist.md) | [App Flow Guidelines](app-flow.md)*"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Backend Structure Guidelines
 
 *Related: [Tech Stack Guidelines](tech-stack.md) | [Security Checklist](security-checklist.md) | [App Flow Guidelines](app-flow.md)*

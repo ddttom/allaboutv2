@@ -1,3 +1,13 @@
+---
+title: "DAM Block Usage Examples"
+description: "Usage examples for the dam EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # DAM Block Usage Examples
 
 The DAM (Digital Asset Management) block extracts metadata from tabular data and displays it as formatted JSON. This guide shows content authors how to use the block effectively.

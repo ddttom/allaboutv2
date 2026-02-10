@@ -1,3 +1,13 @@
+---
+title: "New Unified Overlay System - Ready to Integrate"
+description: "New overlay implementation status for the ipynb-viewer block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # New Unified Overlay System - Ready to Integrate
 
 ## ✅ Complete - All Modules Built

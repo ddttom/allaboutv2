@@ -1,3 +1,13 @@
+---
+title: "Learnings"
+description: "Critical insights and actionable guidance for AI assistants working on this project"
+author: Tom Cranstoun
+created: 2026-01-14
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Learnings
 
 Critical insights for AI assistants working on this project. Focus: actionable guidance, not historical changelog.

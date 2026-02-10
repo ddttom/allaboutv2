@@ -1,3 +1,13 @@
+---
+title: "Index Block Examples"
+description: "Usage examples for the index EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Index Block Examples
 
 This page demonstrates various usage patterns for the Index block, which automatically generates a table of contents by scanning all headings (h1-h6) on the page.

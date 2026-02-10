@@ -1,3 +1,13 @@
+---
+title: "Columns Block"
+description: "Documentation for the columns EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Columns Block
 
 A flexible multi-column layout system for organizing content side-by-side. Automatically detects column count and creates responsive layouts that stack on mobile and display horizontally on desktop. Perfect for feature comparisons, text + image layouts, and multi-column content organization.

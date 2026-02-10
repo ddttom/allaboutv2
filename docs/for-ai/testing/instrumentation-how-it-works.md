@@ -1,3 +1,13 @@
+---
+title: "How the JavaScript Performance Instrumentation System Works"
+description: "Testing guide: How the JavaScript Performance Instrumentation System Works"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # How the JavaScript Performance Instrumentation System Works
 
 **Related Documentation:** [Debug Guide](debug.md) | [EDS Architecture and Testing Guide](eds-architecture-and-testing-guide.md) | [Block Architecture Standards](../implementation/block-architecture-standards.md) | [EDS Native Testing Standards](eds-native-testing-standards.md)

@@ -1,3 +1,13 @@
+---
+title: "Fortune Cookie Block"
+description: "Documentation for the fortunecookie EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Fortune Cookie Block
 
 A simple, lightweight block that displays random fortune messages fetched from a JSON data source. Perfect for adding a touch of delight to footer sections or any part of your EDS pages.

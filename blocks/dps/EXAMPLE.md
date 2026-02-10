@@ -1,3 +1,13 @@
+---
+title: "DPS Block - Usage Examples"
+description: "Usage examples for the dps EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # DPS Block - Usage Examples
 
 This document provides practical examples for content authors using the Dynamic Presentation System (DPS) block.

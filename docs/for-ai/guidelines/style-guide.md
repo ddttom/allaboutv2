@@ -1,3 +1,13 @@
+---
+title: "CSS Naming Convention Style Guide"
+description: "AI assistant guideline: CSS Naming Convention Style Guide"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # CSS Naming Convention Style Guide
 
 *Related: [Frontend Guidelines](frontend-guidelines.md) | [Design System](design-system.md) | [Block Architecture Standards](../implementation/block-architecture-standards.md)*

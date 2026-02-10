@@ -1,3 +1,13 @@
+---
+title: "Creating Slide Decks with the Dynamic Presentation System (DPS)"
+description: "User documentation for the dps block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Creating Slide Decks with the Dynamic Presentation System (DPS)
 
 The Dynamic Presentation System (DPS) is a powerful presentation framework that transforms structured content into an interactive presentation with advanced features like image sequences, presenter notes, and timer controls.

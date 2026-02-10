@@ -1,3 +1,13 @@
+---
+title: "Embed Block"
+description: "Documentation for the embed EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Embed Block
 
 A universal content embedding component for seamlessly integrating third-party media and social content directly on your pages. Supports YouTube, Vimeo, Twitter, and generic iframe embeds with lazy loading, performance optimization, and optional placeholder images for improved Core Web Vitals scores.

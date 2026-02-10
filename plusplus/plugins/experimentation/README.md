@@ -1,3 +1,13 @@
+---
+title: "AEM Edge Delivery Services Experimentation"
+description: "AEM experimentation plugin for A/B testing and audience targeting"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # AEM Edge Delivery Services Experimentation
 
 The AEM Experimentation plugin helps you quickly set up experimentation and segmentation on your AEM project. 

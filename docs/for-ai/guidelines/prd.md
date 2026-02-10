@@ -1,3 +1,13 @@
+---
+title: "EDS Application Product Requirements Document"
+description: "*Related: [Tech Stack](tech-stack.md) | [App Flow](app-flow.md) | [Security Checklist](security-checklist.md)*"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # EDS Application Product Requirements Document
 
 *Related: [Tech Stack](tech-stack.md) | [App Flow](app-flow.md) | [Security Checklist](security-checklist.md)*

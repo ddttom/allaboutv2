@@ -1,3 +1,13 @@
+---
+title: "Text Block - Google Docs Example"
+description: "Usage examples for the text EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Text Block - Google Docs Example
 
 ## How to Use in Google Docs

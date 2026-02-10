@@ -1,3 +1,13 @@
+---
+title: "EDS Documentation Navigation Flows"
+description: "AI assistant documentation: EDS Documentation Navigation Flows"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # EDS Documentation Navigation Flows
 
 ## Text-Based Relationship Mapping and User Journey Visualization

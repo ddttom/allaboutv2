@@ -1,3 +1,13 @@
+---
+title: "Table Block"
+description: "Documentation for the table EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Table Block
 
 An accessible, responsive table component that enhances standard HTML tables with ARIA attributes, flexible styling variations, and mobile-friendly design. Perfect for data presentation, comparisons, pricing tables, and structured information displays.

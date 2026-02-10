@@ -1,3 +1,13 @@
+---
+title: "IPynb Viewer - Usage Examples"
+description: "Usage examples for the ipynb-viewer EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # IPynb Viewer - Usage Examples
 
 ## Example 1: Basic Notebook Display

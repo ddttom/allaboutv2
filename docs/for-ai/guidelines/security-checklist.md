@@ -1,3 +1,13 @@
+---
+title: "EDS Security Checklist"
+description: "*Related: [Backend Structure](backend-structure.md) | [Tech Stack](tech-stack.md) | [Frontend Guidelines](frontend-guidelines.md)*"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # EDS Security Checklist
 
 *Related: [Backend Structure](backend-structure.md) | [Tech Stack](tech-stack.md) | [Frontend Guidelines](frontend-guidelines.md)*

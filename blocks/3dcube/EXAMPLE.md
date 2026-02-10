@@ -1,3 +1,13 @@
+---
+title: "3D Cube Block Examples"
+description: "Usage examples for the 3dcube EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # 3D Cube Block Examples
 
 ## Basic Product Showcase

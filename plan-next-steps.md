@@ -1,3 +1,13 @@
+---
+title: "Implementation Next Steps"
+description: "Immediate technical setup and architecture decisions for the management system"
+author: Tom Cranstoun
+created: 2024-12-01
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Implementation Next Steps
 
 ## Immediate Actions (This Week)

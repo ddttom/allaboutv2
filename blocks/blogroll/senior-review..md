@@ -1,3 +1,13 @@
+---
+title: "Senior Developer Review: Blogroll Block"
+description: "Senior review of the blogroll block implementation"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Senior Developer Review: Blogroll Block
 
 ## Overall Summary

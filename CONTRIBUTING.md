@@ -1,3 +1,13 @@
+---
+title: "Contributing Guide"
+description: "Guidelines for contributing to the AllAboutV2 Project Helix codebase"
+author: Adobe
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Contributing to Project Helix
 
 This project (like almost all of Project Helix) is an Open Development project and welcomes contributions from everyone who finds it useful or lacking.

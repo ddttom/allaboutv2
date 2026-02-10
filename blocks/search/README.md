@@ -1,3 +1,13 @@
+---
+title: "Search Block"
+description: "Documentation for the search EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Search Block
 
 A powerful site-wide search block that provides real-time search functionality with intelligent ranking and result highlighting. The block fetches data from query-index.json, filters results based on search terms, and displays them with visual highlighting of matched terms.

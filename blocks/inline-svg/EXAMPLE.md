@@ -1,3 +1,13 @@
+---
+title: "Inline SVG Examples"
+description: "Usage examples for the inline-svg EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Inline SVG Examples
 
 This document provides content authoring examples for the Inline SVG block. Use these patterns in your Google Docs or Microsoft Word documents.

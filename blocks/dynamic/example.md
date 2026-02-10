@@ -1,3 +1,13 @@
+---
+title: "Dynamic Block Examples"
+description: "Usage examples for the dynamic EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Dynamic Block Examples
 
 This page demonstrates various usage patterns for the Dynamic block, which automatically fetches and displays content from the query-index.json file.

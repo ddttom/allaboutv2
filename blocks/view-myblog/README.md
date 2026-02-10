@@ -1,3 +1,13 @@
+---
+title: "View MyBlog Block"
+description: "Documentation for the view-myblog EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # View MyBlog Block
 
 A dynamic blog viewer that fetches and displays blog content from a structured JSON feed. Automatically generates latest posts, filters index pages, provides category navigation, and adapts layout based on content structure. Perfect for blog landing pages, content hubs, and documentation portals.

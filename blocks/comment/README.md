@@ -1,3 +1,13 @@
+---
+title: "Comment Block"
+description: "Documentation for the comment EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Comment Block
 
 A special-purpose authoring utility block for adding editorial comments, notes, and annotations to content documents that are visible in the authoring environment but completely hidden from the published website. Perfect for content planning, collaboration notes, and internal documentation.

@@ -1,3 +1,13 @@
+---
+title: "Dashboard Block"
+description: "Documentation for the dashboard EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Dashboard Block
 
 A comprehensive content management dashboard that displays site content status, review dates, and expiry tracking with RAG (Red, Amber, Green) status indicators. Perfect for content governance, editorial calendars, and site-wide content auditing.

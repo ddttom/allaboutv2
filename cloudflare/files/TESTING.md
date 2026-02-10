@@ -1,3 +1,13 @@
+---
+title: "Testing Guide for Cloudflare Worker"
+description: "Two-file testing system and pure function approach for the Cloudflare Worker"
+author: Tom Cranstoun
+created: 2025-12-01
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Testing Guide for Cloudflare Worker
 
 ## ⚠️ CRITICAL: The Two-File Rule

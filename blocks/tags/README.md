@@ -1,3 +1,13 @@
+---
+title: "Tags javascript"
+description: "Documentation for the tags EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Tags javascript
 
 The decorate function is designed to dynamically add metadata tags to a specified HTML block on a web page. It operates by querying the document for a specific block element (.tags.block) and checking for metadata in the global site configuration object (window.siteConfig). Specifically, it looks for content technology and category metadata.

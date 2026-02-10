@@ -1,3 +1,13 @@
+---
+title: "React Slide Builder Examples"
+description: "Usage examples for the react-slide-builder EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # React Slide Builder Examples
 
 This document provides examples for content authors on how to use the React Slide Builder block in Adobe Edge Delivery Services.

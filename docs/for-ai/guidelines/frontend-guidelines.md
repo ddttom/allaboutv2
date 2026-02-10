@@ -1,3 +1,13 @@
+---
+title: "Frontend Development Guidelines"
+description: "AI assistant guideline: Frontend Development Guidelines"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Frontend Development Guidelines
 
 *Related: [EDS Overview](../eds.md) | [Block Architecture Standards](../block-architecture-standards.md) | [Design Philosophy Guide](../design-philosophy-guide.md)*

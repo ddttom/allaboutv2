@@ -1,3 +1,13 @@
+---
+title: "Tabs Block"
+description: "Documentation for the tabs EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Tabs Block
 
 A fully accessible tabbed interface component for organizing related content into separate panels. Only one tab panel is visible at a time, with click interaction to switch between tabs. Perfect for content organization, product features, FAQs, and multi-section information displays.

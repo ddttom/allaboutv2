@@ -1,3 +1,13 @@
+---
+title: "AI text for EDS-Native Pattern Testing Standards"
+description: "Testing guide: AI text for EDS-Native Pattern Testing Standards"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # AI text for EDS-Native Pattern Testing Standards
 
 *Related: [EDS Architecture and Testing Guide](eds-architecture-and-testing-guide.md) | [Block Architecture Standards](../implementation/block-architecture-standards.md) | [Debug Guide](debug.md)*

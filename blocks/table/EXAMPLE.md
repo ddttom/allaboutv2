@@ -1,3 +1,13 @@
+---
+title: "Table Block - Usage Examples"
+description: "Usage examples for the table EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Table Block - Usage Examples
 
 This document shows how to use the table block in Google Docs to create accessible, responsive tables for data presentation, comparisons, and structured information. Perfect for pricing plans, feature comparisons, specifications, and any tabular data.

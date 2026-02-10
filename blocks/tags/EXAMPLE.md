@@ -1,3 +1,13 @@
+---
+title: "Tags Block - Google Docs Example"
+description: "Usage examples for the tags EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Tags Block - Google Docs Example
 
 ## How to Use in Google Docs

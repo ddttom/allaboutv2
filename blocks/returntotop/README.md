@@ -1,3 +1,13 @@
+---
+title: "Return to Top Block"
+description: "Documentation for the returntotop EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Return to Top Block
 
 A lightweight, accessible scroll-to-top button that appears after scrolling down the page. Provides users with a quick way to return to the top of long documents without manual scrolling. Perfect for long-form content, blog posts, documentation, and multi-section pages.

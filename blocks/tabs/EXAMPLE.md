@@ -1,3 +1,13 @@
+---
+title: "Tabs Block - Usage Examples"
+description: "Usage examples for the tabs EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Tabs Block - Usage Examples
 
 This document shows how to use the tabs block in Google Docs to create accessible tabbed interfaces for organizing related content. Perfect for product features, documentation sections, FAQs, and multi-section information displays.

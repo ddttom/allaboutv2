@@ -1,3 +1,13 @@
+---
+title: "Code of Conduct"
+description: "Adobe code of conduct for open and welcoming project participation"
+author: Adobe
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Adobe Code of Conduct
 
 ## Our Pledge

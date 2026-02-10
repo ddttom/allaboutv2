@@ -1,3 +1,13 @@
+---
+title: "IPynb Viewer Block"
+description: "Documentation for the ipynb-viewer EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # IPynb Viewer Block
 
 Display and execute Jupyter notebook (.ipynb) files directly in your EDS site with interactive JavaScript execution capabilities.

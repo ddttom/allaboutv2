@@ -1,3 +1,13 @@
+---
+title: "Content Dashboard Guide"
+description: "Sample EDS dashboard block from the plusplus boilerplate"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Content Dashboard Guide
 
 This dashboard helps you keep track of your published pages.  It provides a quick overview of each page's status, making it easy to see what needs attention.

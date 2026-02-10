@@ -1,3 +1,13 @@
+---
+title: "Jupyter Notebook Testing for EDS Blocks - Browser Only"
+description: "AI assistant documentation: Jupyter Notebook Testing for EDS Blocks - Browser Only"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Jupyter Notebook Testing for EDS Blocks - Browser Only
 
 *Related: [EDS Native Testing Standards](testing/eds-native-testing-standards.md) | [Block Architecture Standards](implementation/block-architecture-standards.md) | [Debug Guide](testing/debug.md)*

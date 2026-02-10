@@ -1,3 +1,13 @@
+---
+title: "Jupyter Notebook Templates"
+description: "This directory contains templates for creating different types of Jupyter notebooks in the AllAboutV2 project."
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Jupyter Notebook Templates
 
 This directory contains templates for creating different types of Jupyter notebooks in the AllAboutV2 project.

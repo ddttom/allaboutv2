@@ -1,3 +1,13 @@
+---
+title: "[Component Name] - Advanced Build Component"
+description: "Implementation guide: [Component Name] - Advanced Build Component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # [Component Name] - Advanced Build Component
 
 *Related: [Complex EDS Blocks Guide](complex-eds-blocks-guide.md) | [Build Blocks Clarification](build-blocks-clarification.md) | [Block Architecture Standards](block-architecture-standards.md)*

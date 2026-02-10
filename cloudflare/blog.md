@@ -1,3 +1,13 @@
+---
+title: "Architecting Testable Cloudflare Workers for Adobe EDS"
+description: "Case study on building reliable, testable edge logic for Adobe EDS with SEO automation"
+author: Tom Cranstoun
+created: 2025-12-12
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Case Study \- Architecting Testable Cloudflare Workers for Adobe EDS
 
 | bio |  |

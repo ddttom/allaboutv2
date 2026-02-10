@@ -1,3 +1,13 @@
+---
+title: "Centreblock"
+description: "Documentation for the centreblock EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Centreblock
 
 A simple, lightweight layout block for centering content vertically and horizontally on the page. Provides consistent spacing and centered text alignment with minimal styling overhead. Perfect for hero sections, feature highlights, call-to-action elements, and standalone announcements.

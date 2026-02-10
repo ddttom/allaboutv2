@@ -1,3 +1,13 @@
+---
+title: "Bio Block - Google Docs Examples"
+description: "Usage examples for the bio EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Bio Block - Google Docs Examples
 
 This document shows how to create bio blocks in Google Docs. The bio block displays author information with an image and bio text.

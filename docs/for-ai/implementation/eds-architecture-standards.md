@@ -1,3 +1,13 @@
+---
+title: "EDS Architecture Standards Guide"
+description: "Implementation guide: EDS Architecture Standards Guide"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # EDS Architecture Standards Guide
 
 **Related Documentation:** [Block Architecture Standards](block-architecture-standards.md) | [EDS Overview](../eds.md) | [Raw EDS Blocks Guide](raw-eds-blocks-guide.md) | [Design Philosophy Guide](design-philosophy-guide.md)

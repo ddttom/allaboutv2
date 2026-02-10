@@ -1,3 +1,13 @@
+---
+title: "License"
+description: "License terms for the AEM experimentation plugin"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
                                  Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/

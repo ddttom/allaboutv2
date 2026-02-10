@@ -1,3 +1,13 @@
+---
+title: "Grid Block"
+description: "Documentation for the grid EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Grid Block
 
 A versatile, CSS-only grid layout system providing multiple responsive grid patterns for organizing content. The grid block supports various layout types including two-column layouts, logo grids, icon cards, bulleted lists, and image galleries.

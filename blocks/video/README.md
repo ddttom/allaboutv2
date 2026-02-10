@@ -1,3 +1,13 @@
+---
+title: "Video Block"
+description: "Documentation for the video EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Video Block
 
 An embedded video player block supporting YouTube, Vimeo, and native MP4 videos with lazy loading, optional poster images, and autoplay capabilities. Optimized for performance with IntersectionObserver-based loading.

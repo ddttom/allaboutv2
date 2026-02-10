@@ -1,3 +1,13 @@
+---
+title: "Blogroll Block"
+description: "Documentation for the blogroll EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Blogroll Block
 
 A versatile component for displaying blog post listings with intelligent filtering, series grouping, and dual display modes. Fetches posts from query-index.json and supports path-based filtering, series detection, and compact floating panel view.

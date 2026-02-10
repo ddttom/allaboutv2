@@ -1,3 +1,13 @@
+---
+title: "Build vs Blocks Directory Structure"
+description: "Implementation guide: Build vs Blocks Directory Structure"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Build vs Blocks Directory Structure
 
 **Related Documentation:** [Complex EDS Blocks Guide](complex-eds-blocks-guide.md) | [EDS Architecture Standards](eds-architecture-standards.md) | [Design Philosophy Guide](design-philosophy-guide.md) | [Build Component Template](build-component-template.md)

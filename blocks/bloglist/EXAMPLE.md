@@ -1,3 +1,13 @@
+---
+title: "Bloglist Block - Usage Examples"
+description: "Usage examples for the bloglist EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Bloglist Block - Usage Examples
 
 This document shows how to use the bloglist block in Google Docs. The bloglist block automatically displays a curated list of blog posts from the site's query-index.json.

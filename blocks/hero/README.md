@@ -1,3 +1,13 @@
+---
+title: "Hero Block"
+description: "Documentation for the hero EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Hero Block
 
 A responsive hero block that displays large banner images with optional text overlays. The block intelligently handles responsive images by merging mobile and desktop image sources into a single picture element.

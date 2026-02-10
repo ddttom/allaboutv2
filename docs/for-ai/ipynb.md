@@ -1,3 +1,13 @@
+---
+title: "Testing EDS Blocks with Jupyter Notebooks: A Developer's Playground"
+description: "AI assistant documentation: Testing EDS Blocks with Jupyter Notebooks: A Developer's Playground"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Testing EDS Blocks with Jupyter Notebooks: A Developer's Playground
 
 > **📢 DEPRECATION NOTICE:** This document is superseded by [explaining-jupyter.md](explaining-jupyter.md) which provides more comprehensive and up-to-date information on Jupyter notebook testing for EDS blocks.

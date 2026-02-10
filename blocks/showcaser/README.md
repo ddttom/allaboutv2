@@ -1,3 +1,13 @@
+---
+title: "Showcaser"
+description: "Documentation for the showcaser EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Showcaser
 
 The Showcaser block displays a visually appealing showcase for code snippets in a book-like format, with the ability to copy code to the clipboard, expand/collapse long code snippets, and a "Return to Menu" button for easy navigation back to the top of the Showcaser.

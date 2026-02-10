@@ -1,3 +1,13 @@
+---
+title: "Code Expander Block Senior Review"
+description: "Senior review of the code-expander block implementation"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Code Expander Block Senior Review
 
 ## Code Quality Assessment

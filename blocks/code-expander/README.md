@@ -1,3 +1,13 @@
+---
+title: "Code Expander Block"
+description: "Documentation for the code-expander EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Code Expander Block
 
 The Code Expander block enhances all `<pre><code>` elements on a page with syntax highlighting, copy functionality, and interactive features. It automatically detects the programming language and applies appropriate styling.

@@ -1,3 +1,13 @@
+---
+title: "Dev Docs Pattern"
+description: "Methodology for maintaining project context across Claude Code sessions and context resets"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Dev Docs Pattern
 
 A methodology for maintaining project context across Claude Code sessions and context resets.

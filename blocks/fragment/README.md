@@ -1,3 +1,13 @@
+---
+title: "Fragment Block"
+description: "Documentation for the fragment EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Fragment Block
 
 A content reuse component that enables embedding shared content from one page into multiple pages. Perfect for common sections like headers, footers, disclaimers, announcements, and reusable content blocks that need to appear consistently across multiple pages.

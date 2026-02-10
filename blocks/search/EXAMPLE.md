@@ -1,3 +1,13 @@
+---
+title: "Search Block Examples"
+description: "Usage examples for the search EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Search Block Examples
 
 ## Basic Search

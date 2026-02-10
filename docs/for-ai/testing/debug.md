@@ -1,3 +1,13 @@
+---
+title: "Block Debugging Guide for AI Assistants"
+description: "Testing guide: Block Debugging Guide for AI Assistants"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Block Debugging Guide for AI Assistants
 
 **Related Documentation:** [Block Architecture Standards](../implementation/block-architecture-standards.md) | [Raw EDS Blocks Guide](../implementation/raw-eds-blocks-guide.md) | [Complex EDS Blocks Guide](../implementation/complex-eds-blocks-guide.md) | [EDS Overview](../eds.md)

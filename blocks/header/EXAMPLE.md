@@ -1,3 +1,13 @@
+---
+title: "Header Block - Usage Examples"
+description: "Usage examples for the header EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Header Block - Usage Examples
 
 The header block is a document-level component that provides site-wide navigation. It is typically placed at the top of the page and is consistent across all pages.

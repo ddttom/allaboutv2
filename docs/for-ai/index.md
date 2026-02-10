@@ -1,3 +1,13 @@
+---
+title: "EDS Documentation Index"
+description: "AI assistant documentation: EDS Documentation Index"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # EDS Documentation Index
 
 ## Comprehensive Navigation Guide for Adobe Edge Delivery Services Development

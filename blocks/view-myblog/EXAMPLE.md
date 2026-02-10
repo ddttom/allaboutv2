@@ -1,3 +1,13 @@
+---
+title: "View MyBlog Block - Author Guide"
+description: "Usage examples for the view-myblog EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # View MyBlog Block - Author Guide
 
 Complete guide for content authors using the View MyBlog block in Google Docs or SharePoint.

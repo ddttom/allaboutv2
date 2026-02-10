@@ -1,3 +1,13 @@
+---
+title: "Remove Icon Styles Block"
+description: "Documentation for the remove-icon-styles EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Remove Icon Styles Block
 
 ## 1. Overview

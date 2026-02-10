@@ -1,3 +1,13 @@
+---
+title: "EDS Application Technology Stack Document"
+description: "*Related: [EDS Overview](../eds.md) | [Frontend Guidelines](frontend-guidelines.md) | [Backend Structure](backend-structure.md)*"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # EDS Application Technology Stack Document
 
 *Related: [EDS Overview](../eds.md) | [Frontend Guidelines](frontend-guidelines.md) | [Backend Structure](backend-structure.md)*

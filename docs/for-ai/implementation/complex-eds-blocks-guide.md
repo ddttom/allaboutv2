@@ -1,3 +1,13 @@
+---
+title: "Creating Complex EDS Blocks"
+description: "Implementation guide: Creating Complex EDS Blocks"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Creating Complex EDS Blocks
 
 ## The Build-Enhanced Approach

@@ -1,3 +1,13 @@
+---
+title: "Test Automation Backups"
+description: "Directory for timestamped backups created by the Cloudflare Worker test automation system"
+author: Tom Cranstoun
+created: 2025-12-12
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Test Automation Backups
 
 This directory contains timestamped backups created by the Cloudflare Worker test automation system.

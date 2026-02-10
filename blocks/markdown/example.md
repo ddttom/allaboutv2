@@ -1,3 +1,13 @@
+---
+title: "Markdown Block - Usage Examples"
+description: "Usage examples for the markdown EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Markdown Block - Usage Examples
 
 This document shows how to use the markdown block in Google Docs to display syntax-highlighted code snippets. Perfect for documentation, tutorials, API examples, and technical content with JavaScript code displays.

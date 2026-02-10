@@ -1,3 +1,13 @@
+---
+title: "Columns Block - Usage Examples"
+description: "Usage examples for the columns EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Columns Block - Usage Examples
 
 This document shows how to use the columns block in Google Docs to create flexible multi-column layouts. Perfect for side-by-side text and image displays, feature comparisons, and organized content presentation.

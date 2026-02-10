@@ -1,3 +1,13 @@
+---
+title: "return to top block"
+description: "Sample EDS returntotop block from the plusplus boilerplate"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # return to top block
 
 This code adds a "return to top" button feature to the webpage. Here's how it works:

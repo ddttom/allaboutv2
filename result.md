@@ -1,3 +1,13 @@
+---
+title: "Fix Result: Code Block Rendering"
+description: "Resolution of code block rendering issues in the GitHub markdown overlay"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Fix Result: Code Block Rendering in GitHub Markdown Overlay
 
 ## Problem

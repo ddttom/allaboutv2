@@ -1,3 +1,13 @@
+---
+title: "Quick Setup Guide"
+description: "First-time setup and development workflow for the Cloudflare Worker"
+author: Tom Cranstoun
+created: 2025-12-01
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Quick Setup Guide - Cloudflare Worker Development
 
 ## First Time Setup

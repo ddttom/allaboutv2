@@ -1,3 +1,13 @@
+---
+title: "Changelog"
+description: "All notable changes to the AllAboutV2 project"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Changelog
 
 All notable changes to the AllAboutV2 project will be documented in this file.

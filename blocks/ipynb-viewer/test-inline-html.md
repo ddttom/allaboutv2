@@ -1,3 +1,13 @@
+---
+title: "Test Inline HTML Escaping"
+description: "Test cases for inline HTML rendering in the ipynb-viewer block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Test Inline HTML Escaping
 
 ## Purpose

@@ -1,3 +1,13 @@
+---
+title: "Bloglist Component"
+description: "Documentation for the bloglist EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Bloglist Component
 
 This document describes the functionality of the `bloglist.js` file, which is responsible for creating a list of blog posts on a webpage.

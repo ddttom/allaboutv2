@@ -1,3 +1,13 @@
+---
+title: "Educational Jupyter Notebooks Guide"
+description: "AI assistant documentation: Educational Jupyter Notebooks Guide"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Educational Jupyter Notebooks Guide
 
 ## Overview

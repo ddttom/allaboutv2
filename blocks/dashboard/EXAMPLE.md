@@ -1,3 +1,13 @@
+---
+title: "Dashboard Block - Usage Examples"
+description: "Usage examples for the dashboard EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Dashboard Block - Usage Examples
 
 This document shows how to use the dashboard block to create content management dashboards with sortable tables, filterable status indicators, and image preview popups. Perfect for content governance, editorial calendars, and site-wide content auditing.

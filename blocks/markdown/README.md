@@ -1,3 +1,13 @@
+---
+title: "Markdown Block"
+description: "Documentation for the markdown EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Markdown Block
 
 A code display component that formats and syntax-highlights code content within a styled container. Despite its name, this block focuses on displaying code with basic syntax highlighting rather than rendering markdown content.

@@ -1,3 +1,13 @@
+---
+title: "Dynamic Presentation System (DPS) Block - Developer Documentation"
+description: "Developer documentation for the dps block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 Okay, here is the content of the `dev-README.md` file:
 
 ```markdown

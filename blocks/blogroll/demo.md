@@ -1,3 +1,13 @@
+---
+title: "Blogroll Block Demo"
+description: "Live demo content for the blogroll EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Blogroll Block Demo
 
 This page demonstrates the Blogroll block in both its default and compact variations.

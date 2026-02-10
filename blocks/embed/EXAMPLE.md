@@ -1,3 +1,13 @@
+---
+title: "Embed Block - Usage Examples"
+description: "Usage examples for the embed EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Embed Block - Usage Examples
 
 This document shows how to use the embed block in Google Docs to seamlessly integrate third-party media and social content. Perfect for embedding YouTube videos, Vimeo content, Twitter posts, and any iframe-based widgets with performance optimization and lazy loading.

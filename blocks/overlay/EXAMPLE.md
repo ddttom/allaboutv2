@@ -1,3 +1,13 @@
+---
+title: "Overlay Block - Google Docs Authoring Example"
+description: "Usage examples for the overlay EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Overlay Block - Google Docs Authoring Example
 
 This document shows how to create Overlay blocks in Google Docs for use with AEM Edge Delivery Services.

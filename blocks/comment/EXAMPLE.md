@@ -1,3 +1,13 @@
+---
+title: "Comment Block - Author Usage Guide"
+description: "Usage examples for the comment EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Comment Block - Author Usage Guide
 
 The Comment block allows content authors to add editorial notes, reminders, and collaboration comments directly within documents. These comments are visible in the authoring environment but completely hidden from the published website.

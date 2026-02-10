@@ -1,3 +1,13 @@
+---
+title: "Dynamic Presentation System (DPS) Block"
+description: "Additional documentation for the dps block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Dynamic Presentation System (DPS) Block
 
 A powerful presentation system that transforms structured content into an interactive presentation with features like image sequences, presenter notes, and timer controls.

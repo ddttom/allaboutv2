@@ -1,3 +1,13 @@
+---
+title: "Cards Block - Usage Examples"
+description: "Usage examples for the cards EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Cards Block - Usage Examples
 
 This document shows how to use the cards block in Google Docs to create responsive grid layouts for content cards. Perfect for blog listings, product showcases, feature grids, and content galleries.

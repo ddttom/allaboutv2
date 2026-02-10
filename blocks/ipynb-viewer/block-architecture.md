@@ -1,3 +1,13 @@
+---
+title: "ipynb-viewer Block Architecture"
+description: "Architecture documentation for the ipynb-viewer block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # ipynb-viewer Block Architecture
 
 ## Overview

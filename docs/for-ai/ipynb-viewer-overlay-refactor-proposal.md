@@ -1,3 +1,13 @@
+---
+title: "ipynb-viewer Overlay Architecture Refactor Proposal"
+description: "The current ipynb-viewer block has multiple separate overlay implementations:"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # ipynb-viewer Overlay Architecture Refactor Proposal
 
 ## Problem Statement

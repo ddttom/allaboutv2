@@ -1,3 +1,13 @@
+---
+title: "Adobe EDS Cloudflare Worker"
+description: "Cloudflare Worker for Adobe EDS adding CORS headers and JSON-LD structured data generation"
+author: Tom Cranstoun
+created: 2025-12-01
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Adobe EDS Cloudflare Worker
 
 A Cloudflare Worker for Adobe Edge Delivery Services that adds CORS headers and generates JSON-LD structured data from page metadata.

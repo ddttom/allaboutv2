@@ -1,3 +1,13 @@
+---
+title: "Cloudflare Worker Test Coverage Report"
+description: "Auto-generated test coverage report for the Cloudflare Worker"
+author: Tom Cranstoun
+created: 2025-12-12
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Cloudflare Worker Test Coverage Report
 
 **Generated:** 2025-12-12T20:34:49.827Z

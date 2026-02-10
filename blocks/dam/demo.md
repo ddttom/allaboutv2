@@ -1,3 +1,13 @@
+---
+title: "DAM Block Demo"
+description: "Live demo content for the dam EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # DAM Block Demo
 
 This demo showcases the DAM block's functionality for managing digital assets metadata.

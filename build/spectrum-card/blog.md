@@ -1,3 +1,13 @@
+---
+title: "Using Spectrum components in Adobe Edge Delivery Services blocks"
+description: "Guide for building a modern, image-capable card block using Adobe Spectrum Web Components in EDS."
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Using Spectrum Components in Adobe Edge Delivery Services Blocks
 
 Adobe's Edge Delivery Services (EDS) enables document-driven web development, but you can still deliver sophisticated UI using Spectrum Web Components. This guide shows how to build a modern, image-capable card block for EDS using Spectrum components, with a focus on maintainability, accessibility, and local testability.

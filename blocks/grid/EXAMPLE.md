@@ -1,3 +1,13 @@
+---
+title: "Grid Block - Usage Examples"
+description: "Usage examples for the grid EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Grid Block - Usage Examples
 
 This document shows how to use the grid block in Google Docs to create various responsive grid layouts. The grid block provides multiple layout patterns for organizing content including logo grids, icon cards, two-column layouts, and more.

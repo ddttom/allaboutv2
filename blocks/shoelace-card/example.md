@@ -1,3 +1,13 @@
+---
+title: "Shoelace Card Examples"
+description: "Usage examples for the shoelace-card EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Shoelace Card Examples
 
 This document provides examples for content authors on how to use the Shoelace Card block in Adobe Edge Delivery Services.

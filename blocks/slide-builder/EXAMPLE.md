@@ -1,3 +1,13 @@
+---
+title: "Slide Builder Examples"
+description: "Usage examples for the slide-builder EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Slide Builder Examples
 
 ## Basic Usage

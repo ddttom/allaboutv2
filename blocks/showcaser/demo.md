@@ -1,3 +1,13 @@
+---
+title: "Showcaser Demo"
+description: "Live demo content for the showcaser EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Showcaser Demo
 
 This page demonstrates the functionality of the Showcaser block, which displays code snippets in a visually appealing book-like format.

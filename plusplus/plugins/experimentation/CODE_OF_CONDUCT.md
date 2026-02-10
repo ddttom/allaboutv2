@@ -1,3 +1,13 @@
+---
+title: "Adobe Code of Conduct"
+description: "Code of conduct for the AEM experimentation plugin project"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Adobe Code of Conduct
 
 ## Our Pledge

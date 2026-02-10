@@ -1,3 +1,13 @@
+---
+title: "Performance Instrumentation Investigation Report"
+description: "Testing guide: Performance Instrumentation Investigation Report"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Performance Instrumentation Investigation Report
 
 *Related: [Instrumentation Guide](instrumentation-how-it-works.md) | [Debug Guide](debug.md) | [EDS Architecture and Testing Guide](eds-architecture-and-testing-guide.md)*

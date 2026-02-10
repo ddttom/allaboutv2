@@ -1,3 +1,13 @@
+---
+title: "Centreblock - Usage Examples"
+description: "Usage examples for the centreblock EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Centreblock - Usage Examples
 
 This document shows how to use the centreblock in Google Docs to create centered content sections with consistent vertical spacing. Perfect for hero sections, feature highlights, call-to-action elements, and standalone announcements.

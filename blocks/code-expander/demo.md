@@ -1,3 +1,13 @@
+---
+title: "Code Expander Block Demo"
+description: "Live demo content for the code-expander EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Code Expander Block Demo
 
 This demo showcases the Code Expander block, which enhances code snippets on your page with syntax highlighting, copy functionality, and interactive features.

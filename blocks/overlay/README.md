@@ -1,3 +1,13 @@
+---
+title: "Overlay Block"
+description: "Documentation for the overlay EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Overlay Block
 
 The Overlay block creates a button that, when clicked, displays content in a full-viewport overlay with an animated entrance and close button.

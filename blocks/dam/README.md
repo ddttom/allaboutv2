@@ -1,3 +1,13 @@
+---
+title: "DAM Block (Digital Asset Management)"
+description: "Documentation for the dam EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # DAM Block (Digital Asset Management)
 
 A specialized block for extracting and displaying digital asset metadata in structured JSON format. Converts tabular asset data into a formatted code display, ideal for metadata documentation, asset catalogs, and content auditing workflows.

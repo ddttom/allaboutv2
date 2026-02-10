@@ -1,3 +1,13 @@
+---
+title: "EDS Site Remediation - Executive Summary"
+description: "**Date**: 2025-12-07"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # EDS Site Remediation - Executive Summary
 
 **Date**: 2025-12-07

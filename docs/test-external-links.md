@@ -1,3 +1,13 @@
+---
+title: "External Links Test"
+description: "This file tests the new external link functionality in the ipynb-viewer GitHub markdown overlay."
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # External Links Test
 
 This file tests the new external link functionality in the ipynb-viewer GitHub markdown overlay.

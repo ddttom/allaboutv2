@@ -1,3 +1,13 @@
+---
+title: "DFS Block Examples"
+description: "Usage examples for the dfs EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # DFS Block Examples
 
 ## Basic Single Category FAQ

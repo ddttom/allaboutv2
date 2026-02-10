@@ -1,3 +1,13 @@
+---
+title: "Repository Review: Web Components with Adobe Edge Delivery Services"
+description: "AI assistant documentation: Repository Review: Web Components with Adobe Edge Delivery Services"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Repository Review: Web Components with Adobe Edge Delivery Services
 
 ## A Deep Dive into Modern EDS Development

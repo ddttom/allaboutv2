@@ -1,3 +1,13 @@
+---
+title: "Content Quality Improvements"
+description: "**Priority Level**: 🟡 MEDIUM"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Content Quality Improvements
 
 **Priority Level**: 🟡 MEDIUM

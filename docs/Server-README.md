@@ -1,3 +1,13 @@
+---
+title: "EDS Development Server Guide"
+description: "*Related: [EDS Overview](eds.md) | [Debug Guide](debug.md) | [EDS Architecture and Testing Guide](eds-architecture-and-testing-guide.md)*"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # EDS Development Server Guide
 
 *Related: [EDS Overview](eds.md) | [Debug Guide](debug.md) | [EDS Architecture and Testing Guide](eds-architecture-and-testing-guide.md)*

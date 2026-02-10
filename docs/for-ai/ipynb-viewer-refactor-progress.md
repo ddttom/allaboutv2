@@ -1,3 +1,13 @@
+---
+title: "ipynb-viewer Unified Overlay Refactor - Progress Report"
+description: "AI assistant documentation: ipynb-viewer Unified Overlay Refactor - Progress Report"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # ipynb-viewer Unified Overlay Refactor - Progress Report
 
 ## Branch: `refactor/ipynb-viewer-unified-overlay`

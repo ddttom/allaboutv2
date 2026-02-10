@@ -1,3 +1,13 @@
+---
+title: "Unified Overlay Architecture - Refactoring Summary"
+description: "Summary of refactoring work on the ipynb-viewer block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Unified Overlay Architecture - Refactoring Summary
 
 ## What Was Built

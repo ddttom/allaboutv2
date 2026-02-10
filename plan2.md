@@ -1,3 +1,13 @@
+---
+title: "EDS Block Library Integration for SaaS Enhancement"
+description: "Plan for leveraging the EDS block library as standalone web components in the SaaS platform"
+author: Tom Cranstoun
+created: 2024-12-01
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Section 19: EDS Block Library Integration for SaaS Enhancement
 
 ## 19.1 Executive Summary

@@ -1,3 +1,13 @@
+---
+title: "Hero Block - Usage Examples"
+description: "Usage examples for the hero EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Hero Block - Usage Examples
 
 ## Example 1: Basic Hero with Two Images

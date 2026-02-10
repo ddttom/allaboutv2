@@ -1,3 +1,13 @@
+---
+title: "PlusPlus - Optimization code for Edge Delivery Services"
+description: "AllAbout Plus Plus project extending Adobe AEM boilerplate with plugins"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # PlusPlus - Optimization code for Edge Delivery Services
 
 A git subtree add for AEM-boilerplate, this git provides the scripting required to add the extras developed by Tom Cranstoun, Digital Domain Technologies Ltd

@@ -1,3 +1,13 @@
+---
+title: "Code Block Rendering Fix Plan"
+description: "Plan to fix code block rendering in the ipynb-viewer GitHub markdown overlay"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Code Block Rendering Fix Plan
 
 ## The Ask

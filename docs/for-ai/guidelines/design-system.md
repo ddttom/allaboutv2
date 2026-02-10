@@ -1,3 +1,13 @@
+---
+title: "AllAboutV2 Design System"
+description: "AI assistant guideline: AllAboutV2 Design System"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # AllAboutV2 Design System
 
 *Related: [Frontend Guidelines](frontend-guidelines.md) | [Style Guide](style-guide.md) | [Block Architecture Standards](../implementation/block-architecture-standards.md)*

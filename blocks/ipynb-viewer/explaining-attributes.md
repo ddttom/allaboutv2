@@ -1,3 +1,13 @@
+---
+title: "IPynb Viewer Attributes Reference"
+description: "Explanation of attributes used by the ipynb-viewer block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # IPynb Viewer Attributes Reference
 
 Complete guide to all metadata attributes supported by the ipynb-viewer block and where they're used.

@@ -1,3 +1,13 @@
+---
+title: "Inline SVG Block"
+description: "Documentation for the inline-svg EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Inline SVG Block
 
 A versatile block for embedding SVG content directly in EDS pages, supporting both icon references and inline SVG markup. Provides automatic SVG manipulation, consistent sizing, and responsive behavior.

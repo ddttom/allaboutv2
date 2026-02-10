@@ -1,3 +1,13 @@
+---
+title: "Floating Alert Block"
+description: "Documentation for the floating-alert EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Floating Alert Block
 
 A modern, accessible document-level floating alert system that displays important notifications in a glassmorphic modal overlay with sparkle effects. The alert appears immediately on page load as a centered modal and supports multiple dismissal methods with persistent state management via localStorage.

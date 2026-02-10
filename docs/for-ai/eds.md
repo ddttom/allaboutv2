@@ -1,3 +1,13 @@
+---
+title: "Adobe Edge Delivery Services - Full Guide for Devs, Architects and AI"
+description: "AI assistant documentation: Adobe Edge Delivery Services - Full Guide for Devs, Architects and AI"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Adobe Edge Delivery Services - Full Guide for Devs, Architects and AI
 
 **Related Documentation:** [Block Architecture Standards](implementation/block-architecture-standards.md) | [Raw EDS Blocks Guide](implementation/raw-eds-blocks-guide.md) | [Complex EDS Blocks Guide](implementation/complex-eds-blocks-guide.md) | [Project Structure](project-structure.md)

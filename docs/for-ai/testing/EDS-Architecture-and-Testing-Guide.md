@@ -1,3 +1,13 @@
+---
+title: "EDS Architecture and Testing Guide"
+description: "Testing guide: EDS Architecture and Testing Guide"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # EDS Architecture and Testing Guide
 
 **Related Documentation:** [Debug Guide](debug.md) | [instrumentation-how-it-works](instrumentation-how-it-works.md) | [Block Architecture Standards](../implementation/block-architecture-standards.md) | [EDS Native Testing Standards](eds-native-testing-standards.md)

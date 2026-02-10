@@ -1,3 +1,13 @@
+---
+title: "Adobe Edge Delivery Services (EDS) Development Reference Guide"
+description: "AI assistant documentation: Adobe Edge Delivery Services (EDS) Development Reference Guide"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Adobe Edge Delivery Services (EDS) Development Reference Guide
 
 *Related: [EDS Overview](eds.md) | [Block Architecture Standards](implementation/block-architecture-standards.md) | [Design Philosophy Guide](implementation/design-philosophy-guide.md)*

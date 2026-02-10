@@ -1,3 +1,13 @@
+---
+title: "Return to Top Block - Usage Examples"
+description: "Usage examples for the returntotop EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Return to Top Block - Usage Examples
 
 This document shows how to use the returntotop block in Google Docs to add a scroll-to-top button on long pages. Perfect for long-form articles, documentation, blog posts, and multi-section pages where users scroll significantly.

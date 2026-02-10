@@ -1,3 +1,13 @@
+---
+title: "ipynb-viewer Unified Overlay - Complete Summary"
+description: "**Branch**: `refactor/ipynb-viewer-unified-overlay`"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # ipynb-viewer Unified Overlay - Complete Summary
 
 ## Project Status

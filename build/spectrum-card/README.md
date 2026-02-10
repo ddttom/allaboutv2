@@ -1,3 +1,13 @@
+---
+title: "Spectrum card component"
+description: "A responsive card component built with Adobe Spectrum Web Components for accessible content display."
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Spectrum Card
 
 A responsive card component built using Adobe Spectrum Web Components, providing a consistent and accessible way to display content with images, titles, descriptions, and action buttons.

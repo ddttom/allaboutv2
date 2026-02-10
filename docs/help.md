@@ -1,3 +1,13 @@
+---
+title: "Viewer - User Guide"
+description: "Welcome to the **Documentation Viewer** interactive help guide! This document will help you understand all the features and how to use them effectively."
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Viewer - User Guide
 
 Welcome to the **Documentation Viewer** interactive help guide! This document will help you understand all the features and how to use them effectively.

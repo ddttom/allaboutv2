@@ -1,3 +1,13 @@
+---
+title: "Integration Instructions - Complete Refactoring"
+description: "Integration documentation for the ipynb-viewer block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Integration Instructions - Complete Refactoring
 
 ## Status: Ready to Integrate

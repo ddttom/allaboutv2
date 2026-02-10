@@ -1,3 +1,13 @@
+---
+title: "Bio Block"
+description: "Documentation for the bio EDS block component"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Bio Block
 
 The bio block displays author or team member biographies with profile images and biographical text. It features automatic image link conversion, responsive layouts, author name extraction, and multiple variations for different presentation needs.

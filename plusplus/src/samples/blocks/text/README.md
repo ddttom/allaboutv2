@@ -1,3 +1,13 @@
+---
+title: "text javascript"
+description: "Sample EDS text block from the plusplus boilerplate"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # text javascript
 
 This code imports a function called `renderExpressions` from a JavaScript module located at "/plusplus/plugins/expressions/src/expressions.js". It then defines and exports a default function named `decorate` which takes a parameter called `block`.

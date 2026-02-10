@@ -1,3 +1,13 @@
+---
+title: "Hello World Block - Usage Examples"
+description: "Usage examples for the helloworld EDS block"
+author: Tom Cranstoun
+created: 2026-01-15
+modified: 2026-02-09
+version: "1.0"
+status: active
+---
+
 # Hello World Block - Usage Examples
 
 This document shows how to use the Hello World block in Google Docs as a learning tool for Adobe Edge Delivery Services (EDS) block development. This is the simplest possible block, perfect for understanding EDS fundamentals.

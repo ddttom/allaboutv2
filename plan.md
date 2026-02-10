@@ -1,3 +1,13 @@
+---
+title: "Bright Sparks Management System PRD"
+description: "Product requirements for a white-labelable multi-trade service provider management system"
+author: Tom Cranstoun
+created: 2024-12-01
+modified: 2026-02-09
+version: "2.0"
+status: active
+---
+
 # Product Requirements Document (PRD): Bright Sparks Management System
 
 **Version:** 2.0  
