@@ -12,7 +12,7 @@ keywords:
   - machine-experience
   - design-principles
   - accessibility
-  - ai-agents
+  - sop-agents
   - metadata
   - semantic-web
   - universal-design

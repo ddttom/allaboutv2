@@ -44,7 +44,7 @@ governance:
   correction_sla: "72 hours from report to updated COG"
 
   usage:
-    ai_inference: "permitted"
+    sop_inference: "permitted"
     caching: "permitted for 24 hours"
     redistribution: "with attribution to MX Reginald Ltd"
     commercial_use: "permitted"
