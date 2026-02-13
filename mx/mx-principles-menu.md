@@ -1,9 +1,9 @@
 ---
 title: "Machine Experience: The Core Principles"
 author: "Tom Cranstoun"
-date: "2026-02-03"
+created: "2026-02-03"
 description: "Quick reference menu listing the core Machine Experience principles for building digital products that work for everyone."
-keywords:
+tags:
   - machine-experience
   - design-principles
   - quick-reference

@@ -1761,7 +1761,7 @@ description: Professional electrical installations, repairs, and testing by NICE
 author: Frankie
 
 # SEO & Social
-keywords: electrician, electrical services, York, NICEIC, rewiring, fuse box
+tags: electrician, electrical services, York, NICEIC, rewiring, fuse box
 og:image: /assets/hero-electrical.jpg
 og:type: article
 canonical: https://brightsparks-york.com/services/electrical

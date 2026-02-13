@@ -2,13 +2,13 @@
 title: "The Principles That Changed How I Build for Everyone"
 author: "Tom Cranstoun"
 author-email: "tom@digitaldomaintechnologies.com"
-date: "2026-02-03"
+created: "2026-02-03"
 content-state: "published"
 content-filename: "principles-changed-how-i-build"
 blog-url: "https://allabout.network/blogs/mx/principles-changed-how-i-build.html"
 publication-date: "2026-02-03"
 description: "A practitioner's guide to Machine Experience principles that make digital products work better for humans, AI agents, and everyone in between."
-keywords:
+tags:
   - machine-experience
   - design-principles
   - accessibility

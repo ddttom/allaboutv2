@@ -4,7 +4,7 @@ description: Ensures CLAUDE.md, README.md, and CHANGELOG.md are updated before g
 version: 1.0.0
 author: Tom Cranstoun
 trigger_type: intent
-keywords:
+tags:
   - git push
   - commit push
   - pushing changes
