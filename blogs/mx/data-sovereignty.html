@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Blog State Tracking -->
+  <meta name="blog-state" content="published">
+  <meta name="blog-draft-date" content="2026-01-20">
+  <meta name="blog-review-date" content="2026-01-26">
+  <meta name="blog-publication-date" content="2026-01-27">
+  <meta name="blog-last-modified" content="2026-01-27">
+  <meta name="blog-review-status" content="published">
+
+  <meta name="author" content="Tom Cranstoun">
+  <meta name="description" content="Understanding jurisdictional and ownership aspects of data sovereignty for web professionals building modern content systems.">
+  <meta name="keywords" content="machine-experience, ai-agents">
+
+  <!-- Robots Meta Tags (SEO) -->
+  <meta name="robots" content="index, follow">
+  <meta name="X-Robots-Tag" content="index, follow">
+
+  <!-- Canonical URL (SEO) -->
+  <link rel="canonical" href="https://allabout.network/blogs/mx/data-sovereignty.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://allabout.network/blogs/mx/data-sovereignty.html">
+  <meta property="og:title" content="Data Sovereignty and the Web We're Building">
+  <meta property="og:description" content="Understanding jurisdictional and ownership aspects of data sovereignty for web professionals building modern content systems.">
+  <meta property="og:image" content="https://allabout.network/blogs/mx/data-sovereignty-social.svg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="AllAbout.Network">
+  <meta property="article:published_time" content="2025-01-24">
+  <meta property="article:author" content="Tom Cranstoun">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://allabout.network/blogs/mx/data-sovereignty.html">
+  <meta name="twitter:title" content="Data Sovereignty and the Web We're Building">
+  <meta name="twitter:description" content="Understanding jurisdictional and ownership aspects of data sovereignty for web professionals building modern content systems.">
+  <meta name="twitter:image" content="https://allabout.network/blogs/mx/data-sovereignty-social.svg">
+
+  <!-- AI-specific meta tags (PROPOSED patterns) -->
+  <meta name="ai-preferred-access" content="html">
+  <meta name="ai-content-policy" content="extract-with-attribution">
+  <meta name="ai-freshness" content="monthly">
+  <meta name="ai-structured-data" content="schema.org-jsonld">
+  <meta name="ai-attribution" content="required" text="Source: Data Sovereignty and the Web We're Building by Tom Cranstoun, Digital Domain Technologies Ltd, https://allabout.network/blogs/mx/data-sovereignty.html">
+  <meta name="llms-txt" content="/llms.txt">
+
+  <title>Data Sovereignty and the Web We're Building | Tom Cranstoun</title>
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Data Sovereignty and the Web We're Building",
+    "description": "Understanding jurisdictional and ownership aspects of data sovereignty for web professionals building modern content systems.",
+    "datePublished": "2025-01-24",
+    "dateModified": "2025-01-24",
+    "author": {
+      "@type": "Person",
+      "name": "Tom Cranstoun",
+      "url": "https://www.linkedin.com/in/tom-cranstoun/",
+      "image": "https://allabout.network/media_126e99d56f06caf788bee715aff92281d2e31a206.png"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "AllAbout.Network",
+      "url": "https://allabout.network"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://allabout.network/blogs/mx/data-sovereignty.html"
+    },
+    "articleSection": "Machine Experience",
+    "keywords": ["machine-experience", "ai-agents"],
+    "wordCount": 1102,
+    "inLanguage": "en-GB"
+  }
+  </script>
+
+  <link rel="stylesheet" href="shared-mx.css">
+</head>
+<body>
+  <!-- Skip to Content Link (WCAG Accessibility) -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- Blog Introduction -->
+  <aside class="blog-introduction"
+         aria-label="Blog introduction"
+         data-component="blog-header">
+    <div class="introduction-content">
+      <a href="about.tom.cranstoun.html" aria-label="View Tom Cranstoun's profile">
+        <img src="https://allabout.network/media_126e99d56f06caf788bee715aff92281d2e31a206.png"
+             alt="Tom Cranstoun profile picture"
+             class="author-image"
+             width="80"
+             height="80">
+      </a>
+      <div class="introduction-text">
+        <div class="introduction-message">The term "data sovereignty" appears in two very different conversations, and if you're building websites or managing content systems, you need to understand both.</div>
+        <div class="author-name">Author: <strong>Tom Cranstoun</strong></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Collapsible Index (TOC) - Pre-collapsed -->
+  <details id="index" class="table-of-contents" data-state="initially-collapsed">
+    <summary>Index</summary>
+    <nav aria-label="Table of contents">
+      <ul>
+        <li><a href="#two-meanings">Two Meanings</a></li>
+        <li><a href="#jurisdiction-matters-more-than-you-think">Jurisdiction Matters More Than You Think</a></li>
+        <li><a href="#control-problem">Control Problem</a></li>
+        <li><a href="#self-hosting-response">Self-Hosting Response</a></li>
+        <li><a href="#what-this-means-for-machine-experience">What This Means for Machine Experience</a></li>
+        <li><a href="#ai-sovereignty-question">AI Sovereignty Question</a></li>
+        <li><a href="#practical-steps">Practical Steps</a></li>
+        <li><a href="#connection-to-mx">Connection to MX</a></li>
+      </ul>
+    </nav>
+  </details>
+
+  <!-- Main Article -->
+  <main id="main" tabindex="-1">
+    <article data-article-type="blog-post" data-word-count="1102">
+      <header>
+        <h1>Data Sovereignty and the Web We're Building</h1>
+        <div class="article-meta"
+             data-published="2025-01-24"
+             data-modified="2025-01-24"
+             data-reading-time="6 min">
+          <time datetime="2025-01-24">24 January 2025</time>
+          <span>·</span>
+          <span>6 min read</span>
+        </div>
+      </header>
+
+
+<h2 id="two-meanings" tabindex="-1">Two Meanings</h2>
+<p>First meaning: where your data lives determines which laws apply to it. Store customer data on servers in Germany, and German law governs it regardless of where your company operates. Keep it in California, and you’re subject to CCPA. This is data sovereignty as jurisdiction.</p>
+<p>Second meaning: who controls your data. Can you export it? Can you move it to another platform? Who decides what happens to it? This is data sovereignty as ownership.</p>
+<p>Both matter, but for different reasons.</p>
+<h2 id="jurisdiction-matters-more-than-you-think" tabindex="-1">Jurisdiction Matters More Than You Think</h2>
+<p>The jurisdictional question isn’t just for lawyers. If you’re running an e-commerce site or handling customer information, server location affects everything from GDPR compliance to how law enforcement can access your data.</p>
+<p>The US CLOUD Act lets American authorities demand data from US companies regardless of where it’s stored. GDPR gives EU regulators power over any data about EU citizens. China, Russia, and India require certain data types to stay within their borders.</p>
+<p>Cloud providers now offer region-specific data centres specifically for this reason. You choose where data lives, not just for performance but for legal protection.</p>
+<p>This gets complicated fast. Medical data in the UK follows NHS requirements. Financial records face different rules in different countries. Most organisations need legal advice here, not technical expertise.</p>
+<h2 id="control-problem" tabindex="-1">Control Problem</h2>
+<p>But the second meaning - who controls your data - hits closer to home for most web professionals.</p>
+<p>When you store content in someone else’s platform, you accept their terms. They can change pricing. They can modify features. They can shut down entirely. Your data exists at their discretion.</p>
+<p>Getting data out can be deliberately difficult. Many platforms make it easy to import content but provide minimal export functionality. Some use proprietary formats that lock you in. Others limit what you can extract through their APIs.</p>
+<p>This creates real business risk. What happens when your CMS vendor doubles their prices? What if they drop a feature your site depends on? What if they go bankrupt?</p>
+<p>The answer should be: you move to another platform. But if your data is trapped in proprietary formats or scattered across multiple systems with no clean export path, you’re stuck.</p>
+<h2 id="self-hosting-response" tabindex="-1">Self-Hosting Response</h2>
+<p>This has driven renewed interest in self-hosting and open source. Run your own servers, control your own data, answer to nobody but yourself.</p>
+<p>It works. You own the infrastructure. You set the backup schedule. You choose when to upgrade. Nobody can change the rules on you.</p>
+<p>But it requires resources. Someone needs to manage those servers, handle security updates, ensure backups run properly, deal with hardware failures. For many organisations, the overhead isn’t worth it.</p>
+<p>The middle ground is choosing platforms that respect data portability. Look for:</p>
+<ul>
+<li>Standard export formats</li>
+<li>Well-documented APIs</li>
+<li>Clear data ownership terms</li>
+<li>No vendor lock-in through proprietary formats</li>
+<li>Ability to run backups independently</li>
+</ul>
+<p>GDPR actually mandates this for EU citizens. The right to data portability means platforms must provide your data in a structured, machine-readable format that works with other services.</p>
+<h2 id="what-this-means-for-machine-experience" tabindex="-1">What This Means for Machine Experience</h2>
+<p>Here’s where this connects to how we build websites.</p>
+<p>Machine Experience - designing for AI agents as well as humans - has implications for data sovereignty. When you structure content properly, when you use semantic markup, when you make data machine-readable, you’re making it portable.</p>
+<p>An AI agent that can parse your content structure can also help you migrate that content. A well-structured website using standard HTML, proper schema markup, and clear data relationships is far easier to move than a proprietary system with custom formats.</p>
+<p>If Claude or ChatGPT can understand your site structure well enough to answer questions about it, that same structure makes data extraction straightforward. Good MX is good data portability.</p>
+<p>The docs/for-ai approach I’ve been developing works both ways. Documentation that helps AI assistants understand your system also helps humans migrate away from it if needed. Clear structure, explicit relationships, semantic markup - these serve both purposes.</p>
+<h2 id="ai-sovereignty-question" tabindex="-1">AI Sovereignty Question</h2>
+<p>There's a third aspect emerging: who controls the AI models that process your data?</p>
+<p>When you send content to ChatGPT or Claude, where does that data go? Who has access? What happens to it? These are sovereignty questions too.</p>
+<p>Some organisations now require AI processing to happen locally or within specific jurisdictions. They want models running on their infrastructure, not external services. This is digital sovereignty extended to AI.</p>
+<p>The recent launches from companies like IBM Sovereign Core and similar initiatives show this isn't theoretical. Organisations want AI capabilities without losing control over where processing happens or who can access the data.</p>
+<p>This jurisdictional complexity extends to training data itself. When an LLM trains on content from China, Russia, or EU jurisdictions with GDPR constraints, does that training data carry jurisdictional restrictions forward? If an LLM ingested content subject to "right to be forgotten" requests in Germany, can it use that information when operating in the US?</p>
+<p>To address this, MX-Bible (launching April 2026) proposes a new metadata pattern: the <code>ai-jurisdiction-restriction</code> meta tag. This experimental pattern would let content creators signal when their content originates from or is subject to jurisdictional constraints—whether that's GDPR in the EU, content controls in China or Russia, or other regional restrictions. Of course, you could use robots.txt directives or the noindex meta tag to prevent AI ingestion entirely, but that excludes your content from everywhere—search engines, AI agents, and all automated discovery. The <code>ai-jurisdiction-restriction</code> approach offers nuance: content remains discoverable whilst signaling jurisdictional constraints. It's a proposed standard, not yet adopted, but follows the same forward-compatible pattern as other AI metadata tags. The goal is giving agents explicit signals about jurisdictional origin and potential legal constraints, rather than forcing them to guess.</p>
+<p>For web developers and content managers, this means considering:</p>
+<ul>
+<li>Where AI-enhanced features send data</li>
+<li>Whether you can run equivalent processing locally</li>
+<li>What data you're sharing with third-party AI services</li>
+<li>Who has access to the results</li>
+<li>Whether content should carry jurisdictional markers for training data transparency</li>
+</ul>
+<h2 id="practical-steps" tabindex="-1">Practical Steps</h2>
+<p>If data sovereignty matters to your organisation - and increasingly, it does - here’s where to start:</p>
+<p>Know where your data lives. Not just which provider, but which physical region. This determines legal jurisdiction.</p>
+<p>Understand your export options before you need them. Can you get a complete backup in usable formats? Test the process.</p>
+<p>Read the contracts. Who owns the data? What rights does the platform claim? What happens when you leave?</p>
+<p>Choose platforms that support standard formats. Proprietary systems create lock-in whether intentional or not.</p>
+<p>Build with portability in mind. Even if you’re not planning to move platforms, structure content and data so that migration would be possible.</p>
+<p>For AI features, understand the data flow. Where does processing happen? Can you run it locally if needed? What data leaves your control?</p>
+<h2 id="connection-to-mx" tabindex="-1">Connection to MX</h2>
+<p>I’m finishing two books on Machine Experience that launch in April. One of the patterns I keep seeing: websites built for machine comprehension are also built for data sovereignty.</p>
+<p>When you make structure explicit, when you use standard semantic markup, when you document relationships clearly - you’re not just helping AI agents understand your content. You’re making your data portable, accessible, and yours.</p>
+<p>Good MX means Claude or ChatGPT can help users find information on your site. It also means you can extract, migrate, and control that information when you need to.</p>
+<p>Data sovereignty and Machine Experience aren’t separate concerns. They’re two aspects of building systems that work well in a world where both humans and AI agents interact with your content.</p>
+<p>The websites that handle this well will have clean structure, semantic markup, clear documentation, and straightforward data models. They’ll work for screen readers, search engines, AI agents, and migration tools - all for the same reason.</p>
+<p>Structure is freedom. Make it machine-readable and you make it portable.</p>
+
+
+      <!-- Author Bio Link (added if author is Tom Cranstoun) -->
+
+      <!-- Author Bio Link -->
+      <aside class="author-bio-link" aria-label="About the author">
+        <hr>
+        <p><strong>About the author:</strong> <a href="about.tom.cranstoun.html">Tom Cranstoun</a> has been building content systems since 1977, specializing in Adobe Experience Manager, Edge Delivery Services, and Machine Experience (MX) strategic advisory.</p>
+      </aside>
+
+    </article>
+  </main>
+
+  <!-- Floating Back to Top Button -->
+  <a href="#" class="back-to-top" aria-label="Back to top">
+    Back to Top
+  </a>
+
+  <!-- Footer -->
+  <footer>
+    <p>© Tom Cranstoun. All rights reserved.</p>
+  </footer>
+</body>
+</html>
