@@ -174,7 +174,7 @@ The seventh principle is the most powerful: documents can contain their own gene
 
 This might sound abstract, so let me explain with an example. Imagine you're documenting an API. You write the specification for each endpoint—what it expects, what it returns, what the validation rules are. Traditional documentation stops there. You write it once, then separately write the code that implements it, then separately write tests that verify it. Three sources of truth that can drift apart.
 
-Executable documentation flips this. The document itself contains prompting instructions and generation instructions as metadata. When an AI reads the file, these instructions are automatically included in context. When a user requests generation, these instructions get executed.
+Executable documentation flips this. The document itself contains a runbook and a deliverable as metadata. When a machine reads the file, the runbook is automatically included in context. When a user requests generation, the deliverable gets executed.
 
 A specification document might include metadata that says "when generating implementation code from this specification, ensure you create validation matching the documented constraints, generate comprehensive error messages for each failure case, and include examples demonstrating each documented feature."
 
@@ -184,7 +184,7 @@ This creates a single source of truth that serves as both documentation and exec
 
 This doesn't mean documentation automatically writes code without human oversight. It means documentation can guide and constrain generation in a way that ensures implementations match specifications. The human still reviews, approves, and refines. But the documentation itself becomes an active participant in the build process rather than a passive reference that drifts out of sync.
 
-The metadata fields that enable this are runbook (context automatically injected when AI reads the file) and createOutputPrompt (generation instructions executed when user requests generation). The former provides understanding. The latter enables action.
+The metadata fields that enable this are runbook (context automatically injected when a machine reads the file) and deliverable (generation instructions executed when user requests generation). The former provides understanding. The latter enables action.
 
 I've used this pattern for everything from API specifications that generate both server and client code to architecture documents that scaffold project structures to data schemas that generate validation logic. Each time, the benefit is the same: the documentation stays synchronized with implementation because it IS the source of implementation guidance.
 
