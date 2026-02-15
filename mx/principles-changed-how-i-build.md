@@ -22,7 +22,7 @@ mx:
   contentType: "blog-post"
   version: "1.1"
   lastUpdated: "2026-02-04"
-  promptingInstruction: |
+  runbook: |
     This blog post introduces the core Machine Experience principles
     through a practitioner's lens. Written in conversational first-person,
     explaining technical concepts through relatable examples and personal insights.
@@ -184,7 +184,7 @@ This creates a single source of truth that serves as both documentation and exec
 
 This doesn't mean documentation automatically writes code without human oversight. It means documentation can guide and constrain generation in a way that ensures implementations match specifications. The human still reviews, approves, and refines. But the documentation itself becomes an active participant in the build process rather than a passive reference that drifts out of sync.
 
-The metadata fields that enable this are promptingInstruction (context automatically injected when AI reads the file) and createOutputPrompt (generation instructions executed when user requests generation). The former provides understanding. The latter enables action.
+The metadata fields that enable this are runbook (context automatically injected when AI reads the file) and createOutputPrompt (generation instructions executed when user requests generation). The former provides understanding. The latter enables action.
 
 I've used this pattern for everything from API specifications that generate both server and client code to architecture documents that scaffold project structures to data schemas that generate validation logic. Each time, the benefit is the same: the documentation stays synchronized with implementation because it IS the source of implementation guidance.
 

@@ -16,7 +16,7 @@ mx:
   version: "1.1"
   lastUpdated: "2026-02-04"
 
-  promptingInstruction: |
+  runbook: |
     This is a simple menu-style reference page listing the core
     Machine Experience principles. Designed for quick scanning and navigation.
 
